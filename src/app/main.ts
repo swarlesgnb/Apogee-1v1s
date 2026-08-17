@@ -12,7 +12,7 @@
  */
 
 import { app, BrowserWindow, ipcMain, shell, dialog } from "electron";
-import { existsSync } from "node:fs";
+import { existsSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
 import { setDataDir } from "../core/dataDir.ts";
@@ -30,6 +30,7 @@ import {
   abandonMatch,
   fetchActiveMatch,
   findMatch,
+  isAdmin,
   refreshBaselines,
   settleMatch,
   submitRun,
@@ -45,6 +46,7 @@ import {
 } from "./session.ts";
 import { findStatsFolder, watchStatsFolder, type StatsWatcher } from "./watcher.ts";
 import { launchKovaaks, writeMatchPlaylist } from "./playlist.ts";
+import { loadSeason, seasonPath, validateSeason } from "../core/season/season.ts";
 
 /**
  * Bundled to dist/app/main.cjs, so `__dirname` is dist/app and the reference data
@@ -749,6 +751,63 @@ ipcMain.handle("apogee:chooseFolder", async () => {
 
   startWatching(chosen);
   return chosen;
+});
+
+/**
+ * Is the signed-in player an admin?
+ *
+ * The `admins` policy lets an account see its own row and nobody else's, so a row
+ * coming back *is* the answer. Anyone without one gets nothing, which is also what a
+ * signed-out client gets, and both mean the same thing here.
+ *
+ * This gates whether the editor is offered, not whether the file can be written: the
+ * season lives on this machine, so anyone with a text editor can already change it.
+ * What the gate is really for is the day a season is published to other people.
+ */
+ipcMain.handle("apogee:isAdmin", async () => {
+  if (!state.session) return { admin: false };
+  try {
+    return { admin: await isAdmin() };
+  } catch {
+    return { admin: false };
+  }
+});
+
+ipcMain.handle("apogee:getSeason", () => {
+  try {
+    return { season: loadSeason(), path: seasonPath() };
+  } catch (err) {
+    return { error: err instanceof Error ? err.message : String(err) };
+  }
+});
+
+/**
+ * Write the season back, then rebuild from it.
+ *
+ * Validated before it is written, not after. A season with a threshold count that does
+ * not match its ladder produces ranks nobody can reach, on every screen that grades a
+ * score, and writing it first would mean the app is already broken by the time anyone
+ * finds out.
+ */
+ipcMain.handle("apogee:saveSeason", async (_e, { season }) => {
+  if (!state.session || !(await isAdmin().catch(() => false))) {
+    return { error: "only an admin can edit the season" };
+  }
+
+  try {
+    validateSeason(season);
+  } catch (err) {
+    return { error: err instanceof Error ? err.message : String(err) };
+  }
+
+  try {
+    writeFileSync(seasonPath(), JSON.stringify(season, null, 2) + "\n", "utf8");
+  } catch (err) {
+    return { error: `could not write the season: ${err instanceof Error ? err.message : err}` };
+  }
+
+  rebuild("season edited");
+  return { ok: true, path: seasonPath() };
 });
 
 ipcMain.handle("apogee:openStatsFolder", () => {

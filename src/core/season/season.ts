@@ -81,6 +81,23 @@ export function hasSeason(): boolean {
 export function loadSeason(path?: string): Season {
   const file = path ?? seasonPath();
   const season = JSON.parse(readFileSync(file, "utf8")) as Season;
+  validateSeason(season);
+  return season;
+}
+
+/**
+ * Refuse a season that would grade scores wrongly.
+ *
+ * Shared with the editor, which checks before writing rather than after: a bad season
+ * breaks every screen that grades a score, so discovering it on the next render means
+ * the app is already wrong by the time anyone is told.
+ *
+ * Thresholds must ascend. A ladder that goes backwards silently makes a rank
+ * unreachable - the score that earns the higher one already earned the lower - and it
+ * is the easiest thing in the world to do by hand while editing a row of numbers.
+ */
+export function validateSeason(season: Season): void {
+  if (!season || typeof season !== "object") throw new Error("not a season");
 
   if (!Array.isArray(season.rankNames) || season.rankNames.length === 0) {
     throw new Error(`season "${season.name}" has no ranks`);
@@ -88,23 +105,60 @@ export function loadSeason(path?: string): Season {
 
   const ranks = season.rankNames.length;
 
-  const badScenario = season.scenarios.find((s) => s.rankMaxes.length !== ranks);
-  if (badScenario) {
-    throw new Error(
-      `${badScenario.scenario} has ${badScenario.rankMaxes.length} thresholds ` +
-        `but the season defines ${ranks} ranks`,
-    );
+  const blank = season.rankNames.find((n) => !n || !n.trim());
+  if (blank !== undefined) throw new Error("a rank has no name");
+
+  const duplicate = season.rankNames.find(
+    (n, i) => season.rankNames.indexOf(n) !== i,
+  );
+  if (duplicate) throw new Error(`two ranks are both called "${duplicate}"`);
+
+  if (!Array.isArray(season.scenarios) || season.scenarios.length === 0) {
+    throw new Error("a season needs at least one scenario");
   }
 
-  const badCategory = season.categories.find((c) => c.rankMaxes.length !== ranks);
-  if (badCategory) {
-    throw new Error(
-      `category ${badCategory.name} has ${badCategory.rankMaxes.length} thresholds ` +
-        `but the season defines ${ranks} ranks`,
-    );
+  for (const s of season.scenarios) {
+    if (s.rankMaxes.length !== ranks) {
+      throw new Error(
+        `${s.label ?? s.scenario} has ${s.rankMaxes.length} thresholds ` +
+          `but the season defines ${ranks} ranks`,
+      );
+    }
+    if (s.rankMaxes.some((v) => !Number.isFinite(v))) {
+      throw new Error(`${s.label ?? s.scenario} has a threshold that is not a number`);
+    }
+    const descends = s.rankMaxes.findIndex((v, i) => i > 0 && v <= s.rankMaxes[i - 1]);
+    if (descends > 0) {
+      throw new Error(
+        `${s.label ?? s.scenario}: ${season.rankNames[descends]} (${s.rankMaxes[descends]}) ` +
+          `is not above ${season.rankNames[descends - 1]} (${s.rankMaxes[descends - 1]})`,
+      );
+    }
   }
 
-  return season;
+  for (const c of season.categories) {
+    if (c.rankMaxes.length !== ranks) {
+      throw new Error(
+        `category ${c.name} has ${c.rankMaxes.length} thresholds ` +
+          `but the season defines ${ranks} ranks`,
+      );
+    }
+    const descends = c.rankMaxes.findIndex((v, i) => i > 0 && v <= c.rankMaxes[i - 1]);
+    if (descends > 0) {
+      throw new Error(`category ${c.name}: thresholds must ascend`);
+    }
+  }
+
+  // A scenario in no category is graded by nothing and would vanish from every screen
+  // without any error to explain where it went.
+  const known = new Set(season.categories.map((c) => c.name));
+  const orphan = season.scenarios.find((s) => !known.has(s.category));
+  if (orphan) {
+    throw new Error(
+      `${orphan.label ?? orphan.scenario} is in category "${orphan.category}", ` +
+        `which the season does not define`,
+    );
+  }
 }
 
 /**

@@ -98,6 +98,18 @@ contextBridge.exposeInMainWorld("apogee", {
   /** Reveal the watched folder in the OS file manager. */
   openStatsFolder: () => ipcRenderer.invoke("apogee:openStatsFolder"),
 
+  /** Whether the signed-in player may edit the season. Gates the editor, nothing else. */
+  isAdmin: () => ipcRenderer.invoke("apogee:isAdmin"),
+
+  /** The season definition currently on disk. */
+  getSeason: () => ipcRenderer.invoke("apogee:getSeason"),
+
+  /**
+   * Write the season back and rebuild from it.
+   * Main validates before writing and refuses a non-admin.
+   */
+  saveSeason: (season) => ipcRenderer.invoke("apogee:saveSeason", { season }),
+
   /** Fires whenever the snapshot is rebuilt. */
   onSnapshot: (handler) => subscribe("apogee:snapshot", handler),
 

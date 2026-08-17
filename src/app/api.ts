@@ -393,3 +393,22 @@ export async function fetchStanding(playerId: string): Promise<Standing | null> 
     runsUploaded: count ?? 0,
   };
 }
+
+/**
+ * Is the signed-in player an admin?
+ *
+ * The RLS policy on `admins` lets an account see its own row and nobody else's, so a
+ * row coming back is itself the answer. There is no endpoint to ask about anyone else,
+ * which is deliberate: the admin list is not a thing clients get to enumerate.
+ */
+export async function isAdmin(): Promise<boolean> {
+  const token = await accessToken();
+  if (!token) return false;
+
+  const { data, error } = await supabase()
+    .from("admins")
+    .select("player_id")
+    .maybeSingle();
+
+  return !error && !!data;
+}

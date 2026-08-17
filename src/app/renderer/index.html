@@ -322,6 +322,57 @@
   .rank-link:focus-visible { outline: 2px solid var(--ink-dim); outline-offset: 2px; }
   .rank-link .tier, .rank-link .sub { display: block; }
 
+  /* ---------------- season editor ---------------- */
+  .season-ranks { display: grid; gap: 8px; margin-bottom: 14px; }
+  .season-rank {
+    display: grid; grid-template-columns: 22px 1fr 46px; align-items: center; gap: 10px;
+  }
+  .season-rank .n {
+    font-family: var(--mono); font-size: 10.5px; color: var(--ink-dim);
+  }
+  .season-ranks input[type="text"] {
+    font: inherit; font-size: 13px; color: var(--ink);
+    background: var(--sunken); border: 1px solid var(--line-bright);
+    border-radius: 7px; padding: 6px 10px; width: 100%;
+  }
+  .season-ranks input[type="color"] {
+    width: 46px; height: 30px; padding: 2px; cursor: pointer;
+    background: var(--sunken); border: 1px solid var(--line-bright); border-radius: 7px;
+  }
+
+  .season-actions {
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  }
+  .season-actions button {
+    font: inherit; font-size: 12px; color: var(--ink-mid);
+    background: transparent; border: 1px solid var(--line-bright);
+    border-radius: 7px; padding: 6px 13px; cursor: pointer;
+  }
+  .season-actions button.go {
+    color: var(--void); background: var(--ink); border-color: var(--ink);
+    font-weight: 600;
+  }
+  .season-actions button:disabled { opacity: .5; cursor: default; }
+  .season-status { font-size: 12px; color: var(--ink-dim); }
+  .season-status.bad { color: var(--down); }
+  .season-status.good { color: var(--up); }
+
+  /* Number inputs sit inside table cells, so they carry no chrome until focused. */
+  .scen input.thr {
+    font: inherit; font-family: var(--mono); font-size: 12px; color: var(--ink);
+    background: transparent; border: 1px solid transparent; border-radius: 5px;
+    padding: 3px 5px; width: 72px; text-align: right;
+  }
+  .scen input.thr:hover { border-color: var(--line); }
+  .scen input.thr:focus { border-color: var(--ink-dim); outline: none; background: var(--sunken); }
+  .scen tr.dropped { opacity: .4; }
+  .scen button.rowdrop {
+    font: inherit; font-size: 11px; color: var(--ink-dim);
+    background: transparent; border: 1px solid var(--line); border-radius: 5px;
+    padding: 2px 8px; cursor: pointer;
+  }
+  .scen button.rowdrop:hover { color: var(--down); border-color: #56222a; }
+
   /* ---------------- ranks ---------------- */
   .rank-lede {
     font-size: 13px; line-height: 1.6; color: var(--ink-mid);
@@ -686,6 +737,8 @@
       <button class="tab" role="tab" aria-selected="true" data-screen="queue">Queue</button>
       <button class="tab" role="tab" aria-selected="false" data-screen="result">Match result</button>
       <button class="tab" role="tab" aria-selected="false" data-screen="ranks">Ranks</button>
+      <button class="tab" role="tab" aria-selected="false" data-screen="season"
+              id="tabSeason" hidden>Season</button>
       <button class="tab" role="tab" aria-selected="false" data-screen="profile">Profile</button>
       <button class="tab" role="tab" aria-selected="false" data-screen="consistency">Consistency</button>
       <button class="tab" role="tab" aria-selected="false" data-screen="quests">Quests</button>
@@ -780,6 +833,56 @@
               <th>Their score</th><th>Δ</th><th>Round</th>
             </tr></thead>
             <tbody id="roundsBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="screen-season">
+      <div class="panel">
+        <div class="phead">
+          <h2>Season editor</h2>
+          <span class="note" id="seasonNote"></span>
+        </div>
+        <div class="pbody">
+          <p class="rank-lede">
+            Edits are written to the season file on this machine and take effect on the
+            next rebuild. Thresholds must ascend, and every scenario needs one per rank —
+            a season that breaks either is refused rather than saved.
+          </p>
+
+          <div class="season-ranks" id="seasonRanks"></div>
+
+          <div class="season-actions">
+            <button type="button" class="go" id="seasonSave">Save season</button>
+            <button type="button" id="seasonReload">Discard changes</button>
+            <span class="season-status" id="seasonStatus"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="phead">
+          <h2>Scenarios and thresholds</h2>
+          <span class="note">one row per scenario · one column per rank</span>
+        </div>
+        <div class="scen-wrap">
+          <table class="scen" id="seasonTable">
+            <thead><tr id="seasonHead"></tr></thead>
+            <tbody id="seasonBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="phead">
+          <h2>Category energy</h2>
+          <span class="note">what a category rank costs</span>
+        </div>
+        <div class="scen-wrap">
+          <table class="scen" id="seasonCatTable">
+            <thead><tr id="seasonCatHead"></tr></thead>
+            <tbody id="seasonCatBody"></tbody>
           </table>
         </div>
       </div>

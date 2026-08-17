@@ -180,6 +180,171 @@ function showOpponent(data) {
   $("opponent").classList.add("on");
 }
 
+/* ----------------------------------------------------------- season editor */
+
+/**
+ * Edit the season this machine grades against.
+ *
+ * The working copy is held here and written only on Save, so a half-typed threshold
+ * never becomes what the app measures people by. Main validates again before writing:
+ * this side exists to make the edit pleasant, not to be the thing that guarantees it,
+ * and a renderer is the wrong place for a rule that decides what a rank means.
+ */
+let seasonDraft = null;
+
+function seasonDirty(dirty) {
+  $("seasonSave").disabled = !dirty;
+  $("seasonReload").disabled = !dirty;
+  if (dirty) setSeasonStatus("unsaved changes", "");
+}
+
+function setSeasonStatus(text, kind) {
+  const el = $("seasonStatus");
+  el.textContent = text;
+  el.className = "season-status" + (kind ? " " + kind : "");
+}
+
+async function loadSeasonEditor() {
+  const result = await window.apogee.getSeason();
+  if (result.error) {
+    setSeasonStatus(result.error, "bad");
+    return;
+  }
+
+  seasonDraft = result.season;
+  $("seasonNote").textContent = `${seasonDraft.name} · ${result.path}`;
+  renderSeasonEditor();
+  seasonDirty(false);
+  setSeasonStatus("", "");
+}
+
+function renderSeasonEditor() {
+  const s = seasonDraft;
+  if (!s) return;
+
+  // ---- rank ladder ----
+  const ranks = $("seasonRanks");
+  ranks.textContent = "";
+
+  s.rankNames.forEach((name, i) => {
+    const row = document.createElement("div");
+    row.className = "season-rank";
+
+    const n = document.createElement("span");
+    n.className = "n";
+    n.textContent = i + 1;
+
+    const text = document.createElement("input");
+    text.type = "text";
+    text.value = name;
+    text.addEventListener("input", () => {
+      const old = s.rankNames[i];
+      s.rankNames[i] = text.value;
+      // Colours are keyed by name, so a rename has to carry its colour across or the
+      // rank silently loses it.
+      if (s.rankColors[old] !== undefined) {
+        s.rankColors[text.value] = s.rankColors[old];
+        delete s.rankColors[old];
+      }
+      seasonDirty(true);
+    });
+
+    const colour = document.createElement("input");
+    colour.type = "color";
+    colour.value = s.rankColors[name] ?? "#8891a3";
+    colour.addEventListener("input", () => {
+      s.rankColors[s.rankNames[i]] = colour.value;
+      seasonDirty(true);
+    });
+
+    row.append(n, text, colour);
+    ranks.append(row);
+  });
+
+  // ---- scenario thresholds ----
+  const head = $("seasonHead");
+  head.innerHTML =
+    "<th>Scenario</th><th>Category</th>" +
+    s.rankNames.map((r) => "<th>" + esc(r) + "</th>").join("") +
+    "<th></th>";
+
+  const body = $("seasonBody");
+  body.textContent = "";
+
+  s.scenarios.forEach((scenario, index) => {
+    const tr = document.createElement("tr");
+
+    const name = document.createElement("td");
+    name.textContent = scenario.label ?? scenario.scenario;
+    name.title = scenario.scenario;
+
+    const cat = document.createElement("td");
+    cat.textContent = scenario.category;
+
+    tr.append(name, cat);
+
+    scenario.rankMaxes.forEach((value, i) => {
+      const td = document.createElement("td");
+      const input = document.createElement("input");
+      input.type = "number";
+      input.className = "thr";
+      input.value = value;
+      input.addEventListener("input", () => {
+        scenario.rankMaxes[i] = input.value === "" ? NaN : Number(input.value);
+        seasonDirty(true);
+      });
+      td.append(input);
+      tr.append(td);
+    });
+
+    const drop = document.createElement("td");
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "rowdrop";
+    btn.textContent = "remove";
+    btn.title = "Take this scenario out of the season";
+    btn.addEventListener("click", () => {
+      s.scenarios.splice(index, 1);
+      renderSeasonEditor();
+      seasonDirty(true);
+    });
+    drop.append(btn);
+    tr.append(drop);
+
+    body.append(tr);
+  });
+
+  // ---- category energy ----
+  $("seasonCatHead").innerHTML =
+    "<th>Category</th>" + s.rankNames.map((r) => "<th>" + esc(r) + "</th>").join("");
+
+  const catBody = $("seasonCatBody");
+  catBody.textContent = "";
+
+  s.categories.forEach((cat) => {
+    const tr = document.createElement("tr");
+    const name = document.createElement("td");
+    name.textContent = cat.name;
+    tr.append(name);
+
+    cat.rankMaxes.forEach((value, i) => {
+      const td = document.createElement("td");
+      const input = document.createElement("input");
+      input.type = "number";
+      input.className = "thr";
+      input.value = value;
+      input.addEventListener("input", () => {
+        cat.rankMaxes[i] = input.value === "" ? NaN : Number(input.value);
+        seasonDirty(true);
+      });
+      td.append(input);
+      tr.append(td);
+    });
+
+    catBody.append(tr);
+  });
+}
+
 /* ------------------------------------------------------------------ ranks */
 
 /**
@@ -746,6 +911,40 @@ function openScreen(name) {
   const el = $(id);
   if (el) el.addEventListener("click", () => openScreen("ranks"));
 });
+
+// The season editor is offered only to an admin. It is not a security boundary - the
+// season is a file on this machine and anyone here can open it in a text editor - it
+// just keeps a tab nobody else can use out of everybody else's way.
+if (HOST === "electron" && window.apogee.isAdmin) {
+  void window.apogee.isAdmin().then((r) => {
+    if (!r || !r.admin) return;
+    $("tabSeason").hidden = false;
+    void loadSeasonEditor();
+  });
+
+  $("seasonSave").addEventListener("click", async () => {
+    const btn = $("seasonSave");
+    btn.disabled = true;
+    setSeasonStatus("saving…", "");
+
+    const result = await window.apogee.saveSeason(seasonDraft);
+
+    if (result && result.error) {
+      // Say what is wrong and leave the draft alone: the numbers on screen are the ones
+      // that need fixing, so throwing them away would be the worst possible response.
+      setSeasonStatus(result.error, "bad");
+      btn.disabled = false;
+      return;
+    }
+
+    setSeasonStatus("saved · rebuilding from the new season", "good");
+    seasonDirty(false);
+  });
+
+  $("seasonReload").addEventListener("click", () => {
+    void loadSeasonEditor();
+  });
+}
 
 document.querySelectorAll(".tab").forEach((tab) => {
   tab.addEventListener("click", () => {
