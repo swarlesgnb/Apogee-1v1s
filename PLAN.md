@@ -1,22 +1,26 @@
-# Arena: Ranked 1v1 for KovaaK's
+# Apogee: Ranked 1v1 for KovaaK's
 
-> Working title. A competitive ladder layered on top of KovaaK's and the Voltaic S5
-> benchmarks. You queue, you get matched against someone near your rank, you both play
-> the same three scenarios, and the ladder moves.
+> A competitive ladder layered on top of KovaaK's and the Voltaic S5 benchmarks. You
+> queue, you get matched against someone near your rank, you both play the same three
+> scenarios, and the ladder moves.
+>
+> The name is the high point of an orbit, which is the thing the ladder measures: not
+> how long you have played, but how far you reached on the day. It shares its sky with
+> the rank tiers, Stargazer through Supernova.
 
 ---
 
 ## 1. What this is
 
-Arena is **not an aim trainer**. KovaaK's owns that space and there is no reason to
-compete with it. Arena is a *layer* on top of KovaaK's that supplies the one thing
+Apogee is **not an aim trainer**. KovaaK's owns that space and there is no reason to
+compete with it. Apogee is a *layer* on top of KovaaK's that supplies the one thing
 solo benchmark grinding cannot: an opponent.
 
 The pitch in one line: **ranked matchmaking for aim, played inside KovaaK's.**
 
-The player never leaves their normal routine. They open Arena, queue for a category,
-Arena tells them which three scenarios to play, they alt-tab to KovaaK's and play them
-exactly as they always would. Arena watches the stats folder, picks up the runs
+The player never leaves their normal routine. They open Apogee, queue for a category,
+Apogee tells them which three scenarios to play, they alt-tab to KovaaK's and play them
+exactly as they always would. Apogee watches the stats folder, picks up the runs
 automatically, settles the match, and moves their rating. No score entry, no
 screenshots, no honour system.
 
@@ -37,7 +41,7 @@ on a day you don't want to compete. They are not the headline.
 | **KovaaK's** | The trainer itself, global leaderboards | No matched competition; #4,182 of 58,017 means nothing emotionally |
 | **evxl.app** | Passive benchmark tracker across platforms | Read-only. Shows you a number, asks nothing of you |
 | **Voltaic** | Defines the benchmarks and rank thresholds | A standard, not a game |
-| **Arena** | Matched 1v1, rating, stakes | Doesn't train you; KovaaK's does that |
+| **Apogee** | Matched 1v1, rating, stakes | Doesn't train you; KovaaK's does that |
 
 Nobody owns "matched competitive aim." That is the opening.
 
@@ -56,7 +60,7 @@ Nobody owns "matched competitive aim." That is the opening.
    └────────┴────────────────────────────────────────────┘
                    ▲
                    │
-        Arena watches the stats folder and does
+        Apogee watches the stats folder and does
         every step after "play" without being asked
 ```
 
@@ -66,10 +70,10 @@ The entire post-play half of that loop is automatic. That is the product.
 
 ## 3. Match format
 
-The player chooses a **category** (or "Any"). Arena selects **three scenarios** from
+The player chooses a **category** (or "Any"). Apogee selects **three scenarios** from
 that category at the player's difficulty tier. Both sides play all three.
 
-For each scenario, Arena computes a **delta**: how far the player scored above or below
+For each scenario, Apogee computes a **delta**: how far the player scored above or below
 their own established baseline on that scenario.
 
 ```
@@ -121,7 +125,7 @@ were decided by who avoided a blow-up rather than who played well.
 | plain mean | +0.6% | 60% | 9.3% |
 
 The real defence turned out to be the **verified-PB floor**, not the high-water
-statistic. Arena knows the player's true PB from KovaaK's own servers (§5), so:
+statistic. Apogee knows the player's true PB from KovaaK's own servers (§5), so:
 
 ```
 baseline_i = max( median(last 50 runs), 0.90 × verified_PB_i )
@@ -145,7 +149,7 @@ order:
 3. The **rank-cohort median** for that scenario.
 
 Matches settled on fallback baselines are marked *provisional* and carry reduced rating
-weight until the player has real history. Arena's first-run backfill (§10) means an
+weight until the player has real history. Apogee's first-run backfill (§10) means an
 existing KovaaK's player skips this entirely: 11,000 historical runs produce real
 baselines instantly. **This is a genuine competitive moat: the app is most accurate for
 exactly the players most likely to try it.**
@@ -196,7 +200,7 @@ last 24h where possible, to reduce warm-up advantage.
 
 ## 4. Rating system
 
-**Glicko-2**, not Elo. Elo assumes regular play against a known-strength pool. Arena
+**Glicko-2**, not Elo. Elo assumes regular play against a known-strength pool. Apogee
 has sparse, asynchronous, bursty play with a small early population, exactly the case
 Glicko-2's rating deviation (RD) was designed for.
 
@@ -205,13 +209,13 @@ Glicko-2's rating deviation (RD) was designed for.
 - **10 placement matches** before a visible rank is assigned.
 - Rating periods batch nightly.
 
-### Rank tiers: Arena's own
+### Rank tiers: Apogee's own
 
-Arena defines **its own rank ladder with its own names and colours**, deliberately not
+Apogee defines **its own rank ladder with its own names and colours**, deliberately not
 reusing Voltaic's. Two parallel rank systems sharing the same words would be a permanent
-source of confusion, and Voltaic's ranks mean something specific that Arena has no right
+source of confusion, and Voltaic's ranks mean something specific that Apogee has no right
 to redefine. Any benchmark rank the player holds appears separately and clearly
-labelled, as a *stat*, never as their Arena rank.
+labelled, as a *stat*, never as their Apogee rank.
 
 Tier boundaries are set by **population percentile**, not fixed rating, so the
 distribution stays meaningful as the player base grows.
@@ -360,7 +364,7 @@ Two useful side findings:
 
 - **Scenario hashes are stable over long periods**, which makes `Hash:` a dependable
   integrity check rather than a moving target.
-- Local history is a *superset* of server history, so Arena's own record of a player is
+- Local history is a *superset* of server history, so Apogee's own record of a player is
   richer than KovaaK's, which is good for baselines, and a reason the desktop client matters.
 
 ### CSV internal consistency checks
@@ -454,7 +458,7 @@ verification, worth knowing before the verification service is written, not afte
 
 ### Steam identity
 
-Steam OpenID login binds an Arena account to a `steamId`, which is what KovaaK's
+Steam OpenID login binds an Apogee account to a `steamId`, which is what KovaaK's
 leaderboards key on. Without this the verification model does not work at all, so it is
 **required at signup**, not optional.
 
@@ -471,7 +475,7 @@ This is acceptable for launch and should be stated publicly rather than oversold
 ## 6. Cold start
 
 A synchronous 1v1 queue with five users is an empty queue, and an empty queue kills the
-app in week one. Arena therefore ships **asynchronous**.
+app in week one. Apogee therefore ships **asynchronous**.
 
 **Async matches:** you are matched against a *stored run set* from a player near your
 rating. Their delta was computed and frozen when they played. You play the same three
@@ -491,7 +495,7 @@ costs nothing later.
 
 ```
 ┌──────────────────────────────────────────────────────────┐
-│  ARENA DESKTOP CLIENT           Electron + React + TS    │
+│  APOGEE DESKTOP CLIENT          Electron + React + TS    │
 │                                                          │
 │  main process          renderer                          │
 │  ├─ chokidar watcher   ├─ queue / match / result UI      │
@@ -585,7 +589,7 @@ Requirements:
 ## 10. Quests: personalized by benchmark
 
 Quests are **not hardcoded to Voltaic**. The player pastes the evxl link for whichever
-benchmark they are actually grinding, and Arena generates quests against *that*
+benchmark they are actually grinding, and Apogee generates quests against *that*
 benchmark's real scenarios and thresholds.
 
 ```
@@ -635,7 +639,7 @@ rank the player already cares about.
 
 Auto-completed from parsed runs. Quest XP feeds an account level and cosmetic titles,
 somewhere for the points to go that doesn't touch competitive integrity. **Quest XP must
-never influence Arena rating**, or the ladder becomes a grind.
+never influence Apogee rating**, or the ladder becomes a grind.
 
 ---
 
@@ -674,7 +678,7 @@ All four Voltaic S5 difficulties resolved, 18 scenarios each, including
 *Elite (Unofficial)* with its Stellaris / Lunara / Solara tiers.
 
 Passing the player's real SteamID to the same endpoint also returns their **actual
-score, scenario rank, and overall benchmark progress**, so Arena can show verified
+score, scenario rank, and overall benchmark progress**, so Apogee can show verified
 benchmark standing without computing anything itself.
 
 ---
@@ -686,11 +690,11 @@ player's rank in each, computed from real history against real thresholds. Its j
 answer *"what should I practise today"* and then hand that straight to the queue button.
 
 This is the most **retention-relevant** feature in the plan and the lowest
-competitive-risk: it makes Arena useful on days the player doesn't want to compete, and
+competitive-risk: it makes Apogee useful on days the player doesn't want to compete, and
 it feeds back into matches by suggesting a category.
 
 Colours come from the tracked benchmark's own `rankColors`, so a Voltaic user sees
-Voltaic's palette here while Arena's own palette (§4) governs the competitive ladder.
+Voltaic's palette here while Apogee's own palette (§4) governs the competitive ladder.
 The two systems stay visually distinct on purpose.
 
 **No longer blocked.** Thresholds are solved (§11).
@@ -707,24 +711,24 @@ Each phase ends somewhere real, and the early ones need no backend at all.
 | **0b** | Benchmark data pipeline (**done**, 133 benchmarks, real thresholds) | none |
 | **1** | CSV parser + folder watcher, validated against 11,058 real files | none |
 | **2** | Local history, baselines, benchmark ranks, weakness map | none |
-| **3** | Arena rank theme + custom colour system | none |
+| **3** | Apogee rank theme + custom colour system | none |
 | **4** | Supabase schema, Steam auth, run upload | yes |
 | **5** | KovaaK's verification service + tiers | yes |
 | **6** | Async matchmaking, settlement, Glicko-2 (**done**) | yes |
 | **7** | Match UI, ranks, profile, juice (**done**, preview) | yes |
 | **8** | Quests driven by a pasted evxl link (**done**) | yes |
 | **9** | Electron shell around the UI (**done**) | yes |
-| **10** | Closed beta (**gated on deployment**; preflight built, `npm run beta`) | yes |
+| **10** | Closed beta (**gated on population**; preflight built, `npm run beta`) | yes |
 | **11** | Live sync mode at ~100 concurrent (**done**, awaiting population) | yes |
 
-Every phase that can be built without credentials is built and validated. The single
-remaining blocker is deployment: nothing is live, because that needs a Supabase project
-and keys.
+Every phase is built, validated and deployed. What is left is not code: the ladder
+needs people on it before a match can settle or a beta can mean anything.
 
-**Phases 1–3 are the right place to start.** They produce a genuinely useful standalone
-app (history, real benchmark ranks, weakness map, your own rank theme) and they
-de-risk the parser everything else depends on, with no hosting decisions, no auth, and
-no cost.
+Phases 1–3 were the right place to start, and the reason is worth keeping: they produce
+a genuinely useful standalone app (history, real benchmark ranks, weakness map, a rank
+theme) and they de-risk the parser everything else stands on, with no hosting
+decisions, no auth, and no cost. A contributor picking this up should still read them
+first.
 
 ---
 
@@ -732,14 +736,18 @@ no cost.
 
 **Open**
 
-1. **Deployment.** Nothing is live. The schema, auth and verification are written and
-   validated offline, but they need a Supabase project and keys, which only you can
-   create. This is the single blocker on everything downstream.
-2. **Name.** "Arena" is a placeholder.
+1. **Population.** Everything is built and deployed, and no match has settled, because
+   settling one needs an opponent and the pool stays empty until somebody plays a
+   category through. This is no longer an engineering problem; it is the cold-start
+   problem of §6, and async is the answer to it.
 
 **Resolved:**
 
-- ~~Arena rank tier names and colours~~ → **done**. Ten tiers, Stargazer through
+- ~~Name~~ → **Apogee**. Settled. The Supabase project already carries it; the client,
+  the README and the module names still say Arena and are yet to follow.
+- ~~Deployment~~ → **done**. Schema, RLS, Steam auth and four Edge Functions are live
+  and verified against the running project by `npm run verify:deployment`.
+- ~~Apogee rank tier names and colours~~ → **done**. Ten tiers, Stargazer through
   Supernova, with the top three widened from 1% to 5/4/2% so they are not permanently
   empty at a small population.
 - ~~Sub-category mapping is provisional~~ → **resolved** (§3). Read from Voltaic's own
@@ -761,7 +769,7 @@ no cost.
 | Cold start: nobody queues | High | Async-first (§6) makes this survivable rather than fatal |
 | "I scored more and lost" confusion | Medium | Show raw scores, baselines and deltas on every result screen |
 | Baseline sandbagging | Medium | High-water baseline + verified-PB floor (§3) |
-| KovaaK's objects to the whole thing | Medium | Talk to them early. Arena drives engagement *to* KovaaK's, so the pitch is friendly |
+| KovaaK's objects to the whole thing | Medium | Talk to them early. Apogee drives engagement *to* KovaaK's, so the pitch is friendly |
 | Voltaic objects to benchmark use | Low | Benchmarks are public and widely used; credit prominently, don't reuse their rank names |
 
 ---
