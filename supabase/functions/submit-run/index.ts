@@ -45,8 +45,27 @@ interface Body {
   matchId?: string;
 }
 
-/** How far outside the match window a run may sit before it is refused. */
-const WINDOW_GRACE_MS = 5 * 60_000;
+/**
+ * Slack at each end of the match window, before a run is refused as out of time.
+ *
+ * One value used to serve both ends, which stopped working when the match deadline
+ * became five minutes: five minutes of slack on the end silently made it ten.
+ *
+ * They answer different questions, so they are separate now.
+ */
+
+/** Before the start: how wrong the player's clock is allowed to be. */
+const WINDOW_START_GRACE_MS = 3 * 60_000;
+
+/**
+ * After the deadline: long enough for a run already under way to finish.
+ *
+ * `played_at` comes from the filename, which KovaaK's writes when the run *ends*. A
+ * scenario begun at 4:59 of a five-minute match therefore lands at 5:59, and refusing
+ * it would mean the real deadline was four minutes with no warning. The rule is that
+ * the last run must be *started* before time is up.
+ */
+const WINDOW_END_GRACE_MS = 90_000;
 
 async function sha256Hex(text: string): Promise<string> {
   const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
@@ -99,9 +118,10 @@ Deno.serve(handler(async (req, admin) => {
     }
 
     window = {
-      start: new Date(new Date(match.created_at).getTime() - WINDOW_GRACE_MS),
+      start: new Date(new Date(match.created_at).getTime() - WINDOW_START_GRACE_MS),
       end: new Date(
-        (match.expires_at ? new Date(match.expires_at).getTime() : Date.now()) + WINDOW_GRACE_MS,
+        (match.expires_at ? new Date(match.expires_at).getTime() : Date.now()) +
+          WINDOW_END_GRACE_MS,
       ),
     };
   }

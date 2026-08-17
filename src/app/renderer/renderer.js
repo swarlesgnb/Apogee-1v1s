@@ -179,6 +179,57 @@ function showOpponent(data) {
   $("opponent").classList.add("on");
 }
 
+/* ------------------------------------------------------- match countdown */
+
+let clockTimer = null;
+
+/**
+ * Count down to the match deadline.
+ *
+ * The server decides when a match expires and charges a loss for running out, so this
+ * is a readout rather than a rule: it never ends anything itself, and if the two ever
+ * disagree the server is right. Its job is only to make sure the deadline is never a
+ * surprise, which matters more at five minutes than it did at six hours.
+ */
+function startMatchClock(expiresAt) {
+  stopMatchClock();
+
+  const clock = $("matchClock");
+  const deadline = expiresAt ? new Date(expiresAt).getTime() : NaN;
+
+  if (!Number.isFinite(deadline)) {
+    clock.hidden = true;
+    return;
+  }
+
+  clock.hidden = false;
+
+  const tick = () => {
+    const left = deadline - Date.now();
+
+    if (left <= 0) {
+      clock.textContent = "time up";
+      clock.className = "match-clock out";
+      stopMatchClock();
+      return;
+    }
+
+    const total = Math.floor(left / 1000);
+    const mins = Math.floor(total / 60);
+    const secs = total % 60;
+    clock.textContent = `${mins}:${String(secs).padStart(2, "0")} left`;
+    clock.className = "match-clock" + (left < 60_000 ? " low" : "");
+  };
+
+  tick();
+  clockTimer = setInterval(tick, 1000);
+}
+
+function stopMatchClock() {
+  if (clockTimer) clearInterval(clockTimer);
+  clockTimer = null;
+}
+
 function renderTodo() {
   const list = $("todoList");
   list.textContent = "";
@@ -619,6 +670,8 @@ function showRealMatch(match, data) {
         "entry in the pool. Only your first run on each counts."
       : "Only your first run on each scenario counts. Apogee picks them up automatically.";
 
+  startMatchClock(match.expiresAt);
+
   $("matchActions").hidden = false;
   $("opponent").classList.add("on");
 }
@@ -833,6 +886,9 @@ if (HOST === "electron") {
     } finally {
       btn.disabled = false;
       btn.textContent = "Abandon match";
+      // A countdown still ticking on a match that no longer exists is its own bug.
+      stopMatchClock();
+      $("matchClock").hidden = true;
       $("queueBtn").textContent = "Find opponent";
       $("queueBtn").disabled = false;
       $("opponent").classList.remove("on");

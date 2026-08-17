@@ -190,3 +190,144 @@ export async function refreshBaseline(
     { onConflict: "player_id,scenario_id" },
   );
 }
+
+/**
+ * End a match the player is not going to finish, and charge them for it if it counted.
+ *
+ * Shared because two paths reach it and they must agree. Pressing Abandon and letting
+ * the clock run out are the same act from the ladder's point of view, and if only one
+ * of them cost anything, the free one would be the only one anybody used.
+ *
+ * That mattered little while a match lasted six hours. With a five-minute deadline,
+ * waiting it out is the cheapest possible way to escape a match that is going badly,
+ * so it has to cost what forfeiting costs.
+ *
+ * The exceptions are the same in both directions:
+ *
+ *   SEEDING   one side, by design. There is no opponent to lose to, and inventing a
+ *             loss against nobody would be a free way to tank a rating.
+ *   PLAYED    the runs are already in. Settlement should decide it, not this.
+ */
+export interface ForfeitOutcome {
+  matchId: string;
+  rated: boolean;
+  verdict: "loss" | null;
+  reason: "forfeit" | "seeding" | "already-played";
+  ratingBefore?: number;
+  ratingAfter?: number;
+  ratingChange?: number;
+}
+
+export async function forfeitMatch(
+  admin: SupabaseClient,
+  matchId: string,
+  playerId: string,
+  updateRating: (
+    player: { rating: number; rd: number; volatility: number },
+    games: { opponent: { rating: number; rd: number; volatility: number }; score: number }[],
+  ) => { rating: number; rd: number; volatility: number },
+): Promise<ForfeitOutcome> {
+  const settledAt = new Date().toISOString();
+
+  const { data: sides } = await admin
+    .from("match_sides")
+    .select("player_id, rating_before, rd_before, match_score")
+    .eq("match_id", matchId);
+
+  const mine = (sides ?? []).find((s: { player_id: string }) => s.player_id === playerId);
+  const opponent = (sides ?? []).find((s: { player_id: string }) => s.player_id !== playerId);
+
+  // Already scored: this is a finished match waiting to settle, not an abandoned one.
+  if (mine?.match_score != null) {
+    return { matchId, rated: false, verdict: null, reason: "already-played" };
+  }
+
+  if (!opponent) {
+    await admin
+      .from("match_sides")
+      .update({ result: null, submitted_at: settledAt })
+      .eq("match_id", matchId)
+      .eq("player_id", playerId);
+
+    await admin
+      .from("matches")
+      .update({ status: "void", settled_at: settledAt })
+      .eq("id", matchId);
+
+    return { matchId, rated: false, verdict: null, reason: "seeding" };
+  }
+
+  const { data: ratingRow } = await admin
+    .from("ratings")
+    .select("rating, rd, volatility, matches_played")
+    .eq("player_id", playerId)
+    .maybeSingle();
+
+  const before = {
+    rating: Number(ratingRow?.rating ?? 1500),
+    rd: Number(ratingRow?.rd ?? 350),
+    volatility: Number(ratingRow?.volatility ?? 0.06),
+  };
+
+  const after = updateRating(before, [
+    {
+      opponent: {
+        rating: Number(opponent.rating_before ?? 1500),
+        rd: Number(opponent.rd_before ?? 350),
+        volatility: 0.06,
+      },
+      score: 0,
+    },
+  ]);
+
+  await admin
+    .from("match_sides")
+    .update({
+      result: "loss",
+      rating_before: before.rating,
+      rating_after: after.rating,
+      rd_before: before.rd,
+      rd_after: after.rd,
+      submitted_at: settledAt,
+    })
+    .eq("match_id", matchId)
+    .eq("player_id", playerId);
+
+  await admin.from("ratings").upsert(
+    {
+      player_id: playerId,
+      rating: after.rating,
+      rd: after.rd,
+      volatility: after.volatility,
+      matches_played: Number(ratingRow?.matches_played ?? 0) + 1,
+      updated_at: settledAt,
+    },
+    { onConflict: "player_id" },
+  );
+
+  await admin.from("rating_history").insert({
+    player_id: playerId,
+    match_id: matchId,
+    rating_before: before.rating,
+    rating_after: after.rating,
+    rd_before: before.rd,
+    rd_after: after.rd,
+    result: 0,
+    weight: 1,
+  });
+
+  await admin
+    .from("matches")
+    .update({ status: "settled", settled_at: settledAt })
+    .eq("id", matchId);
+
+  return {
+    matchId,
+    rated: true,
+    verdict: "loss",
+    reason: "forfeit",
+    ratingBefore: Math.round(before.rating),
+    ratingAfter: Math.round(after.rating),
+    ratingChange: Math.round(after.rating - before.rating),
+  };
+}

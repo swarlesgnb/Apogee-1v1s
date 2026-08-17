@@ -13,6 +13,7 @@
  */
 
 import {
+  forfeitMatch,
   handler,
   json,
   readJson,
@@ -22,7 +23,7 @@ import {
 
 import { selectScenarios, type SelectableScenario } from "../../../src/core/match/scenarioSelection.ts";
 import { findOpponent, type StoredRunSet } from "../../../src/core/match/matchmaking.ts";
-import { defaultRating, winProbability, type Rating } from "../../../src/core/rating/glicko2.ts";
+import { defaultRating, updateRating, winProbability, type Rating } from "../../../src/core/rating/glicko2.ts";
 
 interface Body {
   /** A skill, a sub-category, or "Any". */
@@ -31,8 +32,18 @@ interface Body {
   benchmarkName?: string;
 }
 
-/** How long a player has to complete a match before it expires. */
-const MATCH_TTL_MS = 6 * 60 * 60 * 1000;
+/**
+ * How long a player has to finish all three scenarios.
+ *
+ * Three scenarios at 60 seconds each is three minutes of play, so five leaves two
+ * minutes for launching the game, loading, and moving between them. It was six hours,
+ * which is not a deadline: a player could hold a match open all day, and an opponent's
+ * stored run set sat in a match nobody was playing.
+ *
+ * Deliberately short for a first pass. If it turns out to punish slow loads more than
+ * it discourages going away, this is the number to raise.
+ */
+const MATCH_TTL_MS = 5 * 60_000;
 
 /** Opponents faced this recently are deprioritised, so the ladder feels bigger. */
 const RECENT_OPPONENT_WINDOW_MS = 7 * 24 * 60 * 60 * 1000;
@@ -54,23 +65,29 @@ Deno.serve(handler(async (req, admin) => {
     .eq("player_id", caller.playerId)
     .in("matches.status", ["open", "awaiting_runs"]);
 
-  // Retire anything past its TTL first.
+  // Retire anything past its deadline first.
   //
   // Nothing else does this. Matches were given an expires_at and then nobody ever acted
   // on it, so a match the player walked away from blocked the queue permanently rather
-  // than for six hours - the guard above asks only for the status, and the status never
-  // changed on its own. Expiry is not a decision the player made, so it costs nothing.
+  // than until it expired: the guard above reads only the status, and the status never
+  // changed on its own.
   const now = Date.now();
   const stale = (openMatches ?? []).filter((row: any) => {
     const expiresAt = row.matches?.expires_at;
     return expiresAt != null && new Date(expiresAt).getTime() < now;
   });
 
-  if (stale.length > 0) {
-    await admin
-      .from("matches")
-      .update({ status: "void", settled_at: new Date().toISOString() })
-      .in("id", stale.map((row: any) => row.match_id));
+  // Running out of time is a forfeit, not a free pass.
+  //
+  // It used to void, which was right when a match lasted six hours: expiry meant the
+  // player had forgotten, not decided. At five minutes it means they did not finish,
+  // and if that costs nothing then waiting out the clock is strictly cheaper than
+  // pressing Abandon - so the button that costs a loss would never be used again.
+  //
+  // forfeitMatch is shared with abandon-match so the two cannot disagree, and it still
+  // charges nothing for a seeding match or one whose runs are already in.
+  for (const row of stale) {
+    await forfeitMatch(admin, (row as any).match_id, caller.playerId, updateRating);
   }
 
   const staleIds = new Set(stale.map((row: any) => row.match_id));
