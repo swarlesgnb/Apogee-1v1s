@@ -97,6 +97,7 @@ src/core/
   verify/                    local integrity checks and KovaaK's cross-check
   quests/                    evxl link resolution and quest generation
   ranks/                     Arena rank ladder
+  consistency/               day-to-day consistency floor and reporting
   sync/                      Steam sign-in and run upload
   report/                    local profile, weakness map, UI snapshot
 src/app/                     Electron main, preload bridge, renderer
@@ -151,9 +152,10 @@ is no second implementation to drift.
 
 ### What is not wired yet
 
-The desktop client still runs entirely on local data. It does not sign in, upload, or
-call any of the match functions, and its "Find opponent" button is a placeholder timer.
-The engine is deployed and the client is built; connecting them is the remaining work.
+Nothing, on the client side: it signs in over Steam, backfills its run history, and
+calls `find-match`, `submit-run` and `settle-match` for real. What has never happened is
+a settled match, because settling one needs an opponent and the pool stays empty until
+somebody plays a category through once.
 
 `validate:schema` is the useful one during development: it runs the whole migration and
 seed against a real Postgres compiled to WASM, so schema errors surface without Docker,
