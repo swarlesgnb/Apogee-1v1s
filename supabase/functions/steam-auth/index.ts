@@ -1,5 +1,5 @@
 /**
- * Steam sign-in for the Arena desktop client.
+ * Steam sign-in for the Apogee desktop client.
  *
  * Supabase has no native Steam provider, and cannot have one: Steam speaks OpenID 2.0,
  * which was superseded by OIDC and is not an OAuth2 flow at all. So this function is a
@@ -7,7 +7,7 @@
  * and then mints a real Supabase session for the resulting SteamID64.
  *
  * Why this matters: the SteamID is the join key to KovaaK's leaderboards. Without a
- * trustworthy binding between an Arena account and a Steam account, server-side score
+ * trustworthy binding between an Apogee account and a Steam account, server-side score
  * verification (PLAN.md §5) is meaningless, and the ladder is unprotected. This is the
  * load-bearing piece of the whole anti-cheat design.
  *
@@ -162,6 +162,13 @@ async function fetchSteamProfile(steamId: string): Promise<SteamProfile> {
 /**
  * Deterministic internal email for a Steam identity. Never shown, never mailed:
  * Supabase Auth simply requires an identifier, and the SteamID is the real one.
+ *
+ * The domain still says arena, and must keep saying it. This string is not a label,
+ * it is a lookup key: it is already stored in auth.users for every account that has
+ * ever signed in, and generateLink() below finds an existing user by it. Change it and
+ * an established player stops being found, createUser makes them a second empty
+ * account, and the players upsert then fails on the steam_id unique constraint. The
+ * project was renamed to Apogee; this identifier was deliberately left behind.
  */
 const steamEmail = (steamId: string) => `steam_${steamId}@arena.invalid`;
 
@@ -285,7 +292,7 @@ async function handleCallback(req: Request): Promise<Response> {
   return new Response(
     `<!doctype html><meta charset="utf-8"><title>Signed in</title>
      <body style="font:15px system-ui;padding:3rem;text-align:center;line-height:1.6">
-       <p>Signed in with Steam. Returning you to Arena…</p>
+       <p>Signed in with Steam. Returning you to Apogee…</p>
        <p style="color:#666;font-size:13px">
          If nothing happens, <a href="${escaped}">click here to finish</a>,
          then close this tab.

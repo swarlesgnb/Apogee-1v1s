@@ -24,7 +24,7 @@ phased build.
 | 9 | Electron desktop client | done, boots, watches, renders |
 | 10 | Closed beta | gated on population, preflight built |
 | 11 | Live sync matchmaking | done, starvation-free, awaiting population |
-| 12 | Server-side match engine | done, 4 Edge Functions deployed |
+| 12 | Server-side match engine | done, 5 Edge Functions deployed |
 | 13 | Client wired to the backend | done, sign-in + upload + match loop live |
 | 14 | First real match | **waiting on a benchmark run** |
 
@@ -138,12 +138,12 @@ Deployed and verified. See [SETUP.md](SETUP.md) for the full walkthrough.
 ```bash
 npm run validate:schema       # applies migrations + seed to Postgres-in-WASM, no Docker
 npm run verify:deployment     # proves RLS, auth and the match engine against the live project
-npm run deploy:functions      # redeploy all four Edge Functions
+npm run deploy:functions      # redeploy all five Edge Functions
 npm run sync:reference        # push updated reference data (the seed will not)
 ```
 
-Four Edge Functions carry the server side. `steam-auth` is deliberately public because
-Steam's servers call it directly; the other three require a session, and verification
+Five Edge Functions carry the server side. `steam-auth` is deliberately public because
+Steam's servers call it directly; the other four require a session, and verification
 asserts they refuse both anonymous callers and the anon key.
 
 The functions import the shared core straight from `src/core`, so settlement, Glicko-2

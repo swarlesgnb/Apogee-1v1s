@@ -15,7 +15,7 @@
  * that are already stored.
  */
 
-import { handler, json, requireCaller } from "../_shared/arena.ts";
+import { handler, json, requireCaller } from "../_shared/apogee.ts";
 import { baselineFromScores } from "../../../src/core/history/baseline.ts";
 
 /** Most recent runs considered per scenario. Matches BASELINE_WINDOW plus headroom. */

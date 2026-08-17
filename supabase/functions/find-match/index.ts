@@ -18,7 +18,7 @@ import {
   readJson,
   requireCaller,
   HttpError,
-} from "../_shared/arena.ts";
+} from "../_shared/apogee.ts";
 
 import { selectScenarios, type SelectableScenario } from "../../../src/core/match/scenarioSelection.ts";
 import { findOpponent, type StoredRunSet } from "../../../src/core/match/matchmaking.ts";

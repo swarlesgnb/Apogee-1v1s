@@ -26,7 +26,7 @@ import {
   requireCaller,
   scenarioByName,
   HttpError,
-} from "../_shared/arena.ts";
+} from "../_shared/apogee.ts";
 
 import { parseStatsFile } from "../../../src/core/stats/parseStatsFile.ts";
 import { baselineFromScores } from "../../../src/core/history/baseline.ts";

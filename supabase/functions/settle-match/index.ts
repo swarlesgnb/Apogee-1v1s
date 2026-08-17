@@ -17,7 +17,7 @@ import {
   readJson,
   requireCaller,
   HttpError,
-} from "../_shared/arena.ts";
+} from "../_shared/apogee.ts";
 
 import { baselineFromScores } from "../../../src/core/history/baseline.ts";
 import { updateRating, type Rating } from "../../../src/core/rating/glicko2.ts";

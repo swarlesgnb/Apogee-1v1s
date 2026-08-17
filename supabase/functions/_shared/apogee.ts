@@ -1,5 +1,5 @@
 /**
- * Shared helpers for Arena's Edge Functions.
+ * Shared helpers for Apogee's Edge Functions.
  *
  * Two clients, deliberately distinct:
  *

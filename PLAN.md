@@ -745,7 +745,7 @@ first.
 
 - ~~Name~~ → **Apogee**. Settled. The Supabase project already carries it; the client,
   the README and the module names still say Apogee and are yet to follow.
-- ~~Deployment~~ → **done**. Schema, RLS, Steam auth and four Edge Functions are live
+- ~~Deployment~~ → **done**. Schema, RLS, Steam auth and five Edge Functions are live
   and verified against the running project by `npm run verify:deployment`.
 - ~~Apogee rank tier names and colours~~ → **done**. Ten tiers, Stargazer through
   Supernova, with the top three widened from 1% to 5/4/2% so they are not permanently
