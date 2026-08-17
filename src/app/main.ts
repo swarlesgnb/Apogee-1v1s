@@ -792,28 +792,75 @@ ipcMain.handle("apogee:availableScenarios", () => {
   try {
     const season = loadSeason();
     const already = new Set(season.scenarios.map((s) => s.scenario));
-    const ranks = season.rankNames.length;
 
-    const taxonomy = JSON.parse(
-      readFileSync(dataFile("scenario_taxonomy.json"), "utf8"),
-    ) as { scenarios: { name: string; aimType: string | null; difficulty: string }[] };
+    // Three sources, because no single one is "every KovaaK's scenario".
+    //
+    //   the stats folder    everything this player has ever actually run, which on
+    //                       this machine is 800-odd and is by far the most useful set:
+    //                       a season is most likely to want scenarios somebody plays.
+    //   the taxonomy        the 54 benchmark scenarios, with KovaaK's own aim type.
+    //   benchmark files     everything any committed benchmark names, which reaches
+    //                       scenarios never played here.
+    //
+    // All offline. KovaaK's full catalogue is far larger than any of these, so the
+    // picker also accepts a name typed in directly rather than pretending this is
+    // everything that exists.
+    const known = new Map<string, { aimType: string | null; difficulty: string | null }>();
+
+    try {
+      const taxonomy = JSON.parse(
+        readFileSync(dataFile("scenario_taxonomy.json"), "utf8"),
+      ) as { scenarios: { name: string; aimType: string | null; difficulty: string }[] };
+      for (const s of taxonomy.scenarios) {
+        known.set(s.name, { aimType: s.aimType, difficulty: s.difficulty });
+      }
+    } catch {
+      // A missing taxonomy costs aim-type suggestions, not the picker.
+    }
+
+    for (const file of ["voltaic-s5.json", "voltaic-s5-5.json", "voltaic-s4.json"]) {
+      try {
+        const def = JSON.parse(readFileSync(dataFile("benchmarks", file), "utf8")) as {
+          difficulties: { name: string; categories: { name: string; scenarios: { name: string }[] }[] }[];
+        };
+        for (const d of def.difficulties) {
+          for (const c of d.categories) {
+            for (const s of c.scenarios) {
+              if (!known.has(s.name)) known.set(s.name, { aimType: c.name, difficulty: d.name });
+            }
+          }
+        }
+      } catch {
+        // Optional: a benchmark we do not ship simply contributes nothing.
+      }
+    }
 
     const history = state.statsDir ? scanStatsFolder(state.statsDir) : new Map();
+    for (const name of history.keys()) {
+      if (!known.has(name)) known.set(name, { aimType: null, difficulty: null });
+    }
 
-    const options = taxonomy.scenarios
-      .filter((s) => !already.has(s.name))
-      .map((s) => {
-        const local = history.get(s.name);
+    const options = [...known.entries()]
+      .filter(([name]) => !already.has(name))
+      .map(([name, meta]) => {
+        const local = history.get(name);
         const scores = local ? local.runs.map((r: { score: number }) => r.score) : [];
 
         return {
-          name: s.name,
+          name,
           // KovaaK's calls it Target Switching; the season's category is Switching.
-          category: s.aimType === "Target Switching" ? "Switching" : s.aimType,
-          difficulty: s.difficulty,
+          category: meta.aimType === "Target Switching" ? "Switching" : meta.aimType,
+          difficulty: meta.difficulty,
           runs: scores.length,
           best: scores.length > 0 ? Math.round(Math.max(...scores)) : null,
-          suggested: suggestThresholds(scores, ranks),
+          // One suggestion per category, because each has its own ladder and a
+          // suggestion of the wrong length would be rejected the moment it was added.
+          suggested: Object.fromEntries(
+            season.categories.map((c) => [
+              c.name,
+              suggestThresholds(scores, (c.rankNames ?? season.rankNames).length),
+            ]),
+          ),
         };
       })
       .sort((a, b) => b.runs - a.runs || a.name.localeCompare(b.name));

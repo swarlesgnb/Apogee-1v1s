@@ -192,6 +192,60 @@ function showOpponent(data) {
  */
 let seasonDraft = null;
 
+/**
+ * Add or remove a rank on one ladder.
+ *
+ * The awkward part is not the ladder, it is everything keyed to its length. A category
+ * with four ranks has four energy thresholds and every scenario in it has four score
+ * thresholds; add a rank and touch only the names and the season stops validating, with
+ * an error about a scenario nobody edited. So the arrays move together, here, once.
+ *
+ * `owner` is a category or the season itself - the overall ladder has ranks but no
+ * scenarios, so it only carries names and colours.
+ */
+function addRank(owner, isCategory) {
+  const names = owner.rankNames;
+  const n = names.length;
+
+  // A name that is obviously placeholder and obviously unique. Reusing an existing one
+  // would trip the duplicate check the moment it was saved.
+  let name = `Tier ${n + 1}`;
+  let suffix = n + 1;
+  while (names.includes(name)) name = `Tier ${++suffix}`;
+
+  names.push(name);
+  owner.rankColors[name] = "#8891a3";
+
+  // Extend every threshold list by one step, keeping the ascent. The step is the last
+  // gap, which keeps a hand-tuned ladder's shape rather than imposing one.
+  const extend = (arr) => {
+    const last = arr[arr.length - 1] ?? 0;
+    const gap = arr.length >= 2 ? last - arr[arr.length - 2] : Math.max(1, Math.round(last * 0.1));
+    arr.push(last + Math.max(1, gap));
+  };
+
+  if (isCategory) {
+    extend(owner.rankMaxes);
+    seasonDraft.scenarios
+      .filter((s) => s.category === owner.name)
+      .forEach((s) => extend(s.rankMaxes));
+  }
+}
+
+function removeRank(owner, index, isCategory) {
+  if (owner.rankNames.length <= 1) return;
+
+  const [name] = owner.rankNames.splice(index, 1);
+  delete owner.rankColors[name];
+
+  if (isCategory) {
+    owner.rankMaxes.splice(index, 1);
+    seasonDraft.scenarios
+      .filter((s) => s.category === owner.name)
+      .forEach((s) => s.rankMaxes.splice(index, 1));
+  }
+}
+
 function seasonDirty(dirty) {
   $("seasonSave").disabled = !dirty;
   $("seasonReload").disabled = !dirty;
@@ -228,6 +282,42 @@ async function loadSeasonEditor() {
  * Ordered by how many runs this machine has on each, so the scenarios whose thresholds
  * can actually be suggested from real scores are the ones offered first.
  */
+/**
+ * Fill the picker with whatever matches the search.
+ *
+ * Capped, because the list is every scenario this machine has ever seen - about eight
+ * hundred here - and a select with all of them in it is not a thing anybody can use.
+ * The cap is why the count is shown: "showing 50 of 214" is the difference between a
+ * list that is short and a list that is truncated.
+ */
+const SEASON_PICK_LIMIT = 50;
+
+function fillSeasonPicker(query) {
+  const pick = $("seasonPick");
+  const needle = (query ?? "").trim().toLowerCase();
+
+  const matches = needle
+    ? seasonAvailable.filter((s) => s.name.toLowerCase().includes(needle))
+    : seasonAvailable;
+
+  pick.innerHTML = '<option value="">Add a scenario…</option>';
+
+  matches.slice(0, SEASON_PICK_LIMIT).forEach((s) => {
+    const opt = document.createElement("option");
+    // Indexed against the full list, so filtering never changes what a value means.
+    opt.value = String(seasonAvailable.indexOf(s));
+    opt.textContent =
+      s.name + (s.runs > 0 ? `  ·  ${s.runs} runs, best ${num(s.best)}` : "  ·  no history");
+    pick.append(opt);
+  });
+
+  $("seasonAdd").disabled = true;
+  $("seasonAddNote").textContent =
+    matches.length > SEASON_PICK_LIMIT
+      ? `showing ${SEASON_PICK_LIMIT} of ${matches.length} — narrow the search`
+      : `${matches.length} match${matches.length === 1 ? "" : "es"}`;
+}
+
 async function loadSeasonPicker() {
   const result = await window.apogee.availableScenarios();
   if (!result || result.error) {
@@ -237,15 +327,7 @@ async function loadSeasonPicker() {
 
   seasonAvailable = result.scenarios;
 
-  const pick = $("seasonPick");
-  pick.innerHTML = '<option value="">Add a scenario…</option>';
-  seasonAvailable.forEach((s, i) => {
-    const opt = document.createElement("option");
-    opt.value = String(i);
-    opt.textContent =
-      s.name + (s.runs > 0 ? `  ·  ${s.runs} runs, best ${num(s.best)}` : "  ·  no history");
-    pick.append(opt);
-  });
+  fillSeasonPicker($("seasonSearch").value);
 
   const cat = $("seasonPickCat");
   cat.innerHTML = "";
@@ -273,10 +355,10 @@ function renderSeasonEditor() {
   ranks.textContent = "";
 
   const ladders = s.categories
-    .map((c) => ({ title: c.name, owner: c }))
-    .concat([{ title: "Overall", owner: s }]);
+    .map((c) => ({ title: c.name, owner: c, isCategory: true }))
+    .concat([{ title: "Overall", owner: s, isCategory: false }]);
 
-  ladders.forEach(({ title, owner }) => {
+  ladders.forEach(({ title, owner, isCategory }) => {
     const group = document.createElement("div");
     group.className = "ladder-group";
 
@@ -316,9 +398,39 @@ function renderSeasonEditor() {
         seasonDirty(true);
       });
 
-      row.append(n, text, colour);
+      const drop = document.createElement("button");
+      drop.type = "button";
+      drop.className = "rankdrop";
+      drop.textContent = "×";
+      drop.title = "Remove this rank";
+      drop.disabled = owner.rankNames.length <= 1;
+      drop.addEventListener("click", () => {
+        removeRank(owner, i, isCategory);
+        renderSeasonEditor();
+        seasonDirty(true);
+      });
+
+      row.append(n, text, colour, drop);
       group.append(row);
     });
+
+    const tools = document.createElement("div");
+    tools.className = "ladder-tools";
+
+    const add = document.createElement("button");
+    add.type = "button";
+    add.textContent = "+ rank";
+    add.title = isCategory
+      ? "Add a rank, and a threshold for it on every scenario in this category"
+      : "Add a rank to the overall ladder";
+    add.addEventListener("click", () => {
+      addRank(owner, isCategory);
+      renderSeasonEditor();
+      seasonDirty(true);
+    });
+
+    tools.append(add);
+    group.append(tools);
 
     ranks.append(group);
   });
@@ -1039,6 +1151,10 @@ if (HOST === "electron" && window.apogee.isAdmin) {
     void loadSeasonEditor();
   });
 
+  $("seasonSearch").addEventListener("input", () => {
+    fillSeasonPicker($("seasonSearch").value);
+  });
+
   // Choosing a scenario preselects the category KovaaK's already assigns it, so the
   // common case is one click rather than two decisions.
   $("seasonPick").addEventListener("change", () => {
@@ -1074,7 +1190,8 @@ if (HOST === "electron" && window.apogee.isAdmin) {
       leaderboardId: null,
       // Already the right length for this ladder and already ascending, so adding a
       // scenario never leaves the season in a state that refuses to save.
-      rankMaxes: chosen.suggested.slice(),
+      // Suggestions are per category, since each ladder has its own length.
+      rankMaxes: (chosen.suggested[$("seasonPickCat").value] ?? []).slice(),
     });
 
     renderSeasonEditor();

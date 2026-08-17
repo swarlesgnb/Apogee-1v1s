@@ -374,6 +374,27 @@
     display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
     padding-bottom: 12px;
   }
+  .season-add input[type="search"] {
+    font: inherit; font-size: 12.5px; color: var(--ink);
+    background: var(--sunken); border: 1px solid var(--line-bright);
+    border-radius: 7px; padding: 6px 10px; min-width: 200px;
+  }
+  .ladder-tools { display: flex; gap: 6px; padding-top: 4px; }
+  .ladder-tools button {
+    font: inherit; font-size: 11px; color: var(--ink-dim);
+    background: transparent; border: 1px solid var(--line);
+    border-radius: 6px; padding: 3px 9px; cursor: pointer;
+  }
+  .ladder-tools button:hover:not(:disabled) { color: var(--ink); border-color: var(--ink-dim); }
+  .ladder-tools button:disabled { opacity: .4; cursor: default; }
+  .season-rank { grid-template-columns: 22px 1fr 46px 24px; }
+  .season-rank button.rankdrop {
+    font: inherit; font-size: 13px; line-height: 1; color: var(--ink-dim);
+    background: transparent; border: none; cursor: pointer; padding: 2px 4px;
+  }
+  .season-rank button.rankdrop:hover { color: var(--down); }
+  .season-rank button.rankdrop:disabled { opacity: .3; cursor: default; }
+
   .season-add select {
     font: inherit; font-size: 12.5px; color: var(--ink);
     background: var(--sunken); border: 1px solid var(--line-bright);
@@ -901,7 +922,9 @@
           <span class="note">one row per scenario · one column per rank</span>
         </div>
         <div class="pbody season-add">
-          <select id="seasonPick"><option value="">Add a scenario…</option></select>
+          <input type="search" id="seasonSearch" placeholder="Search scenarios…"
+                 autocomplete="off" spellcheck="false">
+          <select id="seasonPick" size="1"><option value="">Add a scenario…</option></select>
           <select id="seasonPickCat"></select>
           <button type="button" id="seasonAdd">Add</button>
           <span class="season-status" id="seasonAddNote"></span>
