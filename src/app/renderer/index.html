@@ -268,6 +268,16 @@
     text-transform: uppercase; letter-spacing: .06em; color: var(--ink-dim);
   }
   .todo li.pending { opacity: .65; }
+  /* Pushed right, and exempt from the row dimming: a control the player is meant to
+     click should not look as faded as the label it sits beside. */
+  .todo li .scen-play {
+    margin-left: auto; font: inherit; font-size: 11px;
+    color: var(--ink); background: transparent;
+    border: 1px solid var(--line-bright); border-radius: 6px;
+    padding: 3px 10px; cursor: pointer; opacity: 1;
+  }
+  .todo li .scen-play:hover:not(:disabled) { border-color: var(--ink-dim); }
+  .todo li .scen-play:disabled { opacity: .5; cursor: default; }
 
   .match-actions {
     display: flex; align-items: center; justify-content: space-between;

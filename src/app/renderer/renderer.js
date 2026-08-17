@@ -182,6 +182,7 @@ function showOpponent(data) {
 function renderTodo() {
   const list = $("todoList");
   list.textContent = "";
+
   pendingScenarios.forEach((s, i) => {
     const li = document.createElement("li");
     li.className = s.done ? "done" : "pending";
@@ -189,6 +190,35 @@ function renderTodo() {
       '<span class="n">' + (s.done ? "✓" : i + 1) + "</span>" +
       "<span>" + esc(s.label) + "</span>" +
       (s.tier ? '<span class="tier-tag">' + esc(s.tier) + "</span>" : "");
+
+    // Each scenario opens itself. KovaaK's reads its playlists at startup, so a playlist
+    // written mid-session is not in the menu; a deep link needs nothing on disk and
+    // nothing refreshed, and works whether or not the game is already running.
+    if (!s.done && HOST === "electron" && window.apogee && window.apogee.launchScenario) {
+      const play = document.createElement("button");
+      play.type = "button";
+      play.className = "scen-play";
+      play.textContent = "Play";
+      play.title = "Open " + s.label + " in KovaaK's";
+      play.addEventListener("click", async () => {
+        play.disabled = true;
+        const prev = play.textContent;
+        play.textContent = "Opening…";
+        try {
+          const r = await window.apogee.launchScenario(s.label);
+          if (r && r.error) {
+            showError(r.error);
+            play.textContent = prev;
+          } else {
+            play.textContent = "Opened";
+          }
+        } finally {
+          play.disabled = false;
+        }
+      });
+      li.append(play);
+    }
+
     list.append(li);
   });
 }
@@ -848,7 +878,9 @@ if (HOST === "electron") {
             `"${result.playlistName}".`
           : `In KovaaK's, open Playlists and pick "${result.playlistName}".`;
 
-      btn.textContent = "Opening KovaaK's";
+      // Back to an offer, not a state. Left reading "Opening KovaaK's" it looks stuck,
+      // and pressing it again is a reasonable thing to want.
+      btn.textContent = "Play in KovaaK's";
     } catch (err) {
       showError(String(err));
       btn.textContent = "Play in KovaaK's";

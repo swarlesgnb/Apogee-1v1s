@@ -119,13 +119,17 @@ function shape(): void {
   // argument it does not recognise - so it is pinned rather than eyeballed.
   const url = jumpToScenarioUrl("824270", "VT Pasu Intermediate S5");
   check(
-    "the deep link matches the game's own format string",
-    url === "steam://run/824270//?action=jump-to-scenario&name=VT%20Pasu%20Intermediate%20S5&mode=challenge",
+    "the deep link matches the form observed working",
+    url === "steam://run/824270/?action=jump-to-scenario;name=VT%20Pasu%20Intermediate%20S5;mode=challenge",
     url,
   );
-  check("the app id separator is a doubled slash", url.includes("/824270//?action="));
-  check("scenario names are encoded, not pasted", jumpToScenarioUrl("1", "a&b=c").includes("a%26b%3Dc"));
-  check("matches launch in challenge mode, never freeplay", url.endsWith("&mode=challenge"));
+  // The binary's own format string uses & and a doubled slash, and building the URL that
+  // way launched the game without jumping anywhere. Both are pinned so nobody "corrects"
+  // this back to what the binary says.
+  check("parameters are separated by semicolons, not ampersands", !url.includes("&"));
+  check("a single slash follows the app id", url.includes("/824270/?action=") && !url.includes("/824270//"));
+  check("scenario names are encoded, not pasted", jumpToScenarioUrl("1", "a;b=c").includes("a%3Bb%3Dc"));
+  check("matches launch in challenge mode, never freeplay", url.endsWith(";mode=challenge"));
 }
 
 function againstRealFiles(dir: string): void {

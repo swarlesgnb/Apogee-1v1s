@@ -63,6 +63,12 @@ contextBridge.exposeInMainWorld("apogee", {
    */
   launchMatch: () => ipcRenderer.invoke("apogee:launchMatch"),
 
+  /**
+   * Open one of the active match's scenarios in KovaaK's.
+   * Main refuses any scenario that is not part of the match.
+   */
+  launchScenario: (scenario) => ipcRenderer.invoke("apogee:launchScenario", { scenario }),
+
   /** Fires when a match starts, and again with null when it ends. */
   onMatch: (handler) => subscribe("apogee:match", handler),
 

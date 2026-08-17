@@ -26,22 +26,30 @@
 const PLAYLIST_FORMAT_VERSION = 31;
 
 /**
- * KovaaK's deep link, copied from the format string in its own shipping binary:
+ * KovaaK's deep link.
+ *
+ * The shipping binary contains this format string:
  *
  *     steam://run/%s//?action=jump-to-scenario&name=%s&mode=%s
  *
- * The doubled slash is Steam's separator between the app id and the arguments it hands
- * to the game, and this is the game's literal, so it is reproduced rather than tidied.
- * KovaaK's registers no scheme of its own; the deep link is Steam's, which is why
- * scanning the registry for one found nothing and proved nothing.
+ * and building the URL that way does not work: Steam launches the game and the game
+ * opens wherever it left off. That string is what KovaaK's *emits* for its own share
+ * links, and it was taken for the accepted input format without ever being tried. The
+ * form below is the one observed actually working in the wild:
+ *
+ *     steam://run/<appid>/?action=jump-to-scenario;name=<name>;mode=challenge
+ *
+ * One slash, and semicolons rather than ampersands. The likely reason is plumbing: the
+ * query string is handed to the game as a command-line argument, and an unquoted `&`
+ * does not survive a Windows command line.
  *
  * `mode` is challenge or freeplay. Matches are always challenge: freeplay does not
- * produce a scored run.
+ * produce a scored run, so a match launched into freeplay would silently never settle.
  */
 export function jumpToScenarioUrl(appId: string, scenario: string): string {
   return (
-    `steam://run/${appId}//?action=jump-to-scenario` +
-    `&name=${encodeURIComponent(scenario)}&mode=challenge`
+    `steam://run/${appId}/?action=jump-to-scenario` +
+    `;name=${encodeURIComponent(scenario)};mode=challenge`
   );
 }
 

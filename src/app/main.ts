@@ -721,6 +721,30 @@ ipcMain.handle("apogee:openStatsFolder", () => {
  * The playlist is a convenience and never the rule: settlement reads run timestamps, so
  * ignoring it and launching the three scenarios by hand settles identically.
  */
+/**
+ * Open one scenario in KovaaK's.
+ *
+ * The playlist is written at match start, but KovaaK's reads its playlists folder when
+ * it launches, so a match written while the game is already running does not appear in
+ * the menu. Deep-linking each scenario sidesteps that: it needs nothing on disk and
+ * nothing refreshed, and it works whether or not the game is already open.
+ *
+ * Restricted to the scenarios of the active match. This drives an OS-level launch from
+ * a renderer message, and "open whatever the page asks for" is how that becomes a way
+ * to start arbitrary things.
+ */
+ipcMain.handle("apogee:launchScenario", async (_e, { scenario }) => {
+  if (!state.match) return { error: "no active match" };
+
+  const known = state.match.scenarios.some((s) => s.name === scenario);
+  if (!known) return { error: "that scenario is not part of this match" };
+
+  const launched = await launchKovaaks(scenario);
+  return launched.ok
+    ? { ok: true, scenario }
+    : { error: launched.error ?? "could not start KovaaK's" };
+});
+
 ipcMain.handle("apogee:launchMatch", async () => {
   if (!state.match) return { error: "no active match" };
   if (!state.statsDir) return { error: "no stats folder" };
