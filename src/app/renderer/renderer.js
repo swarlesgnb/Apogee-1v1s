@@ -782,9 +782,14 @@ if (HOST === "electron") {
         return;
       }
 
+      // Say exactly where to go. Steam can only start the game, so the player still has
+      // to pick the playlist, and the previous wording left that as a guess: KovaaK's
+      // opens on whatever scenario it had last, which reads like the button failed.
       $("matchHint").textContent = result.launched
-        ? `Playlist "${result.playlistName}" is ready. Pick it from Playlists in KovaaK's.`
-        : `Playlist "${result.playlistName}" written, but Steam did not start the game.`;
+        ? `In KovaaK's, open Playlists and pick "${result.playlistName}". ` +
+          "If it is not listed, restart KovaaK's - it reads playlists at startup."
+        : `Playlist "${result.playlistName}" is ready, but Steam did not start the game. ` +
+          "Launch KovaaK's yourself and pick it from Playlists.";
 
       btn.textContent = "Playlist ready";
     } catch (err) {

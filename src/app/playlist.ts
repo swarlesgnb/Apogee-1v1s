@@ -13,12 +13,13 @@
  * one at a time.
  */
 
-import { existsSync, mkdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, unlinkSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { shell } from "electron";
 
 import {
   buildMatchPlaylist,
+  isApogeePlaylistFile,
   playlistFileName,
   serializePlaylist,
   type MatchPlaylistOptions,
@@ -46,6 +47,8 @@ export interface WriteResult {
   ok: boolean;
   path?: string;
   playlistName?: string;
+  /** How many of Apogee's earlier playlists were cleared out. */
+  removed?: number;
   error?: string;
 }
 
@@ -77,12 +80,49 @@ export function writeMatchPlaylist(
 
   try {
     const playlist = buildMatchPlaylist(options);
-    const path = join(folder, playlistFileName(playlist));
+    const fileName = playlistFileName(playlist);
+    const path = join(folder, fileName);
+
+    // Each match carries its own id in the name so the player can tell which playlist
+    // is the current one. That trades a fixed name for accumulating files, so our own
+    // older ones are removed first.
+    //
+    // Only files matching the Apogee prefix are touched, and only inside the playlists
+    // folder. Deleting in someone else's game directory earns being narrow: a player's
+    // own playlists are irreplaceable, and a wrong sweep here is not recoverable.
+    const removed = sweepOldPlaylists(folder, fileName);
+
     writeFileSync(path, serializePlaylist(playlist), "utf8");
-    return { ok: true, path, playlistName: playlist.playlistName };
+    return { ok: true, path, playlistName: playlist.playlistName, removed };
   } catch (err) {
     return { ok: false, error: err instanceof Error ? err.message : String(err) };
   }
+}
+
+/**
+ * Delete Apogee's previous playlists, keeping the one about to be written.
+ *
+ * Failures are counted rather than thrown: a leftover playlist is untidy, and refusing
+ * to start the match over it would be worse.
+ */
+function sweepOldPlaylists(folder: string, keep: string): number {
+  let removed = 0;
+
+  try {
+    for (const file of readdirSync(folder)) {
+      if (file === keep || !isApogeePlaylistFile(file)) continue;
+      try {
+        unlinkSync(join(folder, file));
+        removed++;
+      } catch {
+        // Locked by the running game, most likely. Leave it.
+      }
+    }
+  } catch {
+    return removed;
+  }
+
+  return removed;
 }
 
 /**

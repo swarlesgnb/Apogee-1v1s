@@ -20,7 +20,9 @@ import { join } from "node:path";
 
 import {
   buildMatchPlaylist,
-  MATCH_PLAYLIST_NAME,
+  MATCH_PLAYLIST_PREFIX,
+  matchPlaylistName,
+  isApogeePlaylistFile,
   playlistFileName,
   serializePlaylist,
 } from "./playlist.ts";
@@ -80,8 +82,20 @@ function shape(): void {
   check("round-trips through JSON", JSON.stringify(JSON.parse(serializePlaylist(p))) === JSON.stringify(p));
   check("is tab-indented like KovaaK's own files", serializePlaylist(p).includes('\n\t"playlistName"'));
 
+  // The match id is in the name so two matches in a row are distinguishable in a menu
+  // that shows nothing else about them.
+  check("carries the match id in its name", p.playlistName === "Apogee Match 3f9a21c4", p.playlistName);
+  check("names the file after the playlist", playlistFileName(p) === "Apogee Match 3f9a21c4.json", playlistFileName(p));
+  check("two matches get two names", matchPlaylistName("aaaaaaaa-1111") !== matchPlaylistName("bbbbbbbb-2222"));
+
   const named = buildMatchPlaylist({ scenarios: SCENARIOS });
-  check("uses one filename for every match", playlistFileName(named) === `${MATCH_PLAYLIST_NAME}.json`, playlistFileName(named));
+  check("falls back to the bare prefix without an id", playlistFileName(named) === `${MATCH_PLAYLIST_PREFIX}.json`, playlistFileName(named));
+
+  // The sweep deletes by this test, so a false positive here deletes a player's own
+  // playlist. It has to be exact.
+  check("recognises its own files", isApogeePlaylistFile("Apogee Match 3f9a21c4.json") && isApogeePlaylistFile("Apogee Match.json"));
+  check("leaves the player's playlists alone", !isApogeePlaylistFile("Goat warmup.json") && !isApogeePlaylistFile("Viscose Benchmark S2 - Medium.json") && !isApogeePlaylistFile("My Apogee Match.json"));
+  check("ignores non-playlist files", !isApogeePlaylistFile("Apogee Match 3f9a21c4.txt"));
 
   // A scenario list is data, and data that reached a path separator would write outside
   // the playlists folder entirely.
@@ -122,7 +136,7 @@ function againstRealFiles(dir: string): void {
     } catch {
       continue;
     }
-    if (file === `${MATCH_PLAYLIST_NAME}.json`) continue; // one we wrote
+    if (isApogeePlaylistFile(file)) continue; // one we wrote
 
     compared++;
     for (const key of REFERENCE_KEYS) if (!(key in parsed)) missing.add(`${key} (${file})`);

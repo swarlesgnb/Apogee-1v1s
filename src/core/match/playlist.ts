@@ -26,10 +26,31 @@
 const PLAYLIST_FORMAT_VERSION = 31;
 
 /**
- * One name for every match, so playing a second match replaces the first rather than
- * leaving a drift of dead playlists in the player's game.
+ * Prefix every Apogee playlist carries. Also what identifies our own leftovers as safe
+ * to delete, so nothing the player made themselves is ever touched.
  */
-export const MATCH_PLAYLIST_NAME = "Apogee Match";
+export const MATCH_PLAYLIST_PREFIX = "Apogee Match";
+
+/**
+ * Characters of the match id to put in the name.
+ *
+ * A fixed name was the first attempt and it is not enough: the playlist menu gives no
+ * indication of when a file changed, so two matches in a row look identical and there
+ * is no way to tell you are about to play the previous one. Eight hex characters make
+ * them distinguishable at a glance while staying short enough to read in a menu.
+ */
+const MATCH_ID_CHARS = 8;
+
+/** Playlist name for a match, e.g. "Apogee Match 81a618a2". */
+export function matchPlaylistName(matchId?: string): string {
+  const short = matchId ? matchId.replace(/[^a-zA-Z0-9]/g, "").slice(0, MATCH_ID_CHARS) : "";
+  return short ? `${MATCH_PLAYLIST_PREFIX} ${short}` : MATCH_PLAYLIST_PREFIX;
+}
+
+/** True for a playlist Apogee wrote, and therefore may delete. */
+export function isApogeePlaylistFile(fileName: string): boolean {
+  return fileName.startsWith(MATCH_PLAYLIST_PREFIX) && fileName.endsWith(".json");
+}
 
 export interface PlaylistEntry {
   scenario_name: string;
@@ -70,7 +91,7 @@ export function buildMatchPlaylist(options: MatchPlaylistOptions): KovaaksPlayli
   const ref = matchId ? ` (${matchId.slice(0, 8)})` : "";
 
   return {
-    playlistName: MATCH_PLAYLIST_NAME,
+    playlistName: matchPlaylistName(matchId),
     playlistId: 0,
     authorSteamId: "",
     authorName: "",
@@ -105,5 +126,5 @@ export function serializePlaylist(playlist: KovaaksPlaylist): string {
  */
 export function playlistFileName(playlist: KovaaksPlaylist): string {
   const safe = playlist.playlistName.replace(/[<>:"/\\|?*\x00-\x1f]/g, "").trim();
-  return `${safe || "Apogee Match"}.json`;
+  return `${safe || MATCH_PLAYLIST_PREFIX}.json`;
 }
