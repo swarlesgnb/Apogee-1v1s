@@ -57,6 +57,12 @@ contextBridge.exposeInMainWorld("apogee", {
   /** Settle now, rather than waiting for the last run to land. */
   settleMatch: () => ipcRenderer.invoke("apogee:settleMatch"),
 
+  /**
+   * Write the match as a KovaaK's playlist and launch the game.
+   * Returns { ok, playlistName, launched } or { error }.
+   */
+  launchMatch: () => ipcRenderer.invoke("apogee:launchMatch"),
+
   /** Fires when a match starts, and again with null when it ends. */
   onMatch: (handler) => subscribe("apogee:match", handler),
 

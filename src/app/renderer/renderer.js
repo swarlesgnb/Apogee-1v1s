@@ -548,6 +548,12 @@ function showRealMatch(match, data) {
   }));
   renderTodo();
 
+  // A new match means a new playlist to write, so the button goes back to offering it.
+  $("playMatchBtn").textContent = "Play in KovaaK's";
+  $("playMatchBtn").disabled = false;
+  $("matchHint").textContent =
+    "Only your first run on each scenario counts. Apogee picks them up automatically.";
+
   $("matchActions").hidden = false;
   $("opponent").classList.add("on");
 }
@@ -729,6 +735,48 @@ if (HOST === "electron") {
   });
 
   $("cancelMatchBtn").addEventListener("click", () => api.cancelMatch());
+
+  // Writes the three scenarios into KovaaK's as a playlist, then starts the game.
+  //
+  // Two steps, not one, because KovaaK's registers no URL scheme: nothing can launch it
+  // straight into a scenario, so the playlist has to be waiting on disk. The button says
+  // what the player then has to do rather than pretending the game opened itself.
+  $("playMatchBtn").addEventListener("click", async () => {
+    const btn = $("playMatchBtn");
+
+    // The shareable preview runs this same file with no main process behind it.
+    if (HOST !== "electron" || !api.launchMatch) {
+      $("matchHint").textContent =
+        "Launching KovaaK's only works in the desktop app.";
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = "Starting…";
+
+    try {
+      const result = await api.launchMatch();
+
+      if (result && result.error) {
+        showError(result.error);
+        btn.textContent = "Play in KovaaK's";
+        return;
+      }
+
+      $("matchHint").textContent = result.launched
+        ? `Playlist "${result.playlistName}" is ready. Pick it from Playlists in KovaaK's.`
+        : `Playlist "${result.playlistName}" written, but Steam did not start the game.`;
+
+      btn.textContent = "Playlist ready";
+    } catch (err) {
+      showError(String(err));
+      btn.textContent = "Play in KovaaK's";
+    } finally {
+      // Re-enable regardless: writing again is harmless and is the obvious thing to try
+      // if the game was already running when the playlist landed.
+      btn.disabled = false;
+    }
+  });
 
   // ---- quests ------------------------------------------------------------
   api.onProgression(renderProgression);

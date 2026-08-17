@@ -42,6 +42,7 @@ import {
   type ApogeeSession,
 } from "./session.ts";
 import { findStatsFolder, watchStatsFolder, type StatsWatcher } from "./watcher.ts";
+import { launchKovaaks, writeMatchPlaylist } from "./playlist.ts";
 
 /**
  * Bundled to dist/app/main.cjs, so `__dirname` is dist/app and the reference data
@@ -683,4 +684,40 @@ ipcMain.handle("apogee:chooseFolder", async () => {
 
 ipcMain.handle("apogee:openStatsFolder", () => {
   if (state.statsDir) void shell.openPath(state.statsDir);
+});
+
+/**
+ * Write the current match as a KovaaK's playlist and start the game.
+ *
+ * Two steps rather than one because KovaaK's registers no URL scheme, so nothing can
+ * launch it straight into a scenario. The playlist has to be on disk first for the
+ * player to pick it from the menu.
+ *
+ * The playlist is a convenience and never the rule: settlement reads run timestamps, so
+ * ignoring it and launching the three scenarios by hand settles identically.
+ */
+ipcMain.handle("apogee:launchMatch", async () => {
+  if (!state.match) return { error: "no active match" };
+  if (!state.statsDir) return { error: "no stats folder" };
+
+  const written = writeMatchPlaylist(state.statsDir, {
+    scenarios: state.match.scenarios.map((s) => s.name),
+    matchId: state.match.matchId,
+    opponent: state.match.opponent?.displayName ?? null,
+  });
+
+  if (!written.ok) return { error: written.error };
+
+  // A running game read its playlists at startup, so a match written now will not
+  // appear until it restarts. Better to say so than to have the player hunt for a
+  // playlist that is genuinely on disk and genuinely not on screen.
+  const launched = await launchKovaaks();
+
+  return {
+    ok: true,
+    playlistName: written.playlistName,
+    path: written.path,
+    launched: launched.ok,
+    launchError: launched.error,
+  };
 });

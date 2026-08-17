@@ -262,13 +262,22 @@
     display: flex; align-items: center; justify-content: space-between;
     gap: 12px; margin-top: 11px; flex-wrap: wrap;
   }
-  .match-hint { font-size: 12px; color: var(--ink-dim); }
+  .match-hint { font-size: 12px; color: var(--ink-dim); flex: 1 1 220px; }
+  .match-buttons { display: flex; gap: 8px; align-items: center; }
   .match-actions button {
     font: inherit; font-size: 11.5px; color: var(--ink-mid);
     background: transparent; border: 1px solid var(--line-bright);
     border-radius: 6px; padding: 5px 11px; cursor: pointer;
   }
   .match-actions button:hover { color: var(--ink); border-color: var(--ink-dim); }
+  .match-actions button:disabled { opacity: .5; cursor: default; }
+  /* The one action the player came here to take, so it does not read as a sibling of
+     "Abandon match". */
+  .match-actions button.go {
+    color: var(--bg); background: var(--ink); border-color: var(--ink);
+    font-weight: 600;
+  }
+  .match-actions button.go:hover:not(:disabled) { opacity: .88; color: var(--bg); }
 
   /* ---------------- upload ---------------- */
   .upload-row {
@@ -636,9 +645,12 @@
               <ol id="todoList"></ol>
               <div class="match-actions" id="matchActions" hidden>
                 <span class="match-hint" id="matchHint">
-                  Play them in any order. Apogee picks each run up automatically.
+                  Only your first run on each scenario counts. Apogee picks them up automatically.
                 </span>
-                <button type="button" id="cancelMatchBtn">Abandon match</button>
+                <span class="match-buttons">
+                  <button type="button" class="go" id="playMatchBtn">Play in KovaaK's</button>
+                  <button type="button" id="cancelMatchBtn">Abandon match</button>
+                </span>
               </div>
             </div>
           </div>
@@ -714,7 +726,8 @@
           </div>
           <p class="cf-explain">
             Every benchmark that exists scores your best run. In a game there is no
-            retry, and it's the same in this gamemode.
+            retry, so your worst run is closer to what you actually bring. Closing this
+            gap is the whole mode.
           </p>
         </div>
       </div>
@@ -786,7 +799,7 @@
 
 
 <script id="apogee-snapshot" type="application/json">{
-  "generatedAt": "2026-08-17T15:20:29.642Z",
+  "generatedAt": "2026-08-17T16:17:46.691Z",
   "benchmark": {
     "name": "Voltaic S5",
     "difficulty": "Intermediate",
@@ -2028,6 +2041,12 @@ function showRealMatch(match, data) {
   }));
   renderTodo();
 
+  // A new match means a new playlist to write, so the button goes back to offering it.
+  $("playMatchBtn").textContent = "Play in KovaaK's";
+  $("playMatchBtn").disabled = false;
+  $("matchHint").textContent =
+    "Only your first run on each scenario counts. Apogee picks them up automatically.";
+
   $("matchActions").hidden = false;
   $("opponent").classList.add("on");
 }
@@ -2209,6 +2228,48 @@ if (HOST === "electron") {
   });
 
   $("cancelMatchBtn").addEventListener("click", () => api.cancelMatch());
+
+  // Writes the three scenarios into KovaaK's as a playlist, then starts the game.
+  //
+  // Two steps, not one, because KovaaK's registers no URL scheme: nothing can launch it
+  // straight into a scenario, so the playlist has to be waiting on disk. The button says
+  // what the player then has to do rather than pretending the game opened itself.
+  $("playMatchBtn").addEventListener("click", async () => {
+    const btn = $("playMatchBtn");
+
+    // The shareable preview runs this same file with no main process behind it.
+    if (HOST !== "electron" || !api.launchMatch) {
+      $("matchHint").textContent =
+        "Launching KovaaK's only works in the desktop app.";
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = "Starting…";
+
+    try {
+      const result = await api.launchMatch();
+
+      if (result && result.error) {
+        showError(result.error);
+        btn.textContent = "Play in KovaaK's";
+        return;
+      }
+
+      $("matchHint").textContent = result.launched
+        ? `Playlist "${result.playlistName}" is ready. Pick it from Playlists in KovaaK's.`
+        : `Playlist "${result.playlistName}" written, but Steam did not start the game.`;
+
+      btn.textContent = "Playlist ready";
+    } catch (err) {
+      showError(String(err));
+      btn.textContent = "Play in KovaaK's";
+    } finally {
+      // Re-enable regardless: writing again is harmless and is the obvious thing to try
+      // if the game was already running when the playlist landed.
+      btn.disabled = false;
+    }
+  });
 
   // ---- quests ------------------------------------------------------------
   api.onProgression(renderProgression);
