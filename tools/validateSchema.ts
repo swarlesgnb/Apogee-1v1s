@@ -223,6 +223,100 @@ async function main(): Promise<void> {
   check("a run on an unknown scenario is still stored",
     unknown.rows.length === 1 && unknown.rows[0].scenario_id === null);
 
+  // ---- a published season is frozen ------------------------------------------------
+  //
+  // The whole promise of a season is that the target does not move while somebody is
+  // grinding toward it, so the freeze is worth more than a comment claiming it. These
+  // run against the trigger, not the application, because that is where the guarantee
+  // has to live to be worth anything.
+  console.log("\n── seasons ─────────────────────────────────────");
+
+  await db.exec(`
+    insert into seasons (id, name, status, rank_names)
+    values ('11111111-1111-1111-1111-111111111111', 'Draft season', 'draft',
+            array['Bronze','Silver','Gold'])
+  `);
+
+  const seasonScenarioId = (
+    await db.query<{ id: number }>(
+      "select id from scenarios where name = 'VT Frogtagon Intermediate S5'",
+    )
+  ).rows[0]?.id;
+
+  await db.exec(`
+    insert into season_scenarios (season_id, scenario_id, category, rank_maxes)
+    values ('11111111-1111-1111-1111-111111111111', ${seasonScenarioId}, 'Clicking',
+            array[100, 200, 300]::numeric[])
+  `);
+
+  let draftEditable = true;
+  try {
+    await db.exec(
+      "update seasons set name = 'Renamed' where id = '11111111-1111-1111-1111-111111111111'",
+    );
+  } catch {
+    draftEditable = false;
+  }
+  check("a draft season can be edited", draftEditable);
+
+  await db.exec(`
+    update seasons set status = 'published', published_at = now()
+    where id = '11111111-1111-1111-1111-111111111111'
+  `);
+
+  let publishedLocked = false;
+  try {
+    await db.exec(`
+      update seasons set rank_names = array['Wood']
+      where id = '11111111-1111-1111-1111-111111111111'
+    `);
+  } catch {
+    publishedLocked = true;
+  }
+  check("a published season cannot be edited", publishedLocked);
+
+  let thresholdsLocked = false;
+  try {
+    await db.exec(`
+      update season_scenarios set rank_maxes = array[1,2,3]::numeric[]
+      where season_id = '11111111-1111-1111-1111-111111111111'
+    `);
+  } catch {
+    thresholdsLocked = true;
+  }
+  check("published thresholds cannot be moved", thresholdsLocked);
+
+  let poolLocked = false;
+  try {
+    await db.exec(
+      "delete from season_scenarios where season_id = '11111111-1111-1111-1111-111111111111'",
+    );
+  } catch {
+    poolLocked = true;
+  }
+  check("a scenario cannot be dropped from a published season", poolLocked);
+
+  let deleteBlocked = false;
+  try {
+    await db.exec("delete from seasons where id = '11111111-1111-1111-1111-111111111111'");
+  } catch {
+    deleteBlocked = true;
+  }
+  check("a published season cannot be deleted", deleteBlocked);
+
+  // Retiring a season changes which one is current without changing what any past rank
+  // meant, so it has to stay possible.
+  let archivable = true;
+  try {
+    await db.exec(`
+      update seasons set status = 'archived'
+      where id = '11111111-1111-1111-1111-111111111111'
+    `);
+  } catch {
+    archivable = false;
+  }
+  check("a published season can still be archived", archivable);
+
   console.log("\n── seeded reference data ────────────────────────");
 
   const counts = await db.query<{ scenarios: number; memberships: number }>(
