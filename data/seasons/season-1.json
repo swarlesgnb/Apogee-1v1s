@@ -1,0 +1,336 @@
+{
+  "name": "Season 1",
+  "status": "draft",
+  "rankNames": [
+    "Tier I",
+    "Tier II",
+    "Tier III",
+    "Tier IV"
+  ],
+  "rankColors": {
+    "Tier I": "#7C8AA5",
+    "Tier II": "#4FA3C7",
+    "Tier III": "#C79A4F",
+    "Tier IV": "#C75FA8"
+  },
+  "seededFrom": {
+    "benchmark": "Voltaic S5",
+    "difficulty": "Intermediate",
+    "rankNames": [
+      "Platinum",
+      "Diamond",
+      "Jade",
+      "Master"
+    ],
+    "note": "Thresholds are Voltaic's published numbers, taken as a starting point we own rather than a source we track. Rank names are ours and are placeholders. Season 2 derives its thresholds from season 1's population instead."
+  },
+  "builtAt": "2026-08-17T20:39:09.173Z",
+  "scenarios": [
+    {
+      "scenario": "VT Pasu Intermediate S5",
+      "category": "Clicking",
+      "leaderboardId": 98330,
+      "rankMaxes": [
+        770,
+        850,
+        930,
+        980
+      ],
+      "corpus": {
+        "runs": 35,
+        "best": 944,
+        "median": 775,
+        "reaches": "Tier III"
+      }
+    },
+    {
+      "scenario": "VT Popcorn Intermediate S5",
+      "category": "Clicking",
+      "leaderboardId": 98333,
+      "rankMaxes": [
+        600,
+        690,
+        780,
+        860
+      ],
+      "corpus": {
+        "runs": 38,
+        "best": 760,
+        "median": 605,
+        "reaches": "Tier II"
+      }
+    },
+    {
+      "scenario": "VT 1w3ts Intermediate S5",
+      "category": "Clicking",
+      "leaderboardId": 103209,
+      "rankMaxes": [
+        1120,
+        1220,
+        1300,
+        1380
+      ],
+      "corpus": {
+        "runs": 55,
+        "best": 1271,
+        "median": 1137,
+        "reaches": "Tier II"
+      }
+    },
+    {
+      "scenario": "VT ww5t Intermediate S5",
+      "category": "Clicking",
+      "leaderboardId": 98029,
+      "rankMaxes": [
+        1310,
+        1400,
+        1490,
+        1560
+      ],
+      "corpus": {
+        "runs": 49,
+        "best": 1440,
+        "median": 1310,
+        "reaches": "Tier II"
+      }
+    },
+    {
+      "scenario": "VT Frogtagon Intermediate S5",
+      "category": "Clicking",
+      "leaderboardId": 105828,
+      "rankMaxes": [
+        940,
+        1040,
+        1140,
+        1230
+      ],
+      "corpus": {
+        "runs": 28,
+        "best": 1130,
+        "median": 1000,
+        "reaches": "Tier II"
+      }
+    },
+    {
+      "scenario": "VT Floating Heads Intermediate S5",
+      "category": "Clicking",
+      "leaderboardId": 98055,
+      "rankMaxes": [
+        610,
+        690,
+        770,
+        860
+      ],
+      "corpus": {
+        "runs": 24,
+        "best": 792,
+        "median": 650,
+        "reaches": "Tier III"
+      }
+    },
+    {
+      "scenario": "VT PGT Intermediate S5",
+      "category": "Tracking",
+      "leaderboardId": 98331,
+      "rankMaxes": [
+        2275,
+        2675,
+        3050,
+        3325
+      ],
+      "corpus": {
+        "runs": 50,
+        "best": 2909,
+        "median": 2355,
+        "reaches": "Tier II"
+      }
+    },
+    {
+      "scenario": "VT Snake Track Intermediate S5",
+      "category": "Tracking",
+      "leaderboardId": 98045,
+      "rankMaxes": [
+        2800,
+        3175,
+        3500,
+        3750
+      ],
+      "corpus": {
+        "runs": 36,
+        "best": 3246,
+        "median": 2930,
+        "reaches": "Tier II"
+      }
+    },
+    {
+      "scenario": "VT Aether Intermediate S5",
+      "category": "Tracking",
+      "leaderboardId": 101369,
+      "rankMaxes": [
+        2175,
+        2550,
+        2900,
+        3175
+      ],
+      "corpus": {
+        "runs": 103,
+        "best": 2775,
+        "median": 2223,
+        "reaches": "Tier II"
+      }
+    },
+    {
+      "scenario": "VT Ground Intermediate S5",
+      "category": "Tracking",
+      "leaderboardId": 101743,
+      "rankMaxes": [
+        2550,
+        2850,
+        3100,
+        3350
+      ],
+      "corpus": {
+        "runs": 51,
+        "best": 2949,
+        "median": 2611,
+        "reaches": "Tier II"
+      }
+    },
+    {
+      "scenario": "VT Raw Control Intermediate S5",
+      "category": "Tracking",
+      "leaderboardId": 98048,
+      "rankMaxes": [
+        2775,
+        3200,
+        3550,
+        3875
+      ],
+      "corpus": {
+        "runs": 16,
+        "best": 3513,
+        "median": 2959,
+        "reaches": "Tier II"
+      }
+    },
+    {
+      "scenario": "VT Controlsphere Intermediate S5",
+      "category": "Tracking",
+      "leaderboardId": 103353,
+      "rankMaxes": [
+        2750,
+        3175,
+        3525,
+        3825
+      ],
+      "corpus": {
+        "runs": 10,
+        "best": 3270,
+        "median": 3121,
+        "reaches": "Tier II"
+      }
+    },
+    {
+      "scenario": "VT DotTS Intermediate S5",
+      "category": "Switching",
+      "leaderboardId": 104865,
+      "rankMaxes": [
+        1110,
+        1180,
+        1230,
+        1280
+      ],
+      "corpus": {
+        "runs": 35,
+        "best": 1210,
+        "median": 1137,
+        "reaches": "Tier II"
+      }
+    },
+    {
+      "scenario": "VT EddieTS Intermediate S5",
+      "category": "Switching",
+      "leaderboardId": 105176,
+      "rankMaxes": [
+        880,
+        950,
+        1020,
+        1080
+      ],
+      "corpus": {
+        "runs": 40,
+        "best": 970,
+        "median": 879,
+        "reaches": "Tier II"
+      }
+    },
+    {
+      "scenario": "VT DriftTS Intermediate S5",
+      "category": "Switching",
+      "leaderboardId": 104863,
+      "rankMaxes": [
+        390,
+        430,
+        460,
+        490
+      ],
+      "corpus": {
+        "runs": 12,
+        "best": 460,
+        "median": 414,
+        "reaches": "Tier III"
+      }
+    },
+    {
+      "scenario": "VT FlyTS Intermediate S5",
+      "category": "Switching",
+      "leaderboardId": 105142,
+      "rankMaxes": [
+        520,
+        570,
+        610,
+        650
+      ],
+      "corpus": {
+        "runs": 14,
+        "best": 595,
+        "median": 554,
+        "reaches": "Tier II"
+      }
+    },
+    {
+      "scenario": "VT ControlTS Intermediate S5",
+      "category": "Switching",
+      "leaderboardId": 104890,
+      "rankMaxes": [
+        420,
+        460,
+        485,
+        520
+      ],
+      "corpus": {
+        "runs": 17,
+        "best": 490,
+        "median": 440,
+        "reaches": "Tier III"
+      }
+    },
+    {
+      "scenario": "VT Penta Bounce Intermediate S5",
+      "category": "Switching",
+      "leaderboardId": 103261,
+      "rankMaxes": [
+        450,
+        490,
+        540,
+        580
+      ],
+      "corpus": {
+        "runs": 13,
+        "best": 504,
+        "median": 463,
+        "reaches": "Tier II"
+      }
+    }
+  ]
+}
