@@ -155,8 +155,11 @@ export interface FoundMatch {
     provisional: boolean;
   } | null;
   seeding?: boolean;
+  /** True when this is a match the player already had, handed back rather than created. */
+  resumed?: boolean;
   winProbability: number | null;
-  poolSize: number;
+  /** Null when the pool was not searched, which is the case for a resumed match. */
+  poolSize: number | null;
 }
 
 export function findMatch(category: string, difficulty: string): Promise<FoundMatch> {

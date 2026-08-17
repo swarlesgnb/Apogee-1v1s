@@ -804,7 +804,7 @@
 
 
 <script id="apogee-snapshot" type="application/json">{
-  "generatedAt": "2026-08-17T16:52:35.594Z",
+  "generatedAt": "2026-08-17T17:18:15.145Z",
   "benchmark": {
     "name": "Voltaic S5",
     "difficulty": "Intermediate",
@@ -2035,9 +2035,11 @@ function showRealMatch(match, data) {
     $("oppTier").textContent = "seeding the pool";
     $("oppTier").style.color = me.tier.color;
     $("oppAge").textContent =
-      match.poolSize === 0
-        ? "you are first in this category"
-        : `pool of ${match.poolSize}, none close enough to your rating`;
+      match.poolSize == null
+        ? "match already in progress"
+        : match.poolSize === 0
+          ? "you are first in this category"
+          : `pool of ${match.poolSize}, none close enough to your rating`;
 
     // No odds to show against nobody, and a half-filled bar would imply a coin flip.
     $("oddsBar").innerHTML =
@@ -2078,8 +2080,9 @@ function showRealMatch(match, data) {
   // A new match means a new playlist to write, so the button goes back to offering it.
   $("playMatchBtn").textContent = "Play in KovaaK's";
   $("playMatchBtn").disabled = false;
-  $("matchHint").textContent =
-    match.seeding || !match.opponent
+  $("matchHint").textContent = match.resumed
+    ? "You already had this match open. Finish it, or abandon it to queue again."
+    : match.seeding || !match.opponent
       ? "Nothing is rated yet. Play these three and your run set becomes the first " +
         "entry in the pool. Only your first run on each counts."
       : "Only your first run on each scenario counts. Apogee picks them up automatically.";
@@ -2116,9 +2119,14 @@ $("queueBtn").addEventListener("click", async () => {
     return;
   }
 
-  // An empty pool is no longer an error. The server hands out a seeding match with the
-  // same three scenarios and no opponent, so there is always something to play.
-  btn.textContent = result.match.seeding ? "Seeding the pool" : "Match in progress";
+  // Neither an empty pool nor an existing match is an error now: the server hands back
+  // a seeding match for the first, and the match you already have for the second, so
+  // there is always something on screen and always a way out of it.
+  btn.textContent = result.match.resumed
+    ? "Match already open"
+    : result.match.seeding
+      ? "Seeding the pool"
+      : "Match in progress";
   activeMatch = result.match;
   showRealMatch(result.match, current);
 });

@@ -76,15 +76,52 @@ Deno.serve(handler(async (req, admin) => {
   const staleIds = new Set(stale.map((row: any) => row.match_id));
   const liveMatch = (openMatches ?? []).find((row: any) => !staleIds.has(row.match_id));
 
+  // Already in a match: hand that one back rather than refusing.
+  //
+  // This used to be a 409 carrying an error string, and the client threw the payload
+  // away, so a player whose app had restarted saw "you already have a match in
+  // progress" with no way to see or leave it - the abandon button lives on the match
+  // panel, and the panel only appears when the client knows about a match. Returning
+  // the match is also just the honest answer: you asked for one, you have one.
   if (liveMatch) {
-    return json(
-      {
-        error: "you already have a match in progress",
-        matchId: liveMatch.match_id,
-        canAbandon: true,
-      },
-      409,
-    );
+    const existing = (liveMatch as any).matches;
+    const existingIds: number[] = existing.scenario_ids ?? [];
+
+    const { data: names } = await admin
+      .from("scenarios")
+      .select("id, name")
+      .in("id", existingIds);
+
+    const nameById = new Map((names ?? []).map((s: any) => [s.id, s.name]));
+
+    const { data: existingSides } = await admin
+      .from("match_sides")
+      .select("player_id, match_score, provisional, rating_before, submitted_at, players!inner(display_name)")
+      .eq("match_id", liveMatch.match_id);
+
+    const other = (existingSides ?? []).find((s: any) => s.player_id !== caller.playerId);
+
+    return json({
+      matchId: liveMatch.match_id,
+      category: existing.category,
+      difficulty: existing.difficulty,
+      expiresAt: existing.expires_at,
+      scenarios: existingIds.map((id) => ({ id, name: nameById.get(id) ?? `scenario ${id}` })),
+      opponent: other
+        ? {
+            displayName: (other as any).players?.display_name ?? "player",
+            rating: Math.round(Number(other.rating_before ?? 1500)),
+            playedAt: other.submitted_at ?? existing.expires_at,
+            provisional: !!other.provisional,
+          }
+        : null,
+      seeding: !other,
+      resumed: true,
+      winProbability: null,
+      // Not counted on this path: the pool is only searched when looking for a new
+      // opponent, and reporting a number we did not measure would be worse than none.
+      poolSize: null,
+    });
   }
 
   // ---- the scenario pool for this benchmark difficulty -------------------------
