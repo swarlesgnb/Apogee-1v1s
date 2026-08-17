@@ -188,6 +188,48 @@ function main(): void {
   check("a zero baseline does not divide by zero",
     noBaseline.verdict === "void" && noBaseline.player.countedRounds === 0);
 
+  // ---- a crash is an absent round, not a bad one ---------------------------------
+  //
+  // The case that motivates all of this: the player alt-F4s eight seconds into the one
+  // attempt that counts. Scoring that would settle a complete match and hand them a
+  // loss for a game that stopped working.
+  const crashed = settleMatch({
+    playerRounds: [
+      { ...round("verified", 12, 100, 1), abandoned: true },
+      round("verified", 110, 100, 2),
+      round("verified", 108, 100, 3),
+    ],
+    opponentRounds: [
+      round("verified", 105, 100, 1),
+      round("verified", 105, 100, 2),
+      round("verified", 105, 100, 3),
+    ],
+  });
+  check("an abandoned round is not scored", crashed.player.countedRounds === 2);
+  check("an abandoned round voids rather than loses", crashed.verdict === "void");
+  check("a crash costs no rating", crashed.ratingWeight === 0);
+  check("the void names the scenario, not a round count",
+    /left before it finished/.test(crashed.voidReason ?? ""), crashed.voidReason);
+  check("the abandoned round says why it was dropped",
+    crashed.player.rounds[0].excludedReason === "left before the scenario finished");
+
+  // Without the flag the same terrible score is simply a terrible score, and losing is
+  // the correct outcome. The flag must be the only thing that changes it.
+  const playedBadly = settleMatch({
+    playerRounds: [
+      round("verified", 12, 100, 1),
+      round("verified", 110, 100, 2),
+      round("verified", 108, 100, 3),
+    ],
+    opponentRounds: [
+      round("verified", 105, 100, 1),
+      round("verified", 105, 100, 2),
+      round("verified", 105, 100, 3),
+    ],
+  });
+  check("the same score unflagged is a loss, not a void", playedBadly.verdict === "loss",
+    `${playedBadly.verdict}, ${playedBadly.player.countedRounds} rounds counted`);
+
   // ---- against real history ----------------------------------------------------
   console.log("\n── deltas from real play ────────────────────────");
 

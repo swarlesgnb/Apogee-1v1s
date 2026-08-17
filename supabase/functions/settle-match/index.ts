@@ -20,6 +20,7 @@ import {
 } from "../_shared/apogee.ts";
 
 import { baselineFromScores } from "../../../src/core/history/baseline.ts";
+import { isAbandonedRun } from "../../../src/core/stats/duration.ts";
 import { updateRating, type Rating } from "../../../src/core/rating/glicko2.ts";
 import {
   explainVerdict,
@@ -84,10 +85,21 @@ Deno.serve(handler(async (req, admin) => {
   // ---- the caller's runs for this match ------------------------------------------
   const { data: runs } = await admin
     .from("runs")
-    .select("id, scenario_id, scenario_name, score, verification_tier, played_at")
+    .select("id, scenario_id, scenario_name, score, verification_tier, played_at, duration_seconds")
     .eq("player_id", caller.playerId)
     .eq("match_id", matchId)
     .order("played_at", { ascending: true });
+
+  // How long each of these scenarios is supposed to last, so a run that stopped early
+  // can be told from one that went badly.
+  const { data: scenarioRows } = await admin
+    .from("scenarios")
+    .select("id, duration_seconds")
+    .in("id", scenarioIds);
+
+  const expectedSeconds = new Map<number, number | null>(
+    (scenarioRows ?? []).map((s: any) => [s.id, s.duration_seconds ?? null]),
+  );
 
   // One run per scenario: the first submitted counts, so a player cannot keep
   // retrying a scenario until it goes well and then settle.
@@ -96,6 +108,46 @@ Deno.serve(handler(async (req, admin) => {
     if (r.scenario_id != null && !firstByScenario.has(r.scenario_id)) {
       firstByScenario.set(r.scenario_id, r);
     }
+  }
+
+  // An abandoned round decides the match on its own: it is dropped rather than scored,
+  // which leaves the sides uneven and voids whatever else happens. So say so now rather
+  // than making the player finish two more scenarios to be told the same thing, and
+  // free the queue while they still want to use it.
+  const abandonedRun = [...firstByScenario.values()].find((r: any) =>
+    isAbandonedRun(
+      r.duration_seconds != null ? Number(r.duration_seconds) : null,
+      expectedSeconds.get(r.scenario_id) ?? null,
+    ),
+  );
+
+  if (abandonedRun) {
+    const settledAt = new Date().toISOString();
+
+    await admin
+      .from("match_sides")
+      .update({ result: null, submitted_at: settledAt })
+      .eq("match_id", matchId)
+      .eq("player_id", caller.playerId);
+
+    await admin
+      .from("matches")
+      .update({ status: "void", settled_at: settledAt })
+      .eq("id", matchId);
+
+    return json({
+      matchId,
+      verdict: "void",
+      rated: false,
+      voidReason: "a scenario was left before it finished",
+      scenario: abandonedRun.scenario_name,
+      playedSeconds: abandonedRun.duration_seconds != null ? Number(abandonedRun.duration_seconds) : null,
+      expectedSeconds: expectedSeconds.get(abandonedRun.scenario_id) ?? null,
+      ratingChange: 0,
+      message:
+        `${abandonedRun.scenario_name} ended early, so this match is void. ` +
+        "Nothing was rated. You can queue again now.",
+    });
   }
 
   const missing = scenarioIds.filter((id) => !firstByScenario.has(id));
@@ -155,6 +207,17 @@ Deno.serve(handler(async (req, admin) => {
       baseline: Number(baseline.value),
       provisional: !!baseline.provisional,
       verificationTier: run.verification_tier as VerificationTier,
+      // Left before the scenario finished. Not a bad score, an absent one: settleMatch
+      // drops the round rather than scoring it, which leaves the sides uneven and voids
+      // at zero rating weight. A crash costs nothing; only forfeiting on purpose does.
+      //
+      // Both sides of this can be null - an unreadable duration, or a scenario with no
+      // fixed length - and isAbandonedRun answers false to either, so a check that
+      // cannot be confident never voids anyone's match.
+      abandoned: isAbandonedRun(
+        run.duration_seconds != null ? Number(run.duration_seconds) : null,
+        expectedSeconds.get(scenarioId) ?? null,
+      ),
     });
   }
 

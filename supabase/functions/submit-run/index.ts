@@ -29,6 +29,7 @@ import {
 } from "../_shared/apogee.ts";
 
 import { parseStatsFile } from "../../../src/core/stats/parseStatsFile.ts";
+import { runDurationSeconds } from "../../../src/core/stats/duration.ts";
 import { baselineFromScores } from "../../../src/core/history/baseline.ts";
 import { verifyRun } from "../../../src/core/verify/verifyRun.ts";
 import { matchServerRecord, recentScores } from "../../../src/core/verify/kovaaksClient.ts";
@@ -153,6 +154,11 @@ Deno.serve(handler(async (req, admin) => {
       miss_count: run.missCount,
       played_at: (run.playedAt ?? new Date()).toISOString(),
       challenge_start: run.challengeStart,
+      // Computed here, from this parse, because it cannot be recovered later: the two
+      // ends are a local wall-clock time and a UTC timestamp, and subtracting those
+      // across a timezone gives the offset rather than a duration. Both values are in
+      // one frame only while the file is being read.
+      duration_seconds: runDurationSeconds(run.challengeStart, run.playedAt),
       hash: run.hash,
       game_version: run.gameVersion,
       avg_fps: run.avgFps,

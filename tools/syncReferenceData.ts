@@ -90,6 +90,18 @@ async function main(): Promise<void> {
     taxonomy.filter((s) => s.topScore).map((s) => [s.name, s.topScore!]),
   );
 
+  // Scenario length, so settlement can tell a crash from a bad run. Only scenarios with
+  // a fixed length carry a number; the ones that end early by design carry null and are
+  // never checked.
+  const durations = new Map(
+    readJson<{ durations: { scenario: string; seconds: number | null }[] }>(
+      "data",
+      "scenario_durations.json",
+    )
+      .durations.filter((d) => d.seconds != null)
+      .map((d) => [d.scenario, d.seconds!]),
+  );
+
   // Only scenarios that already exist are updated; this never invents rows, so a name
   // that is not in the benchmark set is simply skipped.
   const existing = await fetch(`${URL_BASE}/rest/v1/scenarios?select=name`, {
@@ -102,7 +114,8 @@ async function main(): Promise<void> {
   for (const name of known) {
     const model = models[name];
     const wr = worldRecords.get(name);
-    if (!model && wr == null) continue;
+    const duration = durations.get(name);
+    if (!model && wr == null && duration == null) continue;
 
     // PostgREST requires every object in a bulk upsert to carry the same keys, so all
     // three are always sent. Null is meaningful here rather than "leave alone": these
@@ -113,6 +126,7 @@ async function main(): Promise<void> {
       score_model_stat: model?.stat ?? null,
       score_model_k: model?.k ?? null,
       world_record: wr ?? null,
+      duration_seconds: duration ?? null,
     });
   }
 
@@ -120,6 +134,7 @@ async function main(): Promise<void> {
   console.log(`rows to update       : ${rows.length}`);
   console.log(`  with a score model : ${rows.filter((r) => r.score_model_stat).length}`);
   console.log(`  with a world record: ${rows.filter((r) => r.world_record != null).length}`);
+  console.log(`  with a duration    : ${rows.filter((r) => r.duration_seconds != null).length}`);
 
   if (DRY) {
     console.log("\n--dry-run, nothing written");
