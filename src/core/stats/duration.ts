@@ -38,6 +38,37 @@ export const MIN_COMPLETION_FRACTION = 0.9;
  */
 export const MIN_CHECKABLE_SECONDS = 20;
 
+/** `VT Aether Intermediate S5 - Challenge - 2026.08.17-13.01.16 Stats.csv` */
+const FILENAME_STAMP = /(\d{4})\.(\d{2})\.(\d{2})-(\d{2})\.(\d{2})\.(\d{2}) Stats\.csv$/;
+
+/**
+ * The instant a run finished, from its filename and the player's UTC offset.
+ *
+ * KovaaK's writes a bare local wall clock into the filename and records no offset
+ * anywhere, so those digits are not a moment in time until someone says where they were
+ * read. Parsing them with `new Date(y, m, d, ...)` silently supplies whatever timezone
+ * the *runtime* is in, which is right on the player's machine and wrong on a server.
+ *
+ * That is what rejected the first real match: three runs played at 13:01 local were
+ * stored as 13:01Z by an Edge Function running in UTC, six hours before a match window
+ * that had not opened yet, and every one came back "outside the match window". The
+ * backfill path never showed it, because that parses on the player's own machine where
+ * the accident happens to be correct.
+ *
+ * @param tzOffsetMinutes what `Date.prototype.getTimezoneOffset` reports on the
+ *        player's machine: minutes to *add* to local time to reach UTC, so UTC-6 is
+ *        +360. Sent with the run, because only the client can know it.
+ */
+export function playedAtUtc(filename: string, tzOffsetMinutes: number): Date | null {
+  const m = FILENAME_STAMP.exec(filename);
+  if (!m || !Number.isFinite(tzOffsetMinutes)) return null;
+
+  const wall = Date.UTC(+m[1], +m[2] - 1, +m[3], +m[4], +m[5], +m[6]);
+  if (Number.isNaN(wall)) return null;
+
+  return new Date(wall + tzOffsetMinutes * 60_000);
+}
+
 /**
  * Parse a `Challenge Start:` value ("17:31:49.055") to seconds past midnight.
  * Returns null rather than guessing when the shape is not what we expect.

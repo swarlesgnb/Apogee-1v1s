@@ -293,7 +293,22 @@ export async function submitRun(
     .map((b) => b.toString(16).padStart(2, "0"))
     .join("");
 
-  return callFunction<SubmittedRun>("submit-run", { filename, csv, csvSha256, matchId });
+  // The filename carries a bare local wall clock and KovaaK's records no offset, so
+  // only this machine can say what instant those digits mean. Without it the server
+  // reads them in its own timezone and every run lands hours from where it belongs.
+  //
+  // Safe to take from the client: it shifts nothing but the sender's own match window,
+  // and a wrong one puts their runs outside it, which is the check rejecting them
+  // rather than being fooled.
+  const tzOffsetMinutes = new Date().getTimezoneOffset();
+
+  return callFunction<SubmittedRun>("submit-run", {
+    filename,
+    csv,
+    csvSha256,
+    matchId,
+    tzOffsetMinutes,
+  });
 }
 
 export interface SettledMatch {

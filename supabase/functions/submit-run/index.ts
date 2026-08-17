@@ -29,7 +29,7 @@ import {
 } from "../_shared/apogee.ts";
 
 import { parseStatsFile } from "../../../src/core/stats/parseStatsFile.ts";
-import { runDurationSeconds } from "../../../src/core/stats/duration.ts";
+import { playedAtUtc, runDurationSeconds } from "../../../src/core/stats/duration.ts";
 import { baselineFromScores } from "../../../src/core/history/baseline.ts";
 import { verifyRun } from "../../../src/core/verify/verifyRun.ts";
 import { matchServerRecord, recentScores } from "../../../src/core/verify/kovaaksClient.ts";
@@ -43,6 +43,8 @@ interface Body {
   csvSha256: string;
   /** Set when the run is being submitted for a match. */
   matchId?: string;
+  /** Minutes to add to the player's local time to reach UTC; see playedAtUtc. */
+  tzOffsetMinutes?: number;
 }
 
 /**
@@ -89,6 +91,24 @@ Deno.serve(handler(async (req, admin) => {
   const parsed = parseStatsFile(body.filename, body.csv);
   if (!parsed.ok) throw new HttpError(400, `could not parse stats file: ${parsed.reason}`);
   const run = parsed.run;
+
+  // Duration first, from the wall clock, then the wall clock is corrected to an instant.
+  //
+  // The two need opposite things from the same digits. A duration is the gap between
+  // two local readings and is only right while both are in the same frame - which is
+  // why it is computed here at all. `played_at` has to be a real moment, comparable to
+  // a match window recorded in UTC, and the filename alone cannot supply one.
+  const durationSeconds = runDurationSeconds(run.challengeStart, run.playedAt);
+
+  // Correct the parse, which read the filename's local wall clock in the server's own
+  // timezone. Without this every run from a player outside UTC lands hours from where
+  // it belongs and falls outside its match window; that is what rejected all three runs
+  // of the first real match. An older client that sends no offset keeps the old
+  // behaviour rather than being refused.
+  if (body.tzOffsetMinutes != null) {
+    const corrected = playedAtUtc(body.filename, body.tzOffsetMinutes);
+    if (corrected) run.playedAt = corrected;
+  }
 
   const scenario = await scenarioByName(admin, run.scenario);
 
@@ -174,11 +194,7 @@ Deno.serve(handler(async (req, admin) => {
       miss_count: run.missCount,
       played_at: (run.playedAt ?? new Date()).toISOString(),
       challenge_start: run.challengeStart,
-      // Computed here, from this parse, because it cannot be recovered later: the two
-      // ends are a local wall-clock time and a UTC timestamp, and subtracting those
-      // across a timezone gives the offset rather than a duration. Both values are in
-      // one frame only while the file is being read.
-      duration_seconds: runDurationSeconds(run.challengeStart, run.playedAt),
+      duration_seconds: durationSeconds,
       hash: run.hash,
       game_version: run.gameVersion,
       avg_fps: run.avgFps,
