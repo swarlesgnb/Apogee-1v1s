@@ -28,6 +28,7 @@ import { signInWithSteam } from "../core/sync/steamAuth.ts";
 import {
   fetchStanding,
   abandonMatch,
+  fetchActiveMatch,
   findMatch,
   refreshBaselines,
   settleMatch,
@@ -481,10 +482,27 @@ app.whenReady().then(() => {
   // does not re-authenticate every launch. Failure here is not worth surfacing: it
   // simply means they are signed out.
   void restoreSession()
-    .then((session) => {
-      if (session) {
-        state.session = session;
-        broadcast("apogee:session", session);
+    .then(async (session) => {
+      if (!session) return;
+
+      state.session = session;
+      broadcast("apogee:session", session);
+
+      // Recover a match left open by a previous run of the app. The watcher only
+      // submits a run against a match it knows about, so without this a player who
+      // restarts mid-match plays all three scenarios for nothing: the runs upload as
+      // ordinary history, the match stays at awaiting_runs, and nothing reports a
+      // problem because nothing went wrong from anyone's point of view.
+      try {
+        const active = await fetchActiveMatch();
+        if (active) {
+          state.match = active;
+          state.submitted.clear();
+          broadcast("apogee:match", active);
+        }
+      } catch {
+        // Best effort. Queueing surfaces the same match anyway, so a failure here
+        // costs a convenience rather than the match.
       }
     })
     .catch(() => undefined);

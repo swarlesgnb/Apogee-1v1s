@@ -166,6 +166,79 @@ export function findMatch(category: string, difficulty: string): Promise<FoundMa
   return callFunction<FoundMatch>("find-match", { category, difficulty });
 }
 
+/**
+ * The match this player is already in, if any.
+ *
+ * Without this, restarting the app mid-match loses the client's knowledge of it while
+ * the server keeps it open, and the watcher then has nothing to attach runs to: the
+ * player plays all three scenarios and not one of them counts. Nothing errors, the
+ * runs upload as ordinary history, and the match sits at awaiting_runs forever.
+ *
+ * Read straight from the tables rather than through a function. RLS already lets a
+ * participant read their own match and sides, so no new endpoint has to exist, and
+ * nothing here decides anything - it only restores what the client had.
+ */
+export async function fetchActiveMatch(): Promise<FoundMatch | null> {
+  const client = supabase();
+  const token = await accessToken();
+  if (!token) return null;
+
+  const { data: sides } = await client
+    .from("match_sides")
+    .select("match_id, player_id, rating_before, provisional, submitted_at, matches!inner(id, status, category, difficulty, scenario_ids, expires_at)")
+    .in("matches.status", ["open", "awaiting_runs"]);
+
+  const now = Date.now();
+  const mine = (sides ?? []).find((row: any) => {
+    const m = row.matches;
+    if (!m) return false;
+    return m.expires_at == null || new Date(m.expires_at).getTime() > now;
+  });
+
+  if (!mine) return null;
+
+  const match = (mine as any).matches;
+  const scenarioIds: number[] = match.scenario_ids ?? [];
+
+  const { data: names } = await client
+    .from("scenarios")
+    .select("id, name")
+    .in("id", scenarioIds);
+
+  const nameById = new Map((names ?? []).map((s: any) => [s.id, s.name]));
+
+  // The opponent's own side, if this is a contested match rather than a seeding one.
+  const { data: allSides } = await client
+    .from("match_sides")
+    .select("player_id, rating_before, provisional, submitted_at")
+    .eq("match_id", match.id);
+
+  const other = (allSides ?? []).find((s: any) => s.player_id !== (mine as any).player_id);
+
+  return {
+    matchId: match.id,
+    category: match.category,
+    difficulty: match.difficulty,
+    expiresAt: match.expires_at,
+    scenarios: scenarioIds.map((id) => ({ id, name: nameById.get(id) ?? `scenario ${id}` })),
+    opponent: other
+      ? {
+          // Display names are not readable from the client any more (players is
+          // owner-only since the RLS fix), so the server names the opponent when it
+          // hands out the match. On recovery we only know that there is one.
+          displayName: "your opponent",
+          rating: Math.round(Number(other.rating_before ?? 1500)),
+          playedAt: other.submitted_at ?? match.expires_at,
+          provisional: !!other.provisional,
+        }
+      : null,
+    seeding: !other,
+    resumed: true,
+    winProbability: null,
+    poolSize: null,
+  };
+}
+
 export interface AbandonResult {
   ok: boolean;
   matchId?: string;
