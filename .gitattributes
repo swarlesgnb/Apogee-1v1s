@@ -1,0 +1,10 @@
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.ico binary
+
+package-lock.json linguist-generated
+data/*.json linguist-generated
+data/benchmarks/*.json linguist-generated
+tools/arena-ui-preview.html linguist-generated
