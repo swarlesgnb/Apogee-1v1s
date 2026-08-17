@@ -1,0 +1,1080 @@
+<title>Arena Internals</title>
+<style>
+  /* ------------------------------------------------------------------
+     A technical manual, not the app.
+
+     Arena's client is a dark instrument panel, which is right for a thing
+     you glance at between runs and wrong for a document you read for an
+     hour. So this is light-first and quiet: neutrals carry a slight cool
+     bias so they read as chosen, one slate-teal accent, and semantic
+     colour (good / warning / bad) kept deliberately separate from it so a
+     red number always means the same thing.
+
+     Every colour is a token, defined once on :root and redefined for dark.
+     Nothing is coloured inside a media block directly.
+     ------------------------------------------------------------------ */
+  :root {
+    --paper: #f7f8fa;
+    --surface: #ffffff;
+    --sunken: #eef1f5;
+    --ink: #14181f;
+    --ink-mid: #4a5464;
+    --ink-dim: #78828f;
+    --line: #dfe3ea;
+    --line-strong: #c4cbd6;
+
+    --accent: #14706b;
+    --accent-soft: #e3f1ef;
+
+    --good: #1b7a4e;
+    --warn: #96650f;
+    --bad: #a8322a;
+    --good-soft: #e6f4ec;
+    --warn-soft: #fbf1de;
+    --bad-soft: #fbeae8;
+
+    --font: ui-sans-serif, "Segoe UI Variable Text", "Segoe UI", system-ui,
+            -apple-system, "Helvetica Neue", sans-serif;
+    --mono: ui-monospace, "Cascadia Mono", "Cascadia Code", Consolas,
+            "SF Mono", "Roboto Mono", monospace;
+
+    --measure: 68ch;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #0f1319;
+      --surface: #151a21;
+      --sunken: #10151b;
+      --ink: #e8ecf3;
+      --ink-mid: #a4aebd;
+      --ink-dim: #7b8593;
+      --line: #242c36;
+      --line-strong: #343d49;
+
+      --accent: #4ec9be;
+      --accent-soft: #10322f;
+
+      --good: #4fc98a;
+      --warn: #e0ab4a;
+      --bad: #f0796d;
+      --good-soft: #10291d;
+      --warn-soft: #2b2313;
+      --bad-soft: #2c1917;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --paper: #0f1319;
+    --surface: #151a21;
+    --sunken: #10151b;
+    --ink: #e8ecf3;
+    --ink-mid: #a4aebd;
+    --ink-dim: #7b8593;
+    --line: #242c36;
+    --line-strong: #343d49;
+
+    --accent: #4ec9be;
+    --accent-soft: #10322f;
+
+    --good: #4fc98a;
+    --warn: #e0ab4a;
+    --bad: #f0796d;
+    --good-soft: #10291d;
+    --warn-soft: #2b2313;
+    --bad-soft: #2c1917;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font);
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ---------------- shell ---------------- */
+  .page {
+    max-width: 1160px;
+    margin: 0 auto;
+    padding: 40px 24px 96px;
+    display: grid;
+    grid-template-columns: 210px minmax(0, 1fr);
+    gap: 44px;
+    align-items: start;
+  }
+  @media (max-width: 900px) {
+    .page { grid-template-columns: minmax(0, 1fr); gap: 0; }
+    .toc { position: static; margin-bottom: 32px; }
+  }
+
+  /* ---------------- contents ---------------- */
+  .toc {
+    position: sticky;
+    top: 28px;
+    font-size: 13.5px;
+  }
+  .toc h2 {
+    margin: 0 0 10px;
+    font-size: 10.5px;
+    font-weight: 680;
+    text-transform: uppercase;
+    letter-spacing: .11em;
+    color: var(--ink-dim);
+  }
+  .toc ol { margin: 0; padding: 0; list-style: none; display: grid; gap: 2px; }
+  .toc a {
+    display: block;
+    padding: 4px 9px;
+    border-radius: 6px;
+    color: var(--ink-mid);
+    text-decoration: none;
+    border-left: 2px solid transparent;
+  }
+  .toc a:hover { color: var(--ink); background: var(--sunken); }
+  .toc a:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+  /* ---------------- masthead ---------------- */
+  .masthead { margin-bottom: 40px; }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  h1 {
+    margin: 10px 0 0;
+    font-size: 40px;
+    font-weight: 700;
+    letter-spacing: -.025em;
+    line-height: 1.1;
+    text-wrap: balance;
+  }
+  .standfirst {
+    margin: 14px 0 0;
+    font-size: 18px;
+    line-height: 1.55;
+    color: var(--ink-mid);
+    max-width: var(--measure);
+    text-wrap: balance;
+  }
+  .meta {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 22px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink-dim);
+    font-variant-numeric: tabular-nums;
+  }
+  .meta b { color: var(--ink); font-weight: 600; }
+
+  /* ---------------- sections ---------------- */
+  section { margin-top: 56px; scroll-margin-top: 24px; }
+  h2 {
+    margin: 0 0 6px;
+    font-size: 25px;
+    font-weight: 680;
+    letter-spacing: -.018em;
+    text-wrap: balance;
+  }
+  .lede {
+    margin: 0 0 22px;
+    color: var(--ink-mid);
+    max-width: var(--measure);
+  }
+  h3 {
+    margin: 34px 0 8px;
+    font-size: 16.5px;
+    font-weight: 660;
+    letter-spacing: -.008em;
+  }
+  p { max-width: var(--measure); margin: 0 0 14px; }
+  ul, ol.body-list { max-width: var(--measure); padding-left: 20px; margin: 0 0 14px; }
+  li { margin-bottom: 7px; }
+  strong { font-weight: 640; }
+  a { color: var(--accent); }
+
+  code {
+    font-family: var(--mono);
+    font-size: .88em;
+    background: var(--sunken);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 1px 5px;
+  }
+
+  /* ---------------- exhibits ---------------- */
+  .exhibit {
+    margin: 22px 0;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .exhibit-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 11px 16px;
+    border-bottom: 1px solid var(--line);
+    font-size: 11px;
+    font-weight: 660;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+  }
+  .exhibit-head .src { font-family: var(--mono); letter-spacing: 0; text-transform: none; }
+  .exhibit-body { padding: 16px; overflow-x: auto; }
+
+  pre {
+    margin: 0;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: var(--ink);
+    white-space: pre;
+  }
+
+  /* ---------------- flow diagram ---------------- */
+  .flow { display: grid; gap: 0; }
+  .step {
+    display: grid;
+    grid-template-columns: 30px minmax(0, 1fr);
+    gap: 14px;
+    align-items: start;
+  }
+  .step-num {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    font-weight: 640;
+    color: var(--accent);
+    background: var(--accent-soft);
+    border-radius: 50%;
+    width: 26px; height: 26px;
+    display: grid; place-items: center;
+    margin-top: 2px;
+  }
+  .step-body { padding-bottom: 20px; }
+  .step-title { font-weight: 640; font-size: 15px; }
+  .step-where {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--ink-dim);
+    margin-top: 2px;
+  }
+  .step-note { font-size: 14px; color: var(--ink-mid); margin-top: 6px; max-width: 62ch; }
+  .step-rail {
+    grid-column: 1;
+    width: 1px;
+    background: var(--line-strong);
+    margin: 0 auto;
+    height: 100%;
+  }
+  .step:last-child .step-rail { display: none; }
+
+  /* ---------------- tables ---------------- */
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th {
+    text-align: left;
+    padding: 0 14px 8px 0;
+    font-size: 10.5px;
+    font-weight: 680;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    white-space: nowrap;
+  }
+  td {
+    padding: 9px 14px 9px 0;
+    border-top: 1px solid var(--line);
+    vertical-align: top;
+  }
+  td.num, th.num { text-align: right; font-family: var(--mono); font-variant-numeric: tabular-nums; }
+  .mono { font-family: var(--mono); font-size: 12.5px; }
+
+  /* ---------------- callouts ---------------- */
+  .note {
+    margin: 20px 0;
+    padding: 14px 16px;
+    border-radius: 9px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    max-width: var(--measure);
+  }
+  .note p:last-child { margin-bottom: 0; }
+  .note-label {
+    font-size: 10.5px;
+    font-weight: 680;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .note.why { border-color: var(--accent); background: var(--accent-soft); }
+  .note.why .note-label { color: var(--accent); }
+  .note.trap { border-color: var(--bad); background: var(--bad-soft); }
+  .note.trap .note-label { color: var(--bad); }
+  .note.found { border-color: var(--warn); background: var(--warn-soft); }
+  .note.found .note-label { color: var(--warn); }
+
+  .pill {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 1px 7px;
+    border-radius: 999px;
+    border: 1px solid currentColor;
+    vertical-align: 1px;
+  }
+  .pill.good { color: var(--good); }
+  .pill.warn { color: var(--warn); }
+  .pill.bad { color: var(--bad); }
+
+  footer {
+    margin-top: 64px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+    font-size: 13px;
+    color: var(--ink-dim);
+    max-width: var(--measure);
+  }
+</style>
+
+<div class="page">
+  <nav class="toc" aria-label="Contents">
+    <h2>Contents</h2>
+    <ol>
+      <li><a href="#what">What Arena is</a></li>
+      <li><a href="#spine">The spine</a></li>
+      <li><a href="#concepts">Five concepts</a></li>
+      <li><a href="#security">The security model</a></li>
+      <li><a href="#map">Where things live</a></li>
+      <li><a href="#found">Found, not designed</a></li>
+      <li><a href="#bugs">Bugs and lessons</a></li>
+      <li><a href="#verify">Verify it yourself</a></li>
+      <li><a href="#todo">Not done yet</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <header class="masthead">
+      <div class="eyebrow">Arena · technical reference</div>
+      <h1>Arena Internals</h1>
+      <p class="standfirst">
+        How a CSV file that KovaaK's writes to disk becomes a rating change on a
+        competitive ladder, and why each part works the way it does.
+      </p>
+      <div class="meta">
+        <span><b>76</b> files</span>
+        <span><b>18,496</b> lines</span>
+        <span><b>12</b> validation suites</span>
+        <span><b>5</b> edge functions</span>
+        <span><b>11,104</b> runs uploaded</span>
+      </div>
+    </header>
+
+    <!-- ================================================================= -->
+    <section id="what">
+      <h2>What Arena is</h2>
+      <p class="lede">One sentence: ranked matchmaking for aim, played inside KovaaK's.</p>
+
+      <p>
+        Arena is not an aim trainer. KovaaK's owns that space and there is no reason to
+        compete with it. Arena is a layer on top that supplies the one thing solo
+        benchmark grinding cannot: an opponent.
+      </p>
+      <p>
+        The player never leaves their routine. They queue for a category, Arena names
+        three scenarios, they alt-tab to KovaaK's and play them exactly as they always
+        would. Arena watches the stats folder, picks the runs up, verifies them, settles
+        the match and moves the rating. No score entry, no screenshots, no honour system.
+      </p>
+
+      <div class="note why">
+        <div class="note-label">Why this shape</div>
+        <p>
+          Everything else in the space is read-only. evxl shows you a number. KovaaK's
+          leaderboards tell you that you are #4,182 of 58,017, which means nothing
+          emotionally. Voltaic defines a standard, not a game. Nobody owns
+          <em>matched competitive aim</em>, and that gap is the whole opportunity.
+        </p>
+      </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <section id="spine">
+      <h2>The spine</h2>
+      <p class="lede">
+        A run's journey, end to end. This is the sequence worth memorising; almost every
+        file in the project is a step on it.
+      </p>
+
+      <div class="exhibit">
+        <div class="exhibit-head">
+          <span>From keypress to rating change</span>
+          <span class="src">9 steps</span>
+        </div>
+        <div class="exhibit-body">
+          <div class="flow">
+
+            <div class="step">
+              <div class="step-num">1</div>
+              <div class="step-body">
+                <div class="step-title">KovaaK's writes a CSV</div>
+                <div class="step-where">…/FPSAimTrainer/stats/&lt;Scenario&gt; - Challenge - &lt;date&gt; Stats.csv</div>
+                <p class="step-note">
+                  Written progressively as the run ends. Contains per-kill rows, a weapon
+                  block, and a key/value tail with <code>Score:</code>, <code>Hash:</code>
+                  and <code>Challenge Start:</code>.
+                </p>
+              </div>
+            </div>
+
+            <div class="step">
+              <div class="step-num">2</div>
+              <div class="step-body">
+                <div class="step-title">The watcher notices</div>
+                <div class="step-where">src/app/watcher.ts</div>
+                <p class="step-note">
+                  Waits for the file's size to stop changing before reading. Parsing on
+                  the first filesystem event yields a truncated file with no
+                  <code>Score:</code> line, which is the classic way to get this wrong.
+                </p>
+              </div>
+            </div>
+
+            <div class="step">
+              <div class="step-num">3</div>
+              <div class="step-body">
+                <div class="step-title">The parser reads it</div>
+                <div class="step-where">src/core/stats/parseStatsFile.ts</div>
+                <p class="step-note">
+                  Never throws. A crash mid-run leaves a partial CSV, and a watcher that
+                  dies on one bad file is useless. Validated against all 11,058 files in
+                  the corpus: 100% parsed, zero exceptions.
+                </p>
+              </div>
+            </div>
+
+            <div class="step">
+              <div class="step-num">4</div>
+              <div class="step-body">
+                <div class="step-title">If it belongs to a match, it uploads itself</div>
+                <div class="step-where">src/app/main.ts → supabase/functions/submit-run</div>
+                <p class="step-note">
+                  The <em>whole CSV</em> goes to the server, not a summary. That way the
+                  integrity checks run over the file as KovaaK's wrote it, and a client
+                  cannot present tidy numbers contradicting rows it never sent.
+                </p>
+              </div>
+            </div>
+
+            <div class="step">
+              <div class="step-num">5</div>
+              <div class="step-body">
+                <div class="step-title">The server verifies it, twice</div>
+                <div class="step-where">src/core/verify/consistency.ts + kovaaksClient.ts</div>
+                <p class="step-note">
+                  Local integrity (does the file agree with itself?) and a cross-check
+                  against KovaaK's own servers (did this run actually happen?). The run
+                  comes out labelled <span class="pill good">verified</span>
+                  <span class="pill">consistent</span>
+                  <span class="pill warn">suspect</span> or
+                  <span class="pill bad">rejected</span>.
+                </p>
+              </div>
+            </div>
+
+            <div class="step">
+              <div class="step-num">6</div>
+              <div class="step-body">
+                <div class="step-title">Your baseline is recomputed</div>
+                <div class="step-where">src/core/history/baseline.ts</div>
+                <p class="step-note">
+                  The number every match is scored against. Always derived from stored
+                  runs on the server, never taken from the client.
+                </p>
+              </div>
+            </div>
+
+            <div class="step">
+              <div class="step-num">7</div>
+              <div class="step-body">
+                <div class="step-title">When all three land, the match settles</div>
+                <div class="step-where">supabase/functions/settle-match</div>
+                <p class="step-note">
+                  Deltas recomputed from stored rows, compared against the opponent's
+                  frozen deltas, verdict decided. Idempotent: calling twice cannot apply
+                  the rating change twice.
+                </p>
+              </div>
+            </div>
+
+            <div class="step">
+              <div class="step-num">8</div>
+              <div class="step-body">
+                <div class="step-title">Glicko-2 moves your rating</div>
+                <div class="step-where">src/core/rating/glicko2.ts</div>
+                <p class="step-note">
+                  Damped by a weight if either side used a provisional baseline, so a
+                  noisy match still counts but moves the ladder less.
+                </p>
+              </div>
+            </div>
+
+            <div class="step">
+              <div class="step-num">9</div>
+              <div class="step-body">
+                <div class="step-title">Quests reconcile, XP lands</div>
+                <div class="step-where">src/core/quests/progression.ts</div>
+                <p class="step-note">
+                  Progress is recomputed from history rather than counted as events, so a
+                  completion cannot be lost by the app being closed at the wrong moment.
+                </p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <section id="concepts">
+      <h2>Five concepts</h2>
+      <p class="lede">
+        Learn these and the rest of the codebase reads easily. Every number below is from
+        your own data.
+      </p>
+
+      <h3>1. Baseline — what you normally score</h3>
+      <div class="exhibit">
+        <div class="exhibit-head">
+          <span>Definition</span>
+          <span class="src">src/core/history/baseline.ts</span>
+        </div>
+        <div class="exhibit-body">
+<pre>baseline = max( median(last 50 runs),  0.9 × verified personal best )</pre>
+        </div>
+      </div>
+      <p>
+        A median, not a mean, because it ignores outliers in both directions: one
+        disastrous run does not drag it down, one lucky run does not inflate it. The
+        floor at 90% of your KovaaK's-verified PB is what stops sandbagging — you cannot
+        claim a baseline far below what KovaaK's itself vouches you can do.
+      </p>
+
+      <div class="note found">
+        <div class="note-label">Corrected by measurement</div>
+        <p>
+          The first version used the mean of your best 30% of recent runs, for sandbag
+          resistance. Measured across 156 scenarios of your history it was badly
+          off-centre: only <strong>26%</strong> of genuine runs landed above their own
+          baseline, so matches were decided by who avoided a disaster rather than who
+          played well. The <em>PB floor</em> turned out to be doing the anti-sandbag work,
+          not the high-water statistic — so the statistic could be swapped for a centred
+          one at almost no cost.
+        </p>
+      </div>
+
+      <div class="exhibit">
+        <div class="exhibit-head">
+          <span>Four definitions, tested on your history</span>
+          <span class="src">npm run compare:baselines</span>
+        </div>
+        <div class="exhibit-body">
+          <table>
+            <thead>
+              <tr><th>Definition</th><th class="num">Mean delta</th><th class="num">Above baseline</th><th class="num">Sandbag drop</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>top 30% (first attempt)</td><td class="num">−3.8%</td><td class="num">26%</td><td class="num">3.0%</td></tr>
+              <tr><td><strong>median</strong> (shipped)</td><td class="num"><strong>+0.4%</strong></td><td class="num"><strong>58%</strong></td><td class="num"><strong>3.5%</strong></td></tr>
+              <tr><td>plain mean</td><td class="num">+0.6%</td><td class="num">60%</td><td class="num">9.3%</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <h3>2. Delta — how you did today</h3>
+      <div class="exhibit">
+        <div class="exhibit-head">
+          <span>Definition</span>
+          <span class="src">src/core/match/settle.ts</span>
+        </div>
+        <div class="exhibit-body">
+<pre>delta      = (score − baseline) / baseline
+matchScore = mean(delta₁, delta₂, delta₃)     higher wins</pre>
+        </div>
+      </div>
+      <p>
+        Normalising against each player's own baseline is what lets any two players have
+        a real contest. The question stops being "who has more hours on this scenario"
+        and becomes "who showed up sharper today".
+      </p>
+      <div class="note trap">
+        <div class="note-label">The cost, and it is real</div>
+        <p>
+          <strong>You can score higher and still lose.</strong> That is intended, not a
+          bug — but it reads as broken unless it is explained the moment it happens. Every
+          result screen shows raw scores, baselines and deltas together, and
+          <code>explainVerdict()</code> names the case in words when it occurs.
+        </p>
+      </div>
+
+      <h3>3. Energy — how Voltaic ranks</h3>
+      <p>
+        Reverse-engineered from KovaaK's own API and then validated against real accounts:
+        computed category and overall progress match the server to within
+        <strong>0.005 energy</strong> across 20 checks.
+      </p>
+      <div class="exhibit">
+        <div class="exhibit-head">
+          <span>The rule</span>
+          <span class="src">src/core/benchmarks/energy.ts</span>
+        </div>
+        <div class="exhibit-body">
+<pre>threshold i is worth   2500 × (i + 1)   energy
+between thresholds     linear interpolation
+below the first        scales from zero
+above the last         caps
+
+category energy  = sum of its scenarios
+category rank    = highest category threshold met</pre>
+        </div>
+      </div>
+      <p>
+        The subtlety: per-scenario energy is on a <em>universal</em> scale, but category
+        thresholds differ — Switching demands more energy for the same rank than Clicking
+        does. Getting that backwards is the easy mistake, and it is the reason the two
+        numbers are stored separately.
+      </p>
+
+      <h3>4. Floor — what you can do reliably</h3>
+      <div class="exhibit">
+        <div class="exhibit-head">
+          <span>Definition</span>
+          <span class="src">src/core/consistency/floor.ts</span>
+        </div>
+        <div class="exhibit-body">
+<pre>floor   = worst of your last 5 runs
+ceiling = your best ever          ← what every benchmark ranks
+gap     = (ceiling − floor) / ceiling</pre>
+        </div>
+      </div>
+      <p>
+        The floor is fed through the <em>same</em> energy engine as the ceiling, so
+        "Diamond ceiling, Platinum floor" is a literal statement rather than a metaphor.
+        Only the score going in differs.
+      </p>
+      <div class="exhibit">
+        <div class="exhibit-head">
+          <span>Your own numbers · Voltaic S5 Intermediate</span>
+          <span class="src">npm run consistency</span>
+        </div>
+        <div class="exhibit-body">
+          <p style="max-width:none;margin:0 0 14px;font-size:14px;color:var(--ink-mid)">
+            Ceiling <strong>Diamond</strong>, 120,692 energy. Floor
+            <strong>Platinum</strong>, 50,528 energy. <strong>Gap 16.1%</strong> — the
+            single number to close.
+          </p>
+          <table>
+            <thead>
+              <tr><th>Scenario</th><th class="num">Ceiling</th><th class="num">Floor</th><th class="num">Gap</th><th>Rank drop</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Ground</td><td class="num">2949</td><td class="num">2054</td><td class="num">30.3%</td><td>Diamond → unranked</td></tr>
+              <tr><td>Popcorn</td><td class="num">760</td><td class="num">530</td><td class="num">30.3%</td><td>Diamond → unranked</td></tr>
+              <tr><td>PGT</td><td class="num">2909</td><td class="num">2199</td><td class="num">24.4%</td><td>Diamond → unranked</td></tr>
+              <tr><td>Controlsphere</td><td class="num">3270</td><td class="num">3084</td><td class="num">5.7%</td><td>none</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <p>
+        Every benchmark in existence scores the 2909. In a game there is no retry, so the
+        2199 run is the one that decides a fight. Scoring the floor inverts the incentive:
+        chasing a personal best rewards variance, scoring the worst of a window punishes
+        it.
+      </p>
+
+      <h3>5. Verification tier — how much a run is trusted</h3>
+      <div class="exhibit">
+        <div class="exhibit-head">
+          <span>Tiers</span>
+          <span class="src">src/core/verify/verifyRun.ts</span>
+        </div>
+        <div class="exhibit-body">
+          <table>
+            <thead><tr><th>Tier</th><th>Means</th><th>Effect</th></tr></thead>
+            <tbody>
+              <tr><td><span class="pill good">verified</span></td><td>KovaaK's servers hold a matching record</td><td>counts fully</td></tr>
+              <tr><td><span class="pill">consistent</span></td><td>internally coherent, no server record</td><td>counts fully</td></tr>
+              <tr><td><span class="pill warn">suspect</span></td><td>above your verified PB with no server record</td><td>counts, flagged for review</td></tr>
+              <tr><td><span class="pill bad">rejected</span></td><td>the file disagrees with itself</td><td>voids the match</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="note found">
+        <div class="note-label">Why suspect is not rejected</div>
+        <p>
+          The original design auto-voided anything above your PB with no server record.
+          Testing that against your data showed it would produce false positives:
+          <strong>16 of 18</strong> local bests matched KovaaK's exactly, but two did not,
+          and both runs were genuine. Roughly <strong>1 in 9</strong> real personal bests
+          never reaches KovaaK's servers — offline play, a crash, a failed submit. A rule
+          that voids matches on that basis punishes honest players at a rate no ladder
+          survives.
+        </p>
+      </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <section id="security">
+      <h2>The security model</h2>
+      <p class="lede">One rule, and everything else follows from it.</p>
+
+      <div class="note why">
+        <div class="note-label">The rule</div>
+        <p>
+          <strong>The client never computes anything that matters.</strong> It parses
+          CSVs, hashes them, and uploads facts. Baselines, deltas, verification tiers and
+          ratings are all computed server-side. A client that can write its own rating is
+          a client that will.
+        </p>
+      </div>
+
+      <p>Row-level security enforces it rather than convention:</p>
+      <ul>
+        <li>
+          Clients hold <strong>no write grant whatsoever</strong> on <code>ratings</code>,
+          <code>matches</code>, <code>match_sides</code>, <code>baselines</code> or
+          <code>verified_pbs</code>. Those are written only by Edge Functions using the
+          service role, which bypasses RLS.
+        </li>
+        <li>
+          Runs are <strong>insert-and-read only</strong> — no update, no delete. History
+          is append-only, so a bad run cannot be quietly removed after the fact.
+        </li>
+        <li>
+          <code>runs.csv_sha256</code> is unique per player. That single constraint gives
+          both idempotent backfill <em>and</em> replay protection: re-syncing is a no-op,
+          and a good run cannot be submitted twice to win two matches.
+        </li>
+        <li>
+          The scenario a run belongs to is resolved <strong>by the server</strong> from
+          the name. Letting a client nominate a <code>scenario_id</code> would let it file
+          a run against whichever scenario flattered it most.
+        </li>
+      </ul>
+
+      <h3>The two keys</h3>
+      <p>
+        The <strong>anon key</strong> is designed to be public and ships inside the
+        desktop app. RLS is what protects the data, not the key. The
+        <strong>service&nbsp;role key</strong> bypasses RLS entirely — anyone holding it
+        can rewrite every rating in the database. It belongs only in Edge Function secrets
+        on Supabase's servers, and the desktop build deliberately never even reads it.
+      </p>
+
+      <h3>Steam sign-in</h3>
+      <p>
+        Supabase has no native Steam provider and cannot have one: Steam speaks OpenID
+        2.0, which is not an OAuth2 flow at all. <code>supabase/functions/steam-auth</code>
+        bridges the gap — it runs the OpenID dance, verifies the assertion
+        <em>with Steam directly</em>, and only then mints a Supabase session.
+      </p>
+      <div class="note trap">
+        <div class="note-label">Not skippable</div>
+        <p>
+          Without that verification step, anyone could forge a callback naming any
+          SteamID and take over that account. The SteamID is the join key to KovaaK's
+          leaderboards, so a weak binding here would make every score check meaningless.
+        </p>
+      </div>
+      <p>
+        The desktop side uses the RFC 8252 loopback pattern: the app listens on an
+        ephemeral <code>127.0.0.1</code> port, the browser handles login, and a
+        <strong>single-use token</strong> — never a session — crosses back over loopback
+        to be redeemed. The whole flow lives in the main process, so no token ever reaches
+        the renderer.
+      </p>
+    </section>
+
+    <!-- ================================================================= -->
+    <section id="map">
+      <h2>Where things live</h2>
+      <p class="lede">
+        <code>src/core</code> is the brain and is pure logic. It has no idea whether it is
+        running in Electron, in a Deno Edge Function, or in a terminal — which is exactly
+        why the same settlement code runs on the server and in the test suite.
+      </p>
+
+      <div class="exhibit">
+        <div class="exhibit-head"><span>Layout</span><span class="src">76 files · 18,496 lines</span></div>
+        <div class="exhibit-body">
+<pre>src/core/                      the brain — pure, portable, no I/O assumptions
+  stats/          parse KovaaK's CSVs
+  benchmarks/     Voltaic energy and rank computation
+  history/        run history, baselines
+  rating/         Glicko-2
+  match/          scenario selection, settlement, matchmaking, live queue
+  verify/         integrity checks, KovaaK's cross-check, score models
+  consistency/    floor scoring, ceiling-vs-floor report
+  quests/         evxl links, quest generation, floor quests, XP
+  ranks/          Arena's own rank ladder
+  sync/           Steam sign-in, run upload
+  report/         profile, weakness map, UI snapshot
+
+src/app/                       the desktop client (Electron)
+  main.ts         window, watcher, IPC, orchestration
+  preload.cjs     the entire surface the renderer may touch
+  session.ts      Steam sign-in, encrypted session storage
+  api.ts          calls to the backend
+  watcher.ts      stats folder watching
+  renderer/       the UI — a pure view, decides nothing
+
+supabase/
+  migrations/     12 tables, RLS policies, triggers
+  functions/      steam-auth, submit-run, find-match,
+                  settle-match, refresh-baselines
+  seed.sql        248 scenarios, 261 benchmark memberships
+
+tools/                         build-time data extraction and checks
+data/                          committed reference data</pre>
+        </div>
+      </div>
+
+      <div class="note why">
+        <div class="note-label">Why core is separate</div>
+        <p>
+          The Edge Functions import straight from <code>src/core</code>. Settlement,
+          Glicko-2 and the integrity checks are therefore <em>the same code</em> the local
+          suites exercise — there is no second implementation to drift out of sync. When
+          the deploy log shows it uploading <code>src/core/history/baseline.ts</code>,
+          that is the mechanism working.
+        </p>
+      </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <section id="found">
+      <h2>Found, not designed</h2>
+      <p class="lede">
+        The most valuable parts of this system were discovered by measuring, not decided
+        up front. Worth studying because it is the pattern to repeat.
+      </p>
+
+      <h3>KovaaK's serves the thresholds itself</h3>
+      <p>
+        The plan originally flagged the ~250 Voltaic score thresholds as a blocker needing
+        a spreadsheet export. Chasing the evxl-link feature led through evxl's client
+        bundle to where <em>it</em> gets the numbers — and evxl does not own them either.
+        It reads KovaaK's own API. That one endpoint supplies official thresholds, rank
+        names and colours for all <strong>133</strong> benchmarks, free.
+      </p>
+
+      <h3>Scores are a fixed multiple of a countable stat</h3>
+      <p>
+        Editing <code>Score:</code> and nothing else defeats every structural check — the
+        file stays perfectly coherent. That looked unfixable locally. It is not: most
+        scenarios score as a fixed multiple of something countable, and that multiple is a
+        property of the scenario.
+      </p>
+      <div class="exhibit">
+        <div class="exhibit-head"><span>Learned from your corpus</span><span class="src">data/score_models.json</span></div>
+        <div class="exhibit-body">
+<pre>VT Frogtagon Intermediate S5    score = kills    × 10
+VT Aether Intermediate S5       score = hitCount × 1
+
+219 scenarios modelled · 0% false positives · catches a +1% score edit</pre>
+        </div>
+      </div>
+
+      <h3>The sub-category mapping was wrong until it came from the source</h3>
+      <p>
+        The nine Voltaic sub-categories were first derived by reading scenario
+        descriptions. That produced a plausible, confident answer that was
+        <strong>wrong on 6 of 18 scenarios</strong> — Tracking's Precise and Reactive
+        groups were swapped wholesale. The nine <em>names</em> were guessed correctly,
+        which is exactly what made the wrong groupings easy to believe. Only going to
+        Voltaic's own published spreadsheet settled it.
+      </p>
+    </section>
+
+    <!-- ================================================================= -->
+    <section id="bugs">
+      <h2>Bugs and lessons</h2>
+      <p class="lede">
+        Each of these cost real time. They are grouped by the lesson rather than the
+        symptom, because the lesson is the transferable part.
+      </p>
+
+      <h3>Measure a check before you let it reject anything</h3>
+      <div class="exhibit">
+        <div class="exhibit-head"><span>First-draft integrity checks, run against 11,058 genuine runs</span><span class="src">npm run validate:verify</span></div>
+        <div class="exhibit-body">
+          <table>
+            <thead><tr><th>Check</th><th class="num">False positives</th><th>What was actually true</th></tr></thead>
+            <tbody>
+              <tr>
+                <td>reject TTK &lt; 20ms</td>
+                <td class="num">62.0%</td>
+                <td>KovaaK's TTK is first-hit-to-kill within a burst, not reaction time. Sub-millisecond is routine.</td>
+              </tr>
+              <tr>
+                <td>reject negative scores</td>
+                <td class="num">3 runs</td>
+                <td>Pressure scenarios subtract for misses. Real runs score −500.</td>
+              </tr>
+              <tr>
+                <td>one row per kill, numbered from 1</td>
+                <td class="num">0.85%</td>
+                <td><code>Kill #</code> is a running counter. Penalty rows repeat it, multi-kills skip it, numbering starts at 0 or 1.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <p>
+        A 62% false-positive rate would have accused two-thirds of honest players. Final
+        state: every hard check sits at <strong>0.00%</strong> across the whole corpus,
+        and anything that could not reach zero was demoted to advisory rather than kept.
+      </p>
+
+      <h3>Fix it in every place, not the first place</h3>
+      <p>
+        The negative-score lesson was learned once, applied to the verification code, and
+        <em>not</em> applied to the database constraint. Months of understanding lived in a
+        code comment naming the exact three runs, while
+        <code>check (score &gt;= 0)</code> sat in the schema waiting. The backfill failed
+        on batch 5 — the one batch containing a pressure run.
+      </p>
+
+      <h3>A warning you have written off twice is worth reading</h3>
+      <div class="note trap">
+        <div class="note-label">The dead sign-in button</div>
+        <p>
+          Electron 33 bundles Node 20, which has no native <code>WebSocket</code>.
+          <code>supabase-js</code> needs one and throws on startup, so
+          <code>createClient</code> died before sign-in could do anything. The deprecation
+          warning had been visible in the build output for two sessions and dismissed as
+          cosmetic both times. Upgrading to Electron 38 (Node 22) fixed it at the root.
+        </p>
+      </div>
+
+      <h3>Punctuation can be load-bearing</h3>
+      <p>
+        Three separate scripted attempts to normalise punctuation produced worse text: a
+        parenthetical mangled across a line break, pairing that reached across table rows,
+        and a quest whose separator was carrying meaning — <em>"1140 takes you to Jade —
+        10 more"</em> became <em>"Jade 10 more"</em>. Rules cannot tell an appositive from
+        a comma splice. The fix that worked was reading every instance and writing each
+        replacement by hand.
+      </p>
+
+      <h3>Normalisation can create a catch-all</h3>
+      <p>
+        A benchmark-name normaliser stripped everything outside <code>[a-z0-9]</code>,
+        which reduced the registry's Chinese-named entry to an empty string. Since every
+        string starts with <code>""</code>, that entry then matched <em>any</em> unknown
+        input — so a typo silently tracked a benchmark you had never heard of.
+      </p>
+    </section>
+
+    <!-- ================================================================= -->
+    <section id="verify">
+      <h2>Verify it yourself</h2>
+      <p class="lede">
+        Nothing here has to be taken on trust. Every claim above has a command that
+        re-derives it from your own data.
+      </p>
+
+      <div class="exhibit">
+        <div class="exhibit-head"><span>Commands</span><span class="src">npm run …</span></div>
+        <div class="exhibit-body">
+<pre>validate              all 12 suites, against your 11,104 real runs
+validate:verify       false positives and tamper detection
+validate:engine       energy model vs KovaaK's live API
+validate:glicko       Glicko-2 vs Glickman's published example
+validate:progression  quest XP idempotence
+validate:schema       migrations + seed on Postgres-in-WASM, no Docker
+verify:deployment     RLS, auth and the match engine, live
+beta                  pre-flight before inviting anyone
+
+consistency           your ceiling-vs-floor report
+compare:baselines     reproduce the baseline comparison table
+profile               benchmark ranks and weakness map
+smoke                 boot the client headlessly and check it renders</pre>
+        </div>
+      </div>
+
+      <p>
+        Two are worth understanding rather than just running.
+        <code>validate:schema</code> executes the real migrations against Postgres
+        compiled to WebAssembly, so schema errors surface with no Docker, no cloud project
+        and no network. <code>validate:glicko</code> checks the rating implementation
+        against Glickman's own worked example — <code>1464.0506 / 151.5165 / 0.059996</code>
+        — which is the standard trap for a subtly wrong volatility iteration.
+      </p>
+    </section>
+
+    <!-- ================================================================= -->
+    <section id="todo">
+      <h2>Not done yet</h2>
+      <p class="lede">Stated plainly, so nothing here reads as finished when it is not.</p>
+
+      <ul>
+        <li>
+          <strong>No match has ever been played.</strong> The whole loop is built,
+          deployed and verified, but a match needs an opponent and the pool is empty until
+          someone plays a category once.
+        </li>
+        <li>
+          <strong>Score models cover 18 of 248 scenarios server-side.</strong> They are
+          learned from observed runs, and the seed corpus is one player's history. Coverage
+          grows on its own as people upload; scenarios without a model skip that check
+          rather than failing it.
+        </li>
+        <li>
+          <strong>Quest XP is stored locally and is not server-validated.</strong>
+          Deliberate for now — XP is cosmetic and never touches rating, so editing that
+          file only cheats you. If XP ever becomes visible to others it must move
+          server-side; the <code>quests</code> table already exists for that.
+        </li>
+        <li>
+          <strong>Hardware cheats are invisible to this design.</strong> An aimbot
+          producing genuine KovaaK's scores passes every check, because KovaaK's itself
+          accepts them. Mitigation is statistical review at the top ranks, which is where
+          every competitive game lands. Better said publicly than oversold.
+        </li>
+        <li>
+          <strong>Live matchmaking is written but unexercised.</strong> Starvation-free
+          across four simulated populations, but no real queue has ever run.
+        </li>
+        <li>
+          <strong>No installer, and no code signing.</strong> An unsigned Windows binary
+          throws a SmartScreen warning that looks alarming to a stranger.
+        </li>
+      </ul>
+    </section>
+
+    <footer>
+      Generated from the working tree at 76 files and 18,496 lines. Every figure in this
+      document is reproducible with the commands in
+      <a href="#verify">Verify it yourself</a>. The design decisions and their reasoning
+      live in <code>PLAN.md</code>; the operational detail lives in <code>README.md</code>
+      and <code>SETUP.md</code>.
+    </footer>
+  </main>
+</div>
