@@ -814,7 +814,7 @@
 
 
 <script id="apogee-snapshot" type="application/json">{
-  "generatedAt": "2026-08-17T18:08:56.345Z",
+  "generatedAt": "2026-08-17T18:14:21.308Z",
   "benchmark": {
     "name": "Voltaic S5",
     "difficulty": "Intermediate",
@@ -2375,15 +2375,17 @@ if (HOST === "electron") {
         return;
       }
 
-      // KovaaK's opens directly in the first scenario. The other two are in the
-      // playlist, which is the only way to reach them: a local playlist cannot be
-      // deep-linked, only a published one.
+      // Point at the per-scenario buttons rather than the playlist. KovaaK's reads its
+      // playlists folder only at startup, so if the game was already running the
+      // playlist is on disk and not in the menu, and telling someone to go find it
+      // there is telling them to go look for something that is not going to be there.
       $("matchHint").textContent = !result.launched
         ? `Playlist "${result.playlistName}" is ready, but Steam did not start the game. ` +
-          "Launch KovaaK's yourself and pick it from Playlists."
+          "Launch KovaaK's yourself, or use the Play buttons above."
         : result.jumpedTo
-          ? `Opening ${result.jumpedTo}. For the other two, open Playlists and pick ` +
-            `"${result.playlistName}".`
+          ? `Opening ${result.jumpedTo}. Use the Play buttons for the other two — ` +
+            `or restart KovaaK's to get the "${result.playlistName}" playlist, which it ` +
+            "only picks up at startup."
           : `In KovaaK's, open Playlists and pick "${result.playlistName}".`;
 
       // Back to an offer, not a state. Left reading "Opening KovaaK's" it looks stuck,

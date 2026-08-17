@@ -652,6 +652,26 @@ ipcMain.handle("apogee:findMatch", async (_e, { category, difficulty }) => {
     const match = await findMatch(category, difficulty);
     state.match = match;
     state.submitted.clear();
+
+    // Write the playlist now, not when the player presses Play.
+    //
+    // KovaaK's reads its playlists folder once, at startup. A playlist written after
+    // the game is already open never appears in the menu however correct the file is,
+    // which is exactly what it looked like when the file on disk matched the match and
+    // the game still listed the previous one. Writing at match creation means the
+    // common order - queue, then launch the game - finds it there.
+    //
+    // It still cannot help someone who already had KovaaK's open. That is what the
+    // per-scenario deep links are for: they need nothing on disk.
+    if (state.statsDir) {
+      const written = writeMatchPlaylist(state.statsDir, {
+        scenarios: match.scenarios.map((s) => s.name),
+        matchId: match.matchId,
+        opponent: match.opponent?.displayName ?? null,
+      });
+      if (!written.ok) console.warn(`could not write the match playlist: ${written.error}`);
+    }
+
     broadcast("apogee:match", match);
     return { match };
   } catch (err) {
