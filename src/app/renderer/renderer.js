@@ -264,109 +264,161 @@ function renderSeasonEditor() {
   const s = seasonDraft;
   if (!s) return;
 
-  // ---- rank ladder ----
+  // ---- one ladder per category, plus the overall ----
+  //
+  // Three categories are three ladders (PLAN.md §14), so each is edited on its own.
+  // Sharing one control would make renaming Tracking's ranks quietly rename Clicking's,
+  // which is exactly the conflation the split exists to undo.
   const ranks = $("seasonRanks");
   ranks.textContent = "";
 
-  s.rankNames.forEach((name, i) => {
-    const row = document.createElement("div");
-    row.className = "season-rank";
+  const ladders = s.categories
+    .map((c) => ({ title: c.name, owner: c }))
+    .concat([{ title: "Overall", owner: s }]);
 
-    const n = document.createElement("span");
-    n.className = "n";
-    n.textContent = i + 1;
+  ladders.forEach(({ title, owner }) => {
+    const group = document.createElement("div");
+    group.className = "ladder-group";
 
-    const text = document.createElement("input");
-    text.type = "text";
-    text.value = name;
-    text.addEventListener("input", () => {
-      const old = s.rankNames[i];
-      s.rankNames[i] = text.value;
-      // Colours are keyed by name, so a rename has to carry its colour across or the
-      // rank silently loses it.
-      if (s.rankColors[old] !== undefined) {
-        s.rankColors[text.value] = s.rankColors[old];
-        delete s.rankColors[old];
-      }
-      seasonDirty(true);
+    const heading = document.createElement("div");
+    heading.className = "ladder-title";
+    heading.textContent = title;
+    group.append(heading);
+
+    owner.rankNames.forEach((name, i) => {
+      const row = document.createElement("div");
+      row.className = "season-rank";
+
+      const n = document.createElement("span");
+      n.className = "n";
+      n.textContent = i + 1;
+
+      const text = document.createElement("input");
+      text.type = "text";
+      text.value = name;
+      text.addEventListener("input", () => {
+        const previous = owner.rankNames[i];
+        owner.rankNames[i] = text.value;
+        // Colours are keyed by name, so a rename has to carry its colour across or the
+        // rank silently loses it.
+        if (owner.rankColors[previous] !== undefined) {
+          owner.rankColors[text.value] = owner.rankColors[previous];
+          delete owner.rankColors[previous];
+        }
+        seasonDirty(true);
+      });
+
+      const colour = document.createElement("input");
+      colour.type = "color";
+      colour.value = owner.rankColors[name] ?? "#8891a3";
+      colour.addEventListener("input", () => {
+        owner.rankColors[owner.rankNames[i]] = colour.value;
+        seasonDirty(true);
+      });
+
+      row.append(n, text, colour);
+      group.append(row);
     });
 
-    const colour = document.createElement("input");
-    colour.type = "color";
-    colour.value = s.rankColors[name] ?? "#8891a3";
-    colour.addEventListener("input", () => {
-      s.rankColors[s.rankNames[i]] = colour.value;
-      seasonDirty(true);
-    });
-
-    row.append(n, text, colour);
-    ranks.append(row);
+    ranks.append(group);
   });
 
   // ---- scenario thresholds ----
+  // Column headers are per category now, so one shared header row would be wrong for
+  // two of the three. The table is grouped by category instead, each with its own.
   const head = $("seasonHead");
-  head.innerHTML =
-    "<th>Scenario</th><th>Category</th>" +
-    s.rankNames.map((r) => "<th>" + esc(r) + "</th>").join("") +
-    "<th></th>";
+  head.innerHTML = "";
 
   const body = $("seasonBody");
   body.textContent = "";
 
-  s.scenarios.forEach((scenario, index) => {
-    const tr = document.createElement("tr");
+  s.categories.forEach((cat) => {
+    const ladder = cat.rankNames;
 
-    const name = document.createElement("td");
-    name.textContent = scenario.label ?? scenario.scenario;
-    name.title = scenario.scenario;
+    const header = document.createElement("tr");
+    header.innerHTML =
+      '<th colspan="2">' + esc(cat.name) + "</th>" +
+      ladder.map((r) => "<th>" + esc(r) + "</th>").join("") +
+      "<th></th>";
+    body.append(header);
 
-    const cat = document.createElement("td");
-    cat.textContent = scenario.category;
-
-    tr.append(name, cat);
-
-    scenario.rankMaxes.forEach((value, i) => {
-      const td = document.createElement("td");
-      const input = document.createElement("input");
-      input.type = "number";
-      input.className = "thr";
-      input.value = value;
-      input.addEventListener("input", () => {
-        scenario.rankMaxes[i] = input.value === "" ? NaN : Number(input.value);
-        seasonDirty(true);
-      });
-      td.append(input);
-      tr.append(td);
+    s.scenarios.forEach((scenario, index) => {
+      if (scenario.category !== cat.name) return;
+      renderSeasonRow(body, scenario, index);
     });
-
-    const drop = document.createElement("td");
-    const btn = document.createElement("button");
-    btn.type = "button";
-    btn.className = "rowdrop";
-    btn.textContent = "remove";
-    btn.title = "Take this scenario out of the season";
-    btn.addEventListener("click", () => {
-      s.scenarios.splice(index, 1);
-      renderSeasonEditor();
-      seasonDirty(true);
-    });
-    drop.append(btn);
-    tr.append(drop);
-
-    body.append(tr);
   });
 
-  // ---- category energy ----
-  $("seasonCatHead").innerHTML =
-    "<th>Category</th>" + s.rankNames.map((r) => "<th>" + esc(r) + "</th>").join("");
+  renderSeasonCategories();
+}
+
+/** One editable scenario row, against its own category's ladder. */
+function renderSeasonRow(body, scenario, index) {
+  const s = seasonDraft;
+  const tr = document.createElement("tr");
+
+  const name = document.createElement("td");
+  name.textContent = scenario.label ?? scenario.scenario;
+  name.title = scenario.scenario;
+
+  const cat = document.createElement("td");
+  cat.textContent = scenario.category;
+
+  tr.append(name, cat);
+
+  scenario.rankMaxes.forEach((value, i) => {
+    const td = document.createElement("td");
+    const input = document.createElement("input");
+    input.type = "number";
+    input.className = "thr";
+    input.value = value;
+    input.addEventListener("input", () => {
+      scenario.rankMaxes[i] = input.value === "" ? NaN : Number(input.value);
+      seasonDirty(true);
+    });
+    td.append(input);
+    tr.append(td);
+  });
+
+  const drop = document.createElement("td");
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = "rowdrop";
+  btn.textContent = "remove";
+  btn.title = "Take this scenario out of the season";
+  btn.addEventListener("click", () => {
+    s.scenarios.splice(index, 1);
+    renderSeasonEditor();
+    seasonDirty(true);
+  });
+  drop.append(btn);
+  tr.append(drop);
+
+  body.append(tr);
+}
+
+/**
+ * Category energy: what a category rank costs.
+ *
+ * Laid out one category per block rather than one row, because each has its own ladder
+ * now and a shared header row would be wrong for two of the three.
+ */
+function renderSeasonCategories() {
+  const s = seasonDraft;
+  $("seasonCatHead").innerHTML = "";
 
   const catBody = $("seasonCatBody");
   catBody.textContent = "";
 
   s.categories.forEach((cat) => {
+    const header = document.createElement("tr");
+    header.innerHTML =
+      "<th>" + esc(cat.name) + "</th>" +
+      cat.rankNames.map((r) => "<th>" + esc(r) + "</th>").join("");
+    catBody.append(header);
+
     const tr = document.createElement("tr");
     const name = document.createElement("td");
-    name.textContent = cat.name;
+    name.textContent = "energy";
     tr.append(name);
 
     cat.rankMaxes.forEach((value, i) => {

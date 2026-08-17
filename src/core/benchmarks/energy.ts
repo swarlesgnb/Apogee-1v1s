@@ -155,8 +155,11 @@ export function evaluateBenchmark(
 ): BenchmarkResult {
   const { rankNames } = difficulty;
 
+  // A category may carry its own ladder. Where it does, its ranks and its scenarios'
+  // are named from that rather than from the benchmark's, which is what lets three
+  // categories be three ladders instead of three views of one.
   const categories = difficulty.categories.map((c) =>
-    evaluateCategory(c, scores, rankNames),
+    evaluateCategory(c, scores, c.rankNames ?? rankNames),
   );
 
   const totalEnergy = categories.reduce((sum, c) => sum + c.energy, 0);

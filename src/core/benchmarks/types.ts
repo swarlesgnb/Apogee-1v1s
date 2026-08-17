@@ -12,6 +12,16 @@ export interface CategoryDef {
   /** Category-level energy thresholds, one per rank. */
   rankMaxes: number[];
   scenarios: ScenarioDef[];
+  /**
+   * This category's own ladder, when it has one.
+   *
+   * A season gives Clicking, Tracking and Switching separate ranks (PLAN.md §14), so
+   * "Tier II at Tracking" is a different claim from "Tier II at Clicking" and the two
+   * do not have to share a vocabulary. Absent on a Voltaic benchmark, where one ladder
+   * covers all three, and the difficulty's names are used instead.
+   */
+  rankNames?: string[];
+  rankColors?: Record<string, string>;
 }
 
 export interface DifficultyDef {

@@ -25,9 +25,19 @@ import type { DifficultyDef } from "../benchmarks/types.ts";
 
 export interface SeasonCategory {
   name: string;
-  /** Category-level energy thresholds, one per rank. */
+  /** Category-level energy thresholds, one per rank in this category's ladder. */
   rankMaxes: number[];
-  /** True when these are exactly what the energy model would derive. Informational. */
+  /**
+   * This category's own ranks (PLAN.md §14).
+   *
+   * Clicking, Tracking and Switching are three ladders, not three views of one, so each
+   * names and colours its own. They are separate because the claims are separate: being
+   * near the top of Tracking says nothing about Clicking, and a shared vocabulary would
+   * quietly imply it did.
+   */
+  rankNames: string[];
+  rankColors: Record<string, string>;
+  /** True when the energy thresholds are what the model would derive. Informational. */
   derivable?: boolean;
 }
 
@@ -53,6 +63,12 @@ export interface SeasonScenario {
 export interface Season {
   name: string;
   status: "draft" | "published" | "archived";
+  /**
+   * The overall ladder, above the three categories.
+   *
+   * Kept because a player still wants one number that means *them*, and §14 makes it a
+   * readout derived from the three rather than the thing that moves.
+   */
   rankNames: string[];
   rankColors: Record<string, string>;
   categories: SeasonCategory[];
@@ -117,11 +133,19 @@ export function validateSeason(season: Season): void {
     throw new Error("a season needs at least one scenario");
   }
 
+  const ranksByCategory = new Map(
+    season.categories.map((c) => [c.name, (c.rankNames ?? season.rankNames).length]),
+  );
+
   for (const s of season.scenarios) {
-    if (s.rankMaxes.length !== ranks) {
+    // Against its own category's ladder, not the season's: with three ladders those
+    // can differ, and checking the wrong one would pass a scenario that grades to a
+    // rank its category has never heard of.
+    const expected = ranksByCategory.get(s.category) ?? ranks;
+    if (s.rankMaxes.length !== expected) {
       throw new Error(
         `${s.label ?? s.scenario} has ${s.rankMaxes.length} thresholds ` +
-          `but the season defines ${ranks} ranks`,
+          `but ${s.category} defines ${expected} ranks`,
       );
     }
     if (s.rankMaxes.some((v) => !Number.isFinite(v))) {
@@ -129,23 +153,34 @@ export function validateSeason(season: Season): void {
     }
     const descends = s.rankMaxes.findIndex((v, i) => i > 0 && v <= s.rankMaxes[i - 1]);
     if (descends > 0) {
+      // Named from the category's own ladder. Reaching for the season's would print a
+      // rank this scenario is not graded against, which is a confusing way to be told
+      // about a real mistake.
+      const ladder =
+        season.categories.find((c) => c.name === s.category)?.rankNames ?? season.rankNames;
       throw new Error(
-        `${s.label ?? s.scenario}: ${season.rankNames[descends]} (${s.rankMaxes[descends]}) ` +
-          `is not above ${season.rankNames[descends - 1]} (${s.rankMaxes[descends - 1]})`,
+        `${s.label ?? s.scenario}: ${ladder[descends]} (${s.rankMaxes[descends]}) ` +
+          `is not above ${ladder[descends - 1]} (${s.rankMaxes[descends - 1]})`,
       );
     }
   }
 
   for (const c of season.categories) {
-    if (c.rankMaxes.length !== ranks) {
+    if (!Array.isArray(c.rankNames) || c.rankNames.length === 0) {
+      throw new Error(`category ${c.name} has no ranks`);
+    }
+    if (c.rankNames.some((n) => !n || !n.trim())) {
+      throw new Error(`category ${c.name} has a rank with no name`);
+    }
+    if (c.rankMaxes.length !== c.rankNames.length) {
       throw new Error(
-        `category ${c.name} has ${c.rankMaxes.length} thresholds ` +
-          `but the season defines ${ranks} ranks`,
+        `category ${c.name} has ${c.rankMaxes.length} energy thresholds ` +
+          `but ${c.rankNames.length} ranks`,
       );
     }
     const descends = c.rankMaxes.findIndex((v, i) => i > 0 && v <= c.rankMaxes[i - 1]);
     if (descends > 0) {
-      throw new Error(`category ${c.name}: thresholds must ascend`);
+      throw new Error(`category ${c.name}: energy thresholds must ascend`);
     }
   }
 
@@ -187,6 +222,8 @@ export function seasonAsDifficulty(season: Season): DifficultyDef {
     categories: season.categories.map((c) => ({
       name: c.name,
       rankMaxes: c.rankMaxes,
+      rankNames: c.rankNames ?? season.rankNames,
+      rankColors: c.rankColors ?? season.rankColors,
       scenarios: (byCategory.get(c.name) ?? []).map((s) => ({
         name: s.scenario,
         leaderboardId: s.leaderboardId,

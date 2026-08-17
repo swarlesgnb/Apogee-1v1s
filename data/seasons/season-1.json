@@ -22,6 +22,18 @@
         45000,
         60000
       ],
+      "rankNames": [
+        "Tier I",
+        "Tier II",
+        "Tier III",
+        "Tier IV"
+      ],
+      "rankColors": {
+        "Tier I": "#7C8AA5",
+        "Tier II": "#4FA3C7",
+        "Tier III": "#C79A4F",
+        "Tier IV": "#C75FA8"
+      },
       "derivable": true
     },
     {
@@ -32,6 +44,18 @@
         45000,
         60000
       ],
+      "rankNames": [
+        "Tier I",
+        "Tier II",
+        "Tier III",
+        "Tier IV"
+      ],
+      "rankColors": {
+        "Tier I": "#7C8AA5",
+        "Tier II": "#4FA3C7",
+        "Tier III": "#C79A4F",
+        "Tier IV": "#C75FA8"
+      },
       "derivable": true
     },
     {
@@ -42,6 +66,18 @@
         52500,
         70000
       ],
+      "rankNames": [
+        "Tier I",
+        "Tier II",
+        "Tier III",
+        "Tier IV"
+      ],
+      "rankColors": {
+        "Tier I": "#7C8AA5",
+        "Tier II": "#4FA3C7",
+        "Tier III": "#C79A4F",
+        "Tier IV": "#C75FA8"
+      },
       "derivable": false
     }
   ],
@@ -56,7 +92,7 @@
     ],
     "note": "Thresholds are Voltaic's published numbers, taken as a starting point we own rather than a source we track. Rank names are ours and are placeholders. Season 2 derives its thresholds from season 1's population instead."
   },
-  "builtAt": "2026-08-17T20:45:24.772Z",
+  "builtAt": "2026-08-17T21:09:16.657Z",
   "scenarios": [
     {
       "scenario": "VT Pasu Intermediate S5",

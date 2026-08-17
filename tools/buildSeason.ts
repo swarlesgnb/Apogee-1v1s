@@ -34,10 +34,20 @@ import { scanStatsFolder } from "../src/core/history/history.ts";
 const DEFAULT_STATS_DIR =
   "E:\\Steam\\steamapps\\common\\FPSAimTrainer\\FPSAimTrainer\\stats";
 
-/** Placeholder ladder. Renaming these is the first thing the season editor is for. */
+/**
+ * Placeholder ladders, one per category.
+ *
+ * Clicking, Tracking and Switching each rank separately (PLAN.md §14), so each gets its
+ * own names and colours rather than three views of one ladder. They are seeded
+ * identically on purpose: identical placeholders make it obvious that nothing has been
+ * decided yet, where three different invented sets would look like a decision somebody
+ * made and nobody could explain.
+ *
+ * Naming them is the first thing the season editor is for.
+ */
 const RANK_NAMES = ["Tier I", "Tier II", "Tier III", "Tier IV"];
 
-/** Neutral, and distinct from both Voltaic's palette and Apogee's ladder colours. */
+/** Distinct from Voltaic's palette, and from the Apogee ladder's own colours. */
 const RANK_COLORS: Record<string, string> = {
   "Tier I": "#7C8AA5",
   "Tier II": "#4FA3C7",
@@ -164,6 +174,10 @@ function main(): void {
   const categories = (source.categories as VoltaicCategory[]).map((c) => ({
     name: c.name,
     rankMaxes: c.rankMaxes,
+    // Its own ladder, copied rather than shared: editing Tracking's ranks must not
+    // silently rename Clicking's.
+    rankNames: [...RANK_NAMES],
+    rankColors: { ...RANK_COLORS },
     derivable: c.rankMaxes.every(
       (v, i) => v === c.scenarios.length * 2500 * (i + 1),
     ),
