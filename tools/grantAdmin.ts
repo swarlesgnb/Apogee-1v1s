@@ -112,12 +112,30 @@ async function main(): Promise<void> {
 
   const res = await rest("admins", {
     method: "POST",
-    headers: { ...headers, Prefer: "resolution=merge-duplicates" },
+    headers: { Prefer: "resolution=merge-duplicates" },
     body: JSON.stringify({ player_id: player.id, note }),
   });
 
   if (!res.ok) {
-    console.error(`could not grant: HTTP ${res.status} ${await res.text()}`);
+    const body = await res.text();
+
+    // Already an admin. Granting a right somebody already has is the outcome the
+    // caller wanted, so reporting it as a failure is just wrong - and the previous
+    // version did, because rest() already spreads the shared headers and passing them
+    // again overwrote Prefer with a copy that did not have it.
+    if (res.status === 409 || /23505|duplicate key/.test(body)) {
+      console.log(`${player.display_name} (${player.steam_id}) is already an admin`);
+      if (note) {
+        await rest(`admins?player_id=eq.${player.id}`, {
+          method: "PATCH",
+          body: JSON.stringify({ note }),
+        });
+        console.log(`note updated to "${note}"`);
+      }
+      return;
+    }
+
+    console.error(`could not grant: HTTP ${res.status} ${body}`);
     process.exit(1);
   }
 

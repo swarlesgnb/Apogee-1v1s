@@ -12,10 +12,10 @@
  */
 
 import { app, BrowserWindow, ipcMain, shell, dialog } from "electron";
-import { existsSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
-import { setDataDir } from "../core/dataDir.ts";
+import { dataFile, setDataDir } from "../core/dataDir.ts";
 import {
   levelFor,
   reconcile,
@@ -24,6 +24,7 @@ import {
 } from "../core/quests/progression.ts";
 import { loadQuestState, saveQuestState } from "./questStore.ts";
 import { buildSnapshot, type Snapshot } from "../core/report/snapshot.ts";
+import { scanStatsFolder } from "../core/history/history.ts";
 import { signInWithSteam } from "../core/sync/steamAuth.ts";
 import {
   fetchStanding,
@@ -772,6 +773,89 @@ ipcMain.handle("apogee:isAdmin", async () => {
     return { admin: false };
   }
 });
+
+/**
+ * Scenarios that could be added to the season, and what this machine knows about them.
+ *
+ * Two things travel with each one, because both change what a good edit looks like:
+ *
+ *   a suggested category   from KovaaK's own aimType, so the common case needs no
+ *                          decision at all
+ *   local run history      so a scenario can arrive with thresholds drawn from real
+ *                          scores rather than blanks somebody has to invent
+ *
+ * A scenario with no history still gets ascending placeholders. Zeroes would be
+ * refused by the ascending rule and leave the season unsaveable until every cell was
+ * filled, which turns adding one scenario into a chore about all of them.
+ */
+ipcMain.handle("apogee:availableScenarios", () => {
+  try {
+    const season = loadSeason();
+    const already = new Set(season.scenarios.map((s) => s.scenario));
+    const ranks = season.rankNames.length;
+
+    const taxonomy = JSON.parse(
+      readFileSync(dataFile("scenario_taxonomy.json"), "utf8"),
+    ) as { scenarios: { name: string; aimType: string | null; difficulty: string }[] };
+
+    const history = state.statsDir ? scanStatsFolder(state.statsDir) : new Map();
+
+    const options = taxonomy.scenarios
+      .filter((s) => !already.has(s.name))
+      .map((s) => {
+        const local = history.get(s.name);
+        const scores = local ? local.runs.map((r: { score: number }) => r.score) : [];
+
+        return {
+          name: s.name,
+          // KovaaK's calls it Target Switching; the season's category is Switching.
+          category: s.aimType === "Target Switching" ? "Switching" : s.aimType,
+          difficulty: s.difficulty,
+          runs: scores.length,
+          best: scores.length > 0 ? Math.round(Math.max(...scores)) : null,
+          suggested: suggestThresholds(scores, ranks),
+        };
+      })
+      .sort((a, b) => b.runs - a.runs || a.name.localeCompare(b.name));
+
+    return { scenarios: options, categories: season.categories.map((c) => c.name) };
+  } catch (err) {
+    return { error: err instanceof Error ? err.message : String(err) };
+  }
+});
+
+/**
+ * A starting ladder for a scenario being added.
+ *
+ * Drawn from the player's own scores when there are enough of them - percentiles of
+ * what they actually hit is a far better first guess than a round number, and it is the
+ * same reasoning seasons use at rollover, just with one person's data instead of a
+ * population's. Below that it is placeholders, clearly wrong and clearly ascending, so
+ * the season stays saveable while they are corrected.
+ */
+function suggestThresholds(scores: number[], ranks: number): number[] {
+  if (scores.length < 5) {
+    return Array.from({ length: ranks }, (_, i) => (i + 1) * 100);
+  }
+
+  const sorted = [...scores].sort((a, b) => a - b);
+  const at = (p: number) => sorted[Math.min(sorted.length - 1, Math.floor(sorted.length * p))];
+
+  // Spread across the upper half of what they have done: the lowest rank should be
+  // reachable and the highest should not be automatic.
+  const out: number[] = [];
+  for (let i = 0; i < ranks; i++) {
+    const p = 0.5 + (0.45 * i) / Math.max(1, ranks - 1);
+    out.push(Math.round(at(p)));
+  }
+
+  // Percentiles can tie on a flat history, and equal thresholds break the ascending
+  // rule. Nudge each one past the last rather than handing back something invalid.
+  for (let i = 1; i < out.length; i++) {
+    if (out[i] <= out[i - 1]) out[i] = out[i - 1] + 1;
+  }
+  return out;
+}
 
 ipcMain.handle("apogee:getSeason", () => {
   try {

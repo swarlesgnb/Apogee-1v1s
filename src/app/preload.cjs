@@ -104,6 +104,9 @@ contextBridge.exposeInMainWorld("apogee", {
   /** The season definition currently on disk. */
   getSeason: () => ipcRenderer.invoke("apogee:getSeason"),
 
+  /** Scenarios that could be added, with a suggested category and thresholds. */
+  availableScenarios: () => ipcRenderer.invoke("apogee:availableScenarios"),
+
   /**
    * Write the season back and rebuild from it.
    * Main validates before writing and refuses a non-admin.

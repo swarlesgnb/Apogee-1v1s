@@ -204,6 +204,9 @@ function setSeasonStatus(text, kind) {
   el.className = "season-status" + (kind ? " " + kind : "");
 }
 
+/** Scenarios not already in the season, with a suggested category and thresholds. */
+let seasonAvailable = [];
+
 async function loadSeasonEditor() {
   const result = await window.apogee.getSeason();
   if (result.error) {
@@ -216,6 +219,45 @@ async function loadSeasonEditor() {
   renderSeasonEditor();
   seasonDirty(false);
   setSeasonStatus("", "");
+  await loadSeasonPicker();
+}
+
+/**
+ * Fill the picker with what could be added.
+ *
+ * Ordered by how many runs this machine has on each, so the scenarios whose thresholds
+ * can actually be suggested from real scores are the ones offered first.
+ */
+async function loadSeasonPicker() {
+  const result = await window.apogee.availableScenarios();
+  if (!result || result.error) {
+    $("seasonAddNote").textContent = result?.error ?? "";
+    return;
+  }
+
+  seasonAvailable = result.scenarios;
+
+  const pick = $("seasonPick");
+  pick.innerHTML = '<option value="">Add a scenario…</option>';
+  seasonAvailable.forEach((s, i) => {
+    const opt = document.createElement("option");
+    opt.value = String(i);
+    opt.textContent =
+      s.name + (s.runs > 0 ? `  ·  ${s.runs} runs, best ${num(s.best)}` : "  ·  no history");
+    pick.append(opt);
+  });
+
+  const cat = $("seasonPickCat");
+  cat.innerHTML = "";
+  (result.categories ?? []).forEach((name) => {
+    const opt = document.createElement("option");
+    opt.value = name;
+    opt.textContent = name;
+    cat.append(opt);
+  });
+
+  $("seasonAdd").disabled = true;
+  $("seasonAddNote").textContent = `${seasonAvailable.length} available`;
 }
 
 function renderSeasonEditor() {
@@ -943,6 +985,49 @@ if (HOST === "electron" && window.apogee.isAdmin) {
 
   $("seasonReload").addEventListener("click", () => {
     void loadSeasonEditor();
+  });
+
+  // Choosing a scenario preselects the category KovaaK's already assigns it, so the
+  // common case is one click rather than two decisions.
+  $("seasonPick").addEventListener("change", () => {
+    const pick = $("seasonPick");
+    const chosen = seasonAvailable[Number(pick.value)];
+    $("seasonAdd").disabled = !chosen;
+
+    if (!chosen) {
+      $("seasonAddNote").textContent = `${seasonAvailable.length} available`;
+      return;
+    }
+
+    if (chosen.category) {
+      const cat = $("seasonPickCat");
+      const match = Array.prototype.find.call(cat.options, (o) => o.value === chosen.category);
+      if (match) cat.value = chosen.category;
+    }
+
+    $("seasonAddNote").textContent =
+      chosen.runs >= 5
+        ? `thresholds suggested from ${chosen.runs} runs`
+        : "no history here, so thresholds start as placeholders";
+  });
+
+  $("seasonAdd").addEventListener("click", () => {
+    const chosen = seasonAvailable[Number($("seasonPick").value)];
+    if (!chosen || !seasonDraft) return;
+
+    seasonDraft.scenarios.push({
+      scenario: chosen.name,
+      category: $("seasonPickCat").value,
+      label: chosen.name.replace(/^VT\s+/, "").replace(/\s*S\d(\.\d)?\s*$/i, "").trim(),
+      leaderboardId: null,
+      // Already the right length for this ladder and already ascending, so adding a
+      // scenario never leaves the season in a state that refuses to save.
+      rankMaxes: chosen.suggested.slice(),
+    });
+
+    renderSeasonEditor();
+    seasonDirty(true);
+    void loadSeasonPicker();
   });
 }
 

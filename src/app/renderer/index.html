@@ -353,6 +353,23 @@
     font-weight: 600;
   }
   .season-actions button:disabled { opacity: .5; cursor: default; }
+  .season-add {
+    display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
+    padding-bottom: 12px;
+  }
+  .season-add select {
+    font: inherit; font-size: 12.5px; color: var(--ink);
+    background: var(--sunken); border: 1px solid var(--line-bright);
+    border-radius: 7px; padding: 6px 9px; max-width: 380px;
+  }
+  .season-add button {
+    font: inherit; font-size: 12px; color: var(--ink-mid);
+    background: transparent; border: 1px solid var(--line-bright);
+    border-radius: 7px; padding: 6px 13px; cursor: pointer;
+  }
+  .season-add button:hover:not(:disabled) { color: var(--ink); border-color: var(--ink-dim); }
+  .season-add button:disabled { opacity: .5; cursor: default; }
+
   .season-status { font-size: 12px; color: var(--ink-dim); }
   .season-status.bad { color: var(--down); }
   .season-status.good { color: var(--up); }
@@ -865,6 +882,12 @@
         <div class="phead">
           <h2>Scenarios and thresholds</h2>
           <span class="note">one row per scenario · one column per rank</span>
+        </div>
+        <div class="pbody season-add">
+          <select id="seasonPick"><option value="">Add a scenario…</option></select>
+          <select id="seasonPickCat"></select>
+          <button type="button" id="seasonAdd">Add</button>
+          <span class="season-status" id="seasonAddNote"></span>
         </div>
         <div class="scen-wrap">
           <table class="scen" id="seasonTable">
