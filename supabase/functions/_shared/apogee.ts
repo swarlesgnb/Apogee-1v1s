@@ -350,8 +350,16 @@ export async function forfeitMatch(
  * decides.
  */
 
-/** How long a player may idle between runs before the match expires. */
-export const IDLE_ALLOWANCE_MS = 5 * 60_000;
+/**
+ * How long a player may idle between runs before the match expires.
+ *
+ * Three, not five, because this clock no longer has to cover playing. Once loading and
+ * running are free, the only thing left to buy is the gap between scenarios, and a
+ * generous gap is exactly what lets someone hold an opponent's run set hostage: stall
+ * to the last second of each round and a three-minute match becomes a quarter of an
+ * hour, with a win at the end of it.
+ */
+export const IDLE_ALLOWANCE_MS = 3 * 60_000;
 
 /**
  * Extra allowance before the first run only.

@@ -310,6 +310,71 @@
   }
   .match-actions button.go:hover:not(:disabled) { opacity: .88; color: var(--void); }
 
+  /* A rank badge is the thing people press expecting detail, so it is a real button.
+     Styled to keep the layout it replaced rather than to announce itself. */
+  .rank-link {
+    display: flex; align-items: center; gap: 10px; text-align: left;
+    font: inherit; color: inherit; background: transparent;
+    border: 1px solid transparent; border-radius: 9px;
+    padding: 3px 6px; margin: -3px -6px; cursor: pointer;
+  }
+  .rank-link:hover { border-color: var(--line-bright); background: var(--sunken); }
+  .rank-link:focus-visible { outline: 2px solid var(--ink-dim); outline-offset: 2px; }
+  .rank-link .tier, .rank-link .sub { display: block; }
+
+  /* ---------------- ranks ---------------- */
+  .rank-lede {
+    font-size: 13px; line-height: 1.6; color: var(--ink-mid);
+    margin: 0 0 14px; max-width: 68ch;
+  }
+
+  .ladder { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+  .ladder li {
+    display: grid; grid-template-columns: 34px 1fr auto; align-items: center;
+    gap: 12px; padding: 9px 12px; border-radius: 8px;
+    border: 1px solid var(--line); background: var(--sunken);
+  }
+  /* The tier you are in is the one fact this list exists to convey, so it is the only
+     row that carries its own colour. */
+  .ladder li.here {
+    border-color: var(--tier); background: #10151d;
+    box-shadow: inset 3px 0 0 var(--tier);
+  }
+  .ladder .rung {
+    font-family: var(--mono); font-size: 10.5px; color: var(--ink-dim);
+    text-align: right;
+  }
+  .ladder .tier-name { font-size: 13.5px; font-weight: 600; }
+  .ladder li.here .tier-name { color: var(--tier); }
+  .ladder .band {
+    font-family: var(--mono); font-size: 10.5px; color: var(--ink-dim);
+    white-space: nowrap;
+  }
+  .ladder .you {
+    font-family: var(--mono); font-size: 10px; text-transform: uppercase;
+    letter-spacing: .07em; color: var(--tier);
+  }
+
+  .cat-ranks { display: grid; gap: 10px; }
+  .cat-rank {
+    padding: 11px 13px; border-radius: 9px;
+    border: 1px solid var(--line-bright); background: var(--sunken);
+  }
+  .cat-rank-top {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 10px; margin-bottom: 8px;
+  }
+  .cat-rank-name { font-size: 13.5px; font-weight: 600; }
+  .cat-rank-rank { font-family: var(--mono); font-size: 11.5px; }
+  .cat-bar {
+    height: 6px; border-radius: 3px; background: var(--void);
+    overflow: hidden; display: flex;
+  }
+  .cat-bar > div { height: 100%; }
+  .cat-rank-note {
+    margin-top: 7px; font-size: 11.5px; color: var(--ink-dim);
+  }
+
   /* ---------------- upload ---------------- */
   .upload-row {
     display: flex; align-items: center; justify-content: space-between;
@@ -563,11 +628,14 @@
   <header class="topbar">
     <div class="wordmark">Apogee <span>· ranked 1v1 for kovaak's</span></div>
     <div class="whoami" id="whoami" hidden>
-      <div class="badge" id="myBadge"></div>
-      <div>
-        <div class="tier" id="myTier"></div>
-        <div class="sub" id="myRating"></div>
-      </div>
+      <button type="button" class="rank-link" id="myRankLink"
+              title="See the full ladder and what closes the gap">
+        <span class="badge" id="myBadge"></span>
+        <span>
+          <span class="tier" id="myTier"></span>
+          <span class="sub" id="myRating"></span>
+        </span>
+      </button>
       <div class="streak" id="myStreak"></div>
       <div class="level-chip" id="levelChip" hidden></div>
       <div class="account" id="account">
@@ -617,6 +685,7 @@
     <div class="tabs" role="tablist">
       <button class="tab" role="tab" aria-selected="true" data-screen="queue">Queue</button>
       <button class="tab" role="tab" aria-selected="false" data-screen="result">Match result</button>
+      <button class="tab" role="tab" aria-selected="false" data-screen="ranks">Ranks</button>
       <button class="tab" role="tab" aria-selected="false" data-screen="profile">Profile</button>
       <button class="tab" role="tab" aria-selected="false" data-screen="consistency">Consistency</button>
       <button class="tab" role="tab" aria-selected="false" data-screen="quests">Quests</button>
@@ -625,7 +694,10 @@
     <section class="screen active" id="screen-queue">
       <div class="panel">
         <div class="hero">
-          <div class="badge" id="heroBadge"></div>
+          <button type="button" class="rank-link" id="heroRankLink"
+                  title="See the full ladder and what closes the gap">
+            <span class="badge" id="heroBadge"></span>
+          </button>
           <div>
             <div class="name" id="heroName"></div>
             <div class="meta" id="heroMeta"></div>
@@ -708,6 +780,46 @@
               <th>Their score</th><th>Δ</th><th>Round</th>
             </tr></thead>
             <tbody id="roundsBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="screen-ranks">
+      <div class="panel">
+        <div class="phead">
+          <h2>Apogee ladder</h2>
+          <span class="note" id="ladderNote"></span>
+        </div>
+        <div class="pbody">
+          <p class="rank-lede" id="ladderLede"></p>
+          <ol class="ladder" id="ladder"></ol>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="phead">
+          <h2>Benchmark standing</h2>
+          <span class="note" id="benchNote"></span>
+        </div>
+        <div class="pbody">
+          <p class="rank-lede" id="benchLede"></p>
+          <div class="cat-ranks" id="catRanks"></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="phead">
+          <h2>What it takes</h2>
+          <span class="note">closest first</span>
+        </div>
+        <div class="scen-wrap">
+          <table class="scen">
+            <thead><tr>
+              <th>Scenario</th><th>Rank</th><th>Best</th>
+              <th>Next rank</th><th>Target</th><th>Gap</th>
+            </tr></thead>
+            <tbody id="nextRankBody"></tbody>
           </table>
         </div>
       </div>

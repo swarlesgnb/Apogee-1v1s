@@ -119,6 +119,7 @@ function render(data) {
   if (HOST === "electron" && !hasRealResult) renderNoResultYet();
   else if (HOST !== "electron") renderResult(data);
 
+  renderRanks(data);
   renderProfile(data);
   renderConsistency(data);
   renderQuests(data);
@@ -177,6 +178,132 @@ function showOpponent(data) {
   renderTodo();
 
   $("opponent").classList.add("on");
+}
+
+/* ------------------------------------------------------------------ ranks */
+
+/**
+ * The two ladders, side by side, and what closes the gap on each.
+ *
+ * Apogee's ladder and the benchmark's are different claims and are kept visually apart
+ * on purpose (PLAN.md §4): one is where you sit against other players, the other is
+ * what Voltaic says about your scores. Showing them on one page is the clearest way to
+ * make that difference legible rather than the easiest way to blur it, so each keeps
+ * its own colours - Apogee's tiers from the theme, the benchmark's from the benchmark.
+ */
+function renderRanks(data) {
+  const me = data.player.apogee;
+  const tiers = data.theme;
+
+  // render() calls this before the profile, consistency and quest screens, so throwing
+  // here would take all of them down with it. A snapshot missing a tier list is a
+  // reason to show nothing on this page, not to break the other four.
+  if (!me || !Array.isArray(tiers) || tiers.length === 0) {
+    $("ladderNote").textContent = "no ladder data in this snapshot";
+    $("ladder").textContent = "";
+    return;
+  }
+
+  // ---- Apogee ladder ----
+  $("ladderNote").textContent = `${tiers.length} tiers · by population percentile`;
+  $("ladderLede").textContent =
+    "Where you sit against everyone else playing. Tiers are population percentiles, " +
+    "so a tier keeps its meaning as the ladder grows rather than inflating.";
+
+  const ladder = $("ladder");
+  ladder.textContent = "";
+
+  // Highest tier first: a ladder reads top-down, and the top is what people are
+  // climbing toward.
+  [...tiers].reverse().forEach((tier) => {
+    const here = tier.id === me.tier.id;
+    const li = document.createElement("li");
+    li.className = here ? "here" : "";
+    li.style.setProperty("--tier", tier.color);
+    li.innerHTML =
+      '<span class="rung">' + Math.round(tier.percentile[1]) + "%</span>" +
+      '<span class="tier-name">' + esc(tier.name) + "</span>" +
+      (here
+        ? '<span class="you">you · ' + me.percentile.toFixed(1) + "%</span>"
+        : '<span class="band">' + Math.round(tier.percentile[0]) + "–" +
+          Math.round(tier.percentile[1]) + "</span>");
+    ladder.append(li);
+  });
+
+  // ---- benchmark standing, per category ----
+  const bench = data.benchmark;
+  $("benchNote").textContent = `${bench.name} ${bench.difficulty}`;
+  $("benchLede").textContent =
+    `Your ${bench.name} standing, which is a stat rather than a ladder position: it ` +
+    "says what your scores are worth, not who you beat. Overall you are " +
+    `${data.player.benchmarkRank} at ${num(data.player.benchmarkEnergy)} energy.`;
+
+  const host = $("catRanks");
+  host.textContent = "";
+
+  data.categories.forEach((cat) => {
+    const colour = bench.rankColors[cat.rankName] ?? "#8891a3";
+
+    // Where this category sits between its rank and the next, from the scenarios that
+    // make it up. The closest scenario to a promotion is the useful thing to name.
+    const climbing = cat.scenarios
+      .filter((s) => s.nextRankName && s.gap > 0)
+      .sort((a, b) => a.gap - b.gap)[0];
+
+    const el = document.createElement("div");
+    el.className = "cat-rank";
+    el.innerHTML =
+      '<div class="cat-rank-top">' +
+      '<span class="cat-rank-name">' + esc(cat.name) + "</span>" +
+      '<span class="cat-rank-rank" style="color:' + esc(colour) + '">' +
+      esc(cat.rankName) + " · " + num(cat.energy) + " energy</span>" +
+      "</div>" +
+      '<div class="cat-bar">' +
+      cat.scenarios
+        .map((s) => {
+          const c = bench.rankColors[s.rankName] ?? "#39414f";
+          return '<div style="flex:1;background:' + esc(c) + '"></div>';
+        })
+        .join("") +
+      "</div>" +
+      '<div class="cat-rank-note">' +
+      (climbing
+        ? esc(climbing.label) + " is closest: " + num(climbing.gap) +
+          " points from " + esc(climbing.nextRankName)
+        : "every scenario here is at its top rank") +
+      "</div>";
+    host.append(el);
+  });
+
+  // ---- what it takes ----
+  const rows = data.categories
+    .reduce((all, c) => all.concat(c.scenarios), [])
+    .filter((s) => s.nextRankName && s.gap > 0)
+    .sort((a, b) => a.gap - b.gap);
+
+  const body = $("nextRankBody");
+  body.textContent = "";
+
+  if (rows.length === 0) {
+    body.innerHTML =
+      '<tr><td colspan="6" style="color:var(--ink-dim)">' +
+      "Every scenario is at its highest rank for this difficulty.</td></tr>";
+    return;
+  }
+
+  rows.forEach((s) => {
+    const colour = data.benchmark.rankColors[s.rankName] ?? "#8891a3";
+    const next = data.benchmark.rankColors[s.nextRankName] ?? "#8891a3";
+    const tr = document.createElement("tr");
+    tr.innerHTML =
+      "<td>" + esc(s.label) + "</td>" +
+      '<td style="color:' + esc(colour) + '">' + esc(s.rankName) + "</td>" +
+      "<td>" + num(s.score) + "</td>" +
+      '<td style="color:' + esc(next) + '">' + esc(s.nextRankName) + "</td>" +
+      "<td>" + num(s.nextRankScore) + "</td>" +
+      "<td>+" + num(s.gap) + "</td>";
+    body.append(tr);
+  });
 }
 
 /* ------------------------------------------------------- match countdown */
@@ -585,6 +712,19 @@ function showRunToast(run) {
 }
 
 /* ------------------------------------------------------------------ wiring */
+
+/** Send the player to a screen as though they had pressed its tab. */
+function openScreen(name) {
+  const tab = document.querySelector('.tab[data-screen="' + name + '"]');
+  if (tab) tab.click();
+}
+
+// A rank badge invites a press. Before this it was decoration, and pressing it did
+// nothing, which teaches people the display is inert.
+["myRankLink", "heroRankLink"].forEach((id) => {
+  const el = $(id);
+  if (el) el.addEventListener("click", () => openScreen("ranks"));
+});
 
 document.querySelectorAll(".tab").forEach((tab) => {
   tab.addEventListener("click", () => {
