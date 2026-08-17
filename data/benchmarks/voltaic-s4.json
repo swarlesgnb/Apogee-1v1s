@@ -1,0 +1,955 @@
+{
+  "benchmarkName": "Voltaic S4",
+  "abbreviation": "VT",
+  "color": "#02A2DA",
+  "spreadsheetURL": "https://docs.google.com/spreadsheets/d/1qUzF2KHcfs_FgsaDFRfGsLgHhoC1Md5bzMOUbsYzSjg",
+  "evxlUrl": "https://evxl.app/benchmarks/Voltaic%20S4",
+  "source": "kovaaks.com benchmarks API + evxl registry",
+  "fetchedAt": "2026-08-16T19:29:18Z",
+  "difficulties": [
+    {
+      "name": "Novice",
+      "kovaaksBenchmarkId": 237,
+      "rankNames": [
+        "Iron",
+        "Bronze",
+        "Silver",
+        "Gold"
+      ],
+      "rankColors": {
+        "Iron": "#999999",
+        "Bronze": "#FF9900",
+        "Silver": "#CBD9E6",
+        "Gold": "#CAB148"
+      },
+      "categories": [
+        {
+          "name": "Clicking Dynamic",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "VT Pasu Rasp Novice",
+              "leaderboardId": 29489,
+              "rankMaxes": [
+                550,
+                650,
+                750,
+                850
+              ]
+            },
+            {
+              "name": "VT Bounceshot Novice",
+              "leaderboardId": 24975,
+              "rankMaxes": [
+                500,
+                600,
+                700,
+                800
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Clicking Static",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "VT 1w6ts Rasp Novice",
+              "leaderboardId": 29483,
+              "rankMaxes": [
+                650,
+                750,
+                850,
+                950
+              ]
+            },
+            {
+              "name": "VT Multiclick 120 Novice",
+              "leaderboardId": 24969,
+              "rankMaxes": [
+                1160,
+                1260,
+                1360,
+                1460
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Tracking Precise",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "VT Smoothbot Novice",
+              "leaderboardId": 24967,
+              "rankMaxes": [
+                2300,
+                2500,
+                3100,
+                3500
+              ]
+            },
+            {
+              "name": "VT PreciseOrb Novice",
+              "leaderboardId": 24968,
+              "rankMaxes": [
+                1300,
+                1600,
+                1900,
+                2200
+              ]
+            }
+          ]
+        },
+        {
+          "name": "TrackingReactive",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "VT Plaza Novice",
+              "leaderboardId": 43183,
+              "rankMaxes": [
+                2150,
+                2450,
+                2850,
+                3050
+              ]
+            },
+            {
+              "name": "VT Air Novice",
+              "leaderboardId": 43180,
+              "rankMaxes": [
+                1900,
+                2200,
+                2500,
+                2800
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Switching Speed",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "VT psalmTS Novice",
+              "leaderboardId": 24979,
+              "rankMaxes": [
+                620,
+                690,
+                760,
+                830
+              ]
+            },
+            {
+              "name": "VT skyTS Novice",
+              "leaderboardId": 24971,
+              "rankMaxes": [
+                780,
+                860,
+                950,
+                1040
+              ]
+            }
+          ]
+        },
+        {
+          "name": "SwitchingEvasive",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "VT evaTS Novice",
+              "leaderboardId": 24980,
+              "rankMaxes": [
+                450,
+                510,
+                560,
+                620
+              ]
+            },
+            {
+              "name": "VT bounceTS Novice",
+              "leaderboardId": 24973,
+              "rankMaxes": [
+                490,
+                550,
+                610,
+                680
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Intermediate",
+      "kovaaksBenchmarkId": 235,
+      "rankNames": [
+        "Platinum",
+        "Diamond",
+        "Jade",
+        "Master"
+      ],
+      "rankColors": {
+        "Platinum": "#2FCFC2",
+        "Diamond": "#B9F2FF",
+        "Jade": "#85FA85",
+        "Master": "#EC44CA"
+      },
+      "categories": [
+        {
+          "name": "Clicking",
+          "rankMaxes": [
+            15000,
+            30000,
+            45000,
+            60000
+          ],
+          "scenarios": [
+            {
+              "name": "VT Pasu Rasp Intermediate",
+              "leaderboardId": 29493,
+              "rankMaxes": [
+                750,
+                850,
+                950,
+                1050
+              ]
+            },
+            {
+              "name": "VT Bounceshot Intermediate",
+              "leaderboardId": 24955,
+              "rankMaxes": [
+                600,
+                700,
+                800,
+                900
+              ]
+            },
+            {
+              "name": "VT 1w5ts Rasp Intermediate",
+              "leaderboardId": 29494,
+              "rankMaxes": [
+                1000,
+                1100,
+                1200,
+                1300
+              ]
+            },
+            {
+              "name": "VT Multiclick 120 Intermediate",
+              "leaderboardId": 24957,
+              "rankMaxes": [
+                1360,
+                1460,
+                1560,
+                1660
+              ]
+            },
+            {
+              "name": "VT AngleStrafe Intermediate",
+              "leaderboardId": 25063,
+              "rankMaxes": [
+                740,
+                830,
+                920,
+                1000
+              ]
+            },
+            {
+              "name": "VT ArcStrafe Intermediate",
+              "leaderboardId": 29403,
+              "rankMaxes": [
+                660,
+                750,
+                850,
+                940
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Tracking",
+          "rankMaxes": [
+            15000,
+            30000,
+            45000,
+            60000
+          ],
+          "scenarios": [
+            {
+              "name": "VT Smoothbot Intermediate",
+              "leaderboardId": 24952,
+              "rankMaxes": [
+                3050,
+                3450,
+                3850,
+                4250
+              ]
+            },
+            {
+              "name": "VT PreciseOrb Intermediate",
+              "leaderboardId": 24958,
+              "rankMaxes": [
+                1650,
+                2050,
+                2450,
+                2850
+              ]
+            },
+            {
+              "name": "VT Plaza Intermediate",
+              "leaderboardId": 43184,
+              "rankMaxes": [
+                2680,
+                2980,
+                3280,
+                3530
+              ]
+            },
+            {
+              "name": "VT Air Intermediate",
+              "leaderboardId": 43181,
+              "rankMaxes": [
+                2450,
+                2700,
+                2950,
+                3200
+              ]
+            },
+            {
+              "name": "VT PatStrafe Intermediate",
+              "leaderboardId": 26261,
+              "rankMaxes": [
+                2260,
+                2620,
+                2800,
+                3050
+              ]
+            },
+            {
+              "name": "VT AirStrafe Intermediate",
+              "leaderboardId": 29421,
+              "rankMaxes": [
+                2800,
+                3000,
+                3200,
+                3400
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Switching",
+          "rankMaxes": [
+            10000,
+            20000,
+            30000,
+            40000
+          ],
+          "scenarios": [
+            {
+              "name": "VT psalmTS Intermediate",
+              "leaderboardId": 24960,
+              "rankMaxes": [
+                810,
+                880,
+                950,
+                1020
+              ]
+            },
+            {
+              "name": "VT skyTS Intermediate",
+              "leaderboardId": 24964,
+              "rankMaxes": [
+                1030,
+                1130,
+                1220,
+                1300
+              ]
+            },
+            {
+              "name": "VT evaTS Intermediate",
+              "leaderboardId": 24962,
+              "rankMaxes": [
+                550,
+                600,
+                650,
+                700
+              ]
+            },
+            {
+              "name": "VT bounceTS Intermediate",
+              "leaderboardId": 24953,
+              "rankMaxes": [
+                630,
+                670,
+                710,
+                760
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Advanced",
+      "kovaaksBenchmarkId": 253,
+      "rankNames": [
+        "Grandmaster",
+        "Nova",
+        "Astra",
+        "Celestial"
+      ],
+      "rankColors": {
+        "Grandmaster": "#FFD700",
+        "Nova": "#7900FF",
+        "Astra": "#FF2262",
+        "Celestial": "#24DDD8"
+      },
+      "categories": [
+        {
+          "name": "Clicking",
+          "rankMaxes": [
+            15000,
+            30000,
+            45000,
+            60000
+          ],
+          "scenarios": [
+            {
+              "name": "VT Pasu Rasp Advanced",
+              "leaderboardId": 29492,
+              "rankMaxes": [
+                940,
+                1040,
+                1120,
+                1270
+              ]
+            },
+            {
+              "name": "VT Bounceshot Advanced",
+              "leaderboardId": 25154,
+              "rankMaxes": [
+                800,
+                900,
+                1000,
+                1150
+              ]
+            },
+            {
+              "name": "VT 1w3ts Rasp Advanced",
+              "leaderboardId": 29479,
+              "rankMaxes": [
+                1280,
+                1380,
+                1460,
+                1580
+              ]
+            },
+            {
+              "name": "VT Multiclick 180 Advanced",
+              "leaderboardId": 23559,
+              "rankMaxes": [
+                1630,
+                1770,
+                1890,
+                2000
+              ]
+            },
+            {
+              "name": "VT AngleStrafe Advanced",
+              "leaderboardId": 24333,
+              "rankMaxes": [
+                880,
+                1020,
+                1150,
+                1230
+              ]
+            },
+            {
+              "name": "VT ArcStrafe Advanced",
+              "leaderboardId": 29412,
+              "rankMaxes": [
+                940,
+                1080,
+                1150,
+                1230
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Tracking",
+          "rankMaxes": [
+            15000,
+            30000,
+            45000,
+            60000
+          ],
+          "scenarios": [
+            {
+              "name": "VT Smoothbot Advanced",
+              "leaderboardId": 25151,
+              "rankMaxes": [
+                3300,
+                3600,
+                3950,
+                4300
+              ]
+            },
+            {
+              "name": "VT PreciseOrb Advanced",
+              "leaderboardId": 25176,
+              "rankMaxes": [
+                2500,
+                2850,
+                3250,
+                3650
+              ]
+            },
+            {
+              "name": "VT Plaza Advanced",
+              "leaderboardId": 43186,
+              "rankMaxes": [
+                3275,
+                3475,
+                3600,
+                3800
+              ]
+            },
+            {
+              "name": "VT Air Advanced",
+              "leaderboardId": 43182,
+              "rankMaxes": [
+                3000,
+                3250,
+                3500,
+                3750
+              ]
+            },
+            {
+              "name": "VT PatStrafe Advanced",
+              "leaderboardId": 26262,
+              "rankMaxes": [
+                3050,
+                3240,
+                3400,
+                3500
+              ]
+            },
+            {
+              "name": "VT AirStrafe Advanced",
+              "leaderboardId": 29472,
+              "rankMaxes": [
+                3400,
+                3600,
+                3700,
+                3825
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Switching",
+          "rankMaxes": [
+            10000,
+            20000,
+            30000,
+            40000
+          ],
+          "scenarios": [
+            {
+              "name": "VT psalmTS Advanced",
+              "leaderboardId": 25177,
+              "rankMaxes": [
+                1080,
+                1160,
+                1200,
+                1330
+              ]
+            },
+            {
+              "name": "VT skyTS Advanced",
+              "leaderboardId": 25150,
+              "rankMaxes": [
+                1300,
+                1430,
+                1500,
+                1600
+              ]
+            },
+            {
+              "name": "VT evaTS Advanced",
+              "leaderboardId": 25181,
+              "rankMaxes": [
+                680,
+                740,
+                780,
+                830
+              ]
+            },
+            {
+              "name": "VT bounceTS Advanced",
+              "leaderboardId": 25160,
+              "rankMaxes": [
+                820,
+                920,
+                970,
+                1050
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Elite (Unofficial)",
+      "kovaaksBenchmarkId": 1977,
+      "rankNames": [
+        "Grandmaster",
+        "Nova",
+        "Astra",
+        "Celestial",
+        "Ascended",
+        "Eclipse"
+      ],
+      "rankColors": {
+        "Grandmaster": "#FFD700",
+        "Nova": "#7900FF",
+        "Astra": "#FF2262",
+        "Celestial": "#24DDD8",
+        "Ascended": "#FFABBA",
+        "Eclipse": "#351C75"
+      },
+      "categories": [
+        {
+          "name": "Dynamic",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "VT Pasu Rasp Elite",
+              "leaderboardId": 86794,
+              "rankMaxes": [
+                670,
+                780,
+                890,
+                1000,
+                1100,
+                1190
+              ]
+            },
+            {
+              "name": "VT Bounceshot Elite",
+              "leaderboardId": 86805,
+              "rankMaxes": [
+                580,
+                690,
+                800,
+                910,
+                1010,
+                1100
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Static",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "VT 1w2ts Rasp Elite",
+              "leaderboardId": 86795,
+              "rankMaxes": [
+                1180,
+                1260,
+                1340,
+                1420,
+                1490,
+                1550
+              ]
+            },
+            {
+              "name": "VT Multiclick 180 Elite",
+              "leaderboardId": 86801,
+              "rankMaxes": [
+                1470,
+                1590,
+                1690,
+                1790,
+                1880,
+                1970
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Strafe-Click",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "VT AngleStrafe Elite",
+              "leaderboardId": 86796,
+              "rankMaxes": [
+                760,
+                870,
+                980,
+                1090,
+                1190,
+                1280
+              ]
+            },
+            {
+              "name": "VT ArcStrafe Elite",
+              "leaderboardId": 86806,
+              "rankMaxes": [
+                820,
+                920,
+                1020,
+                1120,
+                1210,
+                1290
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Precise",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "VT Smoothbot Elite",
+              "leaderboardId": 86807,
+              "rankMaxes": [
+                2125,
+                2450,
+                2775,
+                3100,
+                3390,
+                3650
+              ]
+            },
+            {
+              "name": "VT PreciseOrb Elite",
+              "leaderboardId": 86797,
+              "rankMaxes": [
+                1650,
+                2025,
+                2400,
+                2775,
+                3115,
+                3415
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Reactive",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "VT Plaza Elite",
+              "leaderboardId": 86815,
+              "rankMaxes": [
+                2775,
+                2950,
+                3125,
+                3300,
+                3460,
+                3600
+              ]
+            },
+            {
+              "name": "VT Air Elite",
+              "leaderboardId": 86816,
+              "rankMaxes": [
+                2300,
+                2550,
+                2800,
+                3050,
+                3275,
+                3475
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Strafe-Track",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "VT PatStrafe Elite",
+              "leaderboardId": 75837,
+              "rankMaxes": [
+                2875,
+                3025,
+                3175,
+                3325,
+                3460,
+                3580
+              ]
+            },
+            {
+              "name": "VT AirStrafe Elite",
+              "leaderboardId": 86817,
+              "rankMaxes": [
+                2950,
+                3100,
+                3250,
+                3400,
+                3535,
+                3655
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Speed",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "VT psalmTS Elite",
+              "leaderboardId": 86818,
+              "rankMaxes": [
+                920,
+                1000,
+                1080,
+                1160,
+                1230,
+                1290
+              ]
+            },
+            {
+              "name": "VT skyTS Elite",
+              "leaderboardId": 86810,
+              "rankMaxes": [
+                1170,
+                1270,
+                1370,
+                1470,
+                1560,
+                1640
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Evasive",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "VT evaTS Elite",
+              "leaderboardId": 86809,
+              "rankMaxes": [
+                600,
+                650,
+                700,
+                750,
+                790,
+                830
+              ]
+            },
+            {
+              "name": "VT bounceTS Elite",
+              "leaderboardId": 86808,
+              "rankMaxes": [
+                720,
+                800,
+                880,
+                960,
+                1030,
+                1090
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

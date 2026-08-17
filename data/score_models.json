@@ -1,0 +1,891 @@
+{
+  "$comment": [
+    "Learned scoring relations: score = <stat> * k, per scenario.",
+    "Derived from observed runs, not from documentation. A scenario only appears",
+    "here if the relation held across every observed run with no exceptions.",
+    "Used by the score_matches_model integrity check; scenarios absent from this",
+    "file simply skip that check rather than failing it.",
+    "Rebuild with: npx tsx src/core/verify/buildScoreModels.ts"
+  ],
+  "minRuns": 8,
+  "tolerance": 0.001,
+  "derivedFrom": "803 scenarios",
+  "models": {
+    "10 Sphere Hipfire Extra Small": {
+      "stat": "kills",
+      "k": 10
+    },
+    "1w2ts Pasu Perfected": {
+      "stat": "kills",
+      "k": 1
+    },
+    "1w2ts Perfected Easier": {
+      "stat": "kills",
+      "k": 1
+    },
+    "1w2ts Perfected": {
+      "stat": "kills",
+      "k": 1
+    },
+    "1w2ts reload Easier": {
+      "stat": "kills",
+      "k": 1
+    },
+    "1w2ts reload smallflicks Easier": {
+      "stat": "kills",
+      "k": 1
+    },
+    "1w2ts reload smallflicks slightly larger": {
+      "stat": "kills",
+      "k": 1
+    },
+    "1w2ts reload smallflicks": {
+      "stat": "kills",
+      "k": 1
+    },
+    "1w2ts reload": {
+      "stat": "kills",
+      "k": 1
+    },
+    "1w3ts reload Easier": {
+      "stat": "kills",
+      "k": 1
+    },
+    "1w3ts reload": {
+      "stat": "kills",
+      "k": 1
+    },
+    "1w4t Pasu Raspberry Master 6mag": {
+      "stat": "kills",
+      "k": 1
+    },
+    "1w4t_vbr_pokeball Raspberry": {
+      "stat": "kills",
+      "k": 1
+    },
+    "1w4ts Voltaic": {
+      "stat": "kills",
+      "k": 1
+    },
+    "1w4ts reload Easier": {
+      "stat": "kills",
+      "k": 1
+    },
+    "1w4ts reload nevermiss": {
+      "stat": "kills",
+      "k": 1
+    },
+    "1w5ts reload": {
+      "stat": "kills",
+      "k": 1
+    },
+    "1w6ts reload Easier": {
+      "stat": "kills",
+      "k": 1
+    },
+    "1w6ts reload v2": {
+      "stat": "kills",
+      "k": 1
+    },
+    "1wall3targets TE Perfected": {
+      "stat": "kills",
+      "k": 1
+    },
+    "1wall5targets_pasu NeverMiss": {
+      "stat": "kills",
+      "k": 1
+    },
+    "1wall5targets_pasu Reload": {
+      "stat": "kills",
+      "k": 1
+    },
+    "1wall6targets TE reload": {
+      "stat": "kills",
+      "k": 1
+    },
+    "2 Tile Jumbo Tile Frenzy": {
+      "stat": "kills",
+      "k": 1
+    },
+    "6 Sphere Hipfire 200% Size": {
+      "stat": "kills",
+      "k": 1
+    },
+    "6 Tile Jumbo Frenzy": {
+      "stat": "kills",
+      "k": 1
+    },
+    "AbyssTrack Easy": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "Aethercontrol Easy": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "Aimerz+ 1w3ts Med S1": {
+      "stat": "kills",
+      "k": 1
+    },
+    "Aimerz+ PTI Med S1": {
+      "stat": "hitCount",
+      "k": 5
+    },
+    "Aimerz+ PreciseTrack Med S1": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "Aimerz+ hopClick Med S1": {
+      "stat": "kills",
+      "k": 10
+    },
+    "Aimerz+ ww2t Easy S1": {
+      "stat": "kills",
+      "k": 1
+    },
+    "Aimerz+ ww2t Hard S1 20% Smaller": {
+      "stat": "kills",
+      "k": 1
+    },
+    "Aimerz+ ww2t Hard S1 Pokeball 65% Smaller": {
+      "stat": "kills",
+      "k": 1
+    },
+    "Air Angelic 4 Voltaic Easy 90%": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "Air Angelic 4 Voltaic Easy": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "Air Voltaic Easy Invincible 4": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "Air Voltaic Invincible 4 Medium": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "Air Voltaic Invincible 7 Easy": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "Avasive Control Track Easy": {
+      "stat": "hitCount",
+      "k": 3
+    },
+    "Avasive bukeTrack Easy": {
+      "stat": "hitCount",
+      "k": 3
+    },
+    "Avasphere Euphoric Basic": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "B180T Voltaic Easy": {
+      "stat": "hitCount",
+      "k": 0.2
+    },
+    "Bounce 180 Sparky Easy": {
+      "stat": "kills",
+      "k": 1
+    },
+    "Bouncesphere Smoothness": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "CatClick Medium": {
+      "stat": "kills",
+      "k": 1
+    },
+    "Centering II 180 Fixed Larger": {
+      "stat": "hitCount",
+      "k": 18
+    },
+    "CombinedClick SuperbAim Easy": {
+      "stat": "kills",
+      "k": 1
+    },
+    "ControlSwitch - THE FINALS": {
+      "stat": "damageDone",
+      "k": 1
+    },
+    "Controlsphere Click Easy": {
+      "stat": "kills",
+      "k": 1
+    },
+    "Controlsphere Click": {
+      "stat": "kills",
+      "k": 1
+    },
+    "Controlsphere Easy III": {
+      "stat": "hitCount",
+      "k": 3
+    },
+    "Controlsphere Far Larger": {
+      "stat": "hitCount",
+      "k": 3
+    },
+    "Controlsphere OW": {
+      "stat": "hitCount",
+      "k": 3
+    },
+    "Controlsphere SuperbAim Very Easy": {
+      "stat": "hitCount",
+      "k": 3
+    },
+    "Controlsphere SuperbAim Viscose": {
+      "stat": "hitCount",
+      "k": 3
+    },
+    "Controlsphere rAim Easy": {
+      "stat": "hitCount",
+      "k": 3
+    },
+    "Controlsphere": {
+      "stat": "hitCount",
+      "k": 3
+    },
+    "DM 1w2ts Pokeball": {
+      "stat": "kills",
+      "k": 10
+    },
+    "DM 1w3ts Pokeball": {
+      "stat": "kills",
+      "k": 10
+    },
+    "DM 1w4ts Pokeball": {
+      "stat": "kills",
+      "k": 10
+    },
+    "DM 1w5ts Pokeball": {
+      "stat": "kills",
+      "k": 10
+    },
+    "DM 1w6ts Pokeball": {
+      "stat": "kills",
+      "k": 10
+    },
+    "DM ww2t Pokeball": {
+      "stat": "kills",
+      "k": 10
+    },
+    "DM ww3t Pokeball": {
+      "stat": "kills",
+      "k": 10
+    },
+    "DM ww4t Pokeball": {
+      "stat": "kills",
+      "k": 10
+    },
+    "DM ww5t Pokeball": {
+      "stat": "kills",
+      "k": 10
+    },
+    "DM ww6t Pokeball": {
+      "stat": "kills",
+      "k": 10
+    },
+    "Deceptive Tracking XYZ Easy": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "DistanceTrack - THE FINALS": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "FloatTS Angelic Easy": {
+      "stat": "hitCount",
+      "k": 0.05
+    },
+    "Flower 50cm": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "Flower Easier 50cm": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "Flower Easier": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "Happy Easter!": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "HighGroundTrack - THE FINALS": {
+      "stat": "damageDone",
+      "k": 1
+    },
+    "HopClick - THE FINALS": {
+      "stat": "kills",
+      "k": 10
+    },
+    "HopSwitch - THE FINALS": {
+      "stat": "hitCount",
+      "k": 0.1
+    },
+    "Huge Poke Tile Frenzy": {
+      "stat": "kills",
+      "k": 1
+    },
+    "IRIS SpeedSwitch Easy": {
+      "stat": "kills",
+      "k": 10
+    },
+    "Jumbo 1wall6targets TE": {
+      "stat": "kills",
+      "k": 1
+    },
+    "Jumbo Tile Frenzy": {
+      "stat": "kills",
+      "k": 1
+    },
+    "KinTs SuperbAim Easy": {
+      "stat": "hitCount",
+      "k": 0.1
+    },
+    "Kindaclose Mid Strafes": {
+      "stat": "hitCount",
+      "k": 18
+    },
+    "Leapcorn Pure Easy": {
+      "stat": "kills",
+      "k": 1
+    },
+    "Leapstrafes Control Medium": {
+      "stat": "hitCount",
+      "k": 18
+    },
+    "Leapstrafes Control wobin": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "Leaptrack Goated 75% Slightly Larger": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "Leisphere Easy": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "PGTI Voltaic Easy Smoother": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "PGTI Voltaic Easy Ultra Jumbo": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "PGTI Voltaic Easy": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "PadTrack - THE FINALS": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "Pasu Angelic 20% Larger": {
+      "stat": "kills",
+      "k": 1
+    },
+    "Pasu Voltaic Reload Easy": {
+      "stat": "kills",
+      "k": 1
+    },
+    "Pasu rAim Easy": {
+      "stat": "kills",
+      "k": 1
+    },
+    "Plink Palace Easy Less Blinks": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "Plink Palace Easy": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "Pokeball 1w4ts 30% Easy": {
+      "stat": "kills",
+      "k": 1
+    },
+    "Pokeball 1w4ts 30%": {
+      "stat": "kills",
+      "k": 1
+    },
+    "Pokeball Frenzy Auto Small Wide": {
+      "stat": "kills",
+      "k": 30
+    },
+    "Popcorn Goated rAim easy": {
+      "stat": "kills",
+      "k": 10
+    },
+    "Popcorn MV Intermediate": {
+      "stat": "kills",
+      "k": 10
+    },
+    "Popcorn MV Medium": {
+      "stat": "kills",
+      "k": 10
+    },
+    "RawControlSphere": {
+      "stat": "hitCount",
+      "k": 3
+    },
+    "SVGS - THE FINALS": {
+      "stat": "damageDone",
+      "k": 1
+    },
+    "SYW Easy": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "Silo Easy": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "SmoothBot Invincible Goated": {
+      "stat": "hitCount",
+      "k": 6
+    },
+    "SmoothBot Perfected": {
+      "stat": "hitCount",
+      "k": 1.304
+    },
+    "Smoothbot Pauer Easy": {
+      "stat": "hitCount",
+      "k": 6
+    },
+    "Smoothbot Pauer Glider 60% Larger": {
+      "stat": "hitCount",
+      "k": 6
+    },
+    "Smoothbot Voltaic Easy 70%": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "Smoothsphere Nevermiss BEGINNER 40% FASTER": {
+      "stat": "hitCount",
+      "k": 3
+    },
+    "Smoothsphere Viscose Easier": {
+      "stat": "hitCount",
+      "k": 3
+    },
+    "Smoothsphere Viscose": {
+      "stat": "hitCount",
+      "k": 3
+    },
+    "StaticSwitchingVox Small": {
+      "stat": "hitCount",
+      "k": 0.05
+    },
+    "StaticSwitchingVox xSmall": {
+      "stat": "hitCount",
+      "k": 0.05
+    },
+    "SteadyTrack": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "Swing Tracking Easy 80%": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "TSK - 360 Turn": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "TSK - Centering 180 Speed 2": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "TSK - Centering 180 Speed 3": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "TSK - Centering 45 Speed 2 Stop": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "TSK - Centering 90 Speed 2": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "TSK - DVD Tracking Big": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "TSK - DVD Tracking MASSIVE": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "TSK - DVD Tracking": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "TSK - Hewchy's VAI 160": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "TSK - Hewchy's VAI 20 Small": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "TSK - Hewchy's VAI 20": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "TSK - ST60 Thick": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "TSK - ST60": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "TSK - SYV Big": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "TSK - SYW Thin": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "TSK - SYW": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "TSK - VSTP Soft Big": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "TSK - Varied Centering 90 Trio": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "Tamspeed 2bpes": {
+      "stat": "kills",
+      "k": 1
+    },
+    "UnderTrack - THE FINALS": {
+      "stat": "damageDone",
+      "k": 1
+    },
+    "VT 1w3ts Rasp Advanced": {
+      "stat": "kills",
+      "k": 10
+    },
+    "VT Aether Bot 1 Easier": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "VT Aether Intermediate S5 Bot 2": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "VT Aether Intermediate S5": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "VT Aether Novice S5 Hard Bot 1 90%": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "VT Aether Novice S5 Hard Bot 1": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "VT Bounceshot Intermediate": {
+      "stat": "kills",
+      "k": 10
+    },
+    "VT Bounceshot Viscose Medium": {
+      "stat": "kills",
+      "k": 10
+    },
+    "VT ControlTS Intermediate S5": {
+      "stat": "hitCount",
+      "k": 0.2
+    },
+    "VT Controlsphere Intermediate S5": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "VT Controlsphere Novice S5 Hard": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "VT Controlsphere Viscose 80%": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "VT Controlsphere Viscose Easier": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "VT Controlsphere Viscose": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "VT DotTS Intermediate S5 Speed": {
+      "stat": "hitCount",
+      "k": 0.667
+    },
+    "VT DotTS Intermediate S5": {
+      "stat": "hitCount",
+      "k": 0.5
+    },
+    "VT DriftTS Intermediate S5": {
+      "stat": "hitCount",
+      "k": 0.2
+    },
+    "VT EddieTS Intermediate S5": {
+      "stat": "hitCount",
+      "k": 0.5
+    },
+    "VT FlyTS Intermediate S5": {
+      "stat": "hitCount",
+      "k": 0.2
+    },
+    "VT Frogtagon Intermediate S5": {
+      "stat": "kills",
+      "k": 10
+    },
+    "VT Ground Intermediate S5": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "VT PGT Intermediate S5": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "VT Penta Bounce Intermediate S5": {
+      "stat": "hitCount",
+      "k": 0.2
+    },
+    "VT Popcorn Intermediate S5": {
+      "stat": "kills",
+      "k": 10
+    },
+    "VT PreciseOrb Intermediate 15% Slower": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "VT Raw Control Intermediate S5": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "VT Raw Control Novice S5 Hard": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "VT Smoothbot Novice 180": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "VT Snake Track Intermediate S5": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "VT ww5t Intermediate S5": {
+      "stat": "kills",
+      "k": 10
+    },
+    "Valorant Microshot Speed Small": {
+      "stat": "kills",
+      "k": 1
+    },
+    "VariousStatic - THE FINALS": {
+      "stat": "kills",
+      "k": 10
+    },
+    "VoxTS Click Medium": {
+      "stat": "kills",
+      "k": 1
+    },
+    "Whisphere Med 60s": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "Whisphere Small & Slow 75%": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "Whisphere Viscose": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "Whisphere": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "WhisphereRawControl": {
+      "stat": "hitCount",
+      "k": 3
+    },
+    "Wide Wall 3 Targets TE": {
+      "stat": "kills",
+      "k": 1
+    },
+    "Wide Wall 4 Targets Small": {
+      "stat": "kills",
+      "k": 1
+    },
+    "Wide Wall 4 Targets": {
+      "stat": "kills",
+      "k": 1
+    },
+    "ZipTrack - THE FINALS": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "aimerz+ Static Switching 5 Bot Slightly Larger": {
+      "stat": "kills",
+      "k": 1
+    },
+    "aimerz+ Static Switching 5 Bot": {
+      "stat": "kills",
+      "k": 1
+    },
+    "beanTS 200%": {
+      "stat": "hitCount",
+      "k": 0.05
+    },
+    "beanTS Larger": {
+      "stat": "hitCount",
+      "k": 0.05
+    },
+    "beanTS": {
+      "stat": "hitCount",
+      "k": 0.05
+    },
+    "cA 1w5ts Novice": {
+      "stat": "kills",
+      "k": 1
+    },
+    "cloverRawControl Big": {
+      "stat": "hitCount",
+      "k": 3
+    },
+    "cloverRawControl Easy": {
+      "stat": "hitCount",
+      "k": 3
+    },
+    "cloverRawControl Viscose 50cm": {
+      "stat": "hitCount",
+      "k": 3
+    },
+    "devTS Goated NR Static 5Bot": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "devTS Static Click Angelic Easy": {
+      "stat": "kills",
+      "k": 1
+    },
+    "hizkuAirPalace Easy": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "kinTS NR Easy": {
+      "stat": "hitCount",
+      "k": 6
+    },
+    "kinTS Voltaic Easy": {
+      "stat": "hitCount",
+      "k": 0.1
+    },
+    "pasu nqs reload": {
+      "stat": "kills",
+      "k": 1
+    },
+    "patCircleSwitch NR": {
+      "stat": "hitCount",
+      "k": 0.005
+    },
+    "patTS NR": {
+      "stat": "damageDone",
+      "k": 1
+    },
+    "patTargetSwitch 90 easy": {
+      "stat": "damageDone",
+      "k": 1
+    },
+    "patTargetSwitch easy": {
+      "stat": "damageDone",
+      "k": 1
+    },
+    "psalmTS Viscose Click": {
+      "stat": "kills",
+      "k": 1
+    },
+    "psalmTS Voltaic Initiate": {
+      "stat": "hitCount",
+      "k": 0.05
+    },
+    "psalmTS angelic click 30% Larger": {
+      "stat": "kills",
+      "k": 1
+    },
+    "skyClick Goated Medium": {
+      "stat": "kills",
+      "k": 1
+    },
+    "tamAngleSmoothness Easier": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "tamTargetSwitch Smooth Easy": {
+      "stat": "kills",
+      "k": 1
+    },
+    "voidTrack Easy": {
+      "stat": "hitCount",
+      "k": 1
+    },
+    "voxTS Static Click rAim": {
+      "stat": "kills",
+      "k": 1
+    },
+    "voxTargetSwitch 2 10% Smaller": {
+      "stat": "hitCount",
+      "k": 0.05
+    },
+    "voxTargetSwitch 2 Large": {
+      "stat": "hitCount",
+      "k": 0.05
+    },
+    "voxTargetSwitch 2": {
+      "stat": "hitCount",
+      "k": 0.05
+    },
+    "voxTargetSwitch": {
+      "stat": "hitCount",
+      "k": 0.05
+    },
+    "waldoTS Intermediate": {
+      "stat": "hitCount",
+      "k": 0.05
+    },
+    "waldoTS": {
+      "stat": "hitCount",
+      "k": 0.05
+    },
+    "ww3t Voltaic Larger": {
+      "stat": "kills",
+      "k": 1
+    },
+    "ww3t Voltaic": {
+      "stat": "kills",
+      "k": 1
+    },
+    "ww4t Voltaic": {
+      "stat": "kills",
+      "k": 1
+    }
+  }
+}

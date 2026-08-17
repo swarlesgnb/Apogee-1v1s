@@ -1,0 +1,547 @@
+{
+  "source": "kovaaks.com/webapp-backend/scenario/popular",
+  "fetchedAt": "2026-08-16T19:21:40Z",
+  "scenarios": [
+    {
+      "name": "VT 1w4ts Novice S5",
+      "difficulty": "Novice",
+      "leaderboardId": 103210,
+      "aimType": "Clicking",
+      "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nSemi auto click timing with four stationary targets on a wall infront of the player. Each target takes 1 hit to eliminate and is worth 10 points. Sqrt Acc scoring applies.",
+      "plays": 2463640,
+      "entries": 215074,
+      "topScore": 2161
+    },
+    {
+      "name": "VT Aether Novice S5",
+      "difficulty": "Novice",
+      "leaderboardId": 101370,
+      "aimType": "Tracking",
+      "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto tracking with a series of three flying targets in a circular arena. Each target lasts 19 seconds and subsequent targets spawn at the same starting location after 1.5 seconds. Score is earned at a rate of 1 point per hit with a firerate of 100 per second.",
+      "plays": 1186836,
+      "entries": 186280,
+      "topScore": 5155
+    },
+    {
+      "name": "VT Controlsphere Novice S5",
+      "difficulty": "Novice",
+      "leaderboardId": 103765,
+      "aimType": "Tracking",
+      "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto tracking with an invincible flying target strafing in a variety of directions in a circular arena, while being repelled away from the roof and floor. Score is earned at a rate of 1 point per hit with a firerate of 100 per second.",
+      "plays": 1115520,
+      "entries": 182921,
+      "topScore": 5726
+    },
+    {
+      "name": "VT ControlTS Novice S5",
+      "difficulty": "Novice",
+      "leaderboardId": 105132,
+      "aimType": "Target Switching",
+      "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto target switching with four targets gently jumping and floating inside a narrow chamber. Each target takes 50 hits to eliminate with a TTK of ~0.6 seconds, and is worth a total of 10 points.",
+      "plays": 817039,
+      "entries": 168062,
+      "topScore": 732
+    },
+    {
+      "name": "VT DotTS Novice S5",
+      "difficulty": "Novice",
+      "leaderboardId": 104868,
+      "aimType": "Target Switching",
+      "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto target switching with five static targets infront of the player. Each target takes 20 hits to eliminate with a TTK of ~0.26 seconds, and is worth a total of 10 points.",
+      "plays": 1180466,
+      "entries": 182091,
+      "topScore": 1666
+    },
+    {
+      "name": "VT DriftTS Novice S5",
+      "difficulty": "Novice",
+      "leaderboardId": 104862,
+      "aimType": "Target Switching",
+      "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto target switching with four targets jumping and floating around in two layered chambers infront of the player. Each target takes 50 hits to eliminate with a TTK of ~0.5 seconds, and is worth a total of 10 points.",
+      "plays": 818208,
+      "entries": 168927,
+      "topScore": 778
+    },
+    {
+      "name": "VT EddieTS Novice S5",
+      "difficulty": "Novice",
+      "leaderboardId": 104835,
+      "aimType": "Target Switching",
+      "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto target switching with four flying targets infront of the player. Each target takes 20 hits to eliminate with a TTK of ~0.24 seconds, and is worth a total of 10 points.",
+      "plays": 1176076,
+      "entries": 173111,
+      "topScore": 1553
+    },
+    {
+      "name": "VT Floating Heads Novice S5",
+      "difficulty": "Novice",
+      "leaderboardId": 98054,
+      "aimType": "Clicking",
+      "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nSemi auto click timing with five targets floating around in a layered arena infront of the player. Each target takes 1 hit to eliminate and is worth 10 points. Sqrt acc scoring applies.",
+      "plays": 1199372,
+      "entries": 196182,
+      "topScore": 1646
+    },
+    {
+      "name": "VT FlyTS Novice S5",
+      "difficulty": "Novice",
+      "leaderboardId": 104830,
+      "aimType": "Target Switching",
+      "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto target switching with four targets flying around infront of the player. Each target takes 50 hits to eliminate with a TTK of ~0.5 seconds, and is worth a total of 10 points.",
+      "plays": 736137,
+      "entries": 177146,
+      "topScore": 889
+    },
+    {
+      "name": "VT Frogtagon Novice S5",
+      "difficulty": "Novice",
+      "leaderboardId": 106186,
+      "aimType": "Clicking",
+      "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nSemi auto click timing with four targets flying in straight lines in all directions within an octagon infront of the player. Each target takes 1 hit to eliminate and is worth 10 points. 100 ammo total, 30 to shoot, refunds 40 on hit, for a net gain of 10 ammo on hit.",
+      "plays": 1186758,
+      "entries": 193796,
+      "topScore": 2100
+    },
+    {
+      "name": "VT Ground Novice S5",
+      "difficulty": "Novice",
+      "leaderboardId": 101744,
+      "aimType": "Tracking",
+      "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto tracking with a series of three grounded targets in a circular arena. Each target lasts 19 seconds and subsequent targets spawn at the same starting location after 1.5 seconds. Score is earned at a rate of 1 point per hit with a firerate of 100 per second.",
+      "plays": 1137799,
+      "entries": 187126,
+      "topScore": 5090
+    },
+    {
+      "name": "VT Pasu Novice S5",
+      "difficulty": "Novice",
+      "leaderboardId": 98059,
+      "aimType": "Clicking",
+      "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nSemi auto click timing with four targets jumping and floating around on a wall infront of the player, while being repelled away from the edges. Each target takes 1 hit to eliminate and is worth 10 points. Sqrt Acc scoring applies.",
+      "plays": 2509408,
+      "entries": 230670,
+      "topScore": 1704
+    },
+    {
+      "name": "VT Penta Bounce Novice S5",
+      "difficulty": "Novice",
+      "leaderboardId": 103262,
+      "aimType": "Target Switching",
+      "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto target switching with five targets bouncing around on a pentagonal wall at varying distances. Each target takes 50 hits to eliminate with a TTK of ~0.5 seconds, and is worth a total of 10 points.",
+      "plays": 839609,
+      "entries": 166189,
+      "topScore": 827
+    },
+    {
+      "name": "VT PGT Novice S5",
+      "difficulty": "Novice",
+      "leaderboardId": 98060,
+      "aimType": "Tracking",
+      "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto tracking with a series of three targets in a circular arena, the first making sharp bounces, the second making shallow bounces and the third flying. Each target lasts 19 seconds and subsequent targets spawn at the same starting location after 1.5 seconds.",
+      "plays": 1271794,
+      "entries": 208370,
+      "topScore": 5528
+    },
+    {
+      "name": "VT Popcorn Novice S5",
+      "difficulty": "Novice",
+      "leaderboardId": 98285,
+      "aimType": "Clicking",
+      "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nSemi auto click timing with five targets jumping around in a wide arena infront of the player. Each target takes 1 hit to eliminate and is worth 10 points. 100 ammo total, 20 to shoot, refunds 40 on hit, for a net gain of 20 ammo on hit.",
+      "plays": 1690633,
+      "entries": 207265,
+      "topScore": 1750
+    },
+    {
+      "name": "VT Raw Control Novice S5",
+      "difficulty": "Novice",
+      "leaderboardId": 98047,
+      "aimType": "Tracking",
+      "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto tracking with an invincible flying target strafing in a variety of directions in a box infront of the player, while being repelled away from each wall. Score is earned at a rate of 1 point per hit with a firerate of 100 per second.",
+      "plays": 1229327,
+      "entries": 187588,
+      "topScore": 5853
+    },
+    {
+      "name": "VT Snake Track Novice S5",
+      "difficulty": "Novice",
+      "leaderboardId": 101560,
+      "aimType": "Tracking",
+      "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto tracking with an invincible grounded target performing wide sweeping strafes in a circular dish surrounding the player. Score is earned at a rate of 1 point per hit with a firerate of 100 per second.",
+      "plays": 1363980,
+      "entries": 208726,
+      "topScore": 5826
+    },
+    {
+      "name": "VT ww5t Novice S5",
+      "difficulty": "Novice",
+      "leaderboardId": 98030,
+      "aimType": "Clicking",
+      "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nSemi auto click timing with five stationary targets on a wide curved wall infront of the player. Each target takes 1 hit to eliminate and is worth 10 points. 100 ammo total, 30 to shoot, refunds 40 on hit, for a net gain of 10 ammo on hit.",
+      "plays": 2013854,
+      "entries": 203996,
+      "topScore": 2350
+    },
+    {
+      "name": "VT 1w3ts Intermediate S5",
+      "difficulty": "Intermediate",
+      "leaderboardId": 103209,
+      "aimType": "Clicking",
+      "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nSemi auto click timing with three stationary targets on a wall infront of the player. Each target takes 1 hit to eliminate and is worth 10 points. Sqrt Acc scoring applies.",
+      "plays": 4478022,
+      "entries": 147712,
+      "topScore": 1965
+    },
+    {
+      "name": "VT Aether Intermediate S5",
+      "difficulty": "Intermediate",
+      "leaderboardId": 101369,
+      "aimType": "Tracking",
+      "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto tracking with a series of three flying targets in a circular arena. Each target lasts 19 seconds and subsequent targets spawn at the same starting location after 1.5 seconds. Score is earned at a rate of 1 point per hit with a firerate of 100 per second.",
+      "plays": 1845226,
+      "entries": 109700,
+      "topScore": 4717
+    },
+    {
+      "name": "VT Controlsphere Intermediate S5",
+      "difficulty": "Intermediate",
+      "leaderboardId": 103353,
+      "aimType": "Tracking",
+      "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto tracking with an invincible flying target strafing in a variety of directions in a circular arena, while being repelled away from the roof and floor. Score is earned at a rate of 1 point per hit with a firerate of 100 per second.",
+      "plays": 2041283,
+      "entries": 111861,
+      "topScore": 5326
+    },
+    {
+      "name": "VT ControlTS Intermediate S5",
+      "difficulty": "Intermediate",
+      "leaderboardId": 104890,
+      "aimType": "Target Switching",
+      "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto target switching with four targets gently jumping and floating inside a narrow chamber. Each target takes 50 hits to eliminate with a TTK of ~0.6 seconds, and is worth a total of 10 points.",
+      "plays": 1453010,
+      "entries": 97776,
+      "topScore": 653
+    },
+    {
+      "name": "VT DotTS Intermediate S5",
+      "difficulty": "Intermediate",
+      "leaderboardId": 104865,
+      "aimType": "Target Switching",
+      "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto target switching with five static targets infront of the player. Each target takes 20 hits to eliminate with a TTK of ~0.26 seconds, and is worth a total of 10 points.",
+      "plays": 2730409,
+      "entries": 115024,
+      "topScore": 1548
+    },
+    {
+      "name": "VT DriftTS Intermediate S5",
+      "difficulty": "Intermediate",
+      "leaderboardId": 104863,
+      "aimType": "Target Switching",
+      "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto target switching with four targets jumping and floating around in two layered chambers infront of the player. Each target takes 50 hits to eliminate with a TTK of ~0.5 seconds, and is worth a total of 10 points.",
+      "plays": 1145463,
+      "entries": 95674,
+      "topScore": 673
+    },
+    {
+      "name": "VT EddieTS Intermediate S5",
+      "difficulty": "Intermediate",
+      "leaderboardId": 105176,
+      "aimType": "Target Switching",
+      "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto target switching with four flying targets infront of the player. Each target takes 20 hits to eliminate with a TTK of ~0.24 seconds, and is worth a total of 10 points.",
+      "plays": 1756304,
+      "entries": 103628,
+      "topScore": 1430
+    },
+    {
+      "name": "VT Floating Heads Intermediate S5",
+      "difficulty": "Intermediate",
+      "leaderboardId": 98055,
+      "aimType": "Clicking",
+      "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nSemi auto click timing with five targets floating around in a layered arena infront of the player. Each target takes 1 hit to eliminate and is worth 10 points. Sqrt acc scoring applies.",
+      "plays": 1566076,
+      "entries": 121851,
+      "topScore": 1516
+    },
+    {
+      "name": "VT FlyTS Intermediate S5",
+      "difficulty": "Intermediate",
+      "leaderboardId": 105142,
+      "aimType": "Target Switching",
+      "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto target switching with four targets flying around infront of the player. Each target takes 50 hits to eliminate with a TTK of ~0.5 seconds, and is worth a total of 10 points.",
+      "plays": 1301048,
+      "entries": 111165,
+      "topScore": 832
+    },
+    {
+      "name": "VT Frogtagon Intermediate S5",
+      "difficulty": "Intermediate",
+      "leaderboardId": 105828,
+      "aimType": "Clicking",
+      "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nSemi auto click timing with four targets flying in straight lines in all directions within an octagon infront of the player. Each target takes 1 hit to eliminate and is worth 10 points. 100 ammo total, 30 to shoot, refunds 39 on hit, for a net gain of 9 ammo on hit.",
+      "plays": 1477922,
+      "entries": 116580,
+      "topScore": 1990
+    },
+    {
+      "name": "VT Ground Intermediate S5",
+      "difficulty": "Intermediate",
+      "leaderboardId": 101743,
+      "aimType": "Tracking",
+      "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto tracking with a series of three grounded targets in a circular arena. Each target lasts 19 seconds and subsequent targets spawn at the same starting location after 1.5 seconds. Score is earned at a rate of 1 point per hit with a firerate of 100 per second.",
+      "plays": 2560574,
+      "entries": 116821,
+      "topScore": 4873
+    },
+    {
+      "name": "VT Pasu Intermediate S5",
+      "difficulty": "Intermediate",
+      "leaderboardId": 98330,
+      "aimType": "Clicking",
+      "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nSemi auto click timing with four targets jumping and floating around on a wall infront of the player, while being repelled away from the edges. Each target takes 1 hit to eliminate and is worth 10 points. Sqrt Acc scoring applies.",
+      "plays": 4433379,
+      "entries": 159512,
+      "topScore": 1593
+    },
+    {
+      "name": "VT Penta Bounce Intermediate S5",
+      "difficulty": "Intermediate",
+      "leaderboardId": 103261,
+      "aimType": "Target Switching",
+      "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto target switching with five targets bouncing around on a pentagonal wall at varying distances. Each target takes 50 hits to eliminate with a TTK of ~0.5 seconds, and is worth a total of 10 points.",
+      "plays": 1212977,
+      "entries": 94991,
+      "topScore": 753
+    },
+    {
+      "name": "VT PGT Intermediate S5",
+      "difficulty": "Intermediate",
+      "leaderboardId": 98331,
+      "aimType": "Tracking",
+      "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto tracking with a series of three targets in a circular arena, the first making sharp bounces, the second making shallow bounces and the third flying. Each target lasts 19 seconds and subsequent targets spawn at the same starting location after 1.5 seconds.",
+      "plays": 2418953,
+      "entries": 130299,
+      "topScore": 5100
+    },
+    {
+      "name": "VT Popcorn Intermediate S5",
+      "difficulty": "Intermediate",
+      "leaderboardId": 98333,
+      "aimType": "Clicking",
+      "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nSemi auto click timing with five targets jumping around in a wide arena infront of the player. Each target takes 1 hit to eliminate and is worth 10 points. 100 ammo total, 20 to shoot, refunds 35 on hit, for a net gain of 15 ammo on hit.",
+      "plays": 2219510,
+      "entries": 125608,
+      "topScore": 1410
+    },
+    {
+      "name": "VT Raw Control Intermediate S5",
+      "difficulty": "Intermediate",
+      "leaderboardId": 98048,
+      "aimType": "Tracking",
+      "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto tracking with an invincible flying target strafing in a variety of directions in a box infront of the player, while being repelled away from each wall. Score is earned at a rate of 1 point per hit with a firerate of 100 per second.",
+      "plays": 2631694,
+      "entries": 116862,
+      "topScore": 5437
+    },
+    {
+      "name": "VT Snake Track Intermediate S5",
+      "difficulty": "Intermediate",
+      "leaderboardId": 98045,
+      "aimType": "Tracking",
+      "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto tracking with an invincible grounded target performing wide sweeping strafes in a circular dish surrounding the player. Score is earned at a rate of 1 point per hit with a firerate of 100 per second.",
+      "plays": 2896668,
+      "entries": 136997,
+      "topScore": 5323
+    },
+    {
+      "name": "VT ww5t Intermediate S5",
+      "difficulty": "Intermediate",
+      "leaderboardId": 98029,
+      "aimType": "Clicking",
+      "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nSemi auto click timing with five stationary targets on a wide curved wall infront of the player. Each target takes 1 hit to eliminate and is worth 10 points. 100 ammo total, 30 to shoot, refunds 40 on hit, for a net gain of 10 ammo on hit.",
+      "plays": 3120484,
+      "entries": 137097,
+      "topScore": 2150
+    },
+    {
+      "name": "VT 1w2ts Advanced S5",
+      "difficulty": "Advanced",
+      "leaderboardId": 98025,
+      "aimType": "Clicking",
+      "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nSemi auto click timing with two stationary targets on a wall infront of the player. Each target takes 1 hit to eliminate and is worth 10 points. Sqrt Acc scoring applies.",
+      "plays": 989142,
+      "entries": 50023,
+      "topScore": 1736
+    },
+    {
+      "name": "VT Aether Advanced S5",
+      "difficulty": "Advanced",
+      "leaderboardId": 100140,
+      "aimType": "Tracking",
+      "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto tracking with a series of three flying targets in a circular arena. Each target lasts 19 seconds and subsequent targets spawn at the same starting location after 1.5 seconds. Score is earned at a rate of 1 point per hit with a firerate of 100 per second.",
+      "plays": 551121,
+      "entries": 28973,
+      "topScore": 4212
+    },
+    {
+      "name": "VT Controlsphere Advanced S5",
+      "difficulty": "Advanced",
+      "leaderboardId": 103114,
+      "aimType": "Tracking",
+      "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto tracking with an invincible flying target strafing in a variety of directions in a circular arena, while being repelled away from the roof and floor. Score is earned at a rate of 1 point per hit with a firerate of 100 per second.",
+      "plays": 695290,
+      "entries": 27016,
+      "topScore": 4506
+    },
+    {
+      "name": "VT ControlTS Advanced S5",
+      "difficulty": "Advanced",
+      "leaderboardId": 104833,
+      "aimType": "Target Switching",
+      "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto target switching with four targets gently jumping and floating inside a narrow chamber. Each target takes 50 hits to eliminate with a TTK of ~0.6 seconds, and is worth a total of 10 points.",
+      "plays": 386597,
+      "entries": 19602,
+      "topScore": 590
+    },
+    {
+      "name": "VT DotTS Advanced S5",
+      "difficulty": "Advanced",
+      "leaderboardId": 104961,
+      "aimType": "Target Switching",
+      "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto target switching with five static targets infront of the player. Each target takes 20 hits to eliminate with a TTK of ~0.22 seconds, and is worth a total of 10 points.",
+      "plays": 934744,
+      "entries": 40042,
+      "topScore": 1526
+    },
+    {
+      "name": "VT DriftTS Advanced S5",
+      "difficulty": "Advanced",
+      "leaderboardId": 104866,
+      "aimType": "Target Switching",
+      "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto target switching with four targets jumping and floating around in two layered chambers infront of the player. Each target takes 50 hits to eliminate with a TTK of ~0.5 seconds, and is worth a total of 10 points.",
+      "plays": 274688,
+      "entries": 18100,
+      "topScore": 590
+    },
+    {
+      "name": "VT EddieTS Advanced S5",
+      "difficulty": "Advanced",
+      "leaderboardId": 104864,
+      "aimType": "Target Switching",
+      "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto target switching with four flying targets infront of the player. Each target takes 20 hits to eliminate with a TTK of ~0.24 seconds, and is worth a total of 10 points.",
+      "plays": 439639,
+      "entries": 22549,
+      "topScore": 1370
+    },
+    {
+      "name": "VT Floating Heads Advanced S5",
+      "difficulty": "Advanced",
+      "leaderboardId": 98012,
+      "aimType": "Clicking",
+      "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nSemi auto click timing with five targets floating around in a layered arena infront of the player. Each target takes 1 hit to eliminate and is worth 10 points. Sqrt acc scoring applies.",
+      "plays": 434830,
+      "entries": 30577,
+      "topScore": 1293
+    },
+    {
+      "name": "VT FlyTS Advanced S5",
+      "difficulty": "Advanced",
+      "leaderboardId": 105143,
+      "aimType": "Target Switching",
+      "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto target switching with four targets flying around infront of the player. Each target takes 50 hits to eliminate with a TTK of ~0.5 seconds, and is worth a total of 10 points.",
+      "plays": 337545,
+      "entries": 21543,
+      "topScore": 750
+    },
+    {
+      "name": "VT Frogtagon Advanced S5",
+      "difficulty": "Advanced",
+      "leaderboardId": 105776,
+      "aimType": "Clicking",
+      "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nSemi auto click timing with four targets flying in straight lines in all directions within an octagon infront of the player. Each target takes 1 hit to eliminate and is worth 10 points. 100 ammo total, 30 to shoot, refunds 38 on hit, for a net gain of 8 ammo on hit.",
+      "plays": 288120,
+      "entries": 25798,
+      "topScore": 1620
+    },
+    {
+      "name": "VT Ground Advanced S5",
+      "difficulty": "Advanced",
+      "leaderboardId": 100768,
+      "aimType": "Tracking",
+      "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto tracking with a series of three grounded targets in a circular arena. Each target lasts 19 seconds and subsequent targets spawn at the same starting location after 1.5 seconds. Score is earned at a rate of 1 point per hit with a firerate of 100 per second.",
+      "plays": 960313,
+      "entries": 35540,
+      "topScore": 4475
+    },
+    {
+      "name": "VT Pasu Advanced S5",
+      "difficulty": "Advanced",
+      "leaderboardId": 98023,
+      "aimType": "Clicking",
+      "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nSemi auto click timing with four targets jumping and floating around on a wall infront of the player, while being repelled away from the edges. Each target takes 1 hit to eliminate and is worth 10 points. Sqrt Acc scoring applies.",
+      "plays": 1078814,
+      "entries": 50677,
+      "topScore": 1443
+    },
+    {
+      "name": "VT Penta Bounce Advanced S5",
+      "difficulty": "Advanced",
+      "leaderboardId": 98619,
+      "aimType": "Target Switching",
+      "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto target switching with five targets bouncing around on a pentagonal wall at varying distances. Each target takes 50 hits to eliminate with a TTK of ~0.5 seconds, and is worth a total of 10 points.",
+      "plays": 277002,
+      "entries": 19019,
+      "topScore": 711
+    },
+    {
+      "name": "VT PGT Advanced S5",
+      "difficulty": "Advanced",
+      "leaderboardId": 98255,
+      "aimType": "Tracking",
+      "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto tracking with a series of three targets in a circular arena, the first making sharp bounces, the second making shallow bounces and the third flying. Each target lasts 19 seconds and subsequent targets spawn at the same starting location after 1.5 seconds.",
+      "plays": 695530,
+      "entries": 30579,
+      "topScore": 4367
+    },
+    {
+      "name": "VT Popcorn Advanced S5",
+      "difficulty": "Advanced",
+      "leaderboardId": 98024,
+      "aimType": "Clicking",
+      "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nSemi auto click timing with five targets jumping around in a wide arena infront of the player. Each target takes 1 hit to eliminate and is worth 10 points. 100 ammo total, 20 to shoot, refunds 30 on hit, for a net gain of 10 ammo on hit.",
+      "plays": 483965,
+      "entries": 28730,
+      "topScore": 1170
+    },
+    {
+      "name": "VT Raw Control Advanced S5",
+      "difficulty": "Advanced",
+      "leaderboardId": 98253,
+      "aimType": "Tracking",
+      "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto tracking with an invincible flying target strafing in a variety of directions in a box infront of the player, while being repelled away from each wall. Score is earned at a rate of 1 point per hit with a firerate of 100 per second.",
+      "plays": 923013,
+      "entries": 34921,
+      "topScore": 4643
+    },
+    {
+      "name": "VT Snake Track Advanced S5",
+      "difficulty": "Advanced",
+      "leaderboardId": 98297,
+      "aimType": "Tracking",
+      "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto tracking with an invincible grounded target performing wide sweeping strafes in a circular dish surrounding the player. Score is earned at a rate of 1 point per hit with a firerate of 100 per second.",
+      "plays": 1000820,
+      "entries": 42987,
+      "topScore": 4761
+    },
+    {
+      "name": "VT ww5t Advanced S5",
+      "difficulty": "Advanced",
+      "leaderboardId": 98026,
+      "aimType": "Clicking",
+      "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nSemi auto click timing with five stationary targets on a wide curved wall infront of the player. Each target takes 1 hit to eliminate and is worth 10 points. 100 ammo total, 30 to shoot, refunds 40 on hit, for a net gain of 10 ammo on hit.",
+      "plays": 560255,
+      "entries": 36270,
+      "topScore": 2040
+    }
+  ],
+  "missing": []
+}

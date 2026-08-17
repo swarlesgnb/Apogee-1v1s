@@ -1,0 +1,338 @@
+{
+  "benchmarkName": "Voltaic S5.5",
+  "abbreviation": "VT",
+  "color": "#02A2DA",
+  "spreadsheetURL": "",
+  "evxlUrl": "https://evxl.app/benchmarks/Voltaic%20S5.5",
+  "source": "kovaaks.com benchmarks API + evxl registry",
+  "fetchedAt": "2026-08-16T19:29:16Z",
+  "difficulties": [
+    {
+      "name": "Advanced",
+      "kovaaksBenchmarkId": 2070,
+      "rankNames": [
+        "Grandmaster",
+        "Nova",
+        "Astra",
+        "Celestial"
+      ],
+      "rankColors": {
+        "Grandmaster": "#FFD700",
+        "Nova": "#7900FF",
+        "Astra": "#FF2262",
+        "Celestial": "#24DDD8"
+      },
+      "categories": [
+        {
+          "name": "Dynamic",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "VT Pasu Viscose Advanced S5",
+              "leaderboardId": 173829,
+              "rankMaxes": [
+                910,
+                1020,
+                1110,
+                1240
+              ]
+            },
+            {
+              "name": "VT Popcorn Ava Advanced S5",
+              "leaderboardId": 173545,
+              "rankMaxes": [
+                670,
+                800,
+                900,
+                1020
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Static",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "VT 1w2ts Advanced S5",
+              "leaderboardId": 98025,
+              "rankMaxes": [
+                1320,
+                1420,
+                1520,
+                1620
+              ]
+            },
+            {
+              "name": "VT ww5t Advanced S5",
+              "leaderboardId": 98026,
+              "rankMaxes": [
+                1510,
+                1610,
+                1720,
+                1860
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Linear",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "VT Frogtagon Advanced S5",
+              "leaderboardId": 105776,
+              "rankMaxes": [
+                1090,
+                1220,
+                1360,
+                1490
+              ]
+            },
+            {
+              "name": "VT Floating Heads Advanced S5",
+              "leaderboardId": 98012,
+              "rankMaxes": [
+                740,
+                830,
+                920,
+                1050
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Precise",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "VT PGT Advanced S5",
+              "leaderboardId": 98255,
+              "rankMaxes": [
+                2750,
+                3175,
+                3625,
+                4050
+              ]
+            },
+            {
+              "name": "VT Snake Track Advanced S5",
+              "leaderboardId": 98297,
+              "rankMaxes": [
+                3050,
+                3425,
+                3725,
+                4050
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Reactive",
+          "rankMaxes": [
+            7500,
+            15000,
+            22500,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "VT Aether Advanced S5",
+              "leaderboardId": 100140,
+              "rankMaxes": [
+                2750,
+                3175,
+                3525,
+                3825
+              ]
+            },
+            {
+              "name": "VT Air Spectral Advanced S5 Test 2",
+              "leaderboardId": 174604,
+              "rankMaxes": [
+                3800,
+                4400,
+                4950,
+                5500
+              ]
+            },
+            {
+              "name": "VT Ground Advanced S5",
+              "leaderboardId": 100768,
+              "rankMaxes": [
+                2875,
+                3200,
+                3500,
+                3725
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Control",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "VT Raw Control Advanced S5",
+              "leaderboardId": 98253,
+              "rankMaxes": [
+                3150,
+                3550,
+                3875,
+                4250
+              ]
+            },
+            {
+              "name": "VT Controlsphere Ava Advanced S5",
+              "leaderboardId": 173543,
+              "rankMaxes": [
+                3150,
+                3500,
+                3925,
+                4200
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Speed",
+          "rankMaxes": [
+            7500,
+            15000,
+            22500,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "VT DotTS Advanced S5",
+              "leaderboardId": 104961,
+              "rankMaxes": [
+                1280,
+                1360,
+                1420,
+                1500
+              ]
+            },
+            {
+              "name": "VT EddieTS Viscose Advanced S5",
+              "leaderboardId": 178196,
+              "rankMaxes": [
+                1020,
+                1120,
+                1200,
+                1270
+              ]
+            },
+            {
+              "name": "VT YoxTS Advanced S5",
+              "leaderboardId": 174859,
+              "rankMaxes": [
+                90,
+                105,
+                110,
+                125
+              ]
+            },
+            {
+              "name": "VT voxTS Advanced S5",
+              "leaderboardId": 174654,
+              "rankMaxes": [
+                105,
+                117,
+                130,
+                140
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Evasive",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "VT AvasiveTS Advanced S5",
+              "leaderboardId": 173542,
+              "rankMaxes": [
+                500,
+                550,
+                610,
+                680
+              ]
+            },
+            {
+              "name": "VT FlyTS Advanced S5",
+              "leaderboardId": 105143,
+              "rankMaxes": [
+                540,
+                600,
+                660,
+                720
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Stability",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "VT ControlTS Advanced S5",
+              "leaderboardId": 104833,
+              "rankMaxes": [
+                450,
+                490,
+                520,
+                550
+              ]
+            },
+            {
+              "name": "VT Penta Bounce Advanced S5",
+              "leaderboardId": 98619,
+              "rankMaxes": [
+                530,
+                580,
+                630,
+                670
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

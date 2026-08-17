@@ -1,0 +1,686 @@
+{
+  "generatedAt": "2026-08-17T05:35:19.614Z",
+  "benchmark": {
+    "name": "Voltaic S5",
+    "difficulty": "Intermediate",
+    "rankNames": [
+      "Platinum",
+      "Diamond",
+      "Jade",
+      "Master"
+    ],
+    "rankColors": {
+      "Platinum": "#2FCFC2",
+      "Diamond": "#B9F2FF",
+      "Jade": "#85FA85",
+      "Master": "#EC44CA"
+    }
+  },
+  "player": {
+    "totalRuns": 11104,
+    "scenarioCount": 803,
+    "streak": 15,
+    "benchmarkRank": "Diamond",
+    "benchmarkEnergy": 120692,
+    "progressToNextRank": 0.5408775730142664,
+    "nextRankName": "Jade",
+    "arena": {
+      "rating": 1617,
+      "rd": 105,
+      "percentile": 50.8,
+      "tier": {
+        "id": "tier-5",
+        "name": "Odyssey",
+        "percentile": [
+          50,
+          80
+        ],
+        "color": "#FF46FF",
+        "glow": "#FF80FF",
+        "gradient": [
+          "#000000",
+          "#FF00FF"
+        ]
+      }
+    }
+  },
+  "theme": [
+    {
+      "id": "tier-1",
+      "name": "Stargazer",
+      "percentile": [
+        0,
+        5
+      ],
+      "color": "#00EAEA",
+      "glow": "#80FFFF",
+      "gradient": [
+        "#0080FF",
+        "#8000FF"
+      ]
+    },
+    {
+      "id": "tier-2",
+      "name": "Astrologist",
+      "percentile": [
+        5,
+        20
+      ],
+      "color": "#8080FF",
+      "glow": "#6464FF",
+      "gradient": [
+        "#000000",
+        "#4F4FFF"
+      ]
+    },
+    {
+      "id": "tier-3",
+      "name": "Cosmonaut",
+      "percentile": [
+        20,
+        35
+      ],
+      "color": "#008080",
+      "glow": "#006C6C",
+      "gradient": [
+        "#000000",
+        "#008080"
+      ]
+    },
+    {
+      "id": "tier-4",
+      "name": "Lunar",
+      "percentile": [
+        35,
+        50
+      ],
+      "color": "#2F2FFF",
+      "glow": "#3333FF",
+      "gradient": [
+        "#000000",
+        "#0000FF"
+      ]
+    },
+    {
+      "id": "tier-5",
+      "name": "Odyssey",
+      "percentile": [
+        50,
+        80
+      ],
+      "color": "#FF46FF",
+      "glow": "#FF80FF",
+      "gradient": [
+        "#000000",
+        "#FF00FF"
+      ]
+    },
+    {
+      "id": "tier-6",
+      "name": "Arecibo",
+      "percentile": [
+        80,
+        90
+      ],
+      "color": "#00FF00",
+      "glow": "#46FF46",
+      "gradient": [
+        "#000000",
+        "#00FF00"
+      ]
+    },
+    {
+      "id": "tier-7",
+      "name": "Quasar",
+      "percentile": [
+        90,
+        97
+      ],
+      "color": "#00FFFF",
+      "glow": "#00FFFF",
+      "gradient": [
+        "#FFFFFF",
+        "#00CCCC"
+      ]
+    },
+    {
+      "id": "tier-8",
+      "name": "Supernova",
+      "percentile": [
+        97,
+        100
+      ],
+      "color": "#FF8000",
+      "glow": "#FF8000",
+      "gradient": [
+        "#FFFF00",
+        "#FF0000"
+      ]
+    }
+  ],
+  "categories": [
+    {
+      "name": "Clicking",
+      "energy": 43225,
+      "rankName": "Diamond",
+      "perScenario": 7204,
+      "scenarios": [
+        {
+          "name": "VT Pasu Intermediate S5",
+          "label": "Pasu",
+          "subCategory": "Dynamic",
+          "score": 944.336487,
+          "rankName": "Jade",
+          "energy": 8217,
+          "nextRankName": "Master",
+          "nextRankScore": 980,
+          "gap": 35.663512999999966,
+          "runs": 35
+        },
+        {
+          "name": "VT Popcorn Intermediate S5",
+          "label": "Popcorn",
+          "subCategory": "Dynamic",
+          "score": 760,
+          "rankName": "Diamond",
+          "energy": 6944,
+          "nextRankName": "Jade",
+          "nextRankScore": 780,
+          "gap": 20,
+          "runs": 38
+        },
+        {
+          "name": "VT 1w3ts Intermediate S5",
+          "label": "1w3ts",
+          "subCategory": "Static",
+          "score": 1271.000122,
+          "rankName": "Diamond",
+          "energy": 6594,
+          "nextRankName": "Jade",
+          "nextRankScore": 1300,
+          "gap": 28.99987800000008,
+          "runs": 55
+        },
+        {
+          "name": "VT ww5t Intermediate S5",
+          "label": "ww5t",
+          "subCategory": "Static",
+          "score": 1440,
+          "rankName": "Diamond",
+          "energy": 6111,
+          "nextRankName": "Jade",
+          "nextRankScore": 1490,
+          "gap": 50,
+          "runs": 49
+        },
+        {
+          "name": "VT Frogtagon Intermediate S5",
+          "label": "Frogtagon",
+          "subCategory": "Linear",
+          "score": 1130,
+          "rankName": "Diamond",
+          "energy": 7250,
+          "nextRankName": "Jade",
+          "nextRankScore": 1140,
+          "gap": 10,
+          "runs": 28
+        },
+        {
+          "name": "VT Floating Heads Intermediate S5",
+          "label": "Floating Heads",
+          "subCategory": "Linear",
+          "score": 791.925354,
+          "rankName": "Jade",
+          "energy": 8109,
+          "nextRankName": "Master",
+          "nextRankScore": 860,
+          "gap": 68.07464600000003,
+          "runs": 24
+        }
+      ]
+    },
+    {
+      "name": "Tracking",
+      "energy": 37618,
+      "rankName": "Diamond",
+      "perScenario": 6270,
+      "scenarios": [
+        {
+          "name": "VT PGT Intermediate S5",
+          "label": "PGT",
+          "subCategory": "Precise",
+          "score": 2909,
+          "rankName": "Diamond",
+          "energy": 6560,
+          "nextRankName": "Jade",
+          "nextRankScore": 3050,
+          "gap": 141,
+          "runs": 49
+        },
+        {
+          "name": "VT Snake Track Intermediate S5",
+          "label": "Snake Track",
+          "subCategory": "Precise",
+          "score": 3246,
+          "rankName": "Diamond",
+          "energy": 5546,
+          "nextRankName": "Jade",
+          "nextRankScore": 3500,
+          "gap": 254,
+          "runs": 34
+        },
+        {
+          "name": "VT Aether Intermediate S5",
+          "label": "Aether",
+          "subCategory": "Reactive",
+          "score": 2775,
+          "rankName": "Diamond",
+          "energy": 6607,
+          "nextRankName": "Jade",
+          "nextRankScore": 2900,
+          "gap": 125,
+          "runs": 100
+        },
+        {
+          "name": "VT Ground Intermediate S5",
+          "label": "Ground",
+          "subCategory": "Reactive",
+          "score": 2949,
+          "rankName": "Diamond",
+          "energy": 5990,
+          "nextRankName": "Jade",
+          "nextRankScore": 3100,
+          "gap": 151,
+          "runs": 51
+        },
+        {
+          "name": "VT Raw Control Intermediate S5",
+          "label": "Raw Control",
+          "subCategory": "Control",
+          "score": 3513,
+          "rankName": "Diamond",
+          "energy": 7236,
+          "nextRankName": "Jade",
+          "nextRankScore": 3550,
+          "gap": 37,
+          "runs": 15
+        },
+        {
+          "name": "VT Controlsphere Intermediate S5",
+          "label": "Controlsphere",
+          "subCategory": "Control",
+          "score": 3270,
+          "rankName": "Diamond",
+          "energy": 5679,
+          "nextRankName": "Jade",
+          "nextRankScore": 3525,
+          "gap": 255,
+          "runs": 9
+        }
+      ]
+    },
+    {
+      "name": "Switching",
+      "energy": 39849,
+      "rankName": "Diamond",
+      "perScenario": 6641,
+      "scenarios": [
+        {
+          "name": "VT DotTS Intermediate S5",
+          "label": "DotTS",
+          "subCategory": "Speed",
+          "score": 1210,
+          "rankName": "Diamond",
+          "energy": 6500,
+          "nextRankName": "Jade",
+          "nextRankScore": 1230,
+          "gap": 20,
+          "runs": 35
+        },
+        {
+          "name": "VT EddieTS Intermediate S5",
+          "label": "EddieTS",
+          "subCategory": "Speed",
+          "score": 970,
+          "rankName": "Diamond",
+          "energy": 5714,
+          "nextRankName": "Jade",
+          "nextRankScore": 1020,
+          "gap": 50,
+          "runs": 40
+        },
+        {
+          "name": "VT DriftTS Intermediate S5",
+          "label": "DriftTS",
+          "subCategory": "Evasive",
+          "score": 460,
+          "rankName": "Jade",
+          "energy": 7500,
+          "nextRankName": "Master",
+          "nextRankScore": 490,
+          "gap": 30,
+          "runs": 12
+        },
+        {
+          "name": "VT FlyTS Intermediate S5",
+          "label": "FlyTS",
+          "subCategory": "Evasive",
+          "score": 595.400024,
+          "rankName": "Diamond",
+          "energy": 6588,
+          "nextRankName": "Jade",
+          "nextRankScore": 610,
+          "gap": 14.59997599999997,
+          "runs": 14
+        },
+        {
+          "name": "VT ControlTS Intermediate S5",
+          "label": "ControlTS",
+          "subCategory": "Stability",
+          "score": 490,
+          "rankName": "Jade",
+          "energy": 7857,
+          "nextRankName": "Master",
+          "nextRankScore": 520,
+          "gap": 30,
+          "runs": 17
+        },
+        {
+          "name": "VT Penta Bounce Intermediate S5",
+          "label": "Penta Bounce",
+          "subCategory": "Stability",
+          "score": 503.800018,
+          "rankName": "Diamond",
+          "energy": 5690,
+          "nextRankName": "Jade",
+          "nextRankScore": 540,
+          "gap": 36.19998199999998,
+          "runs": 13
+        }
+      ]
+    }
+  ],
+  "weakest": "Tracking",
+  "consistency": {
+    "method": "worstOfLast5",
+    "ceilingRank": "Diamond",
+    "ceilingEnergy": 120692,
+    "floorRank": "Platinum",
+    "floorEnergy": 50528,
+    "gap": 0.1611894758742246,
+    "scenarios": [
+      {
+        "name": "VT Ground Intermediate S5",
+        "label": "Ground",
+        "ceiling": 2949,
+        "floor": 2054,
+        "median": 2611,
+        "gap": 0.3034927093930146
+      },
+      {
+        "name": "VT Popcorn Intermediate S5",
+        "label": "Popcorn",
+        "ceiling": 760,
+        "floor": 530,
+        "median": 605,
+        "gap": 0.3026315789473684
+      },
+      {
+        "name": "VT PGT Intermediate S5",
+        "label": "PGT",
+        "ceiling": 2909,
+        "floor": 2199,
+        "median": 2358,
+        "gap": 0.24407012719147472
+      },
+      {
+        "name": "VT Pasu Intermediate S5",
+        "label": "Pasu",
+        "ceiling": 944.336487,
+        "floor": 714.510986,
+        "median": 774.630798,
+        "gap": 0.24337246750903105
+      },
+      {
+        "name": "VT Floating Heads Intermediate S5",
+        "label": "Floating Heads",
+        "ceiling": 791.925354,
+        "floor": 630.300232,
+        "median": 649.789734,
+        "gap": 0.2040913593479922
+      },
+      {
+        "name": "VT Raw Control Intermediate S5",
+        "label": "Raw Control",
+        "ceiling": 3513,
+        "floor": 2841,
+        "median": 2946,
+        "gap": 0.19128949615713065
+      },
+      {
+        "name": "VT Frogtagon Intermediate S5",
+        "label": "Frogtagon",
+        "ceiling": 1130,
+        "floor": 920,
+        "median": 1000,
+        "gap": 0.18584070796460178
+      },
+      {
+        "name": "VT DriftTS Intermediate S5",
+        "label": "DriftTS",
+        "ceiling": 460,
+        "floor": 391.800018,
+        "median": 414.100006,
+        "gap": 0.14826083043478255
+      },
+      {
+        "name": "VT Snake Track Intermediate S5",
+        "label": "Snake Track",
+        "ceiling": 3246,
+        "floor": 2803,
+        "median": 2929.5,
+        "gap": 0.13647566235366604
+      },
+      {
+        "name": "VT Aether Intermediate S5",
+        "label": "Aether",
+        "ceiling": 2775,
+        "floor": 2406,
+        "median": 2219.5,
+        "gap": 0.13297297297297297
+      },
+      {
+        "name": "VT 1w3ts Intermediate S5",
+        "label": "1w3ts",
+        "ceiling": 1271.000122,
+        "floor": 1110.984131,
+        "median": 1137.420776,
+        "gap": 0.1258976991663892
+      },
+      {
+        "name": "VT EddieTS Intermediate S5",
+        "label": "EddieTS",
+        "ceiling": 970,
+        "floor": 850,
+        "median": 879,
+        "gap": 0.12371134020618557
+      },
+      {
+        "name": "VT ControlTS Intermediate S5",
+        "label": "ControlTS",
+        "ceiling": 490,
+        "floor": 430.200012,
+        "median": 440,
+        "gap": 0.12204079183673466
+      },
+      {
+        "name": "VT DotTS Intermediate S5",
+        "label": "DotTS",
+        "ceiling": 1210,
+        "floor": 1090,
+        "median": 1136.5,
+        "gap": 0.09917355371900827
+      },
+      {
+        "name": "VT ww5t Intermediate S5",
+        "label": "ww5t",
+        "ceiling": 1440,
+        "floor": 1300,
+        "median": 1310,
+        "gap": 0.09722222222222222
+      },
+      {
+        "name": "VT Penta Bounce Intermediate S5",
+        "label": "Penta Bounce",
+        "ceiling": 503.800018,
+        "floor": 456.800018,
+        "median": 463,
+        "gap": 0.09329098515435146
+      },
+      {
+        "name": "VT FlyTS Intermediate S5",
+        "label": "FlyTS",
+        "ceiling": 595.400024,
+        "floor": 541.400024,
+        "median": 553.800018,
+        "gap": 0.09069532721416215
+      },
+      {
+        "name": "VT Controlsphere Intermediate S5",
+        "label": "Controlsphere",
+        "ceiling": 3270,
+        "floor": 3084,
+        "median": 3158,
+        "gap": 0.05688073394495413
+      }
+    ]
+  },
+  "match": {
+    "seed": "arena-demo-match-01",
+    "category": "Tracking",
+    "opponent": {
+      "name": "ravenous",
+      "rating": 1577,
+      "tier": {
+        "id": "tier-4",
+        "name": "Lunar",
+        "percentile": [
+          35,
+          50
+        ],
+        "color": "#2F2FFF",
+        "glow": "#3333FF",
+        "gradient": [
+          "#000000",
+          "#0000FF"
+        ]
+      }
+    },
+    "winProbability": 0.552728316151137,
+    "verdict": "loss",
+    "explanation": "You lose: −3.5% vs +1.2% against your own baselines.",
+    "ratingWeight": 1,
+    "playerMatchScore": -0.03539129491031645,
+    "opponentMatchScore": 0.012373752121059673,
+    "rounds": [
+      {
+        "label": "Raw Control",
+        "you": {
+          "score": 2910,
+          "baseline": 3162,
+          "delta": -0.07960907106936149
+        },
+        "them": {
+          "score": 3162,
+          "baseline": 3067,
+          "delta": 0.031025655322449795
+        }
+      },
+      {
+        "label": "Snake Track",
+        "you": {
+          "score": 2803,
+          "baseline": 2930,
+          "delta": -0.04318143027820447
+        },
+        "them": {
+          "score": 2808,
+          "baseline": 2842,
+          "delta": -0.011829540595752691
+        }
+      },
+      {
+        "label": "Aether",
+        "you": {
+          "score": 2539,
+          "baseline": 2498,
+          "delta": 0.016616616616616616
+        },
+        "them": {
+          "score": 2466,
+          "baseline": 2423,
+          "delta": 0.017925141636481918
+        }
+      }
+    ]
+  },
+  "quests": [
+    {
+      "title": "Lift your ww5t floor to Platinum",
+      "detail": "Your worst of the last 5 is 1300. All 5 need to clear 1310; 4 of them do right now.",
+      "xp": 500,
+      "kind": "floor_rank_up",
+      "progress": 0.8,
+      "isFloor": true,
+      "steps": {
+        "done": 4,
+        "total": 5
+      }
+    },
+    {
+      "title": "Reach Jade on Frogtagon",
+      "detail": "You are at 1130. 1140 takes you to Jade, 10 more.",
+      "xp": 300,
+      "kind": "close_the_gap",
+      "progress": 0.9912280701754386,
+      "isFloor": false,
+      "steps": {
+        "done": 1130,
+        "total": 1140
+      }
+    },
+    {
+      "title": "Lift your 1w3ts floor to Platinum",
+      "detail": "Your worst of the last 5 is 1111. All 5 need to clear 1120; 4 of them do right now.",
+      "xp": 500,
+      "kind": "floor_rank_up",
+      "progress": 0.8,
+      "isFloor": true,
+      "steps": {
+        "done": 4,
+        "total": 5
+      }
+    },
+    {
+      "title": "Reach Jade on Raw Control",
+      "detail": "You are at 3513. 3550 takes you to Jade, 37 more.",
+      "xp": 300,
+      "kind": "close_the_gap",
+      "progress": 0.9895774647887324,
+      "isFloor": false,
+      "steps": {
+        "done": 3513,
+        "total": 3550
+      }
+    },
+    {
+      "title": "Rank up any scenario in Intermediate",
+      "detail": "18 scenarios are within reach of their next rank.",
+      "xp": 400,
+      "kind": "rank_up_any",
+      "progress": 0,
+      "isFloor": false,
+      "steps": null
+    }
+  ]
+}

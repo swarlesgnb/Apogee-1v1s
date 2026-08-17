@@ -1,0 +1,1047 @@
+{
+  "benchmarkName": "Revosect S5",
+  "abbreviation": "rA",
+  "color": "#EF4444",
+  "spreadsheetURL": "https://docs.google.com/spreadsheets/d/1aHN2bdUehBtmx5COqsMT1q8SN_JImQYUfsSN73uQyEE/edit?usp=sharing",
+  "evxlUrl": "https://evxl.app/benchmarks/Revosect%20S5",
+  "source": "kovaaks.com benchmarks API + evxl registry",
+  "fetchedAt": "2026-08-16T19:29:21Z",
+  "difficulties": [
+    {
+      "name": "Entry",
+      "kovaaksBenchmarkId": 823,
+      "rankNames": [
+        "Bronze",
+        "Silver",
+        "Gold",
+        "Platinum"
+      ],
+      "rankColors": {
+        "Bronze": "#E69138",
+        "Silver": "#999999",
+        "Gold": "#FFE599",
+        "Platinum": "#6FA8DC"
+      },
+      "categories": [
+        {
+          "name": "Static",
+          "rankMaxes": [
+            10000,
+            20000,
+            30000,
+            40000
+          ],
+          "scenarios": [
+            {
+              "name": "EvoClick Revosect Entry",
+              "leaderboardId": 142851,
+              "rankMaxes": [
+                520,
+                600,
+                680,
+                760
+              ]
+            },
+            {
+              "name": "StrawberryClick Revosect Entry",
+              "leaderboardId": 142853,
+              "rankMaxes": [
+                730,
+                780,
+                830,
+                880
+              ]
+            },
+            {
+              "name": "1w5ts vbr Revosect Entry",
+              "leaderboardId": 142873,
+              "rankMaxes": [
+                860,
+                930,
+                1000,
+                1070
+              ]
+            },
+            {
+              "name": "1w4t Pressure Revosect Entry",
+              "leaderboardId": 142878,
+              "rankMaxes": [
+                1020,
+                1100,
+                1180,
+                1260
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Dynamic",
+          "rankMaxes": [
+            10000,
+            20000,
+            30000,
+            40000
+          ],
+          "scenarios": [
+            {
+              "name": "Pasu Revosect Entry",
+              "leaderboardId": 142881,
+              "rankMaxes": [
+                410,
+                470,
+                530,
+                590
+              ]
+            },
+            {
+              "name": "SpringClick Revosect Entry",
+              "leaderboardId": 142898,
+              "rankMaxes": [
+                400,
+                450,
+                500,
+                550
+              ]
+            },
+            {
+              "name": "SnowClick Revosect Entry",
+              "leaderboardId": 142900,
+              "rankMaxes": [
+                450,
+                510,
+                570,
+                630
+              ]
+            },
+            {
+              "name": "Floating Heads Revosect Entry",
+              "leaderboardId": 142902,
+              "rankMaxes": [
+                420,
+                480,
+                540,
+                600
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Precise",
+          "rankMaxes": [
+            10000,
+            20000,
+            30000,
+            40000
+          ],
+          "scenarios": [
+            {
+              "name": "FloodTrack Revosect Entry",
+              "leaderboardId": 142826,
+              "rankMaxes": [
+                1450,
+                1700,
+                1950,
+                2200
+              ]
+            },
+            {
+              "name": "VTP Revosect Entry",
+              "leaderboardId": 142831,
+              "rankMaxes": [
+                1400,
+                1700,
+                2000,
+                2300
+              ]
+            },
+            {
+              "name": "Tornadosphere Revosect Entry",
+              "leaderboardId": 142822,
+              "rankMaxes": [
+                2000,
+                2300,
+                2600,
+                2900
+              ]
+            },
+            {
+              "name": "Leapstrafes Revosect Entry",
+              "leaderboardId": 142829,
+              "rankMaxes": [
+                1600,
+                1900,
+                2200,
+                2500
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Reactive",
+          "rankMaxes": [
+            10000,
+            20000,
+            30000,
+            40000
+          ],
+          "scenarios": [
+            {
+              "name": "Plaza Pure Revosect Entry",
+              "leaderboardId": 142843,
+              "rankMaxes": [
+                872,
+                877,
+                882,
+                887
+              ]
+            },
+            {
+              "name": "Plaza Smooth Revosect Entry",
+              "leaderboardId": 142847,
+              "rankMaxes": [
+                867,
+                872,
+                877,
+                882
+              ]
+            },
+            {
+              "name": "Air Pure Revosect Entry",
+              "leaderboardId": 142837,
+              "rankMaxes": [
+                868,
+                873,
+                878,
+                883
+              ]
+            },
+            {
+              "name": "Air Smooth Revosect Entry",
+              "leaderboardId": 142839,
+              "rankMaxes": [
+                865,
+                870,
+                875,
+                880
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Speed",
+          "rankMaxes": [
+            10000,
+            20000,
+            30000,
+            40000
+          ],
+          "scenarios": [
+            {
+              "name": "AngleSwitch Revosect Entry",
+              "leaderboardId": 143238,
+              "rankMaxes": [
+                620,
+                690,
+                760,
+                830
+              ]
+            },
+            {
+              "name": "DotSwitch Revosect Entry",
+              "leaderboardId": 143241,
+              "rankMaxes": [
+                740,
+                820,
+                900,
+                980
+              ]
+            },
+            {
+              "name": "NovaSwitch Revosect Entry",
+              "leaderboardId": 143231,
+              "rankMaxes": [
+                580,
+                640,
+                700,
+                760
+              ]
+            },
+            {
+              "name": "WaveSwitch Revosect Entry",
+              "leaderboardId": 142903,
+              "rankMaxes": [
+                630,
+                700,
+                770,
+                840
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Evasive",
+          "rankMaxes": [
+            10000,
+            20000,
+            30000,
+            40000
+          ],
+          "scenarios": [
+            {
+              "name": "SpringTS Revosect Entry",
+              "leaderboardId": 143242,
+              "rankMaxes": [
+                270,
+                310,
+                350,
+                390
+              ]
+            },
+            {
+              "name": "WhisphereTS Revosect Entry",
+              "leaderboardId": 142906,
+              "rankMaxes": [
+                290,
+                330,
+                370,
+                410
+              ]
+            },
+            {
+              "name": "PasuTS Revosect Entry",
+              "leaderboardId": 143244,
+              "rankMaxes": [
+                230,
+                260,
+                290,
+                320
+              ]
+            },
+            {
+              "name": "SmoothTS Revosect Entry",
+              "leaderboardId": 142911,
+              "rankMaxes": [
+                290,
+                330,
+                370,
+                410
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Intermediate",
+      "kovaaksBenchmarkId": 822,
+      "rankNames": [
+        "Ace",
+        "Legend",
+        "Sentinel",
+        "Valour",
+        "Mythic"
+      ],
+      "rankColors": {
+        "Ace": "#E06666",
+        "Legend": "#B6D7A8",
+        "Sentinel": "#76A5AF",
+        "Valour": "#A64D79",
+        "Mythic": "#FFD700"
+      },
+      "categories": [
+        {
+          "name": "Static",
+          "rankMaxes": [
+            8000,
+            16000,
+            24000,
+            32000,
+            40000
+          ],
+          "scenarios": [
+            {
+              "name": "EvoClick Revosect Int",
+              "leaderboardId": 142850,
+              "rankMaxes": [
+                730,
+                830,
+                930,
+                1030,
+                1130
+              ]
+            },
+            {
+              "name": "StrawberryClick Revosect Int",
+              "leaderboardId": 142852,
+              "rankMaxes": [
+                850,
+                925,
+                1000,
+                1075,
+                1150
+              ]
+            },
+            {
+              "name": "1w5ts vbr Revosect Int",
+              "leaderboardId": 142874,
+              "rankMaxes": [
+                1040,
+                1140,
+                1240,
+                1340,
+                1440
+              ]
+            },
+            {
+              "name": "1w4t Pressure Revosect Int",
+              "leaderboardId": 143201,
+              "rankMaxes": [
+                1230,
+                1330,
+                1430,
+                1530,
+                1630
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Dynamic",
+          "rankMaxes": [
+            8000,
+            16000,
+            24000,
+            32000,
+            40000
+          ],
+          "scenarios": [
+            {
+              "name": "Pasu Revosect Int",
+              "leaderboardId": 143200,
+              "rankMaxes": [
+                570,
+                645,
+                720,
+                795,
+                870
+              ]
+            },
+            {
+              "name": "SpringClick Revosect Int",
+              "leaderboardId": 143204,
+              "rankMaxes": [
+                530,
+                610,
+                690,
+                770,
+                850
+              ]
+            },
+            {
+              "name": "SnowClick Revosect Int",
+              "leaderboardId": 142899,
+              "rankMaxes": [
+                610,
+                690,
+                770,
+                850,
+                930
+              ]
+            },
+            {
+              "name": "Floating Heads Revosect Int",
+              "leaderboardId": 142901,
+              "rankMaxes": [
+                580,
+                640,
+                700,
+                760,
+                820
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Precise",
+          "rankMaxes": [
+            8000,
+            16000,
+            24000,
+            32000,
+            40000
+          ],
+          "scenarios": [
+            {
+              "name": "FloodTrack Revosect Int",
+              "leaderboardId": 142824,
+              "rankMaxes": [
+                1900,
+                2125,
+                2350,
+                2575,
+                2800
+              ]
+            },
+            {
+              "name": "VTP Revosect Int",
+              "leaderboardId": 142830,
+              "rankMaxes": [
+                2000,
+                2200,
+                2400,
+                2600,
+                2800
+              ]
+            },
+            {
+              "name": "Tornadosphere Revosect Int",
+              "leaderboardId": 142821,
+              "rankMaxes": [
+                2600,
+                2800,
+                3000,
+                3200,
+                3400
+              ]
+            },
+            {
+              "name": "Leapstrafes Revosect Int",
+              "leaderboardId": 142828,
+              "rankMaxes": [
+                2200,
+                2450,
+                2700,
+                2950,
+                3200
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Reactive",
+          "rankMaxes": [
+            8000,
+            16000,
+            24000,
+            32000,
+            40000
+          ],
+          "scenarios": [
+            {
+              "name": "Plaza Pure Revosect Int",
+              "leaderboardId": 142844,
+              "rankMaxes": [
+                882,
+                887,
+                892,
+                897,
+                903
+              ]
+            },
+            {
+              "name": "Plaza Smooth Revosect Int",
+              "leaderboardId": 142848,
+              "rankMaxes": [
+                874,
+                879,
+                884,
+                889,
+                894
+              ]
+            },
+            {
+              "name": "Air Pure Revosect Int",
+              "leaderboardId": 142834,
+              "rankMaxes": [
+                876,
+                880,
+                884,
+                888,
+                892
+              ]
+            },
+            {
+              "name": "Air Smooth Revosect Int",
+              "leaderboardId": 142840,
+              "rankMaxes": [
+                874,
+                879,
+                884,
+                889,
+                894
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Speed",
+          "rankMaxes": [
+            8000,
+            16000,
+            24000,
+            32000,
+            40000
+          ],
+          "scenarios": [
+            {
+              "name": "AngleSwitch Revosect Int",
+              "leaderboardId": 143207,
+              "rankMaxes": [
+                920,
+                990,
+                1060,
+                1130,
+                1200
+              ]
+            },
+            {
+              "name": "DotSwitch Revosect Int",
+              "leaderboardId": 143208,
+              "rankMaxes": [
+                1060,
+                1120,
+                1180,
+                1240,
+                1300
+              ]
+            },
+            {
+              "name": "NovaSwitch Revosect Int",
+              "leaderboardId": 143209,
+              "rankMaxes": [
+                730,
+                810,
+                890,
+                970,
+                1050
+              ]
+            },
+            {
+              "name": "WaveSwitch Revosect Int",
+              "leaderboardId": 143210,
+              "rankMaxes": [
+                810,
+                870,
+                930,
+                990,
+                1050
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Evasive",
+          "rankMaxes": [
+            8000,
+            16000,
+            24000,
+            32000,
+            40000
+          ],
+          "scenarios": [
+            {
+              "name": "SpringTS Revosect Int",
+              "leaderboardId": 142904,
+              "rankMaxes": [
+                370,
+                410,
+                450,
+                490,
+                530
+              ]
+            },
+            {
+              "name": "WhisphereTS Revosect Int",
+              "leaderboardId": 142905,
+              "rankMaxes": [
+                420,
+                460,
+                500,
+                540,
+                580
+              ]
+            },
+            {
+              "name": "PasuTS Revosect Int",
+              "leaderboardId": 142908,
+              "rankMaxes": [
+                360,
+                390,
+                420,
+                450,
+                480
+              ]
+            },
+            {
+              "name": "SmoothTS Revosect Int",
+              "leaderboardId": 142909,
+              "rankMaxes": [
+                390,
+                430,
+                470,
+                510,
+                550
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Advanced",
+      "kovaaksBenchmarkId": 821,
+      "rankNames": [
+        "Immortal",
+        "Ascended",
+        "Ethereal",
+        "Divine",
+        "Eternal"
+      ],
+      "rankColors": {
+        "Immortal": "#A43EFF",
+        "Ascended": "#D03F5A",
+        "Ethereal": "#FFE599",
+        "Divine": "#6FA8DC",
+        "Eternal": "#FF0000"
+      },
+      "categories": [
+        {
+          "name": "Static",
+          "rankMaxes": [
+            8000,
+            16000,
+            24000,
+            32000,
+            40000
+          ],
+          "scenarios": [
+            {
+              "name": "EvoClick Revosect",
+              "leaderboardId": 141058,
+              "rankMaxes": [
+                1050,
+                1125,
+                1200,
+                1275,
+                1350
+              ]
+            },
+            {
+              "name": "StrawberryClick Revosect",
+              "leaderboardId": 140996,
+              "rankMaxes": [
+                1040,
+                1130,
+                1220,
+                1310,
+                1400
+              ]
+            },
+            {
+              "name": "1w5ts vbr Revosect",
+              "leaderboardId": 139429,
+              "rankMaxes": [
+                1260,
+                1350,
+                1440,
+                1530,
+                1620
+              ]
+            },
+            {
+              "name": "1w4t Pressure Revosect",
+              "leaderboardId": 139428,
+              "rankMaxes": [
+                1600,
+                1690,
+                1780,
+                1870,
+                1960
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Dynamic",
+          "rankMaxes": [
+            8000,
+            16000,
+            24000,
+            32000,
+            40000
+          ],
+          "scenarios": [
+            {
+              "name": "Pasu Revosect",
+              "leaderboardId": 140941,
+              "rankMaxes": [
+                800,
+                900,
+                1000,
+                1100,
+                1200
+              ]
+            },
+            {
+              "name": "SpringClick Revosect",
+              "leaderboardId": 141144,
+              "rankMaxes": [
+                700,
+                830,
+                960,
+                1090,
+                1220
+              ]
+            },
+            {
+              "name": "SnowClick Revosect",
+              "leaderboardId": 142723,
+              "rankMaxes": [
+                700,
+                800,
+                900,
+                1000,
+                1100
+              ]
+            },
+            {
+              "name": "Floating Heads Revosect",
+              "leaderboardId": 142724,
+              "rankMaxes": [
+                700,
+                780,
+                860,
+                940,
+                1020
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Precise",
+          "rankMaxes": [
+            8000,
+            16000,
+            24000,
+            32000,
+            40000
+          ],
+          "scenarios": [
+            {
+              "name": "FloodTrack Revosect",
+              "leaderboardId": 141140,
+              "rankMaxes": [
+                2600,
+                2850,
+                3100,
+                3350,
+                3600
+              ]
+            },
+            {
+              "name": "VTP Revosect",
+              "leaderboardId": 141259,
+              "rankMaxes": [
+                2200,
+                2525,
+                2850,
+                3175,
+                3500
+              ]
+            },
+            {
+              "name": "Tornadosphere Revosect",
+              "leaderboardId": 139438,
+              "rankMaxes": [
+                3000,
+                3325,
+                3650,
+                3975,
+                4300
+              ]
+            },
+            {
+              "name": "Leapstrafes Revosect",
+              "leaderboardId": 142725,
+              "rankMaxes": [
+                2600,
+                2850,
+                3100,
+                3400,
+                3700
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Reactive",
+          "rankMaxes": [
+            8000,
+            16000,
+            24000,
+            32000,
+            40000
+          ],
+          "scenarios": [
+            {
+              "name": "Plaza Pure Revosect",
+              "leaderboardId": 143331,
+              "rankMaxes": [
+                892,
+                898,
+                904,
+                910,
+                916
+              ]
+            },
+            {
+              "name": "Plaza Smooth Revosect",
+              "leaderboardId": 143415,
+              "rankMaxes": [
+                884,
+                890,
+                896,
+                902,
+                908
+              ]
+            },
+            {
+              "name": "Air Pure Revosect",
+              "leaderboardId": 142823,
+              "rankMaxes": [
+                876,
+                885,
+                893,
+                900,
+                906
+              ]
+            },
+            {
+              "name": "Air Smooth Revosect",
+              "leaderboardId": 142841,
+              "rankMaxes": [
+                878,
+                887,
+                895,
+                902,
+                908
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Speed",
+          "rankMaxes": [
+            8000,
+            16000,
+            24000,
+            32000,
+            40000
+          ],
+          "scenarios": [
+            {
+              "name": "AngleSwitch Revosect",
+              "leaderboardId": 141047,
+              "rankMaxes": [
+                1080,
+                1160,
+                1240,
+                1320,
+                1400
+              ]
+            },
+            {
+              "name": "DotSwitch Revosect",
+              "leaderboardId": 141048,
+              "rankMaxes": [
+                1160,
+                1200,
+                1240,
+                1280,
+                1320
+              ]
+            },
+            {
+              "name": "NovaSwitch Revosect",
+              "leaderboardId": 140936,
+              "rankMaxes": [
+                1000,
+                1080,
+                1160,
+                1240,
+                1320
+              ]
+            },
+            {
+              "name": "WaveSwitch Revosect",
+              "leaderboardId": 141138,
+              "rankMaxes": [
+                940,
+                1020,
+                1100,
+                1180,
+                1260
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Evasive",
+          "rankMaxes": [
+            8000,
+            16000,
+            24000,
+            32000,
+            40000
+          ],
+          "scenarios": [
+            {
+              "name": "SpringTS Revosect",
+              "leaderboardId": 141258,
+              "rankMaxes": [
+                480,
+                520,
+                560,
+                600,
+                640
+              ]
+            },
+            {
+              "name": "WhisphereTS Revosect",
+              "leaderboardId": 141052,
+              "rankMaxes": [
+                470,
+                520,
+                570,
+                620,
+                670
+              ]
+            },
+            {
+              "name": "PasuTS Revosect",
+              "leaderboardId": 140945,
+              "rankMaxes": [
+                360,
+                390,
+                420,
+                450,
+                480
+              ]
+            },
+            {
+              "name": "SmoothTS Revosect",
+              "leaderboardId": 141143,
+              "rankMaxes": [
+                460,
+                490,
+                520,
+                550,
+                580
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
