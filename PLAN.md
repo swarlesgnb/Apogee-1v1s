@@ -732,7 +732,78 @@ first.
 
 ---
 
-## 14. Open questions and risks
+## 14. Seasons, and three ladders
+
+Two changes that belong together, because each answers the other's hardest question.
+Scheduled next; nothing here is built.
+
+### Three ranks, not one
+
+`Tracking`, `Clicking` and `Switching` each get their own rating and their own tier.
+You queue a category, you rank in that category, and "what is my Tracking rank" stops
+being unanswerable. An overall tier is derived from the three so there is still one
+number that means *you*, but it is a readout rather than the thing that moves.
+
+This is a schema change: `ratings` is keyed on `player_id` alone today, and becomes
+`(player_id, category)`. Matchmaking, settlement and `rating_history` follow it, and
+`match_sides` already records the ratings it used, so past matches stay readable.
+
+### Where thresholds come from
+
+The obvious plan is to write our own numbers, and the obvious plan is a trap: it swaps
+*Voltaic changing them* for *us maintaining them*, and ours would be guesses where
+theirs are grounded in a real population. That is a worse position, and it fails the
+first time somebody asks why a rank is where it is.
+
+Thresholds are therefore **derived from Apogee's own population**, the same principle
+§4 already uses for the ladder, applied one level down: a rank on a scenario is a
+percentile of what Apogee players actually score on it. Nothing to maintain, nothing to
+go stale, and the answer to "why is Diamond 930" is a fact rather than an opinion.
+
+### Why seasons make that work rather than complicate it
+
+Derived thresholds have one flaw: they move. A player grinding toward a rank does not
+want the target sliding while they chase it, and a ladder whose meaning shifts weekly
+cannot be talked about.
+
+A season fixes exactly that, and nothing else has to. A season is a **frozen
+definition** - a scenario pool and a set of thresholds - held still for its duration:
+
+```
+season N thresholds  =  percentiles of season N-1's population, computed once, frozen
+season 1 thresholds  =  seeded from the existing corpus and the published Voltaic
+                        numbers, which become a starting point we own rather than a
+                        dependency we track
+```
+
+So the numbers are grounded *and* stable, which neither property gets on its own. The
+pool can change between seasons, ratings can soft-reset, and the thing that brings
+people back is the same thing that keeps the data honest.
+
+### What this does not change
+
+The ladder still never reads a threshold. Match settlement compares a player against
+their own baseline (§3) and nothing else, which is why seasons can re-cut ranks without
+touching how a match is decided. Thresholds feed quests, the weakness map and the
+consistency report - the surfaces §4 already calls *stats* rather than standing.
+
+### The order to build it in
+
+1. Own the pool. A season file naming the scenarios per category, read where
+   `data/benchmarks/*.json` is read now. No new scenarios: the eighteen are proven and
+   already hosted, and inventing scenarios is a different project.
+2. Seed season 1's thresholds from the corpus, and check them against the published
+   Voltaic numbers - not to copy them, but because a large unexplained divergence
+   would mean the derivation is wrong.
+3. Split `ratings` per category, with the derived overall on top.
+4. Only then the rollover: compute season 2 from season 1's population.
+
+Steps 1 and 2 are worth having on their own even if seasons never ship, which is the
+right shape for a plan this size.
+
+---
+
+## 15. Open questions and risks
 
 **Open**
 
@@ -774,7 +845,7 @@ first.
 
 ---
 
-## 15. Parked ideas
+## 16. Parked ideas
 
 Not scheduled. Recorded so they are not lost.
 
@@ -803,7 +874,7 @@ which makes it more valuable at launch than it looks.
 
 ---
 
-## 16. Verified facts
+## 17. Verified facts
 
 Everything below was confirmed against live data during planning, not assumed.
 
