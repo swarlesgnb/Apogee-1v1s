@@ -1143,7 +1143,15 @@ if (HOST === "electron" && window.apogee.isAdmin) {
       return;
     }
 
-    setSeasonStatus("saved · rebuilding from the new season", "good");
+    // Name the files. A save that reports success without saying where wrote to the
+    // build output for an afternoon before anybody noticed.
+    const where = (result.paths ?? [result.path]).filter(Boolean);
+    setSeasonStatus(
+      where.length > 1
+        ? `saved to ${where.length} files, including the source · rebuilding`
+        : `saved to ${where[0] ?? "disk"} · rebuilding`,
+      "good",
+    );
     seasonDirty(false);
   });
 

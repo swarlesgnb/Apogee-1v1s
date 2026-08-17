@@ -1103,7 +1103,7 @@
 
 
 <script id="apogee-snapshot" type="application/json">{
-  "generatedAt": "2026-08-17T21:19:32.961Z",
+  "generatedAt": "2026-08-17T22:33:04.471Z",
   "benchmark": {
     "name": "Season 1",
     "difficulty": "",
@@ -1121,7 +1121,7 @@
     }
   },
   "player": {
-    "totalRuns": 11133,
+    "totalRuns": 11138,
     "scenarioCount": 803,
     "streak": 16,
     "benchmarkRank": "Tier II",
@@ -2940,7 +2940,15 @@ if (HOST === "electron" && window.apogee.isAdmin) {
       return;
     }
 
-    setSeasonStatus("saved · rebuilding from the new season", "good");
+    // Name the files. A save that reports success without saying where wrote to the
+    // build output for an afternoon before anybody noticed.
+    const where = (result.paths ?? [result.path]).filter(Boolean);
+    setSeasonStatus(
+      where.length > 1
+        ? `saved to ${where.length} files, including the source · rebuilding`
+        : `saved to ${where[0] ?? "disk"} · rebuilding`,
+      "good",
+    );
     seasonDirty(false);
   });
 

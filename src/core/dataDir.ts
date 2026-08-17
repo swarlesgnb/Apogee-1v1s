@@ -53,3 +53,33 @@ export function dataDir(): string {
 export function dataFile(...segments: string[]): string {
   return join(dataDir(), ...segments);
 }
+
+/**
+ * The *source* data directory, ignoring any override, or null when there is none.
+ *
+ * The Electron app points the core at `dist/data`, which is a copy: `build:app` writes
+ * it fresh from `data/` on every build. Anything the app writes back therefore lives
+ * exactly until the next build and then silently disappears - which is fine for a cache
+ * and ruinous for the season definition, where the thing being overwritten is somebody's
+ * afternoon of naming ranks.
+ *
+ * So an editor writes both: the runtime copy, so the change is visible now, and the
+ * source, so it is still there tomorrow. In a packaged app there is no source tree and
+ * this returns null, which is the correct answer rather than a failure.
+ */
+export function sourceDataDir(): string | null {
+  let current = resolve(process.cwd());
+
+  for (let depth = 0; depth < MAX_DEPTH; depth++) {
+    const candidate = join(current, "data");
+    // `src/` alongside it is what distinguishes a source tree from a build output:
+    // dist/data looks otherwise identical.
+    if (looksLikeDataDir(candidate) && existsSync(join(current, "src"))) return candidate;
+
+    const parent = dirname(current);
+    if (parent === current) break;
+    current = parent;
+  }
+
+  return null;
+}

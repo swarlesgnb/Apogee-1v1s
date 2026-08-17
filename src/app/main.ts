@@ -12,10 +12,10 @@
  */
 
 import { app, BrowserWindow, ipcMain, shell, dialog } from "electron";
-import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
-import { dataFile, setDataDir } from "../core/dataDir.ts";
+import { dataFile, setDataDir, sourceDataDir } from "../core/dataDir.ts";
 import {
   levelFor,
   reconcile,
@@ -931,14 +931,34 @@ ipcMain.handle("apogee:saveSeason", async (_e, { season }) => {
     return { error: err instanceof Error ? err.message : String(err) };
   }
 
+  // Write the source too, not only the copy the app reads.
+  //
+  // The app points the core at dist/data, which build:app rewrites from data/ on every
+  // build. Writing only there meant an edit survived exactly until the next build and
+  // then vanished with nothing to say it had - tolerable for a cache, ruinous for the
+  // file that defines what every rank means.
+  const written: string[] = [];
+  const body = JSON.stringify(season, null, 2) + "\n";
+
   try {
-    writeFileSync(seasonPath(), JSON.stringify(season, null, 2) + "\n", "utf8");
+    writeFileSync(seasonPath(), body, "utf8");
+    written.push(seasonPath());
+
+    const source = sourceDataDir();
+    if (source) {
+      const sourcePath = join(source, "seasons", "season-1.json");
+      if (sourcePath !== seasonPath()) {
+        mkdirSync(join(source, "seasons"), { recursive: true });
+        writeFileSync(sourcePath, body, "utf8");
+        written.push(sourcePath);
+      }
+    }
   } catch (err) {
     return { error: `could not write the season: ${err instanceof Error ? err.message : err}` };
   }
 
   rebuild("season edited");
-  return { ok: true, path: seasonPath() };
+  return { ok: true, path: written[0], paths: written };
 });
 
 ipcMain.handle("apogee:openStatsFolder", () => {
