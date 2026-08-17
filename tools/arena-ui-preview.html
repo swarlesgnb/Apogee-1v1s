@@ -1,0 +1,2300 @@
+<title>Arena Client Preview</title>
+<style>
+  /* ------------------------------------------------------------------
+     Committed single theme. This is a game client, not a document: it
+     lives in one visual world (deep space instrument panel) rather than
+     adapting to a reader's light/dark preference. Every colour is
+     painted explicitly, including the body ground.
+
+     The chrome is achromatic on purpose. All colour on screen comes from
+     the player's own rank palette, so ranks read as the signal they are.
+     ------------------------------------------------------------------ */
+  :root {
+    --void: #07090e;
+    --panel: #0e1219;
+    --panel-2: #141a24;
+    --sunken: #090c12;
+    --line: #1e2531;
+    --line-bright: #2c3542;
+    --ink: #e8ecf4;
+    --ink-mid: #96a0b3;
+    --ink-dim: #5f6a7d;
+    --up: #46d19a;
+    --down: #ff6b7d;
+    --warn: #f0b849;
+    --font: ui-sans-serif, "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif;
+    --mono: ui-monospace, "Cascadia Mono", Consolas, "SF Mono", monospace;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background:
+      radial-gradient(1200px 600px at 78% -8%, #131a2a 0%, transparent 62%),
+      radial-gradient(900px 500px at 8% 108%, #101725 0%, transparent 60%),
+      var(--void);
+    color: var(--ink);
+    font-family: var(--font);
+    font-size: 15px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+
+  .shell { max-width: 1180px; margin: 0 auto; padding: 22px 20px 64px; }
+
+  /* ---------------- top bar ---------------- */
+  .topbar {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+    padding-bottom: 16px; border-bottom: 1px solid var(--line); margin-bottom: 16px;
+  }
+  .wordmark { font-size: 17px; font-weight: 680; letter-spacing: .16em; text-transform: uppercase; }
+  .wordmark span { color: var(--ink-dim); font-weight: 500; letter-spacing: .1em; }
+
+  .whoami { display: flex; align-items: center; gap: 12px; }
+  .whoami .badge { width: 38px; height: 43px; flex: none; }
+  .whoami .badge svg { width: 100%; height: 100%; display: block; overflow: visible; }
+  .whoami .tier { font-size: 13.5px; font-weight: 640; line-height: 1.2; }
+  .whoami .sub {
+    font-family: var(--mono); font-size: 11px; color: var(--ink-dim);
+    font-variant-numeric: tabular-nums;
+  }
+  .streak {
+    font-family: var(--mono); font-size: 11.5px; color: var(--ink-mid);
+    border: 1px solid var(--line-bright); border-radius: 999px; padding: 4px 11px;
+  }
+
+  /* ---------------- account ---------------- */
+  .account { display: flex; align-items: center; }
+  .signin {
+    font: inherit; font-size: 12.5px; font-weight: 620;
+    color: var(--void); background: var(--ink);
+    border: 0; border-radius: 8px; padding: 8px 15px; cursor: pointer;
+    white-space: nowrap;
+  }
+  .signin:hover { background: #fff; }
+  .signin[disabled] { opacity: .55; cursor: default; }
+  .signin:focus-visible { outline: 2px solid var(--ink-mid); outline-offset: 3px; }
+
+  .signed-in { display: flex; align-items: center; gap: 10px; }
+  .signed-in .who-name { font-size: 13px; font-weight: 620; line-height: 1.2; }
+  .signed-in button {
+    font: inherit; font-size: 11.5px; color: var(--ink-mid);
+    background: transparent; border: 1px solid var(--line-bright);
+    border-radius: 6px; padding: 4px 10px; cursor: pointer;
+  }
+  .signed-in button:hover { color: var(--ink); border-color: var(--ink-dim); }
+
+  /* ---------------- status strip ---------------- */
+  .status {
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    font-family: var(--mono); font-size: 11.5px; color: var(--ink-dim);
+    margin-bottom: 18px;
+  }
+  .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--up); flex: none; }
+  .dot.scanning { background: var(--warn); }
+  .dot.bad { background: var(--down); }
+  .status .path {
+    color: var(--ink-mid); overflow: hidden; text-overflow: ellipsis;
+    white-space: nowrap; max-width: 46ch;
+  }
+  .status button {
+    font: inherit; font-family: var(--font); font-size: 11.5px;
+    color: var(--ink-mid); background: transparent;
+    border: 1px solid var(--line-bright); border-radius: 6px;
+    padding: 3px 9px; cursor: pointer;
+  }
+  .status button:hover { color: var(--ink); border-color: var(--ink-dim); }
+  .status button:focus-visible { outline: 2px solid var(--ink-mid); outline-offset: 2px; }
+
+  .banner {
+    display: none; padding: 11px 14px; border-radius: 9px; margin-bottom: 16px;
+    font-size: 13px; background: #2a1418; border: 1px solid #56222a; color: #ffd7dc;
+  }
+  .banner.on { display: block; }
+
+  /* ---------------- preview notice ---------------- */
+  .preview-note {
+    padding: 12px 15px; border-radius: 9px; margin-bottom: 16px;
+    font-size: 13px; line-height: 1.55; color: var(--ink-mid);
+    background: var(--panel); border: 1px solid var(--line-bright);
+  }
+  .preview-note strong { color: var(--ink); font-weight: 640; }
+  .preview-note code {
+    font-family: var(--mono); font-size: 12px; color: var(--ink);
+    background: var(--sunken); border: 1px solid var(--line);
+    border-radius: 5px; padding: 1px 6px;
+  }
+
+  /* ---------------- sign-in fallback ---------------- */
+  .signin-help {
+    padding: 13px 15px; border-radius: 9px; margin-bottom: 16px;
+    background: var(--panel); border: 1px solid var(--line-bright);
+  }
+  .signin-help p { margin: 0 0 9px; font-size: 13px; color: var(--ink-mid); }
+  .signin-link-row { display: flex; gap: 9px; align-items: center; }
+  .signin-link-row code {
+    flex: 1; min-width: 0; overflow-x: auto; white-space: nowrap;
+    font-family: var(--mono); font-size: 11.5px; color: var(--ink);
+    background: var(--sunken); border: 1px solid var(--line);
+    border-radius: 6px; padding: 7px 9px;
+  }
+  .signin-link-row button {
+    font: inherit; font-size: 12px; color: var(--ink-mid);
+    background: transparent; border: 1px solid var(--line-bright);
+    border-radius: 6px; padding: 6px 11px; cursor: pointer; white-space: nowrap;
+  }
+  .signin-link-row button:hover { color: var(--ink); border-color: var(--ink-dim); }
+
+  /* ---------------- tabs ---------------- */
+  .tabs { display: flex; gap: 4px; margin-bottom: 18px; flex-wrap: wrap; }
+  .tab {
+    font: inherit; font-size: 13px; font-weight: 560;
+    color: var(--ink-mid); background: transparent;
+    border: 1px solid transparent; border-radius: 8px;
+    padding: 7px 14px; cursor: pointer;
+  }
+  .tab:hover { color: var(--ink); background: var(--panel); }
+  .tab[aria-selected="true"] {
+    color: var(--ink); background: var(--panel-2); border-color: var(--line-bright);
+  }
+  .tab:focus-visible { outline: 2px solid var(--ink-mid); outline-offset: 2px; }
+
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  .panel {
+    background: var(--panel); border: 1px solid var(--line);
+    border-radius: 12px; overflow: hidden;
+  }
+  .panel + .panel { margin-top: 16px; }
+  .phead {
+    display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
+    padding: 13px 16px; border-bottom: 1px solid var(--line);
+  }
+  .phead h2 {
+    margin: 0; font-size: 10.5px; font-weight: 660; text-transform: uppercase;
+    letter-spacing: .1em; color: var(--ink-dim);
+  }
+  .phead .note { font-size: 12px; color: var(--ink-dim); }
+  .pbody { padding: 16px; }
+
+  /* ---------------- queue ---------------- */
+  .hero { display: flex; align-items: center; gap: 20px; padding: 22px 16px; flex-wrap: wrap; }
+  .hero .badge { width: 104px; height: 118px; flex: none; }
+  .hero .badge svg { width: 100%; height: 100%; display: block; overflow: visible; }
+  .hero .name { font-size: 30px; font-weight: 700; letter-spacing: -.02em; line-height: 1.1; }
+  .hero .meta {
+    font-family: var(--mono); font-size: 12px; color: var(--ink-mid); margin-top: 6px;
+    font-variant-numeric: tabular-nums;
+  }
+  .hero .placement { font-size: 12px; color: var(--ink-dim); margin-top: 8px; max-width: 46ch; }
+
+  .cats { display: flex; flex-wrap: wrap; gap: 6px; }
+  .cat {
+    font: inherit; font-size: 12.5px; font-weight: 560; color: var(--ink-mid);
+    background: var(--sunken); border: 1px solid var(--line);
+    border-radius: 999px; padding: 6px 13px; cursor: pointer;
+  }
+  .cat:hover { color: var(--ink); border-color: var(--line-bright); }
+  .cat[aria-pressed="true"] { color: var(--void); background: var(--ink); border-color: var(--ink); }
+  .cat:focus-visible { outline: 2px solid var(--ink-mid); outline-offset: 2px; }
+
+  .queue-btn {
+    font: inherit; font-size: 14px; font-weight: 640; letter-spacing: .02em;
+    color: var(--void); background: var(--ink); border: 0; border-radius: 9px;
+    padding: 11px 22px; cursor: pointer; margin-top: 14px;
+  }
+  .queue-btn:hover { background: #fff; }
+  .queue-btn:focus-visible { outline: 2px solid var(--ink-mid); outline-offset: 3px; }
+  .queue-btn[disabled] { opacity: .5; cursor: default; }
+
+  .searching {
+    font-family: var(--mono); font-size: 12.5px; color: var(--ink-mid);
+    margin-top: 14px; display: none;
+  }
+  .searching.on { display: block; }
+
+  .opponent { display: none; margin-top: 16px; }
+  .opponent.on { display: block; }
+  .opp-row {
+    display: flex; align-items: center; justify-content: space-between; gap: 14px;
+    padding: 13px 15px; background: var(--sunken);
+    border: 1px solid var(--line-bright); border-radius: 10px; flex-wrap: wrap;
+  }
+  .opp-who { display: flex; align-items: center; gap: 11px; }
+  .opp-who .badge { width: 30px; height: 34px; flex: none; }
+  .opp-who .badge svg { width: 100%; height: 100%; display: block; overflow: visible; }
+
+  .odds { margin-top: 12px; }
+  .odds-bar {
+    height: 7px; border-radius: 999px; overflow: hidden; display: flex;
+    background: var(--sunken); border: 1px solid var(--line);
+  }
+  .odds-labels {
+    display: flex; justify-content: space-between; margin-top: 6px;
+    font-family: var(--mono); font-size: 10.5px; color: var(--ink-dim);
+  }
+
+  .todo { margin-top: 16px; }
+  .todo h3 {
+    margin: 0 0 9px; font-size: 10.5px; font-weight: 660; text-transform: uppercase;
+    letter-spacing: .1em; color: var(--ink-dim);
+  }
+  .todo ol { margin: 0; padding-left: 0; list-style: none; display: grid; gap: 6px; }
+  .todo li {
+    display: flex; align-items: center; gap: 11px;
+    padding: 10px 13px; background: var(--sunken);
+    border: 1px solid var(--line); border-radius: 8px; font-size: 13.5px;
+  }
+  .todo .n { font-family: var(--mono); font-size: 11px; color: var(--ink-dim); width: 18px; flex: none; }
+  .todo li.done { border-color: #24503c; }
+  .todo li.done .n { color: var(--up); }
+  .todo li .tier-tag {
+    margin-left: auto; font-family: var(--mono); font-size: 10px;
+    text-transform: uppercase; letter-spacing: .06em; color: var(--ink-dim);
+  }
+  .todo li.pending { opacity: .65; }
+
+  .match-actions {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 12px; margin-top: 11px; flex-wrap: wrap;
+  }
+  .match-hint { font-size: 12px; color: var(--ink-dim); }
+  .match-actions button {
+    font: inherit; font-size: 11.5px; color: var(--ink-mid);
+    background: transparent; border: 1px solid var(--line-bright);
+    border-radius: 6px; padding: 5px 11px; cursor: pointer;
+  }
+  .match-actions button:hover { color: var(--ink); border-color: var(--ink-dim); }
+
+  /* ---------------- upload ---------------- */
+  .upload-row {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 14px; margin-top: 16px; padding: 13px 15px;
+    background: var(--sunken); border: 1px solid var(--line); border-radius: 10px;
+  }
+  .upload-title { font-size: 13px; font-weight: 600; }
+  .upload-sub { font-size: 12px; color: var(--ink-dim); margin-top: 2px; }
+  .upload-track {
+    height: 5px; background: var(--panel-2); border-radius: 999px;
+    overflow: hidden; margin-top: 9px; min-width: 220px;
+  }
+  .upload-fill { height: 100%; background: var(--up); width: 0%; }
+  .upload-row button {
+    font: inherit; font-size: 12.5px; font-weight: 600; white-space: nowrap;
+    color: var(--void); background: var(--ink); border: 0;
+    border-radius: 7px; padding: 8px 15px; cursor: pointer;
+  }
+  .upload-row button[disabled] { opacity: .5; cursor: default; }
+
+  /* ---------------- match result ---------------- */
+  .verdict {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    flex-wrap: wrap; padding: 18px 16px;
+  }
+  .verdict .big { font-size: 26px; font-weight: 720; letter-spacing: -.02em; }
+  .verdict .scores {
+    font-family: var(--mono); font-size: 13px; color: var(--ink-mid);
+    font-variant-numeric: tabular-nums;
+  }
+  .delta-move {
+    font-family: var(--mono); font-size: 19px; font-weight: 660;
+    font-variant-numeric: tabular-nums;
+  }
+  .explain {
+    margin: 0; padding: 12px 15px; background: var(--sunken);
+    border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+    font-size: 13px; color: var(--ink-mid); line-height: 1.55;
+  }
+
+  .rounds-wrap, .scen-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; }
+  table.rounds { min-width: 560px; }
+  table.scen { min-width: 620px; }
+  th {
+    text-align: right; padding: 12px 16px 8px;
+    font-size: 9.5px; font-weight: 620; text-transform: uppercase;
+    letter-spacing: .09em; color: var(--ink-dim);
+  }
+  th:first-child { text-align: left; }
+  table.scen th:nth-child(2) { text-align: left; }
+  td {
+    padding: 11px 16px; text-align: right; border-top: 1px solid var(--line);
+    font-family: var(--mono); font-size: 13px; font-variant-numeric: tabular-nums;
+  }
+  td:first-child { text-align: left; font-family: var(--font); font-size: 13.5px; font-weight: 560; }
+  table.scen td { padding: 9px 16px; font-size: 12.5px; }
+  table.scen td:first-child { font-size: 13px; font-weight: 550; }
+  table.scen td:nth-child(2) {
+    text-align: left; font-family: var(--font); font-size: 11.5px; color: var(--ink-dim);
+  }
+  tbody tr:hover { background: var(--panel-2); }
+  .base { color: var(--ink-dim); font-size: 11px; }
+  .up { color: var(--up); }
+  .down { color: var(--down); }
+  .won-round { color: var(--up); font-weight: 620; }
+
+  /* ---------------- weakness map ---------------- */
+  .wmap { display: grid; gap: 12px; }
+  .wrow { display: grid; grid-template-columns: 92px 1fr auto; gap: 12px; align-items: center; }
+  .wrow .lbl { font-size: 13px; font-weight: 580; }
+  .wtrack {
+    height: 26px; background: var(--sunken); border: 1px solid var(--line);
+    border-radius: 7px; overflow: hidden;
+  }
+  .wfill { height: 100%; }
+  .wval {
+    font-family: var(--mono); font-size: 12px; color: var(--ink-mid);
+    font-variant-numeric: tabular-nums; min-width: 108px; text-align: right;
+  }
+
+  /* ---------------- consistency ---------------- */
+  .cf-pair {
+    display: grid; grid-template-columns: 1fr auto 1fr; gap: 18px; align-items: center;
+  }
+  @media (max-width: 620px) { .cf-pair { grid-template-columns: 1fr; } }
+  .cf-side { text-align: center; }
+  .cf-label {
+    font-size: 10px; font-weight: 640; text-transform: uppercase;
+    letter-spacing: .11em; color: var(--ink-dim);
+  }
+  .cf-rank { font-size: 26px; font-weight: 720; letter-spacing: -.02em; margin-top: 5px; }
+  .cf-energy {
+    font-family: var(--mono); font-size: 12px; color: var(--ink-mid);
+    font-variant-numeric: tabular-nums; margin-top: 2px;
+  }
+  .cf-note { font-size: 11.5px; color: var(--ink-dim); margin-top: 6px; }
+  .cf-gap {
+    text-align: center; padding: 0 14px;
+    border-left: 1px solid var(--line); border-right: 1px solid var(--line);
+  }
+  @media (max-width: 620px) {
+    .cf-gap { border: 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 12px 0; }
+  }
+  .cf-gap-val {
+    font-family: var(--mono); font-size: 30px; font-weight: 680;
+    font-variant-numeric: tabular-nums; color: var(--warn);
+  }
+  .cf-gap-label {
+    font-size: 10px; text-transform: uppercase; letter-spacing: .11em; color: var(--ink-dim);
+  }
+  .cf-explain {
+    margin: 16px 0 0; font-size: 12.5px; color: var(--ink-mid);
+    line-height: 1.6; max-width: 68ch;
+  }
+  .gapbar {
+    display: inline-block; vertical-align: middle; height: 6px;
+    border-radius: 999px; background: var(--warn); min-width: 2px;
+  }
+
+  /* ---------------- quests ---------------- */
+  .quests { display: grid; gap: 10px; }
+  .quest {
+    display: grid; grid-template-columns: 1fr auto; gap: 10px 16px;
+    padding: 14px 16px; background: var(--sunken);
+    border: 1px solid var(--line); border-radius: 10px;
+  }
+  .quest h3 { margin: 0; font-size: 14px; font-weight: 620; }
+  .quest p { margin: 4px 0 0; font-size: 12.5px; color: var(--ink-mid); }
+  .xp {
+    font-family: var(--mono); font-size: 11px; color: var(--ink-dim);
+    white-space: nowrap; align-self: start;
+  }
+  .qtrack {
+    grid-column: 1 / -1; height: 5px; background: var(--panel-2);
+    border-radius: 999px; overflow: hidden;
+  }
+  .qfill { height: 100%; }
+
+  /* A floor quest asks for a window of clean runs rather than one good one, so it is
+     marked rather than left to look like every other row. */
+  .quest-floor { border-color: #4a3a18; }
+  .floor-tag {
+    font-family: var(--mono); font-size: 9px; text-transform: uppercase;
+    letter-spacing: .09em; color: var(--warn);
+    border: 1px solid #4a3a18; border-radius: 4px;
+    padding: 2px 5px; margin-left: 8px; vertical-align: 2px;
+  }
+  .qsteps {
+    display: block; font-family: var(--mono); font-size: 11px;
+    color: var(--ink-mid); margin-bottom: 3px; white-space: nowrap;
+  }
+
+  /* ---------------- quest completion ---------------- */
+  .celebrate {
+    position: fixed; inset: 0; z-index: 40;
+    display: grid; place-items: center;
+    background: rgba(4, 6, 10, .72);
+  }
+  .celebrate[hidden] { display: none; }
+  .celebrate-card {
+    width: min(420px, calc(100vw - 40px));
+    padding: 26px 26px 22px; text-align: center;
+    background: var(--panel); border: 1px solid var(--line-bright);
+    border-radius: 14px; box-shadow: 0 24px 70px rgba(0, 0, 0, .6);
+  }
+  .celebrate-kicker {
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: .17em;
+    text-transform: uppercase; color: var(--warn);
+  }
+  .celebrate-title {
+    font-size: 21px; font-weight: 700; letter-spacing: -.01em;
+    margin-top: 9px; text-wrap: balance;
+  }
+  .celebrate-detail {
+    font-size: 13px; color: var(--ink-mid); margin-top: 8px; line-height: 1.55;
+  }
+  .celebrate-xp {
+    font-family: var(--mono); font-size: 26px; font-weight: 680;
+    color: var(--up); margin-top: 16px; font-variant-numeric: tabular-nums;
+  }
+  .celebrate-level { margin-top: 16px; text-align: left; }
+  .celebrate-level-row {
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-size: 12px; color: var(--ink-mid); margin-bottom: 6px;
+  }
+  .celebrate-level-xp { font-family: var(--mono); font-size: 11px; color: var(--ink-dim); }
+  .celebrate-track {
+    height: 6px; background: var(--sunken); border: 1px solid var(--line);
+    border-radius: 999px; overflow: hidden;
+  }
+  .celebrate-fill { height: 100%; background: var(--ink); width: 0%; }
+  .celebrate-card button {
+    font: inherit; font-size: 13px; font-weight: 620; margin-top: 20px;
+    color: var(--void); background: var(--ink); border: 0;
+    border-radius: 8px; padding: 9px 26px; cursor: pointer;
+  }
+  .celebrate-card button:hover { background: #fff; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .celebrate-card { animation: pop .32s cubic-bezier(.2, .9, .3, 1) both; }
+    @keyframes pop {
+      from { opacity: 0; transform: translateY(14px) scale(.96); }
+      to { opacity: 1; transform: none; }
+    }
+    .celebrate-fill { transition: width .6s cubic-bezier(.3, .8, .3, 1); }
+  }
+
+  /* Level readout in the header. */
+  .level-chip {
+    font-family: var(--mono); font-size: 11.5px; color: var(--ink-mid);
+    border: 1px solid var(--line-bright); border-radius: 999px; padding: 4px 11px;
+    white-space: nowrap;
+  }
+
+  /* ---------------- live run toast ---------------- */
+  .toast {
+    position: fixed; right: 20px; bottom: 20px; z-index: 20;
+    display: none; align-items: center; gap: 11px;
+    padding: 12px 16px; background: var(--panel-2);
+    border: 1px solid var(--line-bright); border-radius: 10px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, .55); max-width: 340px;
+  }
+  .toast.on { display: flex; }
+  .toast .t-scen { font-size: 13px; font-weight: 600; }
+  .toast .t-score {
+    font-family: var(--mono); font-size: 16px; font-weight: 660;
+    font-variant-numeric: tabular-nums;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .toast.on { animation: slide .28s cubic-bezier(.2,.8,.3,1) both; }
+    @keyframes slide { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; } }
+    .screen.active { animation: fade .22s ease both; }
+    @keyframes fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; } }
+  }
+
+  .empty { padding: 44px 16px; text-align: center; color: var(--ink-mid); }
+  .empty h2 { margin: 0 0 8px; font-size: 18px; font-weight: 640; color: var(--ink); }
+  .empty p { margin: 0 auto; max-width: 52ch; font-size: 13.5px; }
+  .empty button {
+    font: inherit; font-size: 13px; font-weight: 600; margin-top: 16px;
+    color: var(--void); background: var(--ink); border: 0;
+    border-radius: 8px; padding: 9px 18px; cursor: pointer;
+  }
+
+  .footnote { margin-top: 22px; font-size: 12px; color: var(--ink-dim); line-height: 1.6; max-width: 76ch; }
+</style>
+
+<div class="shell">
+  <header class="topbar">
+    <div class="wordmark">Arena <span>· ranked 1v1 for kovaak's</span></div>
+    <div class="whoami" id="whoami" hidden>
+      <div class="badge" id="myBadge"></div>
+      <div>
+        <div class="tier" id="myTier"></div>
+        <div class="sub" id="myRating"></div>
+      </div>
+      <div class="streak" id="myStreak"></div>
+      <div class="level-chip" id="levelChip" hidden></div>
+      <div class="account" id="account">
+        <button type="button" class="signin" id="btnSignIn">Sign in with Steam</button>
+        <div class="signed-in" id="signedIn" hidden>
+          <div>
+            <div class="who-name" id="accountName"></div>
+            <div class="sub" id="accountSteam"></div>
+          </div>
+          <button type="button" id="btnSignOut">Sign out</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="status" id="status">
+    <span class="dot" id="statusDot"></span>
+    <span id="statusText">Starting…</span>
+    <span class="path" id="statusPath"></span>
+    <button type="button" id="btnRescan">Rescan</button>
+    <button type="button" id="btnChoose">Choose folder…</button>
+    <button type="button" id="btnOpen">Open folder</button>
+  </div>
+
+  <div class="preview-note" id="previewNote" hidden>
+    <strong>Static preview.</strong>
+    This is a snapshot of the interface for looking at the design. Signing in, watching
+    your stats folder and playing matches all need the desktop app, which has a
+    filesystem and a local server behind it. Run <code>npm start</code> for the real
+    thing.
+  </div>
+
+  <div class="banner" id="banner"></div>
+
+  <div class="signin-help" id="signinHelp" hidden>
+    <p>
+      Finish signing in with Steam in your browser. If no browser opened, paste this
+      link into one:
+    </p>
+    <div class="signin-link-row">
+      <code id="signinLink"></code>
+      <button type="button" id="signinCopy">Copy link</button>
+    </div>
+  </div>
+
+  <div id="app" hidden>
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" aria-selected="true" data-screen="queue">Queue</button>
+      <button class="tab" role="tab" aria-selected="false" data-screen="result">Match result</button>
+      <button class="tab" role="tab" aria-selected="false" data-screen="profile">Profile</button>
+      <button class="tab" role="tab" aria-selected="false" data-screen="consistency">Consistency</button>
+      <button class="tab" role="tab" aria-selected="false" data-screen="quests">Quests</button>
+    </div>
+
+    <section class="screen active" id="screen-queue">
+      <div class="panel">
+        <div class="hero">
+          <div class="badge" id="heroBadge"></div>
+          <div>
+            <div class="name" id="heroName"></div>
+            <div class="meta" id="heroMeta"></div>
+            <p class="placement" id="heroPlacement"></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="phead">
+          <h2>Find a match</h2>
+          <span class="note">three scenarios, scored against your own baseline</span>
+        </div>
+        <div class="pbody">
+          <div class="cats" id="cats"></div>
+          <button class="queue-btn" id="queueBtn">Find opponent</button>
+          <div class="searching" id="searching">searching the pool…</div>
+
+          <div class="upload-row" id="uploadRow" hidden>
+            <div>
+              <div class="upload-title" id="uploadTitle">Upload your history</div>
+              <div class="upload-sub" id="uploadSub">
+                Builds your baselines server-side. Safe to run more than once.
+              </div>
+              <div class="upload-track" id="uploadTrack" hidden>
+                <div class="upload-fill" id="uploadFill"></div>
+              </div>
+            </div>
+            <button type="button" id="uploadBtn">Upload</button>
+          </div>
+
+          <div class="opponent" id="opponent">
+            <div class="opp-row">
+              <div class="opp-who">
+                <div class="badge" id="oppBadge"></div>
+                <div>
+                  <div style="font-size:13.5px;font-weight:620" id="oppName"></div>
+                  <div class="sub" id="oppTier"></div>
+                </div>
+              </div>
+              <div class="sub" id="oppAge"></div>
+            </div>
+            <div class="odds">
+              <div class="odds-bar" id="oddsBar"></div>
+              <div class="odds-labels"><span id="oddsYou"></span><span id="oddsThem"></span></div>
+            </div>
+            <div class="todo">
+              <h3>Play these in KovaaK's</h3>
+              <ol id="todoList"></ol>
+              <div class="match-actions" id="matchActions" hidden>
+                <span class="match-hint" id="matchHint">
+                  Play them in any order. Arena picks each run up automatically.
+                </span>
+                <button type="button" id="cancelMatchBtn">Abandon match</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="screen-result">
+      <div class="panel">
+        <div class="verdict">
+          <div>
+            <div class="big" id="verdictBig"></div>
+            <div class="scores" id="verdictScores"></div>
+          </div>
+          <div class="delta-move" id="ratingMove"></div>
+        </div>
+        <p class="explain" id="explain"></p>
+        <div class="rounds-wrap">
+          <table class="rounds">
+            <thead><tr>
+              <th>Scenario</th><th>Your score</th><th>Δ</th>
+              <th>Their score</th><th>Δ</th><th>Round</th>
+            </tr></thead>
+            <tbody id="roundsBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="screen-profile">
+      <div class="panel">
+        <div class="phead"><h2>Weakness map</h2><span class="note" id="weakNote"></span></div>
+        <div class="pbody"><div class="wmap" id="wmap"></div></div>
+      </div>
+      <div class="panel">
+        <div class="phead"><h2>Scenarios</h2><span class="note">weakest first</span></div>
+        <div class="scen-wrap">
+          <table class="scen">
+            <thead><tr>
+              <th>Scenario</th><th>Sub-category</th><th>Best</th>
+              <th>Rank</th><th>Energy</th><th>Runs</th><th>To next rank</th>
+            </tr></thead>
+            <tbody id="scenBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="screen-consistency">
+      <div class="panel">
+        <div class="phead">
+          <h2>Ceiling vs floor</h2>
+          <span class="note">worst of your last 5 runs, ranked the same way</span>
+        </div>
+        <div class="pbody">
+          <div class="cf-pair">
+            <div class="cf-side">
+              <div class="cf-label">Ceiling</div>
+              <div class="cf-rank" id="ceilRank"></div>
+              <div class="cf-energy" id="ceilEnergy"></div>
+              <div class="cf-note">what every benchmark ranks you</div>
+            </div>
+            <div class="cf-gap">
+              <div class="cf-gap-val" id="gapVal"></div>
+              <div class="cf-gap-label">gap</div>
+            </div>
+            <div class="cf-side">
+              <div class="cf-label">Floor</div>
+              <div class="cf-rank" id="floorRank"></div>
+              <div class="cf-energy" id="floorEnergy"></div>
+              <div class="cf-note">what you can do reliably</div>
+            </div>
+          </div>
+          <p class="cf-explain">
+            Every benchmark that exists scores your best run. In a game there is no
+            retry or best run, so this gamemode is meant to close that gap.
+          </p>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="phead">
+          <h2>Least reliable first</h2>
+          <span class="note">the widest gaps are where practice pays most</span>
+        </div>
+        <div class="scen-wrap">
+          <table class="scen">
+            <thead><tr>
+              <th>Scenario</th><th>Ceiling</th><th>Median</th><th>Floor</th><th>Gap</th><th></th>
+            </tr></thead>
+            <tbody id="consistencyBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="screen-quests">
+      <div class="panel">
+        <div class="phead">
+          <h2>Today</h2>
+          <span class="note">generated from the benchmark you track</span>
+        </div>
+        <div class="pbody"><div class="quests" id="questList"></div></div>
+      </div>
+    </section>
+
+    <p class="footnote" id="footnote"></p>
+  </div>
+
+  <div class="panel empty" id="empty">
+    <h2>Waiting for your KovaaK's stats</h2>
+    <p id="emptyText">
+      Arena reads the stat files KovaaK's already writes after every run. Nothing to
+      install in the game, and no scores to type in.
+    </p>
+    <button type="button" id="emptyChoose">Choose stats folder…</button>
+  </div>
+</div>
+
+<div class="celebrate" id="celebrate" hidden>
+  <div class="celebrate-card">
+    <div class="celebrate-kicker" id="celebrateKicker">Quest complete</div>
+    <div class="celebrate-title" id="celebrateTitle"></div>
+    <div class="celebrate-detail" id="celebrateDetail"></div>
+    <div class="celebrate-xp" id="celebrateXp"></div>
+    <div class="celebrate-level">
+      <div class="celebrate-level-row">
+        <span id="celebrateLevel"></span>
+        <span class="celebrate-level-xp" id="celebrateLevelXp"></span>
+      </div>
+      <div class="celebrate-track"><div class="celebrate-fill" id="celebrateFill"></div></div>
+    </div>
+    <button type="button" id="celebrateClose">Nice</button>
+  </div>
+</div>
+
+<div class="toast" id="toast">
+  <div>
+    <div class="t-scen" id="toastScen"></div>
+    <div class="sub" id="toastNote">run detected</div>
+  </div>
+  <div class="t-score" id="toastScore"></div>
+</div>
+
+
+
+<script id="arena-snapshot" type="application/json">{
+  "generatedAt": "2026-08-17T05:35:19.614Z",
+  "benchmark": {
+    "name": "Voltaic S5",
+    "difficulty": "Intermediate",
+    "rankNames": [
+      "Platinum",
+      "Diamond",
+      "Jade",
+      "Master"
+    ],
+    "rankColors": {
+      "Platinum": "#2FCFC2",
+      "Diamond": "#B9F2FF",
+      "Jade": "#85FA85",
+      "Master": "#EC44CA"
+    }
+  },
+  "player": {
+    "totalRuns": 11104,
+    "scenarioCount": 803,
+    "streak": 15,
+    "benchmarkRank": "Diamond",
+    "benchmarkEnergy": 120692,
+    "progressToNextRank": 0.5408775730142664,
+    "nextRankName": "Jade",
+    "arena": {
+      "rating": 1617,
+      "rd": 105,
+      "percentile": 50.8,
+      "tier": {
+        "id": "tier-5",
+        "name": "Odyssey",
+        "percentile": [
+          50,
+          80
+        ],
+        "color": "#FF46FF",
+        "glow": "#FF80FF",
+        "gradient": [
+          "#000000",
+          "#FF00FF"
+        ]
+      }
+    }
+  },
+  "theme": [
+    {
+      "id": "tier-1",
+      "name": "Stargazer",
+      "percentile": [
+        0,
+        5
+      ],
+      "color": "#00EAEA",
+      "glow": "#80FFFF",
+      "gradient": [
+        "#0080FF",
+        "#8000FF"
+      ]
+    },
+    {
+      "id": "tier-2",
+      "name": "Astrologist",
+      "percentile": [
+        5,
+        20
+      ],
+      "color": "#8080FF",
+      "glow": "#6464FF",
+      "gradient": [
+        "#000000",
+        "#4F4FFF"
+      ]
+    },
+    {
+      "id": "tier-3",
+      "name": "Cosmonaut",
+      "percentile": [
+        20,
+        35
+      ],
+      "color": "#008080",
+      "glow": "#006C6C",
+      "gradient": [
+        "#000000",
+        "#008080"
+      ]
+    },
+    {
+      "id": "tier-4",
+      "name": "Lunar",
+      "percentile": [
+        35,
+        50
+      ],
+      "color": "#2F2FFF",
+      "glow": "#3333FF",
+      "gradient": [
+        "#000000",
+        "#0000FF"
+      ]
+    },
+    {
+      "id": "tier-5",
+      "name": "Odyssey",
+      "percentile": [
+        50,
+        80
+      ],
+      "color": "#FF46FF",
+      "glow": "#FF80FF",
+      "gradient": [
+        "#000000",
+        "#FF00FF"
+      ]
+    },
+    {
+      "id": "tier-6",
+      "name": "Arecibo",
+      "percentile": [
+        80,
+        90
+      ],
+      "color": "#00FF00",
+      "glow": "#46FF46",
+      "gradient": [
+        "#000000",
+        "#00FF00"
+      ]
+    },
+    {
+      "id": "tier-7",
+      "name": "Quasar",
+      "percentile": [
+        90,
+        97
+      ],
+      "color": "#00FFFF",
+      "glow": "#00FFFF",
+      "gradient": [
+        "#FFFFFF",
+        "#00CCCC"
+      ]
+    },
+    {
+      "id": "tier-8",
+      "name": "Supernova",
+      "percentile": [
+        97,
+        100
+      ],
+      "color": "#FF8000",
+      "glow": "#FF8000",
+      "gradient": [
+        "#FFFF00",
+        "#FF0000"
+      ]
+    }
+  ],
+  "categories": [
+    {
+      "name": "Clicking",
+      "energy": 43225,
+      "rankName": "Diamond",
+      "perScenario": 7204,
+      "scenarios": [
+        {
+          "name": "VT Pasu Intermediate S5",
+          "label": "Pasu",
+          "subCategory": "Dynamic",
+          "score": 944.336487,
+          "rankName": "Jade",
+          "energy": 8217,
+          "nextRankName": "Master",
+          "nextRankScore": 980,
+          "gap": 35.663512999999966,
+          "runs": 35
+        },
+        {
+          "name": "VT Popcorn Intermediate S5",
+          "label": "Popcorn",
+          "subCategory": "Dynamic",
+          "score": 760,
+          "rankName": "Diamond",
+          "energy": 6944,
+          "nextRankName": "Jade",
+          "nextRankScore": 780,
+          "gap": 20,
+          "runs": 38
+        },
+        {
+          "name": "VT 1w3ts Intermediate S5",
+          "label": "1w3ts",
+          "subCategory": "Static",
+          "score": 1271.000122,
+          "rankName": "Diamond",
+          "energy": 6594,
+          "nextRankName": "Jade",
+          "nextRankScore": 1300,
+          "gap": 28.99987800000008,
+          "runs": 55
+        },
+        {
+          "name": "VT ww5t Intermediate S5",
+          "label": "ww5t",
+          "subCategory": "Static",
+          "score": 1440,
+          "rankName": "Diamond",
+          "energy": 6111,
+          "nextRankName": "Jade",
+          "nextRankScore": 1490,
+          "gap": 50,
+          "runs": 49
+        },
+        {
+          "name": "VT Frogtagon Intermediate S5",
+          "label": "Frogtagon",
+          "subCategory": "Linear",
+          "score": 1130,
+          "rankName": "Diamond",
+          "energy": 7250,
+          "nextRankName": "Jade",
+          "nextRankScore": 1140,
+          "gap": 10,
+          "runs": 28
+        },
+        {
+          "name": "VT Floating Heads Intermediate S5",
+          "label": "Floating Heads",
+          "subCategory": "Linear",
+          "score": 791.925354,
+          "rankName": "Jade",
+          "energy": 8109,
+          "nextRankName": "Master",
+          "nextRankScore": 860,
+          "gap": 68.07464600000003,
+          "runs": 24
+        }
+      ]
+    },
+    {
+      "name": "Tracking",
+      "energy": 37618,
+      "rankName": "Diamond",
+      "perScenario": 6270,
+      "scenarios": [
+        {
+          "name": "VT PGT Intermediate S5",
+          "label": "PGT",
+          "subCategory": "Precise",
+          "score": 2909,
+          "rankName": "Diamond",
+          "energy": 6560,
+          "nextRankName": "Jade",
+          "nextRankScore": 3050,
+          "gap": 141,
+          "runs": 49
+        },
+        {
+          "name": "VT Snake Track Intermediate S5",
+          "label": "Snake Track",
+          "subCategory": "Precise",
+          "score": 3246,
+          "rankName": "Diamond",
+          "energy": 5546,
+          "nextRankName": "Jade",
+          "nextRankScore": 3500,
+          "gap": 254,
+          "runs": 34
+        },
+        {
+          "name": "VT Aether Intermediate S5",
+          "label": "Aether",
+          "subCategory": "Reactive",
+          "score": 2775,
+          "rankName": "Diamond",
+          "energy": 6607,
+          "nextRankName": "Jade",
+          "nextRankScore": 2900,
+          "gap": 125,
+          "runs": 100
+        },
+        {
+          "name": "VT Ground Intermediate S5",
+          "label": "Ground",
+          "subCategory": "Reactive",
+          "score": 2949,
+          "rankName": "Diamond",
+          "energy": 5990,
+          "nextRankName": "Jade",
+          "nextRankScore": 3100,
+          "gap": 151,
+          "runs": 51
+        },
+        {
+          "name": "VT Raw Control Intermediate S5",
+          "label": "Raw Control",
+          "subCategory": "Control",
+          "score": 3513,
+          "rankName": "Diamond",
+          "energy": 7236,
+          "nextRankName": "Jade",
+          "nextRankScore": 3550,
+          "gap": 37,
+          "runs": 15
+        },
+        {
+          "name": "VT Controlsphere Intermediate S5",
+          "label": "Controlsphere",
+          "subCategory": "Control",
+          "score": 3270,
+          "rankName": "Diamond",
+          "energy": 5679,
+          "nextRankName": "Jade",
+          "nextRankScore": 3525,
+          "gap": 255,
+          "runs": 9
+        }
+      ]
+    },
+    {
+      "name": "Switching",
+      "energy": 39849,
+      "rankName": "Diamond",
+      "perScenario": 6641,
+      "scenarios": [
+        {
+          "name": "VT DotTS Intermediate S5",
+          "label": "DotTS",
+          "subCategory": "Speed",
+          "score": 1210,
+          "rankName": "Diamond",
+          "energy": 6500,
+          "nextRankName": "Jade",
+          "nextRankScore": 1230,
+          "gap": 20,
+          "runs": 35
+        },
+        {
+          "name": "VT EddieTS Intermediate S5",
+          "label": "EddieTS",
+          "subCategory": "Speed",
+          "score": 970,
+          "rankName": "Diamond",
+          "energy": 5714,
+          "nextRankName": "Jade",
+          "nextRankScore": 1020,
+          "gap": 50,
+          "runs": 40
+        },
+        {
+          "name": "VT DriftTS Intermediate S5",
+          "label": "DriftTS",
+          "subCategory": "Evasive",
+          "score": 460,
+          "rankName": "Jade",
+          "energy": 7500,
+          "nextRankName": "Master",
+          "nextRankScore": 490,
+          "gap": 30,
+          "runs": 12
+        },
+        {
+          "name": "VT FlyTS Intermediate S5",
+          "label": "FlyTS",
+          "subCategory": "Evasive",
+          "score": 595.400024,
+          "rankName": "Diamond",
+          "energy": 6588,
+          "nextRankName": "Jade",
+          "nextRankScore": 610,
+          "gap": 14.59997599999997,
+          "runs": 14
+        },
+        {
+          "name": "VT ControlTS Intermediate S5",
+          "label": "ControlTS",
+          "subCategory": "Stability",
+          "score": 490,
+          "rankName": "Jade",
+          "energy": 7857,
+          "nextRankName": "Master",
+          "nextRankScore": 520,
+          "gap": 30,
+          "runs": 17
+        },
+        {
+          "name": "VT Penta Bounce Intermediate S5",
+          "label": "Penta Bounce",
+          "subCategory": "Stability",
+          "score": 503.800018,
+          "rankName": "Diamond",
+          "energy": 5690,
+          "nextRankName": "Jade",
+          "nextRankScore": 540,
+          "gap": 36.19998199999998,
+          "runs": 13
+        }
+      ]
+    }
+  ],
+  "weakest": "Tracking",
+  "consistency": {
+    "method": "worstOfLast5",
+    "ceilingRank": "Diamond",
+    "ceilingEnergy": 120692,
+    "floorRank": "Platinum",
+    "floorEnergy": 50528,
+    "gap": 0.1611894758742246,
+    "scenarios": [
+      {
+        "name": "VT Ground Intermediate S5",
+        "label": "Ground",
+        "ceiling": 2949,
+        "floor": 2054,
+        "median": 2611,
+        "gap": 0.3034927093930146
+      },
+      {
+        "name": "VT Popcorn Intermediate S5",
+        "label": "Popcorn",
+        "ceiling": 760,
+        "floor": 530,
+        "median": 605,
+        "gap": 0.3026315789473684
+      },
+      {
+        "name": "VT PGT Intermediate S5",
+        "label": "PGT",
+        "ceiling": 2909,
+        "floor": 2199,
+        "median": 2358,
+        "gap": 0.24407012719147472
+      },
+      {
+        "name": "VT Pasu Intermediate S5",
+        "label": "Pasu",
+        "ceiling": 944.336487,
+        "floor": 714.510986,
+        "median": 774.630798,
+        "gap": 0.24337246750903105
+      },
+      {
+        "name": "VT Floating Heads Intermediate S5",
+        "label": "Floating Heads",
+        "ceiling": 791.925354,
+        "floor": 630.300232,
+        "median": 649.789734,
+        "gap": 0.2040913593479922
+      },
+      {
+        "name": "VT Raw Control Intermediate S5",
+        "label": "Raw Control",
+        "ceiling": 3513,
+        "floor": 2841,
+        "median": 2946,
+        "gap": 0.19128949615713065
+      },
+      {
+        "name": "VT Frogtagon Intermediate S5",
+        "label": "Frogtagon",
+        "ceiling": 1130,
+        "floor": 920,
+        "median": 1000,
+        "gap": 0.18584070796460178
+      },
+      {
+        "name": "VT DriftTS Intermediate S5",
+        "label": "DriftTS",
+        "ceiling": 460,
+        "floor": 391.800018,
+        "median": 414.100006,
+        "gap": 0.14826083043478255
+      },
+      {
+        "name": "VT Snake Track Intermediate S5",
+        "label": "Snake Track",
+        "ceiling": 3246,
+        "floor": 2803,
+        "median": 2929.5,
+        "gap": 0.13647566235366604
+      },
+      {
+        "name": "VT Aether Intermediate S5",
+        "label": "Aether",
+        "ceiling": 2775,
+        "floor": 2406,
+        "median": 2219.5,
+        "gap": 0.13297297297297297
+      },
+      {
+        "name": "VT 1w3ts Intermediate S5",
+        "label": "1w3ts",
+        "ceiling": 1271.000122,
+        "floor": 1110.984131,
+        "median": 1137.420776,
+        "gap": 0.1258976991663892
+      },
+      {
+        "name": "VT EddieTS Intermediate S5",
+        "label": "EddieTS",
+        "ceiling": 970,
+        "floor": 850,
+        "median": 879,
+        "gap": 0.12371134020618557
+      },
+      {
+        "name": "VT ControlTS Intermediate S5",
+        "label": "ControlTS",
+        "ceiling": 490,
+        "floor": 430.200012,
+        "median": 440,
+        "gap": 0.12204079183673466
+      },
+      {
+        "name": "VT DotTS Intermediate S5",
+        "label": "DotTS",
+        "ceiling": 1210,
+        "floor": 1090,
+        "median": 1136.5,
+        "gap": 0.09917355371900827
+      },
+      {
+        "name": "VT ww5t Intermediate S5",
+        "label": "ww5t",
+        "ceiling": 1440,
+        "floor": 1300,
+        "median": 1310,
+        "gap": 0.09722222222222222
+      },
+      {
+        "name": "VT Penta Bounce Intermediate S5",
+        "label": "Penta Bounce",
+        "ceiling": 503.800018,
+        "floor": 456.800018,
+        "median": 463,
+        "gap": 0.09329098515435146
+      },
+      {
+        "name": "VT FlyTS Intermediate S5",
+        "label": "FlyTS",
+        "ceiling": 595.400024,
+        "floor": 541.400024,
+        "median": 553.800018,
+        "gap": 0.09069532721416215
+      },
+      {
+        "name": "VT Controlsphere Intermediate S5",
+        "label": "Controlsphere",
+        "ceiling": 3270,
+        "floor": 3084,
+        "median": 3158,
+        "gap": 0.05688073394495413
+      }
+    ]
+  },
+  "match": {
+    "seed": "arena-demo-match-01",
+    "category": "Tracking",
+    "opponent": {
+      "name": "ravenous",
+      "rating": 1577,
+      "tier": {
+        "id": "tier-4",
+        "name": "Lunar",
+        "percentile": [
+          35,
+          50
+        ],
+        "color": "#2F2FFF",
+        "glow": "#3333FF",
+        "gradient": [
+          "#000000",
+          "#0000FF"
+        ]
+      }
+    },
+    "winProbability": 0.552728316151137,
+    "verdict": "loss",
+    "explanation": "You lose: −3.5% vs +1.2% against your own baselines.",
+    "ratingWeight": 1,
+    "playerMatchScore": -0.03539129491031645,
+    "opponentMatchScore": 0.012373752121059673,
+    "rounds": [
+      {
+        "label": "Raw Control",
+        "you": {
+          "score": 2910,
+          "baseline": 3162,
+          "delta": -0.07960907106936149
+        },
+        "them": {
+          "score": 3162,
+          "baseline": 3067,
+          "delta": 0.031025655322449795
+        }
+      },
+      {
+        "label": "Snake Track",
+        "you": {
+          "score": 2803,
+          "baseline": 2930,
+          "delta": -0.04318143027820447
+        },
+        "them": {
+          "score": 2808,
+          "baseline": 2842,
+          "delta": -0.011829540595752691
+        }
+      },
+      {
+        "label": "Aether",
+        "you": {
+          "score": 2539,
+          "baseline": 2498,
+          "delta": 0.016616616616616616
+        },
+        "them": {
+          "score": 2466,
+          "baseline": 2423,
+          "delta": 0.017925141636481918
+        }
+      }
+    ]
+  },
+  "quests": [
+    {
+      "title": "Lift your ww5t floor to Platinum",
+      "detail": "Your worst of the last 5 is 1300. All 5 need to clear 1310; 4 of them do right now.",
+      "xp": 500,
+      "kind": "floor_rank_up",
+      "progress": 0.8,
+      "isFloor": true,
+      "steps": {
+        "done": 4,
+        "total": 5
+      }
+    },
+    {
+      "title": "Reach Jade on Frogtagon",
+      "detail": "You are at 1130. 1140 takes you to Jade, 10 more.",
+      "xp": 300,
+      "kind": "close_the_gap",
+      "progress": 0.9912280701754386,
+      "isFloor": false,
+      "steps": {
+        "done": 1130,
+        "total": 1140
+      }
+    },
+    {
+      "title": "Lift your 1w3ts floor to Platinum",
+      "detail": "Your worst of the last 5 is 1111. All 5 need to clear 1120; 4 of them do right now.",
+      "xp": 500,
+      "kind": "floor_rank_up",
+      "progress": 0.8,
+      "isFloor": true,
+      "steps": {
+        "done": 4,
+        "total": 5
+      }
+    },
+    {
+      "title": "Reach Jade on Raw Control",
+      "detail": "You are at 3513. 3550 takes you to Jade, 37 more.",
+      "xp": 300,
+      "kind": "close_the_gap",
+      "progress": 0.9895774647887324,
+      "isFloor": false,
+      "steps": {
+        "done": 3513,
+        "total": 3550
+      }
+    },
+    {
+      "title": "Rank up any scenario in Intermediate",
+      "detail": "18 scenarios are within reach of their next rank.",
+      "xp": 400,
+      "kind": "rank_up_any",
+      "progress": 0,
+      "isFloor": false,
+      "steps": null
+    }
+  ]
+}</script>
+<script>
+  // Static host: hand the renderer its data instead of an Electron bridge.
+  window.__ARENA_SNAPSHOT__ = JSON.parse(
+    document.getElementById("arena-snapshot").textContent
+  );
+</script>
+<script>
+"use strict";
+
+/**
+ * Arena renderer.
+ *
+ * Runs in two hosts from one source, so the desktop app and the shareable preview
+ * cannot drift apart:
+ *
+ *   ELECTRON  `window.arena` exists (supplied by preload). Data is live: the main
+ *             process watches the stats folder and pushes a new snapshot whenever a
+ *             run lands.
+ *
+ *   PREVIEW   `window.__ARENA_SNAPSHOT__` is inlined by tools/buildUiPreview.ts. Static,
+ *             no Electron, opens anywhere.
+ *
+ * This file is a pure view. It never parses a CSV, computes a delta, or decides a
+ * verdict; all of that arrives already settled.
+ */
+
+const HOST = typeof window.arena !== "undefined" ? "electron" : "preview";
+
+const $ = (id) => document.getElementById(id);
+const esc = (s) =>
+  String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+
+const pct = (v) => (v >= 0 ? "+" : "−") + Math.abs(v * 100).toFixed(1) + "%";
+const num = (v) => Math.round(v).toLocaleString();
+
+/**
+ * A faceted emblem rather than a plain disc: rank badges are read at a glance and at
+ * small sizes, so the silhouette has to carry identity before the colour does.
+ */
+function badge(tier, uid) {
+  const g = "g" + uid;
+  const f = "f" + uid;
+  return (
+    '<svg viewBox="0 0 60 68" role="img" aria-label="' + esc(tier.name) + '">' +
+    '<defs><linearGradient id="' + g + '" x1="0" y1="0" x2="0.35" y2="1">' +
+    '<stop offset="0" stop-color="' + esc(tier.gradient[1]) + '"/>' +
+    '<stop offset="1" stop-color="' + esc(tier.gradient[0]) + '"/></linearGradient>' +
+    '<filter id="' + f + '" x="-60%" y="-60%" width="220%" height="220%">' +
+    '<feDropShadow dx="0" dy="0" stdDeviation="3.2" flood-color="' + esc(tier.glow) +
+    '" flood-opacity="0.85"/></filter></defs>' +
+    '<path d="M30 1.5 56.5 15v27.5L30 66.5 3.5 42.5V15z" fill="url(#' + g +
+    ')" filter="url(#' + f + ')"/>' +
+    '<path d="M30 1.5 56.5 15v27.5L30 66.5 3.5 42.5V15z" fill="none" stroke="' +
+    esc(tier.glow) + '" stroke-opacity=".5" stroke-width="1.1"/>' +
+    '<path d="M30 12 46 20.5v20L30 55 14 40.5v-20z" fill="none" stroke="#fff" ' +
+    'stroke-opacity=".22" stroke-width="1.3"/></svg>'
+  );
+}
+
+/* ------------------------------------------------------------------ status */
+
+function setStatus(kind, text, path) {
+  const dot = $("statusDot");
+  dot.className = "dot" + (kind === "scanning" ? " scanning" : kind === "bad" ? " bad" : "");
+  $("statusText").textContent = text;
+  $("statusPath").textContent = path || "";
+}
+
+function showError(message) {
+  const banner = $("banner");
+  if (!message) {
+    banner.classList.remove("on");
+    return;
+  }
+  banner.textContent = message;
+  banner.classList.add("on");
+}
+
+/* ------------------------------------------------------------------ render */
+
+let current = null;
+let selectedCategory = null;
+/** Scenarios the current match asks for, ticked off as runs land. */
+let pendingScenarios = [];
+
+function render(data) {
+  current = data;
+  $("app").hidden = false;
+  $("empty").hidden = true;
+  $("whoami").hidden = false;
+
+  const me = data.player.arena;
+
+  $("myBadge").innerHTML = badge(me.tier, "me");
+  $("myTier").textContent = me.tier.name;
+  $("myTier").style.color = me.tier.color;
+  $("myRating").textContent = me.rating + " ±" + me.rd;
+  $("myStreak").textContent = data.player.streak + "-day streak";
+
+  $("heroBadge").innerHTML = badge(me.tier, "hero");
+  $("heroName").textContent = me.tier.name;
+  $("heroName").style.color = me.tier.color;
+  $("heroMeta").textContent =
+    "rating " + me.rating + " ±" + me.rd +
+    "   ·   top " + (100 - me.percentile).toFixed(1) + "%" +
+    "   ·   " + num(data.player.totalRuns) + " runs across " + data.player.scenarioCount + " scenarios";
+  $("heroPlacement").textContent =
+    "Placement is provisional: with no live population yet, your tier is estimated " +
+    "from your " + data.benchmark.name + " " + data.benchmark.difficulty + " standing (" +
+    data.player.benchmarkRank + ", " + num(data.player.benchmarkEnergy) + " energy).";
+
+  renderCategories(data);
+
+  // The snapshot carries an illustrative match with an invented opponent, which is
+  // useful in the preview and dishonest in the real client. In the app it is shown only
+  // until a genuine result exists, and is replaced by an empty state instead.
+  if (HOST === "electron" && !hasRealResult) renderNoResultYet();
+  else if (HOST !== "electron") renderResult(data);
+
+  renderProfile(data);
+  renderConsistency(data);
+  renderQuests(data);
+
+  $("footnote").textContent =
+    (HOST === "electron"
+      ? "Live from your KovaaK's stats folder. "
+      : "Static preview. ") +
+    "Every number here is computed from " + num(data.player.totalRuns) +
+    " real runs; the opponent is synthetic. Snapshot " +
+    new Date(data.generatedAt).toLocaleString() + ".";
+}
+
+function renderCategories(data) {
+  const host = $("cats");
+  host.textContent = "";
+  if (selectedCategory === null) selectedCategory = data.weakest;
+
+  ["Any"].concat(data.categories.map((c) => c.name)).forEach((name) => {
+    const b = document.createElement("button");
+    b.className = "cat";
+    b.type = "button";
+    b.textContent = name === data.weakest ? name + " · weakest" : name;
+    b.setAttribute("aria-pressed", String(name === selectedCategory));
+    b.addEventListener("click", () => {
+      selectedCategory = name;
+      Array.prototype.forEach.call(host.children, (c) =>
+        c.setAttribute("aria-pressed", "false"));
+      b.setAttribute("aria-pressed", "true");
+      $("opponent").classList.remove("on");
+      $("queueBtn").disabled = false;
+      $("queueBtn").textContent = "Find opponent";
+    });
+    host.append(b);
+  });
+}
+
+function showOpponent(data) {
+  const m = data.match;
+  const me = data.player.arena;
+
+  $("oppBadge").innerHTML = badge(m.opponent.tier, "opp");
+  $("oppName").textContent = m.opponent.name;
+  $("oppTier").textContent = m.opponent.tier.name + " · " + m.opponent.rating;
+  $("oppTier").style.color = m.opponent.tier.color;
+  $("oppAge").textContent = "stored run · 3 days ago";
+
+  const p = m.winProbability;
+  $("oddsBar").innerHTML =
+    '<div style="flex:' + p + ';background:' + esc(me.tier.color) + '"></div>' +
+    '<div style="flex:' + (1 - p) + ';background:' + esc(m.opponent.tier.color) + '"></div>';
+  $("oddsYou").textContent = "you " + (p * 100).toFixed(0) + "%";
+  $("oddsThem").textContent = (100 - p * 100).toFixed(0) + "% " + m.opponent.name;
+
+  pendingScenarios = m.rounds.map((r) => ({ label: r.label, done: false }));
+  renderTodo();
+
+  $("opponent").classList.add("on");
+}
+
+function renderTodo() {
+  const list = $("todoList");
+  list.textContent = "";
+  pendingScenarios.forEach((s, i) => {
+    const li = document.createElement("li");
+    li.className = s.done ? "done" : "pending";
+    li.innerHTML =
+      '<span class="n">' + (s.done ? "✓" : i + 1) + "</span>" +
+      "<span>" + esc(s.label) + "</span>" +
+      (s.tier ? '<span class="tier-tag">' + esc(s.tier) + "</span>" : "");
+    list.append(li);
+  });
+}
+
+function renderResult(data) {
+  const m = data.match;
+  const won = m.verdict === "win";
+
+  $("verdictBig").textContent =
+    won ? "Victory" : m.verdict === "draw" ? "Draw" : "Defeat";
+  $("verdictBig").style.color =
+    won ? "var(--up)" : m.verdict === "draw" ? "var(--ink)" : "var(--down)";
+  $("verdictScores").textContent =
+    pct(m.playerMatchScore) + " vs " + pct(m.opponentMatchScore) + " against baseline" +
+    (m.ratingWeight < 1 ? "   ·   reduced weight (provisional baselines)" : "");
+  $("ratingMove").textContent = won ? "+18 SR" : "−14 SR";
+  $("ratingMove").style.color = won ? "var(--up)" : "var(--down)";
+  $("explain").textContent = m.explanation;
+
+  const body = $("roundsBody");
+  body.textContent = "";
+  m.rounds.forEach((r) => {
+    const youWon = r.you.delta > r.them.delta;
+    const tr = document.createElement("tr");
+    tr.innerHTML =
+      "<td>" + esc(r.label) + "</td>" +
+      "<td>" + num(r.you.score) + '<div class="base">base ' + num(r.you.baseline) + "</div></td>" +
+      '<td class="' + (r.you.delta >= 0 ? "up" : "down") + '">' + pct(r.you.delta) + "</td>" +
+      "<td>" + num(r.them.score) + '<div class="base">base ' + num(r.them.baseline) + "</div></td>" +
+      '<td class="' + (r.them.delta >= 0 ? "up" : "down") + '">' + pct(r.them.delta) + "</td>" +
+      '<td class="' + (youWon ? "won-round" : "") + '">' + (youWon ? "won" : "lost") + "</td>";
+    body.append(tr);
+  });
+}
+
+/** True once a genuine match has settled in this session. */
+let hasRealResult = false;
+
+/** Empty state for the result tab before any real match has been played. */
+function renderNoResultYet() {
+  $("verdictBig").textContent = "No matches yet";
+  $("verdictBig").style.color = "var(--ink-mid)";
+  $("verdictScores").textContent =
+    "Queue for a category, play the three scenarios, and the result lands here.";
+  $("ratingMove").textContent = "";
+  $("explain").textContent =
+    "Matches are decided on how far above your own baseline you played, not on raw " +
+    "score, so both players get a real contest whatever their rank.";
+  $("roundsBody").textContent = "";
+}
+
+/**
+ * Render a real settled match.
+ *
+ * Distinct from `renderResult`, which draws the snapshot's illustrative match. This one
+ * shows what actually happened, including the rating change and each run's verification
+ * tier, because a player is entitled to see why a result went the way it did.
+ */
+function renderSettled(s) {
+  hasRealResult = true;
+  const won = s.verdict === "win";
+  const isVoid = s.verdict === "void";
+
+  $("verdictBig").textContent = isVoid
+    ? "Void"
+    : won ? "Victory" : s.verdict === "draw" ? "Draw" : "Defeat";
+  $("verdictBig").style.color = isVoid
+    ? "var(--ink-mid)"
+    : won ? "var(--up)" : s.verdict === "draw" ? "var(--ink)" : "var(--down)";
+
+  $("verdictScores").textContent = isVoid
+    ? (s.voidReason || "match could not be settled")
+    : pct(s.yourMatchScore ?? 0) + " vs " + pct(s.theirMatchScore ?? 0) +
+      " against baseline" +
+      (s.ratingWeight < 1 ? `   ·   ${Math.round(s.ratingWeight * 100)}% weight (provisional)` : "");
+
+  const change = s.ratingChange;
+  $("ratingMove").textContent = isVoid
+    ? "no change"
+    : `${change >= 0 ? "+" : "−"}${Math.abs(change)} · ${s.ratingAfter}`;
+  $("ratingMove").style.color = isVoid
+    ? "var(--ink-dim)"
+    : change > 0 ? "var(--up)" : change < 0 ? "var(--down)" : "var(--ink-mid)";
+
+  $("explain").textContent = s.explanation;
+
+  const body = $("roundsBody");
+  body.textContent = "";
+  s.rounds.forEach((r) => {
+    const yours = r.delta ?? 0;
+    const theirs = r.opponentDelta ?? 0;
+    const youWon = r.counted && yours > theirs;
+    const tr = document.createElement("tr");
+    tr.innerHTML =
+      "<td>" + esc(r.scenario) + "</td>" +
+      "<td>" + num(r.score) + '<div class="base">base ' + num(r.baseline) +
+        (r.verificationTier && r.verificationTier !== "verified"
+          ? " · " + esc(r.verificationTier)
+          : "") +
+        "</div></td>" +
+      '<td class="' + (yours >= 0 ? "up" : "down") + '">' +
+        (r.counted ? pct(yours) : "—") + "</td>" +
+      "<td>—</td>" +
+      '<td class="' + (theirs >= 0 ? "up" : "down") + '">' + pct(theirs) + "</td>" +
+      '<td class="' + (youWon ? "won-round" : "") + '">' +
+        (r.counted ? (youWon ? "won" : "lost") : esc(r.excludedReason || "excluded")) +
+      "</td>";
+    body.append(tr);
+  });
+}
+
+function renderProfile(data) {
+  $("weakNote").textContent = data.weakest + " is your weakest category";
+
+  const maxEnergy = Math.max.apply(null, data.categories.map((c) => c.energy));
+  const wmap = $("wmap");
+  wmap.textContent = "";
+
+  data.categories.forEach((cat) => {
+    const colour = data.benchmark.rankColors[cat.rankName] || "#8892a4";
+    const row = document.createElement("div");
+    row.className = "wrow";
+    row.innerHTML =
+      '<div class="lbl">' + esc(cat.name) + "</div>" +
+      '<div class="wtrack"><div class="wfill" style="width:' +
+        ((cat.energy / maxEnergy) * 100).toFixed(1) +
+        "%;background:linear-gradient(90deg," + esc(colour) + "40," + esc(colour) + ')"></div></div>' +
+      '<div class="wval">' + num(cat.energy) + " · " + esc(cat.rankName || "—") + "</div>";
+    wmap.append(row);
+  });
+
+  const body = $("scenBody");
+  body.textContent = "";
+  data.categories
+    .reduce((all, c) => all.concat(c.scenarios), [])
+    .sort((a, b) => a.energy - b.energy)
+    .forEach((s) => {
+      const colour = data.benchmark.rankColors[s.rankName] || "var(--ink-dim)";
+      const tr = document.createElement("tr");
+      tr.innerHTML =
+        "<td>" + esc(s.label) + "</td>" +
+        "<td>" + esc(s.subCategory || "—") + "</td>" +
+        "<td>" + (s.score ? num(s.score) : "—") + "</td>" +
+        '<td style="color:' + esc(colour) + '">' + esc(s.rankName || "—") + "</td>" +
+        "<td>" + num(s.energy) + "</td>" +
+        "<td>" + s.runs + "</td>" +
+        "<td>" +
+          (s.gap != null
+            ? "+" + num(s.gap) + " → " + esc(s.nextRankName)
+            : '<span style="color:var(--ink-dim)">max</span>') +
+        "</td>";
+      body.append(tr);
+    });
+}
+
+/**
+ * Ceiling versus floor.
+ *
+ * Both ranks come from the same Voltaic energy engine; only the score fed in differs.
+ * That is what makes "Diamond ceiling, Platinum floor" a real statement rather than a
+ * figure of speech.
+ */
+function renderConsistency(data) {
+  const c = data.consistency;
+  if (!c) return;
+
+  const colorOf = (rank) => data.benchmark.rankColors[rank] || "var(--ink-mid)";
+
+  $("ceilRank").textContent = c.ceilingRank || "unranked";
+  $("ceilRank").style.color = colorOf(c.ceilingRank);
+  $("ceilEnergy").textContent = num(c.ceilingEnergy) + " energy";
+
+  $("floorRank").textContent = c.floorRank || "unranked";
+  $("floorRank").style.color = colorOf(c.floorRank);
+  $("floorEnergy").textContent = num(c.floorEnergy) + " energy";
+
+  $("gapVal").textContent = (c.gap * 100).toFixed(1) + "%";
+
+  const body = $("consistencyBody");
+  body.textContent = "";
+
+  const worst = c.scenarios.length ? c.scenarios[0].gap : 1;
+
+  c.scenarios.forEach((s) => {
+    // Bar width is relative to the worst gap, so the ordering is legible at a glance
+    // rather than every row looking similar.
+    const width = worst > 0 ? Math.max(2, (s.gap / worst) * 90) : 2;
+    const tr = document.createElement("tr");
+    tr.innerHTML =
+      "<td>" + esc(s.label) + "</td>" +
+      "<td>" + num(s.ceiling) + "</td>" +
+      '<td style="color:var(--ink-dim)">' + num(s.median) + "</td>" +
+      "<td>" + num(s.floor) + "</td>" +
+      "<td>" + (s.gap * 100).toFixed(1) + "%</td>" +
+      '<td><span class="gapbar" style="width:' + width.toFixed(0) + 'px"></span></td>';
+    body.append(tr);
+  });
+}
+
+function renderQuests(data) {
+  const host = $("questList");
+  host.textContent = "";
+  data.quests.forEach((q, i) => {
+    // Floor quests get a single consistent colour rather than one from the rank ramp:
+    // they are a different kind of ask, and looking different is the point.
+    const colour = q.isFloor
+      ? "var(--warn)"
+      : data.theme[Math.min(data.theme.length - 1, 3 + i)].color;
+
+    const el = document.createElement("div");
+    el.className = "quest" + (q.isFloor ? " quest-floor" : "");
+
+    // "4 of 5 runs" says what is left far better than "80%" on a quest whose whole
+    // point is that every run in the window has to clear the bar.
+    const counter = q.steps
+      ? '<span class="qsteps">' + q.steps.done + " of " + q.steps.total + " runs</span>"
+      : "";
+
+    el.innerHTML =
+      "<div><h3>" + esc(q.title) +
+        (q.isFloor ? '<span class="floor-tag">floor</span>' : "") +
+        "</h3><p>" + esc(q.detail) + "</p></div>" +
+      '<div class="xp">' + counter + q.xp + " XP</div>" +
+      '<div class="qtrack"><div class="qfill" style="width:' +
+        (q.progress * 100).toFixed(1) + "%;background:" + esc(colour) + '"></div></div>';
+    host.append(el);
+  });
+}
+
+/* ------------------------------------------------- quest completion */
+
+/**
+ * Completions queue rather than overwrite.
+ *
+ * Finishing the fifth run of a set can complete two quests at once, and a card that
+ * silently replaced the previous one would rob the player of an award they earned.
+ */
+const celebrationQueue = [];
+let celebrating = false;
+
+function showCelebration(payload) {
+  celebrationQueue.push(payload);
+  if (!celebrating) nextCelebration();
+}
+
+function nextCelebration() {
+  const payload = celebrationQueue.shift();
+  if (!payload) {
+    celebrating = false;
+    $("celebrate").hidden = true;
+    return;
+  }
+
+  celebrating = true;
+  const { quest, level } = payload;
+
+  const isFloor =
+    quest.kind === "floor_rank_up" ||
+    quest.kind === "close_the_spread" ||
+    quest.kind === "no_disasters";
+
+  $("celebrateKicker").textContent = isFloor ? "Floor raised" : "Quest complete";
+  $("celebrateTitle").textContent = quest.title;
+  $("celebrateDetail").textContent = quest.detail;
+  $("celebrateXp").textContent = "+" + quest.xp + " XP";
+
+  $("celebrateLevel").textContent = "Level " + level.level;
+  $("celebrateLevelXp").textContent =
+    level.xpIntoLevel.toLocaleString() + " / " + level.xpForNextLevel.toLocaleString();
+
+  $("celebrate").hidden = false;
+  // Fill from zero so the bar visibly moves rather than appearing already full.
+  $("celebrateFill").style.width = "0%";
+  requestAnimationFrame(() => {
+    $("celebrateFill").style.width = (level.progress * 100).toFixed(1) + "%";
+  });
+
+  // More waiting? Say so, so the button does not look like it dismissed them all.
+  $("celebrateClose").textContent =
+    celebrationQueue.length > 0 ? `Next (${celebrationQueue.length} more)` : "Nice";
+}
+
+function renderProgression(p) {
+  const chip = $("levelChip");
+  if (!chip) return;
+  chip.hidden = false;
+  chip.textContent =
+    `lvl ${p.level.level} · ${p.level.xpIntoLevel.toLocaleString()}/` +
+    `${p.level.xpForNextLevel.toLocaleString()} xp`;
+  chip.title = `${p.totalXp.toLocaleString()} XP lifetime · ${p.completedToday} quest(s) done today`;
+}
+
+/* ------------------------------------------------------------------ toast */
+
+let toastTimer = null;
+function showRunToast(run) {
+  $("toastScen").textContent = run.scenario;
+  $("toastScore").textContent = num(run.score);
+  $("toast").classList.add("on");
+
+  if (toastTimer) clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => $("toast").classList.remove("on"), 4200);
+
+  // Tick the scenario off the match to-do list if it was one we asked for.
+  let changed = false;
+  pendingScenarios.forEach((s) => {
+    if (!s.done && run.scenario.indexOf(s.label) !== -1) {
+      s.done = true;
+      changed = true;
+    }
+  });
+  if (changed) renderTodo();
+}
+
+/* ------------------------------------------------------------------ wiring */
+
+document.querySelectorAll(".tab").forEach((tab) => {
+  tab.addEventListener("click", () => {
+    document.querySelectorAll(".tab").forEach((t) => t.setAttribute("aria-selected", "false"));
+    tab.setAttribute("aria-selected", "true");
+    document.querySelectorAll(".screen").forEach((s) => s.classList.remove("active"));
+    $("screen-" + tab.dataset.screen).classList.add("active");
+  });
+});
+
+/* ------------------------------------------------------------------ match */
+
+/** The live match, once one has been found. Null between matches. */
+let activeMatch = null;
+
+/**
+ * Render the opponent and the scenarios to play.
+ *
+ * Takes a real match from the server when there is one, and falls back to the snapshot's
+ * illustrative match only in the static preview, where no server exists.
+ */
+function showRealMatch(match, data) {
+  const me = data.player.arena;
+  const oppTier = data.match.opponent.tier;
+
+  $("oppBadge").innerHTML = badge(oppTier, "opp");
+  $("oppName").textContent = match.opponent.displayName;
+  $("oppTier").textContent = `rating ${match.opponent.rating}` +
+    (match.opponent.provisional ? " · provisional" : "");
+  $("oppTier").style.color = oppTier.color;
+
+  const played = new Date(match.opponent.playedAt);
+  const days = Math.max(0, Math.round((Date.now() - played.getTime()) / 86400000));
+  $("oppAge").textContent =
+    `stored run · ${days === 0 ? "today" : days === 1 ? "yesterday" : days + " days ago"}` +
+    ` · pool of ${match.poolSize}`;
+
+  const p = match.winProbability;
+  $("oddsBar").innerHTML =
+    '<div style="flex:' + p + ';background:' + esc(me.tier.color) + '"></div>' +
+    '<div style="flex:' + (1 - p) + ';background:' + esc(oppTier.color) + '"></div>';
+  $("oddsYou").textContent = "you " + (p * 100).toFixed(0) + "%";
+  $("oddsThem").textContent = (100 - p * 100).toFixed(0) + "% " + match.opponent.displayName;
+
+  pendingScenarios = match.scenarios.map((s) => ({
+    id: s.id,
+    label: s.name,
+    done: false,
+    tier: null,
+  }));
+  renderTodo();
+
+  $("matchActions").hidden = false;
+  $("opponent").classList.add("on");
+}
+
+$("queueBtn").addEventListener("click", async () => {
+  if (!current) return;
+
+  const btn = $("queueBtn");
+
+  if (HOST !== "electron") {
+    // No server in the preview; show the illustrative match instead.
+    showOpponent(current);
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = "Searching…";
+  $("searching").classList.add("on");
+  $("opponent").classList.remove("on");
+  showError(null);
+
+  const result = await window.arena.findMatch(selectedCategory, current.benchmark.difficulty);
+
+  $("searching").classList.remove("on");
+  btn.disabled = false;
+
+  if (result.error) {
+    btn.textContent = "Find opponent";
+    // "No opponent yet" is the expected answer on an empty ladder, not a failure, so
+    // it is phrased as a next step rather than an error.
+    showError(
+      /no opponent/i.test(result.error)
+        ? "Nobody to play yet. Play this category once and your run set becomes the " +
+            "first entry in the pool."
+        : result.error,
+    );
+    return;
+  }
+
+  btn.textContent = "Match in progress";
+  activeMatch = result.match;
+  showRealMatch(result.match, current);
+});
+
+/* ------------------------------------------------------------------ account */
+
+function renderSession(session, configured) {
+  const btn = $("btnSignIn");
+  const panel = $("signedIn");
+  if (!btn || !panel) return;
+
+  // The header holds the sign-in control, so it has to be visible before there is any
+  // snapshot to show. Otherwise a new user with no stats yet has nothing to click.
+  $("whoami").hidden = false;
+
+  if (session) {
+    btn.hidden = true;
+    panel.hidden = false;
+    $("accountName").textContent = session.displayName;
+    // The SteamID is shown truncated: enough to confirm the right account is linked,
+    // without putting a full identifier on screen during a stream.
+    $("accountSteam").textContent = `steam …${String(session.steamId).slice(-6)}`;
+    return;
+  }
+
+  panel.hidden = true;
+  btn.hidden = false;
+  btn.disabled = !configured;
+  btn.textContent = configured ? "Sign in with Steam" : "Sign-in unavailable";
+  btn.title = configured
+    ? "Opens your browser to authenticate with Steam"
+    : "This build has no Supabase settings. Fill in .env and rebuild.";
+}
+
+if (HOST === "electron") {
+  const api = window.arena;
+
+  $("btnRescan").addEventListener("click", () => api.rescan());
+  $("btnOpen").addEventListener("click", () => api.openStatsFolder());
+  const choose = () => api.chooseFolder();
+  $("btnChoose").addEventListener("click", choose);
+  $("emptyChoose").addEventListener("click", choose);
+
+  $("btnSignIn").addEventListener("click", async () => {
+    const result = await api.signIn();
+    if (result && result.error) showError(result.error);
+  });
+
+  $("btnSignOut").addEventListener("click", async () => {
+    await api.signOut();
+  });
+
+  api.onSession((session) => {
+    renderSession(session, true);
+    // Uploading only makes sense once there is an account to attach runs to.
+    $("uploadRow").hidden = !session;
+  });
+
+  // ---- history upload ----------------------------------------------------
+  $("uploadBtn").addEventListener("click", async () => {
+    const btn = $("uploadBtn");
+    btn.disabled = true;
+    $("uploadTrack").hidden = false;
+    showError(null);
+
+    const result = await api.uploadHistory();
+
+    btn.disabled = false;
+    if (result.error) {
+      showError(result.error);
+      return;
+    }
+
+    const r = result.result;
+    const b = result.baselines;
+    $("uploadTitle").textContent = "History uploaded";
+    $("uploadSub").textContent =
+      `${r.uploaded.toLocaleString()} runs on the server` +
+      (b ? ` · ${b.solid} baselines ready` : "") +
+      (r.skipped ? ` · ${r.skipped} unreadable files skipped` : "") +
+      (r.errors.length ? ` · ${r.errors.length} batch error(s)` : "");
+    btn.textContent = "Upload again";
+    if (r.errors.length) showError(r.errors[0]);
+  });
+
+  api.onUploadProgress((p) => {
+    if (p.phase === "baselines") {
+      $("uploadFill").style.width = "100%";
+      $("uploadSub").textContent = "Computing your baselines…";
+      return;
+    }
+    const pct = p.total ? (p.uploaded / p.total) * 100 : 0;
+    $("uploadFill").style.width = pct.toFixed(1) + "%";
+    $("uploadSub").textContent =
+      `${p.uploaded.toLocaleString()} of ${p.total.toLocaleString()} runs` +
+      ` · batch ${p.batch}/${p.batches}`;
+  });
+
+  // ---- match lifecycle ---------------------------------------------------
+  api.onMatch((match) => {
+    activeMatch = match;
+    if (!match) {
+      $("opponent").classList.remove("on");
+      $("matchActions").hidden = true;
+      $("queueBtn").textContent = "Find opponent";
+      $("queueBtn").disabled = false;
+    }
+  });
+
+  api.onMatchProgress((p) => {
+    if (p.status === "submitted") {
+      const s = pendingScenarios.find((x) => x.id === p.scenarioId);
+      if (s) {
+        s.done = true;
+        s.tier = p.verificationTier;
+        renderTodo();
+      }
+      $("matchHint").textContent = p.remaining && p.remaining.length
+        ? `${p.remaining.length} scenario(s) left`
+        : "All runs in. Settling…";
+    } else if (p.status === "failed") {
+      showError(`Could not submit that run: ${p.message}`);
+    } else if (p.status === "already-submitted") {
+      $("matchHint").textContent = p.message;
+    }
+  });
+
+  api.onMatchSettled((settled) => {
+    activeMatch = null;
+    $("matchActions").hidden = true;
+    $("opponent").classList.remove("on");
+    $("queueBtn").textContent = "Find opponent";
+    $("queueBtn").disabled = false;
+    renderSettled(settled);
+
+    // Jump to the result, because that is the payoff and nobody should have to hunt
+    // for it after finishing three scenarios.
+    document.querySelector('.tab[data-screen="result"]').click();
+  });
+
+  $("cancelMatchBtn").addEventListener("click", () => api.cancelMatch());
+
+  // ---- quests ------------------------------------------------------------
+  api.onProgression(renderProgression);
+  api.onQuestComplete(showCelebration);
+
+  $("celebrateClose").addEventListener("click", nextCelebration);
+
+  // Escape dismisses, because a modal that traps you is worse than no modal.
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !$("celebrate").hidden) nextCelebration();
+  });
+
+  api.onSigningIn(({ signingIn }) => {
+    const btn = $("btnSignIn");
+    btn.disabled = signingIn;
+    btn.textContent = signingIn ? "Check your browser…" : "Sign in with Steam";
+    if (!signingIn) $("signinHelp").hidden = true;
+  });
+
+  // If the browser does not appear, the flow is still completable by hand. Showing the
+  // link turns a dead end into an inconvenience.
+  api.onSignInUrl(({ url }) => {
+    const help = $("signinHelp");
+    help.hidden = false;
+    $("signinLink").textContent = url;
+    $("signinLink").dataset.url = url;
+  });
+
+  $("signinCopy").addEventListener("click", async () => {
+    const url = $("signinLink").dataset.url || "";
+    try {
+      await navigator.clipboard.writeText(url);
+      $("signinCopy").textContent = "Copied";
+    } catch {
+      $("signinCopy").textContent = "Select and copy";
+    }
+    setTimeout(() => { $("signinCopy").textContent = "Copy link"; }, 1800);
+  });
+
+  api.onSnapshot((snapshot) => {
+    showError(null);
+    render(snapshot);
+    setStatus("ok", "Watching", snapshot ? currentPath : "");
+  });
+
+  api.onRun((run) => showRunToast(run));
+
+  api.onScanning(({ scanning }) => {
+    setStatus(scanning ? "scanning" : "ok", scanning ? "Scanning…" : "Watching", currentPath);
+  });
+
+  api.onError((message) => {
+    showError(message);
+    setStatus("bad", "Problem", currentPath);
+  });
+
+  var currentPath = "";
+  api.getState().then((state) => {
+    currentPath = state.statsDir || "";
+    renderSession(state.session, state.configured);
+    if (state.snapshot) {
+      render(state.snapshot);
+      setStatus("ok", "Watching", currentPath);
+    } else {
+      setStatus(state.lastError ? "bad" : "scanning", state.lastError ? "Problem" : "Scanning…", currentPath);
+      if (state.lastError) {
+        showError(state.lastError);
+        $("emptyText").textContent = state.lastError;
+      }
+    }
+  });
+} else {
+  // Static preview: the snapshot is inlined, and neither folder controls nor sign-in
+  // apply without a main process behind them.
+  //
+  // The controls are removed rather than merely hidden. A disabled-looking button that
+  // silently does nothing reads as a broken app, and a preview shared with someone else
+  // gives them no way to know the difference.
+  $("status").remove();
+  const account = $("account");
+  if (account) account.remove();
+
+  const note = $("previewNote");
+  if (note) note.hidden = false;
+
+  render(window.__ARENA_SNAPSHOT__);
+}
+
+</script>

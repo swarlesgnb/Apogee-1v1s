@@ -1,0 +1,796 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy"
+      content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:;">
+<title>Arena</title>
+<style>
+  /* ------------------------------------------------------------------
+     Committed single theme. This is a game client, not a document: it
+     lives in one visual world (deep space instrument panel) rather than
+     adapting to a reader's light/dark preference. Every colour is
+     painted explicitly, including the body ground.
+
+     The chrome is achromatic on purpose. All colour on screen comes from
+     the player's own rank palette, so ranks read as the signal they are.
+     ------------------------------------------------------------------ */
+  :root {
+    --void: #07090e;
+    --panel: #0e1219;
+    --panel-2: #141a24;
+    --sunken: #090c12;
+    --line: #1e2531;
+    --line-bright: #2c3542;
+    --ink: #e8ecf4;
+    --ink-mid: #96a0b3;
+    --ink-dim: #5f6a7d;
+    --up: #46d19a;
+    --down: #ff6b7d;
+    --warn: #f0b849;
+    --font: ui-sans-serif, "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif;
+    --mono: ui-monospace, "Cascadia Mono", Consolas, "SF Mono", monospace;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background:
+      radial-gradient(1200px 600px at 78% -8%, #131a2a 0%, transparent 62%),
+      radial-gradient(900px 500px at 8% 108%, #101725 0%, transparent 60%),
+      var(--void);
+    color: var(--ink);
+    font-family: var(--font);
+    font-size: 15px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+
+  .shell { max-width: 1180px; margin: 0 auto; padding: 22px 20px 64px; }
+
+  /* ---------------- top bar ---------------- */
+  .topbar {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+    padding-bottom: 16px; border-bottom: 1px solid var(--line); margin-bottom: 16px;
+  }
+  .wordmark { font-size: 17px; font-weight: 680; letter-spacing: .16em; text-transform: uppercase; }
+  .wordmark span { color: var(--ink-dim); font-weight: 500; letter-spacing: .1em; }
+
+  .whoami { display: flex; align-items: center; gap: 12px; }
+  .whoami .badge { width: 38px; height: 43px; flex: none; }
+  .whoami .badge svg { width: 100%; height: 100%; display: block; overflow: visible; }
+  .whoami .tier { font-size: 13.5px; font-weight: 640; line-height: 1.2; }
+  .whoami .sub {
+    font-family: var(--mono); font-size: 11px; color: var(--ink-dim);
+    font-variant-numeric: tabular-nums;
+  }
+  .streak {
+    font-family: var(--mono); font-size: 11.5px; color: var(--ink-mid);
+    border: 1px solid var(--line-bright); border-radius: 999px; padding: 4px 11px;
+  }
+
+  /* ---------------- account ---------------- */
+  .account { display: flex; align-items: center; }
+  .signin {
+    font: inherit; font-size: 12.5px; font-weight: 620;
+    color: var(--void); background: var(--ink);
+    border: 0; border-radius: 8px; padding: 8px 15px; cursor: pointer;
+    white-space: nowrap;
+  }
+  .signin:hover { background: #fff; }
+  .signin[disabled] { opacity: .55; cursor: default; }
+  .signin:focus-visible { outline: 2px solid var(--ink-mid); outline-offset: 3px; }
+
+  .signed-in { display: flex; align-items: center; gap: 10px; }
+  .signed-in .who-name { font-size: 13px; font-weight: 620; line-height: 1.2; }
+  .signed-in button {
+    font: inherit; font-size: 11.5px; color: var(--ink-mid);
+    background: transparent; border: 1px solid var(--line-bright);
+    border-radius: 6px; padding: 4px 10px; cursor: pointer;
+  }
+  .signed-in button:hover { color: var(--ink); border-color: var(--ink-dim); }
+
+  /* ---------------- status strip ---------------- */
+  .status {
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    font-family: var(--mono); font-size: 11.5px; color: var(--ink-dim);
+    margin-bottom: 18px;
+  }
+  .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--up); flex: none; }
+  .dot.scanning { background: var(--warn); }
+  .dot.bad { background: var(--down); }
+  .status .path {
+    color: var(--ink-mid); overflow: hidden; text-overflow: ellipsis;
+    white-space: nowrap; max-width: 46ch;
+  }
+  .status button {
+    font: inherit; font-family: var(--font); font-size: 11.5px;
+    color: var(--ink-mid); background: transparent;
+    border: 1px solid var(--line-bright); border-radius: 6px;
+    padding: 3px 9px; cursor: pointer;
+  }
+  .status button:hover { color: var(--ink); border-color: var(--ink-dim); }
+  .status button:focus-visible { outline: 2px solid var(--ink-mid); outline-offset: 2px; }
+
+  .banner {
+    display: none; padding: 11px 14px; border-radius: 9px; margin-bottom: 16px;
+    font-size: 13px; background: #2a1418; border: 1px solid #56222a; color: #ffd7dc;
+  }
+  .banner.on { display: block; }
+
+  /* ---------------- preview notice ---------------- */
+  .preview-note {
+    padding: 12px 15px; border-radius: 9px; margin-bottom: 16px;
+    font-size: 13px; line-height: 1.55; color: var(--ink-mid);
+    background: var(--panel); border: 1px solid var(--line-bright);
+  }
+  .preview-note strong { color: var(--ink); font-weight: 640; }
+  .preview-note code {
+    font-family: var(--mono); font-size: 12px; color: var(--ink);
+    background: var(--sunken); border: 1px solid var(--line);
+    border-radius: 5px; padding: 1px 6px;
+  }
+
+  /* ---------------- sign-in fallback ---------------- */
+  .signin-help {
+    padding: 13px 15px; border-radius: 9px; margin-bottom: 16px;
+    background: var(--panel); border: 1px solid var(--line-bright);
+  }
+  .signin-help p { margin: 0 0 9px; font-size: 13px; color: var(--ink-mid); }
+  .signin-link-row { display: flex; gap: 9px; align-items: center; }
+  .signin-link-row code {
+    flex: 1; min-width: 0; overflow-x: auto; white-space: nowrap;
+    font-family: var(--mono); font-size: 11.5px; color: var(--ink);
+    background: var(--sunken); border: 1px solid var(--line);
+    border-radius: 6px; padding: 7px 9px;
+  }
+  .signin-link-row button {
+    font: inherit; font-size: 12px; color: var(--ink-mid);
+    background: transparent; border: 1px solid var(--line-bright);
+    border-radius: 6px; padding: 6px 11px; cursor: pointer; white-space: nowrap;
+  }
+  .signin-link-row button:hover { color: var(--ink); border-color: var(--ink-dim); }
+
+  /* ---------------- tabs ---------------- */
+  .tabs { display: flex; gap: 4px; margin-bottom: 18px; flex-wrap: wrap; }
+  .tab {
+    font: inherit; font-size: 13px; font-weight: 560;
+    color: var(--ink-mid); background: transparent;
+    border: 1px solid transparent; border-radius: 8px;
+    padding: 7px 14px; cursor: pointer;
+  }
+  .tab:hover { color: var(--ink); background: var(--panel); }
+  .tab[aria-selected="true"] {
+    color: var(--ink); background: var(--panel-2); border-color: var(--line-bright);
+  }
+  .tab:focus-visible { outline: 2px solid var(--ink-mid); outline-offset: 2px; }
+
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  .panel {
+    background: var(--panel); border: 1px solid var(--line);
+    border-radius: 12px; overflow: hidden;
+  }
+  .panel + .panel { margin-top: 16px; }
+  .phead {
+    display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
+    padding: 13px 16px; border-bottom: 1px solid var(--line);
+  }
+  .phead h2 {
+    margin: 0; font-size: 10.5px; font-weight: 660; text-transform: uppercase;
+    letter-spacing: .1em; color: var(--ink-dim);
+  }
+  .phead .note { font-size: 12px; color: var(--ink-dim); }
+  .pbody { padding: 16px; }
+
+  /* ---------------- queue ---------------- */
+  .hero { display: flex; align-items: center; gap: 20px; padding: 22px 16px; flex-wrap: wrap; }
+  .hero .badge { width: 104px; height: 118px; flex: none; }
+  .hero .badge svg { width: 100%; height: 100%; display: block; overflow: visible; }
+  .hero .name { font-size: 30px; font-weight: 700; letter-spacing: -.02em; line-height: 1.1; }
+  .hero .meta {
+    font-family: var(--mono); font-size: 12px; color: var(--ink-mid); margin-top: 6px;
+    font-variant-numeric: tabular-nums;
+  }
+  .hero .placement { font-size: 12px; color: var(--ink-dim); margin-top: 8px; max-width: 46ch; }
+
+  .cats { display: flex; flex-wrap: wrap; gap: 6px; }
+  .cat {
+    font: inherit; font-size: 12.5px; font-weight: 560; color: var(--ink-mid);
+    background: var(--sunken); border: 1px solid var(--line);
+    border-radius: 999px; padding: 6px 13px; cursor: pointer;
+  }
+  .cat:hover { color: var(--ink); border-color: var(--line-bright); }
+  .cat[aria-pressed="true"] { color: var(--void); background: var(--ink); border-color: var(--ink); }
+  .cat:focus-visible { outline: 2px solid var(--ink-mid); outline-offset: 2px; }
+
+  .queue-btn {
+    font: inherit; font-size: 14px; font-weight: 640; letter-spacing: .02em;
+    color: var(--void); background: var(--ink); border: 0; border-radius: 9px;
+    padding: 11px 22px; cursor: pointer; margin-top: 14px;
+  }
+  .queue-btn:hover { background: #fff; }
+  .queue-btn:focus-visible { outline: 2px solid var(--ink-mid); outline-offset: 3px; }
+  .queue-btn[disabled] { opacity: .5; cursor: default; }
+
+  .searching {
+    font-family: var(--mono); font-size: 12.5px; color: var(--ink-mid);
+    margin-top: 14px; display: none;
+  }
+  .searching.on { display: block; }
+
+  .opponent { display: none; margin-top: 16px; }
+  .opponent.on { display: block; }
+  .opp-row {
+    display: flex; align-items: center; justify-content: space-between; gap: 14px;
+    padding: 13px 15px; background: var(--sunken);
+    border: 1px solid var(--line-bright); border-radius: 10px; flex-wrap: wrap;
+  }
+  .opp-who { display: flex; align-items: center; gap: 11px; }
+  .opp-who .badge { width: 30px; height: 34px; flex: none; }
+  .opp-who .badge svg { width: 100%; height: 100%; display: block; overflow: visible; }
+
+  .odds { margin-top: 12px; }
+  .odds-bar {
+    height: 7px; border-radius: 999px; overflow: hidden; display: flex;
+    background: var(--sunken); border: 1px solid var(--line);
+  }
+  .odds-labels {
+    display: flex; justify-content: space-between; margin-top: 6px;
+    font-family: var(--mono); font-size: 10.5px; color: var(--ink-dim);
+  }
+
+  .todo { margin-top: 16px; }
+  .todo h3 {
+    margin: 0 0 9px; font-size: 10.5px; font-weight: 660; text-transform: uppercase;
+    letter-spacing: .1em; color: var(--ink-dim);
+  }
+  .todo ol { margin: 0; padding-left: 0; list-style: none; display: grid; gap: 6px; }
+  .todo li {
+    display: flex; align-items: center; gap: 11px;
+    padding: 10px 13px; background: var(--sunken);
+    border: 1px solid var(--line); border-radius: 8px; font-size: 13.5px;
+  }
+  .todo .n { font-family: var(--mono); font-size: 11px; color: var(--ink-dim); width: 18px; flex: none; }
+  .todo li.done { border-color: #24503c; }
+  .todo li.done .n { color: var(--up); }
+  .todo li .tier-tag {
+    margin-left: auto; font-family: var(--mono); font-size: 10px;
+    text-transform: uppercase; letter-spacing: .06em; color: var(--ink-dim);
+  }
+  .todo li.pending { opacity: .65; }
+
+  .match-actions {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 12px; margin-top: 11px; flex-wrap: wrap;
+  }
+  .match-hint { font-size: 12px; color: var(--ink-dim); }
+  .match-actions button {
+    font: inherit; font-size: 11.5px; color: var(--ink-mid);
+    background: transparent; border: 1px solid var(--line-bright);
+    border-radius: 6px; padding: 5px 11px; cursor: pointer;
+  }
+  .match-actions button:hover { color: var(--ink); border-color: var(--ink-dim); }
+
+  /* ---------------- upload ---------------- */
+  .upload-row {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 14px; margin-top: 16px; padding: 13px 15px;
+    background: var(--sunken); border: 1px solid var(--line); border-radius: 10px;
+  }
+  .upload-title { font-size: 13px; font-weight: 600; }
+  .upload-sub { font-size: 12px; color: var(--ink-dim); margin-top: 2px; }
+  .upload-track {
+    height: 5px; background: var(--panel-2); border-radius: 999px;
+    overflow: hidden; margin-top: 9px; min-width: 220px;
+  }
+  .upload-fill { height: 100%; background: var(--up); width: 0%; }
+  .upload-row button {
+    font: inherit; font-size: 12.5px; font-weight: 600; white-space: nowrap;
+    color: var(--void); background: var(--ink); border: 0;
+    border-radius: 7px; padding: 8px 15px; cursor: pointer;
+  }
+  .upload-row button[disabled] { opacity: .5; cursor: default; }
+
+  /* ---------------- match result ---------------- */
+  .verdict {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    flex-wrap: wrap; padding: 18px 16px;
+  }
+  .verdict .big { font-size: 26px; font-weight: 720; letter-spacing: -.02em; }
+  .verdict .scores {
+    font-family: var(--mono); font-size: 13px; color: var(--ink-mid);
+    font-variant-numeric: tabular-nums;
+  }
+  .delta-move {
+    font-family: var(--mono); font-size: 19px; font-weight: 660;
+    font-variant-numeric: tabular-nums;
+  }
+  .explain {
+    margin: 0; padding: 12px 15px; background: var(--sunken);
+    border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+    font-size: 13px; color: var(--ink-mid); line-height: 1.55;
+  }
+
+  .rounds-wrap, .scen-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; }
+  table.rounds { min-width: 560px; }
+  table.scen { min-width: 620px; }
+  th {
+    text-align: right; padding: 12px 16px 8px;
+    font-size: 9.5px; font-weight: 620; text-transform: uppercase;
+    letter-spacing: .09em; color: var(--ink-dim);
+  }
+  th:first-child { text-align: left; }
+  table.scen th:nth-child(2) { text-align: left; }
+  td {
+    padding: 11px 16px; text-align: right; border-top: 1px solid var(--line);
+    font-family: var(--mono); font-size: 13px; font-variant-numeric: tabular-nums;
+  }
+  td:first-child { text-align: left; font-family: var(--font); font-size: 13.5px; font-weight: 560; }
+  table.scen td { padding: 9px 16px; font-size: 12.5px; }
+  table.scen td:first-child { font-size: 13px; font-weight: 550; }
+  table.scen td:nth-child(2) {
+    text-align: left; font-family: var(--font); font-size: 11.5px; color: var(--ink-dim);
+  }
+  tbody tr:hover { background: var(--panel-2); }
+  .base { color: var(--ink-dim); font-size: 11px; }
+  .up { color: var(--up); }
+  .down { color: var(--down); }
+  .won-round { color: var(--up); font-weight: 620; }
+
+  /* ---------------- weakness map ---------------- */
+  .wmap { display: grid; gap: 12px; }
+  .wrow { display: grid; grid-template-columns: 92px 1fr auto; gap: 12px; align-items: center; }
+  .wrow .lbl { font-size: 13px; font-weight: 580; }
+  .wtrack {
+    height: 26px; background: var(--sunken); border: 1px solid var(--line);
+    border-radius: 7px; overflow: hidden;
+  }
+  .wfill { height: 100%; }
+  .wval {
+    font-family: var(--mono); font-size: 12px; color: var(--ink-mid);
+    font-variant-numeric: tabular-nums; min-width: 108px; text-align: right;
+  }
+
+  /* ---------------- consistency ---------------- */
+  .cf-pair {
+    display: grid; grid-template-columns: 1fr auto 1fr; gap: 18px; align-items: center;
+  }
+  @media (max-width: 620px) { .cf-pair { grid-template-columns: 1fr; } }
+  .cf-side { text-align: center; }
+  .cf-label {
+    font-size: 10px; font-weight: 640; text-transform: uppercase;
+    letter-spacing: .11em; color: var(--ink-dim);
+  }
+  .cf-rank { font-size: 26px; font-weight: 720; letter-spacing: -.02em; margin-top: 5px; }
+  .cf-energy {
+    font-family: var(--mono); font-size: 12px; color: var(--ink-mid);
+    font-variant-numeric: tabular-nums; margin-top: 2px;
+  }
+  .cf-note { font-size: 11.5px; color: var(--ink-dim); margin-top: 6px; }
+  .cf-gap {
+    text-align: center; padding: 0 14px;
+    border-left: 1px solid var(--line); border-right: 1px solid var(--line);
+  }
+  @media (max-width: 620px) {
+    .cf-gap { border: 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 12px 0; }
+  }
+  .cf-gap-val {
+    font-family: var(--mono); font-size: 30px; font-weight: 680;
+    font-variant-numeric: tabular-nums; color: var(--warn);
+  }
+  .cf-gap-label {
+    font-size: 10px; text-transform: uppercase; letter-spacing: .11em; color: var(--ink-dim);
+  }
+  .cf-explain {
+    margin: 16px 0 0; font-size: 12.5px; color: var(--ink-mid);
+    line-height: 1.6; max-width: 68ch;
+  }
+  .gapbar {
+    display: inline-block; vertical-align: middle; height: 6px;
+    border-radius: 999px; background: var(--warn); min-width: 2px;
+  }
+
+  /* ---------------- quests ---------------- */
+  .quests { display: grid; gap: 10px; }
+  .quest {
+    display: grid; grid-template-columns: 1fr auto; gap: 10px 16px;
+    padding: 14px 16px; background: var(--sunken);
+    border: 1px solid var(--line); border-radius: 10px;
+  }
+  .quest h3 { margin: 0; font-size: 14px; font-weight: 620; }
+  .quest p { margin: 4px 0 0; font-size: 12.5px; color: var(--ink-mid); }
+  .xp {
+    font-family: var(--mono); font-size: 11px; color: var(--ink-dim);
+    white-space: nowrap; align-self: start;
+  }
+  .qtrack {
+    grid-column: 1 / -1; height: 5px; background: var(--panel-2);
+    border-radius: 999px; overflow: hidden;
+  }
+  .qfill { height: 100%; }
+
+  /* A floor quest asks for a window of clean runs rather than one good one, so it is
+     marked rather than left to look like every other row. */
+  .quest-floor { border-color: #4a3a18; }
+  .floor-tag {
+    font-family: var(--mono); font-size: 9px; text-transform: uppercase;
+    letter-spacing: .09em; color: var(--warn);
+    border: 1px solid #4a3a18; border-radius: 4px;
+    padding: 2px 5px; margin-left: 8px; vertical-align: 2px;
+  }
+  .qsteps {
+    display: block; font-family: var(--mono); font-size: 11px;
+    color: var(--ink-mid); margin-bottom: 3px; white-space: nowrap;
+  }
+
+  /* ---------------- quest completion ---------------- */
+  .celebrate {
+    position: fixed; inset: 0; z-index: 40;
+    display: grid; place-items: center;
+    background: rgba(4, 6, 10, .72);
+  }
+  .celebrate[hidden] { display: none; }
+  .celebrate-card {
+    width: min(420px, calc(100vw - 40px));
+    padding: 26px 26px 22px; text-align: center;
+    background: var(--panel); border: 1px solid var(--line-bright);
+    border-radius: 14px; box-shadow: 0 24px 70px rgba(0, 0, 0, .6);
+  }
+  .celebrate-kicker {
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: .17em;
+    text-transform: uppercase; color: var(--warn);
+  }
+  .celebrate-title {
+    font-size: 21px; font-weight: 700; letter-spacing: -.01em;
+    margin-top: 9px; text-wrap: balance;
+  }
+  .celebrate-detail {
+    font-size: 13px; color: var(--ink-mid); margin-top: 8px; line-height: 1.55;
+  }
+  .celebrate-xp {
+    font-family: var(--mono); font-size: 26px; font-weight: 680;
+    color: var(--up); margin-top: 16px; font-variant-numeric: tabular-nums;
+  }
+  .celebrate-level { margin-top: 16px; text-align: left; }
+  .celebrate-level-row {
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-size: 12px; color: var(--ink-mid); margin-bottom: 6px;
+  }
+  .celebrate-level-xp { font-family: var(--mono); font-size: 11px; color: var(--ink-dim); }
+  .celebrate-track {
+    height: 6px; background: var(--sunken); border: 1px solid var(--line);
+    border-radius: 999px; overflow: hidden;
+  }
+  .celebrate-fill { height: 100%; background: var(--ink); width: 0%; }
+  .celebrate-card button {
+    font: inherit; font-size: 13px; font-weight: 620; margin-top: 20px;
+    color: var(--void); background: var(--ink); border: 0;
+    border-radius: 8px; padding: 9px 26px; cursor: pointer;
+  }
+  .celebrate-card button:hover { background: #fff; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .celebrate-card { animation: pop .32s cubic-bezier(.2, .9, .3, 1) both; }
+    @keyframes pop {
+      from { opacity: 0; transform: translateY(14px) scale(.96); }
+      to { opacity: 1; transform: none; }
+    }
+    .celebrate-fill { transition: width .6s cubic-bezier(.3, .8, .3, 1); }
+  }
+
+  /* Level readout in the header. */
+  .level-chip {
+    font-family: var(--mono); font-size: 11.5px; color: var(--ink-mid);
+    border: 1px solid var(--line-bright); border-radius: 999px; padding: 4px 11px;
+    white-space: nowrap;
+  }
+
+  /* ---------------- live run toast ---------------- */
+  .toast {
+    position: fixed; right: 20px; bottom: 20px; z-index: 20;
+    display: none; align-items: center; gap: 11px;
+    padding: 12px 16px; background: var(--panel-2);
+    border: 1px solid var(--line-bright); border-radius: 10px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, .55); max-width: 340px;
+  }
+  .toast.on { display: flex; }
+  .toast .t-scen { font-size: 13px; font-weight: 600; }
+  .toast .t-score {
+    font-family: var(--mono); font-size: 16px; font-weight: 660;
+    font-variant-numeric: tabular-nums;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .toast.on { animation: slide .28s cubic-bezier(.2,.8,.3,1) both; }
+    @keyframes slide { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; } }
+    .screen.active { animation: fade .22s ease both; }
+    @keyframes fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; } }
+  }
+
+  .empty { padding: 44px 16px; text-align: center; color: var(--ink-mid); }
+  .empty h2 { margin: 0 0 8px; font-size: 18px; font-weight: 640; color: var(--ink); }
+  .empty p { margin: 0 auto; max-width: 52ch; font-size: 13.5px; }
+  .empty button {
+    font: inherit; font-size: 13px; font-weight: 600; margin-top: 16px;
+    color: var(--void); background: var(--ink); border: 0;
+    border-radius: 8px; padding: 9px 18px; cursor: pointer;
+  }
+
+  .footnote { margin-top: 22px; font-size: 12px; color: var(--ink-dim); line-height: 1.6; max-width: 76ch; }
+</style>
+</head>
+<body>
+<div class="shell">
+  <header class="topbar">
+    <div class="wordmark">Arena <span>· ranked 1v1 for kovaak's</span></div>
+    <div class="whoami" id="whoami" hidden>
+      <div class="badge" id="myBadge"></div>
+      <div>
+        <div class="tier" id="myTier"></div>
+        <div class="sub" id="myRating"></div>
+      </div>
+      <div class="streak" id="myStreak"></div>
+      <div class="level-chip" id="levelChip" hidden></div>
+      <div class="account" id="account">
+        <button type="button" class="signin" id="btnSignIn">Sign in with Steam</button>
+        <div class="signed-in" id="signedIn" hidden>
+          <div>
+            <div class="who-name" id="accountName"></div>
+            <div class="sub" id="accountSteam"></div>
+          </div>
+          <button type="button" id="btnSignOut">Sign out</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="status" id="status">
+    <span class="dot" id="statusDot"></span>
+    <span id="statusText">Starting…</span>
+    <span class="path" id="statusPath"></span>
+    <button type="button" id="btnRescan">Rescan</button>
+    <button type="button" id="btnChoose">Choose folder…</button>
+    <button type="button" id="btnOpen">Open folder</button>
+  </div>
+
+  <div class="preview-note" id="previewNote" hidden>
+    <strong>Static preview.</strong>
+    This is a snapshot of the interface for looking at the design. Signing in, watching
+    your stats folder and playing matches all need the desktop app, which has a
+    filesystem and a local server behind it. Run <code>npm start</code> for the real
+    thing.
+  </div>
+
+  <div class="banner" id="banner"></div>
+
+  <div class="signin-help" id="signinHelp" hidden>
+    <p>
+      Finish signing in with Steam in your browser. If no browser opened, paste this
+      link into one:
+    </p>
+    <div class="signin-link-row">
+      <code id="signinLink"></code>
+      <button type="button" id="signinCopy">Copy link</button>
+    </div>
+  </div>
+
+  <div id="app" hidden>
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" aria-selected="true" data-screen="queue">Queue</button>
+      <button class="tab" role="tab" aria-selected="false" data-screen="result">Match result</button>
+      <button class="tab" role="tab" aria-selected="false" data-screen="profile">Profile</button>
+      <button class="tab" role="tab" aria-selected="false" data-screen="consistency">Consistency</button>
+      <button class="tab" role="tab" aria-selected="false" data-screen="quests">Quests</button>
+    </div>
+
+    <section class="screen active" id="screen-queue">
+      <div class="panel">
+        <div class="hero">
+          <div class="badge" id="heroBadge"></div>
+          <div>
+            <div class="name" id="heroName"></div>
+            <div class="meta" id="heroMeta"></div>
+            <p class="placement" id="heroPlacement"></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="phead">
+          <h2>Find a match</h2>
+          <span class="note">three scenarios, scored against your own baseline</span>
+        </div>
+        <div class="pbody">
+          <div class="cats" id="cats"></div>
+          <button class="queue-btn" id="queueBtn">Find opponent</button>
+          <div class="searching" id="searching">searching the pool…</div>
+
+          <div class="upload-row" id="uploadRow" hidden>
+            <div>
+              <div class="upload-title" id="uploadTitle">Upload your history</div>
+              <div class="upload-sub" id="uploadSub">
+                Builds your baselines server-side. Safe to run more than once.
+              </div>
+              <div class="upload-track" id="uploadTrack" hidden>
+                <div class="upload-fill" id="uploadFill"></div>
+              </div>
+            </div>
+            <button type="button" id="uploadBtn">Upload</button>
+          </div>
+
+          <div class="opponent" id="opponent">
+            <div class="opp-row">
+              <div class="opp-who">
+                <div class="badge" id="oppBadge"></div>
+                <div>
+                  <div style="font-size:13.5px;font-weight:620" id="oppName"></div>
+                  <div class="sub" id="oppTier"></div>
+                </div>
+              </div>
+              <div class="sub" id="oppAge"></div>
+            </div>
+            <div class="odds">
+              <div class="odds-bar" id="oddsBar"></div>
+              <div class="odds-labels"><span id="oddsYou"></span><span id="oddsThem"></span></div>
+            </div>
+            <div class="todo">
+              <h3>Play these in KovaaK's</h3>
+              <ol id="todoList"></ol>
+              <div class="match-actions" id="matchActions" hidden>
+                <span class="match-hint" id="matchHint">
+                  Play them in any order. Arena picks each run up automatically.
+                </span>
+                <button type="button" id="cancelMatchBtn">Abandon match</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="screen-result">
+      <div class="panel">
+        <div class="verdict">
+          <div>
+            <div class="big" id="verdictBig"></div>
+            <div class="scores" id="verdictScores"></div>
+          </div>
+          <div class="delta-move" id="ratingMove"></div>
+        </div>
+        <p class="explain" id="explain"></p>
+        <div class="rounds-wrap">
+          <table class="rounds">
+            <thead><tr>
+              <th>Scenario</th><th>Your score</th><th>Δ</th>
+              <th>Their score</th><th>Δ</th><th>Round</th>
+            </tr></thead>
+            <tbody id="roundsBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="screen-profile">
+      <div class="panel">
+        <div class="phead"><h2>Weakness map</h2><span class="note" id="weakNote"></span></div>
+        <div class="pbody"><div class="wmap" id="wmap"></div></div>
+      </div>
+      <div class="panel">
+        <div class="phead"><h2>Scenarios</h2><span class="note">weakest first</span></div>
+        <div class="scen-wrap">
+          <table class="scen">
+            <thead><tr>
+              <th>Scenario</th><th>Sub-category</th><th>Best</th>
+              <th>Rank</th><th>Energy</th><th>Runs</th><th>To next rank</th>
+            </tr></thead>
+            <tbody id="scenBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="screen-consistency">
+      <div class="panel">
+        <div class="phead">
+          <h2>Ceiling vs floor</h2>
+          <span class="note">worst of your last 5 runs, ranked the same way</span>
+        </div>
+        <div class="pbody">
+          <div class="cf-pair">
+            <div class="cf-side">
+              <div class="cf-label">Ceiling</div>
+              <div class="cf-rank" id="ceilRank"></div>
+              <div class="cf-energy" id="ceilEnergy"></div>
+              <div class="cf-note">what every benchmark ranks you</div>
+            </div>
+            <div class="cf-gap">
+              <div class="cf-gap-val" id="gapVal"></div>
+              <div class="cf-gap-label">gap</div>
+            </div>
+            <div class="cf-side">
+              <div class="cf-label">Floor</div>
+              <div class="cf-rank" id="floorRank"></div>
+              <div class="cf-energy" id="floorEnergy"></div>
+              <div class="cf-note">what you can do reliably</div>
+            </div>
+          </div>
+          <p class="cf-explain">
+            Every benchmark that exists scores your best run. In a game there is no
+            retry, so your worst run is closer to what you actually bring. Closing this
+            gap is the whole mode.
+          </p>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="phead">
+          <h2>Least reliable first</h2>
+          <span class="note">the widest gaps are where practice pays most</span>
+        </div>
+        <div class="scen-wrap">
+          <table class="scen">
+            <thead><tr>
+              <th>Scenario</th><th>Ceiling</th><th>Median</th><th>Floor</th><th>Gap</th><th></th>
+            </tr></thead>
+            <tbody id="consistencyBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="screen-quests">
+      <div class="panel">
+        <div class="phead">
+          <h2>Today</h2>
+          <span class="note">generated from the benchmark you track</span>
+        </div>
+        <div class="pbody"><div class="quests" id="questList"></div></div>
+      </div>
+    </section>
+
+    <p class="footnote" id="footnote"></p>
+  </div>
+
+  <div class="panel empty" id="empty">
+    <h2>Waiting for your KovaaK's stats</h2>
+    <p id="emptyText">
+      Arena reads the stat files KovaaK's already writes after every run. Nothing to
+      install in the game, and no scores to type in.
+    </p>
+    <button type="button" id="emptyChoose">Choose stats folder…</button>
+  </div>
+</div>
+
+<div class="celebrate" id="celebrate" hidden>
+  <div class="celebrate-card">
+    <div class="celebrate-kicker" id="celebrateKicker">Quest complete</div>
+    <div class="celebrate-title" id="celebrateTitle"></div>
+    <div class="celebrate-detail" id="celebrateDetail"></div>
+    <div class="celebrate-xp" id="celebrateXp"></div>
+    <div class="celebrate-level">
+      <div class="celebrate-level-row">
+        <span id="celebrateLevel"></span>
+        <span class="celebrate-level-xp" id="celebrateLevelXp"></span>
+      </div>
+      <div class="celebrate-track"><div class="celebrate-fill" id="celebrateFill"></div></div>
+    </div>
+    <button type="button" id="celebrateClose">Nice</button>
+  </div>
+</div>
+
+<div class="toast" id="toast">
+  <div>
+    <div class="t-scen" id="toastScen"></div>
+    <div class="sub" id="toastNote">run detected</div>
+  </div>
+  <div class="t-score" id="toastScore"></div>
+</div>
+
+<script src="renderer.js"></script>
+</body>
+</html>
