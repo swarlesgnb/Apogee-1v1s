@@ -1,0 +1,4826 @@
+{
+  "source": "learned from local run history",
+  "builtAt": "2026-08-17T16:08:40.418Z",
+  "runs": 11098,
+  "note": "Modal run length per scenario, in seconds. null means the scenario has no fixed length (pressure and nevermiss scenarios end early by design), and abandonment is not checked for those.",
+  "durations": [
+    {
+      "scenario": "-----------------",
+      "seconds": null,
+      "runs": 3,
+      "agreement": 0
+    },
+    {
+      "scenario": "1 wall 6 targets Micro++",
+      "seconds": 23,
+      "runs": 23,
+      "agreement": 1
+    },
+    {
+      "scenario": "10 Sphere Hipfire Extra Small",
+      "seconds": 59,
+      "runs": 62,
+      "agreement": 0.967741935483871
+    },
+    {
+      "scenario": "1w1ts flick pressure",
+      "seconds": null,
+      "runs": 12,
+      "agreement": 0.25
+    },
+    {
+      "scenario": "1w2t smallflicks small 60s",
+      "seconds": 60,
+      "runs": 81,
+      "agreement": 1
+    },
+    {
+      "scenario": "1w2tes reload",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "1w2ts Euphoric",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "1w2ts Micro Varied",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "1w2ts Pasu Perfected",
+      "seconds": 60,
+      "runs": 28,
+      "agreement": 0.9285714285714286
+    },
+    {
+      "scenario": "1w2ts Perfected",
+      "seconds": 60,
+      "runs": 102,
+      "agreement": 0.9509803921568627
+    },
+    {
+      "scenario": "1w2ts Perfected Easier",
+      "seconds": 60,
+      "runs": 16,
+      "agreement": 1
+    },
+    {
+      "scenario": "1w2ts reload",
+      "seconds": 59,
+      "runs": 35,
+      "agreement": 0.8857142857142857
+    },
+    {
+      "scenario": "1w2ts reload Easier",
+      "seconds": 60,
+      "runs": 14,
+      "agreement": 1
+    },
+    {
+      "scenario": "1w2ts reload smallflicks",
+      "seconds": 60,
+      "runs": 8,
+      "agreement": 1
+    },
+    {
+      "scenario": "1w2ts reload smallflicks Easier",
+      "seconds": 60,
+      "runs": 14,
+      "agreement": 1
+    },
+    {
+      "scenario": "1w2ts reload smallflicks larger",
+      "seconds": null,
+      "runs": 3,
+      "agreement": 0
+    },
+    {
+      "scenario": "1w2ts reload smallflicks slightly larger",
+      "seconds": 60,
+      "runs": 26,
+      "agreement": 0.8846153846153846
+    },
+    {
+      "scenario": "1w2ts Vertical Flicks easy",
+      "seconds": 59,
+      "runs": 12,
+      "agreement": 1
+    },
+    {
+      "scenario": "1w2ts Vertical Flicks v2",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "1w3ts Pasu Perfected Micro Goated",
+      "seconds": 60,
+      "runs": 12,
+      "agreement": 0.9166666666666666
+    },
+    {
+      "scenario": "1w3ts Pasu Perfected Micro Goated Larger",
+      "seconds": 59,
+      "runs": 19,
+      "agreement": 1
+    },
+    {
+      "scenario": "1w3ts Pasu Perfected Micro Goated Larger 80%",
+      "seconds": 59,
+      "runs": 15,
+      "agreement": 1
+    },
+    {
+      "scenario": "1w3ts reload",
+      "seconds": 60,
+      "runs": 40,
+      "agreement": 0.975
+    },
+    {
+      "scenario": "1w3ts reload Easier",
+      "seconds": 60,
+      "runs": 13,
+      "agreement": 0.9230769230769231
+    },
+    {
+      "scenario": "1w3ts reload Larger",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "1w3ts_square",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "1w4t Pasu Raspberry Grandmaster",
+      "seconds": null,
+      "runs": 3,
+      "agreement": 0
+    },
+    {
+      "scenario": "1w4t Pasu Raspberry Master 6mag",
+      "seconds": 86,
+      "runs": 28,
+      "agreement": 0.6071428571428571
+    },
+    {
+      "scenario": "1w4t Pasu Raspberry Master 6mag 28% larger",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "1w4t Pressure Revosect Int",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "1w4t_pasu Raspberry v1",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "1w4t_vbr_pokeball Raspberry",
+      "seconds": 60,
+      "runs": 62,
+      "agreement": 0.9354838709677419
+    },
+    {
+      "scenario": "1w4tes Reload",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "1w4ts micro adjust",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "1w4ts reload Easier",
+      "seconds": 59,
+      "runs": 12,
+      "agreement": 1
+    },
+    {
+      "scenario": "1w4ts reload nevermiss",
+      "seconds": null,
+      "runs": 9,
+      "agreement": 0.2222222222222222
+    },
+    {
+      "scenario": "1w4ts Voltaic",
+      "seconds": 60,
+      "runs": 29,
+      "agreement": 0.9655172413793104
+    },
+    {
+      "scenario": "1w5t smallflicks - Pressure Aiming",
+      "seconds": null,
+      "runs": 3,
+      "agreement": 0
+    },
+    {
+      "scenario": "1w5ts reload",
+      "seconds": 59,
+      "runs": 16,
+      "agreement": 0.9375
+    },
+    {
+      "scenario": "1w5ts vbr Revosect Int",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "1w5ts_trustechain Raspberry",
+      "seconds": 60,
+      "runs": 103,
+      "agreement": 0.9805825242718447
+    },
+    {
+      "scenario": "1w6ts High Ground",
+      "seconds": 60,
+      "runs": 54,
+      "agreement": 0.7592592592592593
+    },
+    {
+      "scenario": "1w6ts reload",
+      "seconds": 60,
+      "runs": 5,
+      "agreement": 1
+    },
+    {
+      "scenario": "1w6ts reload Easier",
+      "seconds": 60,
+      "runs": 16,
+      "agreement": 0.9375
+    },
+    {
+      "scenario": "1w6ts reload v2",
+      "seconds": 60,
+      "runs": 98,
+      "agreement": 0.8775510204081632
+    },
+    {
+      "scenario": "1w6ts reload v2 20% bigger",
+      "seconds": 59,
+      "runs": 5,
+      "agreement": 1
+    },
+    {
+      "scenario": "1w6ts trustechain Raspberry 30% smaller",
+      "seconds": null,
+      "runs": 3,
+      "agreement": 0
+    },
+    {
+      "scenario": "1w9000t TE",
+      "seconds": null,
+      "runs": 3,
+      "agreement": 0
+    },
+    {
+      "scenario": "1w9000ts",
+      "seconds": 60,
+      "runs": 5,
+      "agreement": 1
+    },
+    {
+      "scenario": "1wall 1target",
+      "seconds": null,
+      "runs": 3,
+      "agreement": 0
+    },
+    {
+      "scenario": "1wall 2targets far smaller denserer",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "1wall 2targets wide smaller denserer",
+      "seconds": null,
+      "runs": 3,
+      "agreement": 0
+    },
+    {
+      "scenario": "1wall 5targets small Raspberry",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "1wall 6targets extra small",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "1wall 6targets small",
+      "seconds": 60,
+      "runs": 94,
+      "agreement": 0.9574468085106383
+    },
+    {
+      "scenario": "1wall3targets TE Perfected",
+      "seconds": 59,
+      "runs": 11,
+      "agreement": 1
+    },
+    {
+      "scenario": "1wall5targets_pasu",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "1wall5targets_pasu NeverMiss",
+      "seconds": null,
+      "runs": 33,
+      "agreement": 0.45454545454545453
+    },
+    {
+      "scenario": "1wall5targets_pasu Reload",
+      "seconds": 86,
+      "runs": 50,
+      "agreement": 0.84
+    },
+    {
+      "scenario": "1wall6targets TE",
+      "seconds": 59,
+      "runs": 21,
+      "agreement": 0.9523809523809523
+    },
+    {
+      "scenario": "1wall6targets TE 180",
+      "seconds": null,
+      "runs": 3,
+      "agreement": 0
+    },
+    {
+      "scenario": "1wall6targets TE Horizontalish",
+      "seconds": 60,
+      "runs": 15,
+      "agreement": 1
+    },
+    {
+      "scenario": "1wall6targets TE reload",
+      "seconds": 59,
+      "runs": 9,
+      "agreement": 1
+    },
+    {
+      "scenario": "1wall8tiles",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "1wall9000sphere",
+      "seconds": 59,
+      "runs": 6,
+      "agreement": 0.8333333333333334
+    },
+    {
+      "scenario": "1wall9000targets",
+      "seconds": 59,
+      "runs": 23,
+      "agreement": 1
+    },
+    {
+      "scenario": "2 Tile Jumbo Microshot Speed",
+      "seconds": null,
+      "runs": 3,
+      "agreement": 0
+    },
+    {
+      "scenario": "2 Tile Jumbo Tile Frenzy",
+      "seconds": 29,
+      "runs": 12,
+      "agreement": 1
+    },
+    {
+      "scenario": "360 Static TS",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "4BK - 1w1t XYZ EVO Adapt",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "4BK - 1w1ts Pokeball",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "4BK - 1w4ts HF Hard Adapt",
+      "seconds": 60,
+      "runs": 5,
+      "agreement": 1
+    },
+    {
+      "scenario": "4BK - Air Angelic 4 Adapt",
+      "seconds": 60,
+      "runs": 5,
+      "agreement": 1
+    },
+    {
+      "scenario": "4BK - Amare RawSpeed Horizontal Switch Adapt",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "4BK - cAt laserTrack Normal Adapt",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "4BK - CB SharpTrack Adapt",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "4BK - Close LS Easy Dodge ADAPT",
+      "seconds": 60,
+      "runs": 6,
+      "agreement": 0.8333333333333334
+    },
+    {
+      "scenario": "4BK - Clustered TS",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "4BK - CombinedClick Adapt",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "4BK - Dynamic Micro Click",
+      "seconds": 59,
+      "runs": 5,
+      "agreement": 1
+    },
+    {
+      "scenario": "4BK - Pasu Dodge Track Adapt",
+      "seconds": 60,
+      "runs": 6,
+      "agreement": 1
+    },
+    {
+      "scenario": "4BK - Pasu Track v2 Adapt",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "4BK - Pokeball 1w6ts Adapt",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "4BK - Pokeball 360 Dodge Adapt",
+      "seconds": 75,
+      "runs": 5,
+      "agreement": 1
+    },
+    {
+      "scenario": "4BK - Pokeball IMAX 3D Adapt",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "4BK - PokeSpeed Adapt",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "4BK - Reactive Flick Adapt",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "4BK - Reflex Firework TS (Low TTK + Faster)",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "4BK - rx 1w4 3D Adapt",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "4BK - rx Reflex Flick Adapt",
+      "seconds": 60,
+      "runs": 5,
+      "agreement": 0.8
+    },
+    {
+      "scenario": "4BK - Smoothbot Raspberry Adapt",
+      "seconds": 59,
+      "runs": 5,
+      "agreement": 1
+    },
+    {
+      "scenario": "4BK - sunClick Easy Adapt",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "4BK - WALLHACK CHALLENGE Adapt",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "4BK - woutTS Adapt",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "5 Sphere Hipfire",
+      "seconds": 60,
+      "runs": 7,
+      "agreement": 1
+    },
+    {
+      "scenario": "5 Sphere Hipfire Small",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "6 Sphere Hipfire 150% Size",
+      "seconds": 60,
+      "runs": 6,
+      "agreement": 1
+    },
+    {
+      "scenario": "6 Sphere Hipfire 200% Size",
+      "seconds": 60,
+      "runs": 11,
+      "agreement": 1
+    },
+    {
+      "scenario": "6 Sphere Hipfire Small Easy",
+      "seconds": 59,
+      "runs": 41,
+      "agreement": 1
+    },
+    {
+      "scenario": "6 Sphere Hipfire Voltaic 30% smaller",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "6 Sphere Hipfire Voltaic NeverMiss",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "6 Sphere Hipfire Voltaic Wide",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "6 Tile Jumbo Frenzy",
+      "seconds": 30,
+      "runs": 28,
+      "agreement": 1
+    },
+    {
+      "scenario": "6 Tile Jumbo Frenzy V2",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "AA4V OW Easy",
+      "seconds": null,
+      "runs": 3,
+      "agreement": 0
+    },
+    {
+      "scenario": "AbyssTrack Easy",
+      "seconds": 60,
+      "runs": 24,
+      "agreement": 1
+    },
+    {
+      "scenario": "AD_Strafing_Trainer_Mixed",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "Aethercontrol Easy",
+      "seconds": 60,
+      "runs": 14,
+      "agreement": 0.7857142857142857
+    },
+    {
+      "scenario": "Aim Coaster",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "Aimbeast Arena",
+      "seconds": 6,
+      "runs": 7,
+      "agreement": 0.8571428571428571
+    },
+    {
+      "scenario": "Aimerz+ 1w3ts Med S1",
+      "seconds": 60,
+      "runs": 73,
+      "agreement": 0.9863013698630136
+    },
+    {
+      "scenario": "Aimerz+ 1w4ts HF Hard S1",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "Aimerz+ goaTS Med S1",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "Aimerz+ hopClick Med S1",
+      "seconds": 60,
+      "runs": 16,
+      "agreement": 1
+    },
+    {
+      "scenario": "Aimerz+ nuTS Med S1",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "Aimerz+ PreciseTrack Med S1",
+      "seconds": 60,
+      "runs": 15,
+      "agreement": 0.8666666666666667
+    },
+    {
+      "scenario": "Aimerz+ PreciseTrack S1 Modified",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "Aimerz+ PTI Med S1",
+      "seconds": 59,
+      "runs": 9,
+      "agreement": 1
+    },
+    {
+      "scenario": "aimerz+ Static Switching 5 Bot",
+      "seconds": 60,
+      "runs": 14,
+      "agreement": 1
+    },
+    {
+      "scenario": "aimerz+ Static Switching 5 Bot Slightly Larger",
+      "seconds": 60,
+      "runs": 32,
+      "agreement": 1
+    },
+    {
+      "scenario": "aimerz+ Static Switching 6 Bot Slightly Larger",
+      "seconds": 59,
+      "runs": 5,
+      "agreement": 1
+    },
+    {
+      "scenario": "Aimerz+ Week #5 - Static Switching",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "Aimerz+ Week #5 - Static Switching 30% Larger",
+      "seconds": 59,
+      "runs": 28,
+      "agreement": 0.9642857142857143
+    },
+    {
+      "scenario": "Aimerz+ ww2t Easy S1",
+      "seconds": 59,
+      "runs": 21,
+      "agreement": 1
+    },
+    {
+      "scenario": "Aimerz+ ww2t Hard S1 20% Smaller",
+      "seconds": 60,
+      "runs": 75,
+      "agreement": 0.96
+    },
+    {
+      "scenario": "Aimerz+ ww2t Hard S1 Pokeball 65% Smaller",
+      "seconds": 60,
+      "runs": 52,
+      "agreement": 1
+    },
+    {
+      "scenario": "Air Angelic",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "Air Angelic 4 Voltaic",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "Air Angelic 4 Voltaic Easy",
+      "seconds": 60,
+      "runs": 35,
+      "agreement": 0.8571428571428571
+    },
+    {
+      "scenario": "Air Angelic 4 Voltaic Easy 70%",
+      "seconds": null,
+      "runs": 3,
+      "agreement": 0
+    },
+    {
+      "scenario": "Air Angelic 4 Voltaic Easy 90%",
+      "seconds": 60,
+      "runs": 49,
+      "agreement": 0.9387755102040817
+    },
+    {
+      "scenario": "Air Angelic Easier",
+      "seconds": null,
+      "runs": 15,
+      "agreement": 0.3333333333333333
+    },
+    {
+      "scenario": "Air Angelic Invincible 2",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "Air Angelic Invincible 2 80%",
+      "seconds": null,
+      "runs": 7,
+      "agreement": 0.42857142857142855
+    },
+    {
+      "scenario": "Air Angelic rAim Easy",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "Air CELESTIAL",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "Air CELESTIAL No UFO Easier",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "Air CELESTIAL No UFO Easy",
+      "seconds": null,
+      "runs": 25,
+      "agreement": 0.2
+    },
+    {
+      "scenario": "Air CELESTIAL No UFO Easy Slowed",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "Air CELESTIAL No UFO Medium",
+      "seconds": null,
+      "runs": 28,
+      "agreement": 0.21428571428571427
+    },
+    {
+      "scenario": "Air Click Adapt",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "Air Dodge",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "Air no UFO no SKYBOTS",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "Air Palace",
+      "seconds": null,
+      "runs": 12,
+      "agreement": 0.25
+    },
+    {
+      "scenario": "Air Palace Smooth",
+      "seconds": null,
+      "runs": 12,
+      "agreement": 0.25
+    },
+    {
+      "scenario": "Air Pure Easier No UFO",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "Air Pure Intermediate",
+      "seconds": null,
+      "runs": 13,
+      "agreement": 0.23076923076923078
+    },
+    {
+      "scenario": "Air Pure Medium",
+      "seconds": null,
+      "runs": 22,
+      "agreement": 0.2727272727272727
+    },
+    {
+      "scenario": "Air Pure Perfected Easy",
+      "seconds": null,
+      "runs": 13,
+      "agreement": 0.3076923076923077
+    },
+    {
+      "scenario": "Air Pure Revosect Int",
+      "seconds": null,
+      "runs": 3,
+      "agreement": 0
+    },
+    {
+      "scenario": "Air Smooth Revosect Int",
+      "seconds": null,
+      "runs": 7,
+      "agreement": 0.2857142857142857
+    },
+    {
+      "scenario": "Air Spectral Easy",
+      "seconds": null,
+      "runs": 22,
+      "agreement": 0.36363636363636365
+    },
+    {
+      "scenario": "Air Spectral Easy 85%",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "Air UFO Hard Invincible Easy Adapt",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "Air Voltaic",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "Air Voltaic Easy",
+      "seconds": null,
+      "runs": 122,
+      "agreement": 0.1721311475409836
+    },
+    {
+      "scenario": "Air Voltaic Easy Invincible 4",
+      "seconds": 60,
+      "runs": 24,
+      "agreement": 0.9583333333333334
+    },
+    {
+      "scenario": "Air Voltaic Easy Invincible 4 80%",
+      "seconds": 60,
+      "runs": 5,
+      "agreement": 0.6
+    },
+    {
+      "scenario": "Air Voltaic Invincible 4 Easier",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "Air Voltaic Invincible 4 Medium",
+      "seconds": 60,
+      "runs": 44,
+      "agreement": 0.9772727272727273
+    },
+    {
+      "scenario": "Air Voltaic Invincible 7 Easy",
+      "seconds": 60,
+      "runs": 13,
+      "agreement": 0.8461538461538461
+    },
+    {
+      "scenario": "AKTK 1w2ts wide microstrafe",
+      "seconds": 60,
+      "runs": 6,
+      "agreement": 0.8333333333333334
+    },
+    {
+      "scenario": "Amare AdjustTrack Adapt",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "Amare Dynamic TAF Micro",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "Amare GarfMicroTS",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "Amare Microcluster Horizontal",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "Amare Microshot Dodge Goated",
+      "seconds": 29,
+      "runs": 10,
+      "agreement": 1
+    },
+    {
+      "scenario": "Amare Pokeball devTS 20% Smaller",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "Amare skyTS Reflex",
+      "seconds": null,
+      "runs": 3,
+      "agreement": 0
+    },
+    {
+      "scenario": "Amare Valorant Strafeshot 3-Click Fixed",
+      "seconds": null,
+      "runs": 3,
+      "agreement": 0
+    },
+    {
+      "scenario": "Amphi LG 1v1 Easy",
+      "seconds": null,
+      "runs": 6,
+      "agreement": 0.5
+    },
+    {
+      "scenario": "Angleshot Valorant Hard",
+      "seconds": 60,
+      "runs": 6,
+      "agreement": 0.8333333333333334
+    },
+    {
+      "scenario": "AngleSwitch Revosect Int",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "Anima WavyClick",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "Animicro Dash",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "Anti-Mirror LS Gallery OW",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "Ascended Tracking v3",
+      "seconds": 89,
+      "runs": 5,
+      "agreement": 0.8
+    },
+    {
+      "scenario": "Avasive bukeTrack Easy",
+      "seconds": 50,
+      "runs": 14,
+      "agreement": 1
+    },
+    {
+      "scenario": "Avasive bukeTrack Hard",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "Avasive Control Track Easy",
+      "seconds": 59,
+      "runs": 34,
+      "agreement": 1
+    },
+    {
+      "scenario": "AvasiveTS Perfected",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "Avasphere Euphoric Basic",
+      "seconds": 60,
+      "runs": 19,
+      "agreement": 0.8947368421052632
+    },
+    {
+      "scenario": "B180 Voltaic",
+      "seconds": 60,
+      "runs": 5,
+      "agreement": 0.8
+    },
+    {
+      "scenario": "B180T Voltaic",
+      "seconds": null,
+      "runs": 3,
+      "agreement": 0
+    },
+    {
+      "scenario": "B180T Voltaic Easy",
+      "seconds": 59,
+      "runs": 13,
+      "agreement": 1
+    },
+    {
+      "scenario": "B180T Voltaic Easy Slower",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "B180TI Voltaic",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "Ballsheet BB",
+      "seconds": 29,
+      "runs": 5,
+      "agreement": 1
+    },
+    {
+      "scenario": "BARDPILL 1w4t",
+      "seconds": 59,
+      "runs": 7,
+      "agreement": 0.7142857142857143
+    },
+    {
+      "scenario": "beanClick 250% Speed",
+      "seconds": null,
+      "runs": 3,
+      "agreement": 0
+    },
+    {
+      "scenario": "beanTS",
+      "seconds": 60,
+      "runs": 74,
+      "agreement": 1
+    },
+    {
+      "scenario": "beanTS 200%",
+      "seconds": 60,
+      "runs": 11,
+      "agreement": 0.9090909090909091
+    },
+    {
+      "scenario": "beanTS 30% Smaller",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "beanTS Larger",
+      "seconds": 59,
+      "runs": 55,
+      "agreement": 1
+    },
+    {
+      "scenario": "BlinkClick Euphoric",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "Bounce 180 Sparky",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "Bounce 180 Sparky Easy",
+      "seconds": 60,
+      "runs": 155,
+      "agreement": 0.9354838709677419
+    },
+    {
+      "scenario": "Bounce 180 Tracking",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "Bouncesphere Smoothness",
+      "seconds": 60,
+      "runs": 16,
+      "agreement": 0.9375
+    },
+    {
+      "scenario": "cA 1ts ruohong",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "cA 1w5ts Novice",
+      "seconds": 60,
+      "runs": 180,
+      "agreement": 0.8888888888888888
+    },
+    {
+      "scenario": "cA 2ts wideflick",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "cA 3ts precise",
+      "seconds": null,
+      "runs": 3,
+      "agreement": 0
+    },
+    {
+      "scenario": "cA 4ts horizontal",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "cA 4ts pokeball",
+      "seconds": null,
+      "runs": 3,
+      "agreement": 0
+    },
+    {
+      "scenario": "cA 5ts vibrate",
+      "seconds": null,
+      "runs": 3,
+      "agreement": 0
+    },
+    {
+      "scenario": "cA 7ts pressure",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "cA 900targets",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "cA fuglaapressure",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "cA micropressure",
+      "seconds": null,
+      "runs": 3,
+      "agreement": 0
+    },
+    {
+      "scenario": "cA sixshot",
+      "seconds": 60,
+      "runs": 5,
+      "agreement": 1
+    },
+    {
+      "scenario": "cA voxTSs smaller",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "cA x-axis flick",
+      "seconds": 60,
+      "runs": 7,
+      "agreement": 1
+    },
+    {
+      "scenario": "cA y-axis flick",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "canTS Logic",
+      "seconds": 60,
+      "runs": 5,
+      "agreement": 0.8
+    },
+    {
+      "scenario": "canTS Smaller",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "canTS Smooth Hard",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "cAt purrClick Easy",
+      "seconds": 60,
+      "runs": 26,
+      "agreement": 0.8846153846153846
+    },
+    {
+      "scenario": "cAt purrClick Hard",
+      "seconds": null,
+      "runs": 3,
+      "agreement": 0
+    },
+    {
+      "scenario": "Cata IC Long Strafes",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "CatClick",
+      "seconds": 59,
+      "runs": 5,
+      "agreement": 1
+    },
+    {
+      "scenario": "CatClick Easier",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "CatClick Medium",
+      "seconds": 60,
+      "runs": 19,
+      "agreement": 0.9473684210526315
+    },
+    {
+      "scenario": "CB SmoothSwitch Easy",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "Centering I 270 GOATED",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "Centering II 180",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "Centering II 180 Fixed Larger",
+      "seconds": 60,
+      "runs": 10,
+      "agreement": 1
+    },
+    {
+      "scenario": "CG Adjust Click Micro",
+      "seconds": 60,
+      "runs": 5,
+      "agreement": 0.8
+    },
+    {
+      "scenario": "cisA Challengers - s1w3 1w2ts Pasu Perfected",
+      "seconds": 59,
+      "runs": 5,
+      "agreement": 1
+    },
+    {
+      "scenario": "ClickTrack 3t",
+      "seconds": 30,
+      "runs": 18,
+      "agreement": 1
+    },
+    {
+      "scenario": "ClickTrack 3t Long",
+      "seconds": 29,
+      "runs": 7,
+      "agreement": 1
+    },
+    {
+      "scenario": "ClickTrack 3t Short",
+      "seconds": 30,
+      "runs": 15,
+      "agreement": 1
+    },
+    {
+      "scenario": "ClickTrack 5t",
+      "seconds": 29,
+      "runs": 25,
+      "agreement": 1
+    },
+    {
+      "scenario": "ClickTrack 5t Long",
+      "seconds": 30,
+      "runs": 11,
+      "agreement": 1
+    },
+    {
+      "scenario": "ClickTrack 5t Short",
+      "seconds": 29,
+      "runs": 11,
+      "agreement": 1
+    },
+    {
+      "scenario": "ClickTrack AntiDiagonal 2t",
+      "seconds": 30,
+      "runs": 6,
+      "agreement": 1
+    },
+    {
+      "scenario": "ClickTrack AntiDiagonal 2t Long",
+      "seconds": 29,
+      "runs": 5,
+      "agreement": 1
+    },
+    {
+      "scenario": "ClickTrack AntiDiagonal 2t Short",
+      "seconds": 29,
+      "runs": 8,
+      "agreement": 1
+    },
+    {
+      "scenario": "ClickTrack AntiDiagonal 3t",
+      "seconds": 30,
+      "runs": 6,
+      "agreement": 1
+    },
+    {
+      "scenario": "ClickTrack AntiDiagonal 3t Long",
+      "seconds": 29,
+      "runs": 10,
+      "agreement": 1
+    },
+    {
+      "scenario": "ClickTrack AntiDiagonal 3t Short",
+      "seconds": 29,
+      "runs": 13,
+      "agreement": 1
+    },
+    {
+      "scenario": "ClickTrack Diagonal 2t",
+      "seconds": 30,
+      "runs": 20,
+      "agreement": 0.95
+    },
+    {
+      "scenario": "ClickTrack Diagonal 2t Long",
+      "seconds": 30,
+      "runs": 8,
+      "agreement": 1
+    },
+    {
+      "scenario": "ClickTrack Diagonal 2t Short",
+      "seconds": 29,
+      "runs": 13,
+      "agreement": 1
+    },
+    {
+      "scenario": "ClickTrack Diagonal 3t",
+      "seconds": 29,
+      "runs": 12,
+      "agreement": 1
+    },
+    {
+      "scenario": "ClickTrack Diagonal 3t Long",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "ClickTrack Diagonal 3t Short",
+      "seconds": 29,
+      "runs": 15,
+      "agreement": 1
+    },
+    {
+      "scenario": "ClickTrack Horizontal 2t",
+      "seconds": 29,
+      "runs": 13,
+      "agreement": 0.9230769230769231
+    },
+    {
+      "scenario": "ClickTrack Horizontal 2t Long",
+      "seconds": 29,
+      "runs": 13,
+      "agreement": 0.9230769230769231
+    },
+    {
+      "scenario": "ClickTrack Horizontal 2t Short",
+      "seconds": 29,
+      "runs": 6,
+      "agreement": 1
+    },
+    {
+      "scenario": "ClickTrack Horizontal 3t",
+      "seconds": 29,
+      "runs": 11,
+      "agreement": 0.8181818181818182
+    },
+    {
+      "scenario": "ClickTrack Horizontal 3t Long",
+      "seconds": 29,
+      "runs": 6,
+      "agreement": 1
+    },
+    {
+      "scenario": "ClickTrack Horizontal 3t Short",
+      "seconds": 29,
+      "runs": 7,
+      "agreement": 1
+    },
+    {
+      "scenario": "ClickTrack Vertical 2t",
+      "seconds": 30,
+      "runs": 12,
+      "agreement": 0.9166666666666666
+    },
+    {
+      "scenario": "ClickTrack Vertical 2t Long",
+      "seconds": 29,
+      "runs": 10,
+      "agreement": 1
+    },
+    {
+      "scenario": "ClickTrack Vertical 2t Short",
+      "seconds": null,
+      "runs": 3,
+      "agreement": 0
+    },
+    {
+      "scenario": "ClickTrack Vertical 3t",
+      "seconds": 29,
+      "runs": 14,
+      "agreement": 1
+    },
+    {
+      "scenario": "ClickTrack Vertical 3t Long",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "ClickTrack Vertical 3t Short",
+      "seconds": 30,
+      "runs": 16,
+      "agreement": 0.875
+    },
+    {
+      "scenario": "Close Evasive Pure",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "Close Fast Strafes Buff Robot",
+      "seconds": null,
+      "runs": 3,
+      "agreement": 0
+    },
+    {
+      "scenario": "Close Long Strafes Invincible FASTER",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "Close Mid AD LFS Dodge",
+      "seconds": 90,
+      "runs": 6,
+      "agreement": 0.8333333333333334
+    },
+    {
+      "scenario": "Close Tappy Strafes Easy",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "cloverRawControl",
+      "seconds": null,
+      "runs": 3,
+      "agreement": 0
+    },
+    {
+      "scenario": "cloverRawControl Big",
+      "seconds": 60,
+      "runs": 24,
+      "agreement": 1
+    },
+    {
+      "scenario": "cloverRawControl Easy",
+      "seconds": 60,
+      "runs": 33,
+      "agreement": 0.9090909090909091
+    },
+    {
+      "scenario": "cloverRawControl Viscose 50cm",
+      "seconds": 60,
+      "runs": 14,
+      "agreement": 1
+    },
+    {
+      "scenario": "cloverRawControl Viscose Easier 50cm",
+      "seconds": 60,
+      "runs": 5,
+      "agreement": 1
+    },
+    {
+      "scenario": "Clustershot Euphoric",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "CombinedClick SuperbAim Easy",
+      "seconds": 60,
+      "runs": 11,
+      "agreement": 0.8181818181818182
+    },
+    {
+      "scenario": "Controlsphere",
+      "seconds": 60,
+      "runs": 11,
+      "agreement": 0.7272727272727273
+    },
+    {
+      "scenario": "Controlsphere Click",
+      "seconds": 60,
+      "runs": 16,
+      "agreement": 0.8125
+    },
+    {
+      "scenario": "Controlsphere Click Easy",
+      "seconds": 59,
+      "runs": 12,
+      "agreement": 0.9166666666666666
+    },
+    {
+      "scenario": "Controlsphere Easy III",
+      "seconds": 60,
+      "runs": 18,
+      "agreement": 1
+    },
+    {
+      "scenario": "Controlsphere Far Larger",
+      "seconds": 60,
+      "runs": 31,
+      "agreement": 0.8387096774193549
+    },
+    {
+      "scenario": "Controlsphere OW",
+      "seconds": 59,
+      "runs": 25,
+      "agreement": 0.96
+    },
+    {
+      "scenario": "Controlsphere rAim",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "Controlsphere rAim Easy",
+      "seconds": 60,
+      "runs": 49,
+      "agreement": 0.8979591836734694
+    },
+    {
+      "scenario": "Controlsphere SuperbAim Very Easy",
+      "seconds": 60,
+      "runs": 167,
+      "agreement": 0.9101796407185628
+    },
+    {
+      "scenario": "Controlsphere SuperbAim Viscose",
+      "seconds": 60,
+      "runs": 27,
+      "agreement": 0.9259259259259259
+    },
+    {
+      "scenario": "Controlsphere SuperbAim Viscose Easier",
+      "seconds": null,
+      "runs": 3,
+      "agreement": 0
+    },
+    {
+      "scenario": "Controlsphere SuperbAim Viscose Hard",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "ControlSwitch - THE FINALS",
+      "seconds": 60,
+      "runs": 46,
+      "agreement": 0.9130434782608695
+    },
+    {
+      "scenario": "darkPressure",
+      "seconds": 59,
+      "runs": 35,
+      "agreement": 0.9714285714285714
+    },
+    {
+      "scenario": "Deceptive Tracking XYZ Easy",
+      "seconds": 59,
+      "runs": 24,
+      "agreement": 0.75
+    },
+    {
+      "scenario": "delta&Normal PTS Extrasmooth",
+      "seconds": 60,
+      "runs": 7,
+      "agreement": 1
+    },
+    {
+      "scenario": "devTS Goated NR",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "devTS Goated NR Static 5Bot",
+      "seconds": 60,
+      "runs": 31,
+      "agreement": 1
+    },
+    {
+      "scenario": "devTS Static Click Angelic",
+      "seconds": 60,
+      "runs": 6,
+      "agreement": 1
+    },
+    {
+      "scenario": "devTS Static Click Angelic Easy",
+      "seconds": 59,
+      "runs": 22,
+      "agreement": 1
+    },
+    {
+      "scenario": "DistanceTrack - THE FINALS",
+      "seconds": 60,
+      "runs": 58,
+      "agreement": 0.9310344827586207
+    },
+    {
+      "scenario": "DM 1w2ts Pokeball",
+      "seconds": 60,
+      "runs": 29,
+      "agreement": 0.8620689655172413
+    },
+    {
+      "scenario": "DM 1w3ts Pokeball",
+      "seconds": 60,
+      "runs": 23,
+      "agreement": 0.8695652173913043
+    },
+    {
+      "scenario": "DM 1w4ts Pokeball",
+      "seconds": 60,
+      "runs": 18,
+      "agreement": 1
+    },
+    {
+      "scenario": "DM 1w5ts Pokeball",
+      "seconds": 60,
+      "runs": 16,
+      "agreement": 1
+    },
+    {
+      "scenario": "DM 1w6ts Pokeball",
+      "seconds": 60,
+      "runs": 16,
+      "agreement": 0.9375
+    },
+    {
+      "scenario": "DM ww2t Pokeball",
+      "seconds": 60,
+      "runs": 25,
+      "agreement": 0.96
+    },
+    {
+      "scenario": "DM ww3t Pokeball",
+      "seconds": 59,
+      "runs": 20,
+      "agreement": 0.85
+    },
+    {
+      "scenario": "DM ww4t Pokeball",
+      "seconds": 60,
+      "runs": 15,
+      "agreement": 1
+    },
+    {
+      "scenario": "DM ww5t Pokeball",
+      "seconds": 60,
+      "runs": 17,
+      "agreement": 0.8823529411764706
+    },
+    {
+      "scenario": "DM ww6t Pokeball",
+      "seconds": 60,
+      "runs": 13,
+      "agreement": 0.8461538461538461
+    },
+    {
+      "scenario": "Domi SmoothinTrack Easy",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "DomiSphere Micro",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "domiSwitch",
+      "seconds": 59,
+      "runs": 7,
+      "agreement": 1
+    },
+    {
+      "scenario": "domiSwitch Avasive",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "domiSwitch Easier",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "domiSwitch Easy",
+      "seconds": 60,
+      "runs": 45,
+      "agreement": 0.9555555555555556
+    },
+    {
+      "scenario": "DotSwitch Euphoric",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "DotSwitch Revosect Int",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "DotTS 30% Larger",
+      "seconds": null,
+      "runs": 3,
+      "agreement": 0
+    },
+    {
+      "scenario": "Driftshot Euphoric",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "e1se MicroTrack",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "ENV Aimerz+ PreciseTrack Adaptive",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "ENV cloverRawControl Adaptive",
+      "seconds": 59,
+      "runs": 6,
+      "agreement": 1
+    },
+    {
+      "scenario": "eth 1w4tes Micro",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "eth FarSkeet",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "eth Pasu Micro Easier",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "eth Pasu Micro Hard",
+      "seconds": 59,
+      "runs": 8,
+      "agreement": 1
+    },
+    {
+      "scenario": "eth Pasu Micro Medium",
+      "seconds": 60,
+      "runs": 21,
+      "agreement": 0.9523809523809523
+    },
+    {
+      "scenario": "eth Precise Dots -2",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "eth Valorant Layered Control v2 40",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "EvaClick Euphoric",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "EvoClick Revosect Int",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "Extra Controlsphere",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "FB StrafeGod",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "Fireworks Flick [x-small]",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "Flicker Plaza rAim Easy",
+      "seconds": null,
+      "runs": 14,
+      "agreement": 0.2857142857142857
+    },
+    {
+      "scenario": "flix's spidershot",
+      "seconds": null,
+      "runs": 3,
+      "agreement": 0
+    },
+    {
+      "scenario": "Floating Heads 50% HP 400%",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "Floating Heads Revosect Int",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "Floating Heads Timing 400%",
+      "seconds": 60,
+      "runs": 5,
+      "agreement": 0.8
+    },
+    {
+      "scenario": "Floating Heads Timing 400% FIXED",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "Floating Heads Timing 400% Larger",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "FloatTS Angelic",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "FloatTS Angelic Easy",
+      "seconds": 59,
+      "runs": 31,
+      "agreement": 0.967741935483871
+    },
+    {
+      "scenario": "FloatTS Click Angelic",
+      "seconds": 60,
+      "runs": 5,
+      "agreement": 1
+    },
+    {
+      "scenario": "FloodTrack Revosect Int",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "Flower 50cm",
+      "seconds": 60,
+      "runs": 21,
+      "agreement": 0.9047619047619048
+    },
+    {
+      "scenario": "Flower Easier",
+      "seconds": 59,
+      "runs": 10,
+      "agreement": 1
+    },
+    {
+      "scenario": "Flower Easier 50cm",
+      "seconds": 60,
+      "runs": 9,
+      "agreement": 0.6666666666666666
+    },
+    {
+      "scenario": "Fortnite glider 360 invincible LG",
+      "seconds": 60,
+      "runs": 6,
+      "agreement": 0.6666666666666666
+    },
+    {
+      "scenario": "Frog Simulator - @wa11p1per",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "fuglaaPressure",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "FuglaaPressure [Wide Wall]",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "fuglaaPressure 6",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "fuglaaPressure 6 Sphere Hipfire no reload",
+      "seconds": 59,
+      "runs": 120,
+      "agreement": 0.9666666666666667
+    },
+    {
+      "scenario": "fuglaaPressure Pokeball fixed",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "fuglaaXYZ Smooth Beta 2",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "FuglaaXYZ Voltaic No Blinks xsmall",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "Gridshot",
+      "seconds": 30,
+      "runs": 19,
+      "agreement": 1
+    },
+    {
+      "scenario": "GridShot 3x3",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "Gridshot Ultimate",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "Ground Plaza Sparky Quake",
+      "seconds": null,
+      "runs": 3,
+      "agreement": 0
+    },
+    {
+      "scenario": "Ground Plaza Sparky V3",
+      "seconds": null,
+      "runs": 32,
+      "agreement": 0.1875
+    },
+    {
+      "scenario": "Ground Plaza Sparky v3 Easy",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "Ground Plaza Sparky v3 OW",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "Ground Plaza Sparky V3 Thin",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "Ground Plaza Voltaic Easy",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "Happy Easter!",
+      "seconds": null,
+      "runs": 49,
+      "agreement": 0.40816326530612246
+    },
+    {
+      "scenario": "Happy Easter! Wide Click 7Target",
+      "seconds": null,
+      "runs": 3,
+      "agreement": 0
+    },
+    {
+      "scenario": "HighGroundTrack - THE FINALS",
+      "seconds": 60,
+      "runs": 50,
+      "agreement": 0.88
+    },
+    {
+      "scenario": "hizkuAirPalace Easy",
+      "seconds": 60,
+      "runs": 10,
+      "agreement": 1
+    },
+    {
+      "scenario": "hizkuGround Easy",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "hizkuRawAir Easy",
+      "seconds": 59,
+      "runs": 6,
+      "agreement": 1
+    },
+    {
+      "scenario": "hizkuRawGround Easy",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "hizkuSmoothGround",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "HopClick - THE FINALS",
+      "seconds": 60,
+      "runs": 32,
+      "agreement": 0.90625
+    },
+    {
+      "scenario": "HopSwitch - THE FINALS",
+      "seconds": 59,
+      "runs": 21,
+      "agreement": 1
+    },
+    {
+      "scenario": "Horizontal Raw Smoothness Rush",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "Huge Poke Tile Frenzy",
+      "seconds": 30,
+      "runs": 10,
+      "agreement": 1
+    },
+    {
+      "scenario": "iiTzTimmy - 3 Tile Jumbo Tile Frenzy",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "iiTzTimmy - Amphi LG 1v1 Easy",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "iiTzTimmy - Ascended Tracking 90",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "iiTzTimmy - Ascended Tracking 90 Invincible",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "iiTzTimmy - Smoothbot Switch Robots",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "iiTzTimmy - Tile Frenzy",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "iiTzTimmy - Tile Frenzy 180 Strafing 400Prct Track",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "IRIS 1w6ts Easy",
+      "seconds": 59,
+      "runs": 6,
+      "agreement": 1
+    },
+    {
+      "scenario": "IRIS 3D Switching Easy",
+      "seconds": 60,
+      "runs": 5,
+      "agreement": 1
+    },
+    {
+      "scenario": "IRIS Air Nuns Easy",
+      "seconds": null,
+      "runs": 3,
+      "agreement": 0
+    },
+    {
+      "scenario": "IRIS Controlsphere Click Easy",
+      "seconds": null,
+      "runs": 3,
+      "agreement": 0
+    },
+    {
+      "scenario": "IRIS Controlsphere Easy",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "IRIS Ground Plaza Easy",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "IRIS Leaptrack Goated Easy",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "IRIS Pasu Easy",
+      "seconds": 59,
+      "runs": 11,
+      "agreement": 1
+    },
+    {
+      "scenario": "IRIS PasuTS Easy",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "IRIS Popcorn Easy",
+      "seconds": 60,
+      "runs": 6,
+      "agreement": 0.8333333333333334
+    },
+    {
+      "scenario": "IRIS Popswitch Easy",
+      "seconds": 60,
+      "runs": 5,
+      "agreement": 1
+    },
+    {
+      "scenario": "IRIS SlideTS Easy",
+      "seconds": 60,
+      "runs": 7,
+      "agreement": 1
+    },
+    {
+      "scenario": "IRIS Smoothbot Easy",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "IRIS SmoothbotTS Easy",
+      "seconds": null,
+      "runs": 3,
+      "agreement": 0
+    },
+    {
+      "scenario": "IRIS SpeedSwitch Easy",
+      "seconds": 60,
+      "runs": 15,
+      "agreement": 1
+    },
+    {
+      "scenario": "IRIS voxTS Click Easy",
+      "seconds": 60,
+      "runs": 5,
+      "agreement": 1
+    },
+    {
+      "scenario": "IRIS WhisphereRawControl Easy",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "IRIS Wide Wall Easy",
+      "seconds": null,
+      "runs": 3,
+      "agreement": 0
+    },
+    {
+      "scenario": "Jumbo 1wall6targets TE",
+      "seconds": 60,
+      "runs": 28,
+      "agreement": 1
+    },
+    {
+      "scenario": "Jumbo Tile Frenzy",
+      "seconds": 29,
+      "runs": 13,
+      "agreement": 1
+    },
+    {
+      "scenario": "Jumbo Tile Frenzy 180",
+      "seconds": 59,
+      "runs": 5,
+      "agreement": 1
+    },
+    {
+      "scenario": "Jumbo1wall9000targets",
+      "seconds": 60,
+      "runs": 12,
+      "agreement": 1
+    },
+    {
+      "scenario": "Kindaclose Mid Strafes",
+      "seconds": 60,
+      "runs": 124,
+      "agreement": 0.8709677419354839
+    },
+    {
+      "scenario": "kinTS NR",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "kinTS NR Easy",
+      "seconds": 60,
+      "runs": 108,
+      "agreement": 0.9444444444444444
+    },
+    {
+      "scenario": "KinTs SuperbAim Easy",
+      "seconds": 60,
+      "runs": 106,
+      "agreement": 0.9622641509433962
+    },
+    {
+      "scenario": "kinTS Voltaic",
+      "seconds": 60,
+      "runs": 6,
+      "agreement": 1
+    },
+    {
+      "scenario": "kinTS Voltaic Easy",
+      "seconds": 60,
+      "runs": 19,
+      "agreement": 1
+    },
+    {
+      "scenario": "kinTS Voltaic Easy 85%",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "Leap 180 Reload Small Curved",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "Leapcorn Pure",
+      "seconds": 59,
+      "runs": 6,
+      "agreement": 1
+    },
+    {
+      "scenario": "Leapcorn Pure Easy",
+      "seconds": 60,
+      "runs": 22,
+      "agreement": 0.8636363636363636
+    },
+    {
+      "scenario": "Leapstrafes Control Medium",
+      "seconds": 60,
+      "runs": 15,
+      "agreement": 0.9333333333333333
+    },
+    {
+      "scenario": "Leapstrafes Control wobin",
+      "seconds": 60,
+      "runs": 42,
+      "agreement": 0.9523809523809523
+    },
+    {
+      "scenario": "Leapstrafes Control wobin Easier",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "Leapstrafes Control wobin Hard",
+      "seconds": 60,
+      "runs": 5,
+      "agreement": 1
+    },
+    {
+      "scenario": "Leapstrafes Revosect Int",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "Leaptrack Goated 75% Slightly Larger",
+      "seconds": 60,
+      "runs": 41,
+      "agreement": 0.9024390243902439
+    },
+    {
+      "scenario": "Leaptrack Goated 80%",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "Leisphere Easy",
+      "seconds": 59,
+      "runs": 25,
+      "agreement": 0.92
+    },
+    {
+      "scenario": "lgc3 Reborn",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "LGC3 Reborn (old scoring)",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "Lilith Control 80%",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "Liot TS LowTTK",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "Long Strafes Humanoid Switch Miyu Adapt",
+      "seconds": 60,
+      "runs": 5,
+      "agreement": 1
+    },
+    {
+      "scenario": "Mass Click (25 seconds)",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "MFSI rAim Easy",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "Microadjustment Tracking Small",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "MicroGOD click Easy",
+      "seconds": 59,
+      "runs": 7,
+      "agreement": 1
+    },
+    {
+      "scenario": "Microshot Avasive",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "Microshot Speed",
+      "seconds": null,
+      "runs": 3,
+      "agreement": 0
+    },
+    {
+      "scenario": "Miniclick Euphoric",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "Narrow Strafe",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "Narrow Strafe -R99-",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "NovaSwitch Revosect Int",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "PadTrack - THE FINALS",
+      "seconds": 60,
+      "runs": 29,
+      "agreement": 0.7241379310344828
+    },
+    {
+      "scenario": "Paki Aim Invincible",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "Pasu Angelic",
+      "seconds": null,
+      "runs": 3,
+      "agreement": 0
+    },
+    {
+      "scenario": "Pasu Angelic 20% Larger",
+      "seconds": 60,
+      "runs": 22,
+      "agreement": 0.9545454545454546
+    },
+    {
+      "scenario": "Pasu Dodge Easy",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "pasu nqs reload",
+      "seconds": 86,
+      "runs": 43,
+      "agreement": 0.7674418604651163
+    },
+    {
+      "scenario": "Pasu rAim Easy",
+      "seconds": 86,
+      "runs": 164,
+      "agreement": 0.8536585365853658
+    },
+    {
+      "scenario": "Pasu Revosect Int",
+      "seconds": null,
+      "runs": 3,
+      "agreement": 0
+    },
+    {
+      "scenario": "pasu small reload",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "Pasu Track Extrasmooth",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "Pasu Track Extrasmooth Small TE",
+      "seconds": 59,
+      "runs": 5,
+      "agreement": 0.8
+    },
+    {
+      "scenario": "Pasu Track Extrasmooth TE",
+      "seconds": 59,
+      "runs": 5,
+      "agreement": 1
+    },
+    {
+      "scenario": "Pasu Track Invincible v2",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "Pasu Track Wide React Goated Easy",
+      "seconds": 59,
+      "runs": 5,
+      "agreement": 1
+    },
+    {
+      "scenario": "Pasu Voltaic",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "Pasu Voltaic Reload",
+      "seconds": 59,
+      "runs": 5,
+      "agreement": 1
+    },
+    {
+      "scenario": "Pasu Voltaic Reload Easier",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "Pasu Voltaic Reload Easy",
+      "seconds": 59,
+      "runs": 23,
+      "agreement": 0.9565217391304348
+    },
+    {
+      "scenario": "Pasutrack RCT Evo Easy",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "PasuTS Revosect Int",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "patCircleSwitch NR",
+      "seconds": 60,
+      "runs": 37,
+      "agreement": 0.8918918918918919
+    },
+    {
+      "scenario": "patTargetSwitch 90 easy",
+      "seconds": 60,
+      "runs": 49,
+      "agreement": 0.9591836734693877
+    },
+    {
+      "scenario": "patTargetSwitch 90 LowTTK",
+      "seconds": null,
+      "runs": 3,
+      "agreement": 0
+    },
+    {
+      "scenario": "patTargetSwitch Dodge 360 v2",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "patTargetSwitch easy",
+      "seconds": 59,
+      "runs": 53,
+      "agreement": 0.9622641509433962
+    },
+    {
+      "scenario": "patTS NR",
+      "seconds": 60,
+      "runs": 27,
+      "agreement": 0.9259259259259259
+    },
+    {
+      "scenario": "Peek and Click faster",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "Pepper Dodge Midrange Fast Enemy",
+      "seconds": 59,
+      "runs": 6,
+      "agreement": 1
+    },
+    {
+      "scenario": "PGTI Voltaic",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "PGTI Voltaic Easy",
+      "seconds": 60,
+      "runs": 38,
+      "agreement": 0.9210526315789473
+    },
+    {
+      "scenario": "PGTI Voltaic Easy 80%",
+      "seconds": 60,
+      "runs": 5,
+      "agreement": 0.6
+    },
+    {
+      "scenario": "PGTI Voltaic Easy Smoother",
+      "seconds": 59,
+      "runs": 10,
+      "agreement": 1
+    },
+    {
+      "scenario": "PGTI Voltaic Easy UFO",
+      "seconds": 60,
+      "runs": 5,
+      "agreement": 1
+    },
+    {
+      "scenario": "PGTI Voltaic Easy Ultra Jumbo",
+      "seconds": 60,
+      "runs": 15,
+      "agreement": 0.9333333333333333
+    },
+    {
+      "scenario": "Pistol Strafe Gallery Sparky",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "Plaza Pure Revosect Int",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "Plaza Smooth Revosect Int",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "Plink Palace Easy",
+      "seconds": 60,
+      "runs": 35,
+      "agreement": 0.9714285714285714
+    },
+    {
+      "scenario": "Plink Palace Easy Less Blinks",
+      "seconds": 59,
+      "runs": 8,
+      "agreement": 0.75
+    },
+    {
+      "scenario": "Pokeball 1w4ts 30%",
+      "seconds": 59,
+      "runs": 33,
+      "agreement": 0.8787878787878788
+    },
+    {
+      "scenario": "Pokeball 1w4ts 30% Easy",
+      "seconds": 60,
+      "runs": 28,
+      "agreement": 0.9642857142857143
+    },
+    {
+      "scenario": "Pokeball 5 Sphere Hipfire Extra Small",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "Pokeball Auto 1w2ts smallflicks",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "Pokeball Frenzy Auto Small",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "Pokeball Frenzy Auto Small 60s",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "Pokeball Frenzy Auto Small Wide",
+      "seconds": 60,
+      "runs": 52,
+      "agreement": 0.9423076923076923
+    },
+    {
+      "scenario": "Pokeball Frenzy Auto TE Wide",
+      "seconds": 60,
+      "runs": 7,
+      "agreement": 1
+    },
+    {
+      "scenario": "Pokeball Frenzy Auto Wide Wall 3 Targets Small",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "Pokeball Reflex Flick 2ts",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "Polarized Hell Easy 20% Slower",
+      "seconds": 59,
+      "runs": 7,
+      "agreement": 0.7142857142857143
+    },
+    {
+      "scenario": "Popcorn Goated rAim",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "Popcorn Goated rAim easy",
+      "seconds": 60,
+      "runs": 18,
+      "agreement": 0.8888888888888888
+    },
+    {
+      "scenario": "Popcorn MV Easier",
+      "seconds": null,
+      "runs": 3,
+      "agreement": 0
+    },
+    {
+      "scenario": "Popcorn MV Hard",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "Popcorn MV Intermediate",
+      "seconds": 60,
+      "runs": 10,
+      "agreement": 0.9
+    },
+    {
+      "scenario": "Popcorn MV Medium",
+      "seconds": 59,
+      "runs": 22,
+      "agreement": 1
+    },
+    {
+      "scenario": "Popcorn Sparky",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "Popcorn Voltaic",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "Popcorn Voltaic Easy",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "Pressure Aiming - 10 Targets",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "Pressure Aiming - 7 Targets",
+      "seconds": null,
+      "runs": 3,
+      "agreement": 0
+    },
+    {
+      "scenario": "Pressure Switching Pumpkins",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "psalmTS angelic click",
+      "seconds": 60,
+      "runs": 7,
+      "agreement": 0.7142857142857143
+    },
+    {
+      "scenario": "psalmTS angelic click 30% Larger",
+      "seconds": 59,
+      "runs": 25,
+      "agreement": 0.84
+    },
+    {
+      "scenario": "psalmTS Viscose Click",
+      "seconds": 60,
+      "runs": 16,
+      "agreement": 1
+    },
+    {
+      "scenario": "psalmTS Viscose Click Easier",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "psalmTS Viscose Click Hard",
+      "seconds": 59,
+      "runs": 5,
+      "agreement": 1
+    },
+    {
+      "scenario": "psalmTS Voltaic Initiate",
+      "seconds": 60,
+      "runs": 127,
+      "agreement": 0.9448818897637795
+    },
+    {
+      "scenario": "PTeS eeSmall TE",
+      "seconds": 60,
+      "runs": 5,
+      "agreement": 0.8
+    },
+    {
+      "scenario": "PTXS Fast",
+      "seconds": 59,
+      "runs": 5,
+      "agreement": 0.8
+    },
+    {
+      "scenario": "PTXS Small Fast",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "PTXS TE",
+      "seconds": 60,
+      "runs": 5,
+      "agreement": 1
+    },
+    {
+      "scenario": "rA S4 GLIDERTRACK EASY",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "RawControlSphere",
+      "seconds": 60,
+      "runs": 29,
+      "agreement": 0.9655172413793104
+    },
+    {
+      "scenario": "RawControlSphere Easier",
+      "seconds": 59,
+      "runs": 7,
+      "agreement": 0.8571428571428571
+    },
+    {
+      "scenario": "RawControlSphere Hard",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "RawMouseControl Reload",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "RawMouseControl Reload Easy",
+      "seconds": 59,
+      "runs": 5,
+      "agreement": 1
+    },
+    {
+      "scenario": "RawMousima",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "Reflex Flick - Fair",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "Reflex Flick TS",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "Reflex Pokeball Horizontal Eresh",
+      "seconds": 49,
+      "runs": 5,
+      "agreement": 0.6
+    },
+    {
+      "scenario": "REVENGE - 1Click Reflex",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "REVENGE - 2Click Pressure",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "Revolving Tracking Extra Thin 45%",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "Rexstrafes Dodge",
+      "seconds": 59,
+      "runs": 6,
+      "agreement": 1
+    },
+    {
+      "scenario": "rx 1w3ts",
+      "seconds": 59,
+      "runs": 5,
+      "agreement": 0.8
+    },
+    {
+      "scenario": "rx 1w6ts Varied Pokeball",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "rx Wideish Wall 2 Targets Varied",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "SCS 15xs Narrow",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "SCS 2L Uniform",
+      "seconds": null,
+      "runs": 3,
+      "agreement": 0
+    },
+    {
+      "scenario": "SCS 2s",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "SCS 2s Uniform",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "SCS 2v",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "SCS 3L Wide",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "SCS 3m Dynamic",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "SCS 3s Uniform",
+      "seconds": null,
+      "runs": 3,
+      "agreement": 0
+    },
+    {
+      "scenario": "SCS 3s Wide",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "SCS 4L Wide",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "SCS 4L Wide Easier",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "SCS 4s",
+      "seconds": null,
+      "runs": 3,
+      "agreement": 0
+    },
+    {
+      "scenario": "SCS 4xs Dynamic",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "SCS 5m Dynamic",
+      "seconds": null,
+      "runs": 3,
+      "agreement": 0
+    },
+    {
+      "scenario": "SCS 5v Wide",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "SCS 6s",
+      "seconds": null,
+      "runs": 3,
+      "agreement": 0
+    },
+    {
+      "scenario": "SCS 6s Narrow",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "SCS 6s Wide",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "SCS 6xs",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "SCS 8v Wide",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "SCS 8xs Uniform",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "shimmicro",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "shimPressure",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "shimPressure HARD",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "shimPressure Micro",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "Silo Easy",
+      "seconds": 60,
+      "runs": 19,
+      "agreement": 0.8947368421052632
+    },
+    {
+      "scenario": "Skeet Clicking",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "skyClick Goated Easier",
+      "seconds": null,
+      "runs": 3,
+      "agreement": 0
+    },
+    {
+      "scenario": "skyClick Goated Hard",
+      "seconds": 60,
+      "runs": 5,
+      "agreement": 1
+    },
+    {
+      "scenario": "skyClick Goated Medium",
+      "seconds": 60,
+      "runs": 23,
+      "agreement": 1
+    },
+    {
+      "scenario": "SmoothBot Invincible Goated",
+      "seconds": 60,
+      "runs": 53,
+      "agreement": 0.9622641509433962
+    },
+    {
+      "scenario": "SmoothBot Invincible Goated 75%",
+      "seconds": 60,
+      "runs": 7,
+      "agreement": 1
+    },
+    {
+      "scenario": "SmoothBot Invincible Goated Smaller",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "Smoothbot Pauer",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "Smoothbot Pauer Easy",
+      "seconds": 60,
+      "runs": 23,
+      "agreement": 0.7391304347826086
+    },
+    {
+      "scenario": "Smoothbot Pauer Glider",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "Smoothbot Pauer Glider 60% Larger",
+      "seconds": 60,
+      "runs": 35,
+      "agreement": 0.8857142857142857
+    },
+    {
+      "scenario": "SmoothBot Perfected",
+      "seconds": 60,
+      "runs": 31,
+      "agreement": 0.9354838709677419
+    },
+    {
+      "scenario": "SmoothBot Perfected Easier",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "SmoothBot Perfected Hard",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "Smoothbot Unvincible Goated Easy",
+      "seconds": 59,
+      "runs": 5,
+      "agreement": 1
+    },
+    {
+      "scenario": "Smoothbot Voltaic",
+      "seconds": null,
+      "runs": 3,
+      "agreement": 0
+    },
+    {
+      "scenario": "Smoothbot Voltaic Easy 70%",
+      "seconds": 60,
+      "runs": 16,
+      "agreement": 1
+    },
+    {
+      "scenario": "Smoothbot Voltaic Massive",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "Smoothsphere Angelic Easy",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "Smoothsphere Nevermiss BEGINNER 40% FASTER",
+      "seconds": 2,
+      "runs": 24,
+      "agreement": 0.75
+    },
+    {
+      "scenario": "Smoothsphere Viscose",
+      "seconds": 60,
+      "runs": 117,
+      "agreement": 0.9487179487179487
+    },
+    {
+      "scenario": "Smoothsphere Viscose Easier",
+      "seconds": 60,
+      "runs": 15,
+      "agreement": 0.9333333333333333
+    },
+    {
+      "scenario": "Smoothsphere Viscose Hard",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "SmoothTS Revosect Int",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "Snake Track Phase 1 Step 1",
+      "seconds": null,
+      "runs": 3,
+      "agreement": 0
+    },
+    {
+      "scenario": "SnowClick Revosect Int",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "speedswitch90 Jumbo 30s",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "SpringClick Revosect Int",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "SpringTS Revosect Int",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "Star Clicking - @wa11p1per",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "Star Clicking 30% Larger",
+      "seconds": 60,
+      "runs": 20,
+      "agreement": 0.9
+    },
+    {
+      "scenario": "Star Clicking Micro",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "Star Clicking Ultra [MadBadMan's Edition]",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "Star Tracking Regen - @wa11p1per",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "StaticSwitchingVox",
+      "seconds": null,
+      "runs": 3,
+      "agreement": 0
+    },
+    {
+      "scenario": "StaticSwitchingVox Small",
+      "seconds": 60,
+      "runs": 23,
+      "agreement": 0.8695652173913043
+    },
+    {
+      "scenario": "StaticSwitchingVox xSmall",
+      "seconds": 60,
+      "runs": 11,
+      "agreement": 0.9090909090909091
+    },
+    {
+      "scenario": "StaticSwitchingVox xxSmall",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "staticswitchingvox xxsmall lowttk",
+      "seconds": 59,
+      "runs": 5,
+      "agreement": 0.8
+    },
+    {
+      "scenario": "SteadyTrack",
+      "seconds": 60,
+      "runs": 14,
+      "agreement": 0.8571428571428571
+    },
+    {
+      "scenario": "StrawberryClick Revosect Int",
+      "seconds": null,
+      "runs": 3,
+      "agreement": 0
+    },
+    {
+      "scenario": "SUMO AIR TS 180",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "SVGS - THE FINALS",
+      "seconds": 59,
+      "runs": 24,
+      "agreement": 0.625
+    },
+    {
+      "scenario": "Swing Tracking",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "Swing Tracking Easy 80%",
+      "seconds": 60,
+      "runs": 13,
+      "agreement": 0.8461538461538461
+    },
+    {
+      "scenario": "SYW (Smooth Your Wrist) FIXED Extra thin",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "SYW Easy",
+      "seconds": 45,
+      "runs": 22,
+      "agreement": 0.9545454545454546
+    },
+    {
+      "scenario": "tamAngleSmoothness",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "tamAngleSmoothness Adaptive Size",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "tamAngleSmoothness Easier",
+      "seconds": 59,
+      "runs": 11,
+      "agreement": 0.9090909090909091
+    },
+    {
+      "scenario": "Tamspeed 2bpes",
+      "seconds": 60,
+      "runs": 18,
+      "agreement": 1
+    },
+    {
+      "scenario": "Tamspeed 2bpes Angelic",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "tamTargetSwitch Smooth Easy",
+      "seconds": 60,
+      "runs": 26,
+      "agreement": 0.9615384615384616
+    },
+    {
+      "scenario": "Target Switching 360",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "Tarzaning 360",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "Thin Aiming Long",
+      "seconds": 60,
+      "runs": 5,
+      "agreement": 1
+    },
+    {
+      "scenario": "Thin Aiming Long Invincible",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "Thin Gauntlet V2",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "Thin Tracking Target Switch 180 v2",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "Tile Frenzy",
+      "seconds": 30,
+      "runs": 36,
+      "agreement": 0.9444444444444444
+    },
+    {
+      "scenario": "Tile Frenzy 180",
+      "seconds": 60,
+      "runs": 5,
+      "agreement": 1
+    },
+    {
+      "scenario": "Tile Frenzy 180 Strafing 200 Percent",
+      "seconds": 60,
+      "runs": 170,
+      "agreement": 0.888235294117647
+    },
+    {
+      "scenario": "Tile Frenzy Mini",
+      "seconds": null,
+      "runs": 3,
+      "agreement": 0
+    },
+    {
+      "scenario": "ToonsClick rAim Easy",
+      "seconds": null,
+      "runs": 3,
+      "agreement": 0
+    },
+    {
+      "scenario": "Tornadosphere Revosect Int",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "Trackstop Master",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "Trippez Slide Targets Thinner",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "TSK - 360 Turn",
+      "seconds": 30,
+      "runs": 12,
+      "agreement": 0.9166666666666666
+    },
+    {
+      "scenario": "TSK - 360 Turn MASSIVE",
+      "seconds": 29,
+      "runs": 5,
+      "agreement": 1
+    },
+    {
+      "scenario": "TSK - Box Tracking",
+      "seconds": null,
+      "runs": 3,
+      "agreement": 0
+    },
+    {
+      "scenario": "TSK - Centering 180 Speed 2",
+      "seconds": 29,
+      "runs": 13,
+      "agreement": 1
+    },
+    {
+      "scenario": "TSK - Centering 180 Speed 3",
+      "seconds": 30,
+      "runs": 9,
+      "agreement": 0.8888888888888888
+    },
+    {
+      "scenario": "TSK - Centering 45 Speed 2 Stop",
+      "seconds": 30,
+      "runs": 19,
+      "agreement": 0.9473684210526315
+    },
+    {
+      "scenario": "TSK - Centering 90 Speed 2",
+      "seconds": 29,
+      "runs": 25,
+      "agreement": 0.96
+    },
+    {
+      "scenario": "TSK - Centering 90 Speed 2 MASSIVE",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "TSK - DVD Tracking",
+      "seconds": 29,
+      "runs": 8,
+      "agreement": 1
+    },
+    {
+      "scenario": "TSK - DVD Tracking Big",
+      "seconds": 29,
+      "runs": 21,
+      "agreement": 0.9523809523809523
+    },
+    {
+      "scenario": "TSK - DVD Tracking MASSIVE",
+      "seconds": 29,
+      "runs": 13,
+      "agreement": 0.9230769230769231
+    },
+    {
+      "scenario": "TSK - DVD Tracking Small",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "TSK - Hewchy's VAI 110",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "TSK - Hewchy's VAI 135",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "TSK - Hewchy's VAI 160",
+      "seconds": 30,
+      "runs": 20,
+      "agreement": 1
+    },
+    {
+      "scenario": "TSK - Hewchy's VAI 160 MASSIVE",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "TSK - Hewchy's VAI 160 Small",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "TSK - Hewchy's VAI 20",
+      "seconds": 29,
+      "runs": 18,
+      "agreement": 1
+    },
+    {
+      "scenario": "TSK - Hewchy's VAI 20 MASSIVE",
+      "seconds": null,
+      "runs": 3,
+      "agreement": 0
+    },
+    {
+      "scenario": "TSK - Hewchy's VAI 20 MASSIVE Flick",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "TSK - Hewchy's VAI 20 Small",
+      "seconds": 30,
+      "runs": 21,
+      "agreement": 0.9047619047619048
+    },
+    {
+      "scenario": "TSK - Hewchy's VAI 70",
+      "seconds": 29,
+      "runs": 5,
+      "agreement": 1
+    },
+    {
+      "scenario": "TSK - ST60",
+      "seconds": 29,
+      "runs": 18,
+      "agreement": 0.8888888888888888
+    },
+    {
+      "scenario": "TSK - ST60 Thick",
+      "seconds": 29,
+      "runs": 29,
+      "agreement": 0.9655172413793104
+    },
+    {
+      "scenario": "TSK - SYV",
+      "seconds": null,
+      "runs": 3,
+      "agreement": 0
+    },
+    {
+      "scenario": "TSK - SYV Big",
+      "seconds": 30,
+      "runs": 10,
+      "agreement": 1
+    },
+    {
+      "scenario": "TSK - SYV Down Close",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "TSK - SYV MASSIVE",
+      "seconds": 30,
+      "runs": 7,
+      "agreement": 1
+    },
+    {
+      "scenario": "TSK - SYV Small",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "TSK - SYV Stop",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "TSK - SYW",
+      "seconds": 29,
+      "runs": 29,
+      "agreement": 0.9310344827586207
+    },
+    {
+      "scenario": "TSK - SYW Thin",
+      "seconds": 29,
+      "runs": 11,
+      "agreement": 1
+    },
+    {
+      "scenario": "TSK - Varied Centering 90 Trio",
+      "seconds": 30,
+      "runs": 9,
+      "agreement": 0.8888888888888888
+    },
+    {
+      "scenario": "TSK - Vertical Frog Stationary",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "TSK - VSTP Soft",
+      "seconds": 30,
+      "runs": 5,
+      "agreement": 1
+    },
+    {
+      "scenario": "TSK - VSTP Soft Big",
+      "seconds": 29,
+      "runs": 10,
+      "agreement": 0.9
+    },
+    {
+      "scenario": "TSK - VSTP Soft MASSIVE",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "TSK - Wavy Tracking",
+      "seconds": 30,
+      "runs": 7,
+      "agreement": 1
+    },
+    {
+      "scenario": "UnderTrack - THE FINALS",
+      "seconds": 60,
+      "runs": 27,
+      "agreement": 0.6666666666666666
+    },
+    {
+      "scenario": "uv VBR Micro 2ts",
+      "seconds": 75,
+      "runs": 7,
+      "agreement": 1
+    },
+    {
+      "scenario": "VAL pressureWide",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "Val Reflex 1Taps 700ms (boON's)",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "Valorant Fireworks Flick Horizontal - Far",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "Valorant Microshot Speed Small",
+      "seconds": 29,
+      "runs": 10,
+      "agreement": 1
+    },
+    {
+      "scenario": "VariousStatic - THE FINALS",
+      "seconds": 59,
+      "runs": 34,
+      "agreement": 0.8823529411764706
+    },
+    {
+      "scenario": "vertical smoothness training popcorn",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "vietTS Micro",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "voidTrack Easy",
+      "seconds": 60,
+      "runs": 20,
+      "agreement": 0.85
+    },
+    {
+      "scenario": "voxTargetClick 20% Small",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "voxTargetSwitch",
+      "seconds": 60,
+      "runs": 19,
+      "agreement": 1
+    },
+    {
+      "scenario": "voxTargetSwitch 2",
+      "seconds": 60,
+      "runs": 73,
+      "agreement": 0.958904109589041
+    },
+    {
+      "scenario": "voxTargetSwitch 2 10% Smaller",
+      "seconds": 59,
+      "runs": 16,
+      "agreement": 1
+    },
+    {
+      "scenario": "voxTargetSwitch 2 20% Smaller",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "voxTargetSwitch 2 Large",
+      "seconds": 60,
+      "runs": 159,
+      "agreement": 0.9182389937106918
+    },
+    {
+      "scenario": "voxTargetSwitch Jumbo",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "VoxTS Click Easier",
+      "seconds": null,
+      "runs": 3,
+      "agreement": 0
+    },
+    {
+      "scenario": "VoxTS Click Medium",
+      "seconds": 60,
+      "runs": 16,
+      "agreement": 1
+    },
+    {
+      "scenario": "VoxTS Click Medium 10% Smaller",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "voxTS rAim Easy",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "voxTS Static Click rAim",
+      "seconds": 60,
+      "runs": 73,
+      "agreement": 0.8493150684931506
+    },
+    {
+      "scenario": "voxTS Viscose Varied",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "voxTS Voltaic LowTTK",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "voxTS Voltaic mini",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "VSS Thin Aiming Long Raspberry",
+      "seconds": 60,
+      "runs": 7,
+      "agreement": 1
+    },
+    {
+      "scenario": "VT 1w2ts Advanced S5",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "VT 1w3ts Intermediate S5",
+      "seconds": 59,
+      "runs": 55,
+      "agreement": 0.9636363636363636
+    },
+    {
+      "scenario": "VT 1w3ts Rasp Advanced",
+      "seconds": 60,
+      "runs": 30,
+      "agreement": 0.9333333333333333
+    },
+    {
+      "scenario": "VT 1w4ts Novice S5",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "VT Aether Advanced S5",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "VT Aether Bot 1 Easier",
+      "seconds": 60,
+      "runs": 11,
+      "agreement": 0.9090909090909091
+    },
+    {
+      "scenario": "VT Aether Intermediate S5",
+      "seconds": 60,
+      "runs": 100,
+      "agreement": 0.97
+    },
+    {
+      "scenario": "VT Aether Intermediate S5 Bot 2",
+      "seconds": 59,
+      "runs": 9,
+      "agreement": 0.8888888888888888
+    },
+    {
+      "scenario": "VT Aether Novice S5",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "VT Aether Novice S5 Bot 2",
+      "seconds": 59,
+      "runs": 5,
+      "agreement": 1
+    },
+    {
+      "scenario": "VT Aether Novice S5 Hard Bot 1",
+      "seconds": 60,
+      "runs": 10,
+      "agreement": 0.9
+    },
+    {
+      "scenario": "VT Aether Novice S5 Hard Bot 1 90%",
+      "seconds": 59,
+      "runs": 91,
+      "agreement": 0.9560439560439561
+    },
+    {
+      "scenario": "VT Bounceshot Advanced",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "VT Bounceshot Intermediate",
+      "seconds": 60,
+      "runs": 18,
+      "agreement": 1
+    },
+    {
+      "scenario": "VT Bounceshot Viscose Easier",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "VT Bounceshot Viscose Hard",
+      "seconds": 59,
+      "runs": 7,
+      "agreement": 1
+    },
+    {
+      "scenario": "VT Bounceshot Viscose Medium",
+      "seconds": 59,
+      "runs": 19,
+      "agreement": 1
+    },
+    {
+      "scenario": "VT Controlsphere Advanced S5",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "VT Controlsphere Intermediate S5",
+      "seconds": 59,
+      "runs": 9,
+      "agreement": 1
+    },
+    {
+      "scenario": "VT Controlsphere Intermediate S5 Hard",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "VT Controlsphere Novice S5",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "VT Controlsphere Novice S5 Hard",
+      "seconds": 60,
+      "runs": 42,
+      "agreement": 0.8809523809523809
+    },
+    {
+      "scenario": "VT Controlsphere Viscose",
+      "seconds": 60,
+      "runs": 40,
+      "agreement": 0.875
+    },
+    {
+      "scenario": "VT Controlsphere Viscose 80%",
+      "seconds": 60,
+      "runs": 28,
+      "agreement": 1
+    },
+    {
+      "scenario": "VT Controlsphere Viscose Easier",
+      "seconds": 60,
+      "runs": 11,
+      "agreement": 1
+    },
+    {
+      "scenario": "VT ControlTS Advanced S5",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "VT ControlTS Intermediate S5",
+      "seconds": 59,
+      "runs": 17,
+      "agreement": 0.8823529411764706
+    },
+    {
+      "scenario": "VT ControlTS Novice S5",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "VT DotTS Advanced S5",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "VT DotTS Intermediate S5",
+      "seconds": 60,
+      "runs": 35,
+      "agreement": 1
+    },
+    {
+      "scenario": "VT DotTS Intermediate S5 Speed",
+      "seconds": 60,
+      "runs": 151,
+      "agreement": 0.9337748344370861
+    },
+    {
+      "scenario": "VT DotTS Novice S5",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "VT DriftTS Advanced S5",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "VT DriftTS Intermediate S5",
+      "seconds": 60,
+      "runs": 12,
+      "agreement": 1
+    },
+    {
+      "scenario": "VT DriftTS Novice S5",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "VT EddieTS Advanced S5",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "VT EddieTS Intermediate S5",
+      "seconds": 60,
+      "runs": 40,
+      "agreement": 0.975
+    },
+    {
+      "scenario": "VT EddieTS Novice S5",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "VT Floating Heads Advanced S5",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "VT Floating Heads Intermediate S5",
+      "seconds": 60,
+      "runs": 24,
+      "agreement": 0.9583333333333334
+    },
+    {
+      "scenario": "VT Floating Heads Novice S5",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "VT Floating Heads Viscose Easier",
+      "seconds": 60,
+      "runs": 7,
+      "agreement": 1
+    },
+    {
+      "scenario": "VT Floating Heads Viscose Hard",
+      "seconds": 59,
+      "runs": 5,
+      "agreement": 1
+    },
+    {
+      "scenario": "VT Floating Heads Viscose Medium",
+      "seconds": 60,
+      "runs": 18,
+      "agreement": 0.9444444444444444
+    },
+    {
+      "scenario": "VT FlyTS Advanced S5",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "VT FlyTS Intermediate S5",
+      "seconds": 60,
+      "runs": 14,
+      "agreement": 0.9285714285714286
+    },
+    {
+      "scenario": "VT FlyTS Novice S5",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "VT Frogtagon Advanced S5",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "VT Frogtagon Intermediate S5",
+      "seconds": 60,
+      "runs": 28,
+      "agreement": 1
+    },
+    {
+      "scenario": "VT Frogtagon Novice S5",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "VT Ground Advanced S5",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "VT Ground Intermediate S5",
+      "seconds": 60,
+      "runs": 51,
+      "agreement": 0.9215686274509803
+    },
+    {
+      "scenario": "VT Ground Novice S5",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "VT Multiclick 180 Advanced",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "VT Pasu Advanced 3 Click",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "VT Pasu Advanced Regen",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "VT Pasu Advanced S5",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "VT Pasu Advanced S5 Hard",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "VT Pasu Intermediate S5",
+      "seconds": 60,
+      "runs": 35,
+      "agreement": 0.9714285714285714
+    },
+    {
+      "scenario": "VT Pasu Novice S5",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "VT Penta Bounce Advanced S5",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "VT Penta Bounce Intermediate S5",
+      "seconds": 59,
+      "runs": 13,
+      "agreement": 1
+    },
+    {
+      "scenario": "VT Penta Bounce Novice S5",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "VT PGT Advanced S5",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "VT PGT Intermediate S5",
+      "seconds": 60,
+      "runs": 49,
+      "agreement": 0.9183673469387755
+    },
+    {
+      "scenario": "VT PGT Novice S5",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "VT Plaza Viscose",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "VT Popcorn Advanced S5",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "VT Popcorn Intermediate S5",
+      "seconds": 59,
+      "runs": 38,
+      "agreement": 0.9210526315789473
+    },
+    {
+      "scenario": "VT Popcorn Novice S5",
+      "seconds": null,
+      "runs": 3,
+      "agreement": 0
+    },
+    {
+      "scenario": "VT PreciseOrb Intermediate 15% Slower",
+      "seconds": 60,
+      "runs": 31,
+      "agreement": 0.9354838709677419
+    },
+    {
+      "scenario": "VT Raw Control Advanced S5",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "VT Raw Control Intermediate S5",
+      "seconds": 60,
+      "runs": 15,
+      "agreement": 1
+    },
+    {
+      "scenario": "VT Raw Control Novice S5",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "VT Raw Control Novice S5 Hard",
+      "seconds": 60,
+      "runs": 23,
+      "agreement": 0.9565217391304348
+    },
+    {
+      "scenario": "VT SkyTS Zala Massive!",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "VT SkyTS Zala Massive! 3 bots",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "VT Smoothbot Intermediate Spherical",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "VT Smoothbot Novice 180",
+      "seconds": 60,
+      "runs": 145,
+      "agreement": 0.9172413793103448
+    },
+    {
+      "scenario": "VT Snake Track Advanced S5",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "VT Snake Track Intermediate S5",
+      "seconds": 60,
+      "runs": 34,
+      "agreement": 0.9411764705882353
+    },
+    {
+      "scenario": "VT Snake Track Novice S5",
+      "seconds": null,
+      "runs": 3,
+      "agreement": 0
+    },
+    {
+      "scenario": "VT VarClick Valorant",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "VT ww5t Advanced S5",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "VT ww5t Intermediate S5",
+      "seconds": 60,
+      "runs": 49,
+      "agreement": 0.9795918367346939
+    },
+    {
+      "scenario": "VT ww5t Novice S5",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "VTP Revosect Int",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "waldoTS",
+      "seconds": 59,
+      "runs": 9,
+      "agreement": 1
+    },
+    {
+      "scenario": "waldoTS Intermediate",
+      "seconds": 60,
+      "runs": 57,
+      "agreement": 0.9298245614035088
+    },
+    {
+      "scenario": "waldoTS Novice",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "waldoTS Perfected",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "WaveClick - KaliAIM",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "WaveSwitch Revosect Int",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "Wavy Micros Intermediate",
+      "seconds": 59,
+      "runs": 5,
+      "agreement": 0.6
+    },
+    {
+      "scenario": "Whisphere",
+      "seconds": 60,
+      "runs": 79,
+      "agreement": 0.7721518987341772
+    },
+    {
+      "scenario": "Whisphere Extra Small & Slow",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "Whisphere Med 60s",
+      "seconds": 60,
+      "runs": 162,
+      "agreement": 0.808641975308642
+    },
+    {
+      "scenario": "Whisphere Small & Slow",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "Whisphere Small & Slow 55%",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "Whisphere Small & Slow 75%",
+      "seconds": 60,
+      "runs": 23,
+      "agreement": 0.9130434782608695
+    },
+    {
+      "scenario": "Whisphere Viscose",
+      "seconds": 60,
+      "runs": 35,
+      "agreement": 1
+    },
+    {
+      "scenario": "Whisphere Viscose Easier",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "Whisphere Viscose Hard",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "WhisphereRawControl",
+      "seconds": 60,
+      "runs": 94,
+      "agreement": 0.9361702127659575
+    },
+    {
+      "scenario": "WhisphereRawControl 30% small",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "WhisphereRawControl Larger + Slowed",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "WhisphereTS Revosect Int",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "Wide Wall 10 Extra Small",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "Wide Wall 3 Targets TE",
+      "seconds": 60,
+      "runs": 19,
+      "agreement": 1
+    },
+    {
+      "scenario": "Wide Wall 4 Targets",
+      "seconds": 60,
+      "runs": 104,
+      "agreement": 0.9230769230769231
+    },
+    {
+      "scenario": "Wide Wall 4 Targets Small",
+      "seconds": 59,
+      "runs": 38,
+      "agreement": 0.8947368421052632
+    },
+    {
+      "scenario": "Wide Wall 6Targets Pasu Reload",
+      "seconds": null,
+      "runs": 3,
+      "agreement": 0
+    },
+    {
+      "scenario": "Widereflex Valorant Pro",
+      "seconds": null,
+      "runs": 4,
+      "agreement": 0
+    },
+    {
+      "scenario": "wobin SYW (Smooth Your Wrist) Truly FIXED Level2",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "Worm The Eater - @wa11p1per",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "ww3t Varied",
+      "seconds": 60,
+      "runs": 5,
+      "agreement": 1
+    },
+    {
+      "scenario": "ww3t Voltaic",
+      "seconds": 59,
+      "runs": 24,
+      "agreement": 1
+    },
+    {
+      "scenario": "ww3t Voltaic Larger",
+      "seconds": 60,
+      "runs": 200,
+      "agreement": 0.93
+    },
+    {
+      "scenario": "ww4t Voltaic",
+      "seconds": 60,
+      "runs": 86,
+      "agreement": 0.9418604651162791
+    },
+    {
+      "scenario": "ww5t Voltaic Slightly Larger",
+      "seconds": 60,
+      "runs": 6,
+      "agreement": 1
+    },
+    {
+      "scenario": "ww6t reload",
+      "seconds": null,
+      "runs": 2,
+      "agreement": 0
+    },
+    {
+      "scenario": "ww6ts reload",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "YoxTS Euphoric",
+      "seconds": null,
+      "runs": 1,
+      "agreement": 0
+    },
+    {
+      "scenario": "ZipTrack - THE FINALS",
+      "seconds": 60,
+      "runs": 35,
+      "agreement": 0.8571428571428571
+    }
+  ]
+}

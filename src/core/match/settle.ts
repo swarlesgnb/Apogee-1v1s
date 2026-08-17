@@ -25,6 +25,12 @@ export interface RoundSubmission {
   /** True when the baseline came from a fallback rather than real history. */
   provisional: boolean;
   verificationTier: VerificationTier;
+  /**
+   * True when the player left before the scenario finished: a crash, an alt-F4, or a
+   * quit. Derived from the run's own length against the scenario's known one
+   * (`isAbandonedRun`), never from anything the player could edit.
+   */
+  abandoned?: boolean;
 }
 
 export interface RoundOutcome extends RoundSubmission {
@@ -86,6 +92,19 @@ function settleSide(rounds: RoundSubmission[]): SideOutcome {
       };
     }
 
+    // A run that stopped early is not a bad performance, it is an absent one. Scoring
+    // it would let a crash on the one attempt that counts (PLAN.md §3) settle as a
+    // loss. Excluding it instead leaves this side a round short, which the round-count
+    // guard in settleMatch turns into a void at zero rating weight: no loss, no win.
+    if (round.abandoned) {
+      return {
+        ...round,
+        delta: null,
+        counted: false,
+        excludedReason: "left before the scenario finished",
+      };
+    }
+
     const delta = computeDelta(round.score, round.baseline);
     if (delta === null) {
       return {
@@ -131,13 +150,24 @@ export function settleMatch(input: SettlementInput): Settlement {
   }
 
   if (player.countedRounds !== opponent.countedRounds) {
+    // Name abandonment for what it is. This string is shown to the player, and "you
+    // completed 2 rounds and they completed 3" reads like the app lost track of
+    // something, which is the impression a void must not leave.
+    const abandonedRounds = [...player.rounds, ...opponent.rounds].filter(
+      (r) => r.abandoned,
+    );
+
     return {
       player,
       opponent,
       verdict: "void",
       voidReason:
-        `sides completed different numbers of rounds ` +
-        `(${player.countedRounds} vs ${opponent.countedRounds})`,
+        abandonedRounds.length > 0
+          ? `a scenario was left before it finished (${abandonedRounds
+              .map((r) => r.scenarioName)
+              .join(", ")})`
+          : `sides completed different numbers of rounds ` +
+            `(${player.countedRounds} vs ${opponent.countedRounds})`,
       ratingWeight: 0,
     };
   }
