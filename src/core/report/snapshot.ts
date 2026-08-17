@@ -11,6 +11,7 @@ import { readFileSync } from "node:fs";
 import { evaluateBenchmark } from "../benchmarks/energy.ts";
 import type { BenchmarkDef, DifficultyDef } from "../benchmarks/types.ts";
 import { dataFile } from "../dataDir.ts";
+import { hasSeason, loadSeason, seasonAsDifficulty, seasonLabels } from "../season/season.ts";
 import { computeBaseline, scanStatsFolder, type ScenarioHistory } from "../history/history.ts";
 import { selectScenarios, type SelectableScenario } from "../match/scenarioSelection.ts";
 import { explainVerdict, settleMatch, type RoundSubmission } from "../match/settle.ts";
@@ -116,9 +117,16 @@ export function pickDifficulty(
 export function buildSnapshot(options: SnapshotOptions): Snapshot | null {
   const now = options.now ?? new Date();
 
-  const benchmark = JSON.parse(
-    readFileSync(options.benchmarkPath ?? dataFile("benchmarks", "voltaic-s5.json"), "utf8"),
-  ) as BenchmarkDef;
+  // The season is the source of truth for what a rank means (PLAN.md §14). The
+  // benchmark file stays as a fallback so an install without a season still works and
+  // so `--benchmark` keeps doing what it says, but nothing normal reads it any more.
+  const useSeason = !options.benchmarkPath && hasSeason();
+
+  const benchmark = useSeason
+    ? null
+    : (JSON.parse(
+        readFileSync(options.benchmarkPath ?? dataFile("benchmarks", "voltaic-s5.json"), "utf8"),
+      ) as BenchmarkDef);
   const subcats = (
     JSON.parse(readFileSync(dataFile("subcategories.json"), "utf8")) as {
       families: Record<string, { skill: string; subCategory: string }>;
@@ -129,7 +137,21 @@ export function buildSnapshot(options: SnapshotOptions): Snapshot | null {
   const history = scanStatsFolder(options.statsDir);
   if (history.size === 0) return null;
 
-  const difficulty = pickDifficulty(benchmark, history);
+  // A season has no difficulties to pick between: splitting one benchmark into four
+  // was Voltaic's way of covering a skill range, and owning the pool means the split is
+  // three categories instead.
+  const season = useSeason ? loadSeason() : null;
+  const difficulty = season
+    ? seasonAsDifficulty(season)
+    : pickDifficulty(benchmark!, history);
+
+  // A season carries its own short labels. Deriving them from the difficulty name was
+  // fine while the difficulty was "Intermediate" and wrong the moment it became
+  // "Season 1": labels came out as "Pasu Intermediate", and since the sub-category map
+  // is keyed on the label, every scenario quietly lost its sub-category too.
+  const seasonLabel = season ? seasonLabels(season) : null;
+  const labelFor = (name: string) =>
+    seasonLabel?.get(name) ?? shortName(name, difficulty.name);
 
   const scores = new Map<string, number>();
   for (const cat of difficulty.categories) {
@@ -169,8 +191,8 @@ export function buildSnapshot(options: SnapshotOptions): Snapshot | null {
     perScenario: Math.round(cat.energy / Math.max(1, cat.scenarios.length)),
     scenarios: cat.scenarios.map((s) => ({
       name: s.scenario.name,
-      label: shortName(s.scenario.name, difficulty.name),
-      subCategory: subcats[shortName(s.scenario.name, difficulty.name)]?.subCategory ?? null,
+      label: labelFor(s.scenario.name),
+      subCategory: subcats[labelFor(s.scenario.name)]?.subCategory ?? null,
       score: s.score,
       rankName: s.rankName,
       energy: Math.round(s.energy),
@@ -186,7 +208,7 @@ export function buildSnapshot(options: SnapshotOptions): Snapshot | null {
   let nextId = 1;
   const pool: SelectableScenario[] = difficulty.categories.flatMap((cat) =>
     cat.scenarios.map((s) => {
-      const family = shortName(s.name, difficulty.name);
+      const family = labelFor(s.name);
       return {
         id: nextId++,
         name: s.name,
@@ -287,8 +309,11 @@ export function buildSnapshot(options: SnapshotOptions): Snapshot | null {
   return {
     generatedAt: now.toISOString(),
     benchmark: {
-      name: benchmark.benchmarkName,
-      difficulty: difficulty.name,
+      name: season ? season.name : benchmark!.benchmarkName,
+      // A season has no difficulty, and repeating its name in that slot printed
+      // "Season 1 Season 1" everywhere the two are shown together. Empty is the honest
+      // value; every reader already joins these with a space and trims.
+      difficulty: season ? "" : difficulty.name,
       rankNames: difficulty.rankNames,
       rankColors: difficulty.rankColors,
     },

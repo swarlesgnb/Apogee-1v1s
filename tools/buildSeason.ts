@@ -60,10 +60,25 @@ interface VoltaicCategory {
 interface SeasonScenario {
   scenario: string;
   category: string;
+  label: string;
   leaderboardId: number | null;
   rankMaxes: number[];
   /** Where this machine's own history sits against the ladder above. */
   corpus?: { runs: number; best: number; median: number; reaches: string | null };
+}
+
+/**
+ * "VT Pasu Intermediate S5" -> "Pasu".
+ *
+ * Computed once here and stored on the season, rather than re-derived downstream from
+ * a difficulty the season no longer has.
+ */
+function shortLabel(scenario: string, difficulty: string): string {
+  return scenario
+    .replace(/^VT\s+/, "")
+    .replace(new RegExp(`\\s*${difficulty}\\s*`, "i"), " ")
+    .replace(/\s*S\d(\.\d)?\s*$/i, "")
+    .trim();
 }
 
 function median(values: number[]): number {
@@ -118,6 +133,7 @@ function main(): void {
       const entry: SeasonScenario = {
         scenario: s.name,
         category: cat.name,
+        label: shortLabel(s.name, difficulty),
         leaderboardId: s.leaderboardId ?? null,
         rankMaxes: s.rankMaxes,
       };
@@ -137,11 +153,28 @@ function main(): void {
     }
   }
 
+  // Category energy thresholds, carried rather than derived.
+  //
+  // Two of the three fall out of the energy model exactly - a category's rank is the
+  // sum of its scenarios', so six scenarios give n * 2500 * (i + 1). Switching does
+  // not: Voltaic asks 17,500 where the others ask 15,000, deliberately making the same
+  // rank harder there. That asymmetry is a judgement about the game, and a season that
+  // silently re-derived it would quietly overrule a decision its owner should be
+  // making on purpose.
+  const categories = (source.categories as VoltaicCategory[]).map((c) => ({
+    name: c.name,
+    rankMaxes: c.rankMaxes,
+    derivable: c.rankMaxes.every(
+      (v, i) => v === c.scenarios.length * 2500 * (i + 1),
+    ),
+  }));
+
   const season = {
     name: "Season 1",
     status: "draft",
     rankNames: RANK_NAMES,
     rankColors: RANK_COLORS,
+    categories,
     seededFrom: {
       benchmark: voltaic.benchmarkName,
       difficulty,

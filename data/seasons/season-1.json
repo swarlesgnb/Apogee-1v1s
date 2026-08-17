@@ -13,6 +13,38 @@
     "Tier III": "#C79A4F",
     "Tier IV": "#C75FA8"
   },
+  "categories": [
+    {
+      "name": "Clicking",
+      "rankMaxes": [
+        15000,
+        30000,
+        45000,
+        60000
+      ],
+      "derivable": true
+    },
+    {
+      "name": "Tracking",
+      "rankMaxes": [
+        15000,
+        30000,
+        45000,
+        60000
+      ],
+      "derivable": true
+    },
+    {
+      "name": "Switching",
+      "rankMaxes": [
+        17500,
+        35000,
+        52500,
+        70000
+      ],
+      "derivable": false
+    }
+  ],
   "seededFrom": {
     "benchmark": "Voltaic S5",
     "difficulty": "Intermediate",
@@ -24,11 +56,12 @@
     ],
     "note": "Thresholds are Voltaic's published numbers, taken as a starting point we own rather than a source we track. Rank names are ours and are placeholders. Season 2 derives its thresholds from season 1's population instead."
   },
-  "builtAt": "2026-08-17T20:39:09.173Z",
+  "builtAt": "2026-08-17T20:45:24.772Z",
   "scenarios": [
     {
       "scenario": "VT Pasu Intermediate S5",
       "category": "Clicking",
+      "label": "Pasu",
       "leaderboardId": 98330,
       "rankMaxes": [
         770,
@@ -46,6 +79,7 @@
     {
       "scenario": "VT Popcorn Intermediate S5",
       "category": "Clicking",
+      "label": "Popcorn",
       "leaderboardId": 98333,
       "rankMaxes": [
         600,
@@ -63,6 +97,7 @@
     {
       "scenario": "VT 1w3ts Intermediate S5",
       "category": "Clicking",
+      "label": "1w3ts",
       "leaderboardId": 103209,
       "rankMaxes": [
         1120,
@@ -80,6 +115,7 @@
     {
       "scenario": "VT ww5t Intermediate S5",
       "category": "Clicking",
+      "label": "ww5t",
       "leaderboardId": 98029,
       "rankMaxes": [
         1310,
@@ -97,6 +133,7 @@
     {
       "scenario": "VT Frogtagon Intermediate S5",
       "category": "Clicking",
+      "label": "Frogtagon",
       "leaderboardId": 105828,
       "rankMaxes": [
         940,
@@ -114,6 +151,7 @@
     {
       "scenario": "VT Floating Heads Intermediate S5",
       "category": "Clicking",
+      "label": "Floating Heads",
       "leaderboardId": 98055,
       "rankMaxes": [
         610,
@@ -131,6 +169,7 @@
     {
       "scenario": "VT PGT Intermediate S5",
       "category": "Tracking",
+      "label": "PGT",
       "leaderboardId": 98331,
       "rankMaxes": [
         2275,
@@ -148,6 +187,7 @@
     {
       "scenario": "VT Snake Track Intermediate S5",
       "category": "Tracking",
+      "label": "Snake Track",
       "leaderboardId": 98045,
       "rankMaxes": [
         2800,
@@ -165,6 +205,7 @@
     {
       "scenario": "VT Aether Intermediate S5",
       "category": "Tracking",
+      "label": "Aether",
       "leaderboardId": 101369,
       "rankMaxes": [
         2175,
@@ -182,6 +223,7 @@
     {
       "scenario": "VT Ground Intermediate S5",
       "category": "Tracking",
+      "label": "Ground",
       "leaderboardId": 101743,
       "rankMaxes": [
         2550,
@@ -199,6 +241,7 @@
     {
       "scenario": "VT Raw Control Intermediate S5",
       "category": "Tracking",
+      "label": "Raw Control",
       "leaderboardId": 98048,
       "rankMaxes": [
         2775,
@@ -216,6 +259,7 @@
     {
       "scenario": "VT Controlsphere Intermediate S5",
       "category": "Tracking",
+      "label": "Controlsphere",
       "leaderboardId": 103353,
       "rankMaxes": [
         2750,
@@ -233,6 +277,7 @@
     {
       "scenario": "VT DotTS Intermediate S5",
       "category": "Switching",
+      "label": "DotTS",
       "leaderboardId": 104865,
       "rankMaxes": [
         1110,
@@ -250,6 +295,7 @@
     {
       "scenario": "VT EddieTS Intermediate S5",
       "category": "Switching",
+      "label": "EddieTS",
       "leaderboardId": 105176,
       "rankMaxes": [
         880,
@@ -267,6 +313,7 @@
     {
       "scenario": "VT DriftTS Intermediate S5",
       "category": "Switching",
+      "label": "DriftTS",
       "leaderboardId": 104863,
       "rankMaxes": [
         390,
@@ -284,6 +331,7 @@
     {
       "scenario": "VT FlyTS Intermediate S5",
       "category": "Switching",
+      "label": "FlyTS",
       "leaderboardId": 105142,
       "rankMaxes": [
         520,
@@ -301,6 +349,7 @@
     {
       "scenario": "VT ControlTS Intermediate S5",
       "category": "Switching",
+      "label": "ControlTS",
       "leaderboardId": 104890,
       "rankMaxes": [
         420,
@@ -318,6 +367,7 @@
     {
       "scenario": "VT Penta Bounce Intermediate S5",
       "category": "Switching",
+      "label": "Penta Bounce",
       "leaderboardId": 103261,
       "rankMaxes": [
         450,

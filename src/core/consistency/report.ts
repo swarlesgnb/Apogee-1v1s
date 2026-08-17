@@ -14,6 +14,7 @@ import { readFileSync } from "node:fs";
 import { evaluateBenchmark } from "../benchmarks/energy.ts";
 import type { BenchmarkDef, DifficultyDef } from "../benchmarks/types.ts";
 import { dataFile } from "../dataDir.ts";
+import { hasSeason, loadSeason, seasonAsDifficulty } from "../season/season.ts";
 import { scanStatsFolder, type ScenarioHistory } from "../history/history.ts";
 import { computeFloor, floorsFor, overallGap, type FloorMethod } from "./floor.ts";
 
@@ -78,9 +79,14 @@ function main(): void {
   const method = (arg("--method") ?? "worstOfLast5") as FloorMethod;
   const compare = process.argv.includes("--compare");
 
-  const benchmark = JSON.parse(
-    readFileSync(dataFile("benchmarks", "voltaic-s5.json"), "utf8"),
-  ) as BenchmarkDef;
+  // The season decides what a rank means (PLAN.md §14); the benchmark file is only a
+  // fallback for an install that has no season yet.
+  const season = hasSeason() ? loadSeason() : null;
+  const benchmark = season
+    ? null
+    : (JSON.parse(
+        readFileSync(dataFile("benchmarks", "voltaic-s5.json"), "utf8"),
+      ) as BenchmarkDef);
 
   const history = scanStatsFolder(statsDir);
   if (history.size === 0) {
@@ -88,7 +94,12 @@ function main(): void {
     process.exit(1);
   }
 
-  const difficulty = pickDifficulty(benchmark, history);
+  const difficulty = season
+    ? seasonAsDifficulty(season)
+    : pickDifficulty(benchmark!, history);
+
+  // What to call the thing being measured against, whichever it is.
+  const definitionName = season ? season.name : `${benchmark!.benchmarkName} ${difficulty.name}`;
   const scenarios = difficulty.categories.flatMap((c) => c.scenarios);
 
   const scoreHistory = new Map<string, number[]>();
@@ -100,7 +111,7 @@ function main(): void {
   // ---- comparing definitions ----------------------------------------------------
   if (compare) {
     console.log(`\n${BOLD}How should the floor be defined?${RESET}`);
-    console.log(`${DIM}${benchmark.benchmarkName} ${difficulty.name}${RESET}\n`);
+    console.log(`${DIM}${definitionName}${RESET}\n`);
     console.log("method            floor rank    energy    mean gap   worst scenario");
 
     for (const m of ["worstOfLast5", "worstOfLast10", "p20OfLast20", "p10OfLast20"] as FloorMethod[]) {
@@ -142,7 +153,7 @@ function main(): void {
   const colorOf = (rank: string | null) => fg(rank ? difficulty.rankColors[rank] : undefined);
 
   console.log();
-  console.log(`${BOLD}${benchmark.benchmarkName} — ${difficulty.name}${RESET}`);
+  console.log(`${BOLD}${definitionName}${RESET}`);
   console.log(`${DIM}floor method: ${method}${RESET}\n`);
 
   console.log(
