@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-17T20:04:41.803Z",
+  "generatedAt": "2026-08-17T20:23:07.544Z",
   "benchmark": {
     "name": "Voltaic S5",
     "difficulty": "Intermediate",
@@ -17,7 +17,7 @@
     }
   },
   "player": {
-    "totalRuns": 11110,
+    "totalRuns": 11116,
     "scenarioCount": 803,
     "streak": 16,
     "benchmarkRank": "Diamond",
@@ -267,7 +267,7 @@
           "nextRankName": "Jade",
           "nextRankScore": 3500,
           "gap": 254,
-          "runs": 35
+          "runs": 36
         },
         {
           "name": "VT Aether Intermediate S5",
@@ -279,7 +279,7 @@
           "nextRankName": "Jade",
           "nextRankScore": 2900,
           "gap": 125,
-          "runs": 102
+          "runs": 103
         },
         {
           "name": "VT Ground Intermediate S5",
@@ -303,7 +303,7 @@
           "nextRankName": "Jade",
           "nextRankScore": 3550,
           "gap": 37,
-          "runs": 15
+          "runs": 16
         },
         {
           "name": "VT Controlsphere Intermediate S5",
@@ -446,7 +446,7 @@
         "label": "Aether",
         "ceiling": 2775,
         "floor": 2169,
-        "median": 2219.5,
+        "median": 2223,
         "gap": 0.21837837837837837
       },
       {
@@ -454,7 +454,7 @@
         "label": "Snake Track",
         "ceiling": 3246,
         "floor": 2572,
-        "median": 2927,
+        "median": 2929.5,
         "gap": 0.20764017252002465
       },
       {
@@ -470,7 +470,7 @@
         "label": "Raw Control",
         "ceiling": 3513,
         "floor": 2841,
-        "median": 2946,
+        "median": 2959,
         "gap": 0.19128949615713065
       },
       {
@@ -578,10 +578,10 @@
     },
     "winProbability": 0.552728316151137,
     "verdict": "loss",
-    "explanation": "You lose: −10.0% vs +1.2% against your own baselines.",
+    "explanation": "You lose: −4.1% vs +1.2% against your own baselines.",
     "ratingWeight": 1,
-    "playerMatchScore": -0.09953921271716666,
-    "opponentMatchScore": 0.012263790240361094,
+    "playerMatchScore": -0.04130365357973361,
+    "opponentMatchScore": 0.012326149417941223,
     "rounds": [
       {
         "label": "Controlsphere",
@@ -612,14 +612,14 @@
       {
         "label": "Snake Track",
         "you": {
-          "score": 2572,
-          "baseline": 2927,
-          "delta": -0.12128459173214896
+          "score": 3086,
+          "baseline": 2930,
+          "delta": 0.053422085680150194
         },
         "them": {
-          "score": 2890,
-          "baseline": 2839,
-          "delta": 0.017895949196777935
+          "score": 2893,
+          "baseline": 2842,
+          "delta": 0.018083026729518326
         }
       }
     ]

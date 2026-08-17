@@ -256,8 +256,31 @@ Deno.serve(handler(async (req, admin) => {
       yourMatchScore: side.matchScore,
       theirMatchScore: null,
       countedRounds: side.countedRounds,
-      rounds: side.rounds,
+      // Same shape the contested path returns. Handing back the raw rounds instead put
+      // `scenarioName` where the client reads `scenario`, and every row in the result
+      // table said "undefined".
+      rounds: side.rounds.map((r) => ({
+        scenario: r.scenarioName,
+        score: r.score,
+        baseline: Math.round(r.baseline),
+        delta: r.delta,
+        // No opponent to compare against, and null says that. Zero would read as an
+        // opponent who scored exactly their baseline, which is a claim about somebody
+        // who does not exist.
+        opponentDelta: null,
+        counted: r.counted,
+        excludedReason: r.excludedReason ?? null,
+        verificationTier: r.verificationTier,
+      })),
       ratingChange: 0,
+      // The client reads `explanation` for the line under the verdict, so a seeding
+      // result has to fill it or that line renders "undefined".
+      explanation:
+        side.countedRounds === scenarioIds.length
+          ? "Nothing was rated: there was no opponent to play against. Your run set is " +
+            "now in the pool, and the next player to queue this category plays against it."
+          : "Recorded, but not every scenario counted, so this run set is not in the " +
+            "pool yet.",
       message:
         side.countedRounds === scenarioIds.length
           ? "Your run set is in the pool. The next player to queue this category plays against it."

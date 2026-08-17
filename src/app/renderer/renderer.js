@@ -457,27 +457,38 @@ function renderNoResultYet() {
  */
 function renderSettled(s) {
   hasRealResult = true;
+
+  // A seeding match has no opponent and therefore no verdict. Without this it fell
+  // through to the losing branch and announced DEFEAT in red over three runs that beat
+  // their baselines - which is not a wrong colour, it is a wrong claim about what
+  // happened.
+  const isSeeding = s.seeding || s.verdict == null;
   const won = s.verdict === "win";
   const isVoid = s.verdict === "void";
 
-  $("verdictBig").textContent = isVoid
-    ? "Void"
+  $("verdictBig").textContent = isSeeding
+    ? "Run set recorded"
+    : isVoid ? "Void"
     : won ? "Victory" : s.verdict === "draw" ? "Draw" : "Defeat";
-  $("verdictBig").style.color = isVoid
-    ? "var(--ink-mid)"
+  $("verdictBig").style.color = isSeeding
+    ? "var(--ink)"
+    : isVoid ? "var(--ink-mid)"
     : won ? "var(--up)" : s.verdict === "draw" ? "var(--ink)" : "var(--down)";
 
-  $("verdictScores").textContent = isVoid
-    ? (s.voidReason || "match could not be settled")
-    : pct(s.yourMatchScore ?? 0) + " vs " + pct(s.theirMatchScore ?? 0) +
-      " against baseline" +
-      (s.ratingWeight < 1 ? `   ·   ${Math.round(s.ratingWeight * 100)}% weight (provisional)` : "");
+  $("verdictScores").textContent = isSeeding
+    ? pct(s.yourMatchScore ?? 0) + " against your own baselines · no opponent yet"
+    : isVoid
+      ? (s.voidReason || "match could not be settled")
+      : pct(s.yourMatchScore ?? 0) + " vs " + pct(s.theirMatchScore ?? 0) +
+        " against baseline" +
+        (s.ratingWeight < 1 ? `   ·   ${Math.round(s.ratingWeight * 100)}% weight (provisional)` : "");
 
   const change = s.ratingChange;
-  $("ratingMove").textContent = isVoid
-    ? "no change"
+  $("ratingMove").textContent = isSeeding
+    ? "not rated"
+    : isVoid ? "no change"
     : `${change >= 0 ? "+" : "−"}${Math.abs(change)} · ${s.ratingAfter}`;
-  $("ratingMove").style.color = isVoid
+  $("ratingMove").style.color = isSeeding || isVoid
     ? "var(--ink-dim)"
     : change > 0 ? "var(--up)" : change < 0 ? "var(--down)" : "var(--ink-mid)";
 
@@ -487,8 +498,18 @@ function renderSettled(s) {
   body.textContent = "";
   s.rounds.forEach((r) => {
     const yours = r.delta ?? 0;
+    // Null means there is nobody on the other side, which is not the same as an
+    // opponent who scored their baseline exactly. Treating it as zero is what turned
+    // three unopposed rounds into three "won" rows under a DEFEAT banner.
+    const hasOpponent = r.opponentDelta != null;
     const theirs = r.opponentDelta ?? 0;
-    const youWon = r.counted && yours > theirs;
+    const youWon = r.counted && hasOpponent && yours > theirs;
+
+    const outcome = !r.counted
+      ? esc(r.excludedReason || "excluded")
+      : !hasOpponent ? "recorded"
+      : youWon ? "won" : "lost";
+
     const tr = document.createElement("tr");
     tr.innerHTML =
       "<td>" + esc(r.scenario) + "</td>" +
@@ -500,10 +521,10 @@ function renderSettled(s) {
       '<td class="' + (yours >= 0 ? "up" : "down") + '">' +
         (r.counted ? pct(yours) : "—") + "</td>" +
       "<td>—</td>" +
-      '<td class="' + (theirs >= 0 ? "up" : "down") + '">' + pct(theirs) + "</td>" +
-      '<td class="' + (youWon ? "won-round" : "") + '">' +
-        (r.counted ? (youWon ? "won" : "lost") : esc(r.excludedReason || "excluded")) +
-      "</td>";
+      (hasOpponent
+        ? '<td class="' + (theirs >= 0 ? "up" : "down") + '">' + pct(theirs) + "</td>"
+        : "<td>—</td>") +
+      '<td class="' + (youWon ? "won-round" : "") + '">' + outcome + "</td>";
     body.append(tr);
   });
 }
