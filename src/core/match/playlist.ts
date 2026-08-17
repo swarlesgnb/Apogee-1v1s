@@ -26,6 +26,26 @@
 const PLAYLIST_FORMAT_VERSION = 31;
 
 /**
+ * KovaaK's deep link, copied from the format string in its own shipping binary:
+ *
+ *     steam://run/%s//?action=jump-to-scenario&name=%s&mode=%s
+ *
+ * The doubled slash is Steam's separator between the app id and the arguments it hands
+ * to the game, and this is the game's literal, so it is reproduced rather than tidied.
+ * KovaaK's registers no scheme of its own; the deep link is Steam's, which is why
+ * scanning the registry for one found nothing and proved nothing.
+ *
+ * `mode` is challenge or freeplay. Matches are always challenge: freeplay does not
+ * produce a scored run.
+ */
+export function jumpToScenarioUrl(appId: string, scenario: string): string {
+  return (
+    `steam://run/${appId}//?action=jump-to-scenario` +
+    `&name=${encodeURIComponent(scenario)}&mode=challenge`
+  );
+}
+
+/**
  * Prefix every Apogee playlist carries. Also what identifies our own leftovers as safe
  * to delete, so nothing the player made themselves is ever touched.
  */

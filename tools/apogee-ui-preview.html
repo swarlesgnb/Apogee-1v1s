@@ -804,7 +804,7 @@
 
 
 <script id="apogee-snapshot" type="application/json">{
-  "generatedAt": "2026-08-17T17:18:15.145Z",
+  "generatedAt": "2026-08-17T17:47:43.567Z",
   "benchmark": {
     "name": "Voltaic S5",
     "difficulty": "Intermediate",
@@ -2335,16 +2335,18 @@ if (HOST === "electron") {
         return;
       }
 
-      // Say exactly where to go. Steam can only start the game, so the player still has
-      // to pick the playlist, and the previous wording left that as a guess: KovaaK's
-      // opens on whatever scenario it had last, which reads like the button failed.
-      $("matchHint").textContent = result.launched
-        ? `In KovaaK's, open Playlists and pick "${result.playlistName}". ` +
-          "If it is not listed, restart KovaaK's - it reads playlists at startup."
-        : `Playlist "${result.playlistName}" is ready, but Steam did not start the game. ` +
-          "Launch KovaaK's yourself and pick it from Playlists.";
+      // KovaaK's opens directly in the first scenario. The other two are in the
+      // playlist, which is the only way to reach them: a local playlist cannot be
+      // deep-linked, only a published one.
+      $("matchHint").textContent = !result.launched
+        ? `Playlist "${result.playlistName}" is ready, but Steam did not start the game. ` +
+          "Launch KovaaK's yourself and pick it from Playlists."
+        : result.jumpedTo
+          ? `Opening ${result.jumpedTo}. For the other two, open Playlists and pick ` +
+            `"${result.playlistName}".`
+          : `In KovaaK's, open Playlists and pick "${result.playlistName}".`;
 
-      btn.textContent = "Playlist ready";
+      btn.textContent = "Opening KovaaK's";
     } catch (err) {
       showError(String(err));
       btn.textContent = "Play in KovaaK's";

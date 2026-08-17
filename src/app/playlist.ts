@@ -1,16 +1,17 @@
 /**
  * Put a match's scenarios into KovaaK's, and start the game.
  *
- * The gap this closes: KovaaK's registers no URL scheme on Windows. Aim Lab does, which
- * is why one-click "play this scenario" links exist for that and not for this; the
- * KovaaK's sites offering the same thing are really handing over a share code to paste.
- * Checked against the registry rather than assumed: nothing under HKLM or HKCU Classes
- * answers to kovaaks, fpsaim, aimtrainer or voltaic.
+ * KovaaK's registers no URL scheme of its own - nothing under HKLM or HKCU Classes
+ * answers to kovaaks, fpsaim, aimtrainer or voltaic, while aimlab does. The conclusion
+ * first drawn from that, that nothing could deep-link into the game, was wrong: the
+ * deep link is Steam's. `steam://run/<appid>//?...` hands its query string to the game
+ * as launch arguments, and KovaaK's parses them in
+ * USteamEventManager::HandleNewLaunchQueryParameters. Its own format string ships in
+ * the binary.
  *
- * So the closest honest thing to one button is two steps that need no typing: write the
- * three scenarios as a local playlist, then launch the game through Steam. The player
- * picks "Apogee Match" from their playlist menu instead of searching for scenario names
- * one at a time.
+ * So the button does both halves. It jumps straight into the first scenario, and writes
+ * the other two as a local playlist, because `jump-to-playlist` keys on a published
+ * playlist's share code and Apogee's are local files.
  */
 
 import { existsSync, mkdirSync, readdirSync, unlinkSync, writeFileSync } from "node:fs";
@@ -20,6 +21,7 @@ import { shell } from "electron";
 import {
   buildMatchPlaylist,
   isApogeePlaylistFile,
+  jumpToScenarioUrl,
   playlistFileName,
   serializePlaylist,
   type MatchPlaylistOptions,
@@ -126,18 +128,40 @@ function sweepOldPlaylists(folder: string, keep: string): number {
 }
 
 /**
- * Ask Steam to start KovaaK's.
+ * Ask Steam to start KovaaK's, in a named scenario when one is given.
  *
- * `steam://rungameid/` is a Steam scheme, not a KovaaK's one, so it can launch the game
- * and nothing more: there is no argument that selects a scenario or a playlist. The
- * playlist has to already be on disk for the player to pick, which is why writing it
- * comes first.
+ * KovaaK's registers no URL scheme of its own - the earlier conclusion that therefore
+ * nothing could deep-link into it was wrong. Steam's `run` URL passes its query string
+ * through to the game as launch arguments, and KovaaK's reads them. Its own format
+ * string, lifted from the shipping binary rather than guessed:
+ *
+ *     steam://run/%s//?action=jump-to-scenario&name=%s&mode=%s
+ *
+ * Note the doubled slash after the app id: that is Steam's separator between the id and
+ * the arguments, and this is the game's own literal, so it is reproduced exactly.
+ *
+ * The binary also carries `jump-to-playlist`, which would be the better fit, but the
+ * parameter names sitting beside it are `sharecode` and `code`: it opens a *published*
+ * playlist by its share code. Apogee writes local playlists (playlistId 0, no share
+ * code), so using it would mean publishing every match to KovaaK's servers. Launching
+ * the first scenario directly and leaving the playlist on disk for the other two is the
+ * better trade.
  */
-export async function launchKovaaks(): Promise<{ ok: boolean; error?: string }> {
+export async function launchKovaaks(
+  scenario?: string | null,
+): Promise<{ ok: boolean; jumped: boolean; error?: string }> {
+  const url = scenario
+    ? jumpToScenarioUrl(KOVAAKS_APP_ID, scenario)
+    : `steam://rungameid/${KOVAAKS_APP_ID}`;
+
   try {
-    await shell.openExternal(`steam://rungameid/${KOVAAKS_APP_ID}`);
-    return { ok: true };
+    await shell.openExternal(url);
+    return { ok: true, jumped: !!scenario };
   } catch (err) {
-    return { ok: false, error: err instanceof Error ? err.message : String(err) };
+    return {
+      ok: false,
+      jumped: false,
+      error: err instanceof Error ? err.message : String(err),
+    };
   }
 }

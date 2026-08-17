@@ -23,6 +23,7 @@ import {
   MATCH_PLAYLIST_PREFIX,
   matchPlaylistName,
   isApogeePlaylistFile,
+  jumpToScenarioUrl,
   playlistFileName,
   serializePlaylist,
 } from "./playlist.ts";
@@ -109,6 +110,22 @@ function shape(): void {
     threw = true;
   }
   check("refuses to write an empty playlist", threw);
+
+  // ---- the deep link ---------------------------------------------------------------
+  //
+  // Asserted literally against the format string in KovaaK's shipping binary:
+  //   steam://run/%s//?action=jump-to-scenario&name=%s&mode=%s
+  // A typo here fails silently - Steam launches the game and the game ignores an
+  // argument it does not recognise - so it is pinned rather than eyeballed.
+  const url = jumpToScenarioUrl("824270", "VT Pasu Intermediate S5");
+  check(
+    "the deep link matches the game's own format string",
+    url === "steam://run/824270//?action=jump-to-scenario&name=VT%20Pasu%20Intermediate%20S5&mode=challenge",
+    url,
+  );
+  check("the app id separator is a doubled slash", url.includes("/824270//?action="));
+  check("scenario names are encoded, not pasted", jumpToScenarioUrl("1", "a&b=c").includes("a%26b%3Dc"));
+  check("matches launch in challenge mode, never freeplay", url.endsWith("&mode=challenge"));
 }
 
 function againstRealFiles(dir: string): void {

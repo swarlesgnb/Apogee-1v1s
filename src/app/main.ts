@@ -733,16 +733,22 @@ ipcMain.handle("apogee:launchMatch", async () => {
 
   if (!written.ok) return { error: written.error };
 
+  // Jump straight into the first scenario. The playlist still gets written, because
+  // nothing can deep-link into a *local* playlist and the player needs the other two
+  // scenarios queued up somewhere.
+  //
   // A running game read its playlists at startup, so a match written now will not
   // appear until it restarts. Better to say so than to have the player hunt for a
   // playlist that is genuinely on disk and genuinely not on screen.
-  const launched = await launchKovaaks();
+  const first = state.match.scenarios[0]?.name ?? null;
+  const launched = await launchKovaaks(first);
 
   return {
     ok: true,
     playlistName: written.playlistName,
     path: written.path,
     launched: launched.ok,
+    jumpedTo: launched.jumped ? first : null,
     launchError: launched.error,
   };
 });
