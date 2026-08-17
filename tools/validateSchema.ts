@@ -44,6 +44,17 @@ const AUTH_STUB = `
   -- prove the policies compile and reference real columns.
   create or replace function auth.uid() returns uuid
     language sql stable as $$ select null::uuid $$;
+
+  -- The three roles PostgREST switches into, and the blanket table grant Supabase
+  -- hands them on every new table. Both halves matter: a migration that narrows a
+  -- privilege has nothing to narrow unless the permissive default is here too, so
+  -- without this the column grants would appear to work while testing nothing.
+  create role anon nologin;
+  create role authenticated nologin;
+  create role service_role nologin bypassrls;
+  grant usage on schema public to anon, authenticated, service_role;
+  alter default privileges in schema public
+    grant all on tables to anon, authenticated, service_role;
 `;
 
 async function main(): Promise<void> {

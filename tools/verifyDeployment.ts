@@ -160,19 +160,63 @@ async function main(): Promise<void> {
   );
 
   // Private tables must not leak to an anonymous reader.
+  //
+  // Ground-truth these against the service role before asserting anything. The first
+  // version of the players check asserted only that anon saw zero rows, which is what
+  // an empty table returns however the policy is written: it passed for as long as
+  // nobody had signed up, tested nothing while it did, and went red the day a real
+  // account existed. A leak check that cannot fail is worse than no check, so each one
+  // below first establishes that there is in fact something to leak.
+  const rowsAs = async (path: string, key: string): Promise<unknown[] | null> => {
+    const res = await rest(path, key);
+    if (res.status !== 200) return null;
+    try {
+      const parsed = JSON.parse(res.body || "[]");
+      return Array.isArray(parsed) ? parsed : null;
+    } catch {
+      return null;
+    }
+  };
+
+  const realPlayers = await rowsAs("players?select=id&limit=5", SECRET!);
+  check(
+    "there are player rows to leak, so the next checks mean something",
+    (realPlayers?.length ?? 0) > 0,
+    `${realPlayers?.length ?? 0} players`,
+  );
+
   const readPlayers = await rest("players?select=steam_id&limit=1", ANON!);
   const players = readPlayers.status === 200 ? JSON.parse(readPlayers.body || "[]") : null;
   check(
-    "player profiles readable but empty (no accounts yet)",
-    readPlayers.status === 200 && Array.isArray(players) && players.length === 0,
+    "anon CANNOT read player profiles",
+    readPlayers.status === 401 || readPlayers.status === 403 ||
+      (Array.isArray(players) && players.length === 0),
     `HTTP ${readPlayers.status}, ${players?.length ?? "?"} rows`,
+  );
+
+  // Moderation state is withheld from its subject too, which is a column privilege
+  // rather than a policy: RLS chooses rows, not columns. A player who can read
+  // under_review on their own row knows exactly when to stop.
+  const readFlags = await rest("players?select=flags&limit=1", ANON!);
+  check(
+    "anon CANNOT read moderation flags",
+    readFlags.status !== 200,
+    `HTTP ${readFlags.status}`,
+  );
+
+  const realRuns = await rowsAs("runs?select=id&limit=5", SECRET!);
+  check(
+    "there are run rows to leak, so the next check means something",
+    (realRuns?.length ?? 0) > 0,
+    `${realRuns?.length ?? 0}+ runs`,
   );
 
   const readRuns = await rest("runs?select=score&limit=1", ANON!);
   const runs = readRuns.status === 200 ? JSON.parse(readRuns.body || "[]") : null;
   check(
     "anon sees no runs belonging to others",
-    readRuns.status === 200 && Array.isArray(runs) && runs.length === 0,
+    readRuns.status === 401 || readRuns.status === 403 ||
+      (Array.isArray(runs) && runs.length === 0),
     `HTTP ${readRuns.status}`,
   );
 
