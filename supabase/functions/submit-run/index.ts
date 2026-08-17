@@ -19,6 +19,7 @@
  */
 
 import {
+  deadlineAfterRun,
   handler,
   json,
   readJson,
@@ -236,6 +237,22 @@ Deno.serve(handler(async (req, admin) => {
     );
   }
 
+  // Push the deadline forward from the moment this run ended.
+  //
+  // The clock is an idle allowance, not a total (see IDLE_ALLOWANCE_MS): a single
+  // deadline from match creation would charge the player for their own loading screens,
+  // and losing to one is not a rule anybody would accept. Restarting it here is what
+  // makes playing free and leaves only idling in a menu to spend it.
+  //
+  // A rejected run still counts as activity. It is evidence the player is at their
+  // machine playing, which is the only thing this clock is measuring, and letting a bad
+  // verification also start a countdown would punish the same run twice.
+  let expiresAt: string | null = null;
+  if (body.matchId) {
+    expiresAt = deadlineAfterRun(run.playedAt ?? new Date()).toISOString();
+    await admin.from("matches").update({ expires_at: expiresAt }).eq("id", body.matchId);
+  }
+
   return json({
     runId: inserted?.id ?? null,
     scenario: run.scenario,
@@ -244,5 +261,6 @@ Deno.serve(handler(async (req, admin) => {
     reasons: outcome.reasons,
     advisories: outcome.advisories,
     counted: outcome.tier !== "rejected",
+    expiresAt,
   });
 }));

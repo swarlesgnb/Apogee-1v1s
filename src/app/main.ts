@@ -241,6 +241,11 @@ async function maybeSubmitForMatch(scenarioName: string, file: string): Promise<
 
   try {
     const result = await submitRun(state.statsDir, file, match.matchId);
+
+    // The clock only runs while nobody is playing, so a landed run moves the deadline.
+    // Keep the cached match in step or the countdown shows a time that has passed.
+    if (result.expiresAt) match.expiresAt = result.expiresAt;
+
     broadcast("apogee:matchProgress", {
       matchId: match.matchId,
       scenarioId: wanted.id,
@@ -249,6 +254,7 @@ async function maybeSubmitForMatch(scenarioName: string, file: string): Promise<
       score: result.score,
       verificationTier: result.verificationTier,
       advisories: result.advisories,
+      expiresAt: result.expiresAt ?? null,
       remaining: match.scenarios.filter((s) => !state.submitted.has(s.id)).map((s) => s.name),
     });
 

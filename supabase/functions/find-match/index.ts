@@ -14,6 +14,8 @@
 
 import {
   forfeitMatch,
+  IDLE_ALLOWANCE_MS,
+  LAUNCH_ALLOWANCE_MS,
   handler,
   json,
   readJson,
@@ -33,17 +35,13 @@ interface Body {
 }
 
 /**
- * How long a player has to finish all three scenarios.
+ * How long a new match has before it expires, if nothing is ever played.
  *
- * Three scenarios at 60 seconds each is three minutes of play, so five leaves two
- * minutes for launching the game, loading, and moving between them. It was six hours,
- * which is not a deadline: a player could hold a match open all day, and an opponent's
- * stored run set sat in a match nobody was playing.
- *
- * Deliberately short for a first pass. If it turns out to punish slow loads more than
- * it discourages going away, this is the number to raise.
+ * Not a total for the match: submit-run pushes the deadline forward every time a run
+ * lands, so this is only the allowance for getting the first one done, and it carries
+ * the extra time a cold start of Steam and the game can need. See IDLE_ALLOWANCE_MS.
  */
-const MATCH_TTL_MS = 5 * 60_000;
+const INITIAL_TTL_MS = IDLE_ALLOWANCE_MS + LAUNCH_ALLOWANCE_MS;
 
 /** Opponents faced this recently are deprioritised, so the ladder feels bigger. */
 const RECENT_OPPONENT_WINDOW_MS = 7 * 24 * 60 * 60 * 1000;
@@ -286,7 +284,7 @@ Deno.serve(handler(async (req, admin) => {
         seed,
         scenario_ids: scenarioIds,
         status: "awaiting_runs",
-        expires_at: new Date(Date.now() + MATCH_TTL_MS).toISOString(),
+        expires_at: new Date(Date.now() + INITIAL_TTL_MS).toISOString(),
       })
       .select("id")
       .maybeSingle();
@@ -312,7 +310,7 @@ Deno.serve(handler(async (req, admin) => {
       matchId: seedMatch.id,
       category: body.category,
       difficulty: body.difficulty,
-      expiresAt: new Date(Date.now() + MATCH_TTL_MS).toISOString(),
+      expiresAt: new Date(Date.now() + INITIAL_TTL_MS).toISOString(),
       scenarios: scenarioIds.map((id) => ({
         id,
         name: seedById.get(id)?.name ?? `scenario ${id}`,
@@ -334,7 +332,7 @@ Deno.serve(handler(async (req, admin) => {
       ? opponent.scenarioIds
       : selectScenarios(selectable, seed, { category: body.category }).map((s) => s.id);
 
-  const expiresAt = new Date(Date.now() + MATCH_TTL_MS).toISOString();
+  const expiresAt = new Date(Date.now() + INITIAL_TTL_MS).toISOString();
 
   const { data: match, error: matchError } = await admin
     .from("matches")

@@ -829,6 +829,14 @@ if (HOST === "electron") {
         s.tier = p.verificationTier;
         renderTodo();
       }
+      // The clock only runs while nobody is playing, so a landed run restarts it.
+      // Without this the countdown keeps draining toward a deadline the server has
+      // already moved, and reads as though playing cost the player time.
+      if (p.expiresAt) {
+        if (activeMatch) activeMatch.expiresAt = p.expiresAt;
+        startMatchClock(p.expiresAt);
+      }
+
       $("matchHint").textContent = p.remaining && p.remaining.length
         ? `${p.remaining.length} scenario(s) left`
         : "All runs in. Settling…";

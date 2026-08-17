@@ -264,6 +264,8 @@ export function abandonMatch(): Promise<AbandonResult> {
 }
 
 export interface SubmittedRun {
+  /** New match deadline: the clock restarts once a run is in. */
+  expiresAt?: string | null;
   runId: string | null;
   scenario: string;
   score: number;

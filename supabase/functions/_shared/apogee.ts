@@ -331,3 +331,37 @@ export async function forfeitMatch(
     ratingChange: Math.round(after.rating - before.rating),
   };
 }
+
+/**
+ * The match clock only runs while nobody is playing.
+ *
+ * A single deadline from match creation charges the player for their own hardware: the
+ * three runs are three fixed minutes, and everything left over has to cover launching
+ * Steam, loading the game, and moving between scenarios. On a slow machine that is the
+ * whole budget, and losing a match to a loading screen is not a rule anybody would
+ * agree to.
+ *
+ * So the deadline is not a total, it is an idle allowance, and it is pushed forward
+ * every time a run lands. Playing costs nothing because the clock restarts once the run
+ * is in; only sitting in a menu spends it.
+ *
+ * Enforced from the runs themselves rather than from anything the client reports about
+ * what it is doing, which keeps it the same kind of fact as everything else the server
+ * decides.
+ */
+
+/** How long a player may idle between runs before the match expires. */
+export const IDLE_ALLOWANCE_MS = 5 * 60_000;
+
+/**
+ * Extra allowance before the first run only.
+ *
+ * The first one may need Steam started and the game loaded from cold, which has nothing
+ * to do with how long the player is willing to take.
+ */
+export const LAUNCH_ALLOWANCE_MS = 5 * 60_000;
+
+/** When a match should expire, given the moment the last run finished. */
+export function deadlineAfterRun(lastRunEndedAt: Date): Date {
+  return new Date(lastRunEndedAt.getTime() + IDLE_ALLOWANCE_MS);
+}

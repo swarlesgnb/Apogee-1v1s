@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-17T19:11:37.142Z",
+  "generatedAt": "2026-08-17T19:55:30.609Z",
   "benchmark": {
     "name": "Voltaic S5",
     "difficulty": "Intermediate",
@@ -17,7 +17,7 @@
     }
   },
   "player": {
-    "totalRuns": 11107,
+    "totalRuns": 11109,
     "scenarioCount": 803,
     "streak": 16,
     "benchmarkRank": "Diamond",
@@ -267,7 +267,7 @@
           "nextRankName": "Jade",
           "nextRankScore": 3500,
           "gap": 254,
-          "runs": 34
+          "runs": 35
         },
         {
           "name": "VT Aether Intermediate S5",
@@ -279,7 +279,7 @@
           "nextRankName": "Jade",
           "nextRankScore": 2900,
           "gap": 125,
-          "runs": 101
+          "runs": 102
         },
         {
           "name": "VT Ground Intermediate S5",
@@ -406,8 +406,8 @@
     "ceilingRank": "Diamond",
     "ceilingEnergy": 120692,
     "floorRank": "Platinum",
-    "floorEnergy": 49845,
-    "gap": 0.16320497761449695,
+    "floorEnergy": 48434,
+    "gap": 0.1708222251762917,
     "scenarios": [
       {
         "name": "VT Ground Intermediate S5",
@@ -442,6 +442,22 @@
         "gap": 0.24337246750903105
       },
       {
+        "name": "VT Aether Intermediate S5",
+        "label": "Aether",
+        "ceiling": 2775,
+        "floor": 2169,
+        "median": 2219.5,
+        "gap": 0.21837837837837837
+      },
+      {
+        "name": "VT Snake Track Intermediate S5",
+        "label": "Snake Track",
+        "ceiling": 3246,
+        "floor": 2572,
+        "median": 2927,
+        "gap": 0.20764017252002465
+      },
+      {
         "name": "VT Floating Heads Intermediate S5",
         "label": "Floating Heads",
         "ceiling": 791.925354,
@@ -466,28 +482,12 @@
         "gap": 0.18584070796460178
       },
       {
-        "name": "VT Aether Intermediate S5",
-        "label": "Aether",
-        "ceiling": 2775,
-        "floor": 2352,
-        "median": 2223,
-        "gap": 0.15243243243243243
-      },
-      {
         "name": "VT DriftTS Intermediate S5",
         "label": "DriftTS",
         "ceiling": 460,
         "floor": 391.800018,
         "median": 414.100006,
         "gap": 0.14826083043478255
-      },
-      {
-        "name": "VT Snake Track Intermediate S5",
-        "label": "Snake Track",
-        "ceiling": 3246,
-        "floor": 2803,
-        "median": 2929.5,
-        "gap": 0.13647566235366604
       },
       {
         "name": "VT 1w3ts Intermediate S5",
@@ -578,10 +578,10 @@
     },
     "winProbability": 0.552728316151137,
     "verdict": "loss",
-    "explanation": "You lose: −7.4% vs +1.2% against your own baselines.",
+    "explanation": "You lose: −10.0% vs +1.2% against your own baselines.",
     "ratingWeight": 1,
-    "playerMatchScore": -0.07350482556585183,
-    "opponentMatchScore": 0.012326149417941223,
+    "playerMatchScore": -0.09953921271716666,
+    "opponentMatchScore": 0.012263790240361094,
     "rounds": [
       {
         "label": "Controlsphere",
@@ -612,22 +612,22 @@
       {
         "label": "Snake Track",
         "you": {
-          "score": 2803,
-          "baseline": 2930,
-          "delta": -0.04318143027820447
+          "score": 2572,
+          "baseline": 2927,
+          "delta": -0.12128459173214896
         },
         "them": {
-          "score": 2893,
-          "baseline": 2842,
-          "delta": 0.018083026729518326
+          "score": 2890,
+          "baseline": 2839,
+          "delta": 0.017895949196777935
         }
       }
     ]
   },
   "quests": [
     {
-      "title": "Lift your ww5t floor to Platinum",
-      "detail": "Your worst of the last 5 is 1300. All 5 need to clear 1310; 4 of them do right now.",
+      "title": "Lift your Aether floor to Platinum",
+      "detail": "Your worst of the last 5 is 2169. All 5 need to clear 2175; 4 of them do right now.",
       "xp": 500,
       "kind": "floor_rank_up",
       "progress": 0.8,
@@ -650,8 +650,8 @@
       }
     },
     {
-      "title": "Lift your 1w3ts floor to Platinum",
-      "detail": "Your worst of the last 5 is 1111. All 5 need to clear 1120; 4 of them do right now.",
+      "title": "Lift your ww5t floor to Platinum",
+      "detail": "Your worst of the last 5 is 1300. All 5 need to clear 1310; 4 of them do right now.",
       "xp": 500,
       "kind": "floor_rank_up",
       "progress": 0.8,
