@@ -519,26 +519,47 @@ let activeMatch = null;
  */
 function showRealMatch(match, data) {
   const me = data.player.apogee;
-  const oppTier = data.match.opponent.tier;
 
-  $("oppBadge").innerHTML = badge(oppTier, "opp");
-  $("oppName").textContent = match.opponent.displayName;
-  $("oppTier").textContent = `rating ${match.opponent.rating}` +
-    (match.opponent.provisional ? " · provisional" : "");
-  $("oppTier").style.color = oppTier.color;
+  // A seeding match has no opponent: the pool was empty, so the server handed out three
+  // scenarios to play against nobody. Everything downstream is identical, which is the
+  // point, so only the opponent card changes.
+  if (match.seeding || !match.opponent) {
+    $("oppBadge").innerHTML = badge(me.tier, "opp");
+    $("oppName").textContent = "No opponent yet";
+    $("oppTier").textContent = "seeding the pool";
+    $("oppTier").style.color = me.tier.color;
+    $("oppAge").textContent =
+      match.poolSize === 0
+        ? "you are first in this category"
+        : `pool of ${match.poolSize}, none close enough to your rating`;
 
-  const played = new Date(match.opponent.playedAt);
-  const days = Math.max(0, Math.round((Date.now() - played.getTime()) / 86400000));
-  $("oppAge").textContent =
-    `stored run · ${days === 0 ? "today" : days === 1 ? "yesterday" : days + " days ago"}` +
-    ` · pool of ${match.poolSize}`;
+    // No odds to show against nobody, and a half-filled bar would imply a coin flip.
+    $("oddsBar").innerHTML =
+      '<div style="flex:1;background:' + esc(me.tier.color) + ';opacity:.25"></div>';
+    $("oddsYou").textContent = "unrated";
+    $("oddsThem").textContent = "nothing at stake";
+  } else {
+    const oppTier = data.match.opponent.tier;
 
-  const p = match.winProbability;
-  $("oddsBar").innerHTML =
-    '<div style="flex:' + p + ';background:' + esc(me.tier.color) + '"></div>' +
-    '<div style="flex:' + (1 - p) + ';background:' + esc(oppTier.color) + '"></div>';
-  $("oddsYou").textContent = "you " + (p * 100).toFixed(0) + "%";
-  $("oddsThem").textContent = (100 - p * 100).toFixed(0) + "% " + match.opponent.displayName;
+    $("oppBadge").innerHTML = badge(oppTier, "opp");
+    $("oppName").textContent = match.opponent.displayName;
+    $("oppTier").textContent = `rating ${match.opponent.rating}` +
+      (match.opponent.provisional ? " · provisional" : "");
+    $("oppTier").style.color = oppTier.color;
+
+    const played = new Date(match.opponent.playedAt);
+    const days = Math.max(0, Math.round((Date.now() - played.getTime()) / 86400000));
+    $("oppAge").textContent =
+      `stored run · ${days === 0 ? "today" : days === 1 ? "yesterday" : days + " days ago"}` +
+      ` · pool of ${match.poolSize}`;
+
+    const p = match.winProbability ?? 0.5;
+    $("oddsBar").innerHTML =
+      '<div style="flex:' + p + ';background:' + esc(me.tier.color) + '"></div>' +
+      '<div style="flex:' + (1 - p) + ';background:' + esc(oppTier.color) + '"></div>';
+    $("oddsYou").textContent = "you " + (p * 100).toFixed(0) + "%";
+    $("oddsThem").textContent = (100 - p * 100).toFixed(0) + "% " + match.opponent.displayName;
+  }
 
   pendingScenarios = match.scenarios.map((s) => ({
     id: s.id,
@@ -552,7 +573,10 @@ function showRealMatch(match, data) {
   $("playMatchBtn").textContent = "Play in KovaaK's";
   $("playMatchBtn").disabled = false;
   $("matchHint").textContent =
-    "Only your first run on each scenario counts. Apogee picks them up automatically.";
+    match.seeding || !match.opponent
+      ? "Nothing is rated yet. Play these three and your run set becomes the first " +
+        "entry in the pool. Only your first run on each counts."
+      : "Only your first run on each scenario counts. Apogee picks them up automatically.";
 
   $("matchActions").hidden = false;
   $("opponent").classList.add("on");
@@ -582,18 +606,13 @@ $("queueBtn").addEventListener("click", async () => {
 
   if (result.error) {
     btn.textContent = "Find opponent";
-    // "No opponent yet" is the expected answer on an empty ladder, not a failure, so
-    // it is phrased as a next step rather than an error.
-    showError(
-      /no opponent/i.test(result.error)
-        ? "Nobody to play yet. Play this category once and your run set becomes the " +
-            "first entry in the pool."
-        : result.error,
-    );
+    showError(result.error);
     return;
   }
 
-  btn.textContent = "Match in progress";
+  // An empty pool is no longer an error. The server hands out a seeding match with the
+  // same three scenarios and no opponent, so there is always something to play.
+  btn.textContent = result.match.seeding ? "Seeding the pool" : "Match in progress";
   activeMatch = result.match;
   showRealMatch(result.match, current);
 });

@@ -24,6 +24,7 @@ import { updateRating, type Rating } from "../../../src/core/rating/glicko2.ts";
 import {
   explainVerdict,
   settleMatch,
+  settleSide,
   verdictToScore,
   type RoundSubmission,
 } from "../../../src/core/match/settle.ts";
@@ -55,20 +56,28 @@ Deno.serve(handler(async (req, admin) => {
   const theirs = (sides ?? []).find((s: any) => s.player_id !== caller.playerId);
 
   if (!mine) throw new HttpError(403, "you are not in that match");
-  if (!theirs) throw new HttpError(409, "this match has no opponent side");
 
   // Already settled: return what was stored rather than recomputing and re-applying.
   if (match.status === "settled") {
     return json({
       matchId,
       alreadySettled: true,
+      seeding: !theirs,
       verdict: mine.result,
       yourMatchScore: mine.match_score != null ? Number(mine.match_score) : null,
-      theirMatchScore: theirs.match_score != null ? Number(theirs.match_score) : null,
+      theirMatchScore: theirs?.match_score != null ? Number(theirs.match_score) : null,
       ratingBefore: mine.rating_before != null ? Number(mine.rating_before) : null,
       ratingAfter: mine.rating_after != null ? Number(mine.rating_after) : null,
     });
   }
+
+  // A seeding match has one side by design: the pool was empty when it was handed out
+  // (find-match), so there was never an opponent to be found. Nothing was contested, so
+  // nothing is rated, but the side still has to be scored and stored here, because
+  // submit-run only records runs and it is this function that writes deltas and
+  // match_score. Until those exist the candidate query in find-match cannot see the run
+  // set, and the pool stays empty however many times somebody plays.
+  const seeding = !theirs;
 
   const scenarioIds: number[] = match.scenario_ids ?? [];
 
@@ -149,16 +158,60 @@ Deno.serve(handler(async (req, admin) => {
     });
   }
 
+  // A seeding match has nothing to compare against, so it is scored on its own and
+  // recorded without touching the ladder. Storing the deltas is the whole purpose: this
+  // side is what the next player to queue will be matched against, and until it has a
+  // match_score the candidate query in find-match cannot see it.
+  if (seeding) {
+    const side = settleSide(playerRounds);
+    const settledAt = new Date().toISOString();
+
+    const { error: seedSideError } = await admin
+      .from("match_sides")
+      .update({
+        run_ids: playerRounds.map((_, i) => firstByScenario.get(scenarioIds[i])!.id),
+        deltas: side.rounds.map((r) => r.delta ?? 0),
+        match_score: side.matchScore,
+        result: null,
+        provisional: side.provisional,
+        submitted_at: settledAt,
+      })
+      .eq("match_id", matchId)
+      .eq("player_id", caller.playerId);
+
+    if (seedSideError) throw new HttpError(500, seedSideError.message);
+
+    await admin
+      .from("matches")
+      .update({ status: "settled", settled_at: settledAt })
+      .eq("id", matchId);
+
+    return json({
+      matchId,
+      seeding: true,
+      verdict: null,
+      yourMatchScore: side.matchScore,
+      theirMatchScore: null,
+      countedRounds: side.countedRounds,
+      rounds: side.rounds,
+      ratingChange: 0,
+      message:
+        side.countedRounds === scenarioIds.length
+          ? "Your run set is in the pool. The next player to queue this category plays against it."
+          : "Recorded, but not every scenario counted, so this run set is not in the pool yet.",
+    });
+  }
+
   // The opponent's deltas were frozen when they played. Reconstruct their side from
   // those rather than re-deriving, which is what makes an async match reproducible.
-  const opponentDeltas: number[] = (theirs.deltas ?? []).map(Number);
+  const opponentDeltas: number[] = (theirs!.deltas ?? []).map(Number);
   const opponentRounds: RoundSubmission[] = scenarioIds.map((scenarioId, i) => ({
     scenarioId,
     scenarioName: playerRounds[i].scenarioName,
     // A synthetic score/baseline pair reproducing the frozen delta exactly.
     score: 1 + (opponentDeltas[i] ?? 0),
     baseline: 1,
-    provisional: !!theirs.provisional,
+    provisional: !!theirs!.provisional,
     verificationTier: "consistent",
   }));
 
@@ -178,8 +231,8 @@ Deno.serve(handler(async (req, admin) => {
   };
 
   const opponentRating: Rating = {
-    rating: Number(theirs.rating_before ?? 1500),
-    rd: Number(theirs.rd_before ?? 350),
+    rating: Number(theirs!.rating_before ?? 1500),
+    rd: Number(theirs!.rd_before ?? 350),
     volatility: 0.06,
   };
 

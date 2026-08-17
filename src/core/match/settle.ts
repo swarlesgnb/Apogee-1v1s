@@ -81,7 +81,15 @@ export function computeDelta(score: number, baseline: number): number | null {
   return (score - baseline) / baseline;
 }
 
-function settleSide(rounds: RoundSubmission[]): SideOutcome {
+/**
+ * Score one side on its own.
+ *
+ * Exported for the seeding match a player gets when the pool is empty: there is no
+ * opponent to compare against, but the side's deltas still have to be computed and
+ * stored, because that stored run set is exactly what the next player is matched
+ * against.
+ */
+export function settleSide(rounds: RoundSubmission[]): SideOutcome {
   const outcomes: RoundOutcome[] = rounds.map((round) => {
     if (round.verificationTier === "rejected") {
       return {

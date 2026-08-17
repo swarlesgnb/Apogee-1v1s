@@ -143,13 +143,19 @@ export interface FoundMatch {
   difficulty: string;
   expiresAt: string;
   scenarios: MatchScenario[];
+  /**
+   * Null on a seeding match, which is what the server hands out when the pool is empty:
+   * the same three scenarios, played against nobody, so the run set becomes the first
+   * entry for whoever queues next.
+   */
   opponent: {
     displayName: string;
     rating: number;
     playedAt: string;
     provisional: boolean;
-  };
-  winProbability: number;
+  } | null;
+  seeding?: boolean;
+  winProbability: number | null;
   poolSize: number;
 }
 

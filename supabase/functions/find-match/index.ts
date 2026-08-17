@@ -174,15 +174,73 @@ Deno.serve(handler(async (req, admin) => {
     runSets,
   );
 
+  // ---- nobody to play: hand out a seeding match ---------------------------------
+  //
+  // An empty pool used to return 404 and create nothing, which told the player to "play
+  // this category once" without ever saying which three scenarios, and gave their runs
+  // no match to attach to. The pool could therefore never receive its first entry, and
+  // on a ladder that ships async-first (PLAN.md §6) that is the difference between a
+  // cold start and no start.
+  //
+  // So a match is created with one side. The player plays the same three scenarios they
+  // would have played against somebody, their deltas are computed and frozen the same
+  // way, and that side becomes a candidate opponent for the next player: the candidate
+  // query asks only for a side with a match_score, not for a settled match.
+  //
+  // Nothing is contested, so nothing is rated. Settlement sees a match with no opponent
+  // side and records it without touching the ladder.
   if (!result.opponent) {
-    return json(
+    const seed = crypto.randomUUID();
+    const scenarioIds = selectScenarios(selectable, seed, {
+      category: body.category,
+    }).map((s) => s.id);
+
+    const { data: seedMatch, error: seedError } = await admin
+      .from("matches")
+      .insert({
+        mode: "async",
+        category: body.category,
+        benchmark_name: benchmarkName,
+        difficulty: body.difficulty,
+        seed,
+        scenario_ids: scenarioIds,
+        status: "awaiting_runs",
+        expires_at: new Date(Date.now() + MATCH_TTL_MS).toISOString(),
+      })
+      .select("id")
+      .maybeSingle();
+
+    if (seedError || !seedMatch) {
+      throw new HttpError(500, seedError?.message ?? "could not create a seeding match");
+    }
+
+    const { error: seedSideError } = await admin.from("match_sides").insert([
       {
-        error: "no opponent available yet",
-        poolSize: runSets.length,
-        hint: "Play this category once and your run set seeds the pool for everyone.",
+        match_id: seedMatch.id,
+        player_id: caller.playerId,
+        rating_before: rating.rating,
+        rd_before: rating.rd,
       },
-      404,
-    );
+    ]);
+
+    if (seedSideError) throw new HttpError(500, seedSideError.message);
+
+    const seedById = new Map(selectable.map((s) => [s.id, s]));
+
+    return json({
+      matchId: seedMatch.id,
+      category: body.category,
+      difficulty: body.difficulty,
+      expiresAt: new Date(Date.now() + MATCH_TTL_MS).toISOString(),
+      scenarios: scenarioIds.map((id) => ({
+        id,
+        name: seedById.get(id)?.name ?? `scenario ${id}`,
+      })),
+      opponent: null,
+      seeding: true,
+      winProbability: null,
+      poolSize: runSets.length,
+    });
   }
 
   // ---- create the match ---------------------------------------------------------
