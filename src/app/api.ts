@@ -163,6 +163,30 @@ export function findMatch(category: string, difficulty: string): Promise<FoundMa
   return callFunction<FoundMatch>("find-match", { category, difficulty });
 }
 
+export interface AbandonResult {
+  ok: boolean;
+  matchId?: string;
+  nothingToAbandon?: boolean;
+  verdict: "loss" | null;
+  rated: boolean;
+  reason?: "forfeit" | "seeding" | "expired";
+  ratingBefore?: number;
+  ratingAfter?: number;
+  ratingChange?: number;
+  message?: string;
+}
+
+/**
+ * End the active match server-side.
+ *
+ * Costs a loss when there was a real opponent, and nothing when there was not. Until
+ * this existed the client's abandon button only cleared local state, leaving the match
+ * open on the server and the player unable to queue at all.
+ */
+export function abandonMatch(): Promise<AbandonResult> {
+  return callFunction<AbandonResult>("abandon-match", {});
+}
+
 export interface SubmittedRun {
   runId: string | null;
   scenario: string;

@@ -62,12 +62,20 @@ function setStatus(kind, text, path) {
 
 function showError(message) {
   const banner = $("banner");
+  banner.classList.remove("notice");
   if (!message) {
     banner.classList.remove("on");
     return;
   }
   banner.textContent = message;
   banner.classList.add("on");
+}
+
+/** The same banner, for something that worked. */
+function showNotice(message) {
+  const banner = $("banner");
+  banner.textContent = message;
+  banner.classList.add("on", "notice");
 }
 
 /* ------------------------------------------------------------------ render */
@@ -753,7 +761,46 @@ if (HOST === "electron") {
     document.querySelector('.tab[data-screen="result"]').click();
   });
 
-  $("cancelMatchBtn").addEventListener("click", () => api.cancelMatch());
+  // Abandoning a contested match is a forfeit and costs a loss, so it asks first. A
+  // seeding match has no opponent and costs nothing, so it does not.
+  $("cancelMatchBtn").addEventListener("click", async () => {
+    const contested = activeMatch && !activeMatch.seeding && activeMatch.opponent;
+
+    if (contested) {
+      const name = activeMatch.opponent.displayName;
+      const ok = window.confirm(
+        `Forfeit this match against ${name}?\n\n` +
+          "It counts as a loss and your rating drops. You can queue again straight away.",
+      );
+      if (!ok) return;
+    }
+
+    const btn = $("cancelMatchBtn");
+    btn.disabled = true;
+    btn.textContent = "Ending…";
+
+    try {
+      const result = await api.cancelMatch();
+
+      if (result && result.error) showError(result.error);
+      else if (result && result.rated) {
+        showError(null);
+        showNotice(
+          `Forfeited. ${result.ratingBefore} → ${result.ratingAfter} (${result.ratingChange})`,
+        );
+      } else if (result && result.message) {
+        showError(null);
+        showNotice(result.message);
+      }
+    } finally {
+      btn.disabled = false;
+      btn.textContent = "Abandon match";
+      $("queueBtn").textContent = "Find opponent";
+      $("queueBtn").disabled = false;
+      $("opponent").classList.remove("on");
+      activeMatch = null;
+    }
+  });
 
   // Writes the three scenarios into KovaaK's as a playlist, then starts the game.
   //

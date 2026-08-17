@@ -27,6 +27,7 @@ import { buildSnapshot, type Snapshot } from "../core/report/snapshot.ts";
 import { signInWithSteam } from "../core/sync/steamAuth.ts";
 import {
   fetchStanding,
+  abandonMatch,
   findMatch,
   refreshBaselines,
   settleMatch,
@@ -641,12 +642,36 @@ ipcMain.handle("apogee:findMatch", async (_e, { category, difficulty }) => {
   }
 });
 
-/** Abandon the current match locally. The server row simply expires. */
-ipcMain.handle("apogee:cancelMatch", () => {
-  state.match = null;
-  state.submitted.clear();
-  broadcast("apogee:match", null);
-  return { ok: true };
+/**
+ * Abandon the current match, on the server as well as here.
+ *
+ * This used to clear local state only, on the assumption the server row "simply
+ * expires". It does not: nothing ever acted on expires_at, and find-match blocks on
+ * status alone, so abandoning locally left the player permanently unable to queue.
+ */
+ipcMain.handle("apogee:cancelMatch", async () => {
+  const clearLocal = () => {
+    state.match = null;
+    state.submitted.clear();
+    broadcast("apogee:match", null);
+  };
+
+  if (!state.session) {
+    clearLocal();
+    return { ok: true, rated: false };
+  }
+
+  try {
+    const result = await abandonMatch();
+    clearLocal();
+    return result;
+  } catch (err) {
+    // Clear locally anyway. A player who cannot reach the server is better off with a
+    // usable app than stuck on a match screen, and find-match will surface the open
+    // match again the moment they queue.
+    clearLocal();
+    return { ok: false, error: err instanceof Error ? err.message : String(err) };
+  }
 });
 
 /** Settle early, for a match where a run was played before Apogee was watching. */

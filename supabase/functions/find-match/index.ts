@@ -48,16 +48,43 @@ Deno.serve(handler(async (req, admin) => {
 
   // Refuse to stack matches. Without this a player could open several, cherry-pick the
   // one that went well, and abandon the rest.
-  const { data: openMatch } = await admin
+  const { data: openMatches } = await admin
     .from("match_sides")
     .select("match_id, matches!inner(id, status, category, difficulty, scenario_ids, expires_at)")
     .eq("player_id", caller.playerId)
-    .in("matches.status", ["open", "awaiting_runs"])
-    .limit(1)
-    .maybeSingle();
+    .in("matches.status", ["open", "awaiting_runs"]);
 
-  if (openMatch) {
-    return json({ error: "you already have a match in progress", matchId: openMatch.match_id }, 409);
+  // Retire anything past its TTL first.
+  //
+  // Nothing else does this. Matches were given an expires_at and then nobody ever acted
+  // on it, so a match the player walked away from blocked the queue permanently rather
+  // than for six hours - the guard above asks only for the status, and the status never
+  // changed on its own. Expiry is not a decision the player made, so it costs nothing.
+  const now = Date.now();
+  const stale = (openMatches ?? []).filter((row: any) => {
+    const expiresAt = row.matches?.expires_at;
+    return expiresAt != null && new Date(expiresAt).getTime() < now;
+  });
+
+  if (stale.length > 0) {
+    await admin
+      .from("matches")
+      .update({ status: "void", settled_at: new Date().toISOString() })
+      .in("id", stale.map((row: any) => row.match_id));
+  }
+
+  const staleIds = new Set(stale.map((row: any) => row.match_id));
+  const liveMatch = (openMatches ?? []).find((row: any) => !staleIds.has(row.match_id));
+
+  if (liveMatch) {
+    return json(
+      {
+        error: "you already have a match in progress",
+        matchId: liveMatch.match_id,
+        canAbandon: true,
+      },
+      409,
+    );
   }
 
   // ---- the scenario pool for this benchmark difficulty -------------------------

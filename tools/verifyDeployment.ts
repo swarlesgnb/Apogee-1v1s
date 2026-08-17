@@ -272,7 +272,7 @@ async function main(): Promise<void> {
 
   // These three move ratings and settle matches, so unlike steam-auth they must refuse
   // anyone without a session. An unauthenticated 200 here would be a total bypass.
-  for (const name of ["submit-run", "find-match", "settle-match"]) {
+  for (const name of ["submit-run", "find-match", "settle-match", "abandon-match", "refresh-baselines"]) {
     const res = await fetch(`${fnBase}/${name}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
