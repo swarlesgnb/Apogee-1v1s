@@ -1,7 +1,7 @@
 /**
  * Glicko-2, per Mark Glickman's specification.
  *
- * Chosen over Elo because Arena's play pattern is exactly what Elo handles badly
+ * Chosen over Elo because Apogee's play pattern is exactly what Elo handles badly
  * (PLAN.md §4): sparse, bursty, asynchronous, against a small and initially unknown
  * population. Glicko-2 carries a rating deviation (uncertainty) and a volatility
  * alongside the rating, so a new or returning player converges quickly while a settled
@@ -132,7 +132,7 @@ function newVolatility(
  * Update a rating from the games played in one rating period.
  *
  * Glicko-2 is defined over rating PERIODS, not individual games: results are batched
- * and applied together. Arena batches nightly (PLAN.md §4).
+ * and applied together. Apogee batches nightly (PLAN.md §4).
  */
 export function updateRating(
   player: Rating,

@@ -12,7 +12,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 
 const RENDERER_DIR = new URL("../src/app/renderer/", import.meta.url);
-const OUT = new URL("./arena-ui-preview.html", import.meta.url);
+const OUT = new URL("./apogee-ui-preview.html", import.meta.url);
 
 const snapshot = readFileSync(new URL("../data/snapshot.json", import.meta.url), "utf8");
 const indexHtml = readFileSync(new URL("index.html", RENDERER_DIR), "utf8");
@@ -32,14 +32,14 @@ const body = bodyMatch[1]
   // The preview supplies its own inline script instead of loading the file.
   .replace(/<script src="renderer\.js"><\/script>/, "");
 
-const html = `<title>Arena Client Preview</title>
+const html = `<title>Apogee Client Preview</title>
 ${style}
 ${body}
-<script id="arena-snapshot" type="application/json">${snapshot}</script>
+<script id="apogee-snapshot" type="application/json">${snapshot}</script>
 <script>
   // Static host: hand the renderer its data instead of an Electron bridge.
-  window.__ARENA_SNAPSHOT__ = JSON.parse(
-    document.getElementById("arena-snapshot").textContent
+  window.__APOGEE_SNAPSHOT__ = JSON.parse(
+    document.getElementById("apogee-snapshot").textContent
   );
 </script>
 <script>
@@ -50,7 +50,7 @@ ${rendererJs}
 writeFileSync(OUT, html, "utf8");
 
 console.log(
-  `wrote tools/arena-ui-preview.html  (${(html.length / 1024).toFixed(0)} KB, ` +
+  `wrote tools/apogee-ui-preview.html  (${(html.length / 1024).toFixed(0)} KB, ` +
     `renderer ${(rendererJs.length / 1024).toFixed(0)} KB, ` +
     `snapshot ${(snapshot.length / 1024).toFixed(0)} KB)`,
 );

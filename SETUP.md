@@ -1,4 +1,4 @@
-# Deploying Arena's backend
+# Deploying Apogee's backend
 
 A one-time walkthrough for creating the Supabase project and pushing the schema. Assumes
 no prior Supabase experience. Roughly 15 minutes, most of it waiting for the project to
@@ -15,13 +15,13 @@ a real Postgres, the seed loads, and the row-level security policies are proven 
 1. Go to **supabase.com/dashboard** and sign in (GitHub login is easiest).
 2. Click **New project**.
 3. Fill in:
-   - **Name**: `arena` is fine. Only you see it.
+   - **Name**: `apogee` is fine. Only you see it.
    - **Database password**: click *Generate a password*, then **save it somewhere
      safe immediately**. You need it in step 3 and Supabase will not show it again.
    - **Region**: pick the one closest to where your players are. This is the single
      hardest thing to change later, since it means recreating the project. For a
      mostly-US aim community, an East or West US region is the safe pick.
-   - **Plan**: Free is enough. Arena's entire dataset is small; the free tier's limits
+   - **Plan**: Free is enough. Apogee's entire dataset is small; the free tier's limits
      are far above what a closed beta will touch.
 4. Click **Create new project** and wait. Provisioning takes one to three minutes.
 
@@ -37,8 +37,8 @@ You are looking for three things:
 
 | Dashboard label | Goes in `.env` as | What it is |
 |---|---|---|
-| Project URL | `ARENA_SUPABASE_URL` | The address of your project |
-| `anon` `public` key | `ARENA_SUPABASE_ANON_KEY` | Safe to ship inside the desktop app |
+| Project URL | `APOGEE_SUPABASE_URL` | The address of your project |
+| `anon` `public` key | `APOGEE_SUPABASE_ANON_KEY` | Safe to ship inside the desktop app |
 | `service_role` `secret` key | `SUPABASE_SERVICE_ROLE_KEY` | **Never** ship this |
 
 **The distinction matters more than anything else in this document.**
@@ -62,8 +62,8 @@ A `.env` file has been created for you with the blanks marked. Open it and paste
 value after its `=`, with no quotes and no spaces:
 
 ```
-ARENA_SUPABASE_URL=https://abcdefghijk.supabase.co
-ARENA_SUPABASE_ANON_KEY=sb_publishable_...
+APOGEE_SUPABASE_URL=https://abcdefghijk.supabase.co
+APOGEE_SUPABASE_ANON_KEY=sb_publishable_...
 SUPABASE_SERVICE_ROLE_KEY=sb_secret_...
 ```
 
@@ -78,7 +78,7 @@ every request then resolves somewhere that does not exist.
 Then set the two derived values in the same file:
 
 ```
-ARENA_STEAM_AUTH_URL=https://abcdefghijk.supabase.co/functions/v1/steam-auth
+APOGEE_STEAM_AUTH_URL=https://abcdefghijk.supabase.co/functions/v1/steam-auth
 STEAM_AUTH_FUNCTION_URL=https://abcdefghijk.supabase.co/functions/v1/steam-auth
 ```
 

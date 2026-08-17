@@ -28,12 +28,12 @@ function loadEnv(): Record<string, string> {
 }
 
 const env = loadEnv();
-const URL_BASE = env.ARENA_SUPABASE_URL?.replace(/\/+$/, "");
+const URL_BASE = env.APOGEE_SUPABASE_URL?.replace(/\/+$/, "");
 const SECRET = env.SUPABASE_SERVICE_ROLE_KEY;
 const DRY = process.argv.includes("--dry-run");
 
 if (!URL_BASE || !SECRET) {
-  console.error("ARENA_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY must be set in .env");
+  console.error("APOGEE_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY must be set in .env");
   process.exit(1);
 }
 

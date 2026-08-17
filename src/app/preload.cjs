@@ -18,83 +18,83 @@ function subscribe(channel, handler) {
   return () => ipcRenderer.removeListener(channel, listener);
 }
 
-contextBridge.exposeInMainWorld("arena", {
+contextBridge.exposeInMainWorld("apogee", {
   /** Current state: stats folder, snapshot, error, scanning flag, session. */
-  getState: () => ipcRenderer.invoke("arena:getState"),
+  getState: () => ipcRenderer.invoke("apogee:getState"),
 
   /**
    * Start Steam sign-in. Opens the system browser and resolves once a session exists.
    * Returns { session } or { error }; no tokens ever cross this bridge.
    */
-  signIn: () => ipcRenderer.invoke("arena:signIn"),
+  signIn: () => ipcRenderer.invoke("apogee:signIn"),
 
   /** Forget the stored session. */
-  signOut: () => ipcRenderer.invoke("arena:signOut"),
+  signOut: () => ipcRenderer.invoke("apogee:signOut"),
 
   /** Fires when the signed-in player changes, with null on sign-out. */
-  onSession: (handler) => subscribe("arena:session", handler),
+  onSession: (handler) => subscribe("apogee:session", handler),
 
   /** Sign-in started or finished, for a spinner. */
-  onSigningIn: (handler) => subscribe("arena:signingIn", handler),
+  onSigningIn: (handler) => subscribe("apogee:signingIn", handler),
 
   /** The sign-in URL, so the user can finish manually if the browser misbehaves. */
-  onSignInUrl: (handler) => subscribe("arena:signInUrl", handler),
+  onSignInUrl: (handler) => subscribe("apogee:signInUrl", handler),
 
   // ---- backfill ----------------------------------------------------------
   /** Upload the whole stats folder. Idempotent; safe to run repeatedly. */
-  uploadHistory: () => ipcRenderer.invoke("arena:uploadHistory"),
-  onUploading: (handler) => subscribe("arena:uploading", handler),
-  onUploadProgress: (handler) => subscribe("arena:uploadProgress", handler),
+  uploadHistory: () => ipcRenderer.invoke("apogee:uploadHistory"),
+  onUploading: (handler) => subscribe("apogee:uploading", handler),
+  onUploadProgress: (handler) => subscribe("apogee:uploadProgress", handler),
 
   // ---- matches -----------------------------------------------------------
   /** Ask the server for an opponent. Returns { match } or { error }. */
   findMatch: (category, difficulty) =>
-    ipcRenderer.invoke("arena:findMatch", { category, difficulty }),
+    ipcRenderer.invoke("apogee:findMatch", { category, difficulty }),
 
   /** Abandon the active match locally. */
-  cancelMatch: () => ipcRenderer.invoke("arena:cancelMatch"),
+  cancelMatch: () => ipcRenderer.invoke("apogee:cancelMatch"),
 
   /** Settle now, rather than waiting for the last run to land. */
-  settleMatch: () => ipcRenderer.invoke("arena:settleMatch"),
+  settleMatch: () => ipcRenderer.invoke("apogee:settleMatch"),
 
   /** Fires when a match starts, and again with null when it ends. */
-  onMatch: (handler) => subscribe("arena:match", handler),
+  onMatch: (handler) => subscribe("apogee:match", handler),
 
   /** Per-scenario progress as runs are submitted and verified. */
-  onMatchProgress: (handler) => subscribe("arena:matchProgress", handler),
+  onMatchProgress: (handler) => subscribe("apogee:matchProgress", handler),
 
   /** The settled result, including the rating change. */
-  onMatchSettled: (handler) => subscribe("arena:matchSettled", handler),
+  onMatchSettled: (handler) => subscribe("apogee:matchSettled", handler),
 
   // ---- standing ----------------------------------------------------------
-  getStanding: () => ipcRenderer.invoke("arena:getStanding"),
-  onStanding: (handler) => subscribe("arena:standing", handler),
+  getStanding: () => ipcRenderer.invoke("apogee:getStanding"),
+  onStanding: (handler) => subscribe("apogee:standing", handler),
 
   // ---- quests ------------------------------------------------------------
   /** Lifetime XP and account level, sent after every snapshot rebuild. */
-  onProgression: (handler) => subscribe("arena:progression", handler),
+  onProgression: (handler) => subscribe("apogee:progression", handler),
 
   /** Fires once per quest the moment it completes. */
-  onQuestComplete: (handler) => subscribe("arena:questComplete", handler),
+  onQuestComplete: (handler) => subscribe("apogee:questComplete", handler),
 
   /** Force a full rescan of the stats folder. */
-  rescan: () => ipcRenderer.invoke("arena:rescan"),
+  rescan: () => ipcRenderer.invoke("apogee:rescan"),
 
   /** Prompt for a stats folder; returns the chosen path or null. */
-  chooseFolder: () => ipcRenderer.invoke("arena:chooseFolder"),
+  chooseFolder: () => ipcRenderer.invoke("apogee:chooseFolder"),
 
   /** Reveal the watched folder in the OS file manager. */
-  openStatsFolder: () => ipcRenderer.invoke("arena:openStatsFolder"),
+  openStatsFolder: () => ipcRenderer.invoke("apogee:openStatsFolder"),
 
   /** Fires whenever the snapshot is rebuilt. */
-  onSnapshot: (handler) => subscribe("arena:snapshot", handler),
+  onSnapshot: (handler) => subscribe("apogee:snapshot", handler),
 
   /** Fires the moment a new run is parsed, before the snapshot rebuild lands. */
-  onRun: (handler) => subscribe("arena:run", handler),
+  onRun: (handler) => subscribe("apogee:run", handler),
 
   /** Scanning started or finished. */
-  onScanning: (handler) => subscribe("arena:scanning", handler),
+  onScanning: (handler) => subscribe("apogee:scanning", handler),
 
   /** Something went wrong; payload is a human-readable message. */
-  onError: (handler) => subscribe("arena:error", handler),
+  onError: (handler) => subscribe("apogee:error", handler),
 });

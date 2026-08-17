@@ -1,7 +1,7 @@
 /**
  * Quest completion, XP and account level.
  *
- * One rule governs all of this: **quest XP never touches Arena rating** (PLAN.md §10).
+ * One rule governs all of this: **quest XP never touches Apogee rating** (PLAN.md §10).
  * The moment grinding quests moves the ladder, the ladder stops measuring skill and
  * starts measuring time spent. XP buys levels and titles; nothing else.
  *

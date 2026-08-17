@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-17T05:35:19.614Z",
+  "generatedAt": "2026-08-17T15:20:29.642Z",
   "benchmark": {
     "name": "Voltaic S5",
     "difficulty": "Intermediate",
@@ -24,7 +24,7 @@
     "benchmarkEnergy": 120692,
     "progressToNextRank": 0.5408775730142664,
     "nextRankName": "Jade",
-    "arena": {
+    "apogee": {
       "rating": 1617,
       "rd": 105,
       "percentile": 50.8,
@@ -556,7 +556,7 @@
     ]
   },
   "match": {
-    "seed": "arena-demo-match-01",
+    "seed": "apogee-demo-match-01",
     "category": "Tracking",
     "opponent": {
       "name": "ravenous",
@@ -578,22 +578,35 @@
     },
     "winProbability": 0.552728316151137,
     "verdict": "loss",
-    "explanation": "You lose: −3.5% vs +1.2% against your own baselines.",
+    "explanation": "You lose: −6.1% vs +1.2% against your own baselines.",
     "ratingWeight": 1,
-    "playerMatchScore": -0.03539129491031645,
-    "opponentMatchScore": 0.012373752121059673,
+    "playerMatchScore": -0.06120889015638003,
+    "opponentMatchScore": 0.012326149417941237,
     "rounds": [
       {
-        "label": "Raw Control",
+        "label": "Controlsphere",
         "you": {
-          "score": 2910,
-          "baseline": 3162,
-          "delta": -0.07960907106936149
+          "score": 3220,
+          "baseline": 3158,
+          "delta": 0.019632678910702975
         },
         "them": {
-          "score": 3162,
-          "baseline": 3067,
-          "delta": 0.031025655322449795
+          "score": 3158,
+          "baseline": 3063,
+          "delta": 0.030927835051546473
+        }
+      },
+      {
+        "label": "PGT",
+        "you": {
+          "score": 2199,
+          "baseline": 2618,
+          "delta": -0.16007791910163857
+        },
+        "them": {
+          "score": 2509,
+          "baseline": 2540,
+          "delta": -0.012032413527241086
         }
       },
       {
@@ -604,22 +617,9 @@
           "delta": -0.04318143027820447
         },
         "them": {
-          "score": 2808,
+          "score": 2893,
           "baseline": 2842,
-          "delta": -0.011829540595752691
-        }
-      },
-      {
-        "label": "Aether",
-        "you": {
-          "score": 2539,
-          "baseline": 2498,
-          "delta": 0.016616616616616616
-        },
-        "them": {
-          "score": 2466,
-          "baseline": 2423,
-          "delta": 0.017925141636481918
+          "delta": 0.018083026729518326
         }
       }
     ]

@@ -220,7 +220,7 @@ labelled, as a *stat*, never as their Apogee rank.
 Tier boundaries are set by **population percentile**, not fixed rating, so the
 distribution stays meaningful as the player base grows.
 
-Ranks are defined in a single themeable file, `data/arena_ranks.json`, so the names,
+Ranks are defined in a single themeable file, `data/apogee_ranks.json`, so the names,
 colours, and the entire visual identity can be changed without touching application
 code:
 
@@ -744,7 +744,7 @@ first.
 **Resolved:**
 
 - ~~Name~~ → **Apogee**. Settled. The Supabase project already carries it; the client,
-  the README and the module names still say Arena and are yet to follow.
+  the README and the module names still say Apogee and are yet to follow.
 - ~~Deployment~~ → **done**. Schema, RLS, Steam auth and four Edge Functions are live
   and verified against the running project by `npm run verify:deployment`.
 - ~~Apogee rank tier names and colours~~ → **done**. Ten tiers, Stargazer through

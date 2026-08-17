@@ -2,7 +2,7 @@
 # `supabase start` runs the whole stack in Docker; `supabase db reset` applies
 # migrations/ then seed.sql.
 
-project_id = "arena"
+project_id = "apogee"
 
 [api]
 enabled = true

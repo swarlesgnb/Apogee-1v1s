@@ -28,7 +28,7 @@ const MAX_DEPTH = 6;
 function looksLikeDataDir(candidate: string): boolean {
   // `benchmarks/` is the one subdirectory that only ever exists in ours, so it
   // distinguishes the real directory from some unrelated `data/` further up the tree.
-  return existsSync(join(candidate, "benchmarks")) || existsSync(join(candidate, "arena_ranks.json"));
+  return existsSync(join(candidate, "benchmarks")) || existsSync(join(candidate, "apogee_ranks.json"));
 }
 
 export function dataDir(): string {

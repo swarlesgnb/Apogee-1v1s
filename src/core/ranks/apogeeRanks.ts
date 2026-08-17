@@ -1,8 +1,8 @@
 /**
- * Arena's own rank ladder.
+ * Apogee's own rank ladder.
  *
  * Deliberately separate from any benchmark's ranks (PLAN.md §4). Voltaic ranks describe
- * benchmark achievement; Arena ranks describe ladder standing. They are different claims
+ * benchmark achievement; Apogee ranks describe ladder standing. They are different claims
  * and must never share a vocabulary or a palette.
  *
  * Tiers are assigned by population percentile rather than fixed rating, so the meaning
@@ -47,7 +47,7 @@ export interface RankTheme {
 export const PLACEMENT_MATCHES = 10;
 
 export function loadRankTheme(path?: string | URL): RankTheme {
-  const target = path ?? dataFile("arena_ranks.json");
+  const target = path ?? dataFile("apogee_ranks.json");
   const theme = JSON.parse(readFileSync(target, "utf8")) as RankTheme;
 
   if (!Array.isArray(theme.tiers) || theme.tiers.length === 0) {

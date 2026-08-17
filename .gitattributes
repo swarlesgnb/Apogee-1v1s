@@ -7,4 +7,4 @@
 package-lock.json linguist-generated
 data/*.json linguist-generated
 data/benchmarks/*.json linguist-generated
-tools/arena-ui-preview.html linguist-generated
+tools/apogee-ui-preview.html linguist-generated

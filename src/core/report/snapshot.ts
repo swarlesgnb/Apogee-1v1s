@@ -16,7 +16,7 @@ import { selectScenarios, type SelectableScenario } from "../match/scenarioSelec
 import { explainVerdict, settleMatch, type RoundSubmission } from "../match/settle.ts";
 import { generateQuests, playStreak, questProgress } from "../quests/generate.ts";
 import { defaultRating, updateRating, winProbability } from "../rating/glicko2.ts";
-import { loadRankTheme, tierForPercentile, type RankTier } from "../ranks/arenaRanks.ts";
+import { loadRankTheme, tierForPercentile, type RankTier } from "../ranks/apogeeRanks.ts";
 import { floorsFor, overallGap } from "../consistency/floor.ts";
 
 export interface SnapshotOptions {
@@ -42,7 +42,7 @@ export interface Snapshot {
     benchmarkEnergy: number;
     progressToNextRank: number | null;
     nextRankName: string | null;
-    arena: {
+    apogee: {
       rating: number;
       rd: number;
       percentile: number;
@@ -196,7 +196,7 @@ export function buildSnapshot(options: SnapshotOptions): Snapshot | null {
     }),
   );
 
-  const seed = "arena-demo-match-01";
+  const seed = "apogee-demo-match-01";
   const chosen = selectScenarios(pool, seed, { category: weakest.name });
 
   const playerRounds: RoundSubmission[] = [];
@@ -300,7 +300,7 @@ export function buildSnapshot(options: SnapshotOptions): Snapshot | null {
       benchmarkEnergy: Math.round(result.totalEnergy),
       progressToNextRank: result.progressToNextRank,
       nextRankName: difficulty.rankNames[result.rankIndex + 1] ?? null,
-      arena: {
+      apogee: {
         rating: Math.round(rating.rating),
         rd: Math.round(rating.rd),
         percentile: Number(percentile.toFixed(1)),

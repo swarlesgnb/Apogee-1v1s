@@ -20,8 +20,8 @@ for (const line of readFileSync(join(root, ".env"), "utf8").split(/\r?\n/)) {
   if (m && m[2]) env[m[1]] = m[2].trim();
 }
 
-const URL_BASE = env.ARENA_SUPABASE_URL!;
-const ANON = env.ARENA_SUPABASE_ANON_KEY!;
+const URL_BASE = env.APOGEE_SUPABASE_URL!;
+const ANON = env.APOGEE_SUPABASE_ANON_KEY!;
 const SECRET = env.SUPABASE_SERVICE_ROLE_KEY!;
 
 const admin = createClient(URL_BASE, SECRET, {

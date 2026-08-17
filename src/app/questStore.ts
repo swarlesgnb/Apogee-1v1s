@@ -2,7 +2,7 @@
  * Persist quest progress and XP between launches.
  *
  * Stored as plain JSON in the app's user-data directory. Deliberately not encrypted:
- * nothing here is a secret, and XP is cosmetic by design. It never touches Arena
+ * nothing here is a secret, and XP is cosmetic by design. It never touches Apogee
  * rating, so a player editing this file cheats only themselves out of the number going
  * up honestly.
  *

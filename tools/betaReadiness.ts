@@ -66,7 +66,7 @@ check("blocker", "thresholds are populated, not placeholders", () => {
 });
 
 check("blocker", "rank ladder is well-formed", () => {
-  const theme = readJson("data", "arena_ranks.json");
+  const theme = readJson("data", "apogee_ranks.json");
   const tiers = theme.tiers ?? [];
   if (tiers.length === 0) return [false, "no tiers"];
 
@@ -82,14 +82,14 @@ check("blocker", "rank ladder is well-formed", () => {
 });
 
 check("advisory", "rank tiers have real names", () => {
-  const theme = readJson("data", "arena_ranks.json");
+  const theme = readJson("data", "apogee_ranks.json");
   const placeholder = theme.placeholderNames === true ||
     theme.tiers.some((t: any) => /^Tier [IVX]+$/.test(t.name));
   return [!placeholder, placeholder ? "still using placeholder names" : theme.tiers.map((t: any) => t.name).join(", ")];
 });
 
 check("advisory", "narrow tiers are deliberate, not accidental", () => {
-  const theme = readJson("data", "arena_ranks.json");
+  const theme = readJson("data", "apogee_ranks.json");
   const narrow = theme.tiers.filter((t: any) => t.percentile[1] - t.percentile[0] <= 1);
   if (narrow.length === 0) return [true, "all tiers are 2%+ wide"];
 
@@ -198,7 +198,7 @@ check("blocker", "steam auth function exists", () => {
 check("blocker", "environment is configured", () => {
   if (!existsSync(file(".env"))) return [false, ".env not created: copy .env.example"];
   const env = readFileSync(file(".env"), "utf8");
-  const required = ["ARENA_SUPABASE_URL", "ARENA_SUPABASE_ANON_KEY", "SUPABASE_SERVICE_ROLE_KEY"];
+  const required = ["APOGEE_SUPABASE_URL", "APOGEE_SUPABASE_ANON_KEY", "SUPABASE_SERVICE_ROLE_KEY"];
   const missing = required.filter((k) => !new RegExp(`^${k}=.+`, "m").test(env));
   return [missing.length === 0, missing.length ? `unset: ${missing.join(", ")}` : "all keys set"];
 });

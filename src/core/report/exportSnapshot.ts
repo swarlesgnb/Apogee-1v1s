@@ -36,7 +36,7 @@ function main(): void {
     `  ${snapshot.benchmark.name} ${snapshot.benchmark.difficulty}: ${snapshot.player.benchmarkRank}`,
   );
   console.log(
-    `  arena tier: ${snapshot.player.arena.tier.name} (p${snapshot.player.arena.percentile})`,
+    `  apogee tier: ${snapshot.player.apogee.tier.name} (p${snapshot.player.apogee.percentile})`,
   );
   console.log(`  weakest: ${snapshot.weakest}`);
   console.log(`  match: ${match.verdict}, ${match.explanation}`);

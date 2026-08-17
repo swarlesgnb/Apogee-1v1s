@@ -2,7 +2,7 @@
  * Resolve a pasted evxl link into a tracked benchmark.
  *
  * The player grinds whichever benchmark they care about, pastes its evxl URL, and
- * Arena generates quests against *that* benchmark's real scenarios and thresholds
+ * Apogee generates quests against *that* benchmark's real scenarios and thresholds
  * (PLAN.md §10). Nothing is hardcoded to Voltaic.
  *
  *   https://evxl.app/benchmarks/Voltaic%20S5

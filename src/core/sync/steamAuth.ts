@@ -113,7 +113,7 @@ export function signInWithSteam(config: SteamAuthConfig): Promise<SteamAuthResul
       const reply = (status: number, message: string) => {
         res.writeHead(status, { "content-type": "text/html; charset=utf-8" });
         res.end(
-          `<!doctype html><meta charset="utf-8"><title>Arena</title>` +
+          `<!doctype html><meta charset="utf-8"><title>Apogee</title>` +
             `<body style="font:15px system-ui;padding:3rem;text-align:center">` +
             `<p>${message}</p></body>`,
         );
@@ -141,7 +141,7 @@ export function signInWithSteam(config: SteamAuthConfig): Promise<SteamAuthResul
         return;
       }
 
-      reply(200, "Signed in. You can close this tab and return to Arena.");
+      reply(200, "Signed in. You can close this tab and return to Apogee.");
       finish(() => resolve({ steamId, tokenHash }));
     });
 

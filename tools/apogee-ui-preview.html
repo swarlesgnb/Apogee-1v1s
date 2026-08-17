@@ -1,4 +1,4 @@
-<title>Arena Client Preview</title>
+<title>Apogee Client Preview</title>
 <style>
   /* ------------------------------------------------------------------
      Committed single theme. This is a game client, not a document: it
@@ -520,7 +520,7 @@
 
 <div class="shell">
   <header class="topbar">
-    <div class="wordmark">Arena <span>· ranked 1v1 for kovaak's</span></div>
+    <div class="wordmark">Apogee <span>· ranked 1v1 for kovaak's</span></div>
     <div class="whoami" id="whoami" hidden>
       <div class="badge" id="myBadge"></div>
       <div>
@@ -636,7 +636,7 @@
               <ol id="todoList"></ol>
               <div class="match-actions" id="matchActions" hidden>
                 <span class="match-hint" id="matchHint">
-                  Play them in any order. Arena picks each run up automatically.
+                  Play them in any order. Apogee picks each run up automatically.
                 </span>
                 <button type="button" id="cancelMatchBtn">Abandon match</button>
               </div>
@@ -714,7 +714,8 @@
           </div>
           <p class="cf-explain">
             Every benchmark that exists scores your best run. In a game there is no
-            retry or best run, so this gamemode is meant to close that gap.
+            retry, so your worst run is closer to what you actually bring. Closing this
+            gap is the whole mode.
           </p>
         </div>
       </div>
@@ -751,7 +752,7 @@
   <div class="panel empty" id="empty">
     <h2>Waiting for your KovaaK's stats</h2>
     <p id="emptyText">
-      Arena reads the stat files KovaaK's already writes after every run. Nothing to
+      Apogee reads the stat files KovaaK's already writes after every run. Nothing to
       install in the game, and no scores to type in.
     </p>
     <button type="button" id="emptyChoose">Choose stats folder…</button>
@@ -785,8 +786,8 @@
 
 
 
-<script id="arena-snapshot" type="application/json">{
-  "generatedAt": "2026-08-17T05:35:19.614Z",
+<script id="apogee-snapshot" type="application/json">{
+  "generatedAt": "2026-08-17T15:20:29.642Z",
   "benchmark": {
     "name": "Voltaic S5",
     "difficulty": "Intermediate",
@@ -811,7 +812,7 @@
     "benchmarkEnergy": 120692,
     "progressToNextRank": 0.5408775730142664,
     "nextRankName": "Jade",
-    "arena": {
+    "apogee": {
       "rating": 1617,
       "rd": 105,
       "percentile": 50.8,
@@ -1343,7 +1344,7 @@
     ]
   },
   "match": {
-    "seed": "arena-demo-match-01",
+    "seed": "apogee-demo-match-01",
     "category": "Tracking",
     "opponent": {
       "name": "ravenous",
@@ -1365,22 +1366,35 @@
     },
     "winProbability": 0.552728316151137,
     "verdict": "loss",
-    "explanation": "You lose: −3.5% vs +1.2% against your own baselines.",
+    "explanation": "You lose: −6.1% vs +1.2% against your own baselines.",
     "ratingWeight": 1,
-    "playerMatchScore": -0.03539129491031645,
-    "opponentMatchScore": 0.012373752121059673,
+    "playerMatchScore": -0.06120889015638003,
+    "opponentMatchScore": 0.012326149417941237,
     "rounds": [
       {
-        "label": "Raw Control",
+        "label": "Controlsphere",
         "you": {
-          "score": 2910,
-          "baseline": 3162,
-          "delta": -0.07960907106936149
+          "score": 3220,
+          "baseline": 3158,
+          "delta": 0.019632678910702975
         },
         "them": {
-          "score": 3162,
-          "baseline": 3067,
-          "delta": 0.031025655322449795
+          "score": 3158,
+          "baseline": 3063,
+          "delta": 0.030927835051546473
+        }
+      },
+      {
+        "label": "PGT",
+        "you": {
+          "score": 2199,
+          "baseline": 2618,
+          "delta": -0.16007791910163857
+        },
+        "them": {
+          "score": 2509,
+          "baseline": 2540,
+          "delta": -0.012032413527241086
         }
       },
       {
@@ -1391,22 +1405,9 @@
           "delta": -0.04318143027820447
         },
         "them": {
-          "score": 2808,
+          "score": 2893,
           "baseline": 2842,
-          "delta": -0.011829540595752691
-        }
-      },
-      {
-        "label": "Aether",
-        "you": {
-          "score": 2539,
-          "baseline": 2498,
-          "delta": 0.016616616616616616
-        },
-        "them": {
-          "score": 2466,
-          "baseline": 2423,
-          "delta": 0.017925141636481918
+          "delta": 0.018083026729518326
         }
       }
     ]
@@ -1473,31 +1474,31 @@
 }</script>
 <script>
   // Static host: hand the renderer its data instead of an Electron bridge.
-  window.__ARENA_SNAPSHOT__ = JSON.parse(
-    document.getElementById("arena-snapshot").textContent
+  window.__APOGEE_SNAPSHOT__ = JSON.parse(
+    document.getElementById("apogee-snapshot").textContent
   );
 </script>
 <script>
 "use strict";
 
 /**
- * Arena renderer.
+ * Apogee renderer.
  *
  * Runs in two hosts from one source, so the desktop app and the shareable preview
  * cannot drift apart:
  *
- *   ELECTRON  `window.arena` exists (supplied by preload). Data is live: the main
+ *   ELECTRON  `window.apogee` exists (supplied by preload). Data is live: the main
  *             process watches the stats folder and pushes a new snapshot whenever a
  *             run lands.
  *
- *   PREVIEW   `window.__ARENA_SNAPSHOT__` is inlined by tools/buildUiPreview.ts. Static,
+ *   PREVIEW   `window.__APOGEE_SNAPSHOT__` is inlined by tools/buildUiPreview.ts. Static,
  *             no Electron, opens anywhere.
  *
  * This file is a pure view. It never parses a CSV, computes a delta, or decides a
  * verdict; all of that arrives already settled.
  */
 
-const HOST = typeof window.arena !== "undefined" ? "electron" : "preview";
+const HOST = typeof window.apogee !== "undefined" ? "electron" : "preview";
 
 const $ = (id) => document.getElementById(id);
 const esc = (s) =>
@@ -1563,7 +1564,7 @@ function render(data) {
   $("empty").hidden = true;
   $("whoami").hidden = false;
 
-  const me = data.player.arena;
+  const me = data.player.apogee;
 
   $("myBadge").innerHTML = badge(me.tier, "me");
   $("myTier").textContent = me.tier.name;
@@ -1630,7 +1631,7 @@ function renderCategories(data) {
 
 function showOpponent(data) {
   const m = data.match;
-  const me = data.player.arena;
+  const me = data.player.apogee;
 
   $("oppBadge").innerHTML = badge(m.opponent.tier, "opp");
   $("oppName").textContent = m.opponent.name;
@@ -1998,7 +1999,7 @@ let activeMatch = null;
  * illustrative match only in the static preview, where no server exists.
  */
 function showRealMatch(match, data) {
-  const me = data.player.arena;
+  const me = data.player.apogee;
   const oppTier = data.match.opponent.tier;
 
   $("oppBadge").innerHTML = badge(oppTier, "opp");
@@ -2049,7 +2050,7 @@ $("queueBtn").addEventListener("click", async () => {
   $("opponent").classList.remove("on");
   showError(null);
 
-  const result = await window.arena.findMatch(selectedCategory, current.benchmark.difficulty);
+  const result = await window.apogee.findMatch(selectedCategory, current.benchmark.difficulty);
 
   $("searching").classList.remove("on");
   btn.disabled = false;
@@ -2103,7 +2104,7 @@ function renderSession(session, configured) {
 }
 
 if (HOST === "electron") {
-  const api = window.arena;
+  const api = window.apogee;
 
   $("btnRescan").addEventListener("click", () => api.rescan());
   $("btnOpen").addEventListener("click", () => api.openStatsFolder());
@@ -2294,7 +2295,7 @@ if (HOST === "electron") {
   const note = $("previewNote");
   if (note) note.hidden = false;
 
-  render(window.__ARENA_SNAPSHOT__);
+  render(window.__APOGEE_SNAPSHOT__);
 }
 
 </script>

@@ -1,5 +1,5 @@
 /**
- * Calls from the desktop client to Arena's backend.
+ * Calls from the desktop client to Apogee's backend.
  *
  * Everything here runs in the main process, never the renderer, so the access token
  * stays out of a context the page could reach. The renderer asks for an action by name

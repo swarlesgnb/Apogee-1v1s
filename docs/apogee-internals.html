@@ -1,9 +1,9 @@
-<title>Arena Internals</title>
+<title>Apogee Internals</title>
 <style>
   /* ------------------------------------------------------------------
      A technical manual, not the app.
 
-     Arena's client is a dark instrument panel, which is right for a thing
+     Apogee's client is a dark instrument panel, which is right for a thing
      you glance at between runs and wrong for a document you read for an
      hour. So this is light-first and quiet: neutrals carry a slight cool
      bias so they read as chosen, one slate-teal accent, and semantic
@@ -353,7 +353,7 @@
   <nav class="toc" aria-label="Contents">
     <h2>Contents</h2>
     <ol>
-      <li><a href="#what">What Arena is</a></li>
+      <li><a href="#what">What Apogee is</a></li>
       <li><a href="#spine">The spine</a></li>
       <li><a href="#concepts">Five concepts</a></li>
       <li><a href="#security">The security model</a></li>
@@ -367,8 +367,8 @@
 
   <main>
     <header class="masthead">
-      <div class="eyebrow">Arena · technical reference</div>
-      <h1>Arena Internals</h1>
+      <div class="eyebrow">Apogee · technical reference</div>
+      <h1>Apogee Internals</h1>
       <p class="standfirst">
         How a CSV file that KovaaK's writes to disk becomes a rating change on a
         competitive ladder, and why each part works the way it does.
@@ -384,18 +384,18 @@
 
     <!-- ================================================================= -->
     <section id="what">
-      <h2>What Arena is</h2>
+      <h2>What Apogee is</h2>
       <p class="lede">One sentence: ranked matchmaking for aim, played inside KovaaK's.</p>
 
       <p>
-        Arena is not an aim trainer. KovaaK's owns that space and there is no reason to
-        compete with it. Arena is a layer on top that supplies the one thing solo
+        Apogee is not an aim trainer. KovaaK's owns that space and there is no reason to
+        compete with it. Apogee is a layer on top that supplies the one thing solo
         benchmark grinding cannot: an opponent.
       </p>
       <p>
-        The player never leaves their routine. They queue for a category, Arena names
+        The player never leaves their routine. They queue for a category, Apogee names
         three scenarios, they alt-tab to KovaaK's and play them exactly as they always
-        would. Arena watches the stats folder, picks the runs up, verifies them, settles
+        would. Apogee watches the stats folder, picks the runs up, verifies them, settles
         the match and moves the rating. No score entry, no screenshots, no honour system.
       </p>
 
@@ -832,7 +832,7 @@ gap     = (ceiling − floor) / ceiling</pre>
   verify/         integrity checks, KovaaK's cross-check, score models
   consistency/    floor scoring, ceiling-vs-floor report
   quests/         evxl links, quest generation, floor quests, XP
-  ranks/          Arena's own rank ladder
+  ranks/          Apogee's own rank ladder
   sync/           Steam sign-in, run upload
   report/         profile, weakness map, UI snapshot
 

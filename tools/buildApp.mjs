@@ -29,9 +29,9 @@ const outDir = join(root, "dist", "app");
  */
 function clientEnv() {
   const out = {
-    ARENA_SUPABASE_URL: "",
-    ARENA_SUPABASE_ANON_KEY: "",
-    ARENA_STEAM_AUTH_URL: "",
+    APOGEE_SUPABASE_URL: "",
+    APOGEE_SUPABASE_ANON_KEY: "",
+    APOGEE_STEAM_AUTH_URL: "",
   };
 
   const envPath = join(root, ".env");
@@ -50,9 +50,9 @@ function clientEnv() {
   }
 
   return {
-    __ARENA_SUPABASE_URL__: JSON.stringify(out.ARENA_SUPABASE_URL),
-    __ARENA_SUPABASE_ANON_KEY__: JSON.stringify(out.ARENA_SUPABASE_ANON_KEY),
-    __ARENA_STEAM_AUTH_URL__: JSON.stringify(out.ARENA_STEAM_AUTH_URL),
+    __APOGEE_SUPABASE_URL__: JSON.stringify(out.APOGEE_SUPABASE_URL),
+    __APOGEE_SUPABASE_ANON_KEY__: JSON.stringify(out.APOGEE_SUPABASE_ANON_KEY),
+    __APOGEE_STEAM_AUTH_URL__: JSON.stringify(out.APOGEE_STEAM_AUTH_URL),
   };
 }
 

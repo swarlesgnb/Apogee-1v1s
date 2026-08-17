@@ -1,5 +1,5 @@
 /**
- * Self-test for the Arena rank ladder.
+ * Self-test for the Apogee rank ladder.
  *
  * The percentile bands are hand-edited (and now editor-generated), so the loader's
  * contiguity guard is the thing standing between a typo and silently mis-ranking every
@@ -14,7 +14,7 @@ import {
   standingFor,
   tierForPercentile,
   type RankTheme,
-} from "./arenaRanks.ts";
+} from "./apogeeRanks.ts";
 
 let failures = 0;
 
@@ -39,7 +39,7 @@ function expectThrow(label: string, fn: () => unknown): void {
 
 const theme = loadRankTheme();
 
-console.log(`\nArena rank ladder: ${theme.tiers.length} tiers` +
+console.log(`\nApogee rank ladder: ${theme.tiers.length} tiers` +
   `${theme.placeholderNames ? " (placeholder names)" : ""}\n`);
 
 for (const tier of theme.tiers) {

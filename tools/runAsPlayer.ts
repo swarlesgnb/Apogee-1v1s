@@ -29,8 +29,8 @@ for (const line of readFileSync(join(root, ".env"), "utf8").split(/\r?\n/)) {
   if (m && m[2]) env[m[1]] = m[2].trim();
 }
 
-const URL_BASE = env.ARENA_SUPABASE_URL!.replace(/\/+$/, "");
-const ANON = env.ARENA_SUPABASE_ANON_KEY!;
+const URL_BASE = env.APOGEE_SUPABASE_URL!.replace(/\/+$/, "");
+const ANON = env.APOGEE_SUPABASE_ANON_KEY!;
 const SECRET = env.SUPABASE_SERVICE_ROLE_KEY!;
 
 const [steamId, functionName, rawBody] = process.argv.slice(2);

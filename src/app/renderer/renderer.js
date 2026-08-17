@@ -1,23 +1,23 @@
 "use strict";
 
 /**
- * Arena renderer.
+ * Apogee renderer.
  *
  * Runs in two hosts from one source, so the desktop app and the shareable preview
  * cannot drift apart:
  *
- *   ELECTRON  `window.arena` exists (supplied by preload). Data is live: the main
+ *   ELECTRON  `window.apogee` exists (supplied by preload). Data is live: the main
  *             process watches the stats folder and pushes a new snapshot whenever a
  *             run lands.
  *
- *   PREVIEW   `window.__ARENA_SNAPSHOT__` is inlined by tools/buildUiPreview.ts. Static,
+ *   PREVIEW   `window.__APOGEE_SNAPSHOT__` is inlined by tools/buildUiPreview.ts. Static,
  *             no Electron, opens anywhere.
  *
  * This file is a pure view. It never parses a CSV, computes a delta, or decides a
  * verdict; all of that arrives already settled.
  */
 
-const HOST = typeof window.arena !== "undefined" ? "electron" : "preview";
+const HOST = typeof window.apogee !== "undefined" ? "electron" : "preview";
 
 const $ = (id) => document.getElementById(id);
 const esc = (s) =>
@@ -83,7 +83,7 @@ function render(data) {
   $("empty").hidden = true;
   $("whoami").hidden = false;
 
-  const me = data.player.arena;
+  const me = data.player.apogee;
 
   $("myBadge").innerHTML = badge(me.tier, "me");
   $("myTier").textContent = me.tier.name;
@@ -150,7 +150,7 @@ function renderCategories(data) {
 
 function showOpponent(data) {
   const m = data.match;
-  const me = data.player.arena;
+  const me = data.player.apogee;
 
   $("oppBadge").innerHTML = badge(m.opponent.tier, "opp");
   $("oppName").textContent = m.opponent.name;
@@ -518,7 +518,7 @@ let activeMatch = null;
  * illustrative match only in the static preview, where no server exists.
  */
 function showRealMatch(match, data) {
-  const me = data.player.arena;
+  const me = data.player.apogee;
   const oppTier = data.match.opponent.tier;
 
   $("oppBadge").innerHTML = badge(oppTier, "opp");
@@ -569,7 +569,7 @@ $("queueBtn").addEventListener("click", async () => {
   $("opponent").classList.remove("on");
   showError(null);
 
-  const result = await window.arena.findMatch(selectedCategory, current.benchmark.difficulty);
+  const result = await window.apogee.findMatch(selectedCategory, current.benchmark.difficulty);
 
   $("searching").classList.remove("on");
   btn.disabled = false;
@@ -623,7 +623,7 @@ function renderSession(session, configured) {
 }
 
 if (HOST === "electron") {
-  const api = window.arena;
+  const api = window.apogee;
 
   $("btnRescan").addEventListener("click", () => api.rescan());
   $("btnOpen").addEventListener("click", () => api.openStatsFolder());
@@ -814,5 +814,5 @@ if (HOST === "electron") {
   const note = $("previewNote");
   if (note) note.hidden = false;
 
-  render(window.__ARENA_SNAPSHOT__);
+  render(window.__APOGEE_SNAPSHOT__);
 }

@@ -1,5 +1,5 @@
 /**
- * Arena desktop client: the Electron main process.
+ * Apogee desktop client: the Electron main process.
  *
  * Responsibilities, and deliberately nothing else:
  *   - find the KovaaK's stats folder
@@ -39,7 +39,7 @@ import {
   restoreSession,
   signIn,
   signOut,
-  type ArenaSession,
+  type ApogeeSession,
 } from "./session.ts";
 import { findStatsFolder, watchStatsFolder, type StatsWatcher } from "./watcher.ts";
 
@@ -59,7 +59,7 @@ interface State {
   snapshot: Snapshot | null;
   lastError: string | null;
   scanning: boolean;
-  session: ArenaSession | null;
+  session: ApogeeSession | null;
   signingIn: boolean;
   /** The match the player is currently playing, if any. */
   match: FoundMatch | null;
@@ -95,25 +95,25 @@ function rebuild(reason: string): void {
   if (!state.statsDir) return;
 
   state.scanning = true;
-  broadcast("arena:scanning", { scanning: true, reason });
+  broadcast("apogee:scanning", { scanning: true, reason });
 
   try {
     const snapshot = buildSnapshot({ statsDir: state.statsDir });
     if (snapshot) {
       state.snapshot = snapshot;
       state.lastError = null;
-      broadcast("arena:snapshot", snapshot);
+      broadcast("apogee:snapshot", snapshot);
       checkQuestCompletions(snapshot);
     } else {
       state.lastError = "No runs found in the stats folder yet.";
-      broadcast("arena:error", state.lastError);
+      broadcast("apogee:error", state.lastError);
     }
   } catch (err) {
     state.lastError = err instanceof Error ? err.message : String(err);
-    broadcast("arena:error", state.lastError);
+    broadcast("apogee:error", state.lastError);
   } finally {
     state.scanning = false;
-    broadcast("arena:scanning", { scanning: false, reason });
+    broadcast("apogee:scanning", { scanning: false, reason });
   }
 }
 
@@ -130,7 +130,7 @@ function startWatching(dir: string): void {
     onRun: (run, file) => {
       // Surface the run immediately. The snapshot rebuild follows, but the player
       // should see their run acknowledged the moment it lands, not a second later.
-      broadcast("arena:run", {
+      broadcast("apogee:run", {
         scenario: run.scenario,
         score: run.score,
         playedAt: run.playedAt?.toISOString() ?? null,
@@ -146,7 +146,7 @@ function startWatching(dir: string): void {
     },
     onError: (err) => {
       state.lastError = err.message;
-      broadcast("arena:error", err.message);
+      broadcast("apogee:error", err.message);
     },
   });
 
@@ -198,14 +198,14 @@ function checkQuestCompletions(snapshot: Snapshot): void {
   if (changed) saveQuestState(state.quests);
 
   const level = levelFor(state.quests.totalXp);
-  broadcast("arena:progression", {
+  broadcast("apogee:progression", {
     totalXp: state.quests.totalXp,
     level,
     completedToday: Object.keys(state.quests.completed).length,
   });
 
   for (const quest of result.newlyCompleted) {
-    broadcast("arena:questComplete", { quest, level, xpAwarded: result.xpAwarded });
+    broadcast("apogee:questComplete", { quest, level, xpAwarded: result.xpAwarded });
   }
 }
 
@@ -224,7 +224,7 @@ async function maybeSubmitForMatch(scenarioName: string, file: string): Promise<
   if (!wanted) return;
 
   if (state.submitted.has(wanted.id)) {
-    broadcast("arena:matchProgress", {
+    broadcast("apogee:matchProgress", {
       matchId: match.matchId,
       scenarioId: wanted.id,
       status: "already-submitted",
@@ -238,7 +238,7 @@ async function maybeSubmitForMatch(scenarioName: string, file: string): Promise<
 
   try {
     const result = await submitRun(state.statsDir, file, match.matchId);
-    broadcast("arena:matchProgress", {
+    broadcast("apogee:matchProgress", {
       matchId: match.matchId,
       scenarioId: wanted.id,
       status: "submitted",
@@ -257,7 +257,7 @@ async function maybeSubmitForMatch(scenarioName: string, file: string): Promise<
     // Let them retry the scenario rather than stranding the match.
     state.submitted.delete(wanted.id);
     const message = err instanceof Error ? err.message : String(err);
-    broadcast("arena:matchProgress", {
+    broadcast("apogee:matchProgress", {
       matchId: match.matchId,
       scenarioId: wanted.id,
       status: "failed",
@@ -274,9 +274,9 @@ async function settleActiveMatch(): Promise<void> {
     const settled = await settleMatch(match.matchId);
     state.match = null;
     state.submitted.clear();
-    broadcast("arena:matchSettled", settled);
+    broadcast("apogee:matchSettled", settled);
   } catch (err) {
-    broadcast("arena:error", err instanceof Error ? err.message : String(err));
+    broadcast("apogee:error", err instanceof Error ? err.message : String(err));
   }
 }
 
@@ -288,7 +288,7 @@ function createWindow(): void {
     minHeight: 640,
     backgroundColor: "#07090e",
     show: false,
-    title: "Arena",
+    title: "Apogee",
     webPreferences: {
       preload: join(here, "preload.cjs"),
       // The renderer is a view. It gets no Node, no remote module, and a locked-down
@@ -360,7 +360,7 @@ function runSmokeTest(): void {
         console.log(`runs         : ${snapshot.player.totalRuns}`);
         console.log(`benchmark    : ${snapshot.benchmark.name} ${snapshot.benchmark.difficulty}` +
           ` (${snapshot.player.benchmarkRank})`);
-        console.log(`arena tier   : ${snapshot.player.arena.tier.name}`);
+        console.log(`apogee tier  : ${snapshot.player.apogee.tier.name}`);
         console.log(`weakest      : ${snapshot.weakest}`);
         console.log(`quests       : ${snapshot.quests.length}`);
       }
@@ -390,12 +390,12 @@ function runSmokeTest(): void {
 
   probe.webContents.once("did-finish-load", async () => {
     const hasBridge = await probe.webContents.executeJavaScript(
-      "typeof window.arena === 'object' && typeof window.arena.getState === 'function'",
+      "typeof window.apogee === 'object' && typeof window.apogee.getState === 'function'",
     );
     if (!hasBridge) problems.push("preload bridge is not exposed to the renderer");
 
     const hasSignIn = await probe.webContents.executeJavaScript(
-      "typeof window.arena?.signIn === 'function' && document.getElementById('btnSignIn') !== null",
+      "typeof window.apogee?.signIn === 'function' && document.getElementById('btnSignIn') !== null",
     );
     if (!hasSignIn) problems.push("sign-in is not wired to the renderer");
 
@@ -482,7 +482,7 @@ app.whenReady().then(() => {
     .then((session) => {
       if (session) {
         state.session = session;
-        broadcast("arena:session", session);
+        broadcast("apogee:session", session);
       }
     })
     .catch(() => undefined);
@@ -492,7 +492,7 @@ app.whenReady().then(() => {
     startWatching(found);
   } else {
     state.lastError =
-      "Could not find your KovaaK's stats folder. Use “Choose folder…” to point Arena at it.";
+      "Could not find your KovaaK's stats folder. Use “Choose folder…” to point Apogee at it.";
   }
 
   app.on("activate", () => {
@@ -509,7 +509,7 @@ app.on("window-all-closed", () => {
 // IPC: the entire surface the renderer is given.
 // ---------------------------------------------------------------------------
 
-ipcMain.handle("arena:getState", () => ({
+ipcMain.handle("apogee:getState", () => ({
   statsDir: state.statsDir,
   snapshot: state.snapshot,
   lastError: state.lastError,
@@ -527,12 +527,12 @@ ipcMain.handle("arena:getState", () => ({
 // has nothing to steal.
 // ---------------------------------------------------------------------------
 
-ipcMain.handle("arena:signIn", async () => {
+ipcMain.handle("apogee:signIn", async () => {
   if (!isConfigured()) {
     const message =
       "This build has no Supabase settings. Fill in .env and run npm run build:app.";
     state.lastError = message;
-    broadcast("arena:error", message);
+    broadcast("apogee:error", message);
     return { error: message };
   }
 
@@ -542,11 +542,11 @@ ipcMain.handle("arena:signIn", async () => {
   // case is a user who wants to try again immediately.
   if (state.signingIn) {
     state.signingIn = false;
-    broadcast("arena:signingIn", { signingIn: false });
+    broadcast("apogee:signingIn", { signingIn: false });
   }
 
   state.signingIn = true;
-  broadcast("arena:signingIn", { signingIn: true });
+  broadcast("apogee:signingIn", { signingIn: true });
 
   try {
     const session = await signIn(
@@ -555,30 +555,30 @@ ipcMain.handle("arena:signIn", async () => {
       // recoverable rather than a dead end.
       (url) => {
         console.log("sign-in URL:", url);
-        broadcast("arena:signInUrl", { url });
+        broadcast("apogee:signInUrl", { url });
       },
     );
     state.session = session;
     state.lastError = null;
-    broadcast("arena:session", session);
+    broadcast("apogee:session", session);
     return { session };
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
     state.lastError = message;
-    broadcast("arena:error", message);
+    broadcast("apogee:error", message);
     return { error: message };
   } finally {
     state.signingIn = false;
-    broadcast("arena:signingIn", { signingIn: false });
+    broadcast("apogee:signingIn", { signingIn: false });
   }
 });
 
-ipcMain.handle("arena:signOut", async () => {
+ipcMain.handle("apogee:signOut", async () => {
   await signOut();
   state.session = null;
   state.match = null;
   state.submitted.clear();
-  broadcast("arena:session", null);
+  broadcast("apogee:session", null);
   return { ok: true };
 });
 
@@ -586,24 +586,24 @@ ipcMain.handle("arena:signOut", async () => {
 // backfill, matchmaking, settlement
 // ---------------------------------------------------------------------------
 
-ipcMain.handle("arena:uploadHistory", async () => {
+ipcMain.handle("apogee:uploadHistory", async () => {
   if (!state.session) return { error: "sign in first" };
   if (!state.statsDir) return { error: "no stats folder" };
   if (state.uploading) return { error: "upload already in progress" };
 
   state.uploading = true;
-  broadcast("arena:uploading", { uploading: true });
+  broadcast("apogee:uploading", { uploading: true });
 
   try {
     const result = await uploadBackfill(state.statsDir, state.session.playerId, (p) =>
-      broadcast("arena:uploadProgress", p),
+      broadcast("apogee:uploadProgress", p),
     );
 
     // Backfill writes straight to the table, so nothing has computed the baselines that
     // matches are scored against. Without this the first match would fall back to a
     // provisional baseline and count for half weight, which is plainly wrong for a
     // player who just uploaded years of history.
-    broadcast("arena:uploadProgress", {
+    broadcast("apogee:uploadProgress", {
       uploaded: result.uploaded,
       total: result.prepared,
       batch: 0,
@@ -613,26 +613,26 @@ ipcMain.handle("arena:uploadHistory", async () => {
     const baselines = await refreshBaselines();
 
     const standing = await fetchStanding(state.session.playerId);
-    broadcast("arena:standing", standing);
+    broadcast("apogee:standing", standing);
     return { result, baselines, standing };
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
-    broadcast("arena:error", message);
+    broadcast("apogee:error", message);
     return { error: message };
   } finally {
     state.uploading = false;
-    broadcast("arena:uploading", { uploading: false });
+    broadcast("apogee:uploading", { uploading: false });
   }
 });
 
-ipcMain.handle("arena:findMatch", async (_e, { category, difficulty }) => {
+ipcMain.handle("apogee:findMatch", async (_e, { category, difficulty }) => {
   if (!state.session) return { error: "sign in first" };
 
   try {
     const match = await findMatch(category, difficulty);
     state.match = match;
     state.submitted.clear();
-    broadcast("arena:match", match);
+    broadcast("apogee:match", match);
     return { match };
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
@@ -641,31 +641,31 @@ ipcMain.handle("arena:findMatch", async (_e, { category, difficulty }) => {
 });
 
 /** Abandon the current match locally. The server row simply expires. */
-ipcMain.handle("arena:cancelMatch", () => {
+ipcMain.handle("apogee:cancelMatch", () => {
   state.match = null;
   state.submitted.clear();
-  broadcast("arena:match", null);
+  broadcast("apogee:match", null);
   return { ok: true };
 });
 
-/** Settle early, for a match where a run was played before Arena was watching. */
-ipcMain.handle("arena:settleMatch", async () => {
+/** Settle early, for a match where a run was played before Apogee was watching. */
+ipcMain.handle("apogee:settleMatch", async () => {
   if (!state.match) return { error: "no active match" };
   await settleActiveMatch();
   return { ok: true };
 });
 
-ipcMain.handle("arena:getStanding", async () => {
+ipcMain.handle("apogee:getStanding", async () => {
   if (!state.session) return null;
   return fetchStanding(state.session.playerId);
 });
 
-ipcMain.handle("arena:rescan", () => {
+ipcMain.handle("apogee:rescan", () => {
   rebuild("manual rescan");
   return state.snapshot;
 });
 
-ipcMain.handle("arena:chooseFolder", async () => {
+ipcMain.handle("apogee:chooseFolder", async () => {
   const result = await dialog.showOpenDialog({
     title: "Select your KovaaK's stats folder",
     properties: ["openDirectory"],
@@ -681,6 +681,6 @@ ipcMain.handle("arena:chooseFolder", async () => {
   return chosen;
 });
 
-ipcMain.handle("arena:openStatsFolder", () => {
+ipcMain.handle("apogee:openStatsFolder", () => {
   if (state.statsDir) void shell.openPath(state.statsDir);
 });

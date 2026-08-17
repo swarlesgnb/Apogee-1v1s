@@ -1,6 +1,6 @@
 """Work out which Steam account on this machine is the KovaaK's player.
 
-A machine can have several Steam logins. Arena needs the one whose server-side
+A machine can have several Steam logins. Apogee needs the one whose server-side
 KovaaK's scores actually correspond to the local stats folder, because that pairing is
 what the whole verification model rests on (PLAN.md §5).
 

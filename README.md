@@ -1,4 +1,4 @@
-# Arena
+# Apogee
 
 Ranked 1v1 for KovaaK's. Queue for a category, get matched against someone near your
 rank, play three scenarios in KovaaK's as normal, and the ladder settles itself. Scores
@@ -15,14 +15,14 @@ phased build.
 | 0b | Benchmark data pipeline | done, 133 benchmarks, real thresholds |
 | 1 | Stats parser + validation | done, 100% of 11,058 real files, 0 exceptions |
 | 2 | History, baselines, ranks, weakness map | done, engine matches KovaaK's exactly |
-| 3 | Arena rank theme + visual editor | done, 10 named tiers |
+| 3 | Apogee rank theme + visual editor | done, 10 named tiers |
 | 4 | Supabase schema, Steam auth, run upload | done, deployed and verified live |
 | 5 | Verification: local integrity + KovaaK's cross-check | done, 0% false positives |
 | 6 | Glicko-2, scenario selection, settlement, matchmaking | done, ladder sorts at r=0.998 |
 | 7 | Client UI | done, interactive preview on real data |
 | 8 | Quests from a pasted evxl link | done, 120 of 133 benchmarks trackable |
 | 9 | Electron desktop client | done, boots, watches, renders |
-| 10 | Closed beta | gated on deployment, preflight built |
+| 10 | Closed beta | gated on population, preflight built |
 | 11 | Live sync matchmaking | done, starvation-free, awaiting population |
 | 12 | Server-side match engine | done, 4 Edge Functions deployed |
 | 13 | Client wired to the backend | done, sign-in + upload + match loop live |
@@ -51,7 +51,7 @@ does.
 npm install
 
 npm run profile          # your benchmark ranks and weakness map, from local stats
-npm run ranks            # the Arena rank ladder, with self-tests
+npm run ranks            # the Apogee rank ladder, with self-tests
 npm run validate         # every suite against real data
 npm run typecheck
 ```
@@ -65,17 +65,17 @@ npm run profile -- --stats "D:\path\to\FPSAimTrainer\stats"
 
 ## Rank theme
 
-Arena's ladder has its own tier names and colours, kept deliberately separate from
+Apogee's ladder has its own tier names and colours, kept deliberately separate from
 Voltaic's. Benchmark rank and ladder standing are different claims and must not share a
 vocabulary. Tiers are assigned by **population percentile**, so a tier keeps its meaning
 as the player base grows.
 
-Ten tiers run from Stargazer to Supernova, defined in `data/arena_ranks.json`. Nothing
+Ten tiers run from Stargazer to Supernova, defined in `data/apogee_ranks.json`. Nothing
 in the code keys off the names, so they can be renamed freely.
 
 Open `tools/rank-theme-editor.html` in a browser to edit the palette visually: badges,
 ladder distribution, a match card built from real scores, and the promotion moment all
-update live. Copy the generated JSON back into `data/arena_ranks.json`, then run
+update live. Copy the generated JSON back into `data/apogee_ranks.json`, then run
 `npm run ranks` to confirm the bands still tile 0 to 100 with no gap or overlap.
 
 ## Layout
@@ -85,7 +85,7 @@ data/
   scenario_taxonomy.json     54 Voltaic S5 scenarios, aim types, leaderboard ids
   evxl_registry.json         133 benchmarks with KovaaK's ids + rank colours
   subcategories.json         the nine Voltaic sub-categories, from Voltaic's sheet
-  arena_ranks.json           Arena's own rank tiers, names and colours
+  apogee_ranks.json          Apogee's own rank tiers, names and colours
   score_models.json          learned score = stat * k relations, for verification
   benchmarks/*.json          full definitions: thresholds, ranks, colours
 src/core/
@@ -96,7 +96,7 @@ src/core/
   match/                     scenario selection, settlement, matchmaking, live queue
   verify/                    local integrity checks and KovaaK's cross-check
   quests/                    evxl link resolution and quest generation
-  ranks/                     Arena rank ladder
+  ranks/                     Apogee rank ladder
   consistency/               day-to-day consistency floor and reporting
   sync/                      Steam sign-in and run upload
   report/                    local profile, weakness map, UI snapshot
@@ -238,7 +238,7 @@ closer*, not *forged*.
 
 **Glicko-2**, implemented from the specification and checked against Glickman's own
 worked example: 1464.0506 / 151.5165 / 0.059996, matched exactly. Chosen over Elo
-because Arena's play is sparse, bursty and asynchronous, which is the case Elo handles
+because Apogee's play is sparse, bursty and asynchronous, which is the case Elo handles
 worst.
 
 A simulated 60-player, 25-period season recovers the hidden true-skill order at a
@@ -312,7 +312,7 @@ The file watcher waits for a file's size to stop changing before parsing. KovaaK
 writes stat files progressively, so parsing on the first filesystem event yields a
 truncated CSV with no `Score:` line.
 
-`npm run ui` regenerates `tools/arena-ui-preview.html`, a shareable single-file build of
+`npm run ui` regenerates `tools/apogee-ui-preview.html`, a shareable single-file build of
 **the same renderer** with a snapshot inlined, so the preview and the app cannot drift.
 
 ## Live matchmaking

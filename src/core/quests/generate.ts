@@ -1,12 +1,12 @@
 /**
  * Quest generation.
  *
- * Quests exist to give a reason to open Arena on a day the player does not want to
+ * Quests exist to give a reason to open Apogee on a day the player does not want to
  * compete (PLAN.md §10). They are generated against whichever benchmark the player
  * chose to track, so the targets are real scenarios with real thresholds rather than
  * generic busywork.
  *
- * One rule is load-bearing: **quest XP never touches Arena rating.** The moment
+ * One rule is load-bearing: **quest XP never touches Apogee rating.** The moment
  * grinding quests moves the ladder, the ladder stops measuring skill.
  */
 

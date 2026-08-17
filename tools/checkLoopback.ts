@@ -23,7 +23,7 @@ for (const line of readFileSync(join(root, ".env"), "utf8").split(/\r?\n/)) {
   if (m && m[2]) env[m[1]] = m[2].trim();
 }
 
-const FUNCTION_URL = env.ARENA_STEAM_AUTH_URL!;
+const FUNCTION_URL = env.APOGEE_STEAM_AUTH_URL!;
 
 let failures = 0;
 function check(label: string, ok: boolean, detail = ""): void {

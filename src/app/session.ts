@@ -25,16 +25,16 @@ import { dirname, join } from "node:path";
  * to be public and ships inside the client; row-level security is what protects the
  * data, not this key.
  */
-declare const __ARENA_SUPABASE_URL__: string;
-declare const __ARENA_SUPABASE_ANON_KEY__: string;
-declare const __ARENA_STEAM_AUTH_URL__: string;
+declare const __APOGEE_SUPABASE_URL__: string;
+declare const __APOGEE_SUPABASE_ANON_KEY__: string;
+declare const __APOGEE_STEAM_AUTH_URL__: string;
 
 export const SUPABASE_URL =
-  typeof __ARENA_SUPABASE_URL__ === "string" ? __ARENA_SUPABASE_URL__ : "";
+  typeof __APOGEE_SUPABASE_URL__ === "string" ? __APOGEE_SUPABASE_URL__ : "";
 export const SUPABASE_ANON_KEY =
-  typeof __ARENA_SUPABASE_ANON_KEY__ === "string" ? __ARENA_SUPABASE_ANON_KEY__ : "";
+  typeof __APOGEE_SUPABASE_ANON_KEY__ === "string" ? __APOGEE_SUPABASE_ANON_KEY__ : "";
 export const STEAM_AUTH_URL =
-  typeof __ARENA_STEAM_AUTH_URL__ === "string" ? __ARENA_STEAM_AUTH_URL__ : "";
+  typeof __APOGEE_STEAM_AUTH_URL__ === "string" ? __APOGEE_STEAM_AUTH_URL__ : "";
 
 export function isConfigured(): boolean {
   return Boolean(SUPABASE_URL && SUPABASE_ANON_KEY && STEAM_AUTH_URL);
@@ -58,7 +58,7 @@ export function supabase(): SupabaseClient {
   if (!client) {
     if (!isConfigured()) {
       throw new Error(
-        "Arena was built without Supabase settings. Fill in .env and rebuild.",
+        "Apogee was built without Supabase settings. Fill in .env and rebuild.",
       );
     }
     client = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
@@ -113,7 +113,7 @@ export function clearStoredSession(): void {
   }
 }
 
-export interface ArenaSession {
+export interface ApogeeSession {
   playerId: string;
   steamId: string;
   displayName: string;
@@ -121,7 +121,7 @@ export interface ArenaSession {
   kovaaksUsername: string | null;
 }
 
-async function profileFor(session: Session): Promise<ArenaSession | null> {
+async function profileFor(session: Session): Promise<ApogeeSession | null> {
   const { data, error } = await supabase()
     .from("players")
     .select("id, steam_id, display_name, avatar_url, kovaaks_username")
@@ -140,7 +140,7 @@ async function profileFor(session: Session): Promise<ArenaSession | null> {
 }
 
 /** Restore a session from the encrypted refresh token, if there is one. */
-export async function restoreSession(): Promise<ArenaSession | null> {
+export async function restoreSession(): Promise<ApogeeSession | null> {
   if (!isConfigured()) return null;
 
   const refreshToken = loadRefreshToken();
@@ -168,9 +168,9 @@ export async function signIn(
     open?: (url: string) => void;
   }) => Promise<{ steamId: string; tokenHash: string }>,
   onUrl?: (url: string) => void,
-): Promise<ArenaSession> {
+): Promise<ApogeeSession> {
   if (!isConfigured()) {
-    throw new Error("Arena was built without Supabase settings. Fill in .env and rebuild.");
+    throw new Error("Apogee was built without Supabase settings. Fill in .env and rebuild.");
   }
 
   const { tokenHash } = await openLoopback({

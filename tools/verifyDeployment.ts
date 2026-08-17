@@ -30,8 +30,8 @@ function loadEnv(): Record<string, string> {
 }
 
 const env = loadEnv();
-const URL_BASE = env.ARENA_SUPABASE_URL?.replace(/\/+$/, "");
-const ANON = env.ARENA_SUPABASE_ANON_KEY;
+const URL_BASE = env.APOGEE_SUPABASE_URL?.replace(/\/+$/, "");
+const ANON = env.APOGEE_SUPABASE_ANON_KEY;
 const SECRET = env.SUPABASE_SERVICE_ROLE_KEY;
 const FN = env.STEAM_AUTH_FUNCTION_URL?.replace(/\/+$/, "");
 
