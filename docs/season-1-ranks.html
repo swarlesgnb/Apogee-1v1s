@@ -1,0 +1,442 @@
+<title>Apogee Rank Ladders</title>
+<style>
+  /* ------------------------------------------------------------------
+     A rank sheet, not a document.
+
+     The page is dark on purpose and in one theme only: these ranks live
+     inside a dark client, and a badge that only works on white is a badge
+     that does not work. Committing to the product's own ground is the
+     honest place to judge them.
+
+     The one thing the page must not do is flatter the colours. Every rank
+     is shown three ways - a filled chip, its name on dark, its name on
+     light - because "does this read" is the actual question being asked,
+     and a swatch alone will happily hide a near-black or a pure white.
+     ------------------------------------------------------------------ */
+  :root {
+    --void:      #06080c;
+    --panel:     #0d1117;
+    --sunken:    #090c11;
+    --raised:    #131923;
+    --line:      #1b2230;
+    --line-lit:  #2a3444;
+    --ink:       #e9edf5;
+    --ink-mid:   #9aa5b8;
+    --ink-dim:   #5e6a7c;
+    --warn:      #e0a63f;
+
+    /* The light patch each name is tested against. Not pure white: a real
+       page never is, and pure white flatters a pale colour. */
+    --paper:     #eef1f6;
+
+    --font: ui-sans-serif, "Segoe UI Variable Text", "Segoe UI", system-ui,
+            -apple-system, "Helvetica Neue", sans-serif;
+    --display: "Segoe UI Variable Display", "Segoe UI Semibold", ui-sans-serif,
+               system-ui, sans-serif;
+    --mono: ui-monospace, "Cascadia Mono", "Cascadia Code", Consolas,
+            "SF Mono", "Roboto Mono", monospace;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--void);
+    color: var(--ink);
+    font-family: var(--font);
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 56px 24px 96px;
+  }
+
+  /* ---------------- masthead ---------------- */
+  .masthead { margin-bottom: 44px; }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    margin-bottom: 14px;
+  }
+
+  h1 {
+    font-family: var(--display);
+    font-size: clamp(34px, 5.5vw, 52px);
+    line-height: 1.04;
+    letter-spacing: -.02em;
+    font-weight: 700;
+    margin: 0 0 18px;
+    text-wrap: balance;
+  }
+
+  .standfirst {
+    font-size: 17px;
+    line-height: 1.62;
+    color: var(--ink-mid);
+    max-width: 62ch;
+    margin: 0 0 10px;
+  }
+
+  .ask {
+    margin-top: 26px;
+    padding: 16px 18px;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--warn);
+    border-radius: 4px;
+    max-width: 66ch;
+  }
+  .ask h2 {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--warn);
+    margin: 0 0 8px;
+  }
+  .ask p { margin: 0 0 8px; font-size: 14.5px; color: var(--ink-mid); }
+  .ask p:last-child { margin-bottom: 0; }
+  .ask ol { margin: 8px 0 0; padding-left: 20px; font-size: 14.5px; color: var(--ink-mid); }
+  .ask li { margin-bottom: 5px; }
+
+  /* ---------------- ladders ---------------- */
+  .ladders {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 22px;
+    margin-top: 44px;
+  }
+
+  .ladder {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .ladder-head {
+    padding: 15px 18px 13px;
+    border-bottom: 1px solid var(--line);
+    background: var(--sunken);
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .ladder-head h3 {
+    font-family: var(--display);
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: -.01em;
+    margin: 0;
+  }
+  .ladder-head .theme {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+  }
+
+  .unnamed {
+    padding: 11px 18px;
+    background: #1d1608;
+    border-bottom: 1px solid #3a2e12;
+    font-size: 13px;
+    color: var(--warn);
+  }
+
+  .rungs { display: flex; flex-direction: column-reverse; }
+
+  .rung {
+    display: grid;
+    grid-template-columns: 26px 1fr auto;
+    align-items: center;
+    gap: 13px;
+    padding: 11px 18px;
+    border-top: 1px solid var(--line);
+  }
+  .rung:last-child { border-top: none; }
+
+  .tier {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-dim);
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+  }
+
+  .swatch {
+    width: 13px; height: 13px;
+    border-radius: 3px;
+    flex: none;
+    /* A ring, so a near-black chip is still a chip on a near-black page. */
+    box-shadow: 0 0 0 1px rgba(255,255,255,.22);
+  }
+
+  .name-cell { display: flex; align-items: center; gap: 11px; min-width: 0; }
+
+  .name {
+    font-family: var(--display);
+    font-size: 16px;
+    font-weight: 650;
+    letter-spacing: -.005em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* The same name on a light ground. This is the column that catches a
+     colour which only works on one background. */
+  .onlight {
+    background: var(--paper);
+    border-radius: 3px;
+    padding: 2px 9px;
+    font-family: var(--display);
+    font-size: 13px;
+    font-weight: 650;
+    white-space: nowrap;
+    justify-self: end;
+  }
+
+  .energy {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    color: var(--ink-dim);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ---------------- contrast notes ---------------- */
+  .findings {
+    margin-top: 52px;
+    padding: 22px 24px;
+    background: var(--raised);
+    border: 1px solid var(--line-lit);
+    border-radius: 6px;
+  }
+  .findings h2 {
+    font-family: var(--display);
+    font-size: 19px;
+    font-weight: 700;
+    margin: 0 0 6px;
+  }
+  .findings > p {
+    color: var(--ink-mid);
+    font-size: 14.5px;
+    margin: 0 0 18px;
+    max-width: 68ch;
+  }
+
+  .flags { display: grid; gap: 10px; }
+  .flag {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 13px;
+    align-items: start;
+    padding: 12px 14px;
+    background: var(--sunken);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+  }
+  .flag .chips { display: flex; gap: 5px; padding-top: 3px; }
+  .flag .chip {
+    width: 15px; height: 15px; border-radius: 3px;
+    box-shadow: 0 0 0 1px rgba(255,255,255,.22);
+  }
+  .flag b {
+    display: block;
+    font-size: 14px;
+    font-weight: 650;
+    margin-bottom: 2px;
+  }
+  .flag span { font-size: 13.5px; color: var(--ink-mid); }
+
+  footer {
+    margin-top: 56px;
+    padding-top: 22px;
+    border-top: 1px solid var(--line);
+    font-size: 13px;
+    color: var(--ink-dim);
+    max-width: 70ch;
+  }
+  code {
+    font-family: var(--mono);
+    font-size: .92em;
+    color: var(--ink-mid);
+  }
+</style>
+
+<div class="page">
+  <header class="masthead">
+    <div class="eyebrow">Apogee · Season 1 · draft</div>
+    <h1>Four ladders, thirty-two ranks</h1>
+    <p class="standfirst">
+      Apogee is ranked 1v1 for KovaaK's. You queue a category, play three scenarios,
+      and the ladder moves. Clicking, Tracking and Switching each rank separately —
+      being near the top of one says nothing about the others — and an overall rank is
+      derived from all three.
+    </p>
+    <p class="standfirst">
+      These are the names and colours. Nothing is published yet, so all of it is still
+      cheap to change.
+    </p>
+
+    <div class="ask">
+      <h2>What I'm asking</h2>
+      <ol>
+        <li>Do the names read as a <em>progression</em> — is it obvious which end is good?</li>
+        <li>Does each ladder's theme land, or is it trying too hard?</li>
+        <li>Would you be pleased to be told you're any of these?</li>
+      </ol>
+      <p>Each rank is shown three ways: a colour chip, the name on dark, and the name on
+        light. If it disappears in one of those, that's worth knowing.</p>
+    </div>
+  </header>
+
+  <div class="ladders">
+
+    <section class="ladder">
+      <div class="ladder-head">
+        <h3>Overall</h3>
+        <span class="theme">space</span>
+      </div>
+      <div class="rungs">
+        <div class="rung"><span class="tier">1</span><span class="name-cell"><span class="swatch" style="background:#002aff"></span><span class="name" style="color:#002aff">Stargazer</span></span><span class="onlight" style="color:#002aff">Stargazer</span></div>
+        <div class="rung"><span class="tier">2</span><span class="name-cell"><span class="swatch" style="background:#240000"></span><span class="name" style="color:#240000">Astrologist</span></span><span class="onlight" style="color:#240000">Astrologist</span></div>
+        <div class="rung"><span class="tier">3</span><span class="name-cell"><span class="swatch" style="background:#fff700"></span><span class="name" style="color:#fff700">Cosmonaut</span></span><span class="onlight" style="color:#fff700">Cosmonaut</span></div>
+        <div class="rung"><span class="tier">4</span><span class="name-cell"><span class="swatch" style="background:#3c005c"></span><span class="name" style="color:#3c005c">Lunar</span></span><span class="onlight" style="color:#3c005c">Lunar</span></div>
+        <div class="rung"><span class="tier">5</span><span class="name-cell"><span class="swatch" style="background:#ff00dd"></span><span class="name" style="color:#ff00dd">Odyssey</span></span><span class="onlight" style="color:#ff00dd">Odyssey</span></div>
+        <div class="rung"><span class="tier">6</span><span class="name-cell"><span class="swatch" style="background:#00ff04"></span><span class="name" style="color:#00ff04">Arecibo</span></span><span class="onlight" style="color:#00ff04">Arecibo</span></div>
+        <div class="rung"><span class="tier">7</span><span class="name-cell"><span class="swatch" style="background:#00f4cf"></span><span class="name" style="color:#00f4cf">Quasar</span></span><span class="onlight" style="color:#00f4cf">Quasar</span></div>
+        <div class="rung"><span class="tier">8</span><span class="name-cell"><span class="swatch" style="background:#ff0000"></span><span class="name" style="color:#ff0000">Supernova</span></span><span class="onlight" style="color:#ff0000">Supernova</span></div>
+      </div>
+    </section>
+
+    <section class="ladder">
+      <div class="ladder-head">
+        <h3>Tracking</h3>
+        <span class="theme">evolution</span>
+      </div>
+      <div class="rungs">
+        <div class="rung"><span class="tier">1</span><span class="name-cell"><span class="swatch" style="background:#ff00a2"></span><span class="name" style="color:#ff00a2">Homoerectus</span></span><span class="onlight" style="color:#ff00a2">Homoerectus</span></div>
+        <div class="rung"><span class="tier">2</span><span class="name-cell"><span class="swatch" style="background:#00fbff"></span><span class="name" style="color:#00fbff">Neanderthal</span></span><span class="onlight" style="color:#00fbff">Neanderthal</span></div>
+        <div class="rung"><span class="tier">3</span><span class="name-cell"><span class="swatch" style="background:#fbff00"></span><span class="name" style="color:#fbff00">Homosapiens</span></span><span class="onlight" style="color:#fbff00">Homosapiens</span></div>
+        <div class="rung"><span class="tier">4</span><span class="name-cell"><span class="swatch" style="background:#4d2200"></span><span class="name" style="color:#4d2200">Caveman</span></span><span class="onlight" style="color:#4d2200">Caveman</span></div>
+        <div class="rung"><span class="tier">5</span><span class="name-cell"><span class="swatch" style="background:#ffffff"></span><span class="name" style="color:#ffffff">Neolithic</span></span><span class="onlight" style="color:#ffffff">Neolithic</span></div>
+        <div class="rung"><span class="tier">6</span><span class="name-cell"><span class="swatch" style="background:#00cc03"></span><span class="name" style="color:#00cc03">Human</span></span><span class="onlight" style="color:#00cc03">Human</span></div>
+        <div class="rung"><span class="tier">7</span><span class="name-cell"><span class="swatch" style="background:#0400ff"></span><span class="name" style="color:#0400ff">Robosapien</span></span><span class="onlight" style="color:#0400ff">Robosapien</span></div>
+        <div class="rung"><span class="tier">8</span><span class="name-cell"><span class="swatch" style="background:#ff0000"></span><span class="name" style="color:#ff0000">AimGPT</span></span><span class="onlight" style="color:#ff0000">AimGPT</span></div>
+      </div>
+    </section>
+
+    <section class="ladder">
+      <div class="ladder-head">
+        <h3>Switching</h3>
+        <span class="theme">speed</span>
+      </div>
+      <div class="rungs">
+        <div class="rung"><span class="tier">1</span><span class="name-cell"><span class="swatch" style="background:#2e2e2e"></span><span class="name" style="color:#2e2e2e">Sloth</span></span><span class="onlight" style="color:#2e2e2e">Sloth</span></div>
+        <div class="rung"><span class="tier">2</span><span class="name-cell"><span class="swatch" style="background:#004701"></span><span class="name" style="color:#004701">Galapagos Turtle</span></span><span class="onlight" style="color:#004701">Galapagos Turtle</span></div>
+        <div class="rung"><span class="tier">3</span><span class="name-cell"><span class="swatch" style="background:#0011ff"></span><span class="name" style="color:#0011ff">Manatee</span></span><span class="onlight" style="color:#0011ff">Manatee</span></div>
+        <div class="rung"><span class="tier">4</span><span class="name-cell"><span class="swatch" style="background:#ff6600"></span><span class="name" style="color:#ff6600">Slow Loris</span></span><span class="onlight" style="color:#ff6600">Slow Loris</span></div>
+        <div class="rung"><span class="tier">5</span><span class="name-cell"><span class="swatch" style="background:#04ff00"></span><span class="name" style="color:#04ff00">Ferret</span></span><span class="onlight" style="color:#04ff00">Ferret</span></div>
+        <div class="rung"><span class="tier">6</span><span class="name-cell"><span class="swatch" style="background:#ffffff"></span><span class="name" style="color:#ffffff">Jackrabbit</span></span><span class="onlight" style="color:#ffffff">Jackrabbit</span></div>
+        <div class="rung"><span class="tier">7</span><span class="name-cell"><span class="swatch" style="background:#ffa200"></span><span class="name" style="color:#ffa200">Cheetah</span></span><span class="onlight" style="color:#ffa200">Cheetah</span></div>
+        <div class="rung"><span class="tier">8</span><span class="name-cell"><span class="swatch" style="background:#36006b"></span><span class="name" style="color:#36006b">Peregrine</span></span><span class="onlight" style="color:#36006b">Peregrine</span></div>
+      </div>
+    </section>
+
+    <section class="ladder">
+      <div class="ladder-head">
+        <h3>Clicking</h3>
+        <span class="theme">not named yet</span>
+      </div>
+      <div class="unnamed">Placeholders. This ladder is the one that still needs ideas.</div>
+      <div class="rungs">
+        <div class="rung"><span class="tier">1</span><span class="name-cell"><span class="swatch" style="background:#7C8AA5"></span><span class="name" style="color:#7C8AA5">I</span></span><span class="energy">15,000</span></div>
+        <div class="rung"><span class="tier">2</span><span class="name-cell"><span class="swatch" style="background:#4FA3C7"></span><span class="name" style="color:#4FA3C7">D</span></span><span class="energy">30,000</span></div>
+        <div class="rung"><span class="tier">3</span><span class="name-cell"><span class="swatch" style="background:#C79A4F"></span><span class="name" style="color:#C79A4F">K</span></span><span class="energy">45,000</span></div>
+        <div class="rung"><span class="tier">4</span><span class="name-cell"><span class="swatch" style="background:#C75FA8"></span><span class="name" style="color:#C75FA8">Y</span></span><span class="energy">60,000</span></div>
+        <div class="rung"><span class="tier">5</span><span class="name-cell"><span class="swatch" style="background:#8891a3"></span><span class="name" style="color:#8891a3">E</span></span><span class="energy">75,000</span></div>
+        <div class="rung"><span class="tier">6</span><span class="name-cell"><span class="swatch" style="background:#8891a3"></span><span class="name" style="color:#8891a3">T</span></span><span class="energy">90,000</span></div>
+        <div class="rung"><span class="tier">7</span><span class="name-cell"><span class="swatch" style="background:#8891a3"></span><span class="name" style="color:#8891a3">D:</span></span><span class="energy">105,000</span></div>
+        <div class="rung"><span class="tier">8</span><span class="name-cell"><span class="swatch" style="background:#8891a3"></span><span class="name" style="color:#8891a3">:0</span></span><span class="energy">120,000</span></div>
+      </div>
+    </section>
+
+  </div>
+
+  <section class="findings">
+    <h2>Things I already know are wrong</h2>
+    <p>
+      Better to name them than have three people each spend their first message on the
+      same ones.
+    </p>
+
+    <div class="flags">
+      <div class="flag">
+        <span class="chips">
+          <span class="chip" style="background:#ffffff"></span>
+          <span class="chip" style="background:#240000"></span>
+          <span class="chip" style="background:#2e2e2e"></span>
+          <span class="chip" style="background:#004701"></span>
+        </span>
+        <span>
+          <b>Four colours vanish on one background</b>
+          Neolithic and Jackrabbit are pure white, so they disappear on anything light.
+          Astrologist, Sloth and Galapagos Turtle are near-black and disappear on
+          anything dark. A rank badge has to survive both.
+        </span>
+      </div>
+
+      <div class="flag">
+        <span class="chips"><span class="chip" style="background:#4d2200"></span></span>
+        <span>
+          <b>Tracking's order isn't the actual sequence</b>
+          Homo erectus → Neanderthal → Homo sapiens → <em>Caveman</em> → Neolithic →
+          Human. Caveman and Human sit after Homo sapiens, and Neolithic is an era rather
+          than a species. Anyone who knows the order will notice, and the joke lands
+          better if the ladder is right.
+        </span>
+      </div>
+
+      <div class="flag">
+        <span class="chips">
+          <span class="chip" style="background:#ff0000"></span>
+          <span class="chip" style="background:#ff0000"></span>
+        </span>
+        <span>
+          <b>Two ladders both top out in the same red</b>
+          Supernova and AimGPT are both <code>#ff0000</code>. The top rank is the one
+          people screenshot, so it should be the most distinctive colour on the page, not
+          a shared one.
+        </span>
+      </div>
+
+      <div class="flag">
+        <span class="chips"><span class="chip" style="background:#8891a3"></span></span>
+        <span>
+          <b>Clicking is untouched</b>
+          Still placeholders, and the ladder most in need of a theme. Switching went
+          slow-animal to fast-animal and reads instantly — Clicking wants something with
+          the same shape.
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    Season 1 is a draft: nothing is published, so names, colours, thresholds and even the
+    number of ranks are all still free to change. Once a season is published it is frozen
+    — a rank cannot be re-cut under people who already earned it — so this is the moment
+    to be picky.
+  </footer>
+</div>
