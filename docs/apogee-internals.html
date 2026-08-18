@@ -356,10 +356,13 @@
       <li><a href="#what">What Apogee is</a></li>
       <li><a href="#spine">The spine</a></li>
       <li><a href="#concepts">Five concepts</a></li>
+      <li><a href="#seasons">Seasons</a></li>
+      <li><a href="#matchlife">The life of a match</a></li>
       <li><a href="#security">The security model</a></li>
       <li><a href="#map">Where things live</a></li>
       <li><a href="#found">Found, not designed</a></li>
       <li><a href="#bugs">Bugs and lessons</a></li>
+      <li><a href="#running">Running and maintaining it</a></li>
       <li><a href="#verify">Verify it yourself</a></li>
       <li><a href="#todo">Not done yet</a></li>
     </ol>
@@ -631,7 +634,7 @@ matchScore = mean(delta₁, delta₂, delta₃)     higher wins</pre>
         </p>
       </div>
 
-      <h3>3. Energy — how Voltaic ranks</h3>
+      <h3>3. Energy — how a season ranks</h3>
       <p>
         Reverse-engineered from KovaaK's own API and then validated against real accounts:
         computed category and overall progress match the server to within
@@ -740,6 +743,198 @@ gap     = (ceiling − floor) / ceiling</pre>
     </section>
 
     <!-- ================================================================= -->
+    <section id="seasons">
+      <h2>Seasons</h2>
+      <p class="lede">
+        A season is the answer to "what does a rank mean". It owns the pool, the
+        thresholds and the ladders, it is frozen once published, and it is the reason
+        nothing here depends on Voltaic any more.
+      </p>
+
+      <p>
+        Everything that grades a score used to read
+        <code>data/benchmarks/voltaic-s5.json</code> directly, which made Voltaic the
+        authority on what a rank meant — and put the definition on somebody else's release
+        schedule. A season replaces that. Same numbers to begin with, but ours.
+      </p>
+
+      <div class="exhibit">
+        <div class="exhibit-head">
+          <span>What a season contains</span>
+          <span class="src">data/seasons/season-1.json</span>
+        </div>
+        <div class="exhibit-body">
+<pre>name, status          draft | published | archived
+rankNames/Colors      the <em>overall</em> ladder
+categories[]          Clicking, Tracking, Switching
+  rankNames/Colors      each category's own ladder
+  rankMaxes             energy needed per rank in that category
+scenarios[]           the pool
+  scenario, category    which ladder grades it
+  label                 short display name
+  rankMaxes             score needed per rank</pre>
+        </div>
+      </div>
+
+      <h3>Three ladders, not one</h3>
+      <p>
+        Clicking, Tracking and Switching each name and colour their own ranks. The claims
+        are separate — being near the top of Tracking says nothing about Clicking — and a
+        shared vocabulary would quietly imply otherwise. They can be different depths:
+        Tracking can have six ranks where Clicking has four.
+      </p>
+      <p class="note">
+        <span class="note-label">Watch for</span>
+        Everything is keyed to a ladder's length. A category with four ranks has four
+        energy thresholds, and every scenario in it has four score thresholds. Adding a
+        rank name alone breaks the season with an error about a scenario nobody touched,
+        which is why the editor moves all three arrays together and
+        <code>validateSeason</code> refuses a mismatch before anything is written.
+      </p>
+
+      <h3>The overall rank is derived</h3>
+      <p>
+        It is not graded on its own. Each category is reduced to its <em>standing</em> —
+        how far along its own ladder you are, as a fraction — and the overall is where the
+        average of those falls on the overall ladder. Ladders of different depths compare
+        correctly because nothing is compared until it is already a fraction.
+      </p>
+      <p>
+        The average, not the weakest. Being carried by one strong category is a real thing
+        this says about somebody, and a mean says it. A minimum would make the overall a
+        second, harsher name for the weakest category, which the weakness map already
+        reports and reports better.
+      </p>
+      <p class="note">
+        <span class="note-label">Only for seasons</span>
+        A KovaaK's benchmark has one ladder for all its categories, and its overall rank is
+        whatever their servers report. <code>validate:engine</code> holds this code to
+        matching that, so the summed-energy path is preserved exactly and the derived path
+        is taken only when a category carries its own ladder.
+      </p>
+
+      <h3>Why published means frozen</h3>
+      <p>
+        A threshold edit is not like other edits. Raise a rank and everybody who held it
+        yesterday is something else today, with no run played and nothing in their history
+        to explain it. So the editable thing is a <em>draft</em>, and publishing is
+        one-way.
+      </p>
+      <p>
+        That is enforced by a database trigger rather than by application code, because a
+        guarantee this load-bearing should hold for the data rather than for one path into
+        it. Archiving stays allowed: retiring a season changes which one is current without
+        changing what any past rank meant.
+      </p>
+
+      <h3>Where season 1's numbers came from</h3>
+      <p>
+        Later seasons derive their thresholds from the previous season's population, which
+        is the whole point — a rank becomes a percentile of what people actually score and
+        never needs maintaining. Season 1 cannot, because there is no population yet, so it
+        is seeded from two sources doing different jobs.
+      </p>
+      <p>
+        <strong>Voltaic's published numbers</strong> supply the thresholds. They are real
+        population data, which is exactly what we cannot generate. <strong>The local
+        corpus</strong> is a sanity check, not a source: one player's history describes that
+        player, but it can say whether a real person lands on the scale at all. A seed that
+        puts somebody off the end of its own ladder is wrong whatever its provenance.
+      </p>
+    </section>
+
+    <section id="matchlife">
+      <h2>The life of a match</h2>
+      <p class="lede">
+        Five states, and most of the interesting behaviour is in what happens when a match
+        does <em>not</em> finish cleanly.
+      </p>
+
+      <div class="exhibit">
+        <div class="exhibit-head"><span>States</span><span class="src">matches.status</span></div>
+        <div class="exhibit-body">
+<pre>awaiting_runs   handed out; the clock is running
+settled         scored, rating applied
+void            ended with nothing rated</pre>
+        </div>
+      </div>
+
+      <h3>An empty pool still gives you a match</h3>
+      <p>
+        Queueing with nobody to play returns a <em>seeding match</em>: the same three
+        seeded scenarios, no opponent, nothing rated. The run set is scored and stored, and
+        that is what the next player is matched against. Without it the pool could never
+        receive its first entry, which on an async-first ladder is the difference between a
+        cold start and no start.
+      </p>
+      <p class="note">
+        <span class="note-label">In the UI</span>
+        A seeding match has no verdict. It reads <em>Run set recorded</em>, not a win or a
+        loss, and its rounds read <em>recorded</em> rather than won — a missing opponent
+        delta is <code>null</code>, which is not the same as an opponent who scored exactly
+        their baseline.
+      </p>
+
+      <h3>The clock only runs while nobody is playing</h3>
+      <p>
+        The deadline is an idle allowance, not a total. It is pushed forward every time a
+        run lands, from the moment that run ended, so loading and playing cost nothing and
+        only sitting in a menu spends it. A new match gets a longer first allowance for a
+        cold start of Steam and the game.
+      </p>
+      <p>
+        Three minutes of idle, because once playing is free the only thing left to buy is
+        the gap between scenarios — and a generous gap is what would let somebody stall to
+        the last second of every round and turn a short match into a quarter of an hour of
+        an opponent's time.
+      </p>
+
+      <h3>Quitting costs what running out costs</h3>
+      <p>
+        Pressing <em>Abandon</em> and letting the clock expire are the same act as far as
+        the ladder is concerned, so they run through the same code and cost the same: a
+        loss, at full weight. If only one of them were free, the free one would be the only
+        one anybody used.
+      </p>
+      <p>
+        Two exceptions, both because nothing was contested. A <strong>seeding</strong> match
+        has no opponent to lose to, and inventing a loss against nobody would be free rating
+        tanking. A match whose <strong>runs are already in</strong> should be settled, not
+        forfeited.
+      </p>
+
+      <h3>A crash is an absent round, not a bad one</h3>
+      <p>
+        Only the first attempt on each scenario counts, so an alt-F4 eight seconds in would
+        otherwise become the attempt of record and settle as a loss. A run whose length
+        falls below 90% of its scenario's known length is excluded rather than scored, which
+        leaves the sides uneven and voids the match at zero rating weight.
+      </p>
+      <p class="note">
+        <span class="note-label">Measured</span>
+        Scenario lengths are learned from real history, not hardcoded: the corpus has
+        scenarios at 60s, 30s and 86s, and pressure and nevermiss scenarios end the moment
+        you miss, so they get no fixed length and are never checked. Across 11,104 runs the
+        rule flags 2, and <strong>0 of the 675 runs on benchmark scenarios</strong> — the
+        only ones a match is ever played on.
+      </p>
+
+      <h3>Timestamps are the sharp edge</h3>
+      <p>
+        KovaaK's writes a bare local wall clock into the filename and records no offset
+        anywhere, so those digits are not a moment in time until somebody says where they
+        were read. Two values want opposite things from them:
+      </p>
+      <p>
+        <strong>Duration</strong> is the gap between two local readings and is only right
+        while both are in the same frame, so it is computed during the parse.
+        <strong><code>played_at</code></strong> has to be a real instant comparable to a
+        match window recorded in UTC, so the client sends its offset and the server rebuilds
+        it. Getting this wrong rejected every run of the first real match as "outside the
+        match window", six hours from where it belonged.
+      </p>
+    </section>
+
     <section id="security">
       <h2>The security model</h2>
       <p class="lede">One rule, and everything else follows from it.</p>
@@ -824,15 +1019,16 @@ gap     = (ceiling − floor) / ceiling</pre>
         <div class="exhibit-head"><span>Layout</span><span class="src">76 files · 18,496 lines</span></div>
         <div class="exhibit-body">
 <pre>src/core/                      the brain — pure, portable, no I/O assumptions
-  stats/          parse KovaaK's CSVs
-  benchmarks/     Voltaic energy and rank computation
+  stats/          parse KovaaK's CSVs, derive run length
+  season/         what a rank means; which edits are legal
+  benchmarks/     energy and rank computation
   history/        run history, baselines
   rating/         Glicko-2
   match/          scenario selection, settlement, matchmaking, live queue
   verify/         integrity checks, KovaaK's cross-check, score models
   consistency/    floor scoring, ceiling-vs-floor report
   quests/         evxl links, quest generation, floor quests, XP
-  ranks/          Apogee's own rank ladder
+  ranks/          Apogee's own ladder (the competitive one, not the season's)
   sync/           Steam sign-in, run upload
   report/         profile, weakness map, UI snapshot
 
@@ -845,9 +1041,10 @@ src/app/                       the desktop client (Electron)
   renderer/       the UI — a pure view, decides nothing
 
 supabase/
-  migrations/     12 tables, RLS policies, triggers
-  functions/      steam-auth, submit-run, find-match,
-                  settle-match, refresh-baselines
+  migrations/     15 tables, RLS policies, the season freeze trigger
+  functions/      steam-auth, submit-run, find-match, settle-match,
+                  abandon-match, refresh-baselines
+  functions/_shared/  caller vs admin clients, forfeit, baselines
   seed.sql        248 scenarios, 261 benchmark memberships
 
 tools/                         build-time data extraction and checks
@@ -993,6 +1190,166 @@ VT Aether Intermediate S5       score = hitCount × 1
     </section>
 
     <!-- ================================================================= -->
+    <section id="running">
+      <h2>Running and maintaining it</h2>
+      <p class="lede">
+        What to type, in what order, and the handful of things that will bite you if
+        nobody wrote them down.
+      </p>
+
+      <h3>The daily loop</h3>
+      <div class="exhibit">
+        <div class="exhibit-head"><span>Working on it</span><span class="src">no backend needed</span></div>
+        <div class="exhibit-body">
+<pre>npm start            build the client and launch it
+npm run smoke        boot headlessly and check it renders — no window
+npm run typecheck    tsc, no emit
+npm run validate     every suite, against your real runs
+npm run ui           regenerate the shareable single-file preview</pre>
+        </div>
+      </div>
+      <p>
+        <code>npm start</code> runs <code>build:app</code> first. That matters more than it
+        sounds — see the trap below.
+      </p>
+
+      <h3>Deploying</h3>
+      <p>
+        Order is not arbitrary. The sync writes to columns the migration creates, and the
+        functions read what the sync wrote.
+      </p>
+      <div class="exhibit">
+        <div class="exhibit-head"><span>In this order</span><span class="src">after a schema or function change</span></div>
+        <div class="exhibit-body">
+<pre>npx supabase db push --yes    migrations
+npm run sync:reference        score models, world records, durations
+npm run deploy:functions      all five Edge Functions
+npm run verify:deployment     prove it against the live project</pre>
+        </div>
+      </div>
+      <p class="note">
+        <span class="note-label">Learned the hard way</span>
+        <code>deploy:functions</code> deploys every function every time, deliberately.
+        It once listed four of five, and the missing one sat on a stale bundle for weeks
+        with nothing to indicate it. If you add a function, add it to that script and to
+        the anonymous-caller checks in <code>verifyDeployment</code> in the same commit.
+      </p>
+      <p>
+        <code>WARNING: Docker is not running</code> during a deploy is noise. Docker is
+        only needed for the local stack, never for deploying.
+      </p>
+
+      <h3>Editing a season</h3>
+      <div class="exhibit">
+        <div class="exhibit-head"><span>Season workflow</span><span class="src">admin only</span></div>
+        <div class="exhibit-body">
+<pre>npm run grant:admin -- &lt;steamId&gt; --note "why"   once, per admin
+npm run grant:admin -- --list                   who has it
+
+npm run build:season    rebuild season 1 from the seed + corpus
+npm run push:season     load it into the project as a draft
+npm run validate:season prove edits keep the ladders in step</pre>
+        </div>
+      </div>
+      <p>
+        Day to day you will not use those. The <strong>Season</strong> tab in the app is
+        the editor: rank names, colours, per-scenario thresholds, category energy, adding
+        and removing both scenarios and ranks. Saving writes the file and rebuilds, so a
+        change is visible immediately.
+      </p>
+      <p>
+        There is deliberately no in-app path to granting admin. The <code>admins</code>
+        table has no client write policy at all, so the service-role key is the only door —
+        which is the right home for the power to decide what a rank means.
+      </p>
+      <p class="note">
+        <span class="note-label">Not a security boundary</span>
+        The admin gate hides a tab. The season is a file on the machine and anybody sitting
+        at it can open the JSON in a text editor. The gate matters the day a season is
+        published to other people, not before.
+      </p>
+
+      <h3>The trap: two copies of data/</h3>
+      <p>
+        The app points the core at <code>dist/data</code>, and <code>build:app</code>
+        rewrites that directory from <code>data/</code> on <em>every</em> build. Anything
+        written back to the runtime copy therefore survives exactly until the next build
+        and then vanishes with nothing to say it had.
+      </p>
+      <p>
+        Saving a season writes both — the runtime copy so the change shows now, the source
+        so it is still there tomorrow — and reports how many files it wrote. If a save ever
+        says <em>1 file</em> on a dev machine, the source lookup failed and the edit is
+        living on borrowed time.
+      </p>
+
+      <h3>Refreshing the reference data</h3>
+      <p>
+        All of it is committed, so the app never needs any of these services at runtime.
+        Re-run them when something upstream changes.
+      </p>
+      <div class="exhibit">
+        <div class="exhibit-head"><span>Build-time only</span><span class="src">python + node</span></div>
+        <div class="exhibit-body">
+<pre>python tools/fetch_scenario_taxonomy.py        54 scenarios, aim types, leaderboard ids
+python tools/fetch_benchmark_defs.py           thresholds and rank colours
+python tools/fetch_voltaic_subcategories.py    the nine sub-categories
+python tools/scrape_evxl_bundle.py             evxl's benchmark registry
+python tools/generate_seed.py                  rebuild supabase/seed.sql
+
+npm run build:score-models   score = stat × k, from your corpus
+npm run build:durations      scenario lengths, from your corpus</pre>
+        </div>
+      </div>
+      <p>
+        The last two learn from whoever runs them. Coverage grows with the corpus, and a
+        scenario with no model or no known length is <em>skipped</em> by its check rather
+        than failed by it.
+      </p>
+
+      <h3>When something looks wrong</h3>
+      <div class="exhibit">
+        <div class="exhibit-head"><span>Symptom → cause</span><span class="src">all of these happened</span></div>
+        <div class="exhibit-body">
+<pre>buttons do nothing, "No handler registered for apogee:…"
+   the window is older than dist/. Relaunch.
+
+a change deployed but behaves the old way
+   the client half was never rebuilt. npm run build:app, relaunch.
+
+runs upload but never attach to a match
+   the client lost the match on restart. It recovers on startup now;
+   if it does not, queueing surfaces the same match again.
+
+runs rejected as "in_match_window"
+   a timezone problem, not a verification problem. Check played_at
+   against the match window in the database.
+
+a playlist is on disk but not in the game's menu
+   KovaaK's reads playlists once, at startup. Restart it, or use the
+   per-scenario Play buttons, which need nothing on disk.
+
+"could not read seasons: 404"
+   the migration is not deployed. npx supabase db push --yes</pre>
+        </div>
+      </div>
+      <p>
+        The database is the fastest way to answer "what actually happened". Every run
+        carries <code>verification_notes</code> naming the exact check that rejected it, and
+        <code>tools/runAsPlayer.ts</code> calls any Edge Function as a real player from a
+        terminal, using the same session mechanism a signed-in client would.
+      </p>
+
+      <h3>Before letting anyone else in</h3>
+      <p>
+        <code>npm run beta</code> checks what has to be true before a closed beta:
+        thresholds populated, RLS on every table, no client write policy on ratings or
+        matches, Steam assertions actually verified, the renderer locked down, the
+        environment configured. It separates blockers from advisories and prints the manual
+        items it cannot check rather than pretending they are done.
+      </p>
+    </section>
+
     <section id="verify">
       <h2>Verify it yourself</h2>
       <p class="lede">
@@ -1003,7 +1360,7 @@ VT Aether Intermediate S5       score = hitCount × 1
       <div class="exhibit">
         <div class="exhibit-head"><span>Commands</span><span class="src">npm run …</span></div>
         <div class="exhibit-body">
-<pre>validate              all 12 suites, against your 11,104 real runs
+<pre>validate              all 14 suites, against your real runs
 validate:verify       false positives and tamper detection
 validate:engine       energy model vs KovaaK's live API
 validate:glicko       Glicko-2 vs Glickman's published example
@@ -1036,9 +1393,22 @@ smoke                 boot the client headlessly and check it renders</pre>
 
       <ul>
         <li>
-          <strong>No match has ever been played.</strong> The whole loop is built,
-          deployed and verified, but a match needs an opponent and the pool is empty until
-          someone plays a category once.
+          <strong>No contested match has been played.</strong> The loop works end to end —
+          a seeding match has been queued, played, verified and settled, and its run set is
+          in the pool. What has not happened is a match with somebody on the other side, so
+          the win/loss path and the rating change have never run against a real opponent.
+        </li>
+        <li>
+          <strong>Ratings are still one per player, not three.</strong> The season splits
+          Clicking, Tracking and Switching into separate ladders for grading, but
+          <code>ratings</code> is keyed on <code>player_id</code> alone, so "my Tracking
+          rank" has no answer yet. Splitting it is the next real piece of PLAN.md §14.
+        </li>
+        <li>
+          <strong>Season rollover is not built.</strong> Season 1's thresholds are seeded
+          from Voltaic's numbers. The step that makes seasons worth having — deriving
+          season <em>n</em>'s thresholds from season <em>n−1</em>'s population — needs a
+          population first.
         </li>
         <li>
           <strong>Score models cover 18 of 248 scenarios server-side.</strong> They are
