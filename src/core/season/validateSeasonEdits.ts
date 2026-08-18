@@ -79,5 +79,60 @@ check(
   `${good.categories[0].rankNames.length} vs ${good.categories[1].rankNames.length}`,
 );
 
-console.log(failures === 0 ? "\nOK: the validator catches a desynced ladder" : `\n${failures} failed`);
+
+// ---- the overall rank is derived from the three categories -----------------------
+//
+// Not graded on its own: with ladders of different depths a summed-energy overall
+// silently drops every time one category is shorter than another. These pin the ends,
+// which is where a derivation of this kind goes wrong first.
+import { evaluateBenchmark } from "../benchmarks/energy.ts";
+import { seasonAsDifficulty } from "./season.ts";
+
+console.log("\n-- derived overall --");
+
+const diff = seasonAsDifficulty(base);
+const everyScenario = base.scenarios;
+
+const atLeast = (fraction: number) =>
+  new Map(
+    everyScenario.map((s) => {
+      const top = s.rankMaxes[s.rankMaxes.length - 1];
+      return [s.scenario, top * fraction];
+    }),
+  );
+
+const maxed = evaluateBenchmark(diff, atLeast(1.5));
+check(
+  "maxing every category reaches the top overall rank",
+  maxed.rankName === base.rankNames[base.rankNames.length - 1],
+  `${maxed.rankName}`,
+);
+
+const nothing = evaluateBenchmark(diff, new Map());
+check("scoring nothing is unranked overall", nothing.rankIndex < 0, `${nothing.rankName}`);
+
+// A category shorter than the others must not drag the overall down by arithmetic.
+const uneven: Season = clone();
+const short = uneven.categories[0];
+short.rankNames = short.rankNames.slice(0, 2);
+short.rankColors = { [short.rankNames[0]]: "#888", [short.rankNames[1]]: "#999" };
+short.rankMaxes = short.rankMaxes.slice(0, 2);
+uneven.scenarios
+  .filter((s) => s.category === short.name)
+  .forEach((s) => (s.rankMaxes = s.rankMaxes.slice(0, 2)));
+
+check("a season with uneven ladders is valid", refuses(uneven) === null, refuses(uneven) ?? "");
+
+const unevenMaxed = evaluateBenchmark(seasonAsDifficulty(uneven), atLeast(1.5));
+check(
+  "a shorter ladder does not stop the overall reaching the top",
+  unevenMaxed.rankName === uneven.rankNames[uneven.rankNames.length - 1],
+  `${unevenMaxed.rankName}`,
+);
+
+console.log(
+  failures === 0
+    ? "\nOK: season edits and the derived overall validated"
+    : `\n${failures} check(s) failed`,
+);
 process.exit(failures === 0 ? 0 : 1);

@@ -15,8 +15,11 @@
  *   - Category energy is the plain sum of its scenarios' energy.
  *   - Category rank is the highest threshold in the category's own `rankMaxes`
  *     that the category energy meets.
- *   - Overall progress is the sum of category energy; overall rank is the highest
- *     index where progress meets the summed category thresholds.
+ *   - Overall progress is the sum of category energy. For a KovaaK's benchmark the
+ *     overall rank is the highest index where that meets the summed category
+ *     thresholds, which is what their servers report. For a season, where each category
+ *     has its own ladder, summing is meaningless and the overall is derived from how
+ *     far along its own ladder each category is.
  *
  * Note the category thresholds differ per category (Switching demands more energy
  * for the same rank than Clicking does) but the per-scenario energy scale is
@@ -88,6 +91,10 @@ export interface CategoryResult {
   rankIndex: number;
   rankName: string | null;
   scenarios: ScenarioResult[];
+  /** How many ranks this category's ladder has. */
+  rankCount: number;
+  /** Fraction of the way from this rank to the next, or null at the top. */
+  progressToNextRank: number | null;
 }
 
 export interface BenchmarkResult {
@@ -135,12 +142,25 @@ function evaluateCategory(
   const energy = scenarios.reduce((sum, s) => sum + s.energy, 0);
   const idx = rankIndex(energy, category.rankMaxes);
 
+  // Where this category sits between its current rank and the next. Reported because
+  // the overall rank is derived from it: without a fraction, three categories could
+  // only ever land the overall on whole steps.
+  let progressToNextRank: number | null = null;
+  const next = idx + 1;
+  if (next < category.rankMaxes.length) {
+    const lo = idx >= 0 ? category.rankMaxes[idx] : 0;
+    const hi = category.rankMaxes[next];
+    progressToNextRank = hi > lo ? Math.min(1, Math.max(0, (energy - lo) / (hi - lo))) : 1;
+  }
+
   return {
     name: category.name,
     energy,
     rankIndex: idx,
     rankName: idx >= 0 ? (rankNames[idx] ?? null) : null,
     scenarios,
+    rankCount: category.rankMaxes.length,
+    progressToNextRank,
   };
 }
 
@@ -164,26 +184,64 @@ export function evaluateBenchmark(
 
   const totalEnergy = categories.reduce((sum, c) => sum + c.energy, 0);
 
-  // Overall thresholds are the per-rank sums of every category's thresholds.
-  const rankCount = Math.max(
-    0,
-    ...difficulty.categories.map((c) => c.rankMaxes.length),
-  );
-  const overallThresholds: number[] = [];
-  for (let i = 0; i < rankCount; i++) {
-    overallThresholds.push(
-      difficulty.categories.reduce((sum, c) => sum + (c.rankMaxes[i] ?? 0), 0),
-    );
-  }
+  // How the overall rank is reached depends on what is being evaluated.
+  //
+  // A KovaaK's benchmark has one ladder for all its categories, and its overall rank is
+  // the summed energy against the summed thresholds. That is not a choice, it is what
+  // their servers report, and validateEngine holds this code to matching it - so that
+  // path is preserved exactly.
+  //
+  // A season gives each category its own ladder (PLAN.md §14), and summing stops
+  // meaning anything: a four-rank category contributes nothing to a fifth threshold, so
+  // the overall bar falls every time one ladder is shorter than another, and the index
+  // that comes out is then read against a list of names that may be a third length
+  // again. There the overall is *derived* instead.
+  const perCategoryLadders = difficulty.categories.some((c) => c.rankNames);
 
-  const idx = rankIndex(totalEnergy, overallThresholds);
-
+  let idx: number;
   let progressToNextRank: number | null = null;
-  const nextIdx = idx + 1;
-  if (nextIdx < overallThresholds.length) {
-    const lo = idx >= 0 ? overallThresholds[idx] : 0;
-    const hi = overallThresholds[nextIdx];
-    progressToNextRank = hi > lo ? (totalEnergy - lo) / (hi - lo) : 1;
+
+  if (!perCategoryLadders) {
+    const rankCount = Math.max(0, ...difficulty.categories.map((c) => c.rankMaxes.length));
+    const overallThresholds: number[] = [];
+    for (let i = 0; i < rankCount; i++) {
+      overallThresholds.push(
+        difficulty.categories.reduce((sum, c) => sum + (c.rankMaxes[i] ?? 0), 0),
+      );
+    }
+
+    idx = rankIndex(totalEnergy, overallThresholds);
+
+    const nextIdx = idx + 1;
+    if (nextIdx < overallThresholds.length) {
+      const lo = idx >= 0 ? overallThresholds[idx] : 0;
+      const hi = overallThresholds[nextIdx];
+      progressToNextRank = hi > lo ? (totalEnergy - lo) / (hi - lo) : 1;
+    }
+  } else {
+    // Each category is reduced to its *standing* - how far along its own ladder the
+    // player is, as a fraction - and the overall is where the average of those falls on
+    // the overall ladder. Ladders of different depths compare correctly because nothing
+    // is compared until it is already a fraction.
+    //
+    // The average, not the weakest. Being carried by one strong category is a real
+    // thing this will say about somebody, and a mean says it; a minimum would make the
+    // overall a second, harsher name for the weakest category, which the weakness map
+    // already reports and reports better.
+    const standings = categories.map((c) => {
+      const depth = c.rankCount > 0 ? c.rankCount : 1;
+      // rankIndex is -1 below the first threshold, so +1 puts an unranked category at 0
+      // and the top rank at depth.
+      return Math.min(1, (c.rankIndex + 1 + (c.progressToNextRank ?? 0)) / depth);
+    });
+
+    const standing =
+      standings.length > 0 ? standings.reduce((a, b) => a + b, 0) / standings.length : 0;
+
+    const depth = rankNames.length;
+    const scaled = standing * depth;
+    idx = Math.min(depth - 1, Math.ceil(scaled) - 1);
+    progressToNextRank = idx + 1 < depth ? Math.min(1, Math.max(0, scaled - Math.floor(scaled))) : null;
   }
 
   return {
