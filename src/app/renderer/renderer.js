@@ -2898,7 +2898,7 @@ numberTabs();
  *
  * This is an app people leave open all evening between runs, and the tab strip is the
  * only navigation there is. The numbers follow what is on screen rather than a fixed
- * list, because the Season tab is only there for an admin — hard-coding 4 = Season would
+ * list, because the Season tab is only there for an admin, and hard-coding 4 = Season would
  * put every later tab one place out for everybody else.
  */
 document.addEventListener("keydown", (e) => {

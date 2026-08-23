@@ -10,7 +10,7 @@
  * looks.
  *
  * Read-only, offline apart from one optional reachability probe, and safe to run at any
- * time. Values of secrets are never printed — only whether they are set.
+ * time. Values of secrets are never printed - only whether they are set.
  */
 
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
@@ -45,14 +45,15 @@ function human(ms: number): string {
   return `${Math.round(hours / 24)}d ago`;
 }
 
-/** Newest mtime under a directory, ignoring the noise directories. */
-function newestUnder(dir: string): { path: string; mtime: number } | null {
+/** Newest mtime under a directory, ignoring the noise directories and `skip`. */
+function newestUnder(dir: string, skip?: string): { path: string; mtime: number } | null {
   let newest: { path: string; mtime: number } | null = null;
 
   const walk = (current: string): void => {
     for (const entry of readdirSync(current, { withFileTypes: true })) {
       if (entry.name === "node_modules" || entry.name.startsWith(".")) continue;
       const full = join(current, entry.name);
+      if (full === skip) continue;
       if (entry.isDirectory()) {
         walk(full);
         continue;
@@ -96,7 +97,7 @@ if (!existsSync(envPath)) {
   say(
     "warn",
     ".env",
-    "missing — the client builds, but sign-in and matches are disabled",
+    "missing - the client builds, but sign-in and matches are disabled",
     "copy the keys from the Supabase dashboard into .env",
   );
 } else {
@@ -124,23 +125,36 @@ if (!existsSync(envPath)) {
     "service key",
     env.get("SUPABASE_SERVICE_ROLE_KEY")
       ? "set (needed by sync:reference and verify:deployment)"
-      : "not set — the deploy tools will refuse to run",
+      : "not set - the deploy tools will refuse to run",
   );
 }
 
 // ---- the bundle -----------------------------------------------------------
+//
+// The renderer is copied, not bundled, so it has to be compared against its own copy.
+// Comparing all of src/ against main.cjs called a renderer edit a stale bundle, which
+// is both wrong and unfixable by the command it then tells you to run.
 const bundle = join(root, "dist", "app", "main.cjs");
+const rendererCopy = join(root, "dist", "app", "renderer");
+
 if (!existsSync(bundle)) {
   say("warn", "bundle", "dist/app/main.cjs does not exist", "npm run build:app");
 } else {
   const built = statSync(bundle).mtimeMs;
-  const newest = newestUnder(join(root, "src"));
-  if (newest && newest.mtime > built) {
+  const bundled = newestUnder(join(root, "src"), join(root, "src", "app", "renderer"));
+  const copied = newestUnder(join(root, "src", "app", "renderer"));
+  const copiedAt = existsSync(rendererCopy) ? newestUnder(rendererCopy)?.mtime ?? 0 : 0;
+
+  const staleBundle = bundled && bundled.mtime > built ? bundled : null;
+  const staleRenderer = copied && copied.mtime > copiedAt ? copied : null;
+  const stale = staleBundle ?? staleRenderer;
+
+  if (stale) {
     say(
       "bad",
       "bundle",
-      `stale: ${newest.path.replace(root, ".")} is newer than the build`,
-      "npm run build:app, then relaunch — a running window keeps the old bundle",
+      `stale: ${stale.path.replace(root, ".")} is newer than the build`,
+      "npm run build:app, then relaunch - a running window keeps the old bundle",
     );
   } else {
     say("ok", "bundle", `built ${human(Date.now() - built)}, newer than every source file`);
@@ -155,7 +169,7 @@ if (!stats) {
 } else {
   const runs = readdirSync(stats).filter((f) => f.endsWith("Stats.csv"));
   const level: Level = runs.length === 0 ? "warn" : "ok";
-  say(level, "stats folder", `${runs.length.toLocaleString()} runs — ${stats}`);
+  say(level, "stats folder", `${runs.length.toLocaleString()} runs - ${stats}`);
 }
 
 // ---- reference data -------------------------------------------------------
@@ -183,7 +197,7 @@ try {
   say(
     "ok",
     "season",
-    `${season.name ?? "unnamed"} — ${season.categories?.length ?? 0} categories, ${
+    `${season.name ?? "unnamed"} - ${season.categories?.length ?? 0} categories, ${
       season.published ? "published (frozen)" : "draft (editable)"
     }`,
   );

@@ -9,14 +9,14 @@
  *
  * This replaces scraping the same JSON literal out of evxl's client bundle. evxl's
  * author pointed at /data/benchmarks directly, which is a route he maintains rather than
- * a bundle layout that moves with every deploy — and the scrape had quietly gone stale,
+ * a bundle layout that moves with every deploy - and the scrape had quietly gone stale,
  * leaving 15 benchmarks in the committed registry that evxl had already dropped.
  *
  * Requested by evxl and honoured here: the registry rarely changes, so a copy younger
  * than 24h is used as-is and no request goes out at all. When one does go out it carries
  * the stored ETag, so an unchanged registry costs a 304 and nothing is rewritten.
  *
- * Output: data/evxl_registry.json, committed — the app never reads evxl at runtime.
+ * Output: data/evxl_registry.json, committed - the app never reads evxl at runtime.
  */
 
 import { readFileSync, writeFileSync } from "node:fs";
@@ -83,7 +83,7 @@ async function main(): Promise<number> {
 
   if (!force && age < MAX_AGE_MS) {
     const hours = (age / 3_600_000).toFixed(1);
-    console.log(`cached ${hours}h ago, ${previous!.count} benchmarks — inside the 24h window`);
+    console.log(`cached ${hours}h ago, ${previous!.count} benchmarks - inside the 24h window`);
     console.log("  --force to fetch anyway");
     return 0;
   }
@@ -97,7 +97,7 @@ async function main(): Promise<number> {
   });
 
   if (res.status === 304 && previous) {
-    console.log(`304 not modified — ${previous.count} benchmarks unchanged`);
+    console.log(`304 not modified - ${previous.count} benchmarks unchanged`);
     // Stamp it anyway, or every later run re-asks a question already answered.
     write({ ...previous, fetchedAt: new Date().toISOString() });
     return 0;
@@ -119,7 +119,7 @@ async function main(): Promise<number> {
       typeof entry === "object" && entry !== null && typeof (entry as RegistryEntry).benchmarkName === "string",
   );
   if (benchmarks.length !== payload.length) {
-    console.error(`${payload.length - benchmarks.length} entries carry no benchmarkName — refusing`);
+    console.error(`${payload.length - benchmarks.length} entries carry no benchmarkName - refusing`);
     return 1;
   }
 

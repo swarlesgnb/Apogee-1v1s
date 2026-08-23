@@ -7,7 +7,7 @@
  * does nothing until the bundle is rebuilt *and* the window is closed and reopened:
  * Electron's single-instance lock means `npm start` with a window already open focuses
  * the old process, which is still running the old code. The failure looks like the fix
- * not working. This loop removes the step entirely — save a file, the window comes back
+ * not working. This loop removes the step entirely - save a file, the window comes back
  * on the new bundle a second later, in the same place and size.
  *
  * esbuild's own watcher covers everything reachable from src/app/main.ts, which is the
@@ -55,7 +55,7 @@ function launch() {
     // dev loop, so stop it, instead of leaving a watcher running in a terminal that
     // looks finished.
     if (!shuttingDown && !restarting) {
-      console.log("\nwindow closed — dev loop finished");
+      console.log("\nwindow closed - dev loop finished");
       process.exit(code ?? 0);
     }
   });
@@ -70,7 +70,7 @@ function restart(reason) {
     pendingReasons = new Set();
     restartTimer = null;
 
-    console.log(`\n↻ ${why} — relaunching`);
+    console.log(`\n↻ ${why} - relaunching`);
 
     if (!child) {
       launch();
@@ -105,7 +105,7 @@ cleanDist();
 const options = bundleOptions();
 
 // esbuild bakes `define` values once, when the context is created, so a real timestamp
-// here would report the moment `npm run dev` started for the rest of the session — the
+// here would report the moment `npm run dev` started for the rest of the session - the
 // exact wrong answer, since the whole point of the stamp is spotting a stale window.
 // Under the dev loop the window is never stale, so it says so instead.
 options.define.__APOGEE_BUILD__ = JSON.stringify("dev");
@@ -129,7 +129,7 @@ const ctx = await context({
 
           if (result.errors.length > 0) {
             // Keep the window up: a typo mid-edit should not close what you were looking at.
-            console.error(`\n✗ ${result.errors.length} build error(s) — window left on the last good build`);
+            console.error(`\n✗ ${result.errors.length} build error(s) - window left on the last good build`);
             for (const error of result.errors) {
               const where = error.location ? `${error.location.file}:${error.location.line}` : "";
               console.error(`  ${error.text} ${where}`);
@@ -160,7 +160,7 @@ if (first.errors.length > 0) {
 
 copyStatic();
 
-console.log("apogee dev: watching src/ — save to rebuild and relaunch, close the window to stop");
+console.log("apogee dev: watching src/ - save to rebuild and relaunch, close the window to stop");
 started = true;
 launch();
 

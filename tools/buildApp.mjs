@@ -108,7 +108,7 @@ export function cleanDist() {
   mkdirSync(outDir, { recursive: true });
 }
 
-/** `node tools/buildApp.mjs` — the whole build, from scratch. */
+/** `node tools/buildApp.mjs` - the whole build, from scratch. */
 export async function buildApp() {
   cleanDist();
   await build(bundleOptions());
