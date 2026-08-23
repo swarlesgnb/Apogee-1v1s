@@ -22,6 +22,11 @@ import {
   type SelectableScenario,
 } from "./scenarioSelection.ts";
 import {
+  eligibilityMessage,
+  MIN_RUNS_TO_QUEUE,
+  queueEligibility,
+} from "./eligibility.ts";
+import {
   explainVerdict,
   settleMatch,
   verdictToScore,
@@ -389,6 +394,39 @@ function main(): void {
   check("verdict maps to a Glicko score",
     verdictToScore("win") === 1 && verdictToScore("loss") === 0 &&
     verdictToScore("draw") === 0.5);
+
+  // ---- who may queue --------------------------------------------------------------
+  //
+  // This one refuses to let people play, so it is measured against the corpus on this
+  // machine rather than reasoned about. The bar has to be invisible to somebody with a
+  // real history and present for somebody with none.
+  console.log("\n\u2500\u2500 queue eligibility \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500");
+
+  let corpusRuns = 0;
+  for (const entry of history.values()) corpusRuns += entry.runs.length;
+
+  const real = queueEligibility(corpusRuns);
+  console.log(`       ${corpusRuns.toLocaleString()} runs in the corpus, bar is ${MIN_RUNS_TO_QUEUE}`);
+
+  check("a real history clears the bar", real.eligible, `${corpusRuns} runs`);
+  check("a fresh account does not", !queueEligibility(0).eligible);
+  check("one run short is still short", !queueEligibility(MIN_RUNS_TO_QUEUE - 1).eligible);
+  check("exactly the bar is enough", queueEligibility(MIN_RUNS_TO_QUEUE).eligible);
+
+  // The count arrives from a database, so it can arrive missing or nonsense. Failing
+  // towards "play more" is the safe direction: the alternative is a null being read as
+  // an open door.
+  check("a nonsense count is treated as none",
+    !queueEligibility(Number.NaN).eligible && !queueEligibility(-5).eligible);
+
+  const short = queueEligibility(43);
+  check("the shortfall is what is left to play", short.missing === MIN_RUNS_TO_QUEUE - 43,
+    String(short.missing));
+  check("nothing is left to play once eligible", queueEligibility(50_000).missing === 0);
+  check("the refusal says both numbers",
+    eligibilityMessage(short).includes(String(MIN_RUNS_TO_QUEUE)) &&
+      eligibilityMessage(short).includes("43"),
+    eligibilityMessage(short));
 
   console.log();
   if (failures > 0) {

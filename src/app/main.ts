@@ -28,6 +28,7 @@ import { renderRankSheet } from "../core/report/rankSheet.ts";
 import { scanStatsFolder } from "../core/history/history.ts";
 import { signInWithSteam } from "../core/sync/steamAuth.ts";
 import {
+  fetchUploadedRuns,
   fetchStanding,
   abandonMatch,
   fetchActiveMatch,
@@ -51,6 +52,7 @@ import { loadSettings, saveSettings, settingsPath, type WindowBounds } from "./s
 import { installMenu } from "./menu.ts";
 import { launchKovaaks, writeMatchPlaylist } from "./playlist.ts";
 import { loadSeason, seasonPath, validateSeason } from "../core/season/season.ts";
+import { queueEligibility, type QueueEligibility } from "../core/match/eligibility.ts";
 import { sampleDistribution, RateLimited } from "../core/season/sampleLeaderboard.ts";
 import { thresholdsFrom, type Distribution } from "../core/season/percentiles.ts";
 import { rankDistribution } from "../core/season/distribution.ts";
@@ -803,6 +805,11 @@ ipcMain.handle("apogee:uploadHistory", async () => {
 
     const standing = await fetchStanding(state.session.playerId);
     broadcast("apogee:standing", standing);
+
+    // Uploading is the one action that moves the queue gate, so the readout is pushed
+    // rather than waiting for a relaunch to notice.
+    broadcast("apogee:eligibility", await currentEligibility());
+
     return { result, baselines, standing };
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
@@ -893,6 +900,20 @@ ipcMain.handle("apogee:getStanding", async () => {
   if (!state.session) return null;
   return fetchStanding(state.session.playerId);
 });
+
+/**
+ * Whether this account may queue yet, and how far off it is if not.
+ *
+ * Signed out, the answer is null rather than a refusal: "you need 100 runs" is a
+ * confusing thing to tell somebody whose actual problem is that they have not signed in.
+ */
+async function currentEligibility(): Promise<QueueEligibility | null> {
+  if (!state.session) return null;
+  const uploaded = await fetchUploadedRuns();
+  return uploaded == null ? null : queueEligibility(uploaded);
+}
+
+ipcMain.handle("apogee:queueEligibility", () => currentEligibility());
 
 ipcMain.handle("apogee:rescan", () => {
   rebuild("manual rescan");

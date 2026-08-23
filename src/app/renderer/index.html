@@ -226,6 +226,22 @@
   .queue-btn:focus-visible { outline: 2px solid var(--ink-mid); outline-offset: 3px; }
   .queue-btn[disabled] { opacity: .5; cursor: default; }
 
+  /* Ranked needs a history behind the account. Shown as progress rather than as a
+     refusal at the moment of pressing: "you cannot play" is a much worse thing to learn
+     from a button that looked available. */
+  .queue-gate {
+    display: none; margin-top: 10px; padding: 9px 12px; border-radius: 8px;
+    background: var(--panel); border: 1px solid var(--line-bright);
+    font-size: 12.5px; color: var(--ink-mid); line-height: 1.5;
+  }
+  .queue-gate.on { display: block; }
+  .queue-gate .gate-count { font-family: var(--mono); color: var(--ink); }
+  .queue-gate .gate-track {
+    height: 3px; border-radius: 2px; background: var(--line-bright);
+    margin-top: 7px; overflow: hidden;
+  }
+  .queue-gate .gate-fill { height: 100%; background: var(--ink-dim); width: 0; }
+
   .searching {
     font-family: var(--mono); font-size: 12.5px; color: var(--ink-mid);
     margin-top: 14px; display: none;
@@ -1031,6 +1047,10 @@
           <div class="cats" id="cats"></div>
           <div class="pool-note" id="poolNote"></div>
           <button class="queue-btn" id="queueBtn">Find opponent</button>
+          <div class="queue-gate" id="queueGate">
+            <span id="queueGateText"></span>
+            <div class="gate-track"><div class="gate-fill" id="queueGateFill"></div></div>
+          </div>
           <div class="searching" id="searching">searching the pool…</div>
 
           <div class="upload-row" id="uploadRow" hidden>

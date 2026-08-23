@@ -25,6 +25,11 @@ import {
 
 import { selectScenarios, type SelectableScenario } from "../../../src/core/match/scenarioSelection.ts";
 import { findOpponent, type StoredRunSet } from "../../../src/core/match/matchmaking.ts";
+import {
+  eligibilityMessage,
+  MIN_RUNS_TO_QUEUE,
+  queueEligibility,
+} from "../../../src/core/match/eligibility.ts";
 import { defaultRating, updateRating, winProbability, type Rating } from "../../../src/core/rating/glicko2.ts";
 
 interface Body {
@@ -142,6 +147,29 @@ Deno.serve(handler(async (req, admin) => {
       // opponent, and reporting a number we did not measure would be worse than none.
       poolSize: null,
     });
+  }
+
+  // ---- may this account queue at all? --------------------------------------------
+  //
+  // Deliberately below the resume path: a player already in a match gets it back
+  // whatever their history says, because refusing there would strand them in a match
+  // they cannot see or abandon.
+  //
+  // Counted here rather than trusted from the client, and rejected runs are left out of
+  // the count - a rejection is the file failing local integrity, so uploading garbage
+  // must not buy a ticket. See eligibility.ts for where the number comes from and, more
+  // importantly, for what this check does not prove.
+  const { count: uploadedRuns, error: countError } = await admin
+    .from("runs")
+    .select("id", { count: "exact", head: true })
+    .eq("player_id", caller.playerId)
+    .neq("verification_tier", "rejected");
+
+  if (countError) throw new HttpError(500, countError.message);
+
+  const eligibility = queueEligibility(uploadedRuns ?? 0, MIN_RUNS_TO_QUEUE);
+  if (!eligibility.eligible) {
+    throw new HttpError(403, eligibilityMessage(eligibility));
   }
 
   // ---- the season, and the pool for the requested window -------------------------

@@ -263,6 +263,7 @@ function renderCategories(data) {
       $("opponent").classList.remove("on");
       $("queueBtn").disabled = false;
       $("queueBtn").textContent = "Find opponent";
+      renderEligibility();
     });
     host.append(b);
   });
@@ -2680,6 +2681,58 @@ function renderProgression(p) {
   chip.title = `${p.totalXp.toLocaleString()} XP lifetime · ${p.completedToday} quest(s) done today`;
 }
 
+/* --------------------------------------------------------------- queue gate */
+
+/**
+ * Whether this account may queue, as last reported by main. Null means signed out, or
+ * that the count could not be read - in both cases the gate stays out of the way and the
+ * server remains the thing that actually decides.
+ */
+let eligibility = null;
+
+/**
+ * Show how far off queueing is, and stop the button pretending otherwise.
+ *
+ * The button is disabled here rather than only refusing on press, because a player who
+ * cannot queue yet should be able to see that without discovering it the hard way. The
+ * server checks again regardless: this is a courtesy, not a control.
+ */
+function renderEligibility() {
+  const gate = $("queueGate");
+  const btn = $("queueBtn");
+  if (!gate || !btn) return;
+
+  if (!eligibility || eligibility.eligible) {
+    gate.classList.remove("on");
+    if (btn.dataset.gated === "1") {
+      btn.disabled = false;
+      delete btn.dataset.gated;
+    }
+    return;
+  }
+
+  const { uploaded, required, missing } = eligibility;
+  $("queueGateText").innerHTML =
+    'Ranked opens at <span class="gate-count">' + num(required) + "</span> uploaded runs. " +
+    'You have <span class="gate-count">' + num(uploaded) + "</span> \u2014 " +
+    num(missing) + " to go.";
+  $("queueGateFill").style.width = Math.min(100, (uploaded / required) * 100).toFixed(1) + "%";
+  gate.classList.add("on");
+
+  // Marked so the paths that re-enable the button on a category change or a finished
+  // match do not quietly hand it back.
+  btn.disabled = true;
+  btn.dataset.gated = "1";
+}
+
+function refreshEligibility() {
+  if (!api.queueEligibility) return;
+  api.queueEligibility().then((state) => {
+    eligibility = state;
+    renderEligibility();
+  }).catch(() => undefined);
+}
+
 /* ------------------------------------------------------------------ toast */
 
 let toastTimer = null;
@@ -3043,6 +3096,10 @@ $("queueBtn").addEventListener("click", async () => {
   if (result.error) {
     btn.textContent = "Find opponent";
     showError(result.error);
+    // The server refuses a queue with too little history behind it. Re-read the count so
+    // the gate below the button agrees with what was just said, however the two got out
+    // of step - a fresh sign-in, a second window, a backfill on another machine.
+    refreshEligibility();
     return;
   }
 
@@ -3110,7 +3167,24 @@ if (HOST === "electron") {
     renderSession(session, true);
     // Uploading only makes sense once there is an account to attach runs to.
     $("uploadRow").hidden = !session;
+
+    // Signing out clears the gate rather than leaving the last account's progress on
+    // screen; signing in asks for this one's.
+    if (!session) {
+      eligibility = null;
+      renderEligibility();
+    } else {
+      refreshEligibility();
+    }
   });
+
+  // Pushed by main when a backfill finishes, so the count moves without a relaunch.
+  if (api.onEligibility) {
+    api.onEligibility((state) => {
+      eligibility = state;
+      renderEligibility();
+    });
+  }
 
   // ---- history upload ----------------------------------------------------
   $("uploadBtn").addEventListener("click", async () => {
@@ -3160,6 +3234,7 @@ if (HOST === "electron") {
       $("matchActions").hidden = true;
       $("queueBtn").textContent = "Find opponent";
       $("queueBtn").disabled = false;
+      renderEligibility();
     }
   });
 
@@ -3195,6 +3270,7 @@ if (HOST === "electron") {
     $("opponent").classList.remove("on");
     $("queueBtn").textContent = "Find opponent";
     $("queueBtn").disabled = false;
+    renderEligibility();
     renderSettled(settled);
 
     // Jump to the result, because that is the payoff and nobody should have to hunt
@@ -3241,6 +3317,7 @@ if (HOST === "electron") {
       $("matchClock").hidden = true;
       $("queueBtn").textContent = "Find opponent";
       $("queueBtn").disabled = false;
+      renderEligibility();
       $("opponent").classList.remove("on");
       activeMatch = null;
     }
@@ -3359,6 +3436,7 @@ if (HOST === "electron") {
     currentPath = state.statsDir || "";
     showBuild(state.build);
     renderSession(state.session, state.configured);
+    if (state.session) refreshEligibility();
     if (state.snapshot) {
       render(state.snapshot);
       setStatus("ok", "Watching", currentPath);

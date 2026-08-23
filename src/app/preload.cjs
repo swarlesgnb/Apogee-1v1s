@@ -105,6 +105,15 @@ contextBridge.exposeInMainWorld("apogee", {
   /** Fires once per quest the moment it completes. */
   onQuestComplete: (handler) => subscribe("apogee:questComplete", handler),
 
+  /**
+   * Whether this account has uploaded enough runs to queue, and how many more it needs.
+   * Null when signed out. The readout only - find-match checks again server-side.
+   */
+  queueEligibility: () => ipcRenderer.invoke("apogee:queueEligibility"),
+
+  /** Fires when the uploaded-run count changes, so the readout follows a backfill. */
+  onEligibility: (handler) => subscribe("apogee:eligibility", handler),
+
   /** Force a full rescan of the stats folder. */
   rescan: () => ipcRenderer.invoke("apogee:rescan"),
 

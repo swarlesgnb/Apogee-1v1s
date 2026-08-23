@@ -178,6 +178,29 @@ export function findMatch(
 }
 
 /**
+ * How many runs this account has uploaded, ignoring rejected ones.
+ *
+ * Read straight from `runs` rather than through a function: RLS scopes the table to the
+ * caller's own rows, so the count that comes back is theirs and nobody else's.
+ *
+ * This drives the readout only. find-match counts again server-side before it will hand
+ * out a match, because a number the client reports about itself is a number the client
+ * could lie about.
+ */
+export async function fetchUploadedRuns(): Promise<number | null> {
+  const client = supabase();
+  if (!(await accessToken())) return null;
+
+  const { count, error } = await client
+    .from("runs")
+    .select("id", { count: "exact", head: true })
+    .neq("verification_tier", "rejected");
+
+  if (error) return null;
+  return count ?? 0;
+}
+
+/**
  * The match this player is already in, if any.
  *
  * Without this, restarting the app mid-match loses the client's knowledge of it while
