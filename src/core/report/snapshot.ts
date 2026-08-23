@@ -11,8 +11,18 @@ import { readFileSync } from "node:fs";
 import { evaluateBenchmark } from "../benchmarks/energy.ts";
 import type { BenchmarkDef, DifficultyDef } from "../benchmarks/types.ts";
 import { dataFile } from "../dataDir.ts";
-import { hasSeason, loadSeason, seasonAsDifficulty, seasonLabels } from "../season/season.ts";
+import {
+  hasSeason,
+  loadSeason,
+  matchPoolFor,
+  matchPoolName,
+  matchPoolWindow,
+  seasonAsDifficulty,
+  seasonLabels,
+  type MatchPool,
+} from "../season/season.ts";
 import { computeBaseline, scanStatsFolder, type ScenarioHistory } from "../history/history.ts";
+import { windowCoverage, type WindowCoverage } from "../history/coverage.ts";
 import { selectScenarios, type SelectableScenario } from "../match/scenarioSelection.ts";
 import { explainVerdict, settleMatch, type RoundSubmission } from "../match/settle.ts";
 import { generateQuests, playStreak, questProgress } from "../quests/generate.ts";
@@ -34,6 +44,20 @@ export interface Snapshot {
     difficulty: string;
     rankNames: string[];
     rankColors: Record<string, string>;
+    /**
+     * Which window of the season's pool to queue into.
+     *
+     * An index rather than a name, so renaming a window is a display change and never a
+     * change to what the server resolves. It is also separate from `difficulty` above,
+     * which is a display string and is deliberately empty for a season - passing that to
+     * the server returned a 400, because an empty difficulty resolves to no scenarios.
+     */
+    matchPool: MatchPool;
+    /** Display name of the window matches are drawn from. */
+    matchPoolName: string;
+    /** Window names low to high, and how many ranks each covers. Null on a flat ladder. */
+    windows: string[] | null;
+    windowSize: number | null;
   };
   player: {
     totalRuns: number;
@@ -53,6 +77,15 @@ export interface Snapshot {
   theme: RankTier[];
   categories: unknown[];
   weakest: string;
+  /**
+   * Which difficulties the player is actually measured on.
+   *
+   * A match is decided on delta against your own baseline, so a difficulty you have barely
+   * played is not a hard one - it is an unmeasured one, and a match there is decided by
+   * whose baseline is worse. With four windows this stopped being a detail: most players
+   * are measured on one of them, and nothing on screen said so.
+   */
+  coverage: WindowCoverage[];
   /** Floor rank and per-scenario gaps. See core/consistency. */
   consistency: {
     method: string;
@@ -153,6 +186,25 @@ export function buildSnapshot(options: SnapshotOptions): Snapshot | null {
   const labelFor = (name: string) =>
     seasonLabel?.get(name) ?? shortName(name, difficulty.name);
 
+  // Which window each scenario belongs to, by name.
+  //
+  // Three variants of a family share a label - all three of these are "Pasu" - so
+  // anything listing scenarios rather than families has to say which one it means. The
+  // family rows do not need this, because only one variant appears per row.
+  const windowNameOf = new Map<string, string>();
+  if (season?.windows) {
+    for (const s of season.scenarios) {
+      const w = season.windows[s.window ?? 0];
+      if (w) windowNameOf.set(s.scenario, w);
+    }
+  }
+
+  /** Label that survives being listed next to its own siblings. */
+  const variantLabel = (name: string) => {
+    const w = windowNameOf.get(name);
+    return w ? `${labelFor(name)} ${w.slice(0, 3).toLowerCase()}` : labelFor(name);
+  };
+
   const scores = new Map<string, number>();
   for (const cat of difficulty.categories) {
     for (const s of cat.scenarios) {
@@ -184,20 +236,57 @@ export function buildSnapshot(options: SnapshotOptions): Snapshot | null {
     ]);
   }
 
+  // The ladder each category was graded against, by name.
+  //
+  // Clicking, Tracking and Switching each name and colour their own ranks (PLAN.md §14),
+  // so `benchmark.rankColors` - the overall ladder - contains neither "D" nor
+  // "Neanderthal", and every category and scenario rank rendered grey when looked up
+  // there. The ladder that graded a rank has to travel with it.
+  const ladderOf = new Map(
+    difficulty.categories.map((c) => [
+      c.name,
+      {
+        rankNames: c.rankNames ?? difficulty.rankNames,
+        rankColors: c.rankColors ?? difficulty.rankColors,
+        rankMaxes: c.rankMaxes,
+      },
+    ]),
+  );
+
   const categories = result.categories.map((cat) => ({
     name: cat.name,
     energy: Math.round(cat.energy),
     rankName: cat.rankName,
+    rankNames: ladderOf.get(cat.name)?.rankNames ?? difficulty.rankNames,
+    rankColors: ladderOf.get(cat.name)?.rankColors ?? difficulty.rankColors,
+    // Energy per rank, so the ladder can say what each rung costs rather than only which
+    // one the player is standing on.
+    rankMaxes: ladderOf.get(cat.name)?.rankMaxes ?? [],
+    rankCount: cat.rankCount,
+    progressToNextRank: cat.progressToNextRank,
     perScenario: Math.round(cat.energy / Math.max(1, cat.scenarios.length)),
     scenarios: cat.scenarios.map((s) => ({
       name: s.scenario.name,
       label: labelFor(s.scenario.name),
+      family: s.family,
+      // Which window the shown variant belongs to, so the UI can say "Pasu, Intermediate"
+      // rather than leaving three different scenarios all called Pasu.
+      window: s.scenario.window ?? null,
+      windowName: season?.windows?.[s.scenario.window ?? 0] ?? null,
       subCategory: subcats[labelFor(s.scenario.name)]?.subCategory ?? null,
       score: s.score,
       rankName: s.rankName,
       energy: Math.round(s.energy),
       nextRankName: s.nextRankName,
       nextRankScore: s.nextRankScore,
+      // The next rank can be graded by a harder variant than the one being shown, and a
+      // target score means nothing without the scenario it is scored on.
+      nextRankScenario: s.nextRankScenario,
+      nextRankLabel: s.nextRankScenario ? labelFor(s.nextRankScenario) : null,
+      nextRankWindowName: s.nextRankScenario
+        ? (windowNameOf.get(s.nextRankScenario) ?? null)
+        : null,
+      nextRankIsNewScenario: !!s.nextRankScenario && s.nextRankScenario !== s.scenario.name,
       gap: s.gapToNextRank,
       runs: history.get(s.scenario.name)?.runs.length ?? 0,
     })),
@@ -205,17 +294,24 @@ export function buildSnapshot(options: SnapshotOptions): Snapshot | null {
 
   const weakest = [...result.categories].sort((a, b) => a.energy - b.energy)[0];
 
+  // The illustrative match draws from the same window a real one would (see
+  // `matchPool`), not from the whole ladder: showing a beginner an Advanced scenario in
+  // the demo match would advertise a match they will never be handed.
+  const poolWindow = season ? matchPoolWindow(season) : -1;
+
   let nextId = 1;
   const pool: SelectableScenario[] = difficulty.categories.flatMap((cat) =>
-    cat.scenarios.map((s) => {
-      const family = labelFor(s.name);
-      return {
-        id: nextId++,
-        name: s.name,
-        aimType: subcats[family]?.skill ?? cat.name,
-        subCategory: subcats[family]?.subCategory ?? null,
-      };
-    }),
+    cat.scenarios
+      .filter((s) => poolWindow < 0 || (s.window ?? 0) === poolWindow)
+      .map((s) => {
+        const family = labelFor(s.name);
+        return {
+          id: nextId++,
+          name: s.name,
+          aimType: subcats[family]?.skill ?? cat.name,
+          subCategory: subcats[family]?.subCategory ?? null,
+        };
+      }),
   );
 
   const seed = "apogee-demo-match-01";
@@ -255,7 +351,15 @@ export function buildSnapshot(options: SnapshotOptions): Snapshot | null {
   const settlement = settleMatch({ playerRounds, opponentRounds });
   const opponentRating = { rating: rating.rating - 40, rd: 85, volatility: 0.06 };
 
-  const quests = generateQuests({ difficulty, history, now, count: 5 }).map((q) => ({
+  const quests = generateQuests({
+    difficulty,
+    history,
+    now,
+    count: 5,
+    // A quest names a scenario the player has to go and launch, so it has to be the name
+    // KovaaK's shows and it has to say which of a family's three variants it means.
+    labelFor: variantLabel,
+  }).map((q) => ({
     title: q.title,
     detail: q.detail,
     xp: q.xp,
@@ -298,7 +402,10 @@ export function buildSnapshot(options: SnapshotOptions): Snapshot | null {
       .sort((a, b) => b.gap - a.gap)
       .map((f) => ({
         name: f.scenario,
-        label: shortName(f.scenario, difficulty.name),
+        // A row per scenario, not per family - reliability on the Novice variant is a
+        // different fact from reliability on the Advanced one - so the label has to say
+        // which of the three it is.
+        label: variantLabel(f.scenario),
         ceiling: f.ceiling,
         floor: f.floor,
         median: f.median,
@@ -306,8 +413,11 @@ export function buildSnapshot(options: SnapshotOptions): Snapshot | null {
       })),
   };
 
+  const coverage = season ? windowCoverage(season, history) : [];
+
   return {
     generatedAt: now.toISOString(),
+    coverage,
     benchmark: {
       name: season ? season.name : benchmark!.benchmarkName,
       // A season has no difficulty, and repeating its name in that slot printed
@@ -316,6 +426,12 @@ export function buildSnapshot(options: SnapshotOptions): Snapshot | null {
       difficulty: season ? "" : difficulty.name,
       rankNames: difficulty.rankNames,
       rankColors: difficulty.rankColors,
+      matchPool: season ? matchPoolFor(season) : { window: 0 },
+      // Named as well as numbered, so the Queue tab can say which difficulty it is about
+      // to hand out without having to index the window list itself.
+      matchPoolName: season ? matchPoolName(season) : difficulty.name,
+      windows: season?.windows ?? null,
+      windowSize: season?.windowSize ?? null,
     },
     player: {
       totalRuns,
@@ -351,7 +467,7 @@ export function buildSnapshot(options: SnapshotOptions): Snapshot | null {
       playerMatchScore: settlement.player.matchScore,
       opponentMatchScore: settlement.opponent.matchScore,
       rounds: settlement.player.rounds.map((r, i) => ({
-        label: shortName(r.scenarioName, difficulty.name),
+        label: variantLabel(r.scenarioName),
         you: { score: r.score, baseline: Math.round(r.baseline), delta: r.delta },
         them: {
           score: settlement.opponent.rounds[i]?.score ?? 0,

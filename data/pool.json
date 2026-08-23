@@ -1,0 +1,528 @@
+{
+  "$comment": "Apogee's scenario pool. Owned here: nothing reads a benchmark file to find out what a season is made of. A scenario is identified by the exact name KovaaK's uses, because that is what the player launches and what the leaderboard is keyed on. Edit this file to change the pool; then re-run sample:leaderboards and build:season.",
+  "windowSize": 4,
+  "windows": [
+    "Easy",
+    "Medium",
+    "Hard",
+    "Extreme"
+  ],
+  "ladder": {
+    "$comment": "Percentiles from the top of each scenario's KovaaK's leaderboard, one array per window, easiest rank first. Read as one list across every window they are strictly decreasing, and that is the property that matters: the sweep that grades the population gives a player the same percentile on every board, so these values are the rank boundaries themselves and rank r holds the band between its own value and the next. A value that does not fall below the one before it is a rank superseded the moment it is reached, which is how ranks 4, 8 and 12 came to be held by nobody. npm run distribution is what checks it.",
+    "perWindow": [
+      [
+        0.879,
+        0.779,
+        0.623,
+        0.438
+      ],
+      [
+        0.449,
+        0.248,
+        0.148,
+        0.075
+      ],
+      [
+        0.08,
+        0.021,
+        0.005,
+        0.001
+      ],
+      [
+        0.08,
+        0.021,
+        0.005,
+        0.001
+      ]
+    ]
+  },
+  "matchWindow": 1,
+  "categories": [
+    "Clicking",
+    "Tracking",
+    "Switching"
+  ],
+  "families": [
+    {
+      "family": "1wXts",
+      "category": "Clicking",
+      "variants": [
+        {
+          "window": 0,
+          "scenario": "VT 1w4ts Novice S5",
+          "label": "1w4ts",
+          "leaderboardId": 103210
+        },
+        {
+          "window": 1,
+          "scenario": "VT 1w3ts Intermediate S5",
+          "label": "1w3ts",
+          "leaderboardId": 103209
+        },
+        {
+          "window": 2,
+          "scenario": "VT 1w2ts Advanced S5",
+          "label": "1w2ts",
+          "leaderboardId": 98025
+        },
+        {
+          "window": 3,
+          "scenario": "ww2ts",
+          "label": "ww2ts",
+          "leaderboardId": 12193
+        }
+      ]
+    },
+    {
+      "family": "Floating Heads",
+      "category": "Clicking",
+      "variants": [
+        {
+          "window": 0,
+          "scenario": "VT Floating Heads Novice S5",
+          "label": "Floating Heads",
+          "leaderboardId": 98054
+        },
+        {
+          "window": 1,
+          "scenario": "VT Floating Heads Intermediate S5",
+          "label": "Floating Heads",
+          "leaderboardId": 98055
+        },
+        {
+          "window": 2,
+          "scenario": "VT Floating Heads Advanced S5",
+          "label": "Floating Heads",
+          "leaderboardId": 98012
+        },
+        {
+          "window": 3,
+          "scenario": "VT Floating Heads Elite S5",
+          "label": "Floating Heads Elite",
+          "leaderboardId": 106915
+        }
+      ]
+    },
+    {
+      "family": "Frogtagon",
+      "category": "Clicking",
+      "variants": [
+        {
+          "window": 0,
+          "scenario": "VT Frogtagon Novice S5",
+          "label": "Frogtagon",
+          "leaderboardId": 106186
+        },
+        {
+          "window": 1,
+          "scenario": "VT Frogtagon Intermediate S5",
+          "label": "Frogtagon",
+          "leaderboardId": 105828
+        },
+        {
+          "window": 2,
+          "scenario": "VT Frogtagon Advanced S5",
+          "label": "Frogtagon",
+          "leaderboardId": 105776
+        },
+        {
+          "window": 3,
+          "scenario": "VT Frogtagon Elite S5 2 Targets",
+          "label": "Frogtagon Elite S5 2 Targets",
+          "leaderboardId": 107066
+        }
+      ]
+    },
+    {
+      "family": "Pasu",
+      "category": "Clicking",
+      "variants": [
+        {
+          "window": 0,
+          "scenario": "VT Pasu Novice S5",
+          "label": "Pasu",
+          "leaderboardId": 98059
+        },
+        {
+          "window": 1,
+          "scenario": "VT Pasu Intermediate S5",
+          "label": "Pasu",
+          "leaderboardId": 98330
+        },
+        {
+          "window": 2,
+          "scenario": "VT Pasu Advanced S5",
+          "label": "Pasu",
+          "leaderboardId": 98023
+        },
+        {
+          "window": 3,
+          "scenario": "1w4t Pasu Raspberry Master 6mag",
+          "label": "1w4t Pasu Raspberry Master 6mag",
+          "leaderboardId": 90763
+        }
+      ]
+    },
+    {
+      "family": "Popcorn",
+      "category": "Clicking",
+      "variants": [
+        {
+          "window": 0,
+          "scenario": "VT Popcorn Novice S5",
+          "label": "Popcorn",
+          "leaderboardId": 98285
+        },
+        {
+          "window": 1,
+          "scenario": "VT Popcorn Intermediate S5",
+          "label": "Popcorn",
+          "leaderboardId": 98333
+        },
+        {
+          "window": 2,
+          "scenario": "VT Popcorn Advanced S5",
+          "label": "Popcorn",
+          "leaderboardId": 98024
+        },
+        {
+          "window": 3,
+          "scenario": "Popcorn Voltaic",
+          "label": "Popcorn Voltaic",
+          "leaderboardId": 8
+        }
+      ]
+    },
+    {
+      "family": "ww5t",
+      "category": "Clicking",
+      "variants": [
+        {
+          "window": 0,
+          "scenario": "VT ww5t Novice S5",
+          "label": "ww5t",
+          "leaderboardId": 98030
+        },
+        {
+          "window": 1,
+          "scenario": "VT ww5t Intermediate S5",
+          "label": "ww5t",
+          "leaderboardId": 98029
+        },
+        {
+          "window": 2,
+          "scenario": "VT ww5t Advanced S5",
+          "label": "ww5t",
+          "leaderboardId": 98026
+        },
+        {
+          "window": 3,
+          "scenario": "ww5ts",
+          "label": "ww5ts",
+          "leaderboardId": 6734
+        }
+      ]
+    },
+    {
+      "family": "DomiSwitch",
+      "category": "Switching",
+      "variants": [
+        {
+          "window": 0,
+          "scenario": "domiSwitch Easier",
+          "label": "domiSwitch Easier",
+          "leaderboardId": 185428
+        },
+        {
+          "window": 1,
+          "scenario": "domiSwitch Easy",
+          "label": "domiSwitch Easy",
+          "leaderboardId": 83043
+        },
+        {
+          "window": 2,
+          "scenario": "domiSwitch Hard",
+          "label": "domiSwitch Hard",
+          "leaderboardId": 83042
+        },
+        {
+          "window": 3,
+          "scenario": "domiSwitch Harder",
+          "label": "domiSwitch Harder",
+          "leaderboardId": 185226
+        }
+      ]
+    },
+    {
+      "family": "DotTS",
+      "category": "Switching",
+      "variants": [
+        {
+          "window": 0,
+          "scenario": "VT DotTS Novice S5",
+          "label": "DotTS",
+          "leaderboardId": 104868
+        },
+        {
+          "window": 1,
+          "scenario": "VT DotTS Intermediate S5",
+          "label": "DotTS",
+          "leaderboardId": 104865
+        },
+        {
+          "window": 2,
+          "scenario": "VT DotTS Advanced S5",
+          "label": "DotTS",
+          "leaderboardId": 104961
+        },
+        {
+          "window": 3,
+          "scenario": "VT DotTS Elite S5",
+          "label": "DotTS Elite",
+          "leaderboardId": 104962
+        }
+      ]
+    },
+    {
+      "family": "DriftTS",
+      "category": "Switching",
+      "variants": [
+        {
+          "window": 0,
+          "scenario": "VT DriftTS Novice S5",
+          "label": "DriftTS",
+          "leaderboardId": 104862
+        },
+        {
+          "window": 1,
+          "scenario": "VT DriftTS Intermediate S5",
+          "label": "DriftTS",
+          "leaderboardId": 104863
+        },
+        {
+          "window": 2,
+          "scenario": "VT DriftTS Advanced S5",
+          "label": "DriftTS",
+          "leaderboardId": 104866
+        },
+        {
+          "window": 3,
+          "scenario": "VT DriftTS Elite S5",
+          "label": "DriftTS Elite",
+          "leaderboardId": 104867
+        }
+      ]
+    },
+    {
+      "family": "FlyTS",
+      "category": "Switching",
+      "variants": [
+        {
+          "window": 0,
+          "scenario": "VT FlyTS Novice S5",
+          "label": "FlyTS",
+          "leaderboardId": 104830
+        },
+        {
+          "window": 1,
+          "scenario": "VT FlyTS Intermediate S5",
+          "label": "FlyTS",
+          "leaderboardId": 105142
+        },
+        {
+          "window": 2,
+          "scenario": "VT FlyTS Advanced S5",
+          "label": "FlyTS",
+          "leaderboardId": 105143
+        },
+        {
+          "window": 3,
+          "scenario": "waldoTS Perfected",
+          "label": "waldoTS Perfected",
+          "leaderboardId": 129721
+        }
+      ]
+    },
+    {
+      "family": "Aether",
+      "category": "Tracking",
+      "variants": [
+        {
+          "window": 0,
+          "scenario": "VT Aether Novice S5",
+          "label": "Aether",
+          "leaderboardId": 101370
+        },
+        {
+          "window": 1,
+          "scenario": "VT Aether Intermediate S5",
+          "label": "Aether",
+          "leaderboardId": 101369
+        },
+        {
+          "window": 2,
+          "scenario": "VT Aether Advanced S5",
+          "label": "Aether",
+          "leaderboardId": 100140
+        },
+        {
+          "window": 3,
+          "scenario": "VT Aether Entry S5 Precision Focus",
+          "label": "Aether Entry S5 Precision Focus",
+          "leaderboardId": 104846
+        }
+      ]
+    },
+    {
+      "family": "Angelic",
+      "category": "Tracking",
+      "variants": [
+        {
+          "window": 0,
+          "scenario": "Air Angelic 4 Voltaic Easy 70%",
+          "label": "Air Angelic 4 Voltaic Easy 70%",
+          "leaderboardId": 14155
+        },
+        {
+          "window": 1,
+          "scenario": "Air Angelic 4 Voltaic Easy 90%",
+          "label": "Air Angelic 4 Voltaic Easy 90%",
+          "leaderboardId": 13692
+        },
+        {
+          "window": 2,
+          "scenario": "Air Angelic 4 Voltaic 90%",
+          "label": "Air Angelic 4 Voltaic 90%",
+          "leaderboardId": 2537
+        },
+        {
+          "window": 3,
+          "scenario": "Air Angelic 4 Voltaic Smaller",
+          "label": "Air Angelic 4 Voltaic Smaller",
+          "leaderboardId": 518
+        }
+      ]
+    },
+    {
+      "family": "Controlsphere",
+      "category": "Tracking",
+      "variants": [
+        {
+          "window": 0,
+          "scenario": "VT Controlsphere Novice S5",
+          "label": "Controlsphere",
+          "leaderboardId": 103765
+        },
+        {
+          "window": 1,
+          "scenario": "VT Controlsphere Intermediate S5",
+          "label": "Controlsphere",
+          "leaderboardId": 103353
+        },
+        {
+          "window": 2,
+          "scenario": "VT Controlsphere Advanced S5",
+          "label": "Controlsphere",
+          "leaderboardId": 103114
+        },
+        {
+          "window": 3,
+          "scenario": "VT Controlsphere Viscose Expert",
+          "label": "Controlsphere Viscose Expert",
+          "leaderboardId": 184831
+        }
+      ]
+    },
+    {
+      "family": "Ground",
+      "category": "Tracking",
+      "variants": [
+        {
+          "window": 0,
+          "scenario": "VT Ground Novice S5",
+          "label": "Ground",
+          "leaderboardId": 101744
+        },
+        {
+          "window": 1,
+          "scenario": "VT Ground Intermediate S5",
+          "label": "Ground",
+          "leaderboardId": 101743
+        },
+        {
+          "window": 2,
+          "scenario": "VT Ground Advanced S5",
+          "label": "Ground",
+          "leaderboardId": 100768
+        },
+        {
+          "window": 3,
+          "scenario": "Ground Plaza Sparky V3 Thin",
+          "label": "Ground Plaza Sparky V3 Thin",
+          "leaderboardId": 1408
+        }
+      ]
+    },
+    {
+      "family": "PGT",
+      "category": "Tracking",
+      "variants": [
+        {
+          "window": 0,
+          "scenario": "VT PGT Novice S5",
+          "label": "PGT",
+          "leaderboardId": 98060
+        },
+        {
+          "window": 1,
+          "scenario": "VT PGT Intermediate S5",
+          "label": "PGT",
+          "leaderboardId": 98331
+        },
+        {
+          "window": 2,
+          "scenario": "VT PGT Advanced S5",
+          "label": "PGT",
+          "leaderboardId": 98255
+        },
+        {
+          "window": 3,
+          "scenario": "PGTI Voltaic",
+          "label": "PGTI Voltaic",
+          "leaderboardId": 99
+        }
+      ]
+    },
+    {
+      "family": "Raw Control",
+      "category": "Tracking",
+      "variants": [
+        {
+          "window": 0,
+          "scenario": "VT Raw Control Novice S5",
+          "label": "Raw Control",
+          "leaderboardId": 98047
+        },
+        {
+          "window": 1,
+          "scenario": "VT Raw Control Intermediate S5",
+          "label": "Raw Control",
+          "leaderboardId": 98048
+        },
+        {
+          "window": 2,
+          "scenario": "VT Raw Control Advanced S5",
+          "label": "Raw Control",
+          "leaderboardId": 98253
+        },
+        {
+          "window": 3,
+          "scenario": "VT Raw Control Novice S5 Hard",
+          "label": "Raw Control Novice S5 Hard",
+          "leaderboardId": 106739
+        }
+      ]
+    }
+  ],
+  "overrides": {}
+}

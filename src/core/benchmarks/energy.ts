@@ -12,7 +12,13 @@
  *     Hitting threshold i is worth `ENERGY_PER_RANK * (i + 1)` energy.
  *     Between thresholds, energy interpolates linearly. Below the first, it
  *     interpolates linearly from zero. Above the last, it caps.
- *   - Category energy is the plain sum of its scenarios' energy.
+ *   - On a *windowed* ladder a scenario is one variant of a family, and the family is
+ *     what gets graded: variant energy is offset by the ranks below its window, and the
+ *     family's energy is the **best** of its variants, not their sum. Below its own
+ *     first threshold a variant above window 0 is silent rather than interpolating from
+ *     zero, because a linear ramp from zero across a window it does not cover would
+ *     credit a bad score on a hard scenario as though it were a good one on an easy one.
+ *   - Category energy is the plain sum of its families' energy.
  *   - Category rank is the highest threshold in the category's own `rankMaxes`
  *     that the category energy meets.
  *   - Overall progress is the sum of category energy. For a KovaaK's benchmark the
@@ -74,6 +80,10 @@ export function rankIndex(value: number, thresholds: number[]): number {
 }
 
 export interface ScenarioResult {
+  /**
+   * The variant this result speaks for: on a windowed ladder, whichever of the family's
+   * variants earned the family its energy, so `score` and `scenario` always agree.
+   */
   scenario: ScenarioDef;
   score: number;
   energy: number;
@@ -83,6 +93,26 @@ export interface ScenarioResult {
   nextRankName: string | null;
   nextRankScore: number | null;
   gapToNextRank: number | null;
+  /**
+   * Which scenario the next rank is scored on.
+   *
+   * Not always the one above: the next rank can live in the next window, and then it is
+   * a harder variant that grades it. Saying "930 on Pasu" when the 930 is on a scenario
+   * the player has never launched is the single most confusing thing a windowed ladder
+   * can do, so the target names itself.
+   */
+  nextRankScenario: string | null;
+  /**
+   * The player's current score on `nextRankScenario`.
+   *
+   * Not the same as `score` once the next rank lives in a harder window: `score` belongs
+   * to whichever variant earned the rank, and the target belongs to the one that grades
+   * the next. Anything phrasing the gap as "you are at X, you need Y" has to use this
+   * one, or it prints two numbers from two different scenarios and reads as nonsense.
+   */
+  nextRankFromScore: number | null;
+  /** The family graded, for a windowed ladder. Equal to the scenario name otherwise. */
+  family: string;
 }
 
 export interface CategoryResult {
@@ -107,26 +137,89 @@ export interface BenchmarkResult {
   progressToNextRank: number | null;
 }
 
-function evaluateScenario(
-  scenario: ScenarioDef,
+/**
+ * Energy one variant is worth, and the global rank it proves.
+ *
+ * `offset` is how many ranks sit below this variant's window. A variant above window 0
+ * proves nothing below its own first threshold: the window under it is what measures
+ * that range, and a family takes the best of its variants, so staying silent costs a
+ * player nothing they have actually earned.
+ */
+function variantEnergy(
   score: number,
-  rankNames: string[],
-): ScenarioResult {
-  const idx = rankIndex(score, scenario.rankMaxes);
-  const nextIdx = idx + 1;
-  const hasNext = nextIdx < scenario.rankMaxes.length;
+  rankMaxes: number[],
+  offset: number,
+): { energy: number; rankIndex: number } {
+  const idx = rankIndex(score, rankMaxes);
+
+  if (offset > 0 && idx < 0) return { energy: 0, rankIndex: -1 };
 
   return {
-    scenario,
-    score,
-    energy: scenarioEnergy(score, scenario.rankMaxes),
-    rankIndex: idx,
-    rankName: idx >= 0 ? (rankNames[idx] ?? null) : null,
+    energy: offset * ENERGY_PER_RANK + scenarioEnergy(score, rankMaxes),
+    rankIndex: idx < 0 ? -1 : offset + idx,
+  };
+}
+
+/**
+ * Grade one family against the whole ladder.
+ *
+ * `variants` is one scenario on a flat ladder and one per window on a windowed one, in
+ * window order. `windowSize` is how many ranks each window covers, and equals the whole
+ * ladder for a flat one.
+ */
+function evaluateFamily(
+  family: string,
+  variants: ScenarioDef[],
+  scores: Map<string, number>,
+  rankNames: string[],
+  windowSize: number,
+): ScenarioResult {
+  let best = { energy: 0, rankIndex: -1, scenario: variants[0], score: scores.get(variants[0].name) ?? 0 };
+
+  for (const variant of variants) {
+    const score = scores.get(variant.name) ?? 0;
+    const offset = (variant.window ?? 0) * windowSize;
+    const graded = variantEnergy(score, variant.rankMaxes, offset);
+
+    // Strictly greater, so a tie keeps the easier variant. That matters at zero: a
+    // player who has scored nothing ties every window, and the useful thing to show them
+    // is the one at the bottom - the scenario they should actually launch - rather than
+    // an Advanced scenario they have never opened.
+    if (graded.energy > best.energy) {
+      best = { energy: graded.energy, rankIndex: graded.rankIndex, scenario: variant, score };
+    }
+  }
+
+  // The ladder's depth, not the variants' - a family short of a window would otherwise
+  // quietly shorten its own ladder instead of being reported as the mistake it is.
+  const totalRanks = rankNames.length;
+  const nextIdx = best.rankIndex + 1;
+  const hasNext = nextIdx < totalRanks;
+
+  // The next rank belongs to whichever window contains it, which is not always the
+  // window the player is being graded in.
+  const nextWindow = Math.floor(nextIdx / windowSize);
+  const target = hasNext
+    ? (variants.find((v) => (v.window ?? 0) === nextWindow) ?? null)
+    : null;
+  const nextRankScore = target ? (target.rankMaxes[nextIdx % windowSize] ?? null) : null;
+  const nextRankFromScore = target ? (scores.get(target.name) ?? 0) : null;
+
+  return {
+    scenario: best.scenario,
+    score: best.score,
+    energy: best.energy,
+    rankIndex: best.rankIndex,
+    rankName: best.rankIndex >= 0 ? (rankNames[best.rankIndex] ?? null) : null,
     nextRankName: hasNext ? (rankNames[nextIdx] ?? null) : null,
-    nextRankScore: hasNext ? scenario.rankMaxes[nextIdx] : null,
-    gapToNextRank: hasNext
-      ? Math.max(0, scenario.rankMaxes[nextIdx] - score)
-      : null,
+    nextRankScore,
+    gapToNextRank:
+      nextRankScore !== null && nextRankFromScore !== null
+        ? Math.max(0, nextRankScore - nextRankFromScore)
+        : null,
+    nextRankScenario: target ? target.name : null,
+    nextRankFromScore,
+    family,
   };
 }
 
@@ -135,8 +228,28 @@ function evaluateCategory(
   scores: Map<string, number>,
   rankNames: string[],
 ): CategoryResult {
-  const scenarios = category.scenarios.map((s) =>
-    evaluateScenario(s, scores.get(s.name) ?? 0, rankNames),
+  // A flat ladder is the degenerate case of a windowed one: every scenario is its own
+  // family in window 0, and the window is the whole ladder. Written that way so there is
+  // one path through this code rather than two, and so the KovaaK's numbers this module
+  // is validated against keep coming out of the same arithmetic they always did.
+  const windowSize = category.windowSize ?? category.rankMaxes.length;
+
+  const families = new Map<string, ScenarioDef[]>();
+  for (const s of category.scenarios) {
+    const key = s.family ?? s.name;
+    const list = families.get(key) ?? [];
+    list.push(s);
+    families.set(key, list);
+  }
+
+  const scenarios = [...families].map(([family, variants]) =>
+    evaluateFamily(
+      family,
+      [...variants].sort((a, b) => (a.window ?? 0) - (b.window ?? 0)),
+      scores,
+      rankNames,
+      windowSize,
+    ),
   );
 
   const energy = scenarios.reduce((sum, s) => sum + s.energy, 0);

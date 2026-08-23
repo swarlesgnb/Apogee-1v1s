@@ -89,6 +89,65 @@ async function main(): Promise<void> {
   const mTotal = JSON.parse(memberships.body || "[]")[0]?.count;
   check("all benchmark memberships seeded", mTotal === 261, `${mTotal}`);
 
+  // The pool find-match actually queries.
+  //
+  // Every other check here would pass with that pool empty: the tables exist, the
+  // functions are deployed, and queueing returns a 404 nobody has a reason to expect. This
+  // is the precondition for a match being possible at all.
+  //
+  // Read with the service key, not the anon one, because that is the view find-match has.
+  // A draft season is admin-only by RLS, so an anon check would report an empty pool for a
+  // season that is in fact loaded and fine - a false alarm that costs an hour.
+  const seasonRes = await rest(
+    "seasons?select=id,name,status,windows,window_size&status=in.(published,draft)" +
+      "&order=created_at.desc&limit=10",
+    SECRET!,
+  );
+  const seasonRows = JSON.parse(seasonRes.body || "[]") as {
+    id: string;
+    name: string;
+    status: string;
+    windows: string[] | null;
+  }[];
+
+  // Published wins over draft, matching how find-match picks.
+  const season = seasonRows.find((s) => s.status === "published") ?? seasonRows[0];
+
+  check("a season is loaded for matches to draw from", !!season, season
+    ? `${season.name} (${season.status})`
+    : "none - run npm run push:season");
+
+  if (season) {
+    // Every window, not only the one matches currently use: a window with no scenarios is
+    // a difficulty the editor will happily offer and the server cannot fulfil.
+    const windows = season.windows ?? [];
+    for (const [index, name] of windows.entries()) {
+      const pool = await rest(
+        `season_scenarios?select=count&season_id=eq.${season.id}&window_index=eq.${index}`,
+        SECRET!,
+        { headers: { Prefer: "count=exact" } },
+      );
+      const size = JSON.parse(pool.body || "[]")[0]?.count ?? 0;
+      check(
+        `${name} has scenarios to draw a match from`,
+        size >= 3,
+        `${size} scenarios`,
+      );
+    }
+
+    const orphans = await rest(
+      `season_scenarios?select=count&season_id=eq.${season.id}&window_index=is.null`,
+      SECRET!,
+      { headers: { Prefer: "count=exact" } },
+    );
+    const orphaned = JSON.parse(orphans.body || "[]")[0]?.count ?? 0;
+    check(
+      "every scenario in the season names a window",
+      orphaned === 0,
+      `${orphaned} without one`,
+    );
+  }
+
   const precise = await rest(
     "scenarios?select=name&sub_category=eq.Precise&name=like.*Intermediate*&order=name",
     ANON!,

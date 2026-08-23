@@ -760,6 +760,53 @@ Thresholds are therefore **derived from Apogee's own population**, the same prin
 percentile of what Apogee players actually score on it. Nothing to maintain, nothing to
 go stale, and the answer to "why is Diamond 930" is a fact rather than an opinion.
 
+### One ladder, three scenario windows
+
+A ladder has to hold both a first-week player and a good one, and one set of scenarios
+cannot measure that range. A perfect run on something easy stops proving anything at some
+point; past that point the ladder needs harder scenarios or it stops measuring.
+
+Season 1's first cut got this wrong in the most instructive way. It took Voltaic
+Intermediate's four thresholds and extended them by repeating the last step four times,
+and the result was broken at both ends: rank 1 was Voltaic Platinum, so most players were
+unranked and saw no progress at all, and the top four ranks were a straight line where the
+real curve steepens, so a strong player cleared all four at once. Both halves of "too
+hard for a newcomer *and* too easy at the top" came from the same mistake.
+
+The fix is not three benchmarks a player chooses between - that re-imports the §4
+confusion one level down, and it makes matchmaking ask a question it should never have to.
+It is **one ladder cut into windows**:
+
+```
+ranks  1- 4   Novice variants        VT Pasu Novice S5        555  660  745  800
+ranks  5- 8   Intermediate variants  VT Pasu Intermediate S5  770  850  930  980
+ranks  9-12   Advanced variants      VT Pasu Advanced S5      910 1020 1110 1240
+```
+
+The six scenario **families** per category are the unit that gets graded, not the eighteen
+variants. A family's energy is the *best* of its variants, offset by the ranks below its
+window, so:
+
+- a player only ever plays the six scenarios their band uses, and the ladder is twelve
+  ranks deep without being three times the grind
+- a maxed Novice scenario reads as "this proves rank 4, and cannot prove more", which is
+  the honest thing to say about a perfect run on something easy
+- above window 0 a variant is *silent* below its own first threshold rather than
+  interpolating from zero, so a bad score on a hard scenario cannot be credited as though
+  it were a good one on an easy scenario
+- the app can name the scenario the next rank is scored on, which is the one thing a
+  windowed ladder must never leave implicit
+
+Where one window hands over to the next is Voltaic's judgement in season 1 and a
+measurement in season 2: with players who have run both variants of a family, the
+handover point can be regressed rather than assumed.
+
+The **match pool** is a separate question and stays one window. Settlement compares a
+player against their own baseline (§3), so a beginner and a Celestial already get a real
+contest on the same scenario, and splitting the pool by window would divide a small
+population three ways for nothing. `find-match` already partitions by
+`(category, difficulty)`, so banding it later is a change of one field.
+
 ### Why seasons make that work rather than complicate it
 
 Derived thresholds have one flaw: they move. A player grinding toward a rank does not
@@ -790,11 +837,16 @@ consistency report - the surfaces §4 already calls *stats* rather than standing
 ### The order to build it in
 
 1. Own the pool. A season file naming the scenarios per category, read where
-   `data/benchmarks/*.json` is read now. No new scenarios: the eighteen are proven and
-   already hosted, and inventing scenarios is a different project.
+   `data/benchmarks/*.json` is read now. No invented scenarios: the fifty-four across
+   Voltaic's three difficulties are proven and already hosted, and authoring new ones is
+   a different project. **Done.**
 2. Seed season 1's thresholds from the corpus, and check them against the published
    Voltaic numbers - not to copy them, but because a large unexplained divergence
-   would mean the derivation is wrong.
+   would mean the derivation is wrong. **Done**, and the check earned its place twice: it
+   caught the stretched single-window ladder, and it caught Voltaic's Switching energy
+   thresholds asking 17,500 per rank where six families can only ever produce 15,000 -
+   a top rank unreachable at any score, in their published numbers as well as ours.
+   `validateSeason` refuses that shape now.
 3. Split `ratings` per category, with the derived overall on top.
 4. Only then the rollover: compute season 2 from season 1's population.
 

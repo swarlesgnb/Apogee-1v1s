@@ -162,8 +162,19 @@ export interface FoundMatch {
   poolSize: number | null;
 }
 
-export function findMatch(category: string, difficulty: string): Promise<FoundMatch> {
-  return callFunction<FoundMatch>("find-match", { category, difficulty });
+/**
+ * Queue for a match.
+ *
+ * `pool` names the window of the season's own pool the match is drawn from. It comes from
+ * the snapshot rather than being assumed here, because the season decides it - and it is a
+ * window index rather than a difficulty name so that renaming a window is a display change
+ * and never a change to what the server resolves.
+ */
+export function findMatch(
+  category: string,
+  pool: { window: number },
+): Promise<FoundMatch> {
+  return callFunction<FoundMatch>("find-match", { category, window: pool.window });
 }
 
 /**

@@ -57,20 +57,45 @@ check(
   refuses(energyOff) ?? "accepted",
 );
 
-// A correct add: names, colours, energy and every scenario in the category.
+// A correct add.
+//
+// On a windowed season a ladder grows by a whole window, not by one rank: the ranks a
+// window covers are graded by one scenario, so half a window is a set of ranks with
+// nothing measuring them. Adding one at a time is what the checks above refuse, and this
+// is the shape that has to keep working.
+const size = base.windowSize ?? 1;
 const good = clone();
 const cat = good.categories[0];
-cat.rankNames.push("Tier V");
-cat.rankColors["Tier V"] = "#888888";
-cat.rankMaxes.push(cat.rankMaxes[cat.rankMaxes.length - 1] + 15000);
-good.scenarios
-  .filter((s) => s.category === cat.name)
-  .forEach((s) => {
-    const last = s.rankMaxes[s.rankMaxes.length - 1];
-    const gap = last - s.rankMaxes[s.rankMaxes.length - 2];
-    s.rankMaxes.push(last + Math.max(1, gap));
+// A window that grades ranks nobody has a name for is a window that cannot be shown.
+if (good.windows) good.windows.push("Elite");
+
+for (let i = 0; i < size; i++) {
+  const name = `Tier ${cat.rankNames.length + 1}`;
+  cat.rankNames.push(name);
+  cat.rankColors[name] = "#888888";
+  cat.rankMaxes.push(cat.rankMaxes[cat.rankMaxes.length - 1] + 15000);
+}
+
+// One new variant per family, covering the window just added. Cloned off the family's
+// hardest existing variant and scaled up, which is what a real harder scenario is.
+for (const family of new Set(
+  good.scenarios.filter((s) => s.category === cat.name).map((s) => s.family),
+)) {
+  const variants = good.scenarios.filter((s) => s.family === family);
+  const hardest = variants.reduce((a, b) => ((b.window ?? 0) > (a.window ?? 0) ? b : a));
+  good.scenarios.push({
+    ...hardest,
+    scenario: `${hardest.scenario} (harder)`,
+    window: Math.max(...variants.map((v) => v.window ?? 0)) + 1,
+    rankMaxes: hardest.rankMaxes.map((v) => Math.round(v * 1.1)),
   });
-check("a rank added everywhere it belongs is accepted", refuses(good) === null, refuses(good) ?? "");
+}
+
+check(
+  "a window added everywhere it belongs is accepted",
+  refuses(good) === null,
+  refuses(good) ?? "",
+);
 
 // One category may be a different depth from another.
 check(
@@ -78,6 +103,66 @@ check(
   good.categories[0].rankNames.length !== good.categories[1].rankNames.length,
   `${good.categories[0].rankNames.length} vs ${good.categories[1].rankNames.length}`,
 );
+
+// A rank above the energy ceiling.
+//
+// The one failure mode with no symptom other than a top rank that stays empty forever:
+// the ladder ascends, the counts line up, and no score anybody can produce reaches it.
+// Voltaic's published Switching thresholds have this shape, which is why it is checked.
+const unreachable = clone();
+const ceilingCat = unreachable.categories[0];
+ceilingCat.rankMaxes = ceilingCat.rankMaxes.map((_, i) => 17500 * (i + 1));
+check(
+  "a rank above the energy ceiling is refused",
+  refuses(unreachable) !== null,
+  refuses(unreachable) ?? "accepted",
+);
+
+// ---- windows ---------------------------------------------------------------------
+//
+// The three below are the ways a windowed season goes wrong that a flat one cannot, and
+// each of them is silent without a check: ranks nobody can reach, two scenarios grading
+// the same ranks, and a family that belongs to two categories at once.
+if (base.windowSize) {
+  const holed = clone();
+  const victim = holed.scenarios.find((s) => (s.window ?? 0) === 1)!;
+  holed.scenarios = holed.scenarios.filter((s) => s !== victim);
+  check(
+    "a family missing a window is refused",
+    refuses(holed) !== null,
+    refuses(holed) ?? "accepted",
+  );
+
+  // Two *different* scenarios in one window is a real thing to want: a family is graded on
+  // the best of its variants, so it reads as "either of these proves the rank".
+  const shared = clone();
+  const twin = shared.scenarios.find((s) => (s.window ?? 0) === 0)!;
+  shared.scenarios.push({ ...twin, scenario: `${twin.scenario} (alternate)` });
+  check(
+    "two different scenarios in one window is accepted",
+    refuses(shared) === null,
+    refuses(shared) ?? "",
+  );
+
+  // The same scenario twice adds nothing and is what a mis-click produces.
+  const doubled = clone();
+  const dupe = doubled.scenarios.find((s) => (s.window ?? 0) === 0)!;
+  doubled.scenarios.push({ ...dupe });
+  check(
+    "the same scenario listed twice in a family is refused",
+    refuses(doubled) !== null,
+    refuses(doubled) ?? "accepted",
+  );
+
+  const split = clone();
+  const moved = split.scenarios.find((s) => (s.window ?? 0) === 2)!;
+  moved.category = split.categories[1].name;
+  check(
+    "a family split across categories is refused",
+    refuses(split) !== null,
+    refuses(split) ?? "accepted",
+  );
+}
 
 
 // ---- the overall rank is derived from the three categories -----------------------
@@ -112,14 +197,16 @@ const nothing = evaluateBenchmark(diff, new Map());
 check("scoring nothing is unranked overall", nothing.rankIndex < 0, `${nothing.rankName}`);
 
 // A category shorter than the others must not drag the overall down by arithmetic.
+// Shortened by a whole window, for the same reason the add above adds one.
 const uneven: Season = clone();
 const short = uneven.categories[0];
-short.rankNames = short.rankNames.slice(0, 2);
-short.rankColors = { [short.rankNames[0]]: "#888", [short.rankNames[1]]: "#999" };
-short.rankMaxes = short.rankMaxes.slice(0, 2);
-uneven.scenarios
-  .filter((s) => s.category === short.name)
-  .forEach((s) => (s.rankMaxes = s.rankMaxes.slice(0, 2)));
+const keep = Math.max(size, short.rankNames.length - size);
+short.rankNames = short.rankNames.slice(0, keep);
+short.rankColors = Object.fromEntries(short.rankNames.map((n, i) => [n, i % 2 ? "#888" : "#999"]));
+short.rankMaxes = short.rankMaxes.slice(0, keep);
+uneven.scenarios = uneven.scenarios.filter(
+  (s) => s.category !== short.name || (s.window ?? 0) < keep / size,
+);
 
 check("a season with uneven ladders is valid", refuses(uneven) === null, refuses(uneven) ?? "");
 

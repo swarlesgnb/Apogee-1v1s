@@ -52,6 +52,15 @@ export interface GenerateOptions {
   /** Deterministic tie-breaking, so a reload does not reroll the day's quests. */
   seed?: string;
   /**
+   * How to name a scenario in quest text.
+   *
+   * Supplied by the caller because a season owns its labels, and deriving them from the
+   * difficulty name only works when that name *is* the difficulty being stripped: against
+   * "Season 1" it leaves "Pasu Intermediate" in the title. It also has to disambiguate a
+   * family's three variants, since a quest naming "Pasu" names three scenarios.
+   */
+  labelFor?: (scenario: string) => string;
+  /**
    * How many of the day's quests should target the floor rather than the ceiling.
    *
    * A mix on purpose: ceiling quests give a player something to chase on a day they
@@ -122,6 +131,7 @@ export function generateQuests(options: GenerateOptions): Quest[] {
   const { difficulty, history, now } = options;
   const count = options.count ?? 3;
   const expiresAt = endOfDay(now);
+  const labelFor = options.labelFor ?? ((name: string) => shortName(name, difficulty.name));
 
   const scores = new Map<string, number>();
   for (const cat of difficulty.categories) {
@@ -140,20 +150,30 @@ export function generateQuests(options: GenerateOptions): Quest[] {
     .filter((s) => s.score > 0 && s.gapToNextRank != null && s.nextRankName != null)
     .sort((a, b) => a.gapToNextRank! / a.score - b.gapToNextRank! / b.score);
 
+  // The quest is about the scenario the threshold lives on, which is not always the one
+  // the player is currently ranked by. Every fourth rank crosses into a harder window, and
+  // there the target, the current score and the scenario to launch all belong to the next
+  // variant - so naming the ranked one instead would produce "you are at 800, 770 takes
+  // you to rank 5, 770 more", which is three true numbers arranged into nonsense.
   for (const s of gaps.slice(0, 2)) {
-    const label = shortName(s.scenario.name, difficulty.name);
+    const subject = s.nextRankScenario ?? s.scenario.name;
+    const at = s.nextRankFromScore ?? s.score;
+    const label = labelFor(subject);
+
     candidates.push({
-      id: `gap:${s.scenario.name}`,
+      id: `gap:${subject}`,
       kind: "close_the_gap",
       title: `Reach ${s.nextRankName} on ${label}`,
       detail:
-        `You are at ${s.score.toFixed(0)}. ` +
+        (at > 0
+          ? `You are at ${at.toFixed(0)}. `
+          : `You have not scored on it yet. `) +
         `${s.nextRankScore!.toFixed(0)} takes you to ${s.nextRankName}, ` +
         `${s.gapToNextRank!.toFixed(0)} more.`,
       target: s.nextRankScore!,
-      progress: s.score,
+      progress: at,
       xp: 300,
-      subject: s.scenario.name,
+      subject,
       expiresAt,
     });
   }
@@ -232,7 +252,13 @@ export function generateQuests(options: GenerateOptions): Quest[] {
   // Floor quests are interleaved rather than appended, so they are not always the ones
   // pushed off the end of a short list.
   const floorCount = options.floorQuests ?? Math.min(2, Math.max(1, Math.floor(count / 2)));
-  const floor = generateFloorQuests({ difficulty, history, now, count: floorCount });
+  const floor = generateFloorQuests({
+    difficulty,
+    history,
+    now,
+    count: floorCount,
+    labelFor,
+  });
 
   const mixed: Quest[] = [];
   const ceilingQueue = [...candidates];

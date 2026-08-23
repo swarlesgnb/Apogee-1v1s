@@ -37,28 +37,22 @@ const headers = {
 const rest = (path: string, init: RequestInit = {}) =>
   fetch(`${URL_BASE}/rest/v1/${path}`, { ...init, headers: { ...headers, ...(init.headers ?? {}) } });
 
-interface SeasonFile {
-  name: string;
-  rankNames: string[];
-  rankColors: Record<string, string>;
-  scenarios: { scenario: string; category: string; rankMaxes: number[] }[];
-}
+import { validateSeason, type Season } from "../src/core/season/season.ts";
 
 async function main(): Promise<void> {
   const args = process.argv.slice(2);
   const dry = args.includes("--dry-run");
   const file = args.find((a) => !a.startsWith("--")) ?? "data/seasons/season-1.json";
 
-  const season: SeasonFile = JSON.parse(readFileSync(join(root, file), "utf8"));
+  const season: Season = JSON.parse(readFileSync(join(root, file), "utf8"));
 
-  // Every threshold list must match the ladder, or a rank would exist with no score
-  // attached to it and the season would be unusable in a way nothing else would catch.
-  const wrong = season.scenarios.filter((s) => s.rankMaxes.length !== season.rankNames.length);
-  if (wrong.length > 0) {
-    console.error(
-      `${wrong.length} scenario(s) have a threshold count that does not match ` +
-        `${season.rankNames.length} ranks: ${wrong.map((s) => s.scenario).join(", ")}`,
-    );
+  // The same validator the app loads seasons through, rather than a second opinion
+  // maintained here. A threshold count checked against the wrong ladder is exactly the
+  // kind of near-miss that passes locally and pushes a season nothing can grade with.
+  try {
+    validateSeason(season);
+  } catch (err) {
+    console.error(`this season is not valid: ${err instanceof Error ? err.message : err}`);
     process.exit(1);
   }
 
@@ -77,8 +71,15 @@ async function main(): Promise<void> {
     process.exit(1);
   }
 
-  console.log(`${season.name}: ${season.scenarios.length} scenarios, ` +
-    `${season.rankNames.length} ranks (${season.rankNames.join(" · ")})`);
+  console.log(
+    `${season.name}: ${season.scenarios.length} scenarios, ` +
+      `${season.rankNames.length} overall ranks (${season.rankNames.join(" · ")})` +
+      (season.windowSize
+        ? `
+  ${season.windows?.length ?? 0} windows of ${season.windowSize} ranks: ` +
+          `${(season.windows ?? []).join(" · ")}`
+        : ""),
+  );
 
   const existingRes = await rest(
     `seasons?select=id,status&name=eq.${encodeURIComponent(season.name)}`,
@@ -129,6 +130,8 @@ async function main(): Promise<void> {
         status: "draft",
         rank_names: season.rankNames,
         rank_colors: season.rankColors,
+        window_size: season.windowSize ?? null,
+        windows: season.windows ?? null,
       }),
     })
   ).json() as { id: string }[];
@@ -147,6 +150,8 @@ async function main(): Promise<void> {
         scenario_id: idByName.get(s.scenario),
         category: s.category,
         rank_maxes: s.rankMaxes,
+        family: s.family ?? null,
+        window_index: s.window ?? null,
       })),
     ),
   });

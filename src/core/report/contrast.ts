@@ -1,0 +1,84 @@
+/**
+ * Whether a rank colour can actually be read.
+ *
+ * A rank is a name in a colour, shown on the client's near-black panels and again on
+ * anything lighter - a screenshot, a profile, a web page. A colour that only survives one
+ * of those is a rank that disappears half the time, and the failure is invisible to the
+ * person choosing it: on a lit monitor, against the editor's own background, a near-black
+ * looks like a colour rather than like nothing.
+ *
+ * So it is measured. Shared between the rank sheet and the season editor, because the
+ * whole point is that the warning appears while the colour is being chosen rather than
+ * after it has shipped.
+ */
+
+/** The two grounds every rank name has to survive. Must match the client and the sheet. */
+export const DARK_GROUND = "#06080c";
+export const LIGHT_GROUND = "#eef1f6";
+
+/**
+ * Contrast ratios below this are treated as "this colour disappears".
+ *
+ * Well under WCAG's 4.5:1 for body text, deliberately. A rank name is large, bold, and
+ * carries a filled chip beside it, so the bar for legibility is lower than for prose - and
+ * a threshold that flags half the palette gets ignored, which helps nobody.
+ */
+export const MIN_CONTRAST = 2;
+
+/** sRGB relative luminance, per WCAG. */
+export function luminance(hex: string): number {
+  const m = /^#?([0-9a-f]{6})$/i.exec(hex.trim());
+  if (!m) return 0;
+  const n = parseInt(m[1], 16);
+  const channel = (v: number) => {
+    const s = v / 255;
+    return s <= 0.03928 ? s / 12.92 : Math.pow((s + 0.055) / 1.055, 2.4);
+  };
+  return (
+    0.2126 * channel((n >> 16) & 255) +
+    0.7152 * channel((n >> 8) & 255) +
+    0.0722 * channel(n & 255)
+  );
+}
+
+export function contrast(a: string, b: string): number {
+  const la = luminance(a);
+  const lb = luminance(b);
+  return (Math.max(la, lb) + 0.05) / (Math.min(la, lb) + 0.05);
+}
+
+export interface Readability {
+  onDark: number;
+  onLight: number;
+  /** True when the colour survives both grounds. */
+  ok: boolean;
+  /** Which ground it fails against, for a message that says what to do. */
+  fails: "dark" | "light" | "both" | null;
+}
+
+export function readability(color: string): Readability {
+  const onDark = contrast(color, DARK_GROUND);
+  const onLight = contrast(color, LIGHT_GROUND);
+  const darkBad = onDark < MIN_CONTRAST;
+  const lightBad = onLight < MIN_CONTRAST;
+
+  return {
+    onDark,
+    onLight,
+    ok: !darkBad && !lightBad,
+    fails: darkBad && lightBad ? "both" : darkBad ? "dark" : lightBad ? "light" : null,
+  };
+}
+
+/** A sentence saying what is wrong, or null when nothing is. */
+export function readabilityNote(color: string): string | null {
+  const r = readability(color);
+  if (r.ok) return null;
+
+  if (r.fails === "both") {
+    return `unreadable on both grounds (${r.onDark.toFixed(2)}:1 dark, ${r.onLight.toFixed(2)}:1 light)`;
+  }
+  return r.fails === "dark"
+    ? `disappears on dark (${r.onDark.toFixed(2)}:1) - the client's own background`
+    : `disappears on light (${r.onLight.toFixed(2)}:1) - screenshots and the web`;
+}

@@ -14,7 +14,7 @@ import { readFileSync } from "node:fs";
 import { evaluateBenchmark } from "../benchmarks/energy.ts";
 import type { BenchmarkDef, DifficultyDef } from "../benchmarks/types.ts";
 import { dataFile } from "../dataDir.ts";
-import { hasSeason, loadSeason, seasonAsDifficulty } from "../season/season.ts";
+import { hasSeason, loadSeason, seasonAsDifficulty, seasonLabels } from "../season/season.ts";
 import { scanStatsFolder, type ScenarioHistory } from "../history/history.ts";
 import { computeFloor, floorsFor, overallGap, type FloorMethod } from "./floor.ts";
 
@@ -102,6 +102,42 @@ function main(): void {
   const definitionName = season ? season.name : `${benchmark!.benchmarkName} ${difficulty.name}`;
   const scenarios = difficulty.categories.flatMap((c) => c.scenarios);
 
+  // A season carries its own labels. Deriving them from the definition name works for a
+  // benchmark, where the name is the difficulty being stripped, and not for a season,
+  // where it is "Season 1" and every label keeps the difficulty it was seeded from.
+  const seasonLabel = season ? seasonLabels(season) : null;
+
+  // Three variants of one family share a label - all three of these are "Pasu" - and
+  // this report has a row per scenario, not per family, because reliability on the
+  // Novice one is a different fact from reliability on the Advanced one. So the window
+  // is part of the name here, where three identical rows would otherwise appear.
+  const windowOf = new Map<string, string>();
+  if (season?.windows) {
+    for (const scen of season.scenarios) {
+      const name = season.windows[scen.window ?? 0];
+      if (name) windowOf.set(scen.scenario, name);
+    }
+  }
+
+  const labelFor = (name: string) => {
+    const base = seasonLabel?.get(name) ?? shortName(name, difficulty.name);
+    const window = windowOf.get(name);
+    return window ? `${base} ${window.slice(0, 3).toLowerCase()}` : base;
+  };
+
+  // Which category's ladder a scenario is graded against, and how far into it its own
+  // thresholds start. On a windowed season a variant covers four ranks partway up a
+  // ladder of twelve, so reading its thresholds against index 0 names the wrong rank.
+  const ladderFor = new Map<string, { rankNames: string[]; offset: number }>();
+  for (const c of difficulty.categories) {
+    for (const scen of c.scenarios) {
+      ladderFor.set(scen.name, {
+        rankNames: c.rankNames ?? difficulty.rankNames,
+        offset: (scen.window ?? 0) * (c.windowSize ?? 0),
+      });
+    }
+  }
+
   const scoreHistory = new Map<string, number[]>();
   for (const s of scenarios) {
     const h = history.get(s.name);
@@ -126,7 +162,7 @@ function main(): void {
       console.log(
         `${m.padEnd(17)} ${(result.rankName ?? "unranked").padEnd(12)} ` +
           `${result.totalEnergy.toFixed(0).padStart(7)}   ${(gap * 100).toFixed(1).padStart(6)}%   ` +
-          `${shortName(worst.scenario, difficulty.name)} ${(worst.gap * 100).toFixed(0)}%`,
+          `${labelFor(worst.scenario)} ${(worst.gap * 100).toFixed(0)}%`,
       );
     }
     console.log(
@@ -175,19 +211,20 @@ function main(): void {
     .sort((a, b) => b.gap - a.gap);
 
   console.log(
-    `  ${"scenario".padEnd(16)} ${"ceiling".padStart(8)} ${"floor".padStart(8)} ` +
+    `  ${"scenario".padEnd(20)} ${"ceiling".padStart(8)} ${"floor".padStart(8)} ` +
       `${"gap".padStart(7)}   rank drop`,
   );
 
   for (const f of ranked.slice(0, 10)) {
     const scenarioDef = scenarios.find((s) => s.name === f.scenario)!;
-    const cRank = rankOfScore(scenarioDef.rankMaxes, f.ceiling, difficulty.rankNames);
-    const fRank = rankOfScore(scenarioDef.rankMaxes, f.floor, difficulty.rankNames);
+    const ladder = ladderFor.get(f.scenario)!;
+    const cRank = rankOfScore(scenarioDef.rankMaxes, f.ceiling, ladder.rankNames, ladder.offset);
+    const fRank = rankOfScore(scenarioDef.rankMaxes, f.floor, ladder.rankNames, ladder.offset);
     const drop = cRank === fRank ? `${DIM}none${RESET}` :
       `${colorOf(cRank)}${cRank ?? "—"}${RESET} ${DIM}→${RESET} ${colorOf(fRank)}${fRank ?? "unranked"}${RESET}`;
 
     console.log(
-      `  ${shortName(f.scenario, difficulty.name).padEnd(16)} ` +
+      `  ${labelFor(f.scenario).padEnd(20)} ` +
         `${f.ceiling.toFixed(0).padStart(8)} ${f.floor.toFixed(0).padStart(8)} ` +
         `${(f.gap * 100).toFixed(1).padStart(6)}%   ${drop}`,
     );
@@ -198,7 +235,7 @@ function main(): void {
     console.log(`\n${BOLD}Most reliable${RESET}`);
     for (const f of steady) {
       console.log(
-        `  ${shortName(f.scenario, difficulty.name).padEnd(16)} ` +
+        `  ${labelFor(f.scenario).padEnd(20)} ` +
           `${f.ceiling.toFixed(0).padStart(8)} ${f.floor.toFixed(0).padStart(8)} ` +
           `${(f.gap * 100).toFixed(1).padStart(6)}%`,
       );
@@ -207,18 +244,23 @@ function main(): void {
   console.log();
 }
 
-/** Rank name a score would earn on one scenario, or null if below the first threshold. */
+/**
+ * Rank name a score would earn on one scenario, or null if below the first threshold.
+ *
+ * `offset` is how many ranks sit below this scenario's window. Zero on a flat ladder.
+ */
 function rankOfScore(
   rankMaxes: number[],
   score: number,
   rankNames: string[],
+  offset = 0,
 ): string | null {
   let idx = -1;
   for (let i = 0; i < rankMaxes.length; i++) {
     if (score >= rankMaxes[i]) idx = i;
     else break;
   }
-  return idx >= 0 ? (rankNames[idx] ?? null) : null;
+  return idx >= 0 ? (rankNames[idx + offset] ?? null) : null;
 }
 
 main();

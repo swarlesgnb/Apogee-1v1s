@@ -57,10 +57,19 @@ interface Candidate {
 function floorCandidates(
   difficulty: DifficultyDef,
   history: Map<string, ScenarioHistory>,
+  labelFor: (scenario: string) => string,
 ): Candidate[] {
   const out: Candidate[] = [];
 
   for (const category of difficulty.categories) {
+    // The ladder this category grades against, and how far into it this variant's own
+    // thresholds start. Both were previously read off the benchmark's ladder at index 0,
+    // which names the wrong rank twice over: the overall ladder does not contain a
+    // category's rank names, and a variant covering ranks 9-12 has thresholds numbered
+    // 0-3 of its own.
+    const ladder = category.rankNames ?? difficulty.rankNames;
+    const windowSize = category.windowSize ?? 0;
+
     for (const scenario of category.scenarios) {
       const h = history.get(scenario.name);
       if (!h || h.runs.length < FLOOR_WINDOW) continue;
@@ -75,15 +84,16 @@ function floorCandidates(
 
       const target = scenario.rankMaxes[nextRank];
       const recent = scores.slice(-FLOOR_WINDOW);
+      const offset = (scenario.window ?? 0) * windowSize;
 
       out.push({
         scenario,
-        label: shortName(scenario.name, difficulty.name),
+        label: labelFor(scenario.name),
         floor: result.floor,
         ceiling: result.ceiling,
         gap: result.gap,
         target,
-        targetRank: difficulty.rankNames[nextRank] ?? "next rank",
+        targetRank: ladder[nextRank + offset] ?? "next rank",
         clearing: recent.filter((s) => s >= target).length,
         recent,
       });
@@ -103,6 +113,8 @@ export interface FloorQuestOptions {
   history: Map<string, ScenarioHistory>;
   now: Date;
   count?: number;
+  /** How to name a scenario. See the same field on `GenerateOptions`. */
+  labelFor?: (scenario: string) => string;
 }
 
 function endOfDay(now: Date): Date {
@@ -116,7 +128,9 @@ export function generateFloorQuests(options: FloorQuestOptions): Quest[] {
   const count = options.count ?? 3;
   const expiresAt = endOfDay(now);
 
-  const candidates = floorCandidates(difficulty, history);
+  const labelFor = options.labelFor ?? ((name: string) => shortName(name, difficulty.name));
+
+  const candidates = floorCandidates(difficulty, history, labelFor);
   if (candidates.length === 0) return [];
 
   const quests: Quest[] = [];

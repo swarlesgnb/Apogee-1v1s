@@ -1,15 +1,16 @@
 <title>Apogee Rank Ladders</title>
 <style>
   /* ------------------------------------------------------------------
-     A rank sheet, not a document.
+     A rank sheet, not a document. GENERATED - see core/report/rankSheet.ts;
+     edit the season, not this file.
 
      The page is dark on purpose and in one theme only: these ranks live
      inside a dark client, and a badge that only works on white is a badge
      that does not work. Committing to the product's own ground is the
      honest place to judge them.
 
-     The one thing the page must not do is flatter the colours. Every rank
-     is shown three ways - a filled chip, its name on dark, its name on
+     The one thing the page must not do is flatter the colours. Every named
+     rank is shown three ways - a filled chip, its name on dark, its name on
      light - because "does this read" is the actual question being asked,
      and a swatch alone will happily hide a near-black or a pure white.
      ------------------------------------------------------------------ */
@@ -166,6 +167,23 @@
   }
   .rung:last-child { border-top: none; }
 
+  /* Which scenarios grade this stretch of the ladder. Sits above its own band. */
+  .band {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 7px 18px 6px;
+    background: var(--sunken);
+    border-top: 1px solid var(--line-lit);
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--ink-mid);
+  }
+  .band-range { letter-spacing: .06em; color: var(--ink-dim); text-transform: none; }
+
   .tier {
     font-family: var(--mono);
     font-size: 11px;
@@ -277,13 +295,14 @@
 <div class="page">
   <header class="masthead">
     <div class="eyebrow">Apogee · Season 1 · draft</div>
-    <h1>Four ladders, thirty-two ranks</h1>
+    <h1>Four ladders, fifty-six ranks</h1>
     <p class="standfirst">
       Apogee is ranked 1v1 for KovaaK's. You queue a category, play three scenarios,
       and the ladder moves. Clicking, Tracking and Switching each rank separately —
       being near the top of one says nothing about the others — and an overall rank is
       derived from all three.
     </p>
+    <p class="standfirst">Each category ladder is sixteen ranks deep, cut into four windows of four — Easy, Medium, Hard, Extreme — because one set of scenarios cannot measure both a first-week player and a good one. You are graded against the window you are in, and the scenarios get harder as you climb.</p>
     <p class="standfirst">
       These are the names and colours. Nothing is published yet, so all of it is still
       cheap to change.
@@ -295,9 +314,10 @@
         <li>Do the names read as a <em>progression</em> — is it obvious which end is good?</li>
         <li>Does each ladder's theme land, or is it trying too hard?</li>
         <li>Would you be pleased to be told you're any of these?</li>
+        <li>The bottom four of every ladder are unnamed. What goes there?</li>
       </ol>
-      <p>Each rank is shown three ways: a colour chip, the name on dark, and the name on
-        light. If it disappears in one of those, that's worth knowing.</p>
+      <p>Each named rank is shown three ways: a colour chip, the name on dark, and the name
+        on light. If it disappears in one of those, that's worth knowing.</p>
     </div>
   </header>
 
@@ -322,35 +342,30 @@
 
     <section class="ladder">
       <div class="ladder-head">
-        <h3>Tracking</h3>
-        <span class="theme">evolution</span>
-      </div>
-      <div class="rungs">
-        <div class="rung"><span class="tier">1</span><span class="name-cell"><span class="swatch" style="background:#ff00a2"></span><span class="name" style="color:#ff00a2">Homoerectus</span></span><span class="onlight" style="color:#ff00a2">Homoerectus</span></div>
-        <div class="rung"><span class="tier">2</span><span class="name-cell"><span class="swatch" style="background:#00fbff"></span><span class="name" style="color:#00fbff">Neanderthal</span></span><span class="onlight" style="color:#00fbff">Neanderthal</span></div>
-        <div class="rung"><span class="tier">3</span><span class="name-cell"><span class="swatch" style="background:#fbff00"></span><span class="name" style="color:#fbff00">Homosapiens</span></span><span class="onlight" style="color:#fbff00">Homosapiens</span></div>
-        <div class="rung"><span class="tier">4</span><span class="name-cell"><span class="swatch" style="background:#4d2200"></span><span class="name" style="color:#4d2200">Caveman</span></span><span class="onlight" style="color:#4d2200">Caveman</span></div>
-        <div class="rung"><span class="tier">5</span><span class="name-cell"><span class="swatch" style="background:#ffffff"></span><span class="name" style="color:#ffffff">Neolithic</span></span><span class="onlight" style="color:#ffffff">Neolithic</span></div>
-        <div class="rung"><span class="tier">6</span><span class="name-cell"><span class="swatch" style="background:#00cc03"></span><span class="name" style="color:#00cc03">Human</span></span><span class="onlight" style="color:#00cc03">Human</span></div>
-        <div class="rung"><span class="tier">7</span><span class="name-cell"><span class="swatch" style="background:#0400ff"></span><span class="name" style="color:#0400ff">Robosapien</span></span><span class="onlight" style="color:#0400ff">Robosapien</span></div>
-        <div class="rung"><span class="tier">8</span><span class="name-cell"><span class="swatch" style="background:#ff0000"></span><span class="name" style="color:#ff0000">AimGPT</span></span><span class="onlight" style="color:#ff0000">AimGPT</span></div>
-      </div>
-    </section>
-
-    <section class="ladder">
-      <div class="ladder-head">
         <h3>Switching</h3>
         <span class="theme">speed</span>
       </div>
       <div class="rungs">
-        <div class="rung"><span class="tier">1</span><span class="name-cell"><span class="swatch" style="background:#2e2e2e"></span><span class="name" style="color:#2e2e2e">Sloth</span></span><span class="onlight" style="color:#2e2e2e">Sloth</span></div>
-        <div class="rung"><span class="tier">2</span><span class="name-cell"><span class="swatch" style="background:#004701"></span><span class="name" style="color:#004701">Galapagos Turtle</span></span><span class="onlight" style="color:#004701">Galapagos Turtle</span></div>
-        <div class="rung"><span class="tier">3</span><span class="name-cell"><span class="swatch" style="background:#0011ff"></span><span class="name" style="color:#0011ff">Manatee</span></span><span class="onlight" style="color:#0011ff">Manatee</span></div>
-        <div class="rung"><span class="tier">4</span><span class="name-cell"><span class="swatch" style="background:#ff6600"></span><span class="name" style="color:#ff6600">Slow Loris</span></span><span class="onlight" style="color:#ff6600">Slow Loris</span></div>
-        <div class="rung"><span class="tier">5</span><span class="name-cell"><span class="swatch" style="background:#04ff00"></span><span class="name" style="color:#04ff00">Ferret</span></span><span class="onlight" style="color:#04ff00">Ferret</span></div>
-        <div class="rung"><span class="tier">6</span><span class="name-cell"><span class="swatch" style="background:#ffffff"></span><span class="name" style="color:#ffffff">Jackrabbit</span></span><span class="onlight" style="color:#ffffff">Jackrabbit</span></div>
-        <div class="rung"><span class="tier">7</span><span class="name-cell"><span class="swatch" style="background:#ffa200"></span><span class="name" style="color:#ffa200">Cheetah</span></span><span class="onlight" style="color:#ffa200">Cheetah</span></div>
-        <div class="rung"><span class="tier">8</span><span class="name-cell"><span class="swatch" style="background:#36006b"></span><span class="name" style="color:#36006b">Peregrine</span></span><span class="onlight" style="color:#36006b">Peregrine</span></div>
+        <div class="rung"><span class="tier">1</span><span class="name-cell"><span class="swatch" style="background:#fbff00"></span><span class="name" style="color:#fbff00">Banana Slug</span></span><span class="onlight" style="color:#fbff00">Banana Slug</span></div>
+        <div class="rung"><span class="tier">2</span><span class="name-cell"><span class="swatch" style="background:#787878"></span><span class="name" style="color:#787878">Sloth</span></span><span class="onlight" style="color:#787878">Sloth</span></div>
+        <div class="rung"><span class="tier">3</span><span class="name-cell"><span class="swatch" style="background:#0c6600"></span><span class="name" style="color:#0c6600">Galapagos Turtle</span></span><span class="onlight" style="color:#0c6600">Galapagos Turtle</span></div>
+        <div class="rung"><span class="tier">4</span><span class="name-cell"><span class="swatch" style="background:#70a2ff"></span><span class="name" style="color:#70a2ff">Manatee</span></span><span class="onlight" style="color:#70a2ff">Manatee</span></div>
+        <div class="band"><span>Easy</span><span class="band-range">ranks 1–4</span></div>
+        <div class="rung"><span class="tier">5</span><span class="name-cell"><span class="swatch" style="background:#ff00ae"></span><span class="name" style="color:#ff00ae">Koala</span></span><span class="onlight" style="color:#ff00ae">Koala</span></div>
+        <div class="rung"><span class="tier">6</span><span class="name-cell"><span class="swatch" style="background:#ff6601"></span><span class="name" style="color:#ff6601">Slow Loris</span></span><span class="onlight" style="color:#ff6601">Slow Loris</span></div>
+        <div class="rung"><span class="tier">7</span><span class="name-cell"><span class="swatch" style="background:#04ff00"></span><span class="name" style="color:#04ff00">Ferret</span></span><span class="onlight" style="color:#04ff00">Ferret</span></div>
+        <div class="rung"><span class="tier">8</span><span class="name-cell"><span class="swatch" style="background:#0011ff"></span><span class="name" style="color:#0011ff">Roadrunner</span></span><span class="onlight" style="color:#0011ff">Roadrunner</span></div>
+        <div class="band"><span>Medium</span><span class="band-range">ranks 5–8</span></div>
+        <div class="rung"><span class="tier">9</span><span class="name-cell"><span class="swatch" style="background:#ffffff"></span><span class="name" style="color:#ffffff">Jackrabbit</span></span><span class="onlight" style="color:#ffffff">Jackrabbit</span></div>
+        <div class="rung"><span class="tier">10</span><span class="name-cell"><span class="swatch" style="background:#8891a3"></span><span class="name" style="color:#8891a3">hmm</span></span><span class="onlight" style="color:#8891a3">hmm</span></div>
+        <div class="rung"><span class="tier">11</span><span class="name-cell"><span class="swatch" style="background:#FF5F1F"></span><span class="name" style="color:#FF5F1F">Cheetah</span></span><span class="onlight" style="color:#FF5F1F">Cheetah</span></div>
+        <div class="rung"><span class="tier">12</span><span class="name-cell"><span class="swatch" style="background:#36006b"></span><span class="name" style="color:#36006b">Peregrine</span></span><span class="onlight" style="color:#36006b">Peregrine</span></div>
+        <div class="band"><span>Hard</span><span class="band-range">ranks 9–12</span></div>
+        <div class="rung"><span class="tier">13</span><span class="name-cell"><span class="swatch" style="background:#8891a3"></span><span class="name" style="color:#8891a3">Advanced 1</span></span><span class="onlight" style="color:#8891a3">Advanced 1</span></div>
+        <div class="rung"><span class="tier">14</span><span class="name-cell"><span class="swatch" style="background:#8891a3"></span><span class="name" style="color:#8891a3">Advanced 2</span></span><span class="onlight" style="color:#8891a3">Advanced 2</span></div>
+        <div class="rung"><span class="tier">15</span><span class="name-cell"><span class="swatch" style="background:#8891a3"></span><span class="name" style="color:#8891a3">Advanced 3</span></span><span class="onlight" style="color:#8891a3">Advanced 3</span></div>
+        <div class="rung"><span class="tier">16</span><span class="name-cell"><span class="swatch" style="background:#8891a3"></span><span class="name" style="color:#8891a3">Advanced 4</span></span><span class="onlight" style="color:#8891a3">Advanced 4</span></div>
+        <div class="band"><span>Extreme</span><span class="band-range">ranks 13–16</span></div>
       </div>
     </section>
 
@@ -359,16 +374,58 @@
         <h3>Clicking</h3>
         <span class="theme">not named yet</span>
       </div>
-      <div class="unnamed">Placeholders. This ladder is the one that still needs ideas.</div>
+      <div class="unnamed">4 of 16 ranks are still placeholders.</div>
       <div class="rungs">
-        <div class="rung"><span class="tier">1</span><span class="name-cell"><span class="swatch" style="background:#7C8AA5"></span><span class="name" style="color:#7C8AA5">I</span></span><span class="energy">15,000</span></div>
-        <div class="rung"><span class="tier">2</span><span class="name-cell"><span class="swatch" style="background:#4FA3C7"></span><span class="name" style="color:#4FA3C7">D</span></span><span class="energy">30,000</span></div>
-        <div class="rung"><span class="tier">3</span><span class="name-cell"><span class="swatch" style="background:#C79A4F"></span><span class="name" style="color:#C79A4F">K</span></span><span class="energy">45,000</span></div>
-        <div class="rung"><span class="tier">4</span><span class="name-cell"><span class="swatch" style="background:#C75FA8"></span><span class="name" style="color:#C75FA8">Y</span></span><span class="energy">60,000</span></div>
-        <div class="rung"><span class="tier">5</span><span class="name-cell"><span class="swatch" style="background:#8891a3"></span><span class="name" style="color:#8891a3">E</span></span><span class="energy">75,000</span></div>
-        <div class="rung"><span class="tier">6</span><span class="name-cell"><span class="swatch" style="background:#8891a3"></span><span class="name" style="color:#8891a3">T</span></span><span class="energy">90,000</span></div>
-        <div class="rung"><span class="tier">7</span><span class="name-cell"><span class="swatch" style="background:#8891a3"></span><span class="name" style="color:#8891a3">D:</span></span><span class="energy">105,000</span></div>
-        <div class="rung"><span class="tier">8</span><span class="name-cell"><span class="swatch" style="background:#8891a3"></span><span class="name" style="color:#8891a3">:0</span></span><span class="energy">120,000</span></div>
+        <div class="rung"><span class="tier">1</span><span class="name-cell"><span class="swatch" style="background:#3f4652"></span><span class="name" style="color:#3f4652">Rank 1</span></span><span class="energy">15,000</span></div>
+        <div class="rung"><span class="tier">2</span><span class="name-cell"><span class="swatch" style="background:#59606d"></span><span class="name" style="color:#59606d">Rank 2</span></span><span class="energy">30,000</span></div>
+        <div class="rung"><span class="tier">3</span><span class="name-cell"><span class="swatch" style="background:#737b89"></span><span class="name" style="color:#737b89">Rank 3</span></span><span class="energy">45,000</span></div>
+        <div class="rung"><span class="tier">4</span><span class="name-cell"><span class="swatch" style="background:#8d95a4"></span><span class="name" style="color:#8d95a4">Rank 4</span></span><span class="energy">60,000</span></div>
+        <div class="band"><span>Easy</span><span class="band-range">ranks 1–4</span></div>
+        <div class="rung"><span class="tier">5</span><span class="name-cell"><span class="swatch" style="background:#7C8AA5"></span><span class="name" style="color:#7C8AA5">I</span></span><span class="onlight" style="color:#7C8AA5">I</span></div>
+        <div class="rung"><span class="tier">6</span><span class="name-cell"><span class="swatch" style="background:#8891a3"></span><span class="name" style="color:#8891a3">D</span></span><span class="onlight" style="color:#8891a3">D</span></div>
+        <div class="rung"><span class="tier">7</span><span class="name-cell"><span class="swatch" style="background:#C79A4F"></span><span class="name" style="color:#C79A4F">K</span></span><span class="onlight" style="color:#C79A4F">K</span></div>
+        <div class="rung"><span class="tier">8</span><span class="name-cell"><span class="swatch" style="background:#C75FA8"></span><span class="name" style="color:#C75FA8">Y</span></span><span class="onlight" style="color:#C75FA8">Y</span></div>
+        <div class="band"><span>Medium</span><span class="band-range">ranks 5–8</span></div>
+        <div class="rung"><span class="tier">9</span><span class="name-cell"><span class="swatch" style="background:#8891a3"></span><span class="name" style="color:#8891a3">E</span></span><span class="onlight" style="color:#8891a3">E</span></div>
+        <div class="rung"><span class="tier">10</span><span class="name-cell"><span class="swatch" style="background:#8891a3"></span><span class="name" style="color:#8891a3">T</span></span><span class="onlight" style="color:#8891a3">T</span></div>
+        <div class="rung"><span class="tier">11</span><span class="name-cell"><span class="swatch" style="background:#8891a3"></span><span class="name" style="color:#8891a3">D:</span></span><span class="onlight" style="color:#8891a3">D:</span></div>
+        <div class="rung"><span class="tier">12</span><span class="name-cell"><span class="swatch" style="background:#8891a3"></span><span class="name" style="color:#8891a3">:0</span></span><span class="onlight" style="color:#8891a3">:0</span></div>
+        <div class="band"><span>Hard</span><span class="band-range">ranks 9–12</span></div>
+        <div class="rung"><span class="tier">13</span><span class="name-cell"><span class="swatch" style="background:#8891a3"></span><span class="name" style="color:#8891a3">Advanced 1</span></span><span class="onlight" style="color:#8891a3">Advanced 1</span></div>
+        <div class="rung"><span class="tier">14</span><span class="name-cell"><span class="swatch" style="background:#8891a3"></span><span class="name" style="color:#8891a3">Advanced 2</span></span><span class="onlight" style="color:#8891a3">Advanced 2</span></div>
+        <div class="rung"><span class="tier">15</span><span class="name-cell"><span class="swatch" style="background:#8891a3"></span><span class="name" style="color:#8891a3">Advanced 3</span></span><span class="onlight" style="color:#8891a3">Advanced 3</span></div>
+        <div class="rung"><span class="tier">16</span><span class="name-cell"><span class="swatch" style="background:#8891a3"></span><span class="name" style="color:#8891a3">Advanced 4</span></span><span class="onlight" style="color:#8891a3">Advanced 4</span></div>
+        <div class="band"><span>Extreme</span><span class="band-range">ranks 13–16</span></div>
+      </div>
+    </section>
+
+    <section class="ladder">
+      <div class="ladder-head">
+        <h3>Tracking</h3>
+        <span class="theme">evolution</span>
+      </div>
+      <div class="unnamed">4 of 16 ranks are still placeholders.</div>
+      <div class="rungs">
+        <div class="rung"><span class="tier">1</span><span class="name-cell"><span class="swatch" style="background:#3f4652"></span><span class="name" style="color:#3f4652">Rank 1</span></span><span class="energy">15,000</span></div>
+        <div class="rung"><span class="tier">2</span><span class="name-cell"><span class="swatch" style="background:#59606d"></span><span class="name" style="color:#59606d">Rank 2</span></span><span class="energy">30,000</span></div>
+        <div class="rung"><span class="tier">3</span><span class="name-cell"><span class="swatch" style="background:#737b89"></span><span class="name" style="color:#737b89">Rank 3</span></span><span class="energy">45,000</span></div>
+        <div class="rung"><span class="tier">4</span><span class="name-cell"><span class="swatch" style="background:#8d95a4"></span><span class="name" style="color:#8d95a4">Rank 4</span></span><span class="energy">60,000</span></div>
+        <div class="band"><span>Easy</span><span class="band-range">ranks 1–4</span></div>
+        <div class="rung"><span class="tier">5</span><span class="name-cell"><span class="swatch" style="background:#ff00a2"></span><span class="name" style="color:#ff00a2">Homoerectus</span></span><span class="onlight" style="color:#ff00a2">Homoerectus</span></div>
+        <div class="rung"><span class="tier">6</span><span class="name-cell"><span class="swatch" style="background:#00fbff"></span><span class="name" style="color:#00fbff">Neanderthal</span></span><span class="onlight" style="color:#00fbff">Neanderthal</span></div>
+        <div class="rung"><span class="tier">7</span><span class="name-cell"><span class="swatch" style="background:#fbff00"></span><span class="name" style="color:#fbff00">Homosapiens</span></span><span class="onlight" style="color:#fbff00">Homosapiens</span></div>
+        <div class="rung"><span class="tier">8</span><span class="name-cell"><span class="swatch" style="background:#4d2200"></span><span class="name" style="color:#4d2200">Caveman</span></span><span class="onlight" style="color:#4d2200">Caveman</span></div>
+        <div class="band"><span>Medium</span><span class="band-range">ranks 5–8</span></div>
+        <div class="rung"><span class="tier">9</span><span class="name-cell"><span class="swatch" style="background:#ffffff"></span><span class="name" style="color:#ffffff">Neolithic</span></span><span class="onlight" style="color:#ffffff">Neolithic</span></div>
+        <div class="rung"><span class="tier">10</span><span class="name-cell"><span class="swatch" style="background:#00cc03"></span><span class="name" style="color:#00cc03">Human</span></span><span class="onlight" style="color:#00cc03">Human</span></div>
+        <div class="rung"><span class="tier">11</span><span class="name-cell"><span class="swatch" style="background:#0400ff"></span><span class="name" style="color:#0400ff">Robosapien</span></span><span class="onlight" style="color:#0400ff">Robosapien</span></div>
+        <div class="rung"><span class="tier">12</span><span class="name-cell"><span class="swatch" style="background:#ff0000"></span><span class="name" style="color:#ff0000">HAL 9000</span></span><span class="onlight" style="color:#ff0000">HAL 9000</span></div>
+        <div class="band"><span>Hard</span><span class="band-range">ranks 9–12</span></div>
+        <div class="rung"><span class="tier">13</span><span class="name-cell"><span class="swatch" style="background:#8891a3"></span><span class="name" style="color:#8891a3">Advanced 1</span></span><span class="onlight" style="color:#8891a3">Advanced 1</span></div>
+        <div class="rung"><span class="tier">14</span><span class="name-cell"><span class="swatch" style="background:#8891a3"></span><span class="name" style="color:#8891a3">Advanced 2</span></span><span class="onlight" style="color:#8891a3">Advanced 2</span></div>
+        <div class="rung"><span class="tier">15</span><span class="name-cell"><span class="swatch" style="background:#8891a3"></span><span class="name" style="color:#8891a3">Advanced 3</span></span><span class="onlight" style="color:#8891a3">Advanced 3</span></div>
+        <div class="rung"><span class="tier">16</span><span class="name-cell"><span class="swatch" style="background:#8891a3"></span><span class="name" style="color:#8891a3">Advanced 4</span></span><span class="onlight" style="color:#8891a3">Advanced 4</span></div>
+        <div class="band"><span>Extreme</span><span class="band-range">ranks 13–16</span></div>
       </div>
     </section>
 
@@ -378,65 +435,41 @@
     <h2>Things I already know are wrong</h2>
     <p>
       Better to name them than have three people each spend their first message on the
-      same ones.
+      same ones. The contrast numbers below are measured, not eyeballed.
     </p>
 
     <div class="flags">
       <div class="flag">
-        <span class="chips">
-          <span class="chip" style="background:#ffffff"></span>
-          <span class="chip" style="background:#240000"></span>
-          <span class="chip" style="background:#2e2e2e"></span>
-          <span class="chip" style="background:#004701"></span>
-        </span>
-        <span>
-          <b>Four colours vanish on one background</b>
-          Neolithic and Jackrabbit are pure white, so they disappear on anything light.
-          Astrologist, Sloth and Galapagos Turtle are near-black and disappear on
-          anything dark. A rank badge has to survive both.
-        </span>
+        <span class="chips"><span class="chip" style="background:#240000"></span><span class="chip" style="background:#3c005c"></span><span class="chip" style="background:#36006b"></span><span class="chip" style="background:#4d2200"></span></span>
+        <span><b>four names disappear on a dark ground</b><b>Astrologist</b> (Overall, 1.03:1), <b>Lunar</b> (Overall, 1.29:1), <b>Peregrine</b> (Switching, 1.31:1), <b>Caveman</b> (Tracking, 1.47:1). The client is dark, so these are the ranks nobody will be able to read on the screen they actually live on.</span>
       </div>
-
       <div class="flag">
-        <span class="chips"><span class="chip" style="background:#4d2200"></span></span>
-        <span>
-          <b>Tracking's order isn't the actual sequence</b>
-          Homo erectus → Neanderthal → Homo sapiens → <em>Caveman</em> → Neolithic →
-          Human. Caveman and Human sit after Homo sapiens, and Neolithic is an era rather
-          than a species. Anyone who knows the order will notice, and the joke lands
-          better if the ladder is right.
-        </span>
+        <span class="chips"><span class="chip" style="background:#fff700"></span><span class="chip" style="background:#00ff04"></span><span class="chip" style="background:#00f4cf"></span><span class="chip" style="background:#fbff00"></span><span class="chip" style="background:#04ff00"></span><span class="chip" style="background:#ffffff"></span></span>
+        <span><b>ten names disappear on a light ground</b><b>Cosmonaut</b> (Overall, 1.00:1), <b>Arecibo</b> (Overall, 1.21:1), <b>Quasar</b> (Overall, 1.25:1), <b>Banana Slug</b> (Switching, 1.05:1), <b>Ferret</b> (Switching, 1.21:1), <b>Jackrabbit</b> (Switching, 1.13:1), <b>Neanderthal</b> (Tracking, 1.14:1), <b>Homosapiens</b> (Tracking, 1.05:1), <b>Neolithic</b> (Tracking, 1.13:1), <b>Human</b> (Tracking, 1.92:1). A rank gets shown outside the client too - a screenshot, a profile, a web page - and a badge that only survives one background is not finished.</span>
       </div>
-
-      <div class="flag">
-        <span class="chips">
-          <span class="chip" style="background:#ff0000"></span>
-          <span class="chip" style="background:#ff0000"></span>
-        </span>
-        <span>
-          <b>Two ladders both top out in the same red</b>
-          Supernova and AimGPT are both <code>#ff0000</code>. The top rank is the one
-          people screenshot, so it should be the most distinctive colour on the page, not
-          a shared one.
-        </span>
-      </div>
-
       <div class="flag">
         <span class="chips"><span class="chip" style="background:#8891a3"></span></span>
-        <span>
-          <b>Clicking is untouched</b>
-          Still placeholders, and the ladder most in need of a theme. Switching went
-          slow-animal to fast-animal and reads instantly — Clicking wants something with
-          the same shape.
-        </span>
+        <span><b>Two ladders top out in the same colour</b><b>hmm</b> and <b>Advanced 1</b> and <b>Advanced 2</b> and <b>Advanced 3</b> and <b>Advanced 4</b> and <b>D</b> and <b>E</b> and <b>T</b> and <b>D:</b> and <b>:0</b> and <b>Advanced 1</b> and <b>Advanced 2</b> and <b>Advanced 3</b> and <b>Advanced 4</b> and <b>Advanced 1</b> and <b>Advanced 2</b> and <b>Advanced 3</b> and <b>Advanced 4</b> are both <code>#8891a3</code>. The top rank is the one people screenshot, so it wants to be the most distinctive colour on the page rather than a shared one.</span>
+      </div>
+      <div class="flag">
+        <span class="chips"><span class="chip" style="background:#ff0000"></span><span class="chip" style="background:#fbff00"></span><span class="chip" style="background:#ffffff"></span></span>
+        <span><b>Three colours used on more than one rank</b><code>#ff0000</code> on <b>Supernova</b> (Overall) and <b>HAL 9000</b> (Tracking); <code>#fbff00</code> on <b>Banana Slug</b> (Switching) and <b>Homosapiens</b> (Tracking); <code>#ffffff</code> on <b>Jackrabbit</b> (Switching) and <b>Neolithic</b> (Tracking). Two ranks the same colour is two ranks that look like one.</span>
+      </div>
+      <div class="flag">
+        <span class="chips"><span class="chip" style="background:#3f4652"></span><span class="chip" style="background:#59606d"></span><span class="chip" style="background:#737b89"></span><span class="chip" style="background:#8d95a4"></span></span>
+        <span><b>The bottom of every category ladder is unnamed</b>The ladder grew downwards - it used to start at what is now rank 5 - so Clicking needs four, Tracking needs four. These are the ranks a new player spends their first weeks in, so they are the ones where a name has to be welcoming rather than merely low.</span>
+      </div>
+      <div class="flag">
+        <span class="chips"></span>
+        <span><b>Tracking's order is not the actual sequence</b>Homo erectus, Neanderthal, Homo sapiens, then <em>Caveman</em>, Neolithic, Human. Caveman and Human sit after Homo sapiens, and Neolithic is an era rather than a species. Anyone who knows the order will notice, and the joke lands better if the ladder is right.</span>
       </div>
     </div>
   </section>
 
   <footer>
-    Season 1 is a draft: nothing is published, so names, colours, thresholds and even the
-    number of ranks are all still free to change. Once a season is published it is frozen
-    — a rank cannot be re-cut under people who already earned it — so this is the moment
-    to be picky.
+    Season 1 is a draft: nothing is published, so names, colours,
+    thresholds and even the number of ranks are all still free to change. Once a season is
+    published it is frozen — a rank cannot be re-cut under people who already earned it —
+    so this is the moment to be picky.
   </footer>
 </div>

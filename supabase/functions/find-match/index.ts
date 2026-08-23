@@ -30,8 +30,14 @@ import { defaultRating, updateRating, winProbability, type Rating } from "../../
 interface Body {
   /** A skill, a sub-category, or "Any". */
   category: string;
-  difficulty: string;
-  benchmarkName?: string;
+  /**
+   * Which window of the season pool to draw from, 0-based.
+   *
+   * An index rather than a name: windows are renameable from the season editor, and
+   * partitioning matchmaking on a name would silently stop new matches pairing with every
+   * run set already banked under the old one.
+   */
+  window: number;
 }
 
 /**
@@ -50,9 +56,8 @@ Deno.serve(handler(async (req, admin) => {
   const caller = await requireCaller(req, admin);
   const body = await readJson<Body>(req);
 
-  const benchmarkName = body.benchmarkName ?? "Voltaic S5";
-  if (!body.category || !body.difficulty) {
-    throw new HttpError(400, "category and difficulty are required");
+  if (!body.category || typeof body.window !== "number" || body.window < 0) {
+    throw new HttpError(400, "category and window are required");
   }
 
   // Refuse to stack matches. Without this a player could open several, cherry-pick the
@@ -139,12 +144,39 @@ Deno.serve(handler(async (req, admin) => {
     });
   }
 
-  // ---- the scenario pool for this benchmark difficulty -------------------------
+  // ---- the season, and the pool for the requested window -------------------------
+  //
+  // The season owns the pool (PLAN.md §14), so this reads `season_scenarios` rather than a
+  // benchmark's membership table. Published wins over draft: a published season is frozen,
+  // which is the whole reason to publish one, and a draft is what is being worked on.
+  const { data: seasons, error: seasonError } = await admin
+    .from("seasons")
+    .select("id, name, status, windows, window_size")
+    .in("status", ["published", "draft"])
+    .order("created_at", { ascending: false })
+    .limit(10);
+
+  if (seasonError) throw new HttpError(500, seasonError.message);
+
+  // Published first, then the newest draft. Ordering by date alone would let a draft
+  // somebody is still editing take over from the frozen season people are playing.
+  const season =
+    (seasons ?? []).find((s: any) => s.status === "published") ?? (seasons ?? [])[0];
+
+  if (!season) {
+    // Explicit rather than falling back to some other pool. A match drawn from scenarios
+    // the season does not contain would be graded against thresholds that do not describe
+    // it, and would be worse than no match at all.
+    throw new HttpError(503, "no season is loaded: push one with npm run push:season");
+  }
+
+  const windowName: string = season.windows?.[body.window] ?? `window ${body.window + 1}`;
+
   const { data: pool, error: poolError } = await admin
-    .from("benchmark_scenarios")
-    .select("scenario_id, scenarios!inner(id, name, aim_type, sub_category)")
-    .eq("benchmark_name", benchmarkName)
-    .eq("difficulty", body.difficulty);
+    .from("season_scenarios")
+    .select("scenario_id, window_index, scenarios!inner(id, name, aim_type, sub_category)")
+    .eq("season_id", season.id)
+    .eq("window_index", body.window);
 
   if (poolError) throw new HttpError(500, poolError.message);
 
@@ -156,7 +188,10 @@ Deno.serve(handler(async (req, admin) => {
   }));
 
   if (selectable.length === 0) {
-    throw new HttpError(404, `no scenarios for ${benchmarkName} ${body.difficulty}`);
+    throw new HttpError(
+      404,
+      `${season.name} has no scenarios in ${windowName}`,
+    );
   }
 
   // ---- the caller's rating ------------------------------------------------------
@@ -180,13 +215,13 @@ Deno.serve(handler(async (req, admin) => {
     .select(
       "match_id, player_id, deltas, match_score, provisional, submitted_at, " +
         "players!inner(display_name), " +
-        "matches!inner(category, difficulty, scenario_ids, benchmark_name), " +
+        "matches!inner(category, difficulty, window_index, scenario_ids, benchmark_name), " +
         "ratings:players!inner(id)",
     )
     .not("match_score", "is", null)
     .neq("player_id", caller.playerId)
     .eq("matches.category", body.category)
-    .eq("matches.difficulty", body.difficulty)
+    .eq("matches.window_index", body.window)
     .order("submitted_at", { ascending: false })
     .limit(200);
 
@@ -233,7 +268,7 @@ Deno.serve(handler(async (req, admin) => {
       playerId: c.player_id,
       displayName: c.players?.display_name ?? "player",
       category: c.matches.category,
-      difficulty: c.matches.difficulty,
+      difficulty: c.matches.difficulty ?? windowName,
       scenarioIds: c.matches.scenario_ids ?? [],
       deltas: (c.deltas ?? []).map(Number),
       matchScore: Number(c.match_score),
@@ -247,7 +282,7 @@ Deno.serve(handler(async (req, admin) => {
       playerId: caller.playerId,
       rating,
       category: body.category,
-      difficulty: body.difficulty,
+      difficulty: windowName,
       recentOpponentIds,
     },
     runSets,
@@ -279,8 +314,9 @@ Deno.serve(handler(async (req, admin) => {
       .insert({
         mode: "async",
         category: body.category,
-        benchmark_name: benchmarkName,
-        difficulty: body.difficulty,
+        benchmark_name: season.name,
+        difficulty: windowName,
+        window_index: body.window,
         seed,
         scenario_ids: scenarioIds,
         status: "awaiting_runs",
@@ -309,7 +345,7 @@ Deno.serve(handler(async (req, admin) => {
     return json({
       matchId: seedMatch.id,
       category: body.category,
-      difficulty: body.difficulty,
+      difficulty: windowName,
       expiresAt: new Date(Date.now() + INITIAL_TTL_MS).toISOString(),
       scenarios: scenarioIds.map((id) => ({
         id,
@@ -339,8 +375,9 @@ Deno.serve(handler(async (req, admin) => {
     .insert({
       mode: "async",
       category: body.category,
-      benchmark_name: benchmarkName,
-      difficulty: body.difficulty,
+      benchmark_name: season.name,
+      difficulty: windowName,
+      window_index: body.window,
       seed,
       scenario_ids: scenarioIds,
       status: "awaiting_runs",
@@ -374,7 +411,7 @@ Deno.serve(handler(async (req, admin) => {
   return json({
     matchId: match.id,
     category: body.category,
-    difficulty: body.difficulty,
+    difficulty: windowName,
     expiresAt,
     scenarios: scenarioIds.map((id) => ({ id, name: byId.get(id)?.name ?? `scenario ${id}` })),
     opponent: {

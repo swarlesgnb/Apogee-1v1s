@@ -48,8 +48,24 @@ contextBridge.exposeInMainWorld("apogee", {
 
   // ---- matches -----------------------------------------------------------
   /** Ask the server for an opponent. Returns { match } or { error }. */
-  findMatch: (category, difficulty) =>
-    ipcRenderer.invoke("apogee:findMatch", { category, difficulty }),
+  findMatch: (category, pool) => ipcRenderer.invoke("apogee:findMatch", { category, pool }),
+
+  /**
+   * Derive thresholds for a scenario from its KovaaK's leaderboard.
+   * Samples the board if it is not already cached. Admin only.
+   */
+  sampleScenario: (scenario, leaderboardId, topFractions) =>
+    ipcRenderer.invoke("apogee:sampleScenario", { scenario, leaderboardId, topFractions }),
+
+  /** Search KovaaK's scenario catalogue by name. Admin only. */
+  searchScenarios: (query) => ipcRenderer.invoke("apogee:searchScenarios", { query }),
+
+  /** Population share per rank for the season being edited. Admin only. */
+  rankDistribution: (season) => ipcRenderer.invoke("apogee:rankDistribution", { season }),
+
+  /** Re-derive a window's thresholds from new percentiles. Admin only. */
+  deriveWindow: (scenarios, topFractions) =>
+    ipcRenderer.invoke("apogee:deriveWindow", { scenarios, topFractions }),
 
   /** Abandon the active match locally. */
   cancelMatch: () => ipcRenderer.invoke("apogee:cancelMatch"),
