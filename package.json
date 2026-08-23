@@ -29,6 +29,8 @@
     "typecheck": "tsc --noEmit",
     "build:app": "node tools/buildApp.mjs",
     "start": "npm run build:app && electron .",
+    "dev": "node tools/devApp.mjs",
+    "doctor": "tsx tools/doctor.ts",
     "smoke": "npm run build:app && electron . --smoke",
     "validate:live": "tsx src/core/match/validateLiveQueue.ts",
     "beta": "tsx tools/betaReadiness.ts",

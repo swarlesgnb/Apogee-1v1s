@@ -100,6 +100,10 @@
     color: var(--ink-mid); overflow: hidden; text-overflow: ellipsis;
     white-space: nowrap; max-width: 46ch;
   }
+  /* Which bundle this window is running. A window left open across a rebuild keeps the
+     old code and looks identical to a fresh one, so the answer is on screen rather than
+     in the terminal that launched it. */
+  .status .build { margin-left: auto; color: var(--ink-dim); opacity: .75; }
   .status button {
     font: inherit; font-family: var(--font); font-size: 11.5px;
     color: var(--ink-mid); background: transparent;
@@ -381,7 +385,12 @@
   }
   .ladder-tools button:hover:not(:disabled) { color: var(--ink); border-color: var(--ink-dim); }
   .ladder-tools button:disabled { opacity: .4; cursor: default; }
-  .season-rank { grid-template-columns: 22px 1fr 46px 24px; }
+  .season-rank { grid-template-columns: 22px 1fr 46px 14px 24px; }
+  /* A colour that cannot be read, flagged where it is chosen. */
+  .colourwarn {
+    font-size: 12px; font-weight: 700; color: var(--warn);
+    text-align: center; cursor: help; line-height: 1;
+  }
   .season-rank button.rankdrop {
     font: inherit; font-size: 13px; line-height: 1; color: var(--ink-dim);
     background: transparent; border: none; cursor: pointer; padding: 2px 4px;
@@ -402,6 +411,14 @@
   .season-add button:hover:not(:disabled) { color: var(--ink); border-color: var(--ink-dim); }
   .season-add button:disabled { opacity: .5; cursor: default; }
 
+  /* Only appears when there is something ungradeable to remove. */
+  button.purge {
+    font: inherit; font-size: 12px; color: var(--down);
+    background: transparent; border: 1px solid #56222a;
+    border-radius: 7px; padding: 6px 13px; cursor: pointer;
+  }
+  button.purge:hover { border-color: var(--down); }
+
   .season-status { font-size: 12px; color: var(--ink-dim); }
   .season-status.bad { color: var(--down); }
   .season-status.good { color: var(--up); }
@@ -420,7 +437,197 @@
     background: transparent; border: 1px solid var(--line); border-radius: 5px;
     padding: 2px 8px; cursor: pointer;
   }
-  .scen button.rowdrop:hover { color: var(--down); border-color: #56222a; }
+  .scen td.rowacts { display: flex; gap: 4px; white-space: nowrap; }
+  .scen button.rowdrop:hover:not(:disabled) { color: var(--ink); border-color: var(--ink-dim); }
+  .scen button.rowdrop.danger:hover { color: var(--down); border-color: #56222a; }
+  .scen button.rowdrop:disabled { opacity: .35; cursor: default; }
+
+  /* Which of a family's three variants a row is about, and where a target is scored.
+     Both are quiet: they qualify the thing next to them rather than competing with it,
+     and a name like "Pasu" is ambiguous without them. */
+  .win {
+    font-family: var(--mono); font-size: 10px; letter-spacing: .06em;
+    text-transform: uppercase; color: var(--ink-dim);
+  }
+  .onscen { font-size: 11px; color: var(--ink-dim); white-space: nowrap; }
+
+  /* The twelve-rank ladder, cut into its difficulty bands. Each rung carries its own
+     rank colour; the ones below the player are filled, the one they hold is ringed. */
+  .ladder-strip { display: flex; gap: 14px; flex-wrap: wrap; margin: 12px 0 10px; }
+  .ladder-strip .band { display: grid; gap: 5px; }
+  .ladder-strip .band-name {
+    font-family: var(--mono); font-size: 10px; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--ink-dim);
+  }
+  .ladder-strip .band-rungs { display: flex; gap: 3px; }
+  .ladder-strip .rung {
+    width: 26px; height: 22px; border-radius: 5px;
+    display: grid; place-items: center;
+    font-family: var(--mono); font-size: 10.5px;
+    color: var(--ink-dim);
+    background: var(--sunken); border: 1px solid var(--line);
+  }
+  .ladder-strip .rung.done {
+    background: color-mix(in srgb, var(--rank) 30%, var(--sunken));
+    border-color: color-mix(in srgb, var(--rank) 55%, var(--line));
+    color: var(--ink);
+  }
+  .ladder-strip .rung.here {
+    background: var(--rank); border-color: var(--rank);
+    color: var(--void); font-weight: 700;
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--rank) 35%, transparent);
+  }
+
+  /* Each category is edited one difficulty at a time, so the dropdown lives in the
+     header row it governs rather than in a toolbar away from the numbers. */
+  .scen tr.cat-head th { padding-top: 16px; }
+  select.winpick {
+    font: inherit; font-size: 11px; font-family: var(--mono);
+    letter-spacing: .04em; text-transform: none;
+    color: var(--ink); background: var(--sunken);
+    border: 1px solid var(--line-bright); border-radius: 6px;
+    padding: 3px 7px; margin-left: 12px; cursor: pointer;
+  }
+  select.winpick:hover { border-color: var(--ink-dim); }
+  .scen td.empty { color: var(--ink-dim); padding: 14px 0; }
+
+  /* A family or difficulty added but not yet filled. Marked rather than hidden: the work
+     left is the point, and Save is held until there is none of it. */
+  .scen tr.slot { background: #1d1608; }
+  .scen tr.slot td { border-color: #3a2e12; }
+  .slotpick { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
+  .slotpick input.slotsearch {
+    font: inherit; font-size: 12px; color: var(--ink);
+    background: var(--sunken); border: 1px solid var(--line-bright);
+    border-radius: 6px; padding: 4px 8px; width: 250px;
+  }
+  .slotpick input.slotsearch:focus { outline: none; border-color: var(--ink-dim); }
+  .slotpick input.slotsearch:disabled { opacity: .6; }
+  button.slotadd {
+    font: inherit; font-size: 12px; font-weight: 620;
+    color: var(--void); background: var(--ink);
+    border: 0; border-radius: 6px; padding: 4px 13px; cursor: pointer;
+  }
+  button.slotadd:hover:not(:disabled) { background: #fff; }
+  button.slotadd:disabled {
+    color: var(--ink-dim); background: transparent;
+    border: 1px solid var(--line-bright); cursor: default;
+  }
+
+  .slotnote { font-size: 11px; color: var(--warn); }
+  .slotnote.bad { color: var(--down); }
+
+  /* The percentile ladder, which is what actually decides every threshold. */
+  .pct-row { display: flex; align-items: center; gap: 6px; }
+  .pct-name {
+    font-size: 11.5px; color: var(--ink-mid); width: 66px; flex: none;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  input.pct {
+    font: inherit; font-family: var(--mono); font-size: 11.5px; color: var(--ink);
+    background: var(--sunken); border: 1px solid var(--line);
+    border-radius: 5px; padding: 3px 4px; width: 52px; text-align: right;
+  }
+  input.pct:focus { border-color: var(--ink-dim); outline: none; }
+
+  /* A threshold typed over the derivation. Marked, because "top 15% of the board" and
+     "a number somebody chose" are different claims and should not look alike. */
+  .scen input.thr.override {
+    color: var(--warn);
+    border-color: #3a2e12;
+    background: #1d1608;
+  }
+
+  /* Population shape. Bars are relative to the fullest rank, not to 100%, because the
+     interesting comparison is between ranks and the absolute numbers are small. */
+  .dist { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+  .dist-cat { display: grid; gap: 3px; align-content: start; }
+  .dist-head {
+    font-size: 11px; text-transform: uppercase; letter-spacing: .07em;
+    color: var(--ink-dim); padding-bottom: 4px; margin-bottom: 3px;
+    border-bottom: 1px solid var(--line);
+  }
+  .dist-row { display: grid; grid-template-columns: 108px 1fr 52px; align-items: center; gap: 8px; }
+  .dist-name {
+    font-size: 11.5px; color: var(--ink-mid);
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .dist-track { height: 9px; background: var(--sunken); border-radius: 3px; overflow: hidden; }
+  .dist-fill { display: block; height: 100%; background: var(--ink-dim); border-radius: 3px; }
+  .dist-val {
+    font-family: var(--mono); font-size: 10.5px; color: var(--ink-dim);
+    text-align: right; font-variant-numeric: tabular-nums;
+  }
+  .dist-row.empty .dist-name,
+  .dist-row.empty .dist-val { color: var(--warn); }
+  .dist-note {
+    font-size: 11.5px; color: var(--warn); line-height: 1.45;
+    margin-top: 8px; padding: 8px 10px;
+    background: #1d1608; border: 1px solid #3a2e12; border-radius: 6px;
+  }
+
+  /* Naming happens where the thing will appear, not in a dialog. */
+  input.inline-ask {
+    font: inherit; font-size: 12px; color: var(--ink);
+    background: var(--sunken); border: 1px solid var(--ink-dim);
+    border-radius: 6px; padding: 3px 9px; margin-left: 10px; width: 190px;
+  }
+  input.inline-ask:focus { outline: none; border-color: var(--ink); }
+
+  button.addfam {
+    font: inherit; font-size: 11px; font-weight: 500;
+    letter-spacing: .02em; text-transform: none;
+    color: var(--ink-mid); background: transparent;
+    border: 1px solid var(--line-bright); border-radius: 6px;
+    padding: 3px 9px; margin-left: 10px; cursor: pointer;
+  }
+  button.addfam:hover { color: var(--ink); border-color: var(--ink-dim); }
+  .scen td.family {
+    font-size: 11px; color: var(--ink-dim); white-space: nowrap;
+  }
+  /* Which of a family's difficulties are filled, on every row of it. */
+  .famstate {
+    margin-left: 7px; letter-spacing: 2px; font-size: 9px;
+    color: var(--ink-dim); cursor: help;
+  }
+
+  /* What has actually been scored on this scenario, so a threshold can be judged
+     against reality rather than against a feeling about the number. */
+  .scen td.corpus {
+    font-family: var(--mono); font-size: 11px; color: var(--ink-mid);
+    text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap;
+  }
+  .ladder-note {
+    font-size: 11px; color: var(--ink-dim); margin-top: -4px;
+  }
+
+  /* Coverage: which difficulties hold enough history to be graded honestly. */
+  .cover { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; }
+  .cover-cat { display: grid; gap: 5px; align-content: start; }
+  .cover-head {
+    font-size: 11px; text-transform: uppercase; letter-spacing: .07em;
+    color: var(--ink-dim); padding-bottom: 4px; border-bottom: 1px solid var(--line);
+  }
+  .cover-row { display: grid; grid-template-columns: 84px 1fr 58px; align-items: center; gap: 9px; }
+  .cover-name { font-size: 12px; color: var(--ink-mid); }
+  .cover-track { height: 8px; background: var(--sunken); border-radius: 3px; overflow: hidden; }
+  .cover-fill { display: block; height: 100%; border-radius: 3px; background: var(--ink-dim); }
+  .cover-row.ready .cover-fill { background: var(--up); }
+  .cover-val {
+    font-family: var(--mono); font-size: 10.5px; color: var(--ink-dim); text-align: right;
+  }
+  .cover-row.ready .cover-val { color: var(--up); }
+  .cover-next { font-size: 11.5px; color: var(--ink-dim); margin-top: 6px; line-height: 1.45; }
+
+  /* Which difficulty a match draws from, and whether the player is measured on it. */
+  .pool-note {
+    font-size: 12.5px; line-height: 1.5; color: var(--ink-mid);
+    margin: 12px 0 4px; padding: 10px 12px;
+    background: var(--sunken); border: 1px solid var(--line); border-radius: 8px;
+  }
+  .pool-note.warn { border-color: #3a2e12; background: #1d1608; color: var(--warn); }
+  .pool-note b { color: var(--ink); font-weight: 640; }
+  .pool-note.warn b { color: var(--warn); }
 
   /* ---------------- ranks ---------------- */
   .rank-lede {
@@ -757,6 +964,7 @@
     <button type="button" id="btnRescan">Rescan</button>
     <button type="button" id="btnChoose">Choose folder…</button>
     <button type="button" id="btnOpen">Open folder</button>
+    <span class="build" id="buildStamp" title="Which bundle this window is running"></span>
   </div>
 
   <div class="preview-note" id="previewNote" hidden>
@@ -810,10 +1018,11 @@
       <div class="panel">
         <div class="phead">
           <h2>Find a match</h2>
-          <span class="note">three scenarios, scored against your own baseline</span>
+          <span class="note" id="queueNote">three scenarios, scored against your own baseline</span>
         </div>
         <div class="pbody">
           <div class="cats" id="cats"></div>
+          <div class="pool-note" id="poolNote"></div>
           <button class="queue-btn" id="queueBtn">Find opponent</button>
           <div class="searching" id="searching">searching the pool…</div>
 
@@ -904,6 +1113,7 @@
           <div class="season-actions">
             <button type="button" class="go" id="seasonSave">Save season</button>
             <button type="button" id="seasonReload">Discard changes</button>
+            <button type="button" id="seasonPurge" class="purge" hidden></button>
             <span class="season-status" id="seasonStatus"></span>
           </div>
         </div>
@@ -912,7 +1122,7 @@
       <div class="panel">
         <div class="phead">
           <h2>Scenarios and thresholds</h2>
-          <span class="note">one row per scenario · one column per rank</span>
+          <span class="note">one category at a time · add families and difficulties here</span>
         </div>
         <div class="pbody season-add">
           <input type="search" id="seasonSearch" placeholder="Search scenarios…"
@@ -927,6 +1137,21 @@
             <thead><tr id="seasonHead"></tr></thead>
             <tbody id="seasonBody"></tbody>
           </table>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="phead">
+          <h2>Where the population lands</h2>
+          <span class="note">same percentile on every scenario · real spread flattens it</span>
+        </div>
+        <div class="pbody">
+          <p class="rank-lede">
+            What this ladder does to the people who play these scenarios, from their
+            leaderboards rather than from a guess. A rank nobody holds is a rank that
+            exists and cannot be earned.
+          </p>
+          <div class="dist" id="seasonDist"></div>
         </div>
       </div>
 
@@ -989,6 +1214,21 @@
         <div class="phead"><h2>Weakness map</h2><span class="note" id="weakNote"></span></div>
         <div class="pbody"><div class="wmap" id="wmap"></div></div>
       </div>
+
+      <div class="panel">
+        <div class="phead">
+          <h2>What you are measured on</h2>
+          <span class="note">a baseline needs 5 runs</span>
+        </div>
+        <div class="pbody">
+          <p class="rank-lede">
+            A match compares you against your own past scores, so a difficulty you have
+            barely played is not a hard one — it is an unmeasured one. These are the
+            difficulties your scores can actually be judged on.
+          </p>
+          <div class="cover" id="coverage"></div>
+        </div>
+      </div>
       <div class="panel">
         <div class="phead"><h2>Scenarios</h2><span class="note">weakest first</span></div>
         <div class="scen-wrap">
@@ -1015,7 +1255,7 @@
               <div class="cf-label">Ceiling</div>
               <div class="cf-rank" id="ceilRank"></div>
               <div class="cf-energy" id="ceilEnergy"></div>
-              <div class="cf-note">what every benchmark ranks you</div>
+              <div class="cf-note">what your best run earns</div>
             </div>
             <div class="cf-gap">
               <div class="cf-gap-val" id="gapVal"></div>
@@ -1029,9 +1269,9 @@
             </div>
           </div>
           <p class="cf-explain">
-            Every benchmark that exists scores your best run. In a game there is no
-            retry, so your worst run is closer to what you actually bring. Closing this
-            gap is the whole mode.
+            A benchmark scores your best run. In a match there is no retry, and no second
+            attempt counts — so your worst run is closer to what you actually bring to one.
+            Closing this gap is the whole mode.
           </p>
         </div>
       </div>
@@ -1103,7 +1343,665 @@
 
 
 <script id="apogee-snapshot" type="application/json">{
-  "generatedAt": "2026-08-18T01:47:30.474Z",
+  "generatedAt": "2026-08-23T16:59:41.110Z",
+  "coverage": [
+    {
+      "category": "Clicking",
+      "window": 0,
+      "windowName": "Easy",
+      "total": 6,
+      "measured": 0,
+      "runs": 12,
+      "matchable": false,
+      "complete": false,
+      "scenarios": [
+        {
+          "scenario": "VT ww5t Novice S5",
+          "label": "ww5t",
+          "family": "ww5t",
+          "runs": 1,
+          "measured": false,
+          "needs": 4
+        },
+        {
+          "scenario": "VT 1w4ts Novice S5",
+          "label": "1w4ts",
+          "family": "1wXts",
+          "runs": 2,
+          "measured": false,
+          "needs": 3
+        },
+        {
+          "scenario": "VT Floating Heads Novice S5",
+          "label": "Floating Heads",
+          "family": "Floating Heads",
+          "runs": 2,
+          "measured": false,
+          "needs": 3
+        },
+        {
+          "scenario": "VT Frogtagon Novice S5",
+          "label": "Frogtagon",
+          "family": "Frogtagon",
+          "runs": 2,
+          "measured": false,
+          "needs": 3
+        },
+        {
+          "scenario": "VT Pasu Novice S5",
+          "label": "Pasu",
+          "family": "Pasu",
+          "runs": 2,
+          "measured": false,
+          "needs": 3
+        },
+        {
+          "scenario": "VT Popcorn Novice S5",
+          "label": "Popcorn",
+          "family": "Popcorn",
+          "runs": 3,
+          "measured": false,
+          "needs": 2
+        }
+      ]
+    },
+    {
+      "category": "Clicking",
+      "window": 1,
+      "windowName": "Medium",
+      "total": 6,
+      "measured": 6,
+      "runs": 241,
+      "matchable": true,
+      "complete": true,
+      "scenarios": [
+        {
+          "scenario": "VT Floating Heads Intermediate S5",
+          "label": "Floating Heads",
+          "family": "Floating Heads",
+          "runs": 27,
+          "measured": true,
+          "needs": 0
+        },
+        {
+          "scenario": "VT Frogtagon Intermediate S5",
+          "label": "Frogtagon",
+          "family": "Frogtagon",
+          "runs": 30,
+          "measured": true,
+          "needs": 0
+        },
+        {
+          "scenario": "VT Pasu Intermediate S5",
+          "label": "Pasu",
+          "family": "Pasu",
+          "runs": 36,
+          "measured": true,
+          "needs": 0
+        },
+        {
+          "scenario": "VT Popcorn Intermediate S5",
+          "label": "Popcorn",
+          "family": "Popcorn",
+          "runs": 39,
+          "measured": true,
+          "needs": 0
+        },
+        {
+          "scenario": "VT ww5t Intermediate S5",
+          "label": "ww5t",
+          "family": "ww5t",
+          "runs": 52,
+          "measured": true,
+          "needs": 0
+        },
+        {
+          "scenario": "VT 1w3ts Intermediate S5",
+          "label": "1w3ts",
+          "family": "1wXts",
+          "runs": 57,
+          "measured": true,
+          "needs": 0
+        }
+      ]
+    },
+    {
+      "category": "Clicking",
+      "window": 2,
+      "windowName": "Hard",
+      "total": 6,
+      "measured": 1,
+      "runs": 13,
+      "matchable": false,
+      "complete": false,
+      "scenarios": [
+        {
+          "scenario": "VT 1w2ts Advanced S5",
+          "label": "1w2ts",
+          "family": "1wXts",
+          "runs": 1,
+          "measured": false,
+          "needs": 4
+        },
+        {
+          "scenario": "VT Pasu Advanced S5",
+          "label": "Pasu",
+          "family": "Pasu",
+          "runs": 1,
+          "measured": false,
+          "needs": 4
+        },
+        {
+          "scenario": "VT Popcorn Advanced S5",
+          "label": "Popcorn",
+          "family": "Popcorn",
+          "runs": 1,
+          "measured": false,
+          "needs": 4
+        },
+        {
+          "scenario": "VT ww5t Advanced S5",
+          "label": "ww5t",
+          "family": "ww5t",
+          "runs": 1,
+          "measured": false,
+          "needs": 4
+        },
+        {
+          "scenario": "VT Frogtagon Advanced S5",
+          "label": "Frogtagon",
+          "family": "Frogtagon",
+          "runs": 2,
+          "measured": false,
+          "needs": 3
+        },
+        {
+          "scenario": "VT Floating Heads Advanced S5",
+          "label": "Floating Heads",
+          "family": "Floating Heads",
+          "runs": 7,
+          "measured": true,
+          "needs": 0
+        }
+      ]
+    },
+    {
+      "category": "Clicking",
+      "window": 3,
+      "windowName": "Advanced",
+      "total": 6,
+      "measured": 1,
+      "runs": 30,
+      "matchable": false,
+      "complete": false,
+      "scenarios": [
+        {
+          "scenario": "ww2ts",
+          "label": "ww2ts",
+          "family": "1wXts",
+          "runs": 0,
+          "measured": false,
+          "needs": 5
+        },
+        {
+          "scenario": "VT Floating Heads Elite S5",
+          "label": "Floating Heads Elite",
+          "family": "Floating Heads",
+          "runs": 0,
+          "measured": false,
+          "needs": 5
+        },
+        {
+          "scenario": "VT Frogtagon Elite S5 2 Targets",
+          "label": "Frogtagon Elite S5 2 Targets",
+          "family": "Frogtagon",
+          "runs": 0,
+          "measured": false,
+          "needs": 5
+        },
+        {
+          "scenario": "ww5ts",
+          "label": "ww5ts",
+          "family": "ww5t",
+          "runs": 0,
+          "measured": false,
+          "needs": 5
+        },
+        {
+          "scenario": "Popcorn Voltaic",
+          "label": "Popcorn Voltaic",
+          "family": "Popcorn",
+          "runs": 2,
+          "measured": false,
+          "needs": 3
+        },
+        {
+          "scenario": "1w4t Pasu Raspberry Master 6mag",
+          "label": "1w4t Pasu Raspberry Master 6mag",
+          "family": "Pasu",
+          "runs": 28,
+          "measured": true,
+          "needs": 0
+        }
+      ]
+    },
+    {
+      "category": "Switching",
+      "window": 0,
+      "windowName": "Easy",
+      "total": 4,
+      "measured": 0,
+      "runs": 9,
+      "matchable": false,
+      "complete": false,
+      "scenarios": [
+        {
+          "scenario": "VT DriftTS Novice S5",
+          "label": "DriftTS",
+          "family": "DriftTS",
+          "runs": 1,
+          "measured": false,
+          "needs": 4
+        },
+        {
+          "scenario": "VT DotTS Novice S5",
+          "label": "DotTS",
+          "family": "DotTS",
+          "runs": 2,
+          "measured": false,
+          "needs": 3
+        },
+        {
+          "scenario": "VT FlyTS Novice S5",
+          "label": "FlyTS",
+          "family": "FlyTS",
+          "runs": 2,
+          "measured": false,
+          "needs": 3
+        },
+        {
+          "scenario": "domiSwitch Easier",
+          "label": "domiSwitch Easier",
+          "family": "DomiSwitch",
+          "runs": 4,
+          "measured": false,
+          "needs": 1
+        }
+      ]
+    },
+    {
+      "category": "Switching",
+      "window": 1,
+      "windowName": "Medium",
+      "total": 4,
+      "measured": 4,
+      "runs": 121,
+      "matchable": true,
+      "complete": true,
+      "scenarios": [
+        {
+          "scenario": "VT DriftTS Intermediate S5",
+          "label": "DriftTS",
+          "family": "DriftTS",
+          "runs": 12,
+          "measured": true,
+          "needs": 0
+        },
+        {
+          "scenario": "VT FlyTS Intermediate S5",
+          "label": "FlyTS",
+          "family": "FlyTS",
+          "runs": 15,
+          "measured": true,
+          "needs": 0
+        },
+        {
+          "scenario": "VT DotTS Intermediate S5",
+          "label": "DotTS",
+          "family": "DotTS",
+          "runs": 45,
+          "measured": true,
+          "needs": 0
+        },
+        {
+          "scenario": "domiSwitch Easy",
+          "label": "domiSwitch Easy",
+          "family": "DomiSwitch",
+          "runs": 49,
+          "measured": true,
+          "needs": 0
+        }
+      ]
+    },
+    {
+      "category": "Switching",
+      "window": 2,
+      "windowName": "Hard",
+      "total": 4,
+      "measured": 0,
+      "runs": 3,
+      "matchable": false,
+      "complete": false,
+      "scenarios": [
+        {
+          "scenario": "domiSwitch Hard",
+          "label": "domiSwitch Hard",
+          "family": "DomiSwitch",
+          "runs": 0,
+          "measured": false,
+          "needs": 5
+        },
+        {
+          "scenario": "VT DotTS Advanced S5",
+          "label": "DotTS",
+          "family": "DotTS",
+          "runs": 1,
+          "measured": false,
+          "needs": 4
+        },
+        {
+          "scenario": "VT DriftTS Advanced S5",
+          "label": "DriftTS",
+          "family": "DriftTS",
+          "runs": 1,
+          "measured": false,
+          "needs": 4
+        },
+        {
+          "scenario": "VT FlyTS Advanced S5",
+          "label": "FlyTS",
+          "family": "FlyTS",
+          "runs": 1,
+          "measured": false,
+          "needs": 4
+        }
+      ]
+    },
+    {
+      "category": "Switching",
+      "window": 3,
+      "windowName": "Advanced",
+      "total": 4,
+      "measured": 0,
+      "runs": 1,
+      "matchable": false,
+      "complete": false,
+      "scenarios": [
+        {
+          "scenario": "domiSwitch Harder",
+          "label": "domiSwitch Harder",
+          "family": "DomiSwitch",
+          "runs": 0,
+          "measured": false,
+          "needs": 5
+        },
+        {
+          "scenario": "VT DotTS Elite S5",
+          "label": "DotTS Elite",
+          "family": "DotTS",
+          "runs": 0,
+          "measured": false,
+          "needs": 5
+        },
+        {
+          "scenario": "VT DriftTS Elite S5",
+          "label": "DriftTS Elite",
+          "family": "DriftTS",
+          "runs": 0,
+          "measured": false,
+          "needs": 5
+        },
+        {
+          "scenario": "waldoTS Perfected",
+          "label": "waldoTS Perfected",
+          "family": "FlyTS",
+          "runs": 1,
+          "measured": false,
+          "needs": 4
+        }
+      ]
+    },
+    {
+      "category": "Tracking",
+      "window": 0,
+      "windowName": "Easy",
+      "total": 6,
+      "measured": 0,
+      "runs": 12,
+      "matchable": false,
+      "complete": false,
+      "scenarios": [
+        {
+          "scenario": "VT Controlsphere Novice S5",
+          "label": "Controlsphere",
+          "family": "Controlsphere",
+          "runs": 1,
+          "measured": false,
+          "needs": 4
+        },
+        {
+          "scenario": "VT Ground Novice S5",
+          "label": "Ground",
+          "family": "Ground",
+          "runs": 1,
+          "measured": false,
+          "needs": 4
+        },
+        {
+          "scenario": "VT Raw Control Novice S5",
+          "label": "Raw Control",
+          "family": "Raw Control",
+          "runs": 1,
+          "measured": false,
+          "needs": 4
+        },
+        {
+          "scenario": "VT Aether Novice S5",
+          "label": "Aether",
+          "family": "Aether",
+          "runs": 2,
+          "measured": false,
+          "needs": 3
+        },
+        {
+          "scenario": "Air Angelic 4 Voltaic Easy 70%",
+          "label": "Air Angelic 4 Voltaic Easy 70%",
+          "family": "Angelic",
+          "runs": 3,
+          "measured": false,
+          "needs": 2
+        },
+        {
+          "scenario": "VT PGT Novice S5",
+          "label": "PGT",
+          "family": "PGT",
+          "runs": 4,
+          "measured": false,
+          "needs": 1
+        }
+      ]
+    },
+    {
+      "category": "Tracking",
+      "window": 1,
+      "windowName": "Medium",
+      "total": 6,
+      "measured": 6,
+      "runs": 295,
+      "matchable": true,
+      "complete": true,
+      "scenarios": [
+        {
+          "scenario": "VT Controlsphere Intermediate S5",
+          "label": "Controlsphere",
+          "family": "Controlsphere",
+          "runs": 10,
+          "measured": true,
+          "needs": 0
+        },
+        {
+          "scenario": "VT Raw Control Intermediate S5",
+          "label": "Raw Control",
+          "family": "Raw Control",
+          "runs": 16,
+          "measured": true,
+          "needs": 0
+        },
+        {
+          "scenario": "VT PGT Intermediate S5",
+          "label": "PGT",
+          "family": "PGT",
+          "runs": 50,
+          "measured": true,
+          "needs": 0
+        },
+        {
+          "scenario": "VT Ground Intermediate S5",
+          "label": "Ground",
+          "family": "Ground",
+          "runs": 51,
+          "measured": true,
+          "needs": 0
+        },
+        {
+          "scenario": "Air Angelic 4 Voltaic Easy 90%",
+          "label": "Air Angelic 4 Voltaic Easy 90%",
+          "family": "Angelic",
+          "runs": 63,
+          "measured": true,
+          "needs": 0
+        },
+        {
+          "scenario": "VT Aether Intermediate S5",
+          "label": "Aether",
+          "family": "Aether",
+          "runs": 105,
+          "measured": true,
+          "needs": 0
+        }
+      ]
+    },
+    {
+      "category": "Tracking",
+      "window": 2,
+      "windowName": "Hard",
+      "total": 6,
+      "measured": 0,
+      "runs": 7,
+      "matchable": false,
+      "complete": false,
+      "scenarios": [
+        {
+          "scenario": "Air Angelic 4 Voltaic 90%",
+          "label": "Air Angelic 4 Voltaic 90%",
+          "family": "Angelic",
+          "runs": 0,
+          "measured": false,
+          "needs": 5
+        },
+        {
+          "scenario": "VT Controlsphere Advanced S5",
+          "label": "Controlsphere",
+          "family": "Controlsphere",
+          "runs": 1,
+          "measured": false,
+          "needs": 4
+        },
+        {
+          "scenario": "VT Ground Advanced S5",
+          "label": "Ground",
+          "family": "Ground",
+          "runs": 1,
+          "measured": false,
+          "needs": 4
+        },
+        {
+          "scenario": "VT PGT Advanced S5",
+          "label": "PGT",
+          "family": "PGT",
+          "runs": 1,
+          "measured": false,
+          "needs": 4
+        },
+        {
+          "scenario": "VT Aether Advanced S5",
+          "label": "Aether",
+          "family": "Aether",
+          "runs": 2,
+          "measured": false,
+          "needs": 3
+        },
+        {
+          "scenario": "VT Raw Control Advanced S5",
+          "label": "Raw Control",
+          "family": "Raw Control",
+          "runs": 2,
+          "measured": false,
+          "needs": 3
+        }
+      ]
+    },
+    {
+      "category": "Tracking",
+      "window": 3,
+      "windowName": "Advanced",
+      "total": 6,
+      "measured": 1,
+      "runs": 28,
+      "matchable": false,
+      "complete": false,
+      "scenarios": [
+        {
+          "scenario": "VT Aether Entry S5 Precision Focus",
+          "label": "Aether Entry S5 Precision Focus",
+          "family": "Aether",
+          "runs": 0,
+          "measured": false,
+          "needs": 5
+        },
+        {
+          "scenario": "Air Angelic 4 Voltaic Smaller",
+          "label": "Air Angelic 4 Voltaic Smaller",
+          "family": "Angelic",
+          "runs": 0,
+          "measured": false,
+          "needs": 5
+        },
+        {
+          "scenario": "VT Controlsphere Viscose Expert",
+          "label": "Controlsphere Viscose Expert",
+          "family": "Controlsphere",
+          "runs": 0,
+          "measured": false,
+          "needs": 5
+        },
+        {
+          "scenario": "PGTI Voltaic",
+          "label": "PGTI Voltaic",
+          "family": "PGT",
+          "runs": 1,
+          "measured": false,
+          "needs": 4
+        },
+        {
+          "scenario": "Ground Plaza Sparky V3 Thin",
+          "label": "Ground Plaza Sparky V3 Thin",
+          "family": "Ground",
+          "runs": 2,
+          "measured": false,
+          "needs": 3
+        },
+        {
+          "scenario": "VT Raw Control Novice S5 Hard",
+          "label": "Raw Control Novice S5 Hard",
+          "family": "Raw Control",
+          "runs": 25,
+          "measured": true,
+          "needs": 0
+        }
+      ]
+    }
+  ],
   "benchmark": {
     "name": "Season 1",
     "difficulty": "",
@@ -1126,32 +2024,43 @@
       "Supernova": "#ff0000",
       "Quasar": "#00f4cf",
       "Odyssey": "#ff00dd"
-    }
+    },
+    "matchPool": {
+      "window": 1
+    },
+    "matchPoolName": "Medium",
+    "windows": [
+      "Easy",
+      "Medium",
+      "Hard",
+      "Advanced"
+    ],
+    "windowSize": 4
   },
   "player": {
-    "totalRuns": 11138,
-    "scenarioCount": 803,
-    "streak": 16,
-    "benchmarkRank": "Cosmonaut",
-    "benchmarkEnergy": 120692,
-    "progressToNextRank": 0.5555328954152858,
-    "nextRankName": "Lunar",
+    "totalRuns": 11427,
+    "scenarioCount": 804,
+    "streak": 21,
+    "benchmarkRank": "Odyssey",
+    "benchmarkEnergy": 326307,
+    "progressToNextRank": 0.07007680778405767,
+    "nextRankName": "Arecibo",
     "apogee": {
       "rating": 1617,
       "rd": 105,
-      "percentile": 39.5,
+      "percentile": 56.3,
       "tier": {
-        "id": "tier-4",
-        "name": "Lunar",
+        "id": "tier-5",
+        "name": "Odyssey",
         "percentile": [
-          35,
-          50
+          50,
+          80
         ],
-        "color": "#2F2FFF",
-        "glow": "#3333FF",
+        "color": "#FF46FF",
+        "glow": "#FF80FF",
         "gradient": [
           "#000000",
-          "#0000FF"
+          "#FF00FF"
         ]
       }
     }
@@ -1273,273 +2182,529 @@
   "categories": [
     {
       "name": "Clicking",
-      "energy": 43225,
-      "rankName": "D",
-      "perScenario": 7204,
+      "energy": 127441,
+      "rankName": "Y",
+      "rankNames": [
+        "Rank 1",
+        "Rank 2",
+        "Rank 3",
+        "Rank 4",
+        "I",
+        "D",
+        "K",
+        "Y",
+        "E",
+        "T",
+        "D:",
+        ":0",
+        "Advanced 1",
+        "Advanced 2",
+        "Advanced 3",
+        "Advanced 4"
+      ],
+      "rankColors": {
+        "Rank 1": "#3f4652",
+        "Rank 2": "#59606d",
+        "Rank 3": "#737b89",
+        "Rank 4": "#8d95a4",
+        "I": "#7C8AA5",
+        "D": "#8891a3",
+        "K": "#C79A4F",
+        "Y": "#C75FA8",
+        "E": "#8891a3",
+        "T": "#8891a3",
+        "D:": "#8891a3",
+        ":0": "#8891a3",
+        "Advanced 1": "#8891a3",
+        "Advanced 2": "#8891a3",
+        "Advanced 3": "#8891a3",
+        "Advanced 4": "#8891a3"
+      },
+      "rankMaxes": [
+        15000,
+        30000,
+        45000,
+        60000,
+        75000,
+        90000,
+        105000,
+        120000,
+        135000,
+        150000,
+        165000,
+        180000,
+        195000,
+        210000,
+        225000,
+        240000
+      ],
+      "rankCount": 16,
+      "progressToNextRank": 0.49606222127479366,
+      "perScenario": 21240,
       "scenarios": [
         {
-          "name": "VT Pasu Intermediate S5",
-          "label": "Pasu",
-          "subCategory": "Dynamic",
-          "score": 944.336487,
-          "rankName": "K",
-          "energy": 8217,
-          "nextRankName": "Y",
-          "nextRankScore": 980,
-          "gap": 35.663512999999966,
-          "runs": 35
-        },
-        {
-          "name": "VT Popcorn Intermediate S5",
-          "label": "Popcorn",
-          "subCategory": "Dynamic",
-          "score": 760,
-          "rankName": "D",
-          "energy": 6944,
-          "nextRankName": "K",
-          "nextRankScore": 780,
-          "gap": 20,
-          "runs": 38
-        },
-        {
-          "name": "VT 1w3ts Intermediate S5",
-          "label": "1w3ts",
+          "name": "VT 1w2ts Advanced S5",
+          "label": "1w2ts",
+          "family": "1wXts",
+          "window": 2,
+          "windowName": "Hard",
           "subCategory": "Static",
-          "score": 1271.000122,
-          "rankName": "D",
-          "energy": 6594,
-          "nextRankName": "K",
-          "nextRankScore": 1300,
-          "gap": 28.99987800000008,
-          "runs": 55
+          "score": 1080.529419,
+          "rankName": "E",
+          "energy": 23727,
+          "nextRankName": "T",
+          "nextRankScore": 1107,
+          "nextRankScenario": "VT 1w2ts Advanced S5",
+          "nextRankLabel": "1w2ts",
+          "nextRankWindowName": "Hard",
+          "nextRankIsNewScenario": false,
+          "gap": 26.47058100000004,
+          "runs": 1
         },
         {
-          "name": "VT ww5t Intermediate S5",
-          "label": "ww5t",
-          "subCategory": "Static",
-          "score": 1440,
-          "rankName": "D",
-          "energy": 6111,
-          "nextRankName": "K",
-          "nextRankScore": 1490,
-          "gap": 50,
-          "runs": 49
+          "name": "VT Floating Heads Advanced S5",
+          "label": "Floating Heads",
+          "family": "Floating Heads",
+          "window": 2,
+          "windowName": "Hard",
+          "subCategory": "Linear",
+          "score": 559.727417,
+          "rankName": "E",
+          "energy": 23714,
+          "nextRankName": "T",
+          "nextRankScore": 587,
+          "nextRankScenario": "VT Floating Heads Advanced S5",
+          "nextRankLabel": "Floating Heads",
+          "nextRankWindowName": "Hard",
+          "nextRankIsNewScenario": false,
+          "gap": 27.272583000000054,
+          "runs": 7
         },
         {
           "name": "VT Frogtagon Intermediate S5",
           "label": "Frogtagon",
+          "family": "Frogtagon",
+          "window": 1,
+          "windowName": "Medium",
           "subCategory": "Linear",
-          "score": 1130,
-          "rankName": "D",
-          "energy": 7250,
-          "nextRankName": "K",
-          "nextRankScore": 1140,
-          "gap": 10,
-          "runs": 28
+          "score": 1140,
+          "rankName": "Y",
+          "energy": 20000,
+          "nextRankName": "E",
+          "nextRankScore": 848,
+          "nextRankScenario": "VT Frogtagon Advanced S5",
+          "nextRankLabel": "Frogtagon",
+          "nextRankWindowName": "Hard",
+          "nextRankIsNewScenario": true,
+          "gap": 58,
+          "runs": 30
         },
         {
-          "name": "VT Floating Heads Intermediate S5",
-          "label": "Floating Heads",
-          "subCategory": "Linear",
-          "score": 791.925354,
-          "rankName": "K",
-          "energy": 8109,
-          "nextRankName": "Y",
-          "nextRankScore": 860,
-          "gap": 68.07464600000003,
-          "runs": 24
+          "name": "VT Pasu Intermediate S5",
+          "label": "Pasu",
+          "family": "Pasu",
+          "window": 1,
+          "windowName": "Medium",
+          "subCategory": "Dynamic",
+          "score": 944.336487,
+          "rankName": "Y",
+          "energy": 20000,
+          "nextRankName": "E",
+          "nextRankScore": 636,
+          "nextRankScenario": "VT Pasu Advanced S5",
+          "nextRankLabel": "Pasu",
+          "nextRankWindowName": "Hard",
+          "nextRankIsNewScenario": true,
+          "gap": 49.361144999999965,
+          "runs": 36
+        },
+        {
+          "name": "VT Popcorn Intermediate S5",
+          "label": "Popcorn",
+          "family": "Popcorn",
+          "window": 1,
+          "windowName": "Medium",
+          "subCategory": "Dynamic",
+          "score": 760,
+          "rankName": "Y",
+          "energy": 20000,
+          "nextRankName": "E",
+          "nextRankScore": 449,
+          "nextRankScenario": "VT Popcorn Advanced S5",
+          "nextRankLabel": "Popcorn",
+          "nextRankWindowName": "Hard",
+          "nextRankIsNewScenario": true,
+          "gap": 109,
+          "runs": 39
+        },
+        {
+          "name": "VT ww5t Intermediate S5",
+          "label": "ww5t",
+          "family": "ww5t",
+          "window": 1,
+          "windowName": "Medium",
+          "subCategory": "Static",
+          "score": 1440,
+          "rankName": "Y",
+          "energy": 20000,
+          "nextRankName": "E",
+          "nextRankScore": 1279,
+          "nextRankScenario": "VT ww5t Advanced S5",
+          "nextRankLabel": "ww5t",
+          "nextRankWindowName": "Hard",
+          "nextRankIsNewScenario": true,
+          "gap": 109,
+          "runs": 52
         }
       ]
     },
     {
       "name": "Tracking",
-      "energy": 37618,
-      "rankName": "Neanderthal",
-      "perScenario": 6270,
+      "energy": 118866,
+      "rankName": "Homosapiens",
+      "rankNames": [
+        "Rank 1",
+        "Rank 2",
+        "Rank 3",
+        "Rank 4",
+        "Homoerectus",
+        "Neanderthal",
+        "Homosapiens",
+        "Caveman",
+        "Neolithic",
+        "Human",
+        "Robosapien",
+        "HAL 9000",
+        "Advanced 1",
+        "Advanced 2",
+        "Advanced 3",
+        "Advanced 4"
+      ],
+      "rankColors": {
+        "Rank 1": "#3f4652",
+        "Rank 2": "#59606d",
+        "Rank 3": "#737b89",
+        "Rank 4": "#8d95a4",
+        "Homoerectus": "#ff00a2",
+        "Neanderthal": "#00fbff",
+        "Homosapiens": "#fbff00",
+        "Caveman": "#4d2200",
+        "Neolithic": "#ffffff",
+        "Human": "#00cc03",
+        "Robosapien": "#0400ff",
+        "HAL 9000": "#ff0000",
+        "Advanced 1": "#8891a3",
+        "Advanced 2": "#8891a3",
+        "Advanced 3": "#8891a3",
+        "Advanced 4": "#8891a3"
+      },
+      "rankMaxes": [
+        15000,
+        30000,
+        45000,
+        60000,
+        75000,
+        90000,
+        105000,
+        120000,
+        135000,
+        150000,
+        165000,
+        180000,
+        195000,
+        210000,
+        225000,
+        240000
+      ],
+      "rankCount": 16,
+      "progressToNextRank": 0.9243986254295529,
+      "perScenario": 19811,
       "scenarios": [
-        {
-          "name": "VT PGT Intermediate S5",
-          "label": "PGT",
-          "subCategory": "Precise",
-          "score": 2909,
-          "rankName": "Neanderthal",
-          "energy": 6560,
-          "nextRankName": "Homosapiens",
-          "nextRankScore": 3050,
-          "gap": 141,
-          "runs": 50
-        },
-        {
-          "name": "VT Snake Track Intermediate S5",
-          "label": "Snake Track",
-          "subCategory": "Precise",
-          "score": 3246,
-          "rankName": "Neanderthal",
-          "energy": 5546,
-          "nextRankName": "Homosapiens",
-          "nextRankScore": 3500,
-          "gap": 254,
-          "runs": 36
-        },
         {
           "name": "VT Aether Intermediate S5",
           "label": "Aether",
+          "family": "Aether",
+          "window": 1,
+          "windowName": "Medium",
           "subCategory": "Reactive",
           "score": 2775,
-          "rankName": "Neanderthal",
-          "energy": 6607,
-          "nextRankName": "Homosapiens",
-          "nextRankScore": 2900,
-          "gap": 125,
-          "runs": 103
+          "rankName": "Caveman",
+          "energy": 20000,
+          "nextRankName": "Neolithic",
+          "nextRankScore": 2104,
+          "nextRankScenario": "VT Aether Advanced S5",
+          "nextRankLabel": "Aether",
+          "nextRankWindowName": "Hard",
+          "nextRankIsNewScenario": true,
+          "gap": 261,
+          "runs": 105
         },
         {
-          "name": "VT Ground Intermediate S5",
-          "label": "Ground",
-          "subCategory": "Reactive",
-          "score": 2949,
-          "rankName": "Neanderthal",
-          "energy": 5990,
-          "nextRankName": "Homosapiens",
-          "nextRankScore": 3100,
-          "gap": 151,
-          "runs": 51
-        },
-        {
-          "name": "VT Raw Control Intermediate S5",
-          "label": "Raw Control",
-          "subCategory": "Control",
-          "score": 3513,
-          "rankName": "Neanderthal",
-          "energy": 7236,
-          "nextRankName": "Homosapiens",
-          "nextRankScore": 3550,
-          "gap": 37,
-          "runs": 16
+          "name": "Air Angelic 4 Voltaic Easy 90%",
+          "label": "Air Angelic 4 Voltaic Easy 90%",
+          "family": "Angelic",
+          "window": 1,
+          "windowName": "Medium",
+          "subCategory": null,
+          "score": 3806,
+          "rankName": "Homosapiens",
+          "energy": 18866,
+          "nextRankName": "Caveman",
+          "nextRankScore": 3850,
+          "nextRankScenario": "Air Angelic 4 Voltaic Easy 90%",
+          "nextRankLabel": "Air Angelic 4 Voltaic Easy 90%",
+          "nextRankWindowName": "Medium",
+          "nextRankIsNewScenario": false,
+          "gap": 44,
+          "runs": 63
         },
         {
           "name": "VT Controlsphere Intermediate S5",
           "label": "Controlsphere",
+          "family": "Controlsphere",
+          "window": 1,
+          "windowName": "Medium",
           "subCategory": "Control",
           "score": 3270,
-          "rankName": "Neanderthal",
-          "energy": 5679,
-          "nextRankName": "Homosapiens",
-          "nextRankScore": 3525,
-          "gap": 255,
+          "rankName": "Caveman",
+          "energy": 20000,
+          "nextRankName": "Neolithic",
+          "nextRankScore": 2504,
+          "nextRankScenario": "VT Controlsphere Advanced S5",
+          "nextRankLabel": "Controlsphere",
+          "nextRankWindowName": "Hard",
+          "nextRankIsNewScenario": true,
+          "gap": 288,
           "runs": 10
+        },
+        {
+          "name": "VT Ground Intermediate S5",
+          "label": "Ground",
+          "family": "Ground",
+          "window": 1,
+          "windowName": "Medium",
+          "subCategory": "Reactive",
+          "score": 2949,
+          "rankName": "Caveman",
+          "energy": 20000,
+          "nextRankName": "Neolithic",
+          "nextRankScore": 2379,
+          "nextRankScenario": "VT Ground Advanced S5",
+          "nextRankLabel": "Ground",
+          "nextRankWindowName": "Hard",
+          "nextRankIsNewScenario": true,
+          "gap": 457,
+          "runs": 51
+        },
+        {
+          "name": "VT PGT Intermediate S5",
+          "label": "PGT",
+          "family": "PGT",
+          "window": 1,
+          "windowName": "Medium",
+          "subCategory": "Precise",
+          "score": 2909,
+          "rankName": "Caveman",
+          "energy": 20000,
+          "nextRankName": "Neolithic",
+          "nextRankScore": 2170,
+          "nextRankScenario": "VT PGT Advanced S5",
+          "nextRankLabel": "PGT",
+          "nextRankWindowName": "Hard",
+          "nextRankIsNewScenario": true,
+          "gap": 575,
+          "runs": 50
+        },
+        {
+          "name": "VT Raw Control Intermediate S5",
+          "label": "Raw Control",
+          "family": "Raw Control",
+          "window": 1,
+          "windowName": "Medium",
+          "subCategory": "Control",
+          "score": 3513,
+          "rankName": "Caveman",
+          "energy": 20000,
+          "nextRankName": "Neolithic",
+          "nextRankScore": 2426,
+          "nextRankScenario": "VT Raw Control Advanced S5",
+          "nextRankLabel": "Raw Control",
+          "nextRankWindowName": "Hard",
+          "nextRankIsNewScenario": true,
+          "gap": 241,
+          "runs": 16
         }
       ]
     },
     {
       "name": "Switching",
-      "energy": 39849,
-      "rankName": "Galapagos Turtle",
-      "perScenario": 6641,
+      "energy": 80000,
+      "rankName": "Roadrunner",
+      "rankNames": [
+        "Banana Slug",
+        "Sloth",
+        "Galapagos Turtle",
+        "Manatee",
+        "Koala",
+        "Slow Loris",
+        "Ferret",
+        "Roadrunner",
+        "Jackrabbit",
+        "hmm",
+        "Cheetah",
+        "Peregrine",
+        "Advanced 1",
+        "Advanced 2",
+        "Advanced 3",
+        "Advanced 4"
+      ],
+      "rankColors": {
+        "Banana Slug": "#fbff00",
+        "Sloth": "#787878",
+        "Galapagos Turtle": "#0c6600",
+        "Manatee": "#70a2ff",
+        "Koala": "#ff00ae",
+        "Slow Loris": "#ff6601",
+        "Ferret": "#04ff00",
+        "Roadrunner": "#0011ff",
+        "Jackrabbit": "#ffffff",
+        "hmm": "#8891a3",
+        "Cheetah": "#FF5F1F",
+        "Peregrine": "#36006b",
+        "Advanced 1": "#8891a3",
+        "Advanced 2": "#8891a3",
+        "Advanced 3": "#8891a3",
+        "Advanced 4": "#8891a3"
+      },
+      "rankMaxes": [
+        10000,
+        20000,
+        30000,
+        40000,
+        50000,
+        60000,
+        70000,
+        80000,
+        90000,
+        100000,
+        110000,
+        120000,
+        130000,
+        140000,
+        150000,
+        160000
+      ],
+      "rankCount": 16,
+      "progressToNextRank": 0,
+      "perScenario": 20000,
       "scenarios": [
+        {
+          "name": "domiSwitch Easy",
+          "label": "domiSwitch Easy",
+          "family": "DomiSwitch",
+          "window": 1,
+          "windowName": "Medium",
+          "subCategory": null,
+          "score": 6620.799805,
+          "rankName": "Roadrunner",
+          "energy": 20000,
+          "nextRankName": "Jackrabbit",
+          "nextRankScore": 3666,
+          "nextRankScenario": "domiSwitch Hard",
+          "nextRankLabel": "domiSwitch Hard",
+          "nextRankWindowName": "Hard",
+          "nextRankIsNewScenario": true,
+          "gap": 3666,
+          "runs": 49
+        },
         {
           "name": "VT DotTS Intermediate S5",
           "label": "DotTS",
+          "family": "DotTS",
+          "window": 1,
+          "windowName": "Medium",
           "subCategory": "Speed",
           "score": 1210,
-          "rankName": "Galapagos Turtle",
-          "energy": 6500,
-          "nextRankName": "Manatee",
-          "nextRankScore": 1230,
-          "gap": 20,
-          "runs": 35
-        },
-        {
-          "name": "VT EddieTS Intermediate S5",
-          "label": "EddieTS",
-          "subCategory": "Speed",
-          "score": 970,
-          "rankName": "Galapagos Turtle",
-          "energy": 5714,
-          "nextRankName": "Manatee",
-          "nextRankScore": 1020,
-          "gap": 50,
-          "runs": 40
+          "rankName": "Roadrunner",
+          "energy": 20000,
+          "nextRankName": "Jackrabbit",
+          "nextRankScore": 1116,
+          "nextRankScenario": "VT DotTS Advanced S5",
+          "nextRankLabel": "DotTS",
+          "nextRankWindowName": "Hard",
+          "nextRankIsNewScenario": true,
+          "gap": 65,
+          "runs": 45
         },
         {
           "name": "VT DriftTS Intermediate S5",
           "label": "DriftTS",
+          "family": "DriftTS",
+          "window": 1,
+          "windowName": "Medium",
           "subCategory": "Evasive",
           "score": 460,
-          "rankName": "Manatee",
-          "energy": 7500,
-          "nextRankName": "Slow Loris",
-          "nextRankScore": 490,
-          "gap": 30,
+          "rankName": "Roadrunner",
+          "energy": 20000,
+          "nextRankName": "Jackrabbit",
+          "nextRankScore": 374,
+          "nextRankScenario": "VT DriftTS Advanced S5",
+          "nextRankLabel": "DriftTS",
+          "nextRankWindowName": "Hard",
+          "nextRankIsNewScenario": true,
+          "gap": 55.39999399999999,
           "runs": 12
         },
         {
           "name": "VT FlyTS Intermediate S5",
           "label": "FlyTS",
+          "family": "FlyTS",
+          "window": 1,
+          "windowName": "Medium",
           "subCategory": "Evasive",
           "score": 595.400024,
-          "rankName": "Galapagos Turtle",
-          "energy": 6588,
-          "nextRankName": "Manatee",
-          "nextRankScore": 610,
-          "gap": 14.59997599999997,
-          "runs": 14
-        },
-        {
-          "name": "VT ControlTS Intermediate S5",
-          "label": "ControlTS",
-          "subCategory": "Stability",
-          "score": 490,
-          "rankName": "Manatee",
-          "energy": 7857,
-          "nextRankName": "Slow Loris",
-          "nextRankScore": 520,
-          "gap": 30,
-          "runs": 17
-        },
-        {
-          "name": "VT Penta Bounce Intermediate S5",
-          "label": "Penta Bounce",
-          "subCategory": "Stability",
-          "score": 503.800018,
-          "rankName": "Galapagos Turtle",
-          "energy": 5690,
-          "nextRankName": "Manatee",
-          "nextRankScore": 540,
-          "gap": 36.19998199999998,
-          "runs": 13
+          "rankName": "Roadrunner",
+          "energy": 20000,
+          "nextRankName": "Jackrabbit",
+          "nextRankScore": 494,
+          "nextRankScenario": "VT FlyTS Advanced S5",
+          "nextRankLabel": "FlyTS",
+          "nextRankWindowName": "Hard",
+          "nextRankIsNewScenario": true,
+          "gap": 72.19998199999998,
+          "runs": 15
         }
       ]
     }
   ],
-  "weakest": "Tracking",
+  "weakest": "Switching",
   "consistency": {
     "method": "worstOfLast5",
-    "ceilingRank": "Cosmonaut",
-    "ceilingEnergy": 120692,
-    "floorRank": "Astrologist",
-    "floorEnergy": 48434,
-    "gap": 0.1708222251762917,
+    "ceilingRank": "Odyssey",
+    "ceilingEnergy": 326307,
+    "floorRank": "Lunar",
+    "floorEnergy": 261290,
+    "gap": 0.17068699952477226,
     "scenarios": [
       {
+        "name": "1w4t Pasu Raspberry Master 6mag",
+        "label": "1w4t Pasu Raspberry Master 6mag adv",
+        "ceiling": 63,
+        "floor": 36,
+        "median": 49,
+        "gap": 0.42857142857142855
+      },
+      {
         "name": "VT Ground Intermediate S5",
-        "label": "Ground Intermediate",
+        "label": "Ground med",
         "ceiling": 2949,
         "floor": 2054,
         "median": 2611,
         "gap": 0.3034927093930146
       },
       {
-        "name": "VT Popcorn Intermediate S5",
-        "label": "Popcorn Intermediate",
-        "ceiling": 760,
-        "floor": 530,
-        "median": 605,
-        "gap": 0.3026315789473684
-      },
-      {
         "name": "VT PGT Intermediate S5",
-        "label": "PGT Intermediate",
+        "label": "PGT med",
         "ceiling": 2909,
         "floor": 2199,
         "median": 2355,
@@ -1547,55 +2712,55 @@
       },
       {
         "name": "VT Pasu Intermediate S5",
-        "label": "Pasu Intermediate",
+        "label": "Pasu med",
         "ceiling": 944.336487,
         "floor": 714.510986,
-        "median": 774.630798,
+        "median": 765.8069455,
         "gap": 0.24337246750903105
       },
       {
-        "name": "VT Aether Intermediate S5",
-        "label": "Aether Intermediate",
-        "ceiling": 2775,
-        "floor": 2169,
-        "median": 2223,
-        "gap": 0.21837837837837837
-      },
-      {
-        "name": "VT Snake Track Intermediate S5",
-        "label": "Snake Track Intermediate",
-        "ceiling": 3246,
-        "floor": 2572,
-        "median": 2929.5,
-        "gap": 0.20764017252002465
+        "name": "VT Popcorn Intermediate S5",
+        "label": "Popcorn med",
+        "ceiling": 760,
+        "floor": 580,
+        "median": 610,
+        "gap": 0.23684210526315788
       },
       {
         "name": "VT Floating Heads Intermediate S5",
-        "label": "Floating Heads Intermediate",
+        "label": "Floating Heads med",
         "ceiling": 791.925354,
-        "floor": 630.300232,
-        "median": 649.789734,
-        "gap": 0.2040913593479922
+        "floor": 610.59314,
+        "median": 630.300232,
+        "gap": 0.22897639668195297
+      },
+      {
+        "name": "VT Aether Intermediate S5",
+        "label": "Aether med",
+        "ceiling": 2775,
+        "floor": 2169,
+        "median": 2225,
+        "gap": 0.21837837837837837
+      },
+      {
+        "name": "VT Floating Heads Advanced S5",
+        "label": "Floating Heads har",
+        "ceiling": 559.727417,
+        "floor": 441.733978,
+        "median": 497.438019,
+        "gap": 0.21080518019362982
       },
       {
         "name": "VT Raw Control Intermediate S5",
-        "label": "Raw Control Intermediate",
+        "label": "Raw Control med",
         "ceiling": 3513,
         "floor": 2841,
         "median": 2959,
         "gap": 0.19128949615713065
       },
       {
-        "name": "VT Frogtagon Intermediate S5",
-        "label": "Frogtagon Intermediate",
-        "ceiling": 1130,
-        "floor": 920,
-        "median": 1000,
-        "gap": 0.18584070796460178
-      },
-      {
         "name": "VT DriftTS Intermediate S5",
-        "label": "DriftTS Intermediate",
+        "label": "DriftTS med",
         "ceiling": 460,
         "floor": 391.800018,
         "median": 414.100006,
@@ -1603,143 +2768,151 @@
       },
       {
         "name": "VT 1w3ts Intermediate S5",
-        "label": "1w3ts Intermediate",
-        "ceiling": 1271.000122,
+        "label": "1w3ts med",
+        "ceiling": 1300.443359,
         "floor": 1110.984131,
-        "median": 1137.420776,
-        "gap": 0.1258976991663892
+        "median": 1141.32312,
+        "gap": 0.14568818141044476
       },
       {
-        "name": "VT EddieTS Intermediate S5",
-        "label": "EddieTS Intermediate",
-        "ceiling": 970,
-        "floor": 850,
-        "median": 879,
-        "gap": 0.12371134020618557
-      },
-      {
-        "name": "VT ControlTS Intermediate S5",
-        "label": "ControlTS Intermediate",
-        "ceiling": 490,
-        "floor": 430.200012,
-        "median": 440,
-        "gap": 0.12204079183673466
-      },
-      {
-        "name": "VT DotTS Intermediate S5",
-        "label": "DotTS Intermediate",
-        "ceiling": 1210,
-        "floor": 1090,
-        "median": 1136.5,
-        "gap": 0.09917355371900827
+        "name": "VT Frogtagon Intermediate S5",
+        "label": "Frogtagon med",
+        "ceiling": 1140,
+        "floor": 1030,
+        "median": 1000,
+        "gap": 0.09649122807017543
       },
       {
         "name": "VT ww5t Intermediate S5",
-        "label": "ww5t Intermediate",
+        "label": "ww5t med",
         "ceiling": 1440,
-        "floor": 1300,
+        "floor": 1310,
         "median": 1310,
-        "gap": 0.09722222222222222
-      },
-      {
-        "name": "VT Penta Bounce Intermediate S5",
-        "label": "Penta Bounce Intermediate",
-        "ceiling": 503.800018,
-        "floor": 456.800018,
-        "median": 463,
-        "gap": 0.09329098515435146
+        "gap": 0.09027777777777778
       },
       {
         "name": "VT FlyTS Intermediate S5",
-        "label": "FlyTS Intermediate",
+        "label": "FlyTS med",
         "ceiling": 595.400024,
-        "floor": 541.400024,
-        "median": 553.800018,
-        "gap": 0.09069532721416215
+        "floor": 542.200012,
+        "median": 556.400024,
+        "gap": 0.08935171289143248
+      },
+      {
+        "name": "Air Angelic 4 Voltaic Easy 90%",
+        "label": "Air Angelic 4 Voltaic Easy 90% med",
+        "ceiling": 3806,
+        "floor": 3492,
+        "median": 3426,
+        "gap": 0.08250131371518654
       },
       {
         "name": "VT Controlsphere Intermediate S5",
-        "label": "Controlsphere Intermediate",
+        "label": "Controlsphere med",
         "ceiling": 3270,
         "floor": 3029,
         "median": 3121,
         "gap": 0.07370030581039755
+      },
+      {
+        "name": "domiSwitch Easy",
+        "label": "domiSwitch Easy med",
+        "ceiling": 6620.799805,
+        "floor": 6135.200195,
+        "median": 5815.200195,
+        "gap": 0.07334455417807326
+      },
+      {
+        "name": "VT Raw Control Novice S5 Hard",
+        "label": "Raw Control Novice S5 Hard adv",
+        "ceiling": 3586,
+        "floor": 3331,
+        "median": 3316,
+        "gap": 0.07110987172336866
+      },
+      {
+        "name": "VT DotTS Intermediate S5",
+        "label": "DotTS med",
+        "ceiling": 1210,
+        "floor": 1129.5,
+        "median": 1146.5,
+        "gap": 0.06652892561983471
       }
     ]
   },
   "match": {
     "seed": "apogee-demo-match-01",
-    "category": "Tracking",
+    "category": "Switching",
     "opponent": {
       "name": "ravenous",
       "rating": 1577,
       "tier": {
-        "id": "tier-3",
-        "name": "Cosmonaut",
+        "id": "tier-5",
+        "name": "Odyssey",
         "percentile": [
-          20,
-          35
+          50,
+          80
         ],
-        "color": "#008080",
-        "glow": "#006C6C",
+        "color": "#FF46FF",
+        "glow": "#FF80FF",
         "gradient": [
           "#000000",
-          "#008080"
+          "#FF00FF"
         ]
       }
     },
     "winProbability": 0.552728316151137,
-    "verdict": "loss",
-    "explanation": "You lose: −4.1% vs +1.2% against your own baselines.",
+    "verdict": "win",
+    "explanation": "You win: +3.8% vs +1.2% against your own baselines.",
     "ratingWeight": 1,
-    "playerMatchScore": -0.04130365357973361,
-    "opponentMatchScore": 0.012326149417941223,
+    "playerMatchScore": 0.038220386899158555,
+    "opponentMatchScore": 0.012145606953169366,
     "rounds": [
       {
-        "label": "Controlsphere Intermediate",
+        "label": "domiSwitch Easy med",
         "you": {
-          "score": 3029,
-          "baseline": 3121,
-          "delta": -0.029477731496315284
+          "score": 6424,
+          "baseline": 5959,
+          "delta": 0.07808391553953319
         },
         "them": {
-          "score": 3121,
-          "baseline": 3027,
-          "delta": 0.030927835051546428
+          "score": 5959,
+          "baseline": 5780,
+          "delta": 0.030976308671746226
         }
       },
       {
-        "label": "PGT Intermediate",
+        "label": "FlyTS med",
         "you": {
-          "score": 2231,
-          "baseline": 2618,
-          "delta": -0.14785531492303575
+          "score": 570.200012,
+          "baseline": 556,
+          "delta": 0.024802277866184965
         },
         "them": {
-          "score": 2509,
-          "baseline": 2540,
-          "delta": -0.012032413527241086
+          "score": 533,
+          "baseline": 540,
+          "delta": -0.012428985656416496
         }
       },
       {
-        "label": "Snake Track Intermediate",
+        "label": "DotTS med",
         "you": {
-          "score": 3086,
-          "baseline": 2930,
-          "delta": 0.053422085680150194
+          "score": 1160,
+          "baseline": 1147,
+          "delta": 0.011774967291757523
         },
         "them": {
-          "score": 2893,
-          "baseline": 2842,
-          "delta": 0.018083026729518326
+          "score": 1132,
+          "baseline": 1112,
+          "delta": 0.017889497844178367
         }
       }
     ]
   },
   "quests": [
     {
-      "title": "Lift your Aether Intermediate floor to Stargazer",
-      "detail": "Your worst of the last 5 is 2169. All 5 need to clear 2175; 4 of them do right now.",
+      "title": "Lift your Pasu med floor to D",
+      "detail": "Your worst of the last 5 is 715. All 5 need to clear 715; 4 of them do right now.",
       "xp": 500,
       "kind": "floor_rank_up",
       "progress": 0.8,
@@ -1750,20 +2923,20 @@
       }
     },
     {
-      "title": "Reach K on Frogtagon Intermediate",
-      "detail": "You are at 1130. 1140 takes you to K, 10 more.",
+      "title": "Reach Caveman on Air Angelic 4 Voltaic Easy 90% med",
+      "detail": "You are at 3806. 3850 takes you to Caveman, 44 more.",
       "xp": 300,
       "kind": "close_the_gap",
-      "progress": 0.9912280701754386,
+      "progress": 0.9885714285714285,
       "isFloor": false,
       "steps": {
-        "done": 1130,
-        "total": 1140
+        "done": 3806,
+        "total": 3850
       }
     },
     {
-      "title": "Lift your ww5t Intermediate floor to Stargazer",
-      "detail": "Your worst of the last 5 is 1300. All 5 need to clear 1310; 4 of them do right now.",
+      "title": "Lift your FlyTS med floor to Ferret",
+      "detail": "Your worst of the last 5 is 542. All 5 need to clear 543; 4 of them do right now.",
       "xp": 500,
       "kind": "floor_rank_up",
       "progress": 0.8,
@@ -1774,20 +2947,20 @@
       }
     },
     {
-      "title": "Reach Homosapiens on Raw Control Intermediate",
-      "detail": "You are at 3513. 3550 takes you to Homosapiens, 37 more.",
+      "title": "Reach T on 1w2ts har",
+      "detail": "You are at 1081. 1107 takes you to T, 26 more.",
       "xp": 300,
       "kind": "close_the_gap",
-      "progress": 0.9895774647887324,
+      "progress": 0.976088002710027,
       "isFloor": false,
       "steps": {
-        "done": 3513,
-        "total": 3550
+        "done": 1081,
+        "total": 1107
       }
     },
     {
       "title": "Rank up any scenario in Season 1",
-      "detail": "18 scenarios are within reach of their next rank.",
+      "detail": "16 scenarios are within reach of their next rank.",
       "xp": 400,
       "kind": "rank_up_any",
       "progress": 0,
@@ -1833,6 +3006,39 @@ const pct = (v) => (v >= 0 ? "+" : "−") + Math.abs(v * 100).toFixed(1) + "%";
 const num = (v) => Math.round(v).toLocaleString();
 
 /**
+ * The colour of a rank, looked up on the ladder that graded it.
+ *
+ * Clicking, Tracking and Switching each name and colour their own ranks, so the overall
+ * ladder's palette has no entry for "D" or "Neanderthal": looking a category rank up
+ * there returned undefined and every one of them rendered grey. `cat` is the category
+ * object from the snapshot, which now carries its own ladder; omit it for a rank that
+ * genuinely belongs to the overall ladder, like the consistency ceiling and floor.
+ */
+function rankColor(data, rankName, cat) {
+  if (!rankName) return "var(--ink-dim)";
+  return (
+    (cat && cat.rankColors && cat.rankColors[rankName]) ||
+    data.benchmark.rankColors[rankName] ||
+    "#8891a3"
+  );
+}
+
+/**
+ * The scenario a family's next rank is scored on, named so it can be found.
+ *
+ * The three variants of a family share a label, so "Pasu" alone names three different
+ * scenarios in KovaaK's. When the next rank lives in a harder window - which is what
+ * happens every four ranks - the window is the difference between a target the player
+ * can act on and one they cannot.
+ */
+function targetName(s) {
+  if (!s.nextRankLabel) return "";
+  return s.nextRankWindowName
+    ? s.nextRankLabel + " " + s.nextRankWindowName
+    : s.nextRankLabel;
+}
+
+/**
  * A faceted emblem rather than a plain disc: rank badges are read at a glance and at
  * small sizes, so the silhouette has to carry identity before the colour does.
  */
@@ -1863,6 +3069,29 @@ function setStatus(kind, text, path) {
   dot.className = "dot" + (kind === "scanning" ? " scanning" : kind === "bad" ? " bad" : "");
   $("statusText").textContent = text;
   $("statusPath").textContent = path || "";
+}
+
+/**
+ * Stamp the running bundle into the status bar.
+ *
+ * Short form on screen, full timestamp in the tooltip. Electron holds a single-instance
+ * lock, so `npm start` with a window already open focuses the old window instead of
+ * replacing it: the app looks restarted while running the previous build. This is how
+ * that shows up rather than being deduced an hour later.
+ */
+function showBuild(build) {
+  const el = $("buildStamp");
+  if (!el) return;
+  if (!build || build === "dev") {
+    el.textContent = "dev build";
+    el.title = "Running from source, with no build stamp";
+    return;
+  }
+  const when = new Date(build);
+  el.textContent = Number.isNaN(when.getTime())
+    ? "build " + build
+    : "build " + when.toLocaleString([], { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" });
+  el.title = "Bundle built " + build;
 }
 
 function showError(message) {
@@ -1917,6 +3146,7 @@ function render(data) {
     data.player.benchmarkRank + ", " + num(data.player.benchmarkEnergy) + " energy).";
 
   renderCategories(data);
+  renderPool(data);
 
   // The snapshot carries an illustrative match with an invented opponent, which is
   // useful in the preview and dishonest in the real client. In the app it is shown only
@@ -1926,6 +3156,7 @@ function render(data) {
 
   renderRanks(data);
   renderProfile(data);
+  renderCoverage(data);
   renderConsistency(data);
   renderQuests(data);
 
@@ -1936,6 +3167,58 @@ function render(data) {
     "Every number here is computed from " + num(data.player.totalRuns) +
     " real runs; the opponent is synthetic. Snapshot " +
     new Date(data.generatedAt).toLocaleString() + ".";
+}
+
+/**
+ * Which difficulty a match draws from, and whether the player is measured on it.
+ *
+ * A match is decided on delta against your own baseline, so a difficulty you have barely
+ * played is not a hard match - it is an unmeasured one, worth half rating weight at best
+ * and void at worst. With several difficulties in a season that stopped being a detail and
+ * nothing on screen said which one you were about to be handed.
+ */
+function renderPool(data) {
+  const note = $("poolNote");
+  if (!note) return;
+
+  const pool = data.benchmark.matchPool;
+  const name = data.benchmark.matchPoolName;
+  const coverage = data.coverage ?? [];
+
+  if (!name || coverage.length === 0) {
+    note.hidden = true;
+    return;
+  }
+
+  note.hidden = false;
+
+  // The category being queued, or every category when queueing Any.
+  const relevant = coverage.filter(
+    (c) =>
+      c.window === pool.window &&
+      (selectedCategory === "Any" || selectedCategory === null || c.category === selectedCategory),
+  );
+
+  const short = relevant.filter((c) => !c.matchable);
+  const measured = relevant.reduce((n, c) => n + c.measured, 0);
+  const total = relevant.reduce((n, c) => n + c.total, 0);
+
+  if (short.length === 0) {
+    note.className = "pool-note";
+    note.innerHTML =
+      `Matches draw from <b>${esc(name)}</b>. You have baselines on ` +
+      `${measured} of ${total} of its scenarios, so your scores are what you will be ` +
+      `measured against.`;
+    return;
+  }
+
+  note.className = "pool-note warn";
+  note.innerHTML =
+    `Matches draw from <b>${esc(name)}</b>, and you have baselines on only ` +
+    `${measured} of ${total} of its scenarios` +
+    `${short.length < relevant.length ? ` (short in ${esc(short.map((c) => c.category).join(", "))})` : ""}. ` +
+    `A scenario with no baseline is scored against a guess, which halves what the match ` +
+    `is worth and can void it. Play a few runs of them first.`;
 }
 
 function renderCategories(data) {
@@ -1951,6 +3234,7 @@ function renderCategories(data) {
     b.setAttribute("aria-pressed", String(name === selectedCategory));
     b.addEventListener("click", () => {
       selectedCategory = name;
+      renderPool(data);
       Array.prototype.forEach.call(host.children, (c) =>
         c.setAttribute("aria-pressed", "false"));
       b.setAttribute("aria-pressed", "true");
@@ -1998,6 +3282,168 @@ function showOpponent(data) {
 let seasonDraft = null;
 
 /**
+ * Which window each category is being edited at.
+ *
+ * The editor used to lay all of it out at once: three categories, fifty-four scenarios and
+ * twelve threshold columns in one table. Every number in it was reachable and none of them
+ * was findable. A season is edited one difficulty at a time - that is how the thresholds
+ * were decided and how they are read back - so the table follows, six scenarios against
+ * four ranks, and the rest is a dropdown away rather than on screen.
+ *
+ * Kept per category rather than globally, because comparing Clicking Easy against Tracking
+ * Hard is a real thing to want and a single shared selector would forbid it.
+ */
+const seasonWindowFor = new Map();
+
+function seasonWindowOf(category) {
+  return seasonWindowFor.get(category) ?? 0;
+}
+
+/**
+ * A scenario slot nobody has filled yet.
+ *
+ * Adding a family and adding a difficulty are the same act from the season's point of
+ * view: both create ranks that exist and have nothing measuring them. Rather than two
+ * flows, both create *empty slots*, and filling a slot is one interaction wherever it came
+ * from. The season cannot be saved while any slot is empty - which is the honest state,
+ * since a family missing a window makes the ranks it covers unreachable.
+ */
+function isEmptySlot(scenario) {
+  return !scenario.scenario;
+}
+
+/**
+ * Entries the season cannot grade, and which nothing on screen shows.
+ *
+ * A scenario with no family, no window, or a category the season does not define renders
+ * in no category block at all - so it is invisible, unremovable, and fails validation on
+ * Save naming something the owner cannot find. Listing them is the difference between a
+ * refusal and a fix.
+ */
+function seasonOrphans() {
+  if (!seasonDraft || seasonWindowSize() <= 0) return [];
+  const categories = new Set(seasonDraft.categories.map((c) => c.name));
+
+  return seasonDraft.scenarios.filter(
+    (x) =>
+      !x.family ||
+      typeof x.window !== "number" ||
+      !categories.has(x.category),
+  );
+}
+
+/** Every unfilled slot in the draft, for the Save gate. */
+function seasonGaps() {
+  if (!seasonDraft) return [];
+  return seasonDraft.scenarios
+    .filter(isEmptySlot)
+    .map((x) => `${x.family ?? "?"} · ${windowLabel(x.window ?? 0)}`);
+}
+
+/**
+ * The percentiles each window's ranks sit at.
+ *
+ * Carried on the season by buildSeason. Without it a newly added scenario has nothing to
+ * derive thresholds against, and the editor says so rather than inventing four numbers.
+ */
+function seasonLadder(window) {
+  return seasonDraft?.derivedFrom?.perWindow?.[window] ?? null;
+}
+
+/* ---------------------------------------------------- rank colour readability */
+/*
+ * Mirrors core/report/contrast.ts. The renderer cannot import core - it is a plain script
+ * with no bundler - so the arithmetic is repeated here and the two are kept deliberately
+ * identical. Both grounds and the threshold are the same values; if one moves, move both.
+ *
+ * It is worth the duplication: a colour that disappears is invisible to the person
+ * choosing it, because the editor's own background is neither of the grounds it has to
+ * survive, and finding out from a generated sheet after the fact is finding out too late.
+ */
+const DARK_GROUND = "#06080c";
+const LIGHT_GROUND = "#eef1f6";
+const MIN_CONTRAST = 2;
+
+function luminance(hex) {
+  const m = /^#?([0-9a-f]{6})$/i.exec(String(hex).trim());
+  if (!m) return 0;
+  const n = parseInt(m[1], 16);
+  const channel = (v) => {
+    const c = v / 255;
+    return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+  };
+  return (
+    0.2126 * channel((n >> 16) & 255) +
+    0.7152 * channel((n >> 8) & 255) +
+    0.0722 * channel(n & 255)
+  );
+}
+
+function contrastRatio(a, b) {
+  const la = luminance(a);
+  const lb = luminance(b);
+  return (Math.max(la, lb) + 0.05) / (Math.min(la, lb) + 0.05);
+}
+
+/** What is wrong with a rank colour, or null when nothing is. */
+function colourNote(color) {
+  const onDark = contrastRatio(color, DARK_GROUND);
+  const onLight = contrastRatio(color, LIGHT_GROUND);
+  const darkBad = onDark < MIN_CONTRAST;
+  const lightBad = onLight < MIN_CONTRAST;
+
+  if (darkBad && lightBad) return `unreadable on both grounds`;
+  if (darkBad) return `disappears on dark (${onDark.toFixed(1)}:1)`;
+  if (lightBad) return `disappears on light (${onLight.toFixed(1)}:1)`;
+  return null;
+}
+
+/** Every colour used by more than one rank anywhere in the season. */
+function duplicateColours() {
+  if (!seasonDraft) return new Map();
+
+  const seen = new Map();
+  const ladders = [
+    { title: "Overall", names: seasonDraft.rankNames, colors: seasonDraft.rankColors },
+  ].concat(
+    seasonDraft.categories.map((c) => ({
+      title: c.name,
+      names: c.rankNames,
+      colors: c.rankColors,
+    })),
+  );
+
+  // Placeholder ranks share a drab ramp on purpose, so flagging them as duplicates is
+  // noise on top of the thing that actually needs doing, which is naming them.
+  const placeholder = /^Rank \d+\**$/;
+
+  for (const ladder of ladders) {
+    for (const name of ladder.names) {
+      if (placeholder.test(name)) continue;
+      const colour = (ladder.colors[name] ?? "").toLowerCase();
+      if (!colour) continue;
+      const list = seen.get(colour) ?? [];
+      list.push(`${ladder.title} ${name}`);
+      seen.set(colour, list);
+    }
+  }
+
+  for (const [colour, users] of [...seen]) if (users.length < 2) seen.delete(colour);
+  return seen;
+}
+
+/** How many ranks one window covers, or 0 when the season is not windowed. */
+function seasonWindowSize() {
+  const size = seasonDraft?.windowSize;
+  return typeof size === "number" && size > 0 ? size : 0;
+}
+
+/** Display name for a window, falling back to its number. */
+function windowLabel(index) {
+  return seasonDraft?.windows?.[index] ?? `window ${index + 1}`;
+}
+
+/**
  * Add or remove a rank on one ladder.
  *
  * The awkward part is not the ladder, it is everything keyed to its length. A category
@@ -2009,6 +3455,12 @@ let seasonDraft = null;
  * scenarios, so it only carries names and colours.
  */
 function addRank(owner, isCategory) {
+  // A windowed category cannot grow one rank at a time: the ranks in a window are
+  // graded by one scenario per family, so a rank with no scenario behind it is a rank
+  // nobody can reach. Growing the ladder there means adding a window's worth of
+  // scenarios first, which is what buildSeason does.
+  if (isCategory && seasonWindowSize() > 0) return;
+
   const names = owner.rankNames;
   const n = names.length;
 
@@ -2039,6 +3491,7 @@ function addRank(owner, isCategory) {
 
 function removeRank(owner, index, isCategory) {
   if (owner.rankNames.length <= 1) return;
+  if (isCategory && seasonWindowSize() > 0) return;
 
   const [name] = owner.rankNames.splice(index, 1);
   delete owner.rankColors[name];
@@ -2051,10 +3504,365 @@ function removeRank(owner, index, isCategory) {
   }
 }
 
+/**
+ * Ask for a name, in place.
+ *
+ * Not `prompt()`: Electron does not implement it, so the button simply reported that it
+ * was unsupported and nothing happened. Replacing the button with an input is better than
+ * a dialog anyway - the answer appears where the thing being named will.
+ *
+ * Enter commits, Escape or clicking away cancels, and the button comes back either way.
+ */
+function askInline(button, placeholder, onName) {
+  const input = document.createElement("input");
+  input.type = "text";
+  input.className = "inline-ask";
+  input.placeholder = placeholder;
+
+  let settled = false;
+  const restore = () => {
+    if (settled) return;
+    settled = true;
+    input.replaceWith(button);
+  };
+
+  const commit = () => {
+    // Enter commits and then blurs, so without this guard the name is submitted twice -
+    // harmless where the caller checks for duplicates and confusing everywhere else.
+    if (settled) return;
+    const name = input.value.trim();
+    restore();
+    if (name) onName(name);
+  };
+
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") commit();
+    else if (e.key === "Escape") restore();
+  });
+  input.addEventListener("blur", commit);
+
+  button.replaceWith(input);
+  input.focus();
+}
+
+/**
+ * Add a family: one empty slot in every window of a category.
+ *
+ * A family is the unit the ladder grades, so it only exists once it has a variant in every
+ * window. Creating all the slots at once and refusing to save until they are filled is what
+ * makes that impossible to get half-right.
+ */
+function addFamily(category, family) {
+  const size = seasonWindowSize();
+  const windows = size > 0 ? (seasonDraft.windows ?? []).length : 1;
+
+  for (let w = 0; w < windows; w++) {
+    seasonDraft.scenarios.push({
+      scenario: "",
+      category,
+      family,
+      window: size > 0 ? w : undefined,
+      label: family,
+      leaderboardId: null,
+      rankMaxes: Array.from({ length: size > 0 ? size : 1 }, (_, i) => i + 1),
+    });
+  }
+
+  rebalanceEnergy(category);
+}
+
+/** Remove a family and every variant of it. Single variants are never removed alone. */
+function removeFamily(category, family) {
+  seasonDraft.scenarios = seasonDraft.scenarios.filter(
+    (x) => !(x.category === category && x.family === family),
+  );
+  rebalanceEnergy(category);
+}
+
+/**
+ * Re-derive a category's energy thresholds after its family count changes.
+ *
+ * A family caps at 2500 per rank, so a category caps at families * 2500 * ranks and rank r
+ * costs families * 2500 * r. Leave the old numbers in place after removing a family and
+ * the top ranks become unreachable at any score - which the validator refuses, correctly,
+ * but refusing on Save is a worse way to find out than simply not letting it happen.
+ */
+function rebalanceEnergy(category) {
+  const cat = seasonDraft.categories.find((c) => c.name === category);
+  if (!cat) return;
+
+  const families = new Set(
+    seasonDraft.scenarios.filter((x) => x.category === category).map((x) => x.family),
+  ).size;
+
+  cat.rankMaxes = cat.rankNames.map((_, i) => families * 2500 * (i + 1));
+}
+
+/**
+ * Add a difficulty: a window of ranks on every category, and a slot on every family.
+ *
+ * The ladder and the pool move together or not at all. Adding the ranks without the
+ * scenarios makes them unreachable; adding the scenarios without the ranks makes them
+ * ungraded. Both halves happen here, once.
+ */
+function addWindow(name) {
+  const size = seasonWindowSize();
+  if (size <= 0) return;
+
+  seasonDraft.windows = (seasonDraft.windows ?? []).concat(name);
+  const window = seasonDraft.windows.length - 1;
+
+  // A window needs percentiles as much as it needs ranks and scenarios.
+  //
+  // Without them every slot in the new difficulty refuses to fill - "this season has no
+  // percentile ladder to derive from" - because thresholds are derived from a percentile
+  // and there is none for a window nobody gave one. The ladder and the pool moved together
+  // here from the start; the percentiles were the third thing and were left behind.
+  //
+  // The new window reuses the percentiles of the one below it, not smaller ones.
+  //
+  // Percentiles are percentiles of a *board*, and a new window means harder scenarios,
+  // which means a different and stronger population. "Top 8%" of an Advanced board is a
+  // far higher bar than "top 8%" of an Easy one, so the same numbers on a harder board
+  // already describe a harder rank - that is the whole mechanism the windows run on.
+  //
+  // Continuing to shrink them instead was wrong and the arithmetic said so: carrying on
+  // from a window that closes at 0.1% produced 0.11%, 0.05%, 0.05%, 0.05% - three ranks
+  // pinned to the floor and no longer descending. There is no room above one in a
+  // thousand; the room is on the next board along.
+  seasonDraft.derivedFrom ??= {};
+  const ladders = (seasonDraft.derivedFrom.perWindow ??= []);
+  const below = ladders[window - 1];
+
+  ladders[window] =
+    below && below.length === size
+      ? below.slice()
+      : Array.from({ length: size }, (_, i) => Number((0.5 / 2 ** i).toFixed(4)));
+
+  for (const cat of seasonDraft.categories) {
+    for (let i = 0; i < size; i++) {
+      let rank = `${name} ${i + 1}`;
+      while (cat.rankNames.includes(rank)) rank += "*";
+      cat.rankNames.push(rank);
+      cat.rankColors[rank] = "#8891a3";
+    }
+    // Derived from the family count rather than extrapolated from the last gap, which is
+    // how a ladder ends up with ranks nobody can reach.
+    rebalanceEnergy(cat.name);
+  }
+
+  const families = [];
+  for (const x of seasonDraft.scenarios) {
+    const key = `${x.category}/${x.family}`;
+    if (!families.some((f) => `${f.category}/${f.family}` === key)) {
+      families.push({ category: x.category, family: x.family });
+    }
+  }
+
+  for (const f of families) {
+    seasonDraft.scenarios.push({
+      scenario: "",
+      category: f.category,
+      family: f.family,
+      window,
+      label: f.family,
+      leaderboardId: null,
+      rankMaxes: Array.from({ length: size }, (_, i) => i + 1),
+    });
+  }
+}
+
+/** Remove the top difficulty, with the ranks it graded and the slots that filled it. */
+function removeWindow() {
+  const size = seasonWindowSize();
+  const windows = (seasonDraft.windows ?? []).length;
+  if (size <= 0 || windows <= 1) return;
+
+  const window = windows - 1;
+  seasonDraft.windows = seasonDraft.windows.slice(0, window);
+  seasonDraft.scenarios = seasonDraft.scenarios.filter((x) => (x.window ?? 0) !== window);
+  // The percentiles go with it, or the next window added inherits a ladder for a window
+  // that no longer exists and buildSeason refuses the season for having more ladders than
+  // windows.
+  if (seasonDraft.derivedFrom?.perWindow) {
+    seasonDraft.derivedFrom.perWindow = seasonDraft.derivedFrom.perWindow.slice(0, window);
+  }
+
+  for (const cat of seasonDraft.categories) {
+    for (const name of cat.rankNames.splice(window * size, size)) delete cat.rankColors[name];
+    cat.rankMaxes.splice(window * size, size);
+  }
+  for (const [category] of seasonWindowFor) {
+    if (seasonWindowOf(category) >= window) seasonWindowFor.set(category, window - 1);
+  }
+}
+
+/**
+ * Population shape for the ladder as currently edited.
+ *
+ * Debounced, because it is recomputed from a four-hundred-step sweep and every keystroke
+ * in a threshold box would otherwise start one. Failure is quiet: this is a readout, and a
+ * missing readout must never be mistaken for a broken season.
+ */
+let distributionTimer = null;
+
+function scheduleDistribution() {
+  if (HOST !== "electron" || !seasonDraft) return;
+  if (distributionTimer) clearTimeout(distributionTimer);
+  distributionTimer = setTimeout(renderDistribution, 400);
+}
+
+async function renderDistribution() {
+  const host = $("seasonDist");
+  if (!host || !seasonDraft) return;
+
+  const result = await window.apogee.rankDistribution(seasonDraft);
+  if (!result || result.error || !result.categories) {
+    host.textContent = "";
+    return;
+  }
+
+  host.textContent = "";
+
+  for (const cat of result.categories) {
+    const block = document.createElement("div");
+    block.className = "dist-cat";
+
+    const head = document.createElement("div");
+    head.className = "dist-head";
+    head.textContent = cat.category;
+    block.append(head);
+
+    const rows = [{ name: "unranked", share: cat.unranked, rank: 0 }].concat(cat.ranks);
+    const peak = Math.max(...rows.map((r) => r.share), 0.0001);
+
+    for (const row of rows) {
+      const line = document.createElement("div");
+      line.className = "dist-row" + (row.share === 0 && row.rank > 0 ? " empty" : "");
+
+      const label = document.createElement("span");
+      label.className = "dist-name";
+      label.textContent = row.rank > 0 ? `${row.rank}. ${row.name}` : "unranked";
+
+      const track = document.createElement("span");
+      track.className = "dist-track";
+      const fill = document.createElement("span");
+      fill.className = "dist-fill";
+      fill.style.width = `${(row.share / peak) * 100}%`;
+      track.append(fill);
+
+      const value = document.createElement("span");
+      value.className = "dist-val";
+      value.textContent = row.share === 0 && row.rank > 0
+        ? "nobody"
+        : `${(row.share * 100).toFixed(1)}%`;
+
+      line.append(label, track, value);
+      block.append(line);
+    }
+
+    // A rank between two that are held, which nobody holds, is a promise the ladder does
+    // not keep. Worth naming rather than leaving to be spotted in a row of bars.
+    const held = cat.ranks.filter((r) => r.share > 0).map((r) => r.rank);
+    const gaps = cat.ranks.filter(
+      (r) => r.share === 0 && r.rank > held[0] && r.rank < held[held.length - 1],
+    );
+
+    if (gaps.length > 0) {
+      const note = document.createElement("div");
+      note.className = "dist-note";
+      note.textContent =
+        `${gaps.map((g) => g.name).join(", ")} sit${gaps.length === 1 ? "s" : ""} at the top ` +
+        `of a window and nobody holds ${gaps.length === 1 ? "it" : "them"}: the next ` +
+        `difficulty opens at almost the same percentile, so players cross both at once.`;
+      block.append(note);
+    }
+
+    host.append(block);
+  }
+}
+
+/**
+ * Where an unsaved draft is kept between launches.
+ *
+ * The editor holds the draft in memory, and a season cannot be saved while a slot is
+ * empty - which is exactly the state somebody is in halfway through adding a difficulty.
+ * Closing the app there, or restarting it to pick up a build, threw the work away. An
+ * afternoon's editing should not depend on never needing to restart.
+ */
+const SEASON_DRAFT_KEY = "apogee.seasonDraft";
+
+function stashDraft() {
+  if (!seasonDraft) return;
+  try {
+    localStorage.setItem(SEASON_DRAFT_KEY, JSON.stringify(seasonDraft));
+  } catch {
+    // A draft too large to stash is still a working draft; losing the safety net is not
+    // worth interrupting the edit for.
+  }
+}
+
+function clearStashedDraft() {
+  try {
+    localStorage.removeItem(SEASON_DRAFT_KEY);
+  } catch {
+    // Nothing to do: the stash is a convenience, not a source of truth.
+  }
+}
+
+function stashedDraft() {
+  try {
+    const raw = localStorage.getItem(SEASON_DRAFT_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch {
+    return null;
+  }
+}
+
 function seasonDirty(dirty) {
-  $("seasonSave").disabled = !dirty;
+  // An unfilled slot is not a validation failure to discover on Save - it is visible work
+  // in progress, and the gate says what is left rather than what is wrong.
+  const gaps = seasonGaps();
+  const orphans = seasonOrphans();
+
+  $("seasonSave").disabled = !dirty || gaps.length > 0 || orphans.length > 0;
   $("seasonReload").disabled = !dirty;
-  if (dirty) setSeasonStatus("unsaved changes", "");
+
+  const purge = $("seasonPurge");
+  if (purge) {
+    purge.hidden = orphans.length === 0;
+    purge.textContent =
+      orphans.length === 1
+        ? `Remove 1 entry the season cannot grade`
+        : `Remove ${orphans.length} entries the season cannot grade`;
+  }
+
+  if (orphans.length > 0) {
+    stashDraft();
+    setSeasonStatus(
+      `${orphans.map((o) => o.scenario || "(unnamed)").slice(0, 3).join(", ")}` +
+        (orphans.length > 3 ? ` and ${orphans.length - 3} more` : "") +
+        " have no family or difficulty, so nothing can grade them",
+      "bad",
+    );
+    return;
+  }
+
+  if (gaps.length > 0) {
+    stashDraft();
+    setSeasonStatus(
+      `${gaps.length} slot${gaps.length === 1 ? "" : "s"} still to fill: ` +
+        gaps.slice(0, 4).join(", ") +
+        (gaps.length > 4 ? `, and ${gaps.length - 4} more` : ""),
+      "bad",
+    );
+    return;
+  }
+
+  if (dirty) {
+    stashDraft();
+    setSeasonStatus("unsaved changes", "");
+  }
 }
 
 function setSeasonStatus(text, kind) {
@@ -2074,11 +3882,24 @@ async function loadSeasonEditor() {
   }
 
   seasonDraft = result.season;
+
+  // An unsaved draft from a previous session wins over what is on disk, because it is the
+  // newer of the two and the only copy of that work. Discard puts the saved season back.
+  const stashed = stashedDraft();
+  const restored = stashed && JSON.stringify(stashed) !== JSON.stringify(result.season);
+  if (restored) seasonDraft = stashed;
+
   $("seasonNote").textContent = `${seasonDraft.name} · ${result.path}`;
   renderSeasonEditor();
-  seasonDirty(false);
-  setSeasonStatus("", "");
   await loadSeasonPicker();
+
+  if (restored) {
+    seasonDirty(true);
+    setSeasonStatus("restored unsaved changes from your last session", "");
+  } else {
+    seasonDirty(false);
+    setSeasonStatus("", "");
+  }
 }
 
 /**
@@ -2132,6 +3953,18 @@ async function loadSeasonPicker() {
 
   seasonAvailable = result.scenarios;
 
+  // On a windowed season this row would push a scenario with no family and no window,
+  // which the validator refuses - so the season would become unsaveable with an error
+  // about a field the person never saw. "+ family" replaces it and sits next to the
+  // category it joins. The list itself is still loaded: the slot pickers read it.
+  const manual = document.querySelector(".season-add");
+  if (result.windowed) {
+    if (manual) manual.hidden = true;
+    $("seasonAddNote").textContent = "";
+    return;
+  }
+  if (manual) manual.hidden = false;
+
   fillSeasonPicker($("seasonSearch").value);
 
   const cat = $("seasonPickCat");
@@ -2163,7 +3996,13 @@ function renderSeasonEditor() {
     .map((c) => ({ title: c.name, owner: c, isCategory: true }))
     .concat([{ title: "Overall", owner: s, isCategory: false }]);
 
+  const size = seasonWindowSize();
+
   ladders.forEach(({ title, owner, isCategory }) => {
+    // Only a category's ladder is windowed. The overall one is a readout derived from
+    // the three (PLAN.md §14) and has no scenarios under it, so it stays freely editable.
+    const windowed = isCategory && size > 0;
+
     const group = document.createElement("div");
     group.className = "ladder-group";
 
@@ -2172,6 +4011,15 @@ function renderSeasonEditor() {
     heading.textContent = title;
     group.append(heading);
 
+    if (windowed) {
+      const note = document.createElement("div");
+      note.className = "ladder-note";
+      note.textContent =
+        `${owner.rankNames.length / size} windows of ${size}: ` +
+        (seasonDraft.windows ?? []).join(" · ");
+      group.append(note);
+    }
+
     owner.rankNames.forEach((name, i) => {
       const row = document.createElement("div");
       row.className = "season-rank";
@@ -2179,6 +4027,7 @@ function renderSeasonEditor() {
       const n = document.createElement("span");
       n.className = "n";
       n.textContent = i + 1;
+      if (windowed) n.title = windowLabel(Math.floor(i / size));
 
       const text = document.createElement("input");
       text.type = "text";
@@ -2198,24 +4047,52 @@ function renderSeasonEditor() {
       const colour = document.createElement("input");
       colour.type = "color";
       colour.value = owner.rankColors[name] ?? "#8891a3";
+
+      // Said while the colour is being chosen, not after it has shipped. The editor's own
+      // background is neither of the grounds a rank has to survive, so a near-black looks
+      // like a colour here and like nothing in the client.
+      const warn = document.createElement("span");
+      warn.className = "colourwarn";
+
+      const judge = () => {
+        const value = colour.value;
+        const note = colourNote(value);
+        const shared = duplicateColours().get(value.toLowerCase());
+
+        const problems = [];
+        if (note) problems.push(note);
+        if (shared && shared.length > 1) {
+          problems.push(`also ${shared.filter((u) => !u.endsWith(` ${owner.rankNames[i]}`)).join(", ")}`);
+        }
+
+        warn.textContent = problems.length > 0 ? "!" : "";
+        warn.title = problems.join(" · ");
+        warn.hidden = problems.length === 0;
+      };
+
       colour.addEventListener("input", () => {
         owner.rankColors[owner.rankNames[i]] = colour.value;
+        judge();
         seasonDirty(true);
       });
+
+      judge();
 
       const drop = document.createElement("button");
       drop.type = "button";
       drop.className = "rankdrop";
       drop.textContent = "×";
-      drop.title = "Remove this rank";
-      drop.disabled = owner.rankNames.length <= 1;
+      drop.title = windowed
+        ? "A windowed ladder loses ranks a window at a time, with the scenarios that grade them"
+        : "Remove this rank";
+      drop.disabled = owner.rankNames.length <= 1 || windowed;
       drop.addEventListener("click", () => {
         removeRank(owner, i, isCategory);
         renderSeasonEditor();
         seasonDirty(true);
       });
 
-      row.append(n, text, colour, drop);
+      row.append(n, text, colour, warn, drop);
       group.append(row);
     });
 
@@ -2225,9 +4102,13 @@ function renderSeasonEditor() {
     const add = document.createElement("button");
     add.type = "button";
     add.textContent = "+ rank";
-    add.title = isCategory
-      ? "Add a rank, and a threshold for it on every scenario in this category"
-      : "Add a rank to the overall ladder";
+    add.disabled = windowed;
+    add.title = windowed
+      ? `This ladder is ${size} ranks per window. A new window needs a scenario per ` +
+        `family to grade it, so it is built rather than added here.`
+      : isCategory
+        ? "Add a rank, and a threshold for it on every scenario in this category"
+        : "Add a rank to the overall ladder";
     add.addEventListener("click", () => {
       addRank(owner, isCategory);
       renderSeasonEditor();
@@ -2240,9 +4121,142 @@ function renderSeasonEditor() {
     ranks.append(group);
   });
 
-  // ---- scenario thresholds ----
-  // Column headers are per category now, so one shared header row would be wrong for
-  // two of the three. The table is grouped by category instead, each with its own.
+  // Difficulties, which are a property of the whole season rather than of one ladder: a
+  // window adds ranks to every category and a slot to every family, or it adds nothing.
+  if (size > 0) {
+    const group = document.createElement("div");
+    group.className = "ladder-group";
+
+    const heading = document.createElement("div");
+    heading.className = "ladder-title";
+    heading.textContent = "Difficulties";
+    group.append(heading);
+
+    const note = document.createElement("div");
+    note.className = "ladder-note";
+    note.textContent =
+      `${(s.windows ?? []).length} windows of ${size} ranks. Adding one adds ${size} ranks ` +
+      `to every category and an empty slot to every family.`;
+    group.append(note);
+
+    (s.windows ?? []).forEach((name, w) => {
+      const row = document.createElement("div");
+      row.className = "season-rank";
+
+      const n = document.createElement("span");
+      n.className = "n";
+      n.textContent = w + 1;
+
+      const text = document.createElement("input");
+      text.type = "text";
+      text.value = name;
+      text.title = "What this difficulty is called. Display only.";
+      text.addEventListener("input", () => {
+        s.windows[w] = text.value;
+        seasonDirty(true);
+      });
+
+      const spacer = document.createElement("span");
+
+      const drop = document.createElement("button");
+      drop.type = "button";
+      drop.className = "rankdrop";
+      drop.textContent = "×";
+      // Only the top one: removing a middle window would renumber every window above it
+      // and silently re-point every scenario in them.
+      drop.disabled = w !== (s.windows ?? []).length - 1 || (s.windows ?? []).length <= 1;
+      drop.title = drop.disabled
+        ? "Only the hardest difficulty can be removed"
+        : `Remove ${name}, its ${size} ranks, and its scenarios`;
+      drop.addEventListener("click", () => {
+        removeWindow();
+        renderSeasonEditor();
+        seasonDirty(true);
+      });
+
+      row.append(n, text, spacer, drop);
+      group.append(row);
+    });
+
+    const tools = document.createElement("div");
+    tools.className = "ladder-tools";
+    const add = document.createElement("button");
+    add.type = "button";
+    add.textContent = "+ difficulty";
+    add.addEventListener("click", () => {
+      askInline(add, "New difficulty…", (name) => {
+        if ((s.windows ?? []).includes(name)) {
+          setSeasonStatus(`there is already a difficulty called ${name}`, "bad");
+          return;
+        }
+        addWindow(name);
+        renderSeasonEditor();
+        seasonDirty(true);
+      });
+    });
+    tools.append(add);
+    group.append(tools);
+
+    ranks.append(group);
+
+    // The percentile ladder: the season's actual control surface.
+    //
+    // Every threshold is the score at one of these percentiles on that scenario's own
+    // board. Moving rank 7 from the top 15% to the top 8% is one decision that should move
+    // eighteen numbers, and expressing it by editing eighteen numbers by hand is how they
+    // end up inconsistent with each other. Editing here re-derives them all.
+    const pct = document.createElement("div");
+    pct.className = "ladder-group";
+
+    const pctTitle = document.createElement("div");
+    pctTitle.className = "ladder-title";
+    pctTitle.textContent = "Percentiles";
+    pct.append(pctTitle);
+
+    const pctNote = document.createElement("div");
+    pctNote.className = "ladder-note";
+    pctNote.textContent =
+      "Share of each scenario's leaderboard a rank sits above. Editing re-derives every " +
+      "threshold in that difficulty.";
+    pct.append(pctNote);
+
+    (s.windows ?? []).forEach((name, w) => {
+      const ladder = seasonLadder(w);
+      if (!ladder) return;
+
+      const row = document.createElement("div");
+      row.className = "pct-row";
+
+      const label = document.createElement("span");
+      label.className = "pct-name";
+      label.textContent = name;
+      row.append(label);
+
+      ladder.forEach((fraction, i) => {
+        const input = document.createElement("input");
+        input.type = "number";
+        input.className = "pct";
+        input.step = "0.1";
+        input.min = "0";
+        input.max = "100";
+        input.value = (fraction * 100).toFixed(1);
+        input.title = `Rank ${w * size + i + 1}: top ${(fraction * 100).toFixed(1)}%`;
+        input.addEventListener("change", () => rederiveWindow(w, i, input));
+        row.append(input);
+      });
+
+      pct.append(row);
+    });
+
+    ranks.append(pct);
+  }
+
+  // ---- scenario thresholds, one category and one difficulty at a time ----
+  //
+  // Each category gets its own block with its own difficulty dropdown, so what is on
+  // screen is six scenarios against the four ranks of one window. The whole ladder is
+  // still editable; it is just not all editable at once, which is the difference between
+  // a table you can work in and one you can only stare at.
   const head = $("seasonHead");
   head.innerHTML = "";
 
@@ -2250,37 +4264,551 @@ function renderSeasonEditor() {
   body.textContent = "";
 
   s.categories.forEach((cat) => {
-    const ladder = cat.rankNames;
+    const windows = size > 0 ? cat.rankNames.length / size : 1;
+    const window = Math.min(seasonWindowOf(cat.name), windows - 1);
+    const offset = size > 0 ? window * size : 0;
+    // The ranks this window actually grades, which is what the columns are.
+    const ladder = size > 0 ? cat.rankNames.slice(offset, offset + size) : cat.rankNames;
 
     const header = document.createElement("tr");
-    header.innerHTML =
-      '<th colspan="2">' + esc(cat.name) + "</th>" +
-      ladder.map((r) => "<th>" + esc(r) + "</th>").join("") +
-      "<th></th>";
+    header.className = "cat-head";
+
+    const title = document.createElement("th");
+    title.colSpan = size > 0 ? 3 : 2;
+    title.append(document.createTextNode(cat.name));
+
+    if (size > 0) {
+      const pick = document.createElement("select");
+      pick.className = "winpick";
+      pick.title = `Which difficulty of ${cat.name} to edit`;
+      for (let w = 0; w < windows; w++) {
+        const opt = document.createElement("option");
+        opt.value = String(w);
+        opt.textContent = `${windowLabel(w)}  ·  ranks ${w * size + 1}–${w * size + size}`;
+        opt.selected = w === window;
+        pick.append(opt);
+      }
+      pick.addEventListener("change", () => {
+        seasonWindowFor.set(cat.name, Number(pick.value));
+        // Only the table is redrawn: re-rendering the ladders would throw away a
+        // half-typed rank name somebody is in the middle of.
+        renderSeasonEditor();
+      });
+      title.append(pick);
+    }
+
+    if (size > 0) {
+      // Adding a family belongs next to the category it joins, not in a toolbar that has
+      // to ask which category you meant.
+      const add = document.createElement("button");
+      add.type = "button";
+      add.className = "addfam";
+      add.textContent = "+ family";
+      add.title = `Add a scenario family to ${cat.name}, one slot per difficulty`;
+      add.addEventListener("click", () => {
+        askInline(add, `New ${cat.name} family…`, (name) => {
+          const taken = s.scenarios.some((x) => x.category === cat.name && x.family === name);
+          if (taken) {
+            setSeasonStatus(`${cat.name} already has a family called ${name}`, "bad");
+            return;
+          }
+          addFamily(cat.name, name);
+          renderSeasonEditor();
+          seasonDirty(true);
+        });
+      });
+      title.append(add);
+    }
+
+    header.append(title);
+
+    if (size > 0) {
+      const best = document.createElement("th");
+      best.textContent = "your best";
+      header.append(best);
+    }
+
+    for (const rank of ladder) {
+      const th = document.createElement("th");
+      th.textContent = rank;
+      header.append(th);
+    }
+    header.append(document.createElement("th"));
     body.append(header);
 
-    s.scenarios.forEach((scenario, index) => {
-      if (scenario.category !== cat.name) return;
-      renderSeasonRow(body, scenario, index);
-    });
+    // One row per family, showing only the variant that grades the chosen window.
+    const rows = s.scenarios
+      .map((scenario, index) => ({ scenario, index }))
+      .filter(
+        (r) =>
+          r.scenario.category === cat.name &&
+          (size === 0 || (r.scenario.window ?? 0) === window),
+      )
+      .sort((a, b) =>
+        (a.scenario.family ?? a.scenario.scenario).localeCompare(
+          b.scenario.family ?? b.scenario.scenario,
+        ),
+      );
+
+    if (rows.length === 0) {
+      const empty = document.createElement("tr");
+      empty.innerHTML =
+        '<td colspan="' + (ladder.length + (size > 0 ? 5 : 3)) + '" class="empty">' +
+        "No scenarios in this difficulty yet.</td>";
+      body.append(empty);
+      return;
+    }
+
+    rows.forEach(({ scenario, index }) => renderSeasonRow(body, scenario, index));
   });
 
   renderSeasonCategories();
+  scheduleDistribution();
+
+  // Redrawing can change whether the season is complete - filling the last slot, or adding
+  // a difficulty that opens eighteen - so the gate is re-read here rather than only where
+  // an edit happens to call it.
+  if (!$("seasonSave").disabled || seasonGaps().length > 0) {
+    seasonDirty(!$("seasonReload").disabled || seasonGaps().length > 0);
+  }
 }
 
-/** One editable scenario row, against its own category's ladder. */
+/**
+ * Apply an edited percentile and re-derive every threshold it governs.
+ *
+ * The percentiles must descend within a window, or the rank above asks for no more than
+ * the rank below and the ladder stops rising. Refused here rather than on Save, because by
+ * then eighteen thresholds have already moved.
+ */
+async function rederiveWindow(windowIndex, index, input) {
+  const ladder = seasonLadder(windowIndex);
+  if (!ladder) return;
+
+  const value = Number(input.value) / 100;
+  const proposed = ladder.slice();
+  proposed[index] = value;
+
+  const wrong = proposed.findIndex((f, i) => i > 0 && f >= proposed[i - 1]);
+  if (!Number.isFinite(value) || value <= 0 || value > 1 || wrong > 0) {
+    input.value = (ladder[index] * 100).toFixed(1);
+    setSeasonStatus(
+      "percentiles have to fall across a difficulty: a higher rank sits above a smaller " +
+        "share of the board",
+      "bad",
+    );
+    return;
+  }
+
+  const scenarios = seasonDraft.scenarios
+    .filter((x) => (x.window ?? 0) === windowIndex && x.scenario)
+    .map((x) => x.scenario);
+
+  setSeasonStatus("re-deriving…", "");
+  const result = await window.apogee.deriveWindow(scenarios, proposed);
+
+  if (!result || result.error) {
+    input.value = (ladder[index] * 100).toFixed(1);
+    setSeasonStatus(result?.error ?? "could not re-derive", "bad");
+    return;
+  }
+
+  for (const scenario of seasonDraft.scenarios) {
+    const derived = result.derived[scenario.scenario];
+    if (derived) scenario.rankMaxes = derived;
+  }
+
+  seasonDraft.derivedFrom.perWindow[windowIndex] = proposed;
+
+  renderSeasonEditor();
+  seasonDirty(true);
+
+  if (result.missing.length > 0) {
+    setSeasonStatus(
+      `${result.missing.length} scenario(s) have no sampled board and kept their numbers`,
+      "bad",
+    );
+  }
+}
+
+/**
+ * The control that fills an empty slot.
+ *
+ * Choosing the scenario is only half of it: the season's thresholds are percentiles of
+ * each scenario's own KovaaK's board, so the numbers are derived from that board rather
+ * than typed. The main process samples it (and caches it, so `build:season` later derives
+ * the same numbers this showed) and the four thresholds land in the row.
+ */
+function slotPicker(scenario) {
+  const wrap = document.createElement("div");
+  wrap.className = "slotpick";
+
+  // A text input with a datalist, not a select.
+  //
+  // A select of eight hundred scenarios cannot be searched, so the first version capped it
+  // at three hundred - which meant most scenarios were not merely hard to find but absent.
+  // A datalist gives native type-to-search over the whole list, filters as you type, and
+  // needs no cap.
+  const input = document.createElement("input");
+  input.type = "text";
+  input.className = "slotsearch";
+  input.placeholder = `Search scenarios for ${scenario.family ?? "this slot"}…`;
+  input.autocomplete = "off";
+  input.spellcheck = false;
+
+  const listId = `slots-${(scenario.family ?? "x").replace(/\W/g, "")}-${scenario.window ?? 0}`;
+  const list = document.createElement("datalist");
+  list.id = listId;
+  input.setAttribute("list", listId);
+
+  // Scenarios with a board first: those are the ones that can actually be added, since
+  // thresholds come from the board. The rest are still listed, and say why they cannot be.
+  const options = [...seasonAvailable].sort(
+    (a, b) =>
+      Number(!!b.leaderboardId) - Number(!!a.leaderboardId) || b.runs - a.runs ||
+      a.name.localeCompare(b.name),
+  );
+
+  for (const option of options) {
+    const opt = document.createElement("option");
+    opt.value = option.name;
+    opt.label = option.leaderboardId
+      ? option.runs > 0
+        ? `${option.runs} runs, best ${num(option.best)}`
+        : "no history"
+      : "no leaderboard - cannot derive thresholds";
+    list.append(opt);
+  }
+
+  const status = document.createElement("span");
+  status.className = "slotnote";
+  status.textContent = `${windowLabel(scenario.window ?? 0)} · empty`;
+
+  const fill = async () => {
+    const chosen = resolve();
+    if (!chosen) {
+      if (input.value.trim()) {
+        status.textContent = "no single scenario matches that";
+        status.className = "slotnote bad";
+      }
+      return;
+    }
+
+    if (!chosen.leaderboardId) {
+      status.textContent = "no leaderboard for this scenario, so thresholds cannot be derived";
+      status.className = "slotnote bad";
+      return;
+    }
+
+    const ladder = seasonLadder(scenario.window ?? 0);
+    if (!ladder) {
+      status.textContent = "this season has no percentile ladder to derive from";
+      status.className = "slotnote bad";
+      return;
+    }
+
+    status.textContent = "sampling the leaderboard…";
+    status.className = "slotnote";
+    input.disabled = true;
+
+    const result = await window.apogee.sampleScenario(chosen.name, chosen.leaderboardId, ladder);
+    input.disabled = false;
+
+    if (!result || result.error) {
+      status.textContent = result?.error ?? "could not sample that scenario";
+      status.className = "slotnote bad";
+      return;
+    }
+
+    if (!applyScenario(scenario, chosen, result.rankMaxes)) {
+      status.textContent = "that slot is no longer in the season";
+      status.className = "slotnote bad";
+      return;
+    }
+
+    renderSeasonEditor();
+    seasonDirty(true);
+  };
+
+  // An explicit button, not only the change event.
+  //
+  // The first version committed on `change` alone, which fires on blur or on picking a
+  // datalist entry - so the whole interaction was invisible: you could search, see the
+  // scenario you wanted, and have nothing to press. A visible control that says what it
+  // will do is the difference between a form and a guess.
+  const add = document.createElement("button");
+  add.type = "button";
+  add.className = "slotadd";
+  add.textContent = "add";
+  add.disabled = true;
+  add.title = "Sample this scenario's leaderboard and fill the slot";
+  add.addEventListener("click", fill);
+
+  /**
+   * The scenario the typed text refers to, if it refers to exactly one.
+   *
+   * Case-insensitive, and it accepts a partial name that matches only one scenario -
+   * because an exact, case-sensitive match meant typing "pasu" resolved to nothing and
+   * left the button dead with no explanation. Ambiguity is not resolved silently: two
+   * matches means keep typing.
+   */
+  const resolve = () => {
+    const term = input.value.trim().toLowerCase();
+    if (!term) return null;
+
+    const exact = seasonAvailable.find((o) => o.name.toLowerCase() === term);
+    if (exact) return exact;
+
+    const partial = seasonAvailable.filter((o) => o.name.toLowerCase().includes(term));
+    return partial.length === 1 ? partial[0] : null;
+  };
+
+  /** Enabled only for a name that resolves, so the button never lies about what it can do. */
+  const refresh = () => {
+    const term = input.value.trim();
+    const match = resolve();
+    add.disabled = !match || !match.leaderboardId;
+
+    if (!term) {
+      status.textContent = `${windowLabel(scenario.window ?? 0)} · empty`;
+      status.className = "slotnote";
+    } else if (!match) {
+      const near = seasonAvailable.filter((o) =>
+        o.name.toLowerCase().includes(term.toLowerCase()),
+      ).length;
+      status.textContent =
+        near > 1 ? `${near} scenarios match - keep typing` : "no scenario by that name yet";
+      status.className = "slotnote";
+    } else if (!match.leaderboardId) {
+      // Known by name from the stats folder but not by board. The id is one lookup away,
+      // so fetch it rather than declaring the scenario unusable.
+      status.textContent = "looking up its leaderboard…";
+      status.className = "slotnote";
+      void findLeaderboardId(match, refresh, status);
+    } else {
+      status.textContent = "ready to add";
+      status.className = "slotnote";
+    }
+  };
+
+  input.addEventListener("change", () => {
+    refresh();
+    if (!add.disabled) fill();
+  });
+
+  input.addEventListener("keydown", (e) => {
+    if (e.key !== "Enter") return;
+    refresh();
+    if (!add.disabled) fill();
+  });
+
+  // Typing searches KovaaK's itself, not only the few hundred names some committed file
+  // happens to mention. Debounced so a word costs one request rather than one per letter,
+  // and merged into the same datalist so local and remote results read as one list.
+  let searchTimer = null;
+  const remote = new Map();
+
+  input.addEventListener("input", () => {
+    const term = input.value.trim();
+    refresh();
+    if (searchTimer) clearTimeout(searchTimer);
+    if (term.length < 2 || remote.has(term)) return;
+
+    searchTimer = setTimeout(async () => {
+      const found = await window.apogee.searchScenarios(term);
+      if (!found || found.error || !found.scenarios) return;
+      remote.set(term, true);
+
+      for (const hit of found.scenarios) {
+        // A scenario already in the list is usually one from the stats folder, which knows
+        // the name and not the board. Skipping the remote hit left it permanently
+        // unaddable - findable, selectable, and refused for want of an id the search had
+        // just returned. So an existing entry is completed rather than passed over.
+        const existing = seasonAvailable.find((o) => o.name === hit.name);
+        if (existing) {
+          if (!existing.leaderboardId) existing.leaderboardId = hit.leaderboardId;
+          if (!existing.category && hit.aimType) {
+            existing.category = hit.aimType === "Target Switching" ? "Switching" : hit.aimType;
+          }
+          continue;
+        }
+        // Added to the shared list, so a scenario found once stays findable for every
+        // other slot in this session without asking again.
+        seasonAvailable.push({
+          name: hit.name,
+          category: hit.aimType === "Target Switching" ? "Switching" : hit.aimType,
+          difficulty: null,
+          leaderboardId: hit.leaderboardId,
+          runs: 0,
+          best: null,
+          suggested: {},
+        });
+
+        const opt = document.createElement("option");
+        opt.value = hit.name;
+        opt.label = `${hit.entries.toLocaleString()} on the leaderboard`;
+        list.append(opt);
+      }
+
+      // The typed name may have only just become resolvable.
+      refresh();
+    }, 350);
+  });
+
+  wrap.append(input, add, status);
+
+  wrap.append(list);
+  return wrap;
+}
+
+/**
+ * Fill in a scenario's leaderboard id from KovaaK's, by exact name.
+ *
+ * Scenarios discovered from the stats folder carry a name and nothing else, and a name is
+ * not enough: thresholds come from the board. One lookup turns "cannot be derived" into an
+ * ordinary addable scenario, which is what somebody who has played it expects.
+ */
+const idLookups = new Set();
+
+async function findLeaderboardId(option, refresh, status) {
+  if (idLookups.has(option.name)) return;
+  idLookups.add(option.name);
+
+  const found = await window.apogee.searchScenarios(option.name);
+  if (!found || found.error || !found.scenarios) {
+    status.textContent = found?.error ?? "could not reach KovaaK's to look it up";
+    status.className = "slotnote bad";
+    return;
+  }
+
+  const hit = found.scenarios.find(
+    (h) => h.name.toLowerCase() === option.name.toLowerCase(),
+  );
+
+  if (!hit) {
+    status.textContent = "KovaaK's has no leaderboard for this scenario";
+    status.className = "slotnote bad";
+    return;
+  }
+
+  option.leaderboardId = hit.leaderboardId;
+  refresh();
+}
+
+/**
+ * Write a chosen scenario into its slot.
+ *
+ * The slot is found again by identity rather than trusted from the closure that started
+ * the search. Sampling a leaderboard takes seconds, and anything that redraws the editor in
+ * the meantime - a threshold edit, the difficulty dropdown, the distribution refreshing -
+ * hands the row a new object. Writing to the one captured before the wait then updates
+ * something no longer on screen, which looks exactly like the choice being thrown away.
+ *
+ * Returns false when the slot has gone, so the caller can say so instead of silently
+ * doing nothing.
+ */
+function applyScenario(slot, chosen, rankMaxes) {
+  // The exact object when it is still in the draft, which it usually is. The tuple lookup
+  // is the fallback for a redraw that replaced it - and it can only be a fallback now that
+  // a window may hold more than one scenario, since the tuple no longer identifies one.
+  const live = seasonDraft?.scenarios.includes(slot)
+    ? slot
+    : (seasonDraft?.scenarios.find(
+        (x) =>
+          x.category === slot.category &&
+          x.family === slot.family &&
+          (x.window ?? 0) === (slot.window ?? 0) &&
+          !x.scenario,
+      ) ?? null);
+
+  if (!live) return false;
+
+  live.scenario = chosen.name;
+  live.label = chosen.name.replace(/^VT\s+/, "").replace(/\s*S\d(\.\d)?\s*$/i, "").trim();
+  live.leaderboardId = chosen.leaderboardId ?? null;
+  live.rankMaxes = rankMaxes;
+  return true;
+}
+
+/**
+ * One editable scenario row.
+ *
+ * The row carries exactly the thresholds of the window on screen, so there is no padding
+ * and no greyed-out cells: every input belongs to a rank this scenario actually grades.
+ */
 function renderSeasonRow(body, scenario, index) {
   const s = seasonDraft;
+  const size = seasonWindowSize();
   const tr = document.createElement("tr");
 
   const name = document.createElement("td");
-  name.textContent = scenario.label ?? scenario.scenario;
-  name.title = scenario.scenario;
+
+  if (isEmptySlot(scenario)) {
+    // An unfilled slot. Rather than a name it carries the one control that fills it, so
+    // the gap and the thing that closes it are in the same place.
+    tr.className = "slot";
+    name.append(slotPicker(scenario));
+  } else {
+    name.textContent = scenario.label ?? scenario.scenario;
+    // The exact name KovaaK's uses, because that is what has to be launched and what the
+    // leaderboard is keyed on, and the label is deliberately not it.
+    name.title = scenario.scenario;
+  }
 
   const cat = document.createElement("td");
   cat.textContent = scenario.category;
 
   tr.append(name, cat);
+
+  if (size > 0) {
+    // The family, and which of its difficulties are filled.
+    //
+    // The table shows one difficulty at a time, so a scenario chosen for another window is
+    // off screen - which is indistinguishable from it not having been saved. This says, on
+    // every row, how the whole family stands.
+    const family = document.createElement("td");
+    family.className = "family";
+
+    const name = document.createElement("span");
+    name.textContent = scenario.family ?? "";
+    family.append(name);
+
+    const siblings = (s.scenarios ?? []).filter(
+      (x) => x.family === scenario.family && x.category === scenario.category,
+    );
+
+    const state = document.createElement("span");
+    state.className = "famstate";
+    state.textContent = (s.windows ?? [])
+      .map((_, w) => (siblings.some((x) => (x.window ?? 0) === w && x.scenario) ? "●" : "○"))
+      .join("");
+    state.title = (s.windows ?? [])
+      .map((label, w) => {
+        const hit = siblings.find((x) => (x.window ?? 0) === w);
+        return `${label}: ${hit?.scenario || "empty"}`;
+      })
+      .join("\n");
+    family.append(state);
+
+    tr.append(family);
+
+    // What has actually been scored here, from the season's own corpus figures. A
+    // threshold is a judgement about scores, and making one with no scores in front of you
+    // is guessing.
+    const best = document.createElement("td");
+    best.className = "corpus";
+    best.textContent = scenario.corpus ? num(scenario.corpus.best) : "—";
+    best.title = scenario.corpus
+      ? `${scenario.corpus.runs} runs, median ${num(scenario.corpus.median)}` +
+        (scenario.corpus.reaches ? `, reaches ${scenario.corpus.reaches}` : ", unranked")
+      : "no local history on this scenario";
+    tr.append(best);
+  }
+
+  // A threshold typed by hand stops being a percentile and becomes a judgement. Both are
+  // allowed - it is the season owner's ladder - but they are not the same claim, so an
+  // overridden number is marked here and recorded as an override when the pool is written.
+  const ladder = seasonLadder(scenario.window ?? 0);
+  const derived = scenario.derivedRankMaxes ?? (scenario.overridden ? null : scenario.rankMaxes);
 
   scenario.rankMaxes.forEach((value, i) => {
     const td = document.createElement("td");
@@ -2288,8 +4816,18 @@ function renderSeasonRow(body, scenario, index) {
     input.type = "number";
     input.className = "thr";
     input.value = value;
+
+    const off = derived && derived[i] !== value;
+    if (off) {
+      input.classList.add("override");
+      input.title = `Hand-set. The percentiles give ${num(derived[i])}.`;
+    } else if (ladder) {
+      input.title = `Top ${(ladder[i] * 100).toFixed(1)}% of this scenario's leaderboard`;
+    }
+
     input.addEventListener("input", () => {
       scenario.rankMaxes[i] = input.value === "" ? NaN : Number(input.value);
+      input.classList.toggle("override", !!derived && derived[i] !== Number(input.value));
       seasonDirty(true);
     });
     td.append(input);
@@ -2297,17 +4835,103 @@ function renderSeasonRow(body, scenario, index) {
   });
 
   const drop = document.createElement("td");
-  const btn = document.createElement("button");
-  btn.type = "button";
-  btn.className = "rowdrop";
-  btn.textContent = "remove";
-  btn.title = "Take this scenario out of the season";
-  btn.addEventListener("click", () => {
-    s.scenarios.splice(index, 1);
-    renderSeasonEditor();
-    seasonDirty(true);
-  });
-  drop.append(btn);
+  drop.className = "rowacts";
+
+  if (size > 0) {
+    // How many scenarios this family has in this window decides what removing means.
+    // Emptying the last one leaves the slot - the ranks it grades still need something -
+    // while removing an extra takes the row away entirely.
+    const here = s.scenarios.filter(
+      (x) =>
+        x.category === scenario.category &&
+        x.family === scenario.family &&
+        (x.window ?? 0) === (scenario.window ?? 0),
+    );
+
+    // Another scenario for the same difficulty. The family is graded on its best variant,
+    // so a second one reads as "either of these proves the rank".
+    const more = document.createElement("button");
+    more.type = "button";
+    more.className = "rowdrop";
+    more.textContent = "+";
+    more.title = `Another ${windowLabel(scenario.window ?? 0)} scenario for ${scenario.family}, graded as an alternative`;
+    more.addEventListener("click", () => {
+      s.scenarios.push({
+        scenario: "",
+        category: scenario.category,
+        family: scenario.family,
+        window: scenario.window ?? 0,
+        label: scenario.family,
+        leaderboardId: null,
+        rankMaxes: scenario.rankMaxes.map((_, i) => i + 1),
+      });
+      renderSeasonEditor();
+      seasonDirty(true);
+    });
+    drop.append(more);
+
+    if (!isEmptySlot(scenario)) {
+      // Clearing beats deleting: an accidental pick should cost the pick, not the family.
+      const clear = document.createElement("button");
+      clear.type = "button";
+      clear.className = "rowdrop";
+      clear.textContent = here.length > 1 ? "remove" : "clear";
+      clear.title =
+        here.length > 1
+          ? "Take this alternative out"
+          : "Empty this slot, keeping the family and its other difficulties";
+      clear.addEventListener("click", () => {
+        if (here.length > 1) {
+          s.scenarios.splice(index, 1);
+        } else {
+          scenario.scenario = "";
+          scenario.leaderboardId = null;
+          scenario.label = scenario.family;
+        }
+        renderSeasonEditor();
+        seasonDirty(true);
+      });
+      drop.append(clear);
+    } else if (here.length > 1) {
+      // An unused extra slot is just clutter, and cannot be "cleared" any further.
+      const remove = document.createElement("button");
+      remove.type = "button";
+      remove.className = "rowdrop";
+      remove.textContent = "remove";
+      remove.title = "Take this empty alternative out";
+      remove.addEventListener("click", () => {
+        s.scenarios.splice(index, 1);
+        renderSeasonEditor();
+        seasonDirty(true);
+      });
+      drop.append(remove);
+    }
+
+    const family = document.createElement("button");
+    family.type = "button";
+    family.className = "rowdrop danger";
+    family.textContent = "family";
+    family.title = `Remove ${scenario.family} from every difficulty`;
+    family.addEventListener("click", () => {
+      removeFamily(scenario.category, scenario.family);
+      renderSeasonEditor();
+      seasonDirty(true);
+    });
+    drop.append(family);
+  } else {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "rowdrop";
+    btn.textContent = "remove";
+    btn.title = "Take this scenario out of the season";
+    btn.addEventListener("click", () => {
+      s.scenarios.splice(index, 1);
+      renderSeasonEditor();
+      seasonDirty(true);
+    });
+    drop.append(btn);
+  }
+
   tr.append(drop);
 
   body.append(tr);
@@ -2417,45 +5041,91 @@ function renderRanks(data) {
   const host = $("catRanks");
   host.textContent = "";
 
+  // One twelve-rank ladder per category, cut into its windows.
+  //
+  // This used to be a single bar of six coloured segments, which was right when a category
+  // had four ranks and one set of scenarios. With twelve ranks across three difficulties
+  // the useful questions changed: how far up am I, which difficulty am I being graded in,
+  // and what does the next rank cost - on which scenario, since every fourth rank is graded
+  // by a harder one than the rank below it.
   data.categories.forEach((cat) => {
-    const colour = bench.rankColors[cat.rankName] ?? "#8891a3";
-
-    // Where this category sits between its rank and the next, from the scenarios that
-    // make it up. The closest scenario to a promotion is the useful thing to name.
-    const climbing = cat.scenarios
-      .filter((s) => s.nextRankName && s.gap > 0)
-      .sort((a, b) => a.gap - b.gap)[0];
+    const size = data.benchmark.windowSize ?? cat.rankNames.length;
+    const windows = data.benchmark.windows ?? [];
+    const depth = cat.rankNames.length;
+    const here = cat.rankNames.indexOf(cat.rankName); // -1 when unranked
+    const colour = rankColor(data, cat.rankName, cat);
 
     const el = document.createElement("div");
     el.className = "cat-rank";
-    el.innerHTML =
-      '<div class="cat-rank-top">' +
+
+    const top = document.createElement("div");
+    top.className = "cat-rank-top";
+    top.innerHTML =
       '<span class="cat-rank-name">' + esc(cat.name) + "</span>" +
       '<span class="cat-rank-rank" style="color:' + esc(colour) + '">' +
-      esc(cat.rankName) + " · " + num(cat.energy) + " energy</span>" +
-      "</div>" +
-      '<div class="cat-bar">' +
-      cat.scenarios
-        .map((s) => {
-          const c = bench.rankColors[s.rankName] ?? "#39414f";
-          return '<div style="flex:1;background:' + esc(c) + '"></div>';
-        })
-        .join("") +
-      "</div>" +
-      '<div class="cat-rank-note">' +
-      (climbing
-        ? esc(climbing.label) + " is closest: " + num(climbing.gap) +
-          " points from " + esc(climbing.nextRankName)
-        : "every scenario here is at its top rank") +
-      "</div>";
+      esc(cat.rankName || "unranked") + " · " + num(cat.energy) + " energy</span>";
+    el.append(top);
+
+    // The ladder itself: one cell per rank, grouped into window bands.
+    const strip = document.createElement("div");
+    strip.className = "ladder-strip";
+
+    for (let w = 0; w * size < depth; w++) {
+      const band = document.createElement("div");
+      band.className = "band";
+
+      const label = document.createElement("span");
+      label.className = "band-name";
+      label.textContent = windows[w] ?? `window ${w + 1}`;
+      band.append(label);
+
+      const rungs = document.createElement("div");
+      rungs.className = "band-rungs";
+
+      for (let i = w * size; i < Math.min(depth, w * size + size); i++) {
+        const name = cat.rankNames[i];
+        const rung = document.createElement("span");
+        rung.className =
+          "rung" + (i < here ? " done" : i === here ? " here" : "");
+        rung.style.setProperty("--rank", rankColor(data, name, cat));
+        rung.title = `${name} · rank ${i + 1} of ${depth} · ${num(cat.rankMaxes ? cat.rankMaxes[i] : 0)} energy`;
+        rung.textContent = String(i + 1);
+        rungs.append(rung);
+      }
+
+      band.append(rungs);
+      strip.append(band);
+    }
+
+    el.append(strip);
+
+    // What the next rank costs, and where it is scored.
+    const climbing = cat.scenarios
+      .filter((x) => x.nextRankName && x.gap > 0)
+      .sort((a, b) => a.gap / Math.max(1, a.nextRankScore) - b.gap / Math.max(1, b.nextRankScore))[0];
+
+    const note = document.createElement("div");
+    note.className = "cat-rank-note";
+    note.innerHTML = climbing
+      ? "Closest: " + num(climbing.gap) + " points on <b>" +
+        esc(climbing.nextRankIsNewScenario ? targetName(climbing) : climbing.label) +
+        "</b> for " + esc(climbing.nextRankName) +
+        (climbing.nextRankIsNewScenario
+          ? ' <span class="onscen">a harder scenario than the one ranking you now</span>'
+          : "")
+      : "Every scenario here is at its top rank.";
+    el.append(note);
+
     host.append(el);
   });
 
   // ---- what it takes ----
+  // The category travels with each row, because the rank names in it are that category's
+  // and looking them up on the overall ladder returns nothing.
   const rows = data.categories
-    .reduce((all, c) => all.concat(c.scenarios), [])
-    .filter((s) => s.nextRankName && s.gap > 0)
-    .sort((a, b) => a.gap - b.gap);
+    .reduce((all, c) => all.concat(c.scenarios.map((s) => ({ s, cat: c }))), [])
+    .filter(({ s }) => s.nextRankName && s.gap > 0)
+    .sort((a, b) => a.s.gap - b.s.gap);
 
   const body = $("nextRankBody");
   body.textContent = "";
@@ -2467,16 +5137,25 @@ function renderRanks(data) {
     return;
   }
 
-  rows.forEach((s) => {
-    const colour = data.benchmark.rankColors[s.rankName] ?? "#8891a3";
-    const next = data.benchmark.rankColors[s.nextRankName] ?? "#8891a3";
+  rows.forEach(({ s, cat }) => {
+    const colour = rankColor(data, s.rankName, cat);
+    const next = rankColor(data, s.nextRankName, cat);
     const tr = document.createElement("tr");
+
+    // Where the target score is scored. On a windowed ladder the next rank crosses into a
+    // harder variant every fourth rank, and then the gap is against a scenario that is
+    // not the one in the first column - so that column says so rather than implying the
+    // player just needs a few more points on what they were already playing.
+    const target = s.nextRankIsNewScenario
+      ? " <span class=\"onscen\">on " + esc(targetName(s)) + "</span>"
+      : "";
+
     tr.innerHTML =
-      "<td>" + esc(s.label) + "</td>" +
-      '<td style="color:' + esc(colour) + '">' + esc(s.rankName) + "</td>" +
+      "<td>" + esc(s.label) + (s.windowName ? ' <span class="win">' + esc(s.windowName) + "</span>" : "") + "</td>" +
+      '<td style="color:' + esc(colour) + '">' + esc(s.rankName || "unranked") + "</td>" +
       "<td>" + num(s.score) + "</td>" +
       '<td style="color:' + esc(next) + '">' + esc(s.nextRankName) + "</td>" +
-      "<td>" + num(s.nextRankScore) + "</td>" +
+      "<td>" + num(s.nextRankScore) + target + "</td>" +
       "<td>+" + num(s.gap) + "</td>";
     body.append(tr);
   });
@@ -2705,6 +5384,91 @@ function renderSettled(s) {
   });
 }
 
+/**
+ * Which difficulties hold enough history to grade the player honestly.
+ *
+ * Built because the ladder now spans several difficulties and a player is realistically
+ * measured on one of them. That is not a failing - it is what playing a benchmark looks
+ * like - but it decides which matches mean anything, so it belongs on screen rather than
+ * in a validator nobody runs.
+ */
+function renderCoverage(data) {
+  const host = $("coverage");
+  if (!host) return;
+
+  const coverage = data.coverage ?? [];
+  host.textContent = "";
+
+  if (coverage.length === 0) {
+    host.innerHTML = '<p class="rank-lede">No season loaded, so nothing to measure against.</p>';
+    return;
+  }
+
+  for (const category of [...new Set(coverage.map((c) => c.category))]) {
+    const rows = coverage.filter((c) => c.category === category);
+
+    const block = document.createElement("div");
+    block.className = "cover-cat";
+
+    const head = document.createElement("div");
+    head.className = "cover-head";
+    head.textContent = category;
+    block.append(head);
+
+    for (const row of rows) {
+      const line = document.createElement("div");
+      line.className = "cover-row" + (row.matchable ? " ready" : "");
+
+      const name = document.createElement("span");
+      name.className = "cover-name";
+      name.textContent = row.windowName;
+
+      const track = document.createElement("span");
+      track.className = "cover-track";
+      const fill = document.createElement("span");
+      fill.className = "cover-fill";
+      fill.style.width = `${row.total > 0 ? (row.measured / row.total) * 100 : 0}%`;
+      track.append(fill);
+
+      const value = document.createElement("span");
+      value.className = "cover-val";
+      value.textContent = `${row.measured}/${row.total}`;
+      value.title = row.matchable
+        ? "enough scenarios measured to draw a match from"
+        : "not enough measured scenarios to draw a match from";
+
+      line.append(name, track, value);
+      block.append(line);
+    }
+
+    // The cheapest thing to play next, which is the only actionable part of this panel.
+    const locked = rows.filter((r) => !r.matchable);
+    if (locked.length > 0) {
+      const cheapest = locked
+        .map((r) => {
+          const need = r.scenarios
+            .filter((x) => !x.measured)
+            .sort((a, b) => a.needs - b.needs)
+            .slice(0, Math.max(0, 3 - r.measured));
+          return { row: r, need, cost: need.reduce((n, x) => n + x.needs, 0) };
+        })
+        .filter((x) => x.need.length > 0)
+        .sort((a, b) => a.cost - b.cost)[0];
+
+      if (cheapest) {
+        const next = document.createElement("div");
+        next.className = "cover-next";
+        next.textContent =
+          `${cheapest.cost} more runs unlocks ${cheapest.row.windowName}: ` +
+          cheapest.need.map((x) => `${x.label} +${x.needs}`).join(", ");
+        block.append(next);
+      }
+    }
+
+    host.append(block);
+  }
+}
+
 function renderProfile(data) {
   $("weakNote").textContent = data.weakest + " is your weakest category";
 
@@ -2713,7 +5477,7 @@ function renderProfile(data) {
   wmap.textContent = "";
 
   data.categories.forEach((cat) => {
-    const colour = data.benchmark.rankColors[cat.rankName] || "#8892a4";
+    const colour = rankColor(data, cat.rankName, cat);
     const row = document.createElement("div");
     row.className = "wrow";
     row.innerHTML =
@@ -2727,14 +5491,19 @@ function renderProfile(data) {
 
   const body = $("scenBody");
   body.textContent = "";
+
+  // One row per family, showing the variant that earned the rank. Which variant that is
+  // matters - it is the scenario the score in this row belongs to - so the window is on
+  // the label, and the target names its own scenario when the next rank moves up a window.
   data.categories
-    .reduce((all, c) => all.concat(c.scenarios), [])
-    .sort((a, b) => a.energy - b.energy)
-    .forEach((s) => {
-      const colour = data.benchmark.rankColors[s.rankName] || "var(--ink-dim)";
+    .reduce((all, c) => all.concat(c.scenarios.map((s) => ({ s, cat: c }))), [])
+    .sort((a, b) => a.s.energy - b.s.energy)
+    .forEach(({ s, cat }) => {
+      const colour = rankColor(data, s.rankName, cat);
       const tr = document.createElement("tr");
       tr.innerHTML =
-        "<td>" + esc(s.label) + "</td>" +
+        "<td>" + esc(s.label) +
+          (s.windowName ? ' <span class="win">' + esc(s.windowName) + "</span>" : "") + "</td>" +
         "<td>" + esc(s.subCategory || "—") + "</td>" +
         "<td>" + (s.score ? num(s.score) : "—") + "</td>" +
         '<td style="color:' + esc(colour) + '">' + esc(s.rankName || "—") + "</td>" +
@@ -2742,7 +5511,10 @@ function renderProfile(data) {
         "<td>" + s.runs + "</td>" +
         "<td>" +
           (s.gap != null
-            ? "+" + num(s.gap) + " → " + esc(s.nextRankName)
+            ? "+" + num(s.gap) + " → " + esc(s.nextRankName) +
+              (s.nextRankIsNewScenario
+                ? ' <span class="onscen">on ' + esc(targetName(s)) + "</span>"
+                : "")
             : '<span style="color:var(--ink-dim)">max</span>') +
         "</td>";
       body.append(tr);
@@ -2930,6 +5702,7 @@ if (HOST === "electron" && window.apogee.isAdmin) {
   void window.apogee.isAdmin().then((r) => {
     if (!r || !r.admin) return;
     $("tabSeason").hidden = false;
+    numberTabs();
     void loadSeasonEditor();
   });
 
@@ -2957,10 +5730,24 @@ if (HOST === "electron" && window.apogee.isAdmin) {
         : `saved to ${where[0] ?? "disk"} · rebuilding`,
       "good",
     );
+    // Saved, so the stash is no longer the newer copy of anything.
+    clearStashedDraft();
     seasonDirty(false);
   });
 
+  $("seasonPurge").addEventListener("click", () => {
+    const orphans = new Set(seasonOrphans());
+    if (orphans.size === 0) return;
+    seasonDraft.scenarios = seasonDraft.scenarios.filter((x) => !orphans.has(x));
+    for (const cat of seasonDraft.categories) rebalanceEnergy(cat.name);
+    renderSeasonEditor();
+    seasonDirty(true);
+    setSeasonStatus(`removed ${orphans.size} ungradeable entr${orphans.size === 1 ? "y" : "ies"}`, "good");
+  });
+
   $("seasonReload").addEventListener("click", () => {
+    // Discard means the season on disk, not the draft that was being restored.
+    clearStashedDraft();
     void loadSeasonEditor();
   });
 
@@ -2996,6 +5783,18 @@ if (HOST === "electron" && window.apogee.isAdmin) {
     const chosen = seasonAvailable[Number($("seasonPick").value)];
     if (!chosen || !seasonDraft) return;
 
+    // This row adds a bare scenario, with no family and no window, which a windowed season
+    // refuses - and refuses at Save, long after the fact, naming a scenario that renders
+    // nowhere because its category never matched a block. Hiding the row was not enough:
+    // it is hidden after the picker loads, so it is clickable until then.
+    if (seasonWindowSize() > 0) {
+      setSeasonStatus(
+        "this season is windowed - use + family, so the scenario gets a slot in every difficulty",
+        "bad",
+      );
+      return;
+    }
+
     seasonDraft.scenarios.push({
       scenario: chosen.name,
       category: $("seasonPickCat").value,
@@ -3013,13 +5812,107 @@ if (HOST === "electron" && window.apogee.isAdmin) {
   });
 }
 
+/**
+ * The screen the player was last on.
+ *
+ * Someone who spends their evening on Consistency should not be handed Queue every
+ * launch. Stored per machine in the renderer rather than in main's settings file: it is
+ * a view preference, and main has no business knowing which tab is open.
+ */
+const LAST_SCREEN_KEY = "apogee.lastScreen";
+
+function rememberScreen(name) {
+  try {
+    localStorage.setItem(LAST_SCREEN_KEY, name);
+  } catch {
+    /* Private mode, or storage disabled. The tab still works, it just forgets. */
+  }
+}
+
+function restoreScreen() {
+  let name = null;
+  try {
+    name = localStorage.getItem(LAST_SCREEN_KEY);
+  } catch {
+    return;
+  }
+  if (!name || name === "queue") return;
+
+  const tab = document.querySelector('.tab[data-screen="' + name + '"]');
+  // Skip a tab that is not there any more: the Season tab is admin-only, and it is
+  // revealed after boot, so a remembered "season" simply lands on Queue.
+  if (tab && !tab.hidden) tab.click();
+}
+
 document.querySelectorAll(".tab").forEach((tab) => {
   tab.addEventListener("click", () => {
     document.querySelectorAll(".tab").forEach((t) => t.setAttribute("aria-selected", "false"));
     tab.setAttribute("aria-selected", "true");
     document.querySelectorAll(".screen").forEach((s) => s.classList.remove("active"));
     $("screen-" + tab.dataset.screen).classList.add("active");
+    rememberScreen(tab.dataset.screen);
   });
+});
+
+restoreScreen();
+
+/**
+ * Put each tab's shortcut in its tooltip.
+ *
+ * Re-run whenever a tab appears: revealing the admin-only Season tab renumbers
+ * everything after it, and a tooltip that lies is worse than none.
+ */
+function numberTabs() {
+  const tabs = [...document.querySelectorAll(".tab")].filter((tab) => !tab.hidden);
+  tabs.forEach((tab, i) => {
+    tab.title = i < 9 ? "Press " + (i + 1) : "";
+  });
+}
+
+numberTabs();
+
+/**
+ * Number keys select a tab, and the arrows walk them.
+ *
+ * This is an app people leave open all evening between runs, and the tab strip is the
+ * only navigation there is. The numbers follow what is on screen rather than a fixed
+ * list, because the Season tab is only there for an admin — hard-coding 4 = Season would
+ * put every later tab one place out for everybody else.
+ */
+document.addEventListener("keydown", (e) => {
+  if (e.ctrlKey || e.altKey || e.metaKey) return;
+
+  // Never steal a keystroke from something being typed into, including the season
+  // editor's inline name fields.
+  const target = e.target;
+  if (target && (target.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(target.tagName))) {
+    return;
+  }
+
+  // A modal is showing: its own Escape handling owns the keyboard.
+  const modal = $("celebrate");
+  if (modal && !modal.hidden) return;
+
+  const tabs = [...document.querySelectorAll(".tab")].filter((tab) => !tab.hidden);
+  if (tabs.length === 0) return;
+
+  if (/^[1-9]$/.test(e.key)) {
+    const tab = tabs[Number(e.key) - 1];
+    if (tab) {
+      tab.click();
+      e.preventDefault();
+    }
+    return;
+  }
+
+  if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
+    const here = tabs.findIndex((tab) => tab.getAttribute("aria-selected") === "true");
+    const step = e.key === "ArrowRight" ? 1 : -1;
+    const next = tabs[(Math.max(0, here) + step + tabs.length) % tabs.length];
+    next.click();
+    next.focus();
+    e.preventDefault();
+  }
 });
 
 /* ------------------------------------------------------------------ match */
@@ -3120,7 +6013,7 @@ $("queueBtn").addEventListener("click", async () => {
   $("opponent").classList.remove("on");
   showError(null);
 
-  const result = await window.apogee.findMatch(selectedCategory, current.benchmark.difficulty);
+  const result = await window.apogee.findMatch(selectedCategory, current.benchmark.matchPool);
 
   $("searching").classList.remove("on");
   btn.disabled = false;
@@ -3442,6 +6335,7 @@ if (HOST === "electron") {
   var currentPath = "";
   api.getState().then((state) => {
     currentPath = state.statsDir || "";
+    showBuild(state.build);
     renderSession(state.session, state.configured);
     if (state.snapshot) {
       render(state.snapshot);

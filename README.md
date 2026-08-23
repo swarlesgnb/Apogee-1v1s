@@ -294,9 +294,20 @@ resolves to nothing rather than silently tracking the wrong season.
 ## Desktop client
 
 ```bash
-npm start     # build and launch
-npm run smoke # boot, verify, exit; no window, usable in CI
+npm start      # build and launch
+npm run dev    # the same, but rebuilt and relaunched on every save
+npm run smoke  # boot, verify, exit; no window, usable in CI
+npm run doctor # why is it not working: bundle, folder, keys, data
 ```
+
+`npm run dev` exists because Electron holds a single-instance lock: `npm start` with a
+window already open focuses the old process, which is still running the old bundle, so
+a change that is definitely on disk is definitely not in the app. The dev loop rebuilds
+and relaunches on save, and the window reopens where it was.
+
+The stats folder is found from Steam's own `libraryfolders.vdf`, so an install on any
+drive or library is picked up without being told; a folder chosen by hand is remembered,
+along with the window's size and position.
 
 Electron main process finds the KovaaK's stats folder, watches it, and rebuilds the
 player snapshot whenever a run lands. **All parsing and computation happens in main**;

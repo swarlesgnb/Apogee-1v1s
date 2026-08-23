@@ -106,6 +106,10 @@
     color: var(--ink-mid); overflow: hidden; text-overflow: ellipsis;
     white-space: nowrap; max-width: 46ch;
   }
+  /* Which bundle this window is running. A window left open across a rebuild keeps the
+     old code and looks identical to a fresh one, so the answer is on screen rather than
+     in the terminal that launched it. */
+  .status .build { margin-left: auto; color: var(--ink-dim); opacity: .75; }
   .status button {
     font: inherit; font-family: var(--font); font-size: 11.5px;
     color: var(--ink-mid); background: transparent;
@@ -387,7 +391,12 @@
   }
   .ladder-tools button:hover:not(:disabled) { color: var(--ink); border-color: var(--ink-dim); }
   .ladder-tools button:disabled { opacity: .4; cursor: default; }
-  .season-rank { grid-template-columns: 22px 1fr 46px 24px; }
+  .season-rank { grid-template-columns: 22px 1fr 46px 14px 24px; }
+  /* A colour that cannot be read, flagged where it is chosen. */
+  .colourwarn {
+    font-size: 12px; font-weight: 700; color: var(--warn);
+    text-align: center; cursor: help; line-height: 1;
+  }
   .season-rank button.rankdrop {
     font: inherit; font-size: 13px; line-height: 1; color: var(--ink-dim);
     background: transparent; border: none; cursor: pointer; padding: 2px 4px;
@@ -408,6 +417,14 @@
   .season-add button:hover:not(:disabled) { color: var(--ink); border-color: var(--ink-dim); }
   .season-add button:disabled { opacity: .5; cursor: default; }
 
+  /* Only appears when there is something ungradeable to remove. */
+  button.purge {
+    font: inherit; font-size: 12px; color: var(--down);
+    background: transparent; border: 1px solid #56222a;
+    border-radius: 7px; padding: 6px 13px; cursor: pointer;
+  }
+  button.purge:hover { border-color: var(--down); }
+
   .season-status { font-size: 12px; color: var(--ink-dim); }
   .season-status.bad { color: var(--down); }
   .season-status.good { color: var(--up); }
@@ -426,7 +443,197 @@
     background: transparent; border: 1px solid var(--line); border-radius: 5px;
     padding: 2px 8px; cursor: pointer;
   }
-  .scen button.rowdrop:hover { color: var(--down); border-color: #56222a; }
+  .scen td.rowacts { display: flex; gap: 4px; white-space: nowrap; }
+  .scen button.rowdrop:hover:not(:disabled) { color: var(--ink); border-color: var(--ink-dim); }
+  .scen button.rowdrop.danger:hover { color: var(--down); border-color: #56222a; }
+  .scen button.rowdrop:disabled { opacity: .35; cursor: default; }
+
+  /* Which of a family's three variants a row is about, and where a target is scored.
+     Both are quiet: they qualify the thing next to them rather than competing with it,
+     and a name like "Pasu" is ambiguous without them. */
+  .win {
+    font-family: var(--mono); font-size: 10px; letter-spacing: .06em;
+    text-transform: uppercase; color: var(--ink-dim);
+  }
+  .onscen { font-size: 11px; color: var(--ink-dim); white-space: nowrap; }
+
+  /* The twelve-rank ladder, cut into its difficulty bands. Each rung carries its own
+     rank colour; the ones below the player are filled, the one they hold is ringed. */
+  .ladder-strip { display: flex; gap: 14px; flex-wrap: wrap; margin: 12px 0 10px; }
+  .ladder-strip .band { display: grid; gap: 5px; }
+  .ladder-strip .band-name {
+    font-family: var(--mono); font-size: 10px; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--ink-dim);
+  }
+  .ladder-strip .band-rungs { display: flex; gap: 3px; }
+  .ladder-strip .rung {
+    width: 26px; height: 22px; border-radius: 5px;
+    display: grid; place-items: center;
+    font-family: var(--mono); font-size: 10.5px;
+    color: var(--ink-dim);
+    background: var(--sunken); border: 1px solid var(--line);
+  }
+  .ladder-strip .rung.done {
+    background: color-mix(in srgb, var(--rank) 30%, var(--sunken));
+    border-color: color-mix(in srgb, var(--rank) 55%, var(--line));
+    color: var(--ink);
+  }
+  .ladder-strip .rung.here {
+    background: var(--rank); border-color: var(--rank);
+    color: var(--void); font-weight: 700;
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--rank) 35%, transparent);
+  }
+
+  /* Each category is edited one difficulty at a time, so the dropdown lives in the
+     header row it governs rather than in a toolbar away from the numbers. */
+  .scen tr.cat-head th { padding-top: 16px; }
+  select.winpick {
+    font: inherit; font-size: 11px; font-family: var(--mono);
+    letter-spacing: .04em; text-transform: none;
+    color: var(--ink); background: var(--sunken);
+    border: 1px solid var(--line-bright); border-radius: 6px;
+    padding: 3px 7px; margin-left: 12px; cursor: pointer;
+  }
+  select.winpick:hover { border-color: var(--ink-dim); }
+  .scen td.empty { color: var(--ink-dim); padding: 14px 0; }
+
+  /* A family or difficulty added but not yet filled. Marked rather than hidden: the work
+     left is the point, and Save is held until there is none of it. */
+  .scen tr.slot { background: #1d1608; }
+  .scen tr.slot td { border-color: #3a2e12; }
+  .slotpick { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
+  .slotpick input.slotsearch {
+    font: inherit; font-size: 12px; color: var(--ink);
+    background: var(--sunken); border: 1px solid var(--line-bright);
+    border-radius: 6px; padding: 4px 8px; width: 250px;
+  }
+  .slotpick input.slotsearch:focus { outline: none; border-color: var(--ink-dim); }
+  .slotpick input.slotsearch:disabled { opacity: .6; }
+  button.slotadd {
+    font: inherit; font-size: 12px; font-weight: 620;
+    color: var(--void); background: var(--ink);
+    border: 0; border-radius: 6px; padding: 4px 13px; cursor: pointer;
+  }
+  button.slotadd:hover:not(:disabled) { background: #fff; }
+  button.slotadd:disabled {
+    color: var(--ink-dim); background: transparent;
+    border: 1px solid var(--line-bright); cursor: default;
+  }
+
+  .slotnote { font-size: 11px; color: var(--warn); }
+  .slotnote.bad { color: var(--down); }
+
+  /* The percentile ladder, which is what actually decides every threshold. */
+  .pct-row { display: flex; align-items: center; gap: 6px; }
+  .pct-name {
+    font-size: 11.5px; color: var(--ink-mid); width: 66px; flex: none;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  input.pct {
+    font: inherit; font-family: var(--mono); font-size: 11.5px; color: var(--ink);
+    background: var(--sunken); border: 1px solid var(--line);
+    border-radius: 5px; padding: 3px 4px; width: 52px; text-align: right;
+  }
+  input.pct:focus { border-color: var(--ink-dim); outline: none; }
+
+  /* A threshold typed over the derivation. Marked, because "top 15% of the board" and
+     "a number somebody chose" are different claims and should not look alike. */
+  .scen input.thr.override {
+    color: var(--warn);
+    border-color: #3a2e12;
+    background: #1d1608;
+  }
+
+  /* Population shape. Bars are relative to the fullest rank, not to 100%, because the
+     interesting comparison is between ranks and the absolute numbers are small. */
+  .dist { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+  .dist-cat { display: grid; gap: 3px; align-content: start; }
+  .dist-head {
+    font-size: 11px; text-transform: uppercase; letter-spacing: .07em;
+    color: var(--ink-dim); padding-bottom: 4px; margin-bottom: 3px;
+    border-bottom: 1px solid var(--line);
+  }
+  .dist-row { display: grid; grid-template-columns: 108px 1fr 52px; align-items: center; gap: 8px; }
+  .dist-name {
+    font-size: 11.5px; color: var(--ink-mid);
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .dist-track { height: 9px; background: var(--sunken); border-radius: 3px; overflow: hidden; }
+  .dist-fill { display: block; height: 100%; background: var(--ink-dim); border-radius: 3px; }
+  .dist-val {
+    font-family: var(--mono); font-size: 10.5px; color: var(--ink-dim);
+    text-align: right; font-variant-numeric: tabular-nums;
+  }
+  .dist-row.empty .dist-name,
+  .dist-row.empty .dist-val { color: var(--warn); }
+  .dist-note {
+    font-size: 11.5px; color: var(--warn); line-height: 1.45;
+    margin-top: 8px; padding: 8px 10px;
+    background: #1d1608; border: 1px solid #3a2e12; border-radius: 6px;
+  }
+
+  /* Naming happens where the thing will appear, not in a dialog. */
+  input.inline-ask {
+    font: inherit; font-size: 12px; color: var(--ink);
+    background: var(--sunken); border: 1px solid var(--ink-dim);
+    border-radius: 6px; padding: 3px 9px; margin-left: 10px; width: 190px;
+  }
+  input.inline-ask:focus { outline: none; border-color: var(--ink); }
+
+  button.addfam {
+    font: inherit; font-size: 11px; font-weight: 500;
+    letter-spacing: .02em; text-transform: none;
+    color: var(--ink-mid); background: transparent;
+    border: 1px solid var(--line-bright); border-radius: 6px;
+    padding: 3px 9px; margin-left: 10px; cursor: pointer;
+  }
+  button.addfam:hover { color: var(--ink); border-color: var(--ink-dim); }
+  .scen td.family {
+    font-size: 11px; color: var(--ink-dim); white-space: nowrap;
+  }
+  /* Which of a family's difficulties are filled, on every row of it. */
+  .famstate {
+    margin-left: 7px; letter-spacing: 2px; font-size: 9px;
+    color: var(--ink-dim); cursor: help;
+  }
+
+  /* What has actually been scored on this scenario, so a threshold can be judged
+     against reality rather than against a feeling about the number. */
+  .scen td.corpus {
+    font-family: var(--mono); font-size: 11px; color: var(--ink-mid);
+    text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap;
+  }
+  .ladder-note {
+    font-size: 11px; color: var(--ink-dim); margin-top: -4px;
+  }
+
+  /* Coverage: which difficulties hold enough history to be graded honestly. */
+  .cover { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; }
+  .cover-cat { display: grid; gap: 5px; align-content: start; }
+  .cover-head {
+    font-size: 11px; text-transform: uppercase; letter-spacing: .07em;
+    color: var(--ink-dim); padding-bottom: 4px; border-bottom: 1px solid var(--line);
+  }
+  .cover-row { display: grid; grid-template-columns: 84px 1fr 58px; align-items: center; gap: 9px; }
+  .cover-name { font-size: 12px; color: var(--ink-mid); }
+  .cover-track { height: 8px; background: var(--sunken); border-radius: 3px; overflow: hidden; }
+  .cover-fill { display: block; height: 100%; border-radius: 3px; background: var(--ink-dim); }
+  .cover-row.ready .cover-fill { background: var(--up); }
+  .cover-val {
+    font-family: var(--mono); font-size: 10.5px; color: var(--ink-dim); text-align: right;
+  }
+  .cover-row.ready .cover-val { color: var(--up); }
+  .cover-next { font-size: 11.5px; color: var(--ink-dim); margin-top: 6px; line-height: 1.45; }
+
+  /* Which difficulty a match draws from, and whether the player is measured on it. */
+  .pool-note {
+    font-size: 12.5px; line-height: 1.5; color: var(--ink-mid);
+    margin: 12px 0 4px; padding: 10px 12px;
+    background: var(--sunken); border: 1px solid var(--line); border-radius: 8px;
+  }
+  .pool-note.warn { border-color: #3a2e12; background: #1d1608; color: var(--warn); }
+  .pool-note b { color: var(--ink); font-weight: 640; }
+  .pool-note.warn b { color: var(--warn); }
 
   /* ---------------- ranks ---------------- */
   .rank-lede {
@@ -764,6 +971,7 @@
     <button type="button" id="btnRescan">Rescan</button>
     <button type="button" id="btnChoose">Choose folder…</button>
     <button type="button" id="btnOpen">Open folder</button>
+    <span class="build" id="buildStamp" title="Which bundle this window is running"></span>
   </div>
 
   <div class="preview-note" id="previewNote" hidden>
@@ -817,10 +1025,11 @@
       <div class="panel">
         <div class="phead">
           <h2>Find a match</h2>
-          <span class="note">three scenarios, scored against your own baseline</span>
+          <span class="note" id="queueNote">three scenarios, scored against your own baseline</span>
         </div>
         <div class="pbody">
           <div class="cats" id="cats"></div>
+          <div class="pool-note" id="poolNote"></div>
           <button class="queue-btn" id="queueBtn">Find opponent</button>
           <div class="searching" id="searching">searching the pool…</div>
 
@@ -911,6 +1120,7 @@
           <div class="season-actions">
             <button type="button" class="go" id="seasonSave">Save season</button>
             <button type="button" id="seasonReload">Discard changes</button>
+            <button type="button" id="seasonPurge" class="purge" hidden></button>
             <span class="season-status" id="seasonStatus"></span>
           </div>
         </div>
@@ -919,7 +1129,7 @@
       <div class="panel">
         <div class="phead">
           <h2>Scenarios and thresholds</h2>
-          <span class="note">one row per scenario · one column per rank</span>
+          <span class="note">one category at a time · add families and difficulties here</span>
         </div>
         <div class="pbody season-add">
           <input type="search" id="seasonSearch" placeholder="Search scenarios…"
@@ -934,6 +1144,21 @@
             <thead><tr id="seasonHead"></tr></thead>
             <tbody id="seasonBody"></tbody>
           </table>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="phead">
+          <h2>Where the population lands</h2>
+          <span class="note">same percentile on every scenario · real spread flattens it</span>
+        </div>
+        <div class="pbody">
+          <p class="rank-lede">
+            What this ladder does to the people who play these scenarios, from their
+            leaderboards rather than from a guess. A rank nobody holds is a rank that
+            exists and cannot be earned.
+          </p>
+          <div class="dist" id="seasonDist"></div>
         </div>
       </div>
 
@@ -996,6 +1221,21 @@
         <div class="phead"><h2>Weakness map</h2><span class="note" id="weakNote"></span></div>
         <div class="pbody"><div class="wmap" id="wmap"></div></div>
       </div>
+
+      <div class="panel">
+        <div class="phead">
+          <h2>What you are measured on</h2>
+          <span class="note">a baseline needs 5 runs</span>
+        </div>
+        <div class="pbody">
+          <p class="rank-lede">
+            A match compares you against your own past scores, so a difficulty you have
+            barely played is not a hard one — it is an unmeasured one. These are the
+            difficulties your scores can actually be judged on.
+          </p>
+          <div class="cover" id="coverage"></div>
+        </div>
+      </div>
       <div class="panel">
         <div class="phead"><h2>Scenarios</h2><span class="note">weakest first</span></div>
         <div class="scen-wrap">
@@ -1022,7 +1262,7 @@
               <div class="cf-label">Ceiling</div>
               <div class="cf-rank" id="ceilRank"></div>
               <div class="cf-energy" id="ceilEnergy"></div>
-              <div class="cf-note">what every benchmark ranks you</div>
+              <div class="cf-note">what your best run earns</div>
             </div>
             <div class="cf-gap">
               <div class="cf-gap-val" id="gapVal"></div>
@@ -1036,9 +1276,9 @@
             </div>
           </div>
           <p class="cf-explain">
-            Every benchmark that exists scores your best run. In a game there is no
-            retry, so your worst run is closer to what you actually bring. Closing this
-            gap is the whole mode.
+            A benchmark scores your best run. In a match there is no retry, and no second
+            attempt counts — so your worst run is closer to what you actually bring to one.
+            Closing this gap is the whole mode.
           </p>
         </div>
       </div>

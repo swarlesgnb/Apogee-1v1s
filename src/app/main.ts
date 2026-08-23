@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Apogee desktop client: the Electron main process.
  *
  * Responsibilities, and deliberately nothing else:
@@ -7,11 +7,11 @@
  *   - serve that snapshot to the renderer over a narrow IPC surface
  *
  * All parsing and computation happens here rather than in the renderer, which keeps
- * the renderer a pure view. That mirrors the server-side rule from PLAN.md §7: the
+ * the renderer a pure view. That mirrors the server-side rule from PLAN.md Â§7: the
  * layer that can be tampered with is never the layer that decides anything.
  */
 
-import { app, BrowserWindow, ipcMain, shell, dialog } from "electron";
+import { app, BrowserWindow, ipcMain, screen, shell, dialog } from "electron";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
@@ -24,6 +24,7 @@ import {
 } from "../core/quests/progression.ts";
 import { loadQuestState, saveQuestState } from "./questStore.ts";
 import { buildSnapshot, type Snapshot } from "../core/report/snapshot.ts";
+import { renderRankSheet } from "../core/report/rankSheet.ts";
 import { scanStatsFolder } from "../core/history/history.ts";
 import { signInWithSteam } from "../core/sync/steamAuth.ts";
 import {
@@ -46,8 +47,13 @@ import {
   type ApogeeSession,
 } from "./session.ts";
 import { findStatsFolder, watchStatsFolder, type StatsWatcher } from "./watcher.ts";
+import { loadSettings, saveSettings, settingsPath, type WindowBounds } from "./settings.ts";
+import { installMenu } from "./menu.ts";
 import { launchKovaaks, writeMatchPlaylist } from "./playlist.ts";
 import { loadSeason, seasonPath, validateSeason } from "../core/season/season.ts";
+import { sampleDistribution, RateLimited } from "../core/season/sampleLeaderboard.ts";
+import { thresholdsFrom, type Distribution } from "../core/season/percentiles.ts";
+import { rankDistribution } from "../core/season/distribution.ts";
 
 /**
  * Bundled to dist/app/main.cjs, so `__dirname` is dist/app and the reference data
@@ -56,6 +62,17 @@ import { loadSeason, seasonPath, validateSeason } from "../core/season/season.ts
  */
 const here = __dirname;
 setDataDir(join(here, "..", "data"));
+
+/**
+ * When this bundle was built. Replaced at build time by esbuild's `define`.
+ *
+ * Printed at startup, and again whenever a second launch is refused, because the
+ * single-instance lock makes a stale process very hard to spot: `npm start` with a window
+ * already open quits the new process and focuses the old one, so the app appears to
+ * restart while running the previous bundle.
+ */
+declare const __APOGEE_BUILD__: string;
+const BUILD = typeof __APOGEE_BUILD__ === "string" ? __APOGEE_BUILD__ : "dev";
 
 /** Rebuilding scans the whole folder, so coalesce bursts of runs into one rebuild. */
 const REBUILD_DEBOUNCE_MS = 1200;
@@ -157,6 +174,54 @@ function startWatching(dir: string): void {
   });
 
   rebuild("initial scan");
+}
+
+/**
+ * Ask for the stats folder and start watching it.
+ *
+ * Shared by the button in the status bar and the menu item, because two ways to do the
+ * same thing should not be two implementations of it.
+ */
+async function chooseStatsFolder(): Promise<string | null> {
+  const result = await dialog.showOpenDialog({
+    title: "Select your KovaaK's stats folder",
+    properties: ["openDirectory"],
+    defaultPath: state.statsDir ?? undefined,
+  });
+
+  if (result.canceled || result.filePaths.length === 0) return null;
+
+  const chosen = result.filePaths[0];
+  if (!existsSync(chosen)) return null;
+
+  // Remembered from here on: this is the one thing the app cannot work out for itself
+  // when auto-detection misses, so asking twice is asking one time too many.
+  saveSettings({ statsDir: chosen });
+  startWatching(chosen);
+  return chosen;
+}
+
+/**
+ * Everything worth knowing when someone reports a problem, as pasteable text.
+ *
+ * Deliberately free of anything private: no SteamID, no session, no display name. The
+ * questions this answers are "which build", "which folder", "how many runs" â€” the three
+ * that otherwise take a round trip each to establish.
+ */
+function diagnostics(): string {
+  const snapshot = state.snapshot;
+  return [
+    `Apogee ${app.getVersion()}`,
+    `bundle built  ${BUILD}`,
+    `electron      ${process.versions.electron}  (node ${process.versions.node})`,
+    `platform      ${process.platform} ${process.arch}`,
+    `stats folder  ${state.statsDir ?? "not found"}`,
+    `runs parsed   ${snapshot?.player.totalRuns ?? 0}`,
+    `season        ${snapshot ? `${snapshot.benchmark.name} ${snapshot.benchmark.difficulty}` : "not loaded"}`,
+    `signed in     ${state.session ? "yes" : "no"}`,
+    `settings      ${settingsPath()}`,
+    `last error    ${state.lastError ?? "none"}`,
+  ].join("\n");
 }
 
 /**
@@ -292,12 +357,71 @@ async function settleActiveMatch(): Promise<void> {
   }
 }
 
+/**
+ * Where to open the window.
+ *
+ * A remembered position is only honoured if it still lands on a display that exists.
+ * Unplugging a second monitor otherwise reopens the app at coordinates nothing can
+ * reach, and the fix â€” delete a JSON file you have never heard of â€” is not one anybody
+ * is going to find.
+ */
+function openingBounds(remembered: WindowBounds | null): {
+  width: number;
+  height: number;
+  x?: number;
+  y?: number;
+} {
+  const size = {
+    width: Math.max(DEFAULT_MIN_WIDTH, remembered?.width ?? 1280),
+    height: Math.max(DEFAULT_MIN_HEIGHT, remembered?.height ?? 880),
+  };
+
+  if (remembered?.x == null || remembered.y == null) return size;
+
+  const visible = screen.getAllDisplays().some((display) => {
+    const { x, y, width, height } = display.workArea;
+    // The title bar has to be grabbable, so require the top-left corner to be on-screen
+    // with room to spare rather than merely intersecting somewhere.
+    return (
+      remembered.x! >= x - 8 &&
+      remembered.y! >= y - 8 &&
+      remembered.x! < x + width - 120 &&
+      remembered.y! < y + height - 60
+    );
+  });
+
+  return visible ? { ...size, x: remembered.x, y: remembered.y } : size;
+}
+
+const DEFAULT_MIN_WIDTH = 940;
+const DEFAULT_MIN_HEIGHT = 640;
+
+/** Coalesce the burst of resize events a single drag produces into one write. */
+let boundsTimer: NodeJS.Timeout | null = null;
+
+function rememberBounds(): void {
+  if (!window || window.isDestroyed()) return;
+
+  const maximized = window.isMaximized();
+  // Ask for the normal bounds, not the current ones: saving the maximized rectangle
+  // means un-maximizing later restores to full screen size, which looks broken.
+  const { x, y, width, height } = window.getNormalBounds();
+
+  saveSettings({ window: { x, y, width, height, maximized } });
+}
+
+function scheduleRememberBounds(): void {
+  if (boundsTimer) clearTimeout(boundsTimer);
+  boundsTimer = setTimeout(rememberBounds, 500);
+}
+
 function createWindow(): void {
+  const settings = loadSettings();
+
   window = new BrowserWindow({
-    width: 1280,
-    height: 880,
-    minWidth: 940,
-    minHeight: 640,
+    ...openingBounds(settings.window),
+    minWidth: DEFAULT_MIN_WIDTH,
+    minHeight: DEFAULT_MIN_HEIGHT,
     backgroundColor: "#07090e",
     show: false,
     title: "Apogee",
@@ -311,7 +435,17 @@ function createWindow(): void {
     },
   });
 
+  if (settings.window?.maximized) window.maximize();
+
   window.once("ready-to-show", () => window?.show());
+  window.on("resize", scheduleRememberBounds);
+  window.on("move", scheduleRememberBounds);
+  window.on("maximize", scheduleRememberBounds);
+  window.on("unmaximize", scheduleRememberBounds);
+  window.on("close", () => {
+    if (boundsTimer) clearTimeout(boundsTimer);
+    rememberBounds();
+  });
   window.on("closed", () => { window = null; });
 
   // External links open in the real browser, never inside the app shell.
@@ -342,12 +476,23 @@ const SMOKE = process.argv.includes("--smoke");
  * Smoke runs are exempt: they are short-lived, headless, and must work while a real
  * instance is open.
  */
+console.log(`apogee main built ${BUILD}`);
+
 if (!SMOKE && !app.requestSingleInstanceLock()) {
+  console.log(
+    "another Apogee instance already holds the lock, so this one is quitting and the " +
+      "existing window will be focused. That window is running whatever bundle it " +
+      "started with - close it fully before `npm start` to pick up a new build.",
+  );
   app.quit();
 } else if (!SMOKE) {
   // A second launch focuses the window that already exists, which is what someone
   // double-clicking the icon actually wants.
   app.on("second-instance", () => {
+    console.log(
+      `focusing the existing window, built ${BUILD}. A newer bundle will not load until ` +
+        "this instance is closed.",
+    );
     if (window) {
       if (window.isMinimized()) window.restore();
       window.focus();
@@ -486,6 +631,14 @@ app.whenReady().then(() => {
   }
 
   createWindow();
+  installMenu({
+    rescan: () => rebuild("menu rescan"),
+    chooseFolder: () => void chooseStatsFolder(),
+    openStatsFolder: () => {
+      if (state.statsDir) void shell.openPath(state.statsDir);
+    },
+    diagnostics: () => diagnostics(),
+  });
 
   // A previous sign-in is restored from the encrypted refresh token, so the player
   // does not re-authenticate every launch. Failure here is not worth surfacing: it
@@ -516,12 +669,17 @@ app.whenReady().then(() => {
     })
     .catch(() => undefined);
 
-  const found = findStatsFolder();
+  // A folder the player picked themselves wins over auto-detection. Someone with two
+  // Steam libraries, or a stats folder copied off another machine, told us the answer
+  // once and should not be asked again every launch.
+  const remembered = loadSettings().statsDir;
+  const found = remembered && existsSync(remembered) ? remembered : findStatsFolder();
+
   if (found) {
     startWatching(found);
   } else {
     state.lastError =
-      "Could not find your KovaaK's stats folder. Use “Choose folder…” to point Apogee at it.";
+      "Could not find your KovaaK's stats folder. Use â€œChoose folderâ€¦â€ to point Apogee at it.";
   }
 
   app.on("activate", () => {
@@ -539,6 +697,8 @@ app.on("window-all-closed", () => {
 // ---------------------------------------------------------------------------
 
 ipcMain.handle("apogee:getState", () => ({
+  /** Which bundle this window is running, so a stale one is visible rather than guessed at. */
+  build: BUILD,
   statsDir: state.statsDir,
   snapshot: state.snapshot,
   lastError: state.lastError,
@@ -654,11 +814,12 @@ ipcMain.handle("apogee:uploadHistory", async () => {
   }
 });
 
-ipcMain.handle("apogee:findMatch", async (_e, { category, difficulty }) => {
+ipcMain.handle("apogee:findMatch", async (_e, { category, pool }) => {
   if (!state.session) return { error: "sign in first" };
+  if (typeof pool?.window !== "number") return { error: "no match pool: rebuild the snapshot" };
 
   try {
-    const match = await findMatch(category, difficulty);
+    const match = await findMatch(category, pool);
     state.match = match;
     state.submitted.clear();
 
@@ -738,21 +899,7 @@ ipcMain.handle("apogee:rescan", () => {
   return state.snapshot;
 });
 
-ipcMain.handle("apogee:chooseFolder", async () => {
-  const result = await dialog.showOpenDialog({
-    title: "Select your KovaaK's stats folder",
-    properties: ["openDirectory"],
-    defaultPath: state.statsDir ?? undefined,
-  });
-
-  if (result.canceled || result.filePaths.length === 0) return null;
-
-  const chosen = result.filePaths[0];
-  if (!existsSync(chosen)) return null;
-
-  startWatching(chosen);
-  return chosen;
-});
+ipcMain.handle("apogee:chooseFolder", () => chooseStatsFolder());
 
 /**
  * Is the signed-in player an admin?
@@ -792,6 +939,8 @@ ipcMain.handle("apogee:availableScenarios", () => {
   try {
     const season = loadSeason();
     const already = new Set(season.scenarios.map((s) => s.scenario));
+    const windowSize =
+      typeof season.windowSize === "number" && season.windowSize > 0 ? season.windowSize : 0;
 
     // Three sources, because no single one is "every KovaaK's scenario".
     //
@@ -805,14 +954,33 @@ ipcMain.handle("apogee:availableScenarios", () => {
     // All offline. KovaaK's full catalogue is far larger than any of these, so the
     // picker also accepts a name typed in directly rather than pretending this is
     // everything that exists.
-    const known = new Map<string, { aimType: string | null; difficulty: string | null }>();
+    // The leaderboard id travels with the name.
+    //
+    // Without it a scenario can be found and chosen and then not added: thresholds are
+    // derived from that scenario's KovaaK's board, and the board is addressed by id. The
+    // picker looked like it worked and every selection failed at the last step.
+    const known = new Map<
+      string,
+      { aimType: string | null; difficulty: string | null; leaderboardId: number | null }
+    >();
 
     try {
       const taxonomy = JSON.parse(
         readFileSync(dataFile("scenario_taxonomy.json"), "utf8"),
-      ) as { scenarios: { name: string; aimType: string | null; difficulty: string }[] };
+      ) as {
+        scenarios: {
+          name: string;
+          aimType: string | null;
+          difficulty: string;
+          leaderboardId: number | null;
+        }[];
+      };
       for (const s of taxonomy.scenarios) {
-        known.set(s.name, { aimType: s.aimType, difficulty: s.difficulty });
+        known.set(s.name, {
+          aimType: s.aimType,
+          difficulty: s.difficulty,
+          leaderboardId: s.leaderboardId ?? null,
+        });
       }
     } catch {
       // A missing taxonomy costs aim-type suggestions, not the picker.
@@ -821,12 +989,30 @@ ipcMain.handle("apogee:availableScenarios", () => {
     for (const file of ["voltaic-s5.json", "voltaic-s5-5.json", "voltaic-s4.json"]) {
       try {
         const def = JSON.parse(readFileSync(dataFile("benchmarks", file), "utf8")) as {
-          difficulties: { name: string; categories: { name: string; scenarios: { name: string }[] }[] }[];
+          difficulties: {
+            name: string;
+            categories: {
+              name: string;
+              scenarios: { name: string; leaderboardId: number | null }[];
+            }[];
+          }[];
         };
         for (const d of def.difficulties) {
           for (const c of d.categories) {
             for (const s of c.scenarios) {
-              if (!known.has(s.name)) known.set(s.name, { aimType: c.name, difficulty: d.name });
+              const prior = known.get(s.name);
+              if (!prior) {
+                known.set(s.name, {
+                  aimType: c.name,
+                  difficulty: d.name,
+                  leaderboardId: s.leaderboardId ?? null,
+                });
+              } else if (prior.leaderboardId == null && s.leaderboardId != null) {
+                // The taxonomy knew the scenario but not its board. A benchmark that names
+                // the same scenario does, and an id is the difference between a scenario
+                // that can be added and one that cannot.
+                prior.leaderboardId = s.leaderboardId;
+              }
             }
           }
         }
@@ -837,7 +1023,9 @@ ipcMain.handle("apogee:availableScenarios", () => {
 
     const history = state.statsDir ? scanStatsFolder(state.statsDir) : new Map();
     for (const name of history.keys()) {
-      if (!known.has(name)) known.set(name, { aimType: null, difficulty: null });
+      if (!known.has(name)) {
+        known.set(name, { aimType: null, difficulty: null, leaderboardId: null });
+      }
     }
 
     const options = [...known.entries()]
@@ -851,24 +1039,236 @@ ipcMain.handle("apogee:availableScenarios", () => {
           // KovaaK's calls it Target Switching; the season's category is Switching.
           category: meta.aimType === "Target Switching" ? "Switching" : meta.aimType,
           difficulty: meta.difficulty,
+          leaderboardId: meta.leaderboardId,
           runs: scores.length,
           best: scores.length > 0 ? Math.round(Math.max(...scores)) : null,
           // One suggestion per category, because each has its own ladder and a
           // suggestion of the wrong length would be rejected the moment it was added.
+          // On a windowed season a scenario carries its window's thresholds, not the
+          // whole ladder's, so that is the length to suggest.
           suggested: Object.fromEntries(
             season.categories.map((c) => [
               c.name,
-              suggestThresholds(scores, (c.rankNames ?? season.rankNames).length),
+              suggestThresholds(
+                scores,
+                windowSize || (c.rankNames ?? season.rankNames).length,
+              ),
             ]),
           ),
         };
       })
       .sort((a, b) => b.runs - a.runs || a.name.localeCompare(b.name));
 
-    return { scenarios: options, categories: season.categories.map((c) => c.name) };
+    return {
+      scenarios: options,
+      categories: season.categories.map((c) => c.name),
+      // A windowed season is not added to one scenario at a time: a family needs one
+      // variant per window, so a lone scenario would leave a family incomplete and the
+      // season unsaveable. Said here rather than discovered on Save.
+      windowed: windowSize > 0,
+      windowNote:
+        windowSize > 0
+          ? `This season grades families across ${season.windows?.length ?? 0} windows. ` +
+            `Adding one means a scenario per window, which buildSeason does.`
+          : null,
+    };
   } catch (err) {
     return { error: err instanceof Error ? err.message : String(err) };
   }
+});
+
+/**
+ * Thresholds for a scenario being added, derived the way every other threshold was.
+ *
+ * The season's numbers are percentiles of each scenario's own KovaaK's leaderboard. A
+ * scenario added by hand with invented numbers would be the one row nobody could justify,
+ * so the editor samples the board rather than asking the owner to make something up.
+ *
+ * Cached to `data/leaderboard_percentiles.json` on the way through, so adding the same
+ * scenario twice costs nothing and so the next `build:season` derives the same numbers
+ * this dialog just showed.
+ */
+ipcMain.handle("apogee:sampleScenario", async (_e, { scenario, leaderboardId, topFractions }) => {
+  if (!state.session || !(await isAdmin().catch(() => false))) {
+    return { error: "only an admin can edit the season" };
+  }
+  if (!leaderboardId) return { error: "no leaderboard id for this scenario" };
+
+  const file = dataFile("leaderboard_percentiles.json");
+  let cache: { source: string; sampledAt: string; samplePoints: number[]; distributions: Distribution[] };
+  try {
+    cache = JSON.parse(readFileSync(file, "utf8"));
+  } catch {
+    return { error: "no leaderboard_percentiles.json - run npm run sample:leaderboards" };
+  }
+
+  let dist = cache.distributions.find((d) => d.scenario === scenario);
+  let sampled = false;
+
+  if (!dist) {
+    try {
+      const fetched = await sampleDistribution(scenario, Number(leaderboardId), {
+        points: cache.samplePoints,
+      });
+      if (!fetched) return { error: "that leaderboard has no entries" };
+      dist = fetched;
+      sampled = true;
+    } catch (err) {
+      return {
+        error:
+          err instanceof RateLimited
+            ? "KovaaK's is rate-limiting us; wait a minute and try again"
+            : err instanceof Error
+              ? err.message
+              : String(err),
+      };
+    }
+  }
+
+  const rankMaxes = thresholdsFrom(dist, topFractions);
+  if (!rankMaxes) return { error: "could not derive thresholds from that board" };
+
+  if (sampled) {
+    // Written back so the pool and the cache stay in step; a scenario in the season with
+    // no sampled board is one `build:season` would refuse to build.
+    cache.distributions.push(dist);
+    cache.distributions.sort((a, b) => a.scenario.localeCompare(b.scenario));
+    try {
+      const body = JSON.stringify(cache, null, 2) + "\n";
+      writeFileSync(file, body, "utf8");
+      const source = sourceDataDir();
+      if (source) {
+        writeFileSync(join(source, "leaderboard_percentiles.json"), body, "utf8");
+      }
+    } catch {
+      // A cache we could not write still gave correct thresholds for this dialog.
+    }
+  }
+
+  return { rankMaxes, entries: dist.total, sampled };
+});
+
+/**
+ * Search KovaaK's own scenario catalogue by name.
+ *
+ * The local picker can only offer what some committed file already names - the taxonomy's
+ * fifty-four, plus whatever the benchmark definitions mention. That is a few hundred
+ * against a catalogue of sixty thousand, and everything outside it was unaddable: a
+ * scenario needs a leaderboard id for its thresholds to be derived, and nothing local knew
+ * the id. Asking the source removes the ceiling entirely.
+ *
+ * Read-only, and the same host the app already talks to for verification.
+ */
+ipcMain.handle("apogee:searchScenarios", async (_e, { query }) => {
+  if (!state.session || !(await isAdmin().catch(() => false))) {
+    return { error: "only an admin can edit the season" };
+  }
+
+  const term = String(query ?? "").trim();
+  if (term.length < 2) return { scenarios: [] };
+
+  try {
+    const url =
+      "https://kovaaks.com/webapp-backend/scenario/popular?page=0&max=25" +
+      `&scenarioNameSearch=${encodeURIComponent(term)}`;
+
+    const res = await fetch(url, {
+      headers: {
+        "User-Agent":
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/126.0 Safari/537.36",
+        accept: "application/json",
+      },
+    });
+    if (!res.ok) return { error: `KovaaK's returned ${res.status}` };
+
+    const body = (await res.json()) as {
+      data?: {
+        leaderboardId?: number;
+        scenarioName?: string;
+        scenario?: { aimType?: string | null };
+        counts?: { plays?: number; entries?: number };
+      }[];
+    };
+
+    return {
+      scenarios: (body.data ?? [])
+        .filter((row) => row.scenarioName && row.leaderboardId)
+        .map((row) => ({
+          name: row.scenarioName!,
+          leaderboardId: row.leaderboardId!,
+          aimType: row.scenario?.aimType ?? null,
+          entries: row.counts?.entries ?? 0,
+        })),
+    };
+  } catch (err) {
+    return { error: err instanceof Error ? err.message : String(err) };
+  }
+});
+
+/**
+ * What the ladder currently on screen would do to the population.
+ *
+ * Tuning thresholds without this is guesswork: you can see that a rank asks for 929, and
+ * not that it holds two players in a thousand or that nobody holds it at all. Computed
+ * from the draft rather than the saved season, so it answers for what is being edited.
+ */
+ipcMain.handle("apogee:rankDistribution", async (_e, { season }) => {
+  if (!state.session || !(await isAdmin().catch(() => false))) {
+    return { error: "only an admin can edit the season" };
+  }
+
+  let cache: { distributions: Distribution[] };
+  try {
+    cache = JSON.parse(readFileSync(dataFile("leaderboard_percentiles.json"), "utf8"));
+  } catch {
+    return { error: "no leaderboard_percentiles.json - run npm run sample:leaderboards" };
+  }
+
+  try {
+    return {
+      categories: rankDistribution(
+        season,
+        new Map(cache.distributions.map((d) => [d.scenario, d])),
+      ),
+    };
+  } catch (err) {
+    return { error: err instanceof Error ? err.message : String(err) };
+  }
+});
+
+/**
+ * Re-derive every threshold in one window from a new set of percentiles.
+ *
+ * The percentile ladder is the season's real control surface: moving rank 7 from the top
+ * 15% to the top 8% is one decision that should move eighteen numbers, and moving eighteen
+ * numbers by hand to express it is how they end up inconsistent. Editing the percentages
+ * re-derives from the cached boards immediately, so what is on screen is always what the
+ * next `build:season` would produce.
+ */
+ipcMain.handle("apogee:deriveWindow", async (_e, { scenarios, topFractions }) => {
+  if (!state.session || !(await isAdmin().catch(() => false))) {
+    return { error: "only an admin can edit the season" };
+  }
+
+  let cache: { distributions: Distribution[] };
+  try {
+    cache = JSON.parse(readFileSync(dataFile("leaderboard_percentiles.json"), "utf8"));
+  } catch {
+    return { error: "no leaderboard_percentiles.json - run npm run sample:leaderboards" };
+  }
+
+  const distOf = new Map(cache.distributions.map((d) => [d.scenario, d]));
+  const derived: Record<string, number[]> = {};
+  const missing: string[] = [];
+
+  for (const scenario of scenarios as string[]) {
+    const dist = distOf.get(scenario);
+    const rankMaxes = dist ? thresholdsFrom(dist, topFractions) : null;
+    if (rankMaxes) derived[scenario] = rankMaxes;
+    else missing.push(scenario);
+  }
+
+  return { derived, missing };
 });
 
 /**
@@ -931,6 +1331,83 @@ ipcMain.handle("apogee:saveSeason", async (_e, { season }) => {
     return { error: err instanceof Error ? err.message : String(err) };
   }
 
+  // Write the pool back too, or an evening of editing lives until the next build.
+  //
+  // `data/pool.json` is what buildSeason reads: the families, the windows, the percentile
+  // ladder. The editor edits the *season*, which is the build output - so without this a
+  // rebuild would regenerate from a pool that never heard about the family somebody just
+  // added, and silently undo it. Derived from the season rather than tracked separately,
+  // so there is one thing to keep right instead of two.
+  //
+  // Thresholds that differ from what the percentiles give are recorded as overrides. A
+  // derived number is reproducible and a hand-set one is a judgement; the difference has to
+  // survive the rebuild, and has to be visible afterwards rather than looking like a
+  // measurement.
+  const poolBody = (() => {
+    try {
+      const pool = JSON.parse(readFileSync(dataFile("pool.json"), "utf8"));
+
+      let cache: { distributions: Distribution[] } | null = null;
+      try {
+        cache = JSON.parse(readFileSync(dataFile("leaderboard_percentiles.json"), "utf8"));
+      } catch {
+        // No cache: every threshold is treated as hand-set, which is the safe direction.
+      }
+      const distOf = new Map((cache?.distributions ?? []).map((d) => [d.scenario, d]));
+
+      // The season's own ladder wins: if the percentiles were edited this session, the
+      // pool has not heard about it yet, and diffing against the old ones would record
+      // every freshly-derived threshold as a hand-set override.
+      const ladders: number[][] = season.derivedFrom?.perWindow ?? pool.ladder?.perWindow ?? [];
+      const overrides: Record<string, number[]> = {};
+
+      const families: Record<string, {
+        family: string;
+        category: string;
+        variants: { window: number; scenario: string; label: string; leaderboardId: number | null }[];
+      }> = {};
+
+      for (const scen of season.scenarios) {
+        const key = `${scen.category}/${scen.family}`;
+        families[key] ??= { family: scen.family, category: scen.category, variants: [] };
+        families[key].variants.push({
+          window: scen.window ?? 0,
+          scenario: scen.scenario,
+          label: scen.label,
+          leaderboardId: scen.leaderboardId ?? null,
+        });
+
+        const dist = distOf.get(scen.scenario);
+        const ladder = ladders[scen.window ?? 0];
+        const derived = dist && ladder ? thresholdsFrom(dist, ladder) : null;
+
+        if (!derived || derived.some((n, i) => n !== scen.rankMaxes[i])) {
+          overrides[scen.scenario] = scen.rankMaxes.slice();
+        }
+      }
+
+      for (const f of Object.values(families)) f.variants.sort((a, b) => a.window - b.window);
+
+      pool.windowSize = season.windowSize ?? pool.windowSize;
+      pool.windows = season.windows ?? pool.windows;
+      pool.matchWindow = season.matchPool?.window ?? pool.matchWindow;
+      pool.categories = season.categories.map((c: { name: string }) => c.name);
+      pool.families = Object.values(families).sort(
+        (a, b) => a.category.localeCompare(b.category) || a.family.localeCompare(b.family),
+      );
+      pool.overrides = overrides;
+      if (season.derivedFrom?.perWindow) {
+        pool.ladder = { ...(pool.ladder ?? {}), perWindow: season.derivedFrom.perWindow };
+      }
+
+      return JSON.stringify(pool, null, 2) + "\n";
+    } catch {
+      // A pool we could not rebuild must not stop the season being saved: the season is
+      // the thing the app grades against, and losing that edit would be worse.
+      return null;
+    }
+  })();
+
   // Write the source too, not only the copy the app reads.
   //
   // The app points the core at dist/data, which build:app rewrites from data/ on every
@@ -944,6 +1421,8 @@ ipcMain.handle("apogee:saveSeason", async (_e, { season }) => {
     writeFileSync(seasonPath(), body, "utf8");
     written.push(seasonPath());
 
+    if (poolBody) writeFileSync(dataFile("pool.json"), poolBody, "utf8");
+
     const source = sourceDataDir();
     if (source) {
       const sourcePath = join(source, "seasons", "season-1.json");
@@ -951,6 +1430,24 @@ ipcMain.handle("apogee:saveSeason", async (_e, { season }) => {
         mkdirSync(join(source, "seasons"), { recursive: true });
         writeFileSync(sourcePath, body, "utf8");
         written.push(sourcePath);
+      }
+
+      if (poolBody) {
+        writeFileSync(join(source, "pool.json"), poolBody, "utf8");
+        written.push(join(source, "pool.json"));
+      }
+
+      // Refresh the rank sheet alongside the source.
+      //
+      // Renaming a rank in this editor is the single most likely reason for the sheet to
+      // go stale, since the sheet is what gets sent to people to ask about the names. Only
+      // where a source tree exists: a packaged build has no docs/ to write to, and
+      // inventing one would be creating a file nobody asked for.
+      const docsDir = join(source, "..", "docs");
+      if (existsSync(docsDir)) {
+        const sheet = join(docsDir, "season-1-ranks.html");
+        writeFileSync(sheet, renderRankSheet(season), "utf8");
+        written.push(sheet);
       }
     }
   } catch (err) {

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Watch the KovaaK's stats folder for new runs.
  *
  * Two things make this fiddly in practice, both learned from how KovaaK's actually
@@ -16,6 +16,7 @@
  * Electron.
  */
 
+import { execFileSync } from "node:child_process";
 import { watch, statSync, readFileSync, type FSWatcher } from "node:fs";
 import { join } from "node:path";
 
@@ -112,24 +113,124 @@ export function watchStatsFolder(dir: string, events: WatcherEvents): StatsWatch
 }
 
 /**
- * Common install locations, in the order worth trying.
+ * Where Steam is installed on this machine.
  *
- * KovaaK's is a Steam title, so it follows the user's Steam library layout rather than
- * a fixed path; a second library on another drive is the normal case, not an edge one.
+ * Three sources, cheapest first: the registry value Steam itself writes, the standard
+ * install path, and the drive roots people actually use. The registry is read through
+ * `reg query` because Electron ships no registry binding, and one short child process at
+ * startup beats a native dependency that has to be rebuilt for every Electron version.
+ *
+ * Forward slashes are left as they come: Node accepts them on Windows, and `join`
+ * normalises them, so nothing here has to care which way a path was written.
+ */
+function steamRoots(): string[] {
+  const roots: string[] = [];
+
+  if (process.platform === "win32") {
+    try {
+      const out = execFileSync("reg", ["query", STEAM_KEY, "/v", "SteamPath"], {
+        encoding: "utf8",
+        timeout: 2000,
+        windowsHide: true,
+        stdio: ["ignore", "pipe", "ignore"],
+      });
+      // SteamPath    REG_SZ    e:/steam
+      const found = /SteamPath\s+REG_SZ\s+(.+)/i.exec(out);
+      if (found) roots.push(found[1].trim());
+    } catch {
+      /* No key, no reg.exe, or not Windows. The fixed candidates below still apply. */
+    }
+
+    const programFiles = process.env["ProgramFiles(x86)"];
+    if (programFiles) roots.push(join(programFiles, "Steam"));
+  }
+
+  // Kept as a floor under the two lookups above: a machine with a broken registry value
+  // and a stock install is still found.
+  roots.push(
+    "C:/Program Files (x86)/Steam",
+    "C:/Steam",
+    "D:/Steam",
+    "D:/SteamLibrary",
+    "E:/Steam",
+    "E:/SteamLibrary",
+    "F:/Steam",
+    "F:/SteamLibrary",
+  );
+
+  return unique(roots);
+}
+
+/**
+ * Fold duplicate paths that differ only in case or slash direction.
+ *
+ * Steam's registry value is lowercased with forward slashes (`e:/steam`) while the
+ * fixed candidates are written the way a person would (`E:\Steam`). Windows treats them
+ * as one folder, so probing both is wasted work and printing both is confusing.
+ */
+function unique(paths: string[]): string[] {
+  const seen = new Set<string>();
+  const out: string[] = [];
+
+  for (const path of paths) {
+    // Uppercase the drive letter only: the rest of the path is shown to the player and
+    // should read the way it does in Explorer.
+    const tidy = join(path).replace(/^([a-z]):/, (_, drive: string) => `${drive.toUpperCase()}:`);
+    const key = tidy.toLowerCase();
+    if (seen.has(key)) continue;
+    seen.add(key);
+    out.push(tidy);
+  }
+
+  return out;
+}
+
+/**
+ * Every Steam library on this machine, read from Steam's own `libraryfolders.vdf`.
+ *
+ * This is what makes an install on `G:\Games\SteamLibrary` findable. Guessing drive
+ * letters only ever covered the common cases, and the player it missed had to point at
+ * the folder by hand â€” on every launch, since nothing remembered the answer. Steam has
+ * always kept the real list of libraries; nobody was reading it.
+ *
+ * VDF is Valve's own key-value format. Only `"path" "..."` is wanted, so it is matched
+ * directly rather than by writing a parser for a format we otherwise never touch.
+ */
+function steamLibraries(): string[] {
+  const libraries: string[] = [];
+
+  for (const root of steamRoots()) {
+    libraries.push(root);
+    for (const rel of ["config/libraryfolders.vdf", "steamapps/libraryfolders.vdf"]) {
+      try {
+        const text = readFileSync(join(root, rel), "utf8");
+        for (const entry of text.matchAll(/"path"\s+"([^"]+)"/g)) {
+          // Stored JSON-style, so every backslash in the path arrives doubled.
+          libraries.push(join(entry[1].replace(/\\\\/g, "\\")));
+        }
+      } catch {
+        /* Steam is not installed here, or predates this file. */
+      }
+    }
+  }
+
+  return unique(libraries);
+}
+
+/** Registry value Steam writes on install. */
+const STEAM_KEY = "HKCU\\Software\\Valve\\Steam";
+
+/** Where KovaaK's keeps its stats, relative to the Steam library holding it. */
+const STATS_SUFFIX = join("steamapps", "common", "FPSAimTrainer", "FPSAimTrainer", "stats");
+
+/**
+ * Stats folders worth probing, best guess first.
+ *
+ * Exported so `npm run doctor` can print what was searched when nothing was found: a
+ * bare "not found" is the least useful thing a first run can say.
  */
 export function candidateStatsFolders(): string[] {
-  const suffix = "steamapps\\common\\FPSAimTrainer\\FPSAimTrainer\\stats";
-  const roots = [
-    "C:\\Program Files (x86)\\Steam",
-    "C:\\Steam",
-    "D:\\Steam",
-    "D:\\SteamLibrary",
-    "E:\\Steam",
-    "E:\\SteamLibrary",
-    "F:\\Steam",
-    "F:\\SteamLibrary",
-  ];
-  return roots.map((root) => `${root}\\${suffix}`);
+  return steamLibraries().map((library) => join(library, STATS_SUFFIX));
 }
 
 /** First candidate folder that exists, or null. */

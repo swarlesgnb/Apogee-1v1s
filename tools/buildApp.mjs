@@ -9,11 +9,14 @@
  * `electron` itself is marked external: it is provided by the runtime, not bundled.
  *
  *   node tools/buildApp.mjs
+ *
+ * The pieces are exported as well as run, so `npm run dev` rebuilds exactly what a
+ * release build produces instead of maintaining a second, subtly different config.
  */
 
 import { build } from "esbuild";
 import { cpSync, existsSync, mkdirSync, readFileSync, rmSync } from "node:fs";
-import { dirname, join } from "node:path";
+import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -56,31 +59,64 @@ function clientEnv() {
   };
 }
 
-rmSync(join(root, "dist"), { recursive: true, force: true });
-mkdirSync(outDir, { recursive: true });
+/** esbuild's configuration, shared by the one-shot build and the watching dev runner. */
+export function bundleOptions() {
+  return {
+    entryPoints: [join(root, "src", "app", "main.ts")],
+    outfile: join(outDir, "main.cjs"),
+    bundle: true,
+    platform: "node",
+    format: "cjs",
+    target: "node20",
+    // Provided by the Electron runtime; bundling it would shadow the real module.
+    external: ["electron"],
+    define: {
+      ...clientEnv(),
+      // Stamped so a running app can say which build it is.
+      //
+      // Electron holds a single-instance lock: with a window already open, `npm start`
+      // quits the new process and focuses the old one. The app looks like it restarted and
+      // is still running the previous bundle, so a fix that is definitely on disk is
+      // definitely not in the process - which is a genuinely hard thing to notice.
+      __APOGEE_BUILD__: JSON.stringify(new Date().toISOString()),
+    },
+    sourcemap: true,
+    logLevel: "info",
+    // JSON data files are read at runtime via URLs relative to the source, so they must
+    // resolve against the bundle location instead. Rewritten below by `define`.
+    loader: { ".json": "json" },
+  };
+}
 
-await build({
-  entryPoints: [join(root, "src", "app", "main.ts")],
-  outfile: join(outDir, "main.cjs"),
-  bundle: true,
-  platform: "node",
-  format: "cjs",
-  target: "node20",
-  // Provided by the Electron runtime; bundling it would shadow the real module.
-  external: ["electron"],
-  define: clientEnv(),
-  sourcemap: true,
-  logLevel: "info",
-  // JSON data files are read at runtime via URLs relative to the source, so they must
-  // resolve against the bundle location instead. Rewritten below by `define`.
-  loader: { ".json": "json" },
-});
+/**
+ * Everything that is copied rather than bundled.
+ *
+ * Cheap enough to redo wholesale, which is what the dev runner does on every renderer
+ * edit: a few hundred kilobytes beats deciding which files changed.
+ */
+export function copyStatic() {
+  // The renderer is plain HTML/CSS/JS and ships as-is.
+  cpSync(join(root, "src", "app", "renderer"), join(outDir, "renderer"), { recursive: true });
+  cpSync(join(root, "src", "app", "preload.cjs"), join(outDir, "preload.cjs"));
 
-// The renderer is plain HTML/CSS/JS and ships as-is.
-cpSync(join(root, "src", "app", "renderer"), join(outDir, "renderer"), { recursive: true });
-cpSync(join(root, "src", "app", "preload.cjs"), join(outDir, "preload.cjs"));
+  // Reference data the main process reads at runtime.
+  cpSync(join(root, "data"), join(root, "dist", "data"), { recursive: true });
+}
 
-// Reference data the main process reads at runtime.
-cpSync(join(root, "data"), join(root, "dist", "data"), { recursive: true });
+export function cleanDist() {
+  rmSync(join(root, "dist"), { recursive: true, force: true });
+  mkdirSync(outDir, { recursive: true });
+}
 
-console.log("built dist/app");
+/** `node tools/buildApp.mjs` — the whole build, from scratch. */
+export async function buildApp() {
+  cleanDist();
+  await build(bundleOptions());
+  copyStatic();
+  console.log("built dist/app");
+}
+
+// Run when invoked directly; stay quiet when imported by the dev runner.
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  await buildApp();
+}

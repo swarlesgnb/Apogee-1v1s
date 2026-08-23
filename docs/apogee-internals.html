@@ -1037,7 +1037,9 @@ src/app/                       the desktop client (Electron)
   preload.cjs     the entire surface the renderer may touch
   session.ts      Steam sign-in, encrypted session storage
   api.ts          calls to the backend
-  watcher.ts      stats folder watching
+  watcher.ts      stats folder watching, and finding it via Steam's libraries
+  settings.ts     the stats folder and window bounds, remembered
+  menu.ts         the application menu and its shortcuts
   renderer/       the UI — a pure view, decides nothing
 
 supabase/
@@ -1202,6 +1204,8 @@ VT Aether Intermediate S5       score = hitCount × 1
         <div class="exhibit-head"><span>Working on it</span><span class="src">no backend needed</span></div>
         <div class="exhibit-body">
 <pre>npm start            build the client and launch it
+npm run dev          the same, rebuilt and relaunched on every save
+npm run doctor       why is it not working: bundle, folder, keys, data
 npm run smoke        boot headlessly and check it renders — no window
 npm run typecheck    tsc, no emit
 npm run validate     every suite, against your real runs
@@ -1211,6 +1215,20 @@ npm run ui           regenerate the shareable single-file preview</pre>
       <p>
         <code>npm start</code> runs <code>build:app</code> first. That matters more than it
         sounds — see the trap below.
+      </p>
+      <p>
+        <code>npm run dev</code> is the same build, watched: esbuild rebuilds whatever the
+        main process reaches, the renderer and preload are copied on save, and the window
+        is relaunched — which is the part that cannot be skipped, since a running window
+        keeps the bundle it started with. A build error leaves the window up on the last
+        good build rather than closing what you were looking at. Closing the window ends
+        the loop.
+      </p>
+      <p>
+        <code>npm run doctor</code> answers the question that usually gets asked an hour
+        late: is the bundle older than a source file, is there a stats folder and how many
+        runs are in it, are the client keys set, how old is the benchmark registry, does
+        the season still parse. It exits non-zero only for something genuinely broken.
       </p>
 
       <h3>Deploying</h3>
