@@ -12,7 +12,7 @@ phased build.
 | Phase | | |
 |---|---|---|
 | 0 | Scenario taxonomy | done, 54/54 Voltaic S5 scenarios resolved |
-| 0b | Benchmark data pipeline | done, 133 benchmarks, real thresholds |
+| 0b | Benchmark data pipeline | done, 121 benchmarks, real thresholds |
 | 1 | Stats parser + validation | done, 100% of 11,058 real files, 0 exceptions |
 | 2 | History, baselines, ranks, weakness map | done, engine matches KovaaK's exactly |
 | 3 | Apogee rank theme + visual editor | done, 10 named tiers |
@@ -20,7 +20,7 @@ phased build.
 | 5 | Verification: local integrity + KovaaK's cross-check | done, 0% false positives |
 | 6 | Glicko-2, scenario selection, settlement, matchmaking | done, ladder sorts at r=0.998 |
 | 7 | Client UI | done, interactive preview on real data |
-| 8 | Quests from a pasted evxl link | done, 120 of 133 benchmarks trackable |
+| 8 | Quests from a pasted evxl link | done, all 121 benchmarks trackable |
 | 9 | Electron desktop client | done, boots, watches, renders |
 | 10 | Closed beta | gated on population, preflight built |
 | 11 | Live sync matchmaking | done, starvation-free, awaiting population |
@@ -83,7 +83,7 @@ update live. Copy the generated JSON back into `data/apogee_ranks.json`, then ru
 ```
 data/
   scenario_taxonomy.json     54 Voltaic S5 scenarios, aim types, leaderboard ids
-  evxl_registry.json         133 benchmarks with KovaaK's ids + rank colours
+  evxl_registry.json         121 benchmarks with KovaaK's ids + rank colours
   subcategories.json         the nine Voltaic sub-categories, from Voltaic's sheet
   apogee_ranks.json          Apogee's own rank tiers, names and colours
   score_models.json          learned score = stat * k relations, for verification
@@ -113,7 +113,7 @@ Nothing here is guessed or hand-transcribed.
   (`webapp-backend/benchmarks/player-progress-rank-benchmark`), which serves the
   official per-scenario `rank_maxes` for every benchmark.
 - **The benchmark registry** (which benchmark maps to which KovaaK's id, plus per-rank
-  hex colours) is extracted from evxl.app's client bundle.
+  hex colours) comes from evxl.app's own JSON route, `/data/benchmarks`.
 - **The nine sub-categories** are read from Voltaic's own published spreadsheet, whose
   URL is recorded in evxl's registry.
 
@@ -123,8 +123,7 @@ depends on any of those services being reachable at runtime.
 To refresh:
 
 ```bash
-python tools/scrape_evxl_bundle.py
-python tools/extract_evxl_registry.py
+npm run fetch:evxl                              # cached 24h; --force to re-ask
 python tools/fetch_benchmark_defs.py            # or --all for every benchmark
 python tools/fetch_scenario_taxonomy.py
 python tools/fetch_voltaic_subcategories.py
@@ -286,7 +285,7 @@ npm run compare:baselines    # reproduce the table above on your own history
 ## Quests
 
 Quests are generated against whichever benchmark the player tracks. Paste any evxl
-link. **120 of the 133** benchmarks in the registry are trackable, resolved entirely
+link. **All 121** benchmarks in the registry are trackable, resolved entirely
 offline from committed data.
 
 Resolution refuses to guess: an ambiguous name (`"Voltaic"` matches S3, S4, S5, S5.5)

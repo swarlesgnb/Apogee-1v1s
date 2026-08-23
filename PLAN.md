@@ -605,7 +605,7 @@ benchmark's real scenarios and thresholds.
 └──────────────────────────────────────────────────────┘
 ```
 
-**This is fully solved and proven** (§11). Any of the **133 benchmarks** evxl tracks
+**This is fully solved and proven** (§11). Any of the **121 benchmarks** evxl tracks
 works: Voltaic S5/S5.5/S4, Revosect, Aimerz+, Viscose, TSK, and the long tail of
 community benchmarks. The player can track several at once and pick which drives their
 daily quests.
@@ -653,9 +653,12 @@ the numbers. The answer: evxl doesn't own them either. It reads KovaaK's API.
 **Two build-time steps, both committed to `data/` so the app never depends on either
 service being reachable at runtime:**
 
-1. `tools/scrape_evxl_bundle.py` + `tools/extract_evxl_registry.py`
-   → `data/evxl_registry.json`: **133 benchmarks**, each with `kovaaksBenchmarkId`,
-   `rankColors`, category structure.
+1. `npm run fetch:evxl`
+   → `data/evxl_registry.json`: **121 benchmarks**, each with `kovaaksBenchmarkId`,
+   `rankColors`, category structure. evxl publishes the registry at
+   `evxl.app/data/benchmarks`; it is re-read at most once a day, at his request, and
+   an unchanged registry costs a 304. Reading it out of the client bundle came first
+   and was retired — that copy had drifted 15 benchmarks behind.
 
 2. `tools/fetch_benchmark_defs.py`
    → `data/benchmarks/*.json`, per difficulty: rank names, **per-scenario
@@ -708,7 +711,7 @@ Each phase ends somewhere real, and the early ones need no backend at all.
 | Phase | Deliverable | Backend |
 |---|---|---|
 | **0** | Scenario taxonomy (**done**, 54/54 resolved) | none |
-| **0b** | Benchmark data pipeline (**done**, 133 benchmarks, real thresholds) | none |
+| **0b** | Benchmark data pipeline (**done**, 121 benchmarks, real thresholds) | none |
 | **1** | CSV parser + folder watcher, validated against 11,058 real files | none |
 | **2** | Local history, baselines, benchmark ranks, weakness map | none |
 | **3** | Apogee rank theme + custom colour system | none |
@@ -879,9 +882,9 @@ right shape for a plan this size.
 **Resolved during planning:**
 
 - ~~Voltaic S5 score thresholds need a spreadsheet export~~ → **solved** (§11). Official,
-  free, and generalises to all 133 benchmarks.
-- ~~evxl has no machine-readable data~~ → **solved**. Its registry was recoverable from
-  the client bundle, and it points at KovaaK's own API.
+  free, and generalises to every benchmark evxl tracks.
+- ~~evxl has no machine-readable data~~ → **solved**. It publishes the registry at
+  `/data/benchmarks`, and the registry points at KovaaK's own API.
 
 **Risks:**
 
@@ -947,9 +950,10 @@ Everything below was confirmed against live data during planning, not assumed.
 **evxl.app**
 - A SvelteKit SPA. `__data.json` routes return empty; nothing useful in the HTML shell
 - Runtime API at `api.evxl.app`: `/rank-counts` works and lists **58 ranked benchmarks**
-- Its full benchmark registry ships inside the client bundle: **133 benchmarks** with
+- `/data/benchmarks` serves the full benchmark registry as JSON: **121 benchmarks** with
   `kovaaksBenchmarkId`, `rankColors`, and category structure. This is how an evxl URL
-  gets resolved to real threshold data (§10)
+  gets resolved to real threshold data (§10). It also ships inside the client bundle,
+  which is how it was found before evxl's author pointed at the route
 
 **Voltaic**
 - `app.voltaic.gg` is a Nuxt app backed by Supabase; no public benchmark endpoint found,

@@ -38,6 +38,7 @@
     "build:season": "tsx tools/buildSeason.ts",
     "docs:ranks": "tsx tools/buildRankSheet.ts",
     "push:season": "tsx tools/pushSeason.ts",
+    "fetch:evxl": "tsx tools/fetchEvxlRegistry.ts",
     "sync:reference": "tsx tools/syncReferenceData.ts",
     "deploy:functions": "npx supabase functions deploy steam-auth && npx supabase functions deploy submit-run && npx supabase functions deploy find-match && npx supabase functions deploy settle-match && npx supabase functions deploy abandon-match && npx supabase functions deploy refresh-baselines",
     "validate:progression": "tsx src/core/quests/validateProgression.ts",

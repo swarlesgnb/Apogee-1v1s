@@ -2,6 +2,3 @@ node_modules/
 dist/
 .env
 .env.local
-
-# Downloaded third-party bundle, only needed to regenerate data/evxl_registry.json
-tools/_bundle/

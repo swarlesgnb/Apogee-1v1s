@@ -1078,7 +1078,7 @@ data/                          committed reference data</pre>
         a spreadsheet export. Chasing the evxl-link feature led through evxl's client
         bundle to where <em>it</em> gets the numbers — and evxl does not own them either.
         It reads KovaaK's own API. That one endpoint supplies official thresholds, rank
-        names and colours for all <strong>133</strong> benchmarks, free.
+        names and colours for all <strong>121</strong> benchmarks, free.
       </p>
 
       <h3>Scores are a fixed multiple of a countable stat</h3>
@@ -1294,7 +1294,7 @@ npm run validate:season prove edits keep the ladders in step</pre>
 <pre>python tools/fetch_scenario_taxonomy.py        54 scenarios, aim types, leaderboard ids
 python tools/fetch_benchmark_defs.py           thresholds and rank colours
 python tools/fetch_voltaic_subcategories.py    the nine sub-categories
-python tools/scrape_evxl_bundle.py             evxl's benchmark registry
+npm run fetch:evxl                             evxl's benchmark registry (24h cache)
 python tools/generate_seed.py                  rebuild supabase/seed.sql
 
 npm run build:score-models   score = stat × k, from your corpus

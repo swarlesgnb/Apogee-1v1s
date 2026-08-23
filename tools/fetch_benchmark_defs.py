@@ -7,7 +7,7 @@ KovaaK's own benchmark endpoint gives us, per difficulty:
                             -> leaderboard_id  for score verification
     ranks[]                                    rank names, icons, order
 
-Together that is everything needed to rank a player in any of the 133 benchmarks
+Together that is everything needed to rank a player in any of the benchmarks
 evxl tracks, from official data, with no spreadsheet and no guessing.
 
 Usage:
@@ -121,7 +121,7 @@ def build(entry: dict) -> dict:
 
 def main(argv: list[str]) -> int:
     if not REGISTRY.exists():
-        print("missing data/evxl_registry.json - run extract_evxl_registry.py first")
+        print("missing data/evxl_registry.json - run `npm run fetch:evxl` first")
         return 1
 
     registry = json.loads(REGISTRY.read_text(encoding="utf-8"))

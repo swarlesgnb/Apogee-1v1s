@@ -133,16 +133,27 @@ check("a difficulty in the URL wins", explicit?.difficulty === "Novice", explici
 // Every registry entry with a usable difficulty should produce a track request, so a
 // player can track any benchmark evxl knows about.
 let trackable = 0;
-let untrackable = 0;
+const untrackable: string[] = [];
 for (const entry of registry) {
   const request = toTrackRequest({ entry, difficulty: null, exact: true });
   if (request) trackable++;
-  else untrackable++;
+  else untrackable.push(entry.benchmarkName);
 }
 console.log(`       ${trackable} of ${registry.length} benchmarks are trackable`);
 check("most of the registry is trackable", trackable > registry.length * 0.8,
   `${trackable}/${registry.length}`);
-check("untrackable entries are the ones with no KovaaK's id", untrackable > 0);
+
+// The only honest reason to refuse is a benchmark hosted somewhere other than KovaaK's,
+// which carries no id to track by. Counting refusals instead used to assert there was at
+// least one, and that broke the day evxl dropped its last Aimbeast entry: the data
+// changed, the code was fine, and the suite failed. Assert the rule, not the census.
+const linked = registry.filter((entry) =>
+  (entry.difficulties ?? []).some(
+    (d) => typeof d.kovaaksBenchmarkId === "number" && d.kovaaksBenchmarkId > 0,
+  ),
+);
+check("every benchmark with a KovaaK's id is trackable", trackable === linked.length,
+  `${trackable}/${linked.length}, refused: ${untrackable.join(", ") || "none"}`);
 
 console.log("\n── quest generation from real history ───────────");
 
