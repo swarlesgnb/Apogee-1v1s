@@ -46,11 +46,10 @@ interface Example {
 
 interface Correction {
   aimType: string;
-  subCategory: string;
   kovaaksSays: string;
   measured: { runs: number; kills: number; shotsPerKill: number; weapon: string; bot?: string };
+  namedBy: { benchmark: string; label: string }[];
   why: string;
-  note?: string;
 }
 
 interface CorrectionsFile {
@@ -69,6 +68,31 @@ const taxonomy = JSON.parse(
 ) as { scenarios: { name: string; aimType: string | null }[] };
 
 const tax = new Map(taxonomy.scenarios.map((s) => [s.name, s]));
+
+/**
+ * Every (benchmark, label) pair naming each scenario.
+ *
+ * The pair, not just the benchmark name: a correction records the label verbatim so a
+ * reader can see how strong its support really is - "Dynamic Clicking" settles a category
+ * and "Precision" does not - and a label written from memory rather than read from the
+ * definitions would otherwise pass unnoticed. It did not: this check caught two.
+ */
+const namesFor = new Map<string, Set<string>>();
+for (const f of readdirSync(dataFile("benchmarks")).filter((n) => n.endsWith(".json"))) {
+  const def = JSON.parse(readFileSync(join(dataFile("benchmarks"), f), "utf8")) as {
+    benchmarkName: string;
+    difficulties?: { categories?: { name?: string; scenarios?: { name: string }[] }[] }[];
+  };
+  for (const diff of def.difficulties ?? []) {
+    for (const cat of diff.categories ?? []) {
+      for (const sc of cat.scenarios ?? []) {
+        const set = namesFor.get(sc.name) ?? new Set<string>();
+        set.add(`${def.benchmarkName} :: ${cat.name ?? ""}`);
+        namesFor.set(sc.name, set);
+      }
+    }
+  }
+}
 
 let failures = 0;
 function check(name: string, ok: boolean, detail = ""): void {
@@ -117,10 +141,32 @@ check(
 );
 
 const unreasoned = corrections.filter(([, c]) => !c.why || c.why.trim().length < 80);
+
+// Every correction overrules KovaaK's alone, never KovaaK's plus its own benchmarks. The
+// named benchmarks must therefore actually name the scenario - a correction claiming
+// support it does not have is the one failure mode this file cannot afford.
+const unsupported: string[] = [];
+for (const [name, c] of corrections) {
+  const naming = namesFor.get(name) ?? new Set<string>();
+  if (!c.namedBy || c.namedBy.length === 0) {
+    unsupported.push(`${name} names no benchmark`);
+    continue;
+  }
+  for (const b of c.namedBy) {
+    if (!naming.has(`${b.benchmark} :: ${b.label}`)) {
+      unsupported.push(`${name} claims ${b.benchmark} / ${b.label}, which is not in the definitions`);
+    }
+  }
+}
 check(
   "every correction says why at length",
   unreasoned.length === 0,
   unreasoned.map(([n]) => n).join(", "),
+);
+check(
+  "every benchmark and label a correction cites is in the committed definitions",
+  unsupported.length === 0,
+  unsupported.join("; "),
 );
 
 // ---- the measurement -------------------------------------------------------------------
@@ -224,12 +270,37 @@ if (!existsSync(statsDir)) {
       wrongFigure.push(`${name} quotes weapon ${c.measured.weapon}, measured ${got.weapon}`);
     }
 
-    // The point of the whole file: the scenario must sit OUTSIDE the range of the type
-    // KovaaK's gave it, by a margin, not merely near its edge. Ten times the top of the
-    // clicking range - the observed gap is over a hundred times, so this has room.
-    if (c.kovaaksSays === "Clicking" && clicking && got.shotsPerKill < clicking.hi * 10) {
+    // The point of the whole file: the measurement must REFUTE the label KovaaK's gave,
+    // by a factor of ten, not merely sit near its edge. The statistic settles exactly one
+    // question - one shot per kill, or sustained fire - so it refutes in both directions:
+    //
+    //   labelled Clicking  must measure far ABOVE the clicking band; clicking kills in one
+    //                      shot, so hundreds of shots per kill cannot be clicking
+    //   labelled Tracking  must measure far BELOW the tracking band; tracking a target to
+    //                      death takes sustained fire, so ~1 shot per kill cannot be it
+    //
+    // Nothing refutes a Switching label this way, because switching spans both: one-shot
+    // switching sits at 1.5 and multi-shot at 40. A correction away from Switching would
+    // need a different measurement, and there is none here, so it is refused.
+    const band = bounds.get(c.kovaaksSays === "Target Switching" ? "Switching" : c.kovaaksSays);
+
+    if (c.kovaaksSays === "Clicking") {
+      if (!band) notSeparated.push(`${name}: no clicking band measured to refute`);
+      else if (got.shotsPerKill < band.hi * 10) {
+        notSeparated.push(
+          `${name} at ${got.shotsPerKill.toFixed(1)} is not clear of clicking's ${band.hi.toFixed(1)}`,
+        );
+      }
+    } else if (c.kovaaksSays === "Tracking") {
+      if (!band) notSeparated.push(`${name}: no tracking band measured to refute`);
+      else if (got.shotsPerKill * 10 > band.lo) {
+        notSeparated.push(
+          `${name} at ${got.shotsPerKill.toFixed(1)} is not clear of tracking's ${band.lo.toFixed(1)}`,
+        );
+      }
+    } else {
       notSeparated.push(
-        `${name} at ${got.shotsPerKill.toFixed(1)} is not clear of clicking's ${clicking.hi.toFixed(1)}`,
+        `${name} corrects away from ${c.kovaaksSays}, which shots per kill cannot refute`,
       );
     }
   }

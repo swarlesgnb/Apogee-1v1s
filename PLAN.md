@@ -1031,6 +1031,46 @@ heard of, and one whose measurement does not put it clear of the range it was as
 Voltaic's published mapping still agrees with the derivation on all 106 scenarios it covers,
 which is the check that says the correction did not buy one scenario at the cost of others.
 
+**Swept, once the discriminator existed.** domiSwitch was found by looking; the rest were
+found by measuring all 365 scenarios with local runs against the label KovaaK's gives them.
+The label is right almost everywhere - 191 of the 197 it calls Clicking sit inside 1.0 to
+1.3 - and wrong in two lineages:
+
+```
+labelled Clicking, measured as sustained fire
+  Star Tracking Regen - @wa11p1per   225.6      20 kills   LG
+  domiSwitch                         177.4     201 kills   Poke-Drill
+  domiSwitch Avasive                 161.4      25 kills   LG
+  domiSwitch Easy                    136.6   1,900 kills   Poke-Drill
+  domiSwitch Easier                   94.7     198 kills   Poke-Drill
+
+labelled Tracking, measured as one shot per kill
+  Popcorn MV Easier                    1.4     527 kills   pistol
+  Popcorn MV Medium                    1.6     788 kills   pistol
+  Popcorn MV Intermediate              1.9     224 kills   pistol
+```
+
+The Popcorn lineage is the same fault in the opposite direction, and it is Voltaic's own
+dynamic clicking scenario: a scenario that kills in one pistol shot is not tracking, and the
+lowest genuinely-tracking scenario in the corpus is waldoTS at 32.1, twenty-three times
+higher.
+
+**What the statistic cannot do, which took a wrong turn to learn.** It settles one question -
+one shot per kill, or sustained fire - and that is a fact about the *weapon*. It refutes
+Clicking from above and Tracking from below, and it cannot choose between the two
+possibilities left over, because one-shot switching also fires once and multi-shot switching
+also fires many times. The benchmark labels decide that, so every correction overrules
+KovaaK's alone and never KovaaK's plus its own benchmarks.
+
+`1w4t_vbr_pokeball Raspberry` is the case that rule refuses, and it is the best-sampled
+disagreement in the corpus: 39.5 shots per kill over 5,902 kills, against a KovaaK's label of
+Clicking. It is left alone because Aimerz+ files it under Static Clicking too, so correcting
+it would overrule two sources on a statistic that cannot tell a static-clicking scenario
+played with a drill weapon from a switching one. It sits in `pending` with the reason, along
+with `Star Tracking Regen 40% Larger`, which is almost certainly the same mislabel as its
+corrected sibling and has no local runs to prove it - and this file does not correct on
+inference.
+
 `validate:pool` prints the override rather than swallowing it, because a scenario where this
 repo overrules the game is not something to discover by reading a diff.
 

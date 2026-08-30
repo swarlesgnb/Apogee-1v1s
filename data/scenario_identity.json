@@ -3384,8 +3384,8 @@
     },
     "Popcorn MV Easier": {
       "leaderboardId": 185398,
-      "aimType": "Tracking",
-      "subCategory": "Precise Tracking"
+      "aimType": "Clicking",
+      "subCategory": "Dynamic Clicking"
     },
     "Popcorn MV Hard": {
       "leaderboardId": 185400,
@@ -3394,13 +3394,13 @@
     },
     "Popcorn MV Intermediate": {
       "leaderboardId": 76960,
-      "aimType": "Tracking",
-      "subCategory": "Precise Tracking"
+      "aimType": "Clicking",
+      "subCategory": "Dynamic Clicking"
     },
     "Popcorn MV Medium": {
       "leaderboardId": 184781,
-      "aimType": "Tracking",
-      "subCategory": "Precise Tracking"
+      "aimType": "Clicking",
+      "subCategory": "Micro Clicking"
     },
     "Popcorn MV Novice": {
       "leaderboardId": 76965,
@@ -4104,8 +4104,8 @@
     },
     "Star Tracking Regen - @wa11p1per": {
       "leaderboardId": 29694,
-      "aimType": "Clicking",
-      "subCategory": null
+      "aimType": "Switching",
+      "subCategory": "Evasive Switching"
     },
     "Star Tracking Regen 40% Larger": {
       "leaderboardId": 92667,
@@ -6354,12 +6354,12 @@
     },
     "domiSwitch Avasive": {
       "leaderboardId": 129746,
-      "aimType": "Clicking",
-      "subCategory": null
+      "aimType": "Switching",
+      "subCategory": "Stability Switching"
     },
     "domiSwitch Easier": {
       "leaderboardId": 185428,
-      "aimType": "Clicking",
+      "aimType": "Switching",
       "subCategory": null
     },
     "domiSwitch Easy": {

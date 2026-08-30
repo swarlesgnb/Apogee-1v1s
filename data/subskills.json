@@ -14,7 +14,7 @@
     "normalisation as everybody else's, and Voltaic published where they belong."
   ],
   "source": "data/benchmarks/*.json category names + data/scenario_taxonomy.json aim types",
-  "derivedAt": "2026-08-30T16:12:01.021Z",
+  "derivedAt": "2026-08-30T18:54:29.668Z",
   "benchmarks": 43,
   "categories": {
     "Clicking": [
@@ -43,15 +43,15 @@
   },
   "counts": {
     "scenarios": 1481,
-    "classified": 1071,
-    "fromLabels": 1052,
+    "classified": 1073,
+    "fromLabels": 1054,
     "fromVoltaicSheet": 19,
     "aimTypeFromKovaaks": 1373,
     "aimTypeFromBenchmarkWord": 64,
     "aimTypeFromBenchmarkGroup": 18,
     "aimTypeRefusedAsAmbiguous": 23,
     "noAimType": 26,
-    "splitVote": 48
+    "splitVote": 50
   },
   "subSkills": [
     {
@@ -211,7 +211,7 @@
       "category": "Clicking",
       "subSkill": "Dynamic Clicking",
       "namedBy": 20,
-      "scenarios": 137,
+      "scenarios": 139,
       "benchmarks": [
         {
           "benchmark": "Jade Palace Dynamic",
@@ -220,7 +220,7 @@
             "Fundamentals",
             "Reading"
           ],
-          "scenarios": 26
+          "scenarios": 27
         },
         {
           "benchmark": "Aimerz+ Dynamic Clicking",
@@ -273,6 +273,13 @@
           "scenarios": 8
         },
         {
+          "benchmark": "snakbox Benchmark",
+          "labels": [
+            "Dynamic Clicking"
+          ],
+          "scenarios": 6
+        },
+        {
           "benchmark": "Revosect S1",
           "labels": [
             "Kinetic"
@@ -285,13 +292,6 @@
             "Dynamic"
           ],
           "scenarios": 6
-        },
-        {
-          "benchmark": "snakbox Benchmark",
-          "labels": [
-            "Dynamic Clicking"
-          ],
-          "scenarios": 5
         },
         {
           "benchmark": "Community Benchmarks",
@@ -436,7 +436,7 @@
       "category": "Clicking",
       "subSkill": "Micro Clicking",
       "namedBy": 8,
-      "scenarios": 47,
+      "scenarios": 48,
       "benchmarks": [
         {
           "benchmark": "Viscose Benchmarks S2",
@@ -444,7 +444,7 @@
             "Micro",
             "Precision"
           ],
-          "scenarios": 15
+          "scenarios": 16
         },
         {
           "benchmark": "Anima Micro v1",
@@ -504,7 +504,7 @@
       "category": "Tracking",
       "subSkill": "Precise Tracking",
       "namedBy": 21,
-      "scenarios": 140,
+      "scenarios": 137,
       "benchmarks": [
         {
           "benchmark": "Astro Tracking Benchmark",
@@ -544,14 +544,6 @@
           "scenarios": 12
         },
         {
-          "benchmark": "Viscose Benchmarks S2",
-          "labels": [
-            "Micro",
-            "Precision"
-          ],
-          "scenarios": 6
-        },
-        {
           "benchmark": "Voltaic S5.5",
           "labels": [
             "Precise"
@@ -571,14 +563,6 @@
             "Precise Tracking"
           ],
           "scenarios": 6
-        },
-        {
-          "benchmark": "Viscose Benchmarks",
-          "labels": [
-            "Micro",
-            "Precision"
-          ],
-          "scenarios": 5
         },
         {
           "benchmark": "Community Benchmarks",
@@ -605,6 +589,21 @@
           "benchmark": "Anima Micro v2",
           "labels": [
             "Micro-Tracking"
+          ],
+          "scenarios": 4
+        },
+        {
+          "benchmark": "Viscose Benchmarks S2",
+          "labels": [
+            "Micro"
+          ],
+          "scenarios": 4
+        },
+        {
+          "benchmark": "Viscose Benchmarks",
+          "labels": [
+            "Micro",
+            "Precision"
           ],
           "scenarios": 4
         },
@@ -1175,14 +1174,14 @@
       "category": "Switching",
       "subSkill": "Evasive Switching",
       "namedBy": 15,
-      "scenarios": 88,
+      "scenarios": 89,
       "benchmarks": [
         {
           "benchmark": "Aimerz+ Evasive Switching",
           "labels": [
             "Evasive Switch"
           ],
-          "scenarios": 20
+          "scenarios": 21
         },
         {
           "benchmark": "Avasive S2",
@@ -1289,7 +1288,7 @@
       "category": "Switching",
       "subSkill": "Stability Switching",
       "namedBy": 11,
-      "scenarios": 51,
+      "scenarios": 52,
       "benchmarks": [
         {
           "benchmark": "Revosect S1",
@@ -1343,18 +1342,18 @@
           "scenarios": 4
         },
         {
+          "benchmark": "Anima Micro v2",
+          "labels": [
+            "Micro-Switching"
+          ],
+          "scenarios": 4
+        },
+        {
           "benchmark": "Lemon Static Benchmark",
           "labels": [
             "Stability"
           ],
           "scenarios": 4
-        },
-        {
-          "benchmark": "Anima Micro v2",
-          "labels": [
-            "Micro-Switching"
-          ],
-          "scenarios": 3
         },
         {
           "benchmark": "Viscose Entry Benchmarks",
@@ -1474,7 +1473,7 @@
     },
     {
       "label": "Switching :: Post-Flick",
-      "scenarios": 10,
+      "scenarios": 11,
       "benchmarks": [
         "Viscose Benchmarks S2"
       ]
@@ -1734,13 +1733,6 @@
       ]
     },
     {
-      "label": "Clicking :: Evasive Switch",
-      "scenarios": 2,
-      "benchmarks": [
-        "Aimerz+ Evasive Switching"
-      ]
-    },
-    {
       "label": "Tracking :: Evasive Switch",
       "scenarios": 2,
       "benchmarks": [
@@ -1797,13 +1789,6 @@
       ]
     },
     {
-      "label": "Clicking :: Post-Flick",
-      "scenarios": 2,
-      "benchmarks": [
-        "Viscose Benchmarks S2"
-      ]
-    },
-    {
       "label": "Tracking :: Speed Track",
       "scenarios": 2,
       "benchmarks": [
@@ -1818,6 +1803,13 @@
       ]
     },
     {
+      "label": "Clicking :: Evasive Switch",
+      "scenarios": 1,
+      "benchmarks": [
+        "Aimerz+ Evasive Switching"
+      ]
+    },
+    {
       "label": "Switching :: Precise",
       "scenarios": 1,
       "benchmarks": [
@@ -1829,13 +1821,6 @@
       "scenarios": 1,
       "benchmarks": [
         "Aimerz+ Static Clicking"
-      ]
-    },
-    {
-      "label": "Clicking :: Micro-Switching",
-      "scenarios": 1,
-      "benchmarks": [
-        "Anima Micro v2"
       ]
     },
     {
@@ -1860,24 +1845,10 @@
       ]
     },
     {
-      "label": "Tracking :: Arc",
-      "scenarios": 1,
-      "benchmarks": [
-        "Jade Palace Dynamic"
-      ]
-    },
-    {
       "label": "Clicking :: Strafe",
       "scenarios": 1,
       "benchmarks": [
         "PureG S1"
-      ]
-    },
-    {
-      "label": "Tracking :: Dynamic Clicking",
-      "scenarios": 1,
-      "benchmarks": [
-        "snakbox Benchmark"
       ]
     },
     {
@@ -1899,6 +1870,13 @@
       "scenarios": 1,
       "benchmarks": [
         "TSK Mixed Benchmarks"
+      ]
+    },
+    {
+      "label": "Clicking :: Post-Flick",
+      "scenarios": 1,
+      "benchmarks": [
+        "Viscose Benchmarks S2"
       ]
     }
   ],
@@ -2137,6 +2115,13 @@
       ]
     },
     {
+      "scenario": "Popcorn MV Easier",
+      "between": [
+        "Dynamic Clicking",
+        "Micro Clicking"
+      ]
+    },
+    {
       "scenario": "SnowClick Revosect Int",
       "between": [
         "Linear Clicking",
@@ -2218,6 +2203,13 @@
       "between": [
         "Reactive Tracking",
         "Reading Tracking"
+      ]
+    },
+    {
+      "scenario": "Popcorn MV Intermediate",
+      "between": [
+        "Dynamic Clicking",
+        "Micro Clicking"
       ]
     },
     {
@@ -14481,9 +14473,9 @@
     {
       "scenario": "Popcorn MV Easier",
       "leaderboardId": 185398,
-      "category": "Tracking",
+      "category": "Clicking",
       "categoryFrom": "kovaaks",
-      "subSkill": "Precise Tracking",
+      "subSkill": "Dynamic Clicking",
       "via": "label",
       "entries": 37257,
       "plays": 152788,
@@ -14520,9 +14512,9 @@
     {
       "scenario": "Popcorn MV Intermediate",
       "leaderboardId": 76960,
-      "category": "Tracking",
+      "category": "Clicking",
       "categoryFrom": "kovaaks",
-      "subSkill": "Precise Tracking",
+      "subSkill": "Dynamic Clicking",
       "via": "label",
       "entries": 56007,
       "plays": 428477,
@@ -14542,9 +14534,9 @@
     {
       "scenario": "Popcorn MV Medium",
       "leaderboardId": 184781,
-      "category": "Tracking",
+      "category": "Clicking",
       "categoryFrom": "kovaaks",
-      "subSkill": "Precise Tracking",
+      "subSkill": "Micro Clicking",
       "via": "label",
       "entries": 34605,
       "plays": 255271,
@@ -17014,10 +17006,10 @@
     {
       "scenario": "Star Tracking Regen - @wa11p1per",
       "leaderboardId": 29694,
-      "category": "Clicking",
+      "category": "Switching",
       "categoryFrom": "kovaaks",
-      "subSkill": null,
-      "via": null,
+      "subSkill": "Evasive Switching",
+      "via": "label",
       "entries": 33398,
       "plays": 410064,
       "from": [
@@ -25304,10 +25296,10 @@
     {
       "scenario": "domiSwitch Avasive",
       "leaderboardId": 129746,
-      "category": "Clicking",
+      "category": "Switching",
       "categoryFrom": "kovaaks",
-      "subSkill": null,
-      "via": null,
+      "subSkill": "Stability Switching",
+      "via": "label",
       "entries": 16388,
       "plays": 93089,
       "from": [
@@ -25321,7 +25313,7 @@
     {
       "scenario": "domiSwitch Easier",
       "leaderboardId": 185428,
-      "category": "Clicking",
+      "category": "Switching",
       "categoryFrom": "kovaaks",
       "subSkill": null,
       "via": null,
