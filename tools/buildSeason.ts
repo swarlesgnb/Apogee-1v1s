@@ -57,7 +57,7 @@ import { dataFile } from "../src/core/dataDir.ts";
 import { scanStatsFolder } from "../src/core/history/history.ts";
 import { candidateStatsFolders, findStatsFolder } from "../src/app/watcher.ts";
 import { renderRankSheet } from "../src/core/report/rankSheet.ts";
-import { thresholdsFrom, type Distribution } from "../src/core/season/percentiles.ts";
+import { topFractionOfScore, type Distribution } from "../src/core/season/percentiles.ts";
 import { validateSeason, type Season } from "../src/core/season/season.ts";
 import { ENERGY_PER_RANK } from "../src/core/benchmarks/energy.ts";
 
@@ -223,59 +223,31 @@ function main(): void {
 
   const windowSize = pool.windowSize;
   const ranks = windowSize * pool.windows.length;
-  const ladders = pool.ladder.perWindow;
-
-  if (ladders.length !== pool.windows.length) {
+  // `pool.ladder.perWindow` used to be checked here for shape, because it was the
+  // source of every threshold. It is not a source any more; what is checked instead is
+  // that every variant carries as many scores as a window has ranks, which is the same
+  // guarantee moved to where the numbers now live.
+  const wrongWidth = pool.families.flatMap((f) =>
+    f.variants
+      .filter((v) => !Array.isArray(v.rankMaxes) || v.rankMaxes.length !== windowSize)
+      .map((v) => `${v.scenario} has ${v.rankMaxes?.length ?? 0}`),
+  );
+  if (wrongWidth.length > 0) {
     console.error(
-      `the ladder covers ${ladders.length} windows but the pool has ${pool.windows.length}`,
+      `a window is ${windowSize} ranks, so every variant needs ${windowSize} scores:\n  ` +
+        wrongWidth.join("\n  "),
     );
     process.exit(1);
   }
 
-  for (const [w, ladder] of ladders.entries()) {
-    if (ladder.length !== windowSize) {
-      console.error(
-        `${pool.windows[w]} has ${ladder.length} percentiles but a window is ` +
-          `${windowSize} ranks`,
-      );
-      process.exit(1);
+  // What kind of provenance the pool's numbers carry, summarised into the season so the
+  // debt is visible in the artefact and not only in a validator nobody ran.
+  const sourceCounts: Record<string, number> = {};
+  for (const family of pool.families) {
+    for (const v of family.variants) {
+      const kind = v.source?.kind ?? "none";
+      sourceCounts[kind] = (sourceCounts[kind] ?? 0) + 1;
     }
-  }
-
-  // The whole ladder must fall, handovers included.
-  //
-  // This used to be two checks: a hard one inside each window, and a soft one across the
-  // boundary that allowed a step back on the reasoning that a harder scenario draws a
-  // stronger crowd, so the same ability sits at a larger share of its board. The reasoning
-  // is sound and the check was still wrong, because a family is graded on the BEST of its
-  // variants: a player holds the highest rank any window gives them, so if Expert opens at
-  // the top 15% where Advanced closed at 2.8%, everybody who reached Advanced's last rank
-  // reached Expert's first at the same moment, and the four ranks between are held by
-  // nobody. Season 1 shipped that shape twice.
-  //
-  // Worse, the soft check did not warn either: it collected its findings into an array
-  // that was never printed. A ladder repeating Advanced's four percentiles verbatim for
-  // Expert built without a word.
-  //
-  // So it refuses now, and it refuses on the sequence rather than per window. Modelling
-  // the real step between two boards needs Apogee's own population, which is season 2's
-  // job; until there is one, a ladder that does not descend is a ladder with holes in it.
-  const sequence = ladders.flat();
-  const collision = sequence.findIndex((f, i) => i > 0 && f >= sequence[i - 1]);
-  if (collision > 0) {
-    const windowOf = (r: number) => pool.windows[Math.floor(r / windowSize)];
-    console.error(
-      `rank ${collision + 1} (${windowOf(collision)}) asks for the top ` +
-        `${(sequence[collision] * 100).toFixed(1)}%, which is no harder than rank ` +
-        `${collision} (${windowOf(collision - 1)}) at ` +
-        `${(sequence[collision - 1] * 100).toFixed(1)}%.`,
-    );
-    console.error(
-      "A family is graded on its best variant, so nobody would ever hold rank " +
-        `${collision}: reaching it reaches rank ${collision + 1} too. Lower the ` +
-        "percentiles in ladder.perWindow so the sixteen fall as one sequence.",
-    );
-    process.exit(1);
   }
 
   const seasonFile = join(dataFile("."), "seasons", "season-1.json");
@@ -297,20 +269,27 @@ function main(): void {
         continue;
       }
 
-      const derived = thresholdsFrom(dist, ladders[v.window]);
-      if (!derived) {
+      // The pool owns the numbers now. This used to call thresholdsFrom(dist, ladder)
+      // and cut every rank from a percentile of the board; a benchmark for improvement
+      // wants a target that sits still, so the number is read rather than computed.
+      //
+      // `overrides` went with the derivation. It existed so a hand-set number could
+      // survive a rebuild that would otherwise recompute over it - and with nothing
+      // being computed there is nothing to override.
+      const rankMaxes = v.rankMaxes;
+      if (!Array.isArray(rankMaxes) || rankMaxes.length === 0) {
         missing.push(v.scenario);
         continue;
       }
 
-      // A hand-set threshold wins over the derivation, and says so. Without this the
-      // rebuild silently reverts every deliberate adjustment somebody made.
-      const override = pool.overrides?.[v.scenario];
-      const overridden =
-        Array.isArray(override) &&
-        override.length === derived.length &&
-        override.some((n, i) => n !== derived[i]);
-      const rankMaxes = overridden ? override.slice() : derived;
+      // What the board says about the numbers, rather than what it dictated to them.
+      // `clears[i]` is the share of that leaderboard meeting rank i - the readout that
+      // catches a threshold nobody can reach or everybody clears, which is the job the
+      // percentile ladder used to do by construction and now has to do by inspection.
+      const clears = rankMaxes.map((score) => {
+        const f = topFractionOfScore(dist, score);
+        return f === null ? null : Number(f.toFixed(5));
+      });
 
       const entry: SeasonScenarioOut = {
         scenario: v.scenario,
@@ -321,8 +300,12 @@ function main(): void {
         label: v.label,
         leaderboardId: v.leaderboardId,
         rankMaxes,
-        derivedFrom: { leaderboardEntries: dist.total, topFractions: ladders[v.window] },
-        ...(overridden ? { overridden: true, derivedRankMaxes: derived } : {}),
+        source: v.source ?? { kind: "seeded", note: "no source recorded in the pool" },
+        sanity: {
+          leaderboardEntries: dist.total,
+          clears,
+          sampledAt: cache.sampledAt,
+        },
       };
 
       const local = history.get(v.scenario);
@@ -342,6 +325,62 @@ function main(): void {
 
       scenarios.push(entry);
     }
+  }
+
+  // The whole ladder must still fall, handovers included - now measured, not decreed.
+  //
+  // This used to compare the percentile ladder against itself, which was possible because
+  // every family was cut from one shared sequence. With authored scores there is no shared
+  // sequence, and two scenarios' scores are not comparable at all: 900 on one board and 120
+  // on another say nothing about each other. What IS comparable is how much of each board
+  // clears each threshold, so the check runs on that.
+  //
+  // Why it has to exist: a family is graded on the BEST of its variants, so a player holds
+  // the highest rank any window gives them. If Expert's first rank is easier to clear than
+  // Advanced's last, everybody reaching Advanced's last reaches Expert's first at the same
+  // moment and the ranks between are held by nobody. Season 1 shipped that shape twice, and
+  // the version of this check that only warned collected its findings into an array nothing
+  // ever printed.
+  const notFalling: string[] = [];
+
+  for (const family of pool.families) {
+    const ordered = scenarios
+      .filter((sc) => sc.family === family.family)
+      .sort((a, b) => (a.window ?? 0) - (b.window ?? 0));
+
+    const seq: { clear: number; scenario: string; rank: number }[] = [];
+    for (const sc of ordered) {
+      const clears = sc.sanity?.clears ?? [];
+      clears.forEach((c, i) => {
+        if (typeof c === "number") {
+          seq.push({
+            clear: c,
+            scenario: sc.label ?? sc.scenario,
+            rank: (sc.window ?? 0) * windowSize + i + 1,
+          });
+        }
+      });
+    }
+
+    for (let i = 1; i < seq.length; i++) {
+      if (seq[i].clear >= seq[i - 1].clear) {
+        notFalling.push(
+          `${family.family}: rank ${seq[i].rank} on ${seq[i].scenario} is cleared by ` +
+            `${(seq[i].clear * 100).toFixed(2)}% of its board, no fewer than rank ` +
+            `${seq[i - 1].rank} on ${seq[i - 1].scenario} at ` +
+            `${(seq[i - 1].clear * 100).toFixed(2)}%`,
+        );
+      }
+    }
+  }
+
+  if (notFalling.length > 0) {
+    console.error(
+      `\n${notFalling.length} rank(s) nobody can hold - a family is graded on its best ` +
+        `variant, so reaching the rank below reaches these at the same moment:\n  ` +
+        notFalling.slice(0, 12).join("\n  "),
+    );
+    process.exit(1);
   }
 
   if (missing.length > 0) {
@@ -392,21 +431,31 @@ function main(): void {
     windows: pool.windows,
     matchPool: { window: pool.matchWindow },
     categories,
-    derivedFrom: {
-      thresholds: cache.source,
+    thresholds: {
+      owner: "data/pool.json",
+      sourced: sourceCounts,
+      note:
+        "Every threshold in this file is an authored score read from data/pool.json, not a " +
+        "percentile of anybody's population. A percentile moves when the population moves, " +
+        "so the target slides while somebody is chasing it, and a benchmark for improvement " +
+        "wants a number that sits still. Each one carries a `source` saying whether it was " +
+        "adopted verbatim from a published benchmark, reconciled between several, authored " +
+        "outright with a reason, or is still seeded - inherited from the percentile era and " +
+        "not yet given a source. npm run validate:thresholds re-derives the first two and " +
+        "counts the last.",
+    },
+    boards: {
+      source: cache.source,
       sampledAt: cache.sampledAt,
-      perWindow: ladders,
       leaderboardEntries: scenarios.reduce(
-        (n, s) => n + (s.derivedFrom?.leaderboardEntries ?? 0),
+        (n, s) => n + (s.sanity?.leaderboardEntries ?? 0),
         0,
       ),
       note:
-        "Every threshold is the score at a given percentile of that scenario's KovaaK's " +
-        "leaderboard. The percentiles are ours; the scores are a fact about the game. No " +
-        "other benchmark's numbers appear in this file - where one is consulted it is " +
-        "converted to percentiles and discarded (tools/calibrateLadder.ts). Season 2 " +
-        "re-cuts these against Apogee's own population, including where one window hands " +
-        "over to the next.",
+        "The boards no longer set the thresholds; they audit them. Each scenario carries " +
+        "`sanity.clears` - what share of that leaderboard meets each rank - which is how a " +
+        "threshold nobody can reach, or one everybody clears, gets caught now that no " +
+        "percentile guarantees it by construction.",
     },
     builtAt: new Date().toISOString(),
     scenarios,
@@ -426,21 +475,38 @@ function main(): void {
   writeFileSync(sheet, renderRankSheet(season as unknown as Season), "utf8");
 
   // ---- report ----
+  // The percentile ladder used to be printed here, because it was the thing that decided
+  // every number. What matters now is where the numbers came from, and what the boards say
+  // about them - so the report shows the median clear-rate per window instead. It is the
+  // same shape of readout, measured from the authored numbers rather than dictating them.
+  const medianClear = (w: number): string => {
+    const all = scenarios
+      .filter((sc) => (sc.window ?? 0) === w)
+      .flatMap((sc) => sc.sanity?.clears ?? [])
+      .filter((c): c is number => typeof c === "number")
+      .sort((a, b) => a - b);
+    if (all.length === 0) return "unsampled";
+    const lo = all[0];
+    const hi = all[all.length - 1];
+    return `${(hi * 100).toFixed(1)}% down to ${(lo * 100).toFixed(2)}%`;
+  };
+
   console.log(
     `season 1: ${ranks} ranks per category, ${windowSize} per window\n` +
       `windows: ${pool.windows.join(" / ")}   matches draw from ` +
       `${pool.windows[pool.matchWindow]}\n` +
-      `thresholds, as a share of each scenario's own leaderboard:\n` +
-      ladders
-        .map(
-          (l, w) =>
-            `  ${pool.windows[w].padEnd(8)} top ` +
-            l.map((f) => `${(f * 100).toFixed(1)}%`).join(" / "),
-        )
+      `thresholds are authored; what each window's share of its boards looks like:\n` +
+      pool.windows
+        .map((name, w) => `  ${name.padEnd(12)} ${medianClear(w)}`)
         .join("\n") +
       `\n` +
+      `provenance: ` +
+      Object.entries(sourceCounts)
+        .map(([k, n]) => `${n} ${k}`)
+        .join(", ") +
+      `\n` +
       `${scenarios.length} scenarios in ${pool.families.length} families, behind ` +
-      `${season.derivedFrom.leaderboardEntries.toLocaleString()} leaderboard entries\n`,
+      `${season.boards.leaderboardEntries.toLocaleString()} leaderboard entries\n`,
   );
 
   for (const category of categories) {

@@ -1737,25 +1737,42 @@ ipcMain.handle("apogee:saveSeason", async (_e, { season }) => {
     try {
       const pool = JSON.parse(readFileSync(dataFile("pool.json"), "utf8"));
 
-      let cache: { distributions: Distribution[] } | null = null;
-      try {
-        cache = JSON.parse(readFileSync(dataFile("leaderboard_percentiles.json"), "utf8"));
-      } catch {
-        // No cache: every threshold is treated as hand-set, which is the safe direction.
-      }
-      const distOf = new Map((cache?.distributions ?? []).map((d) => [d.scenario, d]));
-
-      // The season's own ladder wins: if the percentiles were edited this session, the
-      // pool has not heard about it yet, and diffing against the old ones would record
-      // every freshly-derived threshold as a hand-set override.
-      const ladders: number[][] = season.derivedFrom?.perWindow ?? pool.ladder?.perWindow ?? [];
-      const overrides: Record<string, number[]> = {};
+      // Thresholds live in the pool now, so this rebuild has to carry them.
+      //
+      // It did not, and that was the sharpest edge in the whole conversion: the rebuild
+      // reconstructs every variant from the season, and a variant without `rankMaxes` is a
+      // variant with no numbers. One save from the season editor would have emptied every
+      // threshold in the pool, and the next build would have refused with 88 scenarios
+      // missing scores.
+      //
+      // `overrides` is gone with the derivation. It existed so a hand-set number could
+      // survive a rebuild that recomputed over it; nothing recomputes now, so there is
+      // nothing to override and no diff to take.
+      const sourceOf = new Map<string, unknown>(
+        (pool.families ?? []).flatMap((f: { variants?: { scenario: string; source?: unknown }[] }) =>
+          (f.variants ?? []).map((v) => [v.scenario, v.source] as [string, unknown]),
+        ),
+      );
+      const priorMaxes = new Map<string, number[]>(
+        (pool.families ?? []).flatMap((f: { variants?: { scenario: string; rankMaxes?: number[] }[] }) =>
+          (f.variants ?? [])
+            .filter((v) => Array.isArray(v.rankMaxes))
+            .map((v) => [v.scenario, v.rankMaxes!] as [string, number[]]),
+        ),
+      );
 
       const families: Record<string, {
         family: string;
         category: string;
         subCategory?: string;
-        variants: { window: number; scenario: string; label: string; leaderboardId: number | null }[];
+        variants: {
+          window: number;
+          scenario: string;
+          label: string;
+          leaderboardId: number | null;
+          rankMaxes: number[];
+          source: unknown;
+        }[];
       }> = {};
 
       // The season does not carry a sub-skill - it is a property of the family, and the
@@ -1779,20 +1796,34 @@ ipcMain.handle("apogee:saveSeason", async (_e, { season }) => {
           ...(subCategoryOf.has(key) ? { subCategory: subCategoryOf.get(key)! } : {}),
           variants: [],
         };
+        // A number the editor changed is a number somebody authored, and it says so.
+        // Keeping the old source would let an edit inherit a citation it no longer
+        // matches, which is the one thing the provenance is there to prevent.
+        const prior = priorMaxes.get(scen.scenario);
+        const edited =
+          !prior ||
+          prior.length !== scen.rankMaxes.length ||
+          prior.some((n, i) => n !== scen.rankMaxes[i]);
+
         families[key].variants.push({
           window: scen.window ?? 0,
           scenario: scen.scenario,
           label: scen.label,
           leaderboardId: scen.leaderboardId ?? null,
+          rankMaxes: scen.rankMaxes.slice(),
+          source: edited
+            ? {
+                kind: "authored",
+                why:
+                  "Changed in the season editor and not yet explained. Replace this with " +
+                  "the reason the number is what it is, or run the adoption tool to trace " +
+                  "it to a benchmark that publishes it.",
+              }
+            : (sourceOf.get(scen.scenario) ?? {
+                kind: "seeded",
+                note: "no source recorded when this variant was written back",
+              }),
         });
-
-        const dist = distOf.get(scen.scenario);
-        const ladder = ladders[scen.window ?? 0];
-        const derived = dist && ladder ? thresholdsFrom(dist, ladder) : null;
-
-        if (!derived || derived.some((n, i) => n !== scen.rankMaxes[i])) {
-          overrides[scen.scenario] = scen.rankMaxes.slice();
-        }
       }
 
       for (const f of Object.values(families)) f.variants.sort((a, b) => a.window - b.window);
@@ -1804,10 +1835,7 @@ ipcMain.handle("apogee:saveSeason", async (_e, { season }) => {
       pool.families = Object.values(families).sort(
         (a, b) => a.category.localeCompare(b.category) || a.family.localeCompare(b.family),
       );
-      pool.overrides = overrides;
-      if (season.derivedFrom?.perWindow) {
-        pool.ladder = { ...(pool.ladder ?? {}), perWindow: season.derivedFrom.perWindow };
-      }
+      delete pool.overrides;
 
       return JSON.stringify(pool, null, 2) + "\n";
     } catch {

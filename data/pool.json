@@ -211,25 +211,65 @@
           "window": 0,
           "scenario": "VT ww5t Novice S5",
           "label": "VT ww5t Novice S5",
-          "leaderboardId": 98030
+          "leaderboardId": 98030,
+          "rankMaxes": [
+            996,
+            1108,
+            1204,
+            1280
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 1,
           "scenario": "Wide Wall 3 Targets TE",
           "label": "Wide Wall 3 Targets TE",
-          "leaderboardId": 591
+          "leaderboardId": 591,
+          "rankMaxes": [
+            110,
+            115,
+            119,
+            124
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 2,
           "scenario": "Wide Wall 4 Targets",
           "label": "Wide Wall 4 Targets",
-          "leaderboardId": 831
+          "leaderboardId": 831,
+          "rankMaxes": [
+            107,
+            109,
+            112,
+            115
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 3,
           "scenario": "Wide Wall 3 Targets",
           "label": "Wide Wall 3 Targets",
-          "leaderboardId": 337
+          "leaderboardId": 337,
+          "rankMaxes": [
+            111,
+            115,
+            117,
+            120
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         }
       ]
     },
@@ -242,25 +282,65 @@
           "window": 0,
           "scenario": "VT 1w6ts Rasp Novice",
           "label": "VT 1w6ts Rasp Novice",
-          "leaderboardId": 29483
+          "leaderboardId": 29483,
+          "rankMaxes": [
+            724,
+            823,
+            896,
+            952
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 1,
           "scenario": "VT 1w5ts Rasp Intermediate",
           "label": "VT 1w5ts Rasp Intermediate",
-          "leaderboardId": 29494
+          "leaderboardId": 29494,
+          "rankMaxes": [
+            1056,
+            1108,
+            1160,
+            1196
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 2,
           "scenario": "1w6ts reload v2 20% bigger",
           "label": "1w6ts reload v2 20% bigger",
-          "leaderboardId": 21620
+          "leaderboardId": 21620,
+          "rankMaxes": [
+            127,
+            130,
+            133,
+            136
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 3,
           "scenario": "1w6ts reload v2",
           "label": "1w6ts reload v2",
-          "leaderboardId": 666
+          "leaderboardId": 666,
+          "rankMaxes": [
+            140,
+            144,
+            146,
+            149
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         }
       ]
     },
@@ -273,25 +353,65 @@
           "window": 0,
           "scenario": "VT Pasu Novice S5",
           "label": "VT Pasu Novice S5",
-          "leaderboardId": 98059
+          "leaderboardId": 98059,
+          "rankMaxes": [
+            544,
+            663,
+            755,
+            810
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 1,
           "scenario": "VT Pasu Intermediate S5",
           "label": "VT Pasu Intermediate S5",
-          "leaderboardId": 98330
+          "leaderboardId": 98330,
+          "rankMaxes": [
+            785,
+            833,
+            877,
+            924
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 2,
           "scenario": "VT Pasu Advanced S5",
           "label": "VT Pasu Advanced S5",
-          "leaderboardId": 98023
+          "leaderboardId": 98023,
+          "rankMaxes": [
+            835,
+            882,
+            913,
+            933
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 3,
           "scenario": "Pasu Reload Goated",
           "label": "Pasu Reload Goated",
-          "leaderboardId": 583
+          "leaderboardId": 583,
+          "rankMaxes": [
+            128,
+            133,
+            136,
+            140
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         }
       ]
     },
@@ -304,25 +424,65 @@
           "window": 0,
           "scenario": "VT Bounceshot Novice",
           "label": "VT Bounceshot Novice",
-          "leaderboardId": 24975
+          "leaderboardId": 24975,
+          "rankMaxes": [
+            442,
+            569,
+            674,
+            758
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 1,
           "scenario": "B180 Voltaic Easy 92%",
           "label": "B180 Voltaic Easy 92%",
-          "leaderboardId": 12018
+          "leaderboardId": 12018,
+          "rankMaxes": [
+            76,
+            81,
+            87,
+            89
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 2,
           "scenario": "VT Bounceshot Viscose Medium",
           "label": "VT Bounceshot Viscose Medium",
-          "leaderboardId": 185237
+          "leaderboardId": 185237,
+          "rankMaxes": [
+            940,
+            972,
+            1000,
+            1030
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 3,
           "scenario": "VT Bounceshot Advanced",
           "label": "VT Bounceshot Advanced",
-          "leaderboardId": 25154
+          "leaderboardId": 25154,
+          "rankMaxes": [
+            845,
+            880,
+            904,
+            926
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         }
       ]
     },
@@ -335,25 +495,65 @@
           "window": 0,
           "scenario": "VT Floating Heads Novice S5",
           "label": "VT Floating Heads Novice S5",
-          "leaderboardId": 98054
+          "leaderboardId": 98054,
+          "rankMaxes": [
+            390,
+            486,
+            568,
+            637
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 1,
           "scenario": "VT Floating Heads Intermediate S5",
           "label": "VT Floating Heads Intermediate S5",
-          "leaderboardId": 98055
+          "leaderboardId": 98055,
+          "rankMaxes": [
+            650,
+            698,
+            748,
+            796
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 2,
           "scenario": "Floating Heads Timing 400% Larger",
           "label": "Floating Heads Timing 400% Larger",
-          "leaderboardId": 1607
+          "leaderboardId": 1607,
+          "rankMaxes": [
+            3672,
+            3758,
+            3876,
+            3972
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 3,
           "scenario": "Floating Heads Timing 400% FIXED",
           "label": "Floating Heads Timing 400% FIXED",
-          "leaderboardId": 1730
+          "leaderboardId": 1730,
+          "rankMaxes": [
+            3108,
+            3240,
+            3326,
+            3434
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         }
       ]
     },
@@ -366,25 +566,65 @@
           "window": 0,
           "scenario": "VT Frogtagon Novice S5",
           "label": "VT Frogtagon Novice S5",
-          "leaderboardId": 106186
+          "leaderboardId": 106186,
+          "rankMaxes": [
+            634,
+            769,
+            880,
+            968
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 1,
           "scenario": "voxTargetSwitch Click",
           "label": "voxTargetSwitch Click",
-          "leaderboardId": 653
+          "leaderboardId": 653,
+          "rankMaxes": [
+            86,
+            90,
+            94,
+            98
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 2,
           "scenario": "voxTargetClick 20% Small",
           "label": "voxTargetClick 20% Small",
-          "leaderboardId": 857
+          "leaderboardId": 857,
+          "rankMaxes": [
+            97,
+            100,
+            102,
+            104
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 3,
           "scenario": "VoxTargetSwitch Click Small",
           "label": "VoxTargetSwitch Click Small",
-          "leaderboardId": 616
+          "leaderboardId": 616,
+          "rankMaxes": [
+            88,
+            92,
+            94,
+            96
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         }
       ]
     },
@@ -397,25 +637,65 @@
           "window": 0,
           "scenario": "eth Pasu Micro Entry",
           "label": "eth Pasu Micro Entry",
-          "leaderboardId": 190273
+          "leaderboardId": 190273,
+          "rankMaxes": [
+            935,
+            1063,
+            1154,
+            1230
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 1,
           "scenario": "eth Pasu Micro Easier",
           "label": "eth Pasu Micro Easier",
-          "leaderboardId": 185394
+          "leaderboardId": 185394,
+          "rankMaxes": [
+            1230,
+            1265,
+            1296,
+            1330
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 2,
           "scenario": "eth Pasu Micro Medium",
           "label": "eth Pasu Micro Medium",
-          "leaderboardId": 184790
+          "leaderboardId": 184790,
+          "rankMaxes": [
+            1438,
+            1478,
+            1521,
+            1559
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 3,
           "scenario": "1w3ts Pasu Perfected Micro Goated",
           "label": "1w3ts Pasu Perfected Micro Goated",
-          "leaderboardId": 65396
+          "leaderboardId": 65396,
+          "rankMaxes": [
+            1295,
+            1342,
+            1372,
+            1407
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         }
       ]
     },
@@ -428,25 +708,65 @@
           "window": 0,
           "scenario": "1w2ts reload smallflicks Entry",
           "label": "1w2ts reload smallflicks Entry",
-          "leaderboardId": 190274
+          "leaderboardId": 190274,
+          "rankMaxes": [
+            99,
+            110,
+            119,
+            126
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 1,
           "scenario": "1w2ts reload smallflicks larger",
           "label": "1w2ts reload smallflicks larger",
-          "leaderboardId": 185518
+          "leaderboardId": 185518,
+          "rankMaxes": [
+            131,
+            134,
+            138,
+            142
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 2,
           "scenario": "1w2ts reload smallflicks slightly larger",
           "label": "1w2ts reload smallflicks slightly larger",
-          "leaderboardId": 184777
+          "leaderboardId": 184777,
+          "rankMaxes": [
+            153,
+            157,
+            161,
+            164
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 3,
           "scenario": "1w2ts Pasu Perfected 30% Smaller",
           "label": "1w2ts Pasu Perfected 30% Smaller",
-          "leaderboardId": 28243
+          "leaderboardId": 28243,
+          "rankMaxes": [
+            87,
+            90,
+            92,
+            94
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         }
       ]
     },
@@ -459,25 +779,65 @@
           "window": 0,
           "scenario": "VT Smoothbot Novice",
           "label": "VT Smoothbot Novice",
-          "leaderboardId": 24967
+          "leaderboardId": 24967,
+          "rankMaxes": [
+            2211,
+            2616,
+            2932,
+            3190
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 1,
           "scenario": "VT Smoothbot Intermediate",
           "label": "VT Smoothbot Intermediate",
-          "leaderboardId": 24952
+          "leaderboardId": 24952,
+          "rankMaxes": [
+            3369,
+            3568,
+            3773,
+            3936
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 2,
           "scenario": "VT Smoothbot Advanced",
           "label": "VT Smoothbot Advanced",
-          "leaderboardId": 25151
+          "leaderboardId": 25151,
+          "rankMaxes": [
+            3059,
+            3223,
+            3325,
+            3400
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 3,
           "scenario": "Smoothbot Pauer",
           "label": "Smoothbot Pauer",
-          "leaderboardId": 724
+          "leaderboardId": 724,
+          "rankMaxes": [
+            4454,
+            4614,
+            4715,
+            4848
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         }
       ]
     },
@@ -490,25 +850,65 @@
           "window": 0,
           "scenario": "VT Snake Track Novice S5",
           "label": "VT Snake Track Novice S5",
-          "leaderboardId": 101560
+          "leaderboardId": 101560,
+          "rankMaxes": [
+            2439,
+            2876,
+            3253,
+            3469
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 1,
           "scenario": "waldoTS Novice",
           "label": "waldoTS Novice",
-          "leaderboardId": 113019
+          "leaderboardId": 113019,
+          "rankMaxes": [
+            134,
+            140,
+            143,
+            146
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 2,
           "scenario": "waldoTS Intermediate",
           "label": "waldoTS Intermediate",
-          "leaderboardId": 111273
+          "leaderboardId": 111273,
+          "rankMaxes": [
+            156,
+            160,
+            162,
+            165
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 3,
           "scenario": "waldoTS",
           "label": "waldoTS",
-          "leaderboardId": 81042
+          "leaderboardId": 81042,
+          "rankMaxes": [
+            148,
+            152,
+            155,
+            158
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         }
       ]
     },
@@ -521,25 +921,65 @@
           "window": 0,
           "scenario": "VT Ground Novice S5",
           "label": "VT Ground Novice S5",
-          "leaderboardId": 101744
+          "leaderboardId": 101744,
+          "rankMaxes": [
+            2225,
+            2670,
+            3008,
+            3177
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 1,
           "scenario": "Ground Plaza Sparky v3 Easy",
           "label": "Ground Plaza Sparky v3 Easy",
-          "leaderboardId": 134502
+          "leaderboardId": 134502,
+          "rankMaxes": [
+            888,
+            891,
+            893,
+            896
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 2,
           "scenario": "VT Ground Intermediate S5",
           "label": "VT Ground Intermediate S5",
-          "leaderboardId": 101743
+          "leaderboardId": 101743,
+          "rankMaxes": [
+            3371,
+            3403,
+            3438,
+            3476
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 3,
           "scenario": "Ground Plaza Sparky v3 OW",
           "label": "Ground Plaza Sparky v3 OW",
-          "leaderboardId": 871
+          "leaderboardId": 871,
+          "rankMaxes": [
+            894,
+            896,
+            897,
+            899
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         }
       ]
     },
@@ -552,25 +992,65 @@
           "window": 0,
           "scenario": "VT Aether Novice S5",
           "label": "VT Aether Novice S5",
-          "leaderboardId": 101370
+          "leaderboardId": 101370,
+          "rankMaxes": [
+            1649,
+            2057,
+            2419,
+            2664
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 1,
           "scenario": "Air CELESTIAL No UFO Easy Slowed",
           "label": "Air CELESTIAL No UFO Easy Slowed",
-          "leaderboardId": 131872
+          "leaderboardId": 131872,
+          "rankMaxes": [
+            890,
+            893,
+            896,
+            898
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 2,
           "scenario": "Air CELESTIAL No UFO Easy",
           "label": "Air CELESTIAL No UFO Easy",
-          "leaderboardId": 70930
+          "leaderboardId": 70930,
+          "rankMaxes": [
+            895,
+            899,
+            902,
+            904
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 3,
           "scenario": "Air CELESTIAL",
           "label": "Air CELESTIAL",
-          "leaderboardId": 1241
+          "leaderboardId": 1241,
+          "rankMaxes": [
+            883,
+            886,
+            889,
+            891
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         }
       ]
     },
@@ -583,25 +1063,65 @@
           "window": 0,
           "scenario": "VT Controlsphere Novice S5",
           "label": "VT Controlsphere Novice S5",
-          "leaderboardId": 103765
+          "leaderboardId": 103765,
+          "rankMaxes": [
+            1695,
+            2194,
+            2648,
+            2933
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 1,
           "scenario": "VT Controlsphere Intermediate S5",
           "label": "VT Controlsphere Intermediate S5",
-          "leaderboardId": 103353
+          "leaderboardId": 103353,
+          "rankMaxes": [
+            3071,
+            3310,
+            3563,
+            3797
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 2,
           "scenario": "Controlsphere",
           "label": "Controlsphere",
-          "leaderboardId": 392
+          "leaderboardId": 392,
+          "rankMaxes": [
+            10071,
+            10534,
+            10968,
+            11345
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 3,
           "scenario": "Controlsphere rAim",
           "label": "Controlsphere rAim",
-          "leaderboardId": 5102
+          "leaderboardId": 5102,
+          "rankMaxes": [
+            10159,
+            10565,
+            10835,
+            11088
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         }
       ]
     },
@@ -614,25 +1134,65 @@
           "window": 0,
           "scenario": "VT Raw Control Novice S5",
           "label": "VT Raw Control Novice S5",
-          "leaderboardId": 98047
+          "leaderboardId": 98047,
+          "rankMaxes": [
+            2236,
+            2756,
+            3198,
+            3476
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 1,
           "scenario": "Whisphere 80%",
           "label": "Whisphere 80%",
-          "leaderboardId": 55382
+          "leaderboardId": 55382,
+          "rankMaxes": [
+            13013,
+            14110,
+            14800,
+            15259
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 2,
           "scenario": "Whisphere",
           "label": "Whisphere",
-          "leaderboardId": 34963
+          "leaderboardId": 34963,
+          "rankMaxes": [
+            16100,
+            16940,
+            17517,
+            18037
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 3,
           "scenario": "VT Raw Control Intermediate S5 Hard",
           "label": "VT Raw Control Intermediate S5 Hard",
-          "leaderboardId": 105155
+          "leaderboardId": 105155,
+          "rankMaxes": [
+            3220,
+            3417,
+            3545,
+            3694
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         }
       ]
     },
@@ -645,25 +1205,65 @@
           "window": 0,
           "scenario": "VT Aether Novice S5 Bot 2",
           "label": "VT Aether Novice S5 Bot 2",
-          "leaderboardId": 108143
+          "leaderboardId": 108143,
+          "rankMaxes": [
+            2200,
+            2506,
+            2757,
+            2991
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 1,
           "scenario": "Air Voltaic Easy Invincible 4 80%",
           "label": "Air Voltaic Easy Invincible 4 80%",
-          "leaderboardId": 128781
+          "leaderboardId": 128781,
+          "rankMaxes": [
+            3310,
+            3460,
+            3618,
+            3786
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 2,
           "scenario": "Air Voltaic Easy",
           "label": "Air Voltaic Easy",
-          "leaderboardId": 568
+          "leaderboardId": 568,
+          "rankMaxes": [
+            874,
+            878,
+            881,
+            884
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 3,
           "scenario": "Air Voltaic",
           "label": "Air Voltaic",
-          "leaderboardId": 29
+          "leaderboardId": 29,
+          "rankMaxes": [
+            875,
+            879,
+            883,
+            885
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         }
       ]
     },
@@ -676,25 +1276,65 @@
           "window": 0,
           "scenario": "Close Long Strafes Invincible",
           "label": "Close Long Strafes Invincible",
-          "leaderboardId": 117
+          "leaderboardId": 117,
+          "rankMaxes": [
+            7618,
+            9530,
+            11066,
+            12254
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 1,
           "scenario": "Smooth Thin Strafes Raspberry Easy",
           "label": "Smooth Thin Strafes Raspberry Easy",
-          "leaderboardId": 5536
+          "leaderboardId": 5536,
+          "rankMaxes": [
+            7014,
+            7584,
+            8109,
+            8555
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 2,
           "scenario": "Air Angelic 4 Voltaic Easy",
           "label": "Air Angelic 4 Voltaic Easy",
-          "leaderboardId": 42
+          "leaderboardId": 42,
+          "rankMaxes": [
+            3656,
+            3785,
+            3906,
+            4011
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 3,
           "scenario": "Close Fast Strafes Invincible - Thin",
           "label": "Close Fast Strafes Invincible - Thin",
-          "leaderboardId": 814
+          "leaderboardId": 814,
+          "rankMaxes": [
+            10079,
+            10629,
+            10996,
+            11448
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         }
       ]
     },
@@ -707,25 +1347,65 @@
           "window": 0,
           "scenario": "VT EddieTS Novice S5",
           "label": "VT EddieTS Novice S5",
-          "leaderboardId": 104835
+          "leaderboardId": 104835,
+          "rankMaxes": [
+            652,
+            743,
+            822,
+            882
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 1,
           "scenario": "voxTS Viscose Varied",
           "label": "voxTS Viscose Varied",
-          "leaderboardId": 417
+          "leaderboardId": 417,
+          "rankMaxes": [
+            84,
+            89,
+            94,
+            98
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 2,
           "scenario": "voxTargetSwitch",
           "label": "voxTargetSwitch",
-          "leaderboardId": 118
+          "leaderboardId": 118,
+          "rankMaxes": [
+            97,
+            100,
+            102,
+            104
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 3,
           "scenario": "VT skyTS Advanced",
           "label": "VT skyTS Advanced",
-          "leaderboardId": 25150
+          "leaderboardId": 25150,
+          "rankMaxes": [
+            1355,
+            1390,
+            1413,
+            1433
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         }
       ]
     },
@@ -738,25 +1418,65 @@
           "window": 0,
           "scenario": "VT DotTS Novice S5",
           "label": "VT DotTS Novice S5",
-          "leaderboardId": 104868
+          "leaderboardId": 104868,
+          "rankMaxes": [
+            860,
+            967,
+            1051,
+            1096
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 1,
           "scenario": "VT DotTS Intermediate S5",
           "label": "VT DotTS Intermediate S5",
-          "leaderboardId": 104865
+          "leaderboardId": 104865,
+          "rankMaxes": [
+            1143,
+            1181,
+            1219,
+            1247
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 2,
           "scenario": "VT DotTS Advanced S5",
           "label": "VT DotTS Advanced S5",
-          "leaderboardId": 104961
+          "leaderboardId": 104961,
+          "rankMaxes": [
+            1243,
+            1273,
+            1287,
+            1297
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 3,
           "scenario": "VT psalmTS Advanced",
           "label": "VT psalmTS Advanced",
-          "leaderboardId": 25177
+          "leaderboardId": 25177,
+          "rankMaxes": [
+            1091,
+            1116,
+            1132,
+            1154
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         }
       ]
     },
@@ -769,25 +1489,65 @@
           "window": 0,
           "scenario": "VT FlyTS Novice S5",
           "label": "VT FlyTS Novice S5",
-          "leaderboardId": 104830
+          "leaderboardId": 104830,
+          "rankMaxes": [
+            434,
+            482,
+            522,
+            542
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 1,
           "scenario": "VT FlyTS Intermediate S5",
           "label": "VT FlyTS Intermediate S5",
-          "leaderboardId": 105142
+          "leaderboardId": 105142,
+          "rankMaxes": [
+            558,
+            583,
+            610,
+            632
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 2,
           "scenario": "VT FlyTS Advanced S5",
           "label": "VT FlyTS Advanced S5",
-          "leaderboardId": 105143
+          "leaderboardId": 105143,
+          "rankMaxes": [
+            551,
+            561,
+            574,
+            588
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 3,
           "scenario": "domiSwitch",
           "label": "domiSwitch",
-          "leaderboardId": 83035
+          "leaderboardId": 83035,
+          "rankMaxes": [
+            6494,
+            6696,
+            6830,
+            6975
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         }
       ]
     },
@@ -800,25 +1560,65 @@
           "window": 0,
           "scenario": "VT evaTS Novice",
           "label": "VT evaTS Novice",
-          "leaderboardId": 24980
+          "leaderboardId": 24980,
+          "rankMaxes": [
+            480,
+            537,
+            582,
+            616
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 1,
           "scenario": "VT evaTS Intermediate",
           "label": "VT evaTS Intermediate",
-          "leaderboardId": 24962
+          "leaderboardId": 24962,
+          "rankMaxes": [
+            599,
+            625,
+            651,
+            669
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 2,
           "scenario": "tamTargetSwitch Smooth Easy",
           "label": "tamTargetSwitch Smooth Easy",
-          "leaderboardId": 42505
+          "leaderboardId": 42505,
+          "rankMaxes": [
+            35,
+            36,
+            37,
+            38
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 3,
           "scenario": "tamTargetSwitch Smooth Hard",
           "label": "tamTargetSwitch Smooth Hard",
-          "leaderboardId": 727
+          "leaderboardId": 727,
+          "rankMaxes": [
+            32,
+            33,
+            34,
+            35
+          ],
+          "source": {
+            "kind": "authored",
+            "why": "31 made rank 13 exactly as hard as rank 12. tamTargetSwitch Smooth Easy asks 38 for rank 12 and 2.00% of its board clears that; tamTargetSwitch Smooth Hard asked 31 for rank 13 and 2.00% of its board cleared that too. A family is graded on the best of its variants, so everybody reaching rank 12 reached rank 13 in the same run and rank 12 was held by nobody. 32 clears about 1.67%, which puts the ladder back in order. Season 1 shipped this. The percentile ladder it was cut from descended correctly - Advanced closed at 0.03 and Expert opened at 0.022 - so the check that read the ladder saw nothing wrong. These are small integer scores, 35-38 against 31-35, and rounding a percentile onto them collapsed two ranks onto one difficulty. Measuring what share of the board actually clears each authored number is what found it."
+          }
         }
       ]
     },
@@ -831,25 +1631,65 @@
           "window": 0,
           "scenario": "VT ControlTS Novice S5",
           "label": "VT ControlTS Novice S5",
-          "leaderboardId": 105132
+          "leaderboardId": 105132,
+          "rankMaxes": [
+            354,
+            399,
+            436,
+            455
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 1,
           "scenario": "VT ControlTS Intermediate S5",
           "label": "VT ControlTS Intermediate S5",
-          "leaderboardId": 104890
+          "leaderboardId": 104890,
+          "rankMaxes": [
+            445,
+            465,
+            487,
+            503
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 2,
           "scenario": "kinTS Voltaic Easy",
           "label": "kinTS Voltaic Easy",
-          "leaderboardId": 542
+          "leaderboardId": 542,
+          "rankMaxes": [
+            74,
+            76,
+            77,
+            78
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 3,
           "scenario": "kinTS Voltaic",
           "label": "kinTS Voltaic",
-          "leaderboardId": 604
+          "leaderboardId": 604,
+          "rankMaxes": [
+            80,
+            82,
+            84,
+            85
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         }
       ]
     },
@@ -862,25 +1702,65 @@
           "window": 0,
           "scenario": "VT Penta Bounce Novice S5",
           "label": "VT Penta Bounce Novice S5",
-          "leaderboardId": 103262
+          "leaderboardId": 103262,
+          "rankMaxes": [
+            306,
+            366,
+            414,
+            446
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 1,
           "scenario": "beanTS Larger",
           "label": "beanTS Larger",
-          "leaderboardId": 129353
+          "leaderboardId": 129353,
+          "rankMaxes": [
+            125,
+            131,
+            137,
+            141
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 2,
           "scenario": "beanTS",
           "label": "beanTS",
-          "leaderboardId": 2648
+          "leaderboardId": 2648,
+          "rankMaxes": [
+            135,
+            137,
+            141,
+            143
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         },
         {
           "window": 3,
           "scenario": "B180T Voltaic",
           "label": "B180T Voltaic",
-          "leaderboardId": 947
+          "leaderboardId": 947,
+          "rankMaxes": [
+            81,
+            84,
+            86,
+            88
+          ],
+          "source": {
+            "kind": "seeded",
+            "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+          }
         }
       ]
     }

@@ -97,7 +97,7 @@ console.log(`\n${BOLD}provenance${RESET}`);
 
 const wrongDenominator = season.scenarios.filter((sc) => {
   const dist = sources.distributions.get(sc.scenario);
-  const stated = (sc as { derivedFrom?: { leaderboardEntries?: number } }).derivedFrom
+  const stated = (sc as { sanity?: { leaderboardEntries?: number } }).sanity
     ?.leaderboardEntries;
   return dist !== undefined && stated !== undefined && stated !== dist.total;
 });

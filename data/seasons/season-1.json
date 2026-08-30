@@ -207,39 +207,21 @@
       "derivable": true
     }
   ],
-  "derivedFrom": {
-    "thresholds": "kovaaks.com/webapp-backend/leaderboard/scores/global",
-    "sampledAt": "2026-08-30T15:59:54.202Z",
-    "perWindow": [
-      [
-        0.86,
-        0.72,
-        0.56,
-        0.42
-      ],
-      [
-        0.31,
-        0.22,
-        0.15,
-        0.105
-      ],
-      [
-        0.075,
-        0.055,
-        0.04,
-        0.03
-      ],
-      [
-        0.022,
-        0.015,
-        0.011,
-        0.008
-      ]
-    ],
-    "leaderboardEntries": 6421748,
-    "note": "Every threshold is the score at a given percentile of that scenario's KovaaK's leaderboard. The percentiles are ours; the scores are a fact about the game. No other benchmark's numbers appear in this file - where one is consulted it is converted to percentiles and discarded (tools/calibrateLadder.ts). Season 2 re-cuts these against Apogee's own population, including where one window hands over to the next."
+  "thresholds": {
+    "owner": "data/pool.json",
+    "sourced": {
+      "seeded": 87,
+      "authored": 1
+    },
+    "note": "Every threshold in this file is an authored score read from data/pool.json, not a percentile of anybody's population. A percentile moves when the population moves, so the target slides while somebody is chasing it, and a benchmark for improvement wants a number that sits still. Each one carries a `source` saying whether it was adopted verbatim from a published benchmark, reconciled between several, authored outright with a reason, or is still seeded - inherited from the percentile era and not yet given a source. npm run validate:thresholds re-derives the first two and counts the last."
   },
-  "builtAt": "2026-08-30T16:12:37.829Z",
+  "boards": {
+    "source": "kovaaks.com/webapp-backend/leaderboard/scores/global",
+    "sampledAt": "2026-08-30T15:59:54.202Z",
+    "leaderboardEntries": 6421748,
+    "note": "The boards no longer set the thresholds; they audit them. Each scenario carries `sanity.clears` - what share of that leaderboard meets each rank - which is how a threshold nobody can reach, or one everybody clears, gets caught now that no percentile guarantees it by construction."
+  },
+  "builtAt": "2026-08-30T20:57:06.981Z",
   "scenarios": [
     {
       "scenario": "VT ww5t Novice S5",
@@ -255,14 +237,19 @@
         1204,
         1280
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 102106,
-        "topFractions": [
+        "clears": [
           0.86,
           0.72,
           0.56,
           0.42
-        ]
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 1,
@@ -285,14 +272,19 @@
         119,
         124
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 199115,
-        "topFractions": [
-          0.31,
-          0.22,
+        "clears": [
+          0.3,
+          0.21667,
           0.15,
-          0.105
-        ]
+          0.1
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 19,
@@ -315,14 +307,19 @@
         112,
         115
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 207742,
-        "topFractions": [
+        "clears": [
           0.075,
-          0.055,
+          0.05833,
           0.04,
-          0.03
-        ]
+          0.029
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 106,
@@ -345,14 +342,19 @@
         117,
         120
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 383110,
-        "topFractions": [
-          0.022,
+        "clears": [
+          0.02375,
           0.015,
-          0.011,
-          0.008
-        ]
+          0.01167,
+          0.00833
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       }
     },
     {
@@ -369,14 +371,19 @@
         896,
         952
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 122762,
-        "topFractions": [
+        "clears": [
           0.86,
-          0.72,
+          0.71938,
           0.56,
           0.42
-        ]
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       }
     },
     {
@@ -393,14 +400,19 @@
         1160,
         1196
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 72043,
-        "topFractions": [
+        "clears": [
           0.31,
           0.22,
           0.15,
           0.105
-        ]
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       }
     },
     {
@@ -417,14 +429,19 @@
         133,
         136
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 21583,
-        "topFractions": [
+        "clears": [
           0.075,
-          0.055,
+          0.05625,
           0.04,
           0.03
-        ]
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 5,
@@ -447,14 +464,19 @@
         146,
         149
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 51420,
-        "topFractions": [
-          0.022,
+        "clears": [
+          0.0225,
           0.015,
-          0.011,
-          0.008
-        ]
+          0.01167,
+          0.00833
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 108,
@@ -477,14 +499,19 @@
         755,
         810
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 115450,
-        "topFractions": [
-          0.86,
-          0.72,
-          0.56,
-          0.42
-        ]
+        "clears": [
+          0.8596,
+          0.71967,
+          0.56019,
+          0.41829
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 2,
@@ -507,14 +534,19 @@
         877,
         924
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 79758,
-        "topFractions": [
-          0.31,
-          0.22,
-          0.15,
+        "clears": [
+          0.30927,
+          0.22064,
+          0.14996,
           0.105
-        ]
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 36,
@@ -537,14 +569,19 @@
         913,
         933
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 25242,
-        "topFractions": [
-          0.075,
-          0.055,
-          0.04,
-          0.03
-        ]
+        "clears": [
+          0.07526,
+          0.05487,
+          0.03996,
+          0.03021
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 2,
@@ -567,14 +604,19 @@
         136,
         140
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 25879,
-        "topFractions": [
-          0.022,
+        "clears": [
+          0.02188,
           0.015,
-          0.011,
-          0.008
-        ]
+          0.01125,
+          0.00813
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 15,
@@ -597,14 +639,19 @@
         674,
         758
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 125087,
-        "topFractions": [
+        "clears": [
           0.86,
-          0.72,
+          0.71955,
           0.56,
           0.42
-        ]
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       }
     },
     {
@@ -621,14 +668,19 @@
         87,
         89
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 55044,
-        "topFractions": [
-          0.31,
-          0.22,
+        "clears": [
+          0.3,
+          0.21667,
           0.15,
-          0.105
-        ]
+          0.1
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       }
     },
     {
@@ -645,14 +697,19 @@
         1000,
         1030
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 16780,
-        "topFractions": [
+        "clears": [
           0.075,
           0.055,
           0.04,
           0.03
-        ]
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 23,
@@ -675,14 +732,19 @@
         904,
         926
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 22127,
-        "topFractions": [
-          0.022,
+        "clears": [
+          0.02188,
           0.015,
           0.011,
           0.008
-        ]
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 1,
@@ -705,14 +767,19 @@
         568,
         637
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 98229,
-        "topFractions": [
-          0.86,
-          0.72,
-          0.56,
-          0.42
-        ]
+        "clears": [
+          0.86025,
+          0.72015,
+          0.55984,
+          0.41913
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 2,
@@ -735,14 +802,19 @@
         748,
         796
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 60906,
-        "topFractions": [
-          0.31,
-          0.22,
-          0.15,
-          0.105
-        ]
+        "clears": [
+          0.30867,
+          0.22038,
+          0.14994,
+          0.10538
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 27,
@@ -765,14 +837,19 @@
         3876,
         3972
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 69285,
-        "topFractions": [
+        "clears": [
           0.075,
-          0.055,
+          0.05509,
           0.04,
           0.03
-        ]
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 4,
@@ -795,14 +872,19 @@
         3326,
         3434
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 182809,
-        "topFractions": [
+        "clears": [
           0.022,
           0.015,
-          0.011,
-          0.008
-        ]
+          0.01102,
+          0.00801
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 2,
@@ -825,14 +907,19 @@
         880,
         968
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 96999,
-        "topFractions": [
+        "clears": [
           0.86,
-          0.72,
+          0.71955,
           0.56,
           0.42
-        ]
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 2,
@@ -855,14 +942,19 @@
         94,
         98
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 95356,
-        "topFractions": [
-          0.31,
+        "clears": [
+          0.3,
           0.22,
           0.15,
-          0.105
-        ]
+          0.1
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       }
     },
     {
@@ -879,14 +971,19 @@
         102,
         104
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 39066,
-        "topFractions": [
+        "clears": [
           0.075,
-          0.055,
-          0.04,
+          0.05625,
+          0.0425,
           0.03
-        ]
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 4,
@@ -909,14 +1006,19 @@
         94,
         96
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 127111,
-        "topFractions": [
-          0.022,
-          0.015,
-          0.011,
-          0.008
-        ]
+        "clears": [
+          0.023,
+          0.014,
+          0.01,
+          0.0075
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       }
     },
     {
@@ -933,14 +1035,19 @@
         1154,
         1230
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 2529,
-        "topFractions": [
-          0.86,
-          0.72,
-          0.56,
-          0.42
-        ]
+        "clears": [
+          0.86017,
+          0.71955,
+          0.55909,
+          0.41935
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       }
     },
     {
@@ -957,14 +1064,19 @@
         1296,
         1330
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 20295,
-        "topFractions": [
-          0.31,
-          0.22,
+        "clears": [
+          0.31071,
+          0.21944,
           0.15,
-          0.105
-        ]
+          0.10526
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 4,
@@ -987,14 +1099,19 @@
         1521,
         1559
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 19065,
-        "topFractions": [
+        "clears": [
           0.075,
           0.055,
-          0.04,
-          0.03
-        ]
+          0.0401,
+          0.03008
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 25,
@@ -1017,14 +1134,19 @@
         1372,
         1407
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 51099,
-        "topFractions": [
-          0.022,
+        "clears": [
+          0.02211,
           0.015,
-          0.011,
-          0.008
-        ]
+          0.01105,
+          0.00801
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 13,
@@ -1047,14 +1169,19 @@
         119,
         126
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 2833,
-        "topFractions": [
-          0.86,
-          0.72,
-          0.56,
+        "clears": [
+          0.85625,
+          0.725,
+          0.56429,
           0.42
-        ]
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       }
     },
     {
@@ -1071,14 +1198,19 @@
         138,
         142
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 21119,
-        "topFractions": [
-          0.31,
-          0.22,
+        "clears": [
+          0.3,
+          0.225,
           0.15,
-          0.105
-        ]
+          0.1
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 3,
@@ -1101,14 +1233,19 @@
         161,
         164
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 20355,
-        "topFractions": [
+        "clears": [
           0.075,
           0.055,
-          0.04,
+          0.03875,
           0.03
-        ]
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 31,
@@ -1131,14 +1268,19 @@
         92,
         94
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 46459,
-        "topFractions": [
-          0.022,
+        "clears": [
+          0.02375,
           0.015,
-          0.011,
-          0.008
-        ]
+          0.01,
+          0.0075
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 1,
@@ -1161,14 +1303,19 @@
         2932,
         3190
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 187441,
-        "topFractions": [
-          0.86,
-          0.72,
-          0.56,
+        "clears": [
+          0.8601,
+          0.71997,
+          0.56021,
           0.42
-        ]
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       }
     },
     {
@@ -1185,14 +1332,19 @@
         3773,
         3936
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 83099,
-        "topFractions": [
-          0.31,
-          0.22,
+        "clears": [
+          0.3101,
+          0.22009,
           0.15,
-          0.105
-        ]
+          0.10497
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       }
     },
     {
@@ -1209,14 +1361,19 @@
         3325,
         3400
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 39387,
-        "topFractions": [
+        "clears": [
           0.075,
           0.055,
-          0.04,
-          0.03
-        ]
+          0.04005,
+          0.03004
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       }
     },
     {
@@ -1233,14 +1390,19 @@
         4715,
         4848
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 22983,
-        "topFractions": [
-          0.022,
+        "clears": [
+          0.02198,
           0.015,
-          0.011,
+          0.01099,
           0.008
-        ]
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 1,
@@ -1263,14 +1425,19 @@
         3253,
         3469
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 93836,
-        "topFractions": [
-          0.86,
-          0.72,
+        "clears": [
+          0.8601,
+          0.71986,
           0.56,
-          0.42
-        ]
+          0.42041
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 3,
@@ -1293,14 +1460,19 @@
         143,
         146
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 71439,
-        "topFractions": [
-          0.31,
-          0.22,
-          0.15,
-          0.105
-        ]
+        "clears": [
+          0.30691,
+          0.21627,
+          0.14692,
+          0.10077
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 2,
@@ -1323,14 +1495,19 @@
         162,
         165
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 40339,
-        "topFractions": [
-          0.075,
-          0.055,
-          0.04,
-          0.03
-        ]
+        "clears": [
+          0.07956,
+          0.05351,
+          0.0426,
+          0.03026
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 62,
@@ -1353,14 +1530,19 @@
         155,
         158
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 119350,
-        "topFractions": [
-          0.022,
-          0.015,
-          0.011,
-          0.008
-        ]
+        "clears": [
+          0.02237,
+          0.01547,
+          0.01109,
+          0.00807
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 9,
@@ -1383,14 +1565,19 @@
         3008,
         3177
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 93615,
-        "topFractions": [
-          0.86,
-          0.72,
-          0.56,
-          0.42
-        ]
+        "clears": [
+          0.86005,
+          0.72011,
+          0.55978,
+          0.42027
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 1,
@@ -1413,14 +1600,19 @@
         893,
         896
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 21417,
-        "topFractions": [
-          0.31,
-          0.22,
-          0.15,
-          0.105
-        ]
+        "clears": [
+          0.31711,
+          0.22607,
+          0.16346,
+          0.10687
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 1,
@@ -1443,14 +1635,19 @@
         3438,
         3476
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 58297,
-        "topFractions": [
+        "clears": [
           0.075,
           0.055,
-          0.04,
-          0.03
-        ]
+          0.03988,
+          0.02993
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 52,
@@ -1473,14 +1670,19 @@
         897,
         899
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 22349,
-        "topFractions": [
-          0.022,
-          0.015,
-          0.011,
-          0.008
-        ]
+        "clears": [
+          0.02062,
+          0.01473,
+          0.01188,
+          0.00732
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 8,
@@ -1503,14 +1705,19 @@
         2419,
         2664
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 93203,
-        "topFractions": [
-          0.86,
-          0.72,
-          0.56,
+        "clears": [
+          0.86005,
+          0.71986,
+          0.56009,
           0.42
-        ]
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 2,
@@ -1533,14 +1740,19 @@
         896,
         898
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 58578,
-        "topFractions": [
-          0.31,
-          0.22,
-          0.15,
-          0.105
-        ]
+        "clears": [
+          0.30112,
+          0.21478,
+          0.14375,
+          0.10903
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 1,
@@ -1563,14 +1775,19 @@
         902,
         904
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 29538,
-        "topFractions": [
-          0.075,
-          0.055,
-          0.04,
-          0.03
-        ]
+        "clears": [
+          0.07958,
+          0.05425,
+          0.03882,
+          0.02878
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 26,
@@ -1593,14 +1810,19 @@
         889,
         891
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 12040,
-        "topFractions": [
-          0.022,
-          0.015,
-          0.011,
-          0.008
-        ]
+        "clears": [
+          0.02102,
+          0.0156,
+          0.01051,
+          0.00823
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 1,
@@ -1623,14 +1845,19 @@
         2648,
         2933
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 91550,
-        "topFractions": [
-          0.86,
-          0.72,
-          0.56,
-          0.42
-        ]
+        "clears": [
+          0.85995,
+          0.71986,
+          0.55986,
+          0.42013
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 1,
@@ -1653,14 +1880,19 @@
         3563,
         3797
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 55846,
-        "topFractions": [
-          0.31,
+        "clears": [
+          0.30991,
           0.22,
           0.15,
           0.105
-        ]
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 10,
@@ -1683,14 +1915,19 @@
         10968,
         11345
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 150593,
-        "topFractions": [
+        "clears": [
           0.075,
-          0.055,
+          0.05501,
           0.04,
           0.03
-        ]
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 11,
@@ -1713,14 +1950,19 @@
         10835,
         11088
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 24774,
-        "topFractions": [
-          0.022,
-          0.015,
-          0.011,
+        "clears": [
+          0.02199,
+          0.01499,
+          0.01099,
           0.008
-        ]
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 1,
@@ -1743,14 +1985,19 @@
         3198,
         3476
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 93878,
-        "topFractions": [
-          0.86,
-          0.72,
-          0.56,
-          0.42
-        ]
+        "clears": [
+          0.86008,
+          0.71995,
+          0.55985,
+          0.42027
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 1,
@@ -1773,14 +2020,19 @@
         14800,
         15259
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 83496,
-        "topFractions": [
+        "clears": [
           0.31,
           0.22,
           0.15,
           0.105
-        ]
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       }
     },
     {
@@ -1797,14 +2049,19 @@
         17517,
         18037
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 53727,
-        "topFractions": [
+        "clears": [
           0.075,
           0.055,
-          0.04,
+          0.03999,
           0.03
-        ]
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 79,
@@ -1827,14 +2084,19 @@
         3545,
         3694
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 9878,
-        "topFractions": [
-          0.022,
-          0.015,
+        "clears": [
+          0.02199,
+          0.01498,
           0.011,
           0.008
-        ]
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       }
     },
     {
@@ -1851,14 +2113,19 @@
         2757,
         2991
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 5171,
-        "topFractions": [
-          0.86,
-          0.72,
-          0.56,
-          0.42
-        ]
+        "clears": [
+          0.85993,
+          0.72029,
+          0.55974,
+          0.42022
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 5,
@@ -1881,14 +2148,19 @@
         3618,
         3786
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 56889,
-        "topFractions": [
-          0.31,
-          0.22,
+        "clears": [
+          0.30963,
+          0.21988,
           0.15,
-          0.105
-        ]
+          0.10508
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 5,
@@ -1911,14 +2183,19 @@
         881,
         884
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 76638,
-        "topFractions": [
-          0.075,
-          0.055,
-          0.04,
-          0.03
-        ]
+        "clears": [
+          0.07667,
+          0.05385,
+          0.0404,
+          0.03008
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 125,
@@ -1941,14 +2218,19 @@
         883,
         885
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 33910,
-        "topFractions": [
-          0.022,
-          0.015,
-          0.011,
-          0.008
-        ]
+        "clears": [
+          0.02161,
+          0.01562,
+          0.01043,
+          0.0083
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 1,
@@ -1971,14 +2253,19 @@
         11066,
         12254
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 170643,
-        "topFractions": [
-          0.86,
-          0.72,
-          0.56,
-          0.42
-        ]
+        "clears": [
+          0.85998,
+          0.72004,
+          0.56005,
+          0.42005
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       }
     },
     {
@@ -1995,14 +2282,19 @@
         8109,
         8555
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 74862,
-        "topFractions": [
-          0.31,
+        "clears": [
+          0.31006,
           0.22,
           0.15,
-          0.105
-        ]
+          0.10495
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       }
     },
     {
@@ -2019,14 +2311,19 @@
         3906,
         4011
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 141807,
-        "topFractions": [
+        "clears": [
           0.075,
-          0.055,
-          0.04,
-          0.03
-        ]
+          0.05497,
+          0.03996,
+          0.03003
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 36,
@@ -2049,14 +2346,19 @@
         10996,
         11448
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 33556,
-        "topFractions": [
+        "clears": [
           0.022,
           0.015,
           0.011,
           0.008
-        ]
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 9,
@@ -2079,14 +2381,19 @@
         822,
         882
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 86622,
-        "topFractions": [
-          0.86,
-          0.72,
+        "clears": [
+          0.86037,
+          0.71981,
           0.56,
-          0.42
-        ]
+          0.42099
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 1,
@@ -2109,14 +2416,19 @@
         94,
         98
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 268948,
-        "topFractions": [
-          0.31,
-          0.22,
-          0.15,
-          0.105
-        ]
+        "clears": [
+          0.3,
+          0.21667,
+          0.14607,
+          0.10112
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 4,
@@ -2139,14 +2451,19 @@
         102,
         104
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 142076,
-        "topFractions": [
-          0.075,
-          0.055,
-          0.04,
-          0.03
-        ]
+        "clears": [
+          0.07561,
+          0.05393,
+          0.04112,
+          0.03105
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 19,
@@ -2169,14 +2486,19 @@
         1413,
         1433
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 27620,
-        "topFractions": [
-          0.022,
-          0.015,
-          0.011,
-          0.008
-        ]
+        "clears": [
+          0.0219,
+          0.01495,
+          0.01107,
+          0.00794
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       }
     },
     {
@@ -2193,14 +2515,19 @@
         1051,
         1096
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 91135,
-        "topFractions": [
+        "clears": [
           0.86,
-          0.72,
+          0.71943,
           0.56,
           0.42
-        ]
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 2,
@@ -2223,14 +2550,19 @@
         1219,
         1247
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 57461,
-        "topFractions": [
-          0.31,
-          0.22,
-          0.15,
-          0.105
-        ]
+        "clears": [
+          0.31132,
+          0.22045,
+          0.14921,
+          0.10476
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 46,
@@ -2253,14 +2585,19 @@
         1287,
         1297
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 17906,
-        "topFractions": [
+        "clears": [
           0.075,
-          0.055,
-          0.04,
+          0.05473,
+          0.0395,
           0.03
-        ]
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 1,
@@ -2283,14 +2620,19 @@
         1132,
         1154
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 20528,
-        "topFractions": [
-          0.022,
-          0.015,
-          0.011,
-          0.008
-        ]
+        "clears": [
+          0.02192,
+          0.01489,
+          0.01108,
+          0.00799
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       }
     },
     {
@@ -2307,14 +2649,19 @@
         522,
         542
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 79460,
-        "topFractions": [
-          0.86,
-          0.72,
-          0.56,
-          0.42
-        ]
+        "clears": [
+          0.85933,
+          0.72181,
+          0.55884,
+          0.41471
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 2,
@@ -2337,14 +2684,19 @@
         610,
         632
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 48140,
-        "topFractions": [
-          0.31,
-          0.22,
+        "clears": [
+          0.30877,
+          0.21958,
           0.15,
-          0.105
-        ]
+          0.10492
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 15,
@@ -2367,14 +2719,19 @@
         574,
         588
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 9501,
-        "topFractions": [
-          0.075,
-          0.055,
-          0.04,
-          0.03
-        ]
+        "clears": [
+          0.07419,
+          0.05403,
+          0.04041,
+          0.03013
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 1,
@@ -2397,14 +2754,19 @@
         6830,
         6975
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 18273,
-        "topFractions": [
-          0.022,
-          0.015,
-          0.011,
-          0.008
-        ]
+        "clears": [
+          0.02201,
+          0.01501,
+          0.01101,
+          0.00801
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 7,
@@ -2427,14 +2789,19 @@
         582,
         616
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 107001,
-        "topFractions": [
-          0.86,
-          0.72,
-          0.56,
-          0.42
-        ]
+        "clears": [
+          0.85932,
+          0.71905,
+          0.55966,
+          0.41978
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       }
     },
     {
@@ -2451,14 +2818,19 @@
         651,
         669
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 52650,
-        "topFractions": [
-          0.31,
-          0.22,
-          0.15,
-          0.105
-        ]
+        "clears": [
+          0.31079,
+          0.21928,
+          0.14913,
+          0.10415
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       }
     },
     {
@@ -2475,14 +2847,19 @@
         37,
         38
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 69242,
-        "topFractions": [
+        "clears": [
           0.075,
-          0.055,
-          0.04,
-          0.03
-        ]
+          0.05,
+          0.035,
+          0.02
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 26,
@@ -2500,19 +2877,24 @@
       "label": "tamTargetSwitch Smooth Hard",
       "leaderboardId": 727,
       "rankMaxes": [
-        31,
+        32,
         33,
         34,
         35
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "authored",
+        "why": "31 made rank 13 exactly as hard as rank 12. tamTargetSwitch Smooth Easy asks 38 for rank 12 and 2.00% of its board clears that; tamTargetSwitch Smooth Hard asked 31 for rank 13 and 2.00% of its board cleared that too. A family is graded on the best of its variants, so everybody reaching rank 12 reached rank 13 in the same run and rank 12 was held by nobody. 32 clears about 1.67%, which puts the ladder back in order. Season 1 shipped this. The percentile ladder it was cut from descended correctly - Advanced closed at 0.03 and Expert opened at 0.022 - so the check that read the ladder saw nothing wrong. These are small integer scores, 35-38 against 31-35, and rounding a percentile onto them collapsed two ranks onto one difficulty. Measuring what share of the board actually clears each authored number is what found it."
+      },
+      "sanity": {
         "leaderboardEntries": 46012,
-        "topFractions": [
-          0.022,
-          0.015,
-          0.011,
-          0.008
-        ]
+        "clears": [
+          0.01667,
+          0.01333,
+          0.01,
+          0.0075
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       }
     },
     {
@@ -2529,14 +2911,19 @@
         436,
         455
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 84100,
-        "topFractions": [
-          0.86,
-          0.72,
-          0.56,
-          0.42
-        ]
+        "clears": [
+          0.86037,
+          0.71949,
+          0.56069,
+          0.41667
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 1,
@@ -2559,14 +2946,19 @@
         487,
         503
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 48842,
-        "topFractions": [
-          0.31,
-          0.22,
-          0.15,
-          0.105
-        ]
+        "clears": [
+          0.31279,
+          0.22193,
+          0.15058,
+          0.10511
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 18,
@@ -2589,14 +2981,19 @@
         77,
         78
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 60069,
-        "topFractions": [
-          0.075,
-          0.055,
-          0.04,
-          0.03
-        ]
+        "clears": [
+          0.07462,
+          0.04965,
+          0.03812,
+          0.03109
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 22,
@@ -2619,14 +3016,19 @@
         84,
         85
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 28855,
-        "topFractions": [
-          0.022,
-          0.015,
-          0.011,
-          0.008
-        ]
+        "clears": [
+          0.02391,
+          0.01623,
+          0.01051,
+          0.00872
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 6,
@@ -2649,14 +3051,19 @@
         414,
         446
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 83184,
-        "topFractions": [
-          0.86,
-          0.72,
-          0.56,
-          0.42
-        ]
+        "clears": [
+          0.85986,
+          0.72041,
+          0.56071,
+          0.42105
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 1,
@@ -2679,14 +3086,19 @@
         137,
         141
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 71281,
-        "topFractions": [
-          0.31,
-          0.22,
+        "clears": [
+          0.30404,
+          0.21471,
           0.15,
-          0.105
-        ]
+          0.10745
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 55,
@@ -2709,14 +3121,19 @@
         141,
         143
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 96570,
-        "topFractions": [
-          0.075,
-          0.055,
-          0.04,
-          0.03
-        ]
+        "clears": [
+          0.07148,
+          0.05739,
+          0.0388,
+          0.03082
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 81,
@@ -2739,14 +3156,19 @@
         86,
         88
       ],
-      "derivedFrom": {
+      "source": {
+        "kind": "seeded",
+        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+      },
+      "sanity": {
         "leaderboardEntries": 23380,
-        "topFractions": [
-          0.022,
-          0.015,
-          0.011,
-          0.008
-        ]
+        "clears": [
+          0.02,
+          0.01423,
+          0.01038,
+          0.0082
+        ],
+        "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
         "runs": 5,
