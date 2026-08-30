@@ -3891,6 +3891,107 @@ if (HOST === "electron" && window.apogee && window.apogee.getSeason) {
  * run and a practice list still showing yesterday's best - while KovaaK's shows today's -
  * is the one thing this screen must not do.
  */
+let apexData = null;
+
+/**
+ * The apex board.
+ *
+ * Renders from the committed samplings, so it is there with no session and no network -
+ * and it names the scenario each row is scored on, because a board that shows a number
+ * without naming what it is a number on is the confusing half of a windowed ladder all
+ * over again.
+ */
+function renderApex() {
+  if (!apexData || apexData.error) {
+    const note = $("apexNote");
+    if (note) note.textContent = apexData && apexData.error ? apexData.error : "";
+    return;
+  }
+
+  if ($("apexName")) $("apexName").textContent = apexData.season.name + " \u00b7 apex";
+  if ($("apexNote")) {
+    $("apexNote").textContent = apexData.graded + " of " + apexData.total + " families scored";
+  }
+
+  const stats = $("apexStats");
+  if (stats) {
+    stats.textContent = "";
+    const cells = [[apexData.points.toFixed(2), "points"]];
+    apexData.categories.forEach((c) => cells.push([c.points.toFixed(2), c.name.toLowerCase()]));
+    cells.forEach(([v, k]) => {
+      const el = document.createElement("div");
+      el.className = "sv-stat";
+      el.innerHTML = '<span class="v">' + esc(String(v)) + '</span>' +
+                     '<span class="k">' + esc(k) + '</span>';
+      stats.append(el);
+    });
+  }
+
+  const host = $("apexCategories");
+  if (!host) return;
+  host.textContent = "";
+
+  apexData.categories.forEach((cat) => {
+    const panel = document.createElement("div");
+    panel.className = "panel";
+
+    const head = document.createElement("div");
+    head.className = "phead";
+    head.innerHTML =
+      "<h2>" + esc(cat.name) + "</h2>" +
+      '<span class="note">' + esc(cat.points.toFixed(2)) + " points \u00b7 " +
+      cat.graded + " of " + cat.total + " scored</span>";
+    panel.append(head);
+
+    const body = document.createElement("div");
+    body.className = "pbody";
+
+    const table = document.createElement("table");
+    table.className = "scen";
+    table.innerHTML =
+      "<thead><tr><th>Family</th><th>Scored on</th><th>Your best</th>" +
+      "<th>Board position</th><th>Points</th></tr></thead>";
+
+    const tbody = document.createElement("tbody");
+
+    // Best first, so what a player is proudest of is at the top and the unplayed rows
+    // collect at the bottom, where they read as "not yet" rather than as failures.
+    [...cat.families].sort((a, b) => b.points - a.points).forEach((f) => {
+      const tr = document.createElement("tr");
+      const where = f.boardRank === null || f.boardTotal === null
+        ? "\u2014"
+        : "#" + num(f.boardRank) + " of " + num(f.boardTotal);
+      tr.innerHTML =
+        "<td>" + esc(f.family) + "</td>" +
+        "<td>" + esc(f.label) + "</td>" +
+        "<td>" + (f.score === null ? "\u2014" : num(Math.round(f.score))) + "</td>" +
+        "<td>" + esc(where) + "</td>" +
+        "<td>" + (f.score === null ? "\u2014" : esc(f.points.toFixed(2))) + "</td>";
+      tbody.append(tr);
+    });
+
+    table.append(tbody);
+    body.append(table);
+    panel.append(body);
+    host.append(panel);
+  });
+}
+
+/**
+ * Re-read on every snapshot, for the same reason the practice list is: a new personal
+ * best moves a board position, and showing yesterday's is the one thing it must not do.
+ */
+function refreshApex() {
+  if (HOST !== "electron" || !api || !api.apex) return;
+  void api.apex().then((r) => {
+    if (!r) return;
+    apexData = r;
+    renderApex();
+  });
+}
+
+refreshApex();
+
 function refreshPractice() {
   if (HOST !== "electron" || !api || !api.practice) return;
   void api.practice().then((r) => {
@@ -3898,6 +3999,7 @@ function refreshPractice() {
     practice = r;
     if (current) renderSeasonView(current);
   });
+  refreshApex();
 }
 
 refreshPractice();

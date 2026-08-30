@@ -151,12 +151,12 @@ Deployed and verified. See [SETUP.md](SETUP.md) for the full walkthrough.
 ```bash
 npm run validate:schema       # applies migrations + seed to Postgres-in-WASM, no Docker
 npm run verify:deployment     # proves RLS, auth and the match engine against the live project
-npm run deploy:functions      # redeploy all six Edge Functions
+npm run deploy:functions      # redeploy all seven Edge Functions
 npm run sync:reference        # push updated reference data (the seed will not)
 ```
 
-Six Edge Functions carry the server side. `steam-auth` is deliberately public because
-Steam's servers call it directly; the other five require a session, and verification
+Seven Edge Functions carry the server side. `steam-auth` is deliberately public because
+Steam's servers call it directly; the other six require a session, and verification
 asserts they refuse both anonymous callers and the anon key.
 
 The functions import the shared core straight from `src/core`, so settlement, Glicko-2

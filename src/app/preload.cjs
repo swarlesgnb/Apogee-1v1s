@@ -93,6 +93,13 @@ contextBridge.exposeInMainWorld("apogee", {
   practice: () => ipcRenderer.invoke("apogee:practice"),
 
   /**
+   * The apex board: how deep into the top of each graded scenario's leaderboard the
+   * local history sits, past where the ladder stops measuring.
+   * Returns { season, points, graded, total, categories } or { error }.
+   */
+  apex: () => ipcRenderer.invoke("apogee:apex"),
+
+  /**
    * Write the season's practice playlists into KovaaK's own Playlists folder. Pass an
    * array of names for a subset; omit it for all of them.
    * Returns { ok, dir, written, installed, note } or { error }.

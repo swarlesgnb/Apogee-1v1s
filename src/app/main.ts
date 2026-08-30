@@ -31,7 +31,7 @@ import {
 import { loadQuestState, saveQuestState } from "./questStore.ts";
 import { buildSnapshot, type Snapshot } from "../core/report/snapshot.ts";
 import { renderRankSheet } from "../core/report/rankSheet.ts";
-import { scanStatsFolder } from "../core/history/history.ts";
+import { scanStatsFolder, type ScenarioHistory } from "../core/history/history.ts";
 import { signInWithSteam } from "../core/sync/steamAuth.ts";
 import {
   fetchUploadedRuns,
@@ -62,6 +62,8 @@ import { queueEligibility, type QueueEligibility } from "../core/match/eligibili
 import { sampleDistribution, RateLimited } from "../core/season/sampleLeaderboard.ts";
 import { thresholdsFrom, type Distribution } from "../core/season/percentiles.ts";
 import { rankDistribution } from "../core/season/distribution.ts";
+import { apexSources, apexStanding } from "../core/season/standing.ts";
+import type { ApexBoard } from "../core/season/apex.ts";
 import {
   installedPlaylistCount,
   playlistsFolderFor,
@@ -785,6 +787,64 @@ function runSmokeTest(): void {
       }`,
     );
 
+    // The apex board renders from committed data rather than the snapshot, so it is
+    // probed on its own: a build shipped without the sampled boards would leave the
+    // screen empty, and empty here reads as a bad score rather than as a missing file.
+    const apex = await probe.webContents.executeJavaScript(`(async () => {
+      const tab = document.querySelector('.tab[data-screen="apex"]');
+      if (tab) tab.click();
+
+      const data = await window.apogee
+        .apex()
+        .then((r) => (r && r.error ? { err: String(r.error).slice(0, 160) } : r))
+        .catch((e) => ({ err: String(e).slice(0, 160) }));
+
+      const deadline = Date.now() + 2500;
+      while (
+        Date.now() < deadline &&
+        document.querySelectorAll("#apexCategories .panel").length === 0
+      ) {
+        await new Promise((r) => setTimeout(r, 100));
+      }
+
+      return {
+        tab: Boolean(tab),
+        err: data.err ?? null,
+        categories: Array.isArray(data.categories) ? data.categories.length : -1,
+        graded: typeof data.graded === "number" ? data.graded : -1,
+        families: typeof data.total === "number" ? data.total : -1,
+        points: typeof data.points === "number" ? data.points : -1,
+        panels: document.querySelectorAll("#apexCategories .panel").length,
+        rows: document.querySelectorAll("#apexCategories tbody tr").length,
+        placed: [...document.querySelectorAll("#apexCategories tbody tr")].filter((r) =>
+          /#[\\d,]+ of/.test(r.children[3] ? r.children[3].textContent : ""),
+        ).length,
+      };
+    })()`);
+
+    if (!apex.tab) problems.push("the Apex tab is not in the DOM");
+    if (apex.err) problems.push(`the apex board failed: ${apex.err}`);
+    else if (apex.categories <= 0) problems.push("the apex board has no categories");
+    else if (apex.panels === 0) problems.push("the apex board painted no categories");
+    else if (apex.rows !== apex.families) {
+      problems.push("the apex board does not list every family");
+    } else if (apex.graded > 0 && apex.placed === 0) {
+      // A scored family that shows no board position means the sampled boards are
+      // absent or unreadable, which is the one failure this screen can have that
+      // still looks like a rendered page.
+      problems.push("no scored family shows a board position");
+    } else if (apex.graded > 0 && !(apex.points > 0)) {
+      problems.push("the apex board scored families but no points");
+    }
+
+    console.log(
+      `apex board   : ${
+        apex.err
+          ? `FAILED (${apex.err})`
+          : `${apex.points.toFixed(2)} points, ${apex.graded}/${apex.families} families ` +
+            `scored, ${apex.placed} placed on a board, ${apex.panels} categories painted`
+      }`,
+    );
     console.log(`preload      : ${hasBridge ? "bridge exposed" : "MISSING"}`);
     console.log(`renderer     : ${rendered ? "loaded" : "EMPTY"}`);
 
@@ -1839,6 +1899,75 @@ ipcMain.handle("apogee:launchScenario", async (_e, { scenario }) => {
  * milliseconds over a folder the watcher is already rescanning, and a stale practice list
  * would show a personal best that a run five minutes ago already beat.
  */
+/**
+ * The apex board: where the player sits on the boards the ladder stops measuring.
+ *
+ * Read locally from the committed samplings, so it renders with no session and no
+ * network - the same way practice and the rank sheet do. The server keeps its own copy
+ * for the cross-player leaderboard (`refresh-apex`), computed from KovaaK's-verified
+ * bests rather than from the stats folder, because a public board is exactly the surface
+ * somebody would forge a score onto. The two agree for an honest player, and where they
+ * do not, the server's is the one that counts.
+ */
+ipcMain.handle("apogee:apex", () => {
+  let season;
+  try {
+    season = loadSeason();
+  } catch (err) {
+    return { error: err instanceof Error ? err.message : String(err) };
+  }
+
+  let sources;
+  try {
+    sources = apexSources(
+      JSON.parse(readFileSync(dataFile("leaderboard_apex.json"), "utf8")) as {
+        boards: ApexBoard[];
+      },
+      JSON.parse(readFileSync(dataFile("leaderboard_percentiles.json"), "utf8")) as {
+        distributions: Distribution[];
+      },
+    );
+  } catch {
+    // Absent rather than fatal: a build without the sampled boards still runs, it just
+    // cannot show this panel. Saying so beats an empty board that reads as a bad score.
+    return { error: "no sampled leaderboards in this build - run npm run sample:apex" };
+  }
+
+  const history = state.statsDir
+    ? scanStatsFolder(state.statsDir)
+    : new Map<string, ScenarioHistory>();
+  const scores = new Map<string, number>();
+  for (const [scenario, entry] of history) {
+    const best = Math.max(...entry.runs.map((r) => r.score));
+    if (Number.isFinite(best)) scores.set(scenario, best);
+  }
+
+  const standing = apexStanding(season, scores, sources);
+
+  return {
+    season: { name: season.name, status: season.status },
+    points: standing.points,
+    graded: standing.graded,
+    total: standing.total,
+    categories: standing.categories.map((c) => ({
+      name: c.name,
+      points: c.points,
+      graded: c.graded,
+      total: c.total,
+      families: c.families.map((f) => ({
+        family: f.family,
+        subCategory: f.subCategory,
+        scenario: f.scenario,
+        label: f.label,
+        score: f.score,
+        points: f.points,
+        boardRank: f.boardRank === null ? null : Math.round(f.boardRank),
+        boardTotal: f.boardTotal,
+      })),
+    })),
+  };
+});
+
 ipcMain.handle("apogee:practice", () => {
   let season;
   try {

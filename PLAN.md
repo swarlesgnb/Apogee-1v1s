@@ -991,6 +991,91 @@ their own baseline (§3) and nothing else, which is why seasons can re-cut ranks
 touching how a match is decided. Thresholds feed quests, the weakness map and the
 consistency report - the surfaces §4 already calls *stats* rather than standing.
 
+### Past the top: the apex board
+
+The ladder stops measuring on purpose. Scenario energy caps at the last threshold, so
+two players who have both cleared the hardest rank hold identical energy however far
+apart they are. That is the honest thing for a *rank* to do - a rank is a band and a
+band has a top - and it leaves the best players with nothing left to move, which is the
+one group most likely to keep playing.
+
+The obvious fix is to keep interpolating past the last threshold at the same slope, and
+it invents a number: the slope up there is a guess and nothing checks it. The season's
+whole claim is that every threshold is a fact about a real board.
+
+So there is a second standing rather than a longer ladder. **Apex** is where a player
+sits on the same KovaaK's boards the thresholds were cut from, and it does not cap:
+
+```
+apex points  =  -log10(fraction from the top of the board)
+
+  top 10%   1.0        top 0.1%   3.0
+  top 1%    2.0        top 0.01%  4.0
+```
+
+A whole point always means *ten times fewer people above you*, which is the same
+achievement wherever on the scale it falls - 20% to 10% and 2% to 1% are both one point.
+It is defined all the way down the board too, so this is one standing everybody has
+rather than a second ladder that unlocks at the top.
+
+**Percentiles alone cannot do it.** `leaderboard_percentiles.json` samples sixteen
+fractions, the finest at the top 0.1%, and the ladder's own hardest rank is already the
+top 0.8% - so the range a post-rank board exists to separate is inside the clamp, where
+every score reads the same. Sampling finer fractions does not help: a fraction gets
+coarser in *players* exactly where the board gets sparser, and 0.0001 of a 9,878-entry
+board is one person.
+
+So the top is sampled in **ranks** instead - the score at board positions 1, 2, 3, 5, 10,
+25, 50, 100, 250, 500, in `data/leaderboard_apex.json`. A rank means the same thing on a
+board of any size, which is what a fraction stops doing up there, and rank 500 sits below
+the 0.1% point on every board in the pool, so the two sources overlap rather than leaving
+a gap. Interpolation is linear in log(rank), matching how the anchors are spaced and how
+the curve actually falls.
+
+Two things this got wrong first, both now measured:
+
+- **The handover has to be floored.** The two samplings disagree by up to 0.247%
+  (tamTargetSwitch Smooth Hard) because the fractional points interpolate linearly
+  across a convex curve. Where the distribution read *better* than rank 500, a player
+  could have gained standing by scoring less. Below the last anchor the answer is
+  therefore floored at it: under the five-hundredth best score you are, at best,
+  five-hundredth.
+
+- **A family is graded on its top-window variant only, never the best of them.** The
+  ladder's best-of rule is right for a rank and wrong here, because a percentile is a
+  percentile of whoever played *that* scenario: an easy board is enormous and mostly
+  people who opened it once. On **26 of the 43 variant pairs** in the corpus where one
+  player has a score on both an easier variant and the graded one, the easier scenario
+  pays more - 1.12 against 0.48 on Smallflicks. Fixing the graded variant removes the
+  choice, and costs nothing in reach: the top window is what a player who has finished
+  the ladder is already playing.
+
+The board is public and computed server-side from **KovaaK's-verified bests**, not from
+uploaded runs. A leaderboard with no ceiling is exactly the surface somebody would forge
+a score onto, and unlike the ladder it is not bounded by thresholds or settled against a
+baseline. Clients hold no write grant on `apex_standing`, the same rule `ratings` and
+`verified_pbs` already live under.
+
+Nothing here feeds ratings, matchmaking or settlement - the same separation thresholds
+already have. `npm run validate:standing` is what holds it up.
+
+### Why each scenario is in the pool, and who said so
+
+The pool's justification was mechanical: a scenario was in because some benchmark author
+had banded it. That answers *where* a scenario sits and not whether it is a good measure
+of dynamic clicking, and the second question is the one anybody asks first.
+
+`data/scenario_rationale.json` records the answer per family with a citation per claim,
+strongest evidence first: the benchmark author's published design note, then KovaaK's own
+author-written description, then community discussion where it says something the other
+two do not - which is mostly about the scenarios that predate the benchmarks that later
+adopted them. Four families declare their evidence **thin** rather than padding it, which
+is a fact about the pool worth being able to see.
+
+Nothing reads it at runtime. `npm run validate:rationale` re-derives every number in it
+against `scenario_taxonomy.json`, which is not ceremony: it caught fifteen figures that
+had been written from the wrong column of the wrong file.
+
 ### The order to build it in
 
 1. Own the pool. A season file naming the scenarios per category, read where

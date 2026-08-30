@@ -114,13 +114,34 @@ async function main(): Promise<void> {
   check("policies were created", policies.rows.length > 0, `${policies.rows.length} policies`);
 
   // The rule the whole security model rests on: clients may read these, never write.
-  const protectedTables = ["ratings", "matches", "match_sides", "baselines", "verified_pbs"];
+  const protectedTables = [
+    "ratings",
+    "matches",
+    "match_sides",
+    "baselines",
+    "verified_pbs",
+    // The apex board is public to read and self-reportable by nobody. A write policy
+    // here would let a client post its own standing on a leaderboard.
+    "apex_standing",
+    "scenario_boards",
+  ];
   const writable = policies.rows.filter(
     (p) => protectedTables.includes(p.tablename) && p.cmd.toUpperCase() !== "SELECT",
   );
   check("no client write policy on rating or match tables", writable.length === 0,
     writable.length ? writable.map((p) => `${p.tablename}:${p.cmd}`).join(", ") : "read-only");
 
+  // The check above filters by table name, so it passes trivially for a table that is
+  // not there at all - which is exactly how a dropped or reordered migration would hide.
+  // Assert the two the apex board depends on are present and readable, so "no write
+  // policy" is a statement about a real table rather than about an empty filter.
+  for (const table of ["apex_standing", "scenario_boards"]) {
+    const reads = policies.rows.filter(
+      (p) => p.tablename === table && p.cmd.toUpperCase() === "SELECT",
+    );
+    check(`${table} exists and is world-readable`, reads.length === 1,
+      reads.length ? reads[0].policyname : "no select policy - is the migration applied?");
+  }
   // Runs must be append-only.
   const runPolicies = policies.rows.filter((p) => p.tablename === "runs");
   const runCmds = new Set(runPolicies.map((p) => p.cmd.toUpperCase()));

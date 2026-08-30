@@ -135,7 +135,7 @@ npx supabase login                            # interactive; needs a real termin
 npx supabase link --project-ref <ref>
 npx supabase db push --yes                    # tables, policies, triggers
 npm run sync:reference                        # scenarios, score models, world records
-npm run deploy:functions                      # all six of them
+npm run deploy:functions                      # all seven of them
 npx supabase secrets set \
   STEAM_AUTH_FUNCTION_URL=https://<ref>.supabase.co/functions/v1/steam-auth
 npm run verify:deployment                     # proves it against the live API
@@ -154,7 +154,7 @@ Three things that are easy to get wrong, all of which bit during the real deploy
   upsert that never touches player rows, and can be re-run whenever reference data
   changes.
 
-- All six functions have to go up, not just `steam-auth`.
+- All seven functions have to go up, not just `steam-auth`.
   `npm run deploy:functions` does them in one pass. `verify:deployment` asserts every one
   is live, so deploying only the auth bridge fails verification in a way that looks like a
   broken deploy rather than an incomplete one.
@@ -178,9 +178,10 @@ npm run deploy:functions
 | `settle-match` | yes | Recomputes deltas from stored rows, settles, applies Glicko-2 |
 | `abandon-match` | yes | Closes out a match nobody is going to finish, without letting either side dodge the loss |
 | `refresh-baselines` | yes | Recomputes a player's baselines when their run history changes underneath them |
+| `refresh-apex` | yes | Recomputes a player's post-rank standing from their KovaaK's-verified bests, for the public apex board |
 
 Every function except `steam-auth` requires a session, and `npm run verify:deployment`
-asserts all five refuse anonymous callers. It goes one step further for `find-match` and
+asserts all six refuse anonymous callers. It goes one step further for `find-match` and
 `settle-match` — the two that can move a rating on their own — and proves they also
 refuse the anon key as a caller identity. The anon key identifies the app, never a player.
 

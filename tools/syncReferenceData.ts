@@ -84,6 +84,79 @@ async function count(table: string, filter: string): Promise<number> {
   return body[0]?.count ?? 0;
 }
 
+/**
+ * Push the sampled leaderboard shapes the apex board reads.
+ *
+ * Keyed on scenario id rather than name, because `scenario_boards` references
+ * `scenarios(id)` - so this runs after the scenario upsert above and resolves ids from
+ * the project rather than assuming them. A scenario the project has never heard of is
+ * skipped rather than inserted: the apex board grades the season pool, and a board with
+ * no scenario row is not in it.
+ *
+ * Both samplings go in one row. They are only ever read together, and storing them apart
+ * would allow a state where the apex anchors are fresh and the percentiles are not, which
+ * is precisely the disagreement `apexTopFraction` has to floor its handover against.
+ */
+async function syncBoards(): Promise<void> {
+  const apex = readJson<{
+    boards: { scenario: string; total: number; points: { rank: number; score: number }[]; sampledAt: string }[];
+  }>("data", "leaderboard_apex.json").boards;
+
+  const percentiles = readJson<{
+    distributions: {
+      scenario: string;
+      total: number;
+      points: { topFraction: number; score: number }[];
+    }[];
+  }>("data", "leaderboard_percentiles.json").distributions;
+
+  const pctByName = new Map(percentiles.map((d) => [d.scenario, d]));
+
+  const names = [...new Set(apex.map((b) => b.scenario))];
+  const idByName = new Map<string, number>();
+
+  // Resolved in chunks: a `name=in.(...)` filter is a URL, and 88 scenario names with
+  // spaces and quotes in them is a long one.
+  const CHUNK = 40;
+  for (let i = 0; i < names.length; i += CHUNK) {
+    const batch = names.slice(i, i + CHUNK);
+    const filter = batch.map((n) => `"${n.replace(/"/g, '\\"')}"`).join(",");
+    const res = await fetch(
+      `${URL_BASE}/rest/v1/scenarios?select=id,name&name=in.(${encodeURIComponent(filter)})`,
+      { headers: { apikey: SECRET!, Authorization: `Bearer ${SECRET}` } },
+    );
+    if (!res.ok) throw new Error(`resolving scenario ids: ${res.status} ${await res.text()}`);
+    for (const row of (await res.json()) as { id: number; name: string }[]) {
+      idByName.set(row.name, row.id);
+    }
+  }
+
+  const rows = apex
+    .filter((b) => idByName.has(b.scenario))
+    .map((b) => ({
+      scenario_id: idByName.get(b.scenario)!,
+      board_total: b.total,
+      apex_points: b.points,
+      percentile_points: pctByName.get(b.scenario)?.points ?? [],
+      sampled_at: b.sampledAt,
+      synced_at: new Date().toISOString(),
+    }));
+
+  const missing = apex.length - rows.length;
+  const withoutPercentiles = rows.filter((r) => r.percentile_points.length === 0).length;
+
+  console.log(`\nsampled boards       : ${apex.length}`);
+  console.log(`  resolved to an id  : ${rows.length}${missing ? ` (${missing} not in the project)` : ""}`);
+  if (withoutPercentiles > 0) {
+    // Not fatal: the apex anchors alone still place any score in the top 500, which is
+    // the range the board exists for. Worth saying out loud, because below that the
+    // standing falls back to the last anchor for everybody.
+    console.log(`  without percentiles: ${withoutPercentiles}`);
+  }
+
+  if (rows.length > 0) await upsert("scenario_boards", rows, "scenario_id");
+}
+
 async function main(): Promise<void> {
   const learned = readJson<{
     models: Record<string, ScoreModel>;
@@ -221,6 +294,8 @@ async function main(): Promise<void> {
 
   if (withIdentity.length > 0) await upsert("scenarios", withIdentity, "name");
   if (referenceOnly.length > 0) await upsert("scenarios", referenceOnly, "name");
+
+  await syncBoards();
 
   const withModel = await count("scenarios", "score_model_stat=not.is.null");
   const withWeaponModel = await count("scenarios", "weapon_score_per_damage=not.is.null");

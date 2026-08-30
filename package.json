@@ -54,7 +54,7 @@
     "push:season": "tsx tools/pushSeason.ts",
     "fetch:evxl": "tsx tools/fetchEvxlRegistry.ts",
     "sync:reference": "tsx tools/syncReferenceData.ts",
-    "deploy:functions": "npx supabase functions deploy steam-auth && npx supabase functions deploy submit-run && npx supabase functions deploy find-match && npx supabase functions deploy settle-match && npx supabase functions deploy abandon-match && npx supabase functions deploy refresh-baselines",
+    "deploy:functions": "npx supabase functions deploy steam-auth && npx supabase functions deploy submit-run && npx supabase functions deploy find-match && npx supabase functions deploy settle-match && npx supabase functions deploy abandon-match && npx supabase functions deploy refresh-baselines && npx supabase functions deploy refresh-apex",
     "validate:progression": "tsx src/core/quests/validateProgression.ts",
     "validate:consistency": "tsx src/core/consistency/report.ts --compare",
     "consistency": "tsx src/core/consistency/report.ts",

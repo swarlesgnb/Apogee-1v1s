@@ -61,6 +61,19 @@ export const LIMITS: Record<string, Limit> = {
    * Nothing legitimate calls it in a loop.
    */
   "refresh-baselines": { max: 6, windowSeconds: 300 },
+
+  /**
+   * 10 per 5 minutes. Reasoned rather than measured - there is no corpus of leaderboard
+   * refreshes - and set by what the call costs: it reads the caller's verified bests on
+   * the graded scenarios and the sampled board for each, which is bounded by the size of
+   * the pool rather than by the player's history. Cheaper than a baseline refresh, so a
+   * looser limit, but not free, and the standing only moves when a PB does.
+   *
+   * Note that an action absent from this record is not limited at all - `enforceRateLimit`
+   * returns on an unknown key - so a new function that forgets to add itself here gets a
+   * silent pass rather than a default.
+   */
+  "refresh-apex": { max: 10, windowSeconds: 300 },
 };
 
 /**
