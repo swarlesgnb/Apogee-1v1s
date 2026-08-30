@@ -259,6 +259,69 @@ async function main(): Promise<void> {
   );
   check("a deleted player leaves no standing behind", Number(orphaned.rows[0].n) === 0);
 
+  // refresh-apex's write is an upsert on (player_id, category). The primary key check
+  // above proves a plain insert is refused; this proves the upsert REPLACES rather than
+  // failing, which is the other half and the one a wrong conflict target breaks. A
+  // refresh that errors instead of updating would look like a rate limit to the client.
+  await db.exec(
+    `insert into apex_standing (player_id, category, points, graded, family_count)
+     values ('${apexPlayers[0]}', 'Overall', 19.75, 9, 22)
+     on conflict (player_id, category) do update
+       set points = excluded.points,
+           graded = excluded.graded,
+           updated_at = now()`,
+  );
+  const refreshed = await db.query<{ points: string; graded: number; n: string }>(
+    `select points, graded, (select count(*) from apex_standing
+                              where player_id = '${apexPlayers[0]}') as n
+       from apex_standing
+      where player_id = '${apexPlayers[0]}' and category = 'Overall'`,
+  );
+  check(
+    "a refresh replaces a player's standing rather than adding one",
+    Number(refreshed.rows[0]?.points) === 19.75 && Number(refreshed.rows[0]?.n) === 1,
+    `${refreshed.rows[0]?.points} across ${refreshed.rows[0]?.n} row(s)`,
+  );
+
+  // scenario_boards carries both samplings as jsonb, and refresh-apex reads them straight
+  // back into the shapes apex.ts expects. A jsonb column that silently reordered or
+  // stringified them would place every score wrongly and nothing would error.
+  const boardScenario = await db.query<{ id: string }>(
+    `select id from scenarios order by id limit 1`,
+  );
+  if (boardScenario.rows.length === 1) {
+    await db.exec(
+      `insert into scenario_boards
+         (scenario_id, board_total, apex_points, percentile_points, sampled_at)
+       values ('${boardScenario.rows[0].id}', 60383,
+               '[{"rank":1,"score":53},{"rank":2,"score":53},{"rank":500,"score":31}]',
+               '[{"topFraction":0.001,"score":49},{"topFraction":0.5,"score":18}]',
+               now())`,
+    );
+    const stored = await db.query<{ apex_points: { rank: number; score: number }[] }>(
+      `select apex_points from scenario_boards
+        where scenario_id = '${boardScenario.rows[0].id}'`,
+    );
+    const pts = stored.rows[0]?.apex_points ?? [];
+    check(
+      "a sampled board round-trips through jsonb in order",
+      pts.length === 3 && pts[0].rank === 1 && pts[2].rank === 500 && pts[2].score === 31,
+      JSON.stringify(pts),
+    );
+
+    let zeroTotal = false;
+    try {
+      await db.exec(
+        `insert into scenario_boards (scenario_id, board_total, sampled_at)
+         values ('${boardScenario.rows[0].id}', 0, now())`,
+      );
+    } catch {
+      zeroTotal = true;
+    }
+    // Every fraction this table serves divides by board_total.
+    check("a board with no entries is refused", zeroTotal);
+  }
+
   // And the index the board query is written for.
   const apexIdx = await db.query<{ indexdef: string }>(
     `select indexdef from pg_indexes
