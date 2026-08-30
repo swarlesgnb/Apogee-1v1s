@@ -1,0 +1,384 @@
+{
+  "benchmarkName": "PureG S1",
+  "abbreviation": "PG",
+  "color": "#EB1B3D",
+  "spreadsheetURL": "https://docs.google.com/spreadsheets/d/1UttTs6aNPzwAWCEKnRUc8hC0AzbZI2esLq4x8ngcVpU",
+  "evxlUrl": "https://evxl.app/benchmarks/PureG%20S1",
+  "source": "kovaaks.com benchmarks API + evxl registry",
+  "fetchedAt": "2026-08-29T16:58:05Z",
+  "difficulties": [
+    {
+      "name": "All",
+      "kovaaksBenchmarkId": 599,
+      "rankNames": [
+        "Division I",
+        "Division II",
+        "Division III",
+        "Division IV",
+        "Division V",
+        "Division VI",
+        "Division VII",
+        "Division 8",
+        "Division IX",
+        "Division X"
+      ],
+      "rankColors": {
+        "Division I": "#885157",
+        "Division II": "#B89381",
+        "Division III": "#6A6A6A",
+        "Division IV": "#AEAEAE",
+        "Division V": "#B09335",
+        "Division VI": "#DDB845",
+        "Division VII": "#B6D9FF",
+        "Division VIII": "#5BC16B",
+        "Division IX": "#A078F9",
+        "Division X": "#E51C3E"
+      },
+      "categories": [
+        {
+          "name": "Smooth",
+          "rankMaxes": [
+            2000,
+            4000,
+            6000,
+            8000,
+            10000,
+            12000,
+            14000,
+            16000,
+            18000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "Glider Pure",
+              "leaderboardId": 13210,
+              "rankMaxes": [
+                1900,
+                2350,
+                2600,
+                2900,
+                3150,
+                3550,
+                3950,
+                4200,
+                4600,
+                5000
+              ]
+            },
+            {
+              "name": "Bounce Tracking Pure",
+              "leaderboardId": 13212,
+              "rankMaxes": [
+                65,
+                115,
+                135,
+                160,
+                172,
+                187,
+                196,
+                203,
+                213,
+                221
+              ]
+            }
+          ]
+        },
+        {
+          "name": "React",
+          "rankMaxes": [
+            2000,
+            4000,
+            6000,
+            8000,
+            10000,
+            12000,
+            14000,
+            16000,
+            18000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "Air Pure",
+              "leaderboardId": 13213,
+              "rankMaxes": [
+                800,
+                830,
+                845,
+                860,
+                869,
+                880,
+                890,
+                895,
+                899,
+                903
+              ]
+            },
+            {
+              "name": "Ground Plaza Pure",
+              "leaderboardId": 13214,
+              "rankMaxes": [
+                810,
+                835,
+                845,
+                855,
+                865,
+                875,
+                884,
+                886,
+                888,
+                892
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Dynamic",
+          "rankMaxes": [
+            2000,
+            4000,
+            6000,
+            8000,
+            10000,
+            12000,
+            14000,
+            16000,
+            18000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "Horizontal Clicking Pure",
+              "leaderboardId": 13218,
+              "rankMaxes": [
+                75,
+                85,
+                90,
+                100,
+                105,
+                115,
+                122,
+                125,
+                133,
+                140
+              ]
+            },
+            {
+              "name": "Leapcorn Pure",
+              "leaderboardId": 13220,
+              "rankMaxes": [
+                25,
+                35,
+                40,
+                45,
+                50,
+                55,
+                62,
+                66,
+                70,
+                78
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Static",
+          "rankMaxes": [
+            2000,
+            4000,
+            6000,
+            8000,
+            10000,
+            12000,
+            14000,
+            16000,
+            18000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "Static Clicking Pure",
+              "leaderboardId": 13226,
+              "rankMaxes": [
+                215,
+                226,
+                230,
+                235,
+                239,
+                243,
+                247,
+                249,
+                251,
+                253
+              ]
+            },
+            {
+              "name": "Pokeball Pure",
+              "leaderboardId": 13219,
+              "rankMaxes": [
+                70,
+                78,
+                84,
+                90,
+                95,
+                100,
+                105,
+                108,
+                112,
+                115
+              ]
+            }
+          ]
+        },
+        {
+          "name": "DynamicTS",
+          "rankMaxes": [
+            2000,
+            4000,
+            6000,
+            8000,
+            10000,
+            12000,
+            14000,
+            16000,
+            18000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "Pasu Switch Pure",
+              "leaderboardId": 13227,
+              "rankMaxes": [
+                45,
+                50,
+                55,
+                60,
+                65,
+                70,
+                75,
+                80,
+                85,
+                90
+              ]
+            },
+            {
+              "name": "kinTS Pure",
+              "leaderboardId": 13228,
+              "rankMaxes": [
+                55,
+                60,
+                65,
+                70,
+                74,
+                78,
+                82,
+                86,
+                90,
+                94
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Speed",
+          "rankMaxes": [
+            2000,
+            4000,
+            6000,
+            8000,
+            10000,
+            12000,
+            14000,
+            16000,
+            18000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "Static Switching Pure",
+              "leaderboardId": 13221,
+              "rankMaxes": [
+                84,
+                94,
+                102,
+                110,
+                118,
+                124,
+                130,
+                136,
+                142,
+                148
+              ]
+            },
+            {
+              "name": "voxTS Pure",
+              "leaderboardId": 13229,
+              "rankMaxes": [
+                96,
+                104,
+                110,
+                116,
+                122,
+                128,
+                134,
+                138,
+                142,
+                146
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Strafe",
+          "rankMaxes": [
+            2000,
+            4000,
+            6000,
+            8000,
+            10000,
+            12000,
+            14000,
+            16000,
+            18000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "Pistol Strafe Gallery Pure",
+              "leaderboardId": 13225,
+              "rankMaxes": [
+                145000,
+                170000,
+                190000,
+                210000,
+                230000,
+                250000,
+                270000,
+                285000,
+                300000,
+                315000
+              ]
+            },
+            {
+              "name": "Strafe Tracking Pure",
+              "leaderboardId": 13216,
+              "rankMaxes": [
+                2250,
+                2500,
+                2750,
+                3000,
+                3250,
+                3500,
+                3750,
+                4000,
+                4250,
+                4500
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

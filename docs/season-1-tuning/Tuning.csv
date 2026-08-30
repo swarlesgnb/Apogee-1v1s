@@ -1,0 +1,20 @@
+Rank,Window,Percentile (top fraction),Share of players,Check
+1,Novice,0.86,"=IF(C2>C3,C2-C3,0)","=IF(C2>C3,"""",""SKIPPED - rank 1 is superseded by rank 2"")"
+2,Novice,0.72,"=IF(C3>C4,C3-C4,0)","=IF(C3>C4,"""",""SKIPPED - rank 2 is superseded by rank 3"")"
+3,Novice,0.56,"=IF(C4>C5,C4-C5,0)","=IF(C4>C5,"""",""SKIPPED - rank 3 is superseded by rank 4"")"
+4,Novice,0.42,"=IF(C5>C6,C5-C6,0)","=IF(C5>C6,"""",""SKIPPED - rank 4 is superseded by rank 5"")"
+5,Intermediate,0.31,"=IF(C6>C7,C6-C7,0)","=IF(C6>C7,"""",""SKIPPED - rank 5 is superseded by rank 6"")"
+6,Intermediate,0.22,"=IF(C7>C8,C7-C8,0)","=IF(C7>C8,"""",""SKIPPED - rank 6 is superseded by rank 7"")"
+7,Intermediate,0.15,"=IF(C8>C9,C8-C9,0)","=IF(C8>C9,"""",""SKIPPED - rank 7 is superseded by rank 8"")"
+8,Intermediate,0.105,"=IF(C9>C10,C9-C10,0)","=IF(C9>C10,"""",""SKIPPED - rank 8 is superseded by rank 9"")"
+9,Advanced,0.075,"=IF(C10>C11,C10-C11,0)","=IF(C10>C11,"""",""SKIPPED - rank 9 is superseded by rank 10"")"
+10,Advanced,0.055,"=IF(C11>C12,C11-C12,0)","=IF(C11>C12,"""",""SKIPPED - rank 10 is superseded by rank 11"")"
+11,Advanced,0.04,"=IF(C12>C13,C12-C13,0)","=IF(C12>C13,"""",""SKIPPED - rank 11 is superseded by rank 12"")"
+12,Advanced,0.03,"=IF(C13>C14,C13-C14,0)","=IF(C13>C14,"""",""SKIPPED - rank 12 is superseded by rank 13"")"
+13,Expert,0.022,"=IF(C14>C15,C14-C15,0)","=IF(C14>C15,"""",""SKIPPED - rank 13 is superseded by rank 14"")"
+14,Expert,0.015,"=IF(C15>C16,C15-C16,0)","=IF(C15>C16,"""",""SKIPPED - rank 14 is superseded by rank 15"")"
+15,Expert,0.011,"=IF(C16>C17,C16-C17,0)","=IF(C16>C17,"""",""SKIPPED - rank 15 is superseded by rank 16"")"
+16,Expert,0.008,=C17,"=IF(C17>0,"""",""top rank unreachable"")"
+
+unranked,,,=1-C2,
+total,,,=SUM(D2:D17)+D20,"=IF(ABS(D21-1)<0.0001,"""",""shares do not sum to 1"")"

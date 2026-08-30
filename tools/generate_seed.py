@@ -1,10 +1,25 @@
 """Generate supabase/seed.sql: the scenarios reference table.
 
-Joins three committed sources, none of them hand-typed:
+Joins four committed sources, none of them hand-typed:
 
   data/benchmarks/*.json       thresholds, leaderboard ids, per difficulty
   data/scenario_taxonomy.json  KovaaK's authoritative aim types
-  data/subcategories.json      the nine sub-categories (provisional)
+  data/pool.json               the season pool's own family -> sub-skill decisions
+  data/subskills.json          every corpus scenario's sub-skill, derived from what the
+                               benchmarks publishing it call it
+  data/subcategories.json      Voltaic's published mapping, for the families that are theirs
+
+The pool is consulted by scenario name rather than by a family stem parsed out of one.
+It has to be: a season family can span benchmarks - the same sub-skill measured by a
+Community scenario at one window and a Voltaic one at the next - and no amount of
+string-stripping recovers a family name that was never in the scenario name to begin
+with. Without it every scenario outside Voltaic reaches the `scenarios` table with a null
+sub_category, and a null sub_category is a scenario no sub-category queue can ever draw.
+
+Outside the pool the sub-skill comes from `subskills.json`, which classifies 1,007 of the
+corpus rather than Voltaic's eighteen. Same reason: a scenario in `scenarios` with a null
+sub_category is invisible to every sub-skill surface, and before that file the null was
+most of the table.
 
 The seed is idempotent - re-running it updates rows rather than duplicating them - so
 it is safe to apply on every deploy.
@@ -20,8 +35,11 @@ ROOT = Path(__file__).resolve().parents[1]
 BENCH_DIR = ROOT / "data" / "benchmarks"
 TAXONOMY = ROOT / "data" / "scenario_taxonomy.json"
 SUBCATS = ROOT / "data" / "subcategories.json"
+SUBSKILLS = ROOT / "data" / "subskills.json"
+POOL = ROOT / "data" / "pool.json"
 SCORE_MODELS = ROOT / "data" / "score_models.json"
 OUT = ROOT / "supabase" / "seed.sql"
+IDENTITY = ROOT / "data" / "scenario_identity.json"
 
 
 def sql_str(value: str | None) -> str:
@@ -79,6 +97,30 @@ def main() -> int:
 
     subcats = json.loads(SUBCATS.read_text(encoding="utf-8"))["families"]
 
+    # Every corpus scenario the derivation could classify, keyed by scenario name rather
+    # than by a family stem - most of the corpus has no stem Voltaic would recognise.
+    derived_of: dict[str, dict] = {}
+    if SUBSKILLS.exists():
+        for entry in json.loads(SUBSKILLS.read_text(encoding="utf-8")).get("scenarios", []):
+            if entry.get("subSkill"):
+                derived_of[entry["scenario"]] = {
+                    "skill": entry.get("category"),
+                    "subCategory": entry["subSkill"],
+                }
+
+    # The season pool's own decisions, keyed by scenario name. Apogee owns its families,
+    # so where the pool names one its sub-category is the answer, not a fallback.
+    pool_of: dict[str, dict] = {}
+    if POOL.exists():
+        for fam in json.loads(POOL.read_text(encoding="utf-8")).get("families", []):
+            mapping = {
+                "skill": fam.get("category"),
+                "subCategory": fam.get("subCategory")
+                or subcats.get(fam.get("family"), {}).get("subCategory"),
+            }
+            for variant in fam.get("variants", []):
+                pool_of[variant["scenario"]] = mapping
+
     # Verification data the Edge Functions read. Absent entries simply mean the
     # corresponding check is skipped server-side, never that a run is rejected.
     score_models = {}
@@ -107,7 +149,9 @@ def main() -> int:
                 for scen in cat.get("scenarios", []):
                     name = scen["name"]
                     fam = family_of(name, diff_name)
-                    sub = subcats.get(fam, {})
+                    # The pool's own decision wins, then the corpus-wide derivation,
+                    # then Voltaic's sheet for a family stem it recognises.
+                    sub = pool_of.get(name) or derived_of.get(name) or subcats.get(fam, {})
                     tax = taxonomy.get(name, {})
 
                     # Preference order matters. KovaaK's per-scenario aimType is
@@ -215,13 +259,58 @@ on conflict (benchmark_name, difficulty, scenario_id) do update set
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(sql, encoding="utf-8")
 
+    # The same identities, as JSON, for the deploy path.
+    #
+    # seed.sql only reaches a live project through `db push --include-seed`, which
+    # silently skips a seed whose hash it has already recorded - so on every deploy after
+    # the first, a corrected sub-category never arrives. `sync:reference` exists for
+    # exactly that and could not fix it either: it had no source for aim type or
+    # sub-category and sent neither, despite its own header offering "a corrected
+    # sub-category" as the reason it exists.
+    #
+    # This is that source. Written here rather than derived a second time in TypeScript,
+    # because two derivations of the same three fields is how the seed and the live
+    # project come to disagree about what a scenario is.
+    IDENTITY.write_text(
+        json.dumps(
+            {
+                "$comment": (
+                    "Scenario identity: leaderboard id, KovaaK's aim type, and the "
+                    "sub-category the season pool assigns. Generated by "
+                    "tools/generate_seed.py alongside supabase/seed.sql, from the same "
+                    "sources and the same preference order. Read by "
+                    "tools/syncReferenceData.ts, which is how these reach a live project "
+                    "after the first deploy. Do not hand-edit - change data/pool.json and "
+                    "regenerate."
+                ),
+                "generatedFrom": [
+                    "data/benchmarks/*.json",
+                    "data/scenario_taxonomy.json",
+                    "data/pool.json",
+                    "data/subcategories.json",
+                ],
+                "scenarios": dict(sorted(identities.items())),
+            },
+            indent=2,
+            ensure_ascii=False,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+
     no_sub = sum(1 for i in identities.values() if not i["subCategory"])
 
     print(f"wrote {len(identities)} scenarios, {len(memberships)} memberships")
     print(f"  -> {OUT.relative_to(ROOT)}")
+    print(f"  -> {IDENTITY.relative_to(ROOT)}")
     if no_sub:
-        print(f"\n{no_sub} scenarios have no sub-category mapping")
-        print("(expected for non-Voltaic benchmarks; they seed with a null sub_category)")
+        total = len(identities)
+        print(f"\n{total - no_sub} of {total} scenarios carry a sub-skill")
+        print(
+            f"({no_sub} do not: their benchmarks file them by target geometry or body "
+            "part rather than by skill, so there is nothing to read. They seed with a "
+            "null sub_category, which no sub-skill queue can draw.)"
+        )
     return 0
 
 

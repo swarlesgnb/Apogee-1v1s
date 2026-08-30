@@ -1100,7 +1100,7 @@ VT Aether Intermediate S5       score = hitCount × 1
         </div>
       </div>
 
-      <h3>The sub-category mapping was wrong until it came from the source</h3>
+      <h3>The sub-skill mapping was wrong until it came from the source</h3>
       <p>
         The nine Voltaic sub-categories were first derived by reading scenario
         descriptions. That produced a plausible, confident answer that was
@@ -1108,6 +1108,38 @@ VT Aether Intermediate S5       score = hitCount × 1
         groups were swapped wholesale. The nine <em>names</em> were guessed correctly,
         which is exactly what made the wrong groupings easy to believe. Only going to
         Voltaic's own published spreadsheet settled it.
+      </p>
+      <p>
+        The pool now draws from twenty-three benchmarks rather than Voltaic alone, and
+        Voltaic's sheet can only classify Voltaic's eighteen. So the sub-skills are
+        derived instead from the category names <em>every</em> benchmark publishes for
+        its own scenarios — normalised for case and spacing, and keyed by KovaaK's aim
+        type so that "Micro" can mean the clicking sub-skill in Lemon Static and precise
+        tracking in Astro without either being special-cased. Still nothing read from a
+        description.
+      </p>
+      <p>
+        Where KovaaK's has no aim type at all — about a hundred scenarios — the category
+        comes from the author's own <em>word</em>: &ldquo;Evasive Switch&rdquo; is a key in
+        the Switching table and nowhere else, so an author using it has said Switching.
+        A word that <em>two</em> of the three tables claim is refused rather than guessed
+        at. The first version voted inside the box instead — a benchmark's category slot in
+        one difficulty looks homogeneous by construction — and was confidently wrong:
+        Viscose files <code>domiSwitch</code> and <code>tamTargetSwitch Smooth</code> both
+        under &ldquo;Evasive&rdquo;, one clicking and one target switching, so the vote put
+        a target-switching scenario into Linear Clicking with a 51,457-entry board behind
+        it. Same shape as the description-reading mistake, one level down.
+      </p>
+      <p>
+        What makes that trustable is that the earlier mistake is now a test. Voltaic's
+        scenarios go through the same normalisation as everybody else's, and Voltaic
+        published where they belong, so the derivation has to land where Voltaic says
+        it does — on all 106 of them. It does, and
+        <code>npm run build:subskills</code> fails if it ever stops. Eleven sub-skills
+        come out: Voltaic's nine, plus Micro Clicking (named by eight benchmarks) and
+        Reading Tracking (seven). They are named in two words the way snakbox, Avasive
+        and wobin name them, because &ldquo;Micro&rdquo; and &ldquo;Speed&rdquo; mean
+        different things in different categories and one word cannot say which.
       </p>
     </section>
 
@@ -1309,10 +1341,11 @@ npm run validate:season prove edits keep the ladders in step</pre>
       <div class="exhibit">
         <div class="exhibit-head"><span>Build-time only</span><span class="src">python + node</span></div>
         <div class="exhibit-body">
-<pre>python tools/fetch_scenario_taxonomy.py        54 scenarios, aim types, leaderboard ids
+<pre>npm run fetch:evxl                             evxl's benchmark registry (24h cache)
 python tools/fetch_benchmark_defs.py           thresholds and rank colours
-python tools/fetch_voltaic_subcategories.py    the nine sub-categories
-npm run fetch:evxl                             evxl's benchmark registry (24h cache)
+npx tsx tools/fetchTaxonomy.ts                 aim types, leaderboard ids, play counts
+python tools/fetch_voltaic_subcategories.py    Voltaic's nine, the check to hold to
+npm run build:subskills                        the eleven, and the evidence for them
 python tools/generate_seed.py                  rebuild supabase/seed.sql
 
 npm run build:score-models   score = stat × k, from your corpus

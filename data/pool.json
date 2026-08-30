@@ -1,525 +1,886 @@
 {
-  "$comment": "Apogee's scenario pool. Owned here: nothing reads a benchmark file to find out what a season is made of. A scenario is identified by the exact name KovaaK's uses, because that is what the player launches and what the leaderboard is keyed on. Edit this file to change the pool; then re-run sample:leaderboards and build:season.",
+  "$comment": "Apogee's scenario pool. Owned here: nothing reads a benchmark file to find out what a season is made of. A scenario is identified by the exact name KovaaK's uses, because that is what the player launches and what the leaderboard is keyed on. Edit this file to change the pool, then re-run sample:leaderboards and build:season. npm run validate:pool holds it to every claim made below.",
   "windowSize": 4,
   "windows": [
-    "Easy",
-    "Medium",
-    "Hard",
-    "Extreme"
+    "Novice",
+    "Intermediate",
+    "Advanced",
+    "Expert"
   ],
+  "$windows": "A window is a difficulty band, and a scenario's band is the hardest tier any source publishes it in - see `bands`. Hardest rather than first, because a scenario Voltaic calls Intermediate and snakbox calls Hard is being asked for more by snakbox, and the ladder has to grade it at the harder ask or the rank it sets is one anybody in the harder band already holds. The previous pool placed each scenario by hand and the placement was a sentence in this comment rather than a rule; validate:pool now derives the window from `bands` and refuses a variant that disagrees with it.",
   "ladder": {
-    "$comment": "Percentiles from the top of each scenario's KovaaK's leaderboard, one array per window, easiest rank first. Read as one list across every window they are strictly decreasing, and that is the property that matters: the sweep that grades the population gives a player the same percentile on every board, so these values are the rank boundaries themselves and rank r holds the band between its own value and the next. A value that does not fall below the one before it is a rank superseded the moment it is reached, which is how ranks 4, 8 and 12 came to be held by nobody. npm run distribution is what checks it.",
+    "$comment": "Percentiles from the top of each scenario's KovaaK's leaderboard, one array per window, easiest rank first. Read them as ONE sequence of sixteen, not as four ladders: they must fall from the first rank to the last, across the window handovers as well as inside a window. A family is graded on the best of its variants, so a player holds the highest rank any window gives them - and a rank whose percentile is not below every rank above it is reached by nobody, because whoever reaches it reaches a higher one at the same time. Letting a handover step back is the mistake this file keeps making. The cut before this one opened Intermediate at 44.9% where Novice closed at 43.8%, and repeated Advanced's four numbers verbatim for Expert, which left ranks 13 to 16 unreachable by construction. The cut before THAT had the same fault at two handovers. npm run distribution is what catches it: it sweeps the population through the real engine and names every rank nobody holds. This ladder is checked against it and skips none. The step back is not imaginary - a player does sit at a worse percentile on a harder board, so the same ability is a larger share there - but the sweep grades a player at one percentile on every board and cannot see it. Measuring the real step needs Apogee's own population, which is season 2's job. Until then the ladder descends. The cut before this one was also far too loose, which is a different fault and was found by playing it: a high-intermediate player topped out at rank 12 - the ceiling of Advanced - on 17 of the 22 families, and reached rank 15 on one. Sixteen ranks that a mid-ladder player finishes are sixteen ranks that mean nothing. What was wrong was the range, not the shape. A KovaaK's board is mostly people who played a scenario once, so a share of it is a much weaker claim than it sounds, and the old ladder ended at the top 1.4% - which npm run calibrate places at Voltaic's Nova, three ranks short of its last. Its whole Advanced window, 32% to 15%, sat inside Voltaic's *Intermediate*. This cut is anchored on the two references that survive conversion: Voltaic S5 holds a 1.1x to 2.2x spread across scenarios at each of its thresholds and Aimerz+ S1 a 1.2x to 2.2x across its Easy tier, tight enough that both really are percentile ladders in disguise, and both land their last rank at the top 0.1%. The sixteen below are the geometric mean of those two curves, read at sixteen evenly spaced positions along each. The same history that finished the old ladder now peaks at rank 12 with a median family at 9, which is what a high-intermediate player should read. Only the last window is not the reference's own shape. Both references end at the top 0.1%, and this pool cannot: validate:pool asks that seventy players sit above a window's hardest rank, the thinnest Expert board in the pool carries 9,878 entries, and 70/9,878 is the top 0.71%. So the last rank asks the top 0.8% - the limit with enough margin that a resample does not break it - and ranks 13 to 16 are spread geometrically from where Advanced closes. That is a real ceiling and not a preference: a finer cut than this would be a fact about fewer than seventy people. The four are close together in percentile and still a normal rank apart in score, because the top of a board is steep - about 2% of score per rank, which is what Voltaic's top ranks are worth too. Then the easy end was cut again, and the reason is a measurement this pool can make and the references cannot. The windows are stacked as one descending sequence on the theory that a harder scenario draws a stronger population, so the same player sits lower on its board. The corpus on this machine says that effect is small: the same history sits at a median top 10.0% across the Novice variants it has played, 12.9% across Intermediate, 13.0% across Advanced and 17.5% across Expert - under 2x from end to end, against a ladder that asked 86% at the bottom and 0.8% at the top. So the first eight ranks were not grading anybody. They closed at the top 22%, which that history cleared on every Novice scenario it had played and 13 of 15 Intermediate ones, most of them on one to five runs. The easy end is compressed to 86/72/56/42 and 31/22/15/10.5, which drops those 13 to 6. Ranks 13 to 16 are deliberately not touched: Air Voltaic's board saturates near the top - the whole top 2.2% of it spans ten points of score - so the four Expert ranks are already only 0.45% of score apart there, and a tighter cut puts a rank step under run-to-run noise. Maxing the Novice window is not a fault this can fix and is not trying to: a window a decent player does not clear is a window that never hands over.",
     "perWindow": [
       [
-        0.879,
-        0.779,
-        0.623,
-        0.438
+        0.86,
+        0.72,
+        0.56,
+        0.42
       ],
       [
-        0.449,
-        0.248,
-        0.148,
-        0.075
+        0.31,
+        0.22,
+        0.15,
+        0.105
       ],
       [
-        0.08,
-        0.021,
-        0.005,
-        0.001
+        0.075,
+        0.055,
+        0.04,
+        0.03
       ],
       [
-        0.08,
-        0.021,
-        0.005,
-        0.001
+        0.022,
+        0.015,
+        0.011,
+        0.008
       ]
     ]
   },
   "matchWindow": 1,
+  "$matchWindow": "Which window a ranked match draws its three scenarios from. Intermediate: novice scenarios stop separating two players who can both max them, and expert ones ask a first-week player to play something they cannot score on at all.",
   "categories": [
     "Clicking",
     "Tracking",
     "Switching"
   ],
+  "subCategories": {
+    "Clicking": [
+      "Static Clicking",
+      "Dynamic Clicking",
+      "Linear Clicking",
+      "Micro Clicking"
+    ],
+    "Tracking": [
+      "Precise Tracking",
+      "Reactive Tracking",
+      "Control Tracking",
+      "Reading Tracking"
+    ],
+    "Switching": [
+      "Speed Switching",
+      "Evasive Switching",
+      "Stability Switching"
+    ]
+  },
+  "$subCategories": "Eleven, derived rather than chosen: data/subskills.json normalises the category names all 43 committed benchmarks publish for their own scenarios and counts how many name each one. Nine are Voltaic's, and the derivation reproduces Voltaic's published mapping on all 106 of their scenarios, which is what makes the same treatment of everybody else's believable. Two are not Voltaic's and are named by benchmarks their sheet cannot see: Micro Clicking by eight, Reading Tracking by seven. Named in two words the way snakbox, Avasive, wobin and Aimerz+ name them, rather than as the bare word, because the bare word does not survive being read on its own - 'Micro' and 'Speed' mean different things in different categories, and a weakness map or a queue name showing one word cannot say which. Regenerate with npm run build:subskills; do not hand-edit either file's classification.",
+  "sources": [
+    "AimSpeed Benchmarks 2.0",
+    "Aimerz+ Evasive Switching",
+    "Aimerz+ Precise Tracking",
+    "Aimerz+ Reactive Tracking",
+    "Aimerz+ SpeedTS",
+    "Anima Micro v1",
+    "Anima Micro v2",
+    "Astro Tracking Benchmark",
+    "Jade Palace Air",
+    "Jade Palace Dynamic",
+    "Jade Palace Ground",
+    "Lemon Static Benchmark",
+    "Revosect S1",
+    "Sparky (Voltaic) S1",
+    "Viscose Benchmarks",
+    "Viscose Benchmarks S2",
+    "Viscose Entry Benchmarks",
+    "Voltaic S3",
+    "Voltaic S4",
+    "Voltaic S5",
+    "Voltaic S5.5",
+    "e1se Smooth Benchmark",
+    "snakbox Benchmark"
+  ],
+  "$sources": "Every benchmark the pool may draw a scenario from, and nothing else. This replaces the old rule - 'the fifteen most-played benchmarks on evxl' - which could not reach Viscose, Jade Palace, Lemon Static or snakbox however good their scenarios are, and let in nothing from outside the list however good it is. Each of these is a benchmark evxl lists, has a committed definition under data/benchmarks/, and contributes at least one scenario; validate:pool checks all three. Two absences are deliberate. Avasive S2 is not here because it cannot be: its 96 scenarios carry 26 leaderboard entries between the largest of them, so no percentile cut from one of its boards describes anything. e1se Tracking Routine is not here because it is a routine rather than a graded ladder - its 'Intermediate' tier holds Voltaic Novice scenarios, and banding by it would drag the easiest scenarios in the pool two windows up.",
+  "bands": {
+    "AimSpeed Benchmarks 2.0": {
+      "Easy": 1,
+      "Normal": 2,
+      "Hard": 3
+    },
+    "Aimerz+ Evasive Switching": {
+      "Easy": 1,
+      "Hard": 3
+    },
+    "Aimerz+ Precise Tracking": {
+      "Easy": 1,
+      "Hard": 3
+    },
+    "Aimerz+ Reactive Tracking": {
+      "Hard": 3
+    },
+    "Aimerz+ SpeedTS": {
+      "Easy": 1,
+      "Hard": 3
+    },
+    "Anima Micro v1": {
+      "All": 2
+    },
+    "Anima Micro v2": {
+      "All": 2
+    },
+    "Astro Tracking Benchmark": {
+      "Easy": 1,
+      "Normal": 2,
+      "Advanced": 3
+    },
+    "Jade Palace Air": {
+      "Fundamentals": 0,
+      "Easy": 1,
+      "Hard": 3
+    },
+    "Jade Palace Dynamic": {
+      "Fundamentals": 0,
+      "Easy": 1,
+      "Hard": 3
+    },
+    "Jade Palace Ground": {
+      "Fundamentals": 0,
+      "Easy": 1,
+      "Hard": 3
+    },
+    "Lemon Static Benchmark": {
+      "Intermediate": 1,
+      "Advanced": 2
+    },
+    "Revosect S1": {
+      "Easy": 1,
+      "Advanced": 3
+    },
+    "Sparky (Voltaic) S1": {
+      "All": 1
+    },
+    "Viscose Benchmarks": {
+      "Easier": 1,
+      "Medium": 2,
+      "Hard": 3
+    },
+    "Viscose Benchmarks S2": {
+      "Easier": 1,
+      "Medium": 2,
+      "Hard": 3,
+      "Expert": 3
+    },
+    "Viscose Entry Benchmarks": {
+      "Entry": 0
+    },
+    "Voltaic S3": {
+      "Intermediate": 1,
+      "Advanced": 2
+    },
+    "Voltaic S4": {
+      "Novice": 0,
+      "Intermediate": 1,
+      "Advanced": 2,
+      "Elite (Unofficial)": 3
+    },
+    "Voltaic S5": {
+      "Novice": 0,
+      "Intermediate": 1,
+      "Advanced": 2,
+      "Elite (Unofficial)": 3
+    },
+    "Voltaic S5.5": {
+      "Novice": 0,
+      "Intermediate": 1,
+      "Advanced": 2
+    },
+    "e1se Smooth Benchmark": {
+      "Normal": 1,
+      "Hard": 2
+    },
+    "snakbox Benchmark": {
+      "Medium": 2,
+      "Hard": 3
+    }
+  },
+  "$bands": "Which window each source's difficulty tiers belong to. One row per tier rather than one per scenario, because a tier is what its author graded as a unit and 76 hand placements is 76 chances to put a Novice scenario in the Expert band - which samples fine, builds fine, and produces four top ranks anybody clears in one run. The two judgements worth naming: Voltaic's Elite tier is window 3 but is never used, because every Elite board is under 5,000 entries and a rank cut from the top 1.4% of one would be whatever two players happened to score; and Aimerz+, Revosect S1, Jade Palace and snakbox's hardest tiers are read as sitting above Voltaic's Advanced, which is the one claim here their authors did not make. npm run distribution is what checks it - a band placed too high leaves ranks nobody holds.",
+  "subCategoryOverrides": {
+    "1w2ts reload smallflicks Entry": {
+      "subCategory": "Micro Clicking",
+      "why": "Viscose files this lineage under Micro at Easier, Medium and Hard and under Stability at Entry. One tier of one benchmark disagreeing with three of its own is a slip in their sheet rather than a different scenario: it is a two-target smallflicks wall at every tier. Without this, Micro Clicking has one lineage - the whole corpus holds exactly one other novice-tier micro scenario."
+    }
+  },
+  "$subCategoryOverrides": "Scenarios whose derived sub-skill the pool deliberately disagrees with. Each carries its reason, and validate:pool prints every one and refuses an override that agrees with the derivation anyway - an override that has stopped doing anything is a claim nobody is checking. Keep this near-empty: the derivation is right far more often than a hand edit, and the whole point of deriving it was that hand-deriving was measurably wrong on 6 of Voltaic's 18.",
+  "$families": "A sub-skill is what a rank is cut on; a family is one lineage inside it, measured at four difficulties. Every sub-skill carries two, so no sub-skill rests on a single scenario at any difficulty and no category weighs one sub-skill twice as heavily as another - category energy is the sum of its families, so an uneven count is a silent thumb on the scale. The four variants follow one scenario lineage wherever a lineage spans the bands - eth Pasu Micro Entry through Easier and Medium, then Anima's 1w3ts Pasu Perfected Micro Goated - and hold the sub-skill where none does. Every family's sub-skill is checked against what the benchmarks publishing its scenarios call them, so a family cannot be named Precise Tracking and quietly filled with reactive scenarios.",
   "families": [
     {
-      "family": "1wXts",
+      "family": "Wide Wall",
       "category": "Clicking",
+      "subCategory": "Static Clicking",
       "variants": [
         {
           "window": 0,
-          "scenario": "VT 1w4ts Novice S5",
-          "label": "1w4ts",
-          "leaderboardId": 103210
+          "scenario": "VT ww5t Novice S5",
+          "label": "VT ww5t Novice S5",
+          "leaderboardId": 98030
         },
         {
           "window": 1,
-          "scenario": "VT 1w3ts Intermediate S5",
-          "label": "1w3ts",
-          "leaderboardId": 103209
+          "scenario": "Wide Wall 3 Targets TE",
+          "label": "Wide Wall 3 Targets TE",
+          "leaderboardId": 591
         },
         {
           "window": 2,
-          "scenario": "VT 1w2ts Advanced S5",
-          "label": "1w2ts",
-          "leaderboardId": 98025
+          "scenario": "Wide Wall 4 Targets",
+          "label": "Wide Wall 4 Targets",
+          "leaderboardId": 831
         },
         {
           "window": 3,
-          "scenario": "ww2ts",
-          "label": "ww2ts",
-          "leaderboardId": 12193
+          "scenario": "Wide Wall 3 Targets",
+          "label": "Wide Wall 3 Targets",
+          "leaderboardId": 337
         }
       ]
     },
     {
-      "family": "Floating Heads",
+      "family": "Reload Wall",
       "category": "Clicking",
+      "subCategory": "Static Clicking",
       "variants": [
         {
           "window": 0,
-          "scenario": "VT Floating Heads Novice S5",
-          "label": "Floating Heads",
-          "leaderboardId": 98054
+          "scenario": "VT 1w6ts Rasp Novice",
+          "label": "VT 1w6ts Rasp Novice",
+          "leaderboardId": 29483
         },
         {
           "window": 1,
-          "scenario": "VT Floating Heads Intermediate S5",
-          "label": "Floating Heads",
-          "leaderboardId": 98055
+          "scenario": "VT 1w5ts Rasp Intermediate",
+          "label": "VT 1w5ts Rasp Intermediate",
+          "leaderboardId": 29494
         },
         {
           "window": 2,
-          "scenario": "VT Floating Heads Advanced S5",
-          "label": "Floating Heads",
-          "leaderboardId": 98012
+          "scenario": "1w6ts reload v2 20% bigger",
+          "label": "1w6ts reload v2 20% bigger",
+          "leaderboardId": 21620
         },
         {
           "window": 3,
-          "scenario": "VT Floating Heads Elite S5",
-          "label": "Floating Heads Elite",
-          "leaderboardId": 106915
-        }
-      ]
-    },
-    {
-      "family": "Frogtagon",
-      "category": "Clicking",
-      "variants": [
-        {
-          "window": 0,
-          "scenario": "VT Frogtagon Novice S5",
-          "label": "Frogtagon",
-          "leaderboardId": 106186
-        },
-        {
-          "window": 1,
-          "scenario": "VT Frogtagon Intermediate S5",
-          "label": "Frogtagon",
-          "leaderboardId": 105828
-        },
-        {
-          "window": 2,
-          "scenario": "VT Frogtagon Advanced S5",
-          "label": "Frogtagon",
-          "leaderboardId": 105776
-        },
-        {
-          "window": 3,
-          "scenario": "VT Frogtagon Elite S5 2 Targets",
-          "label": "Frogtagon Elite S5 2 Targets",
-          "leaderboardId": 107066
+          "scenario": "1w6ts reload v2",
+          "label": "1w6ts reload v2",
+          "leaderboardId": 666
         }
       ]
     },
     {
       "family": "Pasu",
       "category": "Clicking",
+      "subCategory": "Dynamic Clicking",
       "variants": [
         {
           "window": 0,
           "scenario": "VT Pasu Novice S5",
-          "label": "Pasu",
+          "label": "VT Pasu Novice S5",
           "leaderboardId": 98059
         },
         {
           "window": 1,
           "scenario": "VT Pasu Intermediate S5",
-          "label": "Pasu",
+          "label": "VT Pasu Intermediate S5",
           "leaderboardId": 98330
         },
         {
           "window": 2,
           "scenario": "VT Pasu Advanced S5",
-          "label": "Pasu",
+          "label": "VT Pasu Advanced S5",
           "leaderboardId": 98023
         },
         {
           "window": 3,
-          "scenario": "1w4t Pasu Raspberry Master 6mag",
-          "label": "1w4t Pasu Raspberry Master 6mag",
-          "leaderboardId": 90763
+          "scenario": "Pasu Reload Goated",
+          "label": "Pasu Reload Goated",
+          "leaderboardId": 583
         }
       ]
     },
     {
-      "family": "Popcorn",
+      "family": "Bounceshot",
       "category": "Clicking",
+      "subCategory": "Dynamic Clicking",
       "variants": [
         {
           "window": 0,
-          "scenario": "VT Popcorn Novice S5",
-          "label": "Popcorn",
-          "leaderboardId": 98285
+          "scenario": "VT Bounceshot Novice",
+          "label": "VT Bounceshot Novice",
+          "leaderboardId": 24975
         },
         {
           "window": 1,
-          "scenario": "VT Popcorn Intermediate S5",
-          "label": "Popcorn",
-          "leaderboardId": 98333
+          "scenario": "B180 Voltaic Easy 92%",
+          "label": "B180 Voltaic Easy 92%",
+          "leaderboardId": 12018
         },
         {
           "window": 2,
-          "scenario": "VT Popcorn Advanced S5",
-          "label": "Popcorn",
-          "leaderboardId": 98024
+          "scenario": "VT Bounceshot Viscose Medium",
+          "label": "VT Bounceshot Viscose Medium",
+          "leaderboardId": 185237
         },
         {
           "window": 3,
-          "scenario": "Popcorn Voltaic",
-          "label": "Popcorn Voltaic",
-          "leaderboardId": 8
+          "scenario": "VT Bounceshot Advanced",
+          "label": "VT Bounceshot Advanced",
+          "leaderboardId": 25154
         }
       ]
     },
     {
-      "family": "ww5t",
+      "family": "Floating Heads",
       "category": "Clicking",
+      "subCategory": "Linear Clicking",
       "variants": [
         {
           "window": 0,
-          "scenario": "VT ww5t Novice S5",
-          "label": "ww5t",
-          "leaderboardId": 98030
+          "scenario": "VT Floating Heads Novice S5",
+          "label": "VT Floating Heads Novice S5",
+          "leaderboardId": 98054
         },
         {
           "window": 1,
-          "scenario": "VT ww5t Intermediate S5",
-          "label": "ww5t",
-          "leaderboardId": 98029
+          "scenario": "VT Floating Heads Intermediate S5",
+          "label": "VT Floating Heads Intermediate S5",
+          "leaderboardId": 98055
         },
         {
           "window": 2,
-          "scenario": "VT ww5t Advanced S5",
-          "label": "ww5t",
-          "leaderboardId": 98026
+          "scenario": "Floating Heads Timing 400% Larger",
+          "label": "Floating Heads Timing 400% Larger",
+          "leaderboardId": 1607
         },
         {
           "window": 3,
-          "scenario": "ww5ts",
-          "label": "ww5ts",
-          "leaderboardId": 6734
+          "scenario": "Floating Heads Timing 400% FIXED",
+          "label": "Floating Heads Timing 400% FIXED",
+          "leaderboardId": 1730
         }
       ]
     },
     {
-      "family": "DomiSwitch",
-      "category": "Switching",
+      "family": "voxTS Click",
+      "category": "Clicking",
+      "subCategory": "Linear Clicking",
       "variants": [
         {
           "window": 0,
-          "scenario": "domiSwitch Easier",
-          "label": "domiSwitch Easier",
-          "leaderboardId": 185428
+          "scenario": "VT Frogtagon Novice S5",
+          "label": "VT Frogtagon Novice S5",
+          "leaderboardId": 106186
         },
         {
           "window": 1,
-          "scenario": "domiSwitch Easy",
-          "label": "domiSwitch Easy",
-          "leaderboardId": 83043
+          "scenario": "voxTargetSwitch Click",
+          "label": "voxTargetSwitch Click",
+          "leaderboardId": 653
         },
         {
           "window": 2,
-          "scenario": "domiSwitch Hard",
-          "label": "domiSwitch Hard",
-          "leaderboardId": 83042
+          "scenario": "voxTargetClick 20% Small",
+          "label": "voxTargetClick 20% Small",
+          "leaderboardId": 857
         },
         {
           "window": 3,
-          "scenario": "domiSwitch Harder",
-          "label": "domiSwitch Harder",
-          "leaderboardId": 185226
+          "scenario": "VoxTargetSwitch Click Small",
+          "label": "VoxTargetSwitch Click Small",
+          "leaderboardId": 616
         }
       ]
     },
     {
-      "family": "DotTS",
-      "category": "Switching",
+      "family": "eth Pasu Micro",
+      "category": "Clicking",
+      "subCategory": "Micro Clicking",
       "variants": [
         {
           "window": 0,
-          "scenario": "VT DotTS Novice S5",
-          "label": "DotTS",
-          "leaderboardId": 104868
+          "scenario": "eth Pasu Micro Entry",
+          "label": "eth Pasu Micro Entry",
+          "leaderboardId": 190273
         },
         {
           "window": 1,
-          "scenario": "VT DotTS Intermediate S5",
-          "label": "DotTS",
-          "leaderboardId": 104865
+          "scenario": "eth Pasu Micro Easier",
+          "label": "eth Pasu Micro Easier",
+          "leaderboardId": 185394
         },
         {
           "window": 2,
-          "scenario": "VT DotTS Advanced S5",
-          "label": "DotTS",
-          "leaderboardId": 104961
+          "scenario": "eth Pasu Micro Medium",
+          "label": "eth Pasu Micro Medium",
+          "leaderboardId": 184790
         },
         {
           "window": 3,
-          "scenario": "VT DotTS Elite S5",
-          "label": "DotTS Elite",
-          "leaderboardId": 104962
+          "scenario": "1w3ts Pasu Perfected Micro Goated",
+          "label": "1w3ts Pasu Perfected Micro Goated",
+          "leaderboardId": 65396
         }
       ]
     },
     {
-      "family": "DriftTS",
-      "category": "Switching",
+      "family": "Smallflicks",
+      "category": "Clicking",
+      "subCategory": "Micro Clicking",
       "variants": [
         {
           "window": 0,
-          "scenario": "VT DriftTS Novice S5",
-          "label": "DriftTS",
-          "leaderboardId": 104862
+          "scenario": "1w2ts reload smallflicks Entry",
+          "label": "1w2ts reload smallflicks Entry",
+          "leaderboardId": 190274
         },
         {
           "window": 1,
-          "scenario": "VT DriftTS Intermediate S5",
-          "label": "DriftTS",
-          "leaderboardId": 104863
+          "scenario": "1w2ts reload smallflicks larger",
+          "label": "1w2ts reload smallflicks larger",
+          "leaderboardId": 185518
         },
         {
           "window": 2,
-          "scenario": "VT DriftTS Advanced S5",
-          "label": "DriftTS",
-          "leaderboardId": 104866
+          "scenario": "1w2ts reload smallflicks slightly larger",
+          "label": "1w2ts reload smallflicks slightly larger",
+          "leaderboardId": 184777
         },
         {
           "window": 3,
-          "scenario": "VT DriftTS Elite S5",
-          "label": "DriftTS Elite",
-          "leaderboardId": 104867
+          "scenario": "1w2ts Pasu Perfected 30% Smaller",
+          "label": "1w2ts Pasu Perfected 30% Smaller",
+          "leaderboardId": 28243
         }
       ]
     },
     {
-      "family": "FlyTS",
-      "category": "Switching",
-      "variants": [
-        {
-          "window": 0,
-          "scenario": "VT FlyTS Novice S5",
-          "label": "FlyTS",
-          "leaderboardId": 104830
-        },
-        {
-          "window": 1,
-          "scenario": "VT FlyTS Intermediate S5",
-          "label": "FlyTS",
-          "leaderboardId": 105142
-        },
-        {
-          "window": 2,
-          "scenario": "VT FlyTS Advanced S5",
-          "label": "FlyTS",
-          "leaderboardId": 105143
-        },
-        {
-          "window": 3,
-          "scenario": "waldoTS Perfected",
-          "label": "waldoTS Perfected",
-          "leaderboardId": 129721
-        }
-      ]
-    },
-    {
-      "family": "Aether",
+      "family": "Smoothbot",
       "category": "Tracking",
+      "subCategory": "Precise Tracking",
+      "variants": [
+        {
+          "window": 0,
+          "scenario": "VT Smoothbot Novice",
+          "label": "VT Smoothbot Novice",
+          "leaderboardId": 24967
+        },
+        {
+          "window": 1,
+          "scenario": "VT Smoothbot Intermediate",
+          "label": "VT Smoothbot Intermediate",
+          "leaderboardId": 24952
+        },
+        {
+          "window": 2,
+          "scenario": "VT Smoothbot Advanced",
+          "label": "VT Smoothbot Advanced",
+          "leaderboardId": 25151
+        },
+        {
+          "window": 3,
+          "scenario": "Smoothbot Pauer",
+          "label": "Smoothbot Pauer",
+          "leaderboardId": 724
+        }
+      ]
+    },
+    {
+      "family": "waldoTS",
+      "category": "Tracking",
+      "subCategory": "Precise Tracking",
+      "variants": [
+        {
+          "window": 0,
+          "scenario": "VT Snake Track Novice S5",
+          "label": "VT Snake Track Novice S5",
+          "leaderboardId": 101560
+        },
+        {
+          "window": 1,
+          "scenario": "waldoTS Novice",
+          "label": "waldoTS Novice",
+          "leaderboardId": 113019
+        },
+        {
+          "window": 2,
+          "scenario": "waldoTS Intermediate",
+          "label": "waldoTS Intermediate",
+          "leaderboardId": 111273
+        },
+        {
+          "window": 3,
+          "scenario": "waldoTS",
+          "label": "waldoTS",
+          "leaderboardId": 81042
+        }
+      ]
+    },
+    {
+      "family": "Ground Plaza",
+      "category": "Tracking",
+      "subCategory": "Reactive Tracking",
+      "variants": [
+        {
+          "window": 0,
+          "scenario": "VT Ground Novice S5",
+          "label": "VT Ground Novice S5",
+          "leaderboardId": 101744
+        },
+        {
+          "window": 1,
+          "scenario": "Ground Plaza Sparky v3 Easy",
+          "label": "Ground Plaza Sparky v3 Easy",
+          "leaderboardId": 134502
+        },
+        {
+          "window": 2,
+          "scenario": "VT Ground Intermediate S5",
+          "label": "VT Ground Intermediate S5",
+          "leaderboardId": 101743
+        },
+        {
+          "window": 3,
+          "scenario": "Ground Plaza Sparky v3 OW",
+          "label": "Ground Plaza Sparky v3 OW",
+          "leaderboardId": 871
+        }
+      ]
+    },
+    {
+      "family": "Air CELESTIAL",
+      "category": "Tracking",
+      "subCategory": "Reactive Tracking",
       "variants": [
         {
           "window": 0,
           "scenario": "VT Aether Novice S5",
-          "label": "Aether",
+          "label": "VT Aether Novice S5",
           "leaderboardId": 101370
         },
         {
           "window": 1,
-          "scenario": "VT Aether Intermediate S5",
-          "label": "Aether",
-          "leaderboardId": 101369
+          "scenario": "Air CELESTIAL No UFO Easy Slowed",
+          "label": "Air CELESTIAL No UFO Easy Slowed",
+          "leaderboardId": 131872
         },
         {
           "window": 2,
-          "scenario": "VT Aether Advanced S5",
-          "label": "Aether",
-          "leaderboardId": 100140
+          "scenario": "Air CELESTIAL No UFO Easy",
+          "label": "Air CELESTIAL No UFO Easy",
+          "leaderboardId": 70930
         },
         {
           "window": 3,
-          "scenario": "VT Aether Entry S5 Precision Focus",
-          "label": "Aether Entry S5 Precision Focus",
-          "leaderboardId": 104846
-        }
-      ]
-    },
-    {
-      "family": "Angelic",
-      "category": "Tracking",
-      "variants": [
-        {
-          "window": 0,
-          "scenario": "Air Angelic 4 Voltaic Easy 70%",
-          "label": "Air Angelic 4 Voltaic Easy 70%",
-          "leaderboardId": 14155
-        },
-        {
-          "window": 1,
-          "scenario": "Air Angelic 4 Voltaic Easy 90%",
-          "label": "Air Angelic 4 Voltaic Easy 90%",
-          "leaderboardId": 13692
-        },
-        {
-          "window": 2,
-          "scenario": "Air Angelic 4 Voltaic 90%",
-          "label": "Air Angelic 4 Voltaic 90%",
-          "leaderboardId": 2537
-        },
-        {
-          "window": 3,
-          "scenario": "Air Angelic 4 Voltaic Smaller",
-          "label": "Air Angelic 4 Voltaic Smaller",
-          "leaderboardId": 518
+          "scenario": "Air CELESTIAL",
+          "label": "Air CELESTIAL",
+          "leaderboardId": 1241
         }
       ]
     },
     {
       "family": "Controlsphere",
       "category": "Tracking",
+      "subCategory": "Control Tracking",
       "variants": [
         {
           "window": 0,
           "scenario": "VT Controlsphere Novice S5",
-          "label": "Controlsphere",
+          "label": "VT Controlsphere Novice S5",
           "leaderboardId": 103765
         },
         {
           "window": 1,
           "scenario": "VT Controlsphere Intermediate S5",
-          "label": "Controlsphere",
+          "label": "VT Controlsphere Intermediate S5",
           "leaderboardId": 103353
         },
         {
           "window": 2,
-          "scenario": "VT Controlsphere Advanced S5",
+          "scenario": "Controlsphere",
           "label": "Controlsphere",
-          "leaderboardId": 103114
+          "leaderboardId": 392
         },
         {
           "window": 3,
-          "scenario": "VT Controlsphere Viscose Expert",
-          "label": "Controlsphere Viscose Expert",
-          "leaderboardId": 184831
-        }
-      ]
-    },
-    {
-      "family": "Ground",
-      "category": "Tracking",
-      "variants": [
-        {
-          "window": 0,
-          "scenario": "VT Ground Novice S5",
-          "label": "Ground",
-          "leaderboardId": 101744
-        },
-        {
-          "window": 1,
-          "scenario": "VT Ground Intermediate S5",
-          "label": "Ground",
-          "leaderboardId": 101743
-        },
-        {
-          "window": 2,
-          "scenario": "VT Ground Advanced S5",
-          "label": "Ground",
-          "leaderboardId": 100768
-        },
-        {
-          "window": 3,
-          "scenario": "Ground Plaza Sparky V3 Thin",
-          "label": "Ground Plaza Sparky V3 Thin",
-          "leaderboardId": 1408
-        }
-      ]
-    },
-    {
-      "family": "PGT",
-      "category": "Tracking",
-      "variants": [
-        {
-          "window": 0,
-          "scenario": "VT PGT Novice S5",
-          "label": "PGT",
-          "leaderboardId": 98060
-        },
-        {
-          "window": 1,
-          "scenario": "VT PGT Intermediate S5",
-          "label": "PGT",
-          "leaderboardId": 98331
-        },
-        {
-          "window": 2,
-          "scenario": "VT PGT Advanced S5",
-          "label": "PGT",
-          "leaderboardId": 98255
-        },
-        {
-          "window": 3,
-          "scenario": "PGTI Voltaic",
-          "label": "PGTI Voltaic",
-          "leaderboardId": 99
+          "scenario": "Controlsphere rAim",
+          "label": "Controlsphere rAim",
+          "leaderboardId": 5102
         }
       ]
     },
     {
       "family": "Raw Control",
       "category": "Tracking",
+      "subCategory": "Control Tracking",
       "variants": [
         {
           "window": 0,
           "scenario": "VT Raw Control Novice S5",
-          "label": "Raw Control",
+          "label": "VT Raw Control Novice S5",
           "leaderboardId": 98047
         },
         {
           "window": 1,
-          "scenario": "VT Raw Control Intermediate S5",
-          "label": "Raw Control",
-          "leaderboardId": 98048
+          "scenario": "Whisphere 80%",
+          "label": "Whisphere 80%",
+          "leaderboardId": 55382
         },
         {
           "window": 2,
-          "scenario": "VT Raw Control Advanced S5",
-          "label": "Raw Control",
-          "leaderboardId": 98253
+          "scenario": "Whisphere",
+          "label": "Whisphere",
+          "leaderboardId": 34963
         },
         {
           "window": 3,
-          "scenario": "VT Raw Control Novice S5 Hard",
-          "label": "Raw Control Novice S5 Hard",
-          "leaderboardId": 106739
+          "scenario": "VT Raw Control Intermediate S5 Hard",
+          "label": "VT Raw Control Intermediate S5 Hard",
+          "leaderboardId": 105155
+        }
+      ]
+    },
+    {
+      "family": "Air Voltaic",
+      "category": "Tracking",
+      "subCategory": "Reading Tracking",
+      "variants": [
+        {
+          "window": 0,
+          "scenario": "VT Aether Novice S5 Bot 2",
+          "label": "VT Aether Novice S5 Bot 2",
+          "leaderboardId": 108143
+        },
+        {
+          "window": 1,
+          "scenario": "Air Voltaic Easy Invincible 4 80%",
+          "label": "Air Voltaic Easy Invincible 4 80%",
+          "leaderboardId": 128781
+        },
+        {
+          "window": 2,
+          "scenario": "Air Voltaic Easy",
+          "label": "Air Voltaic Easy",
+          "leaderboardId": 568
+        },
+        {
+          "window": 3,
+          "scenario": "Air Voltaic",
+          "label": "Air Voltaic",
+          "leaderboardId": 29
+        }
+      ]
+    },
+    {
+      "family": "Strafe Reading",
+      "category": "Tracking",
+      "subCategory": "Reading Tracking",
+      "variants": [
+        {
+          "window": 0,
+          "scenario": "Close Long Strafes Invincible",
+          "label": "Close Long Strafes Invincible",
+          "leaderboardId": 117
+        },
+        {
+          "window": 1,
+          "scenario": "Smooth Thin Strafes Raspberry Easy",
+          "label": "Smooth Thin Strafes Raspberry Easy",
+          "leaderboardId": 5536
+        },
+        {
+          "window": 2,
+          "scenario": "Air Angelic 4 Voltaic Easy",
+          "label": "Air Angelic 4 Voltaic Easy",
+          "leaderboardId": 42
+        },
+        {
+          "window": 3,
+          "scenario": "Close Fast Strafes Invincible - Thin",
+          "label": "Close Fast Strafes Invincible - Thin",
+          "leaderboardId": 814
+        }
+      ]
+    },
+    {
+      "family": "voxTS",
+      "category": "Switching",
+      "subCategory": "Speed Switching",
+      "variants": [
+        {
+          "window": 0,
+          "scenario": "VT EddieTS Novice S5",
+          "label": "VT EddieTS Novice S5",
+          "leaderboardId": 104835
+        },
+        {
+          "window": 1,
+          "scenario": "voxTargetSwitch 2 Large",
+          "label": "voxTargetSwitch 2 Large",
+          "leaderboardId": 84880
+        },
+        {
+          "window": 2,
+          "scenario": "voxTargetSwitch",
+          "label": "voxTargetSwitch",
+          "leaderboardId": 118
+        },
+        {
+          "window": 3,
+          "scenario": "voxTS Viscose Varied",
+          "label": "voxTS Viscose Varied",
+          "leaderboardId": 417
+        }
+      ]
+    },
+    {
+      "family": "DotTS",
+      "category": "Switching",
+      "subCategory": "Speed Switching",
+      "variants": [
+        {
+          "window": 0,
+          "scenario": "VT DotTS Novice S5",
+          "label": "VT DotTS Novice S5",
+          "leaderboardId": 104868
+        },
+        {
+          "window": 1,
+          "scenario": "VT DotTS Intermediate S5",
+          "label": "VT DotTS Intermediate S5",
+          "leaderboardId": 104865
+        },
+        {
+          "window": 2,
+          "scenario": "VT DotTS Advanced S5",
+          "label": "VT DotTS Advanced S5",
+          "leaderboardId": 104961
+        },
+        {
+          "window": 3,
+          "scenario": "patCircleSwitch NR",
+          "label": "patCircleSwitch NR",
+          "leaderboardId": 535
+        }
+      ]
+    },
+    {
+      "family": "FlyTS",
+      "category": "Switching",
+      "subCategory": "Evasive Switching",
+      "variants": [
+        {
+          "window": 0,
+          "scenario": "VT FlyTS Novice S5",
+          "label": "VT FlyTS Novice S5",
+          "leaderboardId": 104830
+        },
+        {
+          "window": 1,
+          "scenario": "VT FlyTS Intermediate S5",
+          "label": "VT FlyTS Intermediate S5",
+          "leaderboardId": 105142
+        },
+        {
+          "window": 2,
+          "scenario": "VT FlyTS Advanced S5",
+          "label": "VT FlyTS Advanced S5",
+          "leaderboardId": 105143
+        },
+        {
+          "window": 3,
+          "scenario": "Bounce 180 Tracking",
+          "label": "Bounce 180 Tracking",
+          "leaderboardId": 122
+        }
+      ]
+    },
+    {
+      "family": "Smooth Switching",
+      "category": "Switching",
+      "subCategory": "Evasive Switching",
+      "variants": [
+        {
+          "window": 0,
+          "scenario": "VT evaTS Novice",
+          "label": "VT evaTS Novice",
+          "leaderboardId": 24980
+        },
+        {
+          "window": 1,
+          "scenario": "VT evaTS Intermediate",
+          "label": "VT evaTS Intermediate",
+          "leaderboardId": 24962
+        },
+        {
+          "window": 2,
+          "scenario": "tamTargetSwitch Smooth Easy",
+          "label": "tamTargetSwitch Smooth Easy",
+          "leaderboardId": 42505
+        },
+        {
+          "window": 3,
+          "scenario": "tamTargetSwitch Smooth Hard",
+          "label": "tamTargetSwitch Smooth Hard",
+          "leaderboardId": 727
+        }
+      ]
+    },
+    {
+      "family": "ControlTS",
+      "category": "Switching",
+      "subCategory": "Stability Switching",
+      "variants": [
+        {
+          "window": 0,
+          "scenario": "VT ControlTS Novice S5",
+          "label": "VT ControlTS Novice S5",
+          "leaderboardId": 105132
+        },
+        {
+          "window": 1,
+          "scenario": "VT ControlTS Intermediate S5",
+          "label": "VT ControlTS Intermediate S5",
+          "leaderboardId": 104890
+        },
+        {
+          "window": 2,
+          "scenario": "kinTS Voltaic Easy",
+          "label": "kinTS Voltaic Easy",
+          "leaderboardId": 542
+        },
+        {
+          "window": 3,
+          "scenario": "kinTS Voltaic",
+          "label": "kinTS Voltaic",
+          "leaderboardId": 604
+        }
+      ]
+    },
+    {
+      "family": "beanTS",
+      "category": "Switching",
+      "subCategory": "Stability Switching",
+      "variants": [
+        {
+          "window": 0,
+          "scenario": "VT Penta Bounce Novice S5",
+          "label": "VT Penta Bounce Novice S5",
+          "leaderboardId": 103262
+        },
+        {
+          "window": 1,
+          "scenario": "beanTS Larger",
+          "label": "beanTS Larger",
+          "leaderboardId": 129353
+        },
+        {
+          "window": 2,
+          "scenario": "beanTS",
+          "label": "beanTS",
+          "leaderboardId": 2648
+        },
+        {
+          "window": 3,
+          "scenario": "B180T Voltaic",
+          "label": "B180T Voltaic",
+          "leaderboardId": 947
         }
       ]
     }

@@ -1,0 +1,287 @@
+{
+  "benchmarkName": "cA Static S1",
+  "abbreviation": "cA",
+  "color": "#ABD5FC",
+  "spreadsheetURL": "https://docs.google.com/spreadsheets/u/0/d/18YMQQZs7qy2xKxCEwHkTG4DeQTuEr0Z05cmAIvuuieE",
+  "evxlUrl": "https://evxl.app/benchmarks/cA%20Static%20S1",
+  "source": "kovaaks.com benchmarks API + evxl registry",
+  "fetchedAt": "2026-08-25T13:51:13Z",
+  "difficulties": [
+    {
+      "name": "All",
+      "kovaaksBenchmarkId": 535,
+      "rankNames": [
+        "Glacier",
+        "Rivulet",
+        "Cloud",
+        "Droplets",
+        "Fluid",
+        "Vapour",
+        "Hydro"
+      ],
+      "rankColors": {
+        "Glacier": "#E1FCFF",
+        "Rivulet": "#D9E6FF",
+        "Cloud": "#ABD5FC",
+        "Droplets": "#7CBD9B",
+        "Fluid": "#3F3380",
+        "Vapour": "#9C3B3B",
+        "Hydro": "#24DDD8"
+      },
+      "categories": [
+        {
+          "name": "Flicking",
+          "rankMaxes": [
+            4285.71,
+            8571.43,
+            12857.14,
+            17142.86,
+            21428.57,
+            25714.29,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "cA x-axis flick",
+              "leaderboardId": 94345,
+              "rankMaxes": [
+                130,
+                134,
+                138,
+                142,
+                146,
+                150,
+                154
+              ]
+            },
+            {
+              "name": "cA y-axis flick",
+              "leaderboardId": 94344,
+              "rankMaxes": [
+                130,
+                134,
+                138,
+                142,
+                146,
+                150,
+                154
+              ]
+            },
+            {
+              "name": "cA 2ts wideflick",
+              "leaderboardId": 94275,
+              "rankMaxes": [
+                140,
+                145,
+                150,
+                155,
+                160,
+                165,
+                170
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Microadjust",
+          "rankMaxes": [
+            4285.71,
+            8571.43,
+            12857.14,
+            17142.86,
+            21428.57,
+            25714.29,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "cA 4ts horizontal",
+              "leaderboardId": 94287,
+              "rankMaxes": [
+                130,
+                134,
+                138,
+                142,
+                146,
+                150,
+                154
+              ]
+            },
+            {
+              "name": "cA micropressure",
+              "leaderboardId": 94271,
+              "rankMaxes": [
+                168,
+                175,
+                182,
+                189,
+                196,
+                213,
+                220
+              ]
+            },
+            {
+              "name": "cA 5ts vibrate",
+              "leaderboardId": 98486,
+              "rankMaxes": [
+                134,
+                141,
+                148,
+                154,
+                160,
+                165,
+                170
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Consciousness",
+          "rankMaxes": [
+            2857.14,
+            5714.29,
+            8571.43,
+            11428.57,
+            14285.71,
+            17142.86,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "cA 1ts ruohong",
+              "leaderboardId": 94276,
+              "rankMaxes": [
+                710,
+                750,
+                790,
+                830,
+                870,
+                910,
+                950
+              ]
+            },
+            {
+              "name": "cA fuglaapressure",
+              "leaderboardId": 94284,
+              "rankMaxes": [
+                160,
+                165,
+                170,
+                175,
+                180,
+                185,
+                190
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Fluidity",
+          "rankMaxes": [
+            4285.71,
+            8571.43,
+            12857.14,
+            17142.86,
+            21428.57,
+            25714.29,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "cA 3ts precise",
+              "leaderboardId": 98210,
+              "rankMaxes": [
+                142,
+                147,
+                152,
+                157,
+                162,
+                167,
+                172
+              ]
+            },
+            {
+              "name": "cA 4ts pokeball",
+              "leaderboardId": 94714,
+              "rankMaxes": [
+                120,
+                125,
+                130,
+                135,
+                140,
+                145,
+                150
+              ]
+            },
+            {
+              "name": "cA 900targets",
+              "leaderboardId": 96440,
+              "rankMaxes": [
+                150,
+                160,
+                170,
+                180,
+                190,
+                200,
+                210
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Pace Control",
+          "rankMaxes": [
+            4285.71,
+            8571.43,
+            12857.14,
+            17142.86,
+            21428.57,
+            25714.29,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "cA sixshot",
+              "leaderboardId": 94716,
+              "rankMaxes": [
+                158,
+                164,
+                170,
+                176,
+                182,
+                188,
+                194
+              ]
+            },
+            {
+              "name": "cA voxTSs smaller",
+              "leaderboardId": 94311,
+              "rankMaxes": [
+                162,
+                170,
+                178,
+                186,
+                194,
+                202,
+                210
+              ]
+            },
+            {
+              "name": "cA 7ts pressure",
+              "leaderboardId": 96432,
+              "rankMaxes": [
+                157,
+                162,
+                167,
+                172,
+                177,
+                182,
+                187
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

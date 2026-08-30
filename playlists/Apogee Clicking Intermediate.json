@@ -1,0 +1,47 @@
+{
+	"playlistName": "Apogee Clicking Intermediate",
+	"playlistId": 0,
+	"authorSteamId": "",
+	"authorName": "",
+	"scenarioList": [
+		{
+			"scenario_name": "Wide Wall 3 Targets TE",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "VT 1w5ts Rasp Intermediate",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "VT Pasu Intermediate S5",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "B180 Voltaic Easy 92%",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "VT Floating Heads Intermediate S5",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "voxTargetSwitch Click",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "eth Pasu Micro Easier",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "1w2ts reload smallflicks larger",
+			"play_Count": 1
+		}
+	],
+	"description": "Season 1 practice. 8 scenarios, the ones this season ranks you on. Play them as often as you like - nothing here is a match, and none of it settles anything.",
+	"hasOfflineScenarios": false,
+	"hasEdited": true,
+	"shareCode": "",
+	"version": 31,
+	"updated": 1788031556,
+	"isPrivate": false
+}

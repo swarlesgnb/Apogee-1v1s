@@ -1,0 +1,384 @@
+{
+  "benchmarkName": "Aimerz+ Precise Tracking",
+  "abbreviation": "A+",
+  "color": "#E1E0E1",
+  "spreadsheetURL": "https://docs.google.com/spreadsheets/d/1czvuvgks1SoMNUH_aevVPm5lOgqCQHa_UVR8izpUxfg/edit?gid=373225919#gid=373225919",
+  "evxlUrl": "https://evxl.app/benchmarks/Aimerz%2B%20Precise%20Tracking",
+  "source": "kovaaks.com benchmarks API + evxl registry",
+  "fetchedAt": "2026-08-29T16:57:55Z",
+  "difficulties": [
+    {
+      "name": "Easy",
+      "kovaaksBenchmarkId": 593,
+      "rankNames": [
+        "Bronze",
+        "Silver",
+        "Gold",
+        "Platinum",
+        "Diamond",
+        "Acolyte",
+        "Transcendent"
+      ],
+      "rankColors": {
+        "Bronze": "#A77138",
+        "Silver": "#C2D2D2",
+        "Gold": "#C4A12A",
+        "Platinum": "#00B3A5",
+        "Diamond": "#81D1FF",
+        "Acolyte": "#FFA000",
+        "Transcendent": "#B5F5DF"
+      },
+      "categories": [
+        {
+          "name": "Precise",
+          "rankMaxes": [
+            17142.86,
+            34285.71,
+            51428.57,
+            68571.43,
+            85714.29,
+            102857.14,
+            120000
+          ],
+          "scenarios": [
+            {
+              "name": "Smoothbot Pauer Glider 60% Larger",
+              "leaderboardId": 85148,
+              "rankMaxes": [
+                1700,
+                2100,
+                2600,
+                2900,
+                3300,
+                3900,
+                6000
+              ]
+            },
+            {
+              "name": "Deceptive Tracking XYZ Easy",
+              "leaderboardId": 84931,
+              "rankMaxes": [
+                1750,
+                2000,
+                2250,
+                2500,
+                2800,
+                3200,
+                4800
+              ]
+            },
+            {
+              "name": "Smoothbot Pauer Easy",
+              "leaderboardId": 4878,
+              "rankMaxes": [
+                3600,
+                3900,
+                4200,
+                4500,
+                4900,
+                5500,
+                7400
+              ]
+            },
+            {
+              "name": "cloverRawControl Big",
+              "leaderboardId": 69579,
+              "rankMaxes": [
+                6400,
+                7000,
+                8000,
+                9000,
+                10500,
+                12500,
+                17100
+              ]
+            },
+            {
+              "name": "Leapstrafes Control Medium",
+              "leaderboardId": 63065,
+              "rankMaxes": [
+                7900,
+                8600,
+                9500,
+                10500,
+                12000,
+                14500,
+                20500
+              ]
+            },
+            {
+              "name": "Aimerz+ PreciseTrack Med S1",
+              "leaderboardId": 69248,
+              "rankMaxes": [
+                1200,
+                1600,
+                1900,
+                2200,
+                2500,
+                2800,
+                4200
+              ]
+            },
+            {
+              "name": "Centering II 180 Fixed Larger",
+              "leaderboardId": 84930,
+              "rankMaxes": [
+                8750,
+                9250,
+                9750,
+                10500,
+                12000,
+                13500,
+                19000
+              ]
+            },
+            {
+              "name": "tamAngleSmoothness Easier",
+              "leaderboardId": 83451,
+              "rankMaxes": [
+                1300,
+                1500,
+                1800,
+                2100,
+                2300,
+                2600,
+                3250
+              ]
+            },
+            {
+              "name": "Controlsphere",
+              "leaderboardId": 392,
+              "rankMaxes": [
+                3600,
+                5000,
+                6600,
+                8200,
+                9800,
+                11000,
+                16000
+              ]
+            },
+            {
+              "name": "Whisphere Med 60s",
+              "leaderboardId": 84929,
+              "rankMaxes": [
+                10000,
+                12000,
+                13500,
+                15000,
+                17000,
+                19000,
+                28500
+              ]
+            },
+            {
+              "name": "Aimerz+ PTI Med S1",
+              "leaderboardId": 69247,
+              "rankMaxes": [
+                1200,
+                1500,
+                1800,
+                2100,
+                2400,
+                2700,
+                5050
+              ]
+            },
+            {
+              "name": "Bouncesphere Smoothness",
+              "leaderboardId": 28488,
+              "rankMaxes": [
+                1000,
+                1250,
+                1500,
+                1800,
+                2100,
+                2400,
+                3300
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Hard",
+      "kovaaksBenchmarkId": 590,
+      "rankNames": [
+        "Prophet",
+        "Saint",
+        "Angelic",
+        "Seraphic",
+        "Cherubim",
+        "Transcendent"
+      ],
+      "rankColors": {
+        "Prophet": "#9E0059",
+        "Saint": "#5A189A",
+        "Angelic": "#0F4C5C",
+        "Seraphic": "#590D22",
+        "Cherubim": "#03071E",
+        "Transcendent": "#B5F5DF"
+      },
+      "categories": [
+        {
+          "name": "Precise",
+          "rankMaxes": [
+            20000,
+            40000,
+            60000,
+            80000,
+            100000,
+            120000
+          ],
+          "scenarios": [
+            {
+              "name": "Smoothbot Pauer Glider",
+              "leaderboardId": 32,
+              "rankMaxes": [
+                2750,
+                3050,
+                3450,
+                3850,
+                4250,
+                5000
+              ]
+            },
+            {
+              "name": "Deceptive Tracking XYZ",
+              "leaderboardId": 82412,
+              "rankMaxes": [
+                2000,
+                2400,
+                2800,
+                3200,
+                3600,
+                4000
+              ]
+            },
+            {
+              "name": "Smoothbot Pauer",
+              "leaderboardId": 724,
+              "rankMaxes": [
+                4400,
+                4700,
+                5050,
+                5400,
+                5700,
+                6250
+              ]
+            },
+            {
+              "name": "cloverRawControl",
+              "leaderboardId": 68993,
+              "rankMaxes": [
+                7400,
+                8000,
+                8900,
+                9800,
+                10800,
+                12400
+              ]
+            },
+            {
+              "name": "Leapstrafes Control Phantasy 30% Smaller",
+              "leaderboardId": 55631,
+              "rankMaxes": [
+                8400,
+                9200,
+                10400,
+                11600,
+                13200,
+                15400
+              ]
+            },
+            {
+              "name": "Aimerz+ PreciseTrack S1 Modified",
+              "leaderboardId": 84339,
+              "rankMaxes": [
+                2200,
+                2450,
+                2700,
+                3000,
+                3300,
+                3775
+              ]
+            },
+            {
+              "name": "     CB SmoothTrack",
+              "leaderboardId": 97841,
+              "rankMaxes": [
+                2775,
+                3075,
+                3350,
+                3625,
+                3875,
+                4300
+              ]
+            },
+            {
+              "name": "tamAngleSmoothness",
+              "leaderboardId": 83448,
+              "rankMaxes": [
+                1900,
+                2100,
+                2325,
+                2550,
+                2800,
+                3000
+              ]
+            },
+            {
+              "name": "Extra Controlsphere",
+              "leaderboardId": 562,
+              "rankMaxes": [
+                7800,
+                8400,
+                9000,
+                10000,
+                11100,
+                12400
+              ]
+            },
+            {
+              "name": "Whisphere Small & Slow",
+              "leaderboardId": 34966,
+              "rankMaxes": [
+                15600,
+                16800,
+                18000,
+                19200,
+                21000,
+                23600
+              ]
+            },
+            {
+              "name": "Aimerz+ PTI Med S1",
+              "leaderboardId": 69247,
+              "rankMaxes": [
+                3250,
+                3550,
+                3850,
+                4150,
+                4450,
+                5050
+              ]
+            },
+            {
+              "name": "Bouncesphere Smooth",
+              "leaderboardId": 30847,
+              "rankMaxes": [
+                3600,
+                3900,
+                4200,
+                4500,
+                4800,
+                5250
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

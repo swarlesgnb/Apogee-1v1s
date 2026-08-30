@@ -1,0 +1,670 @@
+{
+  "benchmarkName": "Jade Palace Dynamic",
+  "abbreviation": "JP",
+  "color": "#00ff40",
+  "spreadsheetURL": "https://docs.google.com/spreadsheets/d/1W_RYk3_xbvsS4BHnTItgkwWIoEVh-dbAWDhAWUyvnZU/edit?gid=532719343#gid=532719343",
+  "evxlUrl": "https://evxl.app/benchmarks/Jade%20Palace%20Dynamic",
+  "source": "kovaaks.com benchmarks API + evxl registry",
+  "fetchedAt": "2026-08-29T16:57:52Z",
+  "difficulties": [
+    {
+      "name": "Easy",
+      "kovaaksBenchmarkId": 2821,
+      "rankNames": [
+        "Diamond",
+        "Jade",
+        "Master",
+        "Grandmaster",
+        "Nova"
+      ],
+      "rankColors": {
+        "Diamond": "#B9F2FF",
+        "Jade": "#85FA85",
+        "Master": "#cd30c1",
+        "Grandmaster": "#feeb01",
+        "Nova": "#6f1d89"
+      },
+      "categories": [
+        {
+          "name": "Reading",
+          "rankMaxes": [
+            12000,
+            24000,
+            36000,
+            48000,
+            60000
+          ],
+          "scenarios": [
+            {
+              "name": "Pasu Palace Easy",
+              "leaderboardId": 193483,
+              "rankMaxes": [
+                90,
+                101,
+                112,
+                122,
+                132
+              ]
+            },
+            {
+              "name": "Pasu Voltaic Easy",
+              "leaderboardId": 605,
+              "rankMaxes": [
+                80,
+                89,
+                98,
+                107,
+                115
+              ]
+            },
+            {
+              "name": "Pasu Reload Goated",
+              "leaderboardId": 583,
+              "rankMaxes": [
+                103,
+                114,
+                125,
+                136,
+                147
+              ]
+            },
+            {
+              "name": "CombinedClick Easy",
+              "leaderboardId": 201116,
+              "rankMaxes": [
+                76,
+                88,
+                98,
+                107,
+                116
+              ]
+            },
+            {
+              "name": "Controlswitch Click Easy",
+              "leaderboardId": 200239,
+              "rankMaxes": [
+                75,
+                85,
+                94,
+                104,
+                113
+              ]
+            },
+            {
+              "name": "Pasu VP Easy",
+              "leaderboardId": 196553,
+              "rankMaxes": [
+                910,
+                1000,
+                1090,
+                1180,
+                1260
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Arc",
+          "rankMaxes": [
+            12000,
+            24000,
+            36000,
+            48000,
+            60000
+          ],
+          "scenarios": [
+            {
+              "name": "Popcorn Palace Easy",
+              "leaderboardId": 193482,
+              "rankMaxes": [
+                570,
+                720,
+                860,
+                980,
+                1100
+              ]
+            },
+            {
+              "name": "Popcorn MV Easier",
+              "leaderboardId": 185398,
+              "rankMaxes": [
+                400,
+                480,
+                560,
+                640,
+                720
+              ]
+            },
+            {
+              "name": "Aimerz+ hopClick Easy S1",
+              "leaderboardId": 68428,
+              "rankMaxes": [
+                870,
+                1010,
+                1140,
+                1260,
+                1370
+              ]
+            },
+            {
+              "name": "Leapcorn Pure Easy",
+              "leaderboardId": 42061,
+              "rankMaxes": [
+                60,
+                70,
+                80,
+                90,
+                100
+              ]
+            },
+            {
+              "name": "B180 Voltaic",
+              "leaderboardId": 9,
+              "rankMaxes": [
+                78,
+                87,
+                96,
+                104,
+                112
+              ]
+            },
+            {
+              "name": "Leap 180 Avasive Easy",
+              "leaderboardId": 202791,
+              "rankMaxes": [
+                70,
+                82,
+                92,
+                102,
+                112
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Evasive",
+          "rankMaxes": [
+            8000,
+            16000,
+            24000,
+            32000,
+            40000
+          ],
+          "scenarios": [
+            {
+              "name": "Flow Easy",
+              "leaderboardId": 192630,
+              "rankMaxes": [
+                950,
+                1050,
+                1150,
+                1240,
+                1330
+              ]
+            },
+            {
+              "name": "1w4t Pasu Raspberry Jade",
+              "leaderboardId": 200712,
+              "rankMaxes": [
+                76,
+                88,
+                100,
+                112,
+                124
+              ]
+            },
+            {
+              "name": "cAt purrClick Easy",
+              "leaderboardId": 83324,
+              "rankMaxes": [
+                1040,
+                1120,
+                1200,
+                1280,
+                1360
+              ]
+            },
+            {
+              "name": "SnowClick Revosect Int",
+              "leaderboardId": 142899,
+              "rankMaxes": [
+                740,
+                820,
+                900,
+                980,
+                1060
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Linear",
+          "rankMaxes": [
+            8000,
+            16000,
+            24000,
+            32000,
+            40000
+          ],
+          "scenarios": [
+            {
+              "name": "BeanClick Wide 8 Bots Easy",
+              "leaderboardId": 192660,
+              "rankMaxes": [
+                138,
+                150,
+                165,
+                174,
+                186
+              ]
+            },
+            {
+              "name": "beanClick Euphoric Novice",
+              "leaderboardId": 197636,
+              "rankMaxes": [
+                132,
+                144,
+                156,
+                168,
+                180
+              ]
+            },
+            {
+              "name": "psalmTS Viscose Click",
+              "leaderboardId": 185603,
+              "rankMaxes": [
+                80,
+                88,
+                96,
+                104,
+                112
+              ]
+            },
+            {
+              "name": "VT Floating Heads Intermediate S5 Hard",
+              "leaderboardId": 106273,
+              "rankMaxes": [
+                550,
+                650,
+                740,
+                830,
+                920
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Hard",
+      "kovaaksBenchmarkId": 2828,
+      "rankNames": [
+        "Grandmaster",
+        "Nova",
+        "Astra",
+        "Celestial",
+        "Transcendent"
+      ],
+      "rankColors": {
+        "Grandmaster": "#feeb01",
+        "Nova": "#6f1d89",
+        "Astra": "#c4065b",
+        "Celestial": "#56e4fe",
+        "Transcendent": "#faa0fc"
+      },
+      "categories": [
+        {
+          "name": "Reading",
+          "rankMaxes": [
+            12000,
+            24000,
+            36000,
+            48000,
+            60000
+          ],
+          "scenarios": [
+            {
+              "name": "Pasu Palace",
+              "leaderboardId": 181289,
+              "rankMaxes": [
+                101,
+                113,
+                124,
+                135,
+                157
+              ]
+            },
+            {
+              "name": "Pasu Voltaic",
+              "leaderboardId": 6,
+              "rankMaxes": [
+                92,
+                104,
+                115,
+                126,
+                144
+              ]
+            },
+            {
+              "name": "pasu small reload",
+              "leaderboardId": 95,
+              "rankMaxes": [
+                98,
+                112,
+                124,
+                136,
+                156
+              ]
+            },
+            {
+              "name": "CombinedClick",
+              "leaderboardId": 201114,
+              "rankMaxes": [
+                78,
+                94,
+                108,
+                120,
+                142
+              ]
+            },
+            {
+              "name": "Controlswitch Click",
+              "leaderboardId": 200238,
+              "rankMaxes": [
+                80,
+                92,
+                104,
+                115,
+                138
+              ]
+            },
+            {
+              "name": "Pasu VP",
+              "leaderboardId": 196550,
+              "rankMaxes": [
+                1000,
+                1120,
+                1230,
+                1340,
+                1560
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Arc",
+          "rankMaxes": [
+            12000,
+            24000,
+            36000,
+            48000,
+            60000
+          ],
+          "scenarios": [
+            {
+              "name": "Popcorn Palace",
+              "leaderboardId": 192391,
+              "rankMaxes": [
+                620,
+                740,
+                840,
+                940,
+                1140
+              ]
+            },
+            {
+              "name": "Popcorn MV Advanced",
+              "leaderboardId": 76966,
+              "rankMaxes": [
+                350,
+                440,
+                520,
+                600,
+                740
+              ]
+            },
+            {
+              "name": "Aimerz+ hopClick Hard S1",
+              "leaderboardId": 68378,
+              "rankMaxes": [
+                970,
+                1070,
+                1160,
+                1240,
+                1520
+              ]
+            },
+            {
+              "name": "Leapcorn Pure",
+              "leaderboardId": 13220,
+              "rankMaxes": [
+                68,
+                78,
+                88,
+                98,
+                120
+              ]
+            },
+            {
+              "name": "VT Bounceshot Viscose Expert",
+              "leaderboardId": 185236,
+              "rankMaxes": [
+                840,
+                960,
+                1080,
+                1200,
+                1440
+              ]
+            },
+            {
+              "name": "Leap 180 Avasive",
+              "leaderboardId": 202790,
+              "rankMaxes": [
+                76,
+                88,
+                98,
+                108,
+                135
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Evasive",
+          "rankMaxes": [
+            8000,
+            16000,
+            24000,
+            32000,
+            40000
+          ],
+          "scenarios": [
+            {
+              "name": "Flow",
+              "leaderboardId": 192629,
+              "rankMaxes": [
+                1100,
+                1220,
+                1350,
+                1470,
+                1680
+              ]
+            },
+            {
+              "name": "1w4t Pasu Raspberry Master",
+              "leaderboardId": 15338,
+              "rankMaxes": [
+                86,
+                102,
+                118,
+                132,
+                162
+              ]
+            },
+            {
+              "name": "cAt purrClick Hard",
+              "leaderboardId": 83380,
+              "rankMaxes": [
+                950,
+                1100,
+                1250,
+                1390,
+                1610
+              ]
+            },
+            {
+              "name": "SnowClick Revosect",
+              "leaderboardId": 142723,
+              "rankMaxes": [
+                750,
+                880,
+                1000,
+                1120,
+                1330
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Linear",
+          "rankMaxes": [
+            8000,
+            16000,
+            24000,
+            32000,
+            40000
+          ],
+          "scenarios": [
+            {
+              "name": "BeanClick Wide 8 Bots",
+              "leaderboardId": 40920,
+              "rankMaxes": [
+                145,
+                160,
+                175,
+                188,
+                220
+              ]
+            },
+            {
+              "name": "beanClick Euphoric",
+              "leaderboardId": 197634,
+              "rankMaxes": [
+                148,
+                162,
+                172,
+                182,
+                206
+              ]
+            },
+            {
+              "name": "psalmTS Viscose Click Expert",
+              "leaderboardId": 185607,
+              "rankMaxes": [
+                76,
+                88,
+                100,
+                112,
+                135
+              ]
+            },
+            {
+              "name": "VT Floating Heads Advanced S5 Hard",
+              "leaderboardId": 104678,
+              "rankMaxes": [
+                580,
+                700,
+                800,
+                900,
+                1070
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Fundamentals",
+      "kovaaksBenchmarkId": 2825,
+      "rankNames": [
+        "Iron",
+        "Bronze",
+        "Silver",
+        "Gold",
+        "Platinum",
+        "Diamond",
+        "Jade",
+        "Master"
+      ],
+      "rankColors": {
+        "Iron": "#999999",
+        "Bronze": "#FF9900",
+        "Silver": "#CBD9E6",
+        "Gold": "#CAB148",
+        "Platinum": "#2FCFC2",
+        "Diamond": "#B9F2FF",
+        "Jade": "#85FA85",
+        "Master": "#cd30c1"
+      },
+      "categories": [
+        {
+          "name": "Fundamentals",
+          "rankMaxes": [
+            3750,
+            7500,
+            11250,
+            15000,
+            18750,
+            22500,
+            26250,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "Pasu Viscose Entry Small",
+              "leaderboardId": 192536,
+              "rankMaxes": [
+                470,
+                600,
+                730,
+                860,
+                990,
+                1120,
+                1250,
+                1380
+              ]
+            },
+            {
+              "name": "VoxTS Click Easier",
+              "leaderboardId": 136076,
+              "rankMaxes": [
+                40,
+                50,
+                90,
+                70,
+                80,
+                90,
+                100,
+                110
+              ]
+            },
+            {
+              "name": "Popcorn Palace Easier",
+              "leaderboardId": 201876,
+              "rankMaxes": [
+                330,
+                420,
+                510,
+                590,
+                670,
+                740,
+                810,
+                870
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

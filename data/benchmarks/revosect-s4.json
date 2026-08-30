@@ -1,0 +1,695 @@
+{
+  "benchmarkName": "Revosect S4",
+  "abbreviation": "rA",
+  "color": "#EF4444",
+  "spreadsheetURL": "https://docs.google.com/spreadsheets/d/1ST4_MKPUe7p0x1mAqzdEqAFKNqyB9CAbD450IK-hJIM",
+  "evxlUrl": "https://evxl.app/benchmarks/Revosect%20S4",
+  "source": "kovaaks.com benchmarks API + evxl registry",
+  "fetchedAt": "2026-08-25T13:51:09Z",
+  "difficulties": [
+    {
+      "name": "Easy",
+      "kovaaksBenchmarkId": 536,
+      "rankNames": [
+        "Gold",
+        "Platinum",
+        "Ace",
+        "Legend",
+        "Sentinel",
+        "Valour"
+      ],
+      "rankColors": {
+        "Gold": "#FFE599",
+        "Platinum": "#C9DAF8",
+        "Ace": "#E06666",
+        "Legend": "#B6D7A8",
+        "Sentinel": "#76A5AF",
+        "Valour": "#A64D79"
+      },
+      "categories": [
+        {
+          "name": "Static",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000,
+            25000,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "rA S4 THREESHOT EASY",
+              "leaderboardId": 98107,
+              "rankMaxes": [
+                980,
+                1020,
+                1070,
+                1130,
+                1190,
+                1250
+              ]
+            },
+            {
+              "name": "rA S4 FIVEWIDE EASY",
+              "leaderboardId": 98099,
+              "rankMaxes": [
+                950,
+                1000,
+                1050,
+                1100,
+                1150,
+                1200
+              ]
+            },
+            {
+              "name": "rA S4 FOURWIDE SMALL EASY",
+              "leaderboardId": 98100,
+              "rankMaxes": [
+                850,
+                890,
+                930,
+                970,
+                1010,
+                1050
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Dynamic",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000,
+            25000,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "rA S4 SNAPCLICK EASY",
+              "leaderboardId": 98109,
+              "rankMaxes": [
+                400,
+                450,
+                500,
+                550,
+                600,
+                650
+              ]
+            },
+            {
+              "name": "rA S4 XYCLICK EASY",
+              "leaderboardId": 98148,
+              "rankMaxes": [
+                450,
+                500,
+                550,
+                600,
+                650,
+                700
+              ]
+            },
+            {
+              "name": "rA S4 BOUNCECLICK EASY",
+              "leaderboardId": 98108,
+              "rankMaxes": [
+                350,
+                390,
+                420,
+                450,
+                480,
+                520
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Precise",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "rA S4 GLIDERTRACK EASY",
+              "leaderboardId": 98105,
+              "rankMaxes": [
+                2250,
+                2500,
+                2700,
+                2900,
+                3100,
+                3300
+              ]
+            },
+            {
+              "name": "rA S4 CAPSULETRACK EASY",
+              "leaderboardId": 98104,
+              "rankMaxes": [
+                1850,
+                2000,
+                2150,
+                2300,
+                2450,
+                2600
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Hybrid",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "rA S4 LEAPTRACK EASY",
+              "leaderboardId": 98102,
+              "rankMaxes": [
+                2200,
+                2400,
+                2600,
+                2800,
+                3000,
+                3200
+              ]
+            },
+            {
+              "name": "rA S4 AIRTRACK EASY",
+              "leaderboardId": 98103,
+              "rankMaxes": [
+                2100,
+                2300,
+                2500,
+                2600,
+                2700,
+                2800
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Reactive",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "rA S4 REACTIVESPHERE EASY",
+              "leaderboardId": 98101,
+              "rankMaxes": [
+                1500,
+                1700,
+                1900,
+                2100,
+                2300,
+                2500
+              ]
+            },
+            {
+              "name": "rA S4 STRAFETRACK EASY",
+              "leaderboardId": 98112,
+              "rankMaxes": [
+                2100,
+                2250,
+                2400,
+                2550,
+                2700,
+                2850
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Flick",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "rA S4 WIDESWITCH EASY",
+              "leaderboardId": 98098,
+              "rankMaxes": [
+                115,
+                118,
+                121,
+                124,
+                127,
+                130
+              ]
+            },
+            {
+              "name": "rA S4 ORBSWITCH EASY",
+              "leaderboardId": 98095,
+              "rankMaxes": [
+                105,
+                108,
+                111,
+                114,
+                117,
+                120
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Hybrid TS",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "rA S4 XYSWITCH EASY",
+              "leaderboardId": 98096,
+              "rankMaxes": [
+                75,
+                77,
+                79,
+                81,
+                83,
+                85
+              ]
+            },
+            {
+              "name": "rA S4 LAYERSWITCH EASY",
+              "leaderboardId": 98134,
+              "rankMaxes": [
+                79,
+                82,
+                85,
+                88,
+                91,
+                94
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Track",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "rA S4 EVASWITCH EASY",
+              "leaderboardId": 98135,
+              "rankMaxes": [
+                43,
+                46,
+                49,
+                52,
+                55,
+                58
+              ]
+            },
+            {
+              "name": "rA S4 SPACESWITCH EASY",
+              "leaderboardId": 98094,
+              "rankMaxes": [
+                38,
+                40,
+                42,
+                43,
+                45,
+                47
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Hard",
+      "kovaaksBenchmarkId": 540,
+      "rankNames": [
+        "Mythic",
+        "Immortal",
+        "Archon",
+        "Ethereal",
+        "Divine",
+        "Omnipotent"
+      ],
+      "rankColors": {
+        "Mythic": "#FFD700",
+        "Immortal": "#C36EFF",
+        "Archon": "#FF0000",
+        "Ethereal": "#91D7E4",
+        "Divine": "#050000",
+        "Omnipotent": "#00FF96"
+      },
+      "categories": [
+        {
+          "name": "Static",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000,
+            25000,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "rA S4 THREESHOT HARD",
+              "leaderboardId": 93780,
+              "rankMaxes": [
+                1300,
+                1350,
+                1400,
+                1470,
+                1540,
+                1600
+              ]
+            },
+            {
+              "name": "rA S4 FIVEWIDE HARD",
+              "leaderboardId": 93783,
+              "rankMaxes": [
+                1280,
+                1330,
+                1380,
+                1450,
+                1510,
+                1580
+              ]
+            },
+            {
+              "name": "rA S4 FOURWIDE SMALL HARD",
+              "leaderboardId": 93782,
+              "rankMaxes": [
+                1150,
+                1190,
+                1230,
+                1300,
+                1350,
+                1400
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Dynamic",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000,
+            25000,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "rA S4 SNAPCLICK HARD",
+              "leaderboardId": 93779,
+              "rankMaxes": [
+                450,
+                520,
+                590,
+                670,
+                740,
+                800
+              ]
+            },
+            {
+              "name": "rA S4 XYCLICK HARD",
+              "leaderboardId": 93766,
+              "rankMaxes": [
+                540,
+                610,
+                680,
+                760,
+                830,
+                900
+              ]
+            },
+            {
+              "name": "rA S4 BOUNCECLICK HARD",
+              "leaderboardId": 93769,
+              "rankMaxes": [
+                420,
+                470,
+                520,
+                600,
+                680,
+                740
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Precise",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "rA S4 GLIDERTRACK HARD",
+              "leaderboardId": 93776,
+              "rankMaxes": [
+                2000,
+                2250,
+                2500,
+                2800,
+                3050,
+                3300
+              ]
+            },
+            {
+              "name": "rA S4 CAPSULETRACK HARD",
+              "leaderboardId": 93787,
+              "rankMaxes": [
+                1700,
+                1850,
+                2000,
+                2300,
+                2500,
+                2700
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Hybrid",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "rA S4 LEAPTRACK HARD",
+              "leaderboardId": 93788,
+              "rankMaxes": [
+                2550,
+                2750,
+                2950,
+                3250,
+                3450,
+                3650
+              ]
+            },
+            {
+              "name": "rA S4 AIRTRACK HARD",
+              "leaderboardId": 93768,
+              "rankMaxes": [
+                1725,
+                1850,
+                2000,
+                2200,
+                2450,
+                2650
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Reactive",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "rA S4 REACTIVESPHERE HARD",
+              "leaderboardId": 93773,
+              "rankMaxes": [
+                2100,
+                2300,
+                2500,
+                2750,
+                2900,
+                3100
+              ]
+            },
+            {
+              "name": "rA S4 STRAFETRACK HARD",
+              "leaderboardId": 93786,
+              "rankMaxes": [
+                2000,
+                2200,
+                2400,
+                2650,
+                2800,
+                3000
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Flick",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "rA S4 WIDESWITCH HARD",
+              "leaderboardId": 93777,
+              "rankMaxes": [
+                128,
+                133,
+                138,
+                145,
+                150,
+                155
+              ]
+            },
+            {
+              "name": "rA S4 ORBSWITCH HARD",
+              "leaderboardId": 93774,
+              "rankMaxes": [
+                125,
+                130,
+                135,
+                142,
+                147,
+                152
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Hybrid TS",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "rA S4 XYSWITCH HARD",
+              "leaderboardId": 93767,
+              "rankMaxes": [
+                82,
+                87,
+                92,
+                98,
+                102,
+                105
+              ]
+            },
+            {
+              "name": "rA S4 LAYERSWITCH HARD",
+              "leaderboardId": 93775,
+              "rankMaxes": [
+                85,
+                90,
+                95,
+                102,
+                107,
+                112
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Track",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "rA S4 EVASWITCH HARD",
+              "leaderboardId": 93784,
+              "rankMaxes": [
+                45,
+                48,
+                50,
+                55,
+                59,
+                62
+              ]
+            },
+            {
+              "name": "rA S4 SPACESWITCH HARD",
+              "leaderboardId": 93785,
+              "rankMaxes": [
+                34,
+                37,
+                40,
+                45,
+                48,
+                50
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,595 @@
+{
+  "benchmarkName": "SuperbAim S2",
+  "abbreviation": "sA",
+  "color": "#FF3968",
+  "spreadsheetURL": "https://docs.google.com/spreadsheets/d/1u3aMTs-jM1zvXdsjtXh5hWSGnANJG7nUWCidQyvWQw4",
+  "evxlUrl": "https://evxl.app/benchmarks/SuperbAim%20S2",
+  "source": "kovaaks.com benchmarks API + evxl registry",
+  "fetchedAt": "2026-08-25T13:51:23Z",
+  "difficulties": [
+    {
+      "name": "Easy",
+      "kovaaksBenchmarkId": 733,
+      "rankNames": [
+        "Paper",
+        "Silver",
+        "Gold",
+        "Platinum",
+        "Jade"
+      ],
+      "rankColors": {
+        "Paper": "#C30D23",
+        "Silver": "#FFD97B",
+        "Gold": "#1F8784",
+        "Platinum": "#002549",
+        "Jade": "#24DDD8"
+      },
+      "categories": [
+        {
+          "name": "Predict",
+          "rankMaxes": [
+            4000,
+            8000,
+            12000,
+            16000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "FloatingClick SuperbAim Easy",
+              "leaderboardId": 35931,
+              "rankMaxes": [
+                510,
+                600,
+                680,
+                760,
+                840
+              ]
+            },
+            {
+              "name": "BounceClick SuperbAim Easy",
+              "leaderboardId": 35901,
+              "rankMaxes": [
+                50,
+                60,
+                69,
+                78,
+                87
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Dynamic",
+          "rankMaxes": [
+            4000,
+            8000,
+            12000,
+            16000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "Pasu SuperbAim Easy",
+              "leaderboardId": 35298,
+              "rankMaxes": [
+                52,
+                63,
+                74,
+                85,
+                95
+              ]
+            },
+            {
+              "name": "CombinedClick SuperbAim Easy",
+              "leaderboardId": 35926,
+              "rankMaxes": [
+                55,
+                65,
+                75,
+                84,
+                93
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Static",
+          "rankMaxes": [
+            4000,
+            8000,
+            12000,
+            16000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "6 Dots SuperbAim Easy",
+              "leaderboardId": 35921,
+              "rankMaxes": [
+                800,
+                910,
+                1010,
+                1120,
+                1230
+              ]
+            },
+            {
+              "name": "4 Dots xyzAdjust SuperbAim Easy",
+              "leaderboardId": 35930,
+              "rankMaxes": [
+                105,
+                115,
+                125,
+                135,
+                145
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Precise",
+          "rankMaxes": [
+            2000,
+            4000,
+            6000,
+            8000,
+            10000
+          ],
+          "scenarios": [
+            {
+              "name": "SmoothTrack SuperbAim Easy",
+              "leaderboardId": 36110,
+              "rankMaxes": [
+                3300,
+                3800,
+                4200,
+                4600,
+                5000
+              ]
+            },
+            {
+              "name": "LeapBot SuperbAim Easy",
+              "leaderboardId": 35906,
+              "rankMaxes": [
+                1600,
+                1800,
+                2000,
+                2200,
+                2600
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Reactive",
+          "rankMaxes": [
+            2000,
+            4000,
+            6000,
+            8000,
+            10000
+          ],
+          "scenarios": [
+            {
+              "name": "ReactiveStrafe SuperbAim Easy",
+              "leaderboardId": 48468,
+              "rankMaxes": [
+                2600,
+                2900,
+                3150,
+                3350,
+                3550
+              ]
+            },
+            {
+              "name": "AirReactive SuperbAim Easy",
+              "leaderboardId": 36113,
+              "rankMaxes": [
+                2200,
+                2600,
+                2900,
+                3200,
+                3450
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Control",
+          "rankMaxes": [
+            2000,
+            4000,
+            6000,
+            8000,
+            10000
+          ],
+          "scenarios": [
+            {
+              "name": "AirAngelic SuperbAim Easy",
+              "leaderboardId": 36099,
+              "rankMaxes": [
+                2200,
+                2600,
+                2900,
+                3200,
+                3500
+              ]
+            },
+            {
+              "name": "Controlsphere SuperbAim Easy",
+              "leaderboardId": 35684,
+              "rankMaxes": [
+                5600,
+                7100,
+                8500,
+                9800,
+                11000
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Speed",
+          "rankMaxes": [
+            2000,
+            4000,
+            6000,
+            8000,
+            10000
+          ],
+          "scenarios": [
+            {
+              "name": "VoxTS SuperbAim Easy",
+              "leaderboardId": 36537,
+              "rankMaxes": [
+                770,
+                890,
+                1000,
+                1100,
+                1200
+              ]
+            },
+            {
+              "name": "psalmTS SuperbAim Easy",
+              "leaderboardId": 35914,
+              "rankMaxes": [
+                50,
+                60,
+                70,
+                80,
+                90
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Evasive",
+          "rankMaxes": [
+            2000,
+            4000,
+            6000,
+            8000,
+            10000
+          ],
+          "scenarios": [
+            {
+              "name": "kinTS SuperbAim Easy",
+              "leaderboardId": 35924,
+              "rankMaxes": [
+                47,
+                54,
+                60,
+                66,
+                72
+              ]
+            },
+            {
+              "name": "BounceTS SuperbAim Easy",
+              "leaderboardId": 35910,
+              "rankMaxes": [
+                49,
+                57,
+                64,
+                70,
+                76
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Advanced",
+      "kovaaksBenchmarkId": 732,
+      "rankNames": [
+        "Master",
+        "Grandmaster",
+        "Pure",
+        "Eclipse",
+        "Superb"
+      ],
+      "rankColors": {
+        "Master": "#C30D23",
+        "GrandMaster": "#FFD97B",
+        "Cyan": "#1F8784",
+        "Blazar": "#002549",
+        "Superb": "#24DDD8"
+      },
+      "categories": [
+        {
+          "name": "Predict",
+          "rankMaxes": [
+            4000,
+            8000,
+            12000,
+            16000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "FloatingClick SuperbAim",
+              "leaderboardId": 35936,
+              "rankMaxes": [
+                810,
+                890,
+                950,
+                1010,
+                1060
+              ]
+            },
+            {
+              "name": "BounceClick SuperbAim",
+              "leaderboardId": 35900,
+              "rankMaxes": [
+                76,
+                86,
+                95,
+                103,
+                108
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Dynamic",
+          "rankMaxes": [
+            4000,
+            8000,
+            12000,
+            16000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "Pasu SuperbAim",
+              "leaderboardId": 35929,
+              "rankMaxes": [
+                81,
+                90,
+                98,
+                106,
+                112
+              ]
+            },
+            {
+              "name": "CombinedClick SuperbAim",
+              "leaderboardId": 35956,
+              "rankMaxes": [
+                76,
+                84,
+                91,
+                98,
+                105
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Static",
+          "rankMaxes": [
+            4000,
+            8000,
+            12000,
+            16000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "5 Dots SuperbAim",
+              "leaderboardId": 35908,
+              "rankMaxes": [
+                1220,
+                1320,
+                1410,
+                1500,
+                1560
+              ]
+            },
+            {
+              "name": "3 Dots xyzAdjust SuperbAim",
+              "leaderboardId": 35907,
+              "rankMaxes": [
+                142,
+                151,
+                160,
+                168,
+                176
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Precise",
+          "rankMaxes": [
+            4000,
+            8000,
+            12000,
+            16000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "SmoothTrack SuperbAim",
+              "leaderboardId": 36103,
+              "rankMaxes": [
+                4000,
+                4400,
+                4800,
+                5100,
+                5300
+              ]
+            },
+            {
+              "name": "LeapBot SuperbAim",
+              "leaderboardId": 35905,
+              "rankMaxes": [
+                2300,
+                2600,
+                2900,
+                3100,
+                3300
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Reactive",
+          "rankMaxes": [
+            4000,
+            8000,
+            12000,
+            16000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "ReactiveStrafe SuperbAim",
+              "leaderboardId": 48012,
+              "rankMaxes": [
+                2600,
+                2800,
+                3100,
+                3300,
+                3500
+              ]
+            },
+            {
+              "name": "AirReactive SuperbAim",
+              "leaderboardId": 36012,
+              "rankMaxes": [
+                2400,
+                2700,
+                2900,
+                3100,
+                3300
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Control",
+          "rankMaxes": [
+            4000,
+            8000,
+            12000,
+            16000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "AirAngelic SuperbAim",
+              "leaderboardId": 36097,
+              "rankMaxes": [
+                2850,
+                3200,
+                3500,
+                3800,
+                4000
+              ]
+            },
+            {
+              "name": "Controlsphere SuperbAim",
+              "leaderboardId": 35293,
+              "rankMaxes": [
+                8100,
+                9000,
+                9800,
+                10500,
+                11200
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Speed",
+          "rankMaxes": [
+            4000,
+            8000,
+            12000,
+            16000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "VoxTS SuperbAim",
+              "leaderboardId": 35896,
+              "rankMaxes": [
+                1220,
+                1300,
+                1370,
+                1420,
+                1460
+              ]
+            },
+            {
+              "name": "PsalmTS SuperbAim",
+              "leaderboardId": 35949,
+              "rankMaxes": [
+                90,
+                98,
+                107,
+                114,
+                118
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Evasive",
+          "rankMaxes": [
+            4000,
+            8000,
+            12000,
+            16000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "kinTS SuperbAim",
+              "leaderboardId": 35912,
+              "rankMaxes": [
+                72,
+                78,
+                83,
+                88,
+                91
+              ]
+            },
+            {
+              "name": "BounceTS SuperbAim",
+              "leaderboardId": 35304,
+              "rankMaxes": [
+                72,
+                79,
+                85,
+                90,
+                94
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

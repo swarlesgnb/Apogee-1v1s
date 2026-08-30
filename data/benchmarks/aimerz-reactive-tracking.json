@@ -1,0 +1,190 @@
+{
+  "benchmarkName": "Aimerz+ Reactive Tracking",
+  "abbreviation": "A+",
+  "color": "#E1E0E1",
+  "spreadsheetURL": "https://docs.google.com/spreadsheets/d/15VloIkv-V-B3oq4JTbSnIKwsPMwccx2sQEwTohqlprw/edit?gid=0#gid=0",
+  "evxlUrl": "https://evxl.app/benchmarks/Aimerz%2B%20Reactive%20Tracking",
+  "source": "kovaaks.com benchmarks API + evxl registry",
+  "fetchedAt": "2026-08-29T16:57:57Z",
+  "difficulties": [
+    {
+      "name": "Hard",
+      "kovaaksBenchmarkId": 730,
+      "rankNames": [
+        "Prophet",
+        "Saint",
+        "Angelic",
+        "Seraphic",
+        "Cherubim",
+        "Transcendent"
+      ],
+      "rankColors": {
+        "Prophet": "#9E0059",
+        "Saint": "#5A189A",
+        "Angelic": "#0F4C5C",
+        "Seraphic": "#590D22",
+        "Cherubim": "#03071E",
+        "Transcendent": "#B5F5DF"
+      },
+      "categories": [
+        {
+          "name": "Reactive",
+          "rankMaxes": [
+            20000,
+            40000,
+            60000,
+            80000,
+            100000,
+            120000
+          ],
+          "scenarios": [
+            {
+              "name": "Plink Plaza",
+              "leaderboardId": 76712,
+              "rankMaxes": [
+                550,
+                580,
+                610,
+                645,
+                680,
+                730
+              ]
+            },
+            {
+              "name": "Air Angelic 3478 Fixed",
+              "leaderboardId": 352,
+              "rankMaxes": [
+                952,
+                955,
+                958,
+                962,
+                966,
+                970
+              ]
+            },
+            {
+              "name": "Air invincible 8 small",
+              "leaderboardId": 809,
+              "rankMaxes": [
+                2550,
+                2750,
+                3000,
+                3150,
+                3350,
+                3750
+              ]
+            },
+            {
+              "name": "Ground Plaza Sparky v3 OW",
+              "leaderboardId": 871,
+              "rankMaxes": [
+                888,
+                892,
+                896,
+                901,
+                906,
+                910
+              ]
+            },
+            {
+              "name": "Air Divine",
+              "leaderboardId": 645,
+              "rankMaxes": [
+                881,
+                886,
+                891,
+                896,
+                901,
+                908
+              ]
+            },
+            {
+              "name": "Air CELESTIAL",
+              "leaderboardId": 1241,
+              "rankMaxes": [
+                878,
+                883,
+                888,
+                893,
+                899,
+                905
+              ]
+            },
+            {
+              "name": "Close Fast Strafes Invincible",
+              "leaderboardId": 494,
+              "rankMaxes": [
+                12600,
+                13200,
+                13800,
+                14600,
+                15400,
+                16800
+              ]
+            },
+            {
+              "name": "VT Plaza Viscose Thin",
+              "leaderboardId": 49624,
+              "rankMaxes": [
+                4000,
+                4250,
+                4400,
+                4575,
+                4775,
+                5000
+              ]
+            },
+            {
+              "name": "Pasu Track Wide React",
+              "leaderboardId": 81603,
+              "rankMaxes": [
+                2000,
+                2300,
+                2600,
+                2900,
+                3275,
+                3675
+              ]
+            },
+            {
+              "name": "cAt sausageTrack Normal",
+              "leaderboardId": 83321,
+              "rankMaxes": [
+                2600,
+                2850,
+                3100,
+                3325,
+                3550,
+                3750
+              ]
+            },
+            {
+              "name": "Aimerz+ VGS Med S1",
+              "leaderboardId": 69298,
+              "rankMaxes": [
+                3000,
+                3225,
+                3450,
+                3650,
+                3800,
+                4050
+              ]
+            },
+            {
+              "name": "Controlsphere OW 150%",
+              "leaderboardId": 83267,
+              "rankMaxes": [
+                7800,
+                8400,
+                9000,
+                9600,
+                10200,
+                11000
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

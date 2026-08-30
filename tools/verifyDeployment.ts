@@ -270,13 +270,27 @@ async function main(): Promise<void> {
     `${realRuns?.length ?? 0}+ runs`,
   );
 
+  // This asserted the weaker of the two things that must be true, and so could not
+  // fail. Accepting "HTTP 200 with an empty array" as a pass read green for the whole
+  // time 20260825000013 sat unapplied: RLS was filtering the rows anon could see, while
+  // the table-wide SELECT grant that migration revokes was still in place. A grant is
+  // what is being verified, so the grant is what gets asserted - the same shape as the
+  // players.flags check above, and for the same reason.
   const readRuns = await rest("runs?select=score&limit=1", ANON!);
-  const runs = readRuns.status === 200 ? JSON.parse(readRuns.body || "[]") : null;
   check(
-    "anon sees no runs belonging to others",
-    readRuns.status === 401 || readRuns.status === 403 ||
-      (Array.isArray(runs) && runs.length === 0),
+    "anon CANNOT read runs at all",
+    readRuns.status !== 200,
     `HTTP ${readRuns.status}`,
+  );
+
+  // Asked for by name, because a table-wide revoke and a per-column grant that let this
+  // one back in are indistinguishable from the check above. verification_notes names
+  // the check that caught a run, and is withheld even from the run's own author.
+  const readNotes = await rest("runs?select=verification_notes&limit=1", ANON!);
+  check(
+    "anon CANNOT read verification notes",
+    readNotes.status !== 200,
+    `HTTP ${readNotes.status}`,
   );
 
   // ---- the steam auth function -------------------------------------------------
@@ -384,6 +398,27 @@ async function main(): Promise<void> {
   check("rating history table exists and is empty",
     ratingHistory.status === 200 && JSON.parse(ratingHistory.body || "[]")[0]?.count === 0,
     `HTTP ${ratingHistory.status}`);
+
+  // ---- rate limiting -------------------------------------------------------------
+  console.log("\n── rate limiting ────────────────────────────────");
+
+  // enforceRateLimit fails OPEN, deliberately: an unavailable limiter must not refuse
+  // honest players. The cost of that choice is that a limiter which was never deployed
+  // is indistinguishable at runtime from one nobody has hit yet - it logs and allows,
+  // and every function keeps answering normally. So it is asserted here, where a missing
+  // counter is loud, rather than discovered from a bill.
+  const limits = await rest("rate_limits?select=player_id&limit=1", SECRET!);
+  check("the rate limit counter exists", limits.status === 200, `HTTP ${limits.status}`);
+
+  // A client that could reach this table could reset its own budget, which is the whole
+  // limit gone. 20260824000012 revokes the grants outright rather than relying on the
+  // policy-less RLS alone.
+  const limitsAnon = await rest("rate_limits?select=player_id&limit=1", ANON!);
+  check(
+    "clients CANNOT touch the rate limit counter",
+    limitsAnon.status !== 200,
+    `HTTP ${limitsAnon.status}`,
+  );
 
   console.log();
   if (failures > 0) {

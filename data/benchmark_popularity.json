@@ -1,0 +1,5945 @@
+{
+  "source": "https://kovaaks.com/webapp-backend/leaderboard/scores/global (leaderboard entries per scenario)",
+  "measuredAt": "2026-08-25T02:27:51.377Z",
+  "registryFetchedAt": "2026-08-23T16:23:42.501Z",
+  "sampleSize": 8,
+  "order": "evxl's own published listing order, read live from https://evxl.app/data/benchmarks. That order is chosen by the one person who can see evxl's traffic and is what a visitor to the site sees, so it is what most-played-on-evxl means here. The measured reach below never reorders it.",
+  "method": "A benchmark's reach is the median number of accounts holding a score on its own scenarios - the ones no other benchmark in evxl's registry names - sampled evenly across all of its difficulties, up to 8 of them. Own scenarios only, because a benchmark assembled from Gridshot and Tile Frenzy would otherwise inherit a decade of other people's scores; per difficulty, because a single stride through the name-sorted list lands on one tier every time. Read it as a floor on the audience: a benchmark whose scenarios were widely copied is undercounted by exactly the copying. Fewer than 3 own scenarios means there is nothing to measure, and the entry carries a null.",
+  "benchmarks": [
+    {
+      "benchmark": "Sparky (Voltaic) S1",
+      "abbreviation": "VT",
+      "evxlListingRank": 1,
+      "difficulties": [
+        "All"
+      ],
+      "scenarios": 20,
+      "ownScenarios": 5,
+      "sampled": 5,
+      "players": 37677,
+      "samples": [
+        {
+          "scenario": "Bounce 180 Sparky",
+          "difficulty": "All",
+          "entries": 37677
+        },
+        {
+          "scenario": "Pasu Track Invincible v2",
+          "difficulty": "All",
+          "entries": 63700
+        },
+        {
+          "scenario": "Thin Gauntlet V2",
+          "difficulty": "All",
+          "entries": 130301
+        },
+        {
+          "scenario": "patTargetSwitch Dodge 360 v2",
+          "difficulty": "All",
+          "entries": 4013
+        },
+        {
+          "scenario": "ww6t reload",
+          "difficulty": "All",
+          "entries": 17643
+        }
+      ]
+    },
+    {
+      "benchmark": "Voltaic S3",
+      "abbreviation": "VT",
+      "evxlListingRank": 2,
+      "difficulties": [
+        "Intermediate",
+        "Advanced"
+      ],
+      "scenarios": 33,
+      "ownScenarios": 9,
+      "sampled": 8,
+      "players": 52524,
+      "samples": [
+        {
+          "scenario": "FuglaaXYZ Voltaic",
+          "difficulty": "Advanced",
+          "entries": 25346
+        },
+        {
+          "scenario": "Popcorn Voltaic",
+          "difficulty": "Advanced",
+          "entries": 38529
+        },
+        {
+          "scenario": "patTS Voltaic",
+          "difficulty": "Advanced",
+          "entries": 26021
+        },
+        {
+          "scenario": "voxTS Voltaic",
+          "difficulty": "Advanced",
+          "entries": 130192
+        },
+        {
+          "scenario": "B180 Voltaic Easy",
+          "difficulty": "Intermediate",
+          "entries": 88410
+        },
+        {
+          "scenario": "FuglaaXYZ Voltaic Easy",
+          "difficulty": "Intermediate",
+          "entries": 55937
+        },
+        {
+          "scenario": "Popcorn Voltaic Easy",
+          "difficulty": "Intermediate",
+          "entries": 77311
+        },
+        {
+          "scenario": "Smoothbot TS Voltaic Easy",
+          "difficulty": "Intermediate",
+          "entries": 49110
+        }
+      ]
+    },
+    {
+      "benchmark": "Voltaic S4",
+      "abbreviation": "VT",
+      "evxlListingRank": 3,
+      "difficulties": [
+        "Novice",
+        "Intermediate",
+        "Advanced",
+        "Elite (Unofficial)"
+      ],
+      "scenarios": 60,
+      "ownScenarios": 38,
+      "sampled": 7,
+      "players": 14451,
+      "samples": [
+        {
+          "scenario": "VT AirStrafe Advanced",
+          "difficulty": "Advanced",
+          "entries": 14451
+        },
+        {
+          "scenario": "VT 1w2ts Rasp Elite",
+          "difficulty": "Elite (Unofficial)",
+          "entries": 282
+        },
+        {
+          "scenario": "VT Bounceshot Elite",
+          "difficulty": "Elite (Unofficial)",
+          "entries": 438
+        },
+        {
+          "scenario": "VT PreciseOrb Elite",
+          "difficulty": "Elite (Unofficial)",
+          "entries": 133
+        },
+        {
+          "scenario": "VT 1w5ts Rasp Intermediate",
+          "difficulty": "Intermediate",
+          "entries": 72247
+        },
+        {
+          "scenario": "VT Multiclick 120 Intermediate",
+          "difficulty": "Intermediate",
+          "entries": 82214
+        },
+        {
+          "scenario": "VT Bounceshot Novice",
+          "difficulty": "Novice",
+          "entries": 125386
+        }
+      ]
+    },
+    {
+      "benchmark": "Voltaic S5",
+      "abbreviation": "VT",
+      "evxlListingRank": 4,
+      "difficulties": [
+        "Novice",
+        "Intermediate",
+        "Advanced",
+        "Elite (Unofficial)"
+      ],
+      "scenarios": 72,
+      "ownScenarios": 20,
+      "sampled": 9,
+      "players": 1110,
+      "samples": [
+        {
+          "scenario": "VT 1w2ts Elite S5",
+          "difficulty": "Elite (Unofficial)",
+          "entries": 1794
+        },
+        {
+          "scenario": "VT ControlTS Elite S5",
+          "difficulty": "Elite (Unofficial)",
+          "entries": 584
+        },
+        {
+          "scenario": "VT DriftTS Elite S5",
+          "difficulty": "Elite (Unofficial)",
+          "entries": 624
+        },
+        {
+          "scenario": "VT Floating Heads Elite S5",
+          "difficulty": "Elite (Unofficial)",
+          "entries": 1081
+        },
+        {
+          "scenario": "VT Ground Elite S5",
+          "difficulty": "Elite (Unofficial)",
+          "entries": 1110
+        },
+        {
+          "scenario": "VT Pasu Elite S5",
+          "difficulty": "Elite (Unofficial)",
+          "entries": 2039
+        },
+        {
+          "scenario": "VT Raw Control Elite S5",
+          "difficulty": "Elite (Unofficial)",
+          "entries": 953
+        },
+        {
+          "scenario": "VT DriftTS Intermediate S5",
+          "difficulty": "Intermediate",
+          "entries": 48243
+        },
+        {
+          "scenario": "VT DriftTS Novice S5",
+          "difficulty": "Novice",
+          "entries": 85387
+        }
+      ]
+    },
+    {
+      "benchmark": "Voltaic S5.5",
+      "abbreviation": "VT",
+      "evxlListingRank": 5,
+      "difficulties": [
+        "Novice",
+        "Intermediate",
+        "Advanced"
+      ],
+      "scenarios": 63,
+      "ownScenarios": 12,
+      "sampled": 9,
+      "players": 1023,
+      "samples": [
+        {
+          "scenario": "VT Air Angelic Advanced S5",
+          "difficulty": "Advanced",
+          "entries": 453
+        },
+        {
+          "scenario": "VT AvasiveTS Advanced S5",
+          "difficulty": "Advanced",
+          "entries": 427
+        },
+        {
+          "scenario": "VT domiClick Advanced S5",
+          "difficulty": "Advanced",
+          "entries": 370
+        },
+        {
+          "scenario": "VT Air Angelic Intermediate S5",
+          "difficulty": "Intermediate",
+          "entries": 1183
+        },
+        {
+          "scenario": "VT AvasiveTS Intermediate S5",
+          "difficulty": "Intermediate",
+          "entries": 1170
+        },
+        {
+          "scenario": "VT domiClick Intermediate S5",
+          "difficulty": "Intermediate",
+          "entries": 1230
+        },
+        {
+          "scenario": "VT Air Angelic Novice S5",
+          "difficulty": "Novice",
+          "entries": 1023
+        },
+        {
+          "scenario": "VT AvasiveTS Novice S5",
+          "difficulty": "Novice",
+          "entries": 938
+        },
+        {
+          "scenario": "VT domiClick Novice S5",
+          "difficulty": "Novice",
+          "entries": 1255
+        }
+      ]
+    },
+    {
+      "benchmark": "Revosect S1",
+      "abbreviation": "rA",
+      "evxlListingRank": 6,
+      "difficulties": [
+        "Easy",
+        "Advanced"
+      ],
+      "scenarios": 43,
+      "ownScenarios": 23,
+      "sampled": 8,
+      "players": 7185,
+      "samples": [
+        {
+          "scenario": "Air Small 3478 rAim",
+          "difficulty": "Advanced",
+          "entries": 1187
+        },
+        {
+          "scenario": "devTS Goated rAim",
+          "difficulty": "Advanced",
+          "entries": 4039
+        },
+        {
+          "scenario": "1w6t NQS Raspberry",
+          "difficulty": "Easy",
+          "entries": 15124
+        },
+        {
+          "scenario": "B180 rAim Easy",
+          "difficulty": "Easy",
+          "entries": 6732
+        },
+        {
+          "scenario": "PGTI rAim Easy",
+          "difficulty": "Easy",
+          "entries": 9931
+        },
+        {
+          "scenario": "Pokeball Wide rAim Easy",
+          "difficulty": "Easy",
+          "entries": 7637
+        },
+        {
+          "scenario": "ToonsClick rAim Easy",
+          "difficulty": "Easy",
+          "entries": 10317
+        },
+        {
+          "scenario": "fuglaaXY Reactive rAim Easy",
+          "difficulty": "Easy",
+          "entries": 4734
+        }
+      ]
+    },
+    {
+      "benchmark": "Revosect S4",
+      "abbreviation": "rA",
+      "evxlListingRank": 7,
+      "difficulties": [
+        "Easy",
+        "Hard"
+      ],
+      "scenarios": 36,
+      "ownScenarios": 31,
+      "sampled": 8,
+      "players": 1827,
+      "samples": [
+        {
+          "scenario": "rA S4 AIRTRACK EASY",
+          "difficulty": "Easy",
+          "entries": 1833
+        },
+        {
+          "scenario": "rA S4 EVASWITCH EASY",
+          "difficulty": "Easy",
+          "entries": 4799
+        },
+        {
+          "scenario": "rA S4 LAYERSWITCH EASY",
+          "difficulty": "Easy",
+          "entries": 1821
+        },
+        {
+          "scenario": "rA S4 REACTIVESPHERE EASY",
+          "difficulty": "Easy",
+          "entries": 5634
+        },
+        {
+          "scenario": "rA S4 THREESHOT EASY",
+          "difficulty": "Easy",
+          "entries": 4975
+        },
+        {
+          "scenario": "rA S4 BOUNCECLICK HARD",
+          "difficulty": "Hard",
+          "entries": 405
+        },
+        {
+          "scenario": "rA S4 GLIDERTRACK HARD",
+          "difficulty": "Hard",
+          "entries": 703
+        },
+        {
+          "scenario": "rA S4 SPACESWITCH HARD",
+          "difficulty": "Hard",
+          "entries": 309
+        }
+      ]
+    },
+    {
+      "benchmark": "Aimerz+ S1",
+      "abbreviation": "A+",
+      "evxlListingRank": 8,
+      "difficulties": [
+        "Easy",
+        "Hard"
+      ],
+      "scenarios": 36,
+      "ownScenarios": 24,
+      "sampled": 8,
+      "players": 5695,
+      "samples": [
+        {
+          "scenario": "Aimerz+ 1w3ts Easy S1",
+          "difficulty": "Easy",
+          "entries": 12145
+        },
+        {
+          "scenario": "Aimerz+ PTI Easy S1",
+          "difficulty": "Easy",
+          "entries": 9816
+        },
+        {
+          "scenario": "Aimerz+ caTS Easy S1",
+          "difficulty": "Easy",
+          "entries": 6814
+        },
+        {
+          "scenario": "Aimerz+ nuTS Easy S1",
+          "difficulty": "Easy",
+          "entries": 11103
+        },
+        {
+          "scenario": "Aimerz+ 1w3ts Hard S1",
+          "difficulty": "Hard",
+          "entries": 4097
+        },
+        {
+          "scenario": "Aimerz+ Smoothbot Hard S1",
+          "difficulty": "Hard",
+          "entries": 4575
+        },
+        {
+          "scenario": "Aimerz+ cheaTS Hard S1",
+          "difficulty": "Hard",
+          "entries": 4205
+        },
+        {
+          "scenario": "Aimerz+ nuTS Hard S1",
+          "difficulty": "Hard",
+          "entries": 3923
+        }
+      ]
+    },
+    {
+      "benchmark": "Community Benchmarks",
+      "abbreviation": "CB",
+      "evxlListingRank": 9,
+      "difficulties": [
+        "Easy",
+        "Hard"
+      ],
+      "scenarios": 36,
+      "ownScenarios": 33,
+      "sampled": 8,
+      "players": 2050,
+      "samples": [
+        {
+          "scenario": "CB AerialClick Easy",
+          "difficulty": "Easy",
+          "entries": 7138
+        },
+        {
+          "scenario": "CB EvoClick Easy",
+          "difficulty": "Easy",
+          "entries": 22638
+        },
+        {
+          "scenario": "CB JumpSwitch Easy",
+          "difficulty": "Easy",
+          "entries": 3382
+        },
+        {
+          "scenario": "CB StaticSwitch Easy",
+          "difficulty": "Easy",
+          "entries": 5689
+        },
+        {
+          "scenario": "CB AerialClick",
+          "difficulty": "Hard",
+          "entries": 509
+        },
+        {
+          "scenario": "CB FiveClick",
+          "difficulty": "Hard",
+          "entries": 717
+        },
+        {
+          "scenario": "CB JumpTrack",
+          "difficulty": "Hard",
+          "entries": 438
+        },
+        {
+          "scenario": "CB StrafeTrack",
+          "difficulty": "Hard",
+          "entries": 649
+        }
+      ]
+    },
+    {
+      "benchmark": "cA Static S1",
+      "abbreviation": "cA",
+      "evxlListingRank": 10,
+      "difficulties": [
+        "All"
+      ],
+      "scenarios": 14,
+      "ownScenarios": 7,
+      "sampled": 7,
+      "players": 7935,
+      "samples": [
+        {
+          "scenario": "cA 2ts wideflick",
+          "difficulty": "All",
+          "entries": 9288
+        },
+        {
+          "scenario": "cA 3ts precise",
+          "difficulty": "All",
+          "entries": 6561
+        },
+        {
+          "scenario": "cA 4ts horizontal",
+          "difficulty": "All",
+          "entries": 10689
+        },
+        {
+          "scenario": "cA 4ts pokeball",
+          "difficulty": "All",
+          "entries": 8575
+        },
+        {
+          "scenario": "cA 5ts vibrate",
+          "difficulty": "All",
+          "entries": 5619
+        },
+        {
+          "scenario": "cA fuglaapressure",
+          "difficulty": "All",
+          "entries": 7810
+        },
+        {
+          "scenario": "cA sixshot",
+          "difficulty": "All",
+          "entries": 7935
+        }
+      ]
+    },
+    {
+      "benchmark": "TSK Mixed Benchmarks",
+      "abbreviation": "TSK",
+      "evxlListingRank": 11,
+      "difficulties": [
+        "Beginner",
+        "Main",
+        "Ultimate",
+        "Static",
+        "Strafes",
+        "thundah's BounceSphere",
+        "Reactive by slapped",
+        "Beginner Classic",
+        "Main Classic",
+        "Extra Classic"
+      ],
+      "scenarios": 141,
+      "ownScenarios": 119,
+      "sampled": 12,
+      "players": 2988,
+      "samples": [
+        {
+          "scenario": "TSK - 360 Turn MASSIVE",
+          "difficulty": "Beginner",
+          "entries": 3908
+        },
+        {
+          "scenario": "Pasu Track Extrasmooth Easy TE",
+          "difficulty": "Beginner Classic",
+          "entries": 3722
+        },
+        {
+          "scenario": "PTS DoubleExtra Small TE",
+          "difficulty": "Extra Classic",
+          "entries": 2554
+        },
+        {
+          "scenario": "TSK - 360 Turn",
+          "difficulty": "Main",
+          "entries": 3152
+        },
+        {
+          "scenario": "SYV Altered POV Easy Slow",
+          "difficulty": "Main Classic",
+          "entries": 3428
+        },
+        {
+          "scenario": "LDDH Fixed",
+          "difficulty": "Reactive by slapped",
+          "entries": 41128
+        },
+        {
+          "scenario": "ClickTrack 3t",
+          "difficulty": "Static",
+          "entries": 2823
+        },
+        {
+          "scenario": "ClickTrack Diagonal 3t",
+          "difficulty": "Static",
+          "entries": 1327
+        },
+        {
+          "scenario": "Predictable Strafes",
+          "difficulty": "Strafes",
+          "entries": 1287
+        },
+        {
+          "scenario": "TSK - Box Tracking 3D",
+          "difficulty": "Ultimate",
+          "entries": 433
+        },
+        {
+          "scenario": "TSK - Hewchy's VAI 45",
+          "difficulty": "Ultimate",
+          "entries": 315
+        },
+        {
+          "scenario": "BounceSphere",
+          "difficulty": "thundah's BounceSphere",
+          "entries": 6403
+        }
+      ]
+    },
+    {
+      "benchmark": "thundah Precise Tracking",
+      "abbreviation": "TPT",
+      "evxlListingRank": 12,
+      "difficulties": [
+        "Season 1",
+        "Season 2"
+      ],
+      "scenarios": 20,
+      "ownScenarios": 20,
+      "sampled": 8,
+      "players": 613,
+      "samples": [
+        {
+          "scenario": "Smoothundahsphere S1",
+          "difficulty": "Season 1",
+          "entries": 916
+        },
+        {
+          "scenario": "takiTrack S1",
+          "difficulty": "Season 1",
+          "entries": 294
+        },
+        {
+          "scenario": "thundahTrack S1",
+          "difficulty": "Season 1",
+          "entries": 1346
+        },
+        {
+          "scenario": "thunsphere",
+          "difficulty": "Season 1",
+          "entries": 721
+        },
+        {
+          "scenario": "AngelTrack",
+          "difficulty": "Season 2",
+          "entries": 1112
+        },
+        {
+          "scenario": "CatTrack",
+          "difficulty": "Season 2",
+          "entries": 379
+        },
+        {
+          "scenario": "SkyTrack",
+          "difficulty": "Season 2",
+          "entries": 504
+        },
+        {
+          "scenario": "TunnelTrack",
+          "difficulty": "Season 2",
+          "entries": 424
+        }
+      ]
+    },
+    {
+      "benchmark": "SuperbAim S2",
+      "abbreviation": "sA",
+      "evxlListingRank": 13,
+      "difficulties": [
+        "Easy",
+        "Advanced"
+      ],
+      "scenarios": 32,
+      "ownScenarios": 31,
+      "sampled": 8,
+      "players": 6659,
+      "samples": [
+        {
+          "scenario": "3 Dots xyzAdjust SuperbAim",
+          "difficulty": "Advanced",
+          "entries": 17493
+        },
+        {
+          "scenario": "AirReactive SuperbAim",
+          "difficulty": "Advanced",
+          "entries": 1898
+        },
+        {
+          "scenario": "Controlsphere SuperbAim",
+          "difficulty": "Advanced",
+          "entries": 6304
+        },
+        {
+          "scenario": "ReactiveStrafe SuperbAim",
+          "difficulty": "Advanced",
+          "entries": 3662
+        },
+        {
+          "scenario": "4 Dots xyzAdjust SuperbAim Easy",
+          "difficulty": "Easy",
+          "entries": 7014
+        },
+        {
+          "scenario": "BounceClick SuperbAim Easy",
+          "difficulty": "Easy",
+          "entries": 5789
+        },
+        {
+          "scenario": "FloatingClick SuperbAim Easy",
+          "difficulty": "Easy",
+          "entries": 24417
+        },
+        {
+          "scenario": "SmoothTrack SuperbAim Easy",
+          "difficulty": "Easy",
+          "entries": 10669
+        }
+      ]
+    },
+    {
+      "benchmark": "Anima Micro v1",
+      "abbreviation": "A",
+      "evxlListingRank": 14,
+      "difficulties": [
+        "All"
+      ],
+      "scenarios": 12,
+      "ownScenarios": 6,
+      "sampled": 6,
+      "players": 3811,
+      "samples": [
+        {
+          "scenario": "1w6ts trustechain Raspberry 30% smaller",
+          "difficulty": "All",
+          "entries": 7363
+        },
+        {
+          "scenario": "1wall 2targets wide smaller denserer",
+          "difficulty": "All",
+          "entries": 2016
+        },
+        {
+          "scenario": "Microadjustment Tracking Small",
+          "difficulty": "All",
+          "entries": 6868
+        },
+        {
+          "scenario": "Pasu Micro 50% Speed 2",
+          "difficulty": "All",
+          "entries": 1200
+        },
+        {
+          "scenario": "eth Precise Dots -2",
+          "difficulty": "All",
+          "entries": 1194
+        },
+        {
+          "scenario": "shimmicro",
+          "difficulty": "All",
+          "entries": 5605
+        }
+      ]
+    },
+    {
+      "benchmark": "Anima Micro v2",
+      "abbreviation": "A",
+      "evxlListingRank": 15,
+      "difficulties": [
+        "All"
+      ],
+      "scenarios": 16,
+      "ownScenarios": 6,
+      "sampled": 6,
+      "players": 6434,
+      "samples": [
+        {
+          "scenario": "6 Sphere Hipfire Voltaic 30% smaller",
+          "difficulty": "All",
+          "entries": 6791
+        },
+        {
+          "scenario": "Anima WavyClick",
+          "difficulty": "All",
+          "entries": 6076
+        },
+        {
+          "scenario": "Animicro Dash",
+          "difficulty": "All",
+          "entries": 5806
+        },
+        {
+          "scenario": "DomiSphere Micro",
+          "difficulty": "All",
+          "entries": 4608
+        },
+        {
+          "scenario": "Microshot Avasive",
+          "difficulty": "All",
+          "entries": 8896
+        },
+        {
+          "scenario": "waldoTS Perfected",
+          "difficulty": "All",
+          "entries": 8617
+        }
+      ]
+    },
+    {
+      "benchmark": "AimSpeed Benchmarks",
+      "abbreviation": "AS",
+      "evxlListingRank": 16,
+      "difficulties": [
+        "Easy"
+      ],
+      "scenarios": 24,
+      "ownScenarios": 14,
+      "sampled": 8,
+      "players": 15701,
+      "samples": [
+        {
+          "scenario": "Bounce 180 Tracking Jumbo",
+          "difficulty": "Easy",
+          "entries": 4805
+        },
+        {
+          "scenario": "Pokeball Auto 1w2ts smallflicks",
+          "difficulty": "Easy",
+          "entries": 19219
+        },
+        {
+          "scenario": "Skeet Tracking Goated",
+          "difficulty": "Easy",
+          "entries": 40456
+        },
+        {
+          "scenario": "canTS",
+          "difficulty": "Easy",
+          "entries": 53777
+        },
+        {
+          "scenario": "kinTS NR Static",
+          "difficulty": "Easy",
+          "entries": 6329
+        },
+        {
+          "scenario": "kinTS V2 Static",
+          "difficulty": "Easy",
+          "entries": 12183
+        },
+        {
+          "scenario": "patTargetSwitch 90 easy",
+          "difficulty": "Easy",
+          "entries": 48506
+        },
+        {
+          "scenario": "voxTargetSwitch Jumbo [Low TTK]",
+          "difficulty": "Easy",
+          "entries": 5801
+        }
+      ]
+    },
+    {
+      "benchmark": "Aimerz+ Dynamic Clicking",
+      "abbreviation": "A+",
+      "evxlListingRank": 17,
+      "difficulties": [
+        "Easy",
+        "Hard"
+      ],
+      "scenarios": 22,
+      "ownScenarios": 7,
+      "sampled": 7,
+      "players": 4623,
+      "samples": [
+        {
+          "scenario": "1w4t Pasu Raspberry Master 6mag",
+          "difficulty": "Easy",
+          "entries": 2746
+        },
+        {
+          "scenario": "Aimerz+ hopClick Med S1",
+          "difficulty": "Easy",
+          "entries": 4818
+        },
+        {
+          "scenario": "Popcorn Goated rAim easy",
+          "difficulty": "Easy",
+          "entries": 2304
+        },
+        {
+          "scenario": "Tamspeed 2bpes",
+          "difficulty": "Easy",
+          "entries": 253839
+        },
+        {
+          "scenario": "pasu nqs reload",
+          "difficulty": "Easy",
+          "entries": 4623
+        },
+        {
+          "scenario": "1w4t Pasu Raspberry Grandmaster",
+          "difficulty": "Hard",
+          "entries": 9174
+        },
+        {
+          "scenario": "beanClick 250% Speed",
+          "difficulty": "Hard",
+          "entries": 2332
+        }
+      ]
+    },
+    {
+      "benchmark": "Aimerz+ SpeedTS",
+      "abbreviation": "A+",
+      "evxlListingRank": 18,
+      "difficulties": [
+        "Easy",
+        "Hard"
+      ],
+      "scenarios": 14,
+      "ownScenarios": 5,
+      "sampled": 5,
+      "players": 3105,
+      "samples": [
+        {
+          "scenario": "360 Static TS",
+          "difficulty": "Easy",
+          "entries": 17385
+        },
+        {
+          "scenario": "Aimerz+ goaTS Med S1",
+          "difficulty": "Easy",
+          "entries": 3105
+        },
+        {
+          "scenario": "Aimerz+ nuTS Med S1",
+          "difficulty": "Easy",
+          "entries": 2336
+        },
+        {
+          "scenario": "Target Switching 360",
+          "difficulty": "Easy",
+          "entries": 164224
+        },
+        {
+          "scenario": "patTargetSwitch 90 LowTTK",
+          "difficulty": "Easy",
+          "entries": 2793
+        }
+      ]
+    },
+    {
+      "benchmark": "Aimerz+ Precise Tracking",
+      "abbreviation": "A+",
+      "evxlListingRank": 19,
+      "difficulties": [
+        "Easy",
+        "Hard"
+      ],
+      "scenarios": 23,
+      "ownScenarios": 12,
+      "sampled": 8,
+      "players": 3548,
+      "samples": [
+        {
+          "scenario": "Aimerz+ PTI Med S1",
+          "difficulty": "Easy",
+          "entries": 3347
+        },
+        {
+          "scenario": "Aimerz+ PreciseTrack Med S1",
+          "difficulty": "Easy",
+          "entries": 5352
+        },
+        {
+          "scenario": "Centering II 180 Fixed Larger",
+          "difficulty": "Easy",
+          "entries": 3425
+        },
+        {
+          "scenario": "Leapstrafes Control Medium",
+          "difficulty": "Easy",
+          "entries": 3671
+        },
+        {
+          "scenario": "Whisphere Med 60s",
+          "difficulty": "Easy",
+          "entries": 11204
+        },
+        {
+          "scenario": "     CB SmoothTrack",
+          "difficulty": "Hard",
+          "entries": 500
+        },
+        {
+          "scenario": "Aimerz+ PreciseTrack S1 Modified",
+          "difficulty": "Hard",
+          "entries": 939
+        },
+        {
+          "scenario": "Smoothbot Pauer Glider",
+          "difficulty": "Hard",
+          "entries": 18142
+        }
+      ]
+    },
+    {
+      "benchmark": "Aimerz+ Evasive Switching",
+      "abbreviation": "A+",
+      "evxlListingRank": 20,
+      "difficulties": [
+        "Easy",
+        "Hard"
+      ],
+      "scenarios": 21,
+      "ownScenarios": 15,
+      "sampled": 8,
+      "players": 1638,
+      "samples": [
+        {
+          "scenario": "Aimerz+ hopTS Med S1",
+          "difficulty": "Easy",
+          "entries": 1586
+        },
+        {
+          "scenario": "CircleTS Easy",
+          "difficulty": "Easy",
+          "entries": 1035
+        },
+        {
+          "scenario": "Smoothbot TS Voltaic Regen Hasin",
+          "difficulty": "Easy",
+          "entries": 6906
+        },
+        {
+          "scenario": "Trippez Smooth Switching Regen Slow+",
+          "difficulty": "Easy",
+          "entries": 1690
+        },
+        {
+          "scenario": "tamTargetSwitch Control Hard 30% Larger",
+          "difficulty": "Easy",
+          "entries": 2757
+        },
+        {
+          "scenario": "CircleTS",
+          "difficulty": "Hard",
+          "entries": 2183
+        },
+        {
+          "scenario": "Pasu Switch Wide Regen",
+          "difficulty": "Hard",
+          "entries": 1538
+        },
+        {
+          "scenario": "Trippez Smooth Switching Regen Slower + Smaller",
+          "difficulty": "Hard",
+          "entries": 411
+        }
+      ]
+    },
+    {
+      "benchmark": "Aimerz+ Reactive Tracking",
+      "abbreviation": "A+",
+      "evxlListingRank": 21,
+      "difficulties": [
+        "Hard"
+      ],
+      "scenarios": 12,
+      "ownScenarios": 2,
+      "sampled": 0,
+      "players": null,
+      "samples": []
+    },
+    {
+      "benchmark": "Aimerz+ Static Clicking",
+      "abbreviation": "A+",
+      "evxlListingRank": 22,
+      "difficulties": [
+        "Hard"
+      ],
+      "scenarios": 12,
+      "ownScenarios": 7,
+      "sampled": 7,
+      "players": 4288,
+      "samples": [
+        {
+          "scenario": "1w2t smallflicks small 60s",
+          "difficulty": "Hard",
+          "entries": 236781
+        },
+        {
+          "scenario": "1w4t_vbr_pokeball Raspberry",
+          "difficulty": "Hard",
+          "entries": 7718
+        },
+        {
+          "scenario": "1w5ts_trustechain Raspberry",
+          "difficulty": "Hard",
+          "entries": 2910
+        },
+        {
+          "scenario": "Aimerz+ 1w3ts Med S1",
+          "difficulty": "Hard",
+          "entries": 3067
+        },
+        {
+          "scenario": "Aimerz+ ww2t Hard S1 20% Smaller",
+          "difficulty": "Hard",
+          "entries": 2083
+        },
+        {
+          "scenario": "darkPressure",
+          "difficulty": "Hard",
+          "entries": 4288
+        },
+        {
+          "scenario": "fuglaaPressure 6 Sphere Hipfire no reload",
+          "difficulty": "Hard",
+          "entries": 4734
+        }
+      ]
+    },
+    {
+      "benchmark": "wobin S1",
+      "abbreviation": "w",
+      "evxlListingRank": 23,
+      "difficulties": [
+        "Novice",
+        "Advanced"
+      ],
+      "scenarios": 28,
+      "ownScenarios": 28,
+      "sampled": 8,
+      "players": 331,
+      "samples": [
+        {
+          "scenario": "wobin 1w2ts Micro",
+          "difficulty": "Advanced",
+          "entries": 246
+        },
+        {
+          "scenario": "wobin BounceTrack",
+          "difficulty": "Advanced",
+          "entries": 234
+        },
+        {
+          "scenario": "wobin RawControl",
+          "difficulty": "Advanced",
+          "entries": 189
+        },
+        {
+          "scenario": "wobin WobTS",
+          "difficulty": "Advanced",
+          "entries": 96
+        },
+        {
+          "scenario": "wobin 1w2ts Micro Easy",
+          "difficulty": "Novice",
+          "entries": 511
+        },
+        {
+          "scenario": "wobin BounceTrack Easy",
+          "difficulty": "Novice",
+          "entries": 416
+        },
+        {
+          "scenario": "wobin RawControl Easy",
+          "difficulty": "Novice",
+          "entries": 495
+        },
+        {
+          "scenario": "wobin WobTS Easy",
+          "difficulty": "Novice",
+          "entries": 483
+        }
+      ]
+    },
+    {
+      "benchmark": "Viscose Benchmarks",
+      "abbreviation": "V",
+      "evxlListingRank": 24,
+      "difficulties": [
+        "Easier",
+        "Medium",
+        "Hard"
+      ],
+      "scenarios": 103,
+      "ownScenarios": 21,
+      "sampled": 8,
+      "players": 60536,
+      "samples": [
+        {
+          "scenario": "1w2ts Pasu Perfected Easy",
+          "difficulty": "Easier",
+          "entries": 63856
+        },
+        {
+          "scenario": "1wall5targets_pasu slow",
+          "difficulty": "Easier",
+          "entries": 147443
+        },
+        {
+          "scenario": "B180 Voltaic Easy 92%",
+          "difficulty": "Easier",
+          "entries": 54606
+        },
+        {
+          "scenario": "Controlsphere rAim Easy 90%",
+          "difficulty": "Easier",
+          "entries": 79983
+        },
+        {
+          "scenario": "Polarized Hell Easy 40% Slower",
+          "difficulty": "Easier",
+          "entries": 57215
+        },
+        {
+          "scenario": "Whisphere Small & Slow 55%",
+          "difficulty": "Easier",
+          "entries": 66687
+        },
+        {
+          "scenario": "Controlsphere Click Smaller",
+          "difficulty": "Hard",
+          "entries": 3730
+        },
+        {
+          "scenario": "VT Controlsphere Intermediate S5 Hard",
+          "difficulty": "Hard",
+          "entries": 14373
+        }
+      ]
+    },
+    {
+      "benchmark": "negative Aim",
+      "abbreviation": "nA",
+      "evxlListingRank": 25,
+      "difficulties": [
+        "negative benchmarks"
+      ],
+      "scenarios": 26,
+      "ownScenarios": 0,
+      "sampled": 0,
+      "players": null,
+      "samples": []
+    },
+    {
+      "benchmark": "PureG S2",
+      "abbreviation": "PG",
+      "evxlListingRank": 26,
+      "difficulties": [
+        "All"
+      ],
+      "scenarios": 12,
+      "ownScenarios": 9,
+      "sampled": 8,
+      "players": 4797,
+      "samples": [
+        {
+          "scenario": "PureG BounceSphere",
+          "difficulty": "All",
+          "entries": 5459
+        },
+        {
+          "scenario": "PureG Fuglaa React",
+          "difficulty": "All",
+          "entries": 5350
+        },
+        {
+          "scenario": "PureG KinTS",
+          "difficulty": "All",
+          "entries": 236
+        },
+        {
+          "scenario": "PureG Pasu Switch",
+          "difficulty": "All",
+          "entries": 5212
+        },
+        {
+          "scenario": "PureG Pill Switch",
+          "difficulty": "All",
+          "entries": 4192
+        },
+        {
+          "scenario": "PureG Pokeball",
+          "difficulty": "All",
+          "entries": 4382
+        },
+        {
+          "scenario": "PureG Static Clicking",
+          "difficulty": "All",
+          "entries": 5248
+        },
+        {
+          "scenario": "PureG Static Switching",
+          "difficulty": "All",
+          "entries": 4333
+        }
+      ]
+    },
+    {
+      "benchmark": "PureG S1",
+      "abbreviation": "PG",
+      "evxlListingRank": 27,
+      "difficulties": [
+        "All"
+      ],
+      "scenarios": 14,
+      "ownScenarios": 12,
+      "sampled": 8,
+      "players": 1714,
+      "samples": [
+        {
+          "scenario": "Bounce Tracking Pure",
+          "difficulty": "All",
+          "entries": 1763
+        },
+        {
+          "scenario": "Glider Pure",
+          "difficulty": "All",
+          "entries": 5883
+        },
+        {
+          "scenario": "Horizontal Clicking Pure",
+          "difficulty": "All",
+          "entries": 1665
+        },
+        {
+          "scenario": "Pasu Switch Pure",
+          "difficulty": "All",
+          "entries": 2944
+        },
+        {
+          "scenario": "Pokeball Pure",
+          "difficulty": "All",
+          "entries": 1108
+        },
+        {
+          "scenario": "Static Clicking Pure",
+          "difficulty": "All",
+          "entries": 1101
+        },
+        {
+          "scenario": "Strafe Tracking Pure",
+          "difficulty": "All",
+          "entries": 1573
+        },
+        {
+          "scenario": "kinTS Pure",
+          "difficulty": "All",
+          "entries": 3568
+        }
+      ]
+    },
+    {
+      "benchmark": "MIRA S1",
+      "abbreviation": "MIR",
+      "evxlListingRank": 28,
+      "difficulties": [
+        "Easy",
+        "Advanced"
+      ],
+      "scenarios": 24,
+      "ownScenarios": 24,
+      "sampled": 8,
+      "players": 1158,
+      "samples": [
+        {
+          "scenario": "AA4 Hard MIRA",
+          "difficulty": "Advanced",
+          "entries": 446
+        },
+        {
+          "scenario": "FugaSwitch Hard MIRA Fixed",
+          "difficulty": "Advanced",
+          "entries": 324
+        },
+        {
+          "scenario": "Pasu Hard MIRA",
+          "difficulty": "Advanced",
+          "entries": 428
+        },
+        {
+          "scenario": "VelozSwitch Hard MIRA",
+          "difficulty": "Advanced",
+          "entries": 4663
+        },
+        {
+          "scenario": "AA4 Easy MIRA",
+          "difficulty": "Easy",
+          "entries": 1262
+        },
+        {
+          "scenario": "FugaSwitch Easy MIRA Fixed",
+          "difficulty": "Easy",
+          "entries": 1097
+        },
+        {
+          "scenario": "Pasu Easy MIRA",
+          "difficulty": "Easy",
+          "entries": 1292
+        },
+        {
+          "scenario": "VelozSwitch Easy MIRA",
+          "difficulty": "Easy",
+          "entries": 1218
+        }
+      ]
+    },
+    {
+      "benchmark": "xyz Smoothness",
+      "abbreviation": "xyz",
+      "evxlListingRank": 29,
+      "difficulties": [
+        "Newcomer",
+        "Easy",
+        "Medium",
+        "Hard"
+      ],
+      "scenarios": 84,
+      "ownScenarios": 74,
+      "sampled": 8,
+      "players": 296,
+      "samples": [
+        {
+          "scenario": "Anti-Centering Easy",
+          "difficulty": "Easy",
+          "entries": 2067
+        },
+        {
+          "scenario": "Multi Angle Smoothness Easy",
+          "difficulty": "Easy",
+          "entries": 1307
+        },
+        {
+          "scenario": "Anti-Centering",
+          "difficulty": "Hard",
+          "entries": 313
+        },
+        {
+          "scenario": "Multi Angle Smoothness",
+          "difficulty": "Hard",
+          "entries": 178
+        },
+        {
+          "scenario": "Anti-Centering Medium",
+          "difficulty": "Medium",
+          "entries": 180
+        },
+        {
+          "scenario": "FarmTrack Goated Far Medium",
+          "difficulty": "Medium",
+          "entries": 168
+        },
+        {
+          "scenario": "SYF Smooth Your Fingers Medium",
+          "difficulty": "Medium",
+          "entries": 279
+        },
+        {
+          "scenario": "Anti-Centering Newcomer",
+          "difficulty": "Newcomer",
+          "entries": 1022
+        }
+      ]
+    },
+    {
+      "benchmark": "xyz Smoothness V2",
+      "abbreviation": "xyz",
+      "evxlListingRank": 30,
+      "difficulties": [
+        "All"
+      ],
+      "scenarios": 15,
+      "ownScenarios": 15,
+      "sampled": 8,
+      "players": 770,
+      "samples": [
+        {
+          "scenario": "Anti-Centering V2",
+          "difficulty": "All",
+          "entries": 824
+        },
+        {
+          "scenario": "Bipolar Centering 360 V2",
+          "difficulty": "All",
+          "entries": 823
+        },
+        {
+          "scenario": "Curvesphere Vertical Altered",
+          "difficulty": "All",
+          "entries": 554
+        },
+        {
+          "scenario": "Multi Angle Smoothness V2",
+          "difficulty": "All",
+          "entries": 522
+        },
+        {
+          "scenario": "PTXS 45s",
+          "difficulty": "All",
+          "entries": 553
+        },
+        {
+          "scenario": "SYE Smooth Your Everything",
+          "difficulty": "All",
+          "entries": 1184
+        },
+        {
+          "scenario": "Spherical Centering II 90",
+          "difficulty": "All",
+          "entries": 954
+        },
+        {
+          "scenario": "VS60",
+          "difficulty": "All",
+          "entries": 716
+        }
+      ]
+    },
+    {
+      "benchmark": "REVENGE Benchmark",
+      "abbreviation": "RVG",
+      "evxlListingRank": 31,
+      "difficulties": [
+        "Newcomer",
+        "Main",
+        "Veteran"
+      ],
+      "scenarios": 144,
+      "ownScenarios": 144,
+      "sampled": 9,
+      "players": 72,
+      "samples": [
+        {
+          "scenario": "REVENGE - 1Click Reflex Main",
+          "difficulty": "Main",
+          "entries": 173
+        },
+        {
+          "scenario": "REVENGE - ChillSwitch Main",
+          "difficulty": "Main",
+          "entries": 72
+        },
+        {
+          "scenario": "REVENGE - NarcoTrack Main",
+          "difficulty": "Main",
+          "entries": 48
+        },
+        {
+          "scenario": "REVENGE - 1Click Reflex Newcomer",
+          "difficulty": "Newcomer",
+          "entries": 296
+        },
+        {
+          "scenario": "REVENGE - ChillSwitch Newcomer",
+          "difficulty": "Newcomer",
+          "entries": 99
+        },
+        {
+          "scenario": "REVENGE - NarcoTrack Newcomer",
+          "difficulty": "Newcomer",
+          "entries": 72
+        },
+        {
+          "scenario": "REVENGE - 1Click Reflex",
+          "difficulty": "Veteran",
+          "entries": 61
+        },
+        {
+          "scenario": "REVENGE - ChillSwitch",
+          "difficulty": "Veteran",
+          "entries": 21
+        },
+        {
+          "scenario": "REVENGE - NarcoTrack",
+          "difficulty": "Veteran",
+          "entries": 19
+        }
+      ]
+    },
+    {
+      "benchmark": "m0narcS & hizku Tracking",
+      "abbreviation": "MH",
+      "evxlListingRank": 32,
+      "difficulties": [
+        "Easy",
+        "Medium",
+        "Hard"
+      ],
+      "scenarios": 35,
+      "ownScenarios": 10,
+      "sampled": 7,
+      "players": 993,
+      "samples": [
+        {
+          "scenario": "Avasive Air Angelic Easy",
+          "difficulty": "Easy",
+          "entries": 993
+        },
+        {
+          "scenario": "Glidertrack Avasive Easy",
+          "difficulty": "Easy",
+          "entries": 1360
+        },
+        {
+          "scenario": "Avasive Air Angelic Hard",
+          "difficulty": "Hard",
+          "entries": 176
+        },
+        {
+          "scenario": "Glidertrack Avasive Hard",
+          "difficulty": "Hard",
+          "entries": 356
+        },
+        {
+          "scenario": "Avasive Air Angelic",
+          "difficulty": "Medium",
+          "entries": 847
+        },
+        {
+          "scenario": "Extra SmoothSphere Better Easy",
+          "difficulty": "Medium",
+          "entries": 1916
+        },
+        {
+          "scenario": "Glidertrack Avasive",
+          "difficulty": "Medium",
+          "entries": 1135
+        }
+      ]
+    },
+    {
+      "benchmark": "m0narcS & hizku Reactive Tracking",
+      "abbreviation": "MH",
+      "evxlListingRank": 33,
+      "difficulties": [
+        "Easier",
+        "Main"
+      ],
+      "scenarios": 35,
+      "ownScenarios": 10,
+      "sampled": 8,
+      "players": 329,
+      "samples": [
+        {
+          "scenario": "Ground Plaza Sparky Quake",
+          "difficulty": "Easier",
+          "entries": 3318
+        },
+        {
+          "scenario": "Pasu Track Wide React Goated Easy",
+          "difficulty": "Easier",
+          "entries": 444
+        },
+        {
+          "scenario": "hizkuGround Easy",
+          "difficulty": "Easier",
+          "entries": 672
+        },
+        {
+          "scenario": "hizkuRawAir Easy",
+          "difficulty": "Easier",
+          "entries": 534
+        },
+        {
+          "scenario": "Ground Plaza Sparky Quake Thin",
+          "difficulty": "Main",
+          "entries": 200
+        },
+        {
+          "scenario": "Pasu Track Wide React Goated",
+          "difficulty": "Main",
+          "entries": 121
+        },
+        {
+          "scenario": "hizkuGround",
+          "difficulty": "Main",
+          "entries": 177
+        },
+        {
+          "scenario": "hizkuRawAir",
+          "difficulty": "Main",
+          "entries": 213
+        }
+      ]
+    },
+    {
+      "benchmark": "m0narcS & hizku Precise Tracking",
+      "abbreviation": "MH",
+      "evxlListingRank": 34,
+      "difficulties": [
+        "Easier",
+        "Main"
+      ],
+      "scenarios": 30,
+      "ownScenarios": 11,
+      "sampled": 8,
+      "players": 431,
+      "samples": [
+        {
+          "scenario": "Leapcorn Pure Tracking",
+          "difficulty": "Easier",
+          "entries": 373
+        },
+        {
+          "scenario": "Silo Easier",
+          "difficulty": "Easier",
+          "entries": 8465
+        },
+        {
+          "scenario": "Smoothbot Glider Ava",
+          "difficulty": "Easier",
+          "entries": 625
+        },
+        {
+          "scenario": "Smoothsphere Glider OW Easier",
+          "difficulty": "Easier",
+          "entries": 489
+        },
+        {
+          "scenario": "Suavetrack Control wobin Easy",
+          "difficulty": "Easier",
+          "entries": 974
+        },
+        {
+          "scenario": "Leapcorn Pure Tracking Hard",
+          "difficulty": "Main",
+          "entries": 96
+        },
+        {
+          "scenario": "Smoothbot Glider Ava Hard",
+          "difficulty": "Main",
+          "entries": 184
+        },
+        {
+          "scenario": "Smoothbot Voltaic Ava Hard",
+          "difficulty": "Main",
+          "entries": 144
+        }
+      ]
+    },
+    {
+      "benchmark": "xyz Comps",
+      "abbreviation": "xyz",
+      "evxlListingRank": 35,
+      "difficulties": [
+        "#1 Clicking",
+        "#2 Tracking",
+        "#3 Switching",
+        "#4 Revamp",
+        "#5 Ground"
+      ],
+      "scenarios": 32,
+      "ownScenarios": 2,
+      "sampled": 0,
+      "players": null,
+      "samples": []
+    },
+    {
+      "benchmark": "TNT Valorant Benchmarks",
+      "abbreviation": "TNT",
+      "evxlListingRank": 36,
+      "difficulties": [
+        "Easy",
+        "Medium",
+        "Hard"
+      ],
+      "scenarios": 61,
+      "ownScenarios": 60,
+      "sampled": 8,
+      "players": 1214,
+      "samples": [
+        {
+          "scenario": "Valorant 1w1t Easy",
+          "difficulty": "Easy",
+          "entries": 898
+        },
+        {
+          "scenario": "Valorant DevClick Static Easy",
+          "difficulty": "Easy",
+          "entries": 8
+        },
+        {
+          "scenario": "Valorant Micropace Easy",
+          "difficulty": "Easy",
+          "entries": 6
+        },
+        {
+          "scenario": "Valorant 1w1t Hard",
+          "difficulty": "Hard",
+          "entries": 522
+        },
+        {
+          "scenario": "Valorant FHT Hard",
+          "difficulty": "Hard",
+          "entries": 2073
+        },
+        {
+          "scenario": "Valorant 1w1t Medium",
+          "difficulty": "Medium",
+          "entries": 2571
+        },
+        {
+          "scenario": "Valorant DevClick Static Medium",
+          "difficulty": "Medium",
+          "entries": 1852
+        },
+        {
+          "scenario": "Valorant Micropace Medium",
+          "difficulty": "Medium",
+          "entries": 1529
+        }
+      ]
+    },
+    {
+      "benchmark": "Run and Gun Valorant",
+      "abbreviation": "R&G",
+      "evxlListingRank": 37,
+      "difficulties": [
+        "Normal",
+        "Hard"
+      ],
+      "scenarios": 42,
+      "ownScenarios": 41,
+      "sampled": 8,
+      "players": 834,
+      "samples": [
+        {
+          "scenario": "VAL 1w4ts Pasu Perfected",
+          "difficulty": "Hard",
+          "entries": 710
+        },
+        {
+          "scenario": "VAL Floating Heads",
+          "difficulty": "Hard",
+          "entries": 532
+        },
+        {
+          "scenario": "VAL SmoothsphereTS",
+          "difficulty": "Hard",
+          "entries": 409
+        },
+        {
+          "scenario": "VAL devTS staticClick",
+          "difficulty": "Hard",
+          "entries": 810
+        },
+        {
+          "scenario": "VAL 1w4ts Pasu Perfected EASY",
+          "difficulty": "Normal",
+          "entries": 1313
+        },
+        {
+          "scenario": "VAL Floating Heads EASY",
+          "difficulty": "Normal",
+          "entries": 1139
+        },
+        {
+          "scenario": "VAL SmoothsphereTS EASY",
+          "difficulty": "Normal",
+          "entries": 858
+        },
+        {
+          "scenario": "VAL devTS staticClick EASY",
+          "difficulty": "Normal",
+          "entries": 1387
+        }
+      ]
+    },
+    {
+      "benchmark": "e1se Tracking Routine",
+      "abbreviation": "e",
+      "evxlListingRank": 38,
+      "difficulties": [
+        "Beginner",
+        "Beginner+",
+        "Intermediate"
+      ],
+      "scenarios": 24,
+      "ownScenarios": 19,
+      "sampled": 8,
+      "players": 42520,
+      "samples": [
+        {
+          "scenario": "Centering 90 Easy+ No Strafes",
+          "difficulty": "Beginner",
+          "entries": 84450
+        },
+        {
+          "scenario": "Smooth Tracking a+ Easy",
+          "difficulty": "Beginner",
+          "entries": 83815
+        },
+        {
+          "scenario": "e1se Auto Balanced Long EASY",
+          "difficulty": "Beginner",
+          "entries": 12930
+        },
+        {
+          "scenario": "B180TI Voltaic Iron",
+          "difficulty": "Beginner+",
+          "entries": 4248
+        },
+        {
+          "scenario": "Humanoid Strafes a+ Easy",
+          "difficulty": "Beginner+",
+          "entries": 10386
+        },
+        {
+          "scenario": "Vertical Tracking a+ Easy",
+          "difficulty": "Beginner+",
+          "entries": 8412
+        },
+        {
+          "scenario": "Houston Outlaws - Ground Tracking",
+          "difficulty": "Intermediate",
+          "entries": 73076
+        },
+        {
+          "scenario": "Kindafar Long Strafes",
+          "difficulty": "Intermediate",
+          "entries": 72110
+        }
+      ]
+    },
+    {
+      "benchmark": "e1se Smooth Benchmark",
+      "abbreviation": "e",
+      "evxlListingRank": 39,
+      "difficulties": [
+        "Normal",
+        "Hard"
+      ],
+      "scenarios": 24,
+      "ownScenarios": 14,
+      "sampled": 8,
+      "players": 20704,
+      "samples": [
+        {
+          "scenario": "Centering I 180 no strafes",
+          "difficulty": "Hard",
+          "entries": 137818
+        },
+        {
+          "scenario": "Extra Controlsphere Pure",
+          "difficulty": "Hard",
+          "entries": 34542
+        },
+        {
+          "scenario": "Far Angle Smoothness",
+          "difficulty": "Hard",
+          "entries": 6120
+        },
+        {
+          "scenario": "Pasu Track Smooth",
+          "difficulty": "Hard",
+          "entries": 66691
+        },
+        {
+          "scenario": "Smoothsphere weaker UFO",
+          "difficulty": "Hard",
+          "entries": 439
+        },
+        {
+          "scenario": "Centering I 90 no strafes",
+          "difficulty": "Normal",
+          "entries": 41353
+        },
+        {
+          "scenario": "Spherical Centering Hard",
+          "difficulty": "Normal",
+          "entries": 6300
+        },
+        {
+          "scenario": "VT Suavetrack Intermediate",
+          "difficulty": "Normal",
+          "entries": 6866
+        }
+      ]
+    },
+    {
+      "benchmark": "Astro Tracking Benchmark",
+      "abbreviation": "ATB",
+      "evxlListingRank": 40,
+      "difficulties": [
+        "Easy",
+        "Normal",
+        "Advanced"
+      ],
+      "scenarios": 51,
+      "ownScenarios": 22,
+      "sampled": 8,
+      "players": 682,
+      "samples": [
+        {
+          "scenario": "AmareRawControl",
+          "difficulty": "Advanced",
+          "entries": 4782
+        },
+        {
+          "scenario": "Extra Whisphere 80%",
+          "difficulty": "Advanced",
+          "entries": 226
+        },
+        {
+          "scenario": "VT Ground Intermediate S5 Hard",
+          "difficulty": "Advanced",
+          "entries": 9098
+        },
+        {
+          "scenario": "Air Angelic rAim Biggest",
+          "difficulty": "Easy",
+          "entries": 771
+        },
+        {
+          "scenario": "Avasive Horizontal Track Easy",
+          "difficulty": "Easy",
+          "entries": 592
+        },
+        {
+          "scenario": "Smoothbot Pauer Glider Level 1",
+          "difficulty": "Easy",
+          "entries": 583
+        },
+        {
+          "scenario": "VT Ground Novice S5 Hard",
+          "difficulty": "Easy",
+          "entries": 5758
+        },
+        {
+          "scenario": "Avasive Horizontal Track",
+          "difficulty": "Normal",
+          "entries": 485
+        }
+      ]
+    },
+    {
+      "benchmark": "Matty OW Benchmark",
+      "abbreviation": "M",
+      "evxlListingRank": 41,
+      "difficulties": [
+        "All"
+      ],
+      "scenarios": 12,
+      "ownScenarios": 5,
+      "sampled": 5,
+      "players": 8836,
+      "samples": [
+        {
+          "scenario": "Leap 360 Reload Dodge",
+          "difficulty": "All",
+          "entries": 5026
+        },
+        {
+          "scenario": "Pasu 360 Reload Goated",
+          "difficulty": "All",
+          "entries": 8836
+        },
+        {
+          "scenario": "PasuTS 360 OW",
+          "difficulty": "All",
+          "entries": 2997
+        },
+        {
+          "scenario": "kinTS Amare",
+          "difficulty": "All",
+          "entries": 9057
+        },
+        {
+          "scenario": "patTargetClick Dodge",
+          "difficulty": "All",
+          "entries": 58158
+        }
+      ]
+    },
+    {
+      "benchmark": "AoiAim",
+      "abbreviation": "AOI",
+      "evxlListingRank": 42,
+      "difficulties": [
+        "S1",
+        "S2"
+      ],
+      "scenarios": 40,
+      "ownScenarios": 26,
+      "sampled": 8,
+      "players": 21396,
+      "samples": [
+        {
+          "scenario": "Air no UFO no SKYBOTS Small 3478",
+          "difficulty": "S1",
+          "entries": 3861
+        },
+        {
+          "scenario": "B180TI Extra Small Sparky",
+          "difficulty": "S1",
+          "entries": 31708
+        },
+        {
+          "scenario": "Midrange Fast Strafes Invincible",
+          "difficulty": "S1",
+          "entries": 36578
+        },
+        {
+          "scenario": "Thin Aiming Long",
+          "difficulty": "S1",
+          "entries": 314910
+        },
+        {
+          "scenario": "Tracking God Hard Aoi",
+          "difficulty": "S1",
+          "entries": 786
+        },
+        {
+          "scenario": "Ground Plaza",
+          "difficulty": "S2",
+          "entries": 11084
+        },
+        {
+          "scenario": "Midrange Long Strafes Invincible",
+          "difficulty": "S2",
+          "entries": 110120
+        },
+        {
+          "scenario": "VSS GPAIO",
+          "difficulty": "S2",
+          "entries": 2438
+        }
+      ]
+    },
+    {
+      "benchmark": "Hewchy's LRS Benchmarks",
+      "abbreviation": "HEW",
+      "evxlListingRank": 43,
+      "difficulties": [
+        "All"
+      ],
+      "scenarios": 36,
+      "ownScenarios": 36,
+      "sampled": 8,
+      "players": 265,
+      "samples": [
+        {
+          "scenario": "Hewchy's VAI 0",
+          "difficulty": "All",
+          "entries": 446
+        },
+        {
+          "scenario": "Hewchy's VAI 110",
+          "difficulty": "All",
+          "entries": 508
+        },
+        {
+          "scenario": "Hewchy's VAI 135",
+          "difficulty": "All",
+          "entries": 526
+        },
+        {
+          "scenario": "Hewchy's VAI 150",
+          "difficulty": "All",
+          "entries": 66
+        },
+        {
+          "scenario": "Hewchy's VAI 175",
+          "difficulty": "All",
+          "entries": 60
+        },
+        {
+          "scenario": "Hewchy's VAI 35",
+          "difficulty": "All",
+          "entries": 84
+        },
+        {
+          "scenario": "Hewchy's VAI 55",
+          "difficulty": "All",
+          "entries": 74
+        },
+        {
+          "scenario": "Hewchy's VAI 75",
+          "difficulty": "All",
+          "entries": 700
+        }
+      ]
+    },
+    {
+      "benchmark": "Avasive S1",
+      "abbreviation": "m",
+      "evxlListingRank": 44,
+      "difficulties": [
+        "Genesis",
+        "Ascension",
+        "Enlightenment"
+      ],
+      "scenarios": 54,
+      "ownScenarios": 53,
+      "sampled": 9,
+      "players": 396,
+      "samples": [
+        {
+          "scenario": "Airva Control",
+          "difficulty": "Ascension",
+          "entries": 396
+        },
+        {
+          "scenario": "Avomi ww4t",
+          "difficulty": "Ascension",
+          "entries": 347
+        },
+        {
+          "scenario": "Smoothsphere Glider",
+          "difficulty": "Ascension",
+          "entries": 2347
+        },
+        {
+          "scenario": "Airva Control Hard",
+          "difficulty": "Enlightenment",
+          "entries": 71
+        },
+        {
+          "scenario": "Avomi ww4t Hard",
+          "difficulty": "Enlightenment",
+          "entries": 64
+        },
+        {
+          "scenario": "Smoothsphere Glider Hard",
+          "difficulty": "Enlightenment",
+          "entries": 3021
+        },
+        {
+          "scenario": "Airva Control Easy",
+          "difficulty": "Genesis",
+          "entries": 432
+        },
+        {
+          "scenario": "Avomi ww4t Easy",
+          "difficulty": "Genesis",
+          "entries": 396
+        },
+        {
+          "scenario": "Smoothsphere Glider Easy",
+          "difficulty": "Genesis",
+          "entries": 549
+        }
+      ]
+    },
+    {
+      "benchmark": "Angelic Tac FPS",
+      "abbreviation": "ATF",
+      "evxlListingRank": 45,
+      "difficulties": [
+        "Easy",
+        "Intermediate"
+      ],
+      "scenarios": 28,
+      "ownScenarios": 21,
+      "sampled": 8,
+      "players": 3754,
+      "samples": [
+        {
+          "scenario": "1w2ts Angelic Easy",
+          "difficulty": "Easy",
+          "entries": 2878
+        },
+        {
+          "scenario": "1w6ts Angelic Easy",
+          "difficulty": "Easy",
+          "entries": 2398
+        },
+        {
+          "scenario": "Controlsphere Angelic Easy",
+          "difficulty": "Easy",
+          "entries": 3004
+        },
+        {
+          "scenario": "beanClick Angelic Easy",
+          "difficulty": "Easy",
+          "entries": 10579
+        },
+        {
+          "scenario": "1w2ts Angelic",
+          "difficulty": "Intermediate",
+          "entries": 8292
+        },
+        {
+          "scenario": "1w4ts Angelic",
+          "difficulty": "Intermediate",
+          "entries": 2277
+        },
+        {
+          "scenario": "Pokeball 1w2ts Angelic",
+          "difficulty": "Intermediate",
+          "entries": 4503
+        },
+        {
+          "scenario": "skyClick Angelic",
+          "difficulty": "Intermediate",
+          "entries": 8949
+        }
+      ]
+    },
+    {
+      "benchmark": "Setsunai's Static Benchmark",
+      "abbreviation": "Ssb",
+      "evxlListingRank": 46,
+      "difficulties": [
+        "Normal",
+        "Hard"
+      ],
+      "scenarios": 24,
+      "ownScenarios": 14,
+      "sampled": 8,
+      "players": 2063,
+      "samples": [
+        {
+          "scenario": "Pokeball Frenzy Auto 1w4ts",
+          "difficulty": "Hard",
+          "entries": 55237
+        },
+        {
+          "scenario": "Pokeball ww2t Voltaic Smaller",
+          "difficulty": "Hard",
+          "entries": 876
+        },
+        {
+          "scenario": "Reflex Flick Wide - Fair",
+          "difficulty": "Hard",
+          "entries": 1275
+        },
+        {
+          "scenario": "1w2ts medium reload 30% larger",
+          "difficulty": "Normal",
+          "entries": 2085
+        },
+        {
+          "scenario": "1w4ts 30% larger",
+          "difficulty": "Normal",
+          "entries": 98480
+        },
+        {
+          "scenario": "Pokeball 5 Sphere Hipfire Small",
+          "difficulty": "Normal",
+          "entries": 9881
+        },
+        {
+          "scenario": "Reflex Flick - Horizontal",
+          "difficulty": "Normal",
+          "entries": 2040
+        },
+        {
+          "scenario": "nova's 5 Sphere Hipfire",
+          "difficulty": "Normal",
+          "entries": 1306
+        }
+      ]
+    },
+    {
+      "benchmark": "Victory Road",
+      "abbreviation": "VR",
+      "evxlListingRank": 47,
+      "difficulties": [
+        "Normal"
+      ],
+      "scenarios": 16,
+      "ownScenarios": 4,
+      "sampled": 4,
+      "players": 16362,
+      "samples": [
+        {
+          "scenario": "Air Dodge II",
+          "difficulty": "Normal",
+          "entries": 10179
+        },
+        {
+          "scenario": "Centering II 180 no strafes",
+          "difficulty": "Normal",
+          "entries": 51500
+        },
+        {
+          "scenario": "Revolving Tracking Strafes",
+          "difficulty": "Normal",
+          "entries": 22544
+        },
+        {
+          "scenario": "Stralroom FS Dodge Hard",
+          "difficulty": "Normal",
+          "entries": 1235
+        }
+      ]
+    },
+    {
+      "benchmark": "Dark & Rafal SpeedTS",
+      "abbreviation": "D&R",
+      "evxlListingRank": 48,
+      "difficulties": [
+        "All"
+      ],
+      "scenarios": 12,
+      "ownScenarios": 6,
+      "sampled": 6,
+      "players": 26535,
+      "samples": [
+        {
+          "scenario": "Target Switching 360 Static",
+          "difficulty": "All",
+          "entries": 118834
+        },
+        {
+          "scenario": "Tile Frenzy Flick 180",
+          "difficulty": "All",
+          "entries": 19631
+        },
+        {
+          "scenario": "patCircleSwitch NR Static",
+          "difficulty": "All",
+          "entries": 33439
+        },
+        {
+          "scenario": "patTargetSwitch easy",
+          "difficulty": "All",
+          "entries": 54496
+        },
+        {
+          "scenario": "voxTS Voltaic LowTTK",
+          "difficulty": "All",
+          "entries": 13439
+        },
+        {
+          "scenario": "voxTargetSwitch 30% Smaller",
+          "difficulty": "All",
+          "entries": 5172
+        }
+      ]
+    },
+    {
+      "benchmark": "Group MIYU Tracking",
+      "abbreviation": "GM",
+      "evxlListingRank": 49,
+      "difficulties": [
+        "2023"
+      ],
+      "scenarios": 8,
+      "ownScenarios": 8,
+      "sampled": 8,
+      "players": 8329,
+      "samples": [
+        {
+          "scenario": "Box Sphere Unusual Miyu",
+          "difficulty": "2023",
+          "entries": 6296
+        },
+        {
+          "scenario": "Fast Strafes Humanoid Switch Miyu",
+          "difficulty": "2023",
+          "entries": 8065
+        },
+        {
+          "scenario": "Jump Pad LS Humanoid Inv Miyu",
+          "difficulty": "2023",
+          "entries": 10891
+        },
+        {
+          "scenario": "Long Strafes Humanoid Switch Miyu",
+          "difficulty": "2023",
+          "entries": 22532
+        },
+        {
+          "scenario": "Mid-range 3 Boxes Miyu",
+          "difficulty": "2023",
+          "entries": 8592
+        },
+        {
+          "scenario": "S Humanoid Dodge Miyu",
+          "difficulty": "2023",
+          "entries": 6536
+        },
+        {
+          "scenario": "Tracking Heaven Miyu",
+          "difficulty": "2023",
+          "entries": 3327
+        },
+        {
+          "scenario": "Very Far Thin Long Strafes Miyu",
+          "difficulty": "2023",
+          "entries": 11822
+        }
+      ]
+    },
+    {
+      "benchmark": "xyz Benchmarks",
+      "abbreviation": "xyz",
+      "evxlListingRank": 50,
+      "difficulties": [
+        "Easy",
+        "Hard"
+      ],
+      "scenarios": 48,
+      "ownScenarios": 24,
+      "sampled": 8,
+      "players": 448,
+      "samples": [
+        {
+          "scenario": "XYZ 3DClick Easy",
+          "difficulty": "Easy",
+          "entries": 446
+        },
+        {
+          "scenario": "XYZ AxisClick Easy",
+          "difficulty": "Easy",
+          "entries": 404
+        },
+        {
+          "scenario": "XYZ BounceTrack Easy",
+          "difficulty": "Easy",
+          "entries": 554
+        },
+        {
+          "scenario": "XYZ FloatSwitch Easy",
+          "difficulty": "Easy",
+          "entries": 712
+        },
+        {
+          "scenario": "XYZ LeapTrack Easy",
+          "difficulty": "Easy",
+          "entries": 412
+        },
+        {
+          "scenario": "XYZ SlopeSwitch Easy",
+          "difficulty": "Easy",
+          "entries": 515
+        },
+        {
+          "scenario": "XYZ StarClick Easy",
+          "difficulty": "Easy",
+          "entries": 450
+        },
+        {
+          "scenario": "XYZ WarpSwitch Easy",
+          "difficulty": "Easy",
+          "entries": 340
+        }
+      ]
+    },
+    {
+      "benchmark": "Revosect S5",
+      "abbreviation": "rA",
+      "evxlListingRank": 51,
+      "difficulties": [
+        "Entry",
+        "Intermediate",
+        "Advanced"
+      ],
+      "scenarios": 72,
+      "ownScenarios": 59,
+      "sampled": 7,
+      "players": 1028,
+      "samples": [
+        {
+          "scenario": "1w4t Pressure Revosect",
+          "difficulty": "Advanced",
+          "entries": 343
+        },
+        {
+          "scenario": "PasuTS Revosect",
+          "difficulty": "Advanced",
+          "entries": 149
+        },
+        {
+          "scenario": "1w4t Pressure Revosect Entry",
+          "difficulty": "Entry",
+          "entries": 1725
+        },
+        {
+          "scenario": "Floating Heads Revosect Entry",
+          "difficulty": "Entry",
+          "entries": 1263
+        },
+        {
+          "scenario": "SmoothTS Revosect Entry",
+          "difficulty": "Entry",
+          "entries": 1028
+        },
+        {
+          "scenario": "1w4t Pressure Revosect Int",
+          "difficulty": "Intermediate",
+          "entries": 1168
+        },
+        {
+          "scenario": "PasuTS Revosect Int",
+          "difficulty": "Intermediate",
+          "entries": 544
+        }
+      ]
+    },
+    {
+      "benchmark": "cAt Benchmark",
+      "abbreviation": "cAt",
+      "evxlListingRank": 52,
+      "difficulties": [
+        "Easy",
+        "Normal",
+        "Hard"
+      ],
+      "scenarios": 48,
+      "ownScenarios": 39,
+      "sampled": 8,
+      "players": 837,
+      "samples": [
+        {
+          "scenario": "cAt 4 cats",
+          "difficulty": "Easy",
+          "entries": 1695
+        },
+        {
+          "scenario": "cAt mealSwitch Easy",
+          "difficulty": "Easy",
+          "entries": 967
+        },
+        {
+          "scenario": "cAt tailSwitch Easy",
+          "difficulty": "Easy",
+          "entries": 832
+        },
+        {
+          "scenario": "cAt laserTrack Hard",
+          "difficulty": "Hard",
+          "entries": 385
+        },
+        {
+          "scenario": "cAt tabbySwitch Hard",
+          "difficulty": "Hard",
+          "entries": 275
+        },
+        {
+          "scenario": "cAt fluffyTrack Normal",
+          "difficulty": "Normal",
+          "entries": 842
+        },
+        {
+          "scenario": "cAt pawClick Normal",
+          "difficulty": "Normal",
+          "entries": 1037
+        },
+        {
+          "scenario": "cAt tailSwitch Normal",
+          "difficulty": "Normal",
+          "entries": 593
+        }
+      ]
+    },
+    {
+      "benchmark": "Sparky (Voltaic) S0",
+      "abbreviation": "VT",
+      "evxlListingRank": 53,
+      "difficulties": [
+        "All"
+      ],
+      "scenarios": 20,
+      "ownScenarios": 5,
+      "sampled": 5,
+      "players": 24056,
+      "samples": [
+        {
+          "scenario": "1wall5targets pasu track invincible",
+          "difficulty": "All",
+          "entries": 19577
+        },
+        {
+          "scenario": "Bounce 180",
+          "difficulty": "All",
+          "entries": 99951
+        },
+        {
+          "scenario": "devTargetSwitch Goated",
+          "difficulty": "All",
+          "entries": 14298
+        },
+        {
+          "scenario": "kinTargetSwitch",
+          "difficulty": "All",
+          "entries": 24056
+        },
+        {
+          "scenario": "patTargetSwitch",
+          "difficulty": "All",
+          "entries": 134802
+        }
+      ]
+    },
+    {
+      "benchmark": "roa Ultimate",
+      "abbreviation": "roa",
+      "evxlListingRank": 54,
+      "difficulties": [
+        "roa Ultimate"
+      ],
+      "scenarios": 60,
+      "ownScenarios": 9,
+      "sampled": 8,
+      "players": 3007,
+      "samples": [
+        {
+          "scenario": "Aimerz+ Week #10 - evyTrack",
+          "difficulty": "roa Ultimate",
+          "entries": 654
+        },
+        {
+          "scenario": "Ballsheet fixed",
+          "difficulty": "roa Ultimate",
+          "entries": 1694
+        },
+        {
+          "scenario": "Centering III 180 no strafes",
+          "difficulty": "roa Ultimate",
+          "entries": 4430
+        },
+        {
+          "scenario": "Far Angle Smoothness small",
+          "difficulty": "roa Ultimate",
+          "entries": 3782
+        },
+        {
+          "scenario": "MFSI rAim - Thin",
+          "difficulty": "roa Ultimate",
+          "entries": 2232
+        },
+        {
+          "scenario": "Polarized Hell",
+          "difficulty": "roa Ultimate",
+          "entries": 981
+        },
+        {
+          "scenario": "Target Switching 360 Static Thin",
+          "difficulty": "roa Ultimate",
+          "entries": 83597
+        },
+        {
+          "scenario": "VSS GP9 thin",
+          "difficulty": "roa Ultimate",
+          "entries": 10094
+        }
+      ]
+    },
+    {
+      "benchmark": "Wallhack - Awakening Benchmarks",
+      "abbreviation": "WH",
+      "evxlListingRank": 55,
+      "difficulties": [
+        "Wallhack"
+      ],
+      "scenarios": 12,
+      "ownScenarios": 12,
+      "sampled": 8,
+      "players": 1572,
+      "samples": [
+        {
+          "scenario": "WALLHACK - ArcClick",
+          "difficulty": "Wallhack",
+          "entries": 1165
+        },
+        {
+          "scenario": "WALLHACK - AscendTrack",
+          "difficulty": "Wallhack",
+          "entries": 1484
+        },
+        {
+          "scenario": "WALLHACK - LeapTS",
+          "difficulty": "Wallhack",
+          "entries": 1279
+        },
+        {
+          "scenario": "WALLHACK - MonarchTS",
+          "difficulty": "Wallhack",
+          "entries": 1570
+        },
+        {
+          "scenario": "WALLHACK - Rinsphere",
+          "difficulty": "Wallhack",
+          "entries": 1651
+        },
+        {
+          "scenario": "WALLHACK - Silksphere",
+          "difficulty": "Wallhack",
+          "entries": 1967
+        },
+        {
+          "scenario": "WALLHACK - VBRClick",
+          "difficulty": "Wallhack",
+          "entries": 1573
+        },
+        {
+          "scenario": "WALLHACK - VertTrack",
+          "difficulty": "Wallhack",
+          "entries": 2085
+        }
+      ]
+    },
+    {
+      "benchmark": "Deadman's Static Benchmarks S1",
+      "abbreviation": "DM",
+      "evxlListingRank": 56,
+      "difficulties": [
+        "Level 1",
+        "Level 2",
+        "Level 3",
+        "Level 4",
+        "Boss",
+        "Boss+"
+      ],
+      "scenarios": 96,
+      "ownScenarios": 48,
+      "sampled": 6,
+      "players": 98,
+      "samples": [
+        {
+          "scenario": "DM Hexaclick",
+          "difficulty": "Boss",
+          "entries": 93
+        },
+        {
+          "scenario": "DM Hexaclick Pokeball Smaller",
+          "difficulty": "Boss+",
+          "entries": 67
+        },
+        {
+          "scenario": "DM Hexaclick Level 1",
+          "difficulty": "Level 1",
+          "entries": 476
+        },
+        {
+          "scenario": "DM Hexaclick Level 2",
+          "difficulty": "Level 2",
+          "entries": 127
+        },
+        {
+          "scenario": "DM Hexaclick Level 3",
+          "difficulty": "Level 3",
+          "entries": 93
+        },
+        {
+          "scenario": "DM Hexaclick Level 4",
+          "difficulty": "Level 4",
+          "entries": 102
+        }
+      ]
+    },
+    {
+      "benchmark": "Deadman's Poke Static Benchmarks",
+      "abbreviation": "DM",
+      "evxlListingRank": 57,
+      "difficulties": [
+        "Level 1",
+        "Level 2",
+        "Level 3",
+        "Level 4",
+        "Boss",
+        "Boss+",
+        "Boss++"
+      ],
+      "scenarios": 70,
+      "ownScenarios": 46,
+      "sampled": 8,
+      "players": 197,
+      "samples": [
+        {
+          "scenario": "DM 1w2ts Pokeball",
+          "difficulty": "Boss",
+          "entries": 192
+        },
+        {
+          "scenario": "DM 1w2ts Pokeball Smaller",
+          "difficulty": "Boss+",
+          "entries": 133
+        },
+        {
+          "scenario": "DM 1w2ts Pokeball Even Smaller",
+          "difficulty": "Boss++",
+          "entries": 126
+        },
+        {
+          "scenario": "DM ww2t Pokeball Even Smaller",
+          "difficulty": "Boss++",
+          "entries": 139
+        },
+        {
+          "scenario": "DM 1w2ts Pokeball Level 1",
+          "difficulty": "Level 1",
+          "entries": 522
+        },
+        {
+          "scenario": "DM 1w2ts Pokeball Level 2",
+          "difficulty": "Level 2",
+          "entries": 230
+        },
+        {
+          "scenario": "DM 1w2ts Pokeball Level 3",
+          "difficulty": "Level 3",
+          "entries": 247
+        },
+        {
+          "scenario": "DM 1w2ts Pokeball Level 4",
+          "difficulty": "Level 4",
+          "entries": 201
+        }
+      ]
+    },
+    {
+      "benchmark": "Deadman's Static Benchmarks S2",
+      "abbreviation": "DM",
+      "evxlListingRank": 58,
+      "difficulties": [
+        "Level 1",
+        "Level 2",
+        "Level 3",
+        "Level 4",
+        "Boss",
+        "Boss+",
+        "Boss++"
+      ],
+      "scenarios": 70,
+      "ownScenarios": 46,
+      "sampled": 8,
+      "players": 191,
+      "samples": [
+        {
+          "scenario": "DM 1w2ts",
+          "difficulty": "Boss",
+          "entries": 181
+        },
+        {
+          "scenario": "DM 1w2ts Smaller",
+          "difficulty": "Boss+",
+          "entries": 125
+        },
+        {
+          "scenario": "DM 1w2ts Even Smaller",
+          "difficulty": "Boss++",
+          "entries": 127
+        },
+        {
+          "scenario": "DM ww2t Even Smaller",
+          "difficulty": "Boss++",
+          "entries": 74
+        },
+        {
+          "scenario": "DM 1w2ts Level 1",
+          "difficulty": "Level 1",
+          "entries": 456
+        },
+        {
+          "scenario": "DM 1w2ts Level 2",
+          "difficulty": "Level 2",
+          "entries": 201
+        },
+        {
+          "scenario": "DM 1w2ts Level 3",
+          "difficulty": "Level 3",
+          "entries": 244
+        },
+        {
+          "scenario": "DM 1w2ts Level 4",
+          "difficulty": "Level 4",
+          "entries": 328
+        }
+      ]
+    },
+    {
+      "benchmark": "Deadman's Static Benchmarks S3",
+      "abbreviation": "DM",
+      "evxlListingRank": 59,
+      "difficulties": [
+        "Pokeball Level 1",
+        "Level 1",
+        "Pokeball Level 2",
+        "Level 2",
+        "Pokeball Level 3",
+        "Level 3",
+        "Pokeball Level 4",
+        "Level 4",
+        "Pokeball Boss",
+        "Boss",
+        "Pokeball Boss+",
+        "Boss+",
+        "Pokeball Boss++",
+        "Boss++"
+      ],
+      "scenarios": 140,
+      "ownScenarios": 140,
+      "sampled": 14,
+      "players": 58,
+      "samples": [
+        {
+          "scenario": "DM 1w2ts S3",
+          "difficulty": "Boss",
+          "entries": 44
+        },
+        {
+          "scenario": "DM 1w2ts Smaller S3",
+          "difficulty": "Boss+",
+          "entries": 28
+        },
+        {
+          "scenario": "DM 1w2ts Even Smaller S3",
+          "difficulty": "Boss++",
+          "entries": 47
+        },
+        {
+          "scenario": "DM 1w2ts Level 1 S3",
+          "difficulty": "Level 1",
+          "entries": 162
+        },
+        {
+          "scenario": "DM 1w2ts Level 2 S3",
+          "difficulty": "Level 2",
+          "entries": 93
+        },
+        {
+          "scenario": "DM 1w2ts Level 3 S3",
+          "difficulty": "Level 3",
+          "entries": 79
+        },
+        {
+          "scenario": "DM 1w2ts Level 4 S3",
+          "difficulty": "Level 4",
+          "entries": 59
+        },
+        {
+          "scenario": "DM 1w2ts Pokeball S3",
+          "difficulty": "Pokeball Boss",
+          "entries": 31
+        },
+        {
+          "scenario": "DM 1w2ts Pokeball Smaller S3",
+          "difficulty": "Pokeball Boss+",
+          "entries": 21
+        },
+        {
+          "scenario": "DM 1w2ts Pokeball Even Smaller S3",
+          "difficulty": "Pokeball Boss++",
+          "entries": 24
+        },
+        {
+          "scenario": "DM 1w2ts Pokeball Level 1 S3",
+          "difficulty": "Pokeball Level 1",
+          "entries": 219
+        },
+        {
+          "scenario": "DM 1w2ts Pokeball Level 2 S3",
+          "difficulty": "Pokeball Level 2",
+          "entries": 86
+        },
+        {
+          "scenario": "DM 1w2ts Pokeball Level 3 S3",
+          "difficulty": "Pokeball Level 3",
+          "entries": 75
+        },
+        {
+          "scenario": "DM 1w2ts Pokeball Level 4 S3",
+          "difficulty": "Pokeball Level 4",
+          "entries": 56
+        }
+      ]
+    },
+    {
+      "benchmark": "cR Main Benchmark",
+      "abbreviation": "cR",
+      "evxlListingRank": 60,
+      "difficulties": [
+        "Main"
+      ],
+      "scenarios": 23,
+      "ownScenarios": 6,
+      "sampled": 6,
+      "players": 30089,
+      "samples": [
+        {
+          "scenario": "Floating Heads Timing 400%",
+          "difficulty": "Main",
+          "entries": 230439
+        },
+        {
+          "scenario": "GarfMicroTS",
+          "difficulty": "Main",
+          "entries": 1138
+        },
+        {
+          "scenario": "VT SiniClick Valorant",
+          "difficulty": "Main",
+          "entries": 57191
+        },
+        {
+          "scenario": "eth Didy - S",
+          "difficulty": "Main",
+          "entries": 60937
+        },
+        {
+          "scenario": "headshot precision long distance 3 targets small",
+          "difficulty": "Main",
+          "entries": 2986
+        },
+        {
+          "scenario": "vlav 1w2tes horizontal micro",
+          "difficulty": "Main",
+          "entries": 315
+        }
+      ]
+    },
+    {
+      "benchmark": "Speedclick Archive Benchmarks",
+      "abbreviation": "sA",
+      "evxlListingRank": 61,
+      "difficulties": [
+        "Demonic"
+      ],
+      "scenarios": 9,
+      "ownScenarios": 1,
+      "sampled": 0,
+      "players": null,
+      "samples": []
+    },
+    {
+      "benchmark": "Pojk's Evil Tracking Benchmark",
+      "abbreviation": "ETB",
+      "evxlListingRank": 62,
+      "difficulties": [
+        "Evil"
+      ],
+      "scenarios": 9,
+      "ownScenarios": 5,
+      "sampled": 5,
+      "players": 584,
+      "samples": [
+        {
+          "scenario": "Kindaclose Fast Strafes",
+          "difficulty": "Evil",
+          "entries": 110303
+        },
+        {
+          "scenario": "LDDH LG56 AIMGOD",
+          "difficulty": "Evil",
+          "entries": 744
+        },
+        {
+          "scenario": "Pole Centering Dodge",
+          "difficulty": "Evil",
+          "entries": 562
+        },
+        {
+          "scenario": "Sphere 90 Centering Dodge",
+          "difficulty": "Evil",
+          "entries": 370
+        },
+        {
+          "scenario": "Spherical Centering Dodge",
+          "difficulty": "Evil",
+          "entries": 584
+        }
+      ]
+    },
+    {
+      "benchmark": "Pasu Track DOJO 道場",
+      "abbreviation": "xyz",
+      "evxlListingRank": 63,
+      "difficulties": [
+        "All"
+      ],
+      "scenarios": 8,
+      "ownScenarios": 2,
+      "sampled": 0,
+      "players": null,
+      "samples": []
+    },
+    {
+      "benchmark": "Ground Track DOJO 道場",
+      "abbreviation": "xyz",
+      "evxlListingRank": 64,
+      "difficulties": [
+        "All"
+      ],
+      "scenarios": 6,
+      "ownScenarios": 0,
+      "sampled": 0,
+      "players": null,
+      "samples": []
+    },
+    {
+      "benchmark": "Control Track Dojo 道場",
+      "abbreviation": "xyz",
+      "evxlListingRank": 65,
+      "difficulties": [
+        "All"
+      ],
+      "scenarios": 10,
+      "ownScenarios": 10,
+      "sampled": 8,
+      "players": 160,
+      "samples": [
+        {
+          "scenario": "Control Paradise",
+          "difficulty": "All",
+          "entries": 175
+        },
+        {
+          "scenario": "ControlTrack",
+          "difficulty": "All",
+          "entries": 254
+        },
+        {
+          "scenario": "CozyTrack",
+          "difficulty": "All",
+          "entries": 118
+        },
+        {
+          "scenario": "DistanceTrack",
+          "difficulty": "All",
+          "entries": 145
+        },
+        {
+          "scenario": "MacroTrack",
+          "difficulty": "All",
+          "entries": 173
+        },
+        {
+          "scenario": "MicroTrack",
+          "difficulty": "All",
+          "entries": 136
+        },
+        {
+          "scenario": "SwerveTrack",
+          "difficulty": "All",
+          "entries": 170
+        },
+        {
+          "scenario": "TornadoTrack",
+          "difficulty": "All",
+          "entries": 149
+        }
+      ]
+    },
+    {
+      "benchmark": "TZY SpeedClicking",
+      "abbreviation": "TZY",
+      "evxlListingRank": 66,
+      "difficulties": [
+        "Advanced"
+      ],
+      "scenarios": 8,
+      "ownScenarios": 0,
+      "sampled": 0,
+      "players": null,
+      "samples": []
+    },
+    {
+      "benchmark": "MIRA x Apex - Improvement Benchmark",
+      "abbreviation": "MIR",
+      "evxlListingRank": 67,
+      "difficulties": [
+        "Improvement Bench"
+      ],
+      "scenarios": 10,
+      "ownScenarios": 10,
+      "sampled": 8,
+      "players": 858,
+      "samples": [
+        {
+          "scenario": "r3d 1w4ts Pasu Perfected CR",
+          "difficulty": "Improvement Bench",
+          "entries": 970
+        },
+        {
+          "scenario": "r3d GliderBOT",
+          "difficulty": "Improvement Bench",
+          "entries": 745
+        },
+        {
+          "scenario": "r3d GroundTracking",
+          "difficulty": "Improvement Bench",
+          "entries": 968
+        },
+        {
+          "scenario": "r3d GroundTracking [STRAFE]",
+          "difficulty": "Improvement Bench",
+          "entries": 752
+        },
+        {
+          "scenario": "r3d Horizontal Atmosphere",
+          "difficulty": "Improvement Bench",
+          "entries": 585
+        },
+        {
+          "scenario": "r3d LiftTrack",
+          "difficulty": "Improvement Bench",
+          "entries": 655
+        },
+        {
+          "scenario": "r3d ReactiveControl",
+          "difficulty": "Improvement Bench",
+          "entries": 964
+        },
+        {
+          "scenario": "r3d SmoothControl",
+          "difficulty": "Improvement Bench",
+          "entries": 981
+        }
+      ]
+    },
+    {
+      "benchmark": "✯ Stellar - Speed Clicking Benchmarks",
+      "abbreviation": "STR",
+      "evxlListingRank": 68,
+      "difficulties": [
+        "Normal"
+      ],
+      "scenarios": 12,
+      "ownScenarios": 5,
+      "sampled": 5,
+      "players": 37345,
+      "samples": [
+        {
+          "scenario": "2 Tile Jumbo Tile Frenzy",
+          "difficulty": "Normal",
+          "entries": 37345
+        },
+        {
+          "scenario": "Huge Poke Tile Frenzy",
+          "difficulty": "Normal",
+          "entries": 4195
+        },
+        {
+          "scenario": "Jumbo 1wall6targets TE",
+          "difficulty": "Normal",
+          "entries": 235861
+        },
+        {
+          "scenario": "Jumbo Tile Frenzy",
+          "difficulty": "Normal",
+          "entries": 57949
+        },
+        {
+          "scenario": "Jumbo Tile Frenzy 180",
+          "difficulty": "Normal",
+          "entries": 2803
+        }
+      ]
+    },
+    {
+      "benchmark": "pAim Benchmarks ",
+      "abbreviation": "pA",
+      "evxlListingRank": 69,
+      "difficulties": [
+        "Intermediate",
+        "Advanced"
+      ],
+      "scenarios": 36,
+      "ownScenarios": 36,
+      "sampled": 8,
+      "players": 221,
+      "samples": [
+        {
+          "scenario": "1w2ts Pasu Perfected pAim",
+          "difficulty": "Advanced",
+          "entries": 215
+        },
+        {
+          "scenario": "Air pAim",
+          "difficulty": "Advanced",
+          "entries": 132
+        },
+        {
+          "scenario": "Pokeball Wide pAim",
+          "difficulty": "Advanced",
+          "entries": 120
+        },
+        {
+          "scenario": "Wide4ts pAim",
+          "difficulty": "Advanced",
+          "entries": 176
+        },
+        {
+          "scenario": "1w3ts Smallflicks pAim",
+          "difficulty": "Intermediate",
+          "entries": 279
+        },
+        {
+          "scenario": "BC120TI pAim",
+          "difficulty": "Intermediate",
+          "entries": 227
+        },
+        {
+          "scenario": "Smoothbot Speed Switching pAim",
+          "difficulty": "Intermediate",
+          "entries": 241
+        },
+        {
+          "scenario": "Wide4t pAim",
+          "difficulty": "Intermediate",
+          "entries": 234
+        }
+      ]
+    },
+    {
+      "benchmark": "rxn",
+      "abbreviation": "rxn",
+      "evxlListingRank": 70,
+      "difficulties": [
+        "all"
+      ],
+      "scenarios": 32,
+      "ownScenarios": 17,
+      "sampled": 8,
+      "players": 1835,
+      "samples": [
+        {
+          "scenario": "1w1t horizonalish extremely small",
+          "difficulty": "all",
+          "entries": 146
+        },
+        {
+          "scenario": "1wall5targets_pasu - track",
+          "difficulty": "all",
+          "entries": 10281
+        },
+        {
+          "scenario": "4BK - RawMouseControlPokeball Adapt",
+          "difficulty": "all",
+          "entries": 3311
+        },
+        {
+          "scenario": "Pokeball Auto ww6t Larger Voltaic",
+          "difficulty": "all",
+          "entries": 2681
+        },
+        {
+          "scenario": "Pokeball Floating Heads 400%",
+          "difficulty": "all",
+          "entries": 106
+        },
+        {
+          "scenario": "RawMouseControl Pokeball Easy",
+          "difficulty": "all",
+          "entries": 155
+        },
+        {
+          "scenario": "Reflex Flick - Very Easy",
+          "difficulty": "all",
+          "entries": 17458
+        },
+        {
+          "scenario": "Tamspeed 2bpes LG56 AIMGOD",
+          "difficulty": "all",
+          "entries": 989
+        }
+      ]
+    },
+    {
+      "benchmark": "R Bench Easy",
+      "abbreviation": "RBE",
+      "evxlListingRank": 71,
+      "difficulties": [
+        "Easy"
+      ],
+      "scenarios": 12,
+      "ownScenarios": 6,
+      "sampled": 6,
+      "players": 10996,
+      "samples": [
+        {
+          "scenario": "Cata IC Fast Strafes Easy Invincible",
+          "difficulty": "Easy",
+          "entries": 708
+        },
+        {
+          "scenario": "Close Fast Strafes Very Easy Invincible",
+          "difficulty": "Easy",
+          "entries": 13530
+        },
+        {
+          "scenario": "Close Tappy Strafes Easy",
+          "difficulty": "Easy",
+          "entries": 25445
+        },
+        {
+          "scenario": "KovaaKs Sandbox Intro Scenario",
+          "difficulty": "Easy",
+          "entries": 1113710
+        },
+        {
+          "scenario": "Midrange Fast Strafes Easy Invincible",
+          "difficulty": "Easy",
+          "entries": 447
+        },
+        {
+          "scenario": "Thin Aiming Long Invincible Easy",
+          "difficulty": "Easy",
+          "entries": 8461
+        }
+      ]
+    },
+    {
+      "benchmark": "R Bench Normal",
+      "abbreviation": "RBN",
+      "evxlListingRank": 72,
+      "difficulties": [
+        "Normal"
+      ],
+      "scenarios": 21,
+      "ownScenarios": 20,
+      "sampled": 8,
+      "players": 251,
+      "samples": [
+        {
+          "scenario": "Aimerz+ PreciseTrack S1 Modified 80%",
+          "difficulty": "Normal",
+          "entries": 180
+        },
+        {
+          "scenario": "Batting Aimer",
+          "difficulty": "Normal",
+          "entries": 314
+        },
+        {
+          "scenario": "Ground Plaza Sparky V3 Extra Thin",
+          "difficulty": "Normal",
+          "entries": 187
+        },
+        {
+          "scenario": "Long Strafes Humanoid Switch Miyu but it's REGEN",
+          "difficulty": "Normal",
+          "entries": 146
+        },
+        {
+          "scenario": "Popcorn Goated Tracking Reversed Dodge",
+          "difficulty": "Normal",
+          "entries": 138
+        },
+        {
+          "scenario": "Star Tracking GOATED - Regen",
+          "difficulty": "Normal",
+          "entries": 950
+        },
+        {
+          "scenario": "canTS Small",
+          "difficulty": "Normal",
+          "entries": 1287
+        },
+        {
+          "scenario": "devTS Goated NR Small Regen",
+          "difficulty": "Normal",
+          "entries": 4835
+        }
+      ]
+    },
+    {
+      "benchmark": "mH benchmarks",
+      "abbreviation": "mHb",
+      "evxlListingRank": 73,
+      "difficulties": [
+        "Easy",
+        "Hard"
+      ],
+      "scenarios": 32,
+      "ownScenarios": 18,
+      "sampled": 8,
+      "players": 3379,
+      "samples": [
+        {
+          "scenario": "1w2ts reload smallflicks 20% smaller",
+          "difficulty": "Easy",
+          "entries": 6507
+        },
+        {
+          "scenario": "VT Aether Novice S5 Hard",
+          "difficulty": "Easy",
+          "entries": 4064
+        },
+        {
+          "scenario": "rx 1w6ts No Clusters",
+          "difficulty": "Easy",
+          "entries": 2694
+        },
+        {
+          "scenario": "1w4ts Voltaic 30% smaller",
+          "difficulty": "Hard",
+          "entries": 13475
+        },
+        {
+          "scenario": "Horizontalish 3 Targets (Distance)",
+          "difficulty": "Hard",
+          "entries": 4280
+        },
+        {
+          "scenario": "Pokeball ww3t Voltaic smaller",
+          "difficulty": "Hard",
+          "entries": 2141
+        },
+        {
+          "scenario": "VT Raw Control Elite S5 Reactive Focus",
+          "difficulty": "Hard",
+          "entries": 302
+        },
+        {
+          "scenario": "psalmTS angelic click small",
+          "difficulty": "Hard",
+          "entries": 690
+        }
+      ]
+    },
+    {
+      "benchmark": "Jade Palace Ground",
+      "abbreviation": "JP",
+      "evxlListingRank": 74,
+      "difficulties": [
+        "Easy",
+        "Hard",
+        "Fundamentals"
+      ],
+      "scenarios": 42,
+      "ownScenarios": 21,
+      "sampled": 8,
+      "players": 2202,
+      "samples": [
+        {
+          "scenario": "Close Fast Strafes Easy Invincible - Thin",
+          "difficulty": "Easy",
+          "entries": 3082
+        },
+        {
+          "scenario": "Close Needle Thin Easy+",
+          "difficulty": "Easy",
+          "entries": 2156
+        },
+        {
+          "scenario": "MLSI Demotori Easy",
+          "difficulty": "Easy",
+          "entries": 2248
+        },
+        {
+          "scenario": "Plaza Palace Easy",
+          "difficulty": "Easy",
+          "entries": 4200
+        },
+        {
+          "scenario": "Close Needle Thin Easy",
+          "difficulty": "Hard",
+          "entries": 449
+        },
+        {
+          "scenario": "Midrange Fast Strafes Invincible Thin",
+          "difficulty": "Hard",
+          "entries": 3976
+        },
+        {
+          "scenario": "Plaza Pure Perfected",
+          "difficulty": "Hard",
+          "entries": 392
+        },
+        {
+          "scenario": "controlstrafes midrange",
+          "difficulty": "Hard",
+          "entries": 377
+        }
+      ]
+    },
+    {
+      "benchmark": "Aimerz+ S0",
+      "abbreviation": "A+",
+      "evxlListingRank": 75,
+      "difficulties": [
+        "Medium",
+        "Hard"
+      ],
+      "scenarios": 36,
+      "ownScenarios": 33,
+      "sampled": 8,
+      "players": 11698,
+      "samples": [
+        {
+          "scenario": "aimerz+ 1w3ts Hard",
+          "difficulty": "Hard",
+          "entries": 17065
+        },
+        {
+          "scenario": "aimerz+ B180TC Hard",
+          "difficulty": "Hard",
+          "entries": 3450
+        },
+        {
+          "scenario": "aimerz+ Smoothbot Hard",
+          "difficulty": "Hard",
+          "entries": 7180
+        },
+        {
+          "scenario": "aimerz+ joeTS Hard",
+          "difficulty": "Hard",
+          "entries": 3401
+        },
+        {
+          "scenario": "aimerz+ 1w3ts Normal",
+          "difficulty": "Medium",
+          "entries": 14382
+        },
+        {
+          "scenario": "aimerz+ B180C Normal",
+          "difficulty": "Medium",
+          "entries": 15187
+        },
+        {
+          "scenario": "aimerz+ PipeTrack Normal",
+          "difficulty": "Medium",
+          "entries": 9014
+        },
+        {
+          "scenario": "aimerz+ WaveClick Normal",
+          "difficulty": "Medium",
+          "entries": 15748
+        }
+      ]
+    },
+    {
+      "benchmark": "Lemon Static Benchmark",
+      "abbreviation": "LEM",
+      "evxlListingRank": 76,
+      "difficulties": [
+        "Intermediate",
+        "Advanced"
+      ],
+      "scenarios": 35,
+      "ownScenarios": 15,
+      "sampled": 8,
+      "players": 2294,
+      "samples": [
+        {
+          "scenario": "1w2ts PulseShot",
+          "difficulty": "Advanced",
+          "entries": 1366
+        },
+        {
+          "scenario": "1w5t smallflicks - Pressure Aiming",
+          "difficulty": "Advanced",
+          "entries": 9783
+        },
+        {
+          "scenario": "Aimerz+ Week #5 - Static Switching 30% smaller",
+          "difficulty": "Advanced",
+          "entries": 4957
+        },
+        {
+          "scenario": "1w2ts Vertical Flicks easy",
+          "difficulty": "Intermediate",
+          "entries": 2350
+        },
+        {
+          "scenario": "1w2ts reload Easier",
+          "difficulty": "Intermediate",
+          "entries": 2237
+        },
+        {
+          "scenario": "1w3ts reload Easier",
+          "difficulty": "Intermediate",
+          "entries": 2119
+        },
+        {
+          "scenario": "1w6ts reload Easier",
+          "difficulty": "Intermediate",
+          "entries": 2160
+        },
+        {
+          "scenario": "Aimerz+ Week #5 - Static Switching 30% Larger",
+          "difficulty": "Intermediate",
+          "entries": 9753
+        }
+      ]
+    },
+    {
+      "benchmark": "Slopcore Funmax Benchmark",
+      "abbreviation": "SFB",
+      "evxlListingRank": 77,
+      "difficulties": [
+        "FUNMAX!"
+      ],
+      "scenarios": 13,
+      "ownScenarios": 11,
+      "sampled": 8,
+      "players": 1733,
+      "samples": [
+        {
+          "scenario": "Aim Coaster",
+          "difficulty": "FUNMAX!",
+          "entries": 410
+        },
+        {
+          "scenario": "Awesome Dynamic hibi",
+          "difficulty": "FUNMAX!",
+          "entries": 57
+        },
+        {
+          "scenario": "B180TI Inverted",
+          "difficulty": "FUNMAX!",
+          "entries": 483
+        },
+        {
+          "scenario": "Reactive Flick hard",
+          "difficulty": "FUNMAX!",
+          "entries": 2807
+        },
+        {
+          "scenario": "Super Hoover Cart Racers",
+          "difficulty": "FUNMAX!",
+          "entries": 1868
+        },
+        {
+          "scenario": "Tarzaning 360",
+          "difficulty": "FUNMAX!",
+          "entries": 1598
+        },
+        {
+          "scenario": "VT Speedswitch 90 Entry",
+          "difficulty": "FUNMAX!",
+          "entries": 8757
+        },
+        {
+          "scenario": "WaveClick - KaliAIM",
+          "difficulty": "FUNMAX!",
+          "entries": 6489
+        }
+      ]
+    },
+    {
+      "benchmark": "m0narcS - Euphoric TacFPS Benchmarks",
+      "abbreviation": "M",
+      "evxlListingRank": 78,
+      "difficulties": [
+        "Novice",
+        "Basic",
+        "Main"
+      ],
+      "scenarios": 36,
+      "ownScenarios": 31,
+      "sampled": 8,
+      "players": 2153,
+      "samples": [
+        {
+          "scenario": "Animicro Euphoric Basic",
+          "difficulty": "Basic",
+          "entries": 2271
+        },
+        {
+          "scenario": "Miniclick Euphoric Basic",
+          "difficulty": "Basic",
+          "entries": 2361
+        },
+        {
+          "scenario": "1w2ts Euphoric",
+          "difficulty": "Main",
+          "entries": 2036
+        },
+        {
+          "scenario": "BlinkClick Euphoric",
+          "difficulty": "Main",
+          "entries": 3879
+        },
+        {
+          "scenario": "DotSwitch Euphoric",
+          "difficulty": "Main",
+          "entries": 2269
+        },
+        {
+          "scenario": "Miniclick Euphoric",
+          "difficulty": "Main",
+          "entries": 1415
+        },
+        {
+          "scenario": "Animicro Euphoric Novice",
+          "difficulty": "Novice",
+          "entries": 1328
+        },
+        {
+          "scenario": "Miniclick Euphoric Novice",
+          "difficulty": "Novice",
+          "entries": 1409
+        }
+      ]
+    },
+    {
+      "benchmark": "RXZU - Valorant",
+      "abbreviation": "RXZU",
+      "evxlListingRank": 79,
+      "difficulties": [
+        "Easy",
+        "Hard"
+      ],
+      "scenarios": 40,
+      "ownScenarios": 40,
+      "sampled": 8,
+      "players": 1103,
+      "samples": [
+        {
+          "scenario": "Rxzu - 1WFP Ez",
+          "difficulty": "Easy",
+          "entries": 1756
+        },
+        {
+          "scenario": "Rxzu - KALibri EZ",
+          "difficulty": "Easy",
+          "entries": 1826
+        },
+        {
+          "scenario": "Rxzu - Multiform IV Ez",
+          "difficulty": "Easy",
+          "entries": 1249
+        },
+        {
+          "scenario": "Rxzu - SosiskaVAL Ez",
+          "difficulty": "Easy",
+          "entries": 1571
+        },
+        {
+          "scenario": "Rxzu - 1WFP Adv",
+          "difficulty": "Hard",
+          "entries": 599
+        },
+        {
+          "scenario": "Rxzu - KALibri Adv",
+          "difficulty": "Hard",
+          "entries": 586
+        },
+        {
+          "scenario": "Rxzu - Multiform IV Adv",
+          "difficulty": "Hard",
+          "entries": 404
+        },
+        {
+          "scenario": "Rxzu - TenZclick Adv",
+          "difficulty": "Hard",
+          "entries": 957
+        }
+      ]
+    },
+    {
+      "benchmark": "Amare's Quest",
+      "abbreviation": "AQ!",
+      "evxlListingRank": 80,
+      "difficulties": [
+        "2026"
+      ],
+      "scenarios": 16,
+      "ownScenarios": 12,
+      "sampled": 8,
+      "players": 2878,
+      "samples": [
+        {
+          "scenario": "Amare Dynamic TAF Micro v2",
+          "difficulty": "2026",
+          "entries": 7317
+        },
+        {
+          "scenario": "Amare Horizontal Switch",
+          "difficulty": "2026",
+          "entries": 7400
+        },
+        {
+          "scenario": "Amare Smoothsphere",
+          "difficulty": "2026",
+          "entries": 297
+        },
+        {
+          "scenario": "Amare Star Clicking",
+          "difficulty": "2026",
+          "entries": 2453
+        },
+        {
+          "scenario": "AmareAngleSmoothness",
+          "difficulty": "2026",
+          "entries": 3302
+        },
+        {
+          "scenario": "Domi SmoothinTrack 90%",
+          "difficulty": "2026",
+          "entries": 163
+        },
+        {
+          "scenario": "eth PHM",
+          "difficulty": "2026",
+          "entries": 3960
+        },
+        {
+          "scenario": "tamTS Control Hard (Faster TTK - 30%)",
+          "difficulty": "2026",
+          "entries": 535
+        }
+      ]
+    },
+    {
+      "benchmark": "pixo v1",
+      "abbreviation": "pnv1",
+      "evxlListingRank": 81,
+      "difficulties": [
+        "Base v1"
+      ],
+      "scenarios": 14,
+      "ownScenarios": 1,
+      "sampled": 0,
+      "players": null,
+      "samples": []
+    },
+    {
+      "benchmark": "Nubars Benchmark",
+      "abbreviation": "MCB",
+      "evxlListingRank": 82,
+      "difficulties": [
+        "Main"
+      ],
+      "scenarios": 10,
+      "ownScenarios": 1,
+      "sampled": 0,
+      "players": null,
+      "samples": []
+    },
+    {
+      "benchmark": "Triad Benchmarks",
+      "abbreviation": "RVG",
+      "evxlListingRank": 83,
+      "difficulties": [
+        "Triad"
+      ],
+      "scenarios": 6,
+      "ownScenarios": 6,
+      "sampled": 6,
+      "players": 390,
+      "samples": [
+        {
+          "scenario": "Dynamic Triad",
+          "difficulty": "Triad",
+          "entries": 390
+        },
+        {
+          "scenario": "Evasive Triad",
+          "difficulty": "Triad",
+          "entries": 393
+        },
+        {
+          "scenario": "Precise Triad",
+          "difficulty": "Triad",
+          "entries": 390
+        },
+        {
+          "scenario": "Reactive Triad",
+          "difficulty": "Triad",
+          "entries": 381
+        },
+        {
+          "scenario": "Speed Triad",
+          "difficulty": "Triad",
+          "entries": 353
+        },
+        {
+          "scenario": "Static Triad",
+          "difficulty": "Triad",
+          "entries": 606
+        }
+      ]
+    },
+    {
+      "benchmark": "Henwood Benchmarks",
+      "abbreviation": "HB",
+      "evxlListingRank": 84,
+      "difficulties": [
+        "Henwood Benchmarks"
+      ],
+      "scenarios": 12,
+      "ownScenarios": 9,
+      "sampled": 8,
+      "players": 4715,
+      "samples": [
+        {
+          "scenario": "1w1t static microadjusts",
+          "difficulty": "Henwood Benchmarks",
+          "entries": 555
+        },
+        {
+          "scenario": "1w1ts Pasu Perfected faster Small",
+          "difficulty": "Henwood Benchmarks",
+          "entries": 665
+        },
+        {
+          "scenario": "1w1ts flick pressure",
+          "difficulty": "Henwood Benchmarks",
+          "entries": 5807
+        },
+        {
+          "scenario": "ADJUSTTRACK - VALORANT Medium",
+          "difficulty": "Henwood Benchmarks",
+          "entries": 5180
+        },
+        {
+          "scenario": "Avasive Micro Reflex",
+          "difficulty": "Henwood Benchmarks",
+          "entries": 4250
+        },
+        {
+          "scenario": "C7N x OFA PRESSURE TARGET ACQUISITION",
+          "difficulty": "Henwood Benchmarks",
+          "entries": 2874
+        },
+        {
+          "scenario": "VT 1w1ts Advanced",
+          "difficulty": "Henwood Benchmarks",
+          "entries": 22058
+        },
+        {
+          "scenario": "Valorant Fireworks Flick Horizontal",
+          "difficulty": "Henwood Benchmarks",
+          "entries": 32281
+        }
+      ]
+    },
+    {
+      "benchmark": "773TS Main β3.0",
+      "abbreviation": "773TS",
+      "evxlListingRank": 85,
+      "difficulties": [
+        "Normal"
+      ],
+      "scenarios": 19,
+      "ownScenarios": 19,
+      "sampled": 8,
+      "players": 373,
+      "samples": [
+        {
+          "scenario": "773TS 135",
+          "difficulty": "Normal",
+          "entries": 418
+        },
+        {
+          "scenario": "773TS 180",
+          "difficulty": "Normal",
+          "entries": 444
+        },
+        {
+          "scenario": "773TS 45",
+          "difficulty": "Normal",
+          "entries": 1254
+        },
+        {
+          "scenario": "773TS 90 2Steps",
+          "difficulty": "Normal",
+          "entries": 157
+        },
+        {
+          "scenario": "773TS Always Right",
+          "difficulty": "Normal",
+          "entries": 590
+        },
+        {
+          "scenario": "773TS M",
+          "difficulty": "Normal",
+          "entries": 99
+        },
+        {
+          "scenario": "773TS Run Underground",
+          "difficulty": "Normal",
+          "entries": 328
+        },
+        {
+          "scenario": "773TS W",
+          "difficulty": "Normal",
+          "entries": 70
+        }
+      ]
+    },
+    {
+      "benchmark": "AimSpeed Benchmarks 2.0",
+      "abbreviation": "AS",
+      "evxlListingRank": 86,
+      "difficulties": [
+        "Easy",
+        "Normal",
+        "Hard"
+      ],
+      "scenarios": 54,
+      "ownScenarios": 27,
+      "sampled": 9,
+      "players": 698,
+      "samples": [
+        {
+          "scenario": "3D Switching Easy",
+          "difficulty": "Easy",
+          "entries": 444
+        },
+        {
+          "scenario": "Skeet Tracking Goated Easy",
+          "difficulty": "Easy",
+          "entries": 1879
+        },
+        {
+          "scenario": "voxTargetSwitch Large",
+          "difficulty": "Easy",
+          "entries": 22356
+        },
+        {
+          "scenario": "3D Switching Small",
+          "difficulty": "Hard",
+          "entries": 48
+        },
+        {
+          "scenario": "StaticSwitchingPat 90 xxSmall",
+          "difficulty": "Hard",
+          "entries": 698
+        },
+        {
+          "scenario": "patCircleSwitch NR Small",
+          "difficulty": "Hard",
+          "entries": 81
+        },
+        {
+          "scenario": "voxTargetSwitch Small",
+          "difficulty": "Hard",
+          "entries": 16096
+        },
+        {
+          "scenario": "Floatswitch Intermediate",
+          "difficulty": "Normal",
+          "entries": 9581
+        },
+        {
+          "scenario": "patCircleSwitch 90 NR v2",
+          "difficulty": "Normal",
+          "entries": 200
+        }
+      ]
+    },
+    {
+      "benchmark": "EpicMemer412 Benchmarks",
+      "abbreviation": "EMB",
+      "evxlListingRank": 87,
+      "difficulties": [
+        "Hard"
+      ],
+      "scenarios": 30,
+      "ownScenarios": 13,
+      "sampled": 8,
+      "players": 1170,
+      "samples": [
+        {
+          "scenario": "Carmen Winstead Hype Moments",
+          "difficulty": "Hard",
+          "entries": 53
+        },
+        {
+          "scenario": "Glider GOATED Hard",
+          "difficulty": "Hard",
+          "entries": 11018
+        },
+        {
+          "scenario": "Jump Pad Small",
+          "difficulty": "Hard",
+          "entries": 340
+        },
+        {
+          "scenario": "PsalmTS Revolving Easy",
+          "difficulty": "Hard",
+          "entries": 40024
+        },
+        {
+          "scenario": "Smoothbot Vertical P+",
+          "difficulty": "Hard",
+          "entries": 487
+        },
+        {
+          "scenario": "VT Raw Control Advanced S5 Reactive Focus",
+          "difficulty": "Hard",
+          "entries": 2069
+        },
+        {
+          "scenario": "VT Snake Track Advanced S5 Reactive Focus",
+          "difficulty": "Hard",
+          "entries": 1852
+        },
+        {
+          "scenario": "fl2reTrack",
+          "difficulty": "Hard",
+          "entries": 83
+        }
+      ]
+    },
+    {
+      "benchmark": "Catburg Benchmark",
+      "abbreviation": "catburg",
+      "evxlListingRank": 88,
+      "difficulties": [
+        "catburg"
+      ],
+      "scenarios": 18,
+      "ownScenarios": 3,
+      "sampled": 3,
+      "players": 132,
+      "samples": [
+        {
+          "scenario": "CatSwitch",
+          "difficulty": "catburg",
+          "entries": 41
+        },
+        {
+          "scenario": "Microsphere",
+          "difficulty": "catburg",
+          "entries": 132
+        },
+        {
+          "scenario": "rx Chainshot Pokeball",
+          "difficulty": "catburg",
+          "entries": 8528
+        }
+      ]
+    },
+    {
+      "benchmark": "zhker Aim Camp Benchmarks",
+      "abbreviation": "ZAC",
+      "evxlListingRank": 89,
+      "difficulties": [
+        "Easy"
+      ],
+      "scenarios": 20,
+      "ownScenarios": 10,
+      "sampled": 8,
+      "players": 7100,
+      "samples": [
+        {
+          "scenario": "Air NUNS AIO Easy",
+          "difficulty": "Easy",
+          "entries": 8516
+        },
+        {
+          "scenario": "DomiSphere Micro Easy",
+          "difficulty": "Easy",
+          "entries": 216
+        },
+        {
+          "scenario": "Fireworks Flick Easy",
+          "difficulty": "Easy",
+          "entries": 138550
+        },
+        {
+          "scenario": "Glider GOATED Easy",
+          "difficulty": "Easy",
+          "entries": 159208
+        },
+        {
+          "scenario": "VT Plaza Viscose Easy",
+          "difficulty": "Easy",
+          "entries": 732
+        },
+        {
+          "scenario": "VT Poptrack Novice S5",
+          "difficulty": "Easy",
+          "entries": 5683
+        },
+        {
+          "scenario": "WhisphereRawControl Larger + Slowed 80% speed",
+          "difficulty": "Easy",
+          "entries": 1425
+        },
+        {
+          "scenario": "kinTargetSwitch 360 No Reload",
+          "difficulty": "Easy",
+          "entries": 18531
+        }
+      ]
+    },
+    {
+      "benchmark": "Point Zero [Aim Academy] - Valorant S1",
+      "abbreviation": "ZERO",
+      "evxlListingRank": 90,
+      "difficulties": [
+        "intermediate"
+      ],
+      "scenarios": 18,
+      "ownScenarios": 5,
+      "sampled": 5,
+      "players": 80484,
+      "samples": [
+        {
+          "scenario": "Controlsphere 80%",
+          "difficulty": "intermediate",
+          "entries": 20851
+        },
+        {
+          "scenario": "Reflex Flick - Mini",
+          "difficulty": "intermediate",
+          "entries": 157569
+        },
+        {
+          "scenario": "Reflex Micro++ Flick",
+          "difficulty": "intermediate",
+          "entries": 80484
+        },
+        {
+          "scenario": "Static Wide Reflex",
+          "difficulty": "intermediate",
+          "entries": 6995
+        },
+        {
+          "scenario": "centering I",
+          "difficulty": "intermediate",
+          "entries": 218661
+        }
+      ]
+    },
+    {
+      "benchmark": "Jade Palace Air",
+      "abbreviation": "JP",
+      "evxlListingRank": 91,
+      "difficulties": [
+        "Easy",
+        "Hard",
+        "Fundamentals"
+      ],
+      "scenarios": 43,
+      "ownScenarios": 22,
+      "sampled": 8,
+      "players": 1293,
+      "samples": [
+        {
+          "scenario": "AA4V OW Easy",
+          "difficulty": "Easy",
+          "entries": 1120
+        },
+        {
+          "scenario": "Air Angelic Invincible 2",
+          "difficulty": "Easy",
+          "entries": 8287
+        },
+        {
+          "scenario": "Air Pure Perfected Easy",
+          "difficulty": "Easy",
+          "entries": 1465
+        },
+        {
+          "scenario": "VT Aether Intermediate S5 Bot 2",
+          "difficulty": "Easy",
+          "entries": 8218
+        },
+        {
+          "scenario": "Air Angelic Invincible 2 80%",
+          "difficulty": "Fundamentals",
+          "entries": 2836
+        },
+        {
+          "scenario": "AA4V OW",
+          "difficulty": "Hard",
+          "entries": 204
+        },
+        {
+          "scenario": "Air Palace Smooth Advanced",
+          "difficulty": "Hard",
+          "entries": 128
+        },
+        {
+          "scenario": "Pasutrack RCT Evo",
+          "difficulty": "Hard",
+          "entries": 201
+        }
+      ]
+    },
+    {
+      "benchmark": "33 - benchmarks by unnamed33",
+      "abbreviation": "U33",
+      "evxlListingRank": 92,
+      "difficulties": [
+        "Intermediate",
+        "Advanced"
+      ],
+      "scenarios": 7,
+      "ownScenarios": 5,
+      "sampled": 5,
+      "players": 96,
+      "samples": [
+        {
+          "scenario": "33 - Centering 45 Stop",
+          "difficulty": "Intermediate",
+          "entries": 96
+        },
+        {
+          "scenario": "33 - HewVAI 90",
+          "difficulty": "Intermediate",
+          "entries": 85
+        },
+        {
+          "scenario": "33 - Pixel Smoothness",
+          "difficulty": "Intermediate",
+          "entries": 81
+        },
+        {
+          "scenario": "33 - ST60 x_x",
+          "difficulty": "Intermediate",
+          "entries": 109
+        },
+        {
+          "scenario": "33 - SYW",
+          "difficulty": "Intermediate",
+          "entries": 168
+        }
+      ]
+    },
+    {
+      "benchmark": "Ultimate Valorant Benchmark",
+      "abbreviation": "UVB",
+      "evxlListingRank": 93,
+      "difficulties": [
+        "Ultimate Valorant Benchmark"
+      ],
+      "scenarios": 17,
+      "ownScenarios": 5,
+      "sampled": 5,
+      "players": 20331,
+      "samples": [
+        {
+          "scenario": "ADJUSTTRACK - VALORANT",
+          "difficulty": "Ultimate Valorant Benchmark",
+          "entries": 19674
+        },
+        {
+          "scenario": "Lovable SmoothBot",
+          "difficulty": "Ultimate Valorant Benchmark",
+          "entries": 599
+        },
+        {
+          "scenario": "Reflex Micro++ flick reload small",
+          "difficulty": "Ultimate Valorant Benchmark",
+          "entries": 197935
+        },
+        {
+          "scenario": "Valorant Reflex Flick Strafing",
+          "difficulty": "Ultimate Valorant Benchmark",
+          "entries": 149448
+        },
+        {
+          "scenario": "Valorant Small Horizontal Flicks - Don't Miss! (boON's)",
+          "difficulty": "Ultimate Valorant Benchmark",
+          "entries": 20331
+        }
+      ]
+    },
+    {
+      "benchmark": "Viscose Benchmarks S2",
+      "abbreviation": "V",
+      "evxlListingRank": 94,
+      "difficulties": [
+        "Easier",
+        "Medium",
+        "Hard",
+        "Expert"
+      ],
+      "scenarios": 156,
+      "ownScenarios": 65,
+      "sampled": 7,
+      "players": 1748,
+      "samples": [
+        {
+          "scenario": "Air CELESTIAL No UFO Easier",
+          "difficulty": "Easier",
+          "entries": 20793
+        },
+        {
+          "scenario": "1w2ts reload smallflicks 25% smaller",
+          "difficulty": "Expert",
+          "entries": 1748
+        },
+        {
+          "scenario": "Flower Expert 50cm",
+          "difficulty": "Expert",
+          "entries": 597
+        },
+        {
+          "scenario": "beanTS 200% Slightly Smaller",
+          "difficulty": "Expert",
+          "entries": 563
+        },
+        {
+          "scenario": "1w5ts reload",
+          "difficulty": "Hard",
+          "entries": 2147
+        },
+        {
+          "scenario": "Popcorn MV Hard",
+          "difficulty": "Hard",
+          "entries": 1190
+        },
+        {
+          "scenario": "1w2ts reload smallflicks slightly larger",
+          "difficulty": "Medium",
+          "entries": 19341
+        }
+      ]
+    },
+    {
+      "benchmark": "Serpent's Fast Static S1",
+      "abbreviation": "SFS S1",
+      "evxlListingRank": 95,
+      "difficulties": [
+        "Advanced "
+      ],
+      "scenarios": 17,
+      "ownScenarios": 13,
+      "sampled": 8,
+      "players": 8103,
+      "samples": [
+        {
+          "scenario": " 6 Sphere Hipfire 150% Size",
+          "difficulty": "Advanced ",
+          "entries": 2117
+        },
+        {
+          "scenario": "1wall 1target",
+          "difficulty": "Advanced ",
+          "entries": 65187
+        },
+        {
+          "scenario": "1wall6targets TE 180",
+          "difficulty": "Advanced ",
+          "entries": 12091
+        },
+        {
+          "scenario": "1wall6targets TE Horizontalish",
+          "difficulty": "Advanced ",
+          "entries": 2811
+        },
+        {
+          "scenario": "1wall8tiles",
+          "difficulty": "Advanced ",
+          "entries": 746
+        },
+        {
+          "scenario": "2 Tile Jumbo Microshot Speed",
+          "difficulty": "Advanced ",
+          "entries": 4115
+        },
+        {
+          "scenario": "5 Sphere Hipfire",
+          "difficulty": "Advanced ",
+          "entries": 26481
+        },
+        {
+          "scenario": "Microshot Speed",
+          "difficulty": "Advanced ",
+          "entries": 88475
+        }
+      ]
+    },
+    {
+      "benchmark": "project predator",
+      "abbreviation": "PP",
+      "evxlListingRank": 96,
+      "difficulties": [
+        "promax"
+      ],
+      "scenarios": 6,
+      "ownScenarios": 4,
+      "sampled": 4,
+      "players": 75473,
+      "samples": [
+        {
+          "scenario": "3 Tile Jumbo Tile Frenzy",
+          "difficulty": "promax",
+          "entries": 130095
+        },
+        {
+          "scenario": "Cata IC Long Strafes Thin",
+          "difficulty": "promax",
+          "entries": 5411
+        },
+        {
+          "scenario": "Close Evasive Pure",
+          "difficulty": "promax",
+          "entries": 20851
+        },
+        {
+          "scenario": "patTargetSwitch Small No Reload",
+          "difficulty": "promax",
+          "entries": 138544
+        }
+      ]
+    },
+    {
+      "benchmark": "Static Clicking Suite",
+      "abbreviation": "SCS",
+      "evxlListingRank": 97,
+      "difficulties": [
+        "Pre-Advanced",
+        "Advanced"
+      ],
+      "scenarios": 21,
+      "ownScenarios": 21,
+      "sampled": 8,
+      "players": 127,
+      "samples": [
+        {
+          "scenario": "SCS 2s",
+          "difficulty": "Advanced",
+          "entries": 59
+        },
+        {
+          "scenario": "SCS 3L Wide",
+          "difficulty": "Advanced",
+          "entries": 121
+        },
+        {
+          "scenario": "SCS 4xs Dynamic",
+          "difficulty": "Advanced",
+          "entries": 53
+        },
+        {
+          "scenario": "SCS 6s Wide",
+          "difficulty": "Advanced",
+          "entries": 81
+        },
+        {
+          "scenario": "SCS 15xs Narrow",
+          "difficulty": "Pre-Advanced",
+          "entries": 165
+        },
+        {
+          "scenario": "SCS 2s Uniform",
+          "difficulty": "Pre-Advanced",
+          "entries": 133
+        },
+        {
+          "scenario": "SCS 4L Wide Easier",
+          "difficulty": "Pre-Advanced",
+          "entries": 225
+        },
+        {
+          "scenario": "SCS 6s",
+          "difficulty": "Pre-Advanced",
+          "entries": 200
+        }
+      ]
+    },
+    {
+      "benchmark": "vAim",
+      "abbreviation": "vA",
+      "evxlListingRank": 98,
+      "difficulties": [
+        "Medium"
+      ],
+      "scenarios": 12,
+      "ownScenarios": 2,
+      "sampled": 0,
+      "players": null,
+      "samples": []
+    },
+    {
+      "benchmark": "Viscose Entry Benchmarks",
+      "abbreviation": "V",
+      "evxlListingRank": 99,
+      "difficulties": [
+        "Entry"
+      ],
+      "scenarios": 18,
+      "ownScenarios": 17,
+      "sampled": 8,
+      "players": 2557,
+      "samples": [
+        {
+          "scenario": "1w2ts reload smallflicks Entry",
+          "difficulty": "Entry",
+          "entries": 2659
+        },
+        {
+          "scenario": "Controlsphere Viscose Entry",
+          "difficulty": "Entry",
+          "entries": 3054
+        },
+        {
+          "scenario": "PGTI Vertical Iron",
+          "difficulty": "Entry",
+          "entries": 2611
+        },
+        {
+          "scenario": "RawControlSphere Entry",
+          "difficulty": "Entry",
+          "entries": 2502
+        },
+        {
+          "scenario": "StaticSwitchingVox Entry",
+          "difficulty": "Entry",
+          "entries": 2383
+        },
+        {
+          "scenario": "VT Controlsphere Viscose Entry",
+          "difficulty": "Entry",
+          "entries": 2869
+        },
+        {
+          "scenario": "VoxTS Click Entry",
+          "difficulty": "Entry",
+          "entries": 2247
+        },
+        {
+          "scenario": "eth Pasu Micro Entry",
+          "difficulty": "Entry",
+          "entries": 2382
+        }
+      ]
+    },
+    {
+      "benchmark": "350fs",
+      "abbreviation": "350",
+      "evxlListingRank": 100,
+      "difficulties": [
+        "All"
+      ],
+      "scenarios": 25,
+      "ownScenarios": 13,
+      "sampled": 8,
+      "players": 5948,
+      "samples": [
+        {
+          "scenario": "Amare Avasive Pressure Reflex V2",
+          "difficulty": "All",
+          "entries": 2429
+        },
+        {
+          "scenario": "Amare BeanTS Smooth",
+          "difficulty": "All",
+          "entries": 138
+        },
+        {
+          "scenario": "Close Fast Strafes Invincible VAL",
+          "difficulty": "All",
+          "entries": 6832
+        },
+        {
+          "scenario": "DevTS Goated NR Static Extra Small",
+          "difficulty": "All",
+          "entries": 7288
+        },
+        {
+          "scenario": "PureG_Horizontal_Clicking_Valorant_small",
+          "difficulty": "All",
+          "entries": 45247
+        },
+        {
+          "scenario": "VT Controlstrafes Valorant Smaller & Slower",
+          "difficulty": "All",
+          "entries": 5064
+        },
+        {
+          "scenario": "domiSwitch Zeukos",
+          "difficulty": "All",
+          "entries": 3713
+        },
+        {
+          "scenario": "eth Valorant Layered Control v3 40s",
+          "difficulty": "All",
+          "entries": 17538
+        }
+      ]
+    },
+    {
+      "benchmark": "IRIS Mixed Benchmarks [BETA]",
+      "abbreviation": "I33",
+      "evxlListingRank": 101,
+      "difficulties": [
+        "EASY",
+        "ADV",
+        "SMOOTH"
+      ],
+      "scenarios": 42,
+      "ownScenarios": 40,
+      "sampled": 9,
+      "players": 173,
+      "samples": [
+        {
+          "scenario": "IRIS 1w6ts",
+          "difficulty": "ADV",
+          "entries": 99
+        },
+        {
+          "scenario": "IRIS Controlsphere Click",
+          "difficulty": "ADV",
+          "entries": 47
+        },
+        {
+          "scenario": "IRIS Popcorn",
+          "difficulty": "ADV",
+          "entries": 59
+        },
+        {
+          "scenario": "IRIS SmoothbotTS",
+          "difficulty": "ADV",
+          "entries": 43
+        },
+        {
+          "scenario": "IRIS 1w6ts Easy",
+          "difficulty": "EASY",
+          "entries": 500
+        },
+        {
+          "scenario": "IRIS Controlsphere Easy",
+          "difficulty": "EASY",
+          "entries": 404
+        },
+        {
+          "scenario": "IRIS Popcorn Easy",
+          "difficulty": "EASY",
+          "entries": 446
+        },
+        {
+          "scenario": "IRIS SmoothbotTS Easy",
+          "difficulty": "EASY",
+          "entries": 331
+        },
+        {
+          "scenario": "Horizontal Raw Smoothness Rush",
+          "difficulty": "SMOOTH",
+          "entries": 173
+        }
+      ]
+    },
+    {
+      "benchmark": "NRS 360 / Macro Benchmarks",
+      "abbreviation": "NRS",
+      "evxlListingRank": 102,
+      "difficulties": [
+        "Easy",
+        "Hard"
+      ],
+      "scenarios": 24,
+      "ownScenarios": 20,
+      "sampled": 8,
+      "players": 44,
+      "samples": [
+        {
+          "scenario": "6wall18targets small reload",
+          "difficulty": "Easy",
+          "entries": 71285
+        },
+        {
+          "scenario": "Floating Heads Timing 360 Easy",
+          "difficulty": "Easy",
+          "entries": 47
+        },
+        {
+          "scenario": "NRS Air Easy",
+          "difficulty": "Easy",
+          "entries": 39
+        },
+        {
+          "scenario": "Whisphere Sky&Floorbot 70%",
+          "difficulty": "Easy",
+          "entries": 41
+        },
+        {
+          "scenario": "6wall18targets extra small reload",
+          "difficulty": "Hard",
+          "entries": 137
+        },
+        {
+          "scenario": "Floating Heads Timing 360",
+          "difficulty": "Hard",
+          "entries": 53
+        },
+        {
+          "scenario": "NRS Air",
+          "difficulty": "Hard",
+          "entries": 14
+        },
+        {
+          "scenario": "Whisphere Sky&Floorbot 90%",
+          "difficulty": "Hard",
+          "entries": 16
+        }
+      ]
+    },
+    {
+      "benchmark": "Empulse Benchmark",
+      "abbreviation": "EMP",
+      "evxlListingRank": 103,
+      "difficulties": [
+        "Easy",
+        "Advanced"
+      ],
+      "scenarios": 18,
+      "ownScenarios": 3,
+      "sampled": 3,
+      "players": 76,
+      "samples": [
+        {
+          "scenario": "Frog House Smoother 50% smaller",
+          "difficulty": "Advanced",
+          "entries": 64
+        },
+        {
+          "scenario": "Frog House Smooth Entry",
+          "difficulty": "Easy",
+          "entries": 76
+        },
+        {
+          "scenario": "tamTargetSwitch Control Novice",
+          "difficulty": "Easy",
+          "entries": 6411
+        }
+      ]
+    },
+    {
+      "benchmark": "kl2-Reflex",
+      "abbreviation": "RFLX",
+      "evxlListingRank": 104,
+      "difficulties": [
+        "All"
+      ],
+      "scenarios": 10,
+      "ownScenarios": 6,
+      "sampled": 6,
+      "players": 7146,
+      "samples": [
+        {
+          "scenario": "Avasive Micro Reflex Adapt",
+          "difficulty": "All",
+          "entries": 3601
+        },
+        {
+          "scenario": "Reactive Flick v3 Micro",
+          "difficulty": "All",
+          "entries": 6930
+        },
+        {
+          "scenario": "VT PulseShot Valorant",
+          "difficulty": "All",
+          "entries": 39377
+        },
+        {
+          "scenario": "Valorant Microadjustment (Renon)",
+          "difficulty": "All",
+          "entries": 7362
+        },
+        {
+          "scenario": "eth FP OGG Micro 60",
+          "difficulty": "All",
+          "entries": 85758
+        },
+        {
+          "scenario": "eth Triflick Speed",
+          "difficulty": "All",
+          "entries": 3209
+        }
+      ]
+    },
+    {
+      "benchmark": "cA Ground Tracking S1",
+      "abbreviation": "cA",
+      "evxlListingRank": 105,
+      "difficulties": [
+        "Easy",
+        "Hard"
+      ],
+      "scenarios": 14,
+      "ownScenarios": 14,
+      "sampled": 8,
+      "players": 240,
+      "samples": [
+        {
+          "scenario": "cA FBS Easy S1",
+          "difficulty": "Easy",
+          "entries": 431
+        },
+        {
+          "scenario": "cA FLUIDITY Easy S1",
+          "difficulty": "Easy",
+          "entries": 306
+        },
+        {
+          "scenario": "cA REACTIVE Easy S1",
+          "difficulty": "Easy",
+          "entries": 680
+        },
+        {
+          "scenario": "cA VSS Easy S1",
+          "difficulty": "Easy",
+          "entries": 332
+        },
+        {
+          "scenario": "cA FBS Hard S1",
+          "difficulty": "Hard",
+          "entries": 103
+        },
+        {
+          "scenario": "cA FLUIDITY Hard S1",
+          "difficulty": "Hard",
+          "entries": 82
+        },
+        {
+          "scenario": "cA REACTIVE Hard S1",
+          "difficulty": "Hard",
+          "entries": 174
+        },
+        {
+          "scenario": "cA VSS Hard S1",
+          "difficulty": "Hard",
+          "entries": 84
+        }
+      ]
+    },
+    {
+      "benchmark": "i feel evil",
+      "abbreviation": "ife",
+      "evxlListingRank": 106,
+      "difficulties": [
+        "EVIL"
+      ],
+      "scenarios": 9,
+      "ownScenarios": 0,
+      "sampled": 0,
+      "players": null,
+      "samples": []
+    },
+    {
+      "benchmark": "Mastering Gridshot",
+      "abbreviation": "MG",
+      "evxlListingRank": 107,
+      "difficulties": [
+        "Normal"
+      ],
+      "scenarios": 9,
+      "ownScenarios": 4,
+      "sampled": 4,
+      "players": 14847,
+      "samples": [
+        {
+          "scenario": "GridShot 5x5",
+          "difficulty": "Normal",
+          "entries": 18067
+        },
+        {
+          "scenario": "Gridshot 3x3 30s",
+          "difficulty": "Normal",
+          "entries": 79868
+        },
+        {
+          "scenario": "Gridshot Mini",
+          "difficulty": "Normal",
+          "entries": 11626
+        },
+        {
+          "scenario": "True Gridshot Ultimate",
+          "difficulty": "Normal",
+          "entries": 3538
+        }
+      ]
+    },
+    {
+      "benchmark": "SCP: Roleplay Benchmark",
+      "abbreviation": "SCPRP",
+      "evxlListingRank": 108,
+      "difficulties": [
+        "All"
+      ],
+      "scenarios": 9,
+      "ownScenarios": 9,
+      "sampled": 8,
+      "players": 87,
+      "samples": [
+        {
+          "scenario": "SCP RP Air Angelic",
+          "difficulty": "All",
+          "entries": 90
+        },
+        {
+          "scenario": "SCP RP B180TI Sparki",
+          "difficulty": "All",
+          "entries": 63
+        },
+        {
+          "scenario": "SCP RP Close Tappy Strafes",
+          "difficulty": "All",
+          "entries": 93
+        },
+        {
+          "scenario": "SCP RP Kindafar Long Strafes",
+          "difficulty": "All",
+          "entries": 76
+        },
+        {
+          "scenario": "SCP RP Narrow Strafe",
+          "difficulty": "All",
+          "entries": 70
+        },
+        {
+          "scenario": "SCP RP RawControlSphere",
+          "difficulty": "All",
+          "entries": 84
+        },
+        {
+          "scenario": "SCP RP SmoothBot Perfected",
+          "difficulty": "All",
+          "entries": 101
+        },
+        {
+          "scenario": "SCP RP Smoothsphere",
+          "difficulty": "All",
+          "entries": 112
+        }
+      ]
+    },
+    {
+      "benchmark": "Leica Control Bench",
+      "abbreviation": "LEI",
+      "evxlListingRank": 109,
+      "difficulties": [
+        "Easy",
+        "Hard"
+      ],
+      "scenarios": 32,
+      "ownScenarios": 11,
+      "sampled": 8,
+      "players": 989,
+      "samples": [
+        {
+          "scenario": "AbyssTrack Easy",
+          "difficulty": "Easy",
+          "entries": 1083
+        },
+        {
+          "scenario": "Flower Easier",
+          "difficulty": "Easy",
+          "entries": 1238
+        },
+        {
+          "scenario": "SteadyTrack",
+          "difficulty": "Easy",
+          "entries": 1882
+        },
+        {
+          "scenario": "VT Controlsphere Viscose 80%",
+          "difficulty": "Easy",
+          "entries": 1397
+        },
+        {
+          "scenario": "AbyssTrack",
+          "difficulty": "Hard",
+          "entries": 332
+        },
+        {
+          "scenario": "Avasive Control Track Hard",
+          "difficulty": "Hard",
+          "entries": 895
+        },
+        {
+          "scenario": "Flower Expert",
+          "difficulty": "Hard",
+          "entries": 136
+        },
+        {
+          "scenario": "SteadyTrack - Small",
+          "difficulty": "Hard",
+          "entries": 204
+        }
+      ]
+    },
+    {
+      "benchmark": "二三的三角洲行动瞄准基准测试",
+      "abbreviation": "二三",
+      "evxlListingRank": 110,
+      "difficulties": [
+        "简单",
+        "中等",
+        "困难"
+      ],
+      "scenarios": 60,
+      "ownScenarios": 18,
+      "sampled": 8,
+      "players": 6832,
+      "samples": [
+        {
+          "scenario": "1wall5targets_pasu",
+          "difficulty": "中等",
+          "entries": 243990
+        },
+        {
+          "scenario": "Centering II 180 no strafes easier",
+          "difficulty": "中等",
+          "entries": 12824
+        },
+        {
+          "scenario": "5 Sphere Hipfire extra small - mini",
+          "difficulty": "困难",
+          "entries": 88
+        },
+        {
+          "scenario": "Pasu voltaic extra small slower",
+          "difficulty": "困难",
+          "entries": 53
+        },
+        {
+          "scenario": "6 sphere hipfire voltaic extra small",
+          "difficulty": "简单",
+          "entries": 28861
+        },
+        {
+          "scenario": "Night Lantern - @wa11p1per",
+          "difficulty": "简单",
+          "entries": 24694
+        },
+        {
+          "scenario": "RawMouseControlExtraSmall (Discipline)",
+          "difficulty": "简单",
+          "entries": 839
+        },
+        {
+          "scenario": "VSTP huge Strafe",
+          "difficulty": "简单",
+          "entries": 131
+        }
+      ]
+    },
+    {
+      "benchmark": "FN Prospects Benchmark 2026",
+      "abbreviation": "FNP",
+      "evxlListingRank": 111,
+      "difficulties": [
+        "Easy"
+      ],
+      "scenarios": 27,
+      "ownScenarios": 9,
+      "sampled": 8,
+      "players": 2572,
+      "samples": [
+        {
+          "scenario": "PGTI Voltaic Easy 80% Size 150%",
+          "difficulty": "Easy",
+          "entries": 450
+        },
+        {
+          "scenario": "Skeet Clicking v2",
+          "difficulty": "Easy",
+          "entries": 15888
+        },
+        {
+          "scenario": "Slide Bounce Tracking a+",
+          "difficulty": "Easy",
+          "entries": 479
+        },
+        {
+          "scenario": "Tarzaning 360 Switching",
+          "difficulty": "Easy",
+          "entries": 1564
+        },
+        {
+          "scenario": "VT ControlTS Novice S5 Smooth Small",
+          "difficulty": "Easy",
+          "entries": 3580
+        },
+        {
+          "scenario": "VT PGT Novice S5 Precision Focus",
+          "difficulty": "Easy",
+          "entries": 6499
+        },
+        {
+          "scenario": "Whisphere Small & Slow 70%",
+          "difficulty": "Easy",
+          "entries": 267
+        },
+        {
+          "scenario": "beanClick Micro",
+          "difficulty": "Easy",
+          "entries": 7284
+        }
+      ]
+    },
+    {
+      "benchmark": "Jay9's Improvement Benchmark",
+      "abbreviation": "JAY9",
+      "evxlListingRank": 112,
+      "difficulties": [
+        "Beginner",
+        "Intermediate",
+        "Advanced"
+      ],
+      "scenarios": 34,
+      "ownScenarios": 10,
+      "sampled": 8,
+      "players": 2017,
+      "samples": [
+        {
+          "scenario": "VT Aether Advanced S5 bot 3 80%",
+          "difficulty": "Advanced",
+          "entries": 12
+        },
+        {
+          "scenario": "VT Aether Intermediate S5 Bot 1 Invincible",
+          "difficulty": "Advanced",
+          "entries": 128
+        },
+        {
+          "scenario": "Air Spectral Easy 80%",
+          "difficulty": "Beginner",
+          "entries": 113
+        },
+        {
+          "scenario": "SmoothBot Perfected 80%",
+          "difficulty": "Beginner",
+          "entries": 97
+        },
+        {
+          "scenario": "VT Aether Novice S5 Bot 1",
+          "difficulty": "Beginner",
+          "entries": 5624
+        },
+        {
+          "scenario": "VT Aether Novice S5 Bot 3",
+          "difficulty": "Beginner",
+          "entries": 3906
+        },
+        {
+          "scenario": "VT Aether Intermediate S5 Bot 3",
+          "difficulty": "Intermediate",
+          "entries": 6282
+        },
+        {
+          "scenario": "VT Ground Intermediate S5 Bot 3",
+          "difficulty": "Intermediate",
+          "entries": 9067
+        }
+      ]
+    },
+    {
+      "benchmark": "Dantes Static",
+      "abbreviation": "D",
+      "evxlListingRank": 113,
+      "difficulties": [
+        "Hard"
+      ],
+      "scenarios": 18,
+      "ownScenarios": 8,
+      "sampled": 8,
+      "players": 18096,
+      "samples": [
+        {
+          "scenario": "1w6ts reload",
+          "difficulty": "Hard",
+          "entries": 176811
+        },
+        {
+          "scenario": "1wall6targets TE Small",
+          "difficulty": "Hard",
+          "entries": 3778
+        },
+        {
+          "scenario": "Pokeball Frenzy Auto Small 60s",
+          "difficulty": "Hard",
+          "entries": 54633
+        },
+        {
+          "scenario": "VT 1w2ts Advanced S5 Clusters",
+          "difficulty": "Hard",
+          "entries": 3154
+        },
+        {
+          "scenario": "VT 1w2ts Horizontal Small",
+          "difficulty": "Hard",
+          "entries": 20263
+        },
+        {
+          "scenario": "VT 1w2ts Vertical Small",
+          "difficulty": "Hard",
+          "entries": 18950
+        },
+        {
+          "scenario": "cluster farm click smaller 2ts",
+          "difficulty": "Hard",
+          "entries": 314
+        },
+        {
+          "scenario": "rx 1w8ts Clusterish",
+          "difficulty": "Hard",
+          "entries": 17242
+        }
+      ]
+    },
+    {
+      "benchmark": "WPV Benchmark Valorant - Hard",
+      "abbreviation": "WPV",
+      "evxlListingRank": 114,
+      "difficulties": [
+        "Hard"
+      ],
+      "scenarios": 17,
+      "ownScenarios": 17,
+      "sampled": 8,
+      "players": 3267,
+      "samples": [
+        {
+          "scenario": "WPV 1w2t FSD Chain",
+          "difficulty": "Hard",
+          "entries": 5522
+        },
+        {
+          "scenario": "WPV 5 Sphere",
+          "difficulty": "Hard",
+          "entries": 1609
+        },
+        {
+          "scenario": "WPV Floating Heads Pasu Angelic",
+          "difficulty": "Hard",
+          "entries": 1039
+        },
+        {
+          "scenario": "WPV LineTrack V2",
+          "difficulty": "Hard",
+          "entries": 1182
+        },
+        {
+          "scenario": "WPV Multipeek Ascent",
+          "difficulty": "Hard",
+          "entries": 8785
+        },
+        {
+          "scenario": "WPV Reflex Speed Flick - 75",
+          "difficulty": "Hard",
+          "entries": 3180
+        },
+        {
+          "scenario": "WPV TAF Speed",
+          "difficulty": "Hard",
+          "entries": 3353
+        },
+        {
+          "scenario": "WPV starkTS",
+          "difficulty": "Hard",
+          "entries": 6342
+        }
+      ]
+    },
+    {
+      "benchmark": "psevdOverwatch Benchmarks",
+      "abbreviation": "psevOW",
+      "evxlListingRank": 115,
+      "difficulties": [
+        "Hard"
+      ],
+      "scenarios": 17,
+      "ownScenarios": 12,
+      "sampled": 8,
+      "players": 190,
+      "samples": [
+        {
+          "scenario": "Air Angelic Dodge Fixed",
+          "difficulty": "Hard",
+          "entries": 353
+        },
+        {
+          "scenario": "AvasiveXYZ Strafes",
+          "difficulty": "Hard",
+          "entries": 96
+        },
+        {
+          "scenario": "Carmen Winstead Hype Moments Small",
+          "difficulty": "Hard",
+          "entries": 131
+        },
+        {
+          "scenario": "Clicking Cone Headshot",
+          "difficulty": "Hard",
+          "entries": 266
+        },
+        {
+          "scenario": "Micro Reactive Sphere",
+          "difficulty": "Hard",
+          "entries": 111
+        },
+        {
+          "scenario": "Plaza Humble",
+          "difficulty": "Hard",
+          "entries": 133
+        },
+        {
+          "scenario": "SmoothBot UFO",
+          "difficulty": "Hard",
+          "entries": 246
+        },
+        {
+          "scenario": "ToonsClick Elite",
+          "difficulty": "Hard",
+          "entries": 614
+        }
+      ]
+    },
+    {
+      "benchmark": "Iron Pipe Benchmark",
+      "abbreviation": "IRP",
+      "evxlListingRank": 116,
+      "difficulties": [
+        "Easy",
+        "Medium"
+      ],
+      "scenarios": 85,
+      "ownScenarios": 29,
+      "sampled": 8,
+      "players": 189,
+      "samples": [
+        {
+          "scenario": "Aimerz+ PTI Easy S1 80%",
+          "difficulty": "Easy",
+          "entries": 73
+        },
+        {
+          "scenario": "Ground Plaza Sparky v3 Easy Invincible 2",
+          "difficulty": "Easy",
+          "entries": 209
+        },
+        {
+          "scenario": "Ground Plaza Sparky v3 Easy Slowed Invincible 4",
+          "difficulty": "Easy",
+          "entries": 182
+        },
+        {
+          "scenario": "Aimerz+ 1w4ts HF Med S1",
+          "difficulty": "Medium",
+          "entries": 60
+        },
+        {
+          "scenario": "Aimerz+ VGS Easy S1 Bot 3",
+          "difficulty": "Medium",
+          "entries": 161
+        },
+        {
+          "scenario": "Air CELESTIAL Easy Invincible 4 Fixed",
+          "difficulty": "Medium",
+          "entries": 195
+        },
+        {
+          "scenario": "BounceSphere Novice",
+          "difficulty": "Medium",
+          "entries": 5910
+        },
+        {
+          "scenario": "VT B180TI Novice",
+          "difficulty": "Medium",
+          "entries": 6393
+        }
+      ]
+    },
+    {
+      "benchmark": "Tracer Benchmark",
+      "abbreviation": "MCB",
+      "evxlListingRank": 117,
+      "difficulties": [
+        "Hard"
+      ],
+      "scenarios": 17,
+      "ownScenarios": 10,
+      "sampled": 8,
+      "players": 6702,
+      "samples": [
+        {
+          "scenario": "Air UFO Hard Invincible",
+          "difficulty": "Hard",
+          "entries": 13892
+        },
+        {
+          "scenario": "Close fse dodge OW",
+          "difficulty": "Hard",
+          "entries": 2830
+        },
+        {
+          "scenario": "Close long strafes invincible very thin",
+          "difficulty": "Hard",
+          "entries": 12330
+        },
+        {
+          "scenario": "Closerange Tracking Training Humanoid Easy",
+          "difficulty": "Hard",
+          "entries": 1028
+        },
+        {
+          "scenario": "PsalmTS Revolving",
+          "difficulty": "Hard",
+          "entries": 723
+        },
+        {
+          "scenario": "Smoothbot Pauer Close Smooth",
+          "difficulty": "Hard",
+          "entries": 1120
+        },
+        {
+          "scenario": "Tile Frenzy 360 Strafing 400Prct Track",
+          "difficulty": "Hard",
+          "entries": 22326
+        },
+        {
+          "scenario": "psalmflick Strafing Tracking",
+          "difficulty": "Hard",
+          "entries": 10573
+        }
+      ]
+    },
+    {
+      "benchmark": "Jade Palace Dynamic",
+      "abbreviation": "JP",
+      "evxlListingRank": 118,
+      "difficulties": [
+        "Easy",
+        "Hard",
+        "Fundamentals"
+      ],
+      "scenarios": 43,
+      "ownScenarios": 23,
+      "sampled": 8,
+      "players": 183,
+      "samples": [
+        {
+          "scenario": "1w4t Pasu Raspberry Jade",
+          "difficulty": "Easy",
+          "entries": 144
+        },
+        {
+          "scenario": "Controlswitch Click Easy",
+          "difficulty": "Easy",
+          "entries": 221
+        },
+        {
+          "scenario": "Pasu Palace Easy",
+          "difficulty": "Easy",
+          "entries": 421
+        },
+        {
+          "scenario": "Pasu Viscose Entry Small",
+          "difficulty": "Fundamentals",
+          "entries": 275
+        },
+        {
+          "scenario": "1w4t Pasu Raspberry Master",
+          "difficulty": "Hard",
+          "entries": 2642
+        },
+        {
+          "scenario": "CombinedClick",
+          "difficulty": "Hard",
+          "entries": 31
+        },
+        {
+          "scenario": "Leap 180 Avasive",
+          "difficulty": "Hard",
+          "entries": 17
+        },
+        {
+          "scenario": "Popcorn Palace",
+          "difficulty": "Hard",
+          "entries": 23
+        }
+      ]
+    },
+    {
+      "benchmark": "CONTINIUM TacFPS Benchmarks E1",
+      "abbreviation": "CON",
+      "evxlListingRank": 119,
+      "difficulties": [
+        "Normal"
+      ],
+      "scenarios": 27,
+      "ownScenarios": 15,
+      "sampled": 8,
+      "players": 9612,
+      "samples": [
+        {
+          "scenario": "1w2ts Horizontalish",
+          "difficulty": "Normal",
+          "entries": 1280
+        },
+        {
+          "scenario": "1w2ts Pasu Horizontal",
+          "difficulty": "Normal",
+          "entries": 14522
+        },
+        {
+          "scenario": "AvomiTS Micro",
+          "difficulty": "Normal",
+          "entries": 2734
+        },
+        {
+          "scenario": "Extra Controlsphere Horizontal",
+          "difficulty": "Normal",
+          "entries": 517
+        },
+        {
+          "scenario": "HeadClick Altered",
+          "difficulty": "Normal",
+          "entries": 76691
+        },
+        {
+          "scenario": "TamTS Warzone",
+          "difficulty": "Normal",
+          "entries": 48878
+        },
+        {
+          "scenario": "Wavy Micros Intermediate",
+          "difficulty": "Normal",
+          "entries": 4702
+        },
+        {
+          "scenario": "devts static regen",
+          "difficulty": "Normal",
+          "entries": 25336
+        }
+      ]
+    },
+    {
+      "benchmark": "snakbox Benchmark",
+      "abbreviation": "SNB",
+      "evxlListingRank": 120,
+      "difficulties": [
+        "Medium",
+        "Hard"
+      ],
+      "scenarios": 54,
+      "ownScenarios": 11,
+      "sampled": 8,
+      "players": 83,
+      "samples": [
+        {
+          "scenario": "VT ControlTS Intermediate S5 30% Smaller",
+          "difficulty": "Hard",
+          "entries": 69
+        },
+        {
+          "scenario": "VT DotTS Advanced S5 snakbox",
+          "difficulty": "Hard",
+          "entries": 28
+        },
+        {
+          "scenario": "VT PGT Advanced S5 snakbox",
+          "difficulty": "Hard",
+          "entries": 15
+        },
+        {
+          "scenario": "Smoothbot Voltaic 90% Speed",
+          "difficulty": "Medium",
+          "entries": 135
+        },
+        {
+          "scenario": "VT ControlTS Novice S5 30% Smaller",
+          "difficulty": "Medium",
+          "entries": 72
+        },
+        {
+          "scenario": "VT DotTS Intermediate S5 snakbox",
+          "difficulty": "Medium",
+          "entries": 99
+        },
+        {
+          "scenario": "VT PGT Intermediate S5 snakbox",
+          "difficulty": "Medium",
+          "entries": 93
+        },
+        {
+          "scenario": "Whisphere Small & Slow Easy",
+          "difficulty": "Medium",
+          "entries": 581
+        }
+      ]
+    },
+    {
+      "benchmark": "Avasive S2",
+      "abbreviation": "AS2",
+      "evxlListingRank": 121,
+      "difficulties": [
+        "Easier",
+        "Medium",
+        "Hard"
+      ],
+      "scenarios": 96,
+      "ownScenarios": 96,
+      "sampled": 9,
+      "players": 19,
+      "samples": [
+        {
+          "scenario": "1w4ts Avasive Easier",
+          "difficulty": "Easier",
+          "entries": 21
+        },
+        {
+          "scenario": "BounceClick Avasive Easier",
+          "difficulty": "Easier",
+          "entries": 24
+        },
+        {
+          "scenario": "Pasu Avasive Easier",
+          "difficulty": "Easier",
+          "entries": 26
+        },
+        {
+          "scenario": "1w2ts Avasive",
+          "difficulty": "Hard",
+          "entries": 19
+        },
+        {
+          "scenario": "BounceClick Avasive",
+          "difficulty": "Hard",
+          "entries": 16
+        },
+        {
+          "scenario": "Pasu Avasive",
+          "difficulty": "Hard",
+          "entries": 18
+        },
+        {
+          "scenario": "1w2ts Avasive Medium",
+          "difficulty": "Medium",
+          "entries": 18
+        },
+        {
+          "scenario": "BounceClick Avasive Medium",
+          "difficulty": "Medium",
+          "entries": 14
+        },
+        {
+          "scenario": "Pasu Avasive Medium",
+          "difficulty": "Medium",
+          "entries": 22
+        }
+      ]
+    }
+  ]
+}

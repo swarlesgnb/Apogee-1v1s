@@ -55,12 +55,10 @@ import { join } from "node:path";
 
 import { dataFile } from "../src/core/dataDir.ts";
 import { scanStatsFolder } from "../src/core/history/history.ts";
+import { candidateStatsFolders, findStatsFolder } from "../src/app/watcher.ts";
 import { renderRankSheet } from "../src/core/report/rankSheet.ts";
 import { thresholdsFrom, type Distribution } from "../src/core/season/percentiles.ts";
 import { validateSeason, type Season } from "../src/core/season/season.ts";
-
-const DEFAULT_STATS_DIR =
-  "E:\\Steam\\steamapps\\common\\FPSAimTrainer\\FPSAimTrainer\\stats";
 
 /** Energy one rank of one family is worth. Mirrors ENERGY_PER_RANK. */
 const ENERGY_PER_RANK = 2500;
@@ -91,6 +89,7 @@ interface Pool {
   families: {
     family: string;
     category: string;
+    subCategory?: string;
     variants: {
       window: number;
       scenario: string;
@@ -104,6 +103,7 @@ interface SeasonScenarioOut {
   scenario: string;
   category: string;
   family: string;
+  subCategory?: string;
   window: number;
   label: string;
   leaderboardId: number | null;
@@ -126,17 +126,32 @@ function median(values: number[]): number {
 }
 
 /**
- * Carry a category's existing ladder onto a longer one.
+ * Carry a category's existing ladder onto a new one.
  *
- * Aligned to the top, not the bottom. The ladder grew downwards: what used to be rank 1
- * described a good player, so the names somebody chose keep describing the same standing
- * instead of sliding down and re-labelling a beginner with a name meant for someone else.
+ * Growing, this aligns to the top, not the bottom. The ladder grew downwards: what used to
+ * be rank 1 described a good player, so the names somebody chose keep describing the same
+ * standing instead of sliding down and re-labelling a beginner with a name meant for
+ * someone else.
+ *
+ * Shrinking is the mirror of that and must align to the bottom, which is not the same
+ * rule and was the bug: `slice(-depth)` on a shorter ladder keeps the hardest names and
+ * drops the easiest, so every survivor slides down. Cutting season 1 from sixteen ranks
+ * to twelve moved Switching's Peregrine from the top of the ladder to rank 8 and left the
+ * unnamed placeholders of the *removed* window sitting above it - precisely the
+ * re-labelling the alignment above exists to prevent.
+ *
+ * Aligning a shrink to the bottom is correct rather than merely opposite: windows are
+ * ordered easiest first, and the only shrink the pool can express is dropping trailing
+ * ones. Removing window 0 would renumber every family's variants, which no longer round
+ * trips through this function at all. So the ranks that disappear are always the hardest,
+ * and their names are the ones to drop.
  */
 function carryLadder(
   existing: { rankNames?: string[]; rankColors?: Record<string, string> } | undefined,
   depth: number,
 ): { rankNames: string[]; rankColors: Record<string, string> } {
-  const kept = (existing?.rankNames ?? []).slice(-depth);
+  const all = existing?.rankNames ?? [];
+  const kept = depth < all.length ? all.slice(0, depth) : all;
   const missing = depth - kept.length;
 
   const names: string[] = [];
@@ -160,7 +175,19 @@ function carryLadder(
 function main(): void {
   const args = process.argv.slice(2);
   const statsAt = args.indexOf("--stats");
-  const statsDir = statsAt !== -1 ? args[statsAt + 1] : DEFAULT_STATS_DIR;
+  // Detected rather than hardcoded. This was one developer's absolute path, which works
+  // on exactly one machine and tells everybody else the tool is not meant for them.
+  const statsDir = statsAt !== -1 ? args[statsAt + 1] : findStatsFolder();
+  if (!statsDir) {
+    console.error(
+      "no KovaaK's stats folder found. Searched:\n" +
+        candidateStatsFolders()
+          .map((c) => `  ${c}`)
+          .join("\n") +
+        "\nPass one with --stats <folder>.",
+    );
+    process.exit(1);
+  }
   const fresh = args.includes("--fresh");
 
   const pool = JSON.parse(readFileSync(dataFile("pool.json"), "utf8")) as Pool;
@@ -200,42 +227,42 @@ function main(): void {
       );
       process.exit(1);
     }
-    // Within a window the bar must rise, so the percentile must fall.
-    const flat = ladder.findIndex((f, i) => i > 0 && f >= ladder[i - 1]);
-    if (flat > 0) {
-      console.error(
-        `${pool.windows[w]}: rank ${flat + 1} asks for the top ${(ladder[flat] * 100).toFixed(1)}%, ` +
-          `which is no harder than rank ${flat} at ${(ladder[flat - 1] * 100).toFixed(1)}%`,
-      );
-      process.exit(1);
-    }
   }
 
-  // Across a boundary a percentile is allowed to step back, and often has to: the first
-  // rank of a window is measured on a different board from the last rank below it, and a
-  // harder scenario draws a stronger crowd, so the same ability sits at a larger
-  // percentage there.
+  // The whole ladder must fall, handovers included.
   //
-  // How large a step is correct depends on how much harder the new scenarios are, which
-  // nothing here can know. Two windows a step apart chain within a percentage point, while
-  // a window of genuinely harder scenarios can legitimately reopen at the top 8% above one
-  // that closed at 0.1% - there is no room above one in a thousand, and the room is on the
-  // next board along. So this warns rather than refuses.
+  // This used to be two checks: a hard one inside each window, and a soft one across the
+  // boundary that allowed a step back on the reasoning that a harder scenario draws a
+  // stronger crowd, so the same ability sits at a larger share of its board. The reasoning
+  // is sound and the check was still wrong, because a family is graded on the BEST of its
+  // variants: a player holds the highest rank any window gives them, so if Expert opens at
+  // the top 15% where Advanced closed at 2.8%, everybody who reached Advanced's last rank
+  // reached Expert's first at the same moment, and the four ranks between are held by
+  // nobody. Season 1 shipped that shape twice.
   //
-  // The check that actually decides whether a ladder rises is the distribution: it sweeps
-  // the population through the real engine and reports ranks nobody holds. A handover that
-  // is genuinely wrong shows up there as a skipped rank.
-  const HANDOVER_TOLERANCE = 1.25;
-  const wide: string[] = [];
-  for (let w = 1; w < ladders.length; w++) {
-    const below = ladders[w - 1][windowSize - 1];
-    const here = ladders[w][0];
-    if (here > below * HANDOVER_TOLERANCE) {
-      wide.push(
-        `${pool.windows[w]} opens at the top ${(here * 100).toFixed(1)}% where ` +
-          `${pool.windows[w - 1]} closes at ${(below * 100).toFixed(1)}%`,
-      );
-    }
+  // Worse, the soft check did not warn either: it collected its findings into an array
+  // that was never printed. A ladder repeating Advanced's four percentiles verbatim for
+  // Expert built without a word.
+  //
+  // So it refuses now, and it refuses on the sequence rather than per window. Modelling
+  // the real step between two boards needs Apogee's own population, which is season 2's
+  // job; until there is one, a ladder that does not descend is a ladder with holes in it.
+  const sequence = ladders.flat();
+  const collision = sequence.findIndex((f, i) => i > 0 && f >= sequence[i - 1]);
+  if (collision > 0) {
+    const windowOf = (r: number) => pool.windows[Math.floor(r / windowSize)];
+    console.error(
+      `rank ${collision + 1} (${windowOf(collision)}) asks for the top ` +
+        `${(sequence[collision] * 100).toFixed(1)}%, which is no harder than rank ` +
+        `${collision} (${windowOf(collision - 1)}) at ` +
+        `${(sequence[collision - 1] * 100).toFixed(1)}%.`,
+    );
+    console.error(
+      "A family is graded on its best variant, so nobody would ever hold rank " +
+        `${collision}: reaching it reaches rank ${collision + 1} too. Lower the ` +
+        "percentiles in ladder.perWindow so the sixteen fall as one sequence.",
+    );
+    process.exit(1);
   }
 
   const seasonFile = join(dataFile("."), "seasons", "season-1.json");
@@ -276,6 +303,7 @@ function main(): void {
         scenario: v.scenario,
         category: family.category,
         family: family.family,
+        ...(family.subCategory ? { subCategory: family.subCategory } : {}),
         window: v.window,
         label: v.label,
         leaderboardId: v.leaderboardId,

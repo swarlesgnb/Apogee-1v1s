@@ -69,6 +69,22 @@ export function verifyRun(input: VerifyInput): VerifyOutcome {
   const report = checkConsistency(run, input.consistency ?? {});
   const advisories = [...report.advisories];
 
+  // One advisory escalates rather than only recording, and only this one.
+  //
+  // Accuracy above anything the scenario has ever produced is the single trace a
+  // miss-to-hit conversion leaves: that forgery moves misses into hits, so every counter
+  // stays internally consistent and every hard check passes by construction. Recording it
+  // in the notes and grading the run `consistent` would file the one forgery we know
+  // survives under "unremarkable".
+  //
+  // It escalates a `consistent` verdict and nothing else. It cannot reach `rejected` -
+  // it flags 0.52% of genuine runs, and rejecting honest play is the one thing this
+  // module will not do - and it must never touch `verified`, which means KovaaK's own
+  // servers saw the run, evidence a locally fitted ceiling has no standing to overturn.
+  const accuracyFlagged = report.checks.some(
+    (c) => c.id === "accuracy_within_history" && c.status === "fail",
+  );
+
   // An incoherent file is rejected regardless of what any server says. This is the
   // only path that voids a match outright.
   if (!report.coherent) {
@@ -104,8 +120,13 @@ export function verifyRun(input: VerifyInput): VerifyOutcome {
     // since KovaaK's only ever stores the best.
     if (run.score <= serverRecord.score * PB_TOLERANCE) {
       return {
-        tier: "consistent",
-        reasons: ["internally consistent and at or below the verified personal best"],
+        tier: accuracyFlagged ? "suspect" : "consistent",
+        reasons: [
+          accuracyFlagged
+            ? "at or below the verified personal best, but accuracy exceeds anything " +
+              "the scenario has produced"
+            : "internally consistent and at or below the verified personal best",
+        ],
         advisories,
         report,
       };
@@ -128,8 +149,13 @@ export function verifyRun(input: VerifyInput): VerifyOutcome {
   // No server record at all: a scenario the player has never submitted, or a first
   // run. Nothing to contradict, nothing to confirm.
   return {
-    tier: "consistent",
-    reasons: ["internally consistent; no server record to compare against"],
+    tier: accuracyFlagged ? "suspect" : "consistent",
+    reasons: [
+      accuracyFlagged
+        ? "no server record to compare against, and accuracy exceeds anything the " +
+          "scenario has produced"
+        : "internally consistent; no server record to compare against",
+    ],
     advisories,
     report,
   };

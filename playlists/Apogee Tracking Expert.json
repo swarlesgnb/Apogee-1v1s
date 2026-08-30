@@ -1,0 +1,47 @@
+{
+	"playlistName": "Apogee Tracking Expert",
+	"playlistId": 0,
+	"authorSteamId": "",
+	"authorName": "",
+	"scenarioList": [
+		{
+			"scenario_name": "Smoothbot Pauer",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "waldoTS",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "Ground Plaza Sparky v3 OW",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "Air CELESTIAL",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "Controlsphere rAim",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "VT Raw Control Intermediate S5 Hard",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "Air Voltaic",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "Close Fast Strafes Invincible - Thin",
+			"play_Count": 1
+		}
+	],
+	"description": "Season 1 practice. 8 scenarios, the ones this season ranks you on. Play them as often as you like - nothing here is a match, and none of it settles anything.",
+	"hasOfflineScenarios": false,
+	"hasEdited": true,
+	"shareCode": "",
+	"version": 31,
+	"updated": 1788031556,
+	"isPrivate": false
+}

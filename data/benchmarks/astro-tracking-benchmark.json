@@ -1,0 +1,753 @@
+{
+  "benchmarkName": "Astro Tracking Benchmark",
+  "abbreviation": "ATB",
+  "color": "#1E90FF",
+  "spreadsheetURL": "https://docs.google.com/spreadsheets/d/1KXrXJpCl8xnoa3JuFcthE306Q9R9MOAJWhXj_xXzLOQ/edit?gid=788802502#gid=788802502",
+  "evxlUrl": "https://evxl.app/benchmarks/Astro%20Tracking%20Benchmark",
+  "source": "kovaaks.com benchmarks API + evxl registry",
+  "fetchedAt": "2026-08-29T16:58:08Z",
+  "difficulties": [
+    {
+      "name": "Easy",
+      "kovaaksBenchmarkId": 713,
+      "rankNames": [
+        "Copper",
+        "Iron",
+        "Brass",
+        "Silica"
+      ],
+      "rankColors": {
+        "Copper": "#d99b5d",
+        "Iron": "#e2e7f1",
+        "Brass": "#d8c44f",
+        "Silica": "#e1f5ff"
+      },
+      "categories": [
+        {
+          "name": "Precision",
+          "rankMaxes": [
+            12500,
+            25000,
+            37500,
+            50000
+          ],
+          "scenarios": [
+            {
+              "name": "Smoothsphere Diamond",
+              "leaderboardId": 11939,
+              "rankMaxes": [
+                4250,
+                5000,
+                5500,
+                6000
+              ]
+            },
+            {
+              "name": "Smoothbot Pauer Glider Level 1",
+              "leaderboardId": 106199,
+              "rankMaxes": [
+                1000,
+                1200,
+                1450,
+                1650
+              ]
+            },
+            {
+              "name": "Avasive Horizontal Track Easy",
+              "leaderboardId": 131131,
+              "rankMaxes": [
+                5000,
+                6250,
+                7500,
+                8750
+              ]
+            },
+            {
+              "name": "CB SmoothTrack VERY EASY",
+              "leaderboardId": 97447,
+              "rankMaxes": [
+                1700,
+                2000,
+                2300,
+                2600
+              ]
+            },
+            {
+              "name": "VT Snake Track Novice S5 Hard",
+              "leaderboardId": 104620,
+              "rankMaxes": [
+                2000,
+                2250,
+                2500,
+                2775
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Control",
+          "rankMaxes": [
+            10000,
+            20000,
+            30000,
+            40000
+          ],
+          "scenarios": [
+            {
+              "name": "Controlsphere Diamond",
+              "leaderboardId": 11932,
+              "rankMaxes": [
+                6500,
+                7500,
+                8250,
+                9000
+              ]
+            },
+            {
+              "name": "Avasphere Novice",
+              "leaderboardId": 134667,
+              "rankMaxes": [
+                1600,
+                1850,
+                2000,
+                2250
+              ]
+            },
+            {
+              "name": "VT Raw Control Novice S5 Hard",
+              "leaderboardId": 106739,
+              "rankMaxes": [
+                2250,
+                2500,
+                2750,
+                3000
+              ]
+            },
+            {
+              "name": "Whisphere 80%",
+              "leaderboardId": 55382,
+              "rankMaxes": [
+                8000,
+                9000,
+                10000,
+                11000
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Micro",
+          "rankMaxes": [
+            10000,
+            20000,
+            30000,
+            40000
+          ],
+          "scenarios": [
+            {
+              "name": "Avasive bukeTrack Easy",
+              "leaderboardId": 130665,
+              "rankMaxes": [
+                5000,
+                5750,
+                6500,
+                7250
+              ]
+            },
+            {
+              "name": "cloverRawControl - LVL 1",
+              "leaderboardId": 113777,
+              "rankMaxes": [
+                5800,
+                6400,
+                7000,
+                7600
+              ]
+            },
+            {
+              "name": "Controlsphere Far, Far Larger 90%",
+              "leaderboardId": 128692,
+              "rankMaxes": [
+                6250,
+                7000,
+                7750,
+                8500
+              ]
+            },
+            {
+              "name": "AmareRawControl Brent1",
+              "leaderboardId": 91388,
+              "rankMaxes": [
+                4500,
+                5750,
+                6500,
+                7250
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Reactive",
+          "rankMaxes": [
+            10000,
+            20000,
+            30000,
+            40000
+          ],
+          "scenarios": [
+            {
+              "name": "Air CELESTIAL No UFO Easy Slowed",
+              "leaderboardId": 131872,
+              "rankMaxes": [
+                833,
+                842,
+                851,
+                860
+              ]
+            },
+            {
+              "name": "VT Ground Novice S5 Hard",
+              "leaderboardId": 107511,
+              "rankMaxes": [
+                1750,
+                2000,
+                2250,
+                2500
+              ]
+            },
+            {
+              "name": "Air Angelic rAim Biggest",
+              "leaderboardId": 12233,
+              "rankMaxes": [
+                857,
+                869,
+                881,
+                893
+              ]
+            },
+            {
+              "name": "Ground Plaza Sparky v3 Easy",
+              "leaderboardId": 134502,
+              "rankMaxes": [
+                842,
+                853,
+                864,
+                875
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Normal",
+      "kovaaksBenchmarkId": 698,
+      "rankNames": [
+        "Bronze",
+        "Silver",
+        "Gold",
+        "Platinum",
+        "Diamond"
+      ],
+      "rankColors": {
+        "Bronze": "#c29785",
+        "Silver": "#c8ccd4",
+        "Gold": "#d8b44f",
+        "Platinum": "#c3cae7",
+        "Diamond": "#a6e3ff"
+      },
+      "categories": [
+        {
+          "name": "Precision",
+          "rankMaxes": [
+            10000,
+            20000,
+            30000,
+            40000,
+            50000
+          ],
+          "scenarios": [
+            {
+              "name": "Smoothsphere",
+              "leaderboardId": 396,
+              "rankMaxes": [
+                5400,
+                5900,
+                6400,
+                6900,
+                7400
+              ]
+            },
+            {
+              "name": "Smoothbot Pauer Glider Novice",
+              "leaderboardId": 109838,
+              "rankMaxes": [
+                1200,
+                1400,
+                1600,
+                1800,
+                2000
+              ]
+            },
+            {
+              "name": "Avasive Horizontal Track",
+              "leaderboardId": 128608,
+              "rankMaxes": [
+                8000,
+                8750,
+                9500,
+                10250,
+                11000
+              ]
+            },
+            {
+              "name": "CB SmoothTrack Easy",
+              "leaderboardId": 93209,
+              "rankMaxes": [
+                1950,
+                2400,
+                2650,
+                2900,
+                3100
+              ]
+            },
+            {
+              "name": "VT Snake Track Intermediate S5",
+              "leaderboardId": 98045,
+              "rankMaxes": [
+                1750,
+                2250,
+                2500,
+                3000,
+                3500
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Control",
+          "rankMaxes": [
+            8000,
+            16000,
+            24000,
+            32000,
+            40000
+          ],
+          "scenarios": [
+            {
+              "name": "Controlsphere",
+              "leaderboardId": 392,
+              "rankMaxes": [
+                7250,
+                8000,
+                8750,
+                9500,
+                10250
+              ]
+            },
+            {
+              "name": "Avasphere",
+              "leaderboardId": 128709,
+              "rankMaxes": [
+                1600,
+                1850,
+                2000,
+                2250,
+                2500
+              ]
+            },
+            {
+              "name": "VT Raw Control Intermediate S5",
+              "leaderboardId": 98048,
+              "rankMaxes": [
+                2250,
+                2600,
+                2950,
+                3300,
+                3650
+              ]
+            },
+            {
+              "name": "Whisphere",
+              "leaderboardId": 34963,
+              "rankMaxes": [
+                9500,
+                11000,
+                12500,
+                14000,
+                15000
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Micro",
+          "rankMaxes": [
+            8000,
+            16000,
+            24000,
+            32000,
+            40000
+          ],
+          "scenarios": [
+            {
+              "name": "Avasive bukeTrack",
+              "leaderboardId": 125117,
+              "rankMaxes": [
+                5750,
+                6500,
+                7250,
+                8000,
+                8750
+              ]
+            },
+            {
+              "name": "cloverRawControl Easy",
+              "leaderboardId": 69150,
+              "rankMaxes": [
+                6400,
+                7000,
+                7600,
+                8200,
+                8800
+              ]
+            },
+            {
+              "name": "Controlsphere Far Larger",
+              "leaderboardId": 124981,
+              "rankMaxes": [
+                7250,
+                8000,
+                8750,
+                9500,
+                10250
+              ]
+            },
+            {
+              "name": "AmareRawControl Easy",
+              "leaderboardId": 89520,
+              "rankMaxes": [
+                5500,
+                6250,
+                7000,
+                7750,
+                8500
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Reactive",
+          "rankMaxes": [
+            8000,
+            16000,
+            24000,
+            32000,
+            40000
+          ],
+          "scenarios": [
+            {
+              "name": "Air CELESTIAL No UFO Easy",
+              "leaderboardId": 70930,
+              "rankMaxes": [
+                837,
+                848,
+                859,
+                870,
+                881
+              ]
+            },
+            {
+              "name": "VT Ground Intermediate S5",
+              "leaderboardId": 101743,
+              "rankMaxes": [
+                2000,
+                2250,
+                2500,
+                2750,
+                3000
+              ]
+            },
+            {
+              "name": "Air Angelic rAim Easy",
+              "leaderboardId": 572,
+              "rankMaxes": [
+                857,
+                869,
+                881,
+                893,
+                905
+              ]
+            },
+            {
+              "name": "Ground Plaza Sparky V3",
+              "leaderboardId": 517,
+              "rankMaxes": [
+                843,
+                854,
+                865,
+                876,
+                887
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Advanced",
+      "kovaaksBenchmarkId": 699,
+      "rankNames": [
+        "Emerald",
+        "Amethyst",
+        "Ruby",
+        "Opal",
+        "Cardboard"
+      ],
+      "rankColors": {
+        "Emerald": "#3af09a",
+        "Amethyst": "#ea8cff",
+        "Ruby": "#ee3169",
+        "Opal": "#f5fcff",
+        "Cardboard": "#ffc8ab"
+      },
+      "categories": [
+        {
+          "name": "Precision",
+          "rankMaxes": [
+            10000,
+            20000,
+            30000,
+            40000,
+            50000
+          ],
+          "scenarios": [
+            {
+              "name": "Smoothsphere Master",
+              "leaderboardId": 14854,
+              "rankMaxes": [
+                6250,
+                6750,
+                7250,
+                7550,
+                7850
+              ]
+            },
+            {
+              "name": "Smoothbot Pauer Glider Intermediate",
+              "leaderboardId": 109836,
+              "rankMaxes": [
+                1700,
+                1850,
+                2100,
+                2225,
+                2350
+              ]
+            },
+            {
+              "name": "Avasive Horizontal Track Hard",
+              "leaderboardId": 128614,
+              "rankMaxes": [
+                9500,
+                10250,
+                11000,
+                11375,
+                11750
+              ]
+            },
+            {
+              "name": "CB SmoothTrack",
+              "leaderboardId": 92603,
+              "rankMaxes": [
+                2000,
+                2250,
+                2500,
+                2625,
+                2750
+              ]
+            },
+            {
+              "name": "VT Snake Track Intermediate S5 Hard",
+              "leaderboardId": 105219,
+              "rankMaxes": [
+                2800,
+                2900,
+                3000,
+                3100,
+                3200
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Control",
+          "rankMaxes": [
+            8000,
+            16000,
+            24000,
+            32000,
+            40000
+          ],
+          "scenarios": [
+            {
+              "name": "Controlsphere rAim",
+              "leaderboardId": 5102,
+              "rankMaxes": [
+                8500,
+                9250,
+                10000,
+                10375,
+                10750
+              ]
+            },
+            {
+              "name": "Avasphere Hard 75%",
+              "leaderboardId": 131964,
+              "rankMaxes": [
+                2550,
+                2700,
+                2850,
+                3000,
+                3150
+              ]
+            },
+            {
+              "name": "VT Raw Control Intermediate S5 Hard",
+              "leaderboardId": 105155,
+              "rankMaxes": [
+                2700,
+                2800,
+                2900,
+                3000,
+                3100
+              ]
+            },
+            {
+              "name": "Extra Whisphere 80%",
+              "leaderboardId": 104954,
+              "rankMaxes": [
+                10750,
+                11500,
+                12250,
+                12750,
+                13250
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Micro",
+          "rankMaxes": [
+            8000,
+            16000,
+            24000,
+            32000,
+            40000
+          ],
+          "scenarios": [
+            {
+              "name": "Avasive bukeTrack Hard",
+              "leaderboardId": 125228,
+              "rankMaxes": [
+                4750,
+                5500,
+                6250,
+                6750,
+                7250
+              ]
+            },
+            {
+              "name": "cloverRawControl",
+              "leaderboardId": 68993,
+              "rankMaxes": [
+                5500,
+                6250,
+                7000,
+                7500,
+                8000
+              ]
+            },
+            {
+              "name": "Controlsphere Far",
+              "leaderboardId": 24247,
+              "rankMaxes": [
+                7250,
+                8000,
+                8750,
+                9250,
+                9750
+              ]
+            },
+            {
+              "name": "AmareRawControl",
+              "leaderboardId": 89540,
+              "rankMaxes": [
+                6500,
+                7000,
+                7500,
+                7850,
+                8200
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Reactive",
+          "rankMaxes": [
+            8000,
+            16000,
+            24000,
+            32000,
+            40000
+          ],
+          "scenarios": [
+            {
+              "name": "Air CELESTIAL No UFO",
+              "leaderboardId": 70970,
+              "rankMaxes": [
+                862,
+                871,
+                880,
+                889,
+                898
+              ]
+            },
+            {
+              "name": "VT Ground Intermediate S5 Hard",
+              "leaderboardId": 104677,
+              "rankMaxes": [
+                2150,
+                2300,
+                2550,
+                2700,
+                2850
+              ]
+            },
+            {
+              "name": "Air Angelic",
+              "leaderboardId": 419,
+              "rankMaxes": [
+                891,
+                902,
+                913,
+                919,
+                925
+              ]
+            },
+            {
+              "name": "Ground Plaza Sparky v3 OW",
+              "leaderboardId": 871,
+              "rankMaxes": [
+                860,
+                871,
+                882,
+                889,
+                896
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

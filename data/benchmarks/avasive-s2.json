@@ -1,0 +1,1415 @@
+{
+  "benchmarkName": "Avasive S2",
+  "abbreviation": "AS2",
+  "color": "#1E90FF",
+  "spreadsheetURL": "https://docs.google.com/spreadsheets/d/1yF2M1j_FSN5MXz-TdxEnvsdNZ_nFZhGDSBrygWFJdDE/edit?usp=sharing",
+  "evxlUrl": "https://evxl.app/benchmarks/Avasive%20S2",
+  "source": "kovaaks.com benchmarks API + evxl registry",
+  "fetchedAt": "2026-08-29T16:57:45Z",
+  "difficulties": [
+    {
+      "name": "Easier",
+      "kovaaksBenchmarkId": 2843,
+      "rankNames": [
+        "Flutter",
+        "Sparkle",
+        "Flare",
+        "Glow",
+        "Charm"
+      ],
+      "rankColors": {
+        "Flutter": "#a2afed",
+        "Sparkle": "#a47ddc",
+        "Flare": "#dc937d",
+        "Glow": "#ecf269",
+        "Charm": "#5b9dab"
+      },
+      "categories": [
+        {
+          "name": "Dynamic Clicking",
+          "rankMaxes": [
+            40000,
+            32000,
+            24000,
+            16000,
+            8000
+          ],
+          "scenarios": [
+            {
+              "name": "Pasu Avasive Easier",
+              "leaderboardId": 203395,
+              "rankMaxes": [
+                670,
+                850,
+                1010,
+                1150,
+                1250
+              ]
+            },
+            {
+              "name": "AbyssClick Avasive Easier",
+              "leaderboardId": 203396,
+              "rankMaxes": [
+                640,
+                760,
+                860,
+                940,
+                1000
+              ]
+            },
+            {
+              "name": "BounceClick Avasive Easier",
+              "leaderboardId": 203397,
+              "rankMaxes": [
+                680,
+                760,
+                840,
+                910,
+                980
+              ]
+            },
+            {
+              "name": "JennClick Avasive Easier",
+              "leaderboardId": 203556,
+              "rankMaxes": [
+                380,
+                500,
+                600,
+                680,
+                740
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Static Clicking",
+          "rankMaxes": [
+            40000,
+            32000,
+            24000,
+            16000,
+            8000
+          ],
+          "scenarios": [
+            {
+              "name": "1w4ts Avasive Easier",
+              "leaderboardId": 203399,
+              "rankMaxes": [
+                700,
+                840,
+                960,
+                1050,
+                1120
+              ]
+            },
+            {
+              "name": "Clustershot Avasive Easier",
+              "leaderboardId": 203400,
+              "rankMaxes": [
+                1020,
+                1150,
+                1260,
+                1350,
+                1420
+              ]
+            },
+            {
+              "name": "ww6t Avasive Easier",
+              "leaderboardId": 203401,
+              "rankMaxes": [
+                850,
+                980,
+                1090,
+                1180,
+                1250
+              ]
+            },
+            {
+              "name": "Odd-Angleshot Avasive Easier",
+              "leaderboardId": 203402,
+              "rankMaxes": [
+                820,
+                950,
+                1060,
+                1150,
+                1220
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Precise Tracking",
+          "rankMaxes": [
+            40000,
+            32000,
+            24000,
+            16000,
+            8000
+          ],
+          "scenarios": [
+            {
+              "name": "SmoothBot Avasive Easier",
+              "leaderboardId": 203403,
+              "rankMaxes": [
+                2550,
+                2925,
+                3275,
+                3600,
+                3900
+              ]
+            },
+            {
+              "name": "PTI Avasive Easier",
+              "leaderboardId": 203553,
+              "rankMaxes": [
+                2025,
+                2375,
+                2700,
+                3000,
+                3275
+              ]
+            },
+            {
+              "name": "PreciseTrack Avasive Easier",
+              "leaderboardId": 203404,
+              "rankMaxes": [
+                2625,
+                3000,
+                3350,
+                3675,
+                3975
+              ]
+            },
+            {
+              "name": "Leapstrafes Avasive Easier",
+              "leaderboardId": 203405,
+              "rankMaxes": [
+                1975,
+                2350,
+                2700,
+                3025,
+                3325
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Reactive Tracking",
+          "rankMaxes": [
+            40000,
+            32000,
+            24000,
+            16000,
+            8000
+          ],
+          "scenarios": [
+            {
+              "name": "AirXYZ Avasive Easier",
+              "leaderboardId": 203503,
+              "rankMaxes": [
+                2150,
+                2325,
+                2475,
+                2625,
+                2750
+              ]
+            },
+            {
+              "name": "PasuXYZ Avasive Easier",
+              "leaderboardId": 203467,
+              "rankMaxes": [
+                2550,
+                2750,
+                2925,
+                3100,
+                3250
+              ]
+            },
+            {
+              "name": "Plaza Avasive Easier",
+              "leaderboardId": 203426,
+              "rankMaxes": [
+                3250,
+                3475,
+                3675,
+                3850,
+                4000
+              ]
+            },
+            {
+              "name": "Thin Strafes Avasive Easier",
+              "leaderboardId": 203409,
+              "rankMaxes": [
+                1550,
+                1775,
+                1975,
+                2150,
+                2300
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Speed Switching",
+          "rankMaxes": [
+            40000,
+            32000,
+            24000,
+            16000,
+            8000
+          ],
+          "scenarios": [
+            {
+              "name": "Pokeball Wide Avasive Easier",
+              "leaderboardId": 203410,
+              "rankMaxes": [
+                890,
+                970,
+                1050,
+                1120,
+                1190
+              ]
+            },
+            {
+              "name": "PoleTS Avasive Easier",
+              "leaderboardId": 203411,
+              "rankMaxes": [
+                780,
+                850,
+                920,
+                990,
+                1050
+              ]
+            },
+            {
+              "name": "DollTS Avasive Easier",
+              "leaderboardId": 203412,
+              "rankMaxes": [
+                740,
+                820,
+                890,
+                950,
+                1010
+              ]
+            },
+            {
+              "name": "psalmTS Avasive Easier",
+              "leaderboardId": 203413,
+              "rankMaxes": [
+                840,
+                930,
+                1010,
+                1080,
+                1150
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Evasive Switching",
+          "rankMaxes": [
+            40000,
+            32000,
+            24000,
+            16000,
+            8000
+          ],
+          "scenarios": [
+            {
+              "name": "SmoothTS Avasive Easier",
+              "leaderboardId": 203414,
+              "rankMaxes": [
+                320,
+                370,
+                410,
+                450,
+                480
+              ]
+            },
+            {
+              "name": "BounceTS Avasive Easier",
+              "leaderboardId": 203415,
+              "rankMaxes": [
+                600,
+                660,
+                720,
+                770,
+                820
+              ]
+            },
+            {
+              "name": "AngelTS Avasive Easier",
+              "leaderboardId": 203416,
+              "rankMaxes": [
+                360,
+                410,
+                460,
+                500,
+                540
+              ]
+            },
+            {
+              "name": "AbyssTS Avasive Easier",
+              "leaderboardId": 203417,
+              "rankMaxes": [
+                580,
+                640,
+                690,
+                740,
+                780
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Strafing",
+          "rankMaxes": [
+            40000,
+            32000,
+            24000,
+            16000,
+            8000
+          ],
+          "scenarios": [
+            {
+              "name": "HeadClick Dodge Avasive Easier",
+              "leaderboardId": 203418,
+              "rankMaxes": [
+                570,
+                640,
+                700,
+                760,
+                810
+              ]
+            },
+            {
+              "name": "BounceClick Dodge Avasive Easier",
+              "leaderboardId": 203419,
+              "rankMaxes": [
+                600,
+                670,
+                740,
+                800,
+                860
+              ]
+            },
+            {
+              "name": "Ground Dodge Avasive Easier",
+              "leaderboardId": 203420,
+              "rankMaxes": [
+                2900,
+                3075,
+                3275,
+                3450,
+                3600
+              ]
+            },
+            {
+              "name": "AirTS Dodge Avasive Easier",
+              "leaderboardId": 203421,
+              "rankMaxes": [
+                430,
+                480,
+                530,
+                570,
+                610
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Possession",
+          "rankMaxes": [
+            40000,
+            32000,
+            24000,
+            16000,
+            8000
+          ],
+          "scenarios": [
+            {
+              "name": "AMS Avasive Easier",
+              "leaderboardId": 203422,
+              "rankMaxes": [
+                390,
+                490,
+                580,
+                660,
+                730
+              ]
+            },
+            {
+              "name": "AngelClick Revolving Avasive Easier",
+              "leaderboardId": 203808,
+              "rankMaxes": [
+                500,
+                630,
+                740,
+                830,
+                900
+              ]
+            },
+            {
+              "name": "Bounce House Precise Avasive Easier",
+              "leaderboardId": 203424,
+              "rankMaxes": [
+                2600,
+                2900,
+                3125,
+                3300,
+                3450
+              ]
+            },
+            {
+              "name": "Smoothsphere Revolving Avasive Easier",
+              "leaderboardId": 203811,
+              "rankMaxes": [
+                2750,
+                3050,
+                3275,
+                3450,
+                3600
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Medium",
+      "kovaaksBenchmarkId": 2844,
+      "rankNames": [
+        "Charm",
+        "Entice",
+        "Allure",
+        "Delight",
+        "Tranquility"
+      ],
+      "rankColors": {
+        "Charm": "#5b9dab",
+        "Entice": "#a25069",
+        "Allure": "#4f5ea9",
+        "Delight": "#8d4fa9",
+        "Tranquility": "#8df97b"
+      },
+      "categories": [
+        {
+          "name": "Dynamic Clicking",
+          "rankMaxes": [
+            40000,
+            32000,
+            24000,
+            16000,
+            8000
+          ],
+          "scenarios": [
+            {
+              "name": "Pasu Avasive Medium",
+              "leaderboardId": 203362,
+              "rankMaxes": [
+                900,
+                1040,
+                1160,
+                1280,
+                1400
+              ]
+            },
+            {
+              "name": "AbyssClick Avasive Medium",
+              "leaderboardId": 203363,
+              "rankMaxes": [
+                820,
+                900,
+                980,
+                1060,
+                1140
+              ]
+            },
+            {
+              "name": "BounceClick Avasive Medium",
+              "leaderboardId": 203364,
+              "rankMaxes": [
+                710,
+                810,
+                900,
+                980,
+                1060
+              ]
+            },
+            {
+              "name": "JennClick Avasive Medium",
+              "leaderboardId": 203555,
+              "rankMaxes": [
+                480,
+                580,
+                660,
+                740,
+                820
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Static Clicking",
+          "rankMaxes": [
+            40000,
+            32000,
+            24000,
+            16000,
+            8000
+          ],
+          "scenarios": [
+            {
+              "name": "1w2ts Avasive Medium",
+              "leaderboardId": 203366,
+              "rankMaxes": [
+                840,
+                940,
+                1020,
+                1100,
+                1160
+              ]
+            },
+            {
+              "name": "Clustershot Avasive Medium",
+              "leaderboardId": 203367,
+              "rankMaxes": [
+                1200,
+                1290,
+                1380,
+                1480,
+                1580
+              ]
+            },
+            {
+              "name": "ww4t Avasive Medium",
+              "leaderboardId": 203368,
+              "rankMaxes": [
+                990,
+                1070,
+                1140,
+                1210,
+                1280
+              ]
+            },
+            {
+              "name": "Odd-Angleshot Avasive Medium",
+              "leaderboardId": 203369,
+              "rankMaxes": [
+                940,
+                1060,
+                1170,
+                1270,
+                1360
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Precise Tracking",
+          "rankMaxes": [
+            40000,
+            32000,
+            24000,
+            16000,
+            8000
+          ],
+          "scenarios": [
+            {
+              "name": "SmoothBot Avasive Medium",
+              "leaderboardId": 203370,
+              "rankMaxes": [
+                2725,
+                3100,
+                3425,
+                3750,
+                4050
+              ]
+            },
+            {
+              "name": "PTI Avasive Medium",
+              "leaderboardId": 203552,
+              "rankMaxes": [
+                2525,
+                2850,
+                3150,
+                3425,
+                3700
+              ]
+            },
+            {
+              "name": "PreciseTrack Avasive Medium",
+              "leaderboardId": 203371,
+              "rankMaxes": [
+                2850,
+                3175,
+                3500,
+                3825,
+                4125
+              ]
+            },
+            {
+              "name": "Leapstrafes Avasive Medium",
+              "leaderboardId": 203372,
+              "rankMaxes": [
+                2475,
+                2850,
+                3175,
+                3500,
+                3800
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Reactive Tracking",
+          "rankMaxes": [
+            40000,
+            32000,
+            24000,
+            16000,
+            8000
+          ],
+          "scenarios": [
+            {
+              "name": "AirXYZ Avasive Medium",
+              "leaderboardId": 203504,
+              "rankMaxes": [
+                1625,
+                1950,
+                2225,
+                2450,
+                2675
+              ]
+            },
+            {
+              "name": "PasuXYZ Avasive Medium",
+              "leaderboardId": 203465,
+              "rankMaxes": [
+                2150,
+                2425,
+                2650,
+                2875,
+                3075
+              ]
+            },
+            {
+              "name": "Plaza Avasive Medium",
+              "leaderboardId": 203376,
+              "rankMaxes": [
+                3175,
+                3450,
+                3675,
+                3900,
+                4100
+              ]
+            },
+            {
+              "name": "Thin Strafes Avasive Medium",
+              "leaderboardId": 203377,
+              "rankMaxes": [
+                1475,
+                1700,
+                1900,
+                2075,
+                2225
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Speed Switching",
+          "rankMaxes": [
+            40000,
+            32000,
+            24000,
+            16000,
+            8000
+          ],
+          "scenarios": [
+            {
+              "name": "Pokeball Wide Avasive Medium",
+              "leaderboardId": 203378,
+              "rankMaxes": [
+                920,
+                1000,
+                1080,
+                1150,
+                1220
+              ]
+            },
+            {
+              "name": "PoleTS Avasive Medium",
+              "leaderboardId": 203379,
+              "rankMaxes": [
+                860,
+                940,
+                1010,
+                1080,
+                1140
+              ]
+            },
+            {
+              "name": "DollTS Avasive Medium",
+              "leaderboardId": 203380,
+              "rankMaxes": [
+                830,
+                910,
+                980,
+                1040,
+                1100
+              ]
+            },
+            {
+              "name": "psalmTS Avasive Medium",
+              "leaderboardId": 203381,
+              "rankMaxes": [
+                870,
+                950,
+                1030,
+                1110,
+                1180
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Evasive Switching",
+          "rankMaxes": [
+            40000,
+            32000,
+            24000,
+            16000,
+            8000
+          ],
+          "scenarios": [
+            {
+              "name": "SmoothTS Avasive Medium",
+              "leaderboardId": 203382,
+              "rankMaxes": [
+                340,
+                390,
+                430,
+                470,
+                500
+              ]
+            },
+            {
+              "name": "BounceTS Avasive Medium",
+              "leaderboardId": 203383,
+              "rankMaxes": [
+                610,
+                680,
+                740,
+                800,
+                850
+              ]
+            },
+            {
+              "name": "AngelTS Avasive Medium",
+              "leaderboardId": 203384,
+              "rankMaxes": [
+                380,
+                440,
+                490,
+                530,
+                570
+              ]
+            },
+            {
+              "name": "AbyssTS Avasive Medium",
+              "leaderboardId": 203385,
+              "rankMaxes": [
+                590,
+                650,
+                710,
+                760,
+                800
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Strafing",
+          "rankMaxes": [
+            40000,
+            32000,
+            24000,
+            16000,
+            8000
+          ],
+          "scenarios": [
+            {
+              "name": "HeadClick Dodge Avasive Medium",
+              "leaderboardId": 203386,
+              "rankMaxes": [
+                600,
+                690,
+                770,
+                840,
+                900
+              ]
+            },
+            {
+              "name": "BounceClick Dodge Avasive Medium",
+              "leaderboardId": 203387,
+              "rankMaxes": [
+                650,
+                740,
+                820,
+                890,
+                950
+              ]
+            },
+            {
+              "name": "Ground Dodge Avasive Medium",
+              "leaderboardId": 203388,
+              "rankMaxes": [
+                2800,
+                3050,
+                3275,
+                3500,
+                3850
+              ]
+            },
+            {
+              "name": "AirTS Dodge Avasive Medium",
+              "leaderboardId": 203389,
+              "rankMaxes": [
+                480,
+                540,
+                590,
+                630,
+                670
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Possession",
+          "rankMaxes": [
+            40000,
+            32000,
+            24000,
+            16000,
+            8000
+          ],
+          "scenarios": [
+            {
+              "name": "AMS Avasive Medium",
+              "leaderboardId": 203390,
+              "rankMaxes": [
+                470,
+                580,
+                680,
+                770,
+                850
+              ]
+            },
+            {
+              "name": "AngelClick Revolving Avasive Medium",
+              "leaderboardId": 203807,
+              "rankMaxes": [
+                490,
+                570,
+                640,
+                710,
+                770
+              ]
+            },
+            {
+              "name": "Bounce House Precise Avasive Medium",
+              "leaderboardId": 203392,
+              "rankMaxes": [
+                2700,
+                2950,
+                3175,
+                3400,
+                3600
+              ]
+            },
+            {
+              "name": "Smoothsphere Revolving Avasive Medium",
+              "leaderboardId": 203810,
+              "rankMaxes": [
+                2575,
+                2875,
+                3125,
+                3375,
+                3600
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Hard",
+      "kovaaksBenchmarkId": 2845,
+      "rankNames": [
+        "Tranquility",
+        "Serenity",
+        "Harmony",
+        "Solace",
+        "Euphoria"
+      ],
+      "rankColors": {
+        "Tranquility": "#8df97b",
+        "Serenity": "#7bf9de",
+        "Harmony": "#887bf9",
+        "Solace": "#db7bf9",
+        "Euphoria": "#ff9bcd"
+      },
+      "categories": [
+        {
+          "name": "Dynamic Clicking",
+          "rankMaxes": [
+            40000,
+            32000,
+            24000,
+            16000,
+            8000
+          ],
+          "scenarios": [
+            {
+              "name": "Pasu Avasive",
+              "leaderboardId": 203333,
+              "rankMaxes": [
+                1060,
+                1250,
+                1420,
+                1570,
+                1700
+              ]
+            },
+            {
+              "name": "AbyssClick Avasive",
+              "leaderboardId": 203334,
+              "rankMaxes": [
+                900,
+                1040,
+                1150,
+                1260,
+                1350
+              ]
+            },
+            {
+              "name": "BounceClick Avasive",
+              "leaderboardId": 203335,
+              "rankMaxes": [
+                870,
+                1000,
+                1120,
+                1220,
+                1330
+              ]
+            },
+            {
+              "name": "JennClick Avasive",
+              "leaderboardId": 203554,
+              "rankMaxes": [
+                700,
+                800,
+                900,
+                1000,
+                1100
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Static Clicking",
+          "rankMaxes": [
+            40000,
+            32000,
+            24000,
+            16000,
+            8000
+          ],
+          "scenarios": [
+            {
+              "name": "1w2ts Avasive",
+              "leaderboardId": 203337,
+              "rankMaxes": [
+                1140,
+                1250,
+                1350,
+                1440,
+                1520
+              ]
+            },
+            {
+              "name": "Clustershot Avasive",
+              "leaderboardId": 203338,
+              "rankMaxes": [
+                1500,
+                1640,
+                1760,
+                1870,
+                1970
+              ]
+            },
+            {
+              "name": "ww4t Avasive",
+              "leaderboardId": 203339,
+              "rankMaxes": [
+                1220,
+                1320,
+                1410,
+                1490,
+                1570
+              ]
+            },
+            {
+              "name": "Odd-Angleshot Avasive",
+              "leaderboardId": 203340,
+              "rankMaxes": [
+                1260,
+                1370,
+                1480,
+                1570,
+                1660
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Precise Tracking",
+          "rankMaxes": [
+            40000,
+            32000,
+            24000,
+            16000,
+            8000
+          ],
+          "scenarios": [
+            {
+              "name": "SmoothBot Avasive",
+              "leaderboardId": 201483,
+              "rankMaxes": [
+                3275,
+                3600,
+                3875,
+                4150,
+                4400
+              ]
+            },
+            {
+              "name": "PTI Avasive",
+              "leaderboardId": 203551,
+              "rankMaxes": [
+                2800,
+                3175,
+                3550,
+                3900,
+                4250
+              ]
+            },
+            {
+              "name": "PreciseTrack Avasive",
+              "leaderboardId": 203332,
+              "rankMaxes": [
+                2950,
+                3275,
+                3575,
+                3875,
+                4150
+              ]
+            },
+            {
+              "name": "Leapstrafes Avasive",
+              "leaderboardId": 203341,
+              "rankMaxes": [
+                3025,
+                3400,
+                3725,
+                4050,
+                4350
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Reactive Tracking",
+          "rankMaxes": [
+            40000,
+            32000,
+            24000,
+            16000,
+            8000
+          ],
+          "scenarios": [
+            {
+              "name": "AirXYZ Avasive",
+              "leaderboardId": 203505,
+              "rankMaxes": [
+                1925,
+                2250,
+                2525,
+                2800,
+                3150
+              ]
+            },
+            {
+              "name": "PasuXYZ Avasive",
+              "leaderboardId": 203466,
+              "rankMaxes": [
+                2250,
+                2600,
+                2900,
+                3200,
+                3500
+              ]
+            },
+            {
+              "name": "Plaza Avasive",
+              "leaderboardId": 203345,
+              "rankMaxes": [
+                3450,
+                3700,
+                3950,
+                4200,
+                4400
+              ]
+            },
+            {
+              "name": "Thin Strafes Avasive",
+              "leaderboardId": 203346,
+              "rankMaxes": [
+                1600,
+                2000,
+                2400,
+                2600,
+                2800
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Speed Switching",
+          "rankMaxes": [
+            40000,
+            32000,
+            24000,
+            16000,
+            8000
+          ],
+          "scenarios": [
+            {
+              "name": "Pokeball Wide Avasive",
+              "leaderboardId": 203347,
+              "rankMaxes": [
+                1150,
+                1240,
+                1320,
+                1390,
+                1450
+              ]
+            },
+            {
+              "name": "PoleTS Avasive",
+              "leaderboardId": 203348,
+              "rankMaxes": [
+                1040,
+                1120,
+                1190,
+                1260,
+                1320
+              ]
+            },
+            {
+              "name": "DollTS Avasive",
+              "leaderboardId": 203331,
+              "rankMaxes": [
+                920,
+                1020,
+                1110,
+                1190,
+                1260
+              ]
+            },
+            {
+              "name": "psalmTS Avasive",
+              "leaderboardId": 203349,
+              "rankMaxes": [
+                940,
+                1070,
+                1180,
+                1270,
+                1340
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Evasive Switching",
+          "rankMaxes": [
+            40000,
+            32000,
+            24000,
+            16000,
+            8000
+          ],
+          "scenarios": [
+            {
+              "name": "SmoothTS Avasive",
+              "leaderboardId": 203350,
+              "rankMaxes": [
+                400,
+                450,
+                490,
+                530,
+                560
+              ]
+            },
+            {
+              "name": "BounceTS Avasive",
+              "leaderboardId": 203351,
+              "rankMaxes": [
+                680,
+                750,
+                820,
+                890,
+                950
+              ]
+            },
+            {
+              "name": "AngelTS Avasive",
+              "leaderboardId": 203352,
+              "rankMaxes": [
+                440,
+                500,
+                550,
+                600,
+                640
+              ]
+            },
+            {
+              "name": "AbyssTS Avasive",
+              "leaderboardId": 203353,
+              "rankMaxes": [
+                670,
+                730,
+                780,
+                830,
+                870
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Strafing",
+          "rankMaxes": [
+            40000,
+            32000,
+            24000,
+            16000,
+            8000
+          ],
+          "scenarios": [
+            {
+              "name": "HeadClick Dodge Avasive",
+              "leaderboardId": 203329,
+              "rankMaxes": [
+                780,
+                870,
+                950,
+                1030,
+                1100
+              ]
+            },
+            {
+              "name": "BounceClick Dodge Avasive",
+              "leaderboardId": 203354,
+              "rankMaxes": [
+                820,
+                910,
+                990,
+                1070,
+                1140
+              ]
+            },
+            {
+              "name": "Ground Dodge Avasive",
+              "leaderboardId": 203355,
+              "rankMaxes": [
+                3400,
+                3700,
+                3950,
+                4200,
+                4400
+              ]
+            },
+            {
+              "name": "AirTS Dodge Avasive",
+              "leaderboardId": 203356,
+              "rankMaxes": [
+                580,
+                640,
+                690,
+                740,
+                780
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Possession",
+          "rankMaxes": [
+            40000,
+            32000,
+            24000,
+            16000,
+            8000
+          ],
+          "scenarios": [
+            {
+              "name": "AMS Avasive",
+              "leaderboardId": 203357,
+              "rankMaxes": [
+                710,
+                800,
+                900,
+                1010,
+                1130
+              ]
+            },
+            {
+              "name": "AngelClick Revolving Avasive",
+              "leaderboardId": 203806,
+              "rankMaxes": [
+                620,
+                720,
+                810,
+                900,
+                980
+              ]
+            },
+            {
+              "name": "Bounce House Precise Avasive",
+              "leaderboardId": 203359,
+              "rankMaxes": [
+                3200,
+                3500,
+                3800,
+                4150,
+                4500
+              ]
+            },
+            {
+              "name": "Smoothsphere Revolving Avasive",
+              "leaderboardId": 203809,
+              "rankMaxes": [
+                3175,
+                3500,
+                3775,
+                4050,
+                4300
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,187 @@
+/**
+ * Attack the RLS policies as a hostile authenticated player.
+ *
+ * validateSchema stubs auth.uid() to null, which proves the policies COMPILE but can
+ * never prove what a signed-in attacker is actually allowed to do. This stub reads the
+ * caller's id from a setting instead, so the session can genuinely be somebody.
+ */
+import { PGlite } from "@electric-sql/pglite";
+import { readFileSync, readdirSync } from "node:fs";
+import { join } from "node:path";
+
+import { dirname, join as pjoin } from "node:path";
+import { fileURLToPath } from "node:url";
+const root = pjoin(dirname(fileURLToPath(import.meta.url)), "..");
+const migrationsDir = join(root, "supabase", "migrations");
+
+const STUB = `
+  create schema if not exists auth;
+  create table auth.users (id uuid primary key default gen_random_uuid(), email text unique);
+  create or replace function auth.uid() returns uuid
+    language sql stable as $$ select nullif(current_setting('test.player_id', true), '')::uuid $$;
+  create role anon nologin;
+  create role authenticated nologin;
+  create role service_role nologin bypassrls;
+  grant usage on schema public to anon, authenticated, service_role;
+  alter default privileges in schema public grant all on tables to anon, authenticated, service_role;
+`;
+
+const db = new PGlite();
+await db.waitReady;
+await db.exec(STUB);
+for (const f of readdirSync(migrationsDir).filter((f) => f.endsWith(".sql")).sort()) {
+  await db.exec(readFileSync(join(migrationsDir, f), "utf8"));
+}
+await db.exec(readFileSync(join(root, "supabase", "seed.sql"), "utf8"));
+
+let findings = 0;
+/**
+ * Run one attack and say what actually happened.
+ *
+ * Counting 'no exception raised' as success is WRONG, and the first draft of this file
+ * did exactly that. Under RLS an UPDATE or DELETE with no matching policy does not
+ * raise - it simply matches no rows and reports success. That made four properly
+ * blocked operations look like holes. The number of rows actually changed is what
+ * decides, not the absence of an error.
+ */
+const attack = async (label, sql, expectBlocked = true) => {
+  let affected = 0;
+  try {
+    const r = await db.query(sql);
+    affected = r.affectedRows ?? 0;
+  } catch (err) {
+    const m = String(err.message).split(String.fromCharCode(10))[0];
+    if (expectBlocked) console.log('  ok       ' + label + ' -- refused (' + m.slice(0, 55) + ')');
+    else { findings++; console.log('  HOLE     ' + label + ' -- refused but should be allowed: ' + m); }
+    return;
+  }
+  if (affected === 0) {
+    if (expectBlocked) console.log('  ok       ' + label + ' -- no error raised, but 0 rows changed');
+    else { findings++; console.log('  HOLE     ' + label + ' -- 0 rows changed, expected it to work'); }
+    return;
+  }
+  if (expectBlocked) { findings++; console.log('  HOLE     ' + label + ' -- CHANGED ' + affected + ' row(s)'); }
+  else console.log('  ok       ' + label + ' -- ' + affected + ' row(s), as intended');
+};
+
+// two players: the attacker, and a victim
+const mk = async (steam, name) => {
+  const r = await db.query(`insert into auth.users default values returning id`);
+  const id = r.rows[0].id;
+  await db.exec(`insert into players (id, steam_id, display_name) values ('${id}', '${steam}', '${name}')`);
+  return id;
+};
+const attacker = await mk("76561000000000001", "attacker");
+const victim = await mk("76561000000000002", "victim");
+const scen = (await db.query(`select id from scenarios limit 1`)).rows[0].id;
+
+await db.exec(`set role authenticated`);
+await db.exec(`set test.player_id = '${attacker}'`);
+console.log(`\nacting as authenticated player ${attacker}\n`);
+
+console.log("-- inserting runs --");
+// Every column the backfill upsert actually sends: RunPayload plus player_id. This one
+// must stay ALLOWED - the column grant is only correct if the real client still works,
+// and a grant list that has drifted from RunPayload fails the whole 11k-row batch.
+await attack("insert an ordinary run for myself, exactly as backfill sends it",
+  `insert into runs (player_id, scenario_name, score, accuracy, avg_ttk, kills,
+                     hit_count, miss_count, played_at, challenge_start, hash,
+                     game_version, avg_fps, resolution, cm360, dpi, fov, csv_sha256,
+                     kill_rows)
+   values ('${attacker}', 'x', 100, 0.9, 0.4, 10, 90, 10, now(), null, null,
+           null, 240, '2560x1440', 30, 800, 103, 'sha-ordinary', null)`, false);
+
+// Granted columns only, so that what refuses this is runs_insert_self and not the
+// column grant getting there first - this is the one check in the file that proves the
+// ROW policy still does its job.
+await attack("insert a run for ANOTHER player",
+  `insert into runs (player_id, scenario_name, score, played_at, csv_sha256)
+   values ('${victim}', 'x', 100, now(), 'sha-victim')`);
+
+await attack("insert my own run pre-stamped verification_tier = 'verified'",
+  `insert into runs (player_id, scenario_id, scenario_name, score, played_at, csv_sha256, verification_tier)
+   values ('${attacker}', ${scen}, 'x', 999999, now(), 'sha-tier', 'verified')`);
+
+await attack("insert my own run with verification_notes of my choosing",
+  `insert into runs (player_id, scenario_name, score, played_at, csv_sha256, verification_notes)
+   values ('${attacker}', 'x', 100, now(), 'sha-notes', '{"reasons": []}'::jsonb)`);
+
+// resolve_scenario_id() overwrites this on insert anyway, so the grant is belt and
+// braces - but a check that only passes because of a trigger elsewhere is a check that
+// dies quietly the day the trigger changes.
+await attack("file my run against a scenario_id of my choosing",
+  `insert into runs (player_id, scenario_id, scenario_name, score, played_at, csv_sha256)
+   values ('${attacker}', ${scen}, 'not-that-scenario', 100, now(), 'sha-scenario')`);
+
+await attack("name my own duration_seconds, to make a real run look like a crash",
+  `insert into runs (player_id, scenario_name, score, played_at, csv_sha256, duration_seconds)
+   values ('${attacker}', 'x', 100, now(), 'sha-duration', 3)`);
+
+await attack("attach my own run to an arbitrary match_id",
+  `insert into runs (player_id, scenario_id, scenario_name, score, played_at, csv_sha256, match_id)
+   values ('${attacker}', ${scen}, 'x', 999999, now(), 'sha-match', gen_random_uuid())`);
+
+// The FK above rejected a RANDOM match id. The question that decides how bad the
+// pre-stamped tier is: can the attacker use a REAL match they are legitimately in?
+await db.exec("reset role");
+const realMatch = (await db.query("insert into matches (category, status, benchmark_name, difficulty, seed, scenario_ids) values ('Clicking', 'awaiting_runs', 'Voltaic S5', 'Intermediate', 'seed-1', array[" + scen + "," + scen + "," + scen + "]::bigint[]) returning id")).rows[0].id;
+await db.exec("insert into match_sides (match_id, player_id) values ('" + realMatch + "', '" + attacker + "')");
+await db.exec("set role authenticated");
+await db.exec("set test.player_id = '" + attacker + "'");
+console.log("");
+console.log("-- escalation: a REAL match the attacker is in --");
+await attack("attach a self-inserted 999999 run to my real match, tier verified",
+  "insert into runs (player_id, scenario_name, score, played_at, csv_sha256, match_id, verification_tier)" +
+  " values ('" + attacker + "', 'x', 999999, now(), 'sha-escalate', '" + realMatch + "', 'verified')");
+
+// match_id alone is enough to be worth blocking: settle-match reads the match's runs by
+// match_id, so an unverified fabrication still reaches the rating, one tier lower.
+await attack("attach a self-inserted run to my real match without naming a tier",
+  "insert into runs (player_id, scenario_name, score, played_at, csv_sha256, match_id)" +
+  " values ('" + attacker + "', 'x', 999999, now(), 'sha-escalate-2', '" + realMatch + "')");
+
+console.log("\n-- rewriting history --");
+await attack("update my own run's score after the fact",
+  `update runs set score = 999999 where player_id = '${attacker}'`);
+await attack("delete my own run",
+  `delete from runs where player_id = '${attacker}'`);
+
+console.log("\n-- the tables the security model depends on --");
+await attack("write my own rating", `update ratings set rating = 9999 where player_id = '${attacker}'`);
+await attack("insert a rating row", `insert into ratings (player_id, rating) values ('${victim}', 9999)`);
+await attack("write a baseline", `insert into baselines (player_id, scenario_id, value) values ('${attacker}', ${scen}, 1)`);
+await attack("write a verified PB", `insert into verified_pbs (player_id, scenario_id, score) values ('${attacker}', ${scen}, 999999)`);
+await attack("make myself an admin", `insert into admins (player_id) values ('${attacker}')`);
+await attack("edit reference data (scenarios)", `update scenarios set world_record = 1 where id = ${scen}`);
+await attack("erase my own rate limit", `delete from rate_limits where player_id = '${attacker}'`);
+
+console.log("\n-- reading other people --");
+const readOthers = async (label, sql) => {
+  try {
+    const r = await db.query(sql);
+    console.log(`  ${r.rows.length > 0 ? "SEES " : "ok   "}  ${label}: ${r.rows.length} row(s)`);
+    if (r.rows.length > 0) findings++;
+  } catch (e) { console.log(`  ok     ${label}: blocked`); }
+};
+// Name only granted columns. `select *` here reported "blocked" against players and
+// runs because the STAR hit a column privilege, which looks identical to RLS refusing
+// the row and would keep saying "ok" even if the policy were dropped entirely.
+await readOthers("another player's profile row", `select id, steam_id from players where id = '${victim}'`);
+await readOthers("another player's runs", `select id, score from runs where player_id = '${victim}'`);
+await readOthers("another player's baselines", `select * from baselines where player_id = '${victim}'`);
+
+// Column privileges, on rows RLS does hand over.
+const readOwnColumn = async (label, column) => {
+  try {
+    await db.query(`select ${column} from runs where player_id = '${attacker}'`);
+    findings++;
+    console.log(`  HOLE   my own runs.${column}: readable (${label})`);
+  } catch { console.log(`  ok     my own runs.${column}: refused (${label})`); }
+};
+await readOwnColumn("names the check that caught the run", "verification_notes");
+
+const ratings = await db.query(`select count(*)::int as n from ratings`);
+console.log(`  NOTE   ratings visible to me: ${ratings.rows[0].n} row(s) (policy is 'using (true)')`);
+
+console.log(`\n${findings === 0 ? "no holes found" : `${findings} finding(s)`}`);
+await db.close();

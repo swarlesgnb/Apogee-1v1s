@@ -12,7 +12,7 @@
  */
 
 import { app, BrowserWindow, ipcMain, screen, shell, dialog } from "electron";
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
 import { dataFile, setDataDir, sourceDataDir } from "../core/dataDir.ts";
@@ -22,6 +22,12 @@ import {
   type QuestProgressState,
   type QuestSnapshot,
 } from "../core/quests/progression.ts";
+import {
+  installCrashHandlers,
+  attachRendererLogging,
+  suppressCrashDialogs,
+  log,
+} from "./crashLog.ts";
 import { loadQuestState, saveQuestState } from "./questStore.ts";
 import { buildSnapshot, type Snapshot } from "../core/report/snapshot.ts";
 import { renderRankSheet } from "../core/report/rankSheet.ts";
@@ -56,6 +62,13 @@ import { queueEligibility, type QueueEligibility } from "../core/match/eligibili
 import { sampleDistribution, RateLimited } from "../core/season/sampleLeaderboard.ts";
 import { thresholdsFrom, type Distribution } from "../core/season/percentiles.ts";
 import { rankDistribution } from "../core/season/distribution.ts";
+import {
+  installedPlaylistCount,
+  playlistsFolderFor,
+  practicePlaylists,
+  practiceRows,
+  writePracticePlaylists,
+} from "../core/season/practice.ts";
 
 /**
  * Bundled to dist/app/main.cjs, so `__dirname` is dist/app and the reference data
@@ -424,9 +437,27 @@ function createWindow(): void {
     ...openingBounds(settings.window),
     minWidth: DEFAULT_MIN_WIDTH,
     minHeight: DEFAULT_MIN_HEIGHT,
-    backgroundColor: "#07090e",
+    backgroundColor: "#05060a",
     show: false,
     title: "Apogee",
+    // The app draws its own top bar. `hidden` with an overlay rather than a fully
+    // frameless window: the operating system keeps drawing minimise, maximise and
+    // close, so they behave exactly as they do everywhere else, and the only thing
+    // this side owns is the strip they sit on. The renderer marks that strip as a
+    // drag region, and reserves the width the overlay reports.
+    titleBarStyle: "hidden",
+    // Opaque, and matched to the top bar rather than transparent: a translucent
+    // overlay is not supported everywhere, and the failure mode is a light grey
+    // block in the corner of a black app.
+    titleBarOverlay: {
+      color: "#070910",
+      symbolColor: "#9aa4b6",
+      height: 46,
+    },
+    // The menu is entirely duplicated by buttons on screen, and a Windows menu bar
+    // under a custom title bar is a second row of chrome for nothing. Hidden, not
+    // removed: every accelerator in it still fires.
+    autoHideMenuBar: true,
     webPreferences: {
       preload: join(here, "preload.cjs"),
       // The renderer is a view. It gets no Node, no remote module, and a locked-down
@@ -450,6 +481,8 @@ function createWindow(): void {
   });
   window.on("closed", () => { window = null; });
 
+  attachRendererLogging(window.webContents);
+
   // External links open in the real browser, never inside the app shell.
   window.webContents.setWindowOpenHandler(({ url }) => {
     void shell.openExternal(url);
@@ -466,6 +499,10 @@ function createWindow(): void {
  */
 const SMOKE = process.argv.includes("--smoke");
 
+// The failure-surface probe rejects a promise on purpose; this marks that rejection so
+// its own console error is not counted as a renderer error.
+const SMOKE_FAILURE_MARKER = "apogee smoke probe";
+
 /**
  * One window only.
  *
@@ -479,6 +516,13 @@ const SMOKE = process.argv.includes("--smoke");
  * instance is open.
  */
 console.log(`apogee main built ${BUILD}`);
+
+// Before anything else can throw: a packaged app has no terminal for a stack trace
+// to land in, so an uncaught error would otherwise leave a window that simply stops
+// working with nothing anywhere to say why.
+installCrashHandlers();
+if (SMOKE) suppressCrashDialogs();
+log(`built ${BUILD}`);
 
 if (!SMOKE && !app.requestSingleInstanceLock()) {
   console.log(
@@ -516,6 +560,14 @@ function runSmokeTest(): void {
       if (!snapshot) {
         problems.push("snapshot came back empty");
       } else {
+        // Hand it to the probe window, not just to this console.
+        //
+        // It used to be built, printed and dropped, so `getState` handed the renderer
+        // nothing and every data-driven screen stayed empty behind a window that
+        // reported "renders". The smoke test was checking that the shell loads, which is
+        // the smallest part of what it is for - and it is why an empty Season screen
+        // could not be caught here.
+        state.snapshot = snapshot;
         console.log(`runs         : ${snapshot.player.totalRuns}`);
         console.log(`benchmark    : ${snapshot.benchmark.name} ${snapshot.benchmark.difficulty}` +
           ` (${snapshot.player.benchmarkRank})`);
@@ -544,7 +596,7 @@ function runSmokeTest(): void {
   // how a dead button ships.
   const rendererLogs: string[] = [];
   probe.webContents.on("console-message", (_e, level, message) => {
-    if (level >= 2) rendererLogs.push(message);
+    if (level >= 2 && !message.includes(SMOKE_FAILURE_MARKER)) rendererLogs.push(message);
   });
 
   probe.webContents.once("did-finish-load", async () => {
@@ -586,6 +638,13 @@ function runSmokeTest(): void {
       problems.push("the sign-in button is present but not visible");
     } else if (button.disabled) {
       problems.push(`the sign-in button is disabled (${button.text})`);
+    } else if (!button.listeners) {
+      // A button that is present, visible and enabled with nothing bound to it looks
+      // identical to a working one from out here, and is the exact failure a smoke test
+      // exists to catch. The probe above computed this from the start and nothing ever
+      // read it, which is the vacuous-assertion pattern: a check that cannot fail hides
+      // the thing it was written for.
+      problems.push("the sign-in button is present but nothing is bound to it");
     }
 
     console.log(`supabase     : ${isConfigured() ? "configured" : "MISSING"}`);
@@ -599,6 +658,29 @@ function runSmokeTest(): void {
     );
     console.log(`session      : ${state.session ? state.session.displayName : "signed out"}`);
 
+    // The renderer's failure surface, proved rather than assumed. An unhandled rejection
+    // used to leave the screen half-rendered with nothing anywhere saying so - which is
+    // how `api is not defined` sat in a shipped build. Checking that a handler is
+    // *registered* would pass whether or not it reaches the screen, so this rejects for
+    // real and fails unless the banner ends up carrying the message.
+    const surfaced = await probe.webContents.executeJavaScript(`(async () => {
+      const banner = document.getElementById("banner");
+      if (!banner) return { present: false };
+      const before = { cls: banner.className, text: banner.textContent };
+      Promise.reject(new Error(${JSON.stringify(SMOKE_FAILURE_MARKER)}));
+      await new Promise((r) => setTimeout(r, 150));
+      const seen = { present: true, on: banner.classList.contains("on"), text: banner.textContent };
+      banner.className = before.cls;
+      banner.textContent = before.text;
+      return seen;
+    })()`);
+
+    if (!surfaced.present) problems.push("the error banner is not in the DOM");
+    else if (!surfaced.on || !surfaced.text.includes(SMOKE_FAILURE_MARKER)) {
+      problems.push("an unhandled rejection never reaches the banner");
+    }
+    console.log(`failures     : ${surfaced.on ? "surfaced to the banner" : "SILENT"}`);
+
     if (rendererLogs.length > 0) {
       console.log(`\nrenderer errors:`);
       for (const l of rendererLogs.slice(0, 8)) console.log(`  ${l}`);
@@ -609,6 +691,99 @@ function runSmokeTest(): void {
       "document.getElementById('shellCheck') !== null || document.querySelectorAll('.tab').length",
     );
     if (!rendered) problems.push("renderer produced no tabs");
+
+    // The Season screen is the only way to play the pool outside a match, and nothing
+    // else here touches it: the queue renders whether or not it works.
+    //
+    // Two things are checked and they are not the same thing. The handler is checked
+    // unconditionally, because it is the data the screen cannot exist without. The screen
+    // itself is checked only once a snapshot has actually rendered - this probe window
+    // does not always get one, and an assertion that can only fail is worse than none.
+    const practice = await probe.webContents.executeJavaScript(`(async () => {
+      const tab = document.querySelector('.tab[data-screen="seasonview"]');
+      if (tab) tab.click();
+
+      const data = await window.apogee
+        .practice()
+        .then((r) => (r && r.error ? { err: String(r.error).slice(0, 160) } : r))
+        .catch((e) => ({ err: String(e).slice(0, 160) }));
+
+      // The snapshot drives every screen here, and it arrives over IPC. Wait for it
+      // rather than assume it, and say plainly when it never came.
+      const deadline = Date.now() + 2500;
+      while (Date.now() < deadline && document.querySelectorAll("#svCats .sv-cat").length === 0) {
+        await new Promise((r) => setTimeout(r, 100));
+      }
+      await new Promise((r) => setTimeout(r, 150));
+
+      return {
+        tab: Boolean(tab),
+        host: document.getElementById("svPool") !== null,
+        err: data.err ?? null,
+        scenarios: Array.isArray(data.scenarios) ? data.scenarios.length : -1,
+        families: Array.isArray(data.families) ? data.families.length : -1,
+        playlists: Array.isArray(data.playlists) ? data.playlists.length : -1,
+        named: Array.isArray(data.families) ? data.families.filter((f) => f.next).length : -1,
+        painted: document.querySelectorAll("#svCats .sv-cat").length > 0,
+        bands: document.querySelectorAll("#svDiffs .pool-band").length,
+        rows: document.querySelectorAll("#svPool .pool-row").length,
+        subs: document.querySelectorAll("#svPool .pool-sub").length,
+        next: document.querySelectorAll("#svPool .pool-row.next").length,
+        fills: [...document.querySelectorAll("#svPool .pool-row")].filter(
+          (r) => r.style.getPropertyValue("--fill") !== "",
+        ).length,
+        nums: document.querySelectorAll("#svPool .pool-num").length,
+        chips: document.querySelectorAll("#svChips .pool-chip").length,
+        play: document.querySelector("#svPool .pool-row .scen-play") !== null,
+      };
+    })()`);
+
+    if (!practice.tab) problems.push("the Season tab is not in the DOM");
+    if (!practice.host) problems.push("the Season screen has nowhere to list the pool");
+    if (practice.err) problems.push(`the practice list failed: ${practice.err}`);
+    else if (practice.scenarios <= 0) problems.push("the practice list is empty");
+    else if (practice.families <= 0) problems.push("the practice list has no families");
+    else if (practice.named <= 0) {
+      // Every family names one variant to play next unless it is maxed, and a whole pool
+      // maxed on the machine running a smoke test is not a state worth allowing for.
+      problems.push("no family says which scenario to play next");
+    }
+    if (practice.playlists <= 0) problems.push("the season implies no practice playlists");
+
+    // Only once something snapshot-driven is on screen is the panel's absence meaningful.
+    if (practice.painted) {
+      if (practice.bands === 0) problems.push("the Season screen offers no difficulty to pick");
+      else if (practice.rows === 0) problems.push("the Season screen lists no scenarios to play");
+      else if (practice.subs === 0) problems.push("the Season screen groups nothing by sub-skill");
+      else if (!practice.play) problems.push("the Season screen has no Play button");
+      else if (practice.fills !== practice.rows) {
+        // Progress is the row's own ground now, so a row with no --fill is not a row
+        // missing a decoration - it is a row that silently claims no progress at all.
+        problems.push("not every row carries its progress");
+      } else if (practice.nums !== practice.rows) {
+        problems.push("not every row says what it wants next");
+      } else if (practice.chips === 0) {
+        problems.push("the Season screen offers no playlist to install");
+      } else if (practice.next === 0) {
+        // The band it opens on is the one holding the most of the player's next ranks,
+        // so a band with none of them showing means the default picked the wrong one.
+        problems.push("the band it opened on has nothing marked to play next");
+      }
+    }
+
+    console.log(
+      `season pool  : ${
+        practice.err
+          ? `FAILED (${practice.err})`
+          : `${practice.scenarios} scenarios, ${practice.families} families, ` +
+            `${practice.playlists} playlists` +
+            (practice.painted
+              ? `, ${practice.bands} bands, ${practice.rows} rows in ${practice.subs} ` +
+                `sub-skills, ${practice.next} to play next, ${practice.chips} playlist ` +
+                `chips, Play ${practice.play ? "wired" : "MISSING"}`
+              : ", screen not painted (no snapshot in this window)")
+      }`,
+    );
 
     console.log(`preload      : ${hasBridge ? "bridge exposed" : "MISSING"}`);
     console.log(`renderer     : ${rendered ? "loaded" : "EMPTY"}`);
@@ -982,7 +1157,15 @@ ipcMain.handle("apogee:availableScenarios", () => {
     // picker looked like it worked and every selection failed at the last step.
     const known = new Map<
       string,
-      { aimType: string | null; difficulty: string | null; leaderboardId: number | null }
+      {
+        aimType: string | null;
+        difficulty: string | null;
+        leaderboardId: number | null;
+        /** Every "<benchmark> <tier>" that publishes this scenario. */
+        tiers: string[];
+        /** Just the benchmark names, for the coverage readout. */
+        benchmarks: string[];
+      }
     >();
 
     try {
@@ -1001,15 +1184,27 @@ ipcMain.handle("apogee:availableScenarios", () => {
           aimType: s.aimType,
           difficulty: s.difficulty,
           leaderboardId: s.leaderboardId ?? null,
+          tiers: [],
+          benchmarks: [],
         });
       }
     } catch {
       // A missing taxonomy costs aim-type suggestions, not the picker.
     }
 
-    for (const file of ["voltaic-s5.json", "voltaic-s5-5.json", "voltaic-s4.json"]) {
+    // Every committed benchmark, not a list of three.
+    //
+    // This was `["voltaic-s5.json", "voltaic-s5-5.json", "voltaic-s4.json"]`, and it is
+    // the reason the pool stayed Voltaic-shaped however many benchmark definitions were
+    // added beside them: a scenario the picker never offers is a scenario nobody puts in
+    // a season. Sixteen benchmarks are committed and the picker knew three.
+    //
+    // Reading the directory means a benchmark is usable the moment its definition lands,
+    // which is what `npm run fetch:evxl` and `sync:reference` are for.
+    for (const file of readdirSync(dataFile("benchmarks")).filter((f) => f.endsWith(".json"))) {
       try {
         const def = JSON.parse(readFileSync(dataFile("benchmarks", file), "utf8")) as {
+          benchmarkName: string;
           difficulties: {
             name: string;
             categories: {
@@ -1018,35 +1213,71 @@ ipcMain.handle("apogee:availableScenarios", () => {
             }[];
           }[];
         };
-        for (const d of def.difficulties) {
-          for (const c of d.categories) {
-            for (const s of c.scenarios) {
+        for (const d of def.difficulties ?? []) {
+          for (const c of d.categories ?? []) {
+            for (const s of c.scenarios ?? []) {
+              const tier = `${def.benchmarkName} ${d.name}`;
               const prior = known.get(s.name);
               if (!prior) {
                 known.set(s.name, {
                   aimType: c.name,
                   difficulty: d.name,
                   leaderboardId: s.leaderboardId ?? null,
+                  tiers: [tier],
+                  benchmarks: [def.benchmarkName],
                 });
-              } else if (prior.leaderboardId == null && s.leaderboardId != null) {
+              } else {
                 // The taxonomy knew the scenario but not its board. A benchmark that names
                 // the same scenario does, and an id is the difference between a scenario
                 // that can be added and one that cannot.
-                prior.leaderboardId = s.leaderboardId;
+                if (prior.leaderboardId == null && s.leaderboardId != null) {
+                  prior.leaderboardId = s.leaderboardId;
+                }
+                // Where a scenario is published matters more than that it exists: which
+                // benchmark and which tier is how its difficulty band gets decided, and a
+                // scenario several benchmarks name is a different proposition from one
+                // only its author uses.
+                if (!prior.tiers.includes(tier)) prior.tiers.push(tier);
+                if (!prior.benchmarks.includes(def.benchmarkName)) {
+                  prior.benchmarks.push(def.benchmarkName);
+                }
               }
             }
           }
         }
       } catch {
-        // Optional: a benchmark we do not ship simply contributes nothing.
+        // Optional: a definition we cannot parse simply contributes nothing.
       }
     }
 
     const history = state.statsDir ? scanStatsFolder(state.statsDir) : new Map();
     for (const name of history.keys()) {
       if (!known.has(name)) {
-        known.set(name, { aimType: null, difficulty: null, leaderboardId: null });
+        known.set(name, {
+          aimType: null,
+          difficulty: null,
+          leaderboardId: null,
+          tiers: [],
+          benchmarks: [],
+        });
       }
+    }
+
+    // How many accounts hold a score on each board, from the committed sample.
+    //
+    // A threshold is the score at a percentile of a board, so board size decides whether a
+    // threshold means anything: on 2,000 entries the hardest rank is the two people at the
+    // top of it and moves whenever either has a good day. The picker shows the number and
+    // marks the thin ones, because choosing a scenario is the moment that matters - the
+    // alternative is finding out from validate:pool after a season is built on it.
+    const entriesOf = new Map<string, number>();
+    try {
+      const sample = JSON.parse(
+        readFileSync(dataFile("leaderboard_percentiles.json"), "utf8"),
+      ) as { distributions: { scenario: string; total: number }[] };
+      for (const d of sample.distributions) entriesOf.set(d.scenario, d.total);
+    } catch {
+      // No sample yet: the picker loses the board sizes, not the scenarios.
     }
 
     const options = [...known.entries()]
@@ -1061,6 +1292,10 @@ ipcMain.handle("apogee:availableScenarios", () => {
           category: meta.aimType === "Target Switching" ? "Switching" : meta.aimType,
           difficulty: meta.difficulty,
           leaderboardId: meta.leaderboardId,
+          /** Which benchmarks and tiers publish it - where its difficulty band comes from. */
+          tiers: meta.tiers,
+          /** Accounts on its KovaaK's board, or null when it has never been sampled. */
+          entries: entriesOf.get(name) ?? null,
           runs: scores.length,
           best: scores.length > 0 ? Math.round(Math.max(...scores)) : null,
           // One suggestion per category, because each has its own ladder and a
@@ -1083,9 +1318,42 @@ ipcMain.handle("apogee:availableScenarios", () => {
     return {
       scenarios: options,
       categories: season.categories.map((c) => c.name),
+      // Where every scenario is published and how big its board is - including the ones
+      // already in the season, which `scenarios` above deliberately excludes.
+      //
+      // The rows the editor spends its time on are the filled ones, and until now they
+      // said only a name. On a pool drawn from one benchmark that was no loss; on one
+      // drawn from ten, "which benchmark is this from and is its board big enough to cut
+      // ranks out of" is the question being asked of every row.
+      provenance: Object.fromEntries(
+        [...known].map(([name, meta]) => [
+          name,
+          {
+            tiers: meta.tiers,
+            benchmarks: meta.benchmarks,
+            entries: entriesOf.get(name) ?? null,
+          },
+        ]),
+      ),
       // A windowed season is not added to one scenario at a time: a family needs one
       // variant per window, so a lone scenario would leave a family incomplete and the
       // season unsaveable. Said here rather than discovered on Save.
+      // evxl's own listing order, which is what "most played" means here (see
+      // tools/benchmarkPopularity.ts). Sent so the coverage readout can name the
+      // benchmarks a season uses *nothing* from - the ones a count alone cannot show.
+      benchmarkOrder: (() => {
+        try {
+          const pop = JSON.parse(
+            readFileSync(dataFile("benchmark_popularity.json"), "utf8"),
+          ) as { benchmarks: { benchmark: string; players: number | null }[] };
+          return pop.benchmarks.slice(0, 10).map((b) => ({
+            name: b.benchmark,
+            players: b.players,
+          }));
+        } catch {
+          return [];
+        }
+      })(),
       windowed: windowSize > 0,
       windowNote:
         windowSize > 0
@@ -1385,12 +1653,31 @@ ipcMain.handle("apogee:saveSeason", async (_e, { season }) => {
       const families: Record<string, {
         family: string;
         category: string;
+        subCategory?: string;
         variants: { window: number; scenario: string; label: string; leaderboardId: number | null }[];
       }> = {};
 
+      // The season does not carry a sub-skill - it is a property of the family, and the
+      // pool is where families are declared - so it has to be read back off the pool being
+      // rewritten. Dropping it would leave the family unclassified, which fails no build
+      // and quietly removes it from the weakness map and the sub-category queues.
+      const subCategoryOf = new Map<string, string>(
+        (pool.families ?? [])
+          .filter((f: { subCategory?: string }) => typeof f.subCategory === "string")
+          .map((f: { category: string; family: string; subCategory: string }) => [
+            `${f.category}/${f.family}`,
+            f.subCategory,
+          ]),
+      );
+
       for (const scen of season.scenarios) {
         const key = `${scen.category}/${scen.family}`;
-        families[key] ??= { family: scen.family, category: scen.category, variants: [] };
+        families[key] ??= {
+          family: scen.family,
+          category: scen.category,
+          ...(subCategoryOf.has(key) ? { subCategory: subCategoryOf.get(key)! } : {}),
+          variants: [],
+        };
         families[key].variants.push({
           window: scen.window ?? 0,
           scenario: scen.scenario,
@@ -1505,16 +1792,129 @@ ipcMain.handle("apogee:openStatsFolder", () => {
  * a renderer message, and "open whatever the page asks for" is how that becomes a way
  * to start arbitrary things.
  */
+/**
+ * Open one scenario in KovaaK's.
+ *
+ * Anything the season names, whether or not a match is running. It used to require a live
+ * match and refuse everything else, which made the season pool unplayable except by
+ * queueing - the Season screen could name all 88 scenarios and offer no way to run one.
+ *
+ * Still not "any string the renderer sends": this hands a name to a Steam deep link, so it
+ * is checked against the match and the season first. Both lists come from the main
+ * process, so a renderer with injected script cannot widen them.
+ */
 ipcMain.handle("apogee:launchScenario", async (_e, { scenario }) => {
-  if (!state.match) return { error: "no active match" };
+  if (typeof scenario !== "string" || scenario.length === 0) {
+    return { error: "no scenario given" };
+  }
 
-  const known = state.match.scenarios.some((s) => s.name === scenario);
-  if (!known) return { error: "that scenario is not part of this match" };
+  const inMatch = state.match?.scenarios.some((s) => s.name === scenario) ?? false;
+  const inSeason = (() => {
+    try {
+      return loadSeason().scenarios.some((s) => s.scenario === scenario);
+    } catch {
+      return false;
+    }
+  })();
+
+  if (!inMatch && !inSeason) {
+    return { error: "that scenario is not in this match or this season" };
+  }
 
   const launched = await launchKovaaks(scenario);
   return launched.ok
     ? { ok: true, scenario }
     : { error: launched.error ?? "could not start KovaaK's" };
+});
+
+/**
+ * Everything needed to grind the season, per scenario rather than per family.
+ *
+ * The snapshot already carries one row per family - whichever variant earned the rank -
+ * which is the right shape for a standing and the wrong one for a practice list: it
+ * cannot say what you have done on the other three difficulties, so it cannot say which
+ * one to play next. This reads the whole pool against local history instead.
+ *
+ * Read-only and computed on demand. Deliberately not cached on `state`: it is a few
+ * milliseconds over a folder the watcher is already rescanning, and a stale practice list
+ * would show a personal best that a run five minutes ago already beat.
+ */
+ipcMain.handle("apogee:practice", () => {
+  let season;
+  try {
+    season = loadSeason();
+  } catch (err) {
+    return { error: err instanceof Error ? err.message : String(err) };
+  }
+
+  const history = state.statsDir ? scanStatsFolder(state.statsDir) : new Map();
+  const { rows, families } = practiceRows(season, history);
+  const playlistDir = state.statsDir ? playlistsFolderFor(state.statsDir) : null;
+
+  return {
+    families,
+    scenarios: rows,
+    season: {
+      name: season.name,
+      status: season.status,
+      windows: season.windows ?? [],
+      windowSize: season.windowSize ?? 4,
+      categories: season.categories.map((c) => ({
+        name: c.name,
+        rankNames: c.rankNames,
+        rankColors: c.rankColors,
+      })),
+    },
+    playlists: practicePlaylists(season).map((p) => ({
+      name: p.name,
+      category: p.category,
+      window: p.window,
+      scenarios: p.scenarios.length,
+    })),
+    playlistDir,
+    installed: playlistDir ? installedPlaylistCount(playlistDir) : 0,
+  };
+});
+
+/**
+ * Write the season's practice playlists into KovaaK's own Playlists folder.
+ *
+ * The one action here that touches a folder outside Apogee, so it is explicit rather than
+ * automatic and says exactly where it wrote. KovaaK's reads its playlists at startup, so
+ * the reply carries that too - a player hunting a menu for a playlist that is genuinely on
+ * disk and genuinely not on screen is the failure this note exists to prevent.
+ */
+ipcMain.handle("apogee:installPlaylists", (_e, args) => {
+  if (!state.statsDir) return { error: "no stats folder" };
+
+  // A named subset, for the one band on screen. Filtered here rather than trusted: the
+  // renderer sends names, and only names this season actually produces are written.
+  const only = Array.isArray(args?.names) ? new Set<string>(args.names) : null;
+
+  let season;
+  try {
+    season = loadSeason();
+  } catch (err) {
+    return { error: err instanceof Error ? err.message : String(err) };
+  }
+
+  const dir = playlistsFolderFor(state.statsDir);
+  const result = writePracticePlaylists(season, dir, { only });
+  if (!result.ok) {
+    return {
+      error:
+        `${result.error}. Apogee found KovaaK's stats at ${state.statsDir}, so it expected ` +
+        `a Playlists folder beside it.`,
+    };
+  }
+
+  return {
+    ok: true,
+    dir,
+    written: result.written?.length ?? 0,
+    installed: installedPlaylistCount(dir),
+    note: "KovaaK's reads playlists at startup - restart the game to see them.",
+  };
 });
 
 ipcMain.handle("apogee:launchMatch", async () => {

@@ -1,0 +1,3139 @@
+{
+  "benchmarkName": "Viscose Benchmarks S2",
+  "abbreviation": "V",
+  "color": "#ebbeff",
+  "spreadsheetURL": "https://docs.google.com/spreadsheets/d/1WeuEk444WOkTpvOGMYiertxwlI9gRQSapYiwxjFbT08/edit?usp=sharing",
+  "evxlUrl": "https://evxl.app/benchmarks/Viscose%20Benchmarks%20S2",
+  "source": "kovaaks.com benchmarks API + evxl registry",
+  "fetchedAt": "2026-08-29T16:57:41Z",
+  "difficulties": [
+    {
+      "name": "Easier",
+      "kovaaksBenchmarkId": 2335,
+      "rankNames": [
+        " Lemming",
+        "Hare",
+        "Ermine",
+        "Puffin",
+        "Penguin",
+        "Fox",
+        "Mammoth",
+        "Orca",
+        "Seal"
+      ],
+      "rankColors": {
+        "Lemming": "#C5C3F2",
+        "Hare": "#B2CBEA",
+        "Ermine": "#BAF6FC",
+        "Puffin": "#7bcaf0",
+        "Penguin": "#6B94DF",
+        "Fox": "#5558AA",
+        "Mammoth": "#6E3F98",
+        "Orca": "#C080E4",
+        "Seal": "#F5BDE8"
+      },
+      "categories": [
+        {
+          "name": "Arm",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000,
+            23333.33,
+            26666.67,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "Smoothsphere Viscose Easier",
+              "leaderboardId": 185342,
+              "rankMaxes": [
+                5500,
+                6500,
+                8050,
+                9200,
+                10200,
+                11400,
+                12300,
+                13050,
+                13600
+              ]
+            },
+            {
+              "name": "Whisphere Viscose Easier",
+              "leaderboardId": 185346,
+              "rankMaxes": [
+                6800,
+                9400,
+                10300,
+                11100,
+                12800,
+                14500,
+                16200,
+                17500,
+                18500
+              ]
+            },
+            {
+              "name": "SmoothBot Perfected Easier",
+              "leaderboardId": 184652,
+              "rankMaxes": [
+                2000,
+                2500,
+                3000,
+                3350,
+                3650,
+                4100,
+                4500,
+                4775,
+                5025
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Wrist",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000,
+            23333.33,
+            26666.67,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "Leapstrafes Control wobin Easier",
+              "leaderboardId": 185344,
+              "rankMaxes": [
+                1200,
+                1600,
+                2025,
+                2250,
+                2450,
+                2750,
+                3000,
+                3250,
+                3450
+              ]
+            },
+            {
+              "name": "Controlsphere SuperbAim Viscose Easier",
+              "leaderboardId": 185345,
+              "rankMaxes": [
+                4200,
+                5100,
+                6200,
+                7050,
+                7975,
+                9050,
+                10000,
+                10800,
+                11750
+              ]
+            },
+            {
+              "name": "VT Controlsphere Viscose Easier",
+              "leaderboardId": 184157,
+              "rankMaxes": [
+                1100,
+                1600,
+                2100,
+                2450,
+                2750,
+                3175,
+                3500,
+                3800,
+                4100
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Fingertip",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000,
+            23333.33,
+            26666.67,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "Air Angelic 4 Voltaic Easy 70%",
+              "leaderboardId": 14155,
+              "rankMaxes": [
+                2600,
+                3050,
+                3575,
+                3950,
+                4175,
+                4475,
+                4700,
+                4850,
+                5100
+              ]
+            },
+            {
+              "name": "cloverRawControl Viscose Easier 50cm",
+              "leaderboardId": 185349,
+              "rankMaxes": [
+                5000,
+                5850,
+                6400,
+                7100,
+                7800,
+                9200,
+                10000,
+                10700,
+                11500
+              ]
+            },
+            {
+              "name": "Flower Easier 50cm",
+              "leaderboardId": 185354,
+              "rankMaxes": [
+                1050,
+                1350,
+                1650,
+                2000,
+                2350,
+                2575,
+                2875,
+                3200,
+                3475
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Blending",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000,
+            23333.33,
+            26666.67,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "PGTI Voltaic Easy Smoother",
+              "leaderboardId": 184878,
+              "rankMaxes": [
+                550,
+                700,
+                1050,
+                1200,
+                1375,
+                1675,
+                1950,
+                2250,
+                2500
+              ]
+            },
+            {
+              "name": "Air CELESTIAL No UFO Easier",
+              "leaderboardId": 185640,
+              "rankMaxes": [
+                800,
+                817,
+                842,
+                852,
+                862,
+                873,
+                883,
+                889,
+                896
+              ]
+            },
+            {
+              "name": "RawControlSphere Easier",
+              "leaderboardId": 185356,
+              "rankMaxes": [
+                4700,
+                5900,
+                7400,
+                8200,
+                8900,
+                10400,
+                11000,
+                12300,
+                13200
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Control",
+          "rankMaxes": [
+            2222.22,
+            4444.44,
+            6666.67,
+            8888.89,
+            11111.11,
+            13333.33,
+            15555.56,
+            17777.78,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "Ground Plaza Sparky v3 Easy",
+              "leaderboardId": 134502,
+              "rankMaxes": [
+                780,
+                805,
+                833,
+                845,
+                854,
+                866,
+                876,
+                884,
+                889
+              ]
+            },
+            {
+              "name": "Air Spectral Easy 85%",
+              "leaderboardId": 185693,
+              "rankMaxes": [
+                870,
+                895,
+                907,
+                913,
+                917,
+                922,
+                926,
+                929,
+                932
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Speed",
+          "rankMaxes": [
+            2222.22,
+            4444.44,
+            6666.67,
+            8888.89,
+            11111.11,
+            13333.33,
+            15555.56,
+            17777.78,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "VT Aether Bot 1 Easier",
+              "leaderboardId": 186530,
+              "rankMaxes": [
+                1200,
+                1600,
+                1850,
+                2100,
+                2400,
+                2700,
+                3000,
+                3250,
+                3475
+              ]
+            },
+            {
+              "name": "Plink Palace Easy Less Blinks",
+              "leaderboardId": 184534,
+              "rankMaxes": [
+                1300,
+                1600,
+                2000,
+                2175,
+                2300,
+                2525,
+                2775,
+                2925,
+                3100
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Reading",
+          "rankMaxes": [
+            2222.22,
+            4444.44,
+            6666.67,
+            8888.89,
+            11111.11,
+            13333.33,
+            15555.56,
+            17777.78,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "Air Pure Easier No UFO",
+              "leaderboardId": 185405,
+              "rankMaxes": [
+                875,
+                895,
+                912,
+                919,
+                923,
+                928,
+                933,
+                937,
+                940
+              ]
+            },
+            {
+              "name": "Air Voltaic Invincible 4 Easier",
+              "leaderboardId": 185406,
+              "rankMaxes": [
+                1750,
+                2350,
+                2800,
+                3050,
+                3200,
+                3500,
+                3900,
+                4100,
+                4250
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Speed ",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000,
+            23333.33,
+            26666.67,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "ww5t Voltaic Slightly Larger",
+              "leaderboardId": 185378,
+              "rankMaxes": [
+                70,
+                80,
+                92,
+                97,
+                101,
+                108,
+                113,
+                119,
+                125
+              ]
+            },
+            {
+              "name": "voxTargetSwitch 2 Large",
+              "leaderboardId": 84880,
+              "rankMaxes": [
+                59,
+                68,
+                78,
+                84,
+                92,
+                99,
+                106,
+                113,
+                120
+              ]
+            },
+            {
+              "name": "aimerz+ Static Switching 6 Bot Slightly Larger",
+              "leaderboardId": 185407,
+              "rankMaxes": [
+                78,
+                89,
+                98,
+                103,
+                109,
+                115,
+                121,
+                126,
+                131
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Stability",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000,
+            23333.33,
+            26666.67,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "1w6ts reload v2 20% bigger",
+              "leaderboardId": 21620,
+              "rankMaxes": [
+                64,
+                71,
+                78,
+                85,
+                91,
+                97,
+                103,
+                109,
+                115
+              ]
+            },
+            {
+              "name": "beanTS Larger",
+              "leaderboardId": 129353,
+              "rankMaxes": [
+                53,
+                64,
+                75,
+                86,
+                96,
+                106,
+                116,
+                126,
+                137
+              ]
+            },
+            {
+              "name": "StaticSwitchingVox",
+              "leaderboardId": 15659,
+              "rankMaxes": [
+                67,
+                76,
+                86,
+                91,
+                96,
+                101,
+                108,
+                114,
+                119
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Micro",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000,
+            23333.33,
+            26666.67,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "1w2ts reload smallflicks larger",
+              "leaderboardId": 185518,
+              "rankMaxes": [
+                76,
+                85,
+                93,
+                100,
+                106,
+                112,
+                118,
+                124,
+                130
+              ]
+            },
+            {
+              "name": "eth Pasu Micro Easier",
+              "leaderboardId": 185394,
+              "rankMaxes": [
+                600,
+                700,
+                775,
+                850,
+                925,
+                1000,
+                1075,
+                1150,
+                1225
+              ]
+            },
+            {
+              "name": "waldoTS Novice",
+              "leaderboardId": 113019,
+              "rankMaxes": [
+                51,
+                63,
+                74,
+                85,
+                96,
+                107,
+                118,
+                129,
+                140
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Post-Flick",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000,
+            23333.33,
+            26666.67,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "kinTS Voltaic Easy 85%",
+              "leaderboardId": 185408,
+              "rankMaxes": [
+                35,
+                38,
+                44,
+                49,
+                54,
+                59,
+                63,
+                67,
+                72
+              ]
+            },
+            {
+              "name": "domiSwitch Easier",
+              "leaderboardId": 185428,
+              "rankMaxes": [
+                3000,
+                3600,
+                4200,
+                4800,
+                5400,
+                6000,
+                6500,
+                7000,
+                7500
+              ]
+            },
+            {
+              "name": "B180T Voltaic Easy Slower",
+              "leaderboardId": 185571,
+              "rankMaxes": [
+                32,
+                37,
+                42,
+                47,
+                52,
+                57,
+                62,
+                67,
+                72
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Reading ",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000,
+            23333.33,
+            26666.67,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "Pasu Voltaic Reload Easier",
+              "leaderboardId": 185636,
+              "rankMaxes": [
+                38,
+                46,
+                52,
+                59,
+                65,
+                72,
+                78,
+                84,
+                91
+              ]
+            },
+            {
+              "name": "VT Bounceshot Viscose Easier",
+              "leaderboardId": 185392,
+              "rankMaxes": [
+                300,
+                380,
+                460,
+                540,
+                610,
+                690,
+                750,
+                810,
+                870
+              ]
+            },
+            {
+              "name": "CatClick Easier",
+              "leaderboardId": 184866,
+              "rankMaxes": [
+                27,
+                35,
+                42,
+                49,
+                56,
+                63,
+                69,
+                75,
+                80
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Precision",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000,
+            23333.33,
+            26666.67,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "1w3ts Pasu Perfected Micro Goated Larger 80%",
+              "leaderboardId": 128920,
+              "rankMaxes": [
+                420,
+                530,
+                640,
+                750,
+                860,
+                970,
+                1080,
+                1190,
+                1300
+              ]
+            },
+            {
+              "name": "Popcorn MV Easier",
+              "leaderboardId": 185398,
+              "rankMaxes": [
+                90,
+                150,
+                200,
+                240,
+                280,
+                320,
+                360,
+                390,
+                420
+              ]
+            },
+            {
+              "name": "skyClick Goated Easier",
+              "leaderboardId": 185490,
+              "rankMaxes": [
+                60,
+                71,
+                80,
+                89,
+                95,
+                102,
+                107,
+                112,
+                117
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Stability ",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000,
+            23333.33,
+            26666.67,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "VoxTS Click Easier",
+              "leaderboardId": 136076,
+              "rankMaxes": [
+                48,
+                57,
+                64,
+                72,
+                79,
+                86,
+                93,
+                99,
+                105
+              ]
+            },
+            {
+              "name": "VT Floating Heads Viscose Easier",
+              "leaderboardId": 185409,
+              "rankMaxes": [
+                400,
+                500,
+                580,
+                645,
+                700,
+                790,
+                870,
+                930,
+                1015
+              ]
+            },
+            {
+              "name": "psalmTS Viscose Click Easier",
+              "leaderboardId": 185609,
+              "rankMaxes": [
+                31,
+                39,
+                45,
+                51,
+                57,
+                63,
+                69,
+                74,
+                80
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Medium",
+      "kovaaksBenchmarkId": 2336,
+      "rankNames": [
+        "Cinnabar",
+        "Vermillion",
+        "Saffron",
+        "Celadon",
+        "Viridian",
+        "Cerulean",
+        "Lavender",
+        "Indigo",
+        "Fuchsia"
+      ],
+      "rankColors": {
+        "Cinnabar": "#A71112",
+        "Vermillion": "#F85939",
+        "Saffron": "#F1C338",
+        "Celadon": "#9CFF91",
+        "Viridian": "#368b5c",
+        "Cerulean": "#02A4D3",
+        "Lavender": "#C2C2FF",
+        "Indigo": "#5C3896",
+        "Fuchsia": "#C74375"
+      },
+      "categories": [
+        {
+          "name": "Arm",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000,
+            23333.33,
+            26666.67,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "Smoothsphere Viscose",
+              "leaderboardId": 184106,
+              "rankMaxes": [
+                6000,
+                7700,
+                8900,
+                10100,
+                11200,
+                12050,
+                12800,
+                13700,
+                14400
+              ]
+            },
+            {
+              "name": "Whisphere Viscose",
+              "leaderboardId": 184107,
+              "rankMaxes": [
+                8600,
+                11000,
+                13000,
+                14750,
+                16750,
+                18250,
+                19750,
+                21350,
+                22750
+              ]
+            },
+            {
+              "name": "SmoothBot Perfected",
+              "leaderboardId": 184298,
+              "rankMaxes": [
+                2450,
+                3225,
+                3725,
+                4200,
+                4600,
+                4950,
+                5300,
+                5650,
+                5950
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Wrist",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000,
+            23333.33,
+            26666.67,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "Leapstrafes Control wobin",
+              "leaderboardId": 184561,
+              "rankMaxes": [
+                1750,
+                2200,
+                2500,
+                2850,
+                3200,
+                3425,
+                3700,
+                4000,
+                4300
+              ]
+            },
+            {
+              "name": "Controlsphere SuperbAim Viscose",
+              "leaderboardId": 184352,
+              "rankMaxes": [
+                6500,
+                8050,
+                9150,
+                10000,
+                11000,
+                11900,
+                12750,
+                13600,
+                14500
+              ]
+            },
+            {
+              "name": "VT Controlsphere Viscose",
+              "leaderboardId": 184153,
+              "rankMaxes": [
+                1450,
+                1975,
+                2350,
+                2725,
+                3075,
+                3400,
+                3700,
+                4050,
+                4390
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Fingertip",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000,
+            23333.33,
+            26666.67,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "Air Angelic 4 Voltaic Easy 90%",
+              "leaderboardId": 13692,
+              "rankMaxes": [
+                2375,
+                2825,
+                3150,
+                3450,
+                3700,
+                3925,
+                4125,
+                4360,
+                4550
+              ]
+            },
+            {
+              "name": "cloverRawControl Viscose 50cm",
+              "leaderboardId": 184567,
+              "rankMaxes": [
+                4950,
+                6250,
+                7350,
+                8500,
+                9500,
+                10400,
+                11300,
+                12100,
+                13050
+              ]
+            },
+            {
+              "name": "Flower 50cm",
+              "leaderboardId": 184580,
+              "rankMaxes": [
+                1400,
+                1875,
+                2200,
+                2500,
+                2825,
+                3175,
+                3500,
+                3900,
+                4275
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Blending",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000,
+            23333.33,
+            26666.67,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "VT PreciseOrb Intermediate 15% Slower",
+              "leaderboardId": 41595,
+              "rankMaxes": [
+                1000,
+                1400,
+                1700,
+                1975,
+                2225,
+                2500,
+                2725,
+                3000,
+                3250
+              ]
+            },
+            {
+              "name": "Air CELESTIAL No UFO Medium",
+              "leaderboardId": 184763,
+              "rankMaxes": [
+                817,
+                847,
+                863,
+                877,
+                886,
+                893,
+                900,
+                906,
+                911
+              ]
+            },
+            {
+              "name": "RawControlSphere",
+              "leaderboardId": 184301,
+              "rankMaxes": [
+                6600,
+                8150,
+                9300,
+                10500,
+                11300,
+                12100,
+                13100,
+                14075,
+                14900
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Control",
+          "rankMaxes": [
+            2222.22,
+            4444.44,
+            6666.67,
+            8888.89,
+            11111.11,
+            13333.33,
+            15555.56,
+            17777.78,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "Ground Plaza Sparky V3",
+              "leaderboardId": 517,
+              "rankMaxes": [
+                850,
+                860,
+                870,
+                879,
+                886,
+                892.5,
+                899,
+                904.5,
+                909
+              ]
+            },
+            {
+              "name": "Air Spectral Easy",
+              "leaderboardId": 143228,
+              "rankMaxes": [
+                890,
+                903,
+                910,
+                916,
+                921,
+                925,
+                929,
+                932.5,
+                935
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Speed",
+          "rankMaxes": [
+            2222.22,
+            4444.44,
+            6666.67,
+            8888.89,
+            11111.11,
+            13333.33,
+            15555.56,
+            17777.78,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "VT Aether Novice S5 Hard Bot 1 90%",
+              "leaderboardId": 184784,
+              "rankMaxes": [
+                1575,
+                2150,
+                2500,
+                2800,
+                3075,
+                3350,
+                3575,
+                3825,
+                4025
+              ]
+            },
+            {
+              "name": "Plink Palace Easy",
+              "leaderboardId": 184526,
+              "rankMaxes": [
+                1825,
+                2250,
+                2500,
+                2675,
+                2875,
+                3025,
+                3250,
+                3450,
+                3625
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Reading",
+          "rankMaxes": [
+            2222.22,
+            4444.44,
+            6666.67,
+            8888.89,
+            11111.11,
+            13333.33,
+            15555.56,
+            17777.78,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "Air Pure Medium",
+              "leaderboardId": 184766,
+              "rankMaxes": [
+                870,
+                888,
+                898,
+                904,
+                910.5,
+                915.5,
+                921,
+                926,
+                930
+              ]
+            },
+            {
+              "name": "Air Voltaic Invincible 4 Medium",
+              "leaderboardId": 184775,
+              "rankMaxes": [
+                2275,
+                2700,
+                3025,
+                3300,
+                3575,
+                3850,
+                4075,
+                4375,
+                4600
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Speed ",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000,
+            23333.33,
+            26666.67,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "ww4t Voltaic",
+              "leaderboardId": 23921,
+              "rankMaxes": [
+                90,
+                102,
+                112,
+                118,
+                126,
+                133,
+                141,
+                152,
+                160
+              ]
+            },
+            {
+              "name": "voxTargetSwitch 2",
+              "leaderboardId": 551,
+              "rankMaxes": [
+                69,
+                78,
+                87,
+                96,
+                105,
+                115,
+                122,
+                129,
+                135
+              ]
+            },
+            {
+              "name": "aimerz+ Static Switching 5 Bot Slightly Larger",
+              "leaderboardId": 185211,
+              "rankMaxes": [
+                101,
+                111,
+                120,
+                126,
+                133,
+                139,
+                145,
+                153,
+                161
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Stability",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000,
+            23333.33,
+            26666.67,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "1w6ts reload v2",
+              "leaderboardId": 666,
+              "rankMaxes": [
+                70,
+                82,
+                94,
+                105,
+                116,
+                123,
+                130,
+                138,
+                146
+              ]
+            },
+            {
+              "name": "beanTS",
+              "leaderboardId": 2648,
+              "rankMaxes": [
+                80,
+                91,
+                102,
+                113,
+                125,
+                134,
+                142,
+                148,
+                155
+              ]
+            },
+            {
+              "name": "StaticSwitchingVox Small",
+              "leaderboardId": 15662,
+              "rankMaxes": [
+                91,
+                101,
+                111,
+                119,
+                126,
+                133,
+                138,
+                142,
+                147
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Micro",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000,
+            23333.33,
+            26666.67,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "1w2ts reload smallflicks slightly larger",
+              "leaderboardId": 184777,
+              "rankMaxes": [
+                99,
+                109,
+                119,
+                127,
+                135,
+                142,
+                150,
+                161,
+                169
+              ]
+            },
+            {
+              "name": "eth Pasu Micro Medium",
+              "leaderboardId": 184790,
+              "rankMaxes": [
+                850,
+                975,
+                1050,
+                1150,
+                1250,
+                1300,
+                1400,
+                1525,
+                1650
+              ]
+            },
+            {
+              "name": "waldoTS Intermediate",
+              "leaderboardId": 111273,
+              "rankMaxes": [
+                92,
+                104,
+                115,
+                126,
+                136,
+                144,
+                154,
+                163,
+                171
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Post-Flick",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000,
+            23333.33,
+            26666.67,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "kinTS Voltaic Easy",
+              "leaderboardId": 542,
+              "rankMaxes": [
+                42,
+                49,
+                55,
+                61,
+                67,
+                72,
+                76,
+                81,
+                86
+              ]
+            },
+            {
+              "name": "domiSwitch Easy",
+              "leaderboardId": 83043,
+              "rankMaxes": [
+                3600,
+                4200,
+                4700,
+                5200,
+                5700,
+                6200,
+                6700,
+                7200,
+                7700
+              ]
+            },
+            {
+              "name": "B180T Voltaic Easy",
+              "leaderboardId": 543,
+              "rankMaxes": [
+                40,
+                49,
+                56,
+                63,
+                69,
+                75,
+                81,
+                86,
+                91
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Reading ",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000,
+            23333.33,
+            26666.67,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "Pasu Voltaic Reload Easy",
+              "leaderboardId": 163323,
+              "rankMaxes": [
+                51,
+                64,
+                72,
+                80,
+                88,
+                96,
+                103,
+                112,
+                121
+              ]
+            },
+            {
+              "name": "VT Bounceshot Viscose Medium",
+              "leaderboardId": 185237,
+              "rankMaxes": [
+                420,
+                540,
+                600,
+                690,
+                770,
+                850,
+                920,
+                1010,
+                1100
+              ]
+            },
+            {
+              "name": "CatClick Medium",
+              "leaderboardId": 184780,
+              "rankMaxes": [
+                39,
+                49,
+                56,
+                63,
+                70,
+                77,
+                84,
+                95,
+                103
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Precision",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000,
+            23333.33,
+            26666.67,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "1w3ts Pasu Perfected Micro Goated Larger",
+              "leaderboardId": 125923,
+              "rankMaxes": [
+                790,
+                850,
+                975,
+                1075,
+                1175,
+                1275,
+                1400,
+                1550,
+                1650
+              ]
+            },
+            {
+              "name": "Popcorn MV Medium",
+              "leaderboardId": 184781,
+              "rankMaxes": [
+                160,
+                220,
+                260,
+                310,
+                350,
+                390,
+                440,
+                490,
+                540
+              ]
+            },
+            {
+              "name": "skyClick Goated Medium",
+              "leaderboardId": 185491,
+              "rankMaxes": [
+                83,
+                91,
+                100,
+                109,
+                117,
+                125,
+                132,
+                143,
+                152
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Stability ",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000,
+            23333.33,
+            26666.67,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "VoxTS Click Medium",
+              "leaderboardId": 136098,
+              "rankMaxes": [
+                62,
+                74,
+                81,
+                89,
+                96,
+                103,
+                110,
+                119,
+                127
+              ]
+            },
+            {
+              "name": "VT Floating Heads Viscose Medium",
+              "leaderboardId": 184827,
+              "rankMaxes": [
+                475,
+                575,
+                650,
+                750,
+                825,
+                900,
+                975,
+                1085,
+                1200
+              ]
+            },
+            {
+              "name": "psalmTS Viscose Click",
+              "leaderboardId": 185603,
+              "rankMaxes": [
+                46,
+                56,
+                62,
+                69,
+                75,
+                81,
+                88,
+                96,
+                104
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Hard",
+      "kovaaksBenchmarkId": 2337,
+      "rankNames": [
+        "Wool",
+        "Rayon",
+        "Linen",
+        "Velvet",
+        "Chiffon",
+        "Tricot",
+        "Satin",
+        "Silk"
+      ],
+      "rankColors": {
+        "Wool": "#F1ECEB",
+        "Rayon": "#F1E1EB",
+        "Linen": "#EED3CE",
+        "Velvet": "#ECA1B0",
+        "Chiffon": "#8FC7E7",
+        "Tricot": "#76B0E0",
+        "Satin": "#5CA9C6",
+        "Silk": "#2E6F8A"
+      },
+      "categories": [
+        {
+          "name": "Arm",
+          "rankMaxes": [
+            3750,
+            7500,
+            11250,
+            15000,
+            18750,
+            22500,
+            26250,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "Smoothsphere Viscose Hard",
+              "leaderboardId": 184518,
+              "rankMaxes": [
+                9000,
+                9700,
+                10350,
+                11050,
+                11625,
+                12050,
+                12850,
+                13400
+              ]
+            },
+            {
+              "name": "Whisphere Viscose Hard",
+              "leaderboardId": 185238,
+              "rankMaxes": [
+                14750,
+                15850,
+                16750,
+                18000,
+                18750,
+                19750,
+                21250,
+                22250
+              ]
+            },
+            {
+              "name": "SmoothBot Perfected Hard",
+              "leaderboardId": 184347,
+              "rankMaxes": [
+                4050,
+                4325,
+                4550,
+                4800,
+                5000,
+                5350,
+                5550,
+                5725
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Wrist",
+          "rankMaxes": [
+            3750,
+            7500,
+            11250,
+            15000,
+            18750,
+            22500,
+            26250,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "Leapstrafes Control wobin Hard",
+              "leaderboardId": 184845,
+              "rankMaxes": [
+                2875,
+                3100,
+                3275,
+                3525,
+                3675,
+                3875,
+                4075,
+                4225
+              ]
+            },
+            {
+              "name": "Controlsphere SuperbAim Viscose Hard",
+              "leaderboardId": 184502,
+              "rankMaxes": [
+                9650,
+                10450,
+                11000,
+                11600,
+                12200,
+                13000,
+                13500,
+                14000
+              ]
+            },
+            {
+              "name": "VT Controlsphere Viscose Hard",
+              "leaderboardId": 184152,
+              "rankMaxes": [
+                2700,
+                2975,
+                3225,
+                3450,
+                3625,
+                3875,
+                4200,
+                4475
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Fingertip",
+          "rankMaxes": [
+            3750,
+            7500,
+            11250,
+            15000,
+            18750,
+            22500,
+            26250,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "Air Angelic 4 Voltaic 90%",
+              "leaderboardId": 2537,
+              "rankMaxes": [
+                3375,
+                3635,
+                3825,
+                4025,
+                4180,
+                4375,
+                4540,
+                4660
+              ]
+            },
+            {
+              "name": "cloverRawControl Viscose Hard 50cm",
+              "leaderboardId": 184568,
+              "rankMaxes": [
+                7800,
+                8375,
+                8950,
+                9600,
+                10400,
+                11100,
+                11650,
+                12200
+              ]
+            },
+            {
+              "name": "Flower Hard 50cm",
+              "leaderboardId": 184591,
+              "rankMaxes": [
+                2650,
+                2950,
+                3100,
+                3400,
+                3600,
+                3925,
+                4125,
+                4325
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Blending",
+          "rankMaxes": [
+            3750,
+            7500,
+            11250,
+            15000,
+            18750,
+            22500,
+            26250,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "PGTI Voltaic Slower - 80%",
+              "leaderboardId": 509,
+              "rankMaxes": [
+                1800,
+                2100,
+                2375,
+                2650,
+                2900,
+                3150,
+                3400,
+                3625
+              ]
+            },
+            {
+              "name": "Air CELESTIAL Harder",
+              "leaderboardId": 185225,
+              "rankMaxes": [
+                853,
+                865,
+                871,
+                879,
+                884,
+                889,
+                894,
+                897.5
+              ]
+            },
+            {
+              "name": "RawControlSphere Hard",
+              "leaderboardId": 184794,
+              "rankMaxes": [
+                10775,
+                11400,
+                12000,
+                12650,
+                13300,
+                13950,
+                14650,
+                15200
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Control",
+          "rankMaxes": [
+            2500,
+            5000,
+            7500,
+            10000,
+            12500,
+            15000,
+            17500,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "Ground Plaza Sparky V3 Viscose Hard",
+              "leaderboardId": 184795,
+              "rankMaxes": [
+                889,
+                892.5,
+                896.5,
+                900,
+                903,
+                906.5,
+                909,
+                911.5
+              ]
+            },
+            {
+              "name": "Air Spectral",
+              "leaderboardId": 142893,
+              "rankMaxes": [
+                898,
+                909,
+                913,
+                917,
+                921,
+                924,
+                927,
+                929.5
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Speed",
+          "rankMaxes": [
+            2500,
+            5000,
+            7500,
+            10000,
+            12500,
+            15000,
+            17500,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "VT Aether Intermediate S5 Hard Bot 1",
+              "leaderboardId": 140200,
+              "rankMaxes": [
+                2300,
+                2550,
+                2800,
+                3050,
+                3235,
+                3375,
+                3565,
+                3725
+              ]
+            },
+            {
+              "name": "Plink Palace",
+              "leaderboardId": 184516,
+              "rankMaxes": [
+                2775,
+                2925,
+                3025,
+                3175,
+                3325,
+                3435,
+                3510,
+                3600
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Reading",
+          "rankMaxes": [
+            2500,
+            5000,
+            7500,
+            10000,
+            12500,
+            15000,
+            17500,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "Air Pure Hard",
+              "leaderboardId": 185019,
+              "rankMaxes": [
+                892,
+                897,
+                901,
+                905,
+                908,
+                912,
+                915,
+                916.5
+              ]
+            },
+            {
+              "name": "Air Voltaic Invincible 4 Slightly Slower",
+              "leaderboardId": 185402,
+              "rankMaxes": [
+                3125,
+                3325,
+                3475,
+                3675,
+                3850,
+                4025,
+                4175,
+                4300
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Speed ",
+          "rankMaxes": [
+            3750,
+            7500,
+            11250,
+            15000,
+            18750,
+            22500,
+            26250,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "ww3t Voltaic",
+              "leaderboardId": 68,
+              "rankMaxes": [
+                131,
+                138,
+                144,
+                150,
+                157,
+                163,
+                170,
+                175
+              ]
+            },
+            {
+              "name": "voxTargetSwitch 2 10% Smaller",
+              "leaderboardId": 185192,
+              "rankMaxes": [
+                109,
+                115,
+                119,
+                123,
+                126,
+                130,
+                135,
+                140
+              ]
+            },
+            {
+              "name": "aimerz+ Static Switching 5 Bot",
+              "leaderboardId": 184753,
+              "rankMaxes": [
+                131,
+                136,
+                142,
+                146,
+                150,
+                154,
+                158,
+                162
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Stability",
+          "rankMaxes": [
+            3750,
+            7500,
+            11250,
+            15000,
+            18750,
+            22500,
+            26250,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "1w5ts reload",
+              "leaderboardId": 2308,
+              "rankMaxes": [
+                117,
+                123,
+                130,
+                137,
+                144,
+                149,
+                156,
+                162
+              ]
+            },
+            {
+              "name": "beanTS 200%",
+              "leaderboardId": 58888,
+              "rankMaxes": [
+                123,
+                128,
+                134,
+                139,
+                144,
+                149,
+                155,
+                159
+              ]
+            },
+            {
+              "name": "StaticSwitchingVox xSmall",
+              "leaderboardId": 15766,
+              "rankMaxes": [
+                110,
+                118,
+                124,
+                130,
+                136,
+                142,
+                146,
+                151
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Micro",
+          "rankMaxes": [
+            3750,
+            7500,
+            11250,
+            15000,
+            18750,
+            22500,
+            26250,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "1w2ts reload smallflicks",
+              "leaderboardId": 36,
+              "rankMaxes": [
+                145,
+                151,
+                157,
+                163,
+                168,
+                173,
+                179,
+                184
+              ]
+            },
+            {
+              "name": "eth Pasu Micro Hard",
+              "leaderboardId": 185017,
+              "rankMaxes": [
+                1260,
+                1350,
+                1420,
+                1500,
+                1575,
+                1650,
+                1750,
+                1800
+              ]
+            },
+            {
+              "name": "waldoTS",
+              "leaderboardId": 81042,
+              "rankMaxes": [
+                135,
+                142,
+                149,
+                155,
+                161,
+                167,
+                174,
+                178
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Post-Flick",
+          "rankMaxes": [
+            3750,
+            7500,
+            11250,
+            15000,
+            18750,
+            22500,
+            26250,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "kinTS Voltaic",
+              "leaderboardId": 604,
+              "rankMaxes": [
+                65,
+                69,
+                74,
+                79,
+                83,
+                87,
+                90,
+                93
+              ]
+            },
+            {
+              "name": "domiSwitch",
+              "leaderboardId": 83035,
+              "rankMaxes": [
+                5100,
+                5500,
+                5900,
+                6400,
+                6700,
+                7000,
+                7200,
+                7400
+              ]
+            },
+            {
+              "name": "B180T Voltaic",
+              "leaderboardId": 947,
+              "rankMaxes": [
+                65,
+                70,
+                75,
+                80,
+                85,
+                90,
+                94,
+                98
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Reading ",
+          "rankMaxes": [
+            3750,
+            7500,
+            11250,
+            15000,
+            18750,
+            22500,
+            26250,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "Pasu Voltaic Reload",
+              "leaderboardId": 10412,
+              "rankMaxes": [
+                81,
+                88,
+                94,
+                100,
+                104,
+                109,
+                116,
+                122
+              ]
+            },
+            {
+              "name": "VT Bounceshot Viscose Hard",
+              "leaderboardId": 185230,
+              "rankMaxes": [
+                720,
+                800,
+                850,
+                910,
+                960,
+                1020,
+                1100,
+                1190
+              ]
+            },
+            {
+              "name": "CatClick",
+              "leaderboardId": 179408,
+              "rankMaxes": [
+                70,
+                76,
+                81,
+                86,
+                91,
+                99,
+                107,
+                112
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Precision",
+          "rankMaxes": [
+            3750,
+            7500,
+            11250,
+            15000,
+            18750,
+            22500,
+            26250,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "1w3ts Pasu Perfected Micro Goated",
+              "leaderboardId": 65396,
+              "rankMaxes": [
+                980,
+                1060,
+                1140,
+                1230,
+                1320,
+                1420,
+                1510,
+                1580
+              ]
+            },
+            {
+              "name": "Popcorn MV Hard",
+              "leaderboardId": 185400,
+              "rankMaxes": [
+                340,
+                380,
+                410,
+                440,
+                480,
+                510,
+                560,
+                610
+              ]
+            },
+            {
+              "name": "skyClick Goated Hard",
+              "leaderboardId": 185492,
+              "rankMaxes": [
+                119,
+                127,
+                132,
+                140,
+                144,
+                148,
+                156,
+                164
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Stability ",
+          "rankMaxes": [
+            3750,
+            7500,
+            11250,
+            15000,
+            18750,
+            22500,
+            26250,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "VoxTS Click Medium 10% Smaller",
+              "leaderboardId": 185015,
+              "rankMaxes": [
+                101,
+                107,
+                113,
+                118,
+                122,
+                127,
+                135,
+                142
+              ]
+            },
+            {
+              "name": "VT Floating Heads Viscose Hard",
+              "leaderboardId": 184829,
+              "rankMaxes": [
+                780,
+                875,
+                930,
+                1000,
+                1080,
+                1150,
+                1200,
+                1260
+              ]
+            },
+            {
+              "name": "psalmTS Viscose Click Hard",
+              "leaderboardId": 185604,
+              "rankMaxes": [
+                72,
+                79,
+                85,
+                88,
+                93,
+                99,
+                108,
+                114
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Expert",
+      "kovaaksBenchmarkId": 2338,
+      "rankNames": [
+        "Interloper",
+        "Attuned",
+        "Heroic",
+        "Mythic",
+        "Ascension",
+        "Eclipse"
+      ],
+      "rankColors": {
+        "Interloper": "#f8c9f8",
+        "Attuned": "#ef92ef",
+        "Heroic": "#e967e9",
+        "Mythic": "#cc91f0",
+        "Ascension": "#b966ea",
+        "Eclipse": "#62148f"
+      },
+      "categories": [
+        {
+          "name": "Arm",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000,
+            25000,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "Smoothsphere Viscose Expert",
+              "leaderboardId": 184830,
+              "rankMaxes": [
+                7500,
+                8500,
+                9500,
+                10500,
+                11500,
+                12500
+              ]
+            },
+            {
+              "name": "Whisphere Viscose Expert",
+              "leaderboardId": 185239,
+              "rankMaxes": [
+                14500,
+                16000,
+                17500,
+                19000,
+                20500,
+                22000
+              ]
+            },
+            {
+              "name": "SmoothBot Perfected Expert",
+              "leaderboardId": 184832,
+              "rankMaxes": [
+                4150,
+                4400,
+                4650,
+                4900,
+                5150,
+                5400
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Wrist",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000,
+            25000,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "Leapstrafes Control wobin Expert",
+              "leaderboardId": 185014,
+              "rankMaxes": [
+                2900,
+                3200,
+                3450,
+                3700,
+                3950,
+                4200
+              ]
+            },
+            {
+              "name": "Controlsphere SuperbAim Viscose Expert",
+              "leaderboardId": 184836,
+              "rankMaxes": [
+                9800,
+                10500,
+                11300,
+                12100,
+                12800,
+                13500
+              ]
+            },
+            {
+              "name": "VT Controlsphere Viscose Expert",
+              "leaderboardId": 184831,
+              "rankMaxes": [
+                3150,
+                3400,
+                3650,
+                3900,
+                4150,
+                4400
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Fingertip",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000,
+            25000,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "Air Angelic 4 Voltaic Slightly Smaller",
+              "leaderboardId": 184839,
+              "rankMaxes": [
+                3200,
+                3450,
+                3650,
+                3850,
+                4050,
+                4250
+              ]
+            },
+            {
+              "name": "cloverRawControl Viscose Expert 50cm",
+              "leaderboardId": 184840,
+              "rankMaxes": [
+                7200,
+                8000,
+                8800,
+                9500,
+                10200,
+                10900
+              ]
+            },
+            {
+              "name": "Flower Expert 50cm",
+              "leaderboardId": 184842,
+              "rankMaxes": [
+                3300,
+                3550,
+                3750,
+                3950,
+                4150,
+                4350
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Blending",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000,
+            25000,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "PGTI Voltaic",
+              "leaderboardId": 99,
+              "rankMaxes": [
+                2000,
+                2200,
+                2400,
+                2600,
+                2800,
+                3000
+              ]
+            },
+            {
+              "name": "Air CELESTIAL Expert",
+              "leaderboardId": 185401,
+              "rankMaxes": [
+                881,
+                885,
+                889,
+                893,
+                896,
+                899
+              ]
+            },
+            {
+              "name": "RawControlSphere Expert",
+              "leaderboardId": 184846,
+              "rankMaxes": [
+                9300,
+                10300,
+                11300,
+                12300,
+                13200,
+                14100
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Control",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "Ground Plaza Sparky V3 Thin",
+              "leaderboardId": 1408,
+              "rankMaxes": [
+                890,
+                894,
+                897,
+                900,
+                903,
+                906
+              ]
+            },
+            {
+              "name": "Air Spectral Harder",
+              "leaderboardId": 185018,
+              "rankMaxes": [
+                914,
+                918,
+                922,
+                925,
+                927,
+                929
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Speed",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "VT Aether Advanced S5 bot 1",
+              "leaderboardId": 106773,
+              "rankMaxes": [
+                2700,
+                2900,
+                3100,
+                3250,
+                3400,
+                3550
+              ]
+            },
+            {
+              "name": "Plink Palace Hard",
+              "leaderboardId": 184869,
+              "rankMaxes": [
+                2750,
+                2950,
+                3125,
+                3300,
+                3475,
+                3650
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Reading",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "Air Pure",
+              "leaderboardId": 13213,
+              "rankMaxes": [
+                899,
+                902,
+                905,
+                908,
+                911,
+                914
+              ]
+            },
+            {
+              "name": "Air Voltaic Invincible 4",
+              "leaderboardId": 1092,
+              "rankMaxes": [
+                3650,
+                3800,
+                3950,
+                4100,
+                4200,
+                4300
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Speed ",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000,
+            25000,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "ww3t Voltaic 10% Smaller",
+              "leaderboardId": 92573,
+              "rankMaxes": [
+                152,
+                158,
+                163,
+                168,
+                173,
+                178
+              ]
+            },
+            {
+              "name": "voxTargetSwitch 2 20% Smaller",
+              "leaderboardId": 89093,
+              "rankMaxes": [
+                122,
+                126,
+                130,
+                133,
+                136,
+                139
+              ]
+            },
+            {
+              "name": "aimerz+ Static Switching",
+              "leaderboardId": 54520,
+              "rankMaxes": [
+                139,
+                144,
+                148,
+                153,
+                158,
+                163
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Stability",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000,
+            25000,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "1w4ts Voltaic",
+              "leaderboardId": 319,
+              "rankMaxes": [
+                138,
+                144,
+                150,
+                156,
+                161,
+                167
+              ]
+            },
+            {
+              "name": "beanTS 200% Slightly Smaller",
+              "leaderboardId": 185022,
+              "rankMaxes": [
+                132,
+                137,
+                142,
+                146,
+                150,
+                155
+              ]
+            },
+            {
+              "name": "StaticSwitchingVox xxSmall",
+              "leaderboardId": 18203,
+              "rankMaxes": [
+                128,
+                132,
+                136,
+                140,
+                144,
+                148
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Micro",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000,
+            25000,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "1w2ts reload smallflicks 25% smaller",
+              "leaderboardId": 32659,
+              "rankMaxes": [
+                146,
+                152,
+                158,
+                163,
+                168,
+                173
+              ]
+            },
+            {
+              "name": "eth Pasu Micro Expert",
+              "leaderboardId": 185223,
+              "rankMaxes": [
+                1325,
+                1400,
+                1475,
+                1550,
+                1625,
+                1700
+              ]
+            },
+            {
+              "name": "waldoTS Elite",
+              "leaderboardId": 111257,
+              "rankMaxes": [
+                146,
+                152,
+                157,
+                162,
+                167,
+                172
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Post-Flick",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000,
+            25000,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "kinTS Voltaic Elite",
+              "leaderboardId": 100251,
+              "rankMaxes": [
+                72,
+                77,
+                81,
+                85,
+                89,
+                93
+              ]
+            },
+            {
+              "name": "domiSwitch Harder",
+              "leaderboardId": 185226,
+              "rankMaxes": [
+                5300,
+                5700,
+                6100,
+                6500,
+                6900,
+                7300
+              ]
+            },
+            {
+              "name": "B180T Voltaic 15% Smaller",
+              "leaderboardId": 16045,
+              "rankMaxes": [
+                72,
+                77,
+                81,
+                85,
+                89,
+                93
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Reading ",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000,
+            25000,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "Pasu Voltaic Reload 15% Smaller",
+              "leaderboardId": 185233,
+              "rankMaxes": [
+                95,
+                103,
+                108,
+                113,
+                118,
+                123
+              ]
+            },
+            {
+              "name": "VT Bounceshot Viscose Expert",
+              "leaderboardId": 185236,
+              "rankMaxes": [
+                820,
+                900,
+                970,
+                1040,
+                1100,
+                1150
+              ]
+            },
+            {
+              "name": "CatClick Harder",
+              "leaderboardId": 184865,
+              "rankMaxes": [
+                70,
+                78,
+                85,
+                92,
+                98,
+                104
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Precision",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000,
+            25000,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "1w3ts Pasu Perfected Micro Goated 10% small",
+              "leaderboardId": 172862,
+              "rankMaxes": [
+                1225,
+                1300,
+                1375,
+                1450,
+                1500,
+                1550
+              ]
+            },
+            {
+              "name": "Popcorn MV Advanced",
+              "leaderboardId": 76966,
+              "rankMaxes": [
+                400,
+                430,
+                460,
+                490,
+                520,
+                550
+              ]
+            },
+            {
+              "name": "skyClick Goated Expert",
+              "leaderboardId": 185489,
+              "rankMaxes": [
+                114,
+                121,
+                128,
+                135,
+                142,
+                149
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Stability ",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000,
+            25000,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "VoxTS Click Hard",
+              "leaderboardId": 136746,
+              "rankMaxes": [
+                110,
+                118,
+                125,
+                132,
+                139,
+                146
+              ]
+            },
+            {
+              "name": "VT Floating Heads Viscose Expert",
+              "leaderboardId": 185221,
+              "rankMaxes": [
+                880,
+                940,
+                1000,
+                1060,
+                1110,
+                1180
+              ]
+            },
+            {
+              "name": "psalmTS Viscose Click Expert",
+              "leaderboardId": 185607,
+              "rankMaxes": [
+                76,
+                85,
+                93,
+                101,
+                109,
+                115
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

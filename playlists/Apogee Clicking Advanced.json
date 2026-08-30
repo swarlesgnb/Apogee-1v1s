@@ -1,0 +1,47 @@
+{
+	"playlistName": "Apogee Clicking Advanced",
+	"playlistId": 0,
+	"authorSteamId": "",
+	"authorName": "",
+	"scenarioList": [
+		{
+			"scenario_name": "Wide Wall 4 Targets",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "1w6ts reload v2 20% bigger",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "VT Pasu Advanced S5",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "VT Bounceshot Viscose Medium",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "Floating Heads Timing 400% Larger",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "voxTargetClick 20% Small",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "eth Pasu Micro Medium",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "1w2ts reload smallflicks slightly larger",
+			"play_Count": 1
+		}
+	],
+	"description": "Season 1 practice. 8 scenarios, the ones this season ranks you on. Play them as often as you like - nothing here is a match, and none of it settles anything.",
+	"hasOfflineScenarios": false,
+	"hasEdited": true,
+	"shareCode": "",
+	"version": 31,
+	"updated": 1788031556,
+	"isPrivate": false
+}

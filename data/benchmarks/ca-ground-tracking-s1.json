@@ -1,0 +1,265 @@
+{
+  "benchmarkName": "cA Ground Tracking S1",
+  "abbreviation": "cA",
+  "color": "#5ebbe4",
+  "spreadsheetURL": "",
+  "evxlUrl": "https://evxl.app/benchmarks/cA%20Ground%20Tracking%20S1",
+  "source": "kovaaks.com benchmarks API + evxl registry",
+  "fetchedAt": "2026-08-29T16:58:00Z",
+  "difficulties": [
+    {
+      "name": "Easy",
+      "kovaaksBenchmarkId": 2531,
+      "rankNames": [
+        "Rivulet",
+        "Cloud",
+        "Droplets",
+        "Fluid"
+      ],
+      "rankColors": {
+        "Rivulet": "#85FA85",
+        "Cloud": "#cd30c1",
+        "Droplets": "#feeb01",
+        "Fluid": "#6f1d89"
+      },
+      "categories": [
+        {
+          "name": "READING",
+          "rankMaxes": [
+            7500,
+            15000,
+            22500,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "cA REACTIVE Easy S1",
+              "leaderboardId": 195440,
+              "rankMaxes": [
+                3300,
+                3600,
+                3850,
+                4100
+              ]
+            },
+            {
+              "name": "cA MFSI Easy S1",
+              "leaderboardId": 195438,
+              "rankMaxes": [
+                11500,
+                12500,
+                13500,
+                14500
+              ]
+            },
+            {
+              "name": "cA FBS Easy S1",
+              "leaderboardId": 195439,
+              "rankMaxes": [
+                3550,
+                3800,
+                4050,
+                4300
+              ]
+            }
+          ]
+        },
+        {
+          "name": "CONTROL",
+          "rankMaxes": [
+            7500,
+            15000,
+            22500,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "cA SLIPPERY Easy S1",
+              "leaderboardId": 195469,
+              "rankMaxes": [
+                8000,
+                8700,
+                9350,
+                10000
+              ]
+            },
+            {
+              "name": "cA VSS Easy S1",
+              "leaderboardId": 195470,
+              "rankMaxes": [
+                12100,
+                13000,
+                13800,
+                14600
+              ]
+            },
+            {
+              "name": "cA FLUIDITY Easy S1",
+              "leaderboardId": 195442,
+              "rankMaxes": [
+                3070,
+                3370,
+                3620,
+                3850
+              ]
+            }
+          ]
+        },
+        {
+          "name": "MIX",
+          "rankMaxes": [
+            2500,
+            5000,
+            7500,
+            10000
+          ],
+          "scenarios": [
+            {
+              "name": "cA XYZ Easy S1",
+              "leaderboardId": 195421,
+              "rankMaxes": [
+                3100,
+                3300,
+                3550,
+                3800
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Hard",
+      "kovaaksBenchmarkId": 2534,
+      "rankNames": [
+        "Droplets",
+        "Fluid",
+        "Vapour",
+        "Hydro",
+        "Element"
+      ],
+      "rankColors": {
+        "Droplets": "#feeb01",
+        "Fluid": "#6f1d89",
+        "Vapour": "#c4065b",
+        "Hydro": "#56e4fe",
+        "Element": "#faa0fc"
+      },
+      "categories": [
+        {
+          "name": "READING",
+          "rankMaxes": [
+            4000,
+            8000,
+            12000,
+            16000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "cA REACTIVE Hard S1",
+              "leaderboardId": 194935,
+              "rankMaxes": [
+                2850,
+                3150,
+                3400,
+                3630,
+                3930
+              ]
+            },
+            {
+              "name": "cA MFSI Hard S1",
+              "leaderboardId": 194933,
+              "rankMaxes": [
+                10800,
+                11700,
+                12600,
+                13500,
+                14350
+              ]
+            },
+            {
+              "name": "cA FBS Hard S1",
+              "leaderboardId": 194928,
+              "rankMaxes": [
+                3050,
+                3300,
+                3550,
+                3800,
+                4050
+              ]
+            }
+          ]
+        },
+        {
+          "name": "CONTROL",
+          "rankMaxes": [
+            4000,
+            8000,
+            12000,
+            16000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "cA SLIPPERY Hard S1",
+              "leaderboardId": 194931,
+              "rankMaxes": [
+                8150,
+                8850,
+                9500,
+                10250,
+                10950
+              ]
+            },
+            {
+              "name": "cA VSS Hard S1",
+              "leaderboardId": 194939,
+              "rankMaxes": [
+                12300,
+                13300,
+                14200,
+                15000,
+                16000
+              ]
+            },
+            {
+              "name": "cA FLUIDITY Hard S1",
+              "leaderboardId": 194932,
+              "rankMaxes": [
+                3150,
+                3350,
+                3550,
+                3760,
+                4000
+              ]
+            }
+          ]
+        },
+        {
+          "name": "MIX",
+          "rankMaxes": [
+            4000,
+            8000,
+            12000,
+            16000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "cA XYZ Hard S1",
+              "leaderboardId": 194945,
+              "rankMaxes": [
+                3170,
+                3400,
+                3630,
+                3830,
+                4050
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

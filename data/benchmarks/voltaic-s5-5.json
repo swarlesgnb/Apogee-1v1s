@@ -5,7 +5,7 @@
   "spreadsheetURL": "https://docs.google.com/spreadsheets/d/1kiS9CvXTQjLsm42nBafhddu2Q7XdWtxaMtumeZ_sV-c",
   "evxlUrl": "https://evxl.app/benchmarks/Voltaic%20S5.5",
   "source": "kovaaks.com benchmarks API + evxl registry",
-  "fetchedAt": "2026-08-23T16:25:54Z",
+  "fetchedAt": "2026-08-25T13:51:06Z",
   "difficulties": [
     {
       "name": "Novice",

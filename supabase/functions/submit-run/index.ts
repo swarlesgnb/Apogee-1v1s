@@ -28,6 +28,7 @@ import {
   scenarioByName,
   HttpError,
 } from "../_shared/apogee.ts";
+import { enforceRateLimit } from "../_shared/rateLimit.ts";
 
 import { parseStatsFile } from "../../../src/core/stats/parseStatsFile.ts";
 import { playedAtUtc, runDurationSeconds } from "../../../src/core/stats/duration.ts";
@@ -77,6 +78,7 @@ async function sha256Hex(text: string): Promise<string> {
 
 Deno.serve(handler(async (req, admin) => {
   const caller = await requireCaller(req, admin);
+  await enforceRateLimit(admin, caller.playerId, "submit-run");
   const body = await readJson<Body>(req);
 
   if (!body.csv || !body.filename) throw new HttpError(400, "filename and csv are required");
@@ -177,6 +179,25 @@ Deno.serve(handler(async (req, admin) => {
               stat: scenario.score_model_stat as "kills" | "hitCount" | "damageDone",
               k: Number(scenario.score_model_k),
             }
+          : undefined,
+      // Both rates or neither: the score relation and the shot-count relation only
+      // pin the weapon block between them, and half of it verifies nothing.
+      weaponScoreModel:
+        scenario?.weapon_score_per_damage != null &&
+        scenario.weapon_damage_per_shot != null
+          ? {
+              scorePerDamage: Number(scenario.weapon_score_per_damage),
+              damagePerShot: Number(scenario.weapon_damage_per_shot),
+            }
+          : undefined,
+      // Both, or neither: a rate with no length to be a rate over bounds nothing.
+      shotsPerSecond:
+        scenario?.shots_per_second != null && scenario.duration_seconds != null
+          ? Number(scenario.shots_per_second)
+          : undefined,
+      scenarioSeconds:
+        scenario?.shots_per_second != null && scenario.duration_seconds != null
+          ? Number(scenario.duration_seconds)
           : undefined,
       window,
     },

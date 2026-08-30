@@ -1,0 +1,39 @@
+{
+	"playlistName": "Apogee Switching Intermediate",
+	"playlistId": 0,
+	"authorSteamId": "",
+	"authorName": "",
+	"scenarioList": [
+		{
+			"scenario_name": "voxTargetSwitch 2 Large",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "VT DotTS Intermediate S5",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "VT FlyTS Intermediate S5",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "VT evaTS Intermediate",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "VT ControlTS Intermediate S5",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "beanTS Larger",
+			"play_Count": 1
+		}
+	],
+	"description": "Season 1 practice. 6 scenarios, the ones this season ranks you on. Play them as often as you like - nothing here is a match, and none of it settles anything.",
+	"hasOfflineScenarios": false,
+	"hasEdited": true,
+	"shareCode": "",
+	"version": 31,
+	"updated": 1788031556,
+	"isPrivate": false
+}

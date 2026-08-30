@@ -1,0 +1,375 @@
+{
+  "benchmarkName": "e1se Smooth Benchmark",
+  "abbreviation": "e",
+  "color": "#D3E3FD",
+  "spreadsheetURL": "https://docs.google.com/spreadsheets/d/1IXyjASZHs8yaVgS_os0wMLuvHIdZ2L8wrah_ShjXQ7w/edit?gid=0#gid=0",
+  "evxlUrl": "https://evxl.app/benchmarks/e1se%20Smooth%20Benchmark",
+  "source": "kovaaks.com benchmarks API + evxl registry",
+  "fetchedAt": "2026-08-29T16:58:04Z",
+  "difficulties": [
+    {
+      "name": "Normal",
+      "kovaaksBenchmarkId": 696,
+      "rankNames": [
+        "Milk",
+        "Cream",
+        "Cheese",
+        "Butter"
+      ],
+      "rankColors": {
+        "Milk": "#B6D7A8",
+        "Cream": "#B4A7D6",
+        "Cheese": "#EA9999",
+        "Butter": "#F1C232"
+      },
+      "categories": [
+        {
+          "name": "Centering",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "Centering I 90 no strafes",
+              "leaderboardId": 1743,
+              "rankMaxes": [
+                12250,
+                13550,
+                14800,
+                15600
+              ]
+            },
+            {
+              "name": "Spherical Centering Hard",
+              "leaderboardId": 19819,
+              "rankMaxes": [
+                13800,
+                15050,
+                16100,
+                17000
+              ]
+            },
+            {
+              "name": "Thin Gauntlet Easy",
+              "leaderboardId": 914,
+              "rankMaxes": [
+                895,
+                903,
+                910,
+                915
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Smooth",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "VT Suavetrack Intermediate",
+              "leaderboardId": 40783,
+              "rankMaxes": [
+                19400,
+                21500,
+                23300,
+                24800
+              ]
+            },
+            {
+              "name": "Pasu Track Extrasmooth TE",
+              "leaderboardId": 32539,
+              "rankMaxes": [
+                6980,
+                7350,
+                7680,
+                8040
+              ]
+            },
+            {
+              "name": "e1se Far Angle Smoothness EASY",
+              "leaderboardId": 27713,
+              "rankMaxes": [
+                350,
+                380,
+                405,
+                435
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Sphere",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "Controlsphere",
+              "leaderboardId": 392,
+              "rankMaxes": [
+                10050,
+                10780,
+                11520,
+                12050
+              ]
+            },
+            {
+              "name": "Smoothsphere",
+              "leaderboardId": 396,
+              "rankMaxes": [
+                6800,
+                7590,
+                8400,
+                9250
+              ]
+            },
+            {
+              "name": "e1se Glider 30s Normal",
+              "leaderboardId": 32130,
+              "rankMaxes": [
+                2000,
+                2350,
+                2600,
+                2800
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Smoothbot",
+          "rankMaxes": [
+            2500,
+            5000,
+            7500,
+            10000
+          ],
+          "scenarios": [
+            {
+              "name": "Smoothbot Invincible Goated Easy",
+              "leaderboardId": 955,
+              "rankMaxes": [
+                4150,
+                4460,
+                4700,
+                4900
+              ]
+            },
+            {
+              "name": "Smoothbot Voltaic Easy",
+              "leaderboardId": 370,
+              "rankMaxes": [
+                2850,
+                3080,
+                3330,
+                3580
+              ]
+            },
+            {
+              "name": "VT Smoothbot Intermediate",
+              "leaderboardId": 24952,
+              "rankMaxes": [
+                3400,
+                3840,
+                4150,
+                4420
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Hard",
+      "kovaaksBenchmarkId": 697,
+      "rankNames": [
+        "Milk",
+        "Cream",
+        "Cheese",
+        "Butter"
+      ],
+      "rankColors": {
+        "Milk": "#B6D7A8",
+        "Cream": "#B4A7D6",
+        "Cheese": "#EA9999",
+        "Butter": "#F1C232"
+      },
+      "categories": [
+        {
+          "name": "Centering",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "Centering I 180 no strafes",
+              "leaderboardId": 19,
+              "rankMaxes": [
+                14000,
+                15150,
+                16200,
+                17090
+              ]
+            },
+            {
+              "name": "Spherical Centering",
+              "leaderboardId": 3071,
+              "rankMaxes": [
+                11000,
+                11950,
+                13000,
+                13980
+              ]
+            },
+            {
+              "name": "Thin Gauntlet",
+              "leaderboardId": 13,
+              "rankMaxes": [
+                890,
+                895,
+                900,
+                905
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Smooth",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "Aimerz+ Week #7 - Suavetrack",
+              "leaderboardId": 40784,
+              "rankMaxes": [
+                21500,
+                23300,
+                24900,
+                26500
+              ]
+            },
+            {
+              "name": "Pasu Track Smooth",
+              "leaderboardId": 1334,
+              "rankMaxes": [
+                6250,
+                6440,
+                6630,
+                6880
+              ]
+            },
+            {
+              "name": "Far Angle Smoothness",
+              "leaderboardId": 6914,
+              "rankMaxes": [
+                280,
+                315,
+                335,
+                350
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Sphere",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "Extra Controlsphere Pure",
+              "leaderboardId": 76,
+              "rankMaxes": [
+                2050,
+                2255,
+                2470,
+                2680
+              ]
+            },
+            {
+              "name": "Extra Smoothsphere Pure",
+              "leaderboardId": 77,
+              "rankMaxes": [
+                700,
+                785,
+                876,
+                960
+              ]
+            },
+            {
+              "name": "Smoothsphere weaker UFO",
+              "leaderboardId": 1392,
+              "rankMaxes": [
+                5900,
+                6560,
+                7050,
+                7450
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Smoothbot",
+          "rankMaxes": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "scenarios": [
+            {
+              "name": "SmoothBot Invincible Goated",
+              "leaderboardId": 348,
+              "rankMaxes": [
+                3810,
+                4080,
+                4320,
+                4560
+              ]
+            },
+            {
+              "name": "Smoothbot 180",
+              "leaderboardId": 24650,
+              "rankMaxes": [
+                3160,
+                3430,
+                3680,
+                3900
+              ]
+            },
+            {
+              "name": "VT Smoothbot Advanced",
+              "leaderboardId": 25151,
+              "rankMaxes": [
+                3150,
+                3300,
+                3460,
+                3620
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -12,21 +12,21 @@
     "Supernova"
   ],
   "rankColors": {
-    "Stargazer": "#002aff",
-    "Astrologist": "#240000",
-    "Cosmonaut": "#fff700",
-    "Lunar": "#3c005c",
-    "Arecibo": "#00ff04",
-    "Supernova": "#ff0000",
-    "Quasar": "#00f4cf",
-    "Odyssey": "#ff00dd"
+    "Stargazer": "#4824ff",
+    "Astrologist": "#ff7b00",
+    "Cosmonaut": "#e1ff00",
+    "Lunar": "#2d0070",
+    "Odyssey": "#ff00a2",
+    "Arecibo": "#11ff00",
+    "Quasar": "#00fbff",
+    "Supernova": "#ff3300"
   },
   "windowSize": 4,
   "windows": [
-    "Easy",
-    "Medium",
-    "Hard",
-    "Extreme"
+    "Novice",
+    "Intermediate",
+    "Advanced",
+    "Expert"
   ],
   "matchPool": {
     "window": 1
@@ -35,64 +35,122 @@
     {
       "name": "Clicking",
       "rankMaxes": [
-        15000,
-        30000,
-        45000,
+        20000,
+        40000,
         60000,
-        75000,
-        90000,
-        105000,
+        80000,
+        100000,
         120000,
-        135000,
-        150000,
-        165000,
+        140000,
+        160000,
         180000,
-        195000,
-        210000,
-        225000,
-        240000
+        200000,
+        220000,
+        240000,
+        260000,
+        280000,
+        300000,
+        320000
       ],
       "rankNames": [
-        "Rank 1",
-        "Rank 2",
-        "Rank 3",
-        "Rank 4",
-        "I",
-        "D",
-        "K",
-        "Y",
-        "E",
-        "T",
-        "D:",
-        ":0",
-        "Advanced 1",
-        "Advanced 2",
-        "Advanced 3",
-        "Advanced 4"
+        "Blunderbuss",
+        "Slingshot",
+        "Dart",
+        "Longbow",
+        "Crossbow",
+        "Musket",
+        "Flintlock",
+        "Revolver",
+        "Carbine",
+        "Rifle",
+        "Marksman",
+        "Match Rifle",
+        "Sniper",
+        "Railgun",
+        "Gauss Cannon",
+        "Photon Lance"
       ],
       "rankColors": {
-        "Rank 1": "#3f4652",
-        "Rank 2": "#59606d",
-        "Rank 3": "#737b89",
-        "Rank 4": "#8d95a4",
-        "I": "#7C8AA5",
-        "D": "#8891a3",
-        "K": "#C79A4F",
-        "Y": "#C75FA8",
-        "E": "#8891a3",
-        "T": "#8891a3",
-        "D:": "#8891a3",
-        ":0": "#8891a3",
-        "Advanced 1": "#8891a3",
-        "Advanced 2": "#8891a3",
-        "Advanced 3": "#8891a3",
-        "Advanced 4": "#8891a3"
+        "Blunderbuss": "#B07A2E",
+        "Slingshot": "#8FA83C",
+        "Dart": "#E0455A",
+        "Longbow": "#2E7D4F",
+        "Crossbow": "#5B7C99",
+        "Musket": "#3F3B47",
+        "Flintlock": "#FF9B2A",
+        "Revolver": "#2B4B78",
+        "Carbine": "#6F8F2F",
+        "Rifle": "#8E4A2A",
+        "Marksman": "#E8BE45",
+        "Match Rifle": "#17A583",
+        "Sniper": "#A9DCEC",
+        "Railgun": "#00D9FF",
+        "Gauss Cannon": "#A855F7",
+        "Photon Lance": "#FFFFFF"
       },
       "derivable": true
     },
     {
       "name": "Tracking",
       "rankMaxes": [
+        20000,
+        40000,
+        60000,
+        80000,
+        100000,
+        120000,
+        140000,
+        160000,
+        180000,
+        200000,
+        220000,
+        240000,
+        260000,
+        280000,
+        300000,
+        320000
+      ],
+      "rankNames": [
+        "Amoeba",
+        "Multicellular",
+        "Trilobite",
+        "Amphibian",
+        "Reptile",
+        "Mammal",
+        "Primate",
+        "Chimp",
+        "Hominid",
+        "Homoerectus",
+        "Neanderthal",
+        "Homosapien",
+        "Neolithic",
+        "Robosapien",
+        "HAL 9000",
+        "Singularity"
+      ],
+      "rankColors": {
+        "Amoeba": "#ffd1ea",
+        "Multicellular": "#550160",
+        "Trilobite": "#eeff00",
+        "Amphibian": "#006eff",
+        "Reptile": "#2bff00",
+        "Mammal": "#610000",
+        "Primate": "#331400",
+        "Chimp": "#9a783c",
+        "Hominid": "#7866ff",
+        "Homoerectus": "#95b300",
+        "Neanderthal": "#e100ff",
+        "Homosapien": "#ff0000",
+        "Neolithic": "#ff6600",
+        "Robosapien": "#00fbff",
+        "HAL 9000": "#ffffff",
+        "Singularity": "#000000"
+      },
+      "derivable": true
+    },
+    {
+      "name": "Switching",
+      "rankMaxes": [
         15000,
         30000,
         45000,
@@ -109,64 +167,6 @@
         210000,
         225000,
         240000
-      ],
-      "rankNames": [
-        "Rank 1",
-        "Rank 2",
-        "Rank 3",
-        "Rank 4",
-        "Homoerectus",
-        "Neanderthal",
-        "Homosapiens",
-        "Caveman",
-        "Neolithic",
-        "Human",
-        "Robosapien",
-        "HAL 9000",
-        "Advanced 1",
-        "Advanced 2",
-        "Advanced 3",
-        "Advanced 4"
-      ],
-      "rankColors": {
-        "Rank 1": "#3f4652",
-        "Rank 2": "#59606d",
-        "Rank 3": "#737b89",
-        "Rank 4": "#8d95a4",
-        "Homoerectus": "#ff00a2",
-        "Neanderthal": "#00fbff",
-        "Homosapiens": "#fbff00",
-        "Caveman": "#4d2200",
-        "Neolithic": "#ffffff",
-        "Human": "#00cc03",
-        "Robosapien": "#0400ff",
-        "HAL 9000": "#ff0000",
-        "Advanced 1": "#8891a3",
-        "Advanced 2": "#8891a3",
-        "Advanced 3": "#8891a3",
-        "Advanced 4": "#8891a3"
-      },
-      "derivable": true
-    },
-    {
-      "name": "Switching",
-      "rankMaxes": [
-        10000,
-        20000,
-        30000,
-        40000,
-        50000,
-        60000,
-        70000,
-        80000,
-        90000,
-        100000,
-        110000,
-        120000,
-        130000,
-        140000,
-        150000,
-        160000
       ],
       "rankNames": [
         "Banana Slug",
@@ -175,330 +175,291 @@
         "Manatee",
         "Koala",
         "Slow Loris",
+        "Housecat",
         "Ferret",
+        "Greyhound",
         "Roadrunner",
         "Jackrabbit",
-        "hmm",
+        "Hare",
+        "Pronghorn",
         "Cheetah",
-        "Peregrine",
-        "Advanced 1",
-        "Advanced 2",
-        "Advanced 3",
-        "Advanced 4"
+        "Golden Eagle",
+        "Peregrine"
       ],
       "rankColors": {
         "Banana Slug": "#fbff00",
-        "Sloth": "#787878",
-        "Galapagos Turtle": "#0c6600",
-        "Manatee": "#70a2ff",
-        "Koala": "#ff00ae",
-        "Slow Loris": "#ff6601",
-        "Ferret": "#04ff00",
-        "Roadrunner": "#0011ff",
-        "Jackrabbit": "#ffffff",
-        "hmm": "#8891a3",
-        "Cheetah": "#FF5F1F",
-        "Peregrine": "#36006b",
-        "Advanced 1": "#8891a3",
-        "Advanced 2": "#8891a3",
-        "Advanced 3": "#8891a3",
-        "Advanced 4": "#8891a3"
+        "Sloth": "#4f4f4f",
+        "Galapagos Turtle": "#005c02",
+        "Manatee": "#3328cc",
+        "Koala": "#e6baf3",
+        "Slow Loris": "#ff9d2e",
+        "Housecat": "#d900ff",
+        "Ferret": "#ff0000",
+        "Greyhound": "#800000",
+        "Roadrunner": "#00fbff",
+        "Jackrabbit": "#00ffbf",
+        "Hare": "#ffffff",
+        "Pronghorn": "#421e00",
+        "Cheetah": "#ff7300",
+        "Golden Eagle": "#9e7c00",
+        "Peregrine": "#8000ff"
       },
       "derivable": true
     }
   ],
   "derivedFrom": {
     "thresholds": "kovaaks.com/webapp-backend/leaderboard/scores/global",
-    "sampledAt": "2026-08-19T00:13:46.326Z",
+    "sampledAt": "2026-08-29T19:22:54.010Z",
     "perWindow": [
       [
-        0.879,
-        0.779,
-        0.623,
-        0.438
+        0.86,
+        0.72,
+        0.56,
+        0.42
       ],
       [
-        0.449,
-        0.248,
-        0.148,
-        0.075
+        0.31,
+        0.22,
+        0.15,
+        0.105
       ],
       [
-        0.08,
-        0.021,
-        0.005,
-        0.001
+        0.075,
+        0.055,
+        0.04,
+        0.03
       ],
       [
-        0.08,
-        0.021,
-        0.005,
-        0.001
+        0.022,
+        0.015,
+        0.011,
+        0.008
       ]
     ],
-    "leaderboardEntries": 3013858,
+    "leaderboardEntries": 6594706,
     "note": "Every threshold is the score at a given percentile of that scenario's KovaaK's leaderboard. The percentiles are ours; the scores are a fact about the game. No other benchmark's numbers appear in this file - where one is consulted it is converted to percentiles and discarded (tools/calibrateLadder.ts). Season 2 re-cuts these against Apogee's own population, including where one window hands over to the next."
   },
-  "builtAt": "2026-08-19T00:46:44.558Z",
+  "builtAt": "2026-08-30T02:40:13.836Z",
   "scenarios": [
     {
-      "scenario": "VT 1w4ts Novice S5",
+      "scenario": "VT ww5t Novice S5",
       "category": "Clicking",
-      "family": "1wXts",
+      "family": "Wide Wall",
+      "subCategory": "Static Clicking",
       "window": 0,
-      "label": "1w4ts",
-      "leaderboardId": 103210,
+      "label": "VT ww5t Novice S5",
+      "leaderboardId": 98030,
       "rankMaxes": [
-        800,
-        897,
-        994,
-        1095
+        996,
+        1108,
+        1204,
+        1280
       ],
       "derivedFrom": {
-        "leaderboardEntries": 107668,
+        "leaderboardEntries": 102106,
         "topFractions": [
-          0.879,
-          0.779,
-          0.623,
-          0.438
-        ]
-      },
-      "corpus": {
-        "runs": 2,
-        "best": 1127,
-        "median": 1106,
-        "reaches": "rank 4"
-      }
-    },
-    {
-      "scenario": "VT 1w3ts Intermediate S5",
-      "category": "Clicking",
-      "family": "1wXts",
-      "window": 1,
-      "label": "1w3ts",
-      "leaderboardId": 103209,
-      "rankMaxes": [
-        1077,
-        1179,
-        1249,
-        1340
-      ],
-      "derivedFrom": {
-        "leaderboardEntries": 73825,
-        "topFractions": [
-          0.449,
-          0.248,
-          0.148,
-          0.075
-        ]
-      },
-      "corpus": {
-        "runs": 55,
-        "best": 1271,
-        "median": 1137,
-        "reaches": "rank 7"
-      }
-    },
-    {
-      "scenario": "VT 1w2ts Advanced S5",
-      "category": "Clicking",
-      "family": "1wXts",
-      "window": 2,
-      "label": "1w2ts",
-      "leaderboardId": 98025,
-      "rankMaxes": [
-        1234,
-        1358,
-        1475,
-        1600
-      ],
-      "derivedFrom": {
-        "leaderboardEntries": 24965,
-        "topFractions": [
-          0.08,
-          0.021,
-          0.005,
-          0.001
+          0.86,
+          0.72,
+          0.56,
+          0.42
         ]
       },
       "corpus": {
         "runs": 1,
-        "best": 1081,
-        "median": 1081,
-        "reaches": null
-      }
-    },
-    {
-      "scenario": "VT Floating Heads Novice S5",
-      "category": "Clicking",
-      "family": "Floating Heads",
-      "window": 0,
-      "label": "Floating Heads",
-      "leaderboardId": 98054,
-      "rankMaxes": [
-        373,
-        455,
-        537,
-        628
-      ],
-      "derivedFrom": {
-        "leaderboardEntries": 98229,
-        "topFractions": [
-          0.879,
-          0.779,
-          0.623,
-          0.438
-        ]
-      },
-      "corpus": {
-        "runs": 2,
-        "best": 696,
-        "median": 668,
+        "best": 1330,
+        "median": 1330,
         "reaches": "rank 4"
       }
     },
     {
-      "scenario": "VT Floating Heads Intermediate S5",
+      "scenario": "Wide Wall 3 Targets TE",
       "category": "Clicking",
-      "family": "Floating Heads",
+      "family": "Wide Wall",
+      "subCategory": "Static Clicking",
       "window": 1,
-      "label": "Floating Heads",
-      "leaderboardId": 98055,
+      "label": "Wide Wall 3 Targets TE",
+      "leaderboardId": 591,
       "rankMaxes": [
-        593,
-        682,
-        750,
-        845
+        110,
+        115,
+        119,
+        124
       ],
       "derivedFrom": {
-        "leaderboardEntries": 60906,
+        "leaderboardEntries": 199115,
         "topFractions": [
-          0.449,
-          0.248,
-          0.148,
-          0.075
+          0.31,
+          0.22,
+          0.15,
+          0.105
         ]
       },
       "corpus": {
-        "runs": 25,
-        "best": 792,
-        "median": 669,
-        "reaches": "rank 7"
+        "runs": 19,
+        "best": 151,
+        "median": 144,
+        "reaches": "rank 8"
       }
     },
     {
-      "scenario": "VT Floating Heads Advanced S5",
+      "scenario": "Wide Wall 4 Targets",
       "category": "Clicking",
-      "family": "Floating Heads",
+      "family": "Wide Wall",
+      "subCategory": "Static Clicking",
       "window": 2,
-      "label": "Floating Heads",
-      "leaderboardId": 98012,
+      "label": "Wide Wall 4 Targets",
+      "leaderboardId": 831,
       "rankMaxes": [
-        728,
-        833,
-        940,
-        1062
+        107,
+        109,
+        112,
+        115
       ],
       "derivedFrom": {
-        "leaderboardEntries": 15228,
+        "leaderboardEntries": 207742,
         "topFractions": [
-          0.08,
-          0.021,
-          0.005,
-          0.001
+          0.075,
+          0.055,
+          0.04,
+          0.03
         ]
       },
       "corpus": {
-        "runs": 3,
-        "best": 560,
-        "median": 442,
-        "reaches": null
+        "runs": 106,
+        "best": 125,
+        "median": 112,
+        "reaches": "rank 12"
       }
     },
     {
-      "scenario": "VT Frogtagon Novice S5",
+      "scenario": "Wide Wall 3 Targets",
       "category": "Clicking",
-      "family": "Frogtagon",
+      "family": "Wide Wall",
+      "subCategory": "Static Clicking",
+      "window": 3,
+      "label": "Wide Wall 3 Targets",
+      "leaderboardId": 337,
+      "rankMaxes": [
+        111,
+        115,
+        117,
+        120
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 383110,
+        "topFractions": [
+          0.022,
+          0.015,
+          0.011,
+          0.008
+        ]
+      }
+    },
+    {
+      "scenario": "VT 1w6ts Rasp Novice",
+      "category": "Clicking",
+      "family": "Reload Wall",
+      "subCategory": "Static Clicking",
       "window": 0,
-      "label": "Frogtagon",
-      "leaderboardId": 106186,
+      "label": "VT 1w6ts Rasp Novice",
+      "leaderboardId": 29483,
       "rankMaxes": [
-        610,
-        725,
-        838,
-        957
+        724,
+        823,
+        896,
+        952
       ],
       "derivedFrom": {
-        "leaderboardEntries": 96999,
+        "leaderboardEntries": 122762,
         "topFractions": [
-          0.879,
-          0.779,
-          0.623,
-          0.438
+          0.86,
+          0.72,
+          0.56,
+          0.42
         ]
-      },
-      "corpus": {
-        "runs": 2,
-        "best": 1090,
-        "median": 1080,
-        "reaches": "rank 4"
       }
     },
     {
-      "scenario": "VT Frogtagon Intermediate S5",
+      "scenario": "VT 1w5ts Rasp Intermediate",
       "category": "Clicking",
-      "family": "Frogtagon",
+      "family": "Reload Wall",
+      "subCategory": "Static Clicking",
       "window": 1,
-      "label": "Frogtagon",
-      "leaderboardId": 105828,
+      "label": "VT 1w5ts Rasp Intermediate",
+      "leaderboardId": 29494,
       "rankMaxes": [
-        916,
-        1026,
-        1102,
-        1210
+        1056,
+        1108,
+        1160,
+        1196
       ],
       "derivedFrom": {
-        "leaderboardEntries": 58234,
+        "leaderboardEntries": 72043,
         "topFractions": [
-          0.449,
-          0.248,
-          0.148,
-          0.075
+          0.31,
+          0.22,
+          0.15,
+          0.105
         ]
-      },
-      "corpus": {
-        "runs": 30,
-        "best": 1140,
-        "median": 1000,
-        "reaches": "rank 7"
       }
     },
     {
-      "scenario": "VT Frogtagon Advanced S5",
+      "scenario": "1w6ts reload v2 20% bigger",
       "category": "Clicking",
-      "family": "Frogtagon",
+      "family": "Reload Wall",
+      "subCategory": "Static Clicking",
       "window": 2,
-      "label": "Frogtagon",
-      "leaderboardId": 105776,
+      "label": "1w6ts reload v2 20% bigger",
+      "leaderboardId": 21620,
       "rankMaxes": [
-        1078,
-        1187,
-        1300,
-        1490
+        127,
+        130,
+        133,
+        136
       ],
       "derivedFrom": {
-        "leaderboardEntries": 12824,
+        "leaderboardEntries": 21583,
         "topFractions": [
-          0.08,
-          0.021,
-          0.005,
-          0.001
+          0.075,
+          0.055,
+          0.04,
+          0.03
         ]
       },
       "corpus": {
-        "runs": 2,
-        "best": 790,
-        "median": 765,
+        "runs": 5,
+        "best": 131,
+        "median": 114,
+        "reaches": "rank 10"
+      }
+    },
+    {
+      "scenario": "1w6ts reload v2",
+      "category": "Clicking",
+      "family": "Reload Wall",
+      "subCategory": "Static Clicking",
+      "window": 3,
+      "label": "1w6ts reload v2",
+      "leaderboardId": 666,
+      "rankMaxes": [
+        140,
+        144,
+        146,
+        149
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 51420,
+        "topFractions": [
+          0.022,
+          0.015,
+          0.011,
+          0.008
+        ]
+      },
+      "corpus": {
+        "runs": 108,
+        "best": 127,
+        "median": 108,
         "reaches": null
       }
     },
@@ -506,22 +467,23 @@
       "scenario": "VT Pasu Novice S5",
       "category": "Clicking",
       "family": "Pasu",
+      "subCategory": "Dynamic Clicking",
       "window": 0,
-      "label": "Pasu",
+      "label": "VT Pasu Novice S5",
       "leaderboardId": 98059,
       "rankMaxes": [
-        522,
-        625,
-        722,
-        804
+        544,
+        663,
+        755,
+        810
       ],
       "derivedFrom": {
         "leaderboardEntries": 115450,
         "topFractions": [
-          0.879,
-          0.779,
-          0.623,
-          0.438
+          0.86,
+          0.72,
+          0.56,
+          0.42
         ]
       },
       "corpus": {
@@ -535,51 +497,53 @@
       "scenario": "VT Pasu Intermediate S5",
       "category": "Clicking",
       "family": "Pasu",
+      "subCategory": "Dynamic Clicking",
       "window": 1,
-      "label": "Pasu",
+      "label": "VT Pasu Intermediate S5",
       "leaderboardId": 98330,
       "rankMaxes": [
-        719,
-        818,
-        879,
-        959
+        785,
+        833,
+        877,
+        924
       ],
       "derivedFrom": {
         "leaderboardEntries": 79758,
         "topFractions": [
-          0.449,
-          0.248,
-          0.148,
-          0.075
+          0.31,
+          0.22,
+          0.15,
+          0.105
         ]
       },
       "corpus": {
-        "runs": 35,
+        "runs": 36,
         "best": 944,
-        "median": 775,
-        "reaches": "rank 7"
+        "median": 766,
+        "reaches": "rank 8"
       }
     },
     {
       "scenario": "VT Pasu Advanced S5",
       "category": "Clicking",
       "family": "Pasu",
+      "subCategory": "Dynamic Clicking",
       "window": 2,
-      "label": "Pasu",
+      "label": "VT Pasu Advanced S5",
       "leaderboardId": 98023,
       "rankMaxes": [
-        827,
-        953,
-        1064,
-        1211
+        835,
+        882,
+        913,
+        933
       ],
       "derivedFrom": {
         "leaderboardEntries": 25242,
         "topFractions": [
-          0.08,
-          0.021,
-          0.005,
-          0.001
+          0.075,
+          0.055,
+          0.04,
+          0.03
         ]
       },
       "corpus": {
@@ -590,460 +554,962 @@
       }
     },
     {
-      "scenario": "VT Popcorn Novice S5",
+      "scenario": "Pasu Reload Goated",
       "category": "Clicking",
-      "family": "Popcorn",
-      "window": 0,
-      "label": "Popcorn",
-      "leaderboardId": 98285,
+      "family": "Pasu",
+      "subCategory": "Dynamic Clicking",
+      "window": 3,
+      "label": "Pasu Reload Goated",
+      "leaderboardId": 583,
       "rankMaxes": [
-        360,
-        465,
-        578,
-        697
+        128,
+        133,
+        136,
+        140
       ],
       "derivedFrom": {
-        "leaderboardEntries": 103740,
+        "leaderboardEntries": 25879,
         "topFractions": [
-          0.879,
-          0.779,
-          0.623,
-          0.438
+          0.022,
+          0.015,
+          0.011,
+          0.008
+        ]
+      },
+      "corpus": {
+        "runs": 15,
+        "best": 112,
+        "median": 97,
+        "reaches": null
+      }
+    },
+    {
+      "scenario": "VT Bounceshot Novice",
+      "category": "Clicking",
+      "family": "Bounceshot",
+      "subCategory": "Dynamic Clicking",
+      "window": 0,
+      "label": "VT Bounceshot Novice",
+      "leaderboardId": 24975,
+      "rankMaxes": [
+        442,
+        569,
+        674,
+        758
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 125087,
+        "topFractions": [
+          0.86,
+          0.72,
+          0.56,
+          0.42
+        ]
+      }
+    },
+    {
+      "scenario": "B180 Voltaic Easy 92%",
+      "category": "Clicking",
+      "family": "Bounceshot",
+      "subCategory": "Dynamic Clicking",
+      "window": 1,
+      "label": "B180 Voltaic Easy 92%",
+      "leaderboardId": 12018,
+      "rankMaxes": [
+        76,
+        81,
+        87,
+        89
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 55044,
+        "topFractions": [
+          0.31,
+          0.22,
+          0.15,
+          0.105
+        ]
+      }
+    },
+    {
+      "scenario": "VT Bounceshot Viscose Medium",
+      "category": "Clicking",
+      "family": "Bounceshot",
+      "subCategory": "Dynamic Clicking",
+      "window": 2,
+      "label": "VT Bounceshot Viscose Medium",
+      "leaderboardId": 185237,
+      "rankMaxes": [
+        940,
+        972,
+        1000,
+        1030
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 16780,
+        "topFractions": [
+          0.075,
+          0.055,
+          0.04,
+          0.03
+        ]
+      },
+      "corpus": {
+        "runs": 23,
+        "best": 880,
+        "median": 780,
+        "reaches": null
+      }
+    },
+    {
+      "scenario": "VT Bounceshot Advanced",
+      "category": "Clicking",
+      "family": "Bounceshot",
+      "subCategory": "Dynamic Clicking",
+      "window": 3,
+      "label": "VT Bounceshot Advanced",
+      "leaderboardId": 25154,
+      "rankMaxes": [
+        845,
+        880,
+        904,
+        926
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 22127,
+        "topFractions": [
+          0.022,
+          0.015,
+          0.011,
+          0.008
+        ]
+      },
+      "corpus": {
+        "runs": 1,
+        "best": 450,
+        "median": 450,
+        "reaches": null
+      }
+    },
+    {
+      "scenario": "VT Floating Heads Novice S5",
+      "category": "Clicking",
+      "family": "Floating Heads",
+      "subCategory": "Linear Clicking",
+      "window": 0,
+      "label": "VT Floating Heads Novice S5",
+      "leaderboardId": 98054,
+      "rankMaxes": [
+        390,
+        486,
+        568,
+        637
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 98229,
+        "topFractions": [
+          0.86,
+          0.72,
+          0.56,
+          0.42
+        ]
+      },
+      "corpus": {
+        "runs": 2,
+        "best": 696,
+        "median": 668,
+        "reaches": "rank 4"
+      }
+    },
+    {
+      "scenario": "VT Floating Heads Intermediate S5",
+      "category": "Clicking",
+      "family": "Floating Heads",
+      "subCategory": "Linear Clicking",
+      "window": 1,
+      "label": "VT Floating Heads Intermediate S5",
+      "leaderboardId": 98055,
+      "rankMaxes": [
+        650,
+        698,
+        748,
+        796
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 60906,
+        "topFractions": [
+          0.31,
+          0.22,
+          0.15,
+          0.105
+        ]
+      },
+      "corpus": {
+        "runs": 27,
+        "best": 792,
+        "median": 630,
+        "reaches": "rank 7"
+      }
+    },
+    {
+      "scenario": "Floating Heads Timing 400% Larger",
+      "category": "Clicking",
+      "family": "Floating Heads",
+      "subCategory": "Linear Clicking",
+      "window": 2,
+      "label": "Floating Heads Timing 400% Larger",
+      "leaderboardId": 1607,
+      "rankMaxes": [
+        3672,
+        3758,
+        3876,
+        3972
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 69285,
+        "topFractions": [
+          0.075,
+          0.055,
+          0.04,
+          0.03
+        ]
+      },
+      "corpus": {
+        "runs": 4,
+        "best": 3096,
+        "median": 3042,
+        "reaches": null
+      }
+    },
+    {
+      "scenario": "Floating Heads Timing 400% FIXED",
+      "category": "Clicking",
+      "family": "Floating Heads",
+      "subCategory": "Linear Clicking",
+      "window": 3,
+      "label": "Floating Heads Timing 400% FIXED",
+      "leaderboardId": 1730,
+      "rankMaxes": [
+        3108,
+        3240,
+        3326,
+        3434
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 182809,
+        "topFractions": [
+          0.022,
+          0.015,
+          0.011,
+          0.008
+        ]
+      },
+      "corpus": {
+        "runs": 2,
+        "best": 2592,
+        "median": 2556,
+        "reaches": null
+      }
+    },
+    {
+      "scenario": "VT Frogtagon Novice S5",
+      "category": "Clicking",
+      "family": "voxTS Click",
+      "subCategory": "Linear Clicking",
+      "window": 0,
+      "label": "VT Frogtagon Novice S5",
+      "leaderboardId": 106186,
+      "rankMaxes": [
+        634,
+        769,
+        880,
+        968
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 96999,
+        "topFractions": [
+          0.86,
+          0.72,
+          0.56,
+          0.42
+        ]
+      },
+      "corpus": {
+        "runs": 2,
+        "best": 1090,
+        "median": 1080,
+        "reaches": "rank 4"
+      }
+    },
+    {
+      "scenario": "voxTargetSwitch Click",
+      "category": "Clicking",
+      "family": "voxTS Click",
+      "subCategory": "Linear Clicking",
+      "window": 1,
+      "label": "voxTargetSwitch Click",
+      "leaderboardId": 653,
+      "rankMaxes": [
+        86,
+        90,
+        94,
+        98
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 95356,
+        "topFractions": [
+          0.31,
+          0.22,
+          0.15,
+          0.105
+        ]
+      }
+    },
+    {
+      "scenario": "voxTargetClick 20% Small",
+      "category": "Clicking",
+      "family": "voxTS Click",
+      "subCategory": "Linear Clicking",
+      "window": 2,
+      "label": "voxTargetClick 20% Small",
+      "leaderboardId": 857,
+      "rankMaxes": [
+        97,
+        100,
+        102,
+        104
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 39066,
+        "topFractions": [
+          0.075,
+          0.055,
+          0.04,
+          0.03
+        ]
+      },
+      "corpus": {
+        "runs": 4,
+        "best": 76,
+        "median": 76,
+        "reaches": null
+      }
+    },
+    {
+      "scenario": "VoxTargetSwitch Click Small",
+      "category": "Clicking",
+      "family": "voxTS Click",
+      "subCategory": "Linear Clicking",
+      "window": 3,
+      "label": "VoxTargetSwitch Click Small",
+      "leaderboardId": 616,
+      "rankMaxes": [
+        88,
+        92,
+        94,
+        96
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 127111,
+        "topFractions": [
+          0.022,
+          0.015,
+          0.011,
+          0.008
+        ]
+      }
+    },
+    {
+      "scenario": "eth Pasu Micro Entry",
+      "category": "Clicking",
+      "family": "eth Pasu Micro",
+      "subCategory": "Micro Clicking",
+      "window": 0,
+      "label": "eth Pasu Micro Entry",
+      "leaderboardId": 190273,
+      "rankMaxes": [
+        935,
+        1063,
+        1154,
+        1230
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 2529,
+        "topFractions": [
+          0.86,
+          0.72,
+          0.56,
+          0.42
+        ]
+      }
+    },
+    {
+      "scenario": "eth Pasu Micro Easier",
+      "category": "Clicking",
+      "family": "eth Pasu Micro",
+      "subCategory": "Micro Clicking",
+      "window": 1,
+      "label": "eth Pasu Micro Easier",
+      "leaderboardId": 185394,
+      "rankMaxes": [
+        1230,
+        1265,
+        1296,
+        1330
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 20295,
+        "topFractions": [
+          0.31,
+          0.22,
+          0.15,
+          0.105
+        ]
+      },
+      "corpus": {
+        "runs": 4,
+        "best": 1384,
+        "median": 1266,
+        "reaches": "rank 8"
+      }
+    },
+    {
+      "scenario": "eth Pasu Micro Medium",
+      "category": "Clicking",
+      "family": "eth Pasu Micro",
+      "subCategory": "Micro Clicking",
+      "window": 2,
+      "label": "eth Pasu Micro Medium",
+      "leaderboardId": 184790,
+      "rankMaxes": [
+        1438,
+        1478,
+        1521,
+        1559
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 19065,
+        "topFractions": [
+          0.075,
+          0.055,
+          0.04,
+          0.03
+        ]
+      },
+      "corpus": {
+        "runs": 25,
+        "best": 1376,
+        "median": 1238,
+        "reaches": null
+      }
+    },
+    {
+      "scenario": "1w3ts Pasu Perfected Micro Goated",
+      "category": "Clicking",
+      "family": "eth Pasu Micro",
+      "subCategory": "Micro Clicking",
+      "window": 3,
+      "label": "1w3ts Pasu Perfected Micro Goated",
+      "leaderboardId": 65396,
+      "rankMaxes": [
+        1295,
+        1342,
+        1372,
+        1407
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 51099,
+        "topFractions": [
+          0.022,
+          0.015,
+          0.011,
+          0.008
+        ]
+      },
+      "corpus": {
+        "runs": 13,
+        "best": 1106,
+        "median": 918,
+        "reaches": null
+      }
+    },
+    {
+      "scenario": "1w2ts reload smallflicks Entry",
+      "category": "Clicking",
+      "family": "Smallflicks",
+      "subCategory": "Micro Clicking",
+      "window": 0,
+      "label": "1w2ts reload smallflicks Entry",
+      "leaderboardId": 190274,
+      "rankMaxes": [
+        99,
+        110,
+        119,
+        126
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 2833,
+        "topFractions": [
+          0.86,
+          0.72,
+          0.56,
+          0.42
+        ]
+      }
+    },
+    {
+      "scenario": "1w2ts reload smallflicks larger",
+      "category": "Clicking",
+      "family": "Smallflicks",
+      "subCategory": "Micro Clicking",
+      "window": 1,
+      "label": "1w2ts reload smallflicks larger",
+      "leaderboardId": 185518,
+      "rankMaxes": [
+        131,
+        134,
+        138,
+        142
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 21119,
+        "topFractions": [
+          0.31,
+          0.22,
+          0.15,
+          0.105
         ]
       },
       "corpus": {
         "runs": 3,
-        "best": 830,
-        "median": 780,
-        "reaches": "rank 4"
+        "best": 145,
+        "median": 132,
+        "reaches": "rank 8"
       }
     },
     {
-      "scenario": "VT Popcorn Intermediate S5",
+      "scenario": "1w2ts reload smallflicks slightly larger",
       "category": "Clicking",
-      "family": "Popcorn",
-      "window": 1,
-      "label": "Popcorn",
-      "leaderboardId": 98333,
-      "rankMaxes": [
-        571,
-        666,
-        742,
-        840
-      ],
-      "derivedFrom": {
-        "leaderboardEntries": 62758,
-        "topFractions": [
-          0.449,
-          0.248,
-          0.148,
-          0.075
-        ]
-      },
-      "corpus": {
-        "runs": 38,
-        "best": 760,
-        "median": 605,
-        "reaches": "rank 7"
-      }
-    },
-    {
-      "scenario": "VT Popcorn Advanced S5",
-      "category": "Clicking",
-      "family": "Popcorn",
+      "family": "Smallflicks",
+      "subCategory": "Micro Clicking",
       "window": 2,
-      "label": "Popcorn",
-      "leaderboardId": 98024,
+      "label": "1w2ts reload smallflicks slightly larger",
+      "leaderboardId": 184777,
       "rankMaxes": [
-        632,
-        737,
-        860,
-        1010
+        153,
+        157,
+        161,
+        164
       ],
       "derivedFrom": {
-        "leaderboardEntries": 14260,
+        "leaderboardEntries": 20355,
         "topFractions": [
-          0.08,
-          0.021,
-          0.005,
-          0.001
+          0.075,
+          0.055,
+          0.04,
+          0.03
         ]
       },
       "corpus": {
-        "runs": 1,
-        "best": 340,
-        "median": 340,
+        "runs": 31,
+        "best": 148,
+        "median": 133,
         "reaches": null
       }
     },
     {
-      "scenario": "VT ww5t Novice S5",
+      "scenario": "1w2ts Pasu Perfected 30% Smaller",
       "category": "Clicking",
-      "family": "ww5t",
-      "window": 0,
-      "label": "ww5t",
-      "leaderboardId": 98030,
+      "family": "Smallflicks",
+      "subCategory": "Micro Clicking",
+      "window": 3,
+      "label": "1w2ts Pasu Perfected 30% Smaller",
+      "leaderboardId": 28243,
       "rankMaxes": [
-        976,
-        1073,
-        1166,
-        1271
+        87,
+        90,
+        92,
+        94
       ],
       "derivedFrom": {
-        "leaderboardEntries": 102106,
+        "leaderboardEntries": 46459,
         "topFractions": [
-          0.879,
-          0.779,
-          0.623,
-          0.438
+          0.022,
+          0.015,
+          0.011,
+          0.008
         ]
       },
       "corpus": {
         "runs": 1,
-        "best": 1330,
-        "median": 1330,
-        "reaches": "rank 4"
-      }
-    },
-    {
-      "scenario": "VT ww5t Intermediate S5",
-      "category": "Clicking",
-      "family": "ww5t",
-      "window": 1,
-      "label": "ww5t",
-      "leaderboardId": 98029,
-      "rankMaxes": [
-        1261,
-        1361,
-        1432,
-        1520
-      ],
-      "derivedFrom": {
-        "leaderboardEntries": 68544,
-        "topFractions": [
-          0.449,
-          0.248,
-          0.148,
-          0.075
-        ]
-      },
-      "corpus": {
-        "runs": 50,
-        "best": 1440,
-        "median": 1310,
-        "reaches": "rank 7"
-      }
-    },
-    {
-      "scenario": "VT ww5t Advanced S5",
-      "category": "Clicking",
-      "family": "ww5t",
-      "window": 2,
-      "label": "ww5t",
-      "leaderboardId": 98026,
-      "rankMaxes": [
-        1444,
-        1567,
-        1680,
-        1800
-      ],
-      "derivedFrom": {
-        "leaderboardEntries": 18064,
-        "topFractions": [
-          0.08,
-          0.021,
-          0.005,
-          0.001
-        ]
-      },
-      "corpus": {
-        "runs": 1,
-        "best": 1170,
-        "median": 1170,
+        "best": 65,
+        "median": 65,
         "reaches": null
       }
     },
     {
-      "scenario": "VT DotTS Novice S5",
-      "category": "Switching",
-      "family": "DotTS",
+      "scenario": "VT Smoothbot Novice",
+      "category": "Tracking",
+      "family": "Smoothbot",
+      "subCategory": "Precise Tracking",
       "window": 0,
-      "label": "DotTS",
-      "leaderboardId": 104868,
+      "label": "VT Smoothbot Novice",
+      "leaderboardId": 24967,
       "rankMaxes": [
-        841,
-        932,
-        1021,
-        1092
+        2211,
+        2616,
+        2932,
+        3190
       ],
       "derivedFrom": {
-        "leaderboardEntries": 91135,
+        "leaderboardEntries": 187441,
         "topFractions": [
-          0.879,
-          0.779,
-          0.623,
-          0.438
+          0.86,
+          0.72,
+          0.56,
+          0.42
+        ]
+      }
+    },
+    {
+      "scenario": "VT Smoothbot Intermediate",
+      "category": "Tracking",
+      "family": "Smoothbot",
+      "subCategory": "Precise Tracking",
+      "window": 1,
+      "label": "VT Smoothbot Intermediate",
+      "leaderboardId": 24952,
+      "rankMaxes": [
+        3369,
+        3568,
+        3773,
+        3936
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 83099,
+        "topFractions": [
+          0.31,
+          0.22,
+          0.15,
+          0.105
+        ]
+      }
+    },
+    {
+      "scenario": "VT Smoothbot Advanced",
+      "category": "Tracking",
+      "family": "Smoothbot",
+      "subCategory": "Precise Tracking",
+      "window": 2,
+      "label": "VT Smoothbot Advanced",
+      "leaderboardId": 25151,
+      "rankMaxes": [
+        3059,
+        3223,
+        3325,
+        3400
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 39387,
+        "topFractions": [
+          0.075,
+          0.055,
+          0.04,
+          0.03
+        ]
+      }
+    },
+    {
+      "scenario": "Smoothbot Pauer",
+      "category": "Tracking",
+      "family": "Smoothbot",
+      "subCategory": "Precise Tracking",
+      "window": 3,
+      "label": "Smoothbot Pauer",
+      "leaderboardId": 724,
+      "rankMaxes": [
+        4454,
+        4614,
+        4715,
+        4848
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 22983,
+        "topFractions": [
+          0.022,
+          0.015,
+          0.011,
+          0.008
+        ]
+      },
+      "corpus": {
+        "runs": 1,
+        "best": 2982,
+        "median": 2982,
+        "reaches": null
+      }
+    },
+    {
+      "scenario": "VT Snake Track Novice S5",
+      "category": "Tracking",
+      "family": "waldoTS",
+      "subCategory": "Precise Tracking",
+      "window": 0,
+      "label": "VT Snake Track Novice S5",
+      "leaderboardId": 101560,
+      "rankMaxes": [
+        2439,
+        2876,
+        3253,
+        3469
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 93836,
+        "topFractions": [
+          0.86,
+          0.72,
+          0.56,
+          0.42
+        ]
+      },
+      "corpus": {
+        "runs": 3,
+        "best": 4207,
+        "median": 3892,
+        "reaches": "rank 4"
+      }
+    },
+    {
+      "scenario": "waldoTS Novice",
+      "category": "Tracking",
+      "family": "waldoTS",
+      "subCategory": "Precise Tracking",
+      "window": 1,
+      "label": "waldoTS Novice",
+      "leaderboardId": 113019,
+      "rankMaxes": [
+        134,
+        140,
+        143,
+        146
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 71439,
+        "topFractions": [
+          0.31,
+          0.22,
+          0.15,
+          0.105
         ]
       },
       "corpus": {
         "runs": 2,
-        "best": 1240,
-        "median": 1221,
-        "reaches": "rank 4"
+        "best": 144,
+        "median": 139,
+        "reaches": "rank 7"
       }
     },
     {
-      "scenario": "VT DotTS Intermediate S5",
-      "category": "Switching",
-      "family": "DotTS",
-      "window": 1,
-      "label": "DotTS",
-      "leaderboardId": 104865,
-      "rankMaxes": [
-        1105,
-        1169,
-        1220,
-        1280
-      ],
-      "derivedFrom": {
-        "leaderboardEntries": 57461,
-        "topFractions": [
-          0.449,
-          0.248,
-          0.148,
-          0.075
-        ]
-      },
-      "corpus": {
-        "runs": 41,
-        "best": 1210,
-        "median": 1147,
-        "reaches": "rank 6"
-      }
-    },
-    {
-      "scenario": "VT DotTS Advanced S5",
-      "category": "Switching",
-      "family": "DotTS",
+      "scenario": "waldoTS Intermediate",
+      "category": "Tracking",
+      "family": "waldoTS",
+      "subCategory": "Precise Tracking",
       "window": 2,
-      "label": "DotTS",
-      "leaderboardId": 104961,
+      "label": "waldoTS Intermediate",
+      "leaderboardId": 111273,
       "rankMaxes": [
-        1238,
-        1310,
-        1387,
-        1460
+        156,
+        160,
+        162,
+        165
       ],
       "derivedFrom": {
-        "leaderboardEntries": 17906,
+        "leaderboardEntries": 40339,
         "topFractions": [
-          0.08,
-          0.021,
-          0.005,
-          0.001
+          0.075,
+          0.055,
+          0.04,
+          0.03
         ]
       },
       "corpus": {
-        "runs": 1,
-        "best": 1051,
-        "median": 1051,
+        "runs": 62,
+        "best": 151,
+        "median": 133,
         "reaches": null
       }
     },
     {
-      "scenario": "VT DriftTS Novice S5",
-      "category": "Switching",
-      "family": "DriftTS",
-      "window": 0,
-      "label": "DriftTS",
-      "leaderboardId": 104862,
+      "scenario": "waldoTS",
+      "category": "Tracking",
+      "family": "waldoTS",
+      "subCategory": "Precise Tracking",
+      "window": 3,
+      "label": "waldoTS",
+      "leaderboardId": 81042,
       "rankMaxes": [
-        320,
-        358,
-        396,
-        430
+        148,
+        152,
+        155,
+        158
       ],
       "derivedFrom": {
-        "leaderboardEntries": 84474,
+        "leaderboardEntries": 119350,
         "topFractions": [
-          0.879,
-          0.779,
-          0.623,
-          0.438
+          0.022,
+          0.015,
+          0.011,
+          0.008
         ]
       },
       "corpus": {
-        "runs": 1,
-        "best": 519,
-        "median": 519,
-        "reaches": "rank 4"
-      }
-    },
-    {
-      "scenario": "VT DriftTS Intermediate S5",
-      "category": "Switching",
-      "family": "DriftTS",
-      "window": 1,
-      "label": "DriftTS",
-      "leaderboardId": 104863,
-      "rankMaxes": [
-        395,
-        431,
-        461,
-        490
-      ],
-      "derivedFrom": {
-        "leaderboardEntries": 47760,
-        "topFractions": [
-          0.449,
-          0.248,
-          0.148,
-          0.075
-        ]
-      },
-      "corpus": {
-        "runs": 12,
-        "best": 460,
-        "median": 414,
-        "reaches": "rank 6"
-      }
-    },
-    {
-      "scenario": "VT DriftTS Advanced S5",
-      "category": "Switching",
-      "family": "DriftTS",
-      "window": 2,
-      "label": "DriftTS",
-      "leaderboardId": 104866,
-      "rankMaxes": [
-        437,
-        478,
-        522,
-        547
-      ],
-      "derivedFrom": {
-        "leaderboardEntries": 8941,
-        "topFractions": [
-          0.08,
-          0.021,
-          0.005,
-          0.001
-        ]
-      },
-      "corpus": {
-        "runs": 1,
-        "best": 319,
-        "median": 319,
+        "runs": 9,
+        "best": 137,
+        "median": 133,
         "reaches": null
       }
     },
     {
-      "scenario": "VT FlyTS Novice S5",
-      "category": "Switching",
-      "family": "FlyTS",
+      "scenario": "VT Ground Novice S5",
+      "category": "Tracking",
+      "family": "Ground Plaza",
+      "subCategory": "Reactive Tracking",
       "window": 0,
-      "label": "FlyTS",
-      "leaderboardId": 104830,
+      "label": "VT Ground Novice S5",
+      "leaderboardId": 101744,
       "rankMaxes": [
-        425,
-        468,
-        507,
-        540
+        2225,
+        2670,
+        3008,
+        3177
       ],
       "derivedFrom": {
-        "leaderboardEntries": 79460,
+        "leaderboardEntries": 93615,
         "topFractions": [
-          0.879,
-          0.779,
-          0.623,
-          0.438
-        ]
-      },
-      "corpus": {
-        "runs": 2,
-        "best": 630,
-        "median": 614,
-        "reaches": "rank 4"
-      }
-    },
-    {
-      "scenario": "VT FlyTS Intermediate S5",
-      "category": "Switching",
-      "family": "FlyTS",
-      "window": 1,
-      "label": "FlyTS",
-      "leaderboardId": 105142,
-      "rankMaxes": [
-        529,
-        575,
-        611,
-        651
-      ],
-      "derivedFrom": {
-        "leaderboardEntries": 48140,
-        "topFractions": [
-          0.449,
-          0.248,
-          0.148,
-          0.075
-        ]
-      },
-      "corpus": {
-        "runs": 14,
-        "best": 595,
-        "median": 554,
-        "reaches": "rank 6"
-      }
-    },
-    {
-      "scenario": "VT FlyTS Advanced S5",
-      "category": "Switching",
-      "family": "FlyTS",
-      "window": 2,
-      "label": "FlyTS",
-      "leaderboardId": 105143,
-      "rankMaxes": [
-        550,
-        603,
-        660,
-        690
-      ],
-      "derivedFrom": {
-        "leaderboardEntries": 9501,
-        "topFractions": [
-          0.08,
-          0.021,
-          0.005,
-          0.001
+          0.86,
+          0.72,
+          0.56,
+          0.42
         ]
       },
       "corpus": {
         "runs": 1,
-        "best": 422,
-        "median": 422,
+        "best": 3754,
+        "median": 3754,
+        "reaches": "rank 4"
+      }
+    },
+    {
+      "scenario": "Ground Plaza Sparky v3 Easy",
+      "category": "Tracking",
+      "family": "Ground Plaza",
+      "subCategory": "Reactive Tracking",
+      "window": 1,
+      "label": "Ground Plaza Sparky v3 Easy",
+      "leaderboardId": 134502,
+      "rankMaxes": [
+        888,
+        891,
+        893,
+        896
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 21417,
+        "topFractions": [
+          0.31,
+          0.22,
+          0.15,
+          0.105
+        ]
+      },
+      "corpus": {
+        "runs": 1,
+        "best": 897,
+        "median": 897,
+        "reaches": "rank 8"
+      }
+    },
+    {
+      "scenario": "VT Ground Intermediate S5",
+      "category": "Tracking",
+      "family": "Ground Plaza",
+      "subCategory": "Reactive Tracking",
+      "window": 2,
+      "label": "VT Ground Intermediate S5",
+      "leaderboardId": 101743,
+      "rankMaxes": [
+        3371,
+        3403,
+        3438,
+        3476
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 58297,
+        "topFractions": [
+          0.075,
+          0.055,
+          0.04,
+          0.03
+        ]
+      },
+      "corpus": {
+        "runs": 52,
+        "best": 2949,
+        "median": 2609,
+        "reaches": null
+      }
+    },
+    {
+      "scenario": "Ground Plaza Sparky v3 OW",
+      "category": "Tracking",
+      "family": "Ground Plaza",
+      "subCategory": "Reactive Tracking",
+      "window": 3,
+      "label": "Ground Plaza Sparky v3 OW",
+      "leaderboardId": 871,
+      "rankMaxes": [
+        894,
+        896,
+        897,
+        899
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 22349,
+        "topFractions": [
+          0.022,
+          0.015,
+          0.011,
+          0.008
+        ]
+      },
+      "corpus": {
+        "runs": 8,
+        "best": 870,
+        "median": 863,
         "reaches": null
       }
     },
     {
       "scenario": "VT Aether Novice S5",
       "category": "Tracking",
-      "family": "Aether",
+      "family": "Air CELESTIAL",
+      "subCategory": "Reactive Tracking",
       "window": 0,
-      "label": "Aether",
+      "label": "VT Aether Novice S5",
       "leaderboardId": 101370,
       "rankMaxes": [
-        1579,
-        1919,
-        2280,
-        2639
+        1649,
+        2057,
+        2419,
+        2664
       ],
       "derivedFrom": {
         "leaderboardEntries": 93203,
         "topFractions": [
-          0.879,
-          0.779,
-          0.623,
-          0.438
+          0.86,
+          0.72,
+          0.56,
+          0.42
         ]
       },
       "corpus": {
@@ -1054,60 +1520,92 @@
       }
     },
     {
-      "scenario": "VT Aether Intermediate S5",
+      "scenario": "Air CELESTIAL No UFO Easy Slowed",
       "category": "Tracking",
-      "family": "Aether",
+      "family": "Air CELESTIAL",
+      "subCategory": "Reactive Tracking",
       "window": 1,
-      "label": "Aether",
-      "leaderboardId": 101369,
+      "label": "Air CELESTIAL No UFO Easy Slowed",
+      "leaderboardId": 131872,
       "rankMaxes": [
-        2216,
-        2597,
-        2924,
-        3204
+        890,
+        893,
+        896,
+        898
       ],
       "derivedFrom": {
-        "leaderboardEntries": 54760,
+        "leaderboardEntries": 58578,
         "topFractions": [
-          0.449,
-          0.248,
-          0.148,
-          0.075
+          0.31,
+          0.22,
+          0.15,
+          0.105
         ]
       },
       "corpus": {
-        "runs": 104,
-        "best": 2775,
-        "median": 2224,
-        "reaches": "rank 6"
+        "runs": 1,
+        "best": 892,
+        "median": 892,
+        "reaches": "rank 5"
       }
     },
     {
-      "scenario": "VT Aether Advanced S5",
+      "scenario": "Air CELESTIAL No UFO Easy",
       "category": "Tracking",
-      "family": "Aether",
+      "family": "Air CELESTIAL",
+      "subCategory": "Reactive Tracking",
       "window": 2,
-      "label": "Aether",
-      "leaderboardId": 100140,
+      "label": "Air CELESTIAL No UFO Easy",
+      "leaderboardId": 70930,
       "rankMaxes": [
-        2760,
-        3196,
-        3581,
-        3917
+        895,
+        899,
+        902,
+        904
       ],
       "derivedFrom": {
-        "leaderboardEntries": 14333,
+        "leaderboardEntries": 29538,
         "topFractions": [
-          0.08,
-          0.021,
-          0.005,
-          0.001
+          0.075,
+          0.055,
+          0.04,
+          0.03
         ]
       },
       "corpus": {
-        "runs": 2,
-        "best": 1843,
-        "median": 1795,
+        "runs": 26,
+        "best": 885,
+        "median": 869,
+        "reaches": null
+      }
+    },
+    {
+      "scenario": "Air CELESTIAL",
+      "category": "Tracking",
+      "family": "Air CELESTIAL",
+      "subCategory": "Reactive Tracking",
+      "window": 3,
+      "label": "Air CELESTIAL",
+      "leaderboardId": 1241,
+      "rankMaxes": [
+        883,
+        886,
+        889,
+        891
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 12040,
+        "topFractions": [
+          0.022,
+          0.015,
+          0.011,
+          0.008
+        ]
+      },
+      "corpus": {
+        "runs": 1,
+        "best": 794,
+        "median": 794,
         "reaches": null
       }
     },
@@ -1115,22 +1613,23 @@
       "scenario": "VT Controlsphere Novice S5",
       "category": "Tracking",
       "family": "Controlsphere",
+      "subCategory": "Control Tracking",
       "window": 0,
-      "label": "Controlsphere",
+      "label": "VT Controlsphere Novice S5",
       "leaderboardId": 103765,
       "rankMaxes": [
-        1611,
-        2021,
-        2473,
-        2906
+        1695,
+        2194,
+        2648,
+        2933
       ],
       "derivedFrom": {
         "leaderboardEntries": 91550,
         "topFractions": [
-          0.879,
-          0.779,
-          0.623,
-          0.438
+          0.86,
+          0.72,
+          0.56,
+          0.42
         ]
       },
       "corpus": {
@@ -1144,231 +1643,89 @@
       "scenario": "VT Controlsphere Intermediate S5",
       "category": "Tracking",
       "family": "Controlsphere",
+      "subCategory": "Control Tracking",
       "window": 1,
-      "label": "Controlsphere",
+      "label": "VT Controlsphere Intermediate S5",
       "leaderboardId": 103353,
       "rankMaxes": [
-        2776,
-        3234,
-        3573,
-        3862
+        3071,
+        3310,
+        3563,
+        3797
       ],
       "derivedFrom": {
         "leaderboardEntries": 55846,
         "topFractions": [
-          0.449,
-          0.248,
-          0.148,
-          0.075
+          0.31,
+          0.22,
+          0.15,
+          0.105
         ]
       },
       "corpus": {
         "runs": 10,
         "best": 3270,
         "median": 3121,
-        "reaches": "rank 6"
+        "reaches": "rank 5"
       }
     },
     {
-      "scenario": "VT Controlsphere Advanced S5",
+      "scenario": "Controlsphere",
       "category": "Tracking",
       "family": "Controlsphere",
+      "subCategory": "Control Tracking",
       "window": 2,
       "label": "Controlsphere",
-      "leaderboardId": 103114,
+      "leaderboardId": 392,
       "rankMaxes": [
-        3128,
-        3509,
-        3869,
-        4200
+        10071,
+        10534,
+        10968,
+        11345
       ],
       "derivedFrom": {
-        "leaderboardEntries": 13393,
+        "leaderboardEntries": 150593,
         "topFractions": [
-          0.08,
-          0.021,
-          0.005,
-          0.001
+          0.075,
+          0.055,
+          0.04,
+          0.03
+        ]
+      },
+      "corpus": {
+        "runs": 11,
+        "best": 10167,
+        "median": 9084,
+        "reaches": "rank 9"
+      }
+    },
+    {
+      "scenario": "Controlsphere rAim",
+      "category": "Tracking",
+      "family": "Controlsphere",
+      "subCategory": "Control Tracking",
+      "window": 3,
+      "label": "Controlsphere rAim",
+      "leaderboardId": 5102,
+      "rankMaxes": [
+        10159,
+        10565,
+        10835,
+        11088
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 24774,
+        "topFractions": [
+          0.022,
+          0.015,
+          0.011,
+          0.008
         ]
       },
       "corpus": {
         "runs": 1,
-        "best": 2216,
-        "median": 2216,
-        "reaches": null
-      }
-    },
-    {
-      "scenario": "VT Ground Novice S5",
-      "category": "Tracking",
-      "family": "Ground",
-      "window": 0,
-      "label": "Ground",
-      "leaderboardId": 101744,
-      "rankMaxes": [
-        2146,
-        2526,
-        2892,
-        3164
-      ],
-      "derivedFrom": {
-        "leaderboardEntries": 93615,
-        "topFractions": [
-          0.879,
-          0.779,
-          0.623,
-          0.438
-        ]
-      },
-      "corpus": {
-        "runs": 1,
-        "best": 3754,
-        "median": 3754,
-        "reaches": "rank 4"
-      }
-    },
-    {
-      "scenario": "VT Ground Intermediate S5",
-      "category": "Tracking",
-      "family": "Ground",
-      "window": 1,
-      "label": "Ground",
-      "leaderboardId": 101743,
-      "rankMaxes": [
-        2560,
-        2885,
-        3132,
-        3371
-      ],
-      "derivedFrom": {
-        "leaderboardEntries": 58297,
-        "topFractions": [
-          0.449,
-          0.248,
-          0.148,
-          0.075
-        ]
-      },
-      "corpus": {
-        "runs": 51,
-        "best": 2949,
-        "median": 2611,
-        "reaches": "rank 6"
-      }
-    },
-    {
-      "scenario": "VT Ground Advanced S5",
-      "category": "Tracking",
-      "family": "Ground",
-      "window": 2,
-      "label": "Ground",
-      "leaderboardId": 100768,
-      "rankMaxes": [
-        2882,
-        3195,
-        3498,
-        3770
-      ],
-      "derivedFrom": {
-        "leaderboardEntries": 17608,
-        "topFractions": [
-          0.08,
-          0.021,
-          0.005,
-          0.001
-        ]
-      },
-      "corpus": {
-        "runs": 1,
-        "best": 1922,
-        "median": 1922,
-        "reaches": null
-      }
-    },
-    {
-      "scenario": "VT PGT Novice S5",
-      "category": "Tracking",
-      "family": "PGT",
-      "window": 0,
-      "label": "PGT",
-      "leaderboardId": 98060,
-      "rankMaxes": [
-        1914,
-        2357,
-        2798,
-        3137
-      ],
-      "derivedFrom": {
-        "leaderboardEntries": 93477,
-        "topFractions": [
-          0.879,
-          0.779,
-          0.623,
-          0.438
-        ]
-      },
-      "corpus": {
-        "runs": 4,
-        "best": 3745,
-        "median": 3227,
-        "reaches": "rank 4"
-      }
-    },
-    {
-      "scenario": "VT PGT Intermediate S5",
-      "category": "Tracking",
-      "family": "PGT",
-      "window": 1,
-      "label": "PGT",
-      "leaderboardId": 98331,
-      "rankMaxes": [
-        2347,
-        2805,
-        3139,
-        3391
-      ],
-      "derivedFrom": {
-        "leaderboardEntries": 56377,
-        "topFractions": [
-          0.449,
-          0.248,
-          0.148,
-          0.075
-        ]
-      },
-      "corpus": {
-        "runs": 50,
-        "best": 2909,
-        "median": 2355,
-        "reaches": "rank 6"
-      }
-    },
-    {
-      "scenario": "VT PGT Advanced S5",
-      "category": "Tracking",
-      "family": "PGT",
-      "window": 2,
-      "label": "PGT",
-      "leaderboardId": 98255,
-      "rankMaxes": [
-        2812,
-        3255,
-        3711,
-        4125
-      ],
-      "derivedFrom": {
-        "leaderboardEntries": 13518,
-        "topFractions": [
-          0.08,
-          0.021,
-          0.005,
-          0.001
-        ]
-      },
-      "corpus": {
-        "runs": 1,
-        "best": 1595,
-        "median": 1595,
+        "best": 6264,
+        "median": 6264,
         "reaches": null
       }
     },
@@ -1376,22 +1733,23 @@
       "scenario": "VT Raw Control Novice S5",
       "category": "Tracking",
       "family": "Raw Control",
+      "subCategory": "Control Tracking",
       "window": 0,
-      "label": "Raw Control",
+      "label": "VT Raw Control Novice S5",
       "leaderboardId": 98047,
       "rankMaxes": [
-        2145,
-        2586,
-        3029,
-        3450
+        2236,
+        2756,
+        3198,
+        3476
       ],
       "derivedFrom": {
         "leaderboardEntries": 93878,
         "topFractions": [
-          0.879,
-          0.779,
-          0.623,
-          0.438
+          0.86,
+          0.72,
+          0.56,
+          0.42
         ]
       },
       "corpus": {
@@ -1402,370 +1760,1012 @@
       }
     },
     {
-      "scenario": "VT Raw Control Intermediate S5",
+      "scenario": "Whisphere 80%",
       "category": "Tracking",
       "family": "Raw Control",
+      "subCategory": "Control Tracking",
       "window": 1,
-      "label": "Raw Control",
-      "leaderboardId": 98048,
+      "label": "Whisphere 80%",
+      "leaderboardId": 55382,
       "rankMaxes": [
-        2777,
-        3218,
-        3571,
-        3900
+        13013,
+        14110,
+        14800,
+        15259
       ],
       "derivedFrom": {
-        "leaderboardEntries": 58328,
+        "leaderboardEntries": 83496,
         "topFractions": [
-          0.449,
-          0.248,
-          0.148,
-          0.075
+          0.31,
+          0.22,
+          0.15,
+          0.105
         ]
-      },
-      "corpus": {
-        "runs": 16,
-        "best": 3513,
-        "median": 2959,
-        "reaches": "rank 6"
       }
     },
     {
-      "scenario": "VT Raw Control Advanced S5",
+      "scenario": "Whisphere",
       "category": "Tracking",
       "family": "Raw Control",
+      "subCategory": "Control Tracking",
       "window": 2,
-      "label": "Raw Control",
-      "leaderboardId": 98253,
+      "label": "Whisphere",
+      "leaderboardId": 34963,
       "rankMaxes": [
-        3134,
-        3548,
-        3920,
-        4263
+        16100,
+        16940,
+        17517,
+        18037
       ],
       "derivedFrom": {
-        "leaderboardEntries": 17337,
+        "leaderboardEntries": 53727,
         "topFractions": [
-          0.08,
-          0.021,
-          0.005,
-          0.001
+          0.075,
+          0.055,
+          0.04,
+          0.03
         ]
       },
       "corpus": {
-        "runs": 2,
-        "best": 2185,
-        "median": 2048,
+        "runs": 79,
+        "best": 13710,
+        "median": 11620,
         "reaches": null
       }
     },
     {
-      "scenario": "ww2ts",
-      "category": "Clicking",
-      "family": "1wXts",
-      "window": 3,
-      "label": "ww2ts",
-      "leaderboardId": 12193,
-      "rankMaxes": [
-        88,
-        96,
-        101,
-        102
-      ]
-    },
-    {
-      "scenario": "VT Floating Heads Elite S5",
-      "category": "Clicking",
-      "family": "Floating Heads",
-      "window": 3,
-      "label": "Floating Heads Elite",
-      "leaderboardId": 106915,
-      "rankMaxes": [
-        515,
-        638,
-        758,
-        956
-      ]
-    },
-    {
-      "scenario": "VT Frogtagon Elite S5 2 Targets",
-      "category": "Clicking",
-      "family": "Frogtagon",
-      "window": 3,
-      "label": "Frogtagon Elite S5 2 Targets",
-      "leaderboardId": 107066,
-      "rankMaxes": [
-        712,
-        799,
-        900,
-        901
-      ]
-    },
-    {
-      "scenario": "1w4t Pasu Raspberry Master 6mag",
-      "category": "Clicking",
-      "family": "Pasu",
-      "window": 3,
-      "label": "1w4t Pasu Raspberry Master 6mag",
-      "leaderboardId": 90763,
-      "rankMaxes": [
-        77,
-        93,
-        100,
-        107
-      ]
-    },
-    {
-      "scenario": "Popcorn Voltaic",
-      "category": "Clicking",
-      "family": "Popcorn",
-      "window": 3,
-      "label": "Popcorn Voltaic",
-      "leaderboardId": 8,
-      "rankMaxes": [
-        248,
-        318,
-        370,
-        450
-      ]
-    },
-    {
-      "scenario": "ww5ts",
-      "category": "Clicking",
-      "family": "ww5t",
-      "window": 3,
-      "label": "ww5ts",
-      "leaderboardId": 6734,
-      "rankMaxes": [
-        104,
-        116,
-        117,
-        118
-      ]
-    },
-    {
-      "scenario": "VT DotTS Elite S5",
-      "category": "Switching",
-      "family": "DotTS",
-      "window": 3,
-      "label": "DotTS Elite",
-      "leaderboardId": 104962,
-      "rankMaxes": [
-        1200,
-        1282,
-        1330,
-        1430
-      ]
-    },
-    {
-      "scenario": "VT DriftTS Elite S5",
-      "category": "Switching",
-      "family": "DriftTS",
-      "window": 3,
-      "label": "DriftTS Elite",
-      "leaderboardId": 104867,
-      "rankMaxes": [
-        342,
-        389,
-        420,
-        430
-      ]
-    },
-    {
-      "scenario": "waldoTS Perfected",
-      "category": "Switching",
-      "family": "FlyTS",
-      "window": 3,
-      "label": "waldoTS Perfected",
-      "leaderboardId": 129721,
-      "rankMaxes": [
-        103,
-        117,
-        126,
-        134
-      ]
-    },
-    {
-      "scenario": "VT Aether Entry S5 Precision Focus",
-      "category": "Tracking",
-      "family": "Aether",
-      "window": 3,
-      "label": "Aether Entry S5 Precision Focus",
-      "leaderboardId": 104846,
-      "rankMaxes": [
-        4644,
-        4973,
-        5227,
-        5463
-      ]
-    },
-    {
-      "scenario": "VT Controlsphere Viscose Expert",
-      "category": "Tracking",
-      "family": "Controlsphere",
-      "window": 3,
-      "label": "Controlsphere Viscose Expert",
-      "leaderboardId": 184831,
-      "rankMaxes": [
-        3364,
-        3889,
-        4363,
-        4627
-      ]
-    },
-    {
-      "scenario": "Ground Plaza Sparky V3 Thin",
-      "category": "Tracking",
-      "family": "Ground",
-      "window": 3,
-      "label": "Ground Plaza Sparky V3 Thin",
-      "leaderboardId": 1408,
-      "rankMaxes": [
-        885,
-        896,
-        903,
-        908
-      ]
-    },
-    {
-      "scenario": "PGTI Voltaic",
-      "category": "Tracking",
-      "family": "PGT",
-      "window": 3,
-      "label": "PGTI Voltaic",
-      "leaderboardId": 99,
-      "rankMaxes": [
-        1499,
-        1941,
-        2411,
-        2788
-      ]
-    },
-    {
-      "scenario": "VT Raw Control Novice S5 Hard",
+      "scenario": "VT Raw Control Intermediate S5 Hard",
       "category": "Tracking",
       "family": "Raw Control",
+      "subCategory": "Control Tracking",
       "window": 3,
-      "label": "Raw Control Novice S5 Hard",
-      "leaderboardId": 106739,
+      "label": "VT Raw Control Intermediate S5 Hard",
+      "leaderboardId": 105155,
       "rankMaxes": [
-        4148,
-        4754,
-        5031,
-        5314
-      ]
+        3220,
+        3417,
+        3545,
+        3694
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 9878,
+        "topFractions": [
+          0.022,
+          0.015,
+          0.011,
+          0.008
+        ]
+      }
     },
     {
-      "scenario": "Air Angelic 4 Voltaic Easy 70%",
+      "scenario": "VT Aether Novice S5 Bot 2",
       "category": "Tracking",
-      "family": "Angelic",
+      "family": "Air Voltaic",
+      "subCategory": "Reading Tracking",
       "window": 0,
-      "label": "Air Angelic 4 Voltaic Easy 70%",
-      "leaderboardId": 14155,
+      "label": "VT Aether Novice S5 Bot 2",
+      "leaderboardId": 108143,
       "rankMaxes": [
-        3828,
-        4236,
-        4566,
-        4857
-      ]
+        2200,
+        2506,
+        2757,
+        2991
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 5171,
+        "topFractions": [
+          0.86,
+          0.72,
+          0.56,
+          0.42
+        ]
+      },
+      "corpus": {
+        "runs": 5,
+        "best": 3413,
+        "median": 3351,
+        "reaches": "rank 4"
+      }
     },
     {
-      "scenario": "Air Angelic 4 Voltaic Easy 90%",
+      "scenario": "Air Voltaic Easy Invincible 4 80%",
       "category": "Tracking",
-      "family": "Angelic",
+      "family": "Air Voltaic",
+      "subCategory": "Reading Tracking",
       "window": 1,
-      "label": "Air Angelic 4 Voltaic Easy 90%",
-      "leaderboardId": 13692,
+      "label": "Air Voltaic Easy Invincible 4 80%",
+      "leaderboardId": 128781,
       "rankMaxes": [
-        3647,
-        3932,
-        4119,
-        4280
-      ]
+        3310,
+        3460,
+        3618,
+        3786
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 56889,
+        "topFractions": [
+          0.31,
+          0.22,
+          0.15,
+          0.105
+        ]
+      },
+      "corpus": {
+        "runs": 5,
+        "best": 3512,
+        "median": 3472,
+        "reaches": "rank 6"
+      }
     },
     {
-      "scenario": "Air Angelic 4 Voltaic 90%",
+      "scenario": "Air Voltaic Easy",
       "category": "Tracking",
-      "family": "Angelic",
+      "family": "Air Voltaic",
+      "subCategory": "Reading Tracking",
       "window": 2,
-      "label": "Air Angelic 4 Voltaic 90%",
-      "leaderboardId": 2537,
+      "label": "Air Voltaic Easy",
+      "leaderboardId": 568,
       "rankMaxes": [
-        4181,
-        4509,
-        4695,
-        4918
-      ]
+        874,
+        878,
+        881,
+        884
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 76638,
+        "topFractions": [
+          0.075,
+          0.055,
+          0.04,
+          0.03
+        ]
+      },
+      "corpus": {
+        "runs": 125,
+        "best": 877,
+        "median": 866,
+        "reaches": "rank 9"
+      }
     },
     {
-      "scenario": "Air Angelic 4 Voltaic Smaller",
+      "scenario": "Air Voltaic",
       "category": "Tracking",
-      "family": "Angelic",
+      "family": "Air Voltaic",
+      "subCategory": "Reading Tracking",
       "window": 3,
-      "label": "Air Angelic 4 Voltaic Smaller",
-      "leaderboardId": 518,
+      "label": "Air Voltaic",
+      "leaderboardId": 29,
       "rankMaxes": [
-        2094,
-        2636,
-        3024,
-        3438
-      ]
+        875,
+        879,
+        883,
+        885
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 33910,
+        "topFractions": [
+          0.022,
+          0.015,
+          0.011,
+          0.008
+        ]
+      },
+      "corpus": {
+        "runs": 1,
+        "best": 807,
+        "median": 807,
+        "reaches": null
+      }
     },
     {
-      "scenario": "domiSwitch Easier",
-      "category": "Switching",
-      "family": "DomiSwitch",
+      "scenario": "Close Long Strafes Invincible",
+      "category": "Tracking",
+      "family": "Strafe Reading",
+      "subCategory": "Reading Tracking",
       "window": 0,
-      "label": "domiSwitch Easier",
-      "leaderboardId": 185428,
+      "label": "Close Long Strafes Invincible",
+      "leaderboardId": 117,
       "rankMaxes": [
-        5340,
-        5874,
-        6389,
-        6909
-      ]
+        7618,
+        9530,
+        11066,
+        12254
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 170643,
+        "topFractions": [
+          0.86,
+          0.72,
+          0.56,
+          0.42
+        ]
+      }
     },
     {
-      "scenario": "domiSwitch Easy",
-      "category": "Switching",
-      "family": "DomiSwitch",
+      "scenario": "Smooth Thin Strafes Raspberry Easy",
+      "category": "Tracking",
+      "family": "Strafe Reading",
+      "subCategory": "Reading Tracking",
       "window": 1,
-      "label": "domiSwitch Easy",
-      "leaderboardId": 83043,
+      "label": "Smooth Thin Strafes Raspberry Easy",
+      "leaderboardId": 5536,
       "rankMaxes": [
-        5522,
-        6100,
-        6450,
-        6836
-      ]
+        7014,
+        7584,
+        8109,
+        8555
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 74862,
+        "topFractions": [
+          0.31,
+          0.22,
+          0.15,
+          0.105
+        ]
+      }
     },
     {
-      "scenario": "domiSwitch Hard",
-      "category": "Switching",
-      "family": "DomiSwitch",
+      "scenario": "Air Angelic 4 Voltaic Easy",
+      "category": "Tracking",
+      "family": "Strafe Reading",
+      "subCategory": "Reading Tracking",
       "window": 2,
-      "label": "domiSwitch Hard",
-      "leaderboardId": 83042,
+      "label": "Air Angelic 4 Voltaic Easy",
+      "leaderboardId": 42,
       "rankMaxes": [
-        4533,
-        5315,
-        5956,
-        6607
-      ]
+        3656,
+        3785,
+        3906,
+        4011
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 141807,
+        "topFractions": [
+          0.075,
+          0.055,
+          0.04,
+          0.03
+        ]
+      },
+      "corpus": {
+        "runs": 36,
+        "best": 3467,
+        "median": 3089,
+        "reaches": null
+      }
     },
     {
-      "scenario": "domiSwitch Harder",
-      "category": "Switching",
-      "family": "DomiSwitch",
+      "scenario": "Close Fast Strafes Invincible - Thin",
+      "category": "Tracking",
+      "family": "Strafe Reading",
+      "subCategory": "Reading Tracking",
       "window": 3,
-      "label": "domiSwitch Harder",
-      "leaderboardId": 185226,
+      "label": "Close Fast Strafes Invincible - Thin",
+      "leaderboardId": 814,
       "rankMaxes": [
-        6193,
-        7094,
-        7504,
-        7818
-      ]
+        10079,
+        10629,
+        10996,
+        11448
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 33556,
+        "topFractions": [
+          0.022,
+          0.015,
+          0.011,
+          0.008
+        ]
+      },
+      "corpus": {
+        "runs": 9,
+        "best": 7290,
+        "median": 6948,
+        "reaches": null
+      }
+    },
+    {
+      "scenario": "VT EddieTS Novice S5",
+      "category": "Switching",
+      "family": "voxTS",
+      "subCategory": "Speed Switching",
+      "window": 0,
+      "label": "VT EddieTS Novice S5",
+      "leaderboardId": 104835,
+      "rankMaxes": [
+        652,
+        743,
+        822,
+        882
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 86622,
+        "topFractions": [
+          0.86,
+          0.72,
+          0.56,
+          0.42
+        ]
+      },
+      "corpus": {
+        "runs": 1,
+        "best": 942,
+        "median": 942,
+        "reaches": "rank 4"
+      }
+    },
+    {
+      "scenario": "voxTargetSwitch 2 Large",
+      "category": "Switching",
+      "family": "voxTS",
+      "subCategory": "Speed Switching",
+      "window": 1,
+      "label": "voxTargetSwitch 2 Large",
+      "leaderboardId": 84880,
+      "rankMaxes": [
+        112,
+        117,
+        121,
+        123
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 73058,
+        "topFractions": [
+          0.31,
+          0.22,
+          0.15,
+          0.105
+        ]
+      },
+      "corpus": {
+        "runs": 170,
+        "best": 129,
+        "median": 116,
+        "reaches": "rank 8"
+      }
+    },
+    {
+      "scenario": "voxTargetSwitch",
+      "category": "Switching",
+      "family": "voxTS",
+      "subCategory": "Speed Switching",
+      "window": 2,
+      "label": "voxTargetSwitch",
+      "leaderboardId": 118,
+      "rankMaxes": [
+        97,
+        100,
+        102,
+        104
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 142076,
+        "topFractions": [
+          0.075,
+          0.055,
+          0.04,
+          0.03
+        ]
+      },
+      "corpus": {
+        "runs": 19,
+        "best": 103,
+        "median": 95,
+        "reaches": "rank 11"
+      }
+    },
+    {
+      "scenario": "voxTS Viscose Varied",
+      "category": "Switching",
+      "family": "voxTS",
+      "subCategory": "Speed Switching",
+      "window": 3,
+      "label": "voxTS Viscose Varied",
+      "leaderboardId": 417,
+      "rankMaxes": [
+        111,
+        114,
+        116,
+        118
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 268948,
+        "topFractions": [
+          0.022,
+          0.015,
+          0.011,
+          0.008
+        ]
+      },
+      "corpus": {
+        "runs": 4,
+        "best": 108,
+        "median": 104,
+        "reaches": null
+      }
+    },
+    {
+      "scenario": "VT DotTS Novice S5",
+      "category": "Switching",
+      "family": "DotTS",
+      "subCategory": "Speed Switching",
+      "window": 0,
+      "label": "VT DotTS Novice S5",
+      "leaderboardId": 104868,
+      "rankMaxes": [
+        860,
+        967,
+        1051,
+        1096
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 91135,
+        "topFractions": [
+          0.86,
+          0.72,
+          0.56,
+          0.42
+        ]
+      },
+      "corpus": {
+        "runs": 2,
+        "best": 1240,
+        "median": 1221,
+        "reaches": "rank 4"
+      }
+    },
+    {
+      "scenario": "VT DotTS Intermediate S5",
+      "category": "Switching",
+      "family": "DotTS",
+      "subCategory": "Speed Switching",
+      "window": 1,
+      "label": "VT DotTS Intermediate S5",
+      "leaderboardId": 104865,
+      "rankMaxes": [
+        1143,
+        1181,
+        1219,
+        1247
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 57461,
+        "topFractions": [
+          0.31,
+          0.22,
+          0.15,
+          0.105
+        ]
+      },
+      "corpus": {
+        "runs": 46,
+        "best": 1210,
+        "median": 1145,
+        "reaches": "rank 6"
+      }
+    },
+    {
+      "scenario": "VT DotTS Advanced S5",
+      "category": "Switching",
+      "family": "DotTS",
+      "subCategory": "Speed Switching",
+      "window": 2,
+      "label": "VT DotTS Advanced S5",
+      "leaderboardId": 104961,
+      "rankMaxes": [
+        1243,
+        1273,
+        1287,
+        1297
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 17906,
+        "topFractions": [
+          0.075,
+          0.055,
+          0.04,
+          0.03
+        ]
+      },
+      "corpus": {
+        "runs": 1,
+        "best": 1051,
+        "median": 1051,
+        "reaches": null
+      }
+    },
+    {
+      "scenario": "patCircleSwitch NR",
+      "category": "Switching",
+      "family": "DotTS",
+      "subCategory": "Speed Switching",
+      "window": 3,
+      "label": "patCircleSwitch NR",
+      "leaderboardId": 535,
+      "rankMaxes": [
+        108,
+        110,
+        112,
+        114
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 38271,
+        "topFractions": [
+          0.022,
+          0.015,
+          0.011,
+          0.008
+        ]
+      },
+      "corpus": {
+        "runs": 37,
+        "best": 101,
+        "median": 88,
+        "reaches": null
+      }
+    },
+    {
+      "scenario": "VT FlyTS Novice S5",
+      "category": "Switching",
+      "family": "FlyTS",
+      "subCategory": "Evasive Switching",
+      "window": 0,
+      "label": "VT FlyTS Novice S5",
+      "leaderboardId": 104830,
+      "rankMaxes": [
+        434,
+        482,
+        522,
+        542
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 79460,
+        "topFractions": [
+          0.86,
+          0.72,
+          0.56,
+          0.42
+        ]
+      },
+      "corpus": {
+        "runs": 2,
+        "best": 630,
+        "median": 614,
+        "reaches": "rank 4"
+      }
+    },
+    {
+      "scenario": "VT FlyTS Intermediate S5",
+      "category": "Switching",
+      "family": "FlyTS",
+      "subCategory": "Evasive Switching",
+      "window": 1,
+      "label": "VT FlyTS Intermediate S5",
+      "leaderboardId": 105142,
+      "rankMaxes": [
+        558,
+        583,
+        610,
+        632
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 48140,
+        "topFractions": [
+          0.31,
+          0.22,
+          0.15,
+          0.105
+        ]
+      },
+      "corpus": {
+        "runs": 15,
+        "best": 595,
+        "median": 556,
+        "reaches": "rank 6"
+      }
+    },
+    {
+      "scenario": "VT FlyTS Advanced S5",
+      "category": "Switching",
+      "family": "FlyTS",
+      "subCategory": "Evasive Switching",
+      "window": 2,
+      "label": "VT FlyTS Advanced S5",
+      "leaderboardId": 105143,
+      "rankMaxes": [
+        551,
+        561,
+        574,
+        588
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 9501,
+        "topFractions": [
+          0.075,
+          0.055,
+          0.04,
+          0.03
+        ]
+      },
+      "corpus": {
+        "runs": 1,
+        "best": 422,
+        "median": 422,
+        "reaches": null
+      }
+    },
+    {
+      "scenario": "Bounce 180 Tracking",
+      "category": "Switching",
+      "family": "FlyTS",
+      "subCategory": "Evasive Switching",
+      "window": 3,
+      "label": "Bounce 180 Tracking",
+      "leaderboardId": 122,
+      "rankMaxes": [
+        82,
+        86,
+        88,
+        91
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 128050,
+        "topFractions": [
+          0.022,
+          0.015,
+          0.011,
+          0.008
+        ]
+      },
+      "corpus": {
+        "runs": 1,
+        "best": 74,
+        "median": 74,
+        "reaches": null
+      }
+    },
+    {
+      "scenario": "VT evaTS Novice",
+      "category": "Switching",
+      "family": "Smooth Switching",
+      "subCategory": "Evasive Switching",
+      "window": 0,
+      "label": "VT evaTS Novice",
+      "leaderboardId": 24980,
+      "rankMaxes": [
+        480,
+        537,
+        582,
+        616
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 107001,
+        "topFractions": [
+          0.86,
+          0.72,
+          0.56,
+          0.42
+        ]
+      }
+    },
+    {
+      "scenario": "VT evaTS Intermediate",
+      "category": "Switching",
+      "family": "Smooth Switching",
+      "subCategory": "Evasive Switching",
+      "window": 1,
+      "label": "VT evaTS Intermediate",
+      "leaderboardId": 24962,
+      "rankMaxes": [
+        599,
+        625,
+        651,
+        669
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 52650,
+        "topFractions": [
+          0.31,
+          0.22,
+          0.15,
+          0.105
+        ]
+      }
+    },
+    {
+      "scenario": "tamTargetSwitch Smooth Easy",
+      "category": "Switching",
+      "family": "Smooth Switching",
+      "subCategory": "Evasive Switching",
+      "window": 2,
+      "label": "tamTargetSwitch Smooth Easy",
+      "leaderboardId": 42505,
+      "rankMaxes": [
+        35,
+        36,
+        37,
+        38
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 69242,
+        "topFractions": [
+          0.075,
+          0.055,
+          0.04,
+          0.03
+        ]
+      },
+      "corpus": {
+        "runs": 26,
+        "best": 35,
+        "median": 30,
+        "reaches": "rank 9"
+      }
+    },
+    {
+      "scenario": "tamTargetSwitch Smooth Hard",
+      "category": "Switching",
+      "family": "Smooth Switching",
+      "subCategory": "Evasive Switching",
+      "window": 3,
+      "label": "tamTargetSwitch Smooth Hard",
+      "leaderboardId": 727,
+      "rankMaxes": [
+        31,
+        33,
+        34,
+        35
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 46012,
+        "topFractions": [
+          0.022,
+          0.015,
+          0.011,
+          0.008
+        ]
+      }
+    },
+    {
+      "scenario": "VT ControlTS Novice S5",
+      "category": "Switching",
+      "family": "ControlTS",
+      "subCategory": "Stability Switching",
+      "window": 0,
+      "label": "VT ControlTS Novice S5",
+      "leaderboardId": 105132,
+      "rankMaxes": [
+        354,
+        399,
+        436,
+        455
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 84100,
+        "topFractions": [
+          0.86,
+          0.72,
+          0.56,
+          0.42
+        ]
+      },
+      "corpus": {
+        "runs": 1,
+        "best": 543,
+        "median": 543,
+        "reaches": "rank 4"
+      }
+    },
+    {
+      "scenario": "VT ControlTS Intermediate S5",
+      "category": "Switching",
+      "family": "ControlTS",
+      "subCategory": "Stability Switching",
+      "window": 1,
+      "label": "VT ControlTS Intermediate S5",
+      "leaderboardId": 104890,
+      "rankMaxes": [
+        445,
+        465,
+        487,
+        503
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 48842,
+        "topFractions": [
+          0.31,
+          0.22,
+          0.15,
+          0.105
+        ]
+      },
+      "corpus": {
+        "runs": 18,
+        "best": 490,
+        "median": 445,
+        "reaches": "rank 7"
+      }
+    },
+    {
+      "scenario": "kinTS Voltaic Easy",
+      "category": "Switching",
+      "family": "ControlTS",
+      "subCategory": "Stability Switching",
+      "window": 2,
+      "label": "kinTS Voltaic Easy",
+      "leaderboardId": 542,
+      "rankMaxes": [
+        74,
+        76,
+        77,
+        78
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 60069,
+        "topFractions": [
+          0.075,
+          0.055,
+          0.04,
+          0.03
+        ]
+      },
+      "corpus": {
+        "runs": 22,
+        "best": 74,
+        "median": 71,
+        "reaches": "rank 9"
+      }
+    },
+    {
+      "scenario": "kinTS Voltaic",
+      "category": "Switching",
+      "family": "ControlTS",
+      "subCategory": "Stability Switching",
+      "window": 3,
+      "label": "kinTS Voltaic",
+      "leaderboardId": 604,
+      "rankMaxes": [
+        80,
+        82,
+        84,
+        85
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 28855,
+        "topFractions": [
+          0.022,
+          0.015,
+          0.011,
+          0.008
+        ]
+      },
+      "corpus": {
+        "runs": 6,
+        "best": 71,
+        "median": 65,
+        "reaches": null
+      }
+    },
+    {
+      "scenario": "VT Penta Bounce Novice S5",
+      "category": "Switching",
+      "family": "beanTS",
+      "subCategory": "Stability Switching",
+      "window": 0,
+      "label": "VT Penta Bounce Novice S5",
+      "leaderboardId": 103262,
+      "rankMaxes": [
+        306,
+        366,
+        414,
+        446
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 83184,
+        "topFractions": [
+          0.86,
+          0.72,
+          0.56,
+          0.42
+        ]
+      },
+      "corpus": {
+        "runs": 1,
+        "best": 519,
+        "median": 519,
+        "reaches": "rank 4"
+      }
+    },
+    {
+      "scenario": "beanTS Larger",
+      "category": "Switching",
+      "family": "beanTS",
+      "subCategory": "Stability Switching",
+      "window": 1,
+      "label": "beanTS Larger",
+      "leaderboardId": 129353,
+      "rankMaxes": [
+        125,
+        131,
+        137,
+        141
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 71281,
+        "topFractions": [
+          0.31,
+          0.22,
+          0.15,
+          0.105
+        ]
+      },
+      "corpus": {
+        "runs": 55,
+        "best": 139,
+        "median": 129,
+        "reaches": "rank 7"
+      }
+    },
+    {
+      "scenario": "beanTS",
+      "category": "Switching",
+      "family": "beanTS",
+      "subCategory": "Stability Switching",
+      "window": 2,
+      "label": "beanTS",
+      "leaderboardId": 2648,
+      "rankMaxes": [
+        135,
+        137,
+        141,
+        143
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 96570,
+        "topFractions": [
+          0.075,
+          0.055,
+          0.04,
+          0.03
+        ]
+      },
+      "corpus": {
+        "runs": 81,
+        "best": 137,
+        "median": 120,
+        "reaches": "rank 10"
+      }
+    },
+    {
+      "scenario": "B180T Voltaic",
+      "category": "Switching",
+      "family": "beanTS",
+      "subCategory": "Stability Switching",
+      "window": 3,
+      "label": "B180T Voltaic",
+      "leaderboardId": 947,
+      "rankMaxes": [
+        81,
+        84,
+        86,
+        88
+      ],
+      "derivedFrom": {
+        "leaderboardEntries": 23380,
+        "topFractions": [
+          0.022,
+          0.015,
+          0.011,
+          0.008
+        ]
+      },
+      "corpus": {
+        "runs": 5,
+        "best": 57,
+        "median": 54,
+        "reaches": null
+      }
     }
   ]
 }

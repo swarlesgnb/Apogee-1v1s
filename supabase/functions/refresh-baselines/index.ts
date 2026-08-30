@@ -16,6 +16,7 @@
  */
 
 import { handler, json, requireCaller } from "../_shared/apogee.ts";
+import { enforceRateLimit } from "../_shared/rateLimit.ts";
 import { baselineFromScores } from "../../../src/core/history/baseline.ts";
 
 /** Most recent runs considered per scenario. Matches BASELINE_WINDOW plus headroom. */
@@ -28,6 +29,7 @@ interface RunRow {
 
 Deno.serve(handler(async (req, admin) => {
   const caller = await requireCaller(req, admin);
+  await enforceRateLimit(admin, caller.playerId, "refresh-baselines");
 
   // Only runs on known scenarios can have a baseline: an unmapped scenario has no
   // benchmark to be measured against.

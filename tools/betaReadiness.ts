@@ -57,12 +57,16 @@ check("blocker", "benchmark definitions present", () => {
 });
 
 check("blocker", "thresholds are populated, not placeholders", () => {
-  const bench = readJson("data", "benchmarks", "voltaic-s5.json");
-  const scenarios = bench.difficulties.flatMap((d: any) =>
-    d.categories.flatMap((c: any) => c.scenarios),
-  );
+  // The season, not a benchmark file. This read voltaic-s5.json, which is nothing the app
+  // grades against any more - it reported 72/72 for a benchmark the pool draws 27
+  // scenarios from and would have said the same with the season empty.
+  const season = readJson("data", "seasons", "season-1.json");
+  const scenarios = season.scenarios ?? [];
   const empty = scenarios.filter((s: any) => !s.rankMaxes || s.rankMaxes.length === 0);
-  return [empty.length === 0, `${scenarios.length - empty.length}/${scenarios.length} have thresholds`];
+  return [
+    scenarios.length > 0 && empty.length === 0,
+    `${scenarios.length - empty.length}/${scenarios.length} season scenarios have thresholds`,
+  ];
 });
 
 check("blocker", "rank ladder is well-formed", () => {
@@ -79,6 +83,91 @@ check("blocker", "rank ladder is well-formed", () => {
     }
   }
   return [true, `${tiers.length} tiers, contiguous`];
+});
+
+// The advisory below reads apogee_ranks.json, which holds the eight OVERALL tiers. It
+// passed the whole time the season's per-category ladders were unnamed, because it never
+// looks at them - and those are the names on the ranks screen, three ladders of sixteen
+// against one overall tier. A blocker rather than an advisory: the ladder is the product,
+// and a tester who is told they are "Advanced 2" has been told nothing.
+//
+// Only the editor's own generated default is flagged - `addWindow` in renderer.js names
+// each new rank `${name} ${i + 1}`, so "Rank 3" and "Advanced 2" are provably un-renamed
+// rather than merely plain. Anything else is a naming judgement, and this file has no
+// business making one.
+check("blocker", "season rank ladders have been named", () => {
+  const season = readJson("data", "seasons", "season-1.json");
+  const size = season.windowSize ?? 4;
+
+  // `addWindow` in renderer.js names each new rank `${name} ${i + 1}`, where i is the
+  // rank's position WITHIN its window. Reproducing that exactly is what separates an
+  // un-renamed default from a real name that happens to end in a number: matching
+  // `\S+ \d+` alone flags Tracking's "HAL 9000", which is deliberate and coloured
+  // #ff0000. Colour is no help on its own either - "Rank 1..4" carries a real gradient,
+  // renamed never, recoloured already.
+  const unnamed: string[] = [];
+  for (const cat of season.categories ?? []) {
+    (cat.rankNames ?? []).forEach((name: string, i: number) => {
+      const m = /^(\S+) (\d+)\**$/.exec(name);
+      if (m && Number(m[2]) === (i % size) + 1) unnamed.push(`${cat.name}: ${name}`);
+    });
+  }
+
+  const total = (season.categories ?? []).reduce(
+    (n: number, c: any) => n + (c.rankNames?.length ?? 0),
+    0,
+  );
+  if (unnamed.length === 0) {
+    return [true, `${total} ranks named across ${(season.categories ?? []).length} ladders`];
+  }
+  return [
+    false,
+    `${unnamed.length}/${total} still on the editor default: ${unnamed.slice(0, 4).join(", ")}`,
+  ];
+});
+
+// Every rank must have a scenario behind it.
+//
+// validateSeasonEdits already owns this rule - "a family missing a window is refused,
+// so ranks 5-8 cannot be reached" - but it only ever exercises it against synthetic
+// fixtures. Nothing pointed it at the pair that actually ships, and the gap is not
+// theoretical: the season declared a fourth window, Extreme, that the pool had no
+// families for and the server had no season_scenarios rows for. Ranks 13-16 rendered
+// normally, filled in as the player trained because ranks are computed locally, and
+// could never be drawn by find-match. A tier that looks alive and is not is worse than
+// one that is visibly broken, so this is a blocker.
+check("blocker", "every rank has scenarios behind it", () => {
+  const pool = readJson("data", "pool.json");
+  const season = readJson("data", "seasons", "season-1.json");
+  const size = season.windowSize ?? pool.windowSize ?? 4;
+
+  // Which window indices the pool can actually fill, per category.
+  const filled = new Map<string, Set<number>>();
+  for (const family of pool.families ?? []) {
+    const seen = filled.get(family.category) ?? new Set<number>();
+    for (const v of family.variants ?? []) seen.add(v.window);
+    filled.set(family.category, seen);
+  }
+
+  const unreachable: string[] = [];
+  for (const cat of season.categories ?? []) {
+    const depth = cat.rankNames?.length ?? 0;
+    const seen = filled.get(cat.name) ?? new Set<number>();
+    for (let w = 0; w * size < depth; w++) {
+      if (!seen.has(w)) {
+        const first = w * size + 1;
+        unreachable.push(`${cat.name} ranks ${first}-${Math.min(depth, first + size - 1)}`);
+      }
+    }
+  }
+
+  if (unreachable.length === 0) {
+    const windows = Math.max(
+      ...(season.categories ?? []).map((c: any) => Math.ceil((c.rankNames?.length ?? 0) / size)),
+    );
+    return [true, `every rank is backed, ${windows} window(s) deep`];
+  }
+  return [false, `no scenarios for ${unreachable.join("; ")}`];
 });
 
 check("advisory", "rank tiers have real names", () => {
@@ -244,16 +333,61 @@ function print(list: Result[], heading: string): void {
 print(blockers, "── blockers ─────────────────────────────────────");
 print(advisories, "── advisories ───────────────────────────────────");
 
+// Written work, which can be checked for existence even though its quality cannot.
+//
+// These sat on the manual list and stayed ticked-off-by-nobody for months after they
+// were actually done, which is how a preflight list stops being read: a checklist that
+// never shrinks is one people learn to scroll past. Presence and a plausible length is
+// a weak check, and a weak check that shrinks the list beats a strong one nobody runs.
+const written: { label: string; path: string[]; needs: string[] }[] = [
+  {
+    label: "public statement on what anti-cheat does and does not catch",
+    path: ["FAIR-PLAY.md"],
+    needs: ["cannot catch", "Suspect", "Rejected"],
+  },
+  {
+    label: "how a player disputes a voided match, and who answers",
+    path: ["FAIR-PLAY.md"],
+    needs: ["Disputing a voided match"],
+  },
+  {
+    label: "what is collected, who can see it, and how it is deleted",
+    path: ["PRIVACY.md"],
+    needs: ["What leaves your machine", "Deleting your data"],
+  },
+  {
+    label: "benchmark authors credited where players will see it",
+    path: ["README.md"],
+    needs: ["## Credits", "benchmark authors"],
+  },
+];
+
+console.log("\n── written and committed ────────────────────────");
+const missingWritten: string[] = [];
+for (const item of written) {
+  let ok = false;
+  let detail = `${item.path.join("/")} not found`;
+  try {
+    const text = readFileSync(file(...item.path), "utf8");
+    const absent = item.needs.filter((n) => !text.includes(n));
+    ok = absent.length === 0;
+    detail = ok ? item.path.join("/") : `${item.path.join("/")} is missing: ${absent.join(", ")}`;
+  } catch {
+    /* detail already says so */
+  }
+  if (!ok) missingWritten.push(item.label);
+  console.log(`  ${ok ? "ok  " : "NO  "} ${item.label.padEnd(52)} ${detail}`);
+}
+
 console.log("\n── manual, cannot be automated ──────────────────");
 for (const item of [
   "Play ten real matches end to end and confirm none settle wrongly",
   "Confirm a rejected run really does void a match, on a live account",
   "Confirm the Suspect tier fires without voiding, on a live account",
   "Decide what happens to ratings when the beta ends: reset, or carry over",
-  "Write the one-paragraph public statement on what anti-cheat does and does not catch",
   "Talk to KovaaK's about the API usage before, not after, traffic appears",
-  "Credit Voltaic prominently and confirm they are comfortable with benchmark use",
-  "Decide how a player disputes a voided match, and who answers",
+  "Confirm the benchmark authors are comfortable with their work being used",
+  "Choose a licence — with no LICENSE file the repository is all rights reserved",
 ]) {
   console.log(`  [ ] ${item}`);
 }
@@ -263,12 +397,22 @@ const failedAdvisories = advisories.filter((r) => !r.ok);
 
 console.log(
   `\n${blockers.length - failedBlockers.length}/${blockers.length} blockers clear, ` +
-    `${advisories.length - failedAdvisories.length}/${advisories.length} advisories clear`,
+    `${advisories.length - failedAdvisories.length}/${advisories.length} advisories clear, ` +
+    `${written.length - missingWritten.length}/${written.length} documents written`,
 );
 
 if (failedBlockers.length > 0) {
   console.log("\nNOT READY for a closed beta. Outstanding blockers:");
   for (const r of failedBlockers) console.log(`  - ${r.label}: ${r.detail}`);
+  process.exit(1);
+}
+
+// A document is a blocker for *publishing*, not for building, so it fails the run
+// without the "NOT READY" framing above. Reported rather than merely counted: an
+// assertion whose result nothing reads is the one that hides a real gap.
+if (missingWritten.length > 0) {
+  console.log("\nBlockers are clear, but the repository is not ready to be public:");
+  for (const label of missingWritten) console.log(`  - ${label}`);
   process.exit(1);
 }
 

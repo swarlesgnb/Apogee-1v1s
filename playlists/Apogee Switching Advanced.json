@@ -1,0 +1,39 @@
+{
+	"playlistName": "Apogee Switching Advanced",
+	"playlistId": 0,
+	"authorSteamId": "",
+	"authorName": "",
+	"scenarioList": [
+		{
+			"scenario_name": "voxTargetSwitch",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "VT DotTS Advanced S5",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "VT FlyTS Advanced S5",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "tamTargetSwitch Smooth Easy",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "kinTS Voltaic Easy",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "beanTS",
+			"play_Count": 1
+		}
+	],
+	"description": "Season 1 practice. 6 scenarios, the ones this season ranks you on. Play them as often as you like - nothing here is a match, and none of it settles anything.",
+	"hasOfflineScenarios": false,
+	"hasEdited": true,
+	"shareCode": "",
+	"version": 31,
+	"updated": 1788031556,
+	"isPrivate": false
+}

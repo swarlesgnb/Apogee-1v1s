@@ -1,0 +1,643 @@
+{
+  "benchmarkName": "Community Benchmarks",
+  "abbreviation": "CB",
+  "color": "#10B981",
+  "spreadsheetURL": "https://docs.google.com/spreadsheets/d/1X43zejitcxnCwN6DJmInrouG4m-eNup8sBqCOdk93eg",
+  "evxlUrl": "https://evxl.app/benchmarks/Community%20Benchmarks",
+  "source": "kovaaks.com benchmarks API + evxl registry",
+  "fetchedAt": "2026-08-25T13:51:12Z",
+  "difficulties": [
+    {
+      "name": "Easy",
+      "kovaaksBenchmarkId": 319,
+      "rankNames": [
+        "ROOKIE",
+        "NOVICE",
+        "SCOUT",
+        "DOCENT",
+        "ADEPT",
+        "EXPERT"
+      ],
+      "rankColors": {
+        "ROOKIE": "#ED5314",
+        "NOVICE": "#FFB92A",
+        "SCOUT": "#FEEB51",
+        "DOCENT": "#9BCA3E",
+        "ADEPT": "#3ABBC9",
+        "EXPERT": "#666DCB"
+      },
+      "categories": [
+        {
+          "name": "STATIC",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000,
+            25000,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "CB EvoClick Easy",
+              "leaderboardId": 96088,
+              "rankMaxes": [
+                720,
+                800,
+                880,
+                960,
+                1040,
+                1120
+              ]
+            },
+            {
+              "name": "CB ThreeClick Easy",
+              "leaderboardId": 93206,
+              "rankMaxes": [
+                800,
+                880,
+                960,
+                1040,
+                1120,
+                1200
+              ]
+            },
+            {
+              "name": "CB FiveClick Easy",
+              "leaderboardId": 93216,
+              "rankMaxes": [
+                1050,
+                1140,
+                1230,
+                1320,
+                1410,
+                1500
+              ]
+            }
+          ]
+        },
+        {
+          "name": "DYNAMIC",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000,
+            25000,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "CB XYClick Easy",
+              "leaderboardId": 93204,
+              "rankMaxes": [
+                500,
+                560,
+                630,
+                700,
+                750,
+                800
+              ]
+            },
+            {
+              "name": "CB AerialClick Easy",
+              "leaderboardId": 93221,
+              "rankMaxes": [
+                400,
+                460,
+                520,
+                580,
+                640,
+                700
+              ]
+            },
+            {
+              "name": "CB JumpClick Easy",
+              "leaderboardId": 93213,
+              "rankMaxes": [
+                500,
+                560,
+                620,
+                680,
+                740,
+                800
+              ]
+            }
+          ]
+        },
+        {
+          "name": "PRECISE",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000,
+            25000,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "CB ControlTrack Easy",
+              "leaderboardId": 93217,
+              "rankMaxes": [
+                1750,
+                2000,
+                2250,
+                2500,
+                2750,
+                3000
+              ]
+            },
+            {
+              "name": "CB SmoothTrack Easy",
+              "leaderboardId": 93209,
+              "rankMaxes": [
+                1800,
+                2100,
+                2400,
+                2700,
+                3000,
+                3300
+              ]
+            },
+            {
+              "name": "CB JumpTrack Easy",
+              "leaderboardId": 93211,
+              "rankMaxes": [
+                1600,
+                1900,
+                2200,
+                2500,
+                2800,
+                3100
+              ]
+            }
+          ]
+        },
+        {
+          "name": "REACTIVE",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000,
+            25000,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "CB StrafeTrack Easy",
+              "leaderboardId": 93207,
+              "rankMaxes": [
+                1700,
+                1900,
+                2100,
+                2300,
+                2500,
+                2700
+              ]
+            },
+            {
+              "name": "CB AerialTrack Easy",
+              "leaderboardId": 93218,
+              "rankMaxes": [
+                1700,
+                1900,
+                2100,
+                2300,
+                2500,
+                2700
+              ]
+            },
+            {
+              "name": "CB SharpTrack Easy",
+              "leaderboardId": 93210,
+              "rankMaxes": [
+                1950,
+                2100,
+                2250,
+                2400,
+                2550,
+                2700
+              ]
+            }
+          ]
+        },
+        {
+          "name": "SPEED",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000,
+            25000,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "CB StaticSwitch Easy",
+              "leaderboardId": 93208,
+              "rankMaxes": [
+                800,
+                850,
+                900,
+                950,
+                1000,
+                1050
+              ]
+            },
+            {
+              "name": "CB FlatSwitch Easy",
+              "leaderboardId": 93215,
+              "rankMaxes": [
+                770,
+                820,
+                880,
+                940,
+                1020,
+                1080
+              ]
+            },
+            {
+              "name": "CB WaveSwitch Easy",
+              "leaderboardId": 93205,
+              "rankMaxes": [
+                700,
+                750,
+                800,
+                850,
+                900,
+                950
+              ]
+            }
+          ]
+        },
+        {
+          "name": "EVASIVE",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000,
+            25000,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "CB AerialSwitch Easy",
+              "leaderboardId": 93219,
+              "rankMaxes": [
+                250,
+                300,
+                350,
+                400,
+                450,
+                500
+              ]
+            },
+            {
+              "name": "CB SmoothSwitch Easy",
+              "leaderboardId": 93247,
+              "rankMaxes": [
+                340,
+                370,
+                400,
+                440,
+                480,
+                520
+              ]
+            },
+            {
+              "name": "CB JumpSwitch Easy",
+              "leaderboardId": 93212,
+              "rankMaxes": [
+                360,
+                400,
+                440,
+                480,
+                520,
+                570
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Hard",
+      "kovaaksBenchmarkId": 320,
+      "rankNames": [
+        "VETERAN",
+        "MASTER",
+        "ELITE",
+        "TITAN",
+        "LEGEND",
+        "ETHEREAL"
+      ],
+      "rankColors": {
+        "VETERAN": "#586289",
+        "MASTER": "#43004A",
+        "ELITE": "#B09B72",
+        "TITAN": "#004749",
+        "LEGEND": "#540000",
+        "ETHEREAL": "#1D1D1D"
+      },
+      "categories": [
+        {
+          "name": "STATIC",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000,
+            25000,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "CB EvoClick",
+              "leaderboardId": 96086,
+              "rankMaxes": [
+                1180,
+                1260,
+                1350,
+                1440,
+                1520,
+                1600
+              ]
+            },
+            {
+              "name": "CB ThreeClick",
+              "leaderboardId": 92602,
+              "rankMaxes": [
+                1330,
+                1420,
+                1520,
+                1650,
+                1730,
+                1800
+              ]
+            },
+            {
+              "name": "CB FiveClick",
+              "leaderboardId": 92558,
+              "rankMaxes": [
+                1550,
+                1690,
+                1830,
+                1970,
+                2110,
+                2250
+              ]
+            }
+          ]
+        },
+        {
+          "name": "DYNAMIC",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000,
+            25000,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "CB XYClick",
+              "leaderboardId": 92604,
+              "rankMaxes": [
+                730,
+                850,
+                990,
+                1130,
+                1240,
+                1350
+              ]
+            },
+            {
+              "name": "CB AerialClick",
+              "leaderboardId": 92562,
+              "rankMaxes": [
+                570,
+                640,
+                730,
+                850,
+                970,
+                1070
+              ]
+            },
+            {
+              "name": "CB JumpClick",
+              "leaderboardId": 92555,
+              "rankMaxes": [
+                680,
+                750,
+                830,
+                930,
+                1050,
+                1170
+              ]
+            }
+          ]
+        },
+        {
+          "name": "PRECISE",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000,
+            25000,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "CB ControlTrack",
+              "leaderboardId": 92559,
+              "rankMaxes": [
+                2100,
+                2400,
+                2800,
+                3300,
+                3700,
+                4000
+              ]
+            },
+            {
+              "name": "CB SmoothTrack",
+              "leaderboardId": 92603,
+              "rankMaxes": [
+                2100,
+                2450,
+                2800,
+                3200,
+                3500,
+                3850
+              ]
+            },
+            {
+              "name": "CB JumpTrack",
+              "leaderboardId": 92553,
+              "rankMaxes": [
+                2500,
+                2900,
+                3300,
+                3750,
+                4150,
+                4600
+              ]
+            }
+          ]
+        },
+        {
+          "name": "REACTIVE",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000,
+            25000,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "CB StrafeTrack",
+              "leaderboardId": 92600,
+              "rankMaxes": [
+                1900,
+                2150,
+                2400,
+                2700,
+                2925,
+                3250
+              ]
+            },
+            {
+              "name": "CB AerialTrack",
+              "leaderboardId": 92560,
+              "rankMaxes": [
+                2150,
+                2400,
+                2650,
+                3000,
+                3300,
+                3600
+              ]
+            },
+            {
+              "name": "CB SharpTrack",
+              "leaderboardId": 92552,
+              "rankMaxes": [
+                2000,
+                2250,
+                2500,
+                2800,
+                3100,
+                3400
+              ]
+            }
+          ]
+        },
+        {
+          "name": "SPEED",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000,
+            25000,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "CB StaticSwitch",
+              "leaderboardId": 92601,
+              "rankMaxes": [
+                1150,
+                1200,
+                1250,
+                1300,
+                1350,
+                1400
+              ]
+            },
+            {
+              "name": "CB FlatSwitch",
+              "leaderboardId": 92557,
+              "rankMaxes": [
+                1080,
+                1130,
+                1190,
+                1240,
+                1300,
+                1370
+              ]
+            },
+            {
+              "name": "CB WaveSwitch",
+              "leaderboardId": 92594,
+              "rankMaxes": [
+                950,
+                1000,
+                1050,
+                1100,
+                1150,
+                1200
+              ]
+            }
+          ]
+        },
+        {
+          "name": "EVASIVE",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000,
+            25000,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "CB AerialSwitch",
+              "leaderboardId": 92561,
+              "rankMaxes": [
+                500,
+                560,
+                620,
+                680,
+                740,
+                800
+              ]
+            },
+            {
+              "name": "CB SmoothSwitch",
+              "leaderboardId": 92551,
+              "rankMaxes": [
+                460,
+                500,
+                540,
+                570,
+                600,
+                640
+              ]
+            },
+            {
+              "name": "CB JumpSwitch",
+              "leaderboardId": 92554,
+              "rankMaxes": [
+                440,
+                500,
+                560,
+                620,
+                680,
+                740
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

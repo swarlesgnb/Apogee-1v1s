@@ -80,10 +80,24 @@ contextBridge.exposeInMainWorld("apogee", {
   launchMatch: () => ipcRenderer.invoke("apogee:launchMatch"),
 
   /**
-   * Open one of the active match's scenarios in KovaaK's.
-   * Main refuses any scenario that is not part of the match.
+   * Open one scenario in KovaaK's - a match scenario, or anything the season names.
+   * Main refuses anything in neither, so this cannot be pointed at arbitrary text.
    */
   launchScenario: (scenario) => ipcRenderer.invoke("apogee:launchScenario", { scenario }),
+
+  /**
+   * The whole season pool measured against local history: every scenario, every window,
+   * personal best, which rank it reaches and what the next one costs on it.
+   * Returns { season, scenarios, playlists, playlistDir, installed } or { error }.
+   */
+  practice: () => ipcRenderer.invoke("apogee:practice"),
+
+  /**
+   * Write the season's practice playlists into KovaaK's own Playlists folder. Pass an
+   * array of names for a subset; omit it for all of them.
+   * Returns { ok, dir, written, installed, note } or { error }.
+   */
+  installPlaylists: (names) => ipcRenderer.invoke("apogee:installPlaylists", { names }),
 
   /** Fires when a match starts, and again with null when it ends. */
   onMatch: (handler) => subscribe("apogee:match", handler),

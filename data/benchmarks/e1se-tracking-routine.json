@@ -1,0 +1,461 @@
+{
+  "benchmarkName": "e1se Tracking Routine",
+  "abbreviation": "e",
+  "color": "#D3E3FD",
+  "spreadsheetURL": "https://docs.google.com/spreadsheets/d/1KxW46nYH3pVZoCK-dtWHISbYC41X6O_o8h5KnSFICys/edit?gid=1512712393#gid=1512712393",
+  "evxlUrl": "https://evxl.app/benchmarks/e1se%20Tracking%20Routine",
+  "source": "kovaaks.com benchmarks API + evxl registry",
+  "fetchedAt": "2026-08-29T16:58:03Z",
+  "difficulties": [
+    {
+      "name": "Beginner",
+      "kovaaksBenchmarkId": 693,
+      "rankNames": [
+        "Proficient",
+        "Master"
+      ],
+      "rankColors": {
+        "Proficient": "#66FF94",
+        "Master": "#FF8E86"
+      },
+      "categories": [
+        {
+          "name": "1",
+          "rankMaxes": [
+            5000,
+            10000
+          ],
+          "scenarios": [
+            {
+              "name": "Smoothness Training 60",
+              "leaderboardId": 2803,
+              "rankMaxes": [
+                22800,
+                23000
+              ]
+            }
+          ]
+        },
+        {
+          "name": "2",
+          "rankMaxes": [
+            5000,
+            10000
+          ],
+          "scenarios": [
+            {
+              "name": "Smooth Tracking a+ Easy",
+              "leaderboardId": 26529,
+              "rankMaxes": [
+                10400,
+                10600
+              ]
+            }
+          ]
+        },
+        {
+          "name": "3",
+          "rankMaxes": [
+            5000,
+            10000
+          ],
+          "scenarios": [
+            {
+              "name": "e1se Smoothness EASY",
+              "leaderboardId": 27196,
+              "rankMaxes": [
+                1640,
+                1700
+              ]
+            }
+          ]
+        },
+        {
+          "name": "4",
+          "rankMaxes": [
+            5000,
+            10000
+          ],
+          "scenarios": [
+            {
+              "name": "GP Far Long Strafes Easy",
+              "leaderboardId": 11620,
+              "rankMaxes": [
+                5500,
+                5900
+              ]
+            }
+          ]
+        },
+        {
+          "name": "5",
+          "rankMaxes": [
+            5000,
+            10000
+          ],
+          "scenarios": [
+            {
+              "name": "GP Close Long Strafes Easy",
+              "leaderboardId": 11637,
+              "rankMaxes": [
+                5500,
+                5900
+              ]
+            }
+          ]
+        },
+        {
+          "name": "6",
+          "rankMaxes": [
+            5000,
+            10000
+          ],
+          "scenarios": [
+            {
+              "name": "e1se Auto Balanced Long EASY",
+              "leaderboardId": 27194,
+              "rankMaxes": [
+                17000,
+                20000
+              ]
+            }
+          ]
+        },
+        {
+          "name": "7",
+          "rankMaxes": [
+            5000,
+            10000
+          ],
+          "scenarios": [
+            {
+              "name": "Centering 90 Easy+ No Strafes",
+              "leaderboardId": 7254,
+              "rankMaxes": [
+                18000,
+                19000
+              ]
+            }
+          ]
+        },
+        {
+          "name": "8",
+          "rankMaxes": [
+            5000,
+            10000
+          ],
+          "scenarios": [
+            {
+              "name": "Centering I Easy",
+              "leaderboardId": 1903,
+              "rankMaxes": [
+                15600,
+                17000
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Beginner+",
+      "kovaaksBenchmarkId": 694,
+      "rankNames": [
+        "Proficient",
+        "Master"
+      ],
+      "rankColors": {
+        "Proficient": "#66FF94",
+        "Master": "#FF8E86"
+      },
+      "categories": [
+        {
+          "name": "1",
+          "rankMaxes": [
+            5000,
+            10000
+          ],
+          "scenarios": [
+            {
+              "name": "e1se Reflex Smoothness",
+              "leaderboardId": 27311,
+              "rankMaxes": [
+                4140,
+                4560
+              ]
+            }
+          ]
+        },
+        {
+          "name": "2",
+          "rankMaxes": [
+            5000,
+            10000
+          ],
+          "scenarios": [
+            {
+              "name": "Kindaclose long stop strafes",
+              "leaderboardId": 15877,
+              "rankMaxes": [
+                2200,
+                2300
+              ]
+            }
+          ]
+        },
+        {
+          "name": "3",
+          "rankMaxes": [
+            5000,
+            10000
+          ],
+          "scenarios": [
+            {
+              "name": "e1se Spherical Strafes",
+              "leaderboardId": 27315,
+              "rankMaxes": [
+                8000,
+                8900
+              ]
+            }
+          ]
+        },
+        {
+          "name": "4",
+          "rankMaxes": [
+            5000,
+            10000
+          ],
+          "scenarios": [
+            {
+              "name": "Vertical Tracking a+ Easy",
+              "leaderboardId": 26526,
+              "rankMaxes": [
+                11000,
+                11350
+              ]
+            }
+          ]
+        },
+        {
+          "name": "5",
+          "rankMaxes": [
+            5000,
+            10000
+          ],
+          "scenarios": [
+            {
+              "name": "B180TI Voltaic Iron",
+              "leaderboardId": 11839,
+              "rankMaxes": [
+                209,
+                212
+              ]
+            }
+          ]
+        },
+        {
+          "name": "6",
+          "rankMaxes": [
+            5000,
+            10000
+          ],
+          "scenarios": [
+            {
+              "name": "Slide Bounce Tracking a+ Easy",
+              "leaderboardId": 26524,
+              "rankMaxes": [
+                11000,
+                11400
+              ]
+            }
+          ]
+        },
+        {
+          "name": "7",
+          "rankMaxes": [
+            5000,
+            10000
+          ],
+          "scenarios": [
+            {
+              "name": "High Ground Tracking a+ Easy",
+              "leaderboardId": 26537,
+              "rankMaxes": [
+                10900,
+                11500
+              ]
+            }
+          ]
+        },
+        {
+          "name": "8",
+          "rankMaxes": [
+            5000,
+            10000
+          ],
+          "scenarios": [
+            {
+              "name": "Humanoid Strafes a+ Easy",
+              "leaderboardId": 26531,
+              "rankMaxes": [
+                11000,
+                11550
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Intermediate",
+      "kovaaksBenchmarkId": 695,
+      "rankNames": [
+        "Proficient",
+        "Master"
+      ],
+      "rankColors": {
+        "Proficient": "#66FF94",
+        "Master": "#FF8E86"
+      },
+      "categories": [
+        {
+          "name": "1",
+          "rankMaxes": [
+            10000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "Kindafar Long Strafes",
+              "leaderboardId": 2152,
+              "rankMaxes": [
+                17000,
+                18000
+              ]
+            }
+          ]
+        },
+        {
+          "name": "2",
+          "rankMaxes": [
+            10000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "Ascended Tracking 90 Smooth",
+              "leaderboardId": 374,
+              "rankMaxes": [
+                22000,
+                24000
+              ]
+            }
+          ]
+        },
+        {
+          "name": "3",
+          "rankMaxes": [
+            10000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "Humanoid Strafe Flat",
+              "leaderboardId": 15205,
+              "rankMaxes": [
+                83,
+                88
+              ]
+            }
+          ]
+        },
+        {
+          "name": "4",
+          "rankMaxes": [
+            0,
+            0
+          ],
+          "scenarios": [
+            {
+              "name": "Houston Outlaws - Ground Tracking",
+              "leaderboardId": 25165,
+              "rankMaxes": [
+                2650,
+                2800
+              ]
+            }
+          ]
+        },
+        {
+          "name": "5",
+          "rankMaxes": [
+            0,
+            0
+          ],
+          "scenarios": [
+            {
+              "name": "e1se Far Angle Smoothness EASY",
+              "leaderboardId": 27713,
+              "rankMaxes": [
+                400,
+                425
+              ]
+            }
+          ]
+        },
+        {
+          "name": "6",
+          "rankMaxes": [
+            0,
+            0
+          ],
+          "scenarios": [
+            {
+              "name": "fuglaaXYLongstrafes",
+              "leaderboardId": 525,
+              "rankMaxes": [
+                490,
+                510
+              ]
+            }
+          ]
+        },
+        {
+          "name": "7",
+          "rankMaxes": [
+            0,
+            0
+          ],
+          "scenarios": [
+            {
+              "name": "Overwatch 2 - Vertical Tracking",
+              "leaderboardId": 27635,
+              "rankMaxes": [
+                7500,
+                8000
+              ]
+            }
+          ]
+        },
+        {
+          "name": "8",
+          "rankMaxes": [
+            0,
+            0
+          ],
+          "scenarios": [
+            {
+              "name": "VT Smoothbot Novice",
+              "leaderboardId": 24967,
+              "rankMaxes": [
+                4300,
+                4500
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

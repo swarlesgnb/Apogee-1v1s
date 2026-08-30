@@ -1,0 +1,975 @@
+{
+  "benchmarkName": "snakbox Benchmark",
+  "abbreviation": "SNB",
+  "color": "#1E90FF",
+  "spreadsheetURL": "",
+  "evxlUrl": "https://evxl.app/benchmarks/snakbox%20Benchmark",
+  "source": "kovaaks.com benchmarks API + evxl registry",
+  "fetchedAt": "2026-08-29T16:57:43Z",
+  "difficulties": [
+    {
+      "name": "Medium",
+      "kovaaksBenchmarkId": 2846,
+      "rankNames": [
+        "Calorie",
+        "Mineral",
+        "Enzyme",
+        "Fiber",
+        "Protein",
+        "Nutrient",
+        "Essence"
+      ],
+      "rankColors": {
+        "Calorie": "#FFFFFF",
+        "Mineral": "#808080",
+        "Enzyme": "#00ffb3",
+        "Fiber": "#9d7d58",
+        "Protein": "#ff5252",
+        "Nutrient": "#00ff1e",
+        "Essence": "#b685ff"
+      },
+      "categories": [
+        {
+          "name": "Dynamic Clicking",
+          "rankMaxes": [
+            4285.71,
+            8571.43,
+            12857.14,
+            17142.86,
+            21428.57,
+            25714.29,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "1wall5targets_pasu Reload",
+              "leaderboardId": 43,
+              "rankMaxes": [
+                100,
+                112,
+                125,
+                137,
+                150,
+                165,
+                190
+              ]
+            },
+            {
+              "name": "VT Bounceshot Viscose Medium",
+              "leaderboardId": 185237,
+              "rankMaxes": [
+                700,
+                770,
+                850,
+                920,
+                980,
+                1050,
+                1250
+              ]
+            },
+            {
+              "name": "Popcorn MV Intermediate",
+              "leaderboardId": 76960,
+              "rankMaxes": [
+                230,
+                300,
+                350,
+                400,
+                440,
+                480,
+                600
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Linear Clicking",
+          "rankMaxes": [
+            4285.71,
+            8571.43,
+            12857.14,
+            17142.86,
+            21428.57,
+            25714.29,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "VT Floating Heads Novice S5 Hard",
+              "leaderboardId": 104667,
+              "rankMaxes": [
+                550,
+                620,
+                700,
+                790,
+                880,
+                1000,
+                1200
+              ]
+            },
+            {
+              "name": "psalmTS angelic click 30% Larger",
+              "leaderboardId": 89546,
+              "rankMaxes": [
+                55,
+                65,
+                73,
+                81,
+                88,
+                95,
+                120
+              ]
+            },
+            {
+              "name": "Star Clicking 30% Larger",
+              "leaderboardId": 89545,
+              "rankMaxes": [
+                40,
+                50,
+                58,
+                65,
+                72,
+                80,
+                105
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Static Clicking",
+          "rankMaxes": [
+            4285.71,
+            8571.43,
+            12857.14,
+            17142.86,
+            21428.57,
+            25714.29,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "1w6ts reload v2 20% bigger",
+              "leaderboardId": 21620,
+              "rankMaxes": [
+                100,
+                112,
+                125,
+                135,
+                145,
+                155,
+                175
+              ]
+            },
+            {
+              "name": "1w2ts Perfected Easier",
+              "leaderboardId": 160751,
+              "rankMaxes": [
+                90,
+                102,
+                115,
+                128,
+                136,
+                145,
+                162
+              ]
+            },
+            {
+              "name": "ww4t Voltaic",
+              "leaderboardId": 23921,
+              "rankMaxes": [
+                110,
+                120,
+                130,
+                140,
+                150,
+                160,
+                180
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Precise Tracking",
+          "rankMaxes": [
+            4285.71,
+            8571.43,
+            12857.14,
+            17142.86,
+            21428.57,
+            25714.29,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "PGTI Voltaic Easy",
+              "leaderboardId": 510,
+              "rankMaxes": [
+                1500,
+                2000,
+                2300,
+                2600,
+                2900,
+                3200,
+                3800
+              ]
+            },
+            {
+              "name": "Smoothbot Voltaic 90% Speed",
+              "leaderboardId": 98877,
+              "rankMaxes": [
+                2000,
+                2500,
+                2800,
+                3050,
+                3300,
+                3600,
+                4000
+              ]
+            },
+            {
+              "name": "VT PGT Intermediate S5 snakbox",
+              "leaderboardId": 203500,
+              "rankMaxes": [
+                2250,
+                2650,
+                3000,
+                3400,
+                3850,
+                4200,
+                4650
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Control Tracking",
+          "rankMaxes": [
+            4285.71,
+            8571.43,
+            12857.14,
+            17142.86,
+            21428.57,
+            25714.29,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "Controlsphere",
+              "leaderboardId": 392,
+              "rankMaxes": [
+                9000,
+                10200,
+                10900,
+                11500,
+                12250,
+                13000,
+                14200
+              ]
+            },
+            {
+              "name": "Whisphere Small & Slow Easy",
+              "leaderboardId": 77069,
+              "rankMaxes": [
+                12500,
+                15000,
+                17000,
+                19000,
+                21000,
+                22500,
+                25000
+              ]
+            },
+            {
+              "name": "Air Angelic 4 Voltaic Easy",
+              "leaderboardId": 42,
+              "rankMaxes": [
+                2750,
+                3100,
+                3500,
+                3850,
+                4200,
+                4500,
+                4900
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Reactive Tracking",
+          "rankMaxes": [
+            4285.71,
+            8571.43,
+            12857.14,
+            17142.86,
+            21428.57,
+            25714.29,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "Air Voltaic Easy",
+              "leaderboardId": 568,
+              "rankMaxes": [
+                845,
+                860,
+                872,
+                882,
+                890,
+                897,
+                905
+              ]
+            },
+            {
+              "name": "Air Pure Intermediate",
+              "leaderboardId": 126338,
+              "rankMaxes": [
+                880,
+                890,
+                895,
+                900,
+                904,
+                908,
+                915
+              ]
+            },
+            {
+              "name": "Aimerz+ VGS Easy S1",
+              "leaderboardId": 68358,
+              "rankMaxes": [
+                2250,
+                2600,
+                2900,
+                3200,
+                3450,
+                3650,
+                3925
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Speed Switching",
+          "rankMaxes": [
+            4285.71,
+            8571.43,
+            12857.14,
+            17142.86,
+            21428.57,
+            25714.29,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "VT DotTS Intermediate S5 snakbox",
+              "leaderboardId": 203244,
+              "rankMaxes": [
+                1000,
+                1100,
+                1200,
+                1300,
+                1390,
+                1480,
+                1650
+              ]
+            },
+            {
+              "name": "VT skyTS Intermediate",
+              "leaderboardId": 24964,
+              "rankMaxes": [
+                900,
+                1030,
+                1130,
+                1220,
+                1300,
+                1370,
+                1520
+              ]
+            },
+            {
+              "name": "VT psalmTS Intermediate",
+              "leaderboardId": 24960,
+              "rankMaxes": [
+                780,
+                850,
+                920,
+                990,
+                1060,
+                1130,
+                1250
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Hybrid Switching",
+          "rankMaxes": [
+            4285.71,
+            8571.43,
+            12857.14,
+            17142.86,
+            21428.57,
+            25714.29,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "kinTS Voltaic Easy",
+              "leaderboardId": 542,
+              "rankMaxes": [
+                50,
+                57,
+                64,
+                71,
+                78,
+                85,
+                95
+              ]
+            },
+            {
+              "name": "B180T Voltaic Easy",
+              "leaderboardId": 543,
+              "rankMaxes": [
+                63,
+                70,
+                75,
+                80,
+                85,
+                90,
+                100
+              ]
+            },
+            {
+              "name": "snakSwitch Easy",
+              "leaderboardId": 192745,
+              "rankMaxes": [
+                500,
+                600,
+                680,
+                750,
+                830,
+                920,
+                1080
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Evasive Switching",
+          "rankMaxes": [
+            4285.71,
+            8571.43,
+            12857.14,
+            17142.86,
+            21428.57,
+            25714.29,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "cAt snortSwitch Easy",
+              "leaderboardId": 83332,
+              "rankMaxes": [
+                350,
+                400,
+                450,
+                500,
+                540,
+                580,
+                650
+              ]
+            },
+            {
+              "name": "domiSwitch Easy",
+              "leaderboardId": 83043,
+              "rankMaxes": [
+                4500,
+                5250,
+                6000,
+                6500,
+                7000,
+                7500,
+                8500
+              ]
+            },
+            {
+              "name": "VT ControlTS Novice S5 30% Smaller",
+              "leaderboardId": 193261,
+              "rankMaxes": [
+                300,
+                350,
+                410,
+                440,
+                475,
+                500,
+                575
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Hard",
+      "kovaaksBenchmarkId": 2510,
+      "rankNames": [
+        "Stardust",
+        "Comet",
+        "Nebula",
+        "Pulsar",
+        "Supernova",
+        "Singularity"
+      ],
+      "rankColors": {
+        "Stardust": "#5cabff",
+        "Comet": "#567795",
+        "Nebula": "#a700b3",
+        "Pulsar": "#0088ff",
+        "Supernova": "#2b00ff",
+        "Singularity": "#000000"
+      },
+      "categories": [
+        {
+          "name": "Dynamic Clicking",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000,
+            25000,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "Pasu Reload Goated",
+              "leaderboardId": 583,
+              "rankMaxes": [
+                120,
+                135,
+                150,
+                165,
+                180,
+                195
+              ]
+            },
+            {
+              "name": "VT Bounceshot Viscose Hard",
+              "leaderboardId": 185230,
+              "rankMaxes": [
+                900,
+                1000,
+                1100,
+                1200,
+                1300,
+                1400
+              ]
+            },
+            {
+              "name": "Popcorn MV Advanced",
+              "leaderboardId": 76966,
+              "rankMaxes": [
+                300,
+                380,
+                450,
+                500,
+                550,
+                600
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Linear Clicking",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000,
+            25000,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "VT Floating Heads Intermediate S5 Hard",
+              "leaderboardId": 106273,
+              "rankMaxes": [
+                800,
+                910,
+                1020,
+                1100,
+                1225,
+                1350
+              ]
+            },
+            {
+              "name": "psalmTS angelic click",
+              "leaderboardId": 578,
+              "rankMaxes": [
+                75,
+                85,
+                95,
+                105,
+                115,
+                125
+              ]
+            },
+            {
+              "name": "Star Clicking - @wa11p1per",
+              "leaderboardId": 29687,
+              "rankMaxes": [
+                60,
+                70,
+                78,
+                85,
+                95,
+                105
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Static Clicking",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000,
+            25000,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "1w6ts reload v2",
+              "leaderboardId": 666,
+              "rankMaxes": [
+                135,
+                148,
+                160,
+                170,
+                180,
+                190
+              ]
+            },
+            {
+              "name": "1w2ts Perfected",
+              "leaderboardId": 565,
+              "rankMaxes": [
+                120,
+                135,
+                145,
+                154,
+                162,
+                170
+              ]
+            },
+            {
+              "name": "ww3t Voltaic",
+              "leaderboardId": 68,
+              "rankMaxes": [
+                140,
+                155,
+                165,
+                175,
+                185,
+                195
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Precise Tracking",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000,
+            25000,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "PGTI Voltaic",
+              "leaderboardId": 99,
+              "rankMaxes": [
+                1800,
+                2100,
+                2400,
+                2700,
+                3000,
+                3500
+              ]
+            },
+            {
+              "name": "Smoothbot Voltaic XSmall",
+              "leaderboardId": 657,
+              "rankMaxes": [
+                2750,
+                3100,
+                3400,
+                3650,
+                3900,
+                4150
+              ]
+            },
+            {
+              "name": "VT PGT Advanced S5 snakbox",
+              "leaderboardId": 203486,
+              "rankMaxes": [
+                2750,
+                3150,
+                3500,
+                3825,
+                4150,
+                4400
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Control Tracking",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000,
+            25000,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "Extra Controlsphere",
+              "leaderboardId": 562,
+              "rankMaxes": [
+                6500,
+                8000,
+                9250,
+                10200,
+                11000,
+                12000
+              ]
+            },
+            {
+              "name": "Whisphere Small & Slow",
+              "leaderboardId": 34966,
+              "rankMaxes": [
+                16000,
+                18000,
+                19000,
+                20000,
+                21500,
+                23000
+              ]
+            },
+            {
+              "name": "Air Angelic 4 Voltaic",
+              "leaderboardId": 30,
+              "rankMaxes": [
+                3500,
+                3750,
+                4000,
+                4250,
+                4400,
+                4650
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Reactive Tracking",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000,
+            25000,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "Air Voltaic",
+              "leaderboardId": 29,
+              "rankMaxes": [
+                875,
+                881,
+                887,
+                892,
+                897,
+                901
+              ]
+            },
+            {
+              "name": "Air Pure",
+              "leaderboardId": 13213,
+              "rankMaxes": [
+                890,
+                898,
+                904,
+                909,
+                914,
+                918
+              ]
+            },
+            {
+              "name": "Aimerz+ VGS Med S1",
+              "leaderboardId": 69298,
+              "rankMaxes": [
+                3000,
+                3225,
+                3450,
+                3650,
+                3800,
+                3925
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Speed Switching",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000,
+            25000,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "VT DotTS Advanced S5 snakbox",
+              "leaderboardId": 203245,
+              "rankMaxes": [
+                1260,
+                1350,
+                1430,
+                1520,
+                1600,
+                1670
+              ]
+            },
+            {
+              "name": "VT skyTS Advanced",
+              "leaderboardId": 25150,
+              "rankMaxes": [
+                1200,
+                1300,
+                1400,
+                1500,
+                1600,
+                1670
+              ]
+            },
+            {
+              "name": "VT psalmTS Advanced",
+              "leaderboardId": 25177,
+              "rankMaxes": [
+                1000,
+                1080,
+                1160,
+                1220,
+                1310,
+                1380
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Hybrid Switching",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000,
+            25000,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "kinTS Voltaic",
+              "leaderboardId": 604,
+              "rankMaxes": [
+                75,
+                82,
+                88,
+                92,
+                97,
+                101
+              ]
+            },
+            {
+              "name": "B180T Voltaic",
+              "leaderboardId": 947,
+              "rankMaxes": [
+                77,
+                83,
+                89,
+                95,
+                101,
+                107
+              ]
+            },
+            {
+              "name": "snakSwitch",
+              "leaderboardId": 192578,
+              "rankMaxes": [
+                670,
+                750,
+                840,
+                930,
+                1020,
+                1100
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Evasive Switching",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000,
+            25000,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "cAt snortSwitch Hard",
+              "leaderboardId": 83401,
+              "rankMaxes": [
+                380,
+                430,
+                480,
+                530,
+                570,
+                620
+              ]
+            },
+            {
+              "name": "domiSwitch",
+              "leaderboardId": 83035,
+              "rankMaxes": [
+                6000,
+                6500,
+                7000,
+                7500,
+                8000,
+                8500
+              ]
+            },
+            {
+              "name": "VT ControlTS Intermediate S5 30% Smaller",
+              "leaderboardId": 115804,
+              "rankMaxes": [
+                400,
+                440,
+                480,
+                520,
+                560,
+                600
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

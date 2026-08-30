@@ -127,6 +127,46 @@ async function main(): Promise<void> {
   check("runs are append-only", !runCmds.has("UPDATE") && !runCmds.has("DELETE"),
     [...runCmds].join(", "));
 
+  // And append-only is not enough on its own. `runs` has to stay client-insertable for
+  // backfill, so RLS lets a player write rows there - and RLS answers "which rows",
+  // never "which columns". A client that can name verification_tier on its own insert
+  // has bypassed every check in src/core/verify, so the ban lives in column privileges
+  // (20260825000013) and is asserted here rather than trusted.
+  const runInsertable = new Set(
+    (await db.query<{ column_name: string }>(
+      `select column_name from information_schema.column_privileges
+       where table_name = 'runs' and privilege_type = 'INSERT'
+         and grantee in ('anon', 'authenticated')`,
+    )).rows.map((r) => r.column_name),
+  );
+  const mustNotInsert = ["verification_tier", "verification_notes", "match_id",
+                         "scenario_id", "duration_seconds"];
+  const leaked = mustNotInsert.filter((c) => runInsertable.has(c));
+  check("clients cannot set a run's tier, match or duration", leaked.length === 0,
+    leaked.length ? `insertable: ${leaked.join(", ")}` : `${runInsertable.size} columns granted`);
+
+  // The other half of the same fact: the grant has to still cover everything backfill
+  // sends, or the first-run upload of ~11k rows fails the whole batch. This is the check
+  // that catches a field added to RunPayload and not to the migration.
+  const backfillColumns = ["player_id", "scenario_name", "score", "accuracy", "avg_ttk",
+    "kills", "hit_count", "miss_count", "played_at", "challenge_start", "hash",
+    "game_version", "avg_fps", "resolution", "cm360", "dpi", "fov", "csv_sha256",
+    "kill_rows"];
+  const missing = backfillColumns.filter((c) => !runInsertable.has(c));
+  check("backfill can still insert every column it sends", missing.length === 0,
+    missing.length ? `not granted: ${missing.join(", ")}` : `${backfillColumns.length} columns`);
+
+  // Moderation state must not be readable by its subject - the players.flags argument
+  // from 20260817000004, one table over. verification_notes names the exact check that
+  // caught a run, which is a recipe for the next attempt.
+  const notesReadable = await db.query<{ n: number }>(
+    `select count(*)::int as n from information_schema.column_privileges
+     where table_name = 'runs' and column_name = 'verification_notes'
+       and privilege_type = 'SELECT' and grantee in ('anon', 'authenticated')`,
+  );
+  check("a player cannot read which check caught their run",
+    notesReadable.rows[0].n === 0, `${notesReadable.rows[0].n} grants`);
+
   console.log("\n── behaviour ────────────────────────────────────");
 
   // A player row must automatically get a rating row.
@@ -347,19 +387,44 @@ async function main(): Promise<void> {
     `select sub_category, count(*)::int as n from scenarios
      where sub_category is not null group by sub_category order by sub_category`,
   );
-  check("all nine sub-categories are present", subcats.rows.length === 9,
-    subcats.rows.map((r) => r.sub_category).join(", "));
+  // Read from the pool rather than written down. This was a literal nine, which was
+  // Voltaic's count and stopped being ours the moment the pool declared eleven - and the
+  // failure it produced was a seed that was entirely correct.
+  const poolFile = JSON.parse(readFileSync(join(root, "data", "pool.json"), "utf8")) as {
+    subCategories?: Record<string, string[]>;
+  };
+  const declared = new Set(Object.values(poolFile.subCategories ?? {}).flat());
+  const seeded = new Set(subcats.rows.map((r) => r.sub_category));
+  const absent = [...declared].filter((sub) => !seeded.has(sub));
+  check(
+    `every sub-skill the pool declares reaches the database (${declared.size})`,
+    absent.length === 0,
+    absent.length > 0 ? `missing ${absent.join(", ")}` : [...seeded].sort().join(", "),
+  );
 
+  // One end-to-end spot check that the sub-skill on a row is the right sub-skill, not
+  // merely a non-null one. Voltaic S5 Intermediate is the case with a published answer:
+  // Voltaic's own sheet puts PGT and Snake Track in precise tracking and nothing else,
+  // and an earlier hand-derived mapping had exactly this pair wrong (PLAN.md §3).
+  //
+  // The name is read from the pool rather than written here, because the sub-skills were
+  // renamed to their two-word form once the pool stopped being Voltaic's alone.
+  const preciseTracking =
+    (poolFile.subCategories?.Tracking ?? []).find((sub) => sub.startsWith("Precise")) ??
+    "Precise Tracking";
   const precise = await db.query<{ name: string }>(
     `select s.name from scenarios s
      join benchmark_scenarios bs on bs.scenario_id = s.id
      where bs.benchmark_name = 'Voltaic S5' and bs.difficulty = 'Intermediate'
-       and s.sub_category = 'Precise' order by s.name`,
+       and s.sub_category = $1 order by s.name`,
+    [preciseTracking],
   );
-  check("Precise tracking is PGT and Snake Track",
+  check(
+    `${preciseTracking} in Voltaic S5 Intermediate is PGT and Snake Track`,
     precise.rows.map((r) => r.name).join(", ") ===
       "VT PGT Intermediate S5, VT Snake Track Intermediate S5",
-    precise.rows.map((r) => r.name).join(", "));
+    precise.rows.map((r) => r.name).join(", "),
+  );
 
   // Verification data must reach the server, or the Edge Functions silently skip the
   // checks that depend on it and every run comes back Consistent.
@@ -377,6 +442,19 @@ async function main(): Promise<void> {
   const pct = ((models.rows[0].n / totalScenarios.rows[0].n) * 100).toFixed(0);
   check("score models were seeded", models.rows[0].n > 10,
     `${models.rows[0].n}/${totalScenarios.rows[0].n} scenarios (${pct}%), grows as players upload`);
+
+  // The weapon-block rates verify runs that have no kill rows, which no seed file
+  // carries: like the tail models they are learned locally and pushed by
+  // `npm run sync:reference`. What has to be true here is that the migration made
+  // somewhere for them to land, or the sync fails and the checks silently skip.
+  const weaponColumns = await db.query<{ n: number }>(
+    `select count(*)::int as n from information_schema.columns
+     where table_name = 'scenarios'
+       and column_name in ('weapon_score_per_damage', 'weapon_damage_per_shot',
+                           'shots_per_second', 'duration_seconds')`,
+  );
+  check("weapon-block and firing-rate columns exist", weaponColumns.rows[0].n === 4,
+    `${weaponColumns.rows[0].n} of 4`);
 
   const wr = await db.query<{ n: number }>(
     `select count(*)::int as n from scenarios where world_record is not null`,
@@ -396,6 +474,71 @@ async function main(): Promise<void> {
      where schemaname = 'public' and tablename = 'rating_history'`,
   );
   check("rating history table exists", history.rows[0].n === 1);
+
+  // ── rate limiting ──────────────────────────────────────────────────────────
+  //
+  // The limiter is the one piece of the schema whose whole job is to say no, so it is
+  // worth proving it both counts and stops - and, more importantly, that it RESETS.
+  // A window that never rolls over is not a rate limit, it is a lifetime quota that
+  // locks a player out permanently, and it would look identical to a working one until
+  // somebody hit it.
+  console.log();
+  console.log("── rate limiting ────────────────────────────────");
+
+  const rlPlayer = await db.query<{ id: string }>(
+    `insert into auth.users default values returning id`,
+  );
+  const rlId = rlPlayer.rows[0].id;
+  await db.exec(
+    `insert into players (id, steam_id, display_name)
+     values ('${rlId}', '76561000000000009', 'rate limit probe')`,
+  );
+
+  const consume = async (limit: number, window = "60 seconds") => {
+    const r = await db.query<{ ok: boolean }>(
+      `select consume_rate_limit('${rlId}', 'probe', ${limit}, interval '${window}') as ok`,
+    );
+    return r.rows[0].ok;
+  };
+
+  const first = await consume(3);
+  check("the first request is allowed", first === true);
+
+  await consume(3);
+  const third = await consume(3);
+  check("requests up to the limit are allowed", third === true);
+
+  const fourth = await consume(3);
+  check("the request past the limit is refused", fourth === false);
+
+  // Rolling the window back is what a real expiry does; this is the only way to test
+  // it without sleeping for the window length.
+  await db.exec(
+    `update rate_limits set window_start = now() - interval '2 minutes'
+     where player_id = '${rlId}' and action = 'probe'`,
+  );
+  const afterWindow = await consume(3);
+  check("a new window lets the player back in", afterWindow === true);
+
+  const counted = await db.query<{ count: number }>(
+    `select count from rate_limits where player_id = '${rlId}' and action = 'probe'`,
+  );
+  check("the counter restarted rather than continuing",
+    counted.rows[0].count === 1, `count is ${counted.rows[0].count}`);
+
+  // Separate actions must not share a budget: a player who exhausts submit-run should
+  // still be able to abandon the match they are stuck in.
+  const otherAction = await db.query<{ ok: boolean }>(
+    `select consume_rate_limit('${rlId}', 'different-action', 1, interval '60 seconds') as ok`,
+  );
+  check("a different action has its own budget", otherAction.rows[0].ok === true);
+
+  const rlLocked = await db.query<{ n: number }>(
+    `select count(*)::int as n from information_schema.role_table_grants
+     where table_name = 'rate_limits' and grantee in ('anon', 'authenticated')`,
+  );
+  check("clients cannot read or write the limit counters",
+    rlLocked.rows[0].n === 0, `${rlLocked.rows[0].n} grants`);
 
   await db.close();
 

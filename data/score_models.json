@@ -5,11 +5,21 @@
     "here if the relation held across every observed run with no exceptions.",
     "Used by the score_matches_model integrity check; scenarios absent from this",
     "file simply skip that check rather than failing it.",
+    "",
+    "weaponModels holds the same idea for the weapon block: score = Damage Done *",
+    "scorePerDamage, and Damage Possible = Shots * damagePerShot. Those are what",
+    "verify a tracking run against an invincible target, which scores at a rate",
+    "and so has no kill rows to reconstruct from.",
+    "",
+    "shotRates is the scenario's own firing rate, in shots per second, and only",
+    "for scenarios whose shots are engine ticks rather than human clicks. It is",
+    "the one bound that is not a ratio, so it is the only thing that sees a",
+    "forgery that scales every counter in the file by the same factor.",
     "Rebuild with: npx tsx src/core/verify/buildScoreModels.ts"
   ],
   "minRuns": 8,
   "tolerance": 0.001,
-  "derivedFrom": "803 scenarios",
+  "derivedFrom": "804 scenarios",
   "models": {
     "10 Sphere Hipfire Extra Small": {
       "stat": "kills",
@@ -395,6 +405,10 @@
       "stat": "kills",
       "k": 1
     },
+    "Pasu Voltaic Reload": {
+      "stat": "kills",
+      "k": 1
+    },
     "Pasu rAim Easy": {
       "stat": "kills",
       "k": 1
@@ -600,6 +614,10 @@
       "k": 1
     },
     "VT Bounceshot Intermediate": {
+      "stat": "kills",
+      "k": 10
+    },
+    "VT Bounceshot Viscose Hard": {
       "stat": "kills",
       "k": 10
     },
@@ -887,5 +905,919 @@
       "stat": "kills",
       "k": 1
     }
+  },
+  "weaponModels": {
+    "10 Sphere Hipfire Extra Small": {
+      "scorePerDamage": 10,
+      "damagePerShot": 1
+    },
+    "1w2ts Pasu Perfected": {
+      "scorePerDamage": 0.001,
+      "damagePerShot": 2000
+    },
+    "1w2ts Perfected Easier": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "1w2ts Perfected": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "1w2ts reload Easier": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "1w2ts reload smallflicks Easier": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "1w2ts reload smallflicks slightly larger": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "1w2ts reload smallflicks": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "1w2ts reload": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "1w3ts reload Easier": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "1w3ts reload": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "1w4t Pasu Raspberry Master 6mag": {
+      "scorePerDamage": 0.001,
+      "damagePerShot": 2000
+    },
+    "1w4ts Voltaic": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "1w4ts reload Easier": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "1w4ts reload nevermiss": {
+      "scorePerDamage": 0.01,
+      "damagePerShot": 100000
+    },
+    "1w5ts reload": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "1w6ts reload Easier": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "1w6ts reload v2": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "1wall3targets TE Perfected": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "1wall5targets_pasu NeverMiss": {
+      "scorePerDamage": 0.01,
+      "damagePerShot": 100000
+    },
+    "1wall5targets_pasu Reload": {
+      "scorePerDamage": 0.001,
+      "damagePerShot": 2000
+    },
+    "1wall6targets TE reload": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "2 Tile Jumbo Tile Frenzy": {
+      "scorePerDamage": 0.04,
+      "damagePerShot": 50
+    },
+    "6 Sphere Hipfire 200% Size": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "6 Tile Jumbo Frenzy": {
+      "scorePerDamage": 0.04,
+      "damagePerShot": 50
+    },
+    "AbyssTrack Easy": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "Aethercontrol Easy": {
+      "scorePerDamage": 1000.008,
+      "damagePerShot": 0.0009999580828323313
+    },
+    "Aimerz+ 1w3ts Med S1": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "Aimerz+ PTI Med S1": {
+      "scorePerDamage": 5,
+      "damagePerShot": 1
+    },
+    "Aimerz+ PreciseTrack Med S1": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "Aimerz+ hopClick Med S1": {
+      "scorePerDamage": 2,
+      "damagePerShot": 5
+    },
+    "Aimerz+ ww2t Easy S1": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "Aimerz+ ww2t Hard S1 20% Smaller": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "Air Angelic 4 Voltaic Easy 90%": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "Air Angelic 4 Voltaic Easy": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "Air Voltaic Easy Invincible 4": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "Air Voltaic Invincible 4 Medium": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "Air Voltaic Invincible 7 Easy": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "Avasive Control Track Easy": {
+      "scorePerDamage": 3,
+      "damagePerShot": 1
+    },
+    "Avasive bukeTrack Easy": {
+      "scorePerDamage": 3,
+      "damagePerShot": 1
+    },
+    "Avasphere Euphoric Basic": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "B180T Voltaic Easy": {
+      "scorePerDamage": 0.2,
+      "damagePerShot": 1
+    },
+    "Bounce 180 Sparky Easy": {
+      "scorePerDamage": 0.02,
+      "damagePerShot": 125
+    },
+    "Bouncesphere Smoothness": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "CatClick Medium": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "Centering II 180 Fixed Larger": {
+      "scorePerDamage": 3,
+      "damagePerShot": 6
+    },
+    "CombinedClick SuperbAim Easy": {
+      "scorePerDamage": 0.0001,
+      "damagePerShot": 20000
+    },
+    "ControlSwitch - THE FINALS": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "Controlsphere Click Easy": {
+      "scorePerDamage": 1,
+      "damagePerShot": 2
+    },
+    "Controlsphere Click": {
+      "scorePerDamage": 1,
+      "damagePerShot": 2
+    },
+    "Controlsphere Easy III": {
+      "scorePerDamage": 3,
+      "damagePerShot": 1
+    },
+    "Controlsphere Far Larger": {
+      "scorePerDamage": 3,
+      "damagePerShot": 1
+    },
+    "Controlsphere OW": {
+      "scorePerDamage": 3,
+      "damagePerShot": 1
+    },
+    "Controlsphere SuperbAim Very Easy": {
+      "scorePerDamage": 3,
+      "damagePerShot": 1
+    },
+    "Controlsphere SuperbAim Viscose": {
+      "scorePerDamage": 3,
+      "damagePerShot": 1
+    },
+    "Controlsphere rAim Easy": {
+      "scorePerDamage": 3,
+      "damagePerShot": 1
+    },
+    "Controlsphere": {
+      "scorePerDamage": 3,
+      "damagePerShot": 1
+    },
+    "Deceptive Tracking XYZ Easy": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "DistanceTrack - THE FINALS": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "FloatTS Angelic Easy": {
+      "scorePerDamage": 1,
+      "damagePerShot": 0.05
+    },
+    "Flower 50cm": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "Flower Easier 50cm": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "Flower Easier": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "Happy Easter!": {
+      "scorePerDamage": 10,
+      "damagePerShot": 0.1
+    },
+    "HighGroundTrack - THE FINALS": {
+      "scorePerDamage": 1,
+      "damagePerShot": 2
+    },
+    "HopClick - THE FINALS": {
+      "scorePerDamage": 2,
+      "damagePerShot": 5
+    },
+    "HopSwitch - THE FINALS": {
+      "scorePerDamage": 0.1,
+      "damagePerShot": 1
+    },
+    "Huge Poke Tile Frenzy": {
+      "scorePerDamage": 0.04,
+      "damagePerShot": 50
+    },
+    "Jumbo 1wall6targets TE": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "Jumbo Tile Frenzy": {
+      "scorePerDamage": 0.04,
+      "damagePerShot": 50
+    },
+    "KinTs SuperbAim Easy": {
+      "scorePerDamage": 1,
+      "damagePerShot": 0.2
+    },
+    "Kindaclose Mid Strafes": {
+      "scorePerDamage": 3,
+      "damagePerShot": 6
+    },
+    "Leapcorn Pure Easy": {
+      "scorePerDamage": 0.02,
+      "damagePerShot": 125
+    },
+    "Leapstrafes Control Medium": {
+      "scorePerDamage": 3,
+      "damagePerShot": 6
+    },
+    "Leapstrafes Control wobin": {
+      "scorePerDamage": 10000,
+      "damagePerShot": 0.00009999763633293938
+    },
+    "Leaptrack Goated 75% Slightly Larger": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "Leisphere Easy": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "PGTI Voltaic Easy Smoother": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "PGTI Voltaic Easy Ultra Jumbo": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "PGTI Voltaic Easy": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "PadTrack - THE FINALS": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "Pasu Angelic 20% Larger": {
+      "scorePerDamage": 0.01,
+      "damagePerShot": 200
+    },
+    "Pasu Voltaic Reload Easy": {
+      "scorePerDamage": 0.001,
+      "damagePerShot": 2000
+    },
+    "Pasu Voltaic Reload": {
+      "scorePerDamage": 0.001,
+      "damagePerShot": 2000
+    },
+    "Pasu rAim Easy": {
+      "scorePerDamage": 0.001,
+      "damagePerShot": 2000
+    },
+    "Plink Palace Easy Less Blinks": {
+      "scorePerDamage": 99996.683,
+      "damagePerShot": 0.000009999471458773785
+    },
+    "Plink Palace Easy": {
+      "scorePerDamage": 100000,
+      "damagePerShot": 0.000009999478985758944
+    },
+    "Popcorn Goated rAim easy": {
+      "scorePerDamage": 0.1,
+      "damagePerShot": 200
+    },
+    "Popcorn MV Intermediate": {
+      "scorePerDamage": 0.1,
+      "damagePerShot": 200
+    },
+    "Popcorn MV Medium": {
+      "scorePerDamage": 0.1,
+      "damagePerShot": 200
+    },
+    "RawControlSphere": {
+      "scorePerDamage": 3,
+      "damagePerShot": 1
+    },
+    "SVGS - THE FINALS": {
+      "scorePerDamage": 1,
+      "damagePerShot": 3
+    },
+    "SYW Easy": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "Silo Easy": {
+      "scorePerDamage": 10000.068,
+      "damagePerShot": 0.00009999782645042636
+    },
+    "SmoothBot Invincible Goated": {
+      "scorePerDamage": 1,
+      "damagePerShot": 6
+    },
+    "SmoothBot Perfected": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1.304
+    },
+    "Smoothbot Pauer Easy": {
+      "scorePerDamage": 1,
+      "damagePerShot": 6
+    },
+    "Smoothbot Pauer Glider 60% Larger": {
+      "scorePerDamage": 1,
+      "damagePerShot": 6
+    },
+    "Smoothbot Voltaic Easy 70%": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "Smoothsphere Nevermiss BEGINNER 40% FASTER": {
+      "scorePerDamage": 3,
+      "damagePerShot": 100000
+    },
+    "Smoothsphere Viscose Easier": {
+      "scorePerDamage": 3,
+      "damagePerShot": 1
+    },
+    "Smoothsphere Viscose": {
+      "scorePerDamage": 3,
+      "damagePerShot": 1
+    },
+    "StaticSwitchingVox Small": {
+      "scorePerDamage": 1,
+      "damagePerShot": 0.05
+    },
+    "StaticSwitchingVox xSmall": {
+      "scorePerDamage": 1,
+      "damagePerShot": 0.05
+    },
+    "SteadyTrack": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "Swing Tracking Easy 80%": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "TSK - 360 Turn": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "TSK - Centering 180 Speed 2": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "TSK - Centering 180 Speed 3": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "TSK - Centering 45 Speed 2 Stop": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "TSK - Centering 90 Speed 2": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "TSK - DVD Tracking Big": {
+      "scorePerDamage": 99.998,
+      "damagePerShot": 0.01
+    },
+    "TSK - DVD Tracking MASSIVE": {
+      "scorePerDamage": 99.998,
+      "damagePerShot": 0.01
+    },
+    "TSK - DVD Tracking": {
+      "scorePerDamage": 99.998,
+      "damagePerShot": 0.01
+    },
+    "TSK - Hewchy's VAI 160": {
+      "scorePerDamage": 25000,
+      "damagePerShot": 0.00004000067567567567
+    },
+    "TSK - Hewchy's VAI 20 Small": {
+      "scorePerDamage": 25000,
+      "damagePerShot": 0.00004000067934782609
+    },
+    "TSK - Hewchy's VAI 20": {
+      "scorePerDamage": 25000,
+      "damagePerShot": 0.000040000678886625935
+    },
+    "TSK - ST60 Thick": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "TSK - ST60": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "TSK - SYV Big": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "TSK - SYW Thin": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "TSK - SYW": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "TSK - VSTP Soft Big": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "TSK - Varied Centering 90 Trio": {
+      "scorePerDamage": 100000,
+      "damagePerShot": 0.000009999999999999999
+    },
+    "Tamspeed 2bpes": {
+      "scorePerDamage": 0.04,
+      "damagePerShot": 50
+    },
+    "UnderTrack - THE FINALS": {
+      "scorePerDamage": 1,
+      "damagePerShot": 3
+    },
+    "VT 1w3ts Rasp Advanced": {
+      "scorePerDamage": 10,
+      "damagePerShot": 1
+    },
+    "VT Aether Bot 1 Easier": {
+      "scorePerDamage": 1000.015,
+      "damagePerShot": 0.0009999590814917128
+    },
+    "VT Aether Intermediate S5 Bot 2": {
+      "scorePerDamage": 999.989,
+      "damagePerShot": 0.0009999592901878914
+    },
+    "VT Aether Intermediate S5": {
+      "scorePerDamage": 999.99,
+      "damagePerShot": 0.0009999595446584938
+    },
+    "VT Aether Novice S5 Hard Bot 1 90%": {
+      "scorePerDamage": 999.998,
+      "damagePerShot": 0.000999962663587375
+    },
+    "VT Aether Novice S5 Hard Bot 1": {
+      "scorePerDamage": 999.99,
+      "damagePerShot": 0.0009999588711065222
+    },
+    "VT Bounceshot Intermediate": {
+      "scorePerDamage": 0.2,
+      "damagePerShot": 125
+    },
+    "VT Bounceshot Viscose Hard": {
+      "scorePerDamage": 0.2,
+      "damagePerShot": 125
+    },
+    "VT Bounceshot Viscose Medium": {
+      "scorePerDamage": 0.2,
+      "damagePerShot": 125
+    },
+    "VT ControlTS Intermediate S5": {
+      "scorePerDamage": 10,
+      "damagePerShot": 0.02
+    },
+    "VT Controlsphere Intermediate S5": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "VT Controlsphere Novice S5 Hard": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "VT Controlsphere Viscose 80%": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1.25
+    },
+    "VT Controlsphere Viscose Easier": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "VT Controlsphere Viscose": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "VT DotTS Intermediate S5 Speed": {
+      "scorePerDamage": 10,
+      "damagePerShot": 0.067
+    },
+    "VT DotTS Intermediate S5": {
+      "scorePerDamage": 10,
+      "damagePerShot": 0.05
+    },
+    "VT DriftTS Intermediate S5": {
+      "scorePerDamage": 10,
+      "damagePerShot": 0.02
+    },
+    "VT EddieTS Intermediate S5": {
+      "scorePerDamage": 10,
+      "damagePerShot": 0.05
+    },
+    "VT FlyTS Intermediate S5": {
+      "scorePerDamage": 10,
+      "damagePerShot": 0.02
+    },
+    "VT Frogtagon Intermediate S5": {
+      "scorePerDamage": 10,
+      "damagePerShot": 1
+    },
+    "VT Ground Intermediate S5": {
+      "scorePerDamage": 1000.006,
+      "damagePerShot": 0.000999959379358438
+    },
+    "VT PGT Intermediate S5": {
+      "scorePerDamage": 9999.858,
+      "damagePerShot": 0.00009999682763482552
+    },
+    "VT Penta Bounce Intermediate S5": {
+      "scorePerDamage": 10,
+      "damagePerShot": 0.02
+    },
+    "VT Popcorn Intermediate S5": {
+      "scorePerDamage": 10,
+      "damagePerShot": 1
+    },
+    "VT PreciseOrb Intermediate 15% Slower": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "VT Raw Control Intermediate S5": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "VT Raw Control Novice S5 Hard": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "VT Smoothbot Novice 180": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "VT Snake Track Intermediate S5": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "VT ww5t Intermediate S5": {
+      "scorePerDamage": 10,
+      "damagePerShot": 1
+    },
+    "Valorant Microshot Speed Small": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "VariousStatic - THE FINALS": {
+      "scorePerDamage": 10,
+      "damagePerShot": 1
+    },
+    "VoxTS Click Medium": {
+      "scorePerDamage": 0.01,
+      "damagePerShot": 200
+    },
+    "Whisphere Med 60s": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "Whisphere Small & Slow 75%": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "Whisphere Viscose": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "Whisphere": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "WhisphereRawControl": {
+      "scorePerDamage": 3,
+      "damagePerShot": 1
+    },
+    "Wide Wall 3 Targets TE": {
+      "scorePerDamage": 0.04,
+      "damagePerShot": 50
+    },
+    "Wide Wall 4 Targets Small": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "Wide Wall 4 Targets": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "ZipTrack - THE FINALS": {
+      "scorePerDamage": 100000,
+      "damagePerShot": 0.000019999060503570086
+    },
+    "beanTS 200%": {
+      "scorePerDamage": 0.01,
+      "damagePerShot": 5
+    },
+    "beanTS Larger": {
+      "scorePerDamage": 0.01,
+      "damagePerShot": 5
+    },
+    "beanTS": {
+      "scorePerDamage": 0.01,
+      "damagePerShot": 5
+    },
+    "cA 1w5ts Novice": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "cloverRawControl Big": {
+      "scorePerDamage": 3,
+      "damagePerShot": 1
+    },
+    "cloverRawControl Easy": {
+      "scorePerDamage": 3,
+      "damagePerShot": 1
+    },
+    "cloverRawControl Viscose 50cm": {
+      "scorePerDamage": 3,
+      "damagePerShot": 1
+    },
+    "devTS Goated NR Static 5Bot": {
+      "scorePerDamage": 1,
+      "damagePerShot": 2
+    },
+    "devTS Static Click Angelic Easy": {
+      "scorePerDamage": 0.01,
+      "damagePerShot": 100
+    },
+    "hizkuAirPalace Easy": {
+      "scorePerDamage": 9999.924,
+      "damagePerShot": 0.00009999745460716102
+    },
+    "kinTS NR Easy": {
+      "scorePerDamage": 3,
+      "damagePerShot": 4
+    },
+    "kinTS Voltaic Easy": {
+      "scorePerDamage": 1,
+      "damagePerShot": 0.2
+    },
+    "pasu nqs reload": {
+      "scorePerDamage": 0.001,
+      "damagePerShot": 2000
+    },
+    "patCircleSwitch NR": {
+      "scorePerDamage": 0.01,
+      "damagePerShot": 0.5
+    },
+    "patTS NR": {
+      "scorePerDamage": 1,
+      "damagePerShot": 2
+    },
+    "patTargetSwitch 90 easy": {
+      "scorePerDamage": 1,
+      "damagePerShot": 2
+    },
+    "patTargetSwitch easy": {
+      "scorePerDamage": 1,
+      "damagePerShot": 2
+    },
+    "psalmTS Viscose Click": {
+      "scorePerDamage": 1,
+      "damagePerShot": 2
+    },
+    "psalmTS Voltaic Initiate": {
+      "scorePerDamage": 1,
+      "damagePerShot": 0.05
+    },
+    "psalmTS angelic click 30% Larger": {
+      "scorePerDamage": 1,
+      "damagePerShot": 2
+    },
+    "skyClick Goated Medium": {
+      "scorePerDamage": 0.01,
+      "damagePerShot": 200
+    },
+    "tamAngleSmoothness Easier": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "voidTrack Easy": {
+      "scorePerDamage": 1,
+      "damagePerShot": 1
+    },
+    "voxTS Static Click rAim": {
+      "scorePerDamage": 0.01,
+      "damagePerShot": 100
+    },
+    "voxTargetSwitch 2 10% Smaller": {
+      "scorePerDamage": 0.01,
+      "damagePerShot": 5
+    },
+    "voxTargetSwitch 2 Large": {
+      "scorePerDamage": 0.01,
+      "damagePerShot": 5
+    },
+    "voxTargetSwitch 2": {
+      "scorePerDamage": 0.01,
+      "damagePerShot": 5
+    },
+    "voxTargetSwitch": {
+      "scorePerDamage": 0.01,
+      "damagePerShot": 5
+    },
+    "waldoTS Intermediate": {
+      "scorePerDamage": 0.01,
+      "damagePerShot": 5
+    },
+    "waldoTS": {
+      "scorePerDamage": 0.01,
+      "damagePerShot": 5
+    },
+    "ww3t Voltaic Larger": {
+      "scorePerDamage": 0.04,
+      "damagePerShot": 50
+    },
+    "ww3t Voltaic": {
+      "scorePerDamage": 0.04,
+      "damagePerShot": 50
+    },
+    "ww4t Voltaic": {
+      "scorePerDamage": 0.04,
+      "damagePerShot": 50
+    }
+  },
+  "shotRates": {
+    "AbyssTrack Easy": 99.767,
+    "Aethercontrol Easy": 99.7,
+    "Aimerz+ PTI Med S1": 19.508,
+    "Aimerz+ PreciseTrack Med S1": 74.367,
+    "Air Angelic 4 Voltaic Easy 90%": 89.333,
+    "Air Angelic 4 Voltaic Easy": 99.233,
+    "Air Voltaic Easy Invincible 4": 99.667,
+    "Air Voltaic Invincible 4 Medium": 99.35,
+    "Air Voltaic Invincible 7 Easy": 99.583,
+    "Avasive Control Track Easy": 101.492,
+    "Avasive bukeTrack Easy": 99.64,
+    "Avasphere Euphoric Basic": 99.733,
+    "Bouncesphere Smoothness": 58.8,
+    "Centering II 180 Fixed Larger": 21.65,
+    "Controlsphere Easy III": 99.55,
+    "Controlsphere Far Larger": 98.833,
+    "Controlsphere OW": 101.017,
+    "Controlsphere SuperbAim Very Easy": 94.533,
+    "Controlsphere SuperbAim Viscose": 99.383,
+    "Controlsphere rAim Easy": 99.367,
+    "Controlsphere": 99.633,
+    "Deceptive Tracking XYZ Easy": 91.085,
+    "DistanceTrack - THE FINALS": 99.367,
+    "Flower 50cm": 99.3,
+    "Flower Easier 50cm": 98.183,
+    "Flower Easier": 101.407,
+    "Kindaclose Mid Strafes": 21.633,
+    "Leapstrafes Control Medium": 21.667,
+    "Leapstrafes Control wobin": 99.5,
+    "Leaptrack Goated 75% Slightly Larger": 74.433,
+    "Leisphere Easy": 101.441,
+    "PGTI Voltaic Easy Smoother": 90.153,
+    "PGTI Voltaic Easy Ultra Jumbo": 99.25,
+    "PGTI Voltaic Easy": 98.1,
+    "PadTrack - THE FINALS": 84.217,
+    "Plink Palace Easy Less Blinks": 96.203,
+    "Plink Palace Easy": 95.033,
+    "RawControlSphere": 99.683,
+    "SVGS - THE FINALS": 95.949,
+    "SYW Easy": 21.911,
+    "Silo Easy": 99.683,
+    "SmoothBot Invincible Goated": 21.4,
+    "SmoothBot Perfected": 98.283,
+    "Smoothbot Pauer Easy": 21.633,
+    "Smoothbot Pauer Glider 60% Larger": 21.417,
+    "Smoothbot Voltaic Easy 70%": 48.633,
+    "Smoothsphere Viscose Easier": 98.617,
+    "Smoothsphere Viscose": 99.45,
+    "SteadyTrack": 89.733,
+    "Swing Tracking Easy 80%": 61.85,
+    "TSK - 360 Turn": 98.5,
+    "TSK - Centering 180 Speed 2": 102.724,
+    "TSK - Centering 180 Speed 3": 99.433,
+    "TSK - Centering 45 Speed 2 Stop": 99.367,
+    "TSK - Centering 90 Speed 2": 102.621,
+    "TSK - DVD Tracking Big": 102.724,
+    "TSK - DVD Tracking MASSIVE": 102.655,
+    "TSK - DVD Tracking": 102.724,
+    "TSK - Hewchy's VAI 160": 99.2,
+    "TSK - Hewchy's VAI 20 Small": 98.8,
+    "TSK - Hewchy's VAI 20": 102.448,
+    "TSK - ST60 Thick": 102.69,
+    "TSK - ST60": 102.724,
+    "TSK - SYV Big": 99.167,
+    "TSK - SYW Thin": 102.69,
+    "TSK - SYW": 102.759,
+    "TSK - VSTP Soft Big": 102.552,
+    "TSK - Varied Centering 90 Trio": 94.167,
+    "UnderTrack - THE FINALS": 97.933,
+    "VT Aether Bot 1 Easier": 95.2,
+    "VT Aether Intermediate S5 Bot 2": 98.22,
+    "VT Aether Novice S5 Hard Bot 1 90%": 87.831,
+    "VT Aether Novice S5 Hard Bot 1": 96.867,
+    "VT ControlTS Intermediate S5": 84.271,
+    "VT Controlsphere Intermediate S5": 101.339,
+    "VT Controlsphere Novice S5 Hard": 98.85,
+    "VT Controlsphere Viscose 80%": 79.8,
+    "VT Controlsphere Viscose Easier": 98.467,
+    "VT Controlsphere Viscose": 98.883,
+    "VT DotTS Intermediate S5 Speed": 76.35,
+    "VT DotTS Intermediate S5": 76.433,
+    "VT DriftTS Intermediate S5": 99.567,
+    "VT EddieTS Intermediate S5": 82.75,
+    "VT FlyTS Intermediate S5": 99.55,
+    "VT Penta Bounce Intermediate S5": 100.831,
+    "VT Raw Control Intermediate S5": 99.733,
+    "VT Raw Control Novice S5 Hard": 99.767,
+    "VT Smoothbot Novice 180": 89.5,
+    "VT Snake Track Intermediate S5": 99.7,
+    "Whisphere Med 60s": 496.833,
+    "Whisphere Small & Slow 75%": 396.833,
+    "Whisphere Viscose": 495.667,
+    "Whisphere": 494.833,
+    "WhisphereRawControl": 99.317,
+    "ZipTrack - THE FINALS": 92.05,
+    "cloverRawControl Big": 99.683,
+    "cloverRawControl Easy": 99.183,
+    "cloverRawControl Viscose 50cm": 99.517,
+    "hizkuAirPalace Easy": 97.4,
+    "tamAngleSmoothness Easier": 62.559,
+    "voidTrack Easy": 99.667,
+    "waldoTS": 62.78
   }
 }

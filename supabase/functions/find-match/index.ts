@@ -22,6 +22,7 @@ import {
   requireCaller,
   HttpError,
 } from "../_shared/apogee.ts";
+import { enforceRateLimit } from "../_shared/rateLimit.ts";
 
 import { selectScenarios, type SelectableScenario } from "../../../src/core/match/scenarioSelection.ts";
 import { findOpponent, type StoredRunSet } from "../../../src/core/match/matchmaking.ts";
@@ -59,6 +60,7 @@ const RECENT_OPPONENT_WINDOW_MS = 7 * 24 * 60 * 60 * 1000;
 
 Deno.serve(handler(async (req, admin) => {
   const caller = await requireCaller(req, admin);
+  await enforceRateLimit(admin, caller.playerId, "find-match");
   const body = await readJson<Body>(req);
 
   if (!body.category || typeof body.window !== "number" || body.window < 0) {

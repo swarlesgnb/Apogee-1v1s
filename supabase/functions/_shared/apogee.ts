@@ -119,6 +119,10 @@ export interface ScenarioRow {
   known_hash: string | null;
   score_model_stat: string | null;
   score_model_k: number | null;
+  weapon_score_per_damage: number | null;
+  weapon_damage_per_shot: number | null;
+  shots_per_second: number | null;
+  duration_seconds: number | null;
   world_record: number | null;
 }
 
@@ -129,7 +133,9 @@ export async function scenarioByName(
   const { data } = await admin
     .from("scenarios")
     .select(
-      "id, name, leaderboard_id, aim_type, sub_category, known_hash, score_model_stat, score_model_k, world_record",
+      "id, name, leaderboard_id, aim_type, sub_category, known_hash, score_model_stat, " +
+        "score_model_k, weapon_score_per_damage, weapon_damage_per_shot, " +
+        "shots_per_second, duration_seconds, world_record",
     )
     .eq("name", name)
     .maybeSingle();

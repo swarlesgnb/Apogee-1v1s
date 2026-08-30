@@ -1,0 +1,542 @@
+{
+  "benchmarkName": "Voltaic S3",
+  "abbreviation": "VT",
+  "color": "#02A2DA",
+  "spreadsheetURL": "https://docs.google.com/spreadsheets/d/1yHj87rQNW2WsuH24UoKZajNwNpI6CVyUjR3AwBMbnnY",
+  "evxlUrl": "https://evxl.app/benchmarks/Voltaic%20S3",
+  "source": "kovaaks.com benchmarks API + evxl registry",
+  "fetchedAt": "2026-08-25T13:50:58Z",
+  "difficulties": [
+    {
+      "name": "Intermediate",
+      "kovaaksBenchmarkId": 265,
+      "rankNames": [
+        "Bronze",
+        "Silver",
+        "Gold",
+        "Platinum",
+        "Diamond"
+      ],
+      "rankColors": {
+        "Bronze": "#FF9900",
+        "Silver": "#CBD9E6",
+        "Gold": "#CAB148",
+        "Platinum": "#2FCFC2",
+        "Diamond": "#B9F2FF"
+      },
+      "categories": [
+        {
+          "name": "Clicking",
+          "rankMaxes": [
+            12000,
+            24000,
+            36000,
+            48000,
+            60000
+          ],
+          "scenarios": [
+            {
+              "name": "Pasu Voltaic Easy",
+              "leaderboardId": 605,
+              "rankMaxes": [
+                40,
+                50,
+                56,
+                66,
+                75
+              ]
+            },
+            {
+              "name": "B180 Voltaic Easy",
+              "leaderboardId": 405,
+              "rankMaxes": [
+                52,
+                61,
+                70,
+                77,
+                86
+              ]
+            },
+            {
+              "name": "Popcorn Voltaic Easy",
+              "leaderboardId": 833,
+              "rankMaxes": [
+                100,
+                150,
+                200,
+                250,
+                310
+              ]
+            },
+            {
+              "name": "ww3t Voltaic",
+              "leaderboardId": 68,
+              "rankMaxes": [
+                83,
+                93,
+                103,
+                113,
+                123
+              ]
+            },
+            {
+              "name": "1w4ts Voltaic",
+              "leaderboardId": 319,
+              "rankMaxes": [
+                70,
+                82,
+                91,
+                100,
+                110
+              ]
+            },
+            {
+              "name": "6 Sphere Hipfire Voltaic",
+              "leaderboardId": 108,
+              "rankMaxes": [
+                95,
+                108,
+                120,
+                132,
+                142
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Tracking",
+          "rankMaxes": [
+            12000,
+            24000,
+            36000,
+            48000,
+            60000
+          ],
+          "scenarios": [
+            {
+              "name": "Smoothbot Voltaic Easy",
+              "leaderboardId": 370,
+              "rankMaxes": [
+                1700,
+                2100,
+                2400,
+                2800,
+                3100
+              ]
+            },
+            {
+              "name": "Air Angelic 4 Voltaic Easy",
+              "leaderboardId": 42,
+              "rankMaxes": [
+                1800,
+                2200,
+                2600,
+                3000,
+                3300
+              ]
+            },
+            {
+              "name": "PGTI Voltaic Easy",
+              "leaderboardId": 510,
+              "rankMaxes": [
+                700,
+                1000,
+                1300,
+                1600,
+                1900
+              ]
+            },
+            {
+              "name": "FuglaaXYZ Voltaic Easy",
+              "leaderboardId": 603,
+              "rankMaxes": [
+                7500,
+                8500,
+                10000,
+                12000,
+                14000
+              ]
+            },
+            {
+              "name": "Ground Plaza Voltaic Easy",
+              "leaderboardId": 520,
+              "rankMaxes": [
+                835,
+                845,
+                855,
+                870,
+                880
+              ]
+            },
+            {
+              "name": "Air Voltaic Easy",
+              "leaderboardId": 568,
+              "rankMaxes": [
+                775,
+                800,
+                825,
+                852,
+                865
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Switching",
+          "rankMaxes": [
+            12000,
+            24000,
+            36000,
+            48000,
+            60000
+          ],
+          "scenarios": [
+            {
+              "name": "patTS Voltaic Easy",
+              "leaderboardId": 538,
+              "rankMaxes": [
+                65,
+                80,
+                85,
+                91,
+                98
+              ]
+            },
+            {
+              "name": "psalmTS Voltaic Easy",
+              "leaderboardId": 960,
+              "rankMaxes": [
+                50,
+                58,
+                67,
+                76,
+                85
+              ]
+            },
+            {
+              "name": "voxTS Voltaic Easy",
+              "leaderboardId": 577,
+              "rankMaxes": [
+                74,
+                82,
+                90,
+                100,
+                109
+              ]
+            },
+            {
+              "name": "kinTS Voltaic Easy",
+              "leaderboardId": 542,
+              "rankMaxes": [
+                45,
+                54,
+                60,
+                66,
+                72
+              ]
+            },
+            {
+              "name": "B180T Voltaic Easy",
+              "leaderboardId": 543,
+              "rankMaxes": [
+                40,
+                51,
+                60,
+                69,
+                77
+              ]
+            },
+            {
+              "name": "Smoothbot TS Voltaic Easy",
+              "leaderboardId": 868,
+              "rankMaxes": [
+                35,
+                42,
+                46,
+                50,
+                54
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Advanced",
+      "kovaaksBenchmarkId": 266,
+      "rankNames": [
+        "Jade",
+        "Master",
+        "Grandmaster",
+        "Nova",
+        "Astra",
+        "Celestial"
+      ],
+      "rankColors": {
+        "Jade": "#85FA85",
+        "Master": "#EC44CA",
+        "Grandmaster": "#FFD700",
+        "Nova": "#7900FF",
+        "Astra": "#FF2262",
+        "Celestial": "#24DDD8"
+      },
+      "categories": [
+        {
+          "name": "Clicking",
+          "rankMaxes": [
+            10000,
+            20000,
+            30000,
+            40000,
+            50000,
+            60000
+          ],
+          "scenarios": [
+            {
+              "name": "Pasu Voltaic",
+              "leaderboardId": 6,
+              "rankMaxes": [
+                68,
+                76,
+                85,
+                95,
+                105,
+                110.2
+              ]
+            },
+            {
+              "name": "B180 Voltaic",
+              "leaderboardId": 9,
+              "rankMaxes": [
+                78,
+                88,
+                98,
+                108,
+                115,
+                123
+              ]
+            },
+            {
+              "name": "Popcorn Voltaic",
+              "leaderboardId": 8,
+              "rankMaxes": [
+                220,
+                260,
+                320,
+                390,
+                440,
+                450
+              ]
+            },
+            {
+              "name": "ww3t Voltaic",
+              "leaderboardId": 68,
+              "rankMaxes": [
+                130,
+                138,
+                148,
+                160,
+                170,
+                172
+              ]
+            },
+            {
+              "name": "1w4ts Voltaic",
+              "leaderboardId": 319,
+              "rankMaxes": [
+                115,
+                120,
+                130,
+                142,
+                152,
+                156
+              ]
+            },
+            {
+              "name": "6 Sphere Hipfire Voltaic",
+              "leaderboardId": 108,
+              "rankMaxes": [
+                152,
+                160,
+                175,
+                192,
+                210,
+                213
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Tracking",
+          "rankMaxes": [
+            10000,
+            20000,
+            30000,
+            40000,
+            50000,
+            60000
+          ],
+          "scenarios": [
+            {
+              "name": "Smoothbot Voltaic",
+              "leaderboardId": 300,
+              "rankMaxes": [
+                2600,
+                2900,
+                3400,
+                3800,
+                4000,
+                4134
+              ]
+            },
+            {
+              "name": "Air Angelic 4 Voltaic",
+              "leaderboardId": 30,
+              "rankMaxes": [
+                2700,
+                3000,
+                3400,
+                3900,
+                4100,
+                4226
+              ]
+            },
+            {
+              "name": "PGTI Voltaic",
+              "leaderboardId": 99,
+              "rankMaxes": [
+                1100,
+                1400,
+                1800,
+                2200,
+                2500,
+                2588
+              ]
+            },
+            {
+              "name": "FuglaaXYZ Voltaic",
+              "leaderboardId": 363,
+              "rankMaxes": [
+                11300,
+                12500,
+                13800,
+                15200,
+                16000,
+                16840
+              ]
+            },
+            {
+              "name": "Ground Plaza Voltaic",
+              "leaderboardId": 316,
+              "rankMaxes": [
+                862,
+                870,
+                880,
+                888,
+                894,
+                896
+              ]
+            },
+            {
+              "name": "Air Voltaic",
+              "leaderboardId": 29,
+              "rankMaxes": [
+                850,
+                860,
+                872,
+                883,
+                887,
+                890.7
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Switching",
+          "rankMaxes": [
+            10000,
+            20000,
+            30000,
+            40000,
+            50000,
+            60000
+          ],
+          "scenarios": [
+            {
+              "name": "patTS Voltaic",
+              "leaderboardId": 464,
+              "rankMaxes": [
+                91,
+                97,
+                103,
+                110,
+                116,
+                118.2
+              ]
+            },
+            {
+              "name": "psalmTS Voltaic",
+              "leaderboardId": 1114,
+              "rankMaxes": [
+                85,
+                90,
+                98,
+                107,
+                114,
+                117.5
+              ]
+            },
+            {
+              "name": "voxTS Voltaic",
+              "leaderboardId": 26,
+              "rankMaxes": [
+                102,
+                110,
+                118,
+                125,
+                131,
+                133
+              ]
+            },
+            {
+              "name": "kinTS Voltaic",
+              "leaderboardId": 604,
+              "rankMaxes": [
+                65,
+                72,
+                79,
+                84,
+                88,
+                91
+              ]
+            },
+            {
+              "name": "B180T Voltaic",
+              "leaderboardId": 947,
+              "rankMaxes": [
+                64,
+                70,
+                78,
+                85,
+                92,
+                95.8
+              ]
+            },
+            {
+              "name": "Smoothbot TS Voltaic",
+              "leaderboardId": 596,
+              "rankMaxes": [
+                50,
+                55,
+                60,
+                65,
+                70,
+                70.4
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

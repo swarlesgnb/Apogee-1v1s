@@ -7,15 +7,20 @@ are read straight from the stats folder, never typed in.
 See [PLAN.md](PLAN.md) for the full design: match format, rating, anti-cheat, and the
 phased build.
 
+Before installing, two things worth reading rather than assuming:
+[PRIVACY.md](PRIVACY.md) — exactly what is uploaded and what is not.
+[FAIR-PLAY.md](FAIR-PLAY.md) — what the anti-cheat catches, what it cannot, and how to
+dispute a voided match.
+
 ## Status
 
 | Phase | | |
 |---|---|---|
-| 0 | Scenario taxonomy | done, 54/54 Voltaic S5 scenarios resolved |
+| 0 | Scenario taxonomy | done, 668 scenarios with aim type and board id |
 | 0b | Benchmark data pipeline | done, 121 benchmarks, real thresholds |
 | 1 | Stats parser + validation | done, 100% of 11,058 real files, 0 exceptions |
 | 2 | History, baselines, ranks, weakness map | done, engine matches KovaaK's exactly |
-| 3 | Apogee rank theme + visual editor | done, 10 named tiers |
+| 3 | Apogee rank theme + visual editor | done, 8 named tiers |
 | 4 | Supabase schema, Steam auth, run upload | done, deployed and verified live |
 | 5 | Verification: local integrity + KovaaK's cross-check | done, 0% false positives |
 | 6 | Glicko-2, scenario selection, settlement, matchmaking | done, ladder sorts at r=0.998 |
@@ -24,26 +29,21 @@ phased build.
 | 9 | Electron desktop client | done, boots, watches, renders |
 | 10 | Closed beta | gated on population, preflight built |
 | 11 | Live sync matchmaking | done, starvation-free, awaiting population |
-| 12 | Server-side match engine | done, 5 Edge Functions deployed |
+| 12 | Server-side match engine | done, 6 Edge Functions deployed |
 | 13 | Client wired to the backend | done, sign-in + upload + match loop live |
 | 14 | First real match | **waiting on a benchmark run** |
 
 ### Where things actually stand
 
-The whole loop is built and deployed. What has never happened is a match, because a
-match needs an opponent and the pool is empty until someone plays a category once.
+The whole loop is built, deployed and verified against the live project: Steam sign-in,
+run backfill, run upload, verification, matchmaking, settlement and rating all work end
+to end. Eleven thousand real runs have been uploaded and graded, and baselines are
+computed from them.
 
-Done and verified live:
-
-- Steam sign-in works end to end (`Watchmojo`, steam `…540626`)
-- **11,104 runs** uploaded
-- **84 baselines** computed, 22 solid, including all 18 Voltaic S5 Intermediate scenarios
-- rating row exists at 1500 / rd 350, 0 matches
-
-To finish the loop, from the Queue tab: pick a category, hit Find opponent (expect
-"nobody to play yet"), play the three scenarios anyway so they seed the pool, then queue
-again. Runs submit themselves as they land; the match settles itself when the third one
-does.
+What has never happened is a settled match, and no amount of code will change that.
+Settling one needs a second player, and the queue stays empty until somebody other than
+the author plays a category through. That is the honest status: this is finished
+software waiting on a population, not a work in progress.
 
 ## Quick start
 
@@ -67,11 +67,15 @@ npm run profile -- --stats "D:\path\to\FPSAimTrainer\stats"
 
 Apogee's ladder has its own tier names and colours, kept deliberately separate from
 Voltaic's. Benchmark rank and ladder standing are different claims and must not share a
-vocabulary. Tiers are assigned by **population percentile**, so a tier keeps its meaning
+vocabulary. Tiers are assigned by population percentile, so a tier keeps its meaning
 as the player base grows.
 
-Ten tiers run from Stargazer to Supernova, defined in `data/apogee_ranks.json`. Nothing
-in the code keys off the names, so they can be renamed freely.
+Eight tiers run from Stargazer to Supernova, defined in `data/apogee_ranks.json`.
+Nothing in the code keys off the names, so they can be renamed freely.
+
+This is the *rating* ladder, and it is one of four. The three category ladders and the
+season's overall standing live in `data/seasons/season-1.json` and are edited in the
+app's Season tab. All four use separate names and separate hue bands, on purpose.
 
 Open `tools/rank-theme-editor.html` in a browser to edit the palette visually: badges,
 ladder distribution, a match card built from real scores, and the promotion moment all
@@ -82,11 +86,14 @@ update live. Copy the generated JSON back into `data/apogee_ranks.json`, then ru
 
 ```
 data/
-  scenario_taxonomy.json     54 Voltaic S5 scenarios, aim types, leaderboard ids
+  scenario_taxonomy.json     1,487 scenarios, aim types, leaderboard ids, play counts
   evxl_registry.json         121 benchmarks with KovaaK's ids + rank colours
+  subskills.json             the eleven sub-skills, derived from what 43 benchmarks
+                             call their own scenarios, and the evidence for each
   subcategories.json         the nine Voltaic sub-categories, from Voltaic's sheet
   apogee_ranks.json          Apogee's own rank tiers, names and colours
-  score_models.json          learned score = stat * k relations, for verification
+  score_models.json          learned score = stat * k relations, plus the weapon-block
+                             rates that verify runs with no kill rows
   benchmarks/*.json          full definitions: thresholds, ranks, colours
 src/core/
   stats/                     KovaaK's CSV parsing
@@ -109,24 +116,31 @@ tools/                       build-time data extraction and preflight
 
 Nothing here is guessed or hand-transcribed.
 
-- **Scenario metadata and score thresholds** come from KovaaK's own public API
+- Scenario metadata and score thresholds come from KovaaK's own public API
   (`webapp-backend/benchmarks/player-progress-rank-benchmark`), which serves the
   official per-scenario `rank_maxes` for every benchmark.
-- **The benchmark registry** (which benchmark maps to which KovaaK's id, plus per-rank
+- The benchmark registry (which benchmark maps to which KovaaK's id, plus per-rank
   hex colours) comes from evxl.app's own JSON route, `/data/benchmarks`.
-- **The nine sub-categories** are read from Voltaic's own published spreadsheet, whose
-  URL is recorded in evxl's registry.
+- The eleven sub-skills are derived from the category names the benchmarks themselves
+  publish, normalised and counted in `data/subskills.json`. Nine of them are Voltaic's,
+  and the derivation reproduces Voltaic's published spreadsheet on all 106 of their
+  scenarios - which is the check that makes the same treatment of everybody else's
+  believable. Two are named by benchmarks Voltaic's sheet cannot see: Micro Clicking by
+  eight of them, Reading Tracking by seven. Every family in `data/pool.json` declares its
+  own, and `npm run validate:pool` holds the declaration to the derivation.
 
-All three are build-time steps. The results are committed to `data/`, so the app never
+All of these are build-time steps. The results are committed to `data/`, so the app never
 depends on any of those services being reachable at runtime.
 
-To refresh:
+To refresh, in this order - the taxonomy needs the benchmark definitions, and the
+sub-skills need the taxonomy:
 
 ```bash
 npm run fetch:evxl                              # cached 24h; --force to re-ask
-python tools/fetch_benchmark_defs.py            # or --all for every benchmark
-python tools/fetch_scenario_taxonomy.py
-python tools/fetch_voltaic_subcategories.py
+python tools/fetch_benchmark_defs.py            # every benchmark pool.json names
+npx tsx tools/fetchTaxonomy.ts                  # aim types, play counts, world records
+python tools/fetch_voltaic_subcategories.py     # the check the derivation is held to
+npm run build:subskills                         # the eleven, and the evidence for them
 python tools/generate_seed.py
 ```
 
@@ -137,17 +151,17 @@ Deployed and verified. See [SETUP.md](SETUP.md) for the full walkthrough.
 ```bash
 npm run validate:schema       # applies migrations + seed to Postgres-in-WASM, no Docker
 npm run verify:deployment     # proves RLS, auth and the match engine against the live project
-npm run deploy:functions      # redeploy all five Edge Functions
+npm run deploy:functions      # redeploy all six Edge Functions
 npm run sync:reference        # push updated reference data (the seed will not)
 ```
 
-Five Edge Functions carry the server side. `steam-auth` is deliberately public because
-Steam's servers call it directly; the other four require a session, and verification
+Six Edge Functions carry the server side. `steam-auth` is deliberately public because
+Steam's servers call it directly; the other five require a session, and verification
 asserts they refuse both anonymous callers and the anon key.
 
 The functions import the shared core straight from `src/core`, so settlement, Glicko-2
-and the integrity checks are the *same* code the local validation suites exercise. There
-is no second implementation to drift.
+and the integrity checks are the *same* code the local validation suites exercise, with
+no second implementation to drift.
 
 ### What is not wired yet
 
@@ -162,7 +176,7 @@ a cloud project, or network access.
 
 ### The security rule everything rests on
 
-**The client never computes anything that matters.** It parses CSVs, hashes them, and
+The client never computes anything that matters. It parses CSVs, hashes them, and
 uploads facts. Baselines, deltas, verification tiers and ratings are all computed
 server-side. RLS enforces it: clients hold no write grant whatsoever on `ratings`,
 `matches`, `match_sides`, `baselines` or `verified_pbs`. Runs are insert-and-read only,
@@ -181,7 +195,7 @@ the OpenID dance, verifies the assertion with Steam directly, and mints a Supaba
 session for the resulting SteamID64.
 
 The desktop side uses the RFC 8252 native-app loopback pattern. The app listens on an
-ephemeral `127.0.0.1` port, the browser handles login, and a **single-use token** (never
+ephemeral `127.0.0.1` port, the browser handles login, and a single-use token (never
 a session) crosses back over loopback to be redeemed.
 
 This is load-bearing: the SteamID is the join key to KovaaK's leaderboards, so without a
@@ -199,22 +213,22 @@ Collapsing these silently gives a scenario whichever benchmark's numbers loaded 
 
 Two independent layers (`src/core/verify/`).
 
-**Local integrity.** The file must be internally coherent. Every check was measured
+Local integrity. The file must be internally coherent. Every check was measured
 against all 11,058 real runs before being allowed to reject anything, and **every hard
 check has a 0.00% false-positive rate**. Three checks in the first draft did not, and
 were corrected rather than kept:
 
-- rejecting sub-20ms TTK flagged **62%** of genuine runs, because KovaaK's TTK is
+- rejecting sub-20ms TTK flagged 62% of genuine runs, because KovaaK's TTK is
   first-hit-to-kill within a burst, not reaction time
 - rejecting negative scores flagged real pressure-scenario runs, which legitimately
   score below zero
 - requiring one kill row per kill flagged 0.85%, because `Kill #` is a running counter:
   penalty rows repeat it and multi-kills skip it
 
-**Score models** are the strongest check, and were discovered rather than designed.
+Score models are the strongest check, and were discovered rather than designed.
 Most scenarios score as a fixed multiple of a countable stat (`Frogtagon = kills * 10`,
 `Aether = hitCount * 1`), so the score can be re-derived from the run's own counters.
-219 scenarios modelled (77.4%), and a **+1% score edit is caught**. Scenarios with no
+219 scenarios modelled (77.4%), and a +1% score edit is caught. Scenarios with no
 model skip the check rather than failing it.
 
 ```bash
@@ -222,37 +236,37 @@ npm run build:score-models    # rebuild data/score_models.json from your corpus
 npm run validate:verify       # false positives, tamper detection
 ```
 
-**KovaaK's cross-check.** `user/scenario/last-scores/by-name` returns a player's ~10
+KovaaK's cross-check. `user/scenario/last-scores/by-name` returns a player's ~10
 most recent runs with `hash`, `epoch` and `challengeStart`, so a match run is verifiable
 whether or not it was a personal best. The KovaaK's username is confirmed against
 `user/search` to belong to the signed-in SteamID before it is stored, and RLS forbids
 clients from writing it.
 
 Tiers: `verified` → `consistent` → `suspect` → `rejected`. Only an incoherent file is
-rejected outright. **Suspect still counts.** Measured, ~1 in 9 genuine personal bests
+rejected outright. Suspect still counts. Measured, ~1 in 9 genuine personal bests
 never reach KovaaK's servers, so "above your PB with no server record" means *look
 closer*, not *forged*.
 
 ## Rating and matches
 
-**Glicko-2**, implemented from the specification and checked against Glickman's own
+Glicko-2, implemented from the specification and checked against Glickman's own
 worked example: 1464.0506 / 151.5165 / 0.059996, matched exactly. Chosen over Elo
 because Apogee's play is sparse, bursty and asynchronous, which is the case Elo handles
 worst.
 
 A simulated 60-player, 25-period season recovers the hidden true-skill order at a
-**Spearman correlation of 0.998**, so the ladder does sort people by skill rather than
+Spearman correlation of 0.998, so the ladder does sort people by skill rather than
 by luck.
 
-**Match format.** Three scenarios from a category, each scored as a delta against the
+Match format. Three scenarios from a category, each scored as a delta against the
 player's own baseline, averaged; higher average wins. Scenario choice is a pure function
 of the match seed, so both sides get the same three and no client can reroll them.
 
-Because it is normalised, **you can score higher and still lose**. That is intended, and
+Because it is normalised, you can score higher and still lose. That is intended, and
 `explainVerdict()` names the case explicitly rather than leaving the player to conclude
 the app is broken.
 
-**Matchmaking is asynchronous**: you are matched against a stored run set from someone
+Matchmaking is asynchronous: you are matched against a stored run set from someone
 near your rating. It works with one player online, which is what makes launch survivable
 (PLAN.md §6). Live mode reuses all of it and adds only a queue and a countdown.
 
@@ -260,7 +274,7 @@ near your rating. It works with one player online, which is what makes launch su
 
 The baseline is the centre every match is measured from. The first implementation used
 the mean of the top 30% of recent runs, for sandbag resistance. Measured across 156
-scenarios of real history, it was badly off-centre: only **26%** of genuine runs landed
+scenarios of real history, it was badly off-centre: only 26% of genuine runs landed
 above their own baseline, so matches were decided by who avoided a disaster rather than
 who played well.
 
@@ -270,7 +284,7 @@ who played well.
 | **median** | **+0.4%** | **58%** | **3.5%** |
 | plain mean | +0.6% | 60% | 9.3% |
 
-The **verified-PB floor** turned out to be what defeats sandbagging, not the high-water
+The verified-PB floor turned out to be what defeats sandbagging, not the high-water
 statistic. With the floor in place a median is centred *and* nearly as hard to game,
 while a plain mean is three times more gameable. So:
 
@@ -285,11 +299,59 @@ npm run compare:baselines    # reproduce the table above on your own history
 ## Quests
 
 Quests are generated against whichever benchmark the player tracks. Paste any evxl
-link. **All 121** benchmarks in the registry are trackable, resolved entirely
+link. All 121 benchmarks in the registry are trackable, resolved entirely
 offline from committed data.
 
 Resolution refuses to guess: an ambiguous name (`"Voltaic"` matches S3, S4, S5, S5.5)
 resolves to nothing rather than silently tracking the wrong season.
+
+## Practice: the season without the queue
+
+The season is a benchmark, and grinding it should not require an opponent. The Season
+screen shows the pool **one difficulty at a time** — the way every benchmark it is drawn
+from is played — grouped by category and sub-skill and no further, with your personal
+best, the score the next rank wants, and a **Play** button that deep-links straight into
+KovaaK's. Rows your next rank is actually scored on are highlighted, and the screen opens
+on the band holding the most of them.
+
+Which family a scenario belongs to is how the ladder grades it (§14) and is deliberately
+not shown: `Reactive Tracking` is one comprehensive list, not two lists called
+`Ground Plaza` and `Air CELESTIAL`.
+
+How far through its *current* rank step a score is fills the row itself, measured from
+the threshold already cleared rather than from zero — from zero everything you have
+touched reads as nearly full and the fill says nothing. Filling the row rather than a bar
+inside it means a band of twenty-two is one ragged edge to scan down instead of
+twenty-two gauges to read one at a time.
+
+For a whole session at one difficulty there are sixteen KovaaK's playlists: **Clicking,
+Tracking and Switching separately at each of the four bands**, plus one of everything at
+each band. They install from the same screen, one at a time or all sixteen, straight into
+KovaaK's own Playlists folder.
+
+```
+Apogee Clicking Novice          8      Apogee Tracking Novice          8
+Apogee Clicking Intermediate    8      Apogee Tracking Intermediate    8
+Apogee Clicking Advanced        8      Apogee Tracking Advanced        8
+Apogee Clicking Expert          8      Apogee Tracking Expert          8
+Apogee Switching Novice         6      Apogee All Novice              22
+Apogee Switching Intermediate   6      Apogee All Intermediate        22
+Apogee Switching Advanced       6      Apogee All Advanced            22
+Apogee Switching Expert         6      Apogee All Expert              22
+```
+
+KovaaK's reads playlists at startup, so the app says so rather than leaving anyone hunting
+a menu for a file that is genuinely on disk. The names never begin `Apogee Match`, which
+is the prefix the client sweeps between matches — a practice playlist deleted mid-session
+would look exactly like the app losing your things.
+
+```bash
+npm run practice              # the same list, in the terminal (--all for every band)
+npx tsx tools/buildPlaylists.ts --install   # the playlists, without opening the app
+```
+
+None of it queues, uploads or settles anything. Runs still land in the stats folder and
+still count toward baselines, so an evening of practice is not an evening off the ladder.
 
 ## Desktop client
 
@@ -310,7 +372,7 @@ drive or library is picked up without being told; a folder chosen by hand is rem
 along with the window's size and position.
 
 Electron main process finds the KovaaK's stats folder, watches it, and rebuilds the
-player snapshot whenever a run lands. **All parsing and computation happens in main**;
+player snapshot whenever a run lands. All parsing and computation happens in main;
 the renderer is a pure view that receives settled data over a narrow, named IPC bridge.
 That mirrors the server-side rule: the layer that can be tampered with is never the
 layer that decides anything.
@@ -323,7 +385,7 @@ writes stat files progressively, so parsing on the first filesystem event yields
 truncated CSV with no `Score:` line.
 
 `npm run ui` regenerates `tools/apogee-ui-preview.html`, a shareable single-file build of
-**the same renderer** with a snapshot inlined, so the preview and the app cannot drift.
+the same renderer with a snapshot inlined, so the preview and the app cannot drift.
 
 ## Live matchmaking
 
@@ -331,12 +393,12 @@ Async carries the ladder from day one; `liveQueue.ts` switches on once there is 
 concurrent population. Everything downstream is unchanged: same seeded scenarios, same
 settlement, same rating update.
 
-The problem live mode has that async does not is **starvation**. A player at the top or
+The problem live mode has that async does not is starvation. A player at the top or
 bottom of the ladder may have nobody close. Tolerance therefore widens with waiting
 time, and a player who still cannot be paired is released to an async match rather than
 force-paired into a pointless one. Simulated across four populations (100 players, 8
 players widely spread, a lone outlier among 20 clustered, and an odd population),
-**nobody is ever stranded**.
+nobody is ever stranded.
 
 ## Before inviting anyone
 
@@ -363,5 +425,78 @@ matches, across 20 checks (`npm run validate:engine`).
 - Category and overall rank are the highest thresholds met.
 
 Per-scenario energy is on a universal scale, but category thresholds differ: Switching
-requires more energy for the same rank than Clicking. Getting that backwards is the easy
-mistake.
+requires more energy for the same rank than Clicking, which is easy to get backwards.
+
+## Credits
+
+Apogee is built on work other people published, and it would not exist without it.
+
+The benchmark authors. Season 1's pool is 88 scenarios drawn from twenty-three
+benchmarks, and every one of them is somebody's design work — deciding which scenario
+measures which sub-skill, and at what difficulty, is the hard part and it was already
+done. Each links to its own published sheet, which is the source Apogee reads rather than
+a hand-copied version of it. The counts overlap, because a scenario several benchmarks
+name is credited to all of them:
+
+- [Viscose Benchmarks](https://docs.google.com/spreadsheets/d/1bFAlt6g_Gm8P9RBkcAoObpbIGFwVS5gXIdIK9B_YyZE) — 25 scenarios
+- [Voltaic S5](https://docs.google.com/spreadsheets/d/1RjVJi9AdWLXIOkKR8z6mhmRo_SNokJPxKtLXHWk12Z4)
+  and [S5.5](https://docs.google.com/spreadsheets/d/1kiS9CvXTQjLsm42nBafhddu2Q7XdWtxaMtumeZ_sV-c) — 24 scenarios
+- [Viscose Benchmarks S2](https://docs.google.com/spreadsheets/d/1WeuEk444WOkTpvOGMYiertxwlI9gRQSapYiwxjFbT08) — 18 scenarios
+- [snakbox Benchmark](https://evxl.app/benchmarks/snakbox%20Benchmark) — 11 scenarios
+- [Astro Tracking Benchmark](https://docs.google.com/spreadsheets/d/1KXrXJpCl8xnoa3JuFcthE306Q9R9MOAJWhXj_xXzLOQ) — 10 scenarios
+- [Voltaic S4](https://docs.google.com/spreadsheets/d/1qUzF2KHcfs_FgsaDFRfGsLgHhoC1Md5bzMOUbsYzSjg) — 9 scenarios
+- [Voltaic S3](https://docs.google.com/spreadsheets/d/1yHj87rQNW2WsuH24UoKZajNwNpI6CVyUjR3AwBMbnnY) — 6 scenarios
+- [AimSpeed Benchmarks 2.0](https://evxl.app/benchmarks/AimSpeed%20Benchmarks%202.0) — 6 scenarios
+- [Jade Palace Air](https://docs.google.com/spreadsheets/d/11-E1KWTCw27s6fhW4nwB0F_2ckbdv5RDcBiseUcm1E4) — 5 scenarios
+- [Lemon Static Benchmark](https://docs.google.com/spreadsheets/d/1V9lt5BjKLpzoKBPd-4WgStzhKv-javTWaNcISaLJERg) — 5 scenarios
+- [Jade Palace Ground](https://docs.google.com/spreadsheets/d/131tMwNmJY-lJPVdddpOWKY9uajDWWe3I5ym-UzmF0QE) — 4 scenarios
+- [Revosect S1](https://docs.google.com/spreadsheets/d/1MQujX14dooQWcHu4mvvP5fetHVIr7Apg1taR96hSho0) — 4 scenarios
+- [Sparky (Voltaic) S1](https://docs.google.com/spreadsheets/d/1UttTs6aNPzwAWCEKnRUc8hC0AzbZI2esLq4x8ngcVpU) — 3 scenarios
+- [e1se Smooth Benchmark](https://docs.google.com/spreadsheets/d/1IXyjASZHs8yaVgS_os0wMLuvHIdZ2L8wrah_ShjXQ7w) — 3 scenarios
+- [Aimerz+ SpeedTS](https://docs.google.com/spreadsheets/d/1-9-RQ5-a78HF49eMsYcf7PjBkpbgIahpBwTLYSu9RK4) — 3 scenarios
+- [Aimerz+ Precise Tracking](https://docs.google.com/spreadsheets/d/1czvuvgks1SoMNUH_aevVPm5lOgqCQHa_UVR8izpUxfg),
+  [Reactive Tracking](https://docs.google.com/spreadsheets/d/15VloIkv-V-B3oq4JTbSnIKwsPMwccx2sQEwTohqlprw) and
+  [Evasive Switching](https://docs.google.com/spreadsheets/d/1kxI184tdhT55k98gsfCHy_CRBznu84aaJP8PAJg6-dU) — 2 scenarios each
+- [Viscose Entry Benchmarks](https://docs.google.com/spreadsheets/d/1wMKCKhFQDwGvFgo9KvfbpNYzJ05XQ8gnyXjxNOhdCww) — 2 scenarios
+- [Anima Micro v1](https://docs.google.com/spreadsheets/d/1H8WPvDyOGtSb9f-lNocNxULRDhptG5PlE2mcpyxnaSY),
+  [Anima Micro v2](https://evxl.app/benchmarks/Anima%20Micro%20v2) and
+  [Jade Palace Dynamic](https://docs.google.com/spreadsheets/d/1W_RYk3_xbvsS4BHnTItgkwWIoEVh-dbAWDhAWUyvnZU) — 1 scenario each
+
+Forty-three benchmarks are read in total, not twenty-three. The other twenty set no
+threshold and appear in no season, but they are what `data/subskills.json` is derived
+from: eleven sub-skills, and for each one a count of how many independent authors name
+it. A benchmark that classifies its own scenarios is doing work Apogee would otherwise
+have to guess at, and guessing at it was measurably wrong.
+
+`npm run validate:pool` prints this list from `data/pool.json`, so it stays true when the
+pool changes.
+
+No benchmark's thresholds appear anywhere in a season. Where one is consulted it is
+converted to percentiles and discarded (`tools/calibrateLadder.ts`). A rank in Apogee is
+a share of a scenario's KovaaK's leaderboard, not a borrowed number — an earlier
+hand-derived sub-category mapping turned out to be wrong on 6 of 18 scenarios, which is
+the argument for reading the source and deriving the rest.
+
+Apogee's rank names and tiers are deliberately its own. The rating ladder, the three
+category ladders and the season's overall standing use four separate vocabularies and
+four separate hue bands, none of them any benchmark's, so a rank here can never be
+mistaken for a Voltaic or Revosect rank in either direction.
+
+[KovaaK's](https://store.steampowered.com/app/824270/) (The Meta) — the game. Every
+score Apogee reads was produced by KovaaK's, and its servers are what make verification
+possible at all: they are the referee, and Apogee is a client of their record rather
+than an authority on its own, driving play *to* KovaaK's rather than away from it.
+
+[evxl.app](https://evxl.app) — the benchmark registry, read from the route it
+publishes, which is what makes 121 benchmarks trackable instead of one hard-coded list.
+
+Scenario and playlist authors, whose scenarios are the actual content of every match.
+
+None of the above endorse Apogee or are responsible for it.
+
+## Licence
+
+Not yet chosen. Until a `LICENSE` file exists, the default applies: all rights
+reserved, and no permission is granted to copy, modify or redistribute this code. The
+repository being public makes it readable, not reusable. If you want to use something
+here, ask first.

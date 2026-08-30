@@ -14,9 +14,9 @@
  *   FOR A PLAYER    it is the honest answer to "what can I queue for", and the reason a
  *                   difficulty is worth grinding beyond the rank it pays.
  *   FOR A MATCH     it decides which difficulties two people can fairly contest. A
- *                   difficulty one side has never played is not a hard scenario, it is an
- *                   unmeasured one, and a match there is decided by whose baseline is
- *                   worse rather than by who played better.
+ *                   difficulty one side has never played has no baseline to measure
+ *                   against, so the match turns on whose baseline is worse rather than
+ *                   on who played better.
  *
  * Measured, not assumed: on the most-played account this app has, 11,138 runs across 803
  * scenarios, 36 of the season's 54 scenarios have no usable baseline. Coverage is thin

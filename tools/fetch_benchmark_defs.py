@@ -11,7 +11,7 @@ Together that is everything needed to rank a player in any of the benchmarks
 evxl tracks, from official data, with no spreadsheet and no guessing.
 
 Usage:
-    python tools/fetch_benchmark_defs.py                 # default set
+    python tools/fetch_benchmark_defs.py                 # every benchmark the pool names
     python tools/fetch_benchmark_defs.py "Voltaic S5"    # one benchmark
     python tools/fetch_benchmark_defs.py --all           # every benchmark (slow)
 
@@ -29,6 +29,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 REGISTRY = ROOT / "data" / "evxl_registry.json"
+POOL = ROOT / "data" / "pool.json"
 OUTDIR = ROOT / "data" / "benchmarks"
 
 API = "https://kovaaks.com/webapp-backend/benchmarks/player-progress-rank-benchmark"
@@ -36,7 +37,31 @@ API = "https://kovaaks.com/webapp-backend/benchmarks/player-progress-rank-benchm
 ANON_STEAM_ID = "76561198000000000"
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36"
 
-DEFAULT_SET = ["Voltaic S5", "Voltaic S5.5", "Voltaic S4", "Revosect S5", "Aimerz+ S1"]
+# The pool names the benchmarks it draws from, and src/core/season/validatePool.ts rejects
+# a scenario that comes from anywhere else. That check can only see benchmarks whose
+# definitions are committed here, so the default set *is* pool.sources rather than a list
+# that once matched it.
+#
+# It used to be "the top fifteen of the popularity measurement", which went wrong in the
+# way a derived default does: the first version was five hand-named benchmarks, and by the
+# time the pool grew to sixteen families only two of the top fifteen were committed, which
+# read as nineteen scenarios "in no committed benchmark" when the real fault was here.
+# Reading pool.sources removes the gap entirely - the list that decides what is allowed is
+# the list that decides what is fetched.
+
+# Kept only as the answer when there is no pool to read.
+FALLBACK_SET = ["Voltaic S5", "Voltaic S5.5", "Voltaic S4", "Revosect S5", "Aimerz+ S1"]
+
+
+def default_set() -> list[str]:
+    if not POOL.exists():
+        print("no data/pool.json - falling back to the named set")
+        return FALLBACK_SET
+    sources = json.loads(POOL.read_text(encoding="utf-8")).get("sources") or []
+    if not sources:
+        print("data/pool.json names no sources - falling back to the named set")
+        return FALLBACK_SET
+    return list(sources)
 
 
 def slugify(name: str) -> str:
@@ -132,7 +157,7 @@ def main(argv: list[str]) -> int:
     elif len(argv) > 1:
         wanted = argv[1:]
     else:
-        wanted = DEFAULT_SET
+        wanted = default_set()
 
     OUTDIR.mkdir(parents=True, exist_ok=True)
     ok = 0

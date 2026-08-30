@@ -1,0 +1,377 @@
+{
+  "benchmarkName": "Sparky (Voltaic) S1",
+  "abbreviation": "VT",
+  "color": "#02A2DA",
+  "spreadsheetURL": "https://docs.google.com/spreadsheets/d/1UttTs6aNPzwAWCEKnRUc8hC0AzbZI2esLq4x8ngcVpU",
+  "evxlUrl": "https://evxl.app/benchmarks/Sparky%20%28Voltaic%29%20S1",
+  "source": "kovaaks.com benchmarks API + evxl registry",
+  "fetchedAt": "2026-08-25T13:50:56Z",
+  "difficulties": [
+    {
+      "name": "All",
+      "kovaaksBenchmarkId": 598,
+      "rankNames": [
+        "Silver",
+        "Gold",
+        "Platinum",
+        "Diamond",
+        "Master",
+        "Grandmaster",
+        "Nova",
+        "Ascended"
+      ],
+      "rankColors": {
+        "Silver": "#CBD9E6",
+        "Gold": "#CAB148",
+        "Platinum": "#2FCFC2",
+        "Diamond": "#B9F2FF",
+        "Master": "#EC44CA",
+        "Grandmaster": "#FFD700",
+        "Nova": "#7900FF",
+        "Ascended": "#FF2262"
+      },
+      "categories": [
+        {
+          "name": "Clicking",
+          "rankMaxes": [
+            2500,
+            5000,
+            7500,
+            10000,
+            12500,
+            15000,
+            17500,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "1wall5targets_pasu Reload",
+              "leaderboardId": 43,
+              "rankMaxes": [
+                80,
+                90,
+                105,
+                120,
+                135,
+                145,
+                170,
+                177
+              ]
+            },
+            {
+              "name": "Popcorn Sparky",
+              "leaderboardId": 502,
+              "rankMaxes": [
+                70,
+                100,
+                150,
+                200,
+                250,
+                300,
+                370,
+                390
+              ]
+            },
+            {
+              "name": "ww6t reload",
+              "leaderboardId": 401,
+              "rankMaxes": [
+                105,
+                115,
+                125,
+                135,
+                145,
+                160,
+                167,
+                175
+              ]
+            },
+            {
+              "name": "1w6ts reload v2",
+              "leaderboardId": 666,
+              "rankMaxes": [
+                85,
+                95,
+                105,
+                115,
+                125,
+                137,
+                150,
+                160
+              ]
+            },
+            {
+              "name": "Bounce 180 Sparky",
+              "leaderboardId": 762,
+              "rankMaxes": [
+                55,
+                65,
+                75,
+                85,
+                95,
+                105,
+                120,
+                127
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Tracking",
+          "rankMaxes": [
+            2500,
+            5000,
+            7500,
+            10000,
+            12500,
+            15000,
+            17500,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "Air no UFO no SKYBOTS",
+              "leaderboardId": 234,
+              "rankMaxes": [
+                780,
+                810,
+                835,
+                853,
+                868,
+                877,
+                888,
+                891.4
+              ]
+            },
+            {
+              "name": "Ground Plaza Sparky V3",
+              "leaderboardId": 517,
+              "rankMaxes": [
+                850,
+                860,
+                872,
+                885,
+                892,
+                900,
+                906,
+                908.3
+              ]
+            },
+            {
+              "name": "Popcorn Goated Tracking Invincible",
+              "leaderboardId": 380,
+              "rankMaxes": [
+                500,
+                600,
+                800,
+                1100,
+                1300,
+                1600,
+                2000,
+                2270
+              ]
+            },
+            {
+              "name": "Thin Gauntlet V2",
+              "leaderboardId": 467,
+              "rankMaxes": [
+                825,
+                845,
+                862,
+                872,
+                882,
+                895,
+                907,
+                909.2
+              ]
+            },
+            {
+              "name": "Pasu Track Invincible v2",
+              "leaderboardId": 548,
+              "rankMaxes": [
+                3600,
+                4500,
+                5500,
+                6200,
+                6900,
+                7300,
+                7800,
+                8118
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Switching",
+          "rankMaxes": [
+            2500,
+            5000,
+            7500,
+            10000,
+            12500,
+            15000,
+            17500,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "patTS NR",
+              "leaderboardId": 403,
+              "rankMaxes": [
+                5400,
+                6000,
+                6500,
+                7100,
+                7700,
+                8000,
+                8600,
+                8960
+              ]
+            },
+            {
+              "name": "Bounce 180 Tracking",
+              "leaderboardId": 122,
+              "rankMaxes": [
+                45,
+                56,
+                68,
+                80,
+                90,
+                100,
+                112,
+                118
+              ]
+            },
+            {
+              "name": "kinTS NR",
+              "leaderboardId": 941,
+              "rankMaxes": [
+                15000,
+                16500,
+                18500,
+                20500,
+                22000,
+                23500,
+                25000,
+                25800
+              ]
+            },
+            {
+              "name": "devTS Goated NR",
+              "leaderboardId": 532,
+              "rankMaxes": [
+                400,
+                450,
+                500,
+                550,
+                600,
+                630,
+                690,
+                701
+              ]
+            },
+            {
+              "name": "voxTargetSwitch",
+              "leaderboardId": 118,
+              "rankMaxes": [
+                67,
+                77,
+                87,
+                97,
+                107,
+                112,
+                120,
+                126
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Movement",
+          "rankMaxes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "scenarios": [
+            {
+              "name": "Air Dodge",
+              "leaderboardId": 530,
+              "rankMaxes": [
+                80,
+                90,
+                100,
+                115,
+                130,
+                143,
+                151,
+                153.9
+              ]
+            },
+            {
+              "name": "Pasu Dodge Easy",
+              "leaderboardId": 873,
+              "rankMaxes": [
+                210000,
+                250000,
+                300000,
+                355000,
+                395000,
+                440000,
+                480000,
+                503463
+              ]
+            },
+            {
+              "name": "Pistol Strafe Gallery Sparky",
+              "leaderboardId": 545,
+              "rankMaxes": [
+                130000,
+                160000,
+                195000,
+                230000,
+                255000,
+                280000,
+                300000,
+                311916.8
+              ]
+            },
+            {
+              "name": "LGC3 Reborn (old scoring)",
+              "leaderboardId": 15342,
+              "rankMaxes": [
+                19500,
+                22000,
+                25500,
+                28000,
+                30000,
+                31000,
+                33000,
+                34076.6
+              ]
+            },
+            {
+              "name": "patTargetSwitch Dodge 360 v2",
+              "leaderboardId": 984,
+              "rankMaxes": [
+                5600,
+                6200,
+                6900,
+                7400,
+                8000,
+                8600,
+                9000,
+                9246.8
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

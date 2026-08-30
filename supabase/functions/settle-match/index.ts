@@ -18,6 +18,7 @@ import {
   requireCaller,
   HttpError,
 } from "../_shared/apogee.ts";
+import { enforceRateLimit } from "../_shared/rateLimit.ts";
 
 import { baselineFromScores } from "../../../src/core/history/baseline.ts";
 import { isAbandonedRun } from "../../../src/core/stats/duration.ts";
@@ -37,6 +38,7 @@ interface Body {
 
 Deno.serve(handler(async (req, admin) => {
   const caller = await requireCaller(req, admin);
+  await enforceRateLimit(admin, caller.playerId, "settle-match");
   const { matchId } = await readJson<Body>(req);
   if (!matchId) throw new HttpError(400, "matchId is required");
 

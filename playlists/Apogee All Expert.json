@@ -1,0 +1,103 @@
+{
+	"playlistName": "Apogee All Expert",
+	"playlistId": 0,
+	"authorSteamId": "",
+	"authorName": "",
+	"scenarioList": [
+		{
+			"scenario_name": "1w2ts Pasu Perfected 30% Smaller",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "1w3ts Pasu Perfected Micro Goated",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "1w6ts reload v2",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "Floating Heads Timing 400% FIXED",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "Pasu Reload Goated",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "VoxTargetSwitch Click Small",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "VT Bounceshot Advanced",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "Wide Wall 3 Targets",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "B180T Voltaic",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "Bounce 180 Tracking",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "kinTS Voltaic",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "patCircleSwitch NR",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "tamTargetSwitch Smooth Hard",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "voxTS Viscose Varied",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "Air CELESTIAL",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "Air Voltaic",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "Close Fast Strafes Invincible - Thin",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "Controlsphere rAim",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "Ground Plaza Sparky v3 OW",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "Smoothbot Pauer",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "VT Raw Control Intermediate S5 Hard",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "waldoTS",
+			"play_Count": 1
+		}
+	],
+	"description": "Season 1 practice. 22 scenarios, the ones this season ranks you on. Play them as often as you like - nothing here is a match, and none of it settles anything.",
+	"hasOfflineScenarios": false,
+	"hasEdited": true,
+	"shareCode": "",
+	"version": 31,
+	"updated": 1788031556,
+	"isPrivate": false
+}

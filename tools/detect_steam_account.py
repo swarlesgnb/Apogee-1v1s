@@ -14,14 +14,69 @@ Usage: python tools/detect_steam_account.py [benchmarkId]
 from __future__ import annotations
 
 import json
+import os
 import re
 import sys
 import urllib.request
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-LOGINUSERS = Path(r"E:\Steam\config\loginusers.vdf")
-STATS = Path(r"E:\Steam\steamapps\common\FPSAimTrainer\FPSAimTrainer\stats")
+
+# Steam is wherever it was installed, which is very often not C:. Steam records its
+# extra library folders in libraryfolders.vdf, so the install root is found rather than
+# assumed - this was one developer's `E:\Steam` and worked on exactly one machine.
+STATS_SUFFIX = Path("steamapps/common/FPSAimTrainer/FPSAimTrainer/stats")
+
+
+def steam_roots() -> list[Path]:
+    """Every Steam install root worth looking in, best guess first."""
+    roots: list[Path] = []
+
+    for env in ("ProgramFiles(x86)", "ProgramFiles"):
+        base = os.environ.get(env)
+        if base:
+            roots.append(Path(base) / "Steam")
+
+    for drive in "CDEFGH":
+        roots.append(Path(f"{drive}:/Steam"))
+        roots.append(Path(f"{drive}:/Program Files (x86)/Steam"))
+
+    # Libraries declared by whichever root exists: the game is frequently on a different
+    # drive from Steam itself.
+    for root in list(roots):
+        vdf = root / "steamapps" / "libraryfolders.vdf"
+        try:
+            text = vdf.read_text(encoding="utf-8", errors="replace")
+        except OSError:
+            continue
+        for match in re.finditer(r'"path"\s*"([^"]+)"', text):
+            roots.append(Path(match.group(1).replace("\\\\", "\\")))
+
+    seen: list[Path] = []
+    for root in roots:
+        if root not in seen:
+            seen.append(root)
+    return seen
+
+
+def find_stats() -> Path | None:
+    for root in steam_roots():
+        candidate = root / STATS_SUFFIX
+        if candidate.is_dir():
+            return candidate
+    return None
+
+
+def find_loginusers() -> Path | None:
+    for root in steam_roots():
+        candidate = root / "config" / "loginusers.vdf"
+        if candidate.is_file():
+            return candidate
+    return None
+
+
+LOGINUSERS = find_loginusers()
+STATS = find_stats()
 
 API = "https://kovaaks.com/webapp-backend/benchmarks/player-progress-rank-benchmark"
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/126.0 Safari/537.36"
@@ -31,6 +86,9 @@ DEFAULT_BENCHMARK_ID = 458
 
 
 def steam_accounts() -> list[tuple[str, str]]:
+    if LOGINUSERS is None:
+        searched = "\n".join(f"  {r / 'config' / 'loginusers.vdf'}" for r in steam_roots())
+        sys.exit(f"no Steam loginusers.vdf found. Searched:\n{searched}")
     text = LOGINUSERS.read_text(encoding="utf-8", errors="replace")
     out = []
     for m in re.finditer(r'"(7656\d{13})"\s*\{(.*?)\n\t\}', text, re.DOTALL):
@@ -42,6 +100,9 @@ def steam_accounts() -> list[tuple[str, str]]:
 
 def local_bests() -> dict[str, float]:
     """Highest local score per scenario, from the filenames + Score: field."""
+    if STATS is None:
+        searched = "\n".join(f"  {r / STATS_SUFFIX}" for r in steam_roots())
+        sys.exit(f"no KovaaK's stats folder found. Searched:\n{searched}")
     bests: dict[str, float] = {}
     for path in STATS.glob("*Stats.csv"):
         name = path.name.split(" - Challenge - ")[0]

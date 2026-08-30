@@ -84,6 +84,30 @@ function benchmarkScenarios(): { scenario: string; label: string; leaderboardId:
   return [...out.values()];
 }
 
+/**
+ * Every scenario the pool names, which is what the next `build:season` will ask for.
+ *
+ * Read straight from `pool.json` rather than through the season, because the pool is the
+ * thing somebody edits and the season is what gets built from it.
+ */
+function poolScenarios(): { scenario: string; label: string; leaderboardId: number | null; window: number }[] {
+  const pool = JSON.parse(readFileSync(dataFile("pool.json"), "utf8")) as {
+    families?: {
+      family: string;
+      variants: { window: number; scenario: string; label?: string; leaderboardId: number | null }[];
+    }[];
+  };
+
+  return (pool.families ?? []).flatMap((f) =>
+    f.variants.map((v) => ({
+      scenario: v.scenario,
+      label: `${f.family} ${v.label ?? v.scenario}`,
+      leaderboardId: v.leaderboardId,
+      window: v.window ?? 0,
+    })),
+  );
+}
+
 async function main(): Promise<void> {
   const season = loadSeason();
 
@@ -99,19 +123,34 @@ async function main(): Promise<void> {
   const sameShape =
     JSON.stringify(existing?.samplePoints ?? []) === JSON.stringify(SAMPLE_POINTS);
 
-  // The season pool by default; every benchmark's scenarios with --benchmarks, which is
-  // what the cross-benchmark reference sheet reads.
+  // The pool and the season together by default; every benchmark's scenarios with
+  // --benchmarks, which is what the cross-benchmark reference sheet reads.
+  //
+  // The pool has to come first, and reading the season alone was a deadlock: build:season
+  // refuses a pool scenario with no sampled board and tells you to run this, and this
+  // sampled the season - which is build:season's own output and still describes the pool
+  // as it was before the edit. So adding a family meant sampling nothing it needed. The
+  // season is still unioned in, because a scenario added in the editor is in the season
+  // before it is in the pool and would otherwise lose its board on the next run.
   const source = args.includes("--benchmarks")
     ? benchmarkScenarios()
-    : season.scenarios.map((s) => ({
-        scenario: s.scenario,
-        label: s.label ?? s.scenario,
-        leaderboardId: s.leaderboardId,
-        window: s.window ?? 0,
-      }));
+    : poolScenarios().concat(
+        season.scenarios.map((s) => ({
+          scenario: s.scenario,
+          label: s.label ?? s.scenario,
+          leaderboardId: s.leaderboardId,
+          window: s.window ?? 0,
+        })),
+      );
 
-  const wanted = source.filter((s) => s.leaderboardId != null);
-  const skipped = source.length - wanted.length;
+  // Deduplicated: the pool and the season overlap almost entirely, and a scenario asked
+  // for twice would be sampled twice and written twice.
+  const byScenario = new Map<string, (typeof source)[number]>();
+  for (const s of source) if (!byScenario.has(s.scenario)) byScenario.set(s.scenario, s);
+  const unique = [...byScenario.values()];
+
+  const wanted = unique.filter((s) => s.leaderboardId != null);
+  const skipped = unique.length - wanted.length;
 
   console.log(
     `sampling ${Math.min(wanted.length, only)} of ${wanted.length} scenarios at ` +

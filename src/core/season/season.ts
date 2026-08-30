@@ -59,6 +59,13 @@ export interface SeasonScenario {
    * can be twelve ranks deep without becoming three times the grind.
    */
   family?: string;
+  /**
+   * The sub-skill the family trains, in the pool's two-word form: "Static Clicking",
+   * "Reading Tracking". Carried into the season rather than looked up because the season
+   * is what the app and the database read, and a sub-skill that only exists in the pool
+   * is one the weakness map and the sub-skill queues cannot see.
+   */
+  subCategory?: string;
   /** 0-based window this variant grades. See `Season.windowSize`. */
   window?: number;
   /**

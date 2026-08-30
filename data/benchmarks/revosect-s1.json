@@ -1,0 +1,787 @@
+{
+  "benchmarkName": "Revosect S1",
+  "abbreviation": "rA",
+  "color": "#EF4444",
+  "spreadsheetURL": "https://docs.google.com/spreadsheets/d/1MQujX14dooQWcHu4mvvP5fetHVIr7Apg1taR96hSho0",
+  "evxlUrl": "https://evxl.app/benchmarks/Revosect%20S1",
+  "source": "kovaaks.com benchmarks API + evxl registry",
+  "fetchedAt": "2026-08-25T13:51:07Z",
+  "difficulties": [
+    {
+      "name": "Easy",
+      "kovaaksBenchmarkId": 533,
+      "rankNames": [
+        "Bronze",
+        "Silver",
+        "Gold",
+        "Platinum",
+        "Ruby",
+        "Emerald"
+      ],
+      "rankColors": {
+        "Bronze": "#B45F06",
+        "Silver": "#999999",
+        "Gold": "#FFD966",
+        "Platinum": "#A4C2F4",
+        "Ruby": "#E0115F",
+        "Emerald": "#50C878"
+      },
+      "categories": [
+        {
+          "name": "Static",
+          "rankMaxes": [
+            6666.67,
+            13333.33,
+            20000,
+            26666.67,
+            33333.33,
+            40000
+          ],
+          "scenarios": [
+            {
+              "name": "1w4ts reload",
+              "leaderboardId": 387,
+              "rankMaxes": [
+                80,
+                85,
+                90,
+                100,
+                110,
+                115
+              ]
+            },
+            {
+              "name": "Wide Wall 3 Targets",
+              "leaderboardId": 337,
+              "rankMaxes": [
+                70,
+                75,
+                85,
+                95,
+                105,
+                115
+              ]
+            },
+            {
+              "name": "voxTS Static Click rAim",
+              "leaderboardId": 573,
+              "rankMaxes": [
+                110,
+                115,
+                125,
+                135,
+                145,
+                155
+              ]
+            },
+            {
+              "name": "1w6t NQS Raspberry",
+              "leaderboardId": 1581,
+              "rankMaxes": [
+                80,
+                90,
+                100,
+                110,
+                120,
+                130
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Kinetic",
+          "rankMaxes": [
+            6666.67,
+            13333.33,
+            20000,
+            26666.67,
+            33333.33,
+            40000
+          ],
+          "scenarios": [
+            {
+              "name": "B180 rAim Easy",
+              "leaderboardId": 781,
+              "rankMaxes": [
+                50,
+                55,
+                62,
+                68,
+                76,
+                85
+              ]
+            },
+            {
+              "name": "Pasu rAim Easy",
+              "leaderboardId": 782,
+              "rankMaxes": [
+                90,
+                94,
+                100,
+                108,
+                115,
+                125
+              ]
+            },
+            {
+              "name": "Popcorn rAim Easy",
+              "leaderboardId": 607,
+              "rankMaxes": [
+                80,
+                120,
+                160,
+                200,
+                250,
+                290
+              ]
+            },
+            {
+              "name": "ToonsClick rAim Easy",
+              "leaderboardId": 5093,
+              "rankMaxes": [
+                45,
+                52,
+                56,
+                60,
+                64,
+                68
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Precise",
+          "rankMaxes": [
+            6666.67,
+            13333.33,
+            20000,
+            26666.67,
+            33333.33,
+            40000
+          ],
+          "scenarios": [
+            {
+              "name": "PGTI rAim Easy",
+              "leaderboardId": 655,
+              "rankMaxes": [
+                850,
+                1000,
+                1150,
+                1350,
+                1550,
+                1800
+              ]
+            },
+            {
+              "name": "Smoothbot rAim Easy",
+              "leaderboardId": 609,
+              "rankMaxes": [
+                2100,
+                2400,
+                2700,
+                3100,
+                3600,
+                4000
+              ]
+            },
+            {
+              "name": "Air Angelic rAim Easy",
+              "leaderboardId": 572,
+              "rankMaxes": [
+                880,
+                885,
+                890,
+                900,
+                905,
+                915
+              ]
+            },
+            {
+              "name": "Controlsphere rAim Easy",
+              "leaderboardId": 5137,
+              "rankMaxes": [
+                7200,
+                7800,
+                8400,
+                9000,
+                9500,
+                10000
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Reactive",
+          "rankMaxes": [
+            6666.67,
+            13333.33,
+            20000,
+            26666.67,
+            33333.33,
+            40000
+          ],
+          "scenarios": [
+            {
+              "name": "fuglaaXY Reactive rAim Easy",
+              "leaderboardId": 571,
+              "rankMaxes": [
+                7000,
+                8000,
+                9000,
+                10000,
+                11000,
+                12000
+              ]
+            },
+            {
+              "name": "Air 3478 rAim Easy",
+              "leaderboardId": 355,
+              "rankMaxes": [
+                872,
+                882,
+                892,
+                902,
+                912,
+                918
+              ]
+            },
+            {
+              "name": "MFSI rAim Easy",
+              "leaderboardId": 5191,
+              "rankMaxes": [
+                10300,
+                10700,
+                11200,
+                11700,
+                12700,
+                13700
+              ]
+            },
+            {
+              "name": "Smooth Thin Strafes Raspberry Easy",
+              "leaderboardId": 5536,
+              "rankMaxes": [
+                5700,
+                6400,
+                7200,
+                7600,
+                8300,
+                9000
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Flick TS",
+          "rankMaxes": [
+            6666.67,
+            13333.33,
+            20000,
+            26666.67,
+            33333.33,
+            40000
+          ],
+          "scenarios": [
+            {
+              "name": "PatCircleSwitch rAim",
+              "leaderboardId": 15485,
+              "rankMaxes": [
+                4800,
+                5200,
+                5600,
+                6200,
+                6600,
+                7000
+              ]
+            },
+            {
+              "name": "Pokeball Wide rAim Easy",
+              "leaderboardId": 738,
+              "rankMaxes": [
+                90,
+                100,
+                110,
+                120,
+                130,
+                140
+              ]
+            },
+            {
+              "name": "voxTS rAim Easy",
+              "leaderboardId": 739,
+              "rankMaxes": [
+                71,
+                77,
+                83,
+                90,
+                95,
+                100
+              ]
+            },
+            {
+              "name": "devTS Goated rAim Easy",
+              "leaderboardId": 5159,
+              "rankMaxes": [
+                470,
+                500,
+                530,
+                560,
+                590,
+                630
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Track TS",
+          "rankMaxes": [
+            6666.67,
+            13333.33,
+            20000,
+            26666.67,
+            33333.33,
+            40000
+          ],
+          "scenarios": [
+            {
+              "name": "B180T rAim Easy",
+              "leaderboardId": 740,
+              "rankMaxes": [
+                45,
+                50,
+                55,
+                60,
+                65,
+                70
+              ]
+            },
+            {
+              "name": "kinTS rAim Easy",
+              "leaderboardId": 611,
+              "rankMaxes": [
+                16000,
+                17000,
+                18000,
+                19000,
+                20000,
+                21000
+              ]
+            },
+            {
+              "name": "Pasu Track Smaller rAim Easy",
+              "leaderboardId": 610,
+              "rankMaxes": [
+                48,
+                52,
+                56,
+                60,
+                64,
+                68
+              ]
+            },
+            {
+              "name": "ToonsTS rAim Easy",
+              "leaderboardId": 5054,
+              "rankMaxes": [
+                36,
+                42,
+                48,
+                54,
+                64,
+                68
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Advanced",
+      "kovaaksBenchmarkId": 534,
+      "rankNames": [
+        "Diamond",
+        "Master",
+        "Grandmaster",
+        "Immortal",
+        "Archon",
+        "Divine"
+      ],
+      "rankColors": {
+        "Diamond": "#4A86E8",
+        "Master": "#FF00FF",
+        "Grandmaster": "#FFD700",
+        "Immortal": "#C36EFF",
+        "Archon": "#FF0000",
+        "Divine": "#050000"
+      },
+      "categories": [
+        {
+          "name": "Static",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "1w4ts reload",
+              "leaderboardId": 387,
+              "rankMaxes": [
+                120,
+                125,
+                132,
+                137,
+                145,
+                150
+              ]
+            },
+            {
+              "name": "Wide Wall 3 Targets",
+              "leaderboardId": 337,
+              "rankMaxes": [
+                120,
+                125,
+                130,
+                135,
+                140,
+                145
+              ]
+            },
+            {
+              "name": "voxTS Static Click rAim",
+              "leaderboardId": 573,
+              "rankMaxes": [
+                160,
+                165,
+                170,
+                175,
+                185,
+                195
+              ]
+            },
+            {
+              "name": "1w6t NQS Raspberry",
+              "leaderboardId": 1581,
+              "rankMaxes": [
+                140,
+                150,
+                155,
+                160,
+                170,
+                180
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Kinetic",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "Bounce 180 rAim",
+              "leaderboardId": 526,
+              "rankMaxes": [
+                70,
+                80,
+                85,
+                90,
+                97,
+                103
+              ]
+            },
+            {
+              "name": "Pasu Reload Goated",
+              "leaderboardId": 583,
+              "rankMaxes": [
+                108,
+                115,
+                122,
+                127,
+                137,
+                145
+              ]
+            },
+            {
+              "name": "Popcorn Goated rAim",
+              "leaderboardId": 777,
+              "rankMaxes": [
+                200,
+                250,
+                290,
+                320,
+                360,
+                390
+              ]
+            },
+            {
+              "name": "ToonsClick rAim",
+              "leaderboardId": 5053,
+              "rankMaxes": [
+                55,
+                60,
+                65,
+                75,
+                85,
+                91
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Precise",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "PGTI rAim",
+              "leaderboardId": 4686,
+              "rankMaxes": [
+                1250,
+                1400,
+                1600,
+                1800,
+                2000,
+                2300
+              ]
+            },
+            {
+              "name": "Smoothbot rAim",
+              "leaderboardId": 5151,
+              "rankMaxes": [
+                3600,
+                3900,
+                4100,
+                4400,
+                4700,
+                5200
+              ]
+            },
+            {
+              "name": "Air Angelic",
+              "leaderboardId": 419,
+              "rankMaxes": [
+                898,
+                906,
+                910,
+                915,
+                921,
+                927
+              ]
+            },
+            {
+              "name": "Controlsphere rAim",
+              "leaderboardId": 5102,
+              "rankMaxes": [
+                7000,
+                7600,
+                8200,
+                8800,
+                9250,
+                10800
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Reactive",
+          "rankMaxes": [
+            1666.67,
+            3333.33,
+            5000,
+            6666.67,
+            8333.33,
+            10000
+          ],
+          "scenarios": [
+            {
+              "name": "fuglaaXY Reactive rAim",
+              "leaderboardId": 430,
+              "rankMaxes": [
+                8000,
+                9000,
+                9400,
+                9900,
+                10800,
+                11700
+              ]
+            },
+            {
+              "name": "Air Small 3478 rAim",
+              "leaderboardId": 9824,
+              "rankMaxes": [
+                886,
+                896,
+                900,
+                907,
+                914,
+                922
+              ]
+            },
+            {
+              "name": "MFSI rAim",
+              "leaderboardId": 5075,
+              "rankMaxes": [
+                10500,
+                11500,
+                12200,
+                12800,
+                13450,
+                14000
+              ]
+            },
+            {
+              "name": "Smooth Thin Strafes Raspberry",
+              "leaderboardId": 3696,
+              "rankMaxes": [
+                5500,
+                6100,
+                6400,
+                6800,
+                7350,
+                7900
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Flick TS",
+          "rankMaxes": [
+            1666.67,
+            3333.33,
+            5000,
+            6666.67,
+            8333.33,
+            10000
+          ],
+          "scenarios": [
+            {
+              "name": "PatCircleSwitch rAim",
+              "leaderboardId": 15485,
+              "rankMaxes": [
+                7300,
+                7500,
+                7800,
+                8300,
+                8800,
+                9200
+              ]
+            },
+            {
+              "name": "Pokeball Wide rAim",
+              "leaderboardId": 527,
+              "rankMaxes": [
+                132,
+                138,
+                143,
+                148,
+                153,
+                158
+              ]
+            },
+            {
+              "name": "voxTS rAim",
+              "leaderboardId": 528,
+              "rankMaxes": [
+                96,
+                100,
+                104,
+                108,
+                112,
+                117
+              ]
+            },
+            {
+              "name": "devTS Goated rAim",
+              "leaderboardId": 5133,
+              "rankMaxes": [
+                570,
+                600,
+                630,
+                650,
+                690,
+                720
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Track TS",
+          "rankMaxes": [
+            1666.67,
+            3333.33,
+            5000,
+            6666.67,
+            8333.33,
+            10000
+          ],
+          "scenarios": [
+            {
+              "name": "Bounce 180 Tracking Small",
+              "leaderboardId": 105,
+              "rankMaxes": [
+                64,
+                68,
+                72,
+                77,
+                84,
+                90
+              ]
+            },
+            {
+              "name": "kinTS rAim",
+              "leaderboardId": 360,
+              "rankMaxes": [
+                19000,
+                20500,
+                21500,
+                22500,
+                23700,
+                24600
+              ]
+            },
+            {
+              "name": "Pasu Track Smaller rAim",
+              "leaderboardId": 552,
+              "rankMaxes": [
+                65,
+                70,
+                75,
+                78,
+                84,
+                90
+              ]
+            },
+            {
+              "name": "ToonsTS rAim",
+              "leaderboardId": 5042,
+              "rankMaxes": [
+                52,
+                56,
+                60,
+                65,
+                72,
+                76
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

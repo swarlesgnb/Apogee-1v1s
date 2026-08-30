@@ -1,0 +1,3320 @@
+{
+  "benchmarkName": "TSK Mixed Benchmarks",
+  "abbreviation": "TSK",
+  "color": "#90B17C",
+  "spreadsheetURL": "https://docs.google.com/spreadsheets/d/1QlmPnGcQ9joO49Fx3wVmEGyYIWzEGlPgDdpfAulAu-E",
+  "evxlUrl": "https://evxl.app/benchmarks/TSK%20Mixed%20Benchmarks",
+  "source": "kovaaks.com benchmarks API + evxl registry",
+  "fetchedAt": "2026-08-25T13:51:20Z",
+  "difficulties": [
+    {
+      "name": "Beginner",
+      "kovaaksBenchmarkId": 667,
+      "rankNames": [
+        "Level 1",
+        "Level 2",
+        "Level 3",
+        "Level 4",
+        "Level 5"
+      ],
+      "rankColors": {
+        "Level 1": "#CCCCCC",
+        "Level 2": "#EAD1DC",
+        "Level 3": "#D5A6BD",
+        "Level 4": "#C27BA0",
+        "Level 5": "#666666"
+      },
+      "categories": [
+        {
+          "name": "Beginner",
+          "rankMaxes": [
+            4000,
+            8000,
+            12000,
+            16000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "TSK - Centering 90 Speed 2 MASSIVE",
+              "leaderboardId": 132422,
+              "rankMaxes": [
+                600,
+                900,
+                1200,
+                1600,
+                2000
+              ]
+            },
+            {
+              "name": "TSK - 360 Turn MASSIVE",
+              "leaderboardId": 132423,
+              "rankMaxes": [
+                600,
+                900,
+                1200,
+                1600,
+                2000
+              ]
+            },
+            {
+              "name": "TSK - DVD Tracking MASSIVE",
+              "leaderboardId": 132420,
+              "rankMaxes": [
+                600,
+                900,
+                1200,
+                1600,
+                2000
+              ]
+            },
+            {
+              "name": "TSK - Hewchy's VAI 20 MASSIVE",
+              "leaderboardId": 132430,
+              "rankMaxes": [
+                600,
+                900,
+                1200,
+                1600,
+                2000
+              ]
+            },
+            {
+              "name": "TSK - Hewchy's VAI 160 MASSIVE",
+              "leaderboardId": 132424,
+              "rankMaxes": [
+                600,
+                900,
+                1200,
+                1600,
+                2000
+              ]
+            },
+            {
+              "name": "TSK - SYV MASSIVE",
+              "leaderboardId": 132417,
+              "rankMaxes": [
+                600,
+                900,
+                1200,
+                1600,
+                2000
+              ]
+            },
+            {
+              "name": "TSK - VSTP Soft MASSIVE",
+              "leaderboardId": 132419,
+              "rankMaxes": [
+                400,
+                700,
+                1000,
+                1400,
+                1800
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Main",
+      "kovaaksBenchmarkId": 668,
+      "rankNames": [
+        "Level 1",
+        "Level 2",
+        "Level 3",
+        "Level 4",
+        "Level 5",
+        "Basic",
+        "Beginner",
+        "Intermediate",
+        "Pre-Advanced",
+        "Advanced"
+      ],
+      "rankColors": {
+        "Level 1": "#CCCCCC",
+        "Level 2": "#EAD1DC",
+        "Level 3": "#D5A6BD",
+        "Level 4": "#C27BA0",
+        "Level 5": "#666666",
+        "Basic": "#93C47D",
+        "Beginner": "#FFE599",
+        "Intermediate": "#FCC1C1",
+        "Pre-Advanced": "#D2BFFE",
+        "Advanced": "#B5D1FF"
+      },
+      "categories": [
+        {
+          "name": "Horizontal",
+          "rankMaxes": [
+            2000,
+            4000,
+            6000,
+            8000,
+            10000,
+            12000,
+            14000,
+            16000,
+            18000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "TSK - ST60 Thick",
+              "leaderboardId": 120662,
+              "rankMaxes": [
+                400,
+                600,
+                800,
+                1000,
+                1200,
+                1400,
+                1700,
+                2000,
+                2300,
+                2500
+              ]
+            },
+            {
+              "name": "TSK - SYW",
+              "leaderboardId": 120700,
+              "rankMaxes": [
+                300,
+                400,
+                500,
+                600,
+                700,
+                950,
+                1200,
+                1400,
+                1600,
+                1800
+              ]
+            },
+            {
+              "name": "TSK - Centering 90 Speed 2",
+              "leaderboardId": 120712,
+              "rankMaxes": [
+                350,
+                450,
+                600,
+                800,
+                1000,
+                1200,
+                1400,
+                1600,
+                1800,
+                2000
+              ]
+            },
+            {
+              "name": "TSK - 360 Turn",
+              "leaderboardId": 120694,
+              "rankMaxes": [
+                300,
+                400,
+                500,
+                600,
+                800,
+                1000,
+                1250,
+                1500,
+                1750,
+                2000
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Omni",
+          "rankMaxes": [
+            2000,
+            4000,
+            6000,
+            8000,
+            10000,
+            12000,
+            14000,
+            16000,
+            18000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "TSK - DVD Tracking Big",
+              "leaderboardId": 123665,
+              "rankMaxes": [
+                500,
+                700,
+                900,
+                1100,
+                1300,
+                1500,
+                1800,
+                2100,
+                2350,
+                2450
+              ]
+            },
+            {
+              "name": "TSK - DVD Tracking",
+              "leaderboardId": 123669,
+              "rankMaxes": [
+                400,
+                500,
+                600,
+                800,
+                1000,
+                1200,
+                1500,
+                1700,
+                1950,
+                2200
+              ]
+            },
+            {
+              "name": "TSK - Box Tracking",
+              "leaderboardId": 123458,
+              "rankMaxes": [
+                300,
+                400,
+                500,
+                600,
+                800,
+                1000,
+                1300,
+                1500,
+                1700,
+                1900
+              ]
+            },
+            {
+              "name": "TSK - Wavy Tracking",
+              "leaderboardId": 120839,
+              "rankMaxes": [
+                300,
+                400,
+                500,
+                600,
+                700,
+                800,
+                1200,
+                1400,
+                1700,
+                1900
+              ]
+            }
+          ]
+        },
+        {
+          "name": "VAI",
+          "rankMaxes": [
+            2000,
+            4000,
+            6000,
+            8000,
+            10000,
+            12000,
+            14000,
+            16000,
+            18000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "TSK - Hewchy's VAI 20",
+              "leaderboardId": 125975,
+              "rankMaxes": [
+                500,
+                700,
+                900,
+                1100,
+                1300,
+                1600,
+                1900,
+                2100,
+                2300,
+                2430
+              ]
+            },
+            {
+              "name": "TSK - Hewchy's VAI 160",
+              "leaderboardId": 125978,
+              "rankMaxes": [
+                400,
+                600,
+                800,
+                1000,
+                1200,
+                1550,
+                1850,
+                2050,
+                2250,
+                2400
+              ]
+            },
+            {
+              "name": "TSK - Hewchy's VAI 70",
+              "leaderboardId": 125980,
+              "rankMaxes": [
+                500,
+                700,
+                900,
+                1100,
+                1300,
+                1560,
+                1860,
+                2060,
+                2260,
+                2390
+              ]
+            },
+            {
+              "name": "TSK - Hewchy's VAI 110",
+              "leaderboardId": 125974,
+              "rankMaxes": [
+                400,
+                600,
+                800,
+                1000,
+                1200,
+                1510,
+                1810,
+                2010,
+                2210,
+                2360
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Vertical",
+          "rankMaxes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "scenarios": [
+            {
+              "name": "TSK - SYV Big",
+              "leaderboardId": 128439,
+              "rankMaxes": [
+                400,
+                500,
+                600,
+                800,
+                1000,
+                1200,
+                1500,
+                1850,
+                2200,
+                2400
+              ]
+            },
+            {
+              "name": "TSK - SYV",
+              "leaderboardId": 126435,
+              "rankMaxes": [
+                300,
+                400,
+                500,
+                600,
+                700,
+                900,
+                1300,
+                1700,
+                2000,
+                2150
+              ]
+            },
+            {
+              "name": "TSK - VSTP Soft Big",
+              "leaderboardId": 128444,
+              "rankMaxes": [
+                500,
+                600,
+                700,
+                800,
+                1000,
+                1200,
+                1500,
+                1850,
+                2200,
+                2400
+              ]
+            },
+            {
+              "name": "TSK - VSTP Soft",
+              "leaderboardId": 126425,
+              "rankMaxes": [
+                400,
+                500,
+                600,
+                700,
+                800,
+                1000,
+                1350,
+                1700,
+                2000,
+                2150
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Ultimate",
+      "kovaaksBenchmarkId": 772,
+      "rankNames": [
+        "Basic",
+        "Beginner",
+        "Intermediate",
+        "Pre-Adv.",
+        "Advanced",
+        "BLESSED",
+        "EXALTED",
+        "UBER",
+        "ARCADIA",
+        "HORIZON"
+      ],
+      "rankColors": {
+        "Basic": "#93C47D",
+        "Beginner": "#FFE599",
+        "Intermediate": "#FCC1C1",
+        "Pre-Adv.": "#D2BFFE",
+        "Advanced": "#B5D1FF",
+        "BLESSED": "#E06666",
+        "EXALTED": "#FBBC04",
+        "UBER": "#351C75",
+        "ARCADIA": "#274E13",
+        "HORIZON": "#24DDD8"
+      },
+      "categories": [
+        {
+          "name": "Horizontal",
+          "rankMaxes": [
+            10000,
+            20000,
+            30000,
+            40000,
+            50000,
+            60000,
+            70000,
+            80000,
+            90000,
+            100000
+          ],
+          "scenarios": [
+            {
+              "name": "TSK - ST60 Thick",
+              "leaderboardId": 120662,
+              "rankMaxes": [
+                1400,
+                1700,
+                2000,
+                2300,
+                2500,
+                2580,
+                2640,
+                2680,
+                2780,
+                2909
+              ]
+            },
+            {
+              "name": "TSK - ST60",
+              "leaderboardId": 120665,
+              "rankMaxes": [
+                1000,
+                1250,
+                1500,
+                1750,
+                2000,
+                2100,
+                2200,
+                2300,
+                2420,
+                2620
+              ]
+            },
+            {
+              "name": "TSK - SYW",
+              "leaderboardId": 120700,
+              "rankMaxes": [
+                950,
+                1200,
+                1400,
+                1600,
+                1800,
+                1900,
+                2000,
+                2100,
+                2200,
+                2279
+              ]
+            },
+            {
+              "name": "TSK - SYW Thin",
+              "leaderboardId": 121154,
+              "rankMaxes": [
+                500,
+                700,
+                900,
+                1050,
+                1200,
+                1300,
+                1400,
+                1600,
+                1800,
+                1891
+              ]
+            },
+            {
+              "name": "TSK - Centering 45 Speed 2 Stop",
+              "leaderboardId": 120684,
+              "rankMaxes": [
+                800,
+                1000,
+                1250,
+                1500,
+                1700,
+                1900,
+                2050,
+                2200,
+                2300,
+                2490
+              ]
+            },
+            {
+              "name": "TSK - Centering 90 Speed 2",
+              "leaderboardId": 120712,
+              "rankMaxes": [
+                1200,
+                1400,
+                1600,
+                1800,
+                2000,
+                2100,
+                2200,
+                2300,
+                2450,
+                2599
+              ]
+            },
+            {
+              "name": "TSK - Centering 180 Speed 2",
+              "leaderboardId": 120677,
+              "rankMaxes": [
+                1200,
+                1400,
+                1600,
+                1800,
+                2000,
+                2100,
+                2200,
+                2300,
+                2500,
+                2636
+              ]
+            },
+            {
+              "name": "TSK - Centering 180 Speed 3",
+              "leaderboardId": 120685,
+              "rankMaxes": [
+                800,
+                1000,
+                1200,
+                1400,
+                1600,
+                1700,
+                1800,
+                1900,
+                2200,
+                2228
+              ]
+            },
+            {
+              "name": "TSK - Varied Centering 90 Trio",
+              "leaderboardId": 120731,
+              "rankMaxes": [
+                800,
+                1000,
+                1200,
+                1400,
+                1600,
+                1700,
+                1800,
+                1900,
+                2030,
+                2338
+              ]
+            },
+            {
+              "name": "TSK - 360 Turn",
+              "leaderboardId": 120694,
+              "rankMaxes": [
+                1000,
+                1250,
+                1500,
+                1750,
+                2000,
+                2130,
+                2260,
+                2400,
+                2650,
+                2977
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Omni",
+          "rankMaxes": [
+            10000,
+            20000,
+            30000,
+            40000,
+            50000,
+            60000,
+            70000,
+            80000,
+            90000,
+            100000
+          ],
+          "scenarios": [
+            {
+              "name": "TSK - DVD Tracking Big",
+              "leaderboardId": 123665,
+              "rankMaxes": [
+                1500,
+                1800,
+                2100,
+                2350,
+                2450,
+                2530,
+                2600,
+                2660,
+                2750,
+                2834
+              ]
+            },
+            {
+              "name": "TSK - DVD Tracking",
+              "leaderboardId": 123669,
+              "rankMaxes": [
+                1200,
+                1500,
+                1700,
+                1950,
+                2200,
+                2270,
+                2350,
+                2450,
+                2650,
+                2681
+              ]
+            },
+            {
+              "name": "TSK - DVD Tracking Small",
+              "leaderboardId": 123668,
+              "rankMaxes": [
+                700,
+                1000,
+                1250,
+                1450,
+                1650,
+                1720,
+                1800,
+                1900,
+                2180,
+                2382
+              ]
+            },
+            {
+              "name": "TSK - DVD Tracking Close",
+              "leaderboardId": 123715,
+              "rankMaxes": [
+                900,
+                1400,
+                1750,
+                1900,
+                2100,
+                2200,
+                2300,
+                2400,
+                2500,
+                2735
+              ]
+            },
+            {
+              "name": "TSK - Box Tracking",
+              "leaderboardId": 123458,
+              "rankMaxes": [
+                1000,
+                1300,
+                1500,
+                1700,
+                1900,
+                2000,
+                2100,
+                2200,
+                2300,
+                2562
+              ]
+            },
+            {
+              "name": "TSK - Box Tracking Small",
+              "leaderboardId": 123460,
+              "rankMaxes": [
+                700,
+                900,
+                1100,
+                1200,
+                1300,
+                1400,
+                1500,
+                1600,
+                1700,
+                2028
+              ]
+            },
+            {
+              "name": "TSK - Box Tracking 3D",
+              "leaderboardId": 123492,
+              "rankMaxes": [
+                800,
+                1100,
+                1300,
+                1500,
+                1700,
+                1900,
+                2100,
+                2200,
+                2320,
+                2585
+              ]
+            },
+            {
+              "name": "TSK - Box Tracking Close",
+              "leaderboardId": 123467,
+              "rankMaxes": [
+                800,
+                1000,
+                1200,
+                1400,
+                1600,
+                1800,
+                1900,
+                2180,
+                2260,
+                2411
+              ]
+            },
+            {
+              "name": "TSK - Wavy Tracking",
+              "leaderboardId": 120839,
+              "rankMaxes": [
+                800,
+                1200,
+                1400,
+                1700,
+                1900,
+                2080,
+                2200,
+                2350,
+                2500,
+                2726
+              ]
+            },
+            {
+              "name": "TSK - Wavy Tracking Small",
+              "leaderboardId": 121359,
+              "rankMaxes": [
+                500,
+                800,
+                1000,
+                1200,
+                1400,
+                1500,
+                1600,
+                1700,
+                2000,
+                1933
+              ]
+            }
+          ]
+        },
+        {
+          "name": "VAI",
+          "rankMaxes": [
+            10000,
+            20000,
+            30000,
+            40000,
+            50000,
+            60000,
+            70000,
+            80000,
+            90000,
+            100000
+          ],
+          "scenarios": [
+            {
+              "name": "TSK - Hewchy's VAI 20",
+              "leaderboardId": 125975,
+              "rankMaxes": [
+                1600,
+                1900,
+                2100,
+                2300,
+                2430,
+                2520,
+                2600,
+                2660,
+                2740,
+                2899
+              ]
+            },
+            {
+              "name": "TSK - Hewchy's VAI 20 Small",
+              "leaderboardId": 125976,
+              "rankMaxes": [
+                900,
+                1200,
+                1500,
+                1750,
+                2000,
+                2100,
+                2250,
+                2350,
+                2500,
+                2691
+              ]
+            },
+            {
+              "name": "TSK - Hewchy's VAI 160",
+              "leaderboardId": 125978,
+              "rankMaxes": [
+                1550,
+                1850,
+                2050,
+                2250,
+                2400,
+                2490,
+                2570,
+                2630,
+                2730,
+                2898
+              ]
+            },
+            {
+              "name": "TSK - Hewchy's VAI 160 Small",
+              "leaderboardId": 125979,
+              "rankMaxes": [
+                800,
+                1100,
+                1400,
+                1650,
+                1900,
+                2000,
+                2150,
+                2250,
+                2450,
+                2741
+              ]
+            },
+            {
+              "name": "TSK - Hewchy's VAI 70",
+              "leaderboardId": 125980,
+              "rankMaxes": [
+                1560,
+                1860,
+                2060,
+                2260,
+                2390,
+                2480,
+                2560,
+                2620,
+                2700,
+                2860
+              ]
+            },
+            {
+              "name": "TSK - Hewchy's VAI 70 Small",
+              "leaderboardId": 125981,
+              "rankMaxes": [
+                800,
+                1100,
+                1400,
+                1650,
+                1900,
+                2000,
+                2150,
+                2270,
+                2460,
+                2414
+              ]
+            },
+            {
+              "name": "TSK - Hewchy's VAI 110",
+              "leaderboardId": 125974,
+              "rankMaxes": [
+                1510,
+                1810,
+                2010,
+                2210,
+                2360,
+                2450,
+                2530,
+                2590,
+                2670,
+                2822
+              ]
+            },
+            {
+              "name": "TSK - Hewchy's VAI 110 Small",
+              "leaderboardId": 125982,
+              "rankMaxes": [
+                700,
+                1000,
+                1300,
+                1550,
+                1800,
+                1900,
+                2050,
+                2180,
+                2400,
+                2579
+              ]
+            },
+            {
+              "name": "TSK - Hewchy's VAI 45",
+              "leaderboardId": 125983,
+              "rankMaxes": [
+                1600,
+                1900,
+                2100,
+                2300,
+                2430,
+                2520,
+                2600,
+                2660,
+                2740,
+                2866
+              ]
+            },
+            {
+              "name": "TSK - Hewchy's VAI 135",
+              "leaderboardId": 125984,
+              "rankMaxes": [
+                1550,
+                1850,
+                2050,
+                2250,
+                2400,
+                2490,
+                2570,
+                2630,
+                2730,
+                2842
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Vertical",
+          "rankMaxes": [
+            10000,
+            20000,
+            30000,
+            40000,
+            50000,
+            60000,
+            70000,
+            80000,
+            90000,
+            100000
+          ],
+          "scenarios": [
+            {
+              "name": "TSK - SYV Big",
+              "leaderboardId": 128439,
+              "rankMaxes": [
+                1200,
+                1500,
+                1850,
+                2200,
+                2400,
+                2520,
+                2600,
+                2650,
+                2730,
+                2891
+              ]
+            },
+            {
+              "name": "TSK - SYV",
+              "leaderboardId": 126435,
+              "rankMaxes": [
+                900,
+                1300,
+                1700,
+                2000,
+                2150,
+                2250,
+                2350,
+                2450,
+                2600,
+                2771
+              ]
+            },
+            {
+              "name": "TSK - SYV Small",
+              "leaderboardId": 126707,
+              "rankMaxes": [
+                600,
+                800,
+                1100,
+                1400,
+                1600,
+                1750,
+                1900,
+                2050,
+                2300,
+                2404
+              ]
+            },
+            {
+              "name": "TSK - SYV Stop",
+              "leaderboardId": 126887,
+              "rankMaxes": [
+                700,
+                900,
+                1100,
+                1400,
+                1800,
+                2000,
+                2200,
+                2400,
+                2500,
+                2516
+              ]
+            },
+            {
+              "name": "TSK - SYV Down Close",
+              "leaderboardId": 126747,
+              "rankMaxes": [
+                1000,
+                1350,
+                1700,
+                2100,
+                2300,
+                2420,
+                2540,
+                2650,
+                2750,
+                2887
+              ]
+            },
+            {
+              "name": "TSK - VSTP Soft Big",
+              "leaderboardId": 128444,
+              "rankMaxes": [
+                1200,
+                1500,
+                1850,
+                2200,
+                2400,
+                2500,
+                2580,
+                2600,
+                2700,
+                2762
+              ]
+            },
+            {
+              "name": "TSK - VSTP Soft",
+              "leaderboardId": 126425,
+              "rankMaxes": [
+                1000,
+                1350,
+                1700,
+                2000,
+                2150,
+                2230,
+                2320,
+                2420,
+                2550,
+                2628
+              ]
+            },
+            {
+              "name": "TSK - VSTP Soft Small",
+              "leaderboardId": 128442,
+              "rankMaxes": [
+                700,
+                1000,
+                1250,
+                1450,
+                1650,
+                1760,
+                1880,
+                2000,
+                2200,
+                2333
+              ]
+            },
+            {
+              "name": "TSK - VSTP High",
+              "leaderboardId": 126705,
+              "rankMaxes": [
+                1000,
+                1400,
+                1800,
+                2100,
+                2200,
+                2290,
+                2380,
+                2450,
+                2580,
+                2652
+              ]
+            },
+            {
+              "name": "TSK - Vertical Frog Stationary",
+              "leaderboardId": 127261,
+              "rankMaxes": [
+                1200,
+                1500,
+                1900,
+                2100,
+                2300,
+                2450,
+                2500,
+                2600,
+                2700,
+                2743
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Static",
+      "kovaaksBenchmarkId": 670,
+      "rankNames": [
+        "Basic",
+        "Beginner",
+        "Intermediate",
+        "Pre-Advanced",
+        "Advanced",
+        "BLESSED",
+        "EXALTED",
+        "UBER",
+        "ARCADIA",
+        "HORIZON"
+      ],
+      "rankColors": {
+        "Basic": "#93C47D",
+        "Beginner": "#FFE599",
+        "Intermediate": "#FCC1C1",
+        "Pre-Advanced": "#D2BFFE",
+        "Advanced": "#B5D1FF",
+        "BLESSED": "#E06666",
+        "EXALTED": "#FBBC04",
+        "UBER": "#351C75",
+        "ARCADIA": "#274E13",
+        "HORIZON": "#24DDD8"
+      },
+      "categories": [
+        {
+          "name": "Normal",
+          "rankMaxes": [
+            10000,
+            20000,
+            30000,
+            40000,
+            50000,
+            60000,
+            70000,
+            80000,
+            90000,
+            100000
+          ],
+          "scenarios": [
+            {
+              "name": "ClickTrack 3t",
+              "leaderboardId": 102616,
+              "rankMaxes": [
+                52,
+                58,
+                64,
+                70,
+                76,
+                82,
+                88,
+                94,
+                100,
+                102
+              ]
+            },
+            {
+              "name": "ClickTrack 5t",
+              "leaderboardId": 102615,
+              "rankMaxes": [
+                54,
+                60,
+                66,
+                71,
+                76,
+                82,
+                88,
+                94,
+                100,
+                102
+              ]
+            },
+            {
+              "name": "ClickTrack Horizontal 2t",
+              "leaderboardId": 102619,
+              "rankMaxes": [
+                39,
+                44,
+                49,
+                54,
+                59,
+                64,
+                69,
+                74,
+                79,
+                80
+              ]
+            },
+            {
+              "name": "ClickTrack Horizontal 3t",
+              "leaderboardId": 102627,
+              "rankMaxes": [
+                40,
+                46,
+                52,
+                58,
+                64,
+                69,
+                74,
+                79,
+                84,
+                95
+              ]
+            },
+            {
+              "name": "ClickTrack Diagonal 2t",
+              "leaderboardId": 102618,
+              "rankMaxes": [
+                36,
+                41,
+                46,
+                51,
+                55,
+                60,
+                65,
+                70,
+                75,
+                78
+              ]
+            },
+            {
+              "name": "ClickTrack Diagonal 3t",
+              "leaderboardId": 102635,
+              "rankMaxes": [
+                44,
+                49,
+                54,
+                59,
+                64,
+                70,
+                75,
+                80,
+                85,
+                89
+              ]
+            },
+            {
+              "name": "ClickTrack AntiDiagonal 2t",
+              "leaderboardId": 102626,
+              "rankMaxes": [
+                36,
+                41,
+                46,
+                51,
+                55,
+                60,
+                65,
+                70,
+                75,
+                74
+              ]
+            },
+            {
+              "name": "ClickTrack AntiDiagonal 3t",
+              "leaderboardId": 102622,
+              "rankMaxes": [
+                44,
+                49,
+                54,
+                59,
+                64,
+                70,
+                75,
+                80,
+                85,
+                87
+              ]
+            },
+            {
+              "name": "ClickTrack Vertical 2t",
+              "leaderboardId": 116393,
+              "rankMaxes": [
+                36,
+                41,
+                46,
+                51,
+                55,
+                60,
+                65,
+                70,
+                75,
+                76
+              ]
+            },
+            {
+              "name": "ClickTrack Vertical 3t",
+              "leaderboardId": 116394,
+              "rankMaxes": [
+                44,
+                49,
+                54,
+                59,
+                64,
+                70,
+                75,
+                80,
+                85,
+                87
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Short",
+          "rankMaxes": [
+            10000,
+            20000,
+            30000,
+            40000,
+            50000,
+            60000,
+            70000,
+            80000,
+            90000,
+            100000
+          ],
+          "scenarios": [
+            {
+              "name": "ClickTrack 3t Short",
+              "leaderboardId": 115370,
+              "rankMaxes": [
+                73,
+                81,
+                89,
+                97,
+                104,
+                113,
+                122,
+                131,
+                143,
+                148
+              ]
+            },
+            {
+              "name": "ClickTrack 5t Short",
+              "leaderboardId": 115371,
+              "rankMaxes": [
+                62,
+                69,
+                76,
+                83,
+                89,
+                97,
+                105,
+                113,
+                124,
+                132
+              ]
+            },
+            {
+              "name": "ClickTrack Horizontal 2t Short",
+              "leaderboardId": 115374,
+              "rankMaxes": [
+                63,
+                71,
+                79,
+                87,
+                94,
+                103,
+                112,
+                121,
+                133,
+                142
+              ]
+            },
+            {
+              "name": "ClickTrack Horizontal 3t Short",
+              "leaderboardId": 115480,
+              "rankMaxes": [
+                68,
+                76,
+                84,
+                92,
+                99,
+                108,
+                117,
+                126,
+                138,
+                147
+              ]
+            },
+            {
+              "name": "ClickTrack Diagonal 2t Short",
+              "leaderboardId": 115390,
+              "rankMaxes": [
+                68,
+                77,
+                86,
+                95,
+                103,
+                112,
+                121,
+                130,
+                142,
+                146
+              ]
+            },
+            {
+              "name": "ClickTrack Diagonal 3t Short",
+              "leaderboardId": 115375,
+              "rankMaxes": [
+                76,
+                86,
+                96,
+                106,
+                114,
+                123,
+                133,
+                142,
+                154,
+                157
+              ]
+            },
+            {
+              "name": "ClickTrack AntiDiagonal 2t Short",
+              "leaderboardId": 115368,
+              "rankMaxes": [
+                68,
+                77,
+                86,
+                95,
+                103,
+                112,
+                121,
+                130,
+                142,
+                145
+              ]
+            },
+            {
+              "name": "ClickTrack AntiDiagonal 3t Short",
+              "leaderboardId": 115372,
+              "rankMaxes": [
+                76,
+                86,
+                96,
+                106,
+                114,
+                123,
+                133,
+                142,
+                154,
+                160
+              ]
+            },
+            {
+              "name": "ClickTrack Vertical 2t Short",
+              "leaderboardId": 115725,
+              "rankMaxes": [
+                68,
+                77,
+                86,
+                95,
+                103,
+                112,
+                121,
+                130,
+                142,
+                142
+              ]
+            },
+            {
+              "name": "ClickTrack Vertical 3t Short",
+              "leaderboardId": 116396,
+              "rankMaxes": [
+                76,
+                86,
+                96,
+                106,
+                114,
+                123,
+                133,
+                142,
+                154,
+                154
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Long",
+          "rankMaxes": [
+            10000,
+            20000,
+            30000,
+            40000,
+            50000,
+            60000,
+            70000,
+            80000,
+            90000,
+            100000
+          ],
+          "scenarios": [
+            {
+              "name": "ClickTrack 3t Long",
+              "leaderboardId": 115474,
+              "rankMaxes": [
+                28,
+                32,
+                36,
+                40,
+                44,
+                48,
+                52,
+                56,
+                60,
+                64
+              ]
+            },
+            {
+              "name": "ClickTrack 5t Long",
+              "leaderboardId": 115513,
+              "rankMaxes": [
+                33,
+                37,
+                41,
+                45,
+                49,
+                53,
+                57,
+                61,
+                65,
+                66
+              ]
+            },
+            {
+              "name": "ClickTrack Horizontal 2t Long",
+              "leaderboardId": 115475,
+              "rankMaxes": [
+                33,
+                36,
+                39,
+                42,
+                46,
+                50,
+                54,
+                58,
+                62,
+                62
+              ]
+            },
+            {
+              "name": "ClickTrack Horizontal 3t Long",
+              "leaderboardId": 115517,
+              "rankMaxes": [
+                36,
+                40,
+                44,
+                48,
+                52,
+                57,
+                62,
+                67,
+                72,
+                75
+              ]
+            },
+            {
+              "name": "ClickTrack Diagonal 2t Long",
+              "leaderboardId": 115477,
+              "rankMaxes": [
+                29,
+                33,
+                37,
+                41,
+                45,
+                48,
+                52,
+                56,
+                60,
+                60
+              ]
+            },
+            {
+              "name": "ClickTrack Diagonal 3t Long",
+              "leaderboardId": 115516,
+              "rankMaxes": [
+                32,
+                37,
+                42,
+                47,
+                52,
+                56,
+                60,
+                64,
+                68,
+                70
+              ]
+            },
+            {
+              "name": "ClickTrack AntiDiagonal 2t Long",
+              "leaderboardId": 115476,
+              "rankMaxes": [
+                29,
+                33,
+                37,
+                41,
+                45,
+                48,
+                52,
+                56,
+                60,
+                61
+              ]
+            },
+            {
+              "name": "ClickTrack AntiDiagonal 3t Long",
+              "leaderboardId": 115515,
+              "rankMaxes": [
+                32,
+                37,
+                42,
+                47,
+                52,
+                56,
+                60,
+                64,
+                68,
+                67
+              ]
+            },
+            {
+              "name": "ClickTrack Vertical 2t Long",
+              "leaderboardId": 116392,
+              "rankMaxes": [
+                31,
+                35,
+                39,
+                43,
+                47,
+                50,
+                54,
+                58,
+                62,
+                60
+              ]
+            },
+            {
+              "name": "ClickTrack Vertical 3t Long",
+              "leaderboardId": 116398,
+              "rankMaxes": [
+                34,
+                39,
+                44,
+                49,
+                54,
+                58,
+                62,
+                66,
+                70,
+                71
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Strafes",
+      "kovaaksBenchmarkId": 671,
+      "rankNames": [
+        "Basic",
+        "Beginner",
+        "Intermediate",
+        "Pre-Adv.",
+        "Advanced",
+        "BLESSED",
+        "EXALTED",
+        "UBER",
+        "ARCADIA",
+        "HORIZON"
+      ],
+      "rankColors": {
+        "Basic": "#93C47D",
+        "Beginner": "#FFE599",
+        "Intermediate": "#FCC1C1",
+        "Pre-Advanced": "#D2BFFE",
+        "Advanced": "#B5D1FF",
+        "BLESSED": "#E06666",
+        "EXALTED": "#FBBC04",
+        "UBER": "#351C75",
+        "ARCADIA": "#274E13",
+        "HORIZON": "#24DDD8"
+      },
+      "categories": [
+        {
+          "name": "Normal",
+          "rankMaxes": [
+            4000,
+            8000,
+            12000,
+            16000,
+            20000,
+            24000,
+            28000,
+            32000,
+            36000,
+            40000
+          ],
+          "scenarios": [
+            {
+              "name": "Predictable Strafes Easy",
+              "leaderboardId": 71303,
+              "rankMaxes": [
+                1200,
+                1600,
+                2000,
+                2400,
+                2660,
+                2750,
+                2830,
+                2900,
+                2970,
+                2998
+              ]
+            },
+            {
+              "name": "Predictable Strafes",
+              "leaderboardId": 71302,
+              "rankMaxes": [
+                900,
+                1250,
+                1600,
+                1950,
+                2200,
+                2450,
+                2650,
+                2800,
+                2920,
+                2938
+              ]
+            },
+            {
+              "name": "Predictable Strafes r15",
+              "leaderboardId": 101056,
+              "rankMaxes": [
+                700,
+                1000,
+                1250,
+                1500,
+                1700,
+                1950,
+                2200,
+                2450,
+                2750,
+                2823
+              ]
+            },
+            {
+              "name": "Predictable Strafes Thin",
+              "leaderboardId": 71477,
+              "rankMaxes": [
+                400,
+                600,
+                800,
+                1000,
+                1250,
+                1500,
+                1750,
+                2000,
+                2200,
+                2383
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Long",
+          "rankMaxes": [
+            4000,
+            8000,
+            12000,
+            16000,
+            20000,
+            24000,
+            28000,
+            32000,
+            36000,
+            40000
+          ],
+          "scenarios": [
+            {
+              "name": "Predictable Strafes Long Easy",
+              "leaderboardId": 71305,
+              "rankMaxes": [
+                1200,
+                1600,
+                2000,
+                2300,
+                2450,
+                2600,
+                2750,
+                2850,
+                2950,
+                2992
+              ]
+            },
+            {
+              "name": "Predictable Strafes Long",
+              "leaderboardId": 71304,
+              "rankMaxes": [
+                1000,
+                1250,
+                1500,
+                1700,
+                1900,
+                2100,
+                2300,
+                2500,
+                2780,
+                2839
+              ]
+            },
+            {
+              "name": "Predictable Strafes Long r15",
+              "leaderboardId": 101201,
+              "rankMaxes": [
+                700,
+                900,
+                1100,
+                1400,
+                1600,
+                1800,
+                2000,
+                2200,
+                2450,
+                2548
+              ]
+            },
+            {
+              "name": "Predictable Strafes Long Thin",
+              "leaderboardId": 71472,
+              "rankMaxes": [
+                400,
+                600,
+                800,
+                900,
+                1100,
+                1300,
+                1500,
+                1700,
+                1900,
+                1949
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Short",
+          "rankMaxes": [
+            4000,
+            8000,
+            12000,
+            16000,
+            20000,
+            24000,
+            28000,
+            32000,
+            36000,
+            40000
+          ],
+          "scenarios": [
+            {
+              "name": "Predictable Strafes Short Easy",
+              "leaderboardId": 71307,
+              "rankMaxes": [
+                1200,
+                1600,
+                2000,
+                2400,
+                2660,
+                2750,
+                2830,
+                2900,
+                2970,
+                2998
+              ]
+            },
+            {
+              "name": "Predictable Strafes Short",
+              "leaderboardId": 71306,
+              "rankMaxes": [
+                1000,
+                1300,
+                1600,
+                1900,
+                2150,
+                2350,
+                2650,
+                2850,
+                2920,
+                2967
+              ]
+            },
+            {
+              "name": "Predictable Strafes Short r15",
+              "leaderboardId": 101130,
+              "rankMaxes": [
+                600,
+                1000,
+                1400,
+                1650,
+                1800,
+                2050,
+                2350,
+                2650,
+                2750,
+                2868
+              ]
+            },
+            {
+              "name": "Predictable Strafes Short Thin",
+              "leaderboardId": 71473,
+              "rankMaxes": [
+                400,
+                600,
+                800,
+                1000,
+                1250,
+                1500,
+                1800,
+                2100,
+                2200,
+                2457
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Gauntlet",
+          "rankMaxes": [
+            4000,
+            8000,
+            12000,
+            16000,
+            20000,
+            24000,
+            28000,
+            32000,
+            36000,
+            40000
+          ],
+          "scenarios": [
+            {
+              "name": "Predictable Strafes Gauntlet Easy",
+              "leaderboardId": 100993,
+              "rankMaxes": [
+                700,
+                1200,
+                1700,
+                2000,
+                2300,
+                2450,
+                2600,
+                2750,
+                2920,
+                2958
+              ]
+            },
+            {
+              "name": "Predictable Strafes Gauntlet",
+              "leaderboardId": 100985,
+              "rankMaxes": [
+                600,
+                1000,
+                1400,
+                1700,
+                1900,
+                2100,
+                2300,
+                2500,
+                2750,
+                2837
+              ]
+            },
+            {
+              "name": "Predictable Strafes Gauntlet r15",
+              "leaderboardId": 101186,
+              "rankMaxes": [
+                400,
+                500,
+                900,
+                1200,
+                1400,
+                1600,
+                1800,
+                2050,
+                2400,
+                2597
+              ]
+            },
+            {
+              "name": "Predictable Strafes Gauntlet Thin",
+              "leaderboardId": 100986,
+              "rankMaxes": [
+                300,
+                500,
+                700,
+                900,
+                1000,
+                1150,
+                1300,
+                1500,
+                1800,
+                2113
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "thundah's BounceSphere",
+      "kovaaksBenchmarkId": 379,
+      "rankNames": [
+        "Basic",
+        "Beginner",
+        "Intermediate",
+        "Pre-Adv.",
+        "Advanced",
+        "BLESSED",
+        "EXALTED",
+        "UBER",
+        "SCOURGE",
+        "HORIZON"
+      ],
+      "rankColors": {
+        "Basic": "#93C47D",
+        "Beginner": "#FFE599",
+        "Intermediate": "#FCC1C1",
+        "Pre-Adv.": "#D2BFFE",
+        "Advanced": "#B5D1FF",
+        "BLESSED": "#E06666",
+        "EXALTED": "#FBBC04",
+        "UBER": "#351C75",
+        "SCOURGE": "#274E13",
+        "HORIZON": "#24DDD8"
+      },
+      "categories": [
+        {
+          "name": "Bouncesphere",
+          "rankMaxes": [
+            6000,
+            12000,
+            18000,
+            24000,
+            30000,
+            36000,
+            42000,
+            48000,
+            54000,
+            60000
+          ],
+          "scenarios": [
+            {
+              "name": "BounceSphere Big",
+              "leaderboardId": 102055,
+              "rankMaxes": [
+                1700,
+                2400,
+                3200,
+                3900,
+                4500,
+                4800,
+                5000,
+                5150,
+                5300,
+                5447
+              ]
+            },
+            {
+              "name": "BounceSphere",
+              "leaderboardId": 24133,
+              "rankMaxes": [
+                500,
+                900,
+                1300,
+                1700,
+                2200,
+                2400,
+                2700,
+                3100,
+                3500,
+                3840
+              ]
+            },
+            {
+              "name": "BounceSphere High & Wide",
+              "leaderboardId": 102076,
+              "rankMaxes": [
+                300,
+                600,
+                900,
+                1200,
+                1700,
+                2000,
+                2300,
+                2700,
+                3050,
+                3409
+              ]
+            },
+            {
+              "name": "Bouncesphere Smooth",
+              "leaderboardId": 30847,
+              "rankMaxes": [
+                1000,
+                1600,
+                2200,
+                2800,
+                3500,
+                3800,
+                4100,
+                4400,
+                4700,
+                4957
+              ]
+            },
+            {
+              "name": "BounceSphere Always Left",
+              "leaderboardId": 102078,
+              "rankMaxes": [
+                400,
+                800,
+                1200,
+                1600,
+                2100,
+                2300,
+                2600,
+                3000,
+                3400,
+                3654
+              ]
+            },
+            {
+              "name": "BounceSphere Always Right",
+              "leaderboardId": 102086,
+              "rankMaxes": [
+                600,
+                1000,
+                1400,
+                1800,
+                2300,
+                2500,
+                2800,
+                3200,
+                3600,
+                3777
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Reactive by slapped",
+      "kovaaksBenchmarkId": 610,
+      "rankNames": [
+        "Basic",
+        "Beginner",
+        "Intermediate",
+        "Pre-Advanced",
+        "Advanced",
+        "BLESSED",
+        "EXALTED",
+        "UBER",
+        "ARCADIA",
+        "HORIZON"
+      ],
+      "rankColors": {
+        "Basic": "#93C47D",
+        "Beginner": "#FFE599",
+        "Intermediate": "#FCC1C1",
+        "Pre-Advanced": "#D2BFFE",
+        "Advanced": "#B5D1FF",
+        "BLESSED": "#E06666",
+        "EXALTED": "#FBBC04",
+        "UBER": "#351C75",
+        "ARCADIA": "#274E13",
+        "HORIZON": "#24DDD8"
+      },
+      "categories": [
+        {
+          "name": "Ground",
+          "rankMaxes": [
+            2000,
+            4000,
+            6000,
+            8000,
+            10000,
+            12000,
+            14000,
+            16000,
+            18000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "Smooth Thin Strafes Raspberry",
+              "leaderboardId": 3696,
+              "rankMaxes": [
+                2500,
+                3000,
+                4000,
+                5000,
+                5700,
+                6700,
+                7300,
+                7850,
+                8450,
+                8900
+              ]
+            },
+            {
+              "name": "odb MFSI",
+              "leaderboardId": 4010,
+              "rankMaxes": [
+                900,
+                1100,
+                1200,
+                1350,
+                1650,
+                1850,
+                2050,
+                2350,
+                2650,
+                2850
+              ]
+            },
+            {
+              "name": "LDDH Fixed",
+              "leaderboardId": 80,
+              "rankMaxes": [
+                600,
+                700,
+                800,
+                1000,
+                1200,
+                1400,
+                1550,
+                1700,
+                1850,
+                2000
+              ]
+            },
+            {
+              "name": "MSS Raspberry v2",
+              "leaderboardId": 10183,
+              "rankMaxes": [
+                2600,
+                3400,
+                4000,
+                4500,
+                5250,
+                6000,
+                6700,
+                7150,
+                7850,
+                8400
+              ]
+            },
+            {
+              "name": "MSS Insanity Raspberry",
+              "leaderboardId": 1477,
+              "rankMaxes": [
+                1800,
+                2200,
+                2600,
+                3100,
+                3850,
+                4650,
+                5500,
+                6100,
+                6550,
+                7000
+              ]
+            },
+            {
+              "name": "MFSI v3 Raspberry",
+              "leaderboardId": 8735,
+              "rankMaxes": [
+                2700,
+                3000,
+                3400,
+                3900,
+                4700,
+                5900,
+                6800,
+                7600,
+                8500,
+                8900
+              ]
+            },
+            {
+              "name": "Close Fast Strafes Invincible - Thin",
+              "leaderboardId": 814,
+              "rankMaxes": [
+                3000,
+                4200,
+                5700,
+                6500,
+                7500,
+                8600,
+                9550,
+                10500,
+                11400,
+                12500
+              ]
+            },
+            {
+              "name": "Ground Plaza Sparky v3 OW",
+              "leaderboardId": 871,
+              "rankMaxes": [
+                720,
+                750,
+                800,
+                825,
+                845,
+                875,
+                885,
+                890,
+                896,
+                903
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Air",
+          "rankMaxes": [
+            2000,
+            4000,
+            6000,
+            8000,
+            10000,
+            12000,
+            14000,
+            16000,
+            18000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "Air invincible 8 small",
+              "leaderboardId": 809,
+              "rankMaxes": [
+                1000,
+                1200,
+                1400,
+                1600,
+                1850,
+                2200,
+                2500,
+                2700,
+                2900,
+                3150
+              ]
+            },
+            {
+              "name": "Pasu Track Wide React",
+              "leaderboardId": 81603,
+              "rankMaxes": [
+                600,
+                750,
+                850,
+                1050,
+                1250,
+                1650,
+                2000,
+                2400,
+                2700,
+                3000
+              ]
+            },
+            {
+              "name": "ReactiveSphere",
+              "leaderboardId": 24075,
+              "rankMaxes": [
+                1800,
+                2800,
+                3800,
+                4850,
+                5550,
+                6350,
+                7050,
+                7750,
+                8400,
+                8700
+              ]
+            },
+            {
+              "name": "Air Divine",
+              "leaderboardId": 645,
+              "rankMaxes": [
+                700,
+                750,
+                810,
+                835,
+                850,
+                865,
+                875,
+                885,
+                891,
+                898
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Beginner Classic",
+      "kovaaksBenchmarkId": 471,
+      "rankNames": [
+        "Level 1",
+        "Level 2",
+        "Level 3",
+        "Level 4"
+      ],
+      "rankColors": {
+        "Level 1": "#CCCCCC",
+        "Level 2": "#EAD1DC",
+        "Level 3": "#D5A6BD",
+        "Level 4": "#C27BA0"
+      },
+      "categories": [
+        {
+          "name": "Vertical",
+          "rankMaxes": [
+            2500,
+            5000,
+            7500,
+            10000
+          ],
+          "scenarios": [
+            {
+              "name": "Vertical Smoothness Training Very Easy",
+              "leaderboardId": 32546,
+              "rankMaxes": [
+                3600,
+                4100,
+                4600,
+                5200
+              ]
+            }
+          ]
+        },
+        {
+          "name": "VAI",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "VAI 1 Easy TE",
+              "leaderboardId": 42434,
+              "rankMaxes": [
+                500,
+                900,
+                1300,
+                1700
+              ]
+            },
+            {
+              "name": "VAI 15 Easy TE",
+              "leaderboardId": 32983,
+              "rankMaxes": [
+                500,
+                900,
+                1300,
+                1700
+              ]
+            }
+          ]
+        },
+        {
+          "name": "PasuTrack",
+          "rankMaxes": [
+            2500,
+            5000,
+            7500,
+            10000
+          ],
+          "scenarios": [
+            {
+              "name": "Pasu Track Extrasmooth Easy TE",
+              "leaderboardId": 32982,
+              "rankMaxes": [
+                3500,
+                5000,
+                6600,
+                8200
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Horizontal",
+          "rankMaxes": [
+            2500,
+            5000,
+            7500,
+            10000
+          ],
+          "scenarios": [
+            {
+              "name": "SYW (Smooth Your Wrist) Truly FIXED Easy",
+              "leaderboardId": 32981,
+              "rankMaxes": [
+                350,
+                430,
+                510,
+                600
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Main Classic",
+      "kovaaksBenchmarkId": 227,
+      "rankNames": [
+        "Fundamental",
+        "Beginner",
+        "Intermediate",
+        "Pre-Advanced",
+        "Advanced"
+      ],
+      "rankColors": {
+        "Fundamental": "#93C47D",
+        "Beginner": "#FFE599",
+        "Intermediate": "#FCC1C1",
+        "Pre-Advanced": "#D2BFFE",
+        "Advanced": "#B5D1FF"
+      },
+      "categories": [
+        {
+          "name": "Vertical",
+          "rankMaxes": [
+            6000,
+            12000,
+            18000,
+            24000,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "VSTP NotSmall TE",
+              "leaderboardId": 116640,
+              "rankMaxes": [
+                2100,
+                2700,
+                3200,
+                3700,
+                4400
+              ]
+            },
+            {
+              "name": "SYV Altered POV Easy Slow",
+              "leaderboardId": 47632,
+              "rankMaxes": [
+                3500,
+                4500,
+                5500,
+                6000,
+                6300
+              ]
+            },
+            {
+              "name": "SYV Altered POV Slow",
+              "leaderboardId": 47631,
+              "rankMaxes": [
+                1600,
+                2300,
+                2700,
+                3500,
+                4200
+              ]
+            }
+          ]
+        },
+        {
+          "name": "VAI",
+          "rankMaxes": [
+            8000,
+            16000,
+            24000,
+            32000,
+            40000
+          ],
+          "scenarios": [
+            {
+              "name": "VAI 1 Master TE",
+              "leaderboardId": 32542,
+              "rankMaxes": [
+                950,
+                1250,
+                1550,
+                1700,
+                1850
+              ]
+            },
+            {
+              "name": "VAI 15 Master TE",
+              "leaderboardId": 32545,
+              "rankMaxes": [
+                950,
+                1250,
+                1550,
+                1700,
+                1850
+              ]
+            },
+            {
+              "name": "VAI 1 Grandmaster TE",
+              "leaderboardId": 32543,
+              "rankMaxes": [
+                550,
+                800,
+                1000,
+                1200,
+                1450
+              ]
+            },
+            {
+              "name": "VAI 15 Grandmaster TE",
+              "leaderboardId": 32544,
+              "rankMaxes": [
+                550,
+                800,
+                1000,
+                1200,
+                1450
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Pasu Track",
+          "rankMaxes": [
+            4000,
+            8000,
+            12000,
+            16000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "Pasu Track Extrasmooth TE",
+              "leaderboardId": 32539,
+              "rankMaxes": [
+                5800,
+                6200,
+                6800,
+                7400,
+                8000
+              ]
+            },
+            {
+              "name": "Pasu Track Extrasmooth Small TE",
+              "leaderboardId": 32541,
+              "rankMaxes": [
+                2900,
+                3400,
+                3900,
+                4600,
+                5500
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Horizontal",
+          "rankMaxes": [
+            6000,
+            12000,
+            18000,
+            24000,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "Smooth Thin Strafe Always Right",
+              "leaderboardId": 32550,
+              "rankMaxes": [
+                2800,
+                3200,
+                3650,
+                4100,
+                4600
+              ]
+            },
+            {
+              "name": "Smooth Thin Strafe Always Left",
+              "leaderboardId": 32551,
+              "rankMaxes": [
+                2900,
+                3300,
+                3750,
+                4200,
+                4700
+              ]
+            },
+            {
+              "name": "SYW (Smooth Your Wrist) Truly FIXED",
+              "leaderboardId": 13150,
+              "rankMaxes": [
+                380,
+                450,
+                520,
+                570,
+                620
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Extra Classic",
+      "kovaaksBenchmarkId": 469,
+      "rankNames": [
+        "Basic",
+        "Beginner",
+        "Intermediate",
+        "Pre-Advanced",
+        "Advanced",
+        "BLESSED",
+        "EXALTED",
+        "UBER",
+        "ARCADIA",
+        "HORIZON"
+      ],
+      "rankColors": {
+        "Basic": "#93C47D",
+        "Beginner": "#FFE599",
+        "Intermediate": "#FCC1C1",
+        "Pre-Advanced": "#D2BFFE",
+        "Advanced": "#B5D1FF",
+        "BLESSED": "#E06666",
+        "EXALTED": "#FBBC04",
+        "UBER": "#351C75",
+        "ARCADIA": "#274E13",
+        "HORIZON": "#24DDD8"
+      },
+      "categories": [
+        {
+          "name": "Vertical",
+          "rankMaxes": [
+            6000,
+            12000,
+            18000,
+            24000,
+            30000,
+            36000,
+            42000,
+            48000,
+            54000,
+            60000
+          ],
+          "scenarios": [
+            {
+              "name": "VSTP NotSmall TE",
+              "leaderboardId": 116640,
+              "rankMaxes": [
+                2200,
+                2800,
+                3300,
+                3800,
+                4500,
+                5000,
+                5200,
+                5300,
+                5400,
+                5552
+              ]
+            },
+            {
+              "name": "VSTP Small TE",
+              "leaderboardId": 33081,
+              "rankMaxes": [
+                1600,
+                2000,
+                2300,
+                2600,
+                3100,
+                3400,
+                3650,
+                3900,
+                4300,
+                4744
+              ]
+            },
+            {
+              "name": "SYV Altered POV Slow",
+              "leaderboardId": 47631,
+              "rankMaxes": [
+                1800,
+                2400,
+                2800,
+                3600,
+                4300,
+                4800,
+                5300,
+                5800,
+                6200,
+                6426
+              ]
+            },
+            {
+              "name": "Smooth Your Vertical Altered POV Easy v2",
+              "leaderboardId": 48398,
+              "rankMaxes": [
+                3000,
+                3800,
+                4400,
+                5100,
+                5800,
+                6100,
+                6400,
+                6700,
+                7000,
+                7218
+              ]
+            },
+            {
+              "name": "Smooth Your Vertical Altered POV v2",
+              "leaderboardId": 48393,
+              "rankMaxes": [
+                1100,
+                1600,
+                2000,
+                2500,
+                3100,
+                3500,
+                4000,
+                4500,
+                5000,
+                5568
+              ]
+            },
+            {
+              "name": "Smooth Your Vertical Close",
+              "leaderboardId": 45483,
+              "rankMaxes": [
+                1300,
+                1900,
+                2400,
+                3000,
+                3600,
+                4100,
+                4600,
+                5100,
+                5600,
+                5862
+              ]
+            }
+          ]
+        },
+        {
+          "name": "VAI",
+          "rankMaxes": [
+            6000,
+            12000,
+            18000,
+            24000,
+            30000,
+            36000,
+            42000,
+            48000,
+            54000,
+            60000
+          ],
+          "scenarios": [
+            {
+              "name": "VAI 1 Master TE",
+              "leaderboardId": 32542,
+              "rankMaxes": [
+                1100,
+                1300,
+                1600,
+                1800,
+                2000,
+                2050,
+                2100,
+                2150,
+                2230,
+                2325
+              ]
+            },
+            {
+              "name": "VAI 15 Master TE",
+              "leaderboardId": 32545,
+              "rankMaxes": [
+                1100,
+                1300,
+                1600,
+                1800,
+                2000,
+                2050,
+                2100,
+                2150,
+                2200,
+                2299
+              ]
+            },
+            {
+              "name": "VAI 1 Grandmaster TE",
+              "leaderboardId": 32543,
+              "rankMaxes": [
+                700,
+                950,
+                1150,
+                1350,
+                1600,
+                1700,
+                1800,
+                1900,
+                2000,
+                2154
+              ]
+            },
+            {
+              "name": "VAI 15 Grandmaster TE",
+              "leaderboardId": 32544,
+              "rankMaxes": [
+                700,
+                950,
+                1150,
+                1350,
+                1600,
+                1700,
+                1800,
+                1900,
+                2000,
+                2158
+              ]
+            },
+            {
+              "name": "VAI 3 TE",
+              "leaderboardId": 46164,
+              "rankMaxes": [
+                1100,
+                1300,
+                1600,
+                1800,
+                2000,
+                2100,
+                2150,
+                2200,
+                2230,
+                2291
+              ]
+            },
+            {
+              "name": "VAI 14 TE",
+              "leaderboardId": 46224,
+              "rankMaxes": [
+                1000,
+                1200,
+                1500,
+                1700,
+                1900,
+                2000,
+                2050,
+                2100,
+                2200,
+                2285
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Pasu Track",
+          "rankMaxes": [
+            6000,
+            12000,
+            18000,
+            24000,
+            30000,
+            36000,
+            42000,
+            48000,
+            54000,
+            60000
+          ],
+          "scenarios": [
+            {
+              "name": "Pasu Track Extrasmooth TE",
+              "leaderboardId": 32539,
+              "rankMaxes": [
+                6000,
+                6400,
+                7000,
+                7600,
+                8200,
+                8350,
+                8500,
+                8600,
+                8750,
+                8964
+              ]
+            },
+            {
+              "name": "Pasu Track Extrasmooth Small TE",
+              "leaderboardId": 32541,
+              "rankMaxes": [
+                3500,
+                4000,
+                4500,
+                5300,
+                6200,
+                6600,
+                6950,
+                7300,
+                7900,
+                8478
+              ]
+            },
+            {
+              "name": "PTeS eeSmall TE",
+              "leaderboardId": 45478,
+              "rankMaxes": [
+                2300,
+                3000,
+                3700,
+                4100,
+                4500,
+                4900,
+                5300,
+                5600,
+                6400,
+                7188
+              ]
+            },
+            {
+              "name": "PTS Small TE",
+              "leaderboardId": 33929,
+              "rankMaxes": [
+                3400,
+                3900,
+                4300,
+                4700,
+                5100,
+                5400,
+                5700,
+                5900,
+                6200,
+                6390
+              ]
+            },
+            {
+              "name": "PTS DoubleExtra Small TE",
+              "leaderboardId": 33913,
+              "rankMaxes": [
+                1200,
+                1500,
+                2000,
+                2800,
+                3400,
+                4000,
+                4300,
+                4500,
+                5100,
+                5574
+              ]
+            },
+            {
+              "name": "PTS Close Fast",
+              "leaderboardId": 45482,
+              "rankMaxes": [
+                1400,
+                1700,
+                2000,
+                2500,
+                3000,
+                3500,
+                4000,
+                4500,
+                5000,
+                5490
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Horizontal",
+          "rankMaxes": [
+            6000,
+            12000,
+            18000,
+            24000,
+            30000,
+            36000,
+            42000,
+            48000,
+            54000,
+            60000
+          ],
+          "scenarios": [
+            {
+              "name": "Smooth Thin Strafe Always Right",
+              "leaderboardId": 32550,
+              "rankMaxes": [
+                3000,
+                3400,
+                3850,
+                4350,
+                4850,
+                4950,
+                5050,
+                5150,
+                5400,
+                5772
+              ]
+            },
+            {
+              "name": "Smooth Thin Strafe Always Left",
+              "leaderboardId": 32551,
+              "rankMaxes": [
+                3200,
+                3600,
+                4050,
+                4500,
+                5000,
+                5100,
+                5200,
+                5300,
+                5500,
+                5846
+              ]
+            },
+            {
+              "name": "SYW (Smooth Your Wrist) Truly FIXED",
+              "leaderboardId": 13150,
+              "rankMaxes": [
+                420,
+                490,
+                560,
+                610,
+                660,
+                690,
+                710,
+                730,
+                760,
+                775
+              ]
+            },
+            {
+              "name": "SYW Truly FIXED Extra Thin",
+              "leaderboardId": 45252,
+              "rankMaxes": [
+                800,
+                1100,
+                1300,
+                1550,
+                1800,
+                2000,
+                2200,
+                2400,
+                2700,
+                2958
+              ]
+            },
+            {
+              "name": "Centering II 90 No Strafes Fixed",
+              "leaderboardId": 33903,
+              "rankMaxes": [
+                8000,
+                9000,
+                10000,
+                10500,
+                11500,
+                12000,
+                13000,
+                14000,
+                16000,
+                17388
+              ]
+            },
+            {
+              "name": "Centering II 180 No Strafes Fixed",
+              "leaderboardId": 33902,
+              "rankMaxes": [
+                7000,
+                8000,
+                9000,
+                10000,
+                11000,
+                11500,
+                12500,
+                13500,
+                17000,
+                19008
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,384 @@
+{
+  "benchmarkName": "Aimerz+ Dynamic Clicking",
+  "abbreviation": "A+",
+  "color": "#E1E0E1",
+  "spreadsheetURL": "https://docs.google.com/spreadsheets/d/1HGXrHC-3aMi0F0bmfN7rZE6j2oLGJsvGn3r6uKDrp70",
+  "evxlUrl": "https://evxl.app/benchmarks/Aimerz%2B%20Dynamic%20Clicking",
+  "source": "kovaaks.com benchmarks API + evxl registry",
+  "fetchedAt": "2026-08-29T16:57:53Z",
+  "difficulties": [
+    {
+      "name": "Easy",
+      "kovaaksBenchmarkId": 582,
+      "rankNames": [
+        "Bronze",
+        "Silver",
+        "Gold",
+        "Platinum",
+        "Diamond",
+        "Acolyte",
+        "Transcendent"
+      ],
+      "rankColors": {
+        "Bronze": "#A77138",
+        "Silver": "#C2D2D2",
+        "Gold": "#C4A12A",
+        "Platinum": "#00B3A5",
+        "Diamond": "#81D1FF",
+        "Acolyte": "#FFA000",
+        "Transcendent": "#B5F5DF"
+      },
+      "categories": [
+        {
+          "name": "Dynamic Clicking",
+          "rankMaxes": [
+            17142.86,
+            34285.71,
+            51428.57,
+            68571.43,
+            85714.29,
+            102857.14,
+            120000
+          ],
+          "scenarios": [
+            {
+              "name": "pasu nqs reload",
+              "leaderboardId": 89599,
+              "rankMaxes": [
+                66,
+                78,
+                90,
+                102,
+                114,
+                128,
+                202
+              ]
+            },
+            {
+              "name": "1w4t Pasu Raspberry Master 6mag",
+              "leaderboardId": 90763,
+              "rankMaxes": [
+                48,
+                56,
+                64,
+                74,
+                82,
+                92,
+                160
+              ]
+            },
+            {
+              "name": "cAt purrClick Easy",
+              "leaderboardId": 83324,
+              "rankMaxes": [
+                710,
+                800,
+                880,
+                1000,
+                1130,
+                1280,
+                2100
+              ]
+            },
+            {
+              "name": "1wall5targets_pasu Reload",
+              "leaderboardId": 43,
+              "rankMaxes": [
+                95,
+                107,
+                118,
+                130,
+                140,
+                152,
+                240
+              ]
+            },
+            {
+              "name": "psalmTS angelic click 30% Larger",
+              "leaderboardId": 89546,
+              "rankMaxes": [
+                55,
+                61,
+                68,
+                75,
+                82,
+                90,
+                168
+              ]
+            },
+            {
+              "name": "Leapcorn Pure Easy",
+              "leaderboardId": 42061,
+              "rankMaxes": [
+                56,
+                62,
+                68,
+                74,
+                80,
+                88,
+                145
+              ]
+            },
+            {
+              "name": "Tamspeed 2bpes",
+              "leaderboardId": 340,
+              "rankMaxes": [
+                80,
+                90,
+                100,
+                110,
+                118,
+                128,
+                180
+              ]
+            },
+            {
+              "name": "Star Clicking 30% Larger",
+              "leaderboardId": 89545,
+              "rankMaxes": [
+                40,
+                45,
+                52,
+                60,
+                68,
+                75,
+                130
+              ]
+            },
+            {
+              "name": "Popcorn Goated rAim easy",
+              "leaderboardId": 63202,
+              "rankMaxes": [
+                260,
+                320,
+                380,
+                440,
+                500,
+                580,
+                940
+              ]
+            },
+            {
+              "name": "Pasu Angelic 20% Larger",
+              "leaderboardId": 89821,
+              "rankMaxes": [
+                66,
+                74,
+                82,
+                90,
+                98,
+                108,
+                166
+              ]
+            },
+            {
+              "name": "Aimerz+ hopClick Med S1",
+              "leaderboardId": 69291,
+              "rankMaxes": [
+                640,
+                700,
+                760,
+                830,
+                900,
+                1000,
+                1650
+              ]
+            },
+            {
+              "name": "Controlsphere Click Easy",
+              "leaderboardId": 89547,
+              "rankMaxes": [
+                52,
+                56,
+                62,
+                66,
+                71,
+                78,
+                120
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Hard",
+      "kovaaksBenchmarkId": 583,
+      "rankNames": [
+        "Prophet",
+        "Saint",
+        "Angelic",
+        "Seraphic",
+        "Cherubim",
+        "Transcendent"
+      ],
+      "rankColors": {
+        "Prophet": "#9E0059",
+        "Saint": "#5A189A",
+        "Angelic": "#0F4C5C",
+        "Seraphic": "#590D22",
+        "Cherubim": "#03071E",
+        "Transcendent": "#B5F5DF"
+      },
+      "categories": [
+        {
+          "name": "Dynamic Clicking",
+          "rankMaxes": [
+            20000,
+            40000,
+            60000,
+            80000,
+            100000,
+            120000
+          ],
+          "scenarios": [
+            {
+              "name": "pasu small reload",
+              "leaderboardId": 95,
+              "rankMaxes": [
+                98,
+                106,
+                114,
+                124,
+                132,
+                155
+              ]
+            },
+            {
+              "name": "1w4t Pasu Raspberry Grandmaster",
+              "leaderboardId": 14778,
+              "rankMaxes": [
+                70,
+                76,
+                84,
+                96,
+                112,
+                132
+              ]
+            },
+            {
+              "name": "cAt purrClick Hard",
+              "leaderboardId": 83380,
+              "rankMaxes": [
+                880,
+                980,
+                1100,
+                1250,
+                1400,
+                1550
+              ]
+            },
+            {
+              "name": "1wall5targets_pasu Reload",
+              "leaderboardId": 43,
+              "rankMaxes": [
+                162,
+                172,
+                182,
+                194,
+                210,
+                240
+              ]
+            },
+            {
+              "name": "psalmTS angelic click",
+              "leaderboardId": 578,
+              "rankMaxes": [
+                80,
+                86,
+                92,
+                100,
+                111,
+                136
+              ]
+            },
+            {
+              "name": "Leapcorn Pure",
+              "leaderboardId": 13220,
+              "rankMaxes": [
+                66,
+                72,
+                78,
+                84,
+                95,
+                114
+              ]
+            },
+            {
+              "name": "beanClick 250% Speed",
+              "leaderboardId": 10366,
+              "rankMaxes": [
+                118,
+                130,
+                142,
+                156,
+                170,
+                195
+              ]
+            },
+            {
+              "name": "Star Clicking - @wa11p1per",
+              "leaderboardId": 29687,
+              "rankMaxes": [
+                58,
+                66,
+                74,
+                82,
+                90,
+                106
+              ]
+            },
+            {
+              "name": "Popcorn Goated rAim",
+              "leaderboardId": 777,
+              "rankMaxes": [
+                300,
+                340,
+                380,
+                420,
+                500,
+                640
+              ]
+            },
+            {
+              "name": "Pasu Angelic",
+              "leaderboardId": 38540,
+              "rankMaxes": [
+                102,
+                110,
+                120,
+                132,
+                142,
+                160
+              ]
+            },
+            {
+              "name": "Aimerz+ hopClick Med S1",
+              "leaderboardId": 69291,
+              "rankMaxes": [
+                1030,
+                1120,
+                1200,
+                1320,
+                1450,
+                1650
+              ]
+            },
+            {
+              "name": "Controlsphere Click",
+              "leaderboardId": 24116,
+              "rankMaxes": [
+                54,
+                62,
+                72,
+                80,
+                88,
+                100
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

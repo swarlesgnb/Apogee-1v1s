@@ -57,9 +57,16 @@ async function main(): Promise<void> {
   }
 
   // Resolve names to ids. A season may only name scenarios the project knows about.
+  //
+  // Each name is percent-encoded, the quotes and separators around it are not. A bare
+  // `+` in a query string decodes to a space, so the four Aimerz+ scenarios in season 1
+  // were looked up as "Aimerz  ww2t Hard S1" and came back absent - and the report below
+  // then blamed the seed for rows that were sitting in the table all along. No scenario
+  // name in the 668-name corpus contains a quote, comma or backslash, so encoding the
+  // value is enough and PostgREST's quoting rules never come into it.
   const names = season.scenarios.map((s) => s.scenario);
   const res = await rest(
-    `scenarios?select=id,name&name=in.(${names.map((n) => `"${n}"`).join(",")})`,
+    `scenarios?select=id,name&name=in.(${names.map((n) => `"${encodeURIComponent(n)}"`).join(",")})`,
   );
   const rows = (await res.json()) as { id: number; name: string }[];
   const idByName = new Map(rows.map((r) => [r.name, r.id]));

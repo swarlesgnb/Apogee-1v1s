@@ -6,408 +6,1055 @@
       content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:;">
 <title>Apogee</title>
 <style>
-  /* ------------------------------------------------------------------
-     Committed single theme. This is a game client, not a document: it
-     lives in one visual world (deep space instrument panel) rather than
-     adapting to a reader's light/dark preference. Every colour is
-     painted explicitly, including the body ground.
+  /* ==================================================================
+     Apogee — one committed theme.
 
-     The chrome is achromatic on purpose. All colour on screen comes from
-     the player's own rank palette, so ranks read as the signal they are.
-     ------------------------------------------------------------------ */
+     This is a game client, not a document: it lives in a single visual
+     world rather than adapting to a reader's light/dark preference, and
+     every colour is painted explicitly, including the body ground.
+
+     The chrome is achromatic on purpose. The only chroma is --accent,
+     which the renderer sets to the player's own rank colour on every
+     snapshot, so rank reads as the signal it is and the app takes on the
+     player's colour rather than a brand one.
+
+     Layout is a fixed rail and one scrolling column. The rail is the
+     whole navigation: it never scrolls away, it holds who you are at the
+     bottom, and it carries the keyboard number for every screen so the
+     shortcuts are discoverable rather than documented.
+     ================================================================== */
+
   :root {
-    --void: #07090e;
-    --panel: #0e1219;
-    --panel-2: #141a24;
-    --sunken: #090c12;
-    --line: #1e2531;
-    --line-bright: #2c3542;
-    --ink: #e8ecf4;
-    --ink-mid: #96a0b3;
-    --ink-dim: #5f6a7d;
-    --up: #46d19a;
-    --down: #ff6b7d;
-    --warn: #f0b849;
-    --font: ui-sans-serif, "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif;
-    --mono: ui-monospace, "Cascadia Mono", Consolas, "SF Mono", monospace;
+    /* grounds, darkest to lightest */
+    --void:      #05060a;
+    --rail:      #080a0f;
+    --surface:   #0c0f15;
+    --surface-2: #11151d;
+    --surface-3: #171c26;
+    --sunken:    #07090e;
+
+    /* hairlines: light-on-dark rather than a grey, so one value works on
+       every ground instead of a different border colour per surface */
+    --hair:   rgba(255, 255, 255, .055);
+    --hair-2: rgba(255, 255, 255, .10);
+    --hair-3: rgba(255, 255, 255, .17);
+
+    --ink:     #eef1f7;
+    --ink-mid: #9aa4b6;
+    --ink-dim: #626c80;
+
+    --up:   #3fd6a0;
+    --down: #ff5f78;
+    --warn: #f5b93f;
+
+    /* Overwritten per snapshot with the player's rank colour. */
+    --accent: #7d879b;
+
+    --r-xs: 6px;
+    --r-sm: 9px;
+    --r:    13px;
+    --r-lg: 18px;
+    --r-pill: 999px;
+
+    --shadow-2: 0 10px 30px -12px rgba(0, 0, 0, .8);
+    --shadow-3: 0 28px 70px -20px rgba(0, 0, 0, .85);
+
+    --rail-w: 226px;
+    --bar-h: 46px;
+
+    --font: "Segoe UI Variable Text", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+    --mono: "Cascadia Mono", ui-monospace, Consolas, "SF Mono", monospace;
+
+    --ease: cubic-bezier(.2, .7, .3, 1);
   }
 
   * { box-sizing: border-box; }
 
+  html, body { height: 100%; }
+
   body {
     margin: 0;
-    background:
-      radial-gradient(1200px 600px at 78% -8%, #131a2a 0%, transparent 62%),
-      radial-gradient(900px 500px at 8% 108%, #101725 0%, transparent 60%),
-      var(--void);
+    background: var(--void);
     color: var(--ink);
     font-family: var(--font);
-    font-size: 15px;
+    font-size: 14.5px;
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
-    min-height: 100vh;
+    overflow: hidden;
   }
 
-  .shell { max-width: 1180px; margin: 0 auto; padding: 22px 20px 64px; }
+  ::selection { background: color-mix(in srgb, var(--accent) 42%, transparent); }
 
-  /* ---------------- top bar ---------------- */
-  .topbar {
-    display: flex; align-items: center; justify-content: space-between;
-    gap: 16px; flex-wrap: wrap;
-    padding-bottom: 16px; border-bottom: 1px solid var(--line); margin-bottom: 16px;
+  /* Scrollbars belong to the surface, not to the operating system's idea of one. */
+  ::-webkit-scrollbar { width: 11px; height: 11px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, .09);
+    border: 3px solid transparent;
+    background-clip: content-box;
+    border-radius: var(--r-pill);
   }
-  .wordmark { font-size: 17px; font-weight: 680; letter-spacing: .16em; text-transform: uppercase; }
-  .wordmark span { color: var(--ink-dim); font-weight: 500; letter-spacing: .1em; }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, .18); background-clip: content-box;
+  }
 
-  .whoami { display: flex; align-items: center; gap: 12px; }
-  .whoami .badge { width: 38px; height: 43px; flex: none; }
-  .whoami .badge svg { width: 100%; height: 100%; display: block; overflow: visible; }
-  .whoami .tier { font-size: 13.5px; font-weight: 640; line-height: 1.2; }
-  .whoami .sub {
-    font-family: var(--mono); font-size: 11px; color: var(--ink-dim);
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  /* ==================================================================
+     Frame
+     ================================================================== */
+
+  .frame { display: grid; grid-template-columns: var(--rail-w) 1fr; height: 100vh; }
+
+  /* ---------------------------------------------------------- rail */
+
+  .rail {
+    display: grid; grid-template-rows: var(--bar-h) 1fr auto;
+    min-height: 0;
+    background: linear-gradient(180deg, #0a0d13 0%, var(--rail) 46%, #05070c 100%);
+    border-right: 1px solid var(--hair);
+  }
+
+  /* The window draws no title bar of its own, so the top of each column is the
+     grab handle. Interactive children opt back out. */
+  .rail-top, .topbar { -webkit-app-region: drag; }
+  .rail-top button, .topbar button, .topbar summary,
+  .topbar input, .topbar select { -webkit-app-region: no-drag; }
+
+  .rail-top { display: flex; align-items: center; padding: 0 18px; }
+
+  .wordmark {
+    display: flex; align-items: center; gap: 9px;
+    font-size: 12.5px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase;
+  }
+  .wordmark .mark {
+    width: 15px; height: 17px; flex: none; color: var(--accent);
+    filter: drop-shadow(0 0 6px color-mix(in srgb, var(--accent) 55%, transparent));
+    transition: color .5s var(--ease);
+  }
+  .wordmark .mark svg { width: 100%; height: 100%; display: block; }
+
+  /* ---------------------------------------------------------- nav */
+
+  .nav {
+    display: grid; align-content: start; gap: 2px;
+    padding: 14px 12px; overflow-y: auto; min-height: 0;
+  }
+
+  .nav-label {
+    font-size: 9.5px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase;
+    color: var(--ink-dim); padding: 12px 10px 6px;
+  }
+  .nav-label:first-child { padding-top: 2px; }
+
+  .tab {
+    position: relative;
+    display: grid; grid-template-columns: 20px 1fr auto; align-items: center; gap: 11px;
+    width: 100%; text-align: left;
+    font: inherit; font-size: 13.5px; font-weight: 550;
+    color: var(--ink-mid); background: transparent;
+    border: 1px solid transparent; border-radius: var(--r-sm);
+    padding: 8px 10px; cursor: pointer;
+    transition: color .13s var(--ease), background .13s var(--ease);
+  }
+  .tab .ico { width: 20px; height: 20px; display: block; color: var(--ink-dim); }
+  .tab .ico svg {
+    width: 100%; height: 100%; display: block;
+    fill: none; stroke: currentColor; stroke-width: 1.6;
+    stroke-linecap: round; stroke-linejoin: round;
+  }
+  /* The number that selects this screen. Revealed on hover rather than always
+     on: it is a thing to learn once, not a thing to read every evening. */
+  .tab .tab-key {
+    font-family: var(--mono); font-size: 10px; color: var(--ink-dim);
+    border: 1px solid var(--hair); border-radius: 4px;
+    min-width: 17px; text-align: center; padding: 0 3px;
+    opacity: 0; transition: opacity .13s var(--ease);
+  }
+  .nav:hover .tab-key, .tab:focus-visible .tab-key { opacity: 1; }
+
+  .tab:hover { color: var(--ink); background: rgba(255, 255, 255, .035); }
+  .tab:hover .ico { color: var(--ink-mid); }
+
+  .tab[aria-selected="true"] {
+    color: var(--ink);
+    background: linear-gradient(90deg,
+      color-mix(in srgb, var(--accent) 16%, transparent), rgba(255, 255, 255, .045));
+    border-color: var(--hair);
+  }
+  .tab[aria-selected="true"] .ico { color: var(--accent); }
+  .tab[aria-selected="true"]::before {
+    content: ""; position: absolute; left: -12px; top: 50%; translate: 0 -50%;
+    width: 3px; height: 20px; border-radius: 0 3px 3px 0; background: var(--accent);
+    box-shadow: 0 0 12px color-mix(in srgb, var(--accent) 70%, transparent);
+  }
+
+  /* ---------------------------------------------------- rail footer */
+
+  .rail-foot {
+    display: grid; gap: 10px;
+    padding: 12px; border-top: 1px solid var(--hair);
+    background: rgba(0, 0, 0, .28);
+  }
+
+  .whoami { display: grid; gap: 9px; }
+
+  /* A rank badge invites a press. Before this it was decoration, and pressing it
+     did nothing, which teaches people the display is inert. */
+  .rank-link {
+    display: grid; grid-template-columns: 34px 1fr; align-items: center; gap: 11px;
+    width: 100%; text-align: left;
+    font: inherit; color: inherit; background: transparent;
+    border: 1px solid transparent; border-radius: var(--r-sm);
+    padding: 6px; margin: -6px; cursor: pointer;
+    transition: background .13s var(--ease), border-color .13s var(--ease);
+  }
+  .rank-link:hover { background: rgba(255, 255, 255, .04); border-color: var(--hair); }
+  .rank-link .badge { width: 34px; height: 39px; flex: none; }
+  .rank-link .badge svg { width: 100%; height: 100%; display: block; overflow: visible; }
+  .rank-link .tier { display: block; font-size: 13.5px; font-weight: 650; line-height: 1.25; }
+  .rank-link .sub {
+    display: block; font-family: var(--mono); font-size: 10.5px; color: var(--ink-dim);
     font-variant-numeric: tabular-nums;
   }
-  .streak {
-    font-family: var(--mono); font-size: 11.5px; color: var(--ink-mid);
-    border: 1px solid var(--line-bright); border-radius: 999px; padding: 4px 11px;
+
+  .rail-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .streak, .level-chip {
+    font-family: var(--mono); font-size: 10.5px; color: var(--ink-mid);
+    background: rgba(255, 255, 255, .035);
+    border: 1px solid var(--hair); border-radius: var(--r-pill);
+    padding: 3px 10px; white-space: nowrap;
   }
 
-  /* ---------------- account ---------------- */
-  .account { display: flex; align-items: center; }
+  /* ---------------------------------------------------------- account */
+
+  .account { display: grid; }
   .signin {
-    font: inherit; font-size: 12.5px; font-weight: 620;
-    color: var(--void); background: var(--ink);
-    border: 0; border-radius: 8px; padding: 8px 15px; cursor: pointer;
-    white-space: nowrap;
+    font: inherit; font-size: 12.5px; font-weight: 640;
+    color: #06080c; background: var(--ink);
+    border: 0; border-radius: var(--r-sm); padding: 9px 14px; cursor: pointer;
+    transition: filter .13s var(--ease);
   }
-  .signin:hover { background: #fff; }
-  .signin[disabled] { opacity: .55; cursor: default; }
-  .signin:focus-visible { outline: 2px solid var(--ink-mid); outline-offset: 3px; }
+  .signin:hover { filter: brightness(1.12); }
+  .signin[disabled] { opacity: .45; cursor: default; }
 
-  .signed-in { display: flex; align-items: center; gap: 10px; }
-  .signed-in .who-name { font-size: 13px; font-weight: 620; line-height: 1.2; }
+  .signed-in {
+    display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 8px;
+    padding: 7px 9px; background: rgba(255, 255, 255, .03);
+    border: 1px solid var(--hair); border-radius: var(--r-sm);
+  }
+  .signed-in > div { min-width: 0; }
+  .signed-in .who-name {
+    font-size: 12.5px; font-weight: 620; line-height: 1.25;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .signed-in .sub { font-family: var(--mono); font-size: 10px; color: var(--ink-dim); }
   .signed-in button {
-    font: inherit; font-size: 11.5px; color: var(--ink-mid);
-    background: transparent; border: 1px solid var(--line-bright);
-    border-radius: 6px; padding: 4px 10px; cursor: pointer;
+    font: inherit; font-size: 11px; color: var(--ink-dim);
+    background: transparent; border: 1px solid var(--hair);
+    border-radius: var(--r-xs); padding: 3px 8px; cursor: pointer;
   }
-  .signed-in button:hover { color: var(--ink); border-color: var(--ink-dim); }
+  .signed-in button:hover { color: var(--ink); border-color: var(--hair-3); }
 
-  /* ---------------- status strip ---------------- */
-  .status {
-    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
-    font-family: var(--mono); font-size: 11.5px; color: var(--ink-dim);
-    margin-bottom: 18px;
+  /* ==================================================================
+     Main column
+     ================================================================== */
+
+  .main {
+    position: relative;
+    display: grid; grid-template-rows: var(--bar-h) 1fr;
+    min-width: 0; min-height: 0;
+    background:
+      radial-gradient(900px 460px at 82% -10%,
+        color-mix(in srgb, var(--accent) 10%, transparent) 0%, transparent 65%),
+      radial-gradient(700px 420px at -5% 105%, #0c1120 0%, transparent 60%),
+      var(--void);
   }
-  .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--up); flex: none; }
-  .dot.scanning { background: var(--warn); }
-  .dot.bad { background: var(--down); }
+
+  .topbar {
+    position: relative; z-index: 20;
+    display: flex; align-items: center; gap: 10px;
+    padding: 0 16px; border-bottom: 1px solid var(--hair);
+    background: rgba(6, 8, 12, .72); backdrop-filter: blur(14px);
+  }
+  /* Room for the operating system's window buttons, drawn over the top-right of
+     this bar. Only in the app; the preview has no window. */
+  html.electron .topbar { padding-right: 150px; }
+
+  /* ---------------------------------------------------------- status */
+
+  .status { position: relative; display: flex; align-items: center; min-width: 0; }
+
+  .status-pill {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 12px; color: var(--ink-mid);
+    background: rgba(255, 255, 255, .03);
+    border: 1px solid var(--hair); border-radius: var(--r-pill);
+    padding: 4px 11px; min-width: 0;
+    list-style: none; cursor: pointer;
+    transition: color .13s var(--ease), border-color .13s var(--ease);
+  }
+  .status-pill::-webkit-details-marker { display: none; }
+  .status-pill:hover { border-color: var(--hair-3); color: var(--ink); }
+
+  .dot {
+    width: 7px; height: 7px; border-radius: 50%; flex: none;
+    background: var(--up); box-shadow: 0 0 0 3px color-mix(in srgb, var(--up) 18%, transparent);
+  }
+  .dot.scanning {
+    background: var(--warn); box-shadow: 0 0 0 3px color-mix(in srgb, var(--warn) 18%, transparent);
+  }
+  .dot.bad {
+    background: var(--down); box-shadow: 0 0 0 3px color-mix(in srgb, var(--down) 20%, transparent);
+  }
+
+  /* Long paths matter at the end, not the start, so they are clipped from the left. */
   .status .path {
-    color: var(--ink-mid); overflow: hidden; text-overflow: ellipsis;
-    white-space: nowrap; max-width: 46ch;
+    font-family: var(--mono); font-size: 11px; color: var(--ink-dim);
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 34ch;
+    direction: rtl; text-align: left;
   }
-  /* Which bundle this window is running. A window left open across a rebuild keeps the
-     old code and looks identical to a fresh one, so the answer is on screen rather than
-     in the terminal that launched it. */
-  .status .build { margin-left: auto; color: var(--ink-dim); opacity: .75; }
-  .status button {
-    font: inherit; font-family: var(--font); font-size: 11.5px;
-    color: var(--ink-mid); background: transparent;
-    border: 1px solid var(--line-bright); border-radius: 6px;
-    padding: 3px 9px; cursor: pointer;
+
+  /* The folder controls live behind the pill rather than in the bar: they are used
+     once and then never again, and three buttons on screen all evening for that is
+     three buttons of noise. <details> so it opens on a click and closes on Escape
+     without a line of script behind it. */
+  .status-menu {
+    position: absolute; top: calc(100% + 9px); left: 0; z-index: 30;
+    display: grid; gap: 9px; width: min(430px, 60vw);
+    padding: 13px; background: var(--surface-2);
+    border: 1px solid var(--hair-2); border-radius: var(--r);
+    box-shadow: var(--shadow-3);
   }
-  .status button:hover { color: var(--ink); border-color: var(--ink-dim); }
-  .status button:focus-visible { outline: 2px solid var(--ink-mid); outline-offset: 2px; }
+  /* Wrapped rather than scrolled: a scrollbar under a path is one more thing to
+     operate, and the path is the whole reason the popover is open. */
+  .status-menu .full-path {
+    font-family: var(--mono); font-size: 11px; color: var(--ink-mid);
+    background: var(--sunken); border: 1px solid var(--hair);
+    border-radius: var(--r-xs); padding: 8px 10px;
+    word-break: break-all; line-height: 1.5;
+  }
+  .status-menu .row { display: flex; gap: 7px; flex-wrap: wrap; }
+  .status-menu button {
+    font: inherit; font-size: 12px; color: var(--ink-mid);
+    background: rgba(255, 255, 255, .03); border: 1px solid var(--hair);
+    border-radius: var(--r-xs); padding: 6px 12px; cursor: pointer;
+  }
+  .status-menu button:hover { color: var(--ink); border-color: var(--hair-3); }
+  .status-menu .hint { font-size: 11.5px; color: var(--ink-dim); line-height: 1.5; }
+
+  .topbar-right {
+    margin-left: auto; display: flex; align-items: center; gap: 12px;
+    font-family: var(--mono); font-size: 10.5px; color: var(--ink-dim);
+  }
+  /* Which bundle this window is running. A window left open across a rebuild keeps
+     the old code and looks identical to a fresh one, so the answer is on screen
+     rather than in the terminal that launched it. */
+  .build { opacity: .8; white-space: nowrap; }
+
+  /* ---------------------------------------------------------- scroll */
+
+  .scroll { overflow-y: auto; overflow-x: hidden; min-height: 0; }
+  .content { max-width: 1060px; margin: 0 auto; padding: 26px 28px 76px; }
+
+  /* ==================================================================
+     Notices
+     ================================================================== */
 
   .banner {
-    display: none; padding: 11px 14px; border-radius: 9px; margin-bottom: 16px;
-    font-size: 13px; background: #2a1418; border: 1px solid #56222a; color: #ffd7dc;
+    display: none; align-items: flex-start; gap: 10px;
+    padding: 12px 15px; border-radius: var(--r); margin-bottom: 16px;
+    font-size: 13px; line-height: 1.5;
+    background: color-mix(in srgb, var(--down) 12%, var(--surface));
+    border: 1px solid color-mix(in srgb, var(--down) 40%, transparent);
+    color: #ffdbe0;
   }
   .banner.on { display: block; }
-  /* The same slot carrying something that went to plan. A forfeit confirmation in the
-     red error styling reads as though the forfeit failed. */
+  /* The same slot carrying something that went to plan. A forfeit confirmation in
+     the red error styling reads as though the forfeit failed. */
   .banner.notice {
-    background: var(--panel); border-color: var(--line-bright); color: var(--ink-mid);
+    background: var(--surface-2); border-color: var(--hair-2); color: var(--ink-mid);
   }
 
-  /* ---------------- preview notice ---------------- */
-  .preview-note {
-    padding: 12px 15px; border-radius: 9px; margin-bottom: 16px;
+  .preview-note, .signin-help {
+    padding: 13px 16px; border-radius: var(--r); margin-bottom: 16px;
     font-size: 13px; line-height: 1.55; color: var(--ink-mid);
-    background: var(--panel); border: 1px solid var(--line-bright);
+    background: var(--surface-2); border: 1px solid var(--hair-2);
   }
   .preview-note strong { color: var(--ink); font-weight: 640; }
-  .preview-note code {
+  .preview-note code, .signin-help code {
     font-family: var(--mono); font-size: 12px; color: var(--ink);
-    background: var(--sunken); border: 1px solid var(--line);
+    background: var(--sunken); border: 1px solid var(--hair);
     border-radius: 5px; padding: 1px 6px;
   }
-
-  /* ---------------- sign-in fallback ---------------- */
-  .signin-help {
-    padding: 13px 15px; border-radius: 9px; margin-bottom: 16px;
-    background: var(--panel); border: 1px solid var(--line-bright);
-  }
-  .signin-help p { margin: 0 0 9px; font-size: 13px; color: var(--ink-mid); }
+  .signin-help p { margin: 0 0 10px; }
   .signin-link-row { display: flex; gap: 9px; align-items: center; }
   .signin-link-row code {
     flex: 1; min-width: 0; overflow-x: auto; white-space: nowrap;
-    font-family: var(--mono); font-size: 11.5px; color: var(--ink);
-    background: var(--sunken); border: 1px solid var(--line);
-    border-radius: 6px; padding: 7px 9px;
+    font-size: 11.5px; padding: 7px 10px;
   }
   .signin-link-row button {
     font: inherit; font-size: 12px; color: var(--ink-mid);
-    background: transparent; border: 1px solid var(--line-bright);
-    border-radius: 6px; padding: 6px 11px; cursor: pointer; white-space: nowrap;
+    background: rgba(255, 255, 255, .03); border: 1px solid var(--hair);
+    border-radius: var(--r-xs); padding: 7px 12px; cursor: pointer; white-space: nowrap;
   }
-  .signin-link-row button:hover { color: var(--ink); border-color: var(--ink-dim); }
+  .signin-link-row button:hover { color: var(--ink); border-color: var(--hair-3); }
 
-  /* ---------------- tabs ---------------- */
-  .tabs { display: flex; gap: 4px; margin-bottom: 18px; flex-wrap: wrap; }
-  .tab {
-    font: inherit; font-size: 13px; font-weight: 560;
-    color: var(--ink-mid); background: transparent;
-    border: 1px solid transparent; border-radius: 8px;
-    padding: 7px 14px; cursor: pointer;
-  }
-  .tab:hover { color: var(--ink); background: var(--panel); }
-  .tab[aria-selected="true"] {
-    color: var(--ink); background: var(--panel-2); border-color: var(--line-bright);
-  }
-  .tab:focus-visible { outline: 2px solid var(--ink-mid); outline-offset: 2px; }
+  /* ==================================================================
+     Screens and panels
+     ================================================================== */
 
   .screen { display: none; }
-  .screen.active { display: block; }
+  .screen.active { display: grid; gap: 16px; }
+
+  /* Every screen opens with a plain sentence saying what it is for. The app is
+     full of derived numbers, and a heading alone does not say what they mean. */
+  .screen-head { margin-bottom: 2px; }
+  .screen-head h1 {
+    margin: 0; font-size: 23px; font-weight: 700; letter-spacing: -.02em;
+  }
+  .screen-head p {
+    margin: 5px 0 0; font-size: 13.5px; color: var(--ink-mid);
+    line-height: 1.55; max-width: 68ch;
+  }
 
   .panel {
-    background: var(--panel); border: 1px solid var(--line);
-    border-radius: 12px; overflow: hidden;
+    background: linear-gradient(180deg, rgba(255, 255, 255, .028), rgba(255, 255, 255, .008)),
+                var(--surface);
+    border: 1px solid var(--hair); border-radius: var(--r-lg);
+    overflow: hidden; box-shadow: var(--shadow-2);
   }
-  .panel + .panel { margin-top: 16px; }
   .phead {
-    display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
-    padding: 13px 16px; border-bottom: 1px solid var(--line);
+    display: flex; align-items: baseline; justify-content: space-between; gap: 14px;
+    padding: 14px 18px; border-bottom: 1px solid var(--hair);
   }
   .phead h2 {
-    margin: 0; font-size: 10.5px; font-weight: 660; text-transform: uppercase;
-    letter-spacing: .1em; color: var(--ink-dim);
+    margin: 0; font-size: 10.5px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .13em; color: var(--ink-dim);
   }
-  .phead .note { font-size: 12px; color: var(--ink-dim); }
-  .pbody { padding: 16px; }
+  .phead .note { font-size: 12px; color: var(--ink-dim); text-align: right; }
+  .pbody { padding: 18px; }
 
-  /* ---------------- queue ---------------- */
-  .hero { display: flex; align-items: center; gap: 20px; padding: 22px 16px; flex-wrap: wrap; }
+  .rank-lede {
+    font-size: 13px; line-height: 1.65; color: var(--ink-mid);
+    margin: 0 0 15px; max-width: 70ch;
+  }
+
+  /* ==================================================================
+     Play
+     ================================================================== */
+
+  .hero {
+    position: relative;
+    display: flex; align-items: center; gap: 24px; flex-wrap: wrap;
+    padding: 26px 22px;
+  }
+  /* The rank colour, bled behind the badge. It is the one thing on this screen
+     the player is here to see change. */
+  .hero::before {
+    content: ""; position: absolute; left: -40px; top: -60px;
+    width: 320px; height: 320px; border-radius: 50%;
+    background: radial-gradient(circle,
+      color-mix(in srgb, var(--accent) 22%, transparent) 0%, transparent 68%);
+    pointer-events: none;
+  }
+  .hero > * { position: relative; }
+  /* The rail's version stretches to the rail; here it must not, or as a flex item at
+     width:100% it takes the whole row and pushes everything else below it. */
+  .hero .rank-link {
+    grid-template-columns: 1fr; width: auto; flex: none;
+    margin: 0; padding: 6px; border-radius: var(--r);
+  }
   .hero .badge { width: 104px; height: 118px; flex: none; }
   .hero .badge svg { width: 100%; height: 100%; display: block; overflow: visible; }
-  .hero .name { font-size: 30px; font-weight: 700; letter-spacing: -.02em; line-height: 1.1; }
-  .hero .meta {
-    font-family: var(--mono); font-size: 12px; color: var(--ink-mid); margin-top: 6px;
-    font-variant-numeric: tabular-nums;
+  .hero-kicker {
+    font-size: 10px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase;
+    color: var(--ink-dim); margin-bottom: 6px;
   }
-  .hero .placement { font-size: 12px; color: var(--ink-dim); margin-top: 8px; max-width: 46ch; }
+  .hero-id { flex: 1 1 260px; min-width: 0; }
+  .hero .name {
+    font-size: 34px; font-weight: 750; letter-spacing: -.025em; line-height: 1.05;
+  }
+  .hero .placement {
+    font-size: 12px; color: var(--ink-dim); margin: 12px 0 0; max-width: 46ch; line-height: 1.55;
+  }
 
-  .cats { display: flex; flex-wrap: wrap; gap: 6px; }
+  /* The three numbers behind the tier, given their own column. As one run-on line
+     under the name they were a caption nobody read; the badge also left half the
+     panel empty, which is the widest thing on the screen doing the least. */
+  .hero-stats {
+    display: grid; grid-auto-flow: column; gap: 10px;
+    padding-left: 22px; border-left: 1px solid var(--hair);
+  }
+  .stat { min-width: 104px; }
+  .stat-k {
+    font-size: 9.5px; font-weight: 700; letter-spacing: .13em; text-transform: uppercase;
+    color: var(--ink-dim);
+  }
+  .stat-v {
+    font-family: var(--mono); font-size: 20px; font-weight: 650; color: var(--ink);
+    font-variant-numeric: tabular-nums; margin-top: 5px; line-height: 1.15;
+  }
+  .stat-s { font-size: 11px; color: var(--ink-dim); margin-top: 3px; }
+
+  @media (max-width: 1180px) {
+    .hero-stats {
+      grid-auto-flow: row; grid-template-columns: repeat(3, 1fr);
+      flex: 1 1 100%; padding-left: 0; padding-top: 18px;
+      border-left: 0; border-top: 1px solid var(--hair);
+    }
+  }
+
+  /* Numbered steps, because the order matters and nothing else on screen says so. */
+  .step { display: grid; grid-template-columns: 22px 1fr; gap: 13px; align-items: start; }
+  .step + .step { margin-top: 20px; }
+  .step-n {
+    width: 22px; height: 22px; border-radius: 50%;
+    display: grid; place-items: center;
+    font-family: var(--mono); font-size: 11px; color: var(--ink-mid);
+    background: rgba(255, 255, 255, .04); border: 1px solid var(--hair-2);
+  }
+  .step-title { font-size: 13px; font-weight: 620; margin-bottom: 9px; }
+  .step-title span { font-weight: 450; color: var(--ink-dim); }
+
+  .cats { display: flex; flex-wrap: wrap; gap: 7px; }
   .cat {
     font: inherit; font-size: 12.5px; font-weight: 560; color: var(--ink-mid);
-    background: var(--sunken); border: 1px solid var(--line);
-    border-radius: 999px; padding: 6px 13px; cursor: pointer;
+    background: rgba(255, 255, 255, .03); border: 1px solid var(--hair);
+    border-radius: var(--r-pill); padding: 7px 15px; cursor: pointer;
+    transition: color .13s var(--ease), border-color .13s var(--ease), background .13s var(--ease);
   }
-  .cat:hover { color: var(--ink); border-color: var(--line-bright); }
-  .cat[aria-pressed="true"] { color: var(--void); background: var(--ink); border-color: var(--ink); }
-  .cat:focus-visible { outline: 2px solid var(--ink-mid); outline-offset: 2px; }
+  .cat:hover { color: var(--ink); border-color: var(--hair-3); }
+  .cat[aria-pressed="true"] {
+    color: #06080c; background: var(--ink); border-color: var(--ink); font-weight: 640;
+  }
 
   .queue-btn {
-    font: inherit; font-size: 14px; font-weight: 640; letter-spacing: .02em;
-    color: var(--void); background: var(--ink); border: 0; border-radius: 9px;
-    padding: 11px 22px; cursor: pointer; margin-top: 14px;
+    font: inherit; font-size: 14.5px; font-weight: 660; letter-spacing: .01em;
+    color: #06080c; background: var(--ink); border: 0; border-radius: var(--r);
+    padding: 13px 26px; cursor: pointer;
+    box-shadow: 0 10px 30px -14px color-mix(in srgb, var(--accent) 90%, transparent);
+    transition: filter .13s var(--ease), transform .13s var(--ease);
   }
-  .queue-btn:hover { background: #fff; }
-  .queue-btn:focus-visible { outline: 2px solid var(--ink-mid); outline-offset: 3px; }
-  .queue-btn[disabled] { opacity: .5; cursor: default; }
+  .queue-btn:hover:not(:disabled) { filter: brightness(1.1); }
+  .queue-btn:active:not(:disabled) { transform: translateY(1px); }
+  .queue-btn[disabled] { opacity: .42; cursor: default; box-shadow: none; }
 
   /* Ranked needs a history behind the account. Shown as progress rather than as a
-     refusal at the moment of pressing: "you cannot play" is a much worse thing to learn
-     from a button that looked available. */
+     refusal at the moment of pressing: "you cannot play" is a much worse thing to
+     learn from a button that looked available. */
   .queue-gate {
-    display: none; margin-top: 10px; padding: 9px 12px; border-radius: 8px;
-    background: var(--panel); border: 1px solid var(--line-bright);
-    font-size: 12.5px; color: var(--ink-mid); line-height: 1.5;
+    display: none; margin-top: 12px; padding: 11px 14px; border-radius: var(--r);
+    background: var(--surface-2); border: 1px solid var(--hair-2);
+    font-size: 12.5px; color: var(--ink-mid); line-height: 1.55; max-width: 52ch;
   }
   .queue-gate.on { display: block; }
   .queue-gate .gate-count { font-family: var(--mono); color: var(--ink); }
   .queue-gate .gate-track {
-    height: 3px; border-radius: 2px; background: var(--line-bright);
-    margin-top: 7px; overflow: hidden;
+    height: 4px; border-radius: var(--r-pill); background: rgba(255, 255, 255, .08);
+    margin-top: 9px; overflow: hidden;
   }
-  .queue-gate .gate-fill { height: 100%; background: var(--ink-dim); width: 0; }
+  .queue-gate .gate-fill {
+    height: 100%; width: 0; border-radius: var(--r-pill);
+    background: linear-gradient(90deg, var(--ink-dim), var(--accent));
+  }
 
   .searching {
+    display: none; align-items: center; gap: 9px; margin-top: 13px;
     font-family: var(--mono); font-size: 12.5px; color: var(--ink-mid);
-    margin-top: 14px; display: none;
   }
-  .searching.on { display: block; }
+  .searching.on { display: flex; }
+  .searching::before {
+    content: ""; width: 8px; height: 8px; border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 60%, transparent);
+    animation: ping 1.4s var(--ease) infinite;
+  }
+  @keyframes ping {
+    0%   { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 55%, transparent); }
+    70%  { box-shadow: 0 0 0 9px transparent; }
+    100% { box-shadow: 0 0 0 0 transparent; }
+  }
 
-  .opponent { display: none; margin-top: 16px; }
+  /* Which difficulty a match draws from, and whether the player is measured on it. */
+  .pool-note {
+    font-size: 12.5px; line-height: 1.6; color: var(--ink-mid);
+    margin-top: 11px; padding: 11px 13px;
+    background: rgba(255, 255, 255, .022); border: 1px solid var(--hair);
+    border-left: 2px solid var(--hair-3); border-radius: var(--r-sm);
+  }
+  .pool-note.warn {
+    border-color: color-mix(in srgb, var(--warn) 30%, transparent);
+    border-left-color: var(--warn);
+    background: color-mix(in srgb, var(--warn) 7%, transparent);
+    color: color-mix(in srgb, var(--warn) 55%, var(--ink));
+  }
+  .pool-note b { color: var(--ink); font-weight: 640; }
+
+  /* ---------------------------------------------------------- opponent */
+
+  .opponent { display: none; }
   .opponent.on { display: block; }
-  .opp-row {
-    display: flex; align-items: center; justify-content: space-between; gap: 14px;
-    padding: 13px 15px; background: var(--sunken);
-    border: 1px solid var(--line-bright); border-radius: 10px; flex-wrap: wrap;
-  }
-  .opp-who { display: flex; align-items: center; gap: 11px; }
-  .opp-who .badge { width: 30px; height: 34px; flex: none; }
-  .opp-who .badge svg { width: 100%; height: 100%; display: block; overflow: visible; }
 
-  .odds { margin-top: 12px; }
+  .opp-row {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    padding: 14px 16px; flex-wrap: wrap;
+    background: rgba(255, 255, 255, .025);
+    border: 1px solid var(--hair-2); border-radius: var(--r);
+  }
+  .opp-who { display: flex; align-items: center; gap: 12px; }
+  .opp-who .badge { width: 32px; height: 36px; flex: none; }
+  .opp-who .badge svg { width: 100%; height: 100%; display: block; overflow: visible; }
+  .opp-name { font-size: 14px; font-weight: 640; }
+  .opp-row .sub { font-family: var(--mono); font-size: 11px; color: var(--ink-dim); }
+
+  .odds { margin-top: 14px; }
   .odds-bar {
-    height: 7px; border-radius: 999px; overflow: hidden; display: flex;
-    background: var(--sunken); border: 1px solid var(--line);
+    height: 8px; border-radius: var(--r-pill); overflow: hidden; display: flex;
+    background: var(--sunken); border: 1px solid var(--hair);
   }
   .odds-labels {
-    display: flex; justify-content: space-between; margin-top: 6px;
+    display: flex; justify-content: space-between; margin-top: 7px;
     font-family: var(--mono); font-size: 10.5px; color: var(--ink-dim);
   }
 
-  .todo { margin-top: 16px; }
+  /* ---------------------------------------------------------- to-do */
+
+  .todo { margin-top: 20px; }
   .todo h3 {
-    margin: 0 0 9px; font-size: 10.5px; font-weight: 660; text-transform: uppercase;
-    letter-spacing: .1em; color: var(--ink-dim);
+    margin: 0 0 10px; font-size: 10.5px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .13em; color: var(--ink-dim);
   }
-  .todo ol { margin: 0; padding-left: 0; list-style: none; display: grid; gap: 6px; }
+  .todo ol { margin: 0; padding: 0; list-style: none; display: grid; gap: 7px; }
   .todo li {
-    display: flex; align-items: center; gap: 11px;
-    padding: 10px 13px; background: var(--sunken);
-    border: 1px solid var(--line); border-radius: 8px; font-size: 13.5px;
+    display: flex; align-items: center; gap: 13px;
+    padding: 12px 14px; font-size: 13.5px;
+    background: rgba(255, 255, 255, .022);
+    border: 1px solid var(--hair); border-radius: var(--r-sm);
+    transition: border-color .15s var(--ease), background .15s var(--ease);
   }
-  .todo .n { font-family: var(--mono); font-size: 11px; color: var(--ink-dim); width: 18px; flex: none; }
-  .todo li.done { border-color: #24503c; }
-  .todo li.done .n { color: var(--up); }
+  .todo .n {
+    width: 22px; height: 22px; flex: none; border-radius: 50%;
+    display: grid; place-items: center;
+    font-family: var(--mono); font-size: 11px; color: var(--ink-dim);
+    background: rgba(255, 255, 255, .04); border: 1px solid var(--hair-2);
+  }
+  .todo li.done {
+    border-color: color-mix(in srgb, var(--up) 32%, transparent);
+    background: color-mix(in srgb, var(--up) 6%, transparent);
+  }
+  .todo li.done .n {
+    color: #06110c; background: var(--up);
+    border-color: var(--up); font-weight: 700;
+  }
   .todo li .tier-tag {
     margin-left: auto; font-family: var(--mono); font-size: 10px;
-    text-transform: uppercase; letter-spacing: .06em; color: var(--ink-dim);
+    text-transform: uppercase; letter-spacing: .07em; color: var(--ink-dim);
   }
-  .todo li.pending { opacity: .65; }
-  /* Pushed right, and exempt from the row dimming: a control the player is meant to
-     click should not look as faded as the label it sits beside. */
+  .todo li.pending { opacity: .72; }
+  /* Pushed right, and exempt from the row dimming: a control the player is meant
+     to click should not look as faded as the label it sits beside. */
   .todo li .scen-play {
-    margin-left: auto; font: inherit; font-size: 11px;
-    color: var(--ink); background: transparent;
-    border: 1px solid var(--line-bright); border-radius: 6px;
-    padding: 3px 10px; cursor: pointer; opacity: 1;
+    margin-left: auto; font: inherit; font-size: 11.5px; font-weight: 560;
+    color: var(--ink); background: rgba(255, 255, 255, .05);
+    border: 1px solid var(--hair-2); border-radius: var(--r-xs);
+    padding: 4px 12px; cursor: pointer; opacity: 1;
   }
-  .todo li .scen-play:hover:not(:disabled) { border-color: var(--ink-dim); }
+  .todo li .scen-play:hover:not(:disabled) { border-color: var(--hair-3); }
   .todo li .scen-play:disabled { opacity: .5; cursor: default; }
+  .todo li .tier-tag + .scen-play { margin-left: 10px; }
 
   .match-actions {
     display: flex; align-items: center; justify-content: space-between;
-    gap: 12px; margin-top: 11px; flex-wrap: wrap;
+    gap: 14px; margin-top: 16px; flex-wrap: wrap;
+    padding-top: 16px; border-top: 1px solid var(--hair);
   }
-  .match-hint { font-size: 12px; color: var(--ink-dim); flex: 1 1 220px; }
+  .match-hint { font-size: 12.5px; color: var(--ink-dim); flex: 1 1 240px; line-height: 1.55; }
+  .match-buttons { display: flex; gap: 9px; align-items: center; }
   /* The deadline is short enough that finding out about it by losing would be the
      wrong way to learn it exists. */
   .match-clock {
     font-family: var(--mono); font-size: 12px; letter-spacing: .04em;
-    color: var(--ink-mid); padding: 4px 9px; border-radius: 6px;
-    border: 1px solid var(--line-bright); background: var(--sunken);
-    white-space: nowrap;
+    color: var(--ink-mid); padding: 6px 11px; border-radius: var(--r-xs);
+    border: 1px solid var(--hair-2); background: var(--sunken); white-space: nowrap;
   }
-  .match-clock.low { color: var(--warn); border-color: #5a4520; }
-  .match-clock.out { color: var(--down); border-color: #56222a; }
-  .match-buttons { display: flex; gap: 8px; align-items: center; }
+  .match-clock.low { color: var(--warn); border-color: color-mix(in srgb, var(--warn) 40%, transparent); }
+  .match-clock.out { color: var(--down); border-color: color-mix(in srgb, var(--down) 40%, transparent); }
   .match-actions button {
-    font: inherit; font-size: 11.5px; color: var(--ink-mid);
-    background: transparent; border: 1px solid var(--line-bright);
-    border-radius: 6px; padding: 5px 11px; cursor: pointer;
+    font: inherit; font-size: 12px; color: var(--ink-mid);
+    background: rgba(255, 255, 255, .03); border: 1px solid var(--hair);
+    border-radius: var(--r-xs); padding: 7px 13px; cursor: pointer;
   }
-  .match-actions button:hover { color: var(--ink); border-color: var(--ink-dim); }
+  .match-actions button:hover:not(:disabled) { color: var(--ink); border-color: var(--hair-3); }
   .match-actions button:disabled { opacity: .5; cursor: default; }
-  /* The one action the player came here to take, so it does not read as a sibling of
-     "Abandon match". */
+  /* The one action the player came here to take, so it does not read as a sibling
+     of "Abandon match". */
   .match-actions button.go {
-    color: var(--void); background: var(--ink); border-color: var(--ink);
-    font-weight: 600;
+    color: #06080c; background: var(--ink); border-color: var(--ink); font-weight: 640;
   }
-  .match-actions button.go:hover:not(:disabled) { opacity: .88; color: var(--void); }
+  .match-actions button.go:hover:not(:disabled) { filter: brightness(1.1); color: #06080c; }
 
-  /* A rank badge is the thing people press expecting detail, so it is a real button.
-     Styled to keep the layout it replaced rather than to announce itself. */
-  .rank-link {
-    display: flex; align-items: center; gap: 10px; text-align: left;
-    font: inherit; color: inherit; background: transparent;
-    border: 1px solid transparent; border-radius: 9px;
-    padding: 3px 6px; margin: -3px -6px; cursor: pointer;
-  }
-  .rank-link:hover { border-color: var(--line-bright); background: var(--sunken); }
-  .rank-link:focus-visible { outline: 2px solid var(--ink-dim); outline-offset: 2px; }
-  .rank-link .tier, .rank-link .sub { display: block; }
+  /* ---------------------------------------------------------- upload */
 
-  /* ---------------- season editor ---------------- */
-  /* One ladder per category, side by side, so it reads as three ladders rather than
-     one long list somebody has to keep track of their place in. */
-  .season-ranks {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-    gap: 18px; margin-bottom: 16px;
+  .upload-row {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    flex-wrap: wrap;
   }
-  .ladder-group { display: grid; gap: 8px; align-content: start; }
-  .ladder-title {
-    font-size: 11px; text-transform: uppercase; letter-spacing: .07em;
-    color: var(--ink-dim); padding-bottom: 2px;
-    border-bottom: 1px solid var(--line);
+  .upload-row > div { min-width: 0; flex: 1 1 320px; }
+  .upload-title { font-size: 13.5px; font-weight: 620; }
+  .upload-sub { font-size: 12.5px; color: var(--ink-dim); margin-top: 3px; }
+  .upload-track {
+    height: 5px; background: rgba(255, 255, 255, .07); border-radius: var(--r-pill);
+    overflow: hidden; margin-top: 11px;
   }
+  .upload-fill { height: 100%; width: 0%; background: var(--up); border-radius: var(--r-pill); }
+  .upload-row button {
+    font: inherit; font-size: 12.5px; font-weight: 620; white-space: nowrap;
+    color: #06080c; background: var(--ink); border: 0;
+    border-radius: var(--r-sm); padding: 9px 17px; cursor: pointer;
+  }
+  .upload-row button:hover:not([disabled]) { filter: brightness(1.1); }
+  .upload-row button[disabled] { opacity: .5; cursor: default; }
+
+  /* ==================================================================
+     Match result
+     ================================================================== */
+
+  .verdict {
+    display: flex; align-items: center; justify-content: space-between; gap: 18px;
+    flex-wrap: wrap; padding: 24px 20px;
+  }
+  .verdict .big { font-size: 30px; font-weight: 760; letter-spacing: -.03em; line-height: 1.1; }
+  .verdict .scores {
+    font-family: var(--mono); font-size: 13px; color: var(--ink-mid);
+    font-variant-numeric: tabular-nums; margin-top: 6px;
+  }
+  .delta-move {
+    font-family: var(--mono); font-size: 22px; font-weight: 680;
+    font-variant-numeric: tabular-nums;
+  }
+  .explain {
+    margin: 0; padding: 14px 20px;
+    background: rgba(255, 255, 255, .022);
+    border-top: 1px solid var(--hair); border-bottom: 1px solid var(--hair);
+    font-size: 13px; color: var(--ink-mid); line-height: 1.6;
+  }
+
+  /* ==================================================================
+     Tables
+     ================================================================== */
+
+  .rounds-wrap, .scen-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; }
+  table.rounds { min-width: 560px; }
+  table.scen { min-width: 620px; }
+  th {
+    text-align: right; padding: 13px 18px 9px;
+    font-size: 9.5px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .1em; color: var(--ink-dim); white-space: nowrap;
+  }
+  th:first-child { text-align: left; }
+  table.scen th:nth-child(2) { text-align: left; }
+  td {
+    padding: 12px 18px; text-align: right; border-top: 1px solid var(--hair);
+    font-family: var(--mono); font-size: 13px; font-variant-numeric: tabular-nums;
+  }
+  td:first-child { text-align: left; font-family: var(--font); font-size: 13.5px; font-weight: 560; }
+  table.scen td { padding: 10px 18px; font-size: 12.5px; }
+  table.scen td:first-child { font-size: 13px; font-weight: 550; }
+  table.scen td:nth-child(2) {
+    text-align: left; font-family: var(--font); font-size: 11.5px; color: var(--ink-dim);
+  }
+  tbody tr { transition: background .1s var(--ease); }
+  tbody tr:hover { background: rgba(255, 255, 255, .03); }
   /* Grouped tables put a header row inside the body; make those read as headers. */
   .scen tbody th {
     text-align: left; font-size: 10.5px; text-transform: uppercase;
-    letter-spacing: .06em; color: var(--ink-dim); font-weight: 600;
-    padding-top: 14px;
+    letter-spacing: .08em; color: var(--ink-dim); font-weight: 650; padding-top: 16px;
   }
-  .season-rank {
-    display: grid; grid-template-columns: 22px 1fr 46px; align-items: center; gap: 10px;
+  .base { color: var(--ink-dim); font-size: 11px; }
+  .up { color: var(--up); }
+  .down { color: var(--down); }
+  .won-round { color: var(--up); font-weight: 640; }
+
+  /* Which of a family's three variants a row is about, and where a target is
+     scored. Both are quiet: they qualify the thing next to them rather than
+     competing with it, and a name like "Pasu" is ambiguous without them. */
+  .win {
+    font-family: var(--mono); font-size: 10px; letter-spacing: .06em;
+    text-transform: uppercase; color: var(--ink-dim);
   }
-  .season-rank .n {
-    font-family: var(--mono); font-size: 10.5px; color: var(--ink-dim);
+  .onscen { font-size: 11px; color: var(--ink-dim); white-space: nowrap; }
+
+  /* ==================================================================
+     Ranks
+     ================================================================== */
+
+  .ladder { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+  .ladder li {
+    display: grid; grid-template-columns: 36px 1fr auto; align-items: center;
+    gap: 14px; padding: 10px 14px; border-radius: var(--r-sm);
+    border: 1px solid var(--hair); background: rgba(255, 255, 255, .02);
   }
-  .season-ranks input[type="text"] {
-    font: inherit; font-size: 13px; color: var(--ink);
-    background: var(--sunken); border: 1px solid var(--line-bright);
-    border-radius: 7px; padding: 6px 10px; width: 100%;
+  /* The tier you are in is the one fact this list exists to convey, so it is the
+     only row that carries its own colour. */
+  .ladder li.here {
+    border-color: color-mix(in srgb, var(--tier) 45%, transparent);
+    background: color-mix(in srgb, var(--tier) 10%, transparent);
+    box-shadow: inset 3px 0 0 var(--tier);
   }
-  .season-ranks input[type="color"] {
-    width: 46px; height: 30px; padding: 2px; cursor: pointer;
-    background: var(--sunken); border: 1px solid var(--line-bright); border-radius: 7px;
+  .ladder .rung {
+    font-family: var(--mono); font-size: 10.5px; color: var(--ink-dim); text-align: right;
+  }
+  .ladder .tier-name { font-size: 13.5px; font-weight: 620; }
+  .ladder li.here .tier-name { color: var(--tier); }
+  .ladder .band {
+    font-family: var(--mono); font-size: 10.5px; color: var(--ink-dim); white-space: nowrap;
+  }
+  .ladder .you {
+    font-family: var(--mono); font-size: 10px; text-transform: uppercase;
+    letter-spacing: .08em; color: var(--tier);
   }
 
-  .season-actions {
-    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  .cat-ranks { display: grid; gap: 12px; }
+  .cat-rank {
+    padding: 14px 16px; border-radius: var(--r);
+    border: 1px solid var(--hair); background: rgba(255, 255, 255, .022);
   }
-  .season-actions button {
-    font: inherit; font-size: 12px; color: var(--ink-mid);
-    background: transparent; border: 1px solid var(--line-bright);
-    border-radius: 7px; padding: 6px 13px; cursor: pointer;
+  .cat-rank-top {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 12px; margin-bottom: 10px;
   }
-  .season-actions button.go {
-    color: var(--void); background: var(--ink); border-color: var(--ink);
-    font-weight: 600;
+  .cat-rank-name { font-size: 14px; font-weight: 640; }
+  .cat-rank-rank { font-family: var(--mono); font-size: 11.5px; }
+  .cat-rank-note { margin-top: 10px; font-size: 11.5px; color: var(--ink-dim); line-height: 1.55; }
+  .cat-rank-note b { color: var(--ink-mid); font-weight: 620; }
+
+  /* The ladder, cut into its difficulty bands. Each rung carries its own rank
+     colour; the ones below the player are filled, the one they hold is ringed. */
+  .ladder-strip { display: flex; gap: 16px; flex-wrap: wrap; }
+  .ladder-strip .band { display: grid; gap: 6px; }
+  .ladder-strip .band-name {
+    font-family: var(--mono); font-size: 9.5px; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--ink-dim);
   }
-  .season-actions button:disabled { opacity: .5; cursor: default; }
-  .season-add {
-    display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
-    padding-bottom: 12px;
+  .ladder-strip .band-rungs { display: flex; gap: 4px; }
+  .ladder-strip .rung {
+    width: 28px; height: 24px; border-radius: var(--r-xs);
+    display: grid; place-items: center;
+    font-family: var(--mono); font-size: 10.5px; color: var(--ink-dim);
+    background: rgba(255, 255, 255, .03); border: 1px solid var(--hair);
+    transition: transform .13s var(--ease);
   }
-  .season-add input[type="search"] {
-    font: inherit; font-size: 12.5px; color: var(--ink);
-    background: var(--sunken); border: 1px solid var(--line-bright);
-    border-radius: 7px; padding: 6px 10px; min-width: 200px;
+  .ladder-strip .rung:hover { transform: translateY(-2px); }
+  .ladder-strip .rung.done {
+    background: color-mix(in srgb, var(--rank) 26%, transparent);
+    border-color: color-mix(in srgb, var(--rank) 45%, transparent);
+    color: var(--ink);
   }
-  .ladder-tools { display: flex; gap: 6px; padding-top: 4px; }
-  .ladder-tools button {
-    font: inherit; font-size: 11px; color: var(--ink-dim);
-    background: transparent; border: 1px solid var(--line);
-    border-radius: 6px; padding: 3px 9px; cursor: pointer;
+  .ladder-strip .rung.here {
+    background: var(--rank); border-color: var(--rank);
+    color: #06080c; font-weight: 700;
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--rank) 35%, transparent),
+                0 6px 18px -6px var(--rank);
   }
-  .ladder-tools button:hover:not(:disabled) { color: var(--ink); border-color: var(--ink-dim); }
-  .ladder-tools button:disabled { opacity: .4; cursor: default; }
-  .season-rank { grid-template-columns: 22px 1fr 46px 14px 24px; }
+
+  /* ==================================================================
+     Profile
+     ================================================================== */
+
+  .wmap { display: grid; gap: 12px; }
+  .wrow { display: grid; grid-template-columns: 96px 1fr auto; gap: 14px; align-items: center; }
+  .wrow .lbl { font-size: 13px; font-weight: 600; }
+  .wtrack {
+    height: 28px; background: var(--sunken); border: 1px solid var(--hair);
+    border-radius: var(--r-sm); overflow: hidden;
+  }
+  .wfill { height: 100%; border-radius: var(--r-sm) 0 0 var(--r-sm); }
+  .wval {
+    font-family: var(--mono); font-size: 12px; color: var(--ink-mid);
+    font-variant-numeric: tabular-nums; min-width: 112px; text-align: right;
+  }
+
+  /* Coverage: which difficulties hold enough history to be graded honestly. */
+  .cover { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+  .cover-cat { display: grid; gap: 6px; align-content: start; }
+  .cover-head {
+    font-size: 10.5px; text-transform: uppercase; letter-spacing: .1em;
+    color: var(--ink-dim); font-weight: 650;
+    padding-bottom: 6px; border-bottom: 1px solid var(--hair);
+  }
+  .cover-row { display: grid; grid-template-columns: 84px 1fr 58px; align-items: center; gap: 10px; }
+  .cover-name { font-size: 12px; color: var(--ink-mid); }
+  .cover-track {
+    height: 8px; background: var(--sunken); border-radius: var(--r-pill); overflow: hidden;
+  }
+  .cover-fill { display: block; height: 100%; border-radius: var(--r-pill); background: var(--ink-dim); }
+  .cover-row.ready .cover-fill { background: var(--up); }
+  .cover-val {
+    font-family: var(--mono); font-size: 10.5px; color: var(--ink-dim); text-align: right;
+  }
+  .cover-row.ready .cover-val { color: var(--up); }
+  .cover-next { font-size: 11.5px; color: var(--ink-dim); margin-top: 8px; line-height: 1.5; }
+
+  /* ==================================================================
+     Consistency
+     ================================================================== */
+
+  .cf-pair { display: grid; grid-template-columns: 1fr auto 1fr; gap: 20px; align-items: center; }
+  .cf-side { text-align: center; }
+  .cf-label {
+    font-size: 9.5px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .14em; color: var(--ink-dim);
+  }
+  .cf-rank { font-size: 28px; font-weight: 740; letter-spacing: -.025em; margin-top: 6px; }
+  .cf-energy {
+    font-family: var(--mono); font-size: 12px; color: var(--ink-mid);
+    font-variant-numeric: tabular-nums; margin-top: 3px;
+  }
+  .cf-note { font-size: 11.5px; color: var(--ink-dim); margin-top: 7px; }
+  .cf-gap {
+    text-align: center; padding: 0 18px;
+    border-left: 1px solid var(--hair); border-right: 1px solid var(--hair);
+  }
+  .cf-gap-val {
+    font-family: var(--mono); font-size: 34px; font-weight: 700;
+    font-variant-numeric: tabular-nums; color: var(--warn); line-height: 1.1;
+  }
+  .cf-gap-label {
+    font-size: 9.5px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .14em; color: var(--ink-dim);
+  }
+  .cf-explain {
+    margin: 18px 0 0; font-size: 12.5px; color: var(--ink-mid);
+    line-height: 1.65; max-width: 70ch;
+  }
+  .gapbar {
+    display: inline-block; vertical-align: middle; height: 6px;
+    border-radius: var(--r-pill); background: var(--warn); min-width: 2px;
+  }
+  @media (max-width: 720px) {
+    .cf-pair { grid-template-columns: 1fr; }
+    .cf-gap {
+      border: 0; border-top: 1px solid var(--hair); border-bottom: 1px solid var(--hair);
+      padding: 14px 0;
+    }
+  }
+
+  /* ==================================================================
+     Quests
+     ================================================================== */
+
+  .quests { display: grid; gap: 11px; }
+  .quest {
+    display: grid; grid-template-columns: 1fr auto; gap: 12px 18px;
+    padding: 16px 18px; background: rgba(255, 255, 255, .022);
+    border: 1px solid var(--hair); border-radius: var(--r);
+  }
+  .quest h3 { margin: 0; font-size: 14.5px; font-weight: 640; }
+  .quest p { margin: 5px 0 0; font-size: 12.5px; color: var(--ink-mid); line-height: 1.55; }
+  .xp {
+    font-family: var(--mono); font-size: 11px; color: var(--ink-dim);
+    white-space: nowrap; align-self: start; text-align: right;
+  }
+  .qtrack {
+    grid-column: 1 / -1; height: 5px; background: rgba(255, 255, 255, .07);
+    border-radius: var(--r-pill); overflow: hidden;
+  }
+  .qfill { height: 100%; border-radius: var(--r-pill); }
+
+  /* A floor quest asks for a window of clean runs rather than one good one, so it
+     is marked rather than left to look like every other row. */
+  .quest-floor { border-color: color-mix(in srgb, var(--warn) 28%, transparent); }
+  .floor-tag {
+    font-family: var(--mono); font-size: 9px; text-transform: uppercase;
+    letter-spacing: .1em; color: var(--warn);
+    border: 1px solid color-mix(in srgb, var(--warn) 35%, transparent);
+    border-radius: 4px; padding: 2px 6px; margin-left: 9px; vertical-align: 2px;
+  }
+  .qsteps {
+    display: block; font-family: var(--mono); font-size: 11px;
+    color: var(--ink-mid); margin-bottom: 4px; white-space: nowrap;
+  }
+
+  /* ---------------------------------------------------- celebration */
+
+  .celebrate {
+    position: fixed; inset: 0; z-index: 60;
+    display: grid; place-items: center;
+    background: rgba(3, 4, 7, .74); backdrop-filter: blur(6px);
+  }
+  .celebrate[hidden] { display: none; }
+  .celebrate-card {
+    width: min(430px, calc(100vw - 40px));
+    padding: 30px 30px 24px; text-align: center;
+    background: linear-gradient(180deg, rgba(255, 255, 255, .05), transparent), var(--surface-2);
+    border: 1px solid var(--hair-2); border-radius: var(--r-lg);
+    box-shadow: var(--shadow-3);
+  }
+  .celebrate-kicker {
+    font-family: var(--mono); font-size: 10px; letter-spacing: .2em;
+    text-transform: uppercase; color: var(--warn);
+  }
+  .celebrate-title {
+    font-size: 22px; font-weight: 720; letter-spacing: -.02em;
+    margin-top: 10px; text-wrap: balance;
+  }
+  .celebrate-detail { font-size: 13px; color: var(--ink-mid); margin-top: 9px; line-height: 1.6; }
+  .celebrate-xp {
+    font-family: var(--mono); font-size: 28px; font-weight: 700;
+    color: var(--up); margin-top: 18px; font-variant-numeric: tabular-nums;
+  }
+  .celebrate-level { margin-top: 18px; text-align: left; }
+  .celebrate-level-row {
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-size: 12px; color: var(--ink-mid); margin-bottom: 7px;
+  }
+  .celebrate-level-xp { font-family: var(--mono); font-size: 11px; color: var(--ink-dim); }
+  .celebrate-track {
+    height: 6px; background: var(--sunken); border: 1px solid var(--hair);
+    border-radius: var(--r-pill); overflow: hidden;
+  }
+  .celebrate-fill { height: 100%; background: var(--ink); width: 0%; }
+  .celebrate-card button {
+    font: inherit; font-size: 13px; font-weight: 640; margin-top: 22px;
+    color: #06080c; background: var(--ink); border: 0;
+    border-radius: var(--r-sm); padding: 10px 28px; cursor: pointer;
+  }
+  .celebrate-card button:hover { filter: brightness(1.1); }
+
+  /* ==================================================================
+     Season editor
+     ================================================================== */
+
+  /* One ladder per category, side by side, so it reads as three ladders rather
+     than one long list somebody has to keep their place in. */
+  .season-ranks {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(252px, 1fr));
+    gap: 20px 24px; margin-bottom: 18px;
+  }
+  .ladder-group { display: grid; gap: 8px; align-content: start; }
+  .ladder-title {
+    font-size: 10.5px; text-transform: uppercase; letter-spacing: .1em; font-weight: 650;
+    color: var(--ink-dim); padding-bottom: 4px; border-bottom: 1px solid var(--hair);
+  }
+  .ladder-note { font-size: 11px; color: var(--ink-dim); margin-top: -4px; }
+
+  .season-rank {
+    display: grid; grid-template-columns: 22px 1fr 46px 14px 24px;
+    align-items: center; gap: 10px;
+  }
+  .season-rank .n { font-family: var(--mono); font-size: 10.5px; color: var(--ink-dim); }
+  .season-ranks input[type="text"] {
+    font: inherit; font-size: 13px; color: var(--ink);
+    background: var(--sunken); border: 1px solid var(--hair-2);
+    border-radius: var(--r-xs); padding: 6px 10px; width: 100%;
+  }
+  .season-ranks input[type="text"]:focus { outline: none; border-color: var(--accent); }
+  .season-ranks input[type="color"] {
+    width: 46px; height: 30px; padding: 2px; cursor: pointer;
+    background: var(--sunken); border: 1px solid var(--hair-2); border-radius: var(--r-xs);
+  }
   /* A colour that cannot be read, flagged where it is chosen. */
   .colourwarn {
     font-size: 12px; font-weight: 700; color: var(--warn);
@@ -420,24 +1067,50 @@
   .season-rank button.rankdrop:hover { color: var(--down); }
   .season-rank button.rankdrop:disabled { opacity: .3; cursor: default; }
 
-  .season-add select {
-    font: inherit; font-size: 12.5px; color: var(--ink);
-    background: var(--sunken); border: 1px solid var(--line-bright);
-    border-radius: 7px; padding: 6px 9px; max-width: 380px;
+  .ladder-tools { display: flex; gap: 6px; padding-top: 4px; }
+  .ladder-tools button {
+    font: inherit; font-size: 11px; color: var(--ink-dim);
+    background: transparent; border: 1px solid var(--hair);
+    border-radius: var(--r-xs); padding: 3px 9px; cursor: pointer;
   }
+  .ladder-tools button:hover:not(:disabled) { color: var(--ink); border-color: var(--hair-3); }
+  .ladder-tools button:disabled { opacity: .4; cursor: default; }
+
+  .season-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .season-actions button {
+    font: inherit; font-size: 12px; color: var(--ink-mid);
+    background: rgba(255, 255, 255, .03); border: 1px solid var(--hair);
+    border-radius: var(--r-xs); padding: 7px 14px; cursor: pointer;
+  }
+  .season-actions button:hover:not(:disabled) { color: var(--ink); border-color: var(--hair-3); }
+  .season-actions button.go {
+    color: #06080c; background: var(--ink); border-color: var(--ink); font-weight: 640;
+  }
+  .season-actions button.go:hover:not(:disabled) { filter: brightness(1.1); color: #06080c; }
+  .season-actions button:disabled { opacity: .5; cursor: default; }
+
+  .season-add { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .season-add input[type="search"], .season-add select {
+    font: inherit; font-size: 12.5px; color: var(--ink);
+    background: var(--sunken); border: 1px solid var(--hair-2);
+    border-radius: var(--r-xs); padding: 7px 10px;
+  }
+  .season-add input[type="search"] { min-width: 200px; }
+  .season-add select { max-width: 380px; }
+  .season-add input:focus, .season-add select:focus { outline: none; border-color: var(--accent); }
   .season-add button {
     font: inherit; font-size: 12px; color: var(--ink-mid);
-    background: transparent; border: 1px solid var(--line-bright);
-    border-radius: 7px; padding: 6px 13px; cursor: pointer;
+    background: rgba(255, 255, 255, .03); border: 1px solid var(--hair);
+    border-radius: var(--r-xs); padding: 7px 14px; cursor: pointer;
   }
-  .season-add button:hover:not(:disabled) { color: var(--ink); border-color: var(--ink-dim); }
+  .season-add button:hover:not(:disabled) { color: var(--ink); border-color: var(--hair-3); }
   .season-add button:disabled { opacity: .5; cursor: default; }
 
   /* Only appears when there is something ungradeable to remove. */
   button.purge {
     font: inherit; font-size: 12px; color: var(--down);
-    background: transparent; border: 1px solid #56222a;
-    border-radius: 7px; padding: 6px 13px; cursor: pointer;
+    background: transparent; border: 1px solid color-mix(in srgb, var(--down) 35%, transparent);
+    border-radius: var(--r-xs); padding: 7px 14px; cursor: pointer;
   }
   button.purge:hover { border-color: var(--down); }
 
@@ -451,91 +1124,60 @@
     background: transparent; border: 1px solid transparent; border-radius: 5px;
     padding: 3px 5px; width: 72px; text-align: right;
   }
-  .scen input.thr:hover { border-color: var(--line); }
-  .scen input.thr:focus { border-color: var(--ink-dim); outline: none; background: var(--sunken); }
-  .scen tr.dropped { opacity: .4; }
-  .scen button.rowdrop {
-    font: inherit; font-size: 11px; color: var(--ink-dim);
-    background: transparent; border: 1px solid var(--line); border-radius: 5px;
-    padding: 2px 8px; cursor: pointer;
+  .scen input.thr:hover { border-color: var(--hair); }
+  .scen input.thr:focus { border-color: var(--accent); outline: none; background: var(--sunken); }
+  /* A threshold typed over the derivation. Marked, because "top 15% of the board"
+     and "a number somebody chose" are different claims and should not look alike. */
+  .scen input.thr.override {
+    color: var(--warn);
+    border-color: color-mix(in srgb, var(--warn) 30%, transparent);
+    background: color-mix(in srgb, var(--warn) 8%, transparent);
   }
   .scen td.rowacts { display: flex; gap: 4px; white-space: nowrap; }
-  .scen button.rowdrop:hover:not(:disabled) { color: var(--ink); border-color: var(--ink-dim); }
-  .scen button.rowdrop.danger:hover { color: var(--down); border-color: #56222a; }
+  .scen button.rowdrop {
+    font: inherit; font-size: 11px; color: var(--ink-dim);
+    background: transparent; border: 1px solid var(--hair);
+    border-radius: 5px; padding: 2px 8px; cursor: pointer;
+  }
+  .scen button.rowdrop:hover:not(:disabled) { color: var(--ink); border-color: var(--hair-3); }
+  .scen button.rowdrop.danger:hover { color: var(--down); border-color: color-mix(in srgb, var(--down) 40%, transparent); }
   .scen button.rowdrop:disabled { opacity: .35; cursor: default; }
-
-  /* Which of a family's three variants a row is about, and where a target is scored.
-     Both are quiet: they qualify the thing next to them rather than competing with it,
-     and a name like "Pasu" is ambiguous without them. */
-  .win {
-    font-family: var(--mono); font-size: 10px; letter-spacing: .06em;
-    text-transform: uppercase; color: var(--ink-dim);
-  }
-  .onscen { font-size: 11px; color: var(--ink-dim); white-space: nowrap; }
-
-  /* The twelve-rank ladder, cut into its difficulty bands. Each rung carries its own
-     rank colour; the ones below the player are filled, the one they hold is ringed. */
-  .ladder-strip { display: flex; gap: 14px; flex-wrap: wrap; margin: 12px 0 10px; }
-  .ladder-strip .band { display: grid; gap: 5px; }
-  .ladder-strip .band-name {
-    font-family: var(--mono); font-size: 10px; letter-spacing: .12em;
-    text-transform: uppercase; color: var(--ink-dim);
-  }
-  .ladder-strip .band-rungs { display: flex; gap: 3px; }
-  .ladder-strip .rung {
-    width: 26px; height: 22px; border-radius: 5px;
-    display: grid; place-items: center;
-    font-family: var(--mono); font-size: 10.5px;
-    color: var(--ink-dim);
-    background: var(--sunken); border: 1px solid var(--line);
-  }
-  .ladder-strip .rung.done {
-    background: color-mix(in srgb, var(--rank) 30%, var(--sunken));
-    border-color: color-mix(in srgb, var(--rank) 55%, var(--line));
-    color: var(--ink);
-  }
-  .ladder-strip .rung.here {
-    background: var(--rank); border-color: var(--rank);
-    color: var(--void); font-weight: 700;
-    box-shadow: 0 0 0 2px color-mix(in srgb, var(--rank) 35%, transparent);
-  }
+  .scen td.empty { color: var(--ink-dim); padding: 16px 0; }
 
   /* Each category is edited one difficulty at a time, so the dropdown lives in the
      header row it governs rather than in a toolbar away from the numbers. */
-  .scen tr.cat-head th { padding-top: 16px; }
+  .scen tr.cat-head th { padding-top: 18px; }
   select.winpick {
     font: inherit; font-size: 11px; font-family: var(--mono);
     letter-spacing: .04em; text-transform: none;
     color: var(--ink); background: var(--sunken);
-    border: 1px solid var(--line-bright); border-radius: 6px;
+    border: 1px solid var(--hair-2); border-radius: var(--r-xs);
     padding: 3px 7px; margin-left: 12px; cursor: pointer;
   }
-  select.winpick:hover { border-color: var(--ink-dim); }
-  .scen td.empty { color: var(--ink-dim); padding: 14px 0; }
+  select.winpick:hover { border-color: var(--hair-3); }
 
-  /* A family or difficulty added but not yet filled. Marked rather than hidden: the work
-     left is the point, and Save is held until there is none of it. */
-  .scen tr.slot { background: #1d1608; }
-  .scen tr.slot td { border-color: #3a2e12; }
+  /* A family or difficulty added but not yet filled. Marked rather than hidden:
+     the work left is the point, and Save is held until there is none of it. */
+  .scen tr.slot { background: color-mix(in srgb, var(--warn) 7%, transparent); }
+  .scen tr.slot td { border-color: color-mix(in srgb, var(--warn) 22%, transparent); }
   .slotpick { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
   .slotpick input.slotsearch {
     font: inherit; font-size: 12px; color: var(--ink);
-    background: var(--sunken); border: 1px solid var(--line-bright);
-    border-radius: 6px; padding: 4px 8px; width: 250px;
+    background: var(--sunken); border: 1px solid var(--hair-2);
+    border-radius: var(--r-xs); padding: 5px 9px; width: 250px;
   }
-  .slotpick input.slotsearch:focus { outline: none; border-color: var(--ink-dim); }
+  .slotpick input.slotsearch:focus { outline: none; border-color: var(--accent); }
   .slotpick input.slotsearch:disabled { opacity: .6; }
   button.slotadd {
-    font: inherit; font-size: 12px; font-weight: 620;
-    color: var(--void); background: var(--ink);
-    border: 0; border-radius: 6px; padding: 4px 13px; cursor: pointer;
+    font: inherit; font-size: 12px; font-weight: 640;
+    color: #06080c; background: var(--ink);
+    border: 0; border-radius: var(--r-xs); padding: 5px 14px; cursor: pointer;
   }
-  button.slotadd:hover:not(:disabled) { background: #fff; }
+  button.slotadd:hover:not(:disabled) { filter: brightness(1.1); }
   button.slotadd:disabled {
     color: var(--ink-dim); background: transparent;
-    border: 1px solid var(--line-bright); cursor: default;
+    border: 1px solid var(--hair-2); cursor: default;
   }
-
   .slotnote { font-size: 11px; color: var(--warn); }
   .slotnote.bad { color: var(--down); }
 
@@ -547,798 +1189,1270 @@
   }
   input.pct {
     font: inherit; font-family: var(--mono); font-size: 11.5px; color: var(--ink);
-    background: var(--sunken); border: 1px solid var(--line);
-    border-radius: 5px; padding: 3px 4px; width: 52px; text-align: right;
+    background: var(--sunken); border: 1px solid var(--hair);
+    border-radius: 5px; padding: 3px 5px; width: 52px; text-align: right;
   }
-  input.pct:focus { border-color: var(--ink-dim); outline: none; }
-
-  /* A threshold typed over the derivation. Marked, because "top 15% of the board" and
-     "a number somebody chose" are different claims and should not look alike. */
-  .scen input.thr.override {
-    color: var(--warn);
-    border-color: #3a2e12;
-    background: #1d1608;
-  }
-
-  /* Population shape. Bars are relative to the fullest rank, not to 100%, because the
-     interesting comparison is between ranks and the absolute numbers are small. */
-  .dist { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-  .dist-cat { display: grid; gap: 3px; align-content: start; }
-  .dist-head {
-    font-size: 11px; text-transform: uppercase; letter-spacing: .07em;
-    color: var(--ink-dim); padding-bottom: 4px; margin-bottom: 3px;
-    border-bottom: 1px solid var(--line);
-  }
-  .dist-row { display: grid; grid-template-columns: 108px 1fr 52px; align-items: center; gap: 8px; }
-  .dist-name {
-    font-size: 11.5px; color: var(--ink-mid);
-    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-  }
-  .dist-track { height: 9px; background: var(--sunken); border-radius: 3px; overflow: hidden; }
-  .dist-fill { display: block; height: 100%; background: var(--ink-dim); border-radius: 3px; }
-  .dist-val {
-    font-family: var(--mono); font-size: 10.5px; color: var(--ink-dim);
-    text-align: right; font-variant-numeric: tabular-nums;
-  }
-  .dist-row.empty .dist-name,
-  .dist-row.empty .dist-val { color: var(--warn); }
-  .dist-note {
-    font-size: 11.5px; color: var(--warn); line-height: 1.45;
-    margin-top: 8px; padding: 8px 10px;
-    background: #1d1608; border: 1px solid #3a2e12; border-radius: 6px;
-  }
+  input.pct:focus { border-color: var(--accent); outline: none; }
 
   /* Naming happens where the thing will appear, not in a dialog. */
   input.inline-ask {
     font: inherit; font-size: 12px; color: var(--ink);
-    background: var(--sunken); border: 1px solid var(--ink-dim);
-    border-radius: 6px; padding: 3px 9px; margin-left: 10px; width: 190px;
+    background: var(--sunken); border: 1px solid var(--accent);
+    border-radius: var(--r-xs); padding: 3px 9px; margin-left: 10px; width: 190px;
   }
-  input.inline-ask:focus { outline: none; border-color: var(--ink); }
+  input.inline-ask:focus { outline: none; }
 
   button.addfam {
     font: inherit; font-size: 11px; font-weight: 500;
     letter-spacing: .02em; text-transform: none;
     color: var(--ink-mid); background: transparent;
-    border: 1px solid var(--line-bright); border-radius: 6px;
+    border: 1px solid var(--hair-2); border-radius: var(--r-xs);
     padding: 3px 9px; margin-left: 10px; cursor: pointer;
   }
-  button.addfam:hover { color: var(--ink); border-color: var(--ink-dim); }
-  .scen td.family {
-    font-size: 11px; color: var(--ink-dim); white-space: nowrap;
-  }
+  button.addfam:hover { color: var(--ink); border-color: var(--hair-3); }
+
+  .scen td.family { font-size: 11px; color: var(--ink-dim); white-space: nowrap; }
   /* Which of a family's difficulties are filled, on every row of it. */
   .famstate {
-    margin-left: 7px; letter-spacing: 2px; font-size: 9px;
-    color: var(--ink-dim); cursor: help;
+    margin-left: 7px; letter-spacing: 2px; font-size: 9px; color: var(--ink-dim); cursor: help;
   }
-
   /* What has actually been scored on this scenario, so a threshold can be judged
      against reality rather than against a feeling about the number. */
+  /* Provenance. Dim by default - it is context, not the number being edited - and
+     marked when the board behind it is too thin for a percentile to mean anything. */
+  .scen td.source {
+    font-size: 11px; color: var(--ink-dim); max-width: 190px;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .scen td.source.thin { color: var(--down); }
+  .scen td.source.thin::after { content: " ·  thin board"; }
+
+  /* Benchmark coverage. A bar per benchmark, widths relative to the most-used one,
+     because the question is the shape of the spread rather than any single count. */
+  .sources { display: flex; flex-direction: column; gap: 3px; }
+  .source-row { display: grid; grid-template-columns: 190px 1fr 42px; gap: 10px; align-items: center; }
+  .source-row .sname { font-size: 12px; color: var(--ink-mid); overflow: hidden;
+    text-overflow: ellipsis; white-space: nowrap; }
+  .source-row .sbar { height: 7px; background: var(--hair-2); border-radius: 2px; }
+  .source-row .sbar i { display: block; height: 100%; border-radius: 2px; background: var(--accent); }
+  .source-row .scount { font-family: var(--mono); font-size: 11px; color: var(--ink-dim);
+    text-align: right; font-variant-numeric: tabular-nums; }
+  .source-row.unused .sname, .source-row.unused .scount { color: var(--ink-dim); opacity: .6; }
+  .source-row.unused .sbar i { background: var(--hair-3); }
+
   .scen td.corpus {
     font-family: var(--mono); font-size: 11px; color: var(--ink-mid);
     text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap;
   }
-  .ladder-note {
-    font-size: 11px; color: var(--ink-dim); margin-top: -4px;
-  }
 
-  /* Coverage: which difficulties hold enough history to be graded honestly. */
-  .cover { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; }
-  .cover-cat { display: grid; gap: 5px; align-content: start; }
-  .cover-head {
-    font-size: 11px; text-transform: uppercase; letter-spacing: .07em;
-    color: var(--ink-dim); padding-bottom: 4px; border-bottom: 1px solid var(--line);
+  /* Population shape. Bars are relative to the fullest rank, not to 100%, because
+     the interesting comparison is between ranks and the absolute numbers are small. */
+  .dist { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 22px; }
+  .dist-cat { display: grid; gap: 4px; align-content: start; }
+  .dist-head {
+    font-size: 10.5px; text-transform: uppercase; letter-spacing: .1em; font-weight: 650;
+    color: var(--ink-dim); padding-bottom: 6px; margin-bottom: 4px;
+    border-bottom: 1px solid var(--hair);
   }
-  .cover-row { display: grid; grid-template-columns: 84px 1fr 58px; align-items: center; gap: 9px; }
-  .cover-name { font-size: 12px; color: var(--ink-mid); }
-  .cover-track { height: 8px; background: var(--sunken); border-radius: 3px; overflow: hidden; }
-  .cover-fill { display: block; height: 100%; border-radius: 3px; background: var(--ink-dim); }
-  .cover-row.ready .cover-fill { background: var(--up); }
-  .cover-val {
-    font-family: var(--mono); font-size: 10.5px; color: var(--ink-dim); text-align: right;
+  .dist-row { display: grid; grid-template-columns: 108px 1fr 52px; align-items: center; gap: 9px; }
+  .dist-name {
+    font-size: 11.5px; color: var(--ink-mid);
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
   }
-  .cover-row.ready .cover-val { color: var(--up); }
-  .cover-next { font-size: 11.5px; color: var(--ink-dim); margin-top: 6px; line-height: 1.45; }
-
-  /* Which difficulty a match draws from, and whether the player is measured on it. */
-  .pool-note {
-    font-size: 12.5px; line-height: 1.5; color: var(--ink-mid);
-    margin: 12px 0 4px; padding: 10px 12px;
-    background: var(--sunken); border: 1px solid var(--line); border-radius: 8px;
-  }
-  .pool-note.warn { border-color: #3a2e12; background: #1d1608; color: var(--warn); }
-  .pool-note b { color: var(--ink); font-weight: 640; }
-  .pool-note.warn b { color: var(--warn); }
-
-  /* ---------------- ranks ---------------- */
-  .rank-lede {
-    font-size: 13px; line-height: 1.6; color: var(--ink-mid);
-    margin: 0 0 14px; max-width: 68ch;
-  }
-
-  .ladder { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
-  .ladder li {
-    display: grid; grid-template-columns: 34px 1fr auto; align-items: center;
-    gap: 12px; padding: 9px 12px; border-radius: 8px;
-    border: 1px solid var(--line); background: var(--sunken);
-  }
-  /* The tier you are in is the one fact this list exists to convey, so it is the only
-     row that carries its own colour. */
-  .ladder li.here {
-    border-color: var(--tier); background: #10151d;
-    box-shadow: inset 3px 0 0 var(--tier);
-  }
-  .ladder .rung {
+  .dist-track { height: 9px; background: var(--sunken); border-radius: var(--r-pill); overflow: hidden; }
+  .dist-fill { display: block; height: 100%; background: var(--ink-dim); border-radius: var(--r-pill); }
+  .dist-val {
     font-family: var(--mono); font-size: 10.5px; color: var(--ink-dim);
-    text-align: right;
+    text-align: right; font-variant-numeric: tabular-nums;
   }
-  .ladder .tier-name { font-size: 13.5px; font-weight: 600; }
-  .ladder li.here .tier-name { color: var(--tier); }
-  .ladder .band {
-    font-family: var(--mono); font-size: 10.5px; color: var(--ink-dim);
-    white-space: nowrap;
-  }
-  .ladder .you {
-    font-family: var(--mono); font-size: 10px; text-transform: uppercase;
-    letter-spacing: .07em; color: var(--tier);
+  .dist-row.empty .dist-name, .dist-row.empty .dist-val { color: var(--warn); }
+  .dist-note {
+    font-size: 11.5px; color: var(--warn); line-height: 1.5;
+    margin-top: 10px; padding: 9px 12px;
+    background: color-mix(in srgb, var(--warn) 8%, transparent);
+    border: 1px solid color-mix(in srgb, var(--warn) 25%, transparent);
+    border-radius: var(--r-xs);
   }
 
-  .cat-ranks { display: grid; gap: 10px; }
-  .cat-rank {
-    padding: 11px 13px; border-radius: 9px;
-    border: 1px solid var(--line-bright); background: var(--sunken);
-  }
-  .cat-rank-top {
-    display: flex; align-items: baseline; justify-content: space-between;
-    gap: 10px; margin-bottom: 8px;
-  }
-  .cat-rank-name { font-size: 13.5px; font-weight: 600; }
-  .cat-rank-rank { font-family: var(--mono); font-size: 11.5px; }
-  .cat-bar {
-    height: 6px; border-radius: 3px; background: var(--void);
-    overflow: hidden; display: flex;
-  }
-  .cat-bar > div { height: 100%; }
-  .cat-rank-note {
-    margin-top: 7px; font-size: 11.5px; color: var(--ink-dim);
-  }
+  /* ==================================================================
+     Toast, first run, footnote
+     ================================================================== */
 
-  /* ---------------- upload ---------------- */
-  .upload-row {
-    display: flex; align-items: center; justify-content: space-between;
-    gap: 14px; margin-top: 16px; padding: 13px 15px;
-    background: var(--sunken); border: 1px solid var(--line); border-radius: 10px;
-  }
-  .upload-title { font-size: 13px; font-weight: 600; }
-  .upload-sub { font-size: 12px; color: var(--ink-dim); margin-top: 2px; }
-  .upload-track {
-    height: 5px; background: var(--panel-2); border-radius: 999px;
-    overflow: hidden; margin-top: 9px; min-width: 220px;
-  }
-  .upload-fill { height: 100%; background: var(--up); width: 0%; }
-  .upload-row button {
-    font: inherit; font-size: 12.5px; font-weight: 600; white-space: nowrap;
-    color: var(--void); background: var(--ink); border: 0;
-    border-radius: 7px; padding: 8px 15px; cursor: pointer;
-  }
-  .upload-row button[disabled] { opacity: .5; cursor: default; }
-
-  /* ---------------- match result ---------------- */
-  .verdict {
-    display: flex; align-items: center; justify-content: space-between; gap: 16px;
-    flex-wrap: wrap; padding: 18px 16px;
-  }
-  .verdict .big { font-size: 26px; font-weight: 720; letter-spacing: -.02em; }
-  .verdict .scores {
-    font-family: var(--mono); font-size: 13px; color: var(--ink-mid);
-    font-variant-numeric: tabular-nums;
-  }
-  .delta-move {
-    font-family: var(--mono); font-size: 19px; font-weight: 660;
-    font-variant-numeric: tabular-nums;
-  }
-  .explain {
-    margin: 0; padding: 12px 15px; background: var(--sunken);
-    border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
-    font-size: 13px; color: var(--ink-mid); line-height: 1.55;
-  }
-
-  .rounds-wrap, .scen-wrap { overflow-x: auto; }
-  table { width: 100%; border-collapse: collapse; }
-  table.rounds { min-width: 560px; }
-  table.scen { min-width: 620px; }
-  th {
-    text-align: right; padding: 12px 16px 8px;
-    font-size: 9.5px; font-weight: 620; text-transform: uppercase;
-    letter-spacing: .09em; color: var(--ink-dim);
-  }
-  th:first-child { text-align: left; }
-  table.scen th:nth-child(2) { text-align: left; }
-  td {
-    padding: 11px 16px; text-align: right; border-top: 1px solid var(--line);
-    font-family: var(--mono); font-size: 13px; font-variant-numeric: tabular-nums;
-  }
-  td:first-child { text-align: left; font-family: var(--font); font-size: 13.5px; font-weight: 560; }
-  table.scen td { padding: 9px 16px; font-size: 12.5px; }
-  table.scen td:first-child { font-size: 13px; font-weight: 550; }
-  table.scen td:nth-child(2) {
-    text-align: left; font-family: var(--font); font-size: 11.5px; color: var(--ink-dim);
-  }
-  tbody tr:hover { background: var(--panel-2); }
-  .base { color: var(--ink-dim); font-size: 11px; }
-  .up { color: var(--up); }
-  .down { color: var(--down); }
-  .won-round { color: var(--up); font-weight: 620; }
-
-  /* ---------------- weakness map ---------------- */
-  .wmap { display: grid; gap: 12px; }
-  .wrow { display: grid; grid-template-columns: 92px 1fr auto; gap: 12px; align-items: center; }
-  .wrow .lbl { font-size: 13px; font-weight: 580; }
-  .wtrack {
-    height: 26px; background: var(--sunken); border: 1px solid var(--line);
-    border-radius: 7px; overflow: hidden;
-  }
-  .wfill { height: 100%; }
-  .wval {
-    font-family: var(--mono); font-size: 12px; color: var(--ink-mid);
-    font-variant-numeric: tabular-nums; min-width: 108px; text-align: right;
-  }
-
-  /* ---------------- consistency ---------------- */
-  .cf-pair {
-    display: grid; grid-template-columns: 1fr auto 1fr; gap: 18px; align-items: center;
-  }
-  @media (max-width: 620px) { .cf-pair { grid-template-columns: 1fr; } }
-  .cf-side { text-align: center; }
-  .cf-label {
-    font-size: 10px; font-weight: 640; text-transform: uppercase;
-    letter-spacing: .11em; color: var(--ink-dim);
-  }
-  .cf-rank { font-size: 26px; font-weight: 720; letter-spacing: -.02em; margin-top: 5px; }
-  .cf-energy {
-    font-family: var(--mono); font-size: 12px; color: var(--ink-mid);
-    font-variant-numeric: tabular-nums; margin-top: 2px;
-  }
-  .cf-note { font-size: 11.5px; color: var(--ink-dim); margin-top: 6px; }
-  .cf-gap {
-    text-align: center; padding: 0 14px;
-    border-left: 1px solid var(--line); border-right: 1px solid var(--line);
-  }
-  @media (max-width: 620px) {
-    .cf-gap { border: 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 12px 0; }
-  }
-  .cf-gap-val {
-    font-family: var(--mono); font-size: 30px; font-weight: 680;
-    font-variant-numeric: tabular-nums; color: var(--warn);
-  }
-  .cf-gap-label {
-    font-size: 10px; text-transform: uppercase; letter-spacing: .11em; color: var(--ink-dim);
-  }
-  .cf-explain {
-    margin: 16px 0 0; font-size: 12.5px; color: var(--ink-mid);
-    line-height: 1.6; max-width: 68ch;
-  }
-  .gapbar {
-    display: inline-block; vertical-align: middle; height: 6px;
-    border-radius: 999px; background: var(--warn); min-width: 2px;
-  }
-
-  /* ---------------- quests ---------------- */
-  .quests { display: grid; gap: 10px; }
-  .quest {
-    display: grid; grid-template-columns: 1fr auto; gap: 10px 16px;
-    padding: 14px 16px; background: var(--sunken);
-    border: 1px solid var(--line); border-radius: 10px;
-  }
-  .quest h3 { margin: 0; font-size: 14px; font-weight: 620; }
-  .quest p { margin: 4px 0 0; font-size: 12.5px; color: var(--ink-mid); }
-  .xp {
-    font-family: var(--mono); font-size: 11px; color: var(--ink-dim);
-    white-space: nowrap; align-self: start;
-  }
-  .qtrack {
-    grid-column: 1 / -1; height: 5px; background: var(--panel-2);
-    border-radius: 999px; overflow: hidden;
-  }
-  .qfill { height: 100%; }
-
-  /* A floor quest asks for a window of clean runs rather than one good one, so it is
-     marked rather than left to look like every other row. */
-  .quest-floor { border-color: #4a3a18; }
-  .floor-tag {
-    font-family: var(--mono); font-size: 9px; text-transform: uppercase;
-    letter-spacing: .09em; color: var(--warn);
-    border: 1px solid #4a3a18; border-radius: 4px;
-    padding: 2px 5px; margin-left: 8px; vertical-align: 2px;
-  }
-  .qsteps {
-    display: block; font-family: var(--mono); font-size: 11px;
-    color: var(--ink-mid); margin-bottom: 3px; white-space: nowrap;
-  }
-
-  /* ---------------- quest completion ---------------- */
-  .celebrate {
-    position: fixed; inset: 0; z-index: 40;
-    display: grid; place-items: center;
-    background: rgba(4, 6, 10, .72);
-  }
-  .celebrate[hidden] { display: none; }
-  .celebrate-card {
-    width: min(420px, calc(100vw - 40px));
-    padding: 26px 26px 22px; text-align: center;
-    background: var(--panel); border: 1px solid var(--line-bright);
-    border-radius: 14px; box-shadow: 0 24px 70px rgba(0, 0, 0, .6);
-  }
-  .celebrate-kicker {
-    font-family: var(--mono); font-size: 10.5px; letter-spacing: .17em;
-    text-transform: uppercase; color: var(--warn);
-  }
-  .celebrate-title {
-    font-size: 21px; font-weight: 700; letter-spacing: -.01em;
-    margin-top: 9px; text-wrap: balance;
-  }
-  .celebrate-detail {
-    font-size: 13px; color: var(--ink-mid); margin-top: 8px; line-height: 1.55;
-  }
-  .celebrate-xp {
-    font-family: var(--mono); font-size: 26px; font-weight: 680;
-    color: var(--up); margin-top: 16px; font-variant-numeric: tabular-nums;
-  }
-  .celebrate-level { margin-top: 16px; text-align: left; }
-  .celebrate-level-row {
-    display: flex; justify-content: space-between; align-items: baseline;
-    font-size: 12px; color: var(--ink-mid); margin-bottom: 6px;
-  }
-  .celebrate-level-xp { font-family: var(--mono); font-size: 11px; color: var(--ink-dim); }
-  .celebrate-track {
-    height: 6px; background: var(--sunken); border: 1px solid var(--line);
-    border-radius: 999px; overflow: hidden;
-  }
-  .celebrate-fill { height: 100%; background: var(--ink); width: 0%; }
-  .celebrate-card button {
-    font: inherit; font-size: 13px; font-weight: 620; margin-top: 20px;
-    color: var(--void); background: var(--ink); border: 0;
-    border-radius: 8px; padding: 9px 26px; cursor: pointer;
-  }
-  .celebrate-card button:hover { background: #fff; }
-
-  @media (prefers-reduced-motion: no-preference) {
-    .celebrate-card { animation: pop .32s cubic-bezier(.2, .9, .3, 1) both; }
-    @keyframes pop {
-      from { opacity: 0; transform: translateY(14px) scale(.96); }
-      to { opacity: 1; transform: none; }
-    }
-    .celebrate-fill { transition: width .6s cubic-bezier(.3, .8, .3, 1); }
-  }
-
-  /* Level readout in the header. */
-  .level-chip {
-    font-family: var(--mono); font-size: 11.5px; color: var(--ink-mid);
-    border: 1px solid var(--line-bright); border-radius: 999px; padding: 4px 11px;
-    white-space: nowrap;
-  }
-
-  /* ---------------- live run toast ---------------- */
   .toast {
-    position: fixed; right: 20px; bottom: 20px; z-index: 20;
-    display: none; align-items: center; gap: 11px;
-    padding: 12px 16px; background: var(--panel-2);
-    border: 1px solid var(--line-bright); border-radius: 10px;
-    box-shadow: 0 12px 40px rgba(0, 0, 0, .55); max-width: 340px;
+    position: fixed; right: 22px; bottom: 22px; z-index: 40;
+    display: none; align-items: center; gap: 14px;
+    padding: 13px 17px; background: var(--surface-3);
+    border: 1px solid var(--hair-2); border-radius: var(--r);
+    box-shadow: var(--shadow-3); max-width: 340px;
   }
   .toast.on { display: flex; }
-  .toast .t-scen { font-size: 13px; font-weight: 600; }
+  .toast .t-scen { font-size: 13px; font-weight: 620; }
+  .toast .sub { font-size: 11.5px; color: var(--ink-dim); }
   .toast .t-score {
-    font-family: var(--mono); font-size: 16px; font-weight: 660;
-    font-variant-numeric: tabular-nums;
+    font-family: var(--mono); font-size: 17px; font-weight: 680;
+    font-variant-numeric: tabular-nums; margin-left: auto;
+  }
+
+  /* First run: no stats folder yet, so there is nothing else to show. */
+  .empty { padding: 44px 32px; text-align: center; }
+  .empty h2 { margin: 0 0 10px; font-size: 21px; font-weight: 680; letter-spacing: -.02em; }
+  .empty > p { margin: 0 auto; max-width: 54ch; font-size: 13.5px; color: var(--ink-mid); }
+  .empty-steps {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 12px; margin: 26px auto 0; max-width: 720px; text-align: left;
+  }
+  .empty-step {
+    padding: 14px; border-radius: var(--r);
+    background: rgba(255, 255, 255, .022); border: 1px solid var(--hair);
+  }
+  .empty-step .n {
+    font-family: var(--mono); font-size: 10.5px; color: var(--accent);
+    letter-spacing: .1em; text-transform: uppercase;
+  }
+  .empty-step h3 { margin: 7px 0 4px; font-size: 13.5px; font-weight: 620; }
+  .empty-step p { margin: 0; font-size: 12px; color: var(--ink-dim); line-height: 1.5; }
+  .empty button {
+    font: inherit; font-size: 13px; font-weight: 640; margin-top: 26px;
+    color: #06080c; background: var(--ink); border: 0;
+    border-radius: var(--r-sm); padding: 11px 22px; cursor: pointer;
+  }
+  .empty button:hover { filter: brightness(1.1); }
+
+  .footnote {
+    margin: 8px 0 0; font-size: 11.5px; color: var(--ink-dim);
+    line-height: 1.6; max-width: 76ch;
+  }
+
+  /* ==================================================================
+     Press
+
+     A client somebody opens every evening to click things should be
+     worth clicking. Two rules do most of that work, and both are cheap.
+
+     Down is fast and up is springy. A control that scales down in 90ms
+     and comes back through a slight overshoot reads as a physical button
+     with give in it; the same travel eased symmetrically reads as a web
+     page. The overshoot is 2.2% - enough to feel, small enough that a
+     rail of tabs does not appear to wobble.
+
+     It is an animation rather than a transition on purpose. Most of the
+     controls here already declare a `transition` for colour or filter,
+     and adding transform to each one meant editing thirty rules and
+     missing some of them; a keyframe answers to nothing but itself. It
+     also survives `:active` ending the moment the mouse comes up, which
+     is what truncates the spring and makes a press feel cheap - the
+     classes below are removed on pointerup and when the bounce ends,
+     not when the button is released.
+     ================================================================== */
+
+  @keyframes press-down { to { transform: scale(.955); } }
+  @keyframes press-up {
+    0%   { transform: scale(.955); }
+    55%  { transform: scale(1.022); }
+    100% { transform: none; }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .pressing { animation: press-down .09s cubic-bezier(.3, 0, .2, 1) forwards; }
+    .released { animation: press-up .34s cubic-bezier(.2, .9, .3, 1); }
+  }
+
+  /* The ring a press leaves behind.
+
+     Drawn in a fixed overlay at the pointer rather than inside the
+     control. A ripple parented to a button needs that button to be
+     `position: relative; overflow: hidden`, and clipping the queue
+     button's glow or the selected tab's marker to get one would cost
+     more than the effect is worth. It takes the player's rank colour,
+     like everything else that carries chroma here. */
+  .fx-layer {
+    position: fixed; inset: 0; z-index: 90;
+    pointer-events: none; overflow: hidden;
+  }
+  .fx-ring {
+    position: absolute; width: 14px; height: 14px; margin: -7px 0 0 -7px;
+    border-radius: 50%; border: 1.5px solid var(--accent);
+  }
+  @keyframes fx-ring {
+    from { transform: scale(.5); opacity: .5; }
+    to   { transform: scale(4.6); opacity: 0; }
   }
   @media (prefers-reduced-motion: no-preference) {
-    .toast.on { animation: slide .28s cubic-bezier(.2,.8,.3,1) both; }
-    @keyframes slide { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; } }
-    .screen.active { animation: fade .22s ease both; }
-    @keyframes fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; } }
+    .fx-ring { animation: fx-ring .42s cubic-bezier(.2, .7, .3, 1) forwards; }
   }
 
-  .empty { padding: 44px 16px; text-align: center; color: var(--ink-mid); }
-  .empty h2 { margin: 0 0 8px; font-size: 18px; font-weight: 640; color: var(--ink); }
-  .empty p { margin: 0 auto; max-width: 52ch; font-size: 13.5px; }
-  .empty button {
-    font: inherit; font-size: 13px; font-weight: 600; margin-top: 16px;
-    color: var(--void); background: var(--ink); border: 0;
-    border-radius: 8px; padding: 9px 18px; cursor: pointer;
+  /* ---------------------------------------------------------- sound */
+
+  .sound-toggle {
+    -webkit-app-region: no-drag;
+    display: grid; place-items: center;
+    width: 26px; height: 26px; padding: 0;
+    color: var(--ink-dim); background: transparent;
+    border: 1px solid transparent; border-radius: var(--r-xs);
+    cursor: pointer;
+    transition: color .13s var(--ease), border-color .13s var(--ease);
+  }
+  .sound-toggle:hover { color: var(--ink); border-color: var(--hair-2); }
+  .sound-toggle svg {
+    width: 15px; height: 15px; display: block;
+    fill: none; stroke: currentColor; stroke-width: 1.6;
+    stroke-linecap: round; stroke-linejoin: round;
+  }
+  /* Muted is the state worth spotting from across the room, so it is the one that
+     changes shape rather than only shade. */
+  .sound-toggle[aria-pressed="false"] { opacity: .7; }
+  .sound-toggle[aria-pressed="false"] .wave { display: none; }
+  .sound-toggle .slash { display: none; }
+  .sound-toggle[aria-pressed="false"] .slash { display: block; }
+
+  /* ==================================================================
+     Motion and small windows
+     ================================================================== */
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+    .scroll { scroll-behavior: auto; }
   }
 
-  .footnote { margin-top: 22px; font-size: 12px; color: var(--ink-dim); line-height: 1.6; max-width: 76ch; }
+  @media (prefers-reduced-motion: no-preference) {
+    .screen.active { animation: rise .24s var(--ease) both; }
+    @keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; } }
+    .celebrate-card { animation: pop .32s cubic-bezier(.2, .9, .3, 1) both; }
+    @keyframes pop {
+      from { opacity: 0; transform: translateY(16px) scale(.96); }
+      to { opacity: 1; transform: none; }
+    }
+    .celebrate-fill { transition: width .6s var(--ease); }
+    .toast.on { animation: slide .28s var(--ease) both; }
+    @keyframes slide { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; } }
+    .status-menu { animation: slide .16s var(--ease) both; }
+    .upload-fill, .gate-fill, .qfill, .cover-fill { transition: width .4s var(--ease); }
+  }
+
+  /* At the window's minimum size the rail's labels cost more room than they earn,
+     so it keeps the icons and drops the words. The number keys still work, and the
+     tooltip still names the screen. Pitched just under the minimum window width so
+     it is a deliberately-shrunk window that gets this, not an ordinary one. */
+  @media (max-width: 960px) {
+    :root { --rail-w: 62px; }
+    .rail-top { justify-content: center; padding: 0; }
+    .wordmark span, .nav-label, .tab .tab-label, .tab .tab-key { display: none; }
+    .tab { grid-template-columns: 1fr; justify-items: center; padding: 10px 0; }
+    .tab[aria-selected="true"]::before { left: -12px; }
+    .rail-foot { padding: 10px 8px; justify-items: center; }
+    /* Scoped to the rail. The hero's rank-link holds only the badge, so hiding a
+       last child there would hide the badge itself. */
+    .rail .rank-link { grid-template-columns: 1fr; margin: 0; padding: 4px; }
+    .rail .rank-link > span:last-child, .rail-chips, .signed-in > div { display: none; }
+    /* Both account controls keep their words for the tooltip and the smoke test, and
+       shrink to the glyph that fits. */
+    .signin, .signed-in button { font-size: 0; padding: 9px 0; width: 100%; }
+    .signin::after { content: "→"; font-size: 14px; }
+    .signed-in button::after { content: "⏻"; font-size: 13px; }
+    .signed-in { grid-template-columns: 1fr; padding: 4px; }
+    .content { padding: 22px 20px 64px; }
+  }
+
+  /* ---------------------------------------------------------------- season view
+     The player's read-only view of the season. The editor next door is the same
+     data with inputs on it; this one exists because when the queue is empty the
+     season IS the game, and "what do I grind" needs an answer that is not a
+     spreadsheet. Every rank carries its own colour from the season file, so a
+     ladder reads as a gradient being climbed rather than as a list of names. */
+
+  .sv-stats { display: flex; flex-wrap: wrap; gap: 12px 30px; }
+  .sv-stat { display: grid; gap: 2px; }
+  .sv-stat .v { font-family: var(--mono); font-size: 19px; font-weight: 600; color: var(--ink); }
+  .sv-stat .k {
+    font-family: var(--mono); font-size: 9.5px; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--ink-dim);
+  }
+
+  .sv-tiers { display: grid; gap: 7px; }
+  .sv-tier {
+    position: relative; display: grid; grid-template-columns: 62px 1fr auto auto;
+    align-items: center; gap: 16px; padding: 11px 15px;
+    border: 1px solid var(--hair); border-radius: var(--r-sm);
+    background: rgba(255, 255, 255, .02); overflow: hidden;
+    transition: transform .14s var(--ease), border-color .14s var(--ease);
+  }
+  .sv-tier::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .10;
+    background: linear-gradient(100deg, var(--g1), var(--g2));
+  }
+  .sv-tier:hover { transform: translateX(3px); border-color: var(--hair-3); }
+  .sv-tier.here { border-color: color-mix(in srgb, var(--tier) 55%, transparent); }
+  .sv-tier.here::before { opacity: .26; }
+  .sv-tier > * { position: relative; }
+  .sv-tier .swatch {
+    width: 62px; height: 32px; border-radius: var(--r-xs);
+    background: linear-gradient(135deg, var(--g1), var(--g2));
+    box-shadow: 0 0 18px -5px var(--glow), inset 0 0 0 1px rgba(255, 255, 255, .14);
+  }
+  .sv-tier .nm { font-size: 14.5px; font-weight: 650; color: var(--tier); }
+  .sv-tier .pc { font-family: var(--mono); font-size: 11px; color: var(--ink-dim); }
+  .sv-tier .you {
+    font-family: var(--mono); font-size: 9.5px; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--tier);
+  }
+
+  .sv-cat { display: grid; gap: 13px; }
+  .sv-cat + .sv-cat { margin-top: 22px; padding-top: 22px; border-top: 1px solid var(--hair); }
+  .sv-cat-head { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; }
+  .sv-cat-name { font-size: 15px; font-weight: 660; }
+  .sv-cat-now { font-family: var(--mono); font-size: 11.5px; }
+
+  /* Sixteen ranks as one continuous bar, lit up to where the player stands, so the
+     climb is legible before any of the names are read. */
+  .sv-rail {
+    display: flex; height: 7px; border-radius: 99px; overflow: hidden;
+    border: 1px solid var(--hair); background: var(--sunken);
+  }
+  .sv-rail span { flex: 1 1 0; }
+
+  .sv-wins { display: grid; gap: 14px; }
+  .sv-win { display: grid; gap: 7px; }
+  .sv-win-name {
+    font-family: var(--mono); font-size: 9.5px; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--ink-dim);
+  }
+  .sv-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(136px, 1fr)); gap: 7px; }
+  .sv-rank {
+    display: grid; gap: 4px; padding: 9px 11px;
+    border: 1px solid var(--hair); border-left: 3px solid var(--rank);
+    border-radius: var(--r-xs); background: rgba(255, 255, 255, .02);
+    transition: transform .13s var(--ease), background .13s var(--ease);
+  }
+  .sv-rank:hover { transform: translateY(-2px); background: rgba(255, 255, 255, .05); }
+  .sv-rank.done { background: color-mix(in srgb, var(--rank) 10%, transparent); }
+  .sv-rank.here {
+    border-color: var(--rank);
+    background: color-mix(in srgb, var(--rank) 20%, transparent);
+    box-shadow: 0 0 0 1px var(--rank), 0 8px 22px -10px var(--rank);
+  }
+  .sv-rank .rn { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+  .sv-rank .nm { font-size: 12.5px; font-weight: 620; color: var(--rank); }
+  .sv-rank .ix { font-family: var(--mono); font-size: 9.5px; color: var(--ink-dim); }
+  .sv-rank .en { font-family: var(--mono); font-size: 10px; color: var(--ink-dim); }
+
+  /* ---- the pool as something to run, not a list to read ----
+     Namespaced `pool-` rather than `sv-`. The season screen above already owns .sv-cat
+     and .sv-cat-head for its rank ladders, and the first cut of this panel redefined
+     both - the ladders lost their spacing to a selector written for something else two
+     hundred lines away. */
+
+  /* Band switcher: a segmented control, because picking a difficulty is picking one of
+     four and nothing else, and a row of buttons that all look alike makes you read them
+     to find out which is on. */
+  .pool-bands {
+    display: inline-flex; padding: 3px; margin-bottom: 20px; gap: 2px;
+    border: 1px solid var(--hair); border-radius: var(--r-sm); background: var(--sunken);
+  }
+  .pool-band {
+    display: flex; align-items: center; gap: 8px;
+    font: inherit; font-size: 12px; font-weight: 560; color: var(--ink-dim);
+    background: transparent; border: 0; border-radius: var(--r-xs);
+    padding: 6px 13px; cursor: pointer;
+    transition: color .15s var(--ease), background .15s var(--ease);
+  }
+  .pool-band:hover { color: var(--ink-mid); }
+  .pool-band.on {
+    color: var(--ink); background: var(--surface-3);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, .06) inset, var(--shadow-2);
+  }
+  /* The count sat on the text baseline while the dot sat on the centre line, which put
+     three things on one 12px row at three different heights. All centred now, and the
+     count is a pill so it reads as an annotation rather than a second word. */
+  .pool-band .n {
+    font-family: var(--mono); font-size: 9.5px; line-height: 1; padding: 3px 5px;
+    border-radius: var(--r-pill); background: rgba(255, 255, 255, .05); opacity: .75;
+  }
+  .pool-band.on .n { background: rgba(255, 255, 255, .09); opacity: 1; }
+  /* A dot for a band holding ranks the player is next in line for. The count itself
+     would be a second number competing with the scenario count for the same glance. */
+  .pool-band .due {
+    width: 5px; height: 5px; border-radius: 50%; background: var(--accent);
+    box-shadow: 0 0 7px -1px var(--accent);
+  }
+
+  .pool-grid { display: grid; gap: 30px; }
+
+  .pool-cat { display: grid; gap: 16px; }
+  .pool-cat-head { display: flex; align-items: center; gap: 14px; }
+  .pool-cat-head h3 {
+    margin: 0; font-size: 14.5px; font-weight: 660; letter-spacing: -.01em;
+    white-space: nowrap;
+  }
+  .pool-cat-head .rule { flex: 1; height: 1px; background: var(--hair); }
+  .pool-cat-head .rk {
+    font-family: var(--mono); font-size: 10px; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--rank, var(--ink-dim)); white-space: nowrap;
+  }
+
+  /* Sub-skill: a label and the space above it, and no rail.
+     The rail was a hairline down the left of every group, and once the rows themselves
+     carry a fill it is a second vertical edge beside twenty-two horizontal ones - the
+     thing that made this panel read as scaffolding rather than as a list. Eleven groups
+     of two rows separate perfectly well on spacing. */
+  .pool-sub { display: grid; gap: 2px; }
+  .pool-sub + .pool-sub { margin-top: 16px; }
+  .pool-sub-head {
+    display: flex; align-items: baseline; gap: 10px; margin-bottom: 6px; padding-left: 12px;
+  }
+  .pool-sub-name {
+    font-family: var(--mono); font-size: 9.5px; letter-spacing: .15em;
+    text-transform: uppercase; color: var(--ink-mid);
+  }
+  .pool-sub-note { font-family: var(--mono); font-size: 9.5px; color: var(--ink-dim); }
+
+  /* The row.
+     It was five columns - name, bar, best, target, Play - on fixed widths that shared no
+     edge with anything, and the bar was a 4px sliver floating in an 86px column between
+     two numbers. Three columns now, and the bar is gone as an element: progress is the
+     row's own ground, so a band of twenty-two reads as one ragged edge scanned down
+     rather than twenty-two gauges read one at a time. */
+  .pool-row {
+    --fill: 0%;
+    position: relative; isolation: isolate;
+    display: grid; grid-template-columns: 1fr auto 54px;
+    align-items: center; gap: 16px; padding: 9px 12px;
+    border: 1px solid transparent; border-radius: var(--r-xs);
+    transition: border-color .13s var(--ease);
+  }
+  /* Tint up to the fill, and one brighter line at the boundary. Without the line the
+     tint is a smudge and stops being a measurement; with it the row is a gauge.
+     Every state below sets background-IMAGE only, so the hover tint underneath it is a
+     background-colour that survives all three rather than being cancelled by whichever
+     rule happens to come last. */
+  .pool-row::before {
+    content: ""; position: absolute; inset: 0; z-index: -1;
+    border-radius: inherit; pointer-events: none;
+    background-color: transparent;
+    background-image:
+      linear-gradient(90deg,
+        transparent calc(var(--fill) - 1.5px),
+        color-mix(in srgb, var(--rank, var(--ink-mid)) 55%, transparent) calc(var(--fill) - 1.5px),
+        color-mix(in srgb, var(--rank, var(--ink-mid)) 55%, transparent) var(--fill),
+        transparent var(--fill)),
+      linear-gradient(90deg,
+        color-mix(in srgb, var(--rank, var(--ink-mid)) 11%, transparent) var(--fill),
+        transparent var(--fill));
+  }
+  /* Progress through the CURRENT rank step, not from zero - from zero everything a
+     player has touched reads as nearly full and the fill says nothing. */
+  .pool-row.done::before {
+    background-image: linear-gradient(90deg,
+      color-mix(in srgb, var(--up) 12%, transparent) 0 100%);
+  }
+  .pool-row.untouched::before { background-image: none; }
+  .pool-row.untouched .nm { color: var(--ink-dim); }
+  .pool-row:hover { border-color: var(--hair); }
+  .pool-row:hover::before { background-color: rgba(255, 255, 255, .03); }
+  /* The row the next rank is scored on: the one line here that is an instruction rather
+     than a record, so it gets the accent and nothing else does. */
+  .pool-row.next { border-color: color-mix(in srgb, var(--accent) 40%, transparent); }
+  .pool-row.next .nm { color: var(--ink); font-weight: 580; }
+
+  .pool-row .nm {
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    font-size: 12.5px; color: var(--ink);
+  }
+
+  /* Best and target as one expression rather than two right-aligned columns. They are
+     one sentence - you have this, the rank wants that - and splitting them put a 14px
+     gap in the middle of it. The "+129" that used to follow is the same fact a third
+     time, and is on the title instead. */
+  .pool-num {
+    display: flex; align-items: baseline; gap: 7px; justify-self: end;
+    font-family: var(--mono); font-size: 11.5px; white-space: nowrap;
+  }
+  .pool-num .pb { color: var(--ink); min-width: 52px; text-align: right; }
+  .pool-num .pb.none { color: var(--ink-dim); font-size: 10px; }
+  .pool-num .to { color: var(--ink-dim); }
+  .pool-num .tgt { color: var(--ink-mid); min-width: 52px; }
+  .pool-num .tgt.max {
+    color: var(--up); min-width: 0; font-size: 9.5px; letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+
+  /* Present but quiet until the row is under the cursor - twenty-two live buttons at
+     full contrast is a wall, and the row is the thing being scanned. The column is held
+     open whether or not the button shows, so hovering a row does not reflow the list. */
+  .pool-row .scen-play {
+    font: inherit; font-size: 11px; font-weight: 560; color: var(--ink-mid);
+    background: transparent; border: 1px solid var(--hair);
+    border-radius: var(--r-xs); padding: 4px 0; width: 100%; cursor: pointer;
+    opacity: 0; transition: opacity .13s var(--ease), color .13s var(--ease),
+      border-color .13s var(--ease), background .13s var(--ease);
+  }
+  .pool-row:hover .scen-play, .pool-row.next .scen-play,
+  .pool-row .scen-play:focus-visible { opacity: 1; }
+  .pool-row .scen-play:hover:not(:disabled) {
+    color: var(--ink); border-color: var(--hair-3); background: rgba(255, 255, 255, .06);
+  }
+  .pool-row .scen-play:disabled { opacity: .4; cursor: default; }
+
+  /* ---- playlists for the band on screen ---- */
+  .pool-lists {
+    margin-top: 8px; padding-top: 20px; border-top: 1px solid var(--hair);
+    display: grid; gap: 12px;
+  }
+  .pool-lists-head { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+  .pool-lists-head h4 {
+    margin: 0; font-family: var(--mono); font-size: 9.5px; letter-spacing: .15em;
+    text-transform: uppercase; color: var(--ink-mid); font-weight: 500;
+  }
+  .pool-lists-head .note { font-size: 11.5px; color: var(--ink-dim); }
+  .pool-chips { display: flex; gap: 8px; flex-wrap: wrap; }
+  .pool-chip {
+    display: flex; align-items: center; gap: 8px;
+    font: inherit; font-size: 11.5px; color: var(--ink-mid);
+    background: rgba(255, 255, 255, .022); border: 1px solid var(--hair);
+    border-radius: var(--r-pill); padding: 6px 13px; cursor: pointer;
+    transition: color .13s var(--ease), border-color .13s var(--ease), background .13s var(--ease);
+  }
+  .pool-chip:hover:not(:disabled) {
+    color: var(--ink); border-color: var(--hair-3); background: rgba(255, 255, 255, .06);
+  }
+  .pool-chip:disabled { opacity: .5; cursor: default; }
+  .pool-chip .n {
+    font-family: var(--mono); font-size: 9.5px; line-height: 1; padding: 3px 5px;
+    border-radius: var(--r-pill); background: rgba(255, 255, 255, .05); color: var(--ink-dim);
+  }
+  .pool-chip.all { border-color: var(--hair-2); color: var(--ink); }
+
 </style>
 </head>
 <body>
-<div class="shell">
-  <header class="topbar">
-    <div class="wordmark">Apogee <span>· ranked 1v1 for kovaak's</span></div>
-    <div class="whoami" id="whoami" hidden>
-      <button type="button" class="rank-link" id="myRankLink"
-              title="See the full ladder and what closes the gap">
-        <span class="badge" id="myBadge"></span>
-        <span>
-          <span class="tier" id="myTier"></span>
-          <span class="sub" id="myRating"></span>
-        </span>
+<div class="frame">
+
+  <!-- ============================================================ rail -->
+  <aside class="rail">
+    <div class="rail-top">
+      <div class="wordmark">
+        <span class="mark"><svg viewBox="0 0 60 68" aria-hidden="true">
+          <path d="M30 1.5 56.5 15v27.5L30 66.5 3.5 42.5V15z" fill="currentColor" opacity=".9"/>
+          <path d="M30 14 44 21.5v18L30 51 16 39.5v-18z" fill="#05060a"/>
+        </svg></span>
+        <span>Apogee</span>
+      </div>
+    </div>
+
+    <nav class="nav" role="tablist" aria-label="Screens">
+      <div class="nav-label">Play</div>
+
+      <button class="tab" role="tab" aria-selected="true" data-screen="queue">
+        <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2.6"/>
+          <path d="M12 1.6v3.2M12 19.2v3.2M1.6 12h3.2M19.2 12h3.2"/>
+        </svg></span>
+        <span class="tab-label">Find a match</span>
+        <span class="tab-key"></span>
       </button>
-      <div class="streak" id="myStreak"></div>
-      <div class="level-chip" id="levelChip" hidden></div>
+
+      <button class="tab" role="tab" aria-selected="false" data-screen="result">
+        <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M7 3.6h10v4.6a5 5 0 0 1-10 0z"/>
+          <path d="M7 5.6H4v1.2a4 4 0 0 0 3.6 4M17 5.6h3v1.2a4 4 0 0 1-3.6 4"/>
+          <path d="M12 13.2v3.1M8.4 20.4h7.2l-.9-4.1H9.3z"/>
+        </svg></span>
+        <span class="tab-label">Last match</span>
+        <span class="tab-key"></span>
+      </button>
+
+      <div class="nav-label">Where you stand</div>
+
+      <button class="tab" role="tab" aria-selected="false" data-screen="ranks">
+        <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M5 20.4V14M12 20.4V8.4M19 20.4V3.6"/>
+        </svg></span>
+        <span class="tab-label">Ranks</span>
+        <span class="tab-key"></span>
+      </button>
+
+      <button class="tab" role="tab" aria-selected="false" data-screen="profile">
+        <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M3.6 3.6v16.8h16.8"/>
+          <path d="M7.2 15.6l3.4-4.6 3.1 3 4.5-6.6"/>
+        </svg></span>
+        <span class="tab-label">Your aim</span>
+        <span class="tab-key"></span>
+      </button>
+
+      <button class="tab" role="tab" aria-selected="false" data-screen="consistency">
+        <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M2.4 12h3l2.2-6.6 3.4 13.2 2.8-8.4 1.9 3.6h5.9"/>
+        </svg></span>
+        <span class="tab-label">Consistency</span>
+        <span class="tab-key"></span>
+      </button>
+
+      <div class="nav-label">Practice</div>
+
+      <button class="tab" role="tab" aria-selected="false" data-screen="quests">
+        <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M10 6h10M10 12h10M10 18h10"/>
+          <path d="M3.6 6l1.3 1.3L7.4 4.8M3.6 12l1.3 1.3L7.4 10.8M3.6 18l1.3 1.3L7.4 16.8"/>
+        </svg></span>
+        <span class="tab-label">Quests</span>
+        <span class="tab-key"></span>
+      </button>
+
+      <button class="tab" role="tab" aria-selected="false" data-screen="seasonview">
+        <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 3.2l2.6 5.5 6 .9-4.3 4.3 1 6.1-5.3-2.9-5.3 2.9 1-6.1L3.4 9.6l6-.9z"/>
+        </svg></span>
+        <span class="tab-label">Season</span>
+        <span class="tab-key"></span>
+      </button>
+
+      <button class="tab" role="tab" aria-selected="false" data-screen="season" id="tabSeason" hidden>
+        <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M3.6 7.2h9.6M17.4 7.2h3M3.6 16.8h3.6M11.4 16.8h9"/>
+          <circle cx="15.2" cy="7.2" r="2.2"/><circle cx="9.2" cy="16.8" r="2.2"/>
+        </svg></span>
+        <span class="tab-label">Season editor</span>
+        <span class="tab-key"></span>
+      </button>
+    </nav>
+
+    <div class="rail-foot">
+      <div class="whoami" id="whoami" hidden>
+        <button type="button" class="rank-link" id="myRankLink"
+                title="See the full ladder and what closes the gap">
+          <span class="badge" id="myBadge"></span>
+          <span>
+            <span class="tier" id="myTier"></span>
+            <span class="sub" id="myRating"></span>
+          </span>
+        </button>
+        <div class="rail-chips">
+          <div class="streak" id="myStreak"></div>
+          <div class="level-chip" id="levelChip" hidden></div>
+        </div>
+      </div>
+
       <div class="account" id="account">
-        <button type="button" class="signin" id="btnSignIn">Sign in with Steam</button>
+        <button type="button" class="signin" id="btnSignIn"
+                  title="Sign in with Steam">Sign in with Steam</button>
         <div class="signed-in" id="signedIn" hidden>
           <div>
             <div class="who-name" id="accountName"></div>
             <div class="sub" id="accountSteam"></div>
           </div>
-          <button type="button" id="btnSignOut">Sign out</button>
+          <button type="button" id="btnSignOut" title="Sign out">Sign out</button>
         </div>
       </div>
     </div>
-  </header>
+  </aside>
 
-  <div class="status" id="status">
-    <span class="dot" id="statusDot"></span>
-    <span id="statusText">Starting…</span>
-    <span class="path" id="statusPath"></span>
-    <button type="button" id="btnRescan">Rescan</button>
-    <button type="button" id="btnChoose">Choose folder…</button>
-    <button type="button" id="btnOpen">Open folder</button>
-    <span class="build" id="buildStamp" title="Which bundle this window is running"></span>
-  </div>
+  <!-- ============================================================ main -->
+  <div class="main">
 
-  <div class="preview-note" id="previewNote" hidden>
-    <strong>Static preview.</strong>
-    This is a snapshot of the interface for looking at the design. Signing in, watching
-    your stats folder and playing matches all need the desktop app, which has a
-    filesystem and a local server behind it. Run <code>npm start</code> for the real
-    thing.
-  </div>
-
-  <div class="banner" id="banner"></div>
-
-  <div class="signin-help" id="signinHelp" hidden>
-    <p>
-      Finish signing in with Steam in your browser. If no browser opened, paste this
-      link into one:
-    </p>
-    <div class="signin-link-row">
-      <code id="signinLink"></code>
-      <button type="button" id="signinCopy">Copy link</button>
-    </div>
-  </div>
-
-  <div id="app" hidden>
-    <div class="tabs" role="tablist">
-      <button class="tab" role="tab" aria-selected="true" data-screen="queue">Queue</button>
-      <button class="tab" role="tab" aria-selected="false" data-screen="result">Match result</button>
-      <button class="tab" role="tab" aria-selected="false" data-screen="ranks">Ranks</button>
-      <button class="tab" role="tab" aria-selected="false" data-screen="season"
-              id="tabSeason" hidden>Season</button>
-      <button class="tab" role="tab" aria-selected="false" data-screen="profile">Profile</button>
-      <button class="tab" role="tab" aria-selected="false" data-screen="consistency">Consistency</button>
-      <button class="tab" role="tab" aria-selected="false" data-screen="quests">Quests</button>
-    </div>
-
-    <section class="screen active" id="screen-queue">
-      <div class="panel">
-        <div class="hero">
-          <button type="button" class="rank-link" id="heroRankLink"
-                  title="See the full ladder and what closes the gap">
-            <span class="badge" id="heroBadge"></span>
-          </button>
-          <div>
-            <div class="name" id="heroName"></div>
-            <div class="meta" id="heroMeta"></div>
-            <p class="placement" id="heroPlacement"></p>
-          </div>
-        </div>
-      </div>
-
-      <div class="panel">
-        <div class="phead">
-          <h2>Find a match</h2>
-          <span class="note" id="queueNote">three scenarios, scored against your own baseline</span>
-        </div>
-        <div class="pbody">
-          <div class="cats" id="cats"></div>
-          <div class="pool-note" id="poolNote"></div>
-          <button class="queue-btn" id="queueBtn">Find opponent</button>
-          <div class="queue-gate" id="queueGate">
-            <span id="queueGateText"></span>
-            <div class="gate-track"><div class="gate-fill" id="queueGateFill"></div></div>
-          </div>
-          <div class="searching" id="searching">searching the pool…</div>
-
-          <div class="upload-row" id="uploadRow" hidden>
-            <div>
-              <div class="upload-title" id="uploadTitle">Upload your history</div>
-              <div class="upload-sub" id="uploadSub">
-                Builds your baselines server-side. Safe to run more than once.
-              </div>
-              <div class="upload-track" id="uploadTrack" hidden>
-                <div class="upload-fill" id="uploadFill"></div>
-              </div>
+    <header class="topbar">
+      <div class="status" id="status">
+        <details>
+          <summary class="status-pill">
+            <span class="dot" id="statusDot"></span>
+            <span id="statusText">Starting…</span>
+            <span class="path" id="statusPath"></span>
+          </summary>
+          <div class="status-menu">
+            <div class="full-path" id="statusPathFull"></div>
+            <div class="row">
+              <button type="button" id="btnRescan">Rescan now</button>
+              <button type="button" id="btnChoose">Choose folder…</button>
+              <button type="button" id="btnOpen">Open in Explorer</button>
             </div>
-            <button type="button" id="uploadBtn">Upload</button>
+            <p class="hint">
+              Apogee reads the stat files KovaaK's writes after every run. It never
+              changes them, and nothing is typed in by hand.
+            </p>
           </div>
+        </details>
+      </div>
 
-          <div class="opponent" id="opponent">
-            <div class="opp-row">
-              <div class="opp-who">
-                <div class="badge" id="oppBadge"></div>
-                <div>
-                  <div style="font-size:13.5px;font-weight:620" id="oppName"></div>
-                  <div class="sub" id="oppTier"></div>
+      <div class="topbar-right">
+        <button type="button" class="sound-toggle" id="soundToggle"
+                aria-pressed="true" title="Sound on — mute (M)">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5H4z"/>
+            <path class="wave" d="M15.4 9.3a4 4 0 0 1 0 5.4"/>
+            <path class="wave" d="M18 6.8a7.5 7.5 0 0 1 0 10.4"/>
+            <path class="slash" d="M16 9.6l5.2 4.8m0-4.8L16 14.4"/>
+          </svg>
+        </button>
+        <span class="build" id="buildStamp" title="Which bundle this window is running"></span>
+      </div>
+    </header>
+
+    <div class="scroll">
+      <div class="content">
+
+        <div class="preview-note" id="previewNote" hidden>
+          <strong>Static preview.</strong>
+          This is a snapshot of the interface for looking at the design. Signing in,
+          watching your stats folder and playing matches all need the desktop app, which
+          has a filesystem and a local server behind it. Run <code>npm start</code> for
+          the real thing.
+        </div>
+
+        <div class="banner" id="banner"></div>
+
+        <div class="signin-help" id="signinHelp" hidden>
+          <p>
+            Finish signing in with Steam in your browser. If no browser opened, paste
+            this link into one:
+          </p>
+          <div class="signin-link-row">
+            <code id="signinLink"></code>
+            <button type="button" id="signinCopy">Copy link</button>
+          </div>
+        </div>
+
+        <div id="app" hidden>
+
+          <!-- ------------------------------------------------ play -->
+          <section class="screen active" id="screen-queue">
+            <div class="screen-head">
+              <h1>Find a match</h1>
+              <p>
+                Pick a category, play three scenarios in KovaaK's, and the ladder
+                settles itself. Rounds are scored on how far above your own past
+                scores you played.
+              </p>
+            </div>
+
+            <div class="panel">
+              <div class="hero">
+                <button type="button" class="rank-link" id="heroRankLink"
+                        title="See the full ladder and what closes the gap">
+                  <span class="badge" id="heroBadge"></span>
+                </button>
+                <div class="hero-id">
+                  <div class="hero-kicker">Your rank</div>
+                  <div class="name" id="heroName"></div>
+                  <p class="placement" id="heroPlacement"></p>
+                </div>
+                <div class="hero-stats">
+                  <div class="stat">
+                    <div class="stat-k">Rating</div>
+                    <div class="stat-v" id="heroRating"></div>
+                    <div class="stat-s" id="heroRd"></div>
+                  </div>
+                  <div class="stat">
+                    <div class="stat-k">Population</div>
+                    <div class="stat-v" id="heroPercentile"></div>
+                    <div class="stat-s">of everyone playing</div>
+                  </div>
+                  <div class="stat">
+                    <div class="stat-k">Runs read</div>
+                    <div class="stat-v" id="heroRuns"></div>
+                    <div class="stat-s" id="heroScenarios"></div>
+                  </div>
                 </div>
               </div>
-              <div class="sub" id="oppAge"></div>
             </div>
-            <div class="odds">
-              <div class="odds-bar" id="oddsBar"></div>
-              <div class="odds-labels"><span id="oddsYou"></span><span id="oddsThem"></span></div>
-            </div>
-            <div class="todo">
-              <h3>Play these in KovaaK's</h3>
-              <ol id="todoList"></ol>
-              <div class="match-actions" id="matchActions" hidden>
-                <span class="match-hint" id="matchHint">
-                  Only your first run on each scenario counts. Apogee picks them up automatically.
-                </span>
-                <span class="match-buttons">
-                  <span class="match-clock" id="matchClock" hidden>--:--</span>
-                  <button type="button" class="go" id="playMatchBtn">Play in KovaaK's</button>
-                  <button type="button" id="cancelMatchBtn">Abandon match</button>
-                </span>
+
+            <div class="panel">
+              <div class="phead">
+                <h2>Queue</h2>
+                <span class="note" id="queueNote">three scenarios, scored against your own baseline</span>
+              </div>
+              <div class="pbody">
+
+                <div class="step">
+                  <div class="step-n">1</div>
+                  <div>
+                    <div class="step-title">Choose a category <span>— weakest is marked</span></div>
+                    <div class="cats" id="cats"></div>
+                    <div class="pool-note" id="poolNote"></div>
+                  </div>
+                </div>
+
+                <div class="step">
+                  <div class="step-n">2</div>
+                  <div>
+                    <div class="step-title">Find someone to play <span>— matched on rating</span></div>
+                    <button class="queue-btn" id="queueBtn">Find opponent</button>
+                    <div class="queue-gate" id="queueGate">
+                      <span id="queueGateText"></span>
+                      <div class="gate-track"><div class="gate-fill" id="queueGateFill"></div></div>
+                    </div>
+                    <div class="searching" id="searching">searching the pool…</div>
+                  </div>
+                </div>
+
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </section>
 
-    <section class="screen" id="screen-result">
-      <div class="panel">
-        <div class="verdict">
-          <div>
-            <div class="big" id="verdictBig"></div>
-            <div class="scores" id="verdictScores"></div>
-          </div>
-          <div class="delta-move" id="ratingMove"></div>
-        </div>
-        <p class="explain" id="explain"></p>
-        <div class="rounds-wrap">
-          <table class="rounds">
-            <thead><tr>
-              <th>Scenario</th><th>Your score</th><th>Δ</th>
-              <th>Their score</th><th>Δ</th><th>Round</th>
-            </tr></thead>
-            <tbody id="roundsBody"></tbody>
-          </table>
-        </div>
-      </div>
-    </section>
+            <div class="panel opponent" id="opponent">
+              <div class="phead">
+                <h2>Your match</h2>
+                <span class="note">only your first run on each scenario counts</span>
+              </div>
+              <div class="pbody">
+                <div class="opp-row">
+                  <div class="opp-who">
+                    <div class="badge" id="oppBadge"></div>
+                    <div>
+                      <div class="opp-name" id="oppName"></div>
+                      <div class="sub" id="oppTier"></div>
+                    </div>
+                  </div>
+                  <div class="sub" id="oppAge"></div>
+                </div>
 
-    <section class="screen" id="screen-season">
-      <div class="panel">
-        <div class="phead">
-          <h2>Season editor</h2>
-          <span class="note" id="seasonNote"></span>
-        </div>
-        <div class="pbody">
-          <p class="rank-lede">
-            Edits are written to the season file on this machine and take effect on the
-            next rebuild. Thresholds must ascend, and every scenario needs one per rank —
-            a season that breaks either is refused rather than saved.
-          </p>
+                <div class="odds">
+                  <div class="odds-bar" id="oddsBar"></div>
+                  <div class="odds-labels"><span id="oddsYou"></span><span id="oddsThem"></span></div>
+                </div>
 
-          <div class="season-ranks" id="seasonRanks"></div>
-
-          <div class="season-actions">
-            <button type="button" class="go" id="seasonSave">Save season</button>
-            <button type="button" id="seasonReload">Discard changes</button>
-            <button type="button" id="seasonPurge" class="purge" hidden></button>
-            <span class="season-status" id="seasonStatus"></span>
-          </div>
-        </div>
-      </div>
-
-      <div class="panel">
-        <div class="phead">
-          <h2>Scenarios and thresholds</h2>
-          <span class="note">one category at a time · add families and difficulties here</span>
-        </div>
-        <div class="pbody season-add">
-          <input type="search" id="seasonSearch" placeholder="Search scenarios…"
-                 autocomplete="off" spellcheck="false">
-          <select id="seasonPick" size="1"><option value="">Add a scenario…</option></select>
-          <select id="seasonPickCat"></select>
-          <button type="button" id="seasonAdd">Add</button>
-          <span class="season-status" id="seasonAddNote"></span>
-        </div>
-        <div class="scen-wrap">
-          <table class="scen" id="seasonTable">
-            <thead><tr id="seasonHead"></tr></thead>
-            <tbody id="seasonBody"></tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="panel">
-        <div class="phead">
-          <h2>Where the population lands</h2>
-          <span class="note">same percentile on every scenario · real spread flattens it</span>
-        </div>
-        <div class="pbody">
-          <p class="rank-lede">
-            What this ladder does to the people who play these scenarios, from their
-            leaderboards rather than from a guess. A rank nobody holds is a rank that
-            exists and cannot be earned.
-          </p>
-          <div class="dist" id="seasonDist"></div>
-        </div>
-      </div>
-
-      <div class="panel">
-        <div class="phead">
-          <h2>Category energy</h2>
-          <span class="note">what a category rank costs</span>
-        </div>
-        <div class="scen-wrap">
-          <table class="scen" id="seasonCatTable">
-            <thead><tr id="seasonCatHead"></tr></thead>
-            <tbody id="seasonCatBody"></tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-
-    <section class="screen" id="screen-ranks">
-      <div class="panel">
-        <div class="phead">
-          <h2>Apogee ladder</h2>
-          <span class="note" id="ladderNote"></span>
-        </div>
-        <div class="pbody">
-          <p class="rank-lede" id="ladderLede"></p>
-          <ol class="ladder" id="ladder"></ol>
-        </div>
-      </div>
-
-      <div class="panel">
-        <div class="phead">
-          <h2>Benchmark standing</h2>
-          <span class="note" id="benchNote"></span>
-        </div>
-        <div class="pbody">
-          <p class="rank-lede" id="benchLede"></p>
-          <div class="cat-ranks" id="catRanks"></div>
-        </div>
-      </div>
-
-      <div class="panel">
-        <div class="phead">
-          <h2>What it takes</h2>
-          <span class="note">closest first</span>
-        </div>
-        <div class="scen-wrap">
-          <table class="scen">
-            <thead><tr>
-              <th>Scenario</th><th>Rank</th><th>Best</th>
-              <th>Next rank</th><th>Target</th><th>Gap</th>
-            </tr></thead>
-            <tbody id="nextRankBody"></tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-
-    <section class="screen" id="screen-profile">
-      <div class="panel">
-        <div class="phead"><h2>Weakness map</h2><span class="note" id="weakNote"></span></div>
-        <div class="pbody"><div class="wmap" id="wmap"></div></div>
-      </div>
-
-      <div class="panel">
-        <div class="phead">
-          <h2>What you are measured on</h2>
-          <span class="note">a baseline needs 5 runs</span>
-        </div>
-        <div class="pbody">
-          <p class="rank-lede">
-            A match compares you against your own past scores, so a difficulty you have
-            barely played is not a hard one — it is an unmeasured one. These are the
-            difficulties your scores can actually be judged on.
-          </p>
-          <div class="cover" id="coverage"></div>
-        </div>
-      </div>
-      <div class="panel">
-        <div class="phead"><h2>Scenarios</h2><span class="note">weakest first</span></div>
-        <div class="scen-wrap">
-          <table class="scen">
-            <thead><tr>
-              <th>Scenario</th><th>Sub-category</th><th>Best</th>
-              <th>Rank</th><th>Energy</th><th>Runs</th><th>To next rank</th>
-            </tr></thead>
-            <tbody id="scenBody"></tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-
-    <section class="screen" id="screen-consistency">
-      <div class="panel">
-        <div class="phead">
-          <h2>Ceiling vs floor</h2>
-          <span class="note">worst of your last 5 runs, ranked the same way</span>
-        </div>
-        <div class="pbody">
-          <div class="cf-pair">
-            <div class="cf-side">
-              <div class="cf-label">Ceiling</div>
-              <div class="cf-rank" id="ceilRank"></div>
-              <div class="cf-energy" id="ceilEnergy"></div>
-              <div class="cf-note">what your best run earns</div>
+                <div class="todo">
+                  <h3>Play these in KovaaK's</h3>
+                  <ol id="todoList"></ol>
+                  <div class="match-actions" id="matchActions" hidden>
+                    <span class="match-hint" id="matchHint">
+                      Only your first run on each scenario counts. Apogee picks them up
+                      automatically.
+                    </span>
+                    <span class="match-buttons">
+                      <span class="match-clock" id="matchClock" hidden>--:--</span>
+                      <button type="button" class="go" id="playMatchBtn">Play in KovaaK's</button>
+                      <button type="button" id="cancelMatchBtn">Abandon match</button>
+                    </span>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="cf-gap">
-              <div class="cf-gap-val" id="gapVal"></div>
-              <div class="cf-gap-label">gap</div>
+
+            <div class="panel" id="uploadRow" hidden>
+              <div class="phead">
+                <h2>Your history</h2>
+                <span class="note">safe to run more than once</span>
+              </div>
+              <div class="pbody">
+                <div class="upload-row">
+                  <div>
+                    <div class="upload-title" id="uploadTitle">Upload your history</div>
+                    <div class="upload-sub" id="uploadSub">
+                      Builds your baselines server-side, which is what every match is
+                      scored against.
+                    </div>
+                    <div class="upload-track" id="uploadTrack" hidden>
+                      <div class="upload-fill" id="uploadFill"></div>
+                    </div>
+                  </div>
+                  <button type="button" id="uploadBtn">Upload</button>
+                </div>
+              </div>
             </div>
-            <div class="cf-side">
-              <div class="cf-label">Floor</div>
-              <div class="cf-rank" id="floorRank"></div>
-              <div class="cf-energy" id="floorEnergy"></div>
-              <div class="cf-note">what you can do reliably</div>
+          </section>
+
+          <!-- ---------------------------------------------- result -->
+          <section class="screen" id="screen-result">
+            <div class="screen-head">
+              <h1>Last match</h1>
+              <p>
+                Each round is won by the bigger improvement over your own baseline, not by
+                the bigger score. Two out of three takes the match.
+              </p>
+            </div>
+
+            <div class="panel">
+              <div class="verdict">
+                <div>
+                  <div class="big" id="verdictBig"></div>
+                  <div class="scores" id="verdictScores"></div>
+                </div>
+                <div class="delta-move" id="ratingMove"></div>
+              </div>
+              <p class="explain" id="explain"></p>
+              <div class="rounds-wrap">
+                <table class="rounds">
+                  <thead><tr>
+                    <th>Scenario</th><th>Your score</th><th>Δ</th>
+                    <th>Their score</th><th>Δ</th><th>Round</th>
+                  </tr></thead>
+                  <tbody id="roundsBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <!-- ----------------------------------------------- ranks -->
+          <section class="screen" id="screen-ranks">
+            <div class="screen-head">
+              <h1>Ranks</h1>
+              <p>
+                One ladder per category, and an overall tier derived from them.
+                Thresholds come from the season file, not from an outside
+                benchmark.
+              </p>
+            </div>
+
+            <div class="panel">
+              <div class="phead">
+                <h2>Apogee ladder</h2>
+                <span class="note" id="ladderNote"></span>
+              </div>
+              <div class="pbody">
+                <p class="rank-lede" id="ladderLede"></p>
+                <ol class="ladder" id="ladder"></ol>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="phead">
+                <h2>Benchmark standing</h2>
+                <span class="note" id="benchNote"></span>
+              </div>
+              <div class="pbody">
+                <p class="rank-lede" id="benchLede"></p>
+                <div class="cat-ranks" id="catRanks"></div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="phead">
+                <h2>What it takes</h2>
+                <span class="note">closest first</span>
+              </div>
+              <div class="scen-wrap">
+                <table class="scen">
+                  <thead><tr>
+                    <th>Scenario</th><th>Rank</th><th>Best</th>
+                    <th>Next rank</th><th>Target</th><th>Gap</th>
+                  </tr></thead>
+                  <tbody id="nextRankBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <!-- --------------------------------------------- profile -->
+          <section class="screen" id="screen-profile">
+            <div class="screen-head">
+              <h1>Your aim</h1>
+              <p>
+                Where your energy is, where it is missing, and which difficulties
+                have enough history to grade.
+              </p>
+            </div>
+
+            <div class="panel">
+              <div class="phead"><h2>Weakness map</h2><span class="note" id="weakNote"></span></div>
+              <div class="pbody"><div class="wmap" id="wmap"></div></div>
+            </div>
+
+            <div class="panel">
+              <div class="phead">
+                <h2>What you are measured on</h2>
+                <span class="note">a baseline needs 5 runs</span>
+              </div>
+              <div class="pbody">
+                <p class="rank-lede">
+                  A match compares you against your own past scores, so a
+                  difficulty you have barely played cannot be graded yet. These
+                  are the ones with enough history.
+                </p>
+                <div class="cover" id="coverage"></div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="phead"><h2>Scenarios</h2><span class="note">weakest first</span></div>
+              <div class="scen-wrap">
+                <table class="scen">
+                  <thead><tr>
+                    <th>Scenario</th><th>Sub-category</th><th>Best</th>
+                    <th>Rank</th><th>Energy</th><th>Runs</th><th>To next rank</th>
+                  </tr></thead>
+                  <tbody id="scenBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <!-- ----------------------------------------- consistency -->
+          <section class="screen" id="screen-consistency">
+            <div class="screen-head">
+              <h1>Consistency</h1>
+              <p>
+                A benchmark scores your best run. A match has no retry, so this
+                screen ranks your worst recent run instead.
+              </p>
+            </div>
+
+            <div class="panel">
+              <div class="phead">
+                <h2>Ceiling vs floor</h2>
+                <span class="note">worst of your last 5 runs, ranked the same way</span>
+              </div>
+              <div class="pbody">
+                <div class="cf-pair">
+                  <div class="cf-side">
+                    <div class="cf-label">Ceiling</div>
+                    <div class="cf-rank" id="ceilRank"></div>
+                    <div class="cf-energy" id="ceilEnergy"></div>
+                    <div class="cf-note">what your best run earns</div>
+                  </div>
+                  <div class="cf-gap">
+                    <div class="cf-gap-val" id="gapVal"></div>
+                    <div class="cf-gap-label">gap</div>
+                  </div>
+                  <div class="cf-side">
+                    <div class="cf-label">Floor</div>
+                    <div class="cf-rank" id="floorRank"></div>
+                    <div class="cf-energy" id="floorEnergy"></div>
+                    <div class="cf-note">what you can do reliably</div>
+                  </div>
+                </div>
+                <p class="cf-explain">
+                  A benchmark scores your best run. A match has no retry, so your
+                  worst recent run is the better guide to what you will bring to
+                  one.
+                </p>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="phead">
+                <h2>Least reliable first</h2>
+                <span class="note">widest gaps first</span>
+              </div>
+              <div class="scen-wrap">
+                <table class="scen">
+                  <thead><tr>
+                    <th>Scenario</th><th>Ceiling</th><th>Median</th><th>Floor</th><th>Gap</th><th></th>
+                  </tr></thead>
+                  <tbody id="consistencyBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <!-- ---------------------------------------------- quests -->
+          <section class="screen" id="screen-quests">
+            <div class="screen-head">
+              <h1>Quests</h1>
+              <p>
+                Today's practice, generated from the benchmark you track and your
+                recent runs.
+              </p>
+            </div>
+
+            <div class="panel">
+              <div class="phead">
+                <h2>Today</h2>
+                <span class="note">generated from the benchmark you track</span>
+              </div>
+              <div class="pbody"><div class="quests" id="questList"></div></div>
+            </div>
+          </section>
+
+          <!-- ---------------------------------------------- season -->
+          <!-- ------------------------------------------ season (player) -->
+          <section class="screen" id="screen-seasonview">
+            <div class="screen-head">
+              <h1>Season</h1>
+              <p>
+                What a rank means right now, and everything in the pool you can
+                climb it on. Ranks move while the season is a draft.
+              </p>
+            </div>
+
+            <div class="panel">
+              <div class="phead">
+                <h2 id="svName">Season</h2>
+                <span class="note" id="svNote"></span>
+              </div>
+              <div class="pbody"><div class="sv-stats" id="svStats"></div></div>
+            </div>
+
+            <div class="panel">
+              <div class="phead">
+                <h2>Overall tier</h2>
+                <span class="note">by population percentile</span>
+              </div>
+              <div class="pbody">
+                <p class="rank-lede">
+                  Your standing across all three categories. Tiers are shares of the
+                  population, so one keeps its meaning as the ladder grows.
+                </p>
+                <div class="sv-tiers" id="svTiers"></div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="phead">
+                <h2>Category ladders</h2>
+                <span class="note">sixteen ranks each, four windows deep</span>
+              </div>
+              <div class="pbody">
+                <p class="rank-lede">
+                  Every category has its own sixteen ranks and its own names. The
+                  overall tier above is derived from all three, so climbing any of
+                  them moves it.
+                </p>
+                <div id="svCats"></div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="phead">
+                <h2>The pool</h2>
+                <span class="note" id="svPoolNote"></span>
+              </div>
+              <div class="pbody">
+                <p class="rank-lede">
+                  One difficulty at a time, the way every benchmark this is drawn from is
+                  played. Your best on each scenario, and the score the next rank wants.
+                  Play any of them whenever you like — nothing here queues you and nothing
+                  here settles anything. A highlighted row is one your next rank is scored
+                  on.
+                </p>
+                <div class="pool-bands" id="svDiffs"></div>
+                <div class="pool-grid" id="svPool"></div>
+                <div class="pool-lists" id="svPlaylists" hidden>
+                  <div class="pool-lists-head">
+                    <h4 id="svListsTitle">Playlists</h4>
+                    <span class="note" id="svInstallNote"></span>
+                  </div>
+                  <div class="pool-chips" id="svChips"></div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="screen" id="screen-season">
+            <div class="screen-head">
+              <h1>Season</h1>
+              <p>
+                What a rank means on this machine. Edits are written to the season file
+                and take effect on the next rebuild.
+              </p>
+            </div>
+
+            <div class="panel">
+              <div class="phead">
+                <h2>Ladders</h2>
+                <span class="note" id="seasonNote"></span>
+              </div>
+              <div class="pbody">
+                <p class="rank-lede">
+                  Thresholds must ascend, and every scenario needs one per rank. A
+                  season that breaks either is refused on save.
+                </p>
+                <div class="season-ranks" id="seasonRanks"></div>
+                <div class="season-actions">
+                  <button type="button" class="go" id="seasonSave">Save season</button>
+                  <button type="button" id="seasonReload">Discard changes</button>
+                  <button type="button" id="seasonPurge" class="purge" hidden></button>
+                  <span class="season-status" id="seasonStatus"></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="phead">
+                <h2>Scenarios and thresholds</h2>
+                <span class="note">one category at a time · add families and difficulties here</span>
+              </div>
+              <div class="pbody">
+                <div class="season-add">
+                  <input type="search" id="seasonSearch" placeholder="Search scenarios…"
+                         autocomplete="off" spellcheck="false">
+                  <select id="seasonPick" size="1"><option value="">Add a scenario…</option></select>
+                  <select id="seasonPickCat"></select>
+                  <button type="button" id="seasonAdd">Add</button>
+                  <span class="season-status" id="seasonAddNote"></span>
+                </div>
+              </div>
+              <div class="scen-wrap">
+                <table class="scen" id="seasonTable">
+                  <thead><tr id="seasonHead"></tr></thead>
+                  <tbody id="seasonBody"></tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="phead">
+                <h2>What this season draws on</h2>
+                <span class="note">how concentrated the pool is</span>
+              </div>
+              <div class="pbody">
+                <p class="rank-lede">
+                  Which benchmarks the pool draws from, and how many scenarios it
+                  takes from each. If nearly all of them come from one benchmark,
+                  the season is a copy of it under different rank names.
+                </p>
+                <div class="sources" id="seasonSources"></div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="phead">
+                <h2>Where the population lands</h2>
+                <span class="note">same percentile on every scenario</span>
+              </div>
+              <div class="pbody">
+                <p class="rank-lede">
+                  What this ladder does to the people who play these scenarios,
+                  taken from their leaderboards rather than estimated. Watch for
+                  ranks that nobody lands in.
+                </p>
+                <div class="dist" id="seasonDist"></div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="phead">
+                <h2>Category energy</h2>
+                <span class="note">what a category rank costs</span>
+              </div>
+              <div class="scen-wrap">
+                <table class="scen" id="seasonCatTable">
+                  <thead><tr id="seasonCatHead"></tr></thead>
+                  <tbody id="seasonCatBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <p class="footnote" id="footnote"></p>
+        </div>
+
+        <!-- ------------------------------------------- first run -->
+        <div class="panel empty" id="empty">
+          <h2>Waiting for your KovaaK's stats</h2>
+          <p id="emptyText">
+            Apogee reads the stat files KovaaK's already writes after every run. Nothing
+            to install in the game, and no scores to type in.
+          </p>
+          <div class="empty-steps">
+            <div class="empty-step">
+              <div class="n">Step one</div>
+              <h3>Point it at your stats</h3>
+              <p>Usually found on its own. If not, choose the folder yourself below.</p>
+            </div>
+            <div class="empty-step">
+              <div class="n">Step two</div>
+              <h3>Play as you normally would</h3>
+              <p>Every run is read as it lands. Nothing in the game changes.</p>
+            </div>
+            <div class="empty-step">
+              <div class="n">Step three</div>
+              <h3>Queue a category</h3>
+              <p>Three scenarios against a real opponent, scored against your own past.</p>
             </div>
           </div>
-          <p class="cf-explain">
-            A benchmark scores your best run. In a match there is no retry, and no second
-            attempt counts — so your worst run is closer to what you actually bring to one.
-            Closing this gap is the whole mode.
-          </p>
+          <button type="button" id="emptyChoose">Choose stats folder…</button>
         </div>
+
       </div>
-
-      <div class="panel">
-        <div class="phead">
-          <h2>Least reliable first</h2>
-          <span class="note">the widest gaps are where practice pays most</span>
-        </div>
-        <div class="scen-wrap">
-          <table class="scen">
-            <thead><tr>
-              <th>Scenario</th><th>Ceiling</th><th>Median</th><th>Floor</th><th>Gap</th><th></th>
-            </tr></thead>
-            <tbody id="consistencyBody"></tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-
-    <section class="screen" id="screen-quests">
-      <div class="panel">
-        <div class="phead">
-          <h2>Today</h2>
-          <span class="note">generated from the benchmark you track</span>
-        </div>
-        <div class="pbody"><div class="quests" id="questList"></div></div>
-      </div>
-    </section>
-
-    <p class="footnote" id="footnote"></p>
-  </div>
-
-  <div class="panel empty" id="empty">
-    <h2>Waiting for your KovaaK's stats</h2>
-    <p id="emptyText">
-      Apogee reads the stat files KovaaK's already writes after every run. Nothing to
-      install in the game, and no scores to type in.
-    </p>
-    <button type="button" id="emptyChoose">Choose stats folder…</button>
+    </div>
   </div>
 </div>
 

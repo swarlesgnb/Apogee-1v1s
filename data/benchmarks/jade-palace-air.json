@@ -1,0 +1,670 @@
+{
+  "benchmarkName": "Jade Palace Air",
+  "abbreviation": "JP",
+  "color": "#00ff40",
+  "spreadsheetURL": "https://docs.google.com/spreadsheets/d/11-E1KWTCw27s6fhW4nwB0F_2ckbdv5RDcBiseUcm1E4/edit?usp=sharing",
+  "evxlUrl": "https://evxl.app/benchmarks/Jade%20Palace%20Air",
+  "source": "kovaaks.com benchmarks API + evxl registry",
+  "fetchedAt": "2026-08-29T16:57:49Z",
+  "difficulties": [
+    {
+      "name": "Easy",
+      "kovaaksBenchmarkId": 2429,
+      "rankNames": [
+        "Diamond",
+        "Jade",
+        "Master",
+        "Grandmaster",
+        "Nova"
+      ],
+      "rankColors": {
+        "Diamond": "#B9F2FF",
+        "Jade": "#85FA85",
+        "Master": "#cd30c1",
+        "Grandmaster": "#feeb01",
+        "Nova": "#6f1d89"
+      },
+      "categories": [
+        {
+          "name": "Reading",
+          "rankMaxes": [
+            12000,
+            24000,
+            36000,
+            48000,
+            60000
+          ],
+          "scenarios": [
+            {
+              "name": "Air Palace",
+              "leaderboardId": 173500,
+              "rankMaxes": [
+                877,
+                886,
+                894,
+                901,
+                907
+              ]
+            },
+            {
+              "name": "Air Pure Perfected Easy",
+              "leaderboardId": 189586,
+              "rankMaxes": [
+                898,
+                905,
+                911,
+                916,
+                920
+              ]
+            },
+            {
+              "name": "Air Angelic Easier",
+              "leaderboardId": 189778,
+              "rankMaxes": [
+                921,
+                927,
+                932,
+                936,
+                939
+              ]
+            },
+            {
+              "name": "Air Voltaic Easy",
+              "leaderboardId": 568,
+              "rankMaxes": [
+                872,
+                881,
+                889,
+                896,
+                902
+              ]
+            },
+            {
+              "name": "Air Voltaic Easy Invincible 4",
+              "leaderboardId": 21792,
+              "rankMaxes": [
+                3100,
+                3500,
+                3900,
+                4200,
+                4500
+              ]
+            },
+            {
+              "name": "Air Voltaic Invincible 7 Easy",
+              "leaderboardId": 13200,
+              "rankMaxes": [
+                2800,
+                3150,
+                3450,
+                3700,
+                3900
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Hybrid",
+          "rankMaxes": [
+            12000,
+            24000,
+            36000,
+            48000,
+            60000
+          ],
+          "scenarios": [
+            {
+              "name": "hizkuAirPalace Easy",
+              "leaderboardId": 189773,
+              "rankMaxes": [
+                2700,
+                3000,
+                3300,
+                3600,
+                3900
+              ]
+            },
+            {
+              "name": "Air CELESTIAL No UFO Medium",
+              "leaderboardId": 184763,
+              "rankMaxes": [
+                889,
+                895,
+                901,
+                907,
+                913
+              ]
+            },
+            {
+              "name": "Air Spectral Easy",
+              "leaderboardId": 143228,
+              "rankMaxes": [
+                917,
+                922,
+                927,
+                932,
+                936
+              ]
+            },
+            {
+              "name": "Air Palace Smooth",
+              "leaderboardId": 174337,
+              "rankMaxes": [
+                887,
+                894,
+                900,
+                905,
+                909
+              ]
+            },
+            {
+              "name": "Air Smooth Revosect Int",
+              "leaderboardId": 142840,
+              "rankMaxes": [
+                879,
+                888,
+                896,
+                903,
+                909
+              ]
+            },
+            {
+              "name": "Air Pure Revosect Int",
+              "leaderboardId": 142834,
+              "rankMaxes": [
+                872,
+                881,
+                889,
+                896,
+                902
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Technique",
+          "rankMaxes": [
+            12000,
+            24000,
+            36000,
+            48000,
+            60000
+          ],
+          "scenarios": [
+            {
+              "name": "Leisphere Easy",
+              "leaderboardId": 185129,
+              "rankMaxes": [
+                3400,
+                3750,
+                4050,
+                4300,
+                4500
+              ]
+            },
+            {
+              "name": "AA4V OW Easy",
+              "leaderboardId": 189519,
+              "rankMaxes": [
+                3300,
+                3650,
+                3950,
+                4200,
+                4450
+              ]
+            },
+            {
+              "name": "Pasutrack RCT Evo Easy",
+              "leaderboardId": 189580,
+              "rankMaxes": [
+                2800,
+                3200,
+                3600,
+                3900,
+                4150
+              ]
+            },
+            {
+              "name": "Controlsphere OW",
+              "leaderboardId": 9638,
+              "rankMaxes": [
+                7000,
+                8250,
+                9250,
+                10000,
+                10500
+              ]
+            },
+            {
+              "name": "Air Angelic Invincible 2",
+              "leaderboardId": 31,
+              "rankMaxes": [
+                3300,
+                3600,
+                3900,
+                4250,
+                4500
+              ]
+            },
+            {
+              "name": "VT Aether Novice S5 Hard Bot 1",
+              "leaderboardId": 184360,
+              "rankMaxes": [
+                3000,
+                3250,
+                3500,
+                3750,
+                4000
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Underaim",
+          "rankMaxes": [
+            4000,
+            8000,
+            12000,
+            16000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "Air Angelic 4 Voltaic Easy",
+              "leaderboardId": 42,
+              "rankMaxes": [
+                3500,
+                3800,
+                4100,
+                4400,
+                4700
+              ]
+            },
+            {
+              "name": "VT Aether Intermediate S5 Bot 2",
+              "leaderboardId": 106993,
+              "rankMaxes": [
+                2900,
+                3200,
+                3500,
+                3800,
+                4100
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Hard",
+      "kovaaksBenchmarkId": 2428,
+      "rankNames": [
+        "Grandmaster",
+        "Nova",
+        "Astra",
+        "Celestial",
+        "Transcendent"
+      ],
+      "rankColors": {
+        "Grandmaster": "#feeb01",
+        "Nova": "#6f1d89",
+        "Astra": "#c4065b",
+        "Celestial": "#56e4fe",
+        "Transcendent": "#faa0fc"
+      },
+      "categories": [
+        {
+          "name": "Reading",
+          "rankMaxes": [
+            12000,
+            24000,
+            36000,
+            48000,
+            60000
+          ],
+          "scenarios": [
+            {
+              "name": "Air Palace Advanced",
+              "leaderboardId": 189605,
+              "rankMaxes": [
+                885,
+                893,
+                901,
+                908,
+                915
+              ]
+            },
+            {
+              "name": "Air Pure Perfected",
+              "leaderboardId": 189293,
+              "rankMaxes": [
+                906,
+                910,
+                914,
+                918,
+                924
+              ]
+            },
+            {
+              "name": "Air Angelic",
+              "leaderboardId": 419,
+              "rankMaxes": [
+                922,
+                926,
+                930,
+                934,
+                940
+              ]
+            },
+            {
+              "name": "Air Voltaic",
+              "leaderboardId": 29,
+              "rankMaxes": [
+                882,
+                887,
+                892,
+                897,
+                904
+              ]
+            },
+            {
+              "name": "Air Voltaic Invincible 4",
+              "leaderboardId": 1092,
+              "rankMaxes": [
+                3350,
+                3700,
+                4000,
+                4250,
+                4700
+              ]
+            },
+            {
+              "name": "Air Voltaic Invincible 7",
+              "leaderboardId": 443,
+              "rankMaxes": [
+                2900,
+                3250,
+                3600,
+                3900,
+                4250
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Hybrid",
+          "rankMaxes": [
+            12000,
+            24000,
+            36000,
+            48000,
+            60000
+          ],
+          "scenarios": [
+            {
+              "name": "hizkuAirPalace",
+              "leaderboardId": 189604,
+              "rankMaxes": [
+                3000,
+                3250,
+                3500,
+                3750,
+                4100
+              ]
+            },
+            {
+              "name": "Air CELESTIAL Harder",
+              "leaderboardId": 185225,
+              "rankMaxes": [
+                883,
+                891,
+                898,
+                902,
+                907
+              ]
+            },
+            {
+              "name": "Air Spectral",
+              "leaderboardId": 142893,
+              "rankMaxes": [
+                919,
+                926,
+                931,
+                935,
+                940
+              ]
+            },
+            {
+              "name": "Air Palace Smooth Advanced",
+              "leaderboardId": 189637,
+              "rankMaxes": [
+                892,
+                900,
+                907,
+                912,
+                918
+              ]
+            },
+            {
+              "name": "Air Smooth Revosect",
+              "leaderboardId": 142841,
+              "rankMaxes": [
+                884,
+                892,
+                900,
+                907,
+                914
+              ]
+            },
+            {
+              "name": "Air Pure Revosect",
+              "leaderboardId": 142823,
+              "rankMaxes": [
+                882,
+                890,
+                898,
+                905,
+                912
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Technique",
+          "rankMaxes": [
+            12000,
+            24000,
+            36000,
+            48000,
+            60000
+          ],
+          "scenarios": [
+            {
+              "name": "Leisphere",
+              "leaderboardId": 185126,
+              "rankMaxes": [
+                3450,
+                3800,
+                4100,
+                4350,
+                4800
+              ]
+            },
+            {
+              "name": "AA4V OW",
+              "leaderboardId": 189514,
+              "rankMaxes": [
+                3600,
+                3900,
+                4150,
+                4400,
+                4800
+              ]
+            },
+            {
+              "name": "Pasutrack RCT Evo",
+              "leaderboardId": 189520,
+              "rankMaxes": [
+                3250,
+                3550,
+                3850,
+                4150,
+                4500
+              ]
+            },
+            {
+              "name": "Controlsphere OW 150%",
+              "leaderboardId": 83267,
+              "rankMaxes": [
+                8400,
+                9000,
+                9600,
+                10200,
+                11200
+              ]
+            },
+            {
+              "name": "Air Angelic invincible 6",
+              "leaderboardId": 2021,
+              "rankMaxes": [
+                4200,
+                4400,
+                4600,
+                4800,
+                5050
+              ]
+            },
+            {
+              "name": "VT Aether Intermediate S5 Hard Bot 1",
+              "leaderboardId": 140200,
+              "rankMaxes": [
+                3000,
+                3275,
+                3550,
+                3825,
+                4200
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Underaim",
+          "rankMaxes": [
+            4000,
+            8000,
+            12000,
+            16000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "Air Angelic 4 Voltaic",
+              "leaderboardId": 30,
+              "rankMaxes": [
+                3600,
+                3900,
+                4200,
+                4450,
+                4900
+              ]
+            },
+            {
+              "name": "VT Aether Advanced S5 bot 2",
+              "leaderboardId": 106775,
+              "rankMaxes": [
+                3250,
+                3600,
+                3900,
+                4150,
+                4500
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Fundamentals",
+      "kovaaksBenchmarkId": 2430,
+      "rankNames": [
+        "Iron",
+        "Bronze",
+        "Silver",
+        "Gold",
+        "Platinum",
+        "Diamond",
+        "Jade",
+        "Master"
+      ],
+      "rankColors": {
+        "Iron": "#999999",
+        "Bronze": "#FF9900",
+        "Silver": "#CBD9E6",
+        "Gold": "#CAB148",
+        "Platinum": "#2FCFC2",
+        "Diamond": "#B9F2FF",
+        "Jade": "#85FA85",
+        "Master": "#cd30c1"
+      },
+      "categories": [
+        {
+          "name": "Fundamentals",
+          "rankMaxes": [
+            3750,
+            7500,
+            11250,
+            15000,
+            18750,
+            22500,
+            26250,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "Air Angelic Invincible 2 80%",
+              "leaderboardId": 73836,
+              "rankMaxes": [
+                2300,
+                2500,
+                2700,
+                2900,
+                3100,
+                3300,
+                3500,
+                3700
+              ]
+            },
+            {
+              "name": "Air Voltaic Easy Invincible 4 80%",
+              "leaderboardId": 128781,
+              "rankMaxes": [
+                1700,
+                2000,
+                2300,
+                2650,
+                3000,
+                3350,
+                3700,
+                4000
+              ]
+            },
+            {
+              "name": "VT Aether Novice S5 Bot 2",
+              "leaderboardId": 108143,
+              "rankMaxes": [
+                1750,
+                2150,
+                2550,
+                2950,
+                3350,
+                3750,
+                4150,
+                4450
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

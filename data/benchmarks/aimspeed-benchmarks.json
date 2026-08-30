@@ -1,0 +1,459 @@
+{
+  "benchmarkName": "AimSpeed Benchmarks",
+  "abbreviation": "AS",
+  "color": "#14B8A6",
+  "spreadsheetURL": "https://docs.google.com/spreadsheets/d/1V3UE_NltXh8YL0gYueJ6jarVZy8lxH7xcYT9K_9Z-Jo",
+  "evxlUrl": "https://evxl.app/benchmarks/AimSpeed%20Benchmarks",
+  "source": "kovaaks.com benchmarks API + evxl registry",
+  "fetchedAt": "2026-08-29T16:58:00Z",
+  "difficulties": [
+    {
+      "name": "Easy",
+      "kovaaksBenchmarkId": 581,
+      "rankNames": [
+        "Stagnant",
+        "Gradual",
+        "Moderate",
+        "Swift",
+        "Exponential",
+        "Accelerated",
+        "Speed"
+      ],
+      "rankColors": {
+        "Stagnant": "#F9CB9C",
+        "Gradual": "#FFE599",
+        "Moderate": "#B6D7A8",
+        "Swift": "#A4C2F4",
+        "Exponential": "#B47AD6",
+        "Accelerated": "#3C78D8",
+        "Speed": "#050000"
+      },
+      "categories": [
+        {
+          "name": "voxTS",
+          "rankMaxes": [
+            5714.29,
+            11428.57,
+            17142.86,
+            22857.14,
+            28571.43,
+            34285.71,
+            40000
+          ],
+          "scenarios": [
+            {
+              "name": "voxTargetSwitch Jumbo",
+              "leaderboardId": 413,
+              "rankMaxes": [
+                120,
+                125,
+                130,
+                135,
+                140,
+                150,
+                160
+              ]
+            },
+            {
+              "name": "voxTargetSwitch Jumbo [Low TTK]",
+              "leaderboardId": 224,
+              "rankMaxes": [
+                140,
+                145,
+                150,
+                155,
+                160,
+                170,
+                180
+              ]
+            },
+            {
+              "name": "StaticSwitchingVox Jumbo",
+              "leaderboardId": 15654,
+              "rankMaxes": [
+                150,
+                155,
+                160,
+                165,
+                170,
+                180,
+                190
+              ]
+            },
+            {
+              "name": "voxTS-Huge Jumbo static",
+              "leaderboardId": 24780,
+              "rankMaxes": [
+                160,
+                165,
+                170,
+                175,
+                180,
+                190,
+                200
+              ]
+            }
+          ]
+        },
+        {
+          "name": "patTS",
+          "rankMaxes": [
+            4285.71,
+            8571.43,
+            12857.14,
+            17142.86,
+            21428.57,
+            25714.29,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "patCircleSwitch easy NR",
+              "leaderboardId": 3719,
+              "rankMaxes": [
+                7600,
+                8000,
+                8400,
+                8800,
+                9200,
+                10000,
+                10400
+              ]
+            },
+            {
+              "name": "patTargetSwitch 90 easy",
+              "leaderboardId": 586,
+              "rankMaxes": [
+                8000,
+                8500,
+                9000,
+                9500,
+                10000,
+                10400,
+                10960
+              ]
+            },
+            {
+              "name": "StaticSwitchingPat 90 Jumbo",
+              "leaderboardId": 15655,
+              "rankMaxes": [
+                120,
+                125,
+                130,
+                135,
+                140,
+                145,
+                150
+              ]
+            }
+          ]
+        },
+        {
+          "name": "xenTS",
+          "rankMaxes": [
+            2857.14,
+            5714.29,
+            8571.43,
+            11428.57,
+            14285.71,
+            17142.86,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "xenTargetSwitch Jumbo",
+              "leaderboardId": 8837,
+              "rankMaxes": [
+                84,
+                87,
+                90,
+                93,
+                96,
+                105,
+                110
+              ]
+            },
+            {
+              "name": "xenTargetSwitch speed static",
+              "leaderboardId": 1074,
+              "rankMaxes": [
+                100,
+                104,
+                108,
+                112,
+                116,
+                125,
+                130
+              ]
+            }
+          ]
+        },
+        {
+          "name": "kinTS",
+          "rankMaxes": [
+            4285.71,
+            8571.43,
+            12857.14,
+            17142.86,
+            21428.57,
+            25714.29,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "kinTS NR Easy",
+              "leaderboardId": 7542,
+              "rankMaxes": [
+                19800,
+                20700,
+                21600,
+                22500,
+                23400,
+                25200,
+                27000
+              ]
+            },
+            {
+              "name": "kinTS NR Static",
+              "leaderboardId": 1061,
+              "rankMaxes": [
+                24000,
+                25200,
+                26400,
+                27600,
+                28800,
+                30000,
+                32100
+              ]
+            },
+            {
+              "name": "kinTS V2 Static",
+              "leaderboardId": 1062,
+              "rankMaxes": [
+                24000,
+                25200,
+                26400,
+                27600,
+                28800,
+                30000,
+                32100
+              ]
+            }
+          ]
+        },
+        {
+          "name": "devTS",
+          "rankMaxes": [
+            2857.14,
+            5714.29,
+            8571.43,
+            11428.57,
+            14285.71,
+            17142.86,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "devTS Goated Easy",
+              "leaderboardId": 1333,
+              "rankMaxes": [
+                600,
+                630,
+                660,
+                690,
+                720,
+                780,
+                810
+              ]
+            },
+            {
+              "name": "devTS Goated NR Static Easy",
+              "leaderboardId": 11435,
+              "rankMaxes": [
+                720,
+                750,
+                780,
+                810,
+                840,
+                870,
+                900
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Pokeball",
+          "rankMaxes": [
+            4285.71,
+            8571.43,
+            12857.14,
+            17142.86,
+            21428.57,
+            25714.29,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "Pokeball Frenzy Auto",
+              "leaderboardId": 1561,
+              "rankMaxes": [
+                114,
+                118,
+                122,
+                126,
+                130,
+                135,
+                140
+              ]
+            },
+            {
+              "name": "Pokeball Frenzy Auto TE 60s",
+              "leaderboardId": 1944,
+              "rankMaxes": [
+                148,
+                156,
+                164,
+                172,
+                180,
+                190,
+                200
+              ]
+            },
+            {
+              "name": "Pokeball Auto 1w2ts smallflicks",
+              "leaderboardId": 685,
+              "rankMaxes": [
+                126,
+                132,
+                138,
+                144,
+                150,
+                160,
+                170
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Other",
+          "rankMaxes": [
+            4285.71,
+            8571.43,
+            12857.14,
+            17142.86,
+            21428.57,
+            25714.29,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "canTS",
+              "leaderboardId": 717,
+              "rankMaxes": [
+                340,
+                370,
+                400,
+                430,
+                480,
+                500,
+                530
+              ]
+            },
+            {
+              "name": "beanTS",
+              "leaderboardId": 2648,
+              "rankMaxes": [
+                124,
+                130,
+                136,
+                140,
+                150,
+                155,
+                160
+              ]
+            },
+            {
+              "name": "DotTS 30% Larger",
+              "leaderboardId": 75698,
+              "rankMaxes": [
+                2500,
+                2550,
+                2600,
+                2700,
+                2800,
+                2900,
+                3000
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Mixed",
+          "rankMaxes": [
+            5714.29,
+            11428.57,
+            17142.86,
+            22857.14,
+            28571.43,
+            34285.71,
+            40000
+          ],
+          "scenarios": [
+            {
+              "name": "Bounce 180 Tracking Jumbo",
+              "leaderboardId": 1759,
+              "rankMaxes": [
+                99,
+                103,
+                107,
+                111,
+                115,
+                125,
+                135
+              ]
+            },
+            {
+              "name": "3D Switching",
+              "leaderboardId": 88,
+              "rankMaxes": [
+                450,
+                480,
+                510,
+                550,
+                600,
+                625,
+                650
+              ]
+            },
+            {
+              "name": "Skeet Tracking Goated",
+              "leaderboardId": 977,
+              "rankMaxes": [
+                2400,
+                2800,
+                3200,
+                3500,
+                4000,
+                4100,
+                4300
+              ]
+            },
+            {
+              "name": "Target Switching 90 static",
+              "leaderboardId": 1183,
+              "rankMaxes": [
+                1600,
+                1680,
+                1760,
+                1840,
+                1960,
+                2000,
+                2050
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

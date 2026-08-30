@@ -1,0 +1,47 @@
+{
+	"playlistName": "Apogee Tracking Advanced",
+	"playlistId": 0,
+	"authorSteamId": "",
+	"authorName": "",
+	"scenarioList": [
+		{
+			"scenario_name": "VT Smoothbot Advanced",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "waldoTS Intermediate",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "VT Ground Intermediate S5",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "Air CELESTIAL No UFO Easy",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "Controlsphere",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "Whisphere",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "Air Voltaic Easy",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "Air Angelic 4 Voltaic Easy",
+			"play_Count": 1
+		}
+	],
+	"description": "Season 1 practice. 8 scenarios, the ones this season ranks you on. Play them as often as you like - nothing here is a match, and none of it settles anything.",
+	"hasOfflineScenarios": false,
+	"hasEdited": true,
+	"shareCode": "",
+	"version": 31,
+	"updated": 1788031556,
+	"isPrivate": false
+}

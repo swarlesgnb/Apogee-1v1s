@@ -1,0 +1,54 @@
+# Packaging for the public build.
+#
+# Kept out of package.json deliberately: the packaging story has more moving parts than
+# the scripts block can hold legibly, and the two are changed for different reasons.
+#
+# What ships is dist/ and nothing else. `build:app` already produces a self-contained
+# tree - the bundled main process, the renderer, and the reference data copied from
+# data/ - so the whitelist is short, and anything not named here cannot leak into a
+# public download by accident. That matters more than usual: the repo root holds .env,
+# an 11k-run stats corpus and the full source.
+
+appId: com.apogee.desktop
+productName: Apogee
+copyright: Copyright © 2026 Rylee
+
+directories:
+  output: release
+  buildResources: build
+
+files:
+  - dist/**
+  # Source maps are a third of the package and the source is public on GitHub anyway.
+  - "!dist/**/*.map"
+  # A dev artifact: `npm run ui` writes the local player's own snapshot here, and
+  # build:app copies data/ wholesale, so without this line every download carries
+  # somebody's real play history.
+  - "!dist/data/snapshot.json"
+  # esbuild bundles every runtime dependency into main.cjs, so electron-builder's
+  # default of shipping production node_modules as well is 500 files of dead weight
+  # and a second, divergent copy of supabase-js. The smoke test on the packaged
+  # binary is what proves nothing actually resolves from here at runtime.
+  - "!node_modules/**"
+
+# The season editor and the ladder calibrator write back into dist/data (see
+# sourceDataDir()). Inside an asar that is read-only, so those writes have to land on
+# a real file on disk. Unpacking the data directory is what makes them possible at all.
+asarUnpack:
+  - dist/data/**
+
+win:
+  target: nsis
+  icon: build/icon.png
+
+nsis:
+  # A one-click installer picks the location, installs, and launches, which is the wrong
+  # shape for a tool that reads another game's files: people want to see where it went.
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  # Per-user, so installing needs no administrator prompt - and, less obviously, so the
+  # unpacked data directory above lands somewhere the app may actually write to.
+  perMachine: false
+  createDesktopShortcut: true
+  shortcutName: Apogee
+  artifactName: ${productName}-${version}-setup.${ext}

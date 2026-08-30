@@ -42,6 +42,11 @@ interface ScoreModel {
   k: number;
 }
 
+interface WeaponScoreModel {
+  scorePerDamage: number;
+  damagePerShot: number;
+}
+
 function readJson<T>(...p: string[]): T {
   return JSON.parse(readFileSync(join(root, ...p), "utf8")) as T;
 }
@@ -80,7 +85,16 @@ async function count(table: string, filter: string): Promise<number> {
 }
 
 async function main(): Promise<void> {
-  const models = readJson<{ models: Record<string, ScoreModel> }>("data", "score_models.json").models;
+  const learned = readJson<{
+    models: Record<string, ScoreModel>;
+    weaponModels: Record<string, WeaponScoreModel>;
+    shotRates: Record<string, number>;
+  }>("data", "score_models.json");
+  const models = learned.models;
+  const weaponModels = learned.weaponModels;
+  // Only the scenarios whose shots are engine ticks appear here; the rest are absent
+  // rather than zero, and absent means the check skips.
+  const shotRates = learned.shotRates;
   const taxonomy = readJson<{ scenarios: { name: string; topScore: number | null }[] }>(
     "data",
     "scenario_taxonomy.json",
@@ -102,52 +116,119 @@ async function main(): Promise<void> {
       .map((d) => [d.scenario, d.seconds!]),
   );
 
-  // Only scenarios that already exist are updated; this never invents rows, so a name
-  // that is not in the benchmark set is simply skipped.
+  // What a scenario IS: its board, its aim type, and the sub-category the season pool
+  // puts it in. Generated beside seed.sql by tools/generate_seed.py, from the same
+  // sources, so the seed and this can never disagree about a scenario.
+  //
+  // This is the gap that made the header above only half true. Reference data does
+  // change - "a corrected sub-category" is the example it gives - and until now the only
+  // route for one was the seed, which `db push` skips on every deploy after the first.
+  // sub_category is not cosmetic: find-match reads it, and a sub-category queue matches
+  // scenarios on it, so a stale one is a queue that finds nothing.
+  const identity = readJson<{
+    scenarios: Record<
+      string,
+      { leaderboardId: number | null; aimType: string | null; subCategory: string | null }
+    >;
+  }>("data", "scenario_identity.json").scenarios;
+
   const existing = await fetch(`${URL_BASE}/rest/v1/scenarios?select=name`, {
     headers: { apikey: SECRET!, Authorization: `Bearer ${SECRET}` },
   }).then((r) => r.json() as Promise<{ name: string }[]>);
 
-  const known = new Set(existing.map((s) => s.name));
+  const live = new Set(existing.map((s) => s.name));
 
-  const rows: Record<string, unknown>[] = [];
+  // Every scenario the committed definitions name, whether or not the project has it.
+  //
+  // It used to be only the ones already there, on the reasoning that this should not
+  // invent rows. But a season built from a benchmark added since the first deploy names
+  // scenarios the project has never heard of, and skipping them leaves find-match unable
+  // to resolve half a pool. `scenarios` is reference data keyed on a unique name, and an
+  // upsert of a row nothing points at is inert; a missing one breaks a match.
+  const known = new Set([...live, ...Object.keys(identity)]);
+
+  // Two batches, not one, because they carry different columns.
+  //
+  // A bulk upsert sends one shape, and a null in it is an UPDATE to null rather than
+  // "leave this alone". So a scenario the committed definitions no longer name must not
+  // travel in the same batch as the ones they do: it would arrive carrying three nulls
+  // and clear an aim type that was perfectly correct. Its reference data is still sent -
+  // that part this file really is the sole source of.
+  const withIdentity: Record<string, unknown>[] = [];
+  const referenceOnly: Record<string, unknown>[] = [];
+
   for (const name of known) {
     const model = models[name];
+    const weaponModel = weaponModels[name];
     const wr = worldRecords.get(name);
     const duration = durations.get(name);
-    if (!model && wr == null && duration == null) continue;
+    const shotRate = shotRates[name];
+    const ident = identity[name];
+    if (
+      !model &&
+      !weaponModel &&
+      wr == null &&
+      duration == null &&
+      shotRate == null &&
+      !ident
+    ) {
+      continue;
+    }
 
-    // PostgREST requires every object in a bulk upsert to carry the same keys, so all
-    // three are always sent. Null is meaningful here rather than "leave alone": these
+    // PostgREST requires every object in a bulk upsert to carry the same keys, so all of
+    // these are always sent. Null is meaningful here rather than "leave alone": these
     // files are the source of truth, and a model that is no longer derivable should
     // stop being applied.
-    rows.push({
+    (ident ? withIdentity : referenceOnly).push({
       name,
+      ...(ident
+        ? {
+            leaderboard_id: ident.leaderboardId,
+            aim_type: ident.aimType,
+            sub_category: ident.subCategory,
+          }
+        : {}),
       score_model_stat: model?.stat ?? null,
       score_model_k: model?.k ?? null,
+      weapon_score_per_damage: weaponModel?.scorePerDamage ?? null,
+      weapon_damage_per_shot: weaponModel?.damagePerShot ?? null,
       world_record: wr ?? null,
       duration_seconds: duration ?? null,
+      shots_per_second: shotRate ?? null,
     });
   }
 
-  console.log(`scenarios in project : ${known.size}`);
+  const rows = [...withIdentity, ...referenceOnly];
+
+  console.log(`scenarios in project : ${live.size}`);
+  console.log(`named by a benchmark : ${Object.keys(identity).length}`);
+  console.log(`  new to the project : ${[...Object.keys(identity)].filter((n) => !live.has(n)).length}`);
   console.log(`rows to update       : ${rows.length}`);
+  console.log(`  with an identity   : ${withIdentity.length}`);
+  console.log(`  with a sub-category: ${withIdentity.filter((r) => r.sub_category).length}`);
   console.log(`  with a score model : ${rows.filter((r) => r.score_model_stat).length}`);
+  console.log(
+    `  with a weapon model: ${rows.filter((r) => r.weapon_score_per_damage != null).length}`,
+  );
   console.log(`  with a world record: ${rows.filter((r) => r.world_record != null).length}`);
   console.log(`  with a duration    : ${rows.filter((r) => r.duration_seconds != null).length}`);
+  console.log(`  with a shot rate   : ${rows.filter((r) => r.shots_per_second != null).length}`);
 
   if (DRY) {
     console.log("\n--dry-run, nothing written");
     return;
   }
 
-  await upsert("scenarios", rows, "name");
+  if (withIdentity.length > 0) await upsert("scenarios", withIdentity, "name");
+  if (referenceOnly.length > 0) await upsert("scenarios", referenceOnly, "name");
 
   const withModel = await count("scenarios", "score_model_stat=not.is.null");
+  const withWeaponModel = await count("scenarios", "weapon_score_per_damage=not.is.null");
   const withWr = await count("scenarios", "world_record=not.is.null");
 
   console.log(`\nlive now:`);
   console.log(`  score models  : ${withModel}`);
+  console.log(`  weapon models : ${withWeaponModel}`);
   console.log(`  world records : ${withWr}`);
 
   if (withModel === 0) {

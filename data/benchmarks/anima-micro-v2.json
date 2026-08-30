@@ -1,0 +1,299 @@
+{
+  "benchmarkName": "Anima Micro v2",
+  "abbreviation": "A",
+  "color": "#A2D4DE",
+  "spreadsheetURL": "https://t.co/3h621dLfcM",
+  "evxlUrl": "https://evxl.app/benchmarks/Anima%20Micro%20v2",
+  "source": "kovaaks.com benchmarks API + evxl registry",
+  "fetchedAt": "2026-08-25T13:51:25Z",
+  "difficulties": [
+    {
+      "name": "All",
+      "kovaaksBenchmarkId": 615,
+      "rankNames": [
+        "Dust",
+        "Cell",
+        "Molecule",
+        "Atom",
+        "Nucleus",
+        "Ion",
+        "Electron"
+      ],
+      "rankColors": {
+        "Dust": "#A6FF94",
+        "Cell": "#00FFFF",
+        "Molecule": "#4A86E8",
+        "Atom": "#FC95FC",
+        "Nucleus": "#F25652",
+        "Ion": "#FF9900",
+        "Electron": "#FFFF00"
+      },
+      "categories": [
+        {
+          "name": "Micro-Dynamic",
+          "rankMaxes": [
+            5714.29,
+            11428.57,
+            17142.86,
+            22857.14,
+            28571.43,
+            34285.71,
+            40000
+          ],
+          "scenarios": [
+            {
+              "name": "Microshot Avasive",
+              "leaderboardId": 129743,
+              "rankMaxes": [
+                50,
+                65,
+                80,
+                100,
+                115,
+                130,
+                150
+              ]
+            },
+            {
+              "name": "1w3ts Pasu Perfected Micro Goated",
+              "leaderboardId": 65396,
+              "rankMaxes": [
+                750,
+                890,
+                1030,
+                1175,
+                1300,
+                1450,
+                1600
+              ]
+            },
+            {
+              "name": "Anima WavyClick",
+              "leaderboardId": 128755,
+              "rankMaxes": [
+                400,
+                525,
+                650,
+                775,
+                900,
+                1025,
+                1150
+              ]
+            },
+            {
+              "name": "Star Clicking Micro",
+              "leaderboardId": 129784,
+              "rankMaxes": [
+                300,
+                400,
+                500,
+                600,
+                700,
+                800,
+                900
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Micro-Static",
+          "rankMaxes": [
+            5714.29,
+            11428.57,
+            17142.86,
+            22857.14,
+            28571.43,
+            34285.71,
+            40000
+          ],
+          "scenarios": [
+            {
+              "name": "devTS Static Click Angelic",
+              "leaderboardId": 38539,
+              "rankMaxes": [
+                100,
+                112,
+                123,
+                135,
+                147,
+                158,
+                170
+              ]
+            },
+            {
+              "name": "RawMousima",
+              "leaderboardId": 128525,
+              "rankMaxes": [
+                1200,
+                1420,
+                1630,
+                1850,
+                2060,
+                2280,
+                2500
+              ]
+            },
+            {
+              "name": "Animicro Dash",
+              "leaderboardId": 128527,
+              "rankMaxes": [
+                50,
+                54,
+                58,
+                63,
+                67,
+                71,
+                75
+              ]
+            },
+            {
+              "name": "6 Sphere Hipfire Voltaic 30% smaller",
+              "leaderboardId": 10264,
+              "rankMaxes": [
+                100,
+                113,
+                125,
+                138,
+                150,
+                163,
+                175
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Micro-Tracking",
+          "rankMaxes": [
+            5714.29,
+            11428.57,
+            17142.86,
+            22857.14,
+            28571.43,
+            34285.71,
+            40000
+          ],
+          "scenarios": [
+            {
+              "name": "cloverRawControl",
+              "leaderboardId": 68993,
+              "rankMaxes": [
+                3000,
+                4100,
+                5150,
+                6250,
+                7300,
+                8400,
+                9500
+              ]
+            },
+            {
+              "name": "Avasive bukeTrack Hard",
+              "leaderboardId": 125228,
+              "rankMaxes": [
+                2750,
+                3800,
+                4850,
+                5875,
+                6900,
+                7950,
+                9000
+              ]
+            },
+            {
+              "name": "Swing Tracking",
+              "leaderboardId": 92189,
+              "rankMaxes": [
+                950,
+                1200,
+                1420,
+                1650,
+                1900,
+                2100,
+                2350
+              ]
+            },
+            {
+              "name": "DomiSphere Micro",
+              "leaderboardId": 129836,
+              "rankMaxes": [
+                1600,
+                2000,
+                2400,
+                2750,
+                3100,
+                3500,
+                3900
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Micro-Switching",
+          "rankMaxes": [
+            5714.29,
+            11428.57,
+            17142.86,
+            22857.14,
+            28571.43,
+            34285.71,
+            40000
+          ],
+          "scenarios": [
+            {
+              "name": "waldoTS Perfected",
+              "leaderboardId": 129721,
+              "rankMaxes": [
+                75,
+                84,
+                93,
+                103,
+                112,
+                121,
+                130
+              ]
+            },
+            {
+              "name": "domiSwitch Avasive",
+              "leaderboardId": 129746,
+              "rankMaxes": [
+                3200,
+                3800,
+                4350,
+                4950,
+                5500,
+                6100,
+                6700
+              ]
+            },
+            {
+              "name": "AvasiveTS Perfected",
+              "leaderboardId": 129750,
+              "rankMaxes": [
+                4300,
+                5000,
+                5750,
+                6450,
+                7150,
+                7900,
+                8600
+              ]
+            },
+            {
+              "name": "vietTS Micro",
+              "leaderboardId": 129100,
+              "rankMaxes": [
+                85,
+                95,
+                104,
+                114,
+                123,
+                133,
+                142
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

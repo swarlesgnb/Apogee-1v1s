@@ -1,0 +1,190 @@
+{
+  "benchmarkName": "Aimerz+ Static Clicking",
+  "abbreviation": "A+",
+  "color": "#E1E0E1",
+  "spreadsheetURL": "https://docs.google.com/spreadsheets/d/1rvrijNj9JY4WHhrWrojtk_Q2hvsFzO2-laUsPHxOMSs/edit?gid=0#gid=0",
+  "evxlUrl": "https://evxl.app/benchmarks/Aimerz%2B%20Static%20Clicking",
+  "source": "kovaaks.com benchmarks API + evxl registry",
+  "fetchedAt": "2026-08-29T16:57:57Z",
+  "difficulties": [
+    {
+      "name": "Hard",
+      "kovaaksBenchmarkId": 819,
+      "rankNames": [
+        "Prophet",
+        "Saint",
+        "Angelic",
+        "Seraphic",
+        "Cherubim",
+        "Transcendent"
+      ],
+      "rankColors": {
+        "Prophet": "#9E0059",
+        "Saint": "#5A189A",
+        "Angelic": "#0F4C5C",
+        "Seraphic": "#590D22",
+        "Cherubim": "#03071E",
+        "Transcendent": "#B5F5DF"
+      },
+      "categories": [
+        {
+          "name": "Static Clicking",
+          "rankMaxes": [
+            20000,
+            40000,
+            60000,
+            80000,
+            100000,
+            120000
+          ],
+          "scenarios": [
+            {
+              "name": "darkPressure",
+              "leaderboardId": 16344,
+              "rankMaxes": [
+                7300,
+                7950,
+                8550,
+                9000,
+                9400,
+                10400
+              ]
+            },
+            {
+              "name": "Wide Wall 4 Targets",
+              "leaderboardId": 831,
+              "rankMaxes": [
+                133,
+                141,
+                149,
+                157,
+                164,
+                186
+              ]
+            },
+            {
+              "name": "fuglaaPressure 6 Sphere Hipfire no reload",
+              "leaderboardId": 30400,
+              "rankMaxes": [
+                8500,
+                9200,
+                9850,
+                10600,
+                11200,
+                12200
+              ]
+            },
+            {
+              "name": "1w5ts_trustechain Raspberry",
+              "leaderboardId": 37197,
+              "rankMaxes": [
+                120,
+                132,
+                144,
+                162,
+                178,
+                205
+              ]
+            },
+            {
+              "name": "1w2ts Perfected",
+              "leaderboardId": 565,
+              "rankMaxes": [
+                126,
+                133,
+                140,
+                148,
+                156,
+                176
+              ]
+            },
+            {
+              "name": "1w2t smallflicks small 60s",
+              "leaderboardId": 686,
+              "rankMaxes": [
+                1500,
+                1580,
+                1660,
+                1740,
+                1820,
+                2040
+              ]
+            },
+            {
+              "name": "1wall 6targets small",
+              "leaderboardId": 2,
+              "rankMaxes": [
+                1320,
+                1420,
+                1520,
+                1620,
+                1720,
+                2000
+              ]
+            },
+            {
+              "name": "Aimerz+ ww2t Hard S1 20% Smaller",
+              "leaderboardId": 83707,
+              "rankMaxes": [
+                130,
+                137,
+                144,
+                152,
+                161,
+                175
+              ]
+            },
+            {
+              "name": "Aimerz+ 1w3ts Med S1",
+              "leaderboardId": 69295,
+              "rankMaxes": [
+                136,
+                143,
+                151,
+                164,
+                173,
+                190
+              ]
+            },
+            {
+              "name": "1w4t_vbr_pokeball Raspberry",
+              "leaderboardId": 4272,
+              "rankMaxes": [
+                106,
+                112,
+                118,
+                124,
+                130,
+                146
+              ]
+            },
+            {
+              "name": "Pokeball Frenzy Auto Small Wide",
+              "leaderboardId": 106,
+              "rankMaxes": [
+                2670,
+                2850,
+                3030,
+                3180,
+                3390,
+                3810
+              ]
+            },
+            {
+              "name": "10 Sphere Hipfire Extra Small",
+              "leaderboardId": 462,
+              "rankMaxes": [
+                1350,
+                1460,
+                1560,
+                1660,
+                1760,
+                1960
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

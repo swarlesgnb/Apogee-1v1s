@@ -15,10 +15,12 @@
  */
 
 import { forfeitMatch, handler, json, requireCaller } from "../_shared/apogee.ts";
+import { enforceRateLimit } from "../_shared/rateLimit.ts";
 import { updateRating } from "../../../src/core/rating/glicko2.ts";
 
 Deno.serve(handler(async (req, admin) => {
   const caller = await requireCaller(req, admin);
+  await enforceRateLimit(admin, caller.playerId, "abandon-match");
 
   const { data: side } = await admin
     .from("match_sides")

@@ -414,7 +414,9 @@ export async function fetchStanding(playerId: string): Promise<Standing | null> 
       .maybeSingle(),
     client
       .from("runs")
-      .select("*", { count: "exact", head: true })
+      // `id`, not `*`: runs no longer grants every column to authenticated, and a
+      // head-count that names `*` asks for privileges on all of them.
+      .select("id", { count: "exact", head: true })
       .eq("player_id", playerId),
   ]);
 

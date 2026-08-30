@@ -80,9 +80,9 @@ export interface Snapshot {
   /**
    * Which difficulties the player is actually measured on.
    *
-   * A match is decided on delta against your own baseline, so a difficulty you have barely
-   * played is not a hard one - it is an unmeasured one, and a match there is decided by
-   * whose baseline is worse. With four windows this stopped being a detail: most players
+   * A match is decided on delta against your own baseline, so a difficulty with little
+   * history behind it turns the match on whose baseline is worse. With four windows this
+   * stopped being a detail: most players
    * are measured on one of them, and nothing on screen said so.
    */
   coverage: WindowCoverage[];
@@ -174,6 +174,13 @@ export function buildSnapshot(options: SnapshotOptions): Snapshot | null {
   // was Voltaic's way of covering a skill range, and owning the pool means the split is
   // three categories instead.
   const season = useSeason ? loadSeason() : null;
+
+  /** Scenario -> the sub-skill its family trains, as the season declares it. */
+  const seasonSubCategory = new Map<string, string>(
+    (season?.scenarios ?? [])
+      .filter((s): s is typeof s & { subCategory: string } => typeof s.subCategory === "string")
+      .map((s) => [s.scenario, s.subCategory]),
+  );
   const difficulty = season
     ? seasonAsDifficulty(season)
     : pickDifficulty(benchmark!, history);
@@ -273,7 +280,14 @@ export function buildSnapshot(options: SnapshotOptions): Snapshot | null {
       // rather than leaving three different scenarios all called Pasu.
       window: s.scenario.window ?? null,
       windowName: season?.windows?.[s.scenario.window ?? 0] ?? null,
-      subCategory: subcats[labelFor(s.scenario.name)]?.subCategory ?? null,
+      // The season's own declaration first. Voltaic's sheet is the fallback and can only
+      // answer for Voltaic's eighteen families, so leaning on it left every scenario from
+      // the other twenty-two benchmarks with a null sub-skill - and a null sub-skill is
+      // a scenario the weakness map cannot place.
+      subCategory:
+        seasonSubCategory.get(s.scenario.name) ??
+        subcats[labelFor(s.scenario.name)]?.subCategory ??
+        null,
       score: s.score,
       rankName: s.rankName,
       energy: Math.round(s.energy),

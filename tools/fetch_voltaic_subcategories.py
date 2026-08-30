@@ -11,6 +11,20 @@ This reads the mapping from the source instead. evxl's registry records each ben
 Its first three columns are skill / sub-category / scenario, using merged cells, so the
 labels are forward-filled down each group.
 
+Two sheets, not one. S5 is authoritative and always wins. S4 is read only to cover the
+families S5 never had - Bounceshot, Multiclick 120, 1w5ts Rasp, Smoothbot, Air, skyTS -
+which the season pool draws on and S5 cannot answer for. S4's own layout is identical,
+but its scenario lists live on tabs named Novice / Intermediate / Advanced rather than on
+the default one, which exports the instructions page instead. S4 also uses a "Strafe"
+group that S5 replaced; anything landing there is dropped rather than mapped onto one of
+the nine, because renaming somebody's taxonomy is the guessing this file exists to avoid.
+
+The season's own family names are Apogee's, not Voltaic's: the pool groups scenarios into
+"Wide Wall" and "Ground Plaza" where the sheets say "1w4ts" and "Ground". Those are joined
+here rather than in each of the five modules that read this file, and only where every
+member scenario that resolves agrees. A family whose members disagree is left out, so a
+split family shows up as unmapped rather than as a coin flip.
+
     python tools/fetch_voltaic_subcategories.py
 
 Output: data/subcategories.json
@@ -23,6 +37,7 @@ import io
 import json
 import re
 import sys
+import urllib.parse
 import urllib.request
 from pathlib import Path
 
@@ -31,6 +46,12 @@ REGISTRY = ROOT / "data" / "evxl_registry.json"
 OUT = ROOT / "data" / "subcategories.json"
 
 BENCHMARK = "Voltaic S5"
+FALLBACK = "Voltaic S4"
+
+# S4 keeps its scenario lists on these tabs. Its default tab is the instructions page.
+FALLBACK_TABS = ("Novice", "Intermediate", "Advanced")
+
+POOL = ROOT / "data" / "pool.json"
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/126.0 Safari/537.36"
 
 SKILLS = {"Clicking", "Tracking", "Switching"}
@@ -49,6 +70,17 @@ def sheet_id(url: str) -> str | None:
 def fetch_csv(sheet: str) -> str:
     export = f"https://docs.google.com/spreadsheets/d/{sheet}/export?format=csv"
     req = urllib.request.Request(export, headers={"User-Agent": UA})
+    with urllib.request.urlopen(req, timeout=30) as resp:
+        return resp.read().decode("utf-8", "replace")
+
+
+def fetch_tab_csv(sheet: str, tab: str) -> str:
+    """One named tab. The plain /export endpoint only ever gives the first sheet."""
+    url = (
+        f"https://docs.google.com/spreadsheets/d/{sheet}/gviz/tq"
+        f"?tqx=out:csv&sheet={urllib.parse.quote(tab)}"
+    )
+    req = urllib.request.Request(url, headers={"User-Agent": UA})
     with urllib.request.urlopen(req, timeout=30) as resp:
         return resp.read().decode("utf-8", "replace")
 
@@ -79,8 +111,16 @@ def parse(csv_text: str) -> list[tuple[str, str, str]]:
             skill = a
             # A new skill begins a new sub-category run.
             sub = None
-        if b in SUBCATEGORIES:
-            sub = b
+
+        # Any label in this column starts a new group. One of the nine is the group;
+        # anything else - S4's "Strafe", which S5 replaced - ends the previous one and
+        # takes its scenarios with it. Testing only for the nine would leave `sub`
+        # pointing at the group above, so Strafe's rows would be filed under it: on S4
+        # that silently made AngleStrafe and ArcStrafe "Static", and AirStrafe and
+        # PatStrafe "Reactive". Dropping them is right - a group Voltaic retired has no
+        # honest home among the nine, and inventing one is the guess this file avoids.
+        if b:
+            sub = b if b in SUBCATEGORIES else None
 
         if c.startswith("VT ") and skill and sub:
             out.append((skill, sub, c))
@@ -122,6 +162,51 @@ def main() -> int:
         if known:
             families[variant] = dict(known)
 
+    # ---- S4, for the families S5 never had -------------------------------------
+    origin: dict[str, str] = {fam: BENCHMARK for fam in families}
+    fb = next((b for b in registry if b["benchmarkName"] == FALLBACK), None)
+    fb_sheet = sheet_id(fb.get("spreadsheetURL") or "") if fb else None
+
+    if fb_sheet:
+        added = 0
+        for tab in FALLBACK_TABS:
+            try:
+                rows = parse(fetch_tab_csv(fb_sheet, tab))
+            except Exception as err:  # a missing tab must not lose the S5 mapping
+                print(f"  {FALLBACK}/{tab}: {type(err).__name__}", file=sys.stderr)
+                continue
+            for skill, sub, scenario in rows:
+                fam = family_of(scenario)
+                if fam and fam not in families:
+                    families[fam] = {"skill": skill, "subCategory": sub}
+                    origin[fam] = FALLBACK
+                    added += 1
+        print(f"source: {fb['spreadsheetURL']}  (+{added} families S5 does not cover)")
+
+    # ---- the pool's own family names, joined through the sheets ------------------
+    joined = 0
+    if POOL.exists():
+        pool = json.loads(POOL.read_text(encoding="utf-8"))
+        for entry_fam in pool.get("families", []):
+            name = entry_fam.get("family")
+            if not name or name in families:
+                continue
+            seen = {
+                (families[k]["skill"], families[k]["subCategory"])
+                for k in (family_of(v["scenario"]) for v in entry_fam.get("variants", []))
+                if k in families
+            }
+            # Exactly one answer among the members that resolve, or nothing.
+            if len(seen) == 1:
+                skill, sub = seen.pop()
+                families[name] = {"skill": skill, "subCategory": sub}
+                origin[name] = "pool join"
+                joined += 1
+        print(f"joined {joined} pool family name(s) through the sheets")
+
+    for fam, info in families.items():
+        info["source"] = origin.get(fam, BENCHMARK)
+
     by_sub: dict[str, list[str]] = {}
     for fam, info in families.items():
         by_sub.setdefault(f"{info['skill']}/{info['subCategory']}", []).append(fam)
@@ -130,8 +215,13 @@ def main() -> int:
         json.dumps(
             {
                 "$comment": [
-                    "Sub-category mapping for Voltaic S5, keyed by scenario family (the",
-                    "name with the 'VT ' prefix and ' <Difficulty> S5' suffix removed).",
+                    "Sub-category mapping keyed by scenario family (the name with the",
+                    "'VT ' prefix and ' <Difficulty> S5' suffix removed), plus the season",
+                    "pool's own family names joined through those same sheets.",
+                    "",
+                    "Each entry records the sheet it came from in `source`: Voltaic S5 is",
+                    "authoritative, Voltaic S4 covers only families S5 never had, and",
+                    "'pool join' means every member scenario that resolved agreed.",
                     "",
                     "AUTHORITATIVE. Generated by tools/fetch_voltaic_subcategories.py from",
                     "Voltaic's own published spreadsheet, recorded in evxl's registry as",

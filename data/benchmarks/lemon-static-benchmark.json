@@ -1,0 +1,661 @@
+{
+  "benchmarkName": "Lemon Static Benchmark",
+  "abbreviation": "LEM",
+  "color": "#F4DB1F",
+  "spreadsheetURL": "https://docs.google.com/spreadsheets/d/1V9lt5BjKLpzoKBPd-4WgStzhKv-javTWaNcISaLJERg",
+  "evxlUrl": "https://evxl.app/benchmarks/Lemon%20Static%20Benchmark",
+  "source": "kovaaks.com benchmarks API + evxl registry",
+  "fetchedAt": "2026-08-29T16:57:47Z",
+  "difficulties": [
+    {
+      "name": "Intermediate",
+      "kovaaksBenchmarkId": 2277,
+      "rankNames": [
+        "Berry",
+        "Peach",
+        "Cherry",
+        "Pear",
+        "Kiwi",
+        "Durian"
+      ],
+      "rankColors": {
+        "Berry": "#A60000",
+        "Peach": "#A66300",
+        "Cherry": "#A6A600",
+        "Pear": "#00A600",
+        "Kiwi": "#00A6A6",
+        "Durian": "#305797"
+      },
+      "categories": [
+        {
+          "name": "Stability",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "Pokeball 1w4ts 30% Easy",
+              "leaderboardId": 178814,
+              "rankMaxes": [
+                92,
+                98,
+                108,
+                120,
+                135,
+                146
+              ]
+            },
+            {
+              "name": "Aimerz+ Week #5 - Static Switching 30% Larger",
+              "leaderboardId": 111216,
+              "rankMaxes": [
+                14000,
+                14500,
+                15700,
+                16200,
+                17000,
+                17800
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Micro",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000,
+            25000,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "6 Sphere Hipfire Small Easy",
+              "leaderboardId": 178815,
+              "rankMaxes": [
+                1490,
+                1580,
+                1650,
+                1720,
+                1830,
+                1900
+              ]
+            },
+            {
+              "name": "devTS Static Click Angelic Easy",
+              "leaderboardId": 38726,
+              "rankMaxes": [
+                124,
+                130,
+                141,
+                150,
+                161,
+                176
+              ]
+            },
+            {
+              "name": "1w2ts Pasu Perfected",
+              "leaderboardId": 22601,
+              "rankMaxes": [
+                70,
+                84,
+                95,
+                103,
+                109,
+                115
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Wide Wall",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "Aimerz+ ww2t Easy S1",
+              "leaderboardId": 68458,
+              "rankMaxes": [
+                125,
+                134,
+                148,
+                152,
+                160,
+                170
+              ]
+            },
+            {
+              "name": "Wide Wall 3 Targets TE",
+              "leaderboardId": 591,
+              "rankMaxes": [
+                132,
+                141,
+                156,
+                170,
+                182,
+                190
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Isolated",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000,
+            25000,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "1w2ts Perfected Easier",
+              "leaderboardId": 160751,
+              "rankMaxes": [
+                96,
+                104,
+                115,
+                121,
+                130,
+                146
+              ]
+            },
+            {
+              "name": "1w2ts Vertical Flicks easy",
+              "leaderboardId": 164921,
+              "rankMaxes": [
+                102,
+                110,
+                122,
+                130,
+                142,
+                150
+              ]
+            },
+            {
+              "name": "1w2ts reload smallflicks Easier",
+              "leaderboardId": 178816,
+              "rankMaxes": [
+                119,
+                127,
+                138,
+                149,
+                162,
+                176
+              ]
+            }
+          ]
+        },
+        {
+          "name": "1 Wall",
+          "rankMaxes": [
+            6666.67,
+            13333.33,
+            20000,
+            26666.67,
+            33333.33,
+            40000
+          ],
+          "scenarios": [
+            {
+              "name": "1w2ts reload Easier",
+              "leaderboardId": 178817,
+              "rankMaxes": [
+                96,
+                104,
+                112,
+                119,
+                126,
+                133
+              ]
+            },
+            {
+              "name": "1w3ts reload Easier",
+              "leaderboardId": 178818,
+              "rankMaxes": [
+                100,
+                107,
+                116,
+                123,
+                131,
+                144
+              ]
+            },
+            {
+              "name": "1w4ts reload Easier",
+              "leaderboardId": 178819,
+              "rankMaxes": [
+                115,
+                120,
+                127,
+                136,
+                143,
+                157
+              ]
+            },
+            {
+              "name": "1w6ts reload Easier",
+              "leaderboardId": 178820,
+              "rankMaxes": [
+                120,
+                128,
+                136,
+                141,
+                150,
+                161
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Advanced",
+      "kovaaksBenchmarkId": 1829,
+      "rankNames": [
+        "Yuzu",
+        "Snake",
+        "Mango",
+        "Lime",
+        "Star",
+        "Guava",
+        "Dragon"
+      ],
+      "rankColors": {
+        "Yuzu": "#FF0000",
+        "Snake": "#FF9900",
+        "Mango": "#FFFF00",
+        "Lime": "#00FF00",
+        "Star": "#00FFFF",
+        "Guava": "#4A86E8",
+        "Dragon": "#0000FF"
+      },
+      "categories": [
+        {
+          "name": " Stability",
+          "rankMaxes": [
+            2857.14,
+            5714.29,
+            8571.43,
+            11428.57,
+            14285.71,
+            17142.86,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "Pokeball 1w4ts 30%",
+              "leaderboardId": 456,
+              "rankMaxes": [
+                113,
+                120,
+                125,
+                130,
+                135,
+                140,
+                145
+              ]
+            },
+            {
+              "name": "Pokeball 1w2ts Horizontalish small",
+              "leaderboardId": 5429,
+              "rankMaxes": [
+                100,
+                107,
+                115,
+                120,
+                130,
+                135,
+                140
+              ]
+            },
+            {
+              "name": "Aimerz+ Week #5 - Static Switching 30% smaller",
+              "leaderboardId": 64673,
+              "rankMaxes": [
+                13700,
+                14000,
+                14500,
+                15000,
+                15500,
+                16000,
+                16500
+              ]
+            }
+          ]
+        },
+        {
+          "name": " Micro",
+          "rankMaxes": [
+            2857.14,
+            5714.29,
+            8571.43,
+            11428.57,
+            14285.71,
+            17142.86,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "5 Sphere Hipfire Small",
+              "leaderboardId": 125,
+              "rankMaxes": [
+                1550,
+                1630,
+                1700,
+                1800,
+                1900,
+                2050,
+                2200
+              ]
+            },
+            {
+              "name": "devTS Static Click Angelic",
+              "leaderboardId": 38539,
+              "rankMaxes": [
+                137,
+                145,
+                153,
+                160,
+                170,
+                175,
+                180
+              ]
+            },
+            {
+              "name": "1w2ts Pasu Perfected 30% Smaller",
+              "leaderboardId": 28243,
+              "rankMaxes": [
+                80,
+                87,
+                90,
+                97,
+                105,
+                112,
+                118
+              ]
+            },
+            {
+              "name": "Aimerz+ 1w4ts HF Hard S1",
+              "leaderboardId": 68287,
+              "rankMaxes": [
+                170,
+                180,
+                195,
+                205,
+                215,
+                225,
+                235
+              ]
+            }
+          ]
+        },
+        {
+          "name": " Wide Wall",
+          "rankMaxes": [
+            2857.14,
+            5714.29,
+            8571.43,
+            11428.57,
+            14285.71,
+            17142.86,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "Wide Wall 3 Targets",
+              "leaderboardId": 337,
+              "rankMaxes": [
+                127,
+                135,
+                140,
+                155,
+                160,
+                165,
+                170
+              ]
+            },
+            {
+              "name": "Wide Wall 4 Targets",
+              "leaderboardId": 831,
+              "rankMaxes": [
+                132,
+                140,
+                150,
+                155,
+                165,
+                170,
+                180
+              ]
+            },
+            {
+              "name": "Aimerz+ ww2t Hard S1",
+              "leaderboardId": 68389,
+              "rankMaxes": [
+                142,
+                150,
+                155,
+                160,
+                170,
+                175,
+                180
+              ]
+            }
+          ]
+        },
+        {
+          "name": " Isolated",
+          "rankMaxes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "scenarios": [
+            {
+              "name": "1w2ts Perfected",
+              "leaderboardId": 565,
+              "rankMaxes": [
+                123,
+                133,
+                140,
+                144,
+                155,
+                160,
+                170
+              ]
+            },
+            {
+              "name": "1w2ts reload smallflicks",
+              "leaderboardId": 36,
+              "rankMaxes": [
+                152,
+                160,
+                165,
+                175,
+                180,
+                190,
+                200
+              ]
+            },
+            {
+              "name": "1w2ts Vertical Flicks v2",
+              "leaderboardId": 12402,
+              "rankMaxes": [
+                95,
+                100,
+                105,
+                110,
+                120,
+                125,
+                130
+              ]
+            }
+          ]
+        },
+        {
+          "name": " Pressure",
+          "rankMaxes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "scenarios": [
+            {
+              "name": "1w2ts PulseShot",
+              "leaderboardId": 121642,
+              "rankMaxes": [
+                12500,
+                13000,
+                13800,
+                14500,
+                15500,
+                16200,
+                17000
+              ]
+            },
+            {
+              "name": "1w5t smallflicks - Pressure Aiming",
+              "leaderboardId": 18904,
+              "rankMaxes": [
+                8500,
+                9000,
+                9500,
+                10000,
+                10500,
+                11000,
+                11500
+              ]
+            }
+          ]
+        },
+        {
+          "name": " Chaining",
+          "rankMaxes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "scenarios": [
+            {
+              "name": "1w4ts_truste Raspberry",
+              "leaderboardId": 10631,
+              "rankMaxes": [
+                146,
+                152,
+                168,
+                175,
+                185,
+                195,
+                205
+              ]
+            },
+            {
+              "name": "1w6ts_trustechain Raspberry",
+              "leaderboardId": 10625,
+              "rankMaxes": [
+                150,
+                157,
+                165,
+                175,
+                180,
+                190,
+                200
+              ]
+            }
+          ]
+        },
+        {
+          "name": " 1 Wall",
+          "rankMaxes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "scenarios": [
+            {
+              "name": "1w2ts reload",
+              "leaderboardId": 197,
+              "rankMaxes": [
+                118,
+                123,
+                128,
+                138,
+                145,
+                155,
+                160
+              ]
+            },
+            {
+              "name": "1w3ts reload",
+              "leaderboardId": 215,
+              "rankMaxes": [
+                123,
+                130,
+                135,
+                140,
+                150,
+                160,
+                170
+              ]
+            },
+            {
+              "name": "1w4ts reload",
+              "leaderboardId": 387,
+              "rankMaxes": [
+                133,
+                140,
+                145,
+                150,
+                160,
+                165,
+                175
+              ]
+            },
+            {
+              "name": "1w6ts reload v2",
+              "leaderboardId": 666,
+              "rankMaxes": [
+                136,
+                145,
+                155,
+                160,
+                165,
+                175,
+                185
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

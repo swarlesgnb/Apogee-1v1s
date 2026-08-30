@@ -1,0 +1,527 @@
+{
+  "benchmarkName": "wobin S1",
+  "abbreviation": "w",
+  "color": "#8BA9E4",
+  "spreadsheetURL": "https://docs.google.com/spreadsheets/d/1XhuTL78YAP4KIR7LfE6w66efKIvICGGmET6wU8zg5fE",
+  "evxlUrl": "https://evxl.app/benchmarks/wobin%20S1",
+  "source": "kovaaks.com benchmarks API + evxl registry",
+  "fetchedAt": "2026-08-29T16:58:09Z",
+  "difficulties": [
+    {
+      "name": "Novice",
+      "kovaaksBenchmarkId": 576,
+      "rankNames": [
+        "Bluebell",
+        "Tulip",
+        "Lily",
+        "Orchid",
+        "Iris"
+      ],
+      "rankColors": {
+        "Bluebell": "#A2D2FF",
+        "Tulip": "#FEE18F",
+        "Lily": "#FFAFCC",
+        "Orchid": "#FFB8AF",
+        "Iris": "#CDB4DB"
+      },
+      "categories": [
+        {
+          "name": "Static Clicking",
+          "rankMaxes": [
+            4000,
+            8000,
+            12000,
+            16000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "wobin 1w4ts Easy",
+              "leaderboardId": 125392,
+              "rankMaxes": [
+                1050,
+                1150,
+                1250,
+                1350,
+                1500
+              ]
+            },
+            {
+              "name": "wobin ww6t Horizontal Easy",
+              "leaderboardId": 125407,
+              "rankMaxes": [
+                1350,
+                1500,
+                1650,
+                1850,
+                2000
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Dynamic Clicking",
+          "rankMaxes": [
+            4000,
+            8000,
+            12000,
+            16000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "wobin 1w2ts Micro Easy",
+              "leaderboardId": 125394,
+              "rankMaxes": [
+                700,
+                760,
+                820,
+                900,
+                980
+              ]
+            },
+            {
+              "name": "wobinclick",
+              "leaderboardId": 114734,
+              "rankMaxes": [
+                850,
+                950,
+                1050,
+                1200,
+                1300
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Precise Tracking",
+          "rankMaxes": [
+            4000,
+            8000,
+            12000,
+            16000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "wobin Sky Strafe Easy",
+              "leaderboardId": 125361,
+              "rankMaxes": [
+                3000,
+                3200,
+                3400,
+                3700,
+                4000
+              ]
+            },
+            {
+              "name": "wobin BounceTrack Easy",
+              "leaderboardId": 125451,
+              "rankMaxes": [
+                1550,
+                1750,
+                1950,
+                2250,
+                2500
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Reactive Trackin",
+          "rankMaxes": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "scenarios": [
+            {
+              "name": "wobin Polarized Hell Dash Easy",
+              "leaderboardId": 125397,
+              "rankMaxes": [
+                2400,
+                2600,
+                2800,
+                3000,
+                3200
+              ]
+            },
+            {
+              "name": "wobin Blinkstrafe Easy",
+              "leaderboardId": 125456,
+              "rankMaxes": [
+                2300,
+                2600,
+                2900,
+                3200,
+                3500
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Control Tracking",
+          "rankMaxes": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "scenarios": [
+            {
+              "name": "wobin Wobinorb Easy",
+              "leaderboardId": 125692,
+              "rankMaxes": [
+                3150,
+                3450,
+                3750,
+                4050,
+                4350
+              ]
+            },
+            {
+              "name": "wobin RawControl Easy",
+              "leaderboardId": 125671,
+              "rankMaxes": [
+                3100,
+                3400,
+                3700,
+                4000,
+                4300
+              ]
+            }
+          ]
+        },
+        {
+          "name": "SpeedTS",
+          "rankMaxes": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "scenarios": [
+            {
+              "name": "wobin DotTS Easy",
+              "leaderboardId": 125689,
+              "rankMaxes": [
+                1070,
+                1150,
+                1210,
+                1270,
+                1330
+              ]
+            },
+            {
+              "name": "wobin WobTS Easy",
+              "leaderboardId": 125672,
+              "rankMaxes": [
+                920,
+                980,
+                1040,
+                1100,
+                1180
+              ]
+            }
+          ]
+        },
+        {
+          "name": "EvasiveTS",
+          "rankMaxes": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "scenarios": [
+            {
+              "name": "wobin CloudTS Easy",
+              "leaderboardId": 125892,
+              "rankMaxes": [
+                500,
+                540,
+                580,
+                630,
+                680
+              ]
+            },
+            {
+              "name": "wobin RawControlTS Easy",
+              "leaderboardId": 125820,
+              "rankMaxes": [
+                440,
+                480,
+                520,
+                560,
+                600
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Advanced",
+      "kovaaksBenchmarkId": 577,
+      "rankNames": [
+        "Lilac",
+        "Rose",
+        "Lotus",
+        "Hyacinth",
+        "Aster"
+      ],
+      "rankColors": {
+        "Lilac": "#B9FBC0",
+        "Rose": "#98F5E1",
+        "Lotus": "#A3C4F3",
+        "Hyacinth": "#CFBAF0",
+        "Aster": "#FB6F92"
+      },
+      "categories": [
+        {
+          "name": "Static Clicking",
+          "rankMaxes": [
+            4000,
+            8000,
+            12000,
+            16000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "wobin 1w4ts",
+              "leaderboardId": 125388,
+              "rankMaxes": [
+                1450,
+                1550,
+                1650,
+                1750,
+                1850
+              ]
+            },
+            {
+              "name": "wobin ww5t Horizontal",
+              "leaderboardId": 125615,
+              "rankMaxes": [
+                1950,
+                2100,
+                2250,
+                2350,
+                2450
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Dynamic Clicking",
+          "rankMaxes": [
+            4000,
+            8000,
+            12000,
+            16000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "wobin 1w2ts Micro",
+              "leaderboardId": 125797,
+              "rankMaxes": [
+                850,
+                910,
+                970,
+                1030,
+                1090
+              ]
+            },
+            {
+              "name": "wobinclick ultra",
+              "leaderboardId": 114747,
+              "rankMaxes": [
+                1060,
+                1120,
+                1180,
+                1240,
+                1300
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Precise Tracking",
+          "rankMaxes": [
+            4000,
+            8000,
+            12000,
+            16000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "wobin Sky Strafe",
+              "leaderboardId": 125360,
+              "rankMaxes": [
+                3400,
+                3700,
+                4000,
+                4300,
+                4600
+              ]
+            },
+            {
+              "name": "wobin BounceTrack",
+              "leaderboardId": 125452,
+              "rankMaxes": [
+                1700,
+                1900,
+                2100,
+                2300,
+                2550
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Reactive Trackin",
+          "rankMaxes": [
+            4000,
+            8000,
+            12000,
+            16000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "wobin Polarized Hell Dash",
+              "leaderboardId": 125263,
+              "rankMaxes": [
+                2800,
+                3100,
+                3400,
+                3700,
+                4000
+              ]
+            },
+            {
+              "name": "wobin Blinkstrafe",
+              "leaderboardId": 125455,
+              "rankMaxes": [
+                3000,
+                3225,
+                3450,
+                3675,
+                3900
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Control Tracking",
+          "rankMaxes": [
+            4000,
+            8000,
+            12000,
+            16000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "wobin Wobinorb",
+              "leaderboardId": 125693,
+              "rankMaxes": [
+                3250,
+                3450,
+                3650,
+                3850,
+                4050
+              ]
+            },
+            {
+              "name": "wobin RawControl",
+              "leaderboardId": 125664,
+              "rankMaxes": [
+                3200,
+                3375,
+                3550,
+                3725,
+                3900
+              ]
+            }
+          ]
+        },
+        {
+          "name": "SpeedTS",
+          "rankMaxes": [
+            4000,
+            8000,
+            12000,
+            16000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "wobin DotTS",
+              "leaderboardId": 125691,
+              "rankMaxes": [
+                1220,
+                1270,
+                1320,
+                1370,
+                1420
+              ]
+            },
+            {
+              "name": "wobin WobTS",
+              "leaderboardId": 125813,
+              "rankMaxes": [
+                1000,
+                1060,
+                1120,
+                1180,
+                1240
+              ]
+            }
+          ]
+        },
+        {
+          "name": "EvasiveTS",
+          "rankMaxes": [
+            4000,
+            8000,
+            12000,
+            16000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "wobin CloudTS",
+              "leaderboardId": 125894,
+              "rankMaxes": [
+                570,
+                600,
+                630,
+                660,
+                690
+              ]
+            },
+            {
+              "name": "wobin RawControlTS",
+              "leaderboardId": 125818,
+              "rankMaxes": [
+                510,
+                540,
+                570,
+                600,
+                630
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

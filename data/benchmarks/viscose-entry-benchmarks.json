@@ -1,0 +1,366 @@
+{
+  "benchmarkName": "Viscose Entry Benchmarks",
+  "abbreviation": "V",
+  "color": "#ebbeff",
+  "spreadsheetURL": "https://docs.google.com/spreadsheets/d/1wMKCKhFQDwGvFgo9KvfbpNYzJ05XQ8gnyXjxNOhdCww/edit?usp=sharing",
+  "evxlUrl": "https://evxl.app/benchmarks/Viscose%20Entry%20Benchmarks",
+  "source": "kovaaks.com benchmarks API + evxl registry",
+  "fetchedAt": "2026-08-29T16:57:42Z",
+  "difficulties": [
+    {
+      "name": "Entry",
+      "kovaaksBenchmarkId": 2477,
+      "rankNames": [
+        "Caspian",
+        "Ribbon",
+        "Weddell",
+        "Harbour",
+        "Harp",
+        "Baikal"
+      ],
+      "rankColors": {
+        "Caspian": "#C5C3F2",
+        "Ribbon": "#B2CBEA",
+        "Weddell": "#BAF6FC",
+        "Harbour": "#7bcaf0",
+        "Harp": "#6B94DF",
+        "Baikal": "#5558AA"
+      },
+      "categories": [
+        {
+          "name": "Arm",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "Smoothsphere Viscose Horizontal Entry",
+              "leaderboardId": 189903,
+              "rankMaxes": [
+                6000,
+                8000,
+                10000,
+                11500,
+                13000,
+                14500
+              ]
+            },
+            {
+              "name": "Air Voltaic Invincible 4 Entry",
+              "leaderboardId": 143160,
+              "rankMaxes": [
+                2400,
+                2900,
+                3300,
+                3700,
+                4050,
+                4400
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Wrist",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "Controlsphere Viscose Entry",
+              "leaderboardId": 190002,
+              "rankMaxes": [
+                6000,
+                8000,
+                9500,
+                11000,
+                12500,
+                14000
+              ]
+            },
+            {
+              "name": "VT Controlsphere Viscose Entry",
+              "leaderboardId": 189866,
+              "rankMaxes": [
+                2500,
+                3000,
+                3400,
+                3800,
+                4200,
+                4500
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Fingertip",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "cloverRawControl Viscose Entry",
+              "leaderboardId": 190024,
+              "rankMaxes": [
+                4000,
+                6000,
+                8000,
+                9500,
+                11000,
+                12500
+              ]
+            },
+            {
+              "name": "Flower Entry",
+              "leaderboardId": 190139,
+              "rankMaxes": [
+                1900,
+                2500,
+                3100,
+                3600,
+                4000,
+                4400
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Blending",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "PGTI Vertical Iron",
+              "leaderboardId": 29252,
+              "rankMaxes": [
+                900,
+                1400,
+                1900,
+                2300,
+                2700,
+                3000
+              ]
+            },
+            {
+              "name": "RawControlSphere Entry",
+              "leaderboardId": 190185,
+              "rankMaxes": [
+                5000,
+                7000,
+                9000,
+                10500,
+                12000,
+                13400
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Speed",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "wasuTS Entry",
+              "leaderboardId": 190123,
+              "rankMaxes": [
+                95,
+                108,
+                118,
+                128,
+                138,
+                145
+              ]
+            },
+            {
+              "name": "aimerz+ Static Switching 6 Bot Larger",
+              "leaderboardId": 190025,
+              "rankMaxes": [
+                85,
+                92,
+                98,
+                104,
+                110,
+                115
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Stability",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "1w2ts reload smallflicks Entry",
+              "leaderboardId": 190274,
+              "rankMaxes": [
+                75,
+                84,
+                92,
+                100,
+                108,
+                115
+              ]
+            },
+            {
+              "name": "StaticSwitchingVox Entry",
+              "leaderboardId": 190275,
+              "rankMaxes": [
+                80,
+                87,
+                93,
+                99,
+                105,
+                110
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Micro",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "eth Pasu Micro Entry",
+              "leaderboardId": 190273,
+              "rankMaxes": [
+                600,
+                700,
+                800,
+                900,
+                1000,
+                1100
+              ]
+            },
+            {
+              "name": "waldoTS Novice Static",
+              "leaderboardId": 189999,
+              "rankMaxes": [
+                92,
+                99,
+                106,
+                113,
+                120,
+                125
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Reading",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "Pasu Viscose Entry",
+              "leaderboardId": 192535,
+              "rankMaxes": [
+                520,
+                600,
+                680,
+                750,
+                830,
+                900
+              ]
+            },
+            {
+              "name": "VT Bounceshot Viscose Entry",
+              "leaderboardId": 190272,
+              "rankMaxes": [
+                400,
+                490,
+                580,
+                670,
+                760,
+                850
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Stability ",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "VT Floating Heads Viscose Entry",
+              "leaderboardId": 192531,
+              "rankMaxes": [
+                550,
+                630,
+                700,
+                760,
+                820,
+                880
+              ]
+            },
+            {
+              "name": "VoxTS Click Entry",
+              "leaderboardId": 192530,
+              "rankMaxes": [
+                71,
+                79,
+                86,
+                92,
+                98,
+                105
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

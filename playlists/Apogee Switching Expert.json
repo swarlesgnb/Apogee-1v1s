@@ -1,0 +1,39 @@
+{
+	"playlistName": "Apogee Switching Expert",
+	"playlistId": 0,
+	"authorSteamId": "",
+	"authorName": "",
+	"scenarioList": [
+		{
+			"scenario_name": "voxTS Viscose Varied",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "patCircleSwitch NR",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "Bounce 180 Tracking",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "tamTargetSwitch Smooth Hard",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "kinTS Voltaic",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "B180T Voltaic",
+			"play_Count": 1
+		}
+	],
+	"description": "Season 1 practice. 6 scenarios, the ones this season ranks you on. Play them as often as you like - nothing here is a match, and none of it settles anything.",
+	"hasOfflineScenarios": false,
+	"hasEdited": true,
+	"shareCode": "",
+	"version": 31,
+	"updated": 1788031556,
+	"isPrivate": false
+}

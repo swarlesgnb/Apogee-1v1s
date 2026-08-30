@@ -1,0 +1,233 @@
+{
+  "benchmarkName": "Anima Micro v1",
+  "abbreviation": "A",
+  "color": "#A2D4DE",
+  "spreadsheetURL": "https://docs.google.com/spreadsheets/d/1H8WPvDyOGtSb9f-lNocNxULRDhptG5PlE2mcpyxnaSY",
+  "evxlUrl": "https://evxl.app/benchmarks/Anima%20Micro%20v1",
+  "source": "kovaaks.com benchmarks API + evxl registry",
+  "fetchedAt": "2026-08-25T13:51:24Z",
+  "difficulties": [
+    {
+      "name": "All",
+      "kovaaksBenchmarkId": 550,
+      "rankNames": [
+        "Retail",
+        "Uber Driver",
+        "Barber",
+        "Violinist",
+        "Artist",
+        "Surgeon",
+        "Cartoon"
+      ],
+      "rankColors": {
+        "Retail": "#FF8D8D",
+        "Uber Driver": "#FFC988",
+        "Barber": "#FCFF80",
+        "Violinist": "#A6FF94",
+        "Artist": "#34BECB",
+        "Surgeon": "#7DAEFF",
+        "Cartoon": "#FC95FC"
+      },
+      "categories": [
+        {
+          "name": "Micro-Dynamic",
+          "rankMaxes": [
+            5714.29,
+            11428.57,
+            17142.86,
+            22857.14,
+            28571.43,
+            34285.71,
+            40000
+          ],
+          "scenarios": [
+            {
+              "name": "Tamspeed 2bpes Angelic",
+              "leaderboardId": 38536,
+              "rankMaxes": [
+                120,
+                130,
+                140,
+                150,
+                160,
+                170,
+                180
+              ]
+            },
+            {
+              "name": "1w3ts Pasu Perfected Micro Goated",
+              "leaderboardId": 65396,
+              "rankMaxes": [
+                1200,
+                1300,
+                1400,
+                1500,
+                1600,
+                1700,
+                1800
+              ]
+            },
+            {
+              "name": "Pasu Micro 50% Speed 2",
+              "leaderboardId": 96385,
+              "rankMaxes": [
+                80,
+                90,
+                100,
+                110,
+                120,
+                130,
+                140
+              ]
+            },
+            {
+              "name": "eth Precise Dots -2",
+              "leaderboardId": 96335,
+              "rankMaxes": [
+                48,
+                55,
+                62,
+                69,
+                76,
+                83,
+                90
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Micro-Static",
+          "rankMaxes": [
+            5714.29,
+            11428.57,
+            17142.86,
+            22857.14,
+            28571.43,
+            34285.71,
+            40000
+          ],
+          "scenarios": [
+            {
+              "name": "shimmicro",
+              "leaderboardId": 84415,
+              "rankMaxes": [
+                95000,
+                100000,
+                105000,
+                110000,
+                115000,
+                120000,
+                125000
+              ]
+            },
+            {
+              "name": "1wall 2targets wide smaller denserer",
+              "leaderboardId": 50419,
+              "rankMaxes": [
+                1000,
+                1150,
+                1300,
+                1450,
+                1550,
+                1750,
+                1900
+              ]
+            },
+            {
+              "name": "5 Sphere Hipfire Small",
+              "leaderboardId": 125,
+              "rankMaxes": [
+                1400,
+                1550,
+                1700,
+                1850,
+                2000,
+                2150,
+                2250
+              ]
+            },
+            {
+              "name": "1w6ts trustechain Raspberry 30% smaller",
+              "leaderboardId": 44256,
+              "rankMaxes": [
+                115,
+                124,
+                133,
+                142,
+                150,
+                159,
+                168
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Micro-Tracking",
+          "rankMaxes": [
+            5714.29,
+            11428.57,
+            17142.86,
+            22857.14,
+            28571.43,
+            34285.71,
+            40000
+          ],
+          "scenarios": [
+            {
+              "name": "cloverRawControl",
+              "leaderboardId": 68993,
+              "rankMaxes": [
+                5500,
+                6400,
+                7250,
+                8150,
+                9050,
+                9950,
+                10800
+              ]
+            },
+            {
+              "name": "Extra Controlsphere",
+              "leaderboardId": 562,
+              "rankMaxes": [
+                6000,
+                7000,
+                8000,
+                9000,
+                10000,
+                11000,
+                12000
+              ]
+            },
+            {
+              "name": "e1se MicroTrack",
+              "leaderboardId": 62726,
+              "rankMaxes": [
+                3500,
+                3750,
+                4000,
+                4250,
+                4500,
+                4750,
+                5000
+              ]
+            },
+            {
+              "name": "Microadjustment Tracking Small",
+              "leaderboardId": 55928,
+              "rankMaxes": [
+                3500,
+                3900,
+                4250,
+                4650,
+                5000,
+                5400,
+                5800
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

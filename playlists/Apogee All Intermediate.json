@@ -1,0 +1,103 @@
+{
+	"playlistName": "Apogee All Intermediate",
+	"playlistId": 0,
+	"authorSteamId": "",
+	"authorName": "",
+	"scenarioList": [
+		{
+			"scenario_name": "1w2ts reload smallflicks larger",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "B180 Voltaic Easy 92%",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "eth Pasu Micro Easier",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "voxTargetSwitch Click",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "VT 1w5ts Rasp Intermediate",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "VT Floating Heads Intermediate S5",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "VT Pasu Intermediate S5",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "Wide Wall 3 Targets TE",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "beanTS Larger",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "voxTargetSwitch 2 Large",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "VT ControlTS Intermediate S5",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "VT DotTS Intermediate S5",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "VT evaTS Intermediate",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "VT FlyTS Intermediate S5",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "Air CELESTIAL No UFO Easy Slowed",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "Air Voltaic Easy Invincible 4 80%",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "Ground Plaza Sparky v3 Easy",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "Smooth Thin Strafes Raspberry Easy",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "VT Controlsphere Intermediate S5",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "VT Smoothbot Intermediate",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "waldoTS Novice",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "Whisphere 80%",
+			"play_Count": 1
+		}
+	],
+	"description": "Season 1 practice. 22 scenarios, the ones this season ranks you on. Play them as often as you like - nothing here is a match, and none of it settles anything.",
+	"hasOfflineScenarios": false,
+	"hasEdited": true,
+	"shareCode": "",
+	"version": 31,
+	"updated": 1788031556,
+	"isPrivate": false
+}

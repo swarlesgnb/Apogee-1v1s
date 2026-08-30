@@ -1,0 +1,384 @@
+{
+  "benchmarkName": "Aimerz+ Evasive Switching",
+  "abbreviation": "A+",
+  "color": "#E1E0E1",
+  "spreadsheetURL": "https://docs.google.com/spreadsheets/d/1kxI184tdhT55k98gsfCHy_CRBznu84aaJP8PAJg6-dU/edit?gid=0#gid=0",
+  "evxlUrl": "https://evxl.app/benchmarks/Aimerz%2B%20Evasive%20Switching",
+  "source": "kovaaks.com benchmarks API + evxl registry",
+  "fetchedAt": "2026-08-29T16:57:56Z",
+  "difficulties": [
+    {
+      "name": "Easy",
+      "kovaaksBenchmarkId": 596,
+      "rankNames": [
+        "Bronze",
+        "Silver",
+        "Gold",
+        "Platinum",
+        "Diamond",
+        "Acolyte",
+        "Transcendent"
+      ],
+      "rankColors": {
+        "Bronze": "#A77138",
+        "Silver": "#C2D2D2",
+        "Gold": "#C4A12A",
+        "Platinum": "#00B3A5",
+        "Diamond": "#81D1FF",
+        "Acolyte": "#FFA000",
+        "Transcendent": "#B5F5DF"
+      },
+      "categories": [
+        {
+          "name": "Evasive Switch",
+          "rankMaxes": [
+            17142.86,
+            34285.71,
+            51428.57,
+            68571.43,
+            85714.29,
+            102857.14,
+            120000
+          ],
+          "scenarios": [
+            {
+              "name": "tamTargetSwitch Control Hard 30% Larger",
+              "leaderboardId": 92614,
+              "rankMaxes": [
+                28,
+                31,
+                35,
+                38,
+                42,
+                45,
+                65
+              ]
+            },
+            {
+              "name": "tamTargetSwitch Smooth Hard 30% Larger",
+              "leaderboardId": 96201,
+              "rankMaxes": [
+                22,
+                26,
+                28,
+                32,
+                35,
+                38,
+                56
+              ]
+            },
+            {
+              "name": "Controlsphere TS 200% HP MORE BOTS",
+              "leaderboardId": 92674,
+              "rankMaxes": [
+                6400,
+                7000,
+                7500,
+                8000,
+                8800,
+                9400,
+                12450
+              ]
+            },
+            {
+              "name": "Smoothbot TS Voltaic Regen Hasin",
+              "leaderboardId": 15084,
+              "rankMaxes": [
+                20,
+                23,
+                26,
+                29,
+                32,
+                36,
+                63
+              ]
+            },
+            {
+              "name": "Pasu Switch Wide",
+              "leaderboardId": 48886,
+              "rankMaxes": [
+                330,
+                370,
+                400,
+                440,
+                490,
+                540,
+                800
+              ]
+            },
+            {
+              "name": "domiSwitch Easy",
+              "leaderboardId": 83043,
+              "rankMaxes": [
+                4850,
+                5350,
+                6000,
+                6400,
+                6900,
+                7200,
+                9650
+              ]
+            },
+            {
+              "name": "Star Tracking Regen 40% Larger",
+              "leaderboardId": 92667,
+              "rankMaxes": [
+                26,
+                29,
+                32,
+                35,
+                38,
+                41,
+                60
+              ]
+            },
+            {
+              "name": "Trippez Smooth Switching Regen Slow+",
+              "leaderboardId": 96204,
+              "rankMaxes": [
+                140,
+                190,
+                230,
+                270,
+                310,
+                380,
+                500
+              ]
+            },
+            {
+              "name": "CircleTS Easy",
+              "leaderboardId": 96202,
+              "rankMaxes": [
+                320,
+                370,
+                410,
+                460,
+                520,
+                590,
+                800
+              ]
+            },
+            {
+              "name": "darkSwitch Easy",
+              "leaderboardId": 92579,
+              "rankMaxes": [
+                95,
+                106,
+                112,
+                118,
+                123,
+                128,
+                160
+              ]
+            },
+            {
+              "name": "Bounce 180 Tracking",
+              "leaderboardId": 122,
+              "rankMaxes": [
+                55,
+                63,
+                70,
+                76,
+                82,
+                90,
+                136
+              ]
+            },
+            {
+              "name": "Aimerz+ hopTS Med S1",
+              "leaderboardId": 69310,
+              "rankMaxes": [
+                58,
+                62,
+                66,
+                70,
+                74,
+                78,
+                110
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Hard",
+      "kovaaksBenchmarkId": 597,
+      "rankNames": [
+        "Prophet",
+        "Saint",
+        "Angelic",
+        "Seraphic",
+        "Cherubim",
+        "Transcendent"
+      ],
+      "rankColors": {
+        "Prophet": "#9E0059",
+        "Saint": "#5A189A",
+        "Angelic": "#0F4C5C",
+        "Seraphic": "#590D22",
+        "Cherubim": "#03071E",
+        "Transcendent": "#B5F5DF"
+      },
+      "categories": [
+        {
+          "name": "Evasive Switch",
+          "rankMaxes": [
+            20000,
+            40000,
+            60000,
+            80000,
+            100000,
+            120000
+          ],
+          "scenarios": [
+            {
+              "name": "tamTargetSwitch Control Hard",
+              "leaderboardId": 757,
+              "rankMaxes": [
+                39,
+                41,
+                43,
+                46,
+                50,
+                55
+              ]
+            },
+            {
+              "name": "tamTargetSwitch Smooth Hard",
+              "leaderboardId": 727,
+              "rankMaxes": [
+                33,
+                36,
+                38,
+                41,
+                44,
+                48
+              ]
+            },
+            {
+              "name": "Controlsphere TS 30% Smaller 200% HP MORE BOTS",
+              "leaderboardId": 81628,
+              "rankMaxes": [
+                7950,
+                8350,
+                8800,
+                9200,
+                9900,
+                11100
+              ]
+            },
+            {
+              "name": "Smoothbot TS Voltaic Regen Hasin",
+              "leaderboardId": 15084,
+              "rankMaxes": [
+                42,
+                46,
+                48,
+                51,
+                56,
+                63
+              ]
+            },
+            {
+              "name": "domiSwitch",
+              "leaderboardId": 83035,
+              "rankMaxes": [
+                6250,
+                6600,
+                7000,
+                7400,
+                7900,
+                8600
+              ]
+            },
+            {
+              "name": "darkSwitch",
+              "leaderboardId": 83197,
+              "rankMaxes": [
+                66,
+                71,
+                76,
+                80,
+                84,
+                90
+              ]
+            },
+            {
+              "name": "Star Tracking Regen - @wa11p1per",
+              "leaderboardId": 29694,
+              "rankMaxes": [
+                33,
+                36,
+                39,
+                42,
+                46,
+                52
+              ]
+            },
+            {
+              "name": "Trippez Smooth Switching Regen Slower + Smaller",
+              "leaderboardId": 83228,
+              "rankMaxes": [
+                260,
+                290,
+                320,
+                350,
+                380,
+                420
+              ]
+            },
+            {
+              "name": "CircleTS",
+              "leaderboardId": 37435,
+              "rankMaxes": [
+                500,
+                540,
+                580,
+                620,
+                680,
+                770
+              ]
+            },
+            {
+              "name": "Pasu Switch Wide Regen",
+              "leaderboardId": 48884,
+              "rankMaxes": [
+                600,
+                660,
+                740,
+                820,
+                900,
+                1080
+              ]
+            },
+            {
+              "name": "Bounce 180 Tracking",
+              "leaderboardId": 122,
+              "rankMaxes": [
+                99,
+                105,
+                111,
+                118,
+                125,
+                136
+              ]
+            },
+            {
+              "name": "Aimerz+ hopTS Med S1",
+              "leaderboardId": 69310,
+              "rankMaxes": [
+                82,
+                86,
+                91,
+                96,
+                102,
+                110
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

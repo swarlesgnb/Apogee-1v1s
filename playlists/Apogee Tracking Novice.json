@@ -1,0 +1,47 @@
+{
+	"playlistName": "Apogee Tracking Novice",
+	"playlistId": 0,
+	"authorSteamId": "",
+	"authorName": "",
+	"scenarioList": [
+		{
+			"scenario_name": "VT Smoothbot Novice",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "VT Snake Track Novice S5",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "VT Ground Novice S5",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "VT Aether Novice S5",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "VT Controlsphere Novice S5",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "VT Raw Control Novice S5",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "VT Aether Novice S5 Bot 2",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "Close Long Strafes Invincible",
+			"play_Count": 1
+		}
+	],
+	"description": "Season 1 practice. 8 scenarios, the ones this season ranks you on. Play them as often as you like - nothing here is a match, and none of it settles anything.",
+	"hasOfflineScenarios": false,
+	"hasEdited": true,
+	"shareCode": "",
+	"version": 31,
+	"updated": 1788031556,
+	"isPrivate": false
+}

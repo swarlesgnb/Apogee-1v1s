@@ -1,0 +1,459 @@
+{
+  "benchmarkName": "MIRA S1",
+  "abbreviation": "MIR",
+  "color": "#C13F3E",
+  "spreadsheetURL": "https://docs.google.com/spreadsheets/d/1t_cR_2k4_7ZFqjqGceJgvgdwMSqAtc5dLq4try7EBiA",
+  "evxlUrl": "https://evxl.app/benchmarks/MIRA%20S1",
+  "source": "kovaaks.com benchmarks API + evxl registry",
+  "fetchedAt": "2026-08-29T16:58:06Z",
+  "difficulties": [
+    {
+      "name": "Easy",
+      "kovaaksBenchmarkId": 600,
+      "rankNames": [
+        "Apprentice",
+        "Aspiring",
+        "Ace",
+        "Challenger",
+        "Disciple"
+      ],
+      "rankColors": {
+        "Apprentice": "#999999",
+        "Aspiring": "#CBD9E6",
+        "Ace": "#E9CC52",
+        "Challenger": "#2FCFC2",
+        "Disciple": "#FF6961"
+      },
+      "categories": [
+        {
+          "name": "Static",
+          "rankMaxes": [
+            4000,
+            8000,
+            12000,
+            16000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "Multiclick Easy MIRA",
+              "leaderboardId": 63891,
+              "rankMaxes": [
+                110,
+                120,
+                131,
+                143,
+                155
+              ]
+            },
+            {
+              "name": "Fiveshot Easy MIRA",
+              "leaderboardId": 63904,
+              "rankMaxes": [
+                700,
+                850,
+                950,
+                1050,
+                1150
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Dynamic",
+          "rankMaxes": [
+            4000,
+            8000,
+            12000,
+            16000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "Bounceshot Easy MIRA",
+              "leaderboardId": 63931,
+              "rankMaxes": [
+                60,
+                70,
+                80,
+                90,
+                100
+              ]
+            },
+            {
+              "name": "Pasu Easy MIRA",
+              "leaderboardId": 63932,
+              "rankMaxes": [
+                700,
+                800,
+                900,
+                1000,
+                1100
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Precise",
+          "rankMaxes": [
+            4000,
+            8000,
+            12000,
+            16000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "Smoothbot Easy MIRA",
+              "leaderboardId": 63915,
+              "rankMaxes": [
+                6500,
+                8350,
+                10200,
+                12050,
+                13900
+              ]
+            },
+            {
+              "name": "PTI Easy MIRA",
+              "leaderboardId": 63933,
+              "rankMaxes": [
+                8000,
+                10000,
+                13000,
+                16000,
+                18000
+              ]
+            }
+          ]
+        },
+        {
+          "name": "React",
+          "rankMaxes": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "scenarios": [
+            {
+              "name": "Plaza Easy MIRA",
+              "leaderboardId": 63936,
+              "rankMaxes": [
+                7500,
+                8000,
+                8500,
+                9000,
+                9500
+              ]
+            },
+            {
+              "name": "AA4 Easy MIRA",
+              "leaderboardId": 63937,
+              "rankMaxes": [
+                9250,
+                10500,
+                11900,
+                12900,
+                13900
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Speed",
+          "rankMaxes": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "scenarios": [
+            {
+              "name": "VelozSwitch Easy MIRA",
+              "leaderboardId": 63911,
+              "rankMaxes": [
+                75,
+                85,
+                95,
+                105,
+                115
+              ]
+            },
+            {
+              "name": "kndTS Wide Easy MIRA",
+              "leaderboardId": 63893,
+              "rankMaxes": [
+                85,
+                95,
+                105,
+                115,
+                125
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Flow",
+          "rankMaxes": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "scenarios": [
+            {
+              "name": "r3dSwitch Easy MIRA",
+              "leaderboardId": 63956,
+              "rankMaxes": [
+                300,
+                350,
+                390,
+                430,
+                470
+              ]
+            },
+            {
+              "name": "FugaSwitch Easy MIRA Fixed",
+              "leaderboardId": 63894,
+              "rankMaxes": [
+                55,
+                60,
+                65,
+                70,
+                75
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Advanced",
+      "kovaaksBenchmarkId": 601,
+      "rankNames": [
+        "Ascended",
+        "Expert",
+        "Supreme",
+        "Immortal",
+        "Eternal"
+      ],
+      "rankColors": {
+        "Ascendant": "#66FF66",
+        "Expert": "#FF9900",
+        "Supreme": "#FF2262",
+        "Immortal": "#19E1FF",
+        "Eternal": "#020202"
+      },
+      "categories": [
+        {
+          "name": "Static",
+          "rankMaxes": [
+            4000,
+            8000,
+            12000,
+            16000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "Multiclick Hard MIRA",
+              "leaderboardId": 63925,
+              "rankMaxes": [
+                138,
+                147,
+                156,
+                163,
+                170
+              ]
+            },
+            {
+              "name": "Fourshot Hard MIRA Fixed",
+              "leaderboardId": 63934,
+              "rankMaxes": [
+                1100,
+                1150,
+                1250,
+                1350,
+                1450
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Dynamic",
+          "rankMaxes": [
+            4000,
+            8000,
+            12000,
+            16000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "Bounceshot Hard MIRA",
+              "leaderboardId": 63926,
+              "rankMaxes": [
+                800,
+                900,
+                980,
+                1070,
+                1130
+              ]
+            },
+            {
+              "name": "Pasu Hard MIRA",
+              "leaderboardId": 63935,
+              "rankMaxes": [
+                880,
+                940,
+                1000,
+                1060,
+                1120
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Precise",
+          "rankMaxes": [
+            4000,
+            8000,
+            12000,
+            16000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "Smoothbot Hard MIRA Fixed",
+              "leaderboardId": 63927,
+              "rankMaxes": [
+                5800,
+                6500,
+                7200,
+                7900,
+                8600
+              ]
+            },
+            {
+              "name": "PTI Hard MIRA",
+              "leaderboardId": 63910,
+              "rankMaxes": [
+                9400,
+                10500,
+                11450,
+                12375,
+                13100
+              ]
+            }
+          ]
+        },
+        {
+          "name": "React",
+          "rankMaxes": [
+            4000,
+            8000,
+            12000,
+            16000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "Plaza Hard MIRA",
+              "leaderboardId": 63928,
+              "rankMaxes": [
+                5000,
+                5350,
+                5700,
+                6050,
+                6350
+              ]
+            },
+            {
+              "name": "AA4 Hard MIRA",
+              "leaderboardId": 63939,
+              "rankMaxes": [
+                7000,
+                7875,
+                8750,
+                9625,
+                10500
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Speed",
+          "rankMaxes": [
+            4000,
+            8000,
+            12000,
+            16000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "VelozSwitch Hard MIRA",
+              "leaderboardId": 63909,
+              "rankMaxes": [
+                100,
+                110,
+                119,
+                128,
+                134
+              ]
+            },
+            {
+              "name": "kndTS Wide Hard MIRA",
+              "leaderboardId": 63906,
+              "rankMaxes": [
+                110,
+                118,
+                124,
+                130,
+                136
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Flow",
+          "rankMaxes": [
+            4000,
+            8000,
+            12000,
+            16000,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "r3dSwitch Hard MIRA",
+              "leaderboardId": 63908,
+              "rankMaxes": [
+                320,
+                360,
+                400,
+                460,
+                520
+              ]
+            },
+            {
+              "name": "FugaSwitch Hard MIRA Fixed",
+              "leaderboardId": 63907,
+              "rankMaxes": [
+                48,
+                52,
+                59,
+                62,
+                66
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

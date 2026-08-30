@@ -1,0 +1,384 @@
+{
+  "benchmarkName": "Aimerz+ SpeedTS",
+  "abbreviation": "A+",
+  "color": "#E1E0E1",
+  "spreadsheetURL": "https://docs.google.com/spreadsheets/d/1-9-RQ5-a78HF49eMsYcf7PjBkpbgIahpBwTLYSu9RK4/edit?gid=373225919#gid=373225919",
+  "evxlUrl": "https://evxl.app/benchmarks/Aimerz%2B%20SpeedTS",
+  "source": "kovaaks.com benchmarks API + evxl registry",
+  "fetchedAt": "2026-08-29T16:57:54Z",
+  "difficulties": [
+    {
+      "name": "Easy",
+      "kovaaksBenchmarkId": 584,
+      "rankNames": [
+        "Bronze",
+        "Silver",
+        "Gold",
+        "Platinum",
+        "Diamond",
+        "Acolyte",
+        "Transcendent"
+      ],
+      "rankColors": {
+        "Bronze": "#A77138",
+        "Silver": "#C2D2D2",
+        "Gold": "#C4A12A",
+        "Platinum": "#00B3A5",
+        "Diamond": "#81D1FF",
+        "Acolyte": "#FFA000",
+        "Transcendent": "#B5F5DF"
+      },
+      "categories": [
+        {
+          "name": "SpeedTS",
+          "rankMaxes": [
+            17142.86,
+            34285.71,
+            51428.57,
+            68571.43,
+            85714.29,
+            102857.14,
+            120000
+          ],
+          "scenarios": [
+            {
+              "name": "StaticSwitchingVox xxSmall",
+              "leaderboardId": 18203,
+              "rankMaxes": [
+                96,
+                101,
+                106,
+                112,
+                117,
+                123,
+                154
+              ]
+            },
+            {
+              "name": "DotTS 30% Larger",
+              "leaderboardId": 75698,
+              "rankMaxes": [
+                2200,
+                2350,
+                2450,
+                2600,
+                2700,
+                2850,
+                3600
+              ]
+            },
+            {
+              "name": "voxTS Viscose Varied",
+              "leaderboardId": 417,
+              "rankMaxes": [
+                86,
+                94,
+                100,
+                106,
+                112,
+                120,
+                154
+              ]
+            },
+            {
+              "name": "patCircleSwitch NR",
+              "leaderboardId": 535,
+              "rankMaxes": [
+                80,
+                84,
+                90,
+                96,
+                102,
+                108,
+                146
+              ]
+            },
+            {
+              "name": "patTargetSwitch 90 LowTTK",
+              "leaderboardId": 75617,
+              "rankMaxes": [
+                2350,
+                2500,
+                2650,
+                2800,
+                2950,
+                3100,
+                4240
+              ]
+            },
+            {
+              "name": "beanTS",
+              "leaderboardId": 2648,
+              "rankMaxes": [
+                94,
+                104,
+                114,
+                122,
+                132,
+                140,
+                186
+              ]
+            },
+            {
+              "name": "Target Switching 360",
+              "leaderboardId": 22,
+              "rankMaxes": [
+                11400,
+                12100,
+                12800,
+                13600,
+                14200,
+                15000,
+                19600
+              ]
+            },
+            {
+              "name": "voxTargetSwitch 2",
+              "leaderboardId": 551,
+              "rankMaxes": [
+                83,
+                92,
+                102,
+                111,
+                117,
+                125,
+                161
+              ]
+            },
+            {
+              "name": "Aimerz+ goaTS Med S1",
+              "leaderboardId": 69305,
+              "rankMaxes": [
+                81,
+                85,
+                90,
+                96,
+                102,
+                110,
+                148
+              ]
+            },
+            {
+              "name": "Aimerz+ nuTS Med S1",
+              "leaderboardId": 69303,
+              "rankMaxes": [
+                80,
+                86,
+                92,
+                98,
+                106,
+                112,
+                156
+              ]
+            },
+            {
+              "name": "Aimerz+ Week #5 - Static Switching",
+              "leaderboardId": 38996,
+              "rankMaxes": [
+                12500,
+                12900,
+                13400,
+                14200,
+                15000,
+                15800,
+                20000
+              ]
+            },
+            {
+              "name": "360 Static TS",
+              "leaderboardId": 976,
+              "rankMaxes": [
+                2200,
+                2350,
+                2500,
+                2650,
+                2800,
+                2950,
+                3800
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Hard",
+      "kovaaksBenchmarkId": 585,
+      "rankNames": [
+        "Prophet",
+        "Saint",
+        "Angelic",
+        "Seraphic",
+        "Cherubim",
+        "Transcendent"
+      ],
+      "rankColors": {
+        "Prophet": "#9E0059",
+        "Saint": "#5A189A",
+        "Angelic": "#0F4C5C",
+        "Seraphic": "#590D22",
+        "Cherubim": "#03071E",
+        "Transcendent": "#B5F5DF"
+      },
+      "categories": [
+        {
+          "name": "SpeedTS",
+          "rankMaxes": [
+            20000,
+            40000,
+            60000,
+            80000,
+            100000,
+            120000
+          ],
+          "scenarios": [
+            {
+              "name": "StaticSwitchingVox xxSmall",
+              "leaderboardId": 18203,
+              "rankMaxes": [
+                128,
+                132,
+                136,
+                141,
+                146,
+                154
+              ]
+            },
+            {
+              "name": "DotTS",
+              "leaderboardId": 75317,
+              "rankMaxes": [
+                2550,
+                2675,
+                2800,
+                2900,
+                3025,
+                3250
+              ]
+            },
+            {
+              "name": "voxTS Viscose Varied",
+              "leaderboardId": 417,
+              "rankMaxes": [
+                126,
+                132,
+                137,
+                142,
+                147,
+                154
+              ]
+            },
+            {
+              "name": "patCircleSwitch NR",
+              "leaderboardId": 535,
+              "rankMaxes": [
+                113,
+                118,
+                124,
+                131,
+                138,
+                146
+              ]
+            },
+            {
+              "name": "patTargetSwitch 90 LowTTK",
+              "leaderboardId": 75617,
+              "rankMaxes": [
+                3200,
+                3350,
+                3475,
+                3675,
+                3900,
+                4240
+              ]
+            },
+            {
+              "name": "beanTS 200%",
+              "leaderboardId": 58888,
+              "rankMaxes": [
+                136,
+                142,
+                149,
+                155,
+                161,
+                173
+              ]
+            },
+            {
+              "name": "Target Switching 360",
+              "leaderboardId": 22,
+              "rankMaxes": [
+                16400,
+                17000,
+                17600,
+                18200,
+                18800,
+                19600
+              ]
+            },
+            {
+              "name": "voxTargetSwitch 2",
+              "leaderboardId": 551,
+              "rankMaxes": [
+                130,
+                134,
+                139,
+                145,
+                152,
+                161
+              ]
+            },
+            {
+              "name": "Aimerz+ goaTS Med S1",
+              "leaderboardId": 69305,
+              "rankMaxes": [
+                110,
+                116,
+                122,
+                131,
+                138,
+                148
+              ]
+            },
+            {
+              "name": "Aimerz+ nuTS Med S1",
+              "leaderboardId": 69303,
+              "rankMaxes": [
+                112,
+                118,
+                126,
+                136,
+                145,
+                156
+              ]
+            },
+            {
+              "name": "Aimerz+ Week #5 - Static Switching",
+              "leaderboardId": 38996,
+              "rankMaxes": [
+                16200,
+                16800,
+                17400,
+                18150,
+                19000,
+                20000
+              ]
+            },
+            {
+              "name": "360 Static TS",
+              "leaderboardId": 976,
+              "rankMaxes": [
+                3000,
+                3150,
+                3275,
+                3425,
+                3575,
+                3800
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

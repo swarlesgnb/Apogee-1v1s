@@ -4,6 +4,7 @@
  * one before main writes it. This checks that net actually holds.
  */
 import { loadSeason, validateSeason, type Season } from "./season.ts";
+import { ENERGY_PER_RANK } from "../benchmarks/energy.ts";
 
 const base = loadSeason();
 const clone = (): Season => JSON.parse(JSON.stringify(base));
@@ -109,9 +110,18 @@ check(
 // The one failure mode with no symptom other than a top rank that stays empty forever:
 // the ladder ascends, the counts line up, and no score anybody can produce reaches it.
 // Voltaic's published Switching thresholds have this shape, which is why it is checked.
+//
+// The step is derived from the category's own family count rather than written down. It
+// used to be a literal 17,500, which was above the ceiling while the category had six
+// families and exactly *at* it the moment the pool grew to seven - so the check passed a
+// season it was supposed to refuse, and the only symptom was this suite going green.
 const unreachable = clone();
 const ceilingCat = unreachable.categories[0];
-ceilingCat.rankMaxes = ceilingCat.rankMaxes.map((_, i) => 17500 * (i + 1));
+const ceilingFamilies = new Set(
+  unreachable.scenarios.filter((s) => s.category === ceilingCat.name).map((s) => s.family),
+).size;
+const overCeiling = (ceilingFamilies + 1) * ENERGY_PER_RANK;
+ceilingCat.rankMaxes = ceilingCat.rankMaxes.map((_, i) => overCeiling * (i + 1));
 check(
   "a rank above the energy ceiling is refused",
   refuses(unreachable) !== null,

@@ -2,3 +2,17 @@ node_modules/
 dist/
 .env
 .env.local
+release/
+build/
+.cache/
+
+# Editor state, which is per-person and not part of the project.
+.vscode/
+.idea/
+
+# Python bytecode, written whenever a tools/ script is imported.
+__pycache__/
+*.pyc
+
+# Supabase CLI local link state: per-machine, and it carries the project ref.
+supabase/.temp/

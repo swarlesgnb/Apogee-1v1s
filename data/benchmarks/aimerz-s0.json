@@ -1,0 +1,565 @@
+{
+  "benchmarkName": "Aimerz+ S0",
+  "abbreviation": "A+",
+  "color": "#E1E0E1",
+  "spreadsheetURL": "https://docs.google.com/spreadsheets/d/1UttTs6aNPzwAWCEKnRUc8hC0AzbZI2esLq4x8ngcVpU/edit?gid=876421041#gid=876421041",
+  "evxlUrl": "https://evxl.app/benchmarks/Aimerz%2B%20S0",
+  "source": "kovaaks.com benchmarks API + evxl registry",
+  "fetchedAt": "2026-08-29T16:57:59Z",
+  "difficulties": [
+    {
+      "name": "Medium",
+      "kovaaksBenchmarkId": 1823,
+      "rankNames": [
+        "Iron",
+        "Bronze",
+        "Silver",
+        "Gold",
+        "Platinum",
+        "Diamond"
+      ],
+      "rankColors": {
+        "Iron": "#999999",
+        "Bronze": "#a77138",
+        "Silver": "#c2d2d2",
+        "Gold": "#c4a12a",
+        "Platinum": "#00b3a5",
+        "Diamond": "#81d1ff"
+      },
+      "categories": [
+        {
+          "name": "Clicking",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "aimerz+ PipeClick Normal",
+              "leaderboardId": 44344,
+              "rankMaxes": [
+                40,
+                50,
+                65,
+                75,
+                85,
+                95
+              ]
+            },
+            {
+              "name": "aimerz+ B180C Normal",
+              "leaderboardId": 44339,
+              "rankMaxes": [
+                30,
+                35,
+                40,
+                50,
+                60,
+                75
+              ]
+            },
+            {
+              "name": "aimerz+ WaveClick Normal",
+              "leaderboardId": 44337,
+              "rankMaxes": [
+                45,
+                50,
+                55,
+                60,
+                65,
+                70
+              ]
+            },
+            {
+              "name": "aimerz+ 1w3ts Normal",
+              "leaderboardId": 44333,
+              "rankMaxes": [
+                70,
+                80,
+                90,
+                100,
+                110,
+                120
+              ]
+            },
+            {
+              "name": "aimerz+ ww6t Normal",
+              "leaderboardId": 44335,
+              "rankMaxes": [
+                80,
+                90,
+                100,
+                110,
+                120,
+                130
+              ]
+            },
+            {
+              "name": "aimerz+ 1w4ts HF Normal",
+              "leaderboardId": 44332,
+              "rankMaxes": [
+                80,
+                100,
+                115,
+                130,
+                145,
+                155
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Tracking",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "aimerz+ Smoothbot Normal",
+              "leaderboardId": 44347,
+              "rankMaxes": [
+                2000,
+                2600,
+                3000,
+                3500,
+                3850,
+                4400
+              ]
+            },
+            {
+              "name": "aimerz+ PTI Normal",
+              "leaderboardId": 44352,
+              "rankMaxes": [
+                300,
+                350,
+                400,
+                450,
+                500,
+                550
+              ]
+            },
+            {
+              "name": "aimerz+ PreciseTrack Normal",
+              "leaderboardId": 44354,
+              "rankMaxes": [
+                1400,
+                1650,
+                2050,
+                2350,
+                2650,
+                2950
+              ]
+            },
+            {
+              "name": "aimerz+ PipeTrack Normal",
+              "leaderboardId": 44357,
+              "rankMaxes": [
+                1800,
+                2150,
+                2450,
+                2850,
+                3300,
+                3650
+              ]
+            },
+            {
+              "name": "aimerz+ VariedStrafes Normal",
+              "leaderboardId": 44361,
+              "rankMaxes": [
+                2000,
+                2200,
+                2400,
+                2600,
+                2800,
+                3000
+              ]
+            },
+            {
+              "name": "aimerz+ Air Normal",
+              "leaderboardId": 53742,
+              "rankMaxes": [
+                3000,
+                4000,
+                4500,
+                5000,
+                5500,
+                6000
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Switching",
+          "rankMaxes": [
+            3333.33,
+            6666.67,
+            10000,
+            13333.33,
+            16666.67,
+            20000
+          ],
+          "scenarios": [
+            {
+              "name": "aimerz+ pivoTS Normal",
+              "leaderboardId": 44376,
+              "rankMaxes": [
+                70,
+                80,
+                90,
+                95,
+                105,
+                115
+              ]
+            },
+            {
+              "name": "aimerz+ waveTS Normal",
+              "leaderboardId": 44374,
+              "rankMaxes": [
+                45,
+                50,
+                55,
+                60,
+                65,
+                70
+              ]
+            },
+            {
+              "name": "aimerz+ swingTS Normal",
+              "leaderboardId": 53595,
+              "rankMaxes": [
+                700,
+                750,
+                800,
+                850,
+                900,
+                950
+              ]
+            },
+            {
+              "name": "aimerz+ joeTS Normal",
+              "leaderboardId": 44377,
+              "rankMaxes": [
+                50,
+                60,
+                70,
+                75,
+                80,
+                85
+              ]
+            },
+            {
+              "name": "aimerz+ B180TC Normal",
+              "leaderboardId": 44380,
+              "rankMaxes": [
+                35,
+                40,
+                45,
+                50,
+                55,
+                60
+              ]
+            },
+            {
+              "name": "aimerz+ TomTS Normal",
+              "leaderboardId": 44394,
+              "rankMaxes": [
+                25,
+                30,
+                35,
+                40,
+                45,
+                50
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Hard",
+      "kovaaksBenchmarkId": 1822,
+      "rankNames": [
+        "Acolyte",
+        "Prophet",
+        "Saint",
+        "Angelic",
+        "Seraphic",
+        "Cherubim"
+      ],
+      "rankColors": {
+        "Acolyte": "#FFa000",
+        "Prophet": "#9e0059",
+        "Saint": "#5a189a",
+        "Angelic": "#0f4c5c",
+        "Seraphic": "#590d22",
+        "Cherubim": "#03071e"
+      },
+      "categories": [
+        {
+          "name": "Clicking",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000,
+            25000,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "aimerz+ PipeClick Hard",
+              "leaderboardId": 44342,
+              "rankMaxes": [
+                75,
+                85,
+                100,
+                112,
+                120,
+                140
+              ]
+            },
+            {
+              "name": "aimerz+ B180C Hard",
+              "leaderboardId": 44338,
+              "rankMaxes": [
+                50,
+                60,
+                75,
+                90,
+                103,
+                118
+              ]
+            },
+            {
+              "name": "aimerz+ WaveClick Hard",
+              "leaderboardId": 44336,
+              "rankMaxes": [
+                60,
+                65,
+                70,
+                77,
+                84,
+                91
+              ]
+            },
+            {
+              "name": "aimerz+ 1w3ts Hard",
+              "leaderboardId": 44330,
+              "rankMaxes": [
+                112,
+                122,
+                135,
+                145,
+                158,
+                163
+              ]
+            },
+            {
+              "name": "aimerz+ ww6t Hard",
+              "leaderboardId": 44334,
+              "rankMaxes": [
+                120,
+                130,
+                145,
+                155,
+                168,
+                178
+              ]
+            },
+            {
+              "name": "aimerz+ 1w4ts HF Hard",
+              "leaderboardId": 44331,
+              "rankMaxes": [
+                142,
+                155,
+                170,
+                185,
+                200,
+                222
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Tracking",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000,
+            25000,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "aimerz+ Smoothbot Hard",
+              "leaderboardId": 44346,
+              "rankMaxes": [
+                3100,
+                3650,
+                4200,
+                4500,
+                5000,
+                5400
+              ]
+            },
+            {
+              "name": "aimerz+ PTI Hard",
+              "leaderboardId": 44351,
+              "rankMaxes": [
+                550,
+                650,
+                750,
+                840,
+                900,
+                930
+              ]
+            },
+            {
+              "name": "aimerz+ PreciseTrack Hard",
+              "leaderboardId": 44353,
+              "rankMaxes": [
+                1750,
+                2100,
+                2400,
+                2800,
+                3100,
+                3400
+              ]
+            },
+            {
+              "name": "aimerz+ PipeTrack Hard",
+              "leaderboardId": 44356,
+              "rankMaxes": [
+                1750,
+                2050,
+                2600,
+                3100,
+                3450,
+                3650
+              ]
+            },
+            {
+              "name": "aimerz+ VariedStrafes Hard",
+              "leaderboardId": 44360,
+              "rankMaxes": [
+                2400,
+                2750,
+                3100,
+                3350,
+                3450,
+                3550
+              ]
+            },
+            {
+              "name": "aimerz+ Air Hard",
+              "leaderboardId": 53741,
+              "rankMaxes": [
+                4450,
+                4750,
+                5250,
+                5750,
+                6000,
+                6250
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Switching",
+          "rankMaxes": [
+            5000,
+            10000,
+            15000,
+            20000,
+            25000,
+            30000
+          ],
+          "scenarios": [
+            {
+              "name": "aimerz+ pivoTS Hard",
+              "leaderboardId": 44373,
+              "rankMaxes": [
+                125,
+                130,
+                135,
+                144,
+                150,
+                156
+              ]
+            },
+            {
+              "name": "aimerz+ waveTS Hard",
+              "leaderboardId": 44375,
+              "rankMaxes": [
+                70,
+                80,
+                90,
+                100,
+                105,
+                110
+              ]
+            },
+            {
+              "name": "aimerz+ swingTS Hard",
+              "leaderboardId": 53596,
+              "rankMaxes": [
+                950,
+                1050,
+                1100,
+                1160,
+                1190,
+                1220
+              ]
+            },
+            {
+              "name": "aimerz+ joeTS Hard",
+              "leaderboardId": 44378,
+              "rankMaxes": [
+                55,
+                65,
+                73,
+                79,
+                84,
+                90
+              ]
+            },
+            {
+              "name": "aimerz+ B180TC Hard",
+              "leaderboardId": 44379,
+              "rankMaxes": [
+                54,
+                63,
+                72,
+                83,
+                89,
+                92
+              ]
+            },
+            {
+              "name": "aimerz+ TomTS Hard",
+              "leaderboardId": 44395,
+              "rankMaxes": [
+                40,
+                50,
+                60,
+                67,
+                70,
+                73
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

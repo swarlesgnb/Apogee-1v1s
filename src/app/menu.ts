@@ -13,6 +13,7 @@
  */
 
 import { app, BrowserWindow, clipboard, dialog, Menu, shell } from "electron";
+import { logPath } from "./crashLog.ts";
 
 export interface MenuActions {
   rescan(): void;
@@ -74,6 +75,13 @@ export function installMenu(actions: MenuActions): void {
           // the path is a different one on every platform and nobody remembers it.
           label: "Open app data folder",
           click: () => void shell.openPath(app.getPath("userData")),
+        },
+        {
+          // The one thing worth attaching to a bug report. A player who can be told
+          // "Help > Open log" can send something useful; one who has to be talked
+          // through %APPDATA% usually cannot.
+          label: "Open log",
+          click: () => void shell.showItemInFolder(logPath()),
         },
         {
           label: "About Apogee",
