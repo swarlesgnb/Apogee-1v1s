@@ -938,19 +938,56 @@ be regressed rather than assumed.
 
 How far that judgement actually reaches is now printed rather than left to be discovered.
 `npm run validate:pool` names every scenario whose window rests on a single source, and
-there are **fourteen of the eighty-eight** - including three where the sole source is
+there are **twelve of the eighty-eight** - including three where the sole source is
 snakbox, the thinnest benchmark in the pool at 83 measured players against Viscose's
 60,536.
 
-Two of the fourteen are raised by *two* windows, and they share a cause worth knowing.
-Each author's tiers are mapped onto four windows, so a benchmark publishing only Easy and
-Hard has its Hard land at window 3 by construction: `voxTS Viscose Varied` and
-`Bounce 180 Tracking` are both graded Expert on an Aimerz+ Hard tier while every other
-source that names them says Intermediate. That is not obviously wrong - Aimerz+ Hard
-genuinely is the hardest tier its author publishes - but it means how finely an author
-chose to slice their own ladder decides how hard Apogee grades a scenario, which is not
-a claim the band rule was meant to make. It is stated rather than hidden, and it is the
-first thing season 2's regression should settle.
+### One benchmark, one opinion
+
+Printing that list exposed a fault in the rule itself. Aimerz+ SpeedTS lists **the same
+twelve scenarios in both its Easy and its Hard tier**: the author is not naming a harder
+scenario, they are asking a higher score of the same one. Taking the hardest tier a
+scenario appears in therefore read a threshold difference as two whole windows of ladder,
+and it had put `voxTS Viscose Varied` and `patCircleSwitch NR` in the Expert band while
+the only other source naming them said Intermediate.
+
+So a benchmark whose tiers are substantially the same scenario set speaks with its
+*easiest* listing, and the hardest-tier rule then runs across benchmarks as before. Where
+that threshold sits is measured, not chosen. Every tier pair in the corpus that shares a
+scenario at all:
+
+```
+Aimerz+ SpeedTS      Easy/Hard        10 of 14 shared   0.71
+Aimerz+ Evasive      Easy/Hard         3 of 21          0.14
+Revosect S1          Easy/Advanced     5 of 43          0.12
+Voltaic S3           Inter/Advanced    3 of 33          0.09
+Viscose Benchmarks   Easier/Medium     4 of 68          0.06
+Aimerz+ Precise      Easy/Hard         1 of 23          0.04
+```
+
+One pair sits at 0.71 and the next at 0.14, so the cut at 0.5 has nothing near it. Only
+Aimerz+ SpeedTS reuses its scenario set; every other author changes the scenarios, and a
+scenario appearing in two of *their* tiers is a second placement rather than a second
+price. Narrowing the rule to what the overlap can actually demonstrate matters: the blunt
+version - easiest listing always wins - also moved `Wide Wall 3 Targets`,
+`Floating Heads Timing 400% Larger` and `tamTargetSwitch Smooth Easy`, on an argument
+their benchmarks do not support.
+
+The two scenarios the rule moves are refilled from the corpus rather than left as gaps,
+because each was its family's only Expert variant: `VT skyTS Advanced` (27,620 entries)
+takes voxTS, and `VT psalmTS Advanced` (20,528) takes DotTS - the latter with an argument
+from the author, since Voltaic retired PsalmTS in S5 by replacing it with EddieTS for
+"more regular and predictable movement", which makes PsalmTS the same lineage with the
+predictability taken out.
+
+`Bounce 180 Tracking` stays Expert, and the reason is worth recording. Aimerz+ Evasive
+Switching shares only 3 of 21 scenarios between its tiers, so the overlap argument does
+not reach it and the rule leaves it where it was. It is still the weakest placement in the
+pool - window 3 on one listing whose author also files it under Easy - and it is kept
+because nothing can replace it: the only Evasive scenario any source bands above Advanced
+with a board at all is Smoothbot TS Voltaic Regen Hasin at 6,958 entries, against the
+8,750 the Expert window needs to put seventy players above its hardest rank. It stays
+flagged by `validate:pool` as the one remaining two-window jump.
 
 The match pool is a separate question and stays one window. Settlement compares a
 player against their own baseline (§3), so a beginner and a Celestial already get a real

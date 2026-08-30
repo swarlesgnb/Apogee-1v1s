@@ -1,6 +1,6 @@
 {
   "source": "kovaaks.com/webapp-backend/leaderboard/scores/global",
-  "sampledAt": "2026-08-30T06:24:55.344Z",
+  "sampledAt": "2026-08-30T15:47:05.032Z",
   "sampleRanks": [
     1,
     2,
@@ -3520,6 +3520,54 @@
       "sampledAt": "2026-08-30T06:24:40.450Z"
     },
     {
+      "scenario": "VT psalmTS Advanced",
+      "leaderboardId": 25177,
+      "total": 20738,
+      "points": [
+        {
+          "rank": 1,
+          "score": 1396.03
+        },
+        {
+          "rank": 2,
+          "score": 1370.03
+        },
+        {
+          "rank": 3,
+          "score": 1360.03
+        },
+        {
+          "rank": 5,
+          "score": 1346.53
+        },
+        {
+          "rank": 10,
+          "score": 1330.53
+        },
+        {
+          "rank": 25,
+          "score": 1250.03
+        },
+        {
+          "rank": 50,
+          "score": 1211.02
+        },
+        {
+          "rank": 100,
+          "score": 1180.02
+        },
+        {
+          "rank": 250,
+          "score": 1120.02
+        },
+        {
+          "rank": 500,
+          "score": 1088.52
+        }
+      ],
+      "sampledAt": "2026-08-30T15:47:04.618Z"
+    },
+    {
       "scenario": "VT Raw Control Intermediate S5 Hard",
       "leaderboardId": 105155,
       "total": 9883,
@@ -3614,6 +3662,54 @@
         }
       ],
       "sampledAt": "2026-08-30T06:22:01.492Z"
+    },
+    {
+      "scenario": "VT skyTS Advanced",
+      "leaderboardId": 25150,
+      "total": 27851,
+      "points": [
+        {
+          "rank": 1,
+          "score": 1680
+        },
+        {
+          "rank": 2,
+          "score": 1668.12
+        },
+        {
+          "rank": 3,
+          "score": 1663.75
+        },
+        {
+          "rank": 5,
+          "score": 1651.25
+        },
+        {
+          "rank": 10,
+          "score": 1615
+        },
+        {
+          "rank": 25,
+          "score": 1558.75
+        },
+        {
+          "rank": 50,
+          "score": 1516.25
+        },
+        {
+          "rank": 100,
+          "score": 1475
+        },
+        {
+          "rank": 250,
+          "score": 1426.25
+        },
+        {
+          "rank": 500,
+          "score": 1366.25
+        }
+      ],
+      "sampledAt": "2026-08-30T15:46:59.769Z"
     },
     {
       "scenario": "VT Smoothbot Advanced",

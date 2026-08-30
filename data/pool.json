@@ -711,9 +711,9 @@
         },
         {
           "window": 1,
-          "scenario": "voxTargetSwitch 2 Large",
-          "label": "voxTargetSwitch 2 Large",
-          "leaderboardId": 84880
+          "scenario": "voxTS Viscose Varied",
+          "label": "voxTS Viscose Varied",
+          "leaderboardId": 417
         },
         {
           "window": 2,
@@ -723,9 +723,9 @@
         },
         {
           "window": 3,
-          "scenario": "voxTS Viscose Varied",
-          "label": "voxTS Viscose Varied",
-          "leaderboardId": 417
+          "scenario": "VT skyTS Advanced",
+          "label": "VT skyTS Advanced",
+          "leaderboardId": 25150
         }
       ]
     },
@@ -754,9 +754,9 @@
         },
         {
           "window": 3,
-          "scenario": "patCircleSwitch NR",
-          "label": "patCircleSwitch NR",
-          "leaderboardId": 535
+          "scenario": "VT psalmTS Advanced",
+          "label": "VT psalmTS Advanced",
+          "leaderboardId": 25177
         }
       ]
     },

@@ -236,10 +236,10 @@
         0.008
       ]
     ],
-    "leaderboardEntries": 6594706,
+    "leaderboardEntries": 6531525,
     "note": "Every threshold is the score at a given percentile of that scenario's KovaaK's leaderboard. The percentiles are ours; the scores are a fact about the game. No other benchmark's numbers appear in this file - where one is consulted it is converted to percentiles and discarded (tools/calibrateLadder.ts). Season 2 re-cuts these against Apogee's own population, including where one window hands over to the next."
   },
-  "builtAt": "2026-08-30T02:40:13.836Z",
+  "builtAt": "2026-08-30T15:46:45.208Z",
   "scenarios": [
     {
       "scenario": "VT ww5t Novice S5",
@@ -2096,21 +2096,21 @@
       }
     },
     {
-      "scenario": "voxTargetSwitch 2 Large",
+      "scenario": "voxTS Viscose Varied",
       "category": "Switching",
       "family": "voxTS",
       "subCategory": "Speed Switching",
       "window": 1,
-      "label": "voxTargetSwitch 2 Large",
-      "leaderboardId": 84880,
+      "label": "voxTS Viscose Varied",
+      "leaderboardId": 417,
       "rankMaxes": [
-        112,
-        117,
-        121,
-        123
+        84,
+        89,
+        94,
+        98
       ],
       "derivedFrom": {
-        "leaderboardEntries": 73058,
+        "leaderboardEntries": 268948,
         "topFractions": [
           0.31,
           0.22,
@@ -2119,9 +2119,9 @@
         ]
       },
       "corpus": {
-        "runs": 170,
-        "best": 129,
-        "median": 116,
+        "runs": 4,
+        "best": 108,
+        "median": 104,
         "reaches": "rank 8"
       }
     },
@@ -2156,33 +2156,27 @@
       }
     },
     {
-      "scenario": "voxTS Viscose Varied",
+      "scenario": "VT skyTS Advanced",
       "category": "Switching",
       "family": "voxTS",
       "subCategory": "Speed Switching",
       "window": 3,
-      "label": "voxTS Viscose Varied",
-      "leaderboardId": 417,
+      "label": "VT skyTS Advanced",
+      "leaderboardId": 25150,
       "rankMaxes": [
-        111,
-        114,
-        116,
-        118
+        1355,
+        1390,
+        1413,
+        1433
       ],
       "derivedFrom": {
-        "leaderboardEntries": 268948,
+        "leaderboardEntries": 27620,
         "topFractions": [
           0.022,
           0.015,
           0.011,
           0.008
         ]
-      },
-      "corpus": {
-        "runs": 4,
-        "best": 108,
-        "median": 104,
-        "reaches": null
       }
     },
     {
@@ -2276,33 +2270,27 @@
       }
     },
     {
-      "scenario": "patCircleSwitch NR",
+      "scenario": "VT psalmTS Advanced",
       "category": "Switching",
       "family": "DotTS",
       "subCategory": "Speed Switching",
       "window": 3,
-      "label": "patCircleSwitch NR",
-      "leaderboardId": 535,
+      "label": "VT psalmTS Advanced",
+      "leaderboardId": 25177,
       "rankMaxes": [
-        108,
-        110,
-        112,
-        114
+        1091,
+        1116,
+        1132,
+        1154
       ],
       "derivedFrom": {
-        "leaderboardEntries": 38271,
+        "leaderboardEntries": 20528,
         "topFractions": [
           0.022,
           0.015,
           0.011,
           0.008
         ]
-      },
-      "corpus": {
-        "runs": 37,
-        "best": 101,
-        "median": 88,
-        "reaches": null
       }
     },
     {

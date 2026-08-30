@@ -503,6 +503,107 @@ if (unused.length > 0) {
 console.log(`
 ${BOLD}bands${RESET}`);
 
+/**
+ * How alike two tiers of one benchmark are, as shared scenarios over the union.
+ *
+ * The number matters because it separates two things that look identical in the data: an
+ * author whose tiers are different scenarios, and an author whose tiers are the SAME
+ * scenarios with a higher score asked of them. See `derivedWindow`.
+ */
+function tierOverlap(a: Set<string>, b: Set<string>): number {
+  const shared = [...a].filter((n) => b.has(n)).length;
+  const union = new Set([...a, ...b]).size;
+  return union === 0 ? 0 : shared / union;
+}
+
+/**
+ * Tier pairs alike enough that the difficulty is in the score, not the scenario.
+ *
+ * MEASURED across the corpus, and the separation is not close. Every tier pair in every
+ * source that shares a scenario at all:
+ *
+ *   Aimerz+ SpeedTS          Easy/Hard          10 of 14 shared   0.71
+ *   Aimerz+ Evasive          Easy/Hard           3 of 21           0.14
+ *   Revosect S1              Easy/Advanced       5 of 43           0.12
+ *   Voltaic S3               Inter/Advanced      3 of 33           0.09
+ *   Viscose Benchmarks       Easier/Medium       4 of 68           0.06
+ *   Aimerz+ Precise          Easy/Hard           1 of 23           0.04
+ *
+ * One pair sits at 0.71 and the next at 0.14, so 0.5 is a threshold with nothing near it
+ * rather than a number chosen to get an answer. Aimerz+ SpeedTS runs the same twelve
+ * scenarios at both difficulties; everyone else changes the scenarios.
+ */
+const SAME_SCENARIOS_OVERLAP = 0.5;
+
+/** Scenario names per benchmark tier, for the overlap test. */
+const tierMembers = new Map<string, Map<string, Set<string>>>();
+for (const [scenario, entry] of fromBenchmarks) {
+  for (const t of entry.tiers) {
+    if (!sources.has(t.benchmark)) continue;
+    const byTier = tierMembers.get(t.benchmark) ?? new Map<string, Set<string>>();
+    const members = byTier.get(t.difficulty) ?? new Set<string>();
+    members.add(scenario);
+    byTier.set(t.difficulty, members);
+    tierMembers.set(t.benchmark, byTier);
+  }
+}
+
+/**
+ * The window a scenario's tiers band it into, or null when none of them are banded.
+ *
+ * The rule is the HARDEST tier any source publishes it in - a scenario Voltaic calls
+ * Intermediate and snakbox calls Hard is being asked for more by snakbox, and grading it
+ * at the easier ask sets a rank everyone in the harder band already holds.
+ *
+ * With one correction, measured rather than assumed. Aimerz+ SpeedTS lists the same twelve
+ * scenarios in both its Easy and its Hard tier - `voxTS Viscose Varied` and
+ * `patCircleSwitch NR` among them. The author is not saying the scenario gets harder; they
+ * are asking a higher score of the same scenario. Reading that Hard listing as scenario
+ * difficulty turned a threshold difference into two whole windows of ladder, and put two
+ * Intermediate switching scenarios in the Expert band.
+ *
+ * So where a benchmark's two tiers are substantially the same scenario set, that benchmark
+ * speaks with its easiest listing. Where they are different sets - every other source, by a
+ * wide margin - a scenario appearing in two of them is the author placing it twice, and the
+ * harder listing stands. The hardest-tier rule then runs across benchmarks as before.
+ */
+function derivedWindow(
+  tiers: { benchmark: string; difficulty: string }[],
+): { window: number | null; perBenchmark: { benchmark: string; difficulty: string; band: number }[] } {
+  const perBenchmarkMap = new Map<string, { benchmark: string; difficulty: string; band: number }>();
+
+  for (const t of tiers) {
+    const band = pool.bands?.[t.benchmark]?.[t.difficulty];
+    if (typeof band !== "number") continue;
+
+    const prior = perBenchmarkMap.get(t.benchmark);
+    if (!prior) {
+      perBenchmarkMap.set(t.benchmark, { benchmark: t.benchmark, difficulty: t.difficulty, band });
+      continue;
+    }
+
+    const members = tierMembers.get(t.benchmark);
+    const alike =
+      members !== undefined &&
+      tierOverlap(
+        members.get(t.difficulty) ?? new Set<string>(),
+        members.get(prior.difficulty) ?? new Set<string>(),
+      ) >= SAME_SCENARIOS_OVERLAP;
+
+    // Alike: the tiers differ by score, so the easier listing is what this benchmark
+    // actually claims about the scenario. Not alike: two genuine placements, harder wins.
+    const take = alike ? band < prior.band : band > prior.band;
+    if (take) {
+      perBenchmarkMap.set(t.benchmark, { benchmark: t.benchmark, difficulty: t.difficulty, band });
+    }
+  }
+
+  const perBenchmark = [...perBenchmarkMap.values()];
+  return {
+    window: perBenchmark.length === 0 ? null : Math.max(...perBenchmark.map((t) => t.band)),
+    perBenchmark,
+  };
+}
 const unbanded: string[] = [];
 const misbanded: string[] = [];
 
@@ -515,17 +616,15 @@ for (const v of variants) {
   const tiers = (fromBenchmarks.get(v.scenario)?.tiers ?? []).filter((t) =>
     sources.has(t.benchmark),
   );
-  const bands = tiers
-    .map((t) => pool.bands?.[t.benchmark]?.[t.difficulty])
-    .filter((w): w is number => typeof w === "number");
+  const { window: hardest } = derivedWindow(tiers);
 
-  if (bands.length === 0) {
+  if (hardest === null) {
     unbanded.push(
       `${v.scenario} (${tiers.map((t) => `${t.benchmark} ${t.difficulty}`).join(", ") || "no tier"})`,
     );
     continue;
   }
-  const hardest = Math.max(...bands);
+
   if (v.window !== hardest) {
     misbanded.push(
       `${v.scenario} is window ${v.window} here, ${hardest} by its hardest tier ` +
@@ -573,9 +672,9 @@ for (const v of variants) {
   const tiers = (fromBenchmarks.get(v.scenario)?.tiers ?? []).filter((t) =>
     sources.has(t.benchmark),
   );
-  const banded = tiers
-    .map((t) => ({ ...t, band: pool.bands?.[t.benchmark]?.[t.difficulty] }))
-    .filter((t): t is typeof t & { band: number } => typeof t.band === "number");
+  // One opinion per benchmark, from the same derivation the check uses - otherwise this
+  // report would count an author's two listings of one scenario as two sources agreeing.
+  const banded = derivedWindow(tiers).perBenchmark;
 
   if (banded.length < 2) continue;
 

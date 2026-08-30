@@ -336,12 +336,17 @@
       "family": "DotTS",
       "subCategory": "Speed Switching",
       "isolates": "Switching between static targets, where all of the cost is the travel and none is the track.",
-      "why": "The cleanest possible speed-switching test: the targets do not move, so the only thing being measured is how fast the crosshair gets to the next one and stops. Voltaic built it as their first static target-switching scenario for that reason.",
+      "why": "The cleanest possible speed-switching test: the targets do not move, so the only thing being measured is how fast the crosshair gets to the next one and stops. Voltaic built it as their first static target-switching scenario for that reason. The Expert variant is psalmTS rather than a DotTS variant, and that is the point of it: Voltaic retired PsalmTS in S5 by replacing it with EddieTS specifically to get more regular and predictable movement, which makes the scenario they moved away from the less predictable member of the same lineage - the right thing to ask at the top of a speed ladder, and a claim from the author who made it.",
       "evidence": [
         {
           "source": "voltaic-s5",
           "scenario": "VT DotTS Novice S5",
           "says": "Static dots with a notably longer time-to-kill than Pokeball scenarios - their first static target switching scenario."
+        },
+        {
+          "source": "voltaic-s5",
+          "scenario": "VT psalmTS Advanced",
+          "says": "EddieTS is introduced as a replacement for PsalmTS with \"more regular and predictable movement, to lean into the speed target switching design\" - so PsalmTS is the same lineage with the predictability taken out."
         }
       ],
       "audience": {
@@ -354,7 +359,7 @@
       "family": "voxTS",
       "subCategory": "Speed Switching",
       "isolates": "Speed switching across wide angles, where the travel is long enough to dominate the shot.",
-      "why": "DotTS holds the short-travel case; the vox lineage holds the wide one, and the community treats it as the wide-angle switch-speed reference. Voltaic's EddieTS opens the family because it was rebuilt specifically to be predictable, which is what a speed test wants at the novice end.",
+      "why": "DotTS holds the short-travel case; the vox lineage holds the wide one, and the community treats it as the wide-angle switch-speed reference. Voltaic's EddieTS opens the family because it was rebuilt specifically to be predictable, which is what a speed test wants at the novice end. voxTS Viscose Varied grades the Intermediate window rather than the Expert one: Aimerz+ SpeedTS runs the same twelve scenarios at both its difficulties, so its Hard listing asks a higher score of the same scenario rather than naming a harder one, and reading it as difficulty had this scenario grading Expert while the only other source that names it said Intermediate.",
       "evidence": [
         {
           "source": "voltaic-s5",
