@@ -205,6 +205,71 @@ try {
   say("bad", "season", `will not parse: ${err instanceof Error ? err.message : String(err)}`);
 }
 
+// The apex board reads committed samples, so it fails in the quietest way there is: a
+// pool change without a re-sample leaves a graded scenario with no board, and the screen
+// shows a family with no position rather than an error. Two things are worth knowing, and
+// they are different questions.
+try {
+  const apexPath = join(root, "data", "leaderboard_apex.json");
+  const seasonPath = join(root, "data", "seasons", "season-1.json");
+
+  const apex = JSON.parse(readFileSync(apexPath, "utf8")) as {
+    sampledAt?: string;
+    boards?: { scenario: string }[];
+  };
+  const season = JSON.parse(readFileSync(seasonPath, "utf8")) as {
+    scenarios?: { scenario: string; family?: string; window?: number }[];
+  };
+
+  // Only the top-window variant of each family is graded - see standing.ts - so the
+  // other sixty-six being unsampled would not matter and should not raise anything.
+  const graded = new Map<string, { scenario: string; window: number }>();
+  for (const sc of season.scenarios ?? []) {
+    const family = sc.family ?? sc.scenario;
+    const window = sc.window ?? 0;
+    const prior = graded.get(family);
+    if (!prior || window > prior.window) graded.set(family, { scenario: sc.scenario, window });
+  }
+
+  const sampled = new Set((apex.boards ?? []).map((b) => b.scenario));
+  const missing = [...graded.values()].filter((g) => !sampled.has(g.scenario));
+
+  if (missing.length > 0) {
+    say(
+      "bad",
+      "apex boards",
+      `${missing.length} graded scenario(s) never sampled: ${missing
+        .slice(0, 3)
+        .map((m) => m.scenario)
+        .join(", ")}`,
+      "npm run sample:apex",
+    );
+  } else {
+    // Sampled BEFORE the season was last built means the pool moved underneath the
+    // samples. Every graded scenario still has a board, so nothing is missing - but the
+    // positions are being read off boards chosen for a different pool, which is the
+    // failure that looks like nothing at all.
+    const apexAge = ageOf(apexPath);
+    const seasonAge = ageOf(seasonPath);
+    const stale = apexAge > seasonAge;
+    say(
+      stale ? "warn" : "ok",
+      "apex boards",
+      `${sampled.size} sampled, ${graded.size} graded, ` +
+        `${stale ? "older than" : "newer than"} the season build ` +
+        `(sampled ${human(apexAge)})`,
+      stale ? "npm run sample:apex" : undefined,
+    );
+  }
+} catch {
+  say(
+    "warn",
+    "apex boards",
+    "data/leaderboard_apex.json missing or unreadable - the Apex screen will be empty",
+    "npm run sample:apex",
+  );
+}
+
 console.log("");
 console.log(
   worst === "ok"
