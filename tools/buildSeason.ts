@@ -108,7 +108,20 @@ interface SeasonScenarioOut {
   label: string;
   leaderboardId: number | null;
   rankMaxes: number[];
-  /** How the thresholds were derived, per scenario, so a number can be traced. */
+  /**
+   * How the thresholds were derived, per scenario, so a number can be traced.
+   *
+   * `leaderboardEntries` is the leaderboard endpoint's own `total` - the number of rows
+   * it will paginate - because that is the population the percentile is cut from and the
+   * denominator every `page` index here is computed against.
+   *
+   * It is NOT `counts.entries` from the scenario API, which `scenario_taxonomy.json`
+   * carries under the same word for the same scenario and which is roughly twice as
+   * large: 104,417 against 210,497 on VT ww5t Novice S5, and the ratio is not constant.
+   * Whatever that field counts, it is not the board being sampled, and swapping the two
+   * would silently redefine every threshold in the season. The two numbers are both
+   * KovaaK's own and they measure different things; this is the one the ladder means.
+   */
   derivedFrom?: { leaderboardEntries: number; topFractions: number[] };
   /** True when these thresholds were set by hand and are not what the percentiles give. */
   overridden?: boolean;

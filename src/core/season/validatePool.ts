@@ -545,6 +545,69 @@ check(
   misbanded.join("; "),
 );
 
+// Which windows rest on one benchmark's opinion alone.
+//
+// The band rule takes the HARDEST tier any source publishes a scenario in, which is
+// deliberate: a scenario Voltaic calls Intermediate and snakbox calls Hard is being asked
+// for more by snakbox, and grading it at the easier ask sets a rank everyone in the harder
+// band already holds. The cost of that rule is that a single source can raise a scenario a
+// whole window on its own, and nothing downstream can tell that happened.
+//
+// This is a report rather than a check, because being raised by one source is not an
+// error - it is the rule working. It is printed because the sources are not equally well
+// evidenced: snakbox carries 83 measured players against Viscose's 60,536, and "the
+// thinnest source in the pool is the only reason this scenario is Expert" is a sentence
+// somebody should have to read before publishing a season, not discover afterwards.
+//
+// The gap is worth reading as well as the count, and the two-window jumps have a cause
+// worth knowing: a benchmark's tiers are mapped onto four windows, so an author who
+// publishes only Easy and Hard has their Hard land at window 3 by construction. Both
+// scenarios currently raised by two windows come from such a benchmark. That is not
+// obviously wrong - Aimerz+ Hard genuinely is the hardest tier its author publishes -
+// but it means a two-tier benchmark's top tier outranks a four-tier benchmark's
+// Advanced, on nothing more than how finely each author chose to slice their ladder.
+// Season 2 can settle it with a population; until then it is stated rather than hidden.
+const raisedByOne: { gap: number; line: string }[] = [];
+
+for (const v of variants) {
+  const tiers = (fromBenchmarks.get(v.scenario)?.tiers ?? []).filter((t) =>
+    sources.has(t.benchmark),
+  );
+  const banded = tiers
+    .map((t) => ({ ...t, band: pool.bands?.[t.benchmark]?.[t.difficulty] }))
+    .filter((t): t is typeof t & { band: number } => typeof t.band === "number");
+
+  if (banded.length < 2) continue;
+
+  const hardest = Math.max(...banded.map((t) => t.band));
+  const atHardest = banded.filter((t) => t.band === hardest);
+  if (atHardest.length !== 1) continue;
+
+  const runnerUp = Math.max(...banded.filter((t) => t.band !== hardest).map((t) => t.band));
+  const sole = atHardest[0];
+  raisedByOne.push({
+    gap: hardest - runnerUp,
+    line:
+      `${v.scenario}: window ${hardest} on ${sole.benchmark} ${sole.difficulty} alone, ` +
+      `${runnerUp} by the other ${banded.length - 1}`,
+  });
+}
+
+if (raisedByOne.length > 0) {
+  // Widest gap first. One window is the rule doing its job; two means a scenario two
+  // other benchmarks call Intermediate is being graded as Expert, which is a much
+  // larger claim resting on the same single opinion.
+  raisedByOne.sort((a, b) => b.gap - a.gap);
+  const jumps = raisedByOne.filter((r) => r.gap > 1).length;
+
+  console.log(
+    `  ${DIM}${raisedByOne.length} scenario(s) sit higher than every other source puts them` +
+      `${jumps > 0 ? `, ${jumps} by more than one window` : ""}:${RESET}`,
+  );
+  for (const r of raisedByOne) {
+    console.log(`  ${DIM}  ${r.gap > 1 ? "!" : " "} ${r.line}${RESET}`);
+  }
+}
 const bandedTiers = Object.values(pool.bands ?? {}).reduce(
   (n, tiers) => n + Object.keys(tiers).length,
   0,

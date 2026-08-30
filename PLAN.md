@@ -936,6 +936,22 @@ leaves ranks nobody holds. Where one window hands over to the next becomes a mea
 in season 2: with players who have run both variants of a family, the handover point can
 be regressed rather than assumed.
 
+How far that judgement actually reaches is now printed rather than left to be discovered.
+`npm run validate:pool` names every scenario whose window rests on a single source, and
+there are **fourteen of the eighty-eight** - including three where the sole source is
+snakbox, the thinnest benchmark in the pool at 83 measured players against Viscose's
+60,536.
+
+Two of the fourteen are raised by *two* windows, and they share a cause worth knowing.
+Each author's tiers are mapped onto four windows, so a benchmark publishing only Easy and
+Hard has its Hard land at window 3 by construction: `voxTS Viscose Varied` and
+`Bounce 180 Tracking` are both graded Expert on an Aimerz+ Hard tier while every other
+source that names them says Intermediate. That is not obviously wrong - Aimerz+ Hard
+genuinely is the hardest tier its author publishes - but it means how finely an author
+chose to slice their own ladder decides how hard Apogee grades a scenario, which is not
+a claim the band rule was meant to make. It is stated rather than hidden, and it is the
+first thing season 2's regression should settle.
+
 The match pool is a separate question and stays one window. Settlement compares a
 player against their own baseline (§3), so a beginner and a Celestial already get a real
 contest on the same scenario, and splitting the pool by window would divide a small

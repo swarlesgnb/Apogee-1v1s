@@ -80,6 +80,55 @@ check(
   ungraded.length ? ungraded.map((v) => v.scenario).join(", ") : `${variants.length} boards`,
 );
 
+// ---- provenance ----------------------------------------------------------------------
+//
+// Two different KovaaK's numbers are called "entries" for the same scenario, and they
+// differ by roughly a factor of two: the leaderboard endpoint's `total` - the rows it
+// paginates - against `counts.entries` from the scenario API, 104,417 against 210,497 on
+// VT ww5t Novice S5. Only the first is the population a percentile is cut from, and it is
+// the denominator every sampled page index was computed against.
+//
+// Swapping them would silently redefine every threshold in the season while leaving the
+// file looking entirely reasonable, so the identity is asserted rather than trusted.
+
+console.log(`\n${BOLD}provenance${RESET}`);
+
+const wrongDenominator = season.scenarios.filter((sc) => {
+  const dist = sources.distributions.get(sc.scenario);
+  const stated = (sc as { derivedFrom?: { leaderboardEntries?: number } }).derivedFrom
+    ?.leaderboardEntries;
+  return dist !== undefined && stated !== undefined && stated !== dist.total;
+});
+
+check(
+  "every threshold's board size is the sampled board's own total",
+  wrongDenominator.length === 0,
+  wrongDenominator.length
+    ? wrongDenominator
+        .slice(0, 3)
+        .map((sc) => sc.scenario)
+        .join(", ")
+    : `${season.scenarios.length} scenarios`,
+);
+
+// And the apex anchors must be sampled against that same board, or a rank and a fraction
+// on one scenario would be denominated differently.
+const apexDisagrees = [...sources.boards.values()].filter((b) => {
+  const dist = sources.distributions.get(b.scenario);
+  if (!dist) return false;
+  // Sampled hours apart, so an exact match is not required - a board that moved by a
+  // percent is the same board. An order-of-magnitude gap is a different number entirely.
+  return Math.abs(b.total - dist.total) / dist.total > 0.05;
+});
+
+check(
+  "the apex anchors and the percentiles were sampled against the same board",
+  apexDisagrees.length === 0,
+  apexDisagrees.length
+    ? apexDisagrees.slice(0, 3).map((b) => b.scenario).join(", ")
+    : `${sources.boards.size} boards`,
+);
+
 // ---- the measure itself --------------------------------------------------------------
 
 console.log(`\n${BOLD}the measure${RESET}`);
