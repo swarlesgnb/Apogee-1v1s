@@ -40,6 +40,17 @@ export interface ThresholdCitation {
   difficulty: string;
   /** The full array that benchmark publishes, so a checker needs nothing else. */
   rankMaxes: number[];
+  /**
+   * The `windowSize` of those the reconciliation actually used.
+   *
+   * A tier can publish more ranks than a window has, so the picks are spread across it
+   * - and then rank 2 of the window is not rank 2 of the published array. Comparing
+   * those two positions is a real bug this field exists to close: it reported six
+   * correctly-reconciled numbers as outside their sources, because it was bracketing
+   * window rank 2 against published rank 2 rather than against the picks either side
+   * of it. Absent when the tier was used whole.
+   */
+  used?: number[];
 }
 
 export type ThresholdSource =
@@ -54,28 +65,28 @@ export function isSourced(source: ThresholdSource | undefined): boolean {
 }
 
 /**
- * Is `values` a contiguous run of `published`?
+ * Is every value in `values` one `published` gives, in the same order?
  *
  * "Adopted" cannot mean "equal", because a window is `windowSize` ranks and a benchmark tier
  * is however many its author chose - Voltaic S5 Advanced publishes four, Viscose Hard six.
- * Taking four of Viscose's six is still adopting Viscose's numbers; inventing a fifth is
- * not. So the test is containment as a run, which distinguishes those two cases and nothing
- * else.
+ * Taking four of Viscose's six is still adopting Viscose's numbers; inventing a fifth is not.
+ *
+ * A subsequence rather than a contiguous run, because four ranks taken from six should span
+ * the range the author meant that tier to cover - first and last included - and evenly
+ * spaced picks are not adjacent. What the test still guarantees is the thing that matters:
+ * every number is one the named author published for this scenario, in the order they
+ * published it. Nothing here was interpolated, averaged or nudged.
  */
-export function isRunOf(values: number[], published: number[]): boolean {
+export function isSubsequenceOf(values: number[], published: number[]): boolean {
   if (values.length === 0 || values.length > published.length) return false;
 
-  for (let start = 0; start + values.length <= published.length; start++) {
-    let all = true;
-    for (let i = 0; i < values.length; i++) {
-      if (published[start + i] !== values[i]) {
-        all = false;
-        break;
-      }
-    }
-    if (all) return true;
+  let at = 0;
+  for (const v of values) {
+    while (at < published.length && published[at] !== v) at++;
+    if (at >= published.length) return false;
+    at++;
   }
-  return false;
+  return true;
 }
 
 /**
@@ -94,9 +105,9 @@ export function checkAgainstSource(
       return `adopted from ${source.from.length} sources; adopted means exactly one, use reconciled`;
     }
     const cited = source.from[0];
-    return isRunOf(values, cited.rankMaxes)
+    return isSubsequenceOf(values, cited.rankMaxes)
       ? null
-      : `does not appear in ${cited.benchmark} ${cited.difficulty}, which publishes [${cited.rankMaxes.join(", ")}]`;
+      : `is not drawn from ${cited.benchmark} ${cited.difficulty}, which publishes [${cited.rankMaxes.join(", ")}]`;
   }
 
   if (source.kind === "reconciled") {
@@ -107,8 +118,10 @@ export function checkAgainstSource(
     // the result is bracketed by the sources it claims to reconcile - a reconciliation that
     // lands outside every number it was reconciling is not one.
     for (let i = 0; i < values.length; i++) {
+      // `used` where the tier was reduced to fit the window, the published array where
+      // it fitted already. Comparing against the wrong one compares two different ranks.
       const at = source.from
-        .map((c) => c.rankMaxes[i])
+        .map((c) => (c.used ?? c.rankMaxes)[i])
         .filter((n): n is number => typeof n === "number");
       if (at.length === 0) continue;
       const lo = Math.min(...at);

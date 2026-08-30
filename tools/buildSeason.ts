@@ -57,7 +57,8 @@ import { dataFile } from "../src/core/dataDir.ts";
 import { scanStatsFolder } from "../src/core/history/history.ts";
 import { candidateStatsFolders, findStatsFolder } from "../src/app/watcher.ts";
 import { renderRankSheet } from "../src/core/report/rankSheet.ts";
-import { topFractionOfScore, type Distribution } from "../src/core/season/percentiles.ts";
+import { type Distribution } from "../src/core/season/percentiles.ts";
+import { apexTopFraction, type ApexBoard } from "../src/core/season/apex.ts";
 import { validateSeason, type Season } from "../src/core/season/season.ts";
 import { ENERGY_PER_RANK } from "../src/core/benchmarks/energy.ts";
 
@@ -221,6 +222,21 @@ function main(): void {
   };
   const distByScenario = new Map(cache.distributions.map((d) => [d.scenario, d]));
 
+  // The top of each board, in ranks rather than fractions. Optional: a pool whose apex
+  // has not been sampled still builds, it just cannot resolve past the top 0.1%.
+  let apexByScenario = new Map<string, ApexBoard>();
+  try {
+    const apexFile = JSON.parse(
+      readFileSync(join(dataFile("."), "leaderboard_apex.json"), "utf8"),
+    ) as { boards: ApexBoard[] };
+    apexByScenario = new Map(apexFile.boards.map((b) => [b.scenario, b]));
+  } catch {
+    console.warn(
+      "no leaderboard_apex.json: clear-rates clamp at the top 0.1%, so ranks beyond it " +
+        "will look identical. Run npm run sample:apex.",
+    );
+  }
+
   const windowSize = pool.windowSize;
   const ranks = windowSize * pool.windows.length;
   // `pool.ladder.perWindow` used to be checked here for shape, because it was the
@@ -286,9 +302,17 @@ function main(): void {
       // `clears[i]` is the share of that leaderboard meeting rank i - the readout that
       // catches a threshold nobody can reach or everybody clears, which is the job the
       // percentile ladder used to do by construction and now has to do by inspection.
+      // Resolved with the apex anchors, not the fractional samples alone.
+      //
+      // The percentile file stops at the top 0.1%, so every threshold at or beyond that
+      // reads as exactly 0.001 and a whole run of Expert ranks looks identical. That is
+      // the measurement running out, not the ranks colliding - and the check below
+      // cannot tell those apart. leaderboard_apex.json holds board ranks 1 to 500 for
+      // exactly this, so the readout uses it and the clamp only binds below rank 500.
+      const board = apexByScenario.get(v.scenario) ?? null;
       const clears = rankMaxes.map((score) => {
-        const f = topFractionOfScore(dist, score);
-        return f === null ? null : Number(f.toFixed(5));
+        const f = apexTopFraction(board, dist, score);
+        return f === null ? null : Number(f.toFixed(6));
       });
 
       const entry: SeasonScenarioOut = {
