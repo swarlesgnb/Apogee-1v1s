@@ -470,7 +470,7 @@
         "plays": 2334521,
         "entries": 166119
       },
-      "thin": "beanTS is one of the three pool scenarios KovaaK's publishes no aim type for. Its sibling variant beanTS Larger is classified Target Switching by KovaaK's, and the two share an author description, which is what settles it."
+      "thin": "beanTS is one of the three pool scenarios KovaaK's publishes no aim type for, so its category cannot be checked against the game and validate:pool warns about it. Two things settle it instead. Its sibling beanTS Larger carries the same author description and IS classified Target Switching by KovaaK's. And the two measure the same mechanic: 28.5 shots per kill against 26.4, both with a lightning gun, over more than nine thousand and seven thousand kills respectively - a one-shot clicking scenario would be near 1.1. The method is the one described in data/aim_type_corrections.json; there is no correction to make here, because KovaaK's has said nothing to contradict."
     }
   ]
 }
