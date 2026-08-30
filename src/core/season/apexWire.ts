@@ -58,3 +58,28 @@ export interface ApexBoardPage {
   /** Null when the caller has never refreshed: absent, rather than present at zero. */
   you: ApexBoardSelf | null;
 }
+
+/** What one category's refresh recomputed. */
+export interface ApexRefreshCategory {
+  category: string;
+  points: number;
+  graded: number;
+  families: number;
+}
+
+/**
+ * What `refresh-apex` reports back.
+ *
+ * Declared here for the same reason as the board page, and it was already drifting: the
+ * client typed this call as returning `{ season }` while the function returned three
+ * fields, so two thirds of the answer was invisible to anything that might have used it.
+ *
+ * `categories` omits a category with nothing graded, because refresh-apex writes no row
+ * for one - a standing of zero and no standing are different things and the board depends
+ * on the difference.
+ */
+export interface ApexRefresh {
+  season: string;
+  categories: ApexRefreshCategory[];
+  overall: { points: number; graded: number; families: number };
+}

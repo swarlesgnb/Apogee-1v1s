@@ -433,8 +433,12 @@ export async function fetchStanding(playerId: string): Promise<Standing | null> 
 // The shape is declared once, in the core, and imported by both the Edge Function that
 // builds it and this client that reads it - see src/core/season/apexWire.ts. Writing it
 // out twice is how a renamed field compiles on both sides and arrives undefined.
-export type { ApexBoardEntry, ApexBoardPage as ApexBoard } from "../core/season/apexWire.ts";
-import type { ApexBoardPage } from "../core/season/apexWire.ts";
+export type {
+  ApexBoardEntry,
+  ApexBoardPage as ApexBoard,
+  ApexRefresh,
+} from "../core/season/apexWire.ts";
+import type { ApexBoardPage, ApexRefresh } from "../core/season/apexWire.ts";
 
 /**
  * The public apex board for one category.
@@ -455,8 +459,8 @@ export function fetchApexBoard(category: string): Promise<ApexBoardPage> {
  * which is honest, and makes the refresh mean something rather than being a no-op the
  * client fires on every render.
  */
-export function refreshApex(): Promise<{ season: string }> {
-  return callFunction<{ season: string }>("refresh-apex", {});
+export function refreshApex(): Promise<ApexRefresh> {
+  return callFunction<ApexRefresh>("refresh-apex", {});
 }
 
 /**

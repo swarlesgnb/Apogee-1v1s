@@ -32,6 +32,10 @@ import { handler, json, requireCaller, HttpError } from "../_shared/apogee.ts";
 import { enforceRateLimit } from "../_shared/rateLimit.ts";
 import { apexPoints, apexTopFraction, type ApexBoard } from "../../../src/core/season/apex.ts";
 import { topOfEachFamily } from "../../../src/core/season/standing.ts";
+import type {
+  ApexRefresh,
+  ApexRefreshCategory,
+} from "../../../src/core/season/apexWire.ts";
 import type { Distribution } from "../../../src/core/season/percentiles.ts";
 
 /**
@@ -257,20 +261,22 @@ Deno.serve(handler(async (req, admin) => {
     if (writeError) return json({ error: writeError.message }, 500);
   }
 
-  return json({
+  const result: ApexRefresh = {
     season: season.name,
     categories: rows
       .filter((r) => r.category !== OVERALL)
-      .map((r) => ({
-        category: r.category,
+      .map((r): ApexRefreshCategory => ({
+        category: String(r.category),
         points: Number((r.points as number).toFixed(4)),
-        graded: r.graded,
-        families: r.family_count,
+        graded: Number(r.graded),
+        families: Number(r.family_count),
       })),
     overall: {
       points: Number(overall.points.toFixed(4)),
       graded: overall.graded,
       families: overall.families,
     },
-  });
+  };
+
+  return json(result);
 }));

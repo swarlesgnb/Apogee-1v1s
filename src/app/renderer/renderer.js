@@ -3942,7 +3942,12 @@ function renderApexBoard() {
       apexBoard.you && apexBoard.you.rank
         ? "you are #" + num(apexBoard.you.rank) + " of " + num(apexBoard.population)
         : "you are not on this board yet";
-    note.textContent = mine + " \u00b7 " + num(apexBoard.population) + " ranked";
+    // The refresh runs before the read and is allowed to fail - a rate limit is the
+    // likely cause and the board is still worth showing. Saying so beats letting a
+    // standing that did not update look like one that did.
+    const stale = apexBoard.refreshed === false ? " \u00b7 not refreshed just now" : "";
+    note.textContent =
+      mine + " \u00b7 " + num(apexBoard.population) + " ranked" + stale;
   }
 
   if (apexBoard.entries.length === 0) {
