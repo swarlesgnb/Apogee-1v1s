@@ -831,6 +831,12 @@ function runSmokeTest(): void {
         // sentence rather than an empty panel. The tabs come from local data and
         // should be there either way.
         tabs: document.querySelectorAll("#apexTabs .apex-tab").length,
+        // A board position read from a committed sample must say which day it is
+        // from. Dropping that turns a dated fact into a wrong current one, and
+        // nothing else would notice.
+        datedBoards: /boards as of/.test(
+          document.getElementById("apexNote")?.textContent ?? "",
+        ),
         boardPanel: document.getElementById("apexBoardBody") !== null,
         boardNote: (
           document.getElementById("apexBoardNote")?.textContent ?? ""
@@ -853,6 +859,8 @@ function runSmokeTest(): void {
       problems.push("the apex board scored families but no points");
     } else if (apex.graded > 0 && apex.targets === 0) {
       problems.push("no scored family says what to chase next");
+    } else if (apex.graded > 0 && !apex.datedBoards) {
+      problems.push("the apex board does not say when its boards were sampled");
     }
 
     if (!apex.boardPanel) problems.push("the Apex screen has nowhere to list the leaderboard");
@@ -1978,6 +1986,7 @@ ipcMain.handle("apogee:apex", () => {
     points: standing.points,
     graded: standing.graded,
     total: standing.total,
+    sampledAt: standing.sampledAt,
     categories: standing.categories.map((c) => ({
       name: c.name,
       points: c.points,

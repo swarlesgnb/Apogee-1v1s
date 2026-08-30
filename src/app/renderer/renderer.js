@@ -4013,7 +4013,14 @@ function renderApex() {
 
   if ($("apexName")) $("apexName").textContent = apexData.season.name + " \u00b7 apex";
   if ($("apexNote")) {
-    $("apexNote").textContent = apexData.graded + " of " + apexData.total + " families scored";
+    // Board positions come from a committed sample, not from KovaaK's live, so the
+    // date is part of the claim rather than a footnote. Without it "#7,307 of
+    // 119,424" reads as current, which it is not.
+    const asOf = apexData.sampledAt
+      ? " \u00b7 boards as of " + new Date(apexData.sampledAt).toLocaleDateString()
+      : "";
+    $("apexNote").textContent =
+      apexData.graded + " of " + apexData.total + " families scored" + asOf;
   }
 
   const stats = $("apexStats");

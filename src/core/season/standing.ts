@@ -94,6 +94,18 @@ export interface ApexStanding {
   points: number;
   graded: number;
   total: number;
+  /**
+   * When the oldest board this standing rests on was sampled.
+   *
+   * A board position is read from committed samples, not from KovaaK's live. That is
+   * deliberate - the app owes nothing to a service being reachable - but it makes
+   * "#7,307 of 119,424" a statement about a particular day, and presenting it as
+   * current would be a small lie told confidently. The OLDEST of the boards in play,
+   * because the standing is only as fresh as its stalest input.
+   *
+   * Null when nothing is graded, which is the honest answer rather than today's date.
+   */
+  sampledAt: string | null;
 }
 
 export interface ApexSources {
@@ -207,11 +219,21 @@ export function apexStanding(
     };
   });
 
+  // Only the boards that actually carried a score: an unplayed family's board is not
+  // something this standing rests on, and letting it set the date would age the whole
+  // readout on the strength of a scenario nobody opened.
+  const used = categories
+    .flatMap((c) => c.families)
+    .filter((f) => f.score !== null)
+    .map((f) => sources.boards.get(f.scenario)?.sampledAt)
+    .filter((d): d is string => typeof d === "string");
+
   return {
     categories,
     points: categories.reduce((sum, c) => sum + c.points, 0),
     graded: categories.reduce((sum, c) => sum + c.graded, 0),
     total: categories.reduce((sum, c) => sum + c.total, 0),
+    sampledAt: used.length ? used.reduce((a, b) => (a < b ? a : b)) : null,
   };
 }
 
