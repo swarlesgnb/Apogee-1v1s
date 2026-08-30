@@ -14,7 +14,7 @@
     "normalisation as everybody else's, and Voltaic published where they belong."
   ],
   "source": "data/benchmarks/*.json category names + data/scenario_taxonomy.json aim types",
-  "derivedAt": "2026-08-29T19:21:51.366Z",
+  "derivedAt": "2026-08-30T16:12:01.021Z",
   "benchmarks": 43,
   "categories": {
     "Clicking": [
@@ -363,7 +363,7 @@
       "category": "Clicking",
       "subSkill": "Linear Clicking",
       "namedBy": 9,
-      "scenarios": 47,
+      "scenarios": 45,
       "benchmarks": [
         {
           "benchmark": "Jade Palace Dynamic",
@@ -379,7 +379,7 @@
             "Evasive",
             "Linear"
           ],
-          "scenarios": 9
+          "scenarios": 7
         },
         {
           "benchmark": "Avasive S1",
@@ -1175,14 +1175,14 @@
       "category": "Switching",
       "subSkill": "Evasive Switching",
       "namedBy": 15,
-      "scenarios": 86,
+      "scenarios": 88,
       "benchmarks": [
         {
           "benchmark": "Aimerz+ Evasive Switching",
           "labels": [
             "Evasive Switch"
           ],
-          "scenarios": 18
+          "scenarios": 20
         },
         {
           "benchmark": "Avasive S2",
@@ -1197,6 +1197,13 @@
             "Evasive"
           ],
           "scenarios": 12
+        },
+        {
+          "benchmark": "snakbox Benchmark",
+          "labels": [
+            "Evasive Switching"
+          ],
+          "scenarios": 6
         },
         {
           "benchmark": "Avasive S1",
@@ -1220,9 +1227,9 @@
           "scenarios": 6
         },
         {
-          "benchmark": "snakbox Benchmark",
+          "benchmark": "Viscose Benchmarks",
           "labels": [
-            "Evasive Switching"
+            "Evasive"
           ],
           "scenarios": 4
         },
@@ -1257,13 +1264,6 @@
         },
         {
           "benchmark": "SuperbAim S2",
-          "labels": [
-            "Evasive"
-          ],
-          "scenarios": 2
-        },
-        {
-          "benchmark": "Viscose Benchmarks",
           "labels": [
             "Evasive"
           ],
@@ -1473,6 +1473,13 @@
       ]
     },
     {
+      "label": "Switching :: Post-Flick",
+      "scenarios": 10,
+      "benchmarks": [
+        "Viscose Benchmarks S2"
+      ]
+    },
+    {
       "label": "Clicking :: Normal",
       "scenarios": 10,
       "benchmarks": [
@@ -1502,13 +1509,6 @@
     },
     {
       "label": "Tracking :: Speed",
-      "scenarios": 8,
-      "benchmarks": [
-        "Viscose Benchmarks S2"
-      ]
-    },
-    {
-      "label": "Switching :: Post-Flick",
       "scenarios": 8,
       "benchmarks": [
         "Viscose Benchmarks S2"
@@ -1561,20 +1561,6 @@
       "scenarios": 6,
       "benchmarks": [
         "Viscose Benchmarks",
-        "Viscose Benchmarks S2"
-      ]
-    },
-    {
-      "label": "Clicking :: Evasive Switch",
-      "scenarios": 4,
-      "benchmarks": [
-        "Aimerz+ Evasive Switching"
-      ]
-    },
-    {
-      "label": "Clicking :: Post-Flick",
-      "scenarios": 4,
-      "benchmarks": [
         "Viscose Benchmarks S2"
       ]
     },
@@ -1748,10 +1734,10 @@
       ]
     },
     {
-      "label": "Clicking :: Evasive Switching",
+      "label": "Clicking :: Evasive Switch",
       "scenarios": 2,
       "benchmarks": [
-        "snakbox Benchmark"
+        "Aimerz+ Evasive Switching"
       ]
     },
     {
@@ -1808,6 +1794,13 @@
       "scenarios": 2,
       "benchmarks": [
         "Revosect S1"
+      ]
+    },
+    {
+      "label": "Clicking :: Post-Flick",
+      "scenarios": 2,
+      "benchmarks": [
+        "Viscose Benchmarks S2"
       ]
     },
     {
@@ -25279,9 +25272,9 @@
     {
       "scenario": "domiSwitch",
       "leaderboardId": 83035,
-      "category": "Clicking",
+      "category": "Switching",
       "categoryFrom": "kovaaks",
-      "subSkill": "Linear Clicking",
+      "subSkill": "Evasive Switching",
       "via": "label",
       "entries": 36637,
       "plays": 387700,
@@ -25345,9 +25338,9 @@
     {
       "scenario": "domiSwitch Easy",
       "leaderboardId": 83043,
-      "category": "Clicking",
+      "category": "Switching",
       "categoryFrom": "kovaaks",
-      "subSkill": "Linear Clicking",
+      "subSkill": "Evasive Switching",
       "via": "label",
       "entries": 77522,
       "plays": 713438,

@@ -6349,8 +6349,8 @@
     },
     "domiSwitch": {
       "leaderboardId": 83035,
-      "aimType": "Clicking",
-      "subCategory": "Linear Clicking"
+      "aimType": "Switching",
+      "subCategory": "Evasive Switching"
     },
     "domiSwitch Avasive": {
       "leaderboardId": 129746,
@@ -6364,8 +6364,8 @@
     },
     "domiSwitch Easy": {
       "leaderboardId": 83043,
-      "aimType": "Clicking",
-      "subCategory": "Linear Clicking"
+      "aimType": "Switching",
+      "subCategory": "Evasive Switching"
     },
     "domiSwitch Easy Slower": {
       "leaderboardId": 128818,

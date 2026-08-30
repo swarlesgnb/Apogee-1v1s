@@ -236,10 +236,10 @@
         0.008
       ]
     ],
-    "leaderboardEntries": 6463858,
+    "leaderboardEntries": 6421748,
     "note": "Every threshold is the score at a given percentile of that scenario's KovaaK's leaderboard. The percentiles are ours; the scores are a fact about the game. No other benchmark's numbers appear in this file - where one is consulted it is converted to percentiles and discarded (tools/calibrateLadder.ts). Season 2 re-cuts these against Apogee's own population, including where one window hands over to the next."
   },
-  "builtAt": "2026-08-30T16:00:03.350Z",
+  "builtAt": "2026-08-30T16:12:37.829Z",
   "scenarios": [
     {
       "scenario": "VT ww5t Novice S5",
@@ -2384,27 +2384,33 @@
       }
     },
     {
-      "scenario": "tamTargetSwitch Control Hard",
+      "scenario": "domiSwitch",
       "category": "Switching",
       "family": "FlyTS",
       "subCategory": "Evasive Switching",
       "window": 3,
-      "label": "tamTargetSwitch Control Hard",
-      "leaderboardId": 757,
+      "label": "domiSwitch",
+      "leaderboardId": 83035,
       "rankMaxes": [
-        37,
-        38,
-        39,
-        40
+        6494,
+        6696,
+        6830,
+        6975
       ],
       "derivedFrom": {
-        "leaderboardEntries": 60383,
+        "leaderboardEntries": 18273,
         "topFractions": [
           0.022,
           0.015,
           0.011,
           0.008
         ]
+      },
+      "corpus": {
+        "runs": 7,
+        "best": 5193,
+        "median": 5015,
+        "reaches": null
       }
     },
     {

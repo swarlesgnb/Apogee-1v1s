@@ -387,14 +387,42 @@ if (unknown.length > 0) {
 const untyped: string[] = [];
 const miscategorised: string[] = [];
 
+/**
+ * Scenarios whose KovaaK's aim type has been measured to be wrong.
+ *
+ * KovaaK's is authoritative here and stays authoritative: this is the only mechanism that
+ * can overrule it, it carries a measurement rather than an opinion, and validate:aimtypes
+ * re-derives that measurement from the corpus. Read as data rather than reimplemented so
+ * the pool, the seed and the sub-skill derivation cannot come to disagree about which
+ * scenarios are corrected.
+ */
+const aimTypeCorrections = new Map<string, string>(
+  Object.entries(
+    (
+      JSON.parse(readFileSync(dataFile("aim_type_corrections.json"), "utf8")) as {
+        corrections: Record<string, { aimType: string }>;
+      }
+    ).corrections,
+  ).map(([name, c]) => [name, c.aimType]),
+);
+
+const corrected: string[] = [];
+
 for (const v of variants) {
+  const correction = normaliseSkill(aimTypeCorrections.get(v.scenario));
   const fromKovaaks = normaliseSkill(taxonomy.get(v.scenario)?.aimType);
   const derived = derivedFor.get(v.scenario);
-  const source = fromKovaaks
-    ? { category: fromKovaaks, who: "KovaaK's" }
-    : derived?.category
-      ? { category: derived.category, who: "the benchmarks that publish it" }
-      : null;
+  const source = correction
+    ? { category: correction, who: "a measured correction" }
+    : fromKovaaks
+      ? { category: fromKovaaks, who: "KovaaK's" }
+      : derived?.category
+        ? { category: derived.category, who: "the benchmarks that publish it" }
+        : null;
+
+  if (correction && fromKovaaks && correction !== fromKovaaks) {
+    corrected.push(`${v.scenario}: ${fromKovaaks} to KovaaK's, ${correction} measured`);
+  }
 
   if (!source) {
     untyped.push(v.scenario);
@@ -405,6 +433,10 @@ for (const v of variants) {
       `${v.scenario} is ${v.category} here, ${source.category} to ${source.who}`,
     );
   }
+}
+
+for (const line of corrected) {
+  console.log(`  ${DIM}correction  ${line}${RESET}`);
 }
 
 check(

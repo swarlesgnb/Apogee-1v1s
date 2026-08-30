@@ -40,6 +40,7 @@ POOL = ROOT / "data" / "pool.json"
 SCORE_MODELS = ROOT / "data" / "score_models.json"
 OUT = ROOT / "supabase" / "seed.sql"
 IDENTITY = ROOT / "data" / "scenario_identity.json"
+CORRECTIONS = ROOT / "data" / "aim_type_corrections.json"
 
 
 def sql_str(value: str | None) -> str:
@@ -63,6 +64,49 @@ def normalise_skill(value: str | None) -> str | None:
     if not value:
         return None
     return SKILLS.get(value.strip().lower())
+
+
+def load_aim_type_corrections(taxonomy: dict) -> dict[str, dict]:
+    """Scenarios where KovaaK's aim type is wrong, and has been measured to be wrong.
+
+    KovaaK's per-scenario aimType is preferred over everything else below, and that
+    preference is right: a benchmark author's category name is a sub-category as often as
+    a category. It is not infallible, and the failure is not cosmetic - aim_type is the
+    column find-match partitions the queue on, so a scenario mislabelled here is graded by
+    the season as one skill and matched as another.
+
+    Corrections are therefore allowed, and fenced. Each one carries a measurement rather
+    than an opinion (shots per kill, which separates the corpus by two orders of magnitude),
+    and `npm run validate:aimtypes` re-derives every figure from the stats folder.
+
+    Refused here: a correction that agrees with KovaaK's, which has stopped doing anything,
+    and one naming a scenario the taxonomy has never heard of, which would silently never
+    apply. Both are how a wrong label becomes permanent.
+    """
+    if not CORRECTIONS.exists():
+        return {}
+
+    doc = json.loads(CORRECTIONS.read_text(encoding="utf-8"))
+    out: dict[str, dict] = {}
+
+    for name, entry in (doc.get("corrections") or {}).items():
+        known = normalise_skill((taxonomy.get(name) or {}).get("aimType"))
+        want = normalise_skill(entry.get("aimType"))
+
+        if want is None:
+            raise SystemExit(f"aim_type_corrections: {name} names no usable aim type")
+        if name not in taxonomy:
+            raise SystemExit(
+                f"aim_type_corrections: {name} is not a scenario KovaaK's publishes"
+            )
+        if known is not None and known == want:
+            raise SystemExit(
+                f"aim_type_corrections: {name} corrects to {want}, which is already "
+                f"what KovaaK's says - remove it"
+            )
+        out[name] = entry
+
+    return out
 
 
 def sql_num_array(values: list) -> str:
@@ -94,6 +138,8 @@ def main() -> int:
     if TAXONOMY.exists():
         data = json.loads(TAXONOMY.read_text(encoding="utf-8"))
         taxonomy = {s["name"]: s for s in data.get("scenarios", [])}
+
+    corrections = load_aim_type_corrections(taxonomy)
 
     subcats = json.loads(SUBCATS.read_text(encoding="utf-8"))["families"]
 
@@ -160,8 +206,11 @@ def main() -> int:
                     # - Voltaic's Elite tier names its categories by SUB-category, so
                     # trusting it blindly labels Pasu as "Dynamic" rather than
                     # "Clicking".
+                    # A measured correction outranks KovaaK's; everything else does not.
+                    corrected = corrections.get(name)
                     aim_type = (
-                        normalise_skill(tax.get("aimType"))
+                        (normalise_skill(corrected["aimType"]) if corrected else None)
+                        or normalise_skill(tax.get("aimType"))
                         or normalise_skill(sub.get("skill"))
                         or normalise_skill(cat.get("name"))
                     )

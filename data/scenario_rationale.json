@@ -382,7 +382,7 @@
       "family": "FlyTS",
       "subCategory": "Evasive Switching",
       "isolates": "Switching onto targets that are actively evading on all three axes.",
-      "why": "Evasive switching is where the target does not cooperate: acquisition is only half the job and the other half is staying on it. Voltaic's FlyTS is built around unpredictable strafe directions and a long time-to-kill, which is exactly that split, and it carries the family through three windows. The Expert variant is tamTargetSwitch Control Hard, chosen over the scenario it replaced on the one thing that was wrong with it: Aimerz+ files this in its Hard tier and files a distinct, larger-target variant in Easy, so the band is a claim its author actually makes rather than one their own Easy listing contradicts. It is a regenerating-target scenario, which is what makes the score depend on holding the target after the flick rather than on reaching it.",
+      "why": "Evasive switching is where the target does not cooperate: acquisition is only half the job and the other half is staying on it. Voltaic's FlyTS is built around unpredictable strafe directions and a long time-to-kill, which is exactly that split, and it carries the family through three windows. The Expert variant is domiSwitch, the best-evidenced placement in the pool: four independent sources - Aimerz+, both Viscose seasons and snakbox - all file it in their hardest tier, none of them lists it twice, and it is one of the two scenarios the community names when asked what trains evasive switching. The other is tamTargetSwitch Smooth, which the Smooth Switching family grades, so the sub-skill's two families are the two scenarios people actually point at.",
       "evidence": [
         {
           "source": "voltaic-s5",
@@ -390,22 +390,22 @@
           "says": "\"Heavier focus on XYZ movement with a fairly high TTK, with the bots strafing in less conventional and predictable directions.\""
         },
         {
-          "source": "kovaaks-scenario",
-          "scenario": "tamTargetSwitch Control Hard",
-          "says": "The author's description: \"Small regenerating dots wiggle back and forth around you while also bouncing slowly, 0.5s ttk, up to 1s to regen to full, starts regening 0.3s after going off target\" - the regen clock is what prices going off target, which is the sub-skill stated as a scoring rule."
+          "source": "steam-ts-thread",
+          "scenario": "domiSwitch",
+          "says": "Named alongside tamTargetSwitch Smooth as an \"evasive long TTK\" scenario that emphasises landing accuracy and post-flick micro correction, which the thread calls \"pretty pivotal for good TS\"."
         },
         {
-          "source": "steam-ts-thread",
-          "scenario": "tamTargetSwitch Control Hard",
-          "says": "The tamTargetSwitch scenarios are what the community names when asked what trains evasive switching, as \"evasive long TTK bots, that emphasize landing accuracy\" and post-flick micro correction - \"pretty pivotal for good TS\"."
+          "source": "kovaaks-scenario",
+          "scenario": "domiSwitch",
+          "says": "The author's description is \"55 hp, regen after 0.3 seconds without damage\" - a regenerating health pool makes the score depend on staying on the target after the flick rather than on reaching it, which is the property the sub-skill is named for."
         }
       ],
       "audience": {
-        "scenario": "tamTargetSwitch Control Hard",
-        "plays": 1538806,
-        "entries": 110714
+        "scenario": "domiSwitch",
+        "plays": 387700,
+        "entries": 36637
       },
-      "thin": "One source bands this at window 3 - Aimerz+ Evasive Switching Hard - where the family's lower windows carry Voltaic's. That is the strongest placement the corpus allows: of every Evasive Switching scenario any source bands above Advanced, this is the only one whose board clears what the Expert window needs to put seventy players above its hardest rank, at 60,383 entries. It also puts a second tamTargetSwitch lineage in the sub-skill, since Smooth Switching grades tamTargetSwitch Smooth Hard; the two are different scenarios by one author rather than one scenario twice, but the independence the two-families rule wants is weaker here than anywhere else in the pool."
+      "thin": "KovaaK's classifies this scenario Clicking, and it is the one place in the pool where Apogee overrules a first-party source. It is overruled on a measurement rather than an opinion: domiSwitch fires 177 shots per kill at a regenerating target, against the 1.1 to 1.3 every clicking scenario in the corpus produces. The correction and its re-derivation live in data/aim_type_corrections.json and npm run validate:aimtypes. Worth knowing because aim_type is the column find-match partitions the queue on, so if the correction were ever dropped this scenario would be graded as Switching and matched as Clicking."
     },
     {
       "family": "Smooth Switching",

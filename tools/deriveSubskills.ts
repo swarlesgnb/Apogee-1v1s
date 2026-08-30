@@ -66,6 +66,7 @@ import { fileURLToPath } from "node:url";
 const root = join(fileURLToPath(new URL(".", import.meta.url)), "..");
 const BENCH_DIR = join(root, "data", "benchmarks");
 const TAXONOMY = join(root, "data", "scenario_taxonomy.json");
+const CORRECTIONS = join(root, "data", "aim_type_corrections.json");
 const VOLTAIC = join(root, "data", "subcategories.json");
 const OUT = join(root, "data", "subskills.json");
 
@@ -307,6 +308,34 @@ const taxonomy = new Map<string, TaxonomyEntry>(
   ).scenarios.map((s) => [s.name, s]),
 );
 
+/**
+ * Scenarios whose KovaaK's aim type has been measured to be wrong.
+ *
+ * The aim type is an *input* to the sub-skill lookup here - the sub-skill is keyed on
+ * (normalised label, aim type) - so one wrong aim type does not merely mislabel a
+ * category, it sends the scenario to the wrong sub-skill as well. domiSwitch is the
+ * case that forced this: KovaaK's calls it Clicking, so a label of "Evasive Switch"
+ * resolved against Clicking and landed it in Linear Clicking.
+ *
+ * See data/aim_type_corrections.json for the measurement and validate:aimtypes for the
+ * re-derivation. Applied before anything else reads the aim type, so the correction
+ * reaches the sub-skill and not only the category.
+ */
+const aimTypeCorrections = new Map<string, string>(
+  Object.entries(
+    (
+      JSON.parse(readFileSync(CORRECTIONS, "utf8")) as {
+        corrections: Record<string, { aimType: string }>;
+      }
+    ).corrections,
+  ).map(([name, c]) => [name, c.aimType]),
+);
+
+/** KovaaK's aim type for a scenario, with a measured correction applied. */
+function correctedAimType(name: string, raw: string | null | undefined): string | null {
+  return aimTypeOf(aimTypeCorrections.get(name) ?? raw);
+}
+
 // ---- read the corpus ------------------------------------------------------------------
 const scenarios = new Map<string, Scenario>();
 const benchmarks: string[] = [];
@@ -322,8 +351,8 @@ for (const file of readdirSync(BENCH_DIR).filter((f) => f.endsWith(".json"))) {
         const entry = scenarios.get(s.name) ?? {
           scenario: s.name,
           leaderboardId: s.leaderboardId ?? meta?.leaderboardId ?? null,
-          category: aimTypeOf(meta?.aimType),
-          categoryFrom: aimTypeOf(meta?.aimType) ? "kovaaks" : null,
+          category: correctedAimType(s.name, meta?.aimType),
+          categoryFrom: correctedAimType(s.name, meta?.aimType) ? "kovaaks" : null,
           subSkill: null,
           via: null,
           entries: meta?.entries ?? null,
@@ -415,12 +444,20 @@ function inferAimTypes(): { fromWord: number; fromGroup: number; refused: number
     // 2. An ambiguous word is a refusal, not a licence to guess from the neighbours.
     //
     // This is the rule that had to be added, and it was added because the version without
-    // it was confidently wrong. Viscose's Hard tier files `domiSwitch` and
-    // `tamTargetSwitch Smooth` both under "Evasive" - one is clicking and one is target
-    // switching - so the slot is not homogeneous however much it looks like a slot, and
-    // taking a vote in it put a target-switching scenario into Linear Clicking. A label
-    // that two of the three tables claim has told us nothing about the category, and the
-    // neighbours in its box cannot be asked to make up the difference.
+    // it was confidently wrong. A benchmark's category slot is not homogeneous however
+    // much it looks like one, so taking a vote inside it put a target-switching scenario
+    // into Linear Clicking. A label that two of the three tables claim has told us nothing
+    // about the category, and the neighbours in its box cannot be asked to make up the
+    // difference.
+    //
+    // The example this comment used to give was wrong in an instructive way. It cited
+    // Viscose's Hard tier filing `domiSwitch` and `tamTargetSwitch Smooth` both under
+    // "Evasive" and called one of them clicking - which was KovaaK's aim type for
+    // domiSwitch, believed rather than measured. Both are target switching: domiSwitch
+    // fires 177 shots per kill at a regenerating target, against the 1.1 to 1.3 every
+    // clicking scenario in the corpus produces. See data/aim_type_corrections.json. The
+    // rule stands; only its illustration was borrowed from the mistake it was guarding
+    // against.
     if (implied.size > 1) {
       refused++;
       continue;

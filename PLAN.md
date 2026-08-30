@@ -212,13 +212,16 @@ it has three.
 
 **A word two of the three tables claim is a refusal, not a licence to guess.** The first
 version of that fallback took a vote inside the box instead — a benchmark's category slot
-in one difficulty looked homogeneous by construction — and was confidently wrong: Viscose's
-Hard tier files `domiSwitch` and `tamTargetSwitch Smooth` both under "Evasive", one
-clicking and one target switching, so the vote put a target-switching scenario into Linear
-Clicking with a 51,457-entry board behind it and nothing to say so. Voting is kept only for
-words that appear in no table at all — "Varied", "Other", "Horizontal" — where the box is
-the only evidence there is. 23 scenarios are refused outright, which is the right number to
-leave unclassified.
+in one difficulty looked homogeneous by construction — and was confidently wrong, putting a
+target-switching scenario into Linear Clicking with nothing to say so. Voting is kept only
+for words that appear in no table at all — "Varied", "Other", "Horizontal" — where the box
+is the only evidence there is. 23 scenarios are refused outright, which is the right number
+to leave unclassified.
+
+The example this used to give was itself the mistake. It cited Viscose's Hard tier filing
+`domiSwitch` and `tamTargetSwitch Smooth` both under "Evasive" and called one of them
+clicking — which was KovaaK's aim type for `domiSwitch`, believed rather than measured.
+Both are target switching. See *Correcting a first-party source* below.
 
 Two of the eleven are not Voltaic's, and are named by benchmarks their sheet cannot see:
 
@@ -985,27 +988,51 @@ Aimerz+ Evasive Switching shares only 3 of 21 scenarios between its tiers - but 
 is the same one by hand: its window 3 rests on an Aimerz+ Hard listing whose author *also*
 files it under Easy, and no rule was going to fix a placement its own source contradicts.
 
-`tamTargetSwitch Control Hard` takes the slot. Enumerating every Evasive Switching scenario
-any source bands above Advanced leaves exactly one that clears the Expert board floor, and
-it is the one whose author does not contradict it: Aimerz+ lists it in Hard and lists a
-distinct, larger-target variant in Easy, so the band is a claim actually made. 60,383 board
-entries against the 8,750 the window needs, and the author's own description - "small
-regenerating dots ... 0.5s ttk ... starts regening 0.3s after going off target" - states
-the sub-skill as a scoring rule: the regen clock is what prices going off target.
+`domiSwitch` takes the slot, and it is the best-evidenced placement in the pool: four
+independent sources - Aimerz+, both Viscose seasons and snakbox - all band it at window 3,
+none of them lists it twice, and it is one of the two scenarios the community names when
+asked what trains evasive switching. The other is `tamTargetSwitch Smooth`, which the Smooth
+Switching family grades, so the sub-skill's two families are the two scenarios people
+actually point at.
 
-It costs something, and the cost is recorded rather than glossed. Smooth Switching already
-grades `tamTargetSwitch Smooth Hard`, so both Evasive families now end on a tamTargetSwitch
-lineage - different scenarios by one author rather than one scenario twice, but weaker
-independence than anywhere else in the pool.
+### Correcting a first-party source
 
-`domiSwitch` is the better-evidenced scenario and is *not* used, which is worth writing
-down so it is not proposed again without the blocker. Four sources band it at window 3 and
-none of them lists it twice, and the community names it. But KovaaK's classifies it
-`Clicking`, and `data/scenario_identity.json` carries that into the `aim_type` column
-`find-match` partitions the queue on - so it would enter the pool as a Switching scenario
-for the ladder and a Linear Clicking one for matchmaking. Its 55hp regenerating target says
-KovaaK's is wrong, and correcting it is a change to the match system rather than to the
-pool. That is the road back to it.
+Using it meant overruling KovaaK's, which classifies `domiSwitch` as **Clicking**. That is
+not a cosmetic disagreement: `aim_type` is the column `find-match` partitions the queue on,
+so the scenario would have been graded by the season as Switching and matched as Clicking.
+It also poisons the sub-skill, because `deriveSubskills` keys on (label, aim type) - which
+is how a scenario four benchmarks call evasive switching came out as Linear Clicking.
+
+KovaaK's is authoritative here and stays authoritative. The one mechanism that can overrule
+it needs a measurement rather than an opinion, and the discriminator is **shots per kill**,
+read from the kill table of real runs. It separates the corpus by two orders of magnitude
+with nothing in between:
+
+```
+clicking     1w6ts reload v2            1.1   over 11,826 kills
+             VT Pasu Intermediate S5    1.3   over  3,142 kills
+switching    voxTargetSwitch           39.8   over  1,779 kills
+             VT DotTS Intermediate S5  40.5   over  5,184 kills
+
+domiSwitch                             177.4  over    201 kills
+domiSwitch Easy                        136.6  over  1,900 kills
+```
+
+A clicking scenario fires once per target. `domiSwitch` fires 177 times, with a Poke-Drill
+at a `regen_dot` bot that carries 55 health and regenerates 0.3s after damage stops - a
+single click cannot eliminate anything, and the score is decided by how much of the time the
+crosshair is on a target. It is not a clicking scenario under any reading.
+
+The correction lives in `data/aim_type_corrections.json` with its evidence, is applied by
+`generate_seed.py` and `deriveSubskills.ts` so the seed and the derivation cannot disagree,
+and `npm run validate:aimtypes` re-derives every figure above from the stats folder. It
+refuses a correction that agrees with KovaaK's, one naming a scenario KovaaK's has never
+heard of, and one whose measurement does not put it clear of the range it was assigned.
+Voltaic's published mapping still agrees with the derivation on all 106 scenarios it covers,
+which is the check that says the correction did not buy one scenario at the cost of others.
+
+`validate:pool` prints the override rather than swallowing it, because a scenario where this
+repo overrules the game is not something to discover by reading a diff.
 
 ### What rests on one opinion
 
