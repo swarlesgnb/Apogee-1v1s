@@ -1,0 +1,460 @@
+{
+  "$comment": "Why each family is in the pool, and who said so. data/pool.json decides WHAT the season grades; this file records WHY that choice is defensible, with a citation per claim. It exists because the pool's own justification was mechanical - a scenario was in because some benchmark author had banded it - and 'an author put it in a tier' does not answer 'is this a good measure of dynamic clicking'. Nothing reads this at runtime: it is documentation held to the same standard as code, which is what npm run validate:rationale is for. Every number quoted here is re-derived from data/scenario_taxonomy.json rather than trusted, and every family in the pool must appear.",
+  "$evidence": "Three kinds, in descending order of what they can settle. A benchmark author's published design note is the strongest: it says what the scenario was built to isolate, in the words of the person who built it. KovaaK's own in-game scenario description is next, and is first-party for scenarios no benchmark documents. Community discussion is last and is used only where it says something the other two do not - which is mostly about scenarios that predate the benchmarks that later adopted them. Where a family's evidence is thin, this file says so rather than padding it: 'thin' is a fact about the pool worth being able to see.",
+  "$audience": "plays and entries are KovaaK's own counters for the named scenario, copied from data/scenario_taxonomy.json and checked against it. They are here because 'the community plays this' is a claim that should carry a number. Read entries as people who have posted a score and plays as runs; the least-played scenario in the pool has 13,262 plays, so nothing here is obscure.",
+  "sources": {
+    "voltaic-s5": {
+      "title": "Announcing the Voltaic Season 5 Aiming Benchmarks BETA for KovaaKs!",
+      "url": "https://blog.voltaic.gg/announcing-the-voltaic-season-5-aiming-benchmarks-beta-for-kovaaks/",
+      "kind": "design note"
+    },
+    "kovaaks-scenario": {
+      "title": "KovaaK's scenario metadata, author-written descriptions",
+      "url": "https://kovaaks.com/webapp-backend/scenario/popular",
+      "kind": "first-party",
+      "note": "Mirrored into data/scenario_taxonomy.json; the description quoted is the author's own."
+    },
+    "steam-ts-thread": {
+      "title": "Which are the best Target Switching Scenarios? - KovaaK's General Discussions",
+      "url": "https://steamcommunity.com/app/824270/discussions/0/759554831917729263/",
+      "kind": "community"
+    }
+  },
+  "families": [
+    {
+      "family": "Wide Wall",
+      "subCategory": "Static Clicking",
+      "isolates": "Static clicking over long travel, at a sensitivity the scenario itself argues against lowering.",
+      "why": "Two claims have to hold for a static family: that it measures clicking rather than pathing, and that it does not quietly reward a sensitivity nobody plays at. Voltaic built ww5t for the second, and the Wide Wall lineage above it is the oldest and most-played static test in the game - 5,601,340 plays on the top-window variant alone, which is more evidence about what a static score means than any benchmark can supply.",
+      "evidence": [
+        {
+          "source": "voltaic-s5",
+          "scenario": "VT ww5t Novice S5",
+          "says": "Medium targets on a curved, exceptionally wide spawn region, designed \"to discourage the use of very low sensitivities\"."
+        }
+      ],
+      "audience": {
+        "scenario": "Wide Wall 3 Targets",
+        "plays": 5601340,
+        "entries": 554846
+      }
+    },
+    {
+      "family": "Reload Wall",
+      "subCategory": "Static Clicking",
+      "isolates": "Static clicking where accuracy is enforced by the ammo economy rather than by a score curve.",
+      "why": "The second static family deliberately measures the same skill under a different scoring rule. Square-root accuracy lets a fast spammer trade precision for volume; a reload clip does not, because a miss costs more ammo than a hit returns. Two static families that both reward spam would be one family measured twice.",
+      "evidence": [
+        {
+          "source": "voltaic-s5",
+          "scenario": "VT 1w6ts Rasp Novice",
+          "says": "1wXts is \"low target count and on the smaller side for small static targets to minimise pathing and to increase focus on pure static technique\"."
+        },
+        {
+          "source": "voltaic-s5",
+          "scenario": "1w6ts reload v2",
+          "says": "The reload mechanic replaces square-root accuracy with a modified ammo system forcing higher accuracy: misses cost more than hits restore."
+        }
+      ],
+      "audience": {
+        "scenario": "1w6ts reload v2",
+        "plays": 1518127,
+        "entries": 89714
+      }
+    },
+    {
+      "family": "Pasu",
+      "subCategory": "Dynamic Clicking",
+      "isolates": "Clicking a target that is moving diagonally and continuously - aiming while tracking.",
+      "why": "Pasu is the scenario the phrase 'dynamic clicking' is usually pointing at, and Voltaic kept it across seasons while fixing what was wrong with it. Its scoring is the interesting part: square-root accuracy is applied specifically to stop the scenario paying for spam, which is the failure mode that would make a dynamic score mean nothing.",
+      "evidence": [
+        {
+          "source": "voltaic-s5",
+          "scenario": "VT Pasu Novice S5",
+          "says": "Diagonally moving targets; the air-jump bug and awkward wall interaction were fixed, and it \"uses square root accuracy to balance the tendency for Pasu to be a more spam heavy clicking scenario\"."
+        }
+      ],
+      "audience": {
+        "scenario": "VT Pasu Intermediate S5",
+        "plays": 4433379,
+        "entries": 159512
+      }
+    },
+    {
+      "family": "Bounceshot",
+      "subCategory": "Dynamic Clicking",
+      "isolates": "Clicking targets whose direction changes on a bounce, so the timing is read rather than followed.",
+      "why": "Pasu's targets move predictably once read; a bouncing target resets that read every time it hits a surface. Pairing them keeps the sub-skill from resting entirely on how well a player has learned one movement pattern.",
+      "evidence": [
+        {
+          "source": "kovaaks-scenario",
+          "scenario": "Bounce 180 Tracking",
+          "says": "The author's description is \"To help vertical tracking on small bouncing balls\" - the bounce, not the strafe, is what the scenario is built around."
+        }
+      ],
+      "audience": {
+        "scenario": "VT Bounceshot Advanced",
+        "plays": 583247,
+        "entries": 38381
+      },
+      "thin": "The hardest windows here are the least documented in the Clicking pool. Voltaic dropped Bounceshot after S4 rather than replacing it, so there is no current design note for the lineage above Novice."
+    },
+    {
+      "family": "Floating Heads",
+      "subCategory": "Linear Clicking",
+      "isolates": "Clicking small targets on a predictable horizontal path, weighted toward precision over speed.",
+      "why": "Linear clicking is the bridge between static and dynamic, and it splits into a precision half and a speed half. This is the precision half, and Voltaic says so explicitly - small targets and square-root accuracy, against Frogtagon's speed focus.",
+      "evidence": [
+        {
+          "source": "voltaic-s5",
+          "scenario": "VT Floating Heads Novice S5",
+          "says": "Heads strafing horizontally with a vertical bob; it \"focuses more on precision, so the targets are fairly small and square root accuracy is used\"."
+        }
+      ],
+      "audience": {
+        "scenario": "Floating Heads Timing 400% FIXED",
+        "plays": 2732923,
+        "entries": 277773
+      }
+    },
+    {
+      "family": "voxTS Click",
+      "subCategory": "Linear Clicking",
+      "isolates": "Linear clicking at speed, where the cost is the travel between targets rather than the shot itself.",
+      "why": "The speed half of linear clicking. Frogtagon opens it because Voltaic tuned it for exactly that, and the vox lineage above it is the widely-played wide-angle version of the same question.",
+      "evidence": [
+        {
+          "source": "voltaic-s5",
+          "scenario": "VT Frogtagon Novice S5",
+          "says": "Frogs moving in straight lines, offering \"predictable strafes\" with intuitive bounce timing, \"intended to be more speed focused\"."
+        }
+      ],
+      "audience": {
+        "scenario": "VoxTargetSwitch Click Small",
+        "plays": 4528032,
+        "entries": 194707
+      }
+    },
+    {
+      "family": "Smallflicks",
+      "subCategory": "Micro Clicking",
+      "isolates": "Repeated short flicks between two close targets, under a reload clip.",
+      "why": "Micro clicking is the sub-skill Voltaic's nine do not name, and it is not static clicking made smaller: the limiting factor is the correction at the end of a very short flick, not target acquisition. The smallflicks lineage is the community's standard test of it and long predates the benchmarks that adopted it.",
+      "evidence": [
+        {
+          "source": "kovaaks-scenario",
+          "scenario": "1w2ts reload smallflicks larger",
+          "says": "Two close small targets that respawn instantly - practice for micro corrections, micro flicking and cluster work."
+        }
+      ],
+      "audience": {
+        "scenario": "1w2ts reload smallflicks slightly larger",
+        "plays": 370212,
+        "entries": 41462
+      }
+    },
+    {
+      "family": "eth Pasu Micro",
+      "subCategory": "Micro Clicking",
+      "isolates": "Micro clicking on a target that is also moving, so the correction is against a shifting point.",
+      "why": "Smallflicks holds the static half of micro clicking; this holds the moving half. Grading micro on two static scenarios would measure one skill twice and leave the harder version of it unmeasured.",
+      "evidence": [
+        {
+          "source": "kovaaks-scenario",
+          "scenario": "eth Pasu Micro Medium",
+          "says": "A Pasu-derived scenario scaled down to micro distances, so the target moves while the correction is being made."
+        }
+      ],
+      "audience": {
+        "scenario": "eth Pasu Micro Medium",
+        "plays": 303768,
+        "entries": 38904
+      },
+      "thin": "The Entry variant that opens this family has 13,262 plays, the smallest audience in the pool. It is used because it is the only novice-tier micro scenario the 43-benchmark corpus contains."
+    },
+    {
+      "family": "Smoothbot",
+      "subCategory": "Precise Tracking",
+      "isolates": "Holding a crosshair on a small target moving smoothly and predictably.",
+      "why": "The purest precise-tracking test in the pool: predictable movement, so what is being measured is how steadily the crosshair is held rather than how well the movement is read. That separation is the whole reason Precise and Reading are different sub-skills here.",
+      "evidence": [
+        {
+          "source": "kovaaks-scenario",
+          "scenario": "VT Smoothbot Novice",
+          "says": "A smoothly moving bot with no direction changes to react to, which is what isolates holding from reading."
+        }
+      ],
+      "audience": {
+        "scenario": "VT Smoothbot Novice",
+        "plays": 4442796,
+        "entries": 326600
+      }
+    },
+    {
+      "family": "waldoTS",
+      "subCategory": "Precise Tracking",
+      "isolates": "Precise tracking where the target's speed changes, so a learned rhythm stops working.",
+      "why": "Smoothbot can be beaten by settling into the target's rhythm. Voltaic built Snake Track specifically to stop that, which makes the two a genuine pair rather than a duplicate: one measures the hold, the other measures the hold when the rhythm is taken away.",
+      "evidence": [
+        {
+          "source": "voltaic-s5",
+          "scenario": "VT Snake Track Novice S5",
+          "says": "A thin snake with accelerating and decelerating strafes, which prevents pure centering and forces \"a higher focus on tracking and less on rhythm\"."
+        }
+      ],
+      "audience": {
+        "scenario": "waldoTS",
+        "plays": 3698827,
+        "entries": 240024
+      }
+    },
+    {
+      "family": "Air CELESTIAL",
+      "subCategory": "Reactive Tracking",
+      "isolates": "Reacting to direction changes in the air, where there is no floor to constrain the movement.",
+      "why": "Reactive tracking is about the cost of a direction change, and air targets make that cost highest because the change can come on any axis. Voltaic rebuilt Aether for movement variety rather than difficulty, which is the right property for the novice end of a reactive ladder.",
+      "evidence": [
+        {
+          "source": "voltaic-s5",
+          "scenario": "VT Aether Novice S5",
+          "says": "Aerial strafes both vertical and horizontal, with greater movement variety than typical Air variants and an emphasis on reactivity."
+        }
+      ],
+      "audience": {
+        "scenario": "Air CELESTIAL No UFO Easy",
+        "plays": 428376,
+        "entries": 59429
+      }
+    },
+    {
+      "family": "Ground Plaza",
+      "subCategory": "Reactive Tracking",
+      "isolates": "Reacting to horizontal-only strafes, which is the shape an actual duel takes.",
+      "why": "The counterpart to the air family, and the more transferable of the two: enemies in most FPS titles strafe on a plane. Voltaic's Ground exists precisely to hold the horizontal-only case apart from the free-movement one.",
+      "evidence": [
+        {
+          "source": "voltaic-s5",
+          "scenario": "VT Ground Novice S5",
+          "says": "Horizontal strafes only, inspired by Plink Plaza; the distinction from the air scenarios is the horizontal-only focus."
+        }
+      ],
+      "audience": {
+        "scenario": "Ground Plaza Sparky v3 OW",
+        "plays": 465924,
+        "entries": 39243
+      }
+    },
+    {
+      "family": "Controlsphere",
+      "subCategory": "Control Tracking",
+      "isolates": "Sustained tracking of a target circling at varying distance, with conventional strafing.",
+      "why": "Control tracking is the long-hold case: the target does not try to break the track, it simply keeps moving, and the score is how much of the time the crosshair was on it. Controlsphere is the most-played scenario in the entire pool at 10.9 million plays, which makes it about as close to a community standard as a scenario gets.",
+      "evidence": [
+        {
+          "source": "voltaic-s5",
+          "scenario": "Controlsphere",
+          "says": "Aerial strafes in a circular arena; it \"focuses less on forward and backwards movement and also has more conventional strafing behavior\"."
+        },
+        {
+          "source": "kovaaks-scenario",
+          "scenario": "Controlsphere",
+          "says": "The author's description: \"Tracking a small gently jumping dot as it flies around you at varying distance and speed.\""
+        }
+      ],
+      "audience": {
+        "scenario": "Controlsphere",
+        "plays": 10881494,
+        "entries": 253971
+      }
+    },
+    {
+      "family": "Raw Control",
+      "subCategory": "Control Tracking",
+      "isolates": "Control tracking on all three axes, including movement toward and away from the player.",
+      "why": "Controlsphere deliberately plays down forward and backward movement; this family is where that movement is the point. The Whisphere variants sit here rather than in Precise on Voltaic's own authority: they name whisphere as one of the two scenarios Controlsphere was derived from, which places it in the same lineage rather than a neighbouring one.",
+      "evidence": [
+        {
+          "source": "voltaic-s5",
+          "scenario": "VT Raw Control Novice S5",
+          "says": "\"Designed to focus on XYZ tracking with a target that doesn't collide with the walls.\""
+        },
+        {
+          "source": "voltaic-s5",
+          "scenario": "Whisphere",
+          "says": "Controlsphere is described as inspired by 'cloverrawcontrol' and 'whisphere', which is what puts Whisphere in the control lineage."
+        }
+      ],
+      "audience": {
+        "scenario": "Whisphere",
+        "plays": 2581721,
+        "entries": 107258
+      }
+    },
+    {
+      "family": "Air Voltaic",
+      "subCategory": "Reading Tracking",
+      "isolates": "Tracking where the difficulty is predicting where the target goes next, not holding the crosshair steady.",
+      "why": "Reading is the second sub-skill Voltaic's nine do not name, and separating it from Precise is what stops a smooth-hands player and a good-reads player getting the same tracking rank for different reasons. Air Voltaic is the long-standing test of the reading half.",
+      "evidence": [
+        {
+          "source": "kovaaks-scenario",
+          "scenario": "Air Voltaic Easy",
+          "says": "An air target whose strafe pattern is unpredictable enough that the limiting factor is the read rather than the hold."
+        }
+      ],
+      "audience": {
+        "scenario": "Air Voltaic Easy",
+        "plays": 1240728,
+        "entries": 108257
+      }
+    },
+    {
+      "family": "Strafe Reading",
+      "subCategory": "Reading Tracking",
+      "isolates": "Reading strafe direction changes at close range, where the angular speed is highest.",
+      "why": "The close-range half of reading. These are among the oldest scenarios in KovaaK's and were the community's standard tracking routine long before any benchmark adopted them - the reason the top-window variant still carries 761,427 plays without appearing in a current benchmark tier.",
+      "evidence": [
+        {
+          "source": "kovaaks-scenario",
+          "scenario": "Close Long Strafes Invincible",
+          "says": "The author's description is \"Close Fast Strafes, but the bots are invincible\" - the invincible variants exist so the score is time-on-target over a fixed period rather than a kill count."
+        },
+        {
+          "source": "kovaaks-scenario",
+          "scenario": "Air Angelic 4 Voltaic Easy",
+          "says": "Easy-to-read movement, used in community routines specifically for smoothness work rather than reading difficulty."
+        }
+      ],
+      "audience": {
+        "scenario": "Close Fast Strafes Invincible - Thin",
+        "plays": 761427,
+        "entries": 51437
+      },
+      "thin": "Two of this family's variants are among the three scenarios in the pool for which KovaaK's publishes no aim type and no benchmark tier settles one, so their category rests on the pool's own classification. The author descriptions above are what supports it."
+    },
+    {
+      "family": "DotTS",
+      "subCategory": "Speed Switching",
+      "isolates": "Switching between static targets, where all of the cost is the travel and none is the track.",
+      "why": "The cleanest possible speed-switching test: the targets do not move, so the only thing being measured is how fast the crosshair gets to the next one and stops. Voltaic built it as their first static target-switching scenario for that reason.",
+      "evidence": [
+        {
+          "source": "voltaic-s5",
+          "scenario": "VT DotTS Novice S5",
+          "says": "Static dots with a notably longer time-to-kill than Pokeball scenarios - their first static target switching scenario."
+        }
+      ],
+      "audience": {
+        "scenario": "VT DotTS Intermediate S5",
+        "plays": 2730409,
+        "entries": 115024
+      }
+    },
+    {
+      "family": "voxTS",
+      "subCategory": "Speed Switching",
+      "isolates": "Speed switching across wide angles, where the travel is long enough to dominate the shot.",
+      "why": "DotTS holds the short-travel case; the vox lineage holds the wide one, and the community treats it as the wide-angle switch-speed reference. Voltaic's EddieTS opens the family because it was rebuilt specifically to be predictable, which is what a speed test wants at the novice end.",
+      "evidence": [
+        {
+          "source": "voltaic-s5",
+          "scenario": "VT EddieTS Novice S5",
+          "says": "A replacement for PsalmTS with \"more regular and predictable movement, to lean into the speed target switching design\"."
+        },
+        {
+          "source": "steam-ts-thread",
+          "scenario": "voxTargetSwitch",
+          "says": "Recommended in community discussion for speed switching specifically, as against the evasive long-TTK scenarios in the same thread."
+        }
+      ],
+      "audience": {
+        "scenario": "voxTS Viscose Varied",
+        "plays": 4585828,
+        "entries": 429489
+      }
+    },
+    {
+      "family": "FlyTS",
+      "subCategory": "Evasive Switching",
+      "isolates": "Switching onto targets that are actively evading on all three axes.",
+      "why": "Evasive switching is where the target does not cooperate: acquisition is only half the job and the other half is staying on it. Voltaic's FlyTS is built around unpredictable strafe directions and a long time-to-kill, which is exactly that split.",
+      "evidence": [
+        {
+          "source": "voltaic-s5",
+          "scenario": "VT FlyTS Novice S5",
+          "says": "\"Heavier focus on XYZ movement with a fairly high TTK, with the bots strafing in less conventional and predictable directions.\""
+        }
+      ],
+      "audience": {
+        "scenario": "Bounce 180 Tracking",
+        "plays": 2583910,
+        "entries": 160671
+      }
+    },
+    {
+      "family": "Smooth Switching",
+      "subCategory": "Evasive Switching",
+      "isolates": "Switching where holding the target after the flick is what scores, not the flick.",
+      "why": "The clearest statement of the evasive half, and the one the community makes itself: the regenerating-dot scenarios pay for what happens after the flick lands. That is the property the sub-skill is named for, and it is why this family sits beside FlyTS rather than under Speed.",
+      "evidence": [
+        {
+          "source": "steam-ts-thread",
+          "scenario": "tamTargetSwitch Smooth Hard",
+          "says": "Recommended as an \"evasive long TTK\" scenario that emphasises landing accuracy and post-flick micro correction, which the thread calls \"pretty pivotal for good TS\"."
+        },
+        {
+          "source": "kovaaks-scenario",
+          "scenario": "tamTargetSwitch Smooth Hard",
+          "says": "The author's description: small regenerating dots circling the player, 0.5s TTK, regeneration starting immediately on going off target."
+        }
+      ],
+      "audience": {
+        "scenario": "tamTargetSwitch Smooth Hard",
+        "plays": 1372622,
+        "entries": 78907
+      }
+    },
+    {
+      "family": "ControlTS",
+      "subCategory": "Stability Switching",
+      "isolates": "Switching onto small, slow targets where precision rather than speed is the limit.",
+      "why": "Stability switching is the third switching sub-skill, and it is the one that is not about speed at all. Voltaic describes ControlTS as DriftTS with the emphasis moved to precision, which is the distinction the sub-skill exists to hold.",
+      "evidence": [
+        {
+          "source": "voltaic-s5",
+          "scenario": "VT ControlTS Novice S5",
+          "says": "Gently jumping targets, similar to DriftTS but with \"greater focus on precision, so the targets are slower and smaller\"."
+        }
+      ],
+      "audience": {
+        "scenario": "kinTS Voltaic",
+        "plays": 588780,
+        "entries": 44253
+      }
+    },
+    {
+      "family": "beanTS",
+      "subCategory": "Stability Switching",
+      "isolates": "Switching between close targets, where the flick is short enough that stability dominates.",
+      "why": "The short-range half of stability switching, and the family that sits closest to micro clicking without crossing into it - the author says as much. Penta Bounce opens it because Voltaic built it for predictable straight-line movement at varying angles, which is the novice form of the same question.",
+      "evidence": [
+        {
+          "source": "voltaic-s5",
+          "scenario": "VT Penta Bounce Novice S5",
+          "says": "Targets ricocheting inside a pentagon, built as a \"smoothness target switching scenario with predictable movement in straight lines at varying angles\"."
+        },
+        {
+          "source": "kovaaks-scenario",
+          "scenario": "beanTS",
+          "says": "The author's description: \"1w2t Smallflicks and voxTS had baby, and they named it beanTS\" - explicitly a cross of the micro-clicking and switching lineages."
+        }
+      ],
+      "audience": {
+        "scenario": "beanTS",
+        "plays": 2334521,
+        "entries": 166119
+      },
+      "thin": "beanTS is one of the three pool scenarios KovaaK's publishes no aim type for. Its sibling variant beanTS Larger is classified Target Switching by KovaaK's, and the two share an author description, which is what settles it."
+    }
+  ]
+}
