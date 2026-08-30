@@ -19,9 +19,10 @@
  * WHAT IT DOES NOT DO
  *
  * It does not recompute. `refresh-apex` writes a player's row when they ask, and this reads
- * what is stored - so a player who has never refreshed is absent from the board rather than
- * present with a stale zero, which is the honest state and the one that makes "refresh"
- * mean something.
+ * what is stored. Two kinds of player are therefore absent rather than present at zero: one
+ * who has never refreshed, and one who has refreshed with no verified best on any graded
+ * scenario. refresh-apex writes no row in either case, which is what keeps `population` a
+ * count of people with a standing rather than a count of people who have opened a screen.
  */
 
 import { handler, json, requireCaller, HttpError } from "../_shared/apogee.ts";

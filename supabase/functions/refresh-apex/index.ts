@@ -202,7 +202,20 @@ Deno.serve(handler(async (req, admin) => {
 
   let overall = { points: 0, graded: 0, families: 0 };
 
+  // A category nothing is graded in does not get a row.
+  //
+  // The client refreshes whenever the Apex screen opens, so writing unconditionally put
+  // everybody who had ever looked at the board onto it at zero - which contradicted what
+  // apex-board promises a few files away, made `population` a count of people who had
+  // opened a screen rather than people with a standing, and turned "you are #47 of 300"
+  // into a sentence about nothing.
+  //
+  // Per category rather than all-or-nothing: somebody with Tracking scores and no
+  // Clicking ones belongs on the Tracking board and not on the Clicking one, which is
+  // what each board claims to be.
   for (const [category, bucket] of perCategory) {
+    if (bucket.graded === 0) continue;
+
     rows.push({
       player_id: caller.playerId,
       category,
@@ -219,21 +232,30 @@ Deno.serve(handler(async (req, admin) => {
   }
 
   // The overall is a row like any other so the board can be sorted by one query
-  // whichever tab is showing, rather than summing three rows per player on read.
-  rows.push({
-    player_id: caller.playerId,
-    category: OVERALL,
-    points: overall.points,
-    graded: overall.graded,
-    family_count: overall.families,
-    updated_at: now,
-  });
+  // whichever tab is showing, rather than summing three rows per player on read. Same
+  // rule as the categories: nothing graded anywhere is not a standing of zero, it is no
+  // standing, and the difference is what the board is for.
+  if (overall.graded > 0) {
+    rows.push({
+      player_id: caller.playerId,
+      category: OVERALL,
+      points: overall.points,
+      graded: overall.graded,
+      family_count: overall.families,
+      updated_at: now,
+    });
+  }
 
-  const { error: writeError } = await admin
-    .from("apex_standing")
-    .upsert(rows, { onConflict: "player_id,category" });
+  // Nothing to write is a real outcome, not an error: a player who has uploaded no
+  // verified best on any graded scenario has no standing yet. Upserting an empty array
+  // would be a wasted round trip, and PostgREST is entitled to reject it.
+  if (rows.length > 0) {
+    const { error: writeError } = await admin
+      .from("apex_standing")
+      .upsert(rows, { onConflict: "player_id,category" });
 
-  if (writeError) return json({ error: writeError.message }, 500);
+    if (writeError) return json({ error: writeError.message }, 500);
+  }
 
   return json({
     season: season.name,
