@@ -334,17 +334,32 @@ export function validateSeason(season: Season): void {
           );
         }
       }
-      // More than one scenario in a window is allowed, and useful: a family is graded on
-      // the best of its variants, so two scenarios sharing a window means "prove this rank
-      // on either of these". What is not allowed is a window with none, which is the case
-      // above - that leaves the ranks it covers unreachable.
+      // Exactly one scenario per window, and this used to say the opposite.
       //
-      // Duplicates of the *same* scenario are refused, though: the same name twice adds
-      // nothing, and it is what a mis-click produces.
+      // The permissive reading was defensible on its own terms - a family is graded on the
+      // best of its variants, so two scenarios sharing a window could mean "prove this rank
+      // on either". It was also the odd one out. `validatePool` has always refused it, and
+      // the deployed schema refuses it outright: `season_scenarios_one_per_window` is a
+      // UNIQUE index on (season_id, family, window_index), so a season using it would pass
+      // every local check and fail on push. `topOfEachFamily` assumes it too, and resolves a
+      // tie by taking whichever variant it happened to see first.
+      //
+      // Three sources, two answers, and the two that agreed were the ones that could not be
+      // argued with. So this one moved.
       const names = variants.map((v) => v.scenario);
       const twice = names.find((n, i) => names.indexOf(n) !== i);
       if (twice) {
         throw new Error(`family ${family} lists ${twice} twice`);
+      }
+
+      const crowded = [...seen].find(
+        (w) => variants.filter((v) => (v.window ?? 0) === w).length > 1,
+      );
+      if (crowded !== undefined) {
+        throw new Error(
+          `family ${family} has more than one scenario in window ${crowded}; ` +
+            `a window holds exactly one, which is what the database enforces`,
+        );
       }
     }
   }

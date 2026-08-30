@@ -64,6 +64,7 @@ import { queueEligibility, type QueueEligibility } from "../core/match/eligibili
 import { sampleDistribution, RateLimited } from "../core/season/sampleLeaderboard.ts";
 import { thresholdsFrom, type Distribution } from "../core/season/percentiles.ts";
 import { rankDistribution } from "../core/season/distribution.ts";
+import { ENERGY_PER_RANK } from "../core/benchmarks/energy.ts";
 import { apexSources, apexStanding } from "../core/season/standing.ts";
 import type { ApexBoard } from "../core/season/apex.ts";
 import {
@@ -1692,7 +1693,10 @@ function suggestThresholds(scores: number[], ranks: number): number[] {
 
 ipcMain.handle("apogee:getSeason", () => {
   try {
-    return { season: loadSeason(), path: seasonPath() };
+    // energyPerRank travels with the season because the renderer needs it to rebalance a
+    // category's ladder and cannot import it - it is a browser script. It used to be a
+    // literal 2500 there, a third copy of a constant that has one owner.
+    return { season: loadSeason(), path: seasonPath(), energyPerRank: ENERGY_PER_RANK };
   } catch (err) {
     return { error: err instanceof Error ? err.message : String(err) };
   }

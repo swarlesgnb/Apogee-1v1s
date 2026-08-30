@@ -143,15 +143,17 @@ if (base.windowSize) {
     refuses(holed) ?? "accepted",
   );
 
-  // Two *different* scenarios in one window is a real thing to want: a family is graded on
-  // the best of its variants, so it reads as "either of these proves the rank".
+  // Two different scenarios in one window used to be accepted here and refused by
+  // validate:pool and by the database's UNIQUE (season_id, family, window_index). A season
+  // built on the permissive reading passed locally and failed on push, so this check now
+  // asserts the refusal the other two always gave.
   const shared = clone();
   const twin = shared.scenarios.find((s) => (s.window ?? 0) === 0)!;
   shared.scenarios.push({ ...twin, scenario: `${twin.scenario} (alternate)` });
   check(
-    "two different scenarios in one window is accepted",
-    refuses(shared) === null,
-    refuses(shared) ?? "",
+    "two scenarios in one window is refused, as the database refuses it",
+    refuses(shared) !== null,
+    refuses(shared) ?? "accepted",
   );
 
   // The same scenario twice adds nothing and is what a mis-click produces.

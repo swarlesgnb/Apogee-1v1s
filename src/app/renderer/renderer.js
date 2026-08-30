@@ -696,6 +696,16 @@ function showOpponent(data) {
  * and a renderer is the wrong place for a rule that decides what a rank means.
  */
 let seasonDraft = null;
+/**
+ * Energy one rank of one family is worth.
+ *
+ * Owned by src/core/benchmarks/energy.ts and delivered with the season, because the
+ * renderer is a pure view and cannot import from the core. This was a literal 2500
+ * inline in rebalanceEnergy - a third copy of a constant with one owner, which would
+ * have let the season editor compute a different ladder to everything that grades a
+ * score. The initialiser is a fallback for an older main process, not a default.
+ */
+let energyPerRank = 2500;
 
 /**
  * Which window each category is being edited at.
@@ -1011,7 +1021,10 @@ function rebalanceEnergy(category) {
     seasonDraft.scenarios.filter((x) => x.category === category).map((x) => x.family),
   ).size;
 
-  cat.rankMaxes = cat.rankNames.map((_, i) => families * 2500 * (i + 1));
+  // Sent with the season rather than restated here. This was a literal 2500 - a third
+  // copy of a constant owned by src/core/benchmarks/energy.ts - and a change there would
+  // have left the season editor quietly computing a different ladder to everything else.
+  cat.rankMaxes = cat.rankNames.map((_, i) => families * energyPerRank * (i + 1));
 }
 
 /**
@@ -1333,6 +1346,9 @@ async function loadSeasonEditor() {
   }
 
   seasonDraft = result.season;
+  // Owned by src/core/benchmarks/energy.ts and sent with the season. The fallback is
+  // only for an older main process; the value is not a preference.
+  if (typeof result.energyPerRank === "number") energyPerRank = result.energyPerRank;
 
   // An unsaved draft from a previous session wins over what is on disk, because it is the
   // newer of the two and the only copy of that work. Discard puts the saved season back.
@@ -3880,6 +3896,7 @@ if (HOST === "electron" && window.apogee && window.apogee.getSeason) {
   void window.apogee.getSeason().then((r) => {
     if (!r || !r.season) return;
     seasonPool = r.season;
+    if (typeof r.energyPerRank === "number") energyPerRank = r.energyPerRank;
     if (current) renderSeasonView(current);
   });
 }

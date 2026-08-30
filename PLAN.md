@@ -156,9 +156,9 @@ exactly the players most likely to try it.**
 
 ### Categories
 
-Three skills, eleven sub-skills, twenty-two families. A family is one scenario lineage
-measured at four difficulties (§14); a sub-skill carries two of them; a category's rank is
-the sum of its families'.
+Three skills and eleven sub-skills. A family is one scenario lineage measured at four
+difficulties (§14), and a category's rank is the sum of its families'. How many families
+a sub-skill carries is not fixed - see below.
 
 | Skill | Sub-skill | Families |
 |---|---|---|
@@ -174,10 +174,20 @@ the sum of its families'.
 | | Evasive Switching | `FlyTS`, `Smooth Switching` |
 | | Stability Switching | `ControlTS`, `beanTS` |
 
-Two per sub-skill everywhere, which is a rule rather than how it happened to work out.
-Category energy is the *sum* of its families, so a sub-skill with three families is a
-sub-skill weighted three times over — an uneven count is a silent thumb on the scale — and
-a sub-skill with one rests every rank it grades on a single scenario at each difficulty.
+The table above happens to carry two per sub-skill. That **was** written down as a rule,
+and it is not one any more.
+
+It was never enforced - no validator has ever checked it - and it was doing real damage as
+a habit: it decided which scenarios could be in the pool before anything was asked about
+whether they train anybody. A season whose job is improvement should pick the scenarios
+that teach the sub-skill and then count them, not pick two because two is the number.
+
+What the rule was protecting is real and survives as something visible rather than
+forbidden. Category energy is the *sum* of its families, so a sub-skill with three families
+is weighted half again as heavily as one with two, and a sub-skill with one rests every
+rank it grades on a single scenario per difficulty. Both are legitimate choices - some
+sub-skills genuinely matter more - and both must be *chosen and printed*, not fallen into.
+`npm run validate:pool` prints the family count per sub-skill for exactly that reason.
 
 Both levels are authoritative and neither is guessed. The three skills come from KovaaK's
 `aimType` field. The eleven sub-skills are derived in `data/subskills.json` from the

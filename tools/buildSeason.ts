@@ -59,9 +59,9 @@ import { candidateStatsFolders, findStatsFolder } from "../src/app/watcher.ts";
 import { renderRankSheet } from "../src/core/report/rankSheet.ts";
 import { thresholdsFrom, type Distribution } from "../src/core/season/percentiles.ts";
 import { validateSeason, type Season } from "../src/core/season/season.ts";
+import { ENERGY_PER_RANK } from "../src/core/benchmarks/energy.ts";
 
-/** Energy one rank of one family is worth. Mirrors ENERGY_PER_RANK. */
-const ENERGY_PER_RANK = 2500;
+
 
 /**
  * Placeholder names for ranks nobody has named yet, and a grey ramp to go with them.
