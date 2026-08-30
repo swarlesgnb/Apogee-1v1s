@@ -202,6 +202,38 @@ check("advisory", "narrow tiers are deliberate, not accidental", () => {
   ];
 });
 
+check("blocker", "the apex board has a sampled board for every scenario it grades", () => {
+  // The apex board is player-facing, and an empty one is worse than an absent one: it
+  // reads as "you have no standing" rather than as "this is not sampled yet". The
+  // graded scenarios are the top-window variant of each family - see standing.ts - so
+  // this checks the set the board actually reads rather than the whole pool.
+  const apexPath = file("data", "leaderboard_apex.json");
+  if (!existsSync(apexPath)) return [false, "leaderboard_apex.json missing: run npm run sample:apex"];
+
+  const boards = new Set<string>(
+    (JSON.parse(readFileSync(apexPath, "utf8")).boards ?? []).map(
+      (b: { scenario: string }) => b.scenario,
+    ),
+  );
+
+  const season = JSON.parse(readFileSync(file("data", "seasons", "season-1.json"), "utf8"));
+  const top = new Map<string, { scenario: string; window: number }>();
+  for (const sc of season.scenarios ?? []) {
+    const family = sc.family ?? sc.scenario;
+    const window = sc.window ?? 0;
+    const prior = top.get(family);
+    if (!prior || window > prior.window) top.set(family, { scenario: sc.scenario, window });
+  }
+
+  const missing = [...top.values()].filter((v) => !boards.has(v.scenario));
+  return [
+    missing.length === 0,
+    missing.length
+      ? `${missing.length} unsampled: ${missing.map((m) => m.scenario).join(", ")}`
+      : `${top.size} graded scenarios, all sampled`,
+  ];
+});
+
 check("blocker", "score models exist for local verification", () => {
   if (!existsSync(file("data", "score_models.json"))) return [false, "not generated"];
   const models = readJson("data", "score_models.json").models ?? {};
@@ -260,7 +292,16 @@ check("blocker", "clients cannot write ratings or match results", () => {
 
   // Any insert/update/all policy on these tables would let a client write its own
   // rating, which is the one thing the whole security model forbids.
-  const protectedTables = ["ratings", "matches", "match_sides", "baselines", "verified_pbs"];
+  const protectedTables = [
+    "ratings",
+    "matches",
+    "match_sides",
+    "baselines",
+    "verified_pbs",
+    // A client write here posts its own place on a public leaderboard, which is the
+    // same class of thing as writing its own rating.
+    "apex_standing",
+  ];
   const offending: string[] = [];
   for (const table of protectedTables) {
     const policies = [...sql.matchAll(new RegExp(`create policy \\w+ on ${table}\\s+for (\\w+)`, "g"))];
