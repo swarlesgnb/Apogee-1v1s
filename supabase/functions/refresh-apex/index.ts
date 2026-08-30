@@ -31,6 +31,7 @@
 import { handler, json, requireCaller, HttpError } from "../_shared/apogee.ts";
 import { enforceRateLimit } from "../_shared/rateLimit.ts";
 import { apexPoints, apexTopFraction, type ApexBoard } from "../../../src/core/season/apex.ts";
+import { topOfEachFamily } from "../../../src/core/season/standing.ts";
 import type { Distribution } from "../../../src/core/season/percentiles.ts";
 
 /**
@@ -89,25 +90,19 @@ Deno.serve(handler(async (req, admin) => {
   // whoever played that scenario, and an easy board is enormous and mostly people who
   // opened it once. Measured on the corpus, the same player reads better on the easier
   // scenario in 26 of 43 variant pairs. Fixing the graded variant removes the choice.
-  const gradedByFamily = new Map<
-    string,
-    { scenarioId: number; category: string; window: number }
-  >();
-
-  for (const row of (pool ?? []) as {
-    scenario_id: number;
-    category: string;
-    family: string | null;
-    window_index: number | null;
-  }[]) {
-    const family = row.family ?? String(row.scenario_id);
-    const window = row.window_index ?? 0;
-    const prior = gradedByFamily.get(family);
-
-    if (!prior || window > prior.window) {
-      gradedByFamily.set(family, { scenarioId: row.scenario_id, category: row.category, window });
-    }
-  }
+  // Same rule as the local board, from the same function - see topOfEachFamily.
+  const gradedByFamily = topOfEachFamily(
+    ((pool ?? []) as {
+      scenario_id: number;
+      category: string;
+      family: string | null;
+      window_index: number | null;
+    }[]).map((row) => ({
+      family: row.family ?? String(row.scenario_id),
+      window: row.window_index ?? 0,
+      value: { scenarioId: row.scenario_id, category: row.category },
+    })),
+  );
 
   if (gradedByFamily.size === 0) {
     throw new HttpError(503, `${season.name} has no scenarios to grade`);

@@ -100,15 +100,39 @@ export interface ApexSources {
  * grading everybody on a scenario one band too easy.
  */
 export function topWindowVariants(season: Season): Map<string, (typeof season.scenarios)[number]> {
-  const best = new Map<string, (typeof season.scenarios)[number]>();
+  return topOfEachFamily(
+    season.scenarios.map((s) => ({
+      family: s.family ?? s.scenario,
+      window: s.window ?? 0,
+      value: s,
+    })),
+  );
+}
 
-  for (const s of season.scenarios) {
-    const family = s.family ?? s.scenario;
-    const prior = best.get(family);
-    if (!prior || (s.window ?? 0) > (prior.window ?? 0)) best.set(family, s);
+/**
+ * The highest-window member of each family.
+ *
+ * Extracted so the Edge Function that writes the public board and the core that renders
+ * the local one apply the same rule rather than two copies of it. They read different
+ * shapes - the server has database rows, the core has a season file - so the shape is a
+ * parameter and the rule is not. Two derivations of one decision is how the seed and the
+ * live project come to disagree about what a scenario is, and this decision is the one that
+ * says which scenario a player's standing is even measured on.
+ *
+ * Ties keep the first seen. A family with two variants in its top window is a malformed
+ * pool, refused by validate:pool rather than resolved here.
+ */
+export function topOfEachFamily<T>(
+  members: { family: string; window: number; value: T }[],
+): Map<string, T> {
+  const best = new Map<string, { window: number; value: T }>();
+
+  for (const m of members) {
+    const prior = best.get(m.family);
+    if (!prior || m.window > prior.window) best.set(m.family, { window: m.window, value: m.value });
   }
 
-  return best;
+  return new Map([...best].map(([family, b]) => [family, b.value]));
 }
 
 /**
