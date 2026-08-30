@@ -100,6 +100,12 @@ contextBridge.exposeInMainWorld("apogee", {
   apex: () => ipcRenderer.invoke("apogee:apex"),
 
   /**
+   * The public apex board for one category, with the caller refreshed onto it first.
+   * Returns { category, population, entries, you, refreshed } or { error }.
+   */
+  apexBoard: (category) => ipcRenderer.invoke("apogee:apexBoard", { category }),
+
+  /**
    * Write the season's practice playlists into KovaaK's own Playlists folder. Pass an
    * array of names for a subset; omit it for all of them.
    * Returns { ok, dir, written, installed, note } or { error }.

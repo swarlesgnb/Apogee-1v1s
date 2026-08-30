@@ -3908,6 +3908,97 @@ let apexData = null;
  * wherever a player sits - which a round rank is not. Shown as the score and the
  * position it buys, because a target nobody can act on is decoration.
  */
+let apexBoardCategory = "Overall";
+let apexBoard = null;
+
+/**
+ * The public board: who is ahead of you, and by how much.
+ *
+ * Server-served rather than read from a table. `apex_standing` is read-self, because a
+ * leaderboard being public does not make the population enumerable - what a client sees
+ * about another player is the server's decision, the same rule opponent names follow.
+ *
+ * Absent rows are absent players, not zeros: somebody who has never refreshed is simply
+ * not on the board yet, and showing them at zero would be inventing a standing.
+ */
+function renderApexBoard() {
+  const note = $("apexBoardNote");
+  const body = $("apexBoardBody");
+  if (!body) return;
+
+  body.textContent = "";
+
+  if (!apexBoard) {
+    if (note) note.textContent = "sign in to see where you stand";
+    return;
+  }
+  if (apexBoard.error) {
+    if (note) note.textContent = apexBoard.error;
+    return;
+  }
+
+  if (note) {
+    const mine =
+      apexBoard.you && apexBoard.you.rank
+        ? "you are #" + num(apexBoard.you.rank) + " of " + num(apexBoard.population)
+        : "you are not on this board yet";
+    note.textContent = mine + " \u00b7 " + num(apexBoard.population) + " ranked";
+  }
+
+  if (apexBoard.entries.length === 0) {
+    const tr = document.createElement("tr");
+    tr.innerHTML = '<td colspan="4">Nobody has refreshed onto this board yet.</td>';
+    body.append(tr);
+    return;
+  }
+
+  apexBoard.entries.forEach((e) => {
+    const tr = document.createElement("tr");
+    if (e.you) tr.className = "apex-you";
+    tr.innerHTML =
+      "<td>" + num(e.rank) + "</td>" +
+      "<td>" + esc(e.displayName) + "</td>" +
+      "<td>" + esc(e.points.toFixed(2)) + "</td>" +
+      "<td>" + e.graded + " of " + e.families + "</td>";
+    body.append(tr);
+  });
+}
+
+/** One tab per category, plus the derived overall. */
+function renderApexTabs() {
+  const host = $("apexTabs");
+  if (!host) return;
+  host.textContent = "";
+
+  const names = ["Overall"].concat(
+    apexData && apexData.categories ? apexData.categories.map((c) => c.name) : [],
+  );
+
+  names.forEach((name) => {
+    const b = document.createElement("button");
+    b.className = "apex-tab";
+    b.type = "button";
+    b.setAttribute("role", "tab");
+    b.setAttribute("aria-selected", String(name === apexBoardCategory));
+    b.textContent = name;
+    b.addEventListener("click", () => {
+      if (name === apexBoardCategory) return;
+      apexBoardCategory = name;
+      renderApexTabs();
+      refreshApexBoard();
+    });
+    host.append(b);
+  });
+}
+
+function refreshApexBoard() {
+  if (HOST !== "electron" || !api || !api.apexBoard) return;
+  void api.apexBoard(apexBoardCategory).then((r) => {
+    apexBoard = r || null;
+    renderApexBoard();
+  });
+}
+
 function nextLabel(f) {
   if (!f.next) return "\u2014";
   return num(Math.round(f.next.score)) + " \u2192 #" + num(f.next.rank);
@@ -4000,6 +4091,8 @@ function refreshApex() {
     if (!r) return;
     apexData = r;
     renderApex();
+    renderApexTabs();
+    refreshApexBoard();
   });
 }
 

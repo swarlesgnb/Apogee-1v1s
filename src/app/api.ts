@@ -430,6 +430,51 @@ export async function fetchStanding(playerId: string): Promise<Standing | null> 
   };
 }
 
+export interface ApexBoardEntry {
+  rank: number;
+  displayName: string;
+  points: number;
+  graded: number;
+  families: number;
+  you: boolean;
+}
+
+export interface ApexBoard {
+  category: string;
+  population: number;
+  entries: ApexBoardEntry[];
+  you: {
+    rank: number | null;
+    points: number;
+    graded: number;
+    families: number;
+    updatedAt: string;
+  } | null;
+}
+
+/**
+ * The public apex board for one category.
+ *
+ * A function call rather than a select, because `apex_standing` is read-self: a
+ * leaderboard is public and the table is not, and what a client sees about another
+ * player is the server's decision (migration 20260817000004). What comes back carries a
+ * display name and a standing and no identifier at all.
+ */
+export function fetchApexBoard(category: string): Promise<ApexBoard> {
+  return callFunction<ApexBoard>("apex-board", { category });
+}
+
+/**
+ * Recompute the caller's own apex standing so the board has something current to show.
+ *
+ * Separate from reading it: a player absent from the board has simply never refreshed,
+ * which is honest, and makes the refresh mean something rather than being a no-op the
+ * client fires on every render.
+ */
+export function refreshApex(): Promise<{ season: string }> {
+  return callFunction<{ season: string }>("refresh-apex", {});
+}
+
 /**
  * Is the signed-in player an admin?
  *

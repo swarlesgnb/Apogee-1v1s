@@ -74,6 +74,14 @@ export const LIMITS: Record<string, Limit> = {
    * silent pass rather than a default.
    */
   "refresh-apex": { max: 10, windowSeconds: 300 },
+
+  /**
+   * 60 per 5 minutes. A read, and the cheapest one here: two counts and a fifty-row
+   * page off an index built for exactly this query. Loose because opening the Apex
+   * screen and flicking between its four categories is four calls, and a player doing
+   * that a few times in a session should never meet a limit they did nothing to earn.
+   */
+  "apex-board": { max: 60, windowSeconds: 300 },
 };
 
 /**

@@ -134,6 +134,17 @@
   }
   .wordmark .mark svg { width: 100%; height: 100%; display: block; }
 
+  /* -------------------------------------------------------- apex */
+  .apex-tabs { display: flex; gap: 6px; margin-bottom: 10px; flex-wrap: wrap; }
+  .apex-tab {
+    padding: 4px 10px; border-radius: 999px; cursor: pointer;
+    border: 1px solid var(--line); background: transparent;
+    color: inherit; font: inherit; font-size: 12px; opacity: .7;
+  }
+  .apex-tab[aria-selected="true"] { opacity: 1; border-color: currentColor; }
+  tr.apex-you { font-weight: 600; }
+  tr.apex-you td:first-child::after { content: " you"; opacity: .6; font-weight: 400; }
+
   /* ---------------------------------------------------------- nav */
 
   .nav {
@@ -2278,6 +2289,22 @@
                 <span class="note" id="apexNote"></span>
               </div>
               <div class="pbody"><div class="sv-stats" id="apexStats"></div></div>
+            </div>
+
+            <div class="panel">
+              <div class="phead">
+                <h2>Leaderboard</h2>
+                <span class="note" id="apexBoardNote">sign in to see where you stand</span>
+              </div>
+              <div class="pbody">
+                <div class="apex-tabs" id="apexTabs"></div>
+                <table class="scen">
+                  <thead><tr>
+                    <th>#</th><th>Player</th><th>Points</th><th>Families</th>
+                  </tr></thead>
+                  <tbody id="apexBoardBody"></tbody>
+                </table>
+              </div>
             </div>
 
             <div id="apexCategories"></div>

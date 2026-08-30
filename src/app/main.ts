@@ -39,7 +39,9 @@ import {
   abandonMatch,
   fetchActiveMatch,
   findMatch,
+  fetchApexBoard,
   isAdmin,
+  refreshApex,
   refreshBaselines,
   settleMatch,
   submitRun,
@@ -825,6 +827,14 @@ function runSmokeTest(): void {
         targets: [...document.querySelectorAll("#apexCategories tbody tr")].filter((r) =>
           /\\u2192 #[\\d,]+/.test(r.children[5] ? r.children[5].textContent : ""),
         ).length,
+        // The public board needs a session, so signed out it must degrade to a
+        // sentence rather than an empty panel. The tabs come from local data and
+        // should be there either way.
+        tabs: document.querySelectorAll("#apexTabs .apex-tab").length,
+        boardPanel: document.getElementById("apexBoardBody") !== null,
+        boardNote: (
+          document.getElementById("apexBoardNote")?.textContent ?? ""
+        ).trim().length,
       };
     })()`);
 
@@ -845,13 +855,23 @@ function runSmokeTest(): void {
       problems.push("no scored family says what to chase next");
     }
 
+    if (!apex.boardPanel) problems.push("the Apex screen has nowhere to list the leaderboard");
+    // One per category plus the derived overall.
+    else if (apex.tabs !== apex.categories + 1) {
+      problems.push("the leaderboard does not offer a tab per category");
+    } else if (apex.boardNote === 0) {
+      // Signed out this is the line telling somebody why the board is empty. Blank
+      // is the state that looks like a bug and reads like nothing.
+      problems.push("the leaderboard says nothing about why it is empty");
+    }
+
     console.log(
       `apex board   : ${
         apex.err
           ? `FAILED (${apex.err})`
           : `${apex.points.toFixed(2)} points, ${apex.graded}/${apex.families} families ` +
             `scored, ${apex.placed} placed, ${apex.targets} with a next target, ` +
-            `${apex.panels} categories painted`
+            `${apex.panels} categories painted, ${apex.tabs} board tabs`
       }`,
     );
     console.log(`preload      : ${hasBridge ? "bridge exposed" : "MISSING"}`);
@@ -1983,6 +2003,36 @@ ipcMain.handle("apogee:apex", () => {
       })),
     })),
   };
+});
+
+/**
+ * The public apex board for one category.
+ *
+ * Refresh then read, in that order and in one call, because the two are one action
+ * from the player's side: opening the board should show them on it. They stay separate
+ * on the server - `refresh-apex` writes, `apex-board` reads - so a client that only
+ * wants to look does not have to write to do it.
+ *
+ * A refresh failure is not fatal. The board is still worth showing without the caller's
+ * own row updated, and the most likely cause is the rate limit, which means their row
+ * was written moments ago anyway.
+ */
+ipcMain.handle("apogee:apexBoard", async (_e, { category }) => {
+  if (!state.session) return { error: "sign in to see the board" };
+
+  let refreshed = true;
+  try {
+    await refreshApex();
+  } catch {
+    refreshed = false;
+  }
+
+  try {
+    const board = await fetchApexBoard(String(category ?? "Overall"));
+    return { ...board, refreshed };
+  } catch (err) {
+    return { error: err instanceof Error ? err.message : String(err) };
+  }
 });
 
 ipcMain.handle("apogee:practice", () => {
