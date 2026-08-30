@@ -33,7 +33,14 @@ import { enforceRateLimit } from "../_shared/rateLimit.ts";
 import { apexPoints, apexTopFraction, type ApexBoard } from "../../../src/core/season/apex.ts";
 import type { Distribution } from "../../../src/core/season/percentiles.ts";
 
-/** The category name used for the sum of the three. Not a real category. */
+/**
+ * The category name the derived total is stored under. Not a real category.
+ *
+ * It shares a primary key with the real ones, so a season that named a category this
+ * would have one row silently overwrite the other - a public standing quietly wrong for
+ * everybody, with nothing failing. Refused below rather than escaped, because a category
+ * called Overall is a season worth rejecting, not one worth working around.
+ */
 const OVERALL = "Overall";
 
 interface BoardRow {
@@ -104,6 +111,14 @@ Deno.serve(handler(async (req, admin) => {
 
   if (gradedByFamily.size === 0) {
     throw new HttpError(503, `${season.name} has no scenarios to grade`);
+  }
+
+  if ([...gradedByFamily.values()].some((g) => g.category === OVERALL)) {
+    throw new HttpError(
+      500,
+      `${season.name} has a category named ${OVERALL}, which collides with the derived ` +
+        "total this board stores under that name",
+    );
   }
 
   const gradedIds = [...gradedByFamily.values()].map((g) => g.scenarioId);
