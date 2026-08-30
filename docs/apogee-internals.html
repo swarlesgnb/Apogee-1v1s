@@ -935,6 +935,48 @@ top 1%     2.0        top 0.01%   4.0</pre>
         so the screen works with no session and no network, and where the two disagree the
         server's is the one that counts.
       </p>
+
+      <h3>A leaderboard is public; the table is not</h3>
+      <p>
+        The cross-player board looks like the one place a plain <code>select</code> would do.
+        It is not, and the reason is a bug this project already had once.
+      </p>
+      <p>
+        Player profiles were world-readable at first — <code>for select using (true)</code> —
+        which let any anonymous caller enumerate the whole player base and join every account
+        to its real Steam profile. The policy that replaced it drew a rule rather than
+        patching a hole: <strong>anything a client sees about another player is a decision the
+        server makes</strong>. Opponent names already work that way, reaching the client
+        through <code>find-match</code>, which joins with the service role and returns the
+        name in its response.
+      </p>
+      <p>
+        The standings table shipped world-readable anyway, on the reasoning that a leaderboard
+        is public by definition. True of the board and false of the table: it would have
+        handed out an ordered list of every <code>player_id</code> and their activity to
+        anyone with a session — the same enumeration in weaker clothing. So the table is
+        read-self like <code>verified_pbs</code>, and the board is served by a function that
+        returns a display name, a standing and a position, and <em>no identifier at all</em>.
+        There is nothing in the response to correlate against anything; the caller finds
+        itself by a flag on its own row.
+      </p>
+
+      <h3>Absent is not zero</h3>
+      <p>
+        A player with no verified best on any graded scenario gets no row, and neither does a
+        category they have not scored in. The first version wrote rows unconditionally, and
+        since the client refreshes whenever the screen opens, everybody who so much as looked
+        at the board landed on it at 0.00 points. That made <code>population</code> a count of
+        people who had opened a screen rather than people with a standing, which turned
+        &ldquo;you are #47 of 300&rdquo; into a sentence about nothing.
+      </p>
+      <p>
+        Ranking is the ordinary competition kind — how many are strictly above you, plus one —
+        so two players tied at the top are both first and the next is third. That is asserted
+        against a real Postgres rather than left as a convention, because dense ranking is the
+        plausible thing for somebody to &ldquo;fix&rdquo; it into, and it would quietly tell
+        the second of two tied players they were second.
+      </p>
     </section>
 
     <!-- ================================================================= -->
