@@ -16,9 +16,9 @@ dispute a voided match.
 
 | Phase | | |
 |---|---|---|
-| 0 | Scenario taxonomy | done, 668 scenarios with aim type and board id |
+| 0 | Scenario taxonomy | done, 1,386 of 1,487 scenarios with aim type and board id |
 | 0b | Benchmark data pipeline | done, 121 benchmarks, real thresholds |
-| 1 | Stats parser + validation | done, 100% of 11,058 real files, 0 exceptions |
+| 1 | Stats parser + validation | done, 100% of 12,080 real files, 0 exceptions |
 | 2 | History, baselines, ranks, weakness map | done, engine matches KovaaK's exactly |
 | 3 | Apogee rank theme + visual editor | done, 8 named tiers |
 | 4 | Supabase schema, Steam auth, run upload | done, deployed and verified live |
@@ -29,9 +29,10 @@ dispute a voided match.
 | 9 | Electron desktop client | done, boots, watches, renders |
 | 10 | Closed beta | gated on population, preflight built |
 | 11 | Live sync matchmaking | done, starvation-free, awaiting population |
-| 12 | Server-side match engine | done, 6 Edge Functions deployed |
+| 12 | Server-side match engine | done, 6 Edge Functions deployed, `refresh-apex` awaiting |
 | 13 | Client wired to the backend | done, sign-in + upload + match loop live |
 | 14 | First real match | **waiting on a benchmark run** |
+| 15 | Apex board, past the top of the ladder | built and validated, ships with phase 12's deploy |
 
 ### Where things actually stand
 
