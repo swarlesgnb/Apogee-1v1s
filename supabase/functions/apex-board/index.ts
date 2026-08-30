@@ -26,6 +26,11 @@
 
 import { handler, json, requireCaller, HttpError } from "../_shared/apogee.ts";
 import { enforceRateLimit } from "../_shared/rateLimit.ts";
+import type {
+  ApexBoardEntry,
+  ApexBoardPage,
+  ApexBoardSelf,
+} from "../../../src/core/season/apexWire.ts";
 
 /** Rows returned. Enough to be a leaderboard, few enough to stay one request. */
 const PAGE = 50;
@@ -90,13 +95,7 @@ Deno.serve(handler(async (req, admin) => {
     .eq("category", category)
     .maybeSingle();
 
-  let you: {
-    rank: number | null;
-    points: number;
-    graded: number;
-    families: number;
-    updatedAt: string;
-  } | null = null;
+  let you: ApexBoardSelf | null = null;
 
   if (mine) {
     // Rank is "how many are strictly above me, plus one". Counted rather than derived
@@ -121,10 +120,12 @@ Deno.serve(handler(async (req, admin) => {
     .select("player_id", { count: "exact", head: true })
     .eq("category", category);
 
-  return json({
+  // Typed as the shared shape so a field added here without adding it there - or the
+  // reverse - is a compile error in the core rather than an undefined on a screen.
+  const page: ApexBoardPage = {
     category,
     population: population ?? 0,
-    entries: rows.map((r, i) => ({
+    entries: rows.map((r, i): ApexBoardEntry => ({
       rank: i + 1,
       displayName: displayName(r),
       points: Number(r.points),
@@ -135,5 +136,7 @@ Deno.serve(handler(async (req, admin) => {
       you: r.player_id === caller.playerId,
     })),
     you,
-  });
+  };
+
+  return json(page);
 }));

@@ -430,27 +430,11 @@ export async function fetchStanding(playerId: string): Promise<Standing | null> 
   };
 }
 
-export interface ApexBoardEntry {
-  rank: number;
-  displayName: string;
-  points: number;
-  graded: number;
-  families: number;
-  you: boolean;
-}
-
-export interface ApexBoard {
-  category: string;
-  population: number;
-  entries: ApexBoardEntry[];
-  you: {
-    rank: number | null;
-    points: number;
-    graded: number;
-    families: number;
-    updatedAt: string;
-  } | null;
-}
+// The shape is declared once, in the core, and imported by both the Edge Function that
+// builds it and this client that reads it - see src/core/season/apexWire.ts. Writing it
+// out twice is how a renamed field compiles on both sides and arrives undefined.
+export type { ApexBoardEntry, ApexBoardPage as ApexBoard } from "../core/season/apexWire.ts";
+import type { ApexBoardPage } from "../core/season/apexWire.ts";
 
 /**
  * The public apex board for one category.
@@ -460,8 +444,8 @@ export interface ApexBoard {
  * player is the server's decision (migration 20260817000004). What comes back carries a
  * display name and a standing and no identifier at all.
  */
-export function fetchApexBoard(category: string): Promise<ApexBoard> {
-  return callFunction<ApexBoard>("apex-board", { category });
+export function fetchApexBoard(category: string): Promise<ApexBoardPage> {
+  return callFunction<ApexBoardPage>("apex-board", { category });
 }
 
 /**
