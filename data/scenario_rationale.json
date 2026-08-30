@@ -88,8 +88,8 @@
       "evidence": [
         {
           "source": "kovaaks-scenario",
-          "scenario": "Bounce 180 Tracking",
-          "says": "The author's description is \"To help vertical tracking on small bouncing balls\" - the bounce, not the strafe, is what the scenario is built around."
+          "scenario": "VT Bounceshot Novice",
+          "says": "The author's description: \"Four single-click bots leap in mid-high arcs on top of a flat surface, changing depths as they traverse. The player's weapon has three shots and empty magazines recover in their entirety upon each elimination.\" - the arc and the depth change are what make the timing a read rather than a follow, and the three-shot magazine is what stops it paying for spam."
         }
       ],
       "audience": {
@@ -382,19 +382,30 @@
       "family": "FlyTS",
       "subCategory": "Evasive Switching",
       "isolates": "Switching onto targets that are actively evading on all three axes.",
-      "why": "Evasive switching is where the target does not cooperate: acquisition is only half the job and the other half is staying on it. Voltaic's FlyTS is built around unpredictable strafe directions and a long time-to-kill, which is exactly that split.",
+      "why": "Evasive switching is where the target does not cooperate: acquisition is only half the job and the other half is staying on it. Voltaic's FlyTS is built around unpredictable strafe directions and a long time-to-kill, which is exactly that split, and it carries the family through three windows. The Expert variant is tamTargetSwitch Control Hard, chosen over the scenario it replaced on the one thing that was wrong with it: Aimerz+ files this in its Hard tier and files a distinct, larger-target variant in Easy, so the band is a claim its author actually makes rather than one their own Easy listing contradicts. It is a regenerating-target scenario, which is what makes the score depend on holding the target after the flick rather than on reaching it.",
       "evidence": [
         {
           "source": "voltaic-s5",
           "scenario": "VT FlyTS Novice S5",
           "says": "\"Heavier focus on XYZ movement with a fairly high TTK, with the bots strafing in less conventional and predictable directions.\""
+        },
+        {
+          "source": "kovaaks-scenario",
+          "scenario": "tamTargetSwitch Control Hard",
+          "says": "The author's description: \"Small regenerating dots wiggle back and forth around you while also bouncing slowly, 0.5s ttk, up to 1s to regen to full, starts regening 0.3s after going off target\" - the regen clock is what prices going off target, which is the sub-skill stated as a scoring rule."
+        },
+        {
+          "source": "steam-ts-thread",
+          "scenario": "tamTargetSwitch Control Hard",
+          "says": "The tamTargetSwitch scenarios are what the community names when asked what trains evasive switching, as \"evasive long TTK bots, that emphasize landing accuracy\" and post-flick micro correction - \"pretty pivotal for good TS\"."
         }
       ],
       "audience": {
-        "scenario": "Bounce 180 Tracking",
-        "plays": 2583910,
-        "entries": 160671
-      }
+        "scenario": "tamTargetSwitch Control Hard",
+        "plays": 1538806,
+        "entries": 110714
+      },
+      "thin": "One source bands this at window 3 - Aimerz+ Evasive Switching Hard - where the family's lower windows carry Voltaic's. That is the strongest placement the corpus allows: of every Evasive Switching scenario any source bands above Advanced, this is the only one whose board clears what the Expert window needs to put seventy players above its hardest rank, at 60,383 entries. It also puts a second tamTargetSwitch lineage in the sub-skill, since Smooth Switching grades tamTargetSwitch Smooth Hard; the two are different scenarios by one author rather than one scenario twice, but the independence the two-families rule wants is weaker here than anywhere else in the pool."
     },
     {
       "family": "Smooth Switching",

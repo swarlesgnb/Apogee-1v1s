@@ -707,6 +707,39 @@ if (raisedByOne.length > 0) {
     console.log(`  ${DIM}  ${r.gap > 1 ? "!" : " "} ${r.line}${RESET}`);
   }
 }
+// Scenarios only one benchmark bands at all.
+//
+// The report above needs two opinions to have anything to compare, so it says nothing about
+// a scenario only one source names - and that is the thinner position of the two, not the
+// safer one. A disagreement between two sources is at least visible; a single source cannot
+// be contradicted by anything.
+//
+// Not an error, and mostly not even a worry: over a third of these are Voltaic S4 novice
+// scenarios that no other benchmark had reason to re-band. It matters most at window 3,
+// where the percentile is thinnest and a misplacement costs the top of a ladder, so those
+// are named and the rest are counted.
+const soloBanded: { window: number; scenario: string; benchmark: string }[] = [];
+
+for (const v of variants) {
+  const tiers = (fromBenchmarks.get(v.scenario)?.tiers ?? []).filter((t) =>
+    sources.has(t.benchmark),
+  );
+  const banded = derivedWindow(tiers).perBenchmark;
+  if (banded.length === 1) {
+    soloBanded.push({ window: v.window, scenario: v.scenario, benchmark: banded[0].benchmark });
+  }
+}
+
+if (soloBanded.length > 0) {
+  const top = soloBanded.filter((x) => x.window === pool.windows.length - 1);
+  console.log(
+    `  ${DIM}${soloBanded.length} scenario(s) are banded by one benchmark and nothing else` +
+      `${top.length > 0 ? `, ${top.length} of them at the top window:` : ""}${RESET}`,
+  );
+  for (const x of top) {
+    console.log(`  ${DIM}    ${x.scenario} (${x.benchmark})${RESET}`);
+  }
+}
 const bandedTiers = Object.values(pool.bands ?? {}).reduce(
   (n, tiers) => n + Object.keys(tiers).length,
   0,

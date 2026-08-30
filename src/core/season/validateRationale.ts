@@ -58,6 +58,10 @@ const taxonomy = JSON.parse(
   readFileSync(dataFile("scenario_taxonomy.json"), "utf8"),
 ) as { scenarios: { name: string; plays: number | null; entries: number | null }[] };
 
+const percentiles = JSON.parse(
+  readFileSync(dataFile("leaderboard_percentiles.json"), "utf8"),
+) as { distributions: { scenario: string; total: number }[] };
+
 const season = loadSeason();
 
 const tax = new Map(taxonomy.scenarios.map((s) => [s.name, s]));
@@ -185,12 +189,18 @@ check(
 
 // Numbers written into the prose are checked too, since that is where a stale figure is
 // least visible. Any group of digits long enough to be a play count has to be a real one.
+//
+// Three files can supply one. The taxonomy holds plays and entries; leaderboard_percentiles
+// holds the board total, which is a different number from the taxonomy's entries for the
+// same scenario and is the one a claim about board size has to use. Both are committed and
+// re-derivable, which is the whole test - a number this cannot find is one nobody can check.
 const proseNumbers: string[] = [];
 const knownCounts = new Set<number>();
 for (const s of taxonomy.scenarios) {
   if (s.plays !== null) knownCounts.add(s.plays);
   if (s.entries !== null) knownCounts.add(s.entries);
 }
+for (const d of percentiles.distributions) knownCounts.add(d.total);
 for (const f of rationale.families) {
   const text = `${f.isolates} ${f.why} ${f.thin ?? ""}`;
   for (const match of text.matchAll(/\b\d{1,3}(?:,\d{3})+\b/g)) {

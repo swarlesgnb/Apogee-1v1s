@@ -785,9 +785,9 @@
         },
         {
           "window": 3,
-          "scenario": "Bounce 180 Tracking",
-          "label": "Bounce 180 Tracking",
-          "leaderboardId": 122
+          "scenario": "tamTargetSwitch Control Hard",
+          "label": "tamTargetSwitch Control Hard",
+          "leaderboardId": 757
         }
       ]
     },

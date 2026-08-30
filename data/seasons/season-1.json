@@ -209,7 +209,7 @@
   ],
   "derivedFrom": {
     "thresholds": "kovaaks.com/webapp-backend/leaderboard/scores/global",
-    "sampledAt": "2026-08-29T19:22:54.010Z",
+    "sampledAt": "2026-08-30T15:59:54.202Z",
     "perWindow": [
       [
         0.86,
@@ -236,10 +236,10 @@
         0.008
       ]
     ],
-    "leaderboardEntries": 6531525,
+    "leaderboardEntries": 6463858,
     "note": "Every threshold is the score at a given percentile of that scenario's KovaaK's leaderboard. The percentiles are ours; the scores are a fact about the game. No other benchmark's numbers appear in this file - where one is consulted it is converted to percentiles and discarded (tools/calibrateLadder.ts). Season 2 re-cuts these against Apogee's own population, including where one window hands over to the next."
   },
-  "builtAt": "2026-08-30T15:46:45.208Z",
+  "builtAt": "2026-08-30T16:00:03.350Z",
   "scenarios": [
     {
       "scenario": "VT ww5t Novice S5",
@@ -547,9 +547,9 @@
         ]
       },
       "corpus": {
-        "runs": 1,
+        "runs": 2,
         "best": 587,
-        "median": 587,
+        "median": 578,
         "reaches": null
       }
     },
@@ -2384,33 +2384,27 @@
       }
     },
     {
-      "scenario": "Bounce 180 Tracking",
+      "scenario": "tamTargetSwitch Control Hard",
       "category": "Switching",
       "family": "FlyTS",
       "subCategory": "Evasive Switching",
       "window": 3,
-      "label": "Bounce 180 Tracking",
-      "leaderboardId": 122,
+      "label": "tamTargetSwitch Control Hard",
+      "leaderboardId": 757,
       "rankMaxes": [
-        82,
-        86,
-        88,
-        91
+        37,
+        38,
+        39,
+        40
       ],
       "derivedFrom": {
-        "leaderboardEntries": 128050,
+        "leaderboardEntries": 60383,
         "topFractions": [
           0.022,
           0.015,
           0.011,
           0.008
         ]
-      },
-      "corpus": {
-        "runs": 1,
-        "best": 74,
-        "median": 74,
-        "reaches": null
       }
     },
     {

@@ -980,14 +980,43 @@ from the author, since Voltaic retired PsalmTS in S5 by replacing it with EddieT
 "more regular and predictable movement", which makes PsalmTS the same lineage with the
 predictability taken out.
 
-`Bounce 180 Tracking` stays Expert, and the reason is worth recording. Aimerz+ Evasive
-Switching shares only 3 of 21 scenarios between its tiers, so the overlap argument does
-not reach it and the rule leaves it where it was. It is still the weakest placement in the
-pool - window 3 on one listing whose author also files it under Easy - and it is kept
-because nothing can replace it: the only Evasive scenario any source bands above Advanced
-with a board at all is Smoothbot TS Voltaic Regen Hasin at 6,958 entries, against the
-8,750 the Expert window needs to put seventy players above its hardest rank. It stays
-flagged by `validate:pool` as the one remaining two-window jump.
+`Bounce 180 Tracking` is replaced rather than kept. The overlap rule does not reach it -
+Aimerz+ Evasive Switching shares only 3 of 21 scenarios between its tiers - but the defect
+is the same one by hand: its window 3 rests on an Aimerz+ Hard listing whose author *also*
+files it under Easy, and no rule was going to fix a placement its own source contradicts.
+
+`tamTargetSwitch Control Hard` takes the slot. Enumerating every Evasive Switching scenario
+any source bands above Advanced leaves exactly one that clears the Expert board floor, and
+it is the one whose author does not contradict it: Aimerz+ lists it in Hard and lists a
+distinct, larger-target variant in Easy, so the band is a claim actually made. 60,383 board
+entries against the 8,750 the window needs, and the author's own description - "small
+regenerating dots ... 0.5s ttk ... starts regening 0.3s after going off target" - states
+the sub-skill as a scoring rule: the regen clock is what prices going off target.
+
+It costs something, and the cost is recorded rather than glossed. Smooth Switching already
+grades `tamTargetSwitch Smooth Hard`, so both Evasive families now end on a tamTargetSwitch
+lineage - different scenarios by one author rather than one scenario twice, but weaker
+independence than anywhere else in the pool.
+
+`domiSwitch` is the better-evidenced scenario and is *not* used, which is worth writing
+down so it is not proposed again without the blocker. Four sources band it at window 3 and
+none of them lists it twice, and the community names it. But KovaaK's classifies it
+`Clicking`, and `data/scenario_identity.json` carries that into the `aim_type` column
+`find-match` partitions the queue on - so it would enter the pool as a Switching scenario
+for the ladder and a Linear Clicking one for matchmaking. Its 55hp regenerating target says
+KovaaK's is wrong, and correcting it is a change to the match system rather than to the
+pool. That is the road back to it.
+
+### What rests on one opinion
+
+The single-source report above needs two opinions to compare, so it says nothing about a
+scenario only one benchmark bands - and that is the thinner position, not the safer one: a
+disagreement is at least visible, while a lone source cannot be contradicted by anything.
+`validate:pool` therefore counts those too. **Twenty-nine of the eighty-eight**, seven of
+them at the top window, where the percentile is thinnest and a misplacement costs the top of
+a ladder. Most are unremarkable - a third are Voltaic S4 novice scenarios no other benchmark
+had reason to re-band - but the number should be visible before a season is published rather
+than after.
 
 The match pool is a separate question and stays one window. Settlement compares a
 player against their own baseline (§3), so a beginner and a Celestial already get a real

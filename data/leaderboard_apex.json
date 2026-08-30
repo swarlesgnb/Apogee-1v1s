@@ -1,6 +1,6 @@
 {
   "source": "kovaaks.com/webapp-backend/leaderboard/scores/global",
-  "sampledAt": "2026-08-30T15:47:05.032Z",
+  "sampledAt": "2026-08-30T16:00:09.497Z",
   "sampleRanks": [
     1,
     2,
@@ -1120,6 +1120,54 @@
       "sampledAt": "2026-08-30T06:21:56.733Z"
     },
     {
+      "scenario": "domiSwitch",
+      "leaderboardId": 83035,
+      "total": 18273,
+      "points": [
+        {
+          "rank": 1,
+          "score": 8516
+        },
+        {
+          "rank": 2,
+          "score": 8229.59
+        },
+        {
+          "rank": 3,
+          "score": 8038.4
+        },
+        {
+          "rank": 5,
+          "score": 7948
+        },
+        {
+          "rank": 10,
+          "score": 7736.8
+        },
+        {
+          "rank": 25,
+          "score": 7560
+        },
+        {
+          "rank": 50,
+          "score": 7386.4
+        },
+        {
+          "rank": 100,
+          "score": 7098.4
+        },
+        {
+          "rank": 250,
+          "score": 6728.8
+        },
+        {
+          "rank": 500,
+          "score": 6383.2
+        }
+      ],
+      "sampledAt": "2026-08-30T15:56:56.689Z"
+    },
+    {
       "scenario": "eth Pasu Micro Easier",
       "leaderboardId": 185394,
       "total": 20362,
@@ -1742,6 +1790,54 @@
         }
       ],
       "sampledAt": "2026-08-30T06:20:39.908Z"
+    },
+    {
+      "scenario": "tamTargetSwitch Control Hard",
+      "leaderboardId": 757,
+      "total": 60383,
+      "points": [
+        {
+          "rank": 1,
+          "score": 53
+        },
+        {
+          "rank": 2,
+          "score": 53
+        },
+        {
+          "rank": 3,
+          "score": 52
+        },
+        {
+          "rank": 5,
+          "score": 52
+        },
+        {
+          "rank": 10,
+          "score": 50
+        },
+        {
+          "rank": 25,
+          "score": 48
+        },
+        {
+          "rank": 50,
+          "score": 46
+        },
+        {
+          "rank": 100,
+          "score": 44
+        },
+        {
+          "rank": 250,
+          "score": 42
+        },
+        {
+          "rank": 500,
+          "score": 40
+        }
+      ],
+      "sampledAt": "2026-08-30T16:00:09.082Z"
     },
     {
       "scenario": "tamTargetSwitch Smooth Easy",

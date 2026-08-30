@@ -1,6 +1,6 @@
 {
   "source": "kovaaks.com/webapp-backend/leaderboard/scores/global",
-  "sampledAt": "2026-08-29T19:22:54.010Z",
+  "sampledAt": "2026-08-30T15:59:54.202Z",
   "samplePoints": [
     0.001,
     0.005,
@@ -9453,6 +9453,78 @@
       "sampledAt": "2026-08-25T20:27:34.148Z"
     },
     {
+      "scenario": "domiSwitch",
+      "leaderboardId": 83035,
+      "total": 18273,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 7634.4
+        },
+        {
+          "topFraction": 0.005,
+          "score": 7142.4
+        },
+        {
+          "topFraction": 0.01,
+          "score": 6864
+        },
+        {
+          "topFraction": 0.02,
+          "score": 6528.8
+        },
+        {
+          "topFraction": 0.035,
+          "score": 6269.6
+        },
+        {
+          "topFraction": 0.05,
+          "score": 6060
+        },
+        {
+          "topFraction": 0.075,
+          "score": 5803.2
+        },
+        {
+          "topFraction": 0.1,
+          "score": 5619.2
+        },
+        {
+          "topFraction": 0.15,
+          "score": 5312
+        },
+        {
+          "topFraction": 0.2,
+          "score": 5060.79
+        },
+        {
+          "topFraction": 0.3,
+          "score": 4652
+        },
+        {
+          "topFraction": 0.4,
+          "score": 4310.4
+        },
+        {
+          "topFraction": 0.5,
+          "score": 4000
+        },
+        {
+          "topFraction": 0.65,
+          "score": 3524
+        },
+        {
+          "topFraction": 0.8,
+          "score": 2886.4
+        },
+        {
+          "topFraction": 0.95,
+          "score": 1741.6
+        }
+      ],
+      "sampledAt": "2026-08-30T15:56:35.975Z"
+    },
+    {
       "scenario": "domiSwitch Easier",
       "leaderboardId": 185428,
       "total": 18079,
@@ -17659,6 +17731,78 @@
         }
       ],
       "sampledAt": "2026-08-18T23:49:46.582Z"
+    },
+    {
+      "scenario": "tamTargetSwitch Control Hard",
+      "leaderboardId": 757,
+      "total": 60383,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 46
+        },
+        {
+          "topFraction": 0.005,
+          "score": 41
+        },
+        {
+          "topFraction": 0.01,
+          "score": 39
+        },
+        {
+          "topFraction": 0.02,
+          "score": 37
+        },
+        {
+          "topFraction": 0.035,
+          "score": 35
+        },
+        {
+          "topFraction": 0.05,
+          "score": 34
+        },
+        {
+          "topFraction": 0.075,
+          "score": 32
+        },
+        {
+          "topFraction": 0.1,
+          "score": 30
+        },
+        {
+          "topFraction": 0.15,
+          "score": 28
+        },
+        {
+          "topFraction": 0.2,
+          "score": 27
+        },
+        {
+          "topFraction": 0.3,
+          "score": 23
+        },
+        {
+          "topFraction": 0.4,
+          "score": 21
+        },
+        {
+          "topFraction": 0.5,
+          "score": 18
+        },
+        {
+          "topFraction": 0.65,
+          "score": 13
+        },
+        {
+          "topFraction": 0.8,
+          "score": 8
+        },
+        {
+          "topFraction": 0.95,
+          "score": 2
+        }
+      ],
+      "sampledAt": "2026-08-30T15:59:54.201Z"
     },
     {
       "scenario": "tamTargetSwitch Smooth Easy",
