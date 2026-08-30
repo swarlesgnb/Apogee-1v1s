@@ -162,6 +162,114 @@ async function main(): Promise<void> {
     standing.length === 1 && /auth\.uid\(\)/.test(standing[0].qual ?? ""),
     standing.length ? `${standing[0].policyname}: ${standing[0].qual}` : "no select policy",
   );
+  // ---- the apex board's data contract ------------------------------------------------
+  //
+  // `apex-board` is the least-verifiable code in the repo: an Edge Function, so tsc never
+  // sees it, and there is no Deno here to run it. What CAN be verified is the contract it
+  // depends on - that the table stores what it thinks, that the ordering and the rank
+  // arithmetic behave, and that the join to a display name resolves. Those are the parts a
+  // typo would break, and they are all SQL, which this file already has a real Postgres for.
+
+  const apexPlayers: string[] = [];
+  for (const [i, name] of ["apex one", "apex two", "apex three"].entries()) {
+    const u = await db.query<{ id: string }>(
+      `insert into auth.users (email) values ('apex${i}@arena.invalid') returning id`,
+    );
+    const id = u.rows[0].id;
+    apexPlayers.push(id);
+    await db.exec(
+      `insert into players (id, steam_id, display_name)
+       values ('${id}', '7656119800000001${i}', '${name}')`,
+    );
+  }
+
+  // Two tied at the top, one behind: the shape that makes rank arithmetic interesting.
+  const apexPoints = [12.5, 12.5, 4.25];
+  for (const [i, id] of apexPlayers.entries()) {
+    await db.exec(
+      `insert into apex_standing (player_id, category, points, graded, family_count)
+       values ('${id}', 'Overall', ${apexPoints[i]}, 6, 22)`,
+    );
+  }
+
+  // The page query, verbatim in shape: ordered by points, joined for a name.
+  const page = await db.query<{ display_name: string; points: string }>(
+    `select p.display_name, a.points
+       from apex_standing a join players p on p.id = a.player_id
+      where a.category = 'Overall'
+      order by a.points desc
+      limit 50`,
+  );
+  check(
+    "the board pages in descending order, with a name attached",
+    page.rows.length === 3 &&
+      Number(page.rows[0].points) === 12.5 &&
+      Number(page.rows[2].points) === 4.25 &&
+      page.rows.every((r) => r.display_name.startsWith("apex ")),
+    page.rows.map((r) => `${r.display_name} ${r.points}`).join(", "),
+  );
+
+  // "How many are strictly above me, plus one" - which is competition ranking: tied
+  // players share a place and the next one skips. Asserted because the alternative
+  // reading, dense ranking, is a plausible thing for somebody to 'fix' this into, and
+  // it would quietly tell the second-placed of two tied players they were third.
+  const ranks: number[] = [];
+  for (const [i, id] of apexPlayers.entries()) {
+    const above = await db.query<{ n: string }>(
+      `select count(*) as n from apex_standing
+        where category = 'Overall' and points > ${apexPoints[i]}`,
+    );
+    void id;
+    ranks.push(Number(above.rows[0].n) + 1);
+  }
+  check(
+    "tied players share a place and the next one skips it",
+    ranks[0] === 1 && ranks[1] === 1 && ranks[2] === 3,
+    ranks.join(", "),
+  );
+
+  // One standing per player per category, or a refresh would append rather than replace.
+  let apexDuplicate = false;
+  try {
+    await db.exec(
+      `insert into apex_standing (player_id, category, points)
+       values ('${apexPlayers[0]}', 'Overall', 1)`,
+    );
+  } catch {
+    apexDuplicate = true;
+  }
+  check("a player has one standing per category, not a history", apexDuplicate);
+
+  let negativePoints = false;
+  try {
+    await db.exec(
+      `insert into apex_standing (player_id, category, points)
+       values ('${apexPlayers[0]}', 'Clicking', -1)`,
+    );
+  } catch {
+    negativePoints = true;
+  }
+  check("a negative standing is refused", negativePoints);
+
+  // Deleting a player must take their standing with them, or the board would keep
+  // serving a name that no longer exists.
+  await db.exec(`delete from players where id = '${apexPlayers[2]}'`);
+  const orphaned = await db.query<{ n: string }>(
+    `select count(*) as n from apex_standing where player_id = '${apexPlayers[2]}'`,
+  );
+  check("a deleted player leaves no standing behind", Number(orphaned.rows[0].n) === 0);
+
+  // And the index the board query is written for.
+  const apexIdx = await db.query<{ indexdef: string }>(
+    `select indexdef from pg_indexes
+      where tablename = 'apex_standing' and indexname = 'apex_standing_board_idx'`,
+  );
+  check(
+    "the board's ordering is indexed",
+    apexIdx.rows.length === 1 && /points DESC/i.test(apexIdx.rows[0].indexdef),
+    apexIdx.rows[0]?.indexdef ?? "missing",
+  );
+
   // Runs must be append-only.
   const runPolicies = policies.rows.filter((p) => p.tablename === "runs");
   const runCmds = new Set(runPolicies.map((p) => p.cmd.toUpperCase()));
