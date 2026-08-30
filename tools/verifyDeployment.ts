@@ -81,7 +81,22 @@ async function main(): Promise<void> {
     headers: { Prefer: "count=exact" },
   });
   const total = JSON.parse(counted.body || "[]")[0]?.count;
-  check("all scenarios seeded", total === 248, `${total}`);
+
+  // Derived, not hard-coded. This asserted `=== 248` and went red the moment the
+  // corpus grew past it - which it has, to 1,481 - so it was reporting a stale
+  // constant as a deployment failure. A floor is also the right shape for the real
+  // question: the project must have at least everything the seed names, and having
+  // more is a project that has been synced more recently than this checkout.
+  const seeded = Object.keys(
+    JSON.parse(
+      readFileSync(join(root, "data", "scenario_identity.json"), "utf8"),
+    ).scenarios,
+  ).length;
+  check(
+    "every scenario the seed names is live",
+    typeof total === "number" && total >= seeded,
+    `${total} live, ${seeded} named by the seed`,
+  );
 
   const memberships = await rest("benchmark_scenarios?select=count", ANON!, {
     headers: { Prefer: "count=exact" },
@@ -148,15 +163,39 @@ async function main(): Promise<void> {
     );
   }
 
+  // The sub-category vocabulary moved from Voltaic's one-word names to the pool's
+  // two-word sub-skills - "Precise" became "Precise Tracking" when the derivation
+  // grew from nine sub-skills to eleven. This asked for the old word and so could
+  // never pass again, on any deployment, which is a check reporting its own staleness
+  // as somebody else's bug.
+  //
+  // Both halves now come from the committed identity file rather than from a literal:
+  // the vocabulary it asks for and the names it expects back. A future rename shows
+  // up as a real disagreement between the checkout and the project instead.
+  const identity = JSON.parse(
+    readFileSync(join(root, "data", "scenario_identity.json"), "utf8"),
+  ).scenarios as Record<string, { subCategory: string | null }>;
+
+  const SAMPLE_SUB = "Precise Tracking";
+  const expected = Object.entries(identity)
+    .filter(([n, v]) => v.subCategory === SAMPLE_SUB && n.includes("Intermediate"))
+    .map(([n]) => n)
+    .sort();
+
   const precise = await rest(
-    "scenarios?select=name&sub_category=eq.Precise&name=like.*Intermediate*&order=name",
+    `scenarios?select=name&sub_category=eq.${encodeURIComponent(SAMPLE_SUB)}` +
+      "&name=like.*Intermediate*&order=name",
     ANON!,
   );
-  const preciseNames = JSON.parse(precise.body || "[]").map((r: { name: string }) => r.name);
+  const preciseNames = JSON.parse(precise.body || "[]")
+    .map((r: { name: string }) => r.name)
+    .sort();
   check(
-    "the corrected sub-category mapping is live",
-    preciseNames.join(", ") === "VT PGT Intermediate S5, VT Snake Track Intermediate S5",
-    preciseNames.join(", "),
+    "the sub-category mapping in the project matches this checkout",
+    expected.length > 0 && preciseNames.join(", ") === expected.join(", "),
+    preciseNames.length
+      ? `${preciseNames.length} live vs ${expected.length} expected`
+      : `none live, ${expected.length} expected - has sync:reference run?`,
   );
 
   // ---- the security model ------------------------------------------------------
@@ -291,6 +330,99 @@ async function main(): Promise<void> {
     "anon CANNOT read verification notes",
     readNotes.status !== 200,
     `HTTP ${readNotes.status}`,
+  );
+
+  // ---- the apex board ------------------------------------------------------------
+  //
+  // The board is the newest player-facing surface and the one whose security decision is
+  // easiest to undo by accident. 20260830000014 shipped apex_standing world-readable on
+  // the reasoning that a leaderboard is public; 20260830000015 corrected it, because a
+  // world-readable standings table hands out an ordered list of every player_id, which is
+  // the enumeration 20260817000004 already closed once. That correction is worth checking
+  // where it actually has to hold.
+
+  console.log("\n── apex board ───────────────────────────────────");
+
+  // Two different questions, and conflating them is what makes a check cry wolf.
+  //
+  // Whether the TABLE is deployed is a hard requirement - if the migration has not been
+  // pushed, nothing else here means anything. Whether it has ROWS is not: at the start of
+  // a beta nobody has refreshed yet, and failing on that would leave verify:deployment red
+  // for a state that is completely correct. So the first is a check and the second is a
+  // note that says plainly how much the leak check below is worth today.
+  const standingProbe = await rest("apex_standing?select=player_id&limit=5", SECRET!);
+  check(
+    "the standings table is deployed",
+    standingProbe.status === 200,
+    `HTTP ${standingProbe.status}`  + (standingProbe.status === 200 ? "" : " - has db push run?")
+  );
+
+  const realStandings =
+    standingProbe.status === 200
+      ? (JSON.parse(standingProbe.body || "[]") as unknown[])
+      : [];
+  if (standingProbe.status === 200 && realStandings.length === 0) {
+    console.log(
+      "       note: the table is deployed but empty - nobody has run refresh-apex, so " +
+        "the leak checks below pass against no rows and prove less than they will later",
+    );
+  }
+
+  // These two only mean something if the table is there. A 404 satisfies "anon cannot
+  // read it" perfectly and proves nothing about the policy - it is the same shape as the
+  // players check that read green for as long as the table was empty. So an undeployed
+  // table is reported as untested rather than counted as a pass.
+  if (standingProbe.status !== 200) {
+    console.log(
+      "       skipped: the two leak checks below need the table deployed to mean anything",
+    );
+  } else {
+    const readStanding = await rest("apex_standing?select=player_id,points&limit=1", ANON!);
+    const standingRows =
+      readStanding.status === 200 ? JSON.parse(readStanding.body || "[]") : null;
+    check(
+      "anon CANNOT enumerate the standings table",
+      readStanding.status !== 200 ||
+        (Array.isArray(standingRows) && standingRows.length === 0),
+      `HTTP ${readStanding.status}, ${standingRows?.length ?? "?"} rows`,
+    );
+
+    const writeStanding = await rest("apex_standing", ANON!, {
+      method: "POST",
+      body: JSON.stringify({
+        player_id: "00000000-0000-0000-0000-000000000000",
+        category: "Overall",
+        points: 999,
+      }),
+    });
+    check(
+      "anon CANNOT post its own place on the board",
+      writeStanding.status !== 200 && writeStanding.status !== 201,
+      `HTTP ${writeStanding.status}`,
+    );
+  }
+
+  // scenario_boards is the other half and goes the other way: it describes scenarios,
+  // not players, so it stays world-readable like `scenarios` does.
+  const readBoards = await rest("scenario_boards?select=scenario_id,board_total&limit=1", ANON!);
+  check(
+    "anon CAN read the sampled leaderboards",
+    readBoards.status === 200,
+    `HTTP ${readBoards.status}`,
+  );
+
+  // And that they are actually there. This is the check that catches the most likely
+  // real deployment mistake: pushing the migration and the functions but not running
+  // sync:reference, which leaves refresh-apex returning 503 for everybody with nothing
+  // in the logs to say why.
+  const boardCount = await rest("scenario_boards?select=count", ANON!, {
+    headers: { Prefer: "count=exact" },
+  });
+  const boards = JSON.parse(boardCount.body || "[]")[0]?.count ?? 0;
+  check(
+    "the sampled leaderboards have been synced",
+    boards >= 88,
+    boards ? `${boards} boards` : "none - run npm run sync:reference",
   );
 
   // ---- the steam auth function -------------------------------------------------
