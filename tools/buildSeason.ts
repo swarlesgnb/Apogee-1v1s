@@ -310,7 +310,22 @@ function main(): void {
       // cannot tell those apart. leaderboard_apex.json holds board ranks 1 to 500 for
       // exactly this, so the readout uses it and the clamp only binds below rank 500.
       const board = apexByScenario.get(v.scenario) ?? null;
+
+      // Below the coarsest sampled point there is no measurement, only a clamp.
+      //
+      // The distribution's last sample is the top 95%, so any threshold easier than that
+      // score reads as exactly 0.95 however easy it really is - and two easy ranks then look
+      // identical when they are nothing of the sort. eth Pasu Micro Entry asks 600 and 800
+      // for its first two ranks against a board whose 95th percentile is 832: both clamped,
+      // both 95.00%, and the collision check called a rank unreachable that is simply
+      // unmeasured.
+      //
+      // So it reports null, the same answer apexTopFraction gives above rank 500 and for the
+      // same reason. A number nobody can measure is not a number to publish, and null is
+      // what the readers already handle.
+      const floorScore = dist.points[dist.points.length - 1]?.score ?? -Infinity;
       const clears = rankMaxes.map((score) => {
+        if (score < floorScore) return null;
         const f = apexTopFraction(board, dist, score);
         return f === null ? null : Number(f.toFixed(6));
       });
@@ -351,48 +366,36 @@ function main(): void {
     }
   }
 
-  // The whole ladder must still fall, handovers included - now measured, not decreed.
+  // Ranks must get harder as they go - inside a band, and only inside a band.
   //
-  // This used to compare the percentile ladder against itself, which was possible because
-  // every family was cut from one shared sequence. With authored scores there is no shared
-  // sequence, and two scenarios' scores are not comparable at all: 900 on one board and 120
-  // on another say nothing about each other. What IS comparable is how much of each board
-  // clears each threshold, so the check runs on that.
+  // This check used to run across the handovers too, and it was right to when the four
+  // bands were one sixteen-rank ladder: a family was graded on the best of its variants,
+  // so a band opening easier than the one below closed left the ranks between it held by
+  // nobody. Season 1 shipped that shape twice.
   //
-  // Why it has to exist: a family is graded on the BEST of its variants, so a player holds
-  // the highest rank any window gives them. If Expert's first rank is easier to clear than
-  // Advanced's last, everybody reaching Advanced's last reaches Expert's first at the same
-  // moment and the ranks between are held by nobody. Season 1 shipped that shape twice, and
-  // the version of this check that only warned collected its findings into an array nothing
-  // ever printed.
+  // The bands are separate benchmarks now, so the comparison it was making has no meaning.
+  // Nobody carries a rank from Novice into Advanced; a player holds a rank in each band
+  // they have played, and asking whether Advanced rank 1 is harder than Novice rank 4 - on
+  // a different scenario, against a different board - is asking about two things that are
+  // never compared. Adopting the published numbers is what forced the issue: it put 59
+  // ranks beyond reach, 58 at a handover, and evenly split between handovers that shared
+  // an author and handovers that did not. The authors were not disagreeing. Their tiers
+  // were never rungs.
+  //
+  // What still has to hold is that a band's own four ranks get harder, which is a fact
+  // about one scenario against one board.
   const notFalling: string[] = [];
 
-  for (const family of pool.families) {
-    const ordered = scenarios
-      .filter((sc) => sc.family === family.family)
-      .sort((a, b) => (a.window ?? 0) - (b.window ?? 0));
-
-    const seq: { clear: number; scenario: string; rank: number }[] = [];
-    for (const sc of ordered) {
-      const clears = sc.sanity?.clears ?? [];
-      clears.forEach((c, i) => {
-        if (typeof c === "number") {
-          seq.push({
-            clear: c,
-            scenario: sc.label ?? sc.scenario,
-            rank: (sc.window ?? 0) * windowSize + i + 1,
-          });
-        }
-      });
-    }
-
-    for (let i = 1; i < seq.length; i++) {
-      if (seq[i].clear >= seq[i - 1].clear) {
+  for (const sc of scenarios) {
+    const clears = (sc.sanity?.clears ?? []).filter(
+      (c): c is number => typeof c === "number",
+    );
+    for (let i = 1; i < clears.length; i++) {
+      if (clears[i] >= clears[i - 1]) {
         notFalling.push(
-          `${family.family}: rank ${seq[i].rank} on ${seq[i].scenario} is cleared by ` +
-            `${(seq[i].clear * 100).toFixed(2)}% of its board, no fewer than rank ` +
-            `${seq[i - 1].rank} on ${seq[i - 1].scenario} at ` +
-            `${(seq[i - 1].clear * 100).toFixed(2)}%`,
+          `${sc.label ?? sc.scenario} (${pool.windows[sc.window ?? 0]}): rank ${i + 1} is ` +
+            `cleared by ${(clears[i] * 100).toFixed(2)}% of its board, no fewer than rank ` +
+            `${i} at ${(clears[i - 1] * 100).toFixed(2)}%`,
         );
       }
     }
@@ -400,13 +403,11 @@ function main(): void {
 
   if (notFalling.length > 0) {
     console.error(
-      `\n${notFalling.length} rank(s) nobody can hold - a family is graded on its best ` +
-        `variant, so reaching the rank below reaches these at the same moment:\n  ` +
+      `\n${notFalling.length} rank(s) within a band that nobody can hold separately:\n  ` +
         notFalling.slice(0, 12).join("\n  "),
     );
     process.exit(1);
   }
-
   if (missing.length > 0) {
     console.error(
       `no sampled leaderboard for ${missing.length} scenario(s): ${missing.join(", ")}\n` +
@@ -425,14 +426,31 @@ function main(): void {
   const categories = pool.categories.map((name) => {
     const familyCount = pool.families.filter((f) => f.category === name).length;
     const perRank = familyCount * ENERGY_PER_RANK;
+    const prior = existing?.categories?.find((x) => x.name === name);
+
+    // One ladder per band, each grading only that band's scenarios.
+    //
+    // A band's ceiling is its own families at its own top rank - familyCount * windowSize
+    // ranks of energy - not a slice of a sixteen-rank total, because nothing is being
+    // sliced any more. Every band starts at zero and tops out at its own maximum, which is
+    // what makes it a benchmark rather than a stretch of a longer one.
+    const bands = pool.windows.map((_, window) => {
+      const carried = prior?.bands?.find((b) => b.window === window);
+      return {
+        window,
+        rankMaxes: Array.from({ length: windowSize }, (_, i) => perRank * (i + 1)),
+        ...carryLadder(carried, windowSize),
+      };
+    });
 
     return {
       name,
+      bands,
+      // The chained ladder stays for now so nothing that still reads it breaks in the
+      // same commit that introduces the bands. It is the thing the split replaces, and it
+      // goes when the last reader moves over.
       rankMaxes: Array.from({ length: ranks }, (_, i) => perRank * (i + 1)),
-      ...carryLadder(
-        existing?.categories?.find((x) => x.name === name),
-        ranks,
-      ),
+      ...carryLadder(prior, ranks),
       derivable: true,
     };
   });

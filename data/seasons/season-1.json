@@ -34,6 +34,92 @@
   "categories": [
     {
       "name": "Clicking",
+      "bands": [
+        {
+          "window": 0,
+          "rankMaxes": [
+            20000,
+            40000,
+            60000,
+            80000
+          ],
+          "rankNames": [
+            "Rank 1",
+            "Rank 2",
+            "Rank 3",
+            "Rank 4"
+          ],
+          "rankColors": {
+            "Rank 1": "#3f4652",
+            "Rank 2": "#59606d",
+            "Rank 3": "#737b89",
+            "Rank 4": "#8d95a4"
+          }
+        },
+        {
+          "window": 1,
+          "rankMaxes": [
+            20000,
+            40000,
+            60000,
+            80000
+          ],
+          "rankNames": [
+            "Rank 1",
+            "Rank 2",
+            "Rank 3",
+            "Rank 4"
+          ],
+          "rankColors": {
+            "Rank 1": "#3f4652",
+            "Rank 2": "#59606d",
+            "Rank 3": "#737b89",
+            "Rank 4": "#8d95a4"
+          }
+        },
+        {
+          "window": 2,
+          "rankMaxes": [
+            20000,
+            40000,
+            60000,
+            80000
+          ],
+          "rankNames": [
+            "Rank 1",
+            "Rank 2",
+            "Rank 3",
+            "Rank 4"
+          ],
+          "rankColors": {
+            "Rank 1": "#3f4652",
+            "Rank 2": "#59606d",
+            "Rank 3": "#737b89",
+            "Rank 4": "#8d95a4"
+          }
+        },
+        {
+          "window": 3,
+          "rankMaxes": [
+            20000,
+            40000,
+            60000,
+            80000
+          ],
+          "rankNames": [
+            "Rank 1",
+            "Rank 2",
+            "Rank 3",
+            "Rank 4"
+          ],
+          "rankColors": {
+            "Rank 1": "#3f4652",
+            "Rank 2": "#59606d",
+            "Rank 3": "#737b89",
+            "Rank 4": "#8d95a4"
+          }
+        }
+      ],
       "rankMaxes": [
         20000,
         40000,
@@ -92,6 +178,92 @@
     },
     {
       "name": "Tracking",
+      "bands": [
+        {
+          "window": 0,
+          "rankMaxes": [
+            20000,
+            40000,
+            60000,
+            80000
+          ],
+          "rankNames": [
+            "Rank 1",
+            "Rank 2",
+            "Rank 3",
+            "Rank 4"
+          ],
+          "rankColors": {
+            "Rank 1": "#3f4652",
+            "Rank 2": "#59606d",
+            "Rank 3": "#737b89",
+            "Rank 4": "#8d95a4"
+          }
+        },
+        {
+          "window": 1,
+          "rankMaxes": [
+            20000,
+            40000,
+            60000,
+            80000
+          ],
+          "rankNames": [
+            "Rank 1",
+            "Rank 2",
+            "Rank 3",
+            "Rank 4"
+          ],
+          "rankColors": {
+            "Rank 1": "#3f4652",
+            "Rank 2": "#59606d",
+            "Rank 3": "#737b89",
+            "Rank 4": "#8d95a4"
+          }
+        },
+        {
+          "window": 2,
+          "rankMaxes": [
+            20000,
+            40000,
+            60000,
+            80000
+          ],
+          "rankNames": [
+            "Rank 1",
+            "Rank 2",
+            "Rank 3",
+            "Rank 4"
+          ],
+          "rankColors": {
+            "Rank 1": "#3f4652",
+            "Rank 2": "#59606d",
+            "Rank 3": "#737b89",
+            "Rank 4": "#8d95a4"
+          }
+        },
+        {
+          "window": 3,
+          "rankMaxes": [
+            20000,
+            40000,
+            60000,
+            80000
+          ],
+          "rankNames": [
+            "Rank 1",
+            "Rank 2",
+            "Rank 3",
+            "Rank 4"
+          ],
+          "rankColors": {
+            "Rank 1": "#3f4652",
+            "Rank 2": "#59606d",
+            "Rank 3": "#737b89",
+            "Rank 4": "#8d95a4"
+          }
+        }
+      ],
       "rankMaxes": [
         20000,
         40000,
@@ -150,6 +322,92 @@
     },
     {
       "name": "Switching",
+      "bands": [
+        {
+          "window": 0,
+          "rankMaxes": [
+            15000,
+            30000,
+            45000,
+            60000
+          ],
+          "rankNames": [
+            "Rank 1",
+            "Rank 2",
+            "Rank 3",
+            "Rank 4"
+          ],
+          "rankColors": {
+            "Rank 1": "#3f4652",
+            "Rank 2": "#59606d",
+            "Rank 3": "#737b89",
+            "Rank 4": "#8d95a4"
+          }
+        },
+        {
+          "window": 1,
+          "rankMaxes": [
+            15000,
+            30000,
+            45000,
+            60000
+          ],
+          "rankNames": [
+            "Rank 1",
+            "Rank 2",
+            "Rank 3",
+            "Rank 4"
+          ],
+          "rankColors": {
+            "Rank 1": "#3f4652",
+            "Rank 2": "#59606d",
+            "Rank 3": "#737b89",
+            "Rank 4": "#8d95a4"
+          }
+        },
+        {
+          "window": 2,
+          "rankMaxes": [
+            15000,
+            30000,
+            45000,
+            60000
+          ],
+          "rankNames": [
+            "Rank 1",
+            "Rank 2",
+            "Rank 3",
+            "Rank 4"
+          ],
+          "rankColors": {
+            "Rank 1": "#3f4652",
+            "Rank 2": "#59606d",
+            "Rank 3": "#737b89",
+            "Rank 4": "#8d95a4"
+          }
+        },
+        {
+          "window": 3,
+          "rankMaxes": [
+            15000,
+            30000,
+            45000,
+            60000
+          ],
+          "rankNames": [
+            "Rank 1",
+            "Rank 2",
+            "Rank 3",
+            "Rank 4"
+          ],
+          "rankColors": {
+            "Rank 1": "#3f4652",
+            "Rank 2": "#59606d",
+            "Rank 3": "#737b89",
+            "Rank 4": "#8d95a4"
+          }
+        }
+      ],
       "rankMaxes": [
         15000,
         30000,
@@ -210,7 +468,8 @@
   "thresholds": {
     "owner": "data/pool.json",
     "sourced": {
-      "seeded": 87,
+      "reconciled": 49,
+      "adopted": 38,
       "authored": 1
     },
     "note": "Every threshold in this file is an authored score read from data/pool.json, not a percentile of anybody's population. A percentile moves when the population moves, so the target slides while somebody is chasing it, and a benchmark for improvement wants a number that sits still. Each one carries a `source` saying whether it was adopted verbatim from a published benchmark, reconciled between several, authored outright with a reason, or is still seeded - inherited from the percentile era and not yet given a source. npm run validate:thresholds re-derives the first two and counts the last."
@@ -221,7 +480,7 @@
     "leaderboardEntries": 6421748,
     "note": "The boards no longer set the thresholds; they audit them. Each scenario carries `sanity.clears` - what share of that leaderboard meets each rank - which is how a threshold nobody can reach, or one everybody clears, gets caught now that no percentile guarantees it by construction."
   },
-  "builtAt": "2026-08-30T20:57:06.981Z",
+  "builtAt": "2026-08-30T21:33:51.222Z",
   "scenarios": [
     {
       "scenario": "VT ww5t Novice S5",
@@ -232,22 +491,44 @@
       "label": "VT ww5t Novice S5",
       "leaderboardId": 98030,
       "rankMaxes": [
-        996,
-        1108,
-        1204,
-        1280
+        990,
+        1090,
+        1190,
+        1290
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "reconciled",
+        "rule": "median per rank of 2 tiers this pool bands at Novice, each first reduced to 4 evenly spread picks",
+        "from": [
+          {
+            "benchmark": "Voltaic S5.5",
+            "difficulty": "Novice",
+            "rankMaxes": [
+              990,
+              1090,
+              1190,
+              1290
+            ]
+          },
+          {
+            "benchmark": "Voltaic S5",
+            "difficulty": "Novice",
+            "rankMaxes": [
+              990,
+              1090,
+              1190,
+              1290
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 102106,
         "clears": [
-          0.86,
-          0.72,
-          0.56,
-          0.42
+          0.865625,
+          0.75,
+          0.583333,
+          0.4
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -267,22 +548,41 @@
       "label": "Wide Wall 3 Targets TE",
       "leaderboardId": 591,
       "rankMaxes": [
-        110,
-        115,
-        119,
-        124
+        132,
+        156,
+        170,
+        190
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "adopted",
+        "from": [
+          {
+            "benchmark": "Lemon Static Benchmark",
+            "difficulty": "Intermediate",
+            "rankMaxes": [
+              132,
+              141,
+              156,
+              170,
+              182,
+              190
+            ],
+            "used": [
+              132,
+              156,
+              170,
+              190
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 199115,
         "clears": [
-          0.3,
-          0.21667,
-          0.15,
-          0.1
+          0.05,
+          0.007778,
+          0.00251,
+          0.000447
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -290,7 +590,7 @@
         "runs": 19,
         "best": 151,
         "median": 144,
-        "reaches": "rank 8"
+        "reaches": "rank 5"
       }
     },
     {
@@ -302,22 +602,42 @@
       "label": "Wide Wall 4 Targets",
       "leaderboardId": 831,
       "rankMaxes": [
-        107,
-        109,
-        112,
-        115
+        132,
+        150,
+        165,
+        180
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "adopted",
+        "from": [
+          {
+            "benchmark": "Lemon Static Benchmark",
+            "difficulty": "Advanced",
+            "rankMaxes": [
+              132,
+              140,
+              150,
+              155,
+              165,
+              170,
+              180
+            ],
+            "used": [
+              132,
+              150,
+              165,
+              180
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 207742,
         "clears": [
-          0.075,
-          0.05833,
-          0.04,
-          0.029
+          0.004733,
+          0.000653,
+          0.00012,
+          0.000019
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -325,7 +645,7 @@
         "runs": 106,
         "best": 125,
         "median": 112,
-        "reaches": "rank 12"
+        "reaches": null
       }
     },
     {
@@ -337,22 +657,41 @@
       "label": "Wide Wall 3 Targets",
       "leaderboardId": 337,
       "rankMaxes": [
-        111,
-        115,
-        117,
-        120
+        120,
+        130,
+        135,
+        145
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "adopted",
+        "from": [
+          {
+            "benchmark": "Revosect S1",
+            "difficulty": "Advanced",
+            "rankMaxes": [
+              120,
+              125,
+              130,
+              135,
+              140,
+              145
+            ],
+            "used": [
+              120,
+              130,
+              135,
+              145
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 383110,
         "clears": [
-          0.02375,
-          0.015,
-          0.01167,
-          0.00833
+          0.008333,
+          0.003154,
+          0.001303,
+          0.000386
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       }
@@ -366,22 +705,33 @@
       "label": "VT 1w6ts Rasp Novice",
       "leaderboardId": 29483,
       "rankMaxes": [
-        724,
-        823,
-        896,
-        952
+        650,
+        750,
+        850,
+        950
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "adopted",
+        "from": [
+          {
+            "benchmark": "Voltaic S4",
+            "difficulty": "Novice",
+            "rankMaxes": [
+              650,
+              750,
+              850,
+              950
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 122762,
         "clears": [
-          0.86,
-          0.71938,
-          0.56,
-          0.42
+          0.939286,
+          0.832143,
+          0.66875,
+          0.425
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       }
@@ -395,22 +745,33 @@
       "label": "VT 1w5ts Rasp Intermediate",
       "leaderboardId": 29494,
       "rankMaxes": [
-        1056,
-        1108,
-        1160,
-        1196
+        1000,
+        1100,
+        1200,
+        1300
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "adopted",
+        "from": [
+          {
+            "benchmark": "Voltaic S4",
+            "difficulty": "Intermediate",
+            "rankMaxes": [
+              1000,
+              1100,
+              1200,
+              1300
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 72043,
         "clears": [
-          0.31,
-          0.22,
-          0.15,
-          0.105
+          0.45,
+          0.233333,
+          0.1,
+          0.035
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       }
@@ -424,22 +785,42 @@
       "label": "1w6ts reload v2 20% bigger",
       "leaderboardId": 21620,
       "rankMaxes": [
-        127,
-        130,
-        133,
-        136
+        100,
+        125,
+        145,
+        175
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "adopted",
+        "from": [
+          {
+            "benchmark": "snakbox Benchmark",
+            "difficulty": "Medium",
+            "rankMaxes": [
+              100,
+              112,
+              125,
+              135,
+              145,
+              155,
+              175
+            ],
+            "used": [
+              100,
+              125,
+              145,
+              175
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 21583,
         "clears": [
-          0.075,
-          0.05625,
-          0.04,
-          0.03
+          0.625,
+          0.091667,
+          0.011546,
+          0.000462
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -459,22 +840,41 @@
       "label": "1w6ts reload v2",
       "leaderboardId": 666,
       "rankMaxes": [
-        140,
-        144,
-        146,
-        149
+        135,
+        160,
+        170,
+        190
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "adopted",
+        "from": [
+          {
+            "benchmark": "snakbox Benchmark",
+            "difficulty": "Hard",
+            "rankMaxes": [
+              135,
+              148,
+              160,
+              170,
+              180,
+              190
+            ],
+            "used": [
+              135,
+              160,
+              170,
+              190
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 51420,
         "clears": [
-          0.0225,
-          0.015,
-          0.01167,
-          0.00833
+          0.035,
+          0.00214,
+          0.000642,
+          0.000057
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -494,22 +894,44 @@
       "label": "VT Pasu Novice S5",
       "leaderboardId": 98059,
       "rankMaxes": [
-        544,
-        663,
-        755,
-        810
+        555,
+        660,
+        745,
+        800
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "reconciled",
+        "rule": "median per rank of 2 tiers this pool bands at Novice, each first reduced to 4 evenly spread picks",
+        "from": [
+          {
+            "benchmark": "Voltaic S5.5",
+            "difficulty": "Novice",
+            "rankMaxes": [
+              555,
+              660,
+              745,
+              800
+            ]
+          },
+          {
+            "benchmark": "Voltaic S5",
+            "difficulty": "Novice",
+            "rankMaxes": [
+              555,
+              660,
+              745,
+              800
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 115450,
         "clears": [
-          0.8596,
-          0.71967,
-          0.56019,
-          0.41829
+          0.849858,
+          0.724332,
+          0.579249,
+          0.453194
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -529,22 +951,44 @@
       "label": "VT Pasu Intermediate S5",
       "leaderboardId": 98330,
       "rankMaxes": [
-        785,
-        833,
-        877,
-        924
+        770,
+        850,
+        930,
+        980
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "reconciled",
+        "rule": "median per rank of 2 tiers this pool bands at Intermediate, each first reduced to 4 evenly spread picks",
+        "from": [
+          {
+            "benchmark": "Voltaic S5.5",
+            "difficulty": "Intermediate",
+            "rankMaxes": [
+              770,
+              850,
+              930,
+              980
+            ]
+          },
+          {
+            "benchmark": "Voltaic S5",
+            "difficulty": "Intermediate",
+            "rankMaxes": [
+              770,
+              850,
+              930,
+              980
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 79758,
         "clears": [
-          0.30927,
-          0.22064,
-          0.14996,
-          0.105
+          0.342673,
+          0.1914,
+          0.099351,
+          0.057637
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -552,7 +996,7 @@
         "runs": 36,
         "best": 944,
         "median": 766,
-        "reaches": "rank 8"
+        "reaches": "rank 7"
       }
     },
     {
@@ -564,22 +1008,44 @@
       "label": "VT Pasu Advanced S5",
       "leaderboardId": 98023,
       "rankMaxes": [
-        835,
-        882,
-        913,
-        933
+        910,
+        1020,
+        1110,
+        1235
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "reconciled",
+        "rule": "median per rank of 2 tiers this pool bands at Advanced, each first reduced to 4 evenly spread picks",
+        "from": [
+          {
+            "benchmark": "Voltaic S5.5",
+            "difficulty": "Advanced",
+            "rankMaxes": [
+              910,
+              1020,
+              1110,
+              1230
+            ]
+          },
+          {
+            "benchmark": "Voltaic S5",
+            "difficulty": "Advanced",
+            "rankMaxes": [
+              910,
+              1020,
+              1110,
+              1240
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 25242,
         "clears": [
-          0.07526,
-          0.05487,
-          0.03996,
-          0.03021
+          0.041486,
+          0.00998,
+          0.002932,
+          0.00061
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -599,22 +1065,78 @@
       "label": "Pasu Reload Goated",
       "leaderboardId": 583,
       "rankMaxes": [
-        128,
-        133,
-        136,
-        140
+        110,
+        130,
+        140,
+        160
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "reconciled",
+        "rule": "median per rank of 3 tiers this pool bands at Expert, each first reduced to 4 evenly spread picks",
+        "from": [
+          {
+            "benchmark": "Revosect S1",
+            "difficulty": "Advanced",
+            "rankMaxes": [
+              108,
+              115,
+              122,
+              127,
+              137,
+              145
+            ],
+            "used": [
+              108,
+              122,
+              127,
+              145
+            ]
+          },
+          {
+            "benchmark": "snakbox Benchmark",
+            "difficulty": "Hard",
+            "rankMaxes": [
+              120,
+              135,
+              150,
+              165,
+              180,
+              195
+            ],
+            "used": [
+              120,
+              150,
+              165,
+              195
+            ]
+          },
+          {
+            "benchmark": "Viscose Benchmarks",
+            "difficulty": "Hard",
+            "rankMaxes": [
+              110,
+              120,
+              130,
+              140,
+              150,
+              160
+            ],
+            "used": [
+              110,
+              130,
+              140,
+              160
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 25879,
         "clears": [
-          0.02188,
-          0.015,
-          0.01125,
-          0.00813
+          0.075,
+          0.017773,
+          0.007991,
+          0.00117
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -622,7 +1144,7 @@
         "runs": 15,
         "best": 112,
         "median": 97,
-        "reaches": null
+        "reaches": "rank 13"
       }
     },
     {
@@ -634,22 +1156,33 @@
       "label": "VT Bounceshot Novice",
       "leaderboardId": 24975,
       "rankMaxes": [
-        442,
-        569,
-        674,
-        758
+        500,
+        600,
+        700,
+        800
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "adopted",
+        "from": [
+          {
+            "benchmark": "Voltaic S4",
+            "difficulty": "Novice",
+            "rankMaxes": [
+              500,
+              600,
+              700,
+              800
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 125087,
         "clears": [
-          0.86,
-          0.71955,
-          0.56,
-          0.42
+          0.808824,
+          0.677273,
+          0.516667,
+          0.34
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       }
@@ -663,22 +1196,43 @@
       "label": "B180 Voltaic Easy 92%",
       "leaderboardId": 12018,
       "rankMaxes": [
-        76,
-        81,
-        87,
-        89
+        26,
+        50,
+        72,
+        87
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "adopted",
+        "from": [
+          {
+            "benchmark": "Viscose Benchmarks",
+            "difficulty": "Easier",
+            "rankMaxes": [
+              26,
+              38,
+              50,
+              58,
+              65,
+              72,
+              78,
+              87
+            ],
+            "used": [
+              26,
+              50,
+              72,
+              87
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 55044,
         "clears": [
-          0.3,
-          0.21667,
-          0.15,
-          0.1
+          null,
+          0.783333,
+          0.38,
+          0.15
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       }
@@ -692,22 +1246,64 @@
       "label": "VT Bounceshot Viscose Medium",
       "leaderboardId": 185237,
       "rankMaxes": [
-        940,
-        972,
-        1000,
-        1030
+        560,
+        770,
+        915,
+        1175
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "reconciled",
+        "rule": "median per rank of 2 tiers this pool bands at Advanced, each first reduced to 4 evenly spread picks",
+        "from": [
+          {
+            "benchmark": "snakbox Benchmark",
+            "difficulty": "Medium",
+            "rankMaxes": [
+              700,
+              770,
+              850,
+              920,
+              980,
+              1050,
+              1250
+            ],
+            "used": [
+              700,
+              850,
+              980,
+              1250
+            ]
+          },
+          {
+            "benchmark": "Viscose Benchmarks S2",
+            "difficulty": "Medium",
+            "rankMaxes": [
+              420,
+              540,
+              600,
+              690,
+              770,
+              850,
+              920,
+              1010,
+              1100
+            ],
+            "used": [
+              420,
+              690,
+              850,
+              1100
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 16780,
         "clears": [
-          0.075,
-          0.055,
-          0.04,
-          0.03
+          0.62,
+          0.283333,
+          0.095833,
+          0.003237
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -715,7 +1311,7 @@
         "runs": 23,
         "best": 880,
         "median": 780,
-        "reaches": null
+        "reaches": "rank 10"
       }
     },
     {
@@ -727,22 +1323,41 @@
       "label": "VT Bounceshot Advanced",
       "leaderboardId": 25154,
       "rankMaxes": [
-        845,
-        880,
-        904,
-        926
+        730,
+        850,
+        910,
+        1000
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "adopted",
+        "from": [
+          {
+            "benchmark": "Viscose Benchmarks",
+            "difficulty": "Hard",
+            "rankMaxes": [
+              730,
+              790,
+              850,
+              910,
+              950,
+              1000
+            ],
+            "used": [
+              730,
+              850,
+              910,
+              1000
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 22127,
         "clears": [
-          0.02188,
-          0.015,
-          0.011,
-          0.008
+          0.075,
+          0.019921,
+          0.009597,
+          0.002569
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -762,22 +1377,44 @@
       "label": "VT Floating Heads Novice S5",
       "leaderboardId": 98054,
       "rankMaxes": [
-        390,
-        486,
-        568,
-        637
+        375,
+        460,
+        540,
+        640
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "reconciled",
+        "rule": "median per rank of 2 tiers this pool bands at Novice, each first reduced to 4 evenly spread picks",
+        "from": [
+          {
+            "benchmark": "Voltaic S5.5",
+            "difficulty": "Novice",
+            "rankMaxes": [
+              375,
+              460,
+              540,
+              640
+            ]
+          },
+          {
+            "benchmark": "Voltaic S5",
+            "difficulty": "Novice",
+            "rankMaxes": [
+              375,
+              460,
+              540,
+              640
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 98229,
         "clears": [
-          0.86025,
-          0.72015,
-          0.55984,
-          0.41913
+          0.877094,
+          0.769174,
+          0.616204,
+          0.412953
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -797,22 +1434,44 @@
       "label": "VT Floating Heads Intermediate S5",
       "leaderboardId": 98055,
       "rankMaxes": [
-        650,
-        698,
-        748,
-        796
+        610,
+        690,
+        770,
+        860
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "reconciled",
+        "rule": "median per rank of 2 tiers this pool bands at Intermediate, each first reduced to 4 evenly spread picks",
+        "from": [
+          {
+            "benchmark": "Voltaic S5.5",
+            "difficulty": "Intermediate",
+            "rankMaxes": [
+              610,
+              690,
+              770,
+              860
+            ]
+          },
+          {
+            "benchmark": "Voltaic S5",
+            "difficulty": "Intermediate",
+            "rankMaxes": [
+              610,
+              690,
+              770,
+              860
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 60906,
         "clears": [
-          0.30867,
-          0.22038,
-          0.14994,
-          0.10538
+          0.414998,
+          0.234563,
+          0.129516,
+          0.061976
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -832,22 +1491,43 @@
       "label": "Floating Heads Timing 400% Larger",
       "leaderboardId": 1607,
       "rankMaxes": [
-        3672,
-        3758,
-        3876,
-        3972
+        1950,
+        2650,
+        3650,
+        4200
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "adopted",
+        "from": [
+          {
+            "benchmark": "Viscose Benchmarks",
+            "difficulty": "Medium",
+            "rankMaxes": [
+              1950,
+              2300,
+              2650,
+              3000,
+              3350,
+              3650,
+              3900,
+              4200
+            ],
+            "used": [
+              1950,
+              2650,
+              3650,
+              4200
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 69285,
         "clears": [
-          0.075,
-          0.05509,
-          0.04,
-          0.03
+          null,
+          0.634722,
+          0.080093,
+          0.012667
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -855,7 +1535,7 @@
         "runs": 4,
         "best": 3096,
         "median": 3042,
-        "reaches": null
+        "reaches": "rank 10"
       }
     },
     {
@@ -867,22 +1547,41 @@
       "label": "Floating Heads Timing 400% FIXED",
       "leaderboardId": 1730,
       "rankMaxes": [
-        3108,
-        3240,
-        3326,
-        3434
+        3200,
+        3648,
+        3848,
+        4248
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "adopted",
+        "from": [
+          {
+            "benchmark": "Viscose Benchmarks",
+            "difficulty": "Hard",
+            "rankMaxes": [
+              3200,
+              3484,
+              3648,
+              3848,
+              4048,
+              4248
+            ],
+            "used": [
+              3200,
+              3648,
+              3848,
+              4248
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 182809,
         "clears": [
-          0.022,
-          0.015,
-          0.01102,
-          0.00801
+          0.016852,
+          0.004152,
+          0.001595,
+          0.000273
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -902,22 +1601,44 @@
       "label": "VT Frogtagon Novice S5",
       "leaderboardId": 106186,
       "rankMaxes": [
-        634,
-        769,
-        880,
-        968
+        620,
+        740,
+        850,
+        980
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "reconciled",
+        "rule": "median per rank of 2 tiers this pool bands at Novice, each first reduced to 4 evenly spread picks",
+        "from": [
+          {
+            "benchmark": "Voltaic S5.5",
+            "difficulty": "Novice",
+            "rankMaxes": [
+              620,
+              740,
+              850,
+              980
+            ]
+          },
+          {
+            "benchmark": "Voltaic S5",
+            "difficulty": "Novice",
+            "rankMaxes": [
+              620,
+              740,
+              850,
+              980
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 96999,
         "clears": [
-          0.86,
-          0.71955,
-          0.56,
-          0.42
+          0.871053,
+          0.759091,
+          0.605,
+          0.4
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -937,22 +1658,43 @@
       "label": "voxTargetSwitch Click",
       "leaderboardId": 653,
       "rankMaxes": [
-        86,
-        90,
-        94,
-        98
+        49,
+        67,
+        88,
+        100
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "adopted",
+        "from": [
+          {
+            "benchmark": "Viscose Benchmarks",
+            "difficulty": "Easier",
+            "rankMaxes": [
+              49,
+              59,
+              67,
+              74,
+              81,
+              88,
+              94,
+              100
+            ],
+            "used": [
+              49,
+              67,
+              88,
+              100
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 95356,
         "clears": [
-          0.3,
-          0.22,
-          0.15,
-          0.1
+          null,
+          0.735714,
+          0.26,
+          0.075
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       }
@@ -966,22 +1708,43 @@
       "label": "voxTargetClick 20% Small",
       "leaderboardId": 857,
       "rankMaxes": [
-        97,
-        100,
+        62,
+        80,
         102,
-        104
+        116
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "adopted",
+        "from": [
+          {
+            "benchmark": "Viscose Benchmarks",
+            "difficulty": "Medium",
+            "rankMaxes": [
+              62,
+              72,
+              80,
+              87,
+              95,
+              102,
+              108,
+              116
+            ],
+            "used": [
+              62,
+              80,
+              102,
+              116
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 39066,
         "clears": [
-          0.075,
-          0.05625,
+          0.8,
+          0.4,
           0.0425,
-          0.03
+          0.004045
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -989,7 +1752,7 @@
         "runs": 4,
         "best": 76,
         "median": 76,
-        "reaches": null
+        "reaches": "rank 9"
       }
     },
     {
@@ -1001,22 +1764,41 @@
       "label": "VoxTargetSwitch Click Small",
       "leaderboardId": 616,
       "rankMaxes": [
-        88,
-        92,
-        94,
-        96
+        90,
+        101,
+        106,
+        115
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "adopted",
+        "from": [
+          {
+            "benchmark": "Viscose Benchmarks",
+            "difficulty": "Hard",
+            "rankMaxes": [
+              90,
+              96,
+              101,
+              106,
+              111,
+              115
+            ],
+            "used": [
+              90,
+              101,
+              106,
+              115
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 127111,
         "clears": [
-          0.023,
-          0.014,
-          0.01,
-          0.0075
+          0.018,
+          0.003307,
+          0.001363,
+          0.000278
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       }
@@ -1030,22 +1812,41 @@
       "label": "eth Pasu Micro Entry",
       "leaderboardId": 190273,
       "rankMaxes": [
-        935,
-        1063,
-        1154,
-        1230
+        600,
+        800,
+        900,
+        1100
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "adopted",
+        "from": [
+          {
+            "benchmark": "Viscose Entry Benchmarks",
+            "difficulty": "Entry",
+            "rankMaxes": [
+              600,
+              700,
+              800,
+              900,
+              1000,
+              1100
+            ],
+            "used": [
+              600,
+              800,
+              900,
+              1100
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 2529,
         "clears": [
-          0.86017,
-          0.71955,
-          0.55909,
-          0.41935
+          null,
+          null,
+          0.890698,
+          0.669091
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       }
@@ -1059,22 +1860,44 @@
       "label": "eth Pasu Micro Easier",
       "leaderboardId": 185394,
       "rankMaxes": [
-        1230,
-        1265,
-        1296,
-        1330
+        600,
+        850,
+        1000,
+        1225
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "adopted",
+        "from": [
+          {
+            "benchmark": "Viscose Benchmarks S2",
+            "difficulty": "Easier",
+            "rankMaxes": [
+              600,
+              700,
+              775,
+              850,
+              925,
+              1000,
+              1075,
+              1150,
+              1225
+            ],
+            "used": [
+              600,
+              850,
+              1000,
+              1225
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 20295,
         "clears": [
-          0.31071,
-          0.21944,
-          0.15,
-          0.10526
+          null,
+          0.876705,
+          0.71,
+          0.319643
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -1094,22 +1917,44 @@
       "label": "eth Pasu Micro Medium",
       "leaderboardId": 184790,
       "rankMaxes": [
-        1438,
-        1478,
-        1521,
-        1559
+        850,
+        1150,
+        1300,
+        1650
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "adopted",
+        "from": [
+          {
+            "benchmark": "Viscose Benchmarks S2",
+            "difficulty": "Medium",
+            "rankMaxes": [
+              850,
+              975,
+              1050,
+              1150,
+              1250,
+              1300,
+              1400,
+              1525,
+              1650
+            ],
+            "used": [
+              850,
+              1150,
+              1300,
+              1650
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 19065,
         "clears": [
-          0.075,
-          0.055,
-          0.0401,
-          0.03008
+          0.897059,
+          0.495652,
+          0.22069,
+          0.013471
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -1117,7 +1962,7 @@
         "runs": 25,
         "best": 1376,
         "median": 1238,
-        "reaches": null
+        "reaches": "rank 11"
       }
     },
     {
@@ -1129,22 +1974,62 @@
       "label": "1w3ts Pasu Perfected Micro Goated",
       "leaderboardId": 65396,
       "rankMaxes": [
-        1295,
-        1342,
-        1372,
-        1407
+        1040,
+        1220,
+        1410,
+        1570
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "reconciled",
+        "rule": "median per rank of 2 tiers this pool bands at Expert, each first reduced to 4 evenly spread picks",
+        "from": [
+          {
+            "benchmark": "Viscose Benchmarks S2",
+            "difficulty": "Hard",
+            "rankMaxes": [
+              980,
+              1060,
+              1140,
+              1230,
+              1320,
+              1420,
+              1510,
+              1580
+            ],
+            "used": [
+              980,
+              1140,
+              1420,
+              1580
+            ]
+          },
+          {
+            "benchmark": "Viscose Benchmarks",
+            "difficulty": "Hard",
+            "rankMaxes": [
+              1100,
+              1200,
+              1300,
+              1400,
+              1500,
+              1560
+            ],
+            "used": [
+              1100,
+              1300,
+              1400,
+              1560
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 51099,
         "clears": [
-          0.02211,
-          0.015,
-          0.01105,
-          0.00801
+          0.15,
+          0.041818,
+          0.00735,
+          0.001262
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -1152,7 +2037,7 @@
         "runs": 13,
         "best": 1106,
         "median": 918,
-        "reaches": null
+        "reaches": "rank 13"
       }
     },
     {
@@ -1164,22 +2049,41 @@
       "label": "1w2ts reload smallflicks Entry",
       "leaderboardId": 190274,
       "rankMaxes": [
-        99,
-        110,
-        119,
-        126
+        75,
+        92,
+        100,
+        115
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "adopted",
+        "from": [
+          {
+            "benchmark": "Viscose Entry Benchmarks",
+            "difficulty": "Entry",
+            "rankMaxes": [
+              75,
+              84,
+              92,
+              100,
+              108,
+              115
+            ],
+            "used": [
+              75,
+              92,
+              100,
+              115
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 2833,
         "clears": [
-          0.85625,
-          0.725,
-          0.56429,
-          0.42
+          null,
+          0.921875,
+          0.846875,
+          0.65
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       }
@@ -1193,22 +2097,44 @@
       "label": "1w2ts reload smallflicks larger",
       "leaderboardId": 185518,
       "rankMaxes": [
-        131,
-        134,
-        138,
-        142
+        76,
+        100,
+        112,
+        130
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "adopted",
+        "from": [
+          {
+            "benchmark": "Viscose Benchmarks S2",
+            "difficulty": "Easier",
+            "rankMaxes": [
+              76,
+              85,
+              93,
+              100,
+              106,
+              112,
+              118,
+              124,
+              130
+            ],
+            "used": [
+              76,
+              100,
+              112,
+              130
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 21119,
         "clears": [
-          0.3,
-          0.225,
-          0.15,
-          0.1
+          null,
+          0.85625,
+          0.7,
+          0.333333
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -1228,22 +2154,44 @@
       "label": "1w2ts reload smallflicks slightly larger",
       "leaderboardId": 184777,
       "rankMaxes": [
-        153,
-        157,
-        161,
-        164
+        99,
+        127,
+        142,
+        169
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "adopted",
+        "from": [
+          {
+            "benchmark": "Viscose Benchmarks S2",
+            "difficulty": "Medium",
+            "rankMaxes": [
+              99,
+              109,
+              119,
+              127,
+              135,
+              142,
+              150,
+              161,
+              169
+            ],
+            "used": [
+              99,
+              127,
+              142,
+              169
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 20355,
         "clears": [
-          0.075,
-          0.055,
-          0.03875,
-          0.03
+          0.92,
+          0.5,
+          0.2,
+          0.014545
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -1251,7 +2199,7 @@
         "runs": 31,
         "best": 148,
         "median": 133,
-        "reaches": null
+        "reaches": "rank 11"
       }
     },
     {
@@ -1263,22 +2211,41 @@
       "label": "1w2ts Pasu Perfected 30% Smaller",
       "leaderboardId": 28243,
       "rankMaxes": [
+        75,
         87,
-        90,
-        92,
-        94
+        93,
+        103
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "adopted",
+        "from": [
+          {
+            "benchmark": "Viscose Benchmarks",
+            "difficulty": "Hard",
+            "rankMaxes": [
+              75,
+              82,
+              87,
+              93,
+              98,
+              103
+            ],
+            "used": [
+              75,
+              87,
+              93,
+              103
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 46459,
         "clears": [
+          0.116667,
           0.02375,
-          0.015,
-          0.01,
-          0.0075
+          0.007607,
+          0.001355
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -1298,22 +2265,33 @@
       "label": "VT Smoothbot Novice",
       "leaderboardId": 24967,
       "rankMaxes": [
-        2211,
-        2616,
-        2932,
-        3190
+        2300,
+        2500,
+        3100,
+        3500
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "adopted",
+        "from": [
+          {
+            "benchmark": "Voltaic S4",
+            "difficulty": "Novice",
+            "rankMaxes": [
+              2300,
+              2500,
+              3100,
+              3500
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 187441,
         "clears": [
-          0.8601,
-          0.71997,
-          0.56021,
-          0.42
+          0.837626,
+          0.775559,
+          0.47,
+          0.252564
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       }
@@ -1327,22 +2305,44 @@
       "label": "VT Smoothbot Intermediate",
       "leaderboardId": 24952,
       "rankMaxes": [
-        3369,
-        3568,
-        3773,
-        3936
+        3225,
+        3645,
+        4000,
+        4335
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "reconciled",
+        "rule": "median per rank of 2 tiers this pool bands at Intermediate, each first reduced to 4 evenly spread picks",
+        "from": [
+          {
+            "benchmark": "e1se Smooth Benchmark",
+            "difficulty": "Normal",
+            "rankMaxes": [
+              3400,
+              3840,
+              4150,
+              4420
+            ]
+          },
+          {
+            "benchmark": "Voltaic S4",
+            "difficulty": "Intermediate",
+            "rankMaxes": [
+              3050,
+              3450,
+              3850,
+              4250
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 83099,
         "clears": [
-          0.3101,
-          0.22009,
-          0.15,
-          0.10497
+          0.382828,
+          0.19,
+          0.090417,
+          0.025515
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       }
@@ -1356,22 +2356,44 @@
       "label": "VT Smoothbot Advanced",
       "leaderboardId": 25151,
       "rankMaxes": [
-        3059,
-        3223,
-        3325,
-        3400
+        3225,
+        3450,
+        3705,
+        3960
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "reconciled",
+        "rule": "median per rank of 2 tiers this pool bands at Advanced, each first reduced to 4 evenly spread picks",
+        "from": [
+          {
+            "benchmark": "e1se Smooth Benchmark",
+            "difficulty": "Hard",
+            "rankMaxes": [
+              3150,
+              3300,
+              3460,
+              3620
+            ]
+          },
+          {
+            "benchmark": "Voltaic S4",
+            "difficulty": "Advanced",
+            "rankMaxes": [
+              3300,
+              3600,
+              3950,
+              4300
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 39387,
         "clears": [
-          0.075,
-          0.055,
-          0.04005,
-          0.03004
+          0.054756,
+          0.024398,
+          0.009056,
+          0.003313
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       }
@@ -1385,22 +2407,41 @@
       "label": "Smoothbot Pauer",
       "leaderboardId": 724,
       "rankMaxes": [
-        4454,
-        4614,
-        4715,
-        4848
+        4400,
+        5050,
+        5400,
+        6250
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "adopted",
+        "from": [
+          {
+            "benchmark": "Aimerz+ Precise Tracking",
+            "difficulty": "Hard",
+            "rankMaxes": [
+              4400,
+              4700,
+              5050,
+              5400,
+              5700,
+              6250
+            ],
+            "used": [
+              4400,
+              5050,
+              5400,
+              6250
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 22983,
         "clears": [
-          0.02198,
-          0.015,
-          0.01099,
-          0.008
+          0.025116,
+          0.004578,
+          0.001356,
+          0.000044
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -1420,22 +2461,44 @@
       "label": "VT Snake Track Novice S5",
       "leaderboardId": 101560,
       "rankMaxes": [
-        2439,
-        2876,
-        3253,
-        3469
+        2400,
+        2750,
+        3125,
+        3425
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "reconciled",
+        "rule": "median per rank of 2 tiers this pool bands at Novice, each first reduced to 4 evenly spread picks",
+        "from": [
+          {
+            "benchmark": "Voltaic S5.5",
+            "difficulty": "Novice",
+            "rankMaxes": [
+              2400,
+              2750,
+              3125,
+              3425
+            ]
+          },
+          {
+            "benchmark": "Voltaic S5",
+            "difficulty": "Novice",
+            "rankMaxes": [
+              2400,
+              2750,
+              3125,
+              3425
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 93836,
         "clears": [
-          0.8601,
-          0.71986,
-          0.56,
-          0.42041
+          0.869785,
+          0.771644,
+          0.615652,
+          0.465306
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -1455,22 +2518,65 @@
       "label": "waldoTS Novice",
       "leaderboardId": 113019,
       "rankMaxes": [
-        134,
-        140,
-        143,
-        146
+        58,
+        88,
+        114,
+        140
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "reconciled",
+        "rule": "median per rank of 2 tiers this pool bands at Intermediate, each first reduced to 4 evenly spread picks",
+        "from": [
+          {
+            "benchmark": "Viscose Benchmarks S2",
+            "difficulty": "Easier",
+            "rankMaxes": [
+              51,
+              63,
+              74,
+              85,
+              96,
+              107,
+              118,
+              129,
+              140
+            ],
+            "used": [
+              51,
+              85,
+              107,
+              140
+            ]
+          },
+          {
+            "benchmark": "Viscose Benchmarks",
+            "difficulty": "Easier",
+            "rankMaxes": [
+              65,
+              78,
+              90,
+              100,
+              110,
+              120,
+              130,
+              140
+            ],
+            "used": [
+              65,
+              90,
+              120,
+              140
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 71439,
         "clears": [
-          0.30691,
-          0.21627,
-          0.14692,
-          0.10077
+          null,
+          0.946648,
+          0.668557,
+          0.216269
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -1478,7 +2584,7 @@
         "runs": 2,
         "best": 144,
         "median": 139,
-        "reaches": "rank 7"
+        "reaches": "rank 8"
       }
     },
     {
@@ -1490,22 +2596,65 @@
       "label": "waldoTS Intermediate",
       "leaderboardId": 111273,
       "rankMaxes": [
-        156,
-        160,
-        162,
-        165
+        100,
+        126,
+        149,
+        171
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "reconciled",
+        "rule": "median per rank of 2 tiers this pool bands at Advanced, each first reduced to 4 evenly spread picks",
+        "from": [
+          {
+            "benchmark": "Viscose Benchmarks S2",
+            "difficulty": "Medium",
+            "rankMaxes": [
+              92,
+              104,
+              115,
+              126,
+              136,
+              144,
+              154,
+              163,
+              171
+            ],
+            "used": [
+              92,
+              126,
+              144,
+              171
+            ]
+          },
+          {
+            "benchmark": "Viscose Benchmarks",
+            "difficulty": "Medium",
+            "rankMaxes": [
+              108,
+              117,
+              126,
+              135,
+              144,
+              153,
+              162,
+              170
+            ],
+            "used": [
+              108,
+              126,
+              153,
+              170
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 40339,
         "clears": [
-          0.07956,
-          0.05351,
-          0.0426,
-          0.03026
+          0.894118,
+          0.584906,
+          0.150806,
+          0.013205
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -1513,7 +2662,7 @@
         "runs": 62,
         "best": 151,
         "median": 133,
-        "reaches": null
+        "reaches": "rank 11"
       }
     },
     {
@@ -1525,22 +2674,62 @@
       "label": "waldoTS",
       "leaderboardId": 81042,
       "rankMaxes": [
-        148,
-        152,
+        140,
         155,
-        158
+        167,
+        178
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "reconciled",
+        "rule": "median per rank of 2 tiers this pool bands at Expert, each first reduced to 4 evenly spread picks",
+        "from": [
+          {
+            "benchmark": "Viscose Benchmarks S2",
+            "difficulty": "Hard",
+            "rankMaxes": [
+              135,
+              142,
+              149,
+              155,
+              161,
+              167,
+              174,
+              178
+            ],
+            "used": [
+              135,
+              149,
+              167,
+              178
+            ]
+          },
+          {
+            "benchmark": "Viscose Benchmarks",
+            "difficulty": "Hard",
+            "rankMaxes": [
+              145,
+              153,
+              160,
+              166,
+              173,
+              178
+            ],
+            "used": [
+              145,
+              160,
+              166,
+              178
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 119350,
         "clears": [
-          0.02237,
-          0.01547,
-          0.01109,
-          0.00807
+          0.046719,
+          0.011093,
+          0.002389,
+          0.000506
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -1560,22 +2749,44 @@
       "label": "VT Ground Novice S5",
       "leaderboardId": 101744,
       "rankMaxes": [
-        2225,
-        2670,
-        3008,
-        3177
+        2100,
+        2500,
+        2825,
+        3100
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "reconciled",
+        "rule": "median per rank of 2 tiers this pool bands at Novice, each first reduced to 4 evenly spread picks",
+        "from": [
+          {
+            "benchmark": "Voltaic S5.5",
+            "difficulty": "Novice",
+            "rankMaxes": [
+              2100,
+              2500,
+              2825,
+              3100
+            ]
+          },
+          {
+            "benchmark": "Voltaic S5",
+            "difficulty": "Novice",
+            "rankMaxes": [
+              2100,
+              2500,
+              2825,
+              3100
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 93615,
         "clears": [
-          0.86005,
-          0.72011,
-          0.55978,
-          0.42027
+          0.890193,
+          0.789402,
+          0.656929,
+          0.509783
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -1595,22 +2806,55 @@
       "label": "Ground Plaza Sparky v3 Easy",
       "leaderboardId": 134502,
       "rankMaxes": [
-        888,
-        891,
-        893,
-        896
+        811,
+        849,
+        865,
+        882
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "reconciled",
+        "rule": "median per rank of 2 tiers this pool bands at Intermediate, each first reduced to 4 evenly spread picks",
+        "from": [
+          {
+            "benchmark": "Astro Tracking Benchmark",
+            "difficulty": "Easy",
+            "rankMaxes": [
+              842,
+              853,
+              864,
+              875
+            ]
+          },
+          {
+            "benchmark": "Viscose Benchmarks S2",
+            "difficulty": "Easier",
+            "rankMaxes": [
+              780,
+              805,
+              833,
+              845,
+              854,
+              866,
+              876,
+              884,
+              889
+            ],
+            "used": [
+              780,
+              845,
+              866,
+              889
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 21417,
         "clears": [
-          0.31711,
-          0.22607,
-          0.16346,
-          0.10687
+          null,
+          0.807897,
+          0.663645,
+          0.412294
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -1630,22 +2874,40 @@
       "label": "VT Ground Intermediate S5",
       "leaderboardId": 101743,
       "rankMaxes": [
-        3371,
-        3403,
-        3438,
-        3476
+        2000,
+        2250,
+        2750,
+        3000
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "adopted",
+        "from": [
+          {
+            "benchmark": "Astro Tracking Benchmark",
+            "difficulty": "Normal",
+            "rankMaxes": [
+              2000,
+              2250,
+              2500,
+              2750,
+              3000
+            ],
+            "used": [
+              2000,
+              2250,
+              2750,
+              3000
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 58297,
         "clears": [
-          0.075,
-          0.055,
-          0.03988,
-          0.02993
+          0.756566,
+          0.629329,
+          0.320253,
+          0.193103
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -1653,7 +2915,7 @@
         "runs": 52,
         "best": 2949,
         "median": 2609,
-        "reaches": null
+        "reaches": "rank 11"
       }
     },
     {
@@ -1665,22 +2927,59 @@
       "label": "Ground Plaza Sparky v3 OW",
       "leaderboardId": 871,
       "rankMaxes": [
-        894,
-        896,
-        897,
-        899
+        874,
+        884,
+        895,
+        903
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "reconciled",
+        "rule": "median per rank of 2 tiers this pool bands at Expert, each first reduced to 4 evenly spread picks",
+        "from": [
+          {
+            "benchmark": "Aimerz+ Reactive Tracking",
+            "difficulty": "Hard",
+            "rankMaxes": [
+              888,
+              892,
+              896,
+              901,
+              906,
+              910
+            ],
+            "used": [
+              888,
+              896,
+              901,
+              910
+            ]
+          },
+          {
+            "benchmark": "Astro Tracking Benchmark",
+            "difficulty": "Advanced",
+            "rankMaxes": [
+              860,
+              871,
+              882,
+              889,
+              896
+            ],
+            "used": [
+              860,
+              871,
+              889,
+              896
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 22349,
         "clears": [
-          0.02062,
-          0.01473,
-          0.01188,
-          0.00732
+          0.140402,
+          0.069265,
+          0.01668,
+          0.002144
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -1700,22 +2999,44 @@
       "label": "VT Aether Novice S5",
       "leaderboardId": 101370,
       "rankMaxes": [
-        1649,
-        2057,
-        2419,
-        2664
+        1525,
+        1900,
+        2250,
+        2650
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "reconciled",
+        "rule": "median per rank of 2 tiers this pool bands at Novice, each first reduced to 4 evenly spread picks",
+        "from": [
+          {
+            "benchmark": "Voltaic S5.5",
+            "difficulty": "Novice",
+            "rankMaxes": [
+              1525,
+              1900,
+              2250,
+              2650
+            ]
+          },
+          {
+            "benchmark": "Voltaic S5",
+            "difficulty": "Novice",
+            "rankMaxes": [
+              1525,
+              1900,
+              2250,
+              2650
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 93203,
         "clears": [
-          0.86005,
-          0.71986,
-          0.56009,
-          0.42
+          0.89375,
+          0.787143,
+          0.636446,
+          0.43
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -1735,22 +3056,54 @@
       "label": "Air CELESTIAL No UFO Easy Slowed",
       "leaderboardId": 131872,
       "rankMaxes": [
-        890,
-        893,
-        896,
-        898
+        827,
+        846,
+        865,
+        875
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "reconciled",
+        "rule": "median per rank of 2 tiers this pool bands at Intermediate, each first reduced to 4 evenly spread picks",
+        "from": [
+          {
+            "benchmark": "Astro Tracking Benchmark",
+            "difficulty": "Easy",
+            "rankMaxes": [
+              833,
+              842,
+              851,
+              860
+            ]
+          },
+          {
+            "benchmark": "Viscose Benchmarks",
+            "difficulty": "Easier",
+            "rankMaxes": [
+              820,
+              835,
+              850,
+              861,
+              870,
+              878,
+              884,
+              890
+            ],
+            "used": [
+              820,
+              850,
+              878,
+              890
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 58578,
         "clears": [
-          0.30112,
-          0.21478,
-          0.14375,
-          0.10903
+          0.905023,
+          0.831984,
+          0.696109,
+          0.568744
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -1758,7 +3111,7 @@
         "runs": 1,
         "best": 892,
         "median": 892,
-        "reaches": "rank 5"
+        "reaches": "rank 8"
       }
     },
     {
@@ -1770,22 +3123,61 @@
       "label": "Air CELESTIAL No UFO Easy",
       "leaderboardId": 70930,
       "rankMaxes": [
-        895,
-        899,
-        902,
-        904
+        831,
+        852,
+        880,
+        895
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "reconciled",
+        "rule": "median per rank of 2 tiers this pool bands at Advanced, each first reduced to 4 evenly spread picks",
+        "from": [
+          {
+            "benchmark": "Astro Tracking Benchmark",
+            "difficulty": "Normal",
+            "rankMaxes": [
+              837,
+              848,
+              859,
+              870,
+              881
+            ],
+            "used": [
+              837,
+              848,
+              870,
+              881
+            ]
+          },
+          {
+            "benchmark": "Viscose Benchmarks",
+            "difficulty": "Medium",
+            "rankMaxes": [
+              825,
+              840,
+              855,
+              865,
+              881,
+              890,
+              902,
+              908
+            ],
+            "used": [
+              825,
+              855,
+              890,
+              908
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 29538,
         "clears": [
-          0.07958,
-          0.05425,
-          0.03882,
-          0.02878
+          0.818686,
+          0.66322,
+          0.266104,
+          0.07958
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -1793,7 +3185,7 @@
         "runs": 26,
         "best": 885,
         "median": 869,
-        "reaches": null
+        "reaches": "rank 11"
       }
     },
     {
@@ -1805,22 +3197,60 @@
       "label": "Air CELESTIAL",
       "leaderboardId": 1241,
       "rankMaxes": [
-        883,
-        886,
-        889,
-        891
+        873,
+        887,
+        892,
+        901
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "reconciled",
+        "rule": "median per rank of 2 tiers this pool bands at Expert, each first reduced to 4 evenly spread picks",
+        "from": [
+          {
+            "benchmark": "Aimerz+ Reactive Tracking",
+            "difficulty": "Hard",
+            "rankMaxes": [
+              878,
+              883,
+              888,
+              893,
+              899,
+              905
+            ],
+            "used": [
+              878,
+              888,
+              893,
+              905
+            ]
+          },
+          {
+            "benchmark": "Viscose Benchmarks",
+            "difficulty": "Hard",
+            "rankMaxes": [
+              867,
+              875,
+              885,
+              890,
+              894,
+              897
+            ],
+            "used": [
+              867,
+              885,
+              890,
+              897
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 12040,
         "clears": [
-          0.02102,
-          0.0156,
-          0.01051,
-          0.00823
+          0.052744,
+          0.01229,
+          0.006315,
+          0.000371
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -1840,22 +3270,44 @@
       "label": "VT Controlsphere Novice S5",
       "leaderboardId": 103765,
       "rankMaxes": [
-        1695,
-        2194,
-        2648,
-        2933
+        1575,
+        1950,
+        2400,
+        2900
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "reconciled",
+        "rule": "median per rank of 2 tiers this pool bands at Novice, each first reduced to 4 evenly spread picks",
+        "from": [
+          {
+            "benchmark": "Voltaic S5.5",
+            "difficulty": "Novice",
+            "rankMaxes": [
+              1575,
+              1950,
+              2400,
+              2900
+            ]
+          },
+          {
+            "benchmark": "Voltaic S5",
+            "difficulty": "Novice",
+            "rankMaxes": [
+              1575,
+              1950,
+              2400,
+              2900
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 91550,
         "clears": [
-          0.85995,
-          0.71986,
-          0.55986,
-          0.42013
+          0.887104,
+          0.802262,
+          0.649279,
+          0.442282
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -1875,22 +3327,44 @@
       "label": "VT Controlsphere Intermediate S5",
       "leaderboardId": 103353,
       "rankMaxes": [
-        3071,
-        3310,
-        3563,
-        3797
+        2750,
+        3175,
+        3525,
+        3825
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "reconciled",
+        "rule": "median per rank of 2 tiers this pool bands at Intermediate, each first reduced to 4 evenly spread picks",
+        "from": [
+          {
+            "benchmark": "Voltaic S5.5",
+            "difficulty": "Intermediate",
+            "rankMaxes": [
+              2750,
+              3175,
+              3525,
+              3825
+            ]
+          },
+          {
+            "benchmark": "Voltaic S5",
+            "difficulty": "Intermediate",
+            "rankMaxes": [
+              2750,
+              3175,
+              3525,
+              3825
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 55846,
         "clears": [
-          0.30991,
-          0.22,
-          0.15,
-          0.105
+          0.464,
+          0.27,
+          0.159548,
+          0.098718
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -1898,7 +3372,7 @@
         "runs": 10,
         "best": 3270,
         "median": 3121,
-        "reaches": "rank 5"
+        "reaches": "rank 6"
       }
     },
     {
@@ -1910,22 +3384,60 @@
       "label": "Controlsphere",
       "leaderboardId": 392,
       "rankMaxes": [
-        10071,
-        10534,
-        10968,
-        11345
+        8125,
+        9450,
+        10875,
+        12225
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "reconciled",
+        "rule": "median per rank of 2 tiers this pool bands at Advanced, each first reduced to 4 evenly spread picks",
+        "from": [
+          {
+            "benchmark": "Astro Tracking Benchmark",
+            "difficulty": "Normal",
+            "rankMaxes": [
+              7250,
+              8000,
+              8750,
+              9500,
+              10250
+            ],
+            "used": [
+              7250,
+              8000,
+              9500,
+              10250
+            ]
+          },
+          {
+            "benchmark": "snakbox Benchmark",
+            "difficulty": "Medium",
+            "rankMaxes": [
+              9000,
+              10200,
+              10900,
+              11500,
+              12250,
+              13000,
+              14200
+            ],
+            "used": [
+              9000,
+              10900,
+              12250,
+              14200
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 150593,
         "clears": [
-          0.075,
-          0.05501,
-          0.04,
-          0.03
+          0.20249,
+          0.107854,
+          0.042925,
+          0.013273
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -1933,7 +3445,7 @@
         "runs": 11,
         "best": 10167,
         "median": 9084,
-        "reaches": "rank 9"
+        "reaches": "rank 10"
       }
     },
     {
@@ -1945,22 +3457,77 @@
       "label": "Controlsphere rAim",
       "leaderboardId": 5102,
       "rankMaxes": [
-        10159,
-        10565,
-        10835,
-        11088
+        8500,
+        9250,
+        10375,
+        10800
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "reconciled",
+        "rule": "median per rank of 3 tiers this pool bands at Expert, each first reduced to 4 evenly spread picks",
+        "from": [
+          {
+            "benchmark": "Astro Tracking Benchmark",
+            "difficulty": "Advanced",
+            "rankMaxes": [
+              8500,
+              9250,
+              10000,
+              10375,
+              10750
+            ],
+            "used": [
+              8500,
+              9250,
+              10375,
+              10750
+            ]
+          },
+          {
+            "benchmark": "Revosect S1",
+            "difficulty": "Advanced",
+            "rankMaxes": [
+              7000,
+              7600,
+              8200,
+              8800,
+              9250,
+              10800
+            ],
+            "used": [
+              7000,
+              8200,
+              8800,
+              10800
+            ]
+          },
+          {
+            "benchmark": "Viscose Benchmarks",
+            "difficulty": "Hard",
+            "rankMaxes": [
+              9100,
+              9850,
+              10700,
+              11300,
+              11900,
+              12350
+            ],
+            "used": [
+              9100,
+              10700,
+              11300,
+              12350
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 24774,
         "clears": [
-          0.02199,
-          0.01499,
-          0.01099,
-          0.008
+          0.093692,
+          0.053945,
+          0.017206,
+          0.011143
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -1980,22 +3547,44 @@
       "label": "VT Raw Control Novice S5",
       "leaderboardId": 98047,
       "rankMaxes": [
-        2236,
-        2756,
-        3198,
-        3476
+        2125,
+        2550,
+        2975,
+        3450
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "reconciled",
+        "rule": "median per rank of 2 tiers this pool bands at Novice, each first reduced to 4 evenly spread picks",
+        "from": [
+          {
+            "benchmark": "Voltaic S5.5",
+            "difficulty": "Novice",
+            "rankMaxes": [
+              2125,
+              2550,
+              2975,
+              3450
+            ]
+          },
+          {
+            "benchmark": "Voltaic S5",
+            "difficulty": "Novice",
+            "rankMaxes": [
+              2125,
+              2550,
+              2975,
+              3450
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 93878,
         "clears": [
-          0.86008,
-          0.71995,
-          0.55985,
-          0.42027
+          0.88308,
+          0.791647,
+          0.643267,
+          0.437838
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -2015,22 +3604,54 @@
       "label": "Whisphere 80%",
       "leaderboardId": 55382,
       "rankMaxes": [
-        13013,
-        14110,
-        14800,
-        15259
+        7150,
+        9000,
+        11000,
+        12750
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "reconciled",
+        "rule": "median per rank of 2 tiers this pool bands at Intermediate, each first reduced to 4 evenly spread picks",
+        "from": [
+          {
+            "benchmark": "Astro Tracking Benchmark",
+            "difficulty": "Easy",
+            "rankMaxes": [
+              8000,
+              9000,
+              10000,
+              11000
+            ]
+          },
+          {
+            "benchmark": "Viscose Benchmarks",
+            "difficulty": "Easier",
+            "rankMaxes": [
+              6300,
+              7700,
+              9000,
+              10000,
+              11000,
+              12000,
+              13000,
+              14500
+            ],
+            "used": [
+              6300,
+              9000,
+              12000,
+              14500
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 83496,
         "clears": [
-          0.31,
-          0.22,
-          0.15,
-          0.105
+          0.849805,
+          0.710714,
+          0.518,
+          0.337113
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       }
@@ -2044,22 +3665,61 @@
       "label": "Whisphere",
       "leaderboardId": 34963,
       "rankMaxes": [
-        16100,
-        16940,
-        17517,
-        18037
+        7625,
+        10875,
+        15625,
+        17750
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "reconciled",
+        "rule": "median per rank of 2 tiers this pool bands at Advanced, each first reduced to 4 evenly spread picks",
+        "from": [
+          {
+            "benchmark": "Astro Tracking Benchmark",
+            "difficulty": "Normal",
+            "rankMaxes": [
+              9500,
+              11000,
+              12500,
+              14000,
+              15000
+            ],
+            "used": [
+              9500,
+              11000,
+              14000,
+              15000
+            ]
+          },
+          {
+            "benchmark": "Viscose Benchmarks",
+            "difficulty": "Medium",
+            "rankMaxes": [
+              5750,
+              8250,
+              10750,
+              13250,
+              15250,
+              17250,
+              19250,
+              20500
+            ],
+            "used": [
+              5750,
+              10750,
+              17250,
+              20500
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 53727,
         "clears": [
-          0.075,
-          0.055,
-          0.03999,
-          0.03
+          0.662429,
+          0.391176,
+          0.095474,
+          0.034257
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -2067,7 +3727,7 @@
         "runs": 79,
         "best": 13710,
         "median": 11620,
-        "reaches": null
+        "reaches": "rank 10"
       }
     },
     {
@@ -2079,22 +3739,40 @@
       "label": "VT Raw Control Intermediate S5 Hard",
       "leaderboardId": 105155,
       "rankMaxes": [
-        3220,
-        3417,
-        3545,
-        3694
+        2700,
+        2800,
+        3000,
+        3100
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "adopted",
+        "from": [
+          {
+            "benchmark": "Astro Tracking Benchmark",
+            "difficulty": "Advanced",
+            "rankMaxes": [
+              2700,
+              2800,
+              2900,
+              3000,
+              3100
+            ],
+            "used": [
+              2700,
+              2800,
+              3000,
+              3100
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 9878,
         "clears": [
-          0.02199,
-          0.01498,
-          0.011,
-          0.008
+          0.085185,
+          0.061042,
+          0.035607,
+          0.028173
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       }
@@ -2108,22 +3786,43 @@
       "label": "VT Aether Novice S5 Bot 2",
       "leaderboardId": 108143,
       "rankMaxes": [
-        2200,
-        2506,
-        2757,
-        2991
+        1750,
+        2550,
+        3750,
+        4450
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "adopted",
+        "from": [
+          {
+            "benchmark": "Jade Palace Air",
+            "difficulty": "Fundamentals",
+            "rankMaxes": [
+              1750,
+              2150,
+              2550,
+              2950,
+              3350,
+              3750,
+              4150,
+              4450
+            ],
+            "used": [
+              1750,
+              2550,
+              3750,
+              4450
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 5171,
         "clears": [
-          0.85993,
-          0.72029,
-          0.55974,
-          0.42022
+          null,
+          0.692678,
+          0.183117,
+          0.050801
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -2131,7 +3830,7 @@
         "runs": 5,
         "best": 3413,
         "median": 3351,
-        "reaches": "rank 4"
+        "reaches": "rank 2"
       }
     },
     {
@@ -2143,22 +3842,43 @@
       "label": "Air Voltaic Easy Invincible 4 80%",
       "leaderboardId": 128781,
       "rankMaxes": [
-        3310,
-        3460,
-        3618,
-        3786
+        1100,
+        2100,
+        3150,
+        3800
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "adopted",
+        "from": [
+          {
+            "benchmark": "Viscose Benchmarks",
+            "difficulty": "Easier",
+            "rankMaxes": [
+              1100,
+              1600,
+              2100,
+              2450,
+              2800,
+              3150,
+              3400,
+              3800
+            ],
+            "used": [
+              1100,
+              2100,
+              3150,
+              3800
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 56889,
         "clears": [
-          0.30963,
-          0.21988,
-          0.15,
-          0.10508
+          null,
+          0.949675,
+          0.426207,
+          0.101337
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -2166,7 +3886,7 @@
         "runs": 5,
         "best": 3512,
         "median": 3472,
-        "reaches": "rank 6"
+        "reaches": "rank 7"
       }
     },
     {
@@ -2178,22 +3898,42 @@
       "label": "Air Voltaic Easy",
       "leaderboardId": 568,
       "rankMaxes": [
-        874,
-        878,
-        881,
-        884
+        845,
+        872,
+        890,
+        905
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "adopted",
+        "from": [
+          {
+            "benchmark": "snakbox Benchmark",
+            "difficulty": "Medium",
+            "rankMaxes": [
+              845,
+              860,
+              872,
+              882,
+              890,
+              897,
+              905
+            ],
+            "used": [
+              845,
+              872,
+              890,
+              905
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 76638,
         "clears": [
-          0.07667,
-          0.05385,
-          0.0404,
-          0.03008
+          0.407337,
+          0.092596,
+          0.015,
+          0.00059
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -2201,7 +3941,7 @@
         "runs": 125,
         "best": 877,
         "median": 866,
-        "reaches": "rank 9"
+        "reaches": "rank 10"
       }
     },
     {
@@ -2213,22 +3953,59 @@
       "label": "Air Voltaic",
       "leaderboardId": 29,
       "rankMaxes": [
-        875,
         879,
-        883,
-        885
+        887,
+        895,
+        903
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "reconciled",
+        "rule": "median per rank of 2 tiers this pool bands at Expert, each first reduced to 4 evenly spread picks",
+        "from": [
+          {
+            "benchmark": "Jade Palace Air",
+            "difficulty": "Hard",
+            "rankMaxes": [
+              882,
+              887,
+              892,
+              897,
+              904
+            ],
+            "used": [
+              882,
+              887,
+              897,
+              904
+            ]
+          },
+          {
+            "benchmark": "snakbox Benchmark",
+            "difficulty": "Hard",
+            "rankMaxes": [
+              875,
+              881,
+              887,
+              892,
+              897,
+              901
+            ],
+            "used": [
+              875,
+              887,
+              892,
+              901
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 33910,
         "clears": [
-          0.02161,
-          0.01562,
-          0.01043,
-          0.0083
+          0.01447,
+          0.005916,
+          0.000899,
+          0.000092
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -2248,22 +4025,43 @@
       "label": "Close Long Strafes Invincible",
       "leaderboardId": 117,
       "rankMaxes": [
-        7618,
-        9530,
-        11066,
-        12254
+        6000,
+        10000,
+        15500,
+        18000
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "adopted",
+        "from": [
+          {
+            "benchmark": "Jade Palace Ground",
+            "difficulty": "Fundamentals",
+            "rankMaxes": [
+              6000,
+              8000,
+              10000,
+              12000,
+              14000,
+              15500,
+              17000,
+              18000
+            ],
+            "used": [
+              6000,
+              10000,
+              15500,
+              18000
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 170643,
         "clears": [
-          0.85998,
-          0.72004,
-          0.56005,
-          0.42005
+          null,
+          0.67603,
+          0.098792,
+          0.009615
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       }
@@ -2277,22 +4075,59 @@
       "label": "Smooth Thin Strafes Raspberry Easy",
       "leaderboardId": 5536,
       "rankMaxes": [
-        7014,
-        7584,
-        8109,
-        8555
+        7050,
+        8200,
+        9200,
+        10300
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "reconciled",
+        "rule": "median per rank of 2 tiers this pool bands at Intermediate, each first reduced to 4 evenly spread picks",
+        "from": [
+          {
+            "benchmark": "Jade Palace Ground",
+            "difficulty": "Easy",
+            "rankMaxes": [
+              8400,
+              9200,
+              10000,
+              10800,
+              11600
+            ],
+            "used": [
+              8400,
+              9200,
+              10800,
+              11600
+            ]
+          },
+          {
+            "benchmark": "Revosect S1",
+            "difficulty": "Easy",
+            "rankMaxes": [
+              5700,
+              6400,
+              7200,
+              7600,
+              8300,
+              9000
+            ],
+            "used": [
+              5700,
+              7200,
+              7600,
+              9000
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 74862,
         "clears": [
-          0.31006,
-          0.22,
-          0.15,
-          0.10495
+          0.303352,
+          0.140808,
+          0.058521,
+          0.017234
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       }
@@ -2306,22 +4141,63 @@
       "label": "Air Angelic 4 Voltaic Easy",
       "leaderboardId": 42,
       "rankMaxes": [
-        3656,
-        3785,
-        3906,
-        4011
+        2325,
+        3075,
+        3975,
+        4675
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "reconciled",
+        "rule": "median per rank of 2 tiers this pool bands at Advanced, each first reduced to 4 evenly spread picks",
+        "from": [
+          {
+            "benchmark": "snakbox Benchmark",
+            "difficulty": "Medium",
+            "rankMaxes": [
+              2750,
+              3100,
+              3500,
+              3850,
+              4200,
+              4500,
+              4900
+            ],
+            "used": [
+              2750,
+              3500,
+              4200,
+              4900
+            ]
+          },
+          {
+            "benchmark": "Viscose Benchmarks",
+            "difficulty": "Medium",
+            "rankMaxes": [
+              1900,
+              2300,
+              2650,
+              3000,
+              3400,
+              3750,
+              4100,
+              4450
+            ],
+            "used": [
+              1900,
+              2650,
+              3750,
+              4450
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 141807,
         "clears": [
-          0.075,
-          0.05497,
-          0.03996,
-          0.03003
+          0.598616,
+          0.246923,
+          0.032962,
+          0.00213
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -2329,7 +4205,7 @@
         "runs": 36,
         "best": 3467,
         "median": 3089,
-        "reaches": null
+        "reaches": "rank 10"
       }
     },
     {
@@ -2341,22 +4217,40 @@
       "label": "Close Fast Strafes Invincible - Thin",
       "leaderboardId": 814,
       "rankMaxes": [
-        10079,
-        10629,
-        10996,
-        11448
+        9800,
+        11200,
+        13700,
+        15400
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "adopted",
+        "from": [
+          {
+            "benchmark": "Jade Palace Ground",
+            "difficulty": "Hard",
+            "rankMaxes": [
+              9800,
+              11200,
+              12400,
+              13700,
+              15400
+            ],
+            "used": [
+              9800,
+              11200,
+              13700,
+              15400
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 33556,
         "clears": [
-          0.022,
-          0.015,
-          0.011,
-          0.008
+          0.028114,
+          0.009191,
+          0.000602,
+          0.000044
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -2376,22 +4270,44 @@
       "label": "VT EddieTS Novice S5",
       "leaderboardId": 104835,
       "rankMaxes": [
-        652,
-        743,
-        822,
-        882
+        640,
+        730,
+        810,
+        890
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "reconciled",
+        "rule": "median per rank of 2 tiers this pool bands at Novice, each first reduced to 4 evenly spread picks",
+        "from": [
+          {
+            "benchmark": "Voltaic S5.5",
+            "difficulty": "Novice",
+            "rankMaxes": [
+              640,
+              730,
+              810,
+              890
+            ]
+          },
+          {
+            "benchmark": "Voltaic S5",
+            "difficulty": "Novice",
+            "rankMaxes": [
+              640,
+              730,
+              810,
+              890
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 86622,
         "clears": [
-          0.86037,
-          0.71981,
-          0.56,
-          0.42099
+          0.875311,
+          0.74434,
+          0.585714,
+          0.401235
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -2411,22 +4327,42 @@
       "label": "voxTS Viscose Varied",
       "leaderboardId": 417,
       "rankMaxes": [
-        84,
-        89,
-        94,
-        98
+        86,
+        100,
+        112,
+        154
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "adopted",
+        "from": [
+          {
+            "benchmark": "Aimerz+ SpeedTS",
+            "difficulty": "Easy",
+            "rankMaxes": [
+              86,
+              94,
+              100,
+              106,
+              112,
+              120,
+              154
+            ],
+            "used": [
+              86,
+              100,
+              112,
+              154
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 268948,
         "clears": [
-          0.3,
-          0.21667,
-          0.14607,
-          0.10112
+          0.266667,
+          0.083898,
+          0.02,
+          0.000007
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -2434,7 +4370,7 @@
         "runs": 4,
         "best": 108,
         "median": 104,
-        "reaches": "rank 8"
+        "reaches": "rank 6"
       }
     },
     {
@@ -2446,22 +4382,42 @@
       "label": "voxTargetSwitch",
       "leaderboardId": 118,
       "rankMaxes": [
-        97,
-        100,
-        102,
-        104
+        104,
+        112,
+        120,
+        128
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "adopted",
+        "from": [
+          {
+            "benchmark": "AimSpeed Benchmarks 2.0",
+            "difficulty": "Normal",
+            "rankMaxes": [
+              104,
+              108,
+              112,
+              116,
+              120,
+              124,
+              128
+            ],
+            "used": [
+              104,
+              112,
+              120,
+              128
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 142076,
         "clears": [
-          0.07561,
-          0.05393,
-          0.04112,
-          0.03105
+          0.031053,
+          0.00875,
+          0.002121,
+          0.000549
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -2469,7 +4425,7 @@
         "runs": 19,
         "best": 103,
         "median": 95,
-        "reaches": "rank 11"
+        "reaches": null
       }
     },
     {
@@ -2481,22 +4437,41 @@
       "label": "VT skyTS Advanced",
       "leaderboardId": 25150,
       "rankMaxes": [
-        1355,
-        1390,
-        1413,
-        1433
+        1200,
+        1400,
+        1500,
+        1670
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "adopted",
+        "from": [
+          {
+            "benchmark": "snakbox Benchmark",
+            "difficulty": "Hard",
+            "rankMaxes": [
+              1200,
+              1300,
+              1400,
+              1500,
+              1600,
+              1670
+            ],
+            "used": [
+              1200,
+              1400,
+              1500,
+              1670
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 27620,
         "clears": [
-          0.0219,
-          0.01495,
-          0.01107,
-          0.00794
+          0.133333,
+          0.012156,
+          0.002359,
+          0.000064
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       }
@@ -2510,22 +4485,44 @@
       "label": "VT DotTS Novice S5",
       "leaderboardId": 104868,
       "rankMaxes": [
-        860,
-        967,
-        1051,
-        1096
+        845,
+        940,
+        1030,
+        1090
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "reconciled",
+        "rule": "median per rank of 2 tiers this pool bands at Novice, each first reduced to 4 evenly spread picks",
+        "from": [
+          {
+            "benchmark": "Voltaic S5.5",
+            "difficulty": "Novice",
+            "rankMaxes": [
+              845,
+              940,
+              1030,
+              1090
+            ]
+          },
+          {
+            "benchmark": "Voltaic S5",
+            "difficulty": "Novice",
+            "rankMaxes": [
+              845,
+              940,
+              1030,
+              1090
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 91135,
         "clears": [
-          0.86,
-          0.71943,
-          0.56,
-          0.42
+          0.875,
+          0.765714,
+          0.603448,
+          0.45
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -2545,22 +4542,44 @@
       "label": "VT DotTS Intermediate S5",
       "leaderboardId": 104865,
       "rankMaxes": [
-        1143,
-        1181,
-        1219,
-        1247
+        1110,
+        1180,
+        1230,
+        1280
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "reconciled",
+        "rule": "median per rank of 2 tiers this pool bands at Intermediate, each first reduced to 4 evenly spread picks",
+        "from": [
+          {
+            "benchmark": "Voltaic S5.5",
+            "difficulty": "Intermediate",
+            "rankMaxes": [
+              1110,
+              1180,
+              1230,
+              1280
+            ]
+          },
+          {
+            "benchmark": "Voltaic S5",
+            "difficulty": "Intermediate",
+            "rankMaxes": [
+              1110,
+              1180,
+              1230,
+              1280
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 57461,
         "clears": [
-          0.31132,
-          0.22045,
-          0.14921,
-          0.10476
+          0.431667,
+          0.222727,
+          0.131746,
+          0.075
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -2580,22 +4599,44 @@
       "label": "VT DotTS Advanced S5",
       "leaderboardId": 104961,
       "rankMaxes": [
-        1243,
-        1273,
-        1287,
-        1297
+        1275,
+        1350,
+        1410,
+        1485
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "reconciled",
+        "rule": "median per rank of 2 tiers this pool bands at Advanced, each first reduced to 4 evenly spread picks",
+        "from": [
+          {
+            "benchmark": "Voltaic S5.5",
+            "difficulty": "Advanced",
+            "rankMaxes": [
+              1270,
+              1340,
+              1400,
+              1470
+            ]
+          },
+          {
+            "benchmark": "Voltaic S5",
+            "difficulty": "Advanced",
+            "rankMaxes": [
+              1280,
+              1360,
+              1420,
+              1500
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 17906,
         "clears": [
-          0.075,
-          0.05473,
-          0.0395,
-          0.03
+          0.053378,
+          0.010623,
+          0.003209,
+          0.000557
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -2615,22 +4656,41 @@
       "label": "VT psalmTS Advanced",
       "leaderboardId": 25177,
       "rankMaxes": [
-        1091,
-        1116,
-        1132,
-        1154
+        1000,
+        1160,
+        1220,
+        1380
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "adopted",
+        "from": [
+          {
+            "benchmark": "snakbox Benchmark",
+            "difficulty": "Hard",
+            "rankMaxes": [
+              1000,
+              1080,
+              1160,
+              1220,
+              1310,
+              1380
+            ],
+            "used": [
+              1000,
+              1160,
+              1220,
+              1380
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 20528,
         "clears": [
-          0.02192,
-          0.01489,
-          0.01108,
-          0.00799
+          0.071134,
+          0.006547,
+          0.002055,
+          0.000074
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       }
@@ -2644,22 +4704,44 @@
       "label": "VT FlyTS Novice S5",
       "leaderboardId": 104830,
       "rankMaxes": [
-        434,
-        482,
-        522,
-        542
+        420,
+        460,
+        500,
+        535
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "reconciled",
+        "rule": "median per rank of 2 tiers this pool bands at Novice, each first reduced to 4 evenly spread picks",
+        "from": [
+          {
+            "benchmark": "Voltaic S5.5",
+            "difficulty": "Novice",
+            "rankMaxes": [
+              420,
+              460,
+              500,
+              535
+            ]
+          },
+          {
+            "benchmark": "Voltaic S5",
+            "difficulty": "Novice",
+            "rankMaxes": [
+              420,
+              460,
+              500,
+              535
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 79460,
         "clears": [
-          0.85933,
-          0.72181,
-          0.55884,
-          0.41471
+          0.888579,
+          0.805014,
+          0.65,
+          0.504972
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -2679,22 +4761,44 @@
       "label": "VT FlyTS Intermediate S5",
       "leaderboardId": 105142,
       "rankMaxes": [
-        558,
-        583,
+        520,
+        570,
         610,
-        632
+        650
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "reconciled",
+        "rule": "median per rank of 2 tiers this pool bands at Intermediate, each first reduced to 4 evenly spread picks",
+        "from": [
+          {
+            "benchmark": "Voltaic S5.5",
+            "difficulty": "Intermediate",
+            "rankMaxes": [
+              520,
+              570,
+              610,
+              650
+            ]
+          },
+          {
+            "benchmark": "Voltaic S5",
+            "difficulty": "Intermediate",
+            "rankMaxes": [
+              520,
+              570,
+              610,
+              650
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 48140,
         "clears": [
-          0.30877,
-          0.21958,
+          0.505769,
+          0.265035,
           0.15,
-          0.10492
+          0.075926
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -2714,22 +4818,44 @@
       "label": "VT FlyTS Advanced S5",
       "leaderboardId": 105143,
       "rankMaxes": [
-        551,
-        561,
-        574,
-        588
+        540,
+        600,
+        655,
+        705
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "reconciled",
+        "rule": "median per rank of 2 tiers this pool bands at Advanced, each first reduced to 4 evenly spread picks",
+        "from": [
+          {
+            "benchmark": "Voltaic S5.5",
+            "difficulty": "Advanced",
+            "rankMaxes": [
+              540,
+              600,
+              650,
+              690
+            ]
+          },
+          {
+            "benchmark": "Voltaic S5",
+            "difficulty": "Advanced",
+            "rankMaxes": [
+              540,
+              600,
+              660,
+              720
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 9501,
         "clears": [
-          0.07419,
-          0.05403,
-          0.04041,
-          0.03013
+          0.117949,
+          0.025619,
+          0.005601,
+          0.00087
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -2749,22 +4875,98 @@
       "label": "domiSwitch",
       "leaderboardId": 83035,
       "rankMaxes": [
-        6494,
-        6696,
-        6830,
-        6975
+        5775,
+        6625,
+        7200,
+        7950
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "reconciled",
+        "rule": "median per rank of 4 tiers this pool bands at Expert, each first reduced to 4 evenly spread picks",
+        "from": [
+          {
+            "benchmark": "Aimerz+ Evasive Switching",
+            "difficulty": "Hard",
+            "rankMaxes": [
+              6250,
+              6600,
+              7000,
+              7400,
+              7900,
+              8600
+            ],
+            "used": [
+              6250,
+              7000,
+              7400,
+              8600
+            ]
+          },
+          {
+            "benchmark": "snakbox Benchmark",
+            "difficulty": "Hard",
+            "rankMaxes": [
+              6000,
+              6500,
+              7000,
+              7500,
+              8000,
+              8500
+            ],
+            "used": [
+              6000,
+              7000,
+              7500,
+              8500
+            ]
+          },
+          {
+            "benchmark": "Viscose Benchmarks S2",
+            "difficulty": "Hard",
+            "rankMaxes": [
+              5100,
+              5500,
+              5900,
+              6400,
+              6700,
+              7000,
+              7200,
+              7400
+            ],
+            "used": [
+              5100,
+              5900,
+              7000,
+              7400
+            ]
+          },
+          {
+            "benchmark": "Viscose Benchmarks",
+            "difficulty": "Hard",
+            "rankMaxes": [
+              5550,
+              5950,
+              6250,
+              6550,
+              6850,
+              7200
+            ],
+            "used": [
+              5550,
+              6250,
+              6550,
+              7200
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 18273,
         "clears": [
-          0.02201,
-          0.01501,
-          0.01101,
-          0.00801
+          0.078832,
+          0.016848,
+          0.004285,
+          0.000271
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -2784,22 +4986,33 @@
       "label": "VT evaTS Novice",
       "leaderboardId": 24980,
       "rankMaxes": [
-        480,
-        537,
-        582,
-        616
+        450,
+        510,
+        560,
+        620
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "adopted",
+        "from": [
+          {
+            "benchmark": "Voltaic S4",
+            "difficulty": "Novice",
+            "rankMaxes": [
+              450,
+              510,
+              560,
+              620
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 107001,
         "clears": [
-          0.85932,
-          0.71905,
-          0.55966,
-          0.41978
+          0.916101,
+          0.802536,
+          0.645661,
+          0.402654
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       }
@@ -2813,22 +5026,33 @@
       "label": "VT evaTS Intermediate",
       "leaderboardId": 24962,
       "rankMaxes": [
-        599,
-        625,
-        651,
-        669
+        550,
+        600,
+        650,
+        700
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "adopted",
+        "from": [
+          {
+            "benchmark": "Voltaic S4",
+            "difficulty": "Intermediate",
+            "rankMaxes": [
+              550,
+              600,
+              650,
+              700
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 52650,
         "clears": [
-          0.31079,
-          0.21928,
-          0.14913,
-          0.10415
+          0.542195,
+          0.30635,
+          0.151623,
+          0.05639
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       }
@@ -2842,22 +5066,43 @@
       "label": "tamTargetSwitch Smooth Easy",
       "leaderboardId": 42505,
       "rankMaxes": [
-        35,
+        22,
+        29,
         36,
-        37,
-        38
+        41
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "adopted",
+        "from": [
+          {
+            "benchmark": "Viscose Benchmarks",
+            "difficulty": "Medium",
+            "rankMaxes": [
+              22,
+              26,
+              29,
+              32,
+              34,
+              36,
+              38,
+              41
+            ],
+            "used": [
+              22,
+              29,
+              36,
+              41
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 69242,
         "clears": [
-          0.075,
+          0.6125,
+          0.3,
           0.05,
-          0.035,
-          0.02
+          0.007216
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -2865,7 +5110,7 @@
         "runs": 26,
         "best": 35,
         "median": 30,
-        "reaches": "rank 9"
+        "reaches": "rank 10"
       }
     },
     {
@@ -2889,10 +5134,10 @@
       "sanity": {
         "leaderboardEntries": 46012,
         "clears": [
-          0.01667,
-          0.01333,
-          0.01,
-          0.0075
+          0.016667,
+          0.010864,
+          0.007682,
+          0.005432
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       }
@@ -2906,22 +5151,44 @@
       "label": "VT ControlTS Novice S5",
       "leaderboardId": 105132,
       "rankMaxes": [
-        354,
-        399,
-        436,
-        455
+        340,
+        380,
+        420,
+        450
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "reconciled",
+        "rule": "median per rank of 2 tiers this pool bands at Novice, each first reduced to 4 evenly spread picks",
+        "from": [
+          {
+            "benchmark": "Voltaic S5.5",
+            "difficulty": "Novice",
+            "rankMaxes": [
+              340,
+              380,
+              420,
+              450
+            ]
+          },
+          {
+            "benchmark": "Voltaic S5",
+            "difficulty": "Novice",
+            "rankMaxes": [
+              340,
+              380,
+              420,
+              450
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 84100,
         "clears": [
-          0.86037,
-          0.71949,
-          0.56069,
-          0.41667
+          0.892879,
+          0.8,
+          0.630058,
+          0.5
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -2941,22 +5208,44 @@
       "label": "VT ControlTS Intermediate S5",
       "leaderboardId": 104890,
       "rankMaxes": [
-        445,
-        465,
-        487,
-        503
+        420,
+        460,
+        485,
+        520
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "reconciled",
+        "rule": "median per rank of 2 tiers this pool bands at Intermediate, each first reduced to 4 evenly spread picks",
+        "from": [
+          {
+            "benchmark": "Voltaic S5.5",
+            "difficulty": "Intermediate",
+            "rankMaxes": [
+              420,
+              460,
+              485,
+              520
+            ]
+          },
+          {
+            "benchmark": "Voltaic S5",
+            "difficulty": "Intermediate",
+            "rankMaxes": [
+              420,
+              460,
+              485,
+              520
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 48842,
         "clears": [
-          0.31279,
-          0.22193,
-          0.15058,
-          0.10511
+          0.5,
+          0.24386,
+          0.156395,
+          0.075
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -2976,22 +5265,64 @@
       "label": "kinTS Voltaic Easy",
       "leaderboardId": 542,
       "rankMaxes": [
-        74,
-        76,
-        77,
-        78
+        46,
+        63,
+        75,
+        91
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "reconciled",
+        "rule": "median per rank of 2 tiers this pool bands at Advanced, each first reduced to 4 evenly spread picks",
+        "from": [
+          {
+            "benchmark": "snakbox Benchmark",
+            "difficulty": "Medium",
+            "rankMaxes": [
+              50,
+              57,
+              64,
+              71,
+              78,
+              85,
+              95
+            ],
+            "used": [
+              50,
+              64,
+              78,
+              95
+            ]
+          },
+          {
+            "benchmark": "Viscose Benchmarks S2",
+            "difficulty": "Medium",
+            "rankMaxes": [
+              42,
+              49,
+              55,
+              61,
+              67,
+              72,
+              76,
+              81,
+              86
+            ],
+            "used": [
+              42,
+              61,
+              72,
+              86
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 60069,
         "clears": [
-          0.07462,
-          0.04965,
-          0.03812,
-          0.03109
+          0.83963,
+          0.335333,
+          0.062125,
+          0.001247
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -2999,7 +5330,7 @@
         "runs": 22,
         "best": 74,
         "median": 71,
-        "reaches": "rank 9"
+        "reaches": "rank 10"
       }
     },
     {
@@ -3011,22 +5342,62 @@
       "label": "kinTS Voltaic",
       "leaderboardId": 604,
       "rankMaxes": [
-        80,
-        82,
-        84,
-        85
+        70,
+        81,
+        90,
+        97
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "reconciled",
+        "rule": "median per rank of 2 tiers this pool bands at Expert, each first reduced to 4 evenly spread picks",
+        "from": [
+          {
+            "benchmark": "snakbox Benchmark",
+            "difficulty": "Hard",
+            "rankMaxes": [
+              75,
+              82,
+              88,
+              92,
+              97,
+              101
+            ],
+            "used": [
+              75,
+              88,
+              92,
+              101
+            ]
+          },
+          {
+            "benchmark": "Viscose Benchmarks S2",
+            "difficulty": "Hard",
+            "rankMaxes": [
+              65,
+              69,
+              74,
+              79,
+              83,
+              87,
+              90,
+              93
+            ],
+            "used": [
+              65,
+              74,
+              87,
+              93
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 28855,
         "clears": [
-          0.02391,
-          0.01623,
-          0.01051,
-          0.00872
+          0.123854,
+          0.019086,
+          0.002697,
+          0.000351
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -3034,7 +5405,7 @@
         "runs": 6,
         "best": 71,
         "median": 65,
-        "reaches": null
+        "reaches": "rank 13"
       }
     },
     {
@@ -3046,22 +5417,44 @@
       "label": "VT Penta Bounce Novice S5",
       "leaderboardId": 103262,
       "rankMaxes": [
-        306,
-        366,
-        414,
-        446
+        290,
+        340,
+        390,
+        445
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "reconciled",
+        "rule": "median per rank of 2 tiers this pool bands at Novice, each first reduced to 4 evenly spread picks",
+        "from": [
+          {
+            "benchmark": "Voltaic S5.5",
+            "difficulty": "Novice",
+            "rankMaxes": [
+              290,
+              340,
+              390,
+              445
+            ]
+          },
+          {
+            "benchmark": "Voltaic S5",
+            "difficulty": "Novice",
+            "rankMaxes": [
+              290,
+              340,
+              390,
+              445
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 83184,
         "clears": [
-          0.85986,
-          0.72041,
-          0.56071,
-          0.42105
+          0.888028,
+          0.8,
+          0.646429,
+          0.426316
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -3081,22 +5474,84 @@
       "label": "beanTS Larger",
       "leaderboardId": 129353,
       "rankMaxes": [
-        125,
-        131,
-        137,
-        141
+        65,
+        90,
+        120,
+        142
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "reconciled",
+        "rule": "median per rank of 3 tiers this pool bands at Intermediate, each first reduced to 4 evenly spread picks",
+        "from": [
+          {
+            "benchmark": "AimSpeed Benchmarks 2.0",
+            "difficulty": "Easy",
+            "rankMaxes": [
+              140,
+              145,
+              150,
+              155,
+              160,
+              165,
+              170
+            ],
+            "used": [
+              140,
+              150,
+              160,
+              170
+            ]
+          },
+          {
+            "benchmark": "Viscose Benchmarks S2",
+            "difficulty": "Easier",
+            "rankMaxes": [
+              53,
+              64,
+              75,
+              86,
+              96,
+              106,
+              116,
+              126,
+              137
+            ],
+            "used": [
+              53,
+              86,
+              106,
+              137
+            ]
+          },
+          {
+            "benchmark": "Viscose Benchmarks",
+            "difficulty": "Easier",
+            "rankMaxes": [
+              65,
+              78,
+              90,
+              100,
+              110,
+              120,
+              130,
+              142
+            ],
+            "used": [
+              65,
+              90,
+              120,
+              142
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 71281,
         "clears": [
-          0.30404,
-          0.21471,
-          0.15,
-          0.10745
+          null,
+          0.85407,
+          0.404762,
+          0.092857
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -3116,22 +5571,84 @@
       "label": "beanTS",
       "leaderboardId": 2648,
       "rankMaxes": [
-        135,
-        137,
-        141,
-        143
+        88,
+        115,
+        143,
+        156
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "reconciled",
+        "rule": "median per rank of 3 tiers this pool bands at Advanced, each first reduced to 4 evenly spread picks",
+        "from": [
+          {
+            "benchmark": "AimSpeed Benchmarks 2.0",
+            "difficulty": "Normal",
+            "rankMaxes": [
+              140,
+              145,
+              150,
+              155,
+              160,
+              165,
+              170
+            ],
+            "used": [
+              140,
+              150,
+              160,
+              170
+            ]
+          },
+          {
+            "benchmark": "Viscose Benchmarks S2",
+            "difficulty": "Medium",
+            "rankMaxes": [
+              80,
+              91,
+              102,
+              113,
+              125,
+              134,
+              142,
+              148,
+              155
+            ],
+            "used": [
+              80,
+              113,
+              134,
+              155
+            ]
+          },
+          {
+            "benchmark": "Viscose Benchmarks",
+            "difficulty": "Medium",
+            "rankMaxes": [
+              88,
+              103,
+              115,
+              127,
+              136,
+              143,
+              149,
+              156
+            ],
+            "used": [
+              88,
+              115,
+              143,
+              156
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 96570,
         "clears": [
-          0.07148,
-          0.05739,
-          0.0388,
-          0.03082
+          0.665,
+          0.274651,
+          0.030822,
+          0.004323
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
@@ -3151,22 +5668,62 @@
       "label": "B180T Voltaic",
       "leaderboardId": 947,
       "rankMaxes": [
-        81,
-        84,
-        86,
-        88
+        71,
+        82,
+        93,
+        103
       ],
       "source": {
-        "kind": "seeded",
-        "note": "Carried from the percentile-derived season unchanged by tools/extractThresholds.ts. Not yet traced to a published benchmark or deliberately authored."
+        "kind": "reconciled",
+        "rule": "median per rank of 2 tiers this pool bands at Expert, each first reduced to 4 evenly spread picks",
+        "from": [
+          {
+            "benchmark": "snakbox Benchmark",
+            "difficulty": "Hard",
+            "rankMaxes": [
+              77,
+              83,
+              89,
+              95,
+              101,
+              107
+            ],
+            "used": [
+              77,
+              89,
+              95,
+              107
+            ]
+          },
+          {
+            "benchmark": "Viscose Benchmarks S2",
+            "difficulty": "Hard",
+            "rankMaxes": [
+              65,
+              70,
+              75,
+              80,
+              85,
+              90,
+              94,
+              98
+            ],
+            "used": [
+              65,
+              75,
+              90,
+              98
+            ]
+          }
+        ]
       },
       "sanity": {
         "leaderboardEntries": 23380,
         "clears": [
-          0.02,
-          0.01423,
-          0.01038,
-          0.0082
+          0.0775,
+          0.018159,
+          0.00371,
+          0.00026
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },

@@ -24,8 +24,45 @@ import { dataFile } from "../dataDir.ts";
 import { ENERGY_PER_RANK } from "../benchmarks/energy.ts";
 import type { DifficultyDef } from "../benchmarks/types.ts";
 
+/**
+ * One band of one category, graded on its own.
+ *
+ * A band is a complete benchmark: its own scenarios, its own ranks, its own top. That is
+ * how Voltaic, Viscose and Revosect are all built, and it is not a stylistic choice -
+ * it is what their published numbers support.
+ *
+ * The season used to chain the four bands into one sixteen-rank ladder, with a family
+ * graded on the best of its variants and each window's energy offset by the windows
+ * below. That works when every threshold is cut from one percentile ladder, because the
+ * ladder descends by construction. It does not survive authored numbers: measured across
+ * the pool, adopting what the benchmarks actually publish put 59 ranks beyond anyone's
+ * reach, 58 of them at a handover. Not because different authors calibrate differently -
+ * of those 58, twenty-nine were handovers sharing an author and twenty-nine were not -
+ * but because a benchmark's tiers are not rungs. Voltaic Novice and Voltaic Advanced are
+ * separate benchmarks; nobody ever meant Advanced's first rank to be harder than
+ * Novice's last on a different scenario.
+ *
+ * So bands do not chain. A player holds a rank in each band they have played, and the
+ * question 'is Advanced rank 1 harder than Novice rank 4' is never asked.
+ */
+export interface SeasonBand {
+  /** Index into `Season.windows`, which names it. */
+  window: number;
+  rankNames: string[];
+  rankColors: Record<string, string>;
+  /** Category energy thresholds within this band, one per rank. */
+  rankMaxes: number[];
+}
+
 export interface SeasonCategory {
   name: string;
+  /**
+   * This category's bands, each graded independently.
+   *
+   * Absent on a season built before the split, where `rankMaxes` and `rankNames` carry
+   * one chained ladder instead.
+   */
+  bands?: SeasonBand[];
   /** Category-level energy thresholds, one per rank in this category's ladder. */
   rankMaxes: number[];
   /**
@@ -429,6 +466,58 @@ export function validateSeason(season: Season): void {
  * `name` here is the season's, so anything that prints a difficulty prints something
  * true rather than a borrowed label.
  */
+/**
+ * Present each band as its own benchmark, in the shape the grading engine already reads.
+ *
+ * This is the whole of the independent-tier change as far as grading is concerned. The
+ * engine's `evaluateCategory` already treats a flat ladder as the degenerate windowed one
+ * - `windowSize ?? rankMaxes.length` - so a band handed over with its own scenarios and
+ * its own ranks needs no new arithmetic and inherits every check `validateEngine` makes
+ * against KovaaK's own numbers.
+ *
+ * Returns one entry per band, in band order. A season with no `bands` yields nothing, so
+ * a caller can tell 'not split yet' from 'split, and empty'.
+ */
+export function seasonAsDifficulties(season: Season): DifficultyDef[] {
+  const bandCount = Math.max(
+    0,
+    ...season.categories.map((c) => c.bands?.length ?? 0),
+  );
+  if (bandCount === 0) return [];
+
+  const byCategory = new Map<string, SeasonScenario[]>();
+  for (const s of season.scenarios) {
+    const list = byCategory.get(s.category) ?? [];
+    list.push(s);
+    byCategory.set(s.category, list);
+  }
+
+  return Array.from({ length: bandCount }, (_, band) => ({
+    name: `${season.name} ${season.windows?.[band] ?? `band ${band + 1}`}`,
+    kovaaksBenchmarkId: 0,
+    rankNames: season.categories[0]?.bands?.[band]?.rankNames ?? [],
+    rankColors: season.categories[0]?.bands?.[band]?.rankColors ?? {},
+    categories: season.categories.map((c) => {
+      const ladder = c.bands?.[band];
+      return {
+        name: c.name,
+        rankMaxes: ladder?.rankMaxes ?? [],
+        rankNames: ladder?.rankNames ?? [],
+        rankColors: ladder?.rankColors ?? {},
+        // Deliberately no windowSize: inside a band every scenario is its own family in
+        // window 0, which is the flat case, and that is the point of splitting them.
+        scenarios: (byCategory.get(c.name) ?? [])
+          .filter((s) => (s.window ?? 0) === band)
+          .map((s) => ({
+            name: s.scenario,
+            leaderboardId: s.leaderboardId,
+            rankMaxes: s.rankMaxes,
+          })),
+      };
+    }),
+  }));
+}
+
 export function seasonAsDifficulty(season: Season): DifficultyDef {
   const byCategory = new Map<string, SeasonScenario[]>();
   for (const s of season.scenarios) {
