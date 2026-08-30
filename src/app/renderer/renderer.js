@@ -3901,6 +3901,18 @@ let apexData = null;
  * without naming what it is a number on is the confusing half of a windowed ladder all
  * over again.
  */
+/**
+ * What to chase on this scenario next.
+ *
+ * A whole point is ten times fewer people above you, so it is the same amount of work
+ * wherever a player sits - which a round rank is not. Shown as the score and the
+ * position it buys, because a target nobody can act on is decoration.
+ */
+function nextLabel(f) {
+  if (!f.next) return "\u2014";
+  return num(Math.round(f.next.score)) + " \u2192 #" + num(f.next.rank);
+}
+
 function renderApex() {
   if (!apexData || apexData.error) {
     const note = $("apexNote");
@@ -3950,7 +3962,7 @@ function renderApex() {
     table.className = "scen";
     table.innerHTML =
       "<thead><tr><th>Family</th><th>Scored on</th><th>Your best</th>" +
-      "<th>Board position</th><th>Points</th></tr></thead>";
+      "<th>Board position</th><th>Points</th><th>Next</th></tr></thead>";
 
     const tbody = document.createElement("tbody");
 
@@ -3966,7 +3978,8 @@ function renderApex() {
         "<td>" + esc(f.label) + "</td>" +
         "<td>" + (f.score === null ? "\u2014" : num(Math.round(f.score))) + "</td>" +
         "<td>" + esc(where) + "</td>" +
-        "<td>" + (f.score === null ? "\u2014" : esc(f.points.toFixed(2))) + "</td>";
+        "<td>" + (f.score === null ? "\u2014" : esc(f.points.toFixed(2))) + "</td>" +
+        "<td>" + esc(nextLabel(f)) + "</td>";
       tbody.append(tr);
     });
 

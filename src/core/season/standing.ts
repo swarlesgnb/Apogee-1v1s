@@ -51,7 +51,7 @@
  * across families behaves the way category energy already does.
  */
 
-import { apexPoints, apexTopFraction, type ApexBoard } from "./apex.ts";
+import { apexPoints, apexTopFraction, nextWholePoint, type ApexBoard } from "./apex.ts";
 import type { Distribution } from "./percentiles.ts";
 import type { Season } from "./season.ts";
 
@@ -69,6 +69,15 @@ export interface FamilyStanding {
   /** Board size, for reading `boardRank` against. */
   boardTotal: number | null;
   points: number;
+  /**
+   * The next whole point, and what it costs.
+   *
+   * A board people are meant to chase has to name what they are chasing. A whole
+   * point is the unit this board is denominated in - ten times fewer people above
+   * you - so it means the same amount of work wherever a player sits, which a round
+   * rank does not. Null past the world record, where there is nothing to promise.
+   */
+  next: { points: number; score: number; rank: number } | null;
 }
 
 export interface CategoryStanding {
@@ -176,6 +185,7 @@ export function apexStanding(
       boardRank,
       boardTotal,
       points: apexPoints(topFraction),
+      next: nextWholePoint(board, dist, apexPoints(topFraction)),
     };
 
     const bucket = byCategory.get(variant.category);

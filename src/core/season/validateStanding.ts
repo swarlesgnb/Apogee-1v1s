@@ -21,6 +21,8 @@ import {
   apexPoints,
   apexTopFraction,
   boardRankOfScore,
+  nextWholePoint,
+  scoreAtBoardRank,
   type ApexBoard,
 } from "./apex.ts";
 import { apexSources, apexStanding, topWindowVariants } from "./standing.ts";
@@ -170,6 +172,76 @@ for (const board of sources.boards.values()) {
   }
 }
 check("a better score never reads as a worse rank", monotoneBreaks === 0, `${monotoneBreaks} breaks`);
+
+// ---- the target -----------------------------------------------------------------------
+//
+// The board names what to chase next, so the naming has to be right: a score that does not
+// actually reach the rank it is offered for is worse than offering nothing.
+//
+// The property is one-sided, and finding out why was worth the trip. Board scores are
+// integers and the top of a board ties constantly - tamTargetSwitch Control Hard has 53 at
+// both rank 1 and rank 2, Floating Heads Timing 400% FIXED has 4824 at both - so there is
+// simply no score that identifies rank 1.5. Asking for it returns 53, which is rank 1.
+//
+// So a strict round trip is a test the data cannot pass and should not have to. What a
+// player is owed is a promise that holds: score this and you are AT LEAST that rank. Ties
+// make the promise generous, never short, and that is the direction to assert.
+
+console.log(`\n${BOLD}what it names to chase${RESET}`);
+
+let shortOfPromise = 0;
+let promises = 0;
+let ties = 0;
+
+for (const board of sources.boards.values()) {
+  for (const anchorRank of [1.5, 4, 7, 40, 120, 300, 480]) {
+    if (anchorRank > board.points[board.points.length - 1].rank) continue;
+    const score = scoreAtBoardRank(board, anchorRank);
+    if (score === null) continue;
+    const back = boardRankOfScore(board, score);
+    if (back === null) {
+      shortOfPromise++;
+      continue;
+    }
+    promises++;
+    // A hundredth of a rank of slack for floating point, nothing more.
+    if (back > anchorRank + 0.01) shortOfPromise++;
+    else if (back < anchorRank - 0.01) ties++;
+  }
+}
+
+check(
+  "the score named for a rank reaches at least that rank",
+  shortOfPromise === 0,
+  shortOfPromise
+    ? `${shortOfPromise} of ${promises} fall short`
+    : `${promises} promise(s), ${ties} landing better than asked on a tied board`,
+);
+
+// And the target must be an improvement, never a target already met.
+let notAhead = 0;
+let named = 0;
+
+for (const variant of variants) {
+  const board = sources.boards.get(variant.scenario) ?? null;
+  const dist = sources.distributions.get(variant.scenario) ?? null;
+  if (!board) continue;
+
+  for (const probe of [0.05, 0.2, 0.5, 0.9]) {
+    const score = board.points[0].score * probe;
+    const here = apexPoints(apexTopFraction(board, dist, score));
+    const target = nextWholePoint(board, dist, here);
+    if (!target) continue;
+    named++;
+    if (!(target.points > here) || !(target.score > score)) notAhead++;
+  }
+}
+
+check(
+  "the next target is always ahead of where the player already is",
+  notAhead === 0,
+  notAhead ? `${notAhead} of ${named}` : `${named} target(s) checked`,
+);
 
 // ---- the seam ------------------------------------------------------------------------
 //

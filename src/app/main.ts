@@ -819,6 +819,12 @@ function runSmokeTest(): void {
         placed: [...document.querySelectorAll("#apexCategories tbody tr")].filter((r) =>
           /#[\\d,]+ of/.test(r.children[3] ? r.children[3].textContent : ""),
         ).length,
+        // A board people are meant to chase has to say what to chase. Counted rather
+        // than assumed: adding the column and never rendering into it would look
+        // exactly like a rendered page.
+        targets: [...document.querySelectorAll("#apexCategories tbody tr")].filter((r) =>
+          /\\u2192 #[\\d,]+/.test(r.children[5] ? r.children[5].textContent : ""),
+        ).length,
       };
     })()`);
 
@@ -835,6 +841,8 @@ function runSmokeTest(): void {
       problems.push("no scored family shows a board position");
     } else if (apex.graded > 0 && !(apex.points > 0)) {
       problems.push("the apex board scored families but no points");
+    } else if (apex.graded > 0 && apex.targets === 0) {
+      problems.push("no scored family says what to chase next");
     }
 
     console.log(
@@ -842,7 +850,8 @@ function runSmokeTest(): void {
         apex.err
           ? `FAILED (${apex.err})`
           : `${apex.points.toFixed(2)} points, ${apex.graded}/${apex.families} families ` +
-            `scored, ${apex.placed} placed on a board, ${apex.panels} categories painted`
+            `scored, ${apex.placed} placed, ${apex.targets} with a next target, ` +
+            `${apex.panels} categories painted`
       }`,
     );
     console.log(`preload      : ${hasBridge ? "bridge exposed" : "MISSING"}`);
@@ -1963,6 +1972,14 @@ ipcMain.handle("apogee:apex", () => {
         points: f.points,
         boardRank: f.boardRank === null ? null : Math.round(f.boardRank),
         boardTotal: f.boardTotal,
+        next:
+          f.next === null
+            ? null
+            : {
+                points: f.next.points,
+                score: f.next.score,
+                rank: Math.round(f.next.rank),
+              },
       })),
     })),
   };

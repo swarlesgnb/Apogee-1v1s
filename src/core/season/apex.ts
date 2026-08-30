@@ -40,7 +40,7 @@
  */
 
 import type { Distribution } from "./percentiles.ts";
-import { topFractionOfScore } from "./percentiles.ts";
+import { scoreAtTopFraction, topFractionOfScore } from "./percentiles.ts";
 
 /** One sampled point: the score held by the player at this rank on the board. */
 export interface ApexPoint {
@@ -166,6 +166,79 @@ export function apexTopFraction(
   }
 
   return floor;
+}
+
+/**
+ * The score it takes to reach a given position on the board.
+ *
+ * `boardRankOfScore` run backwards, and it exists because a board people are supposed to
+ * chase has to be able to name what they are chasing. "You are 7,307th" is a fact; "1,240
+ * more takes you into the top 1%" is a reason to load the scenario.
+ *
+ * Same log-rank interpolation as the forward direction, so the two agree in the direction
+ * that matters: the score returned reaches AT LEAST the rank asked for. Not exactly it -
+ * board scores are integers and the top of a board ties constantly, with 53 at both rank 1
+ * and rank 2 on tamTargetSwitch Control Hard, so no score identifies rank 1.5 at all. Where
+ * a tie makes the answer generous it is generous, never short, and `validateStanding`
+ * asserts that one-sided property rather than a round trip the data cannot support.
+ *
+ * Null when the rank is past the last anchor, where the apex board has no opinion and the
+ * fractional distribution is the thing to ask.
+ */
+export function scoreAtBoardRank(board: ApexBoard, rank: number): number | null {
+  const points = board.points;
+  if (points.length === 0 || !Number.isFinite(rank)) return null;
+
+  // Better than the world record is the world record's score: nothing above it is known.
+  if (rank <= points[0].rank) return points[0].score;
+
+  for (let i = 0; i < points.length - 1; i++) {
+    const better = points[i];
+    const worse = points[i + 1];
+    if (rank <= worse.rank) {
+      const span = Math.log(worse.rank) - Math.log(better.rank);
+      if (span <= 0) return worse.score;
+      const t = (Math.log(rank) - Math.log(better.rank)) / span;
+      return better.score + t * (worse.score - better.score);
+    }
+  }
+
+  return null;
+}
+
+/**
+ * The next whole apex point, and what it costs.
+ *
+ * A whole point is the unit the board is denominated in - ten times fewer people above
+ * you - so it is the natural next thing to aim at, and unlike a round rank it means the
+ * same amount of work wherever a player currently sits.
+ *
+ * Returns null where the target is off the top of the sampled board: past the world record
+ * there is nothing to promise, and saying so beats inventing a number.
+ */
+export function nextWholePoint(
+  board: ApexBoard | null,
+  dist: Distribution | null,
+  currentPoints: number,
+): { points: number; score: number; rank: number } | null {
+  const target = Math.floor(currentPoints) + 1;
+  const fraction = Math.pow(10, -target);
+
+  if (board && board.total > 0) {
+    const rank = fraction * board.total;
+    // Above the world record: no score reaches it, so there is nothing to name.
+    if (rank < board.points[0].rank) return null;
+
+    const score = scoreAtBoardRank(board, rank);
+    if (score !== null) return { points: target, score, rank };
+  }
+
+  if (dist) {
+    const score = scoreAtTopFraction(dist, fraction);
+    if (score !== null) return { points: target, score, rank: fraction * dist.total };
+  }
+
+  return null;
 }
 
 /**
