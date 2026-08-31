@@ -794,7 +794,8 @@ function runSmokeTest(): void {
     // probed on its own: a build shipped without the sampled boards would leave the
     // screen empty, and empty here reads as a bad score rather than as a missing file.
     const apex = await probe.webContents.executeJavaScript(`(async () => {
-      const tab = document.querySelector('.tab[data-screen="apex"]');
+      // Apex lives on the Season screen now, not a tab of its own.
+      const tab = document.querySelector('.tab[data-screen="seasonview"]');
       if (tab) tab.click();
 
       const data = await window.apogee

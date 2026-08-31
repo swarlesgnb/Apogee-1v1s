@@ -1602,14 +1602,18 @@
      four and nothing else, and a row of buttons that all look alike makes you read them
      to find out which is on. */
   .pool-bands {
-    display: inline-flex; padding: 3px; margin-bottom: 20px; gap: 2px;
-    border: 1px solid var(--hair); border-radius: var(--r-sm); background: var(--sunken);
+    display: grid; grid-auto-flow: column; grid-auto-columns: 1fr;
+    padding: 4px; margin-bottom: 22px; gap: 3px;
+    border: 1px solid var(--hair); border-radius: var(--r); background: var(--sunken);
   }
+  /* Wide enough to be the thing you press. Picking a band is the one real choice on this
+     screen - it decides which twenty-seven scenarios you are looking at - and as a set of
+     small pills it read like a filter chip rather than a difficulty select. */
   .pool-band {
-    display: flex; align-items: center; gap: 8px;
-    font: inherit; font-size: 12px; font-weight: 560; color: var(--ink-dim);
-    background: transparent; border: 0; border-radius: var(--r-xs);
-    padding: 6px 13px; cursor: pointer;
+    display: flex; flex-direction: column-reverse; align-items: center; gap: 5px;
+    font: inherit; font-size: 13px; font-weight: 600; color: var(--ink-dim);
+    background: transparent; border: 0; border-radius: var(--r-sm);
+    padding: 11px 14px; cursor: pointer;
     transition: color .15s var(--ease), background .15s var(--ease);
   }
   .pool-band:hover { color: var(--ink-mid); }
@@ -1651,94 +1655,93 @@
      carry a fill it is a second vertical edge beside twenty-two horizontal ones - the
      thing that made this panel read as scaffolding rather than as a list. Eleven groups
      of two rows separate perfectly well on spacing. */
-  .pool-sub { display: grid; gap: 2px; }
-  .pool-sub + .pool-sub { margin-top: 16px; }
+  /* Sub-skill: a label over a grid of its scenarios.
+     This was a stack of full-width bars - twenty-seven of them at 1,200px wide, each one
+     a name at the far left and two numbers at the far right with a quarter of the screen
+     of nothing in between. Read down, it was a spreadsheet. Scenarios are things you pick
+     one of and go play, so they are tiles you scan, and a sub-skill's two or three sit
+     side by side where they can actually be compared. */
+  .pool-sub { display: grid; gap: 8px; }
+  .pool-sub + .pool-sub { margin-top: 22px; }
   .pool-sub-head {
-    display: flex; align-items: baseline; gap: 10px; margin-bottom: 6px; padding-left: 12px;
+    display: flex; align-items: baseline; gap: 10px; margin-bottom: 2px;
   }
   .pool-sub-name {
     font-family: var(--mono); font-size: 9.5px; letter-spacing: .15em;
     text-transform: uppercase; color: var(--ink-mid);
   }
   .pool-sub-note { font-family: var(--mono); font-size: 9.5px; color: var(--ink-dim); }
+  .pool-sub .pool-tiles {
+    display: grid; gap: 8px;
+    grid-template-columns: repeat(auto-fill, minmax(232px, 1fr));
+  }
 
-  /* The row.
-     It was five columns - name, bar, best, target, Play - on fixed widths that shared no
-     edge with anything, and the bar was a 4px sliver floating in an 86px column between
-     two numbers. Three columns now, and the bar is gone as an element: progress is the
-     row's own ground, so a band of twenty-two reads as one ragged edge scanned down
-     rather than twenty-two gauges read one at a time. */
+  /* The tile.
+     Progress is still the tile's own ground rather than a gauge in a column, but it fills
+     from the bottom now: a card that fills upward reads as a thing being completed, where
+     a horizontal sliver across a wide row read as a table cell. */
   .pool-row {
     --fill: 0%;
-    position: relative; isolation: isolate;
-    display: grid; grid-template-columns: 1fr auto 54px;
-    align-items: center; gap: 16px; padding: 9px 12px;
-    border: 1px solid transparent; border-radius: var(--r-xs);
-    transition: border-color .13s var(--ease);
+    position: relative; isolation: isolate; overflow: hidden;
+    display: grid; gap: 9px; align-content: start;
+    padding: 12px 13px 11px;
+    border: 1px solid var(--hair); border-radius: var(--r-sm);
+    background: var(--sunken);
+    transition: border-color .13s var(--ease), transform .13s var(--ease);
   }
-  /* Tint up to the fill, and one brighter line at the boundary. Without the line the
-     tint is a smudge and stops being a measurement; with it the row is a gauge.
-     Every state below sets background-IMAGE only, so the hover tint underneath it is a
-     background-colour that survives all three rather than being cancelled by whichever
-     rule happens to come last. */
+  /* Progress rides the bottom edge, not the tile's ground.
+     Filling the card bottom-up put the boundary line at whatever height the percentage
+     landed on, which was straight through the name or the numbers on about half of them -
+     it read as a strikethrough, not a measurement. A rail along the bottom is the same
+     fact, always in the same place, and the tile above it stays clean. */
   .pool-row::before {
-    content: ""; position: absolute; inset: 0; z-index: -1;
-    border-radius: inherit; pointer-events: none;
-    background-color: transparent;
-    background-image:
+    content: ""; position: absolute; inset: auto 0 0 0; height: 3px; z-index: -1;
+    background:
       linear-gradient(90deg,
-        transparent calc(var(--fill) - 1.5px),
-        color-mix(in srgb, var(--rank, var(--ink-mid)) 55%, transparent) calc(var(--fill) - 1.5px),
-        color-mix(in srgb, var(--rank, var(--ink-mid)) 55%, transparent) var(--fill),
-        transparent var(--fill)),
-      linear-gradient(90deg,
-        color-mix(in srgb, var(--rank, var(--ink-mid)) 11%, transparent) var(--fill),
-        transparent var(--fill));
+        var(--rank, var(--ink-mid)) var(--fill),
+        rgba(255, 255, 255, .06) var(--fill));
   }
-  /* Progress through the CURRENT rank step, not from zero - from zero everything a
-     player has touched reads as nearly full and the fill says nothing. */
-  .pool-row.done::before {
-    background-image: linear-gradient(90deg,
-      color-mix(in srgb, var(--up) 12%, transparent) 0 100%);
-  }
-  .pool-row.untouched::before { background-image: none; }
+  .pool-row.done::before { background: color-mix(in srgb, var(--up) 70%, transparent); }
+  .pool-row.untouched::before { background: rgba(255, 255, 255, .05); }
   .pool-row.untouched .nm { color: var(--ink-dim); }
-  .pool-row:hover { border-color: var(--hair); }
-  .pool-row:hover::before { background-color: rgba(255, 255, 255, .03); }
-  /* The row the next rank is scored on: the one line here that is an instruction rather
-     than a record, so it gets the accent and nothing else does. */
-  .pool-row.next { border-color: color-mix(in srgb, var(--accent) 40%, transparent); }
-  .pool-row.next .nm { color: var(--ink); font-weight: 580; }
+  .pool-row:hover {
+    border-color: var(--hair-2); transform: translateY(-1px);
+    background: color-mix(in srgb, var(--ink) 4%, var(--sunken));
+  }
+  .pool-row.done { background: color-mix(in srgb, var(--up) 6%, var(--sunken)); }
+  /* The scenario the next rank is scored on: the one tile here that is an instruction
+     rather than a record, so it gets the accent and nothing else does. */
+  .pool-row.next {
+    border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 18%, transparent),
+                0 10px 26px -18px var(--accent);
+  }
+  .pool-row.next .nm { color: var(--ink); font-weight: 600; }
 
   .pool-row .nm {
-    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-    font-size: 12.5px; color: var(--ink);
+    display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    font-size: 12.5px; font-weight: 560; color: var(--ink); line-height: 1.3;
   }
 
-  /* Best and target as one expression rather than two right-aligned columns. They are
-     one sentence - you have this, the rank wants that - and splitting them put a 14px
-     gap in the middle of it. The "+129" that used to follow is the same fact a third
-     time, and is on the title instead. */
   .pool-num {
-    display: flex; align-items: baseline; gap: 7px; justify-self: end;
-    font-family: var(--mono); font-size: 11.5px; white-space: nowrap;
+    display: flex; align-items: baseline; gap: 6px;
+    font-family: var(--mono); font-size: 12px; white-space: nowrap;
   }
-  .pool-num .pb { color: var(--ink); min-width: 52px; text-align: right; }
-  .pool-num .pb.none { color: var(--ink-dim); font-size: 10px; }
+  .pool-num .pb { color: var(--ink); }
+  .pool-num .pb.none { color: var(--ink-dim); font-size: 10.5px; }
   .pool-num .to { color: var(--ink-dim); }
-  .pool-num .tgt { color: var(--ink-mid); min-width: 52px; }
+  .pool-num .tgt { color: var(--ink-mid); }
   .pool-num .tgt.max {
-    color: var(--up); min-width: 0; font-size: 9.5px; letter-spacing: .1em;
-    text-transform: uppercase;
+    color: var(--up); font-size: 9.5px; letter-spacing: .1em; text-transform: uppercase;
   }
 
-  /* Present but quiet until the row is under the cursor - twenty-two live buttons at
-     full contrast is a wall, and the row is the thing being scanned. The column is held
-     open whether or not the button shows, so hovering a row does not reflow the list. */
+  /* Quiet until the tile is under the cursor - twenty-seven live buttons at full contrast
+     is a wall, and the tile is the thing being scanned. The row is held open either way so
+     hovering does not reflow the grid. */
   .pool-row .scen-play {
     font: inherit; font-size: 11px; font-weight: 560; color: var(--ink-mid);
     background: transparent; border: 1px solid var(--hair);
-    border-radius: var(--r-xs); padding: 4px 0; width: 100%; cursor: pointer;
+    border-radius: var(--r-xs); padding: 5px 0; width: 100%; cursor: pointer;
     opacity: 0; transition: opacity .13s var(--ease), color .13s var(--ease),
       border-color .13s var(--ease), background .13s var(--ease);
   }
@@ -1748,6 +1751,15 @@
     color: var(--ink); border-color: var(--hair-3); background: rgba(255, 255, 255, .06);
   }
   .pool-row .scen-play:disabled { opacity: .4; cursor: default; }
+
+  /* ---- the apex section, folded into this screen ---- */
+  .sv-section { margin: 34px 0 14px; }
+  .sv-section-title {
+    margin: 0 0 6px; font-size: 17px; font-weight: 660; letter-spacing: -.01em;
+  }
+  .sv-section-lede {
+    margin: 0; max-width: 66ch; font-size: 12.5px; line-height: 1.6; color: var(--ink-mid);
+  }
 
   /* ---- playlists for the band on screen ---- */
   .pool-lists {
@@ -1843,14 +1855,6 @@
         <span class="tab-key"></span>
       </button>
 
-      <button class="tab" role="tab" aria-selected="false" data-screen="apex">
-        <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M12 3.2L20.4 19.2H3.6z"/>
-          <path d="M8.4 13.2h7.2"/>
-        </svg></span>
-        <span class="tab-label">Apex</span>
-        <span class="tab-key"></span>
-      </button>
 
       <div class="nav-label">Practice</div>
 
@@ -2317,43 +2321,6 @@
           </section>
 
           <!-- ---------------------------------------------- apex -->
-          <section class="screen" id="screen-apex">
-            <div class="screen-head">
-              <h1>Apex</h1>
-              <p>
-                The ladder stops at its top rank, because a rank is a band and a band
-                has a top. This does not stop. It is where you sit on each scenario's
-                KovaaK's leaderboard, and a whole point is ten times fewer players
-                above you.
-              </p>
-            </div>
-
-            <div class="panel">
-              <div class="phead">
-                <h2 id="apexName">Apex board</h2>
-                <span class="note" id="apexNote"></span>
-              </div>
-              <div class="pbody"><div class="sv-stats" id="apexStats"></div></div>
-            </div>
-
-            <div class="panel">
-              <div class="phead">
-                <h2>Leaderboard</h2>
-                <span class="note" id="apexBoardNote">sign in to see where you stand</span>
-              </div>
-              <div class="pbody">
-                <div class="apex-tabs" id="apexTabs"></div>
-                <table class="scen">
-                  <thead><tr>
-                    <th>#</th><th>Player</th><th>Points</th><th>Families</th>
-                  </tr></thead>
-                  <tbody id="apexBoardBody"></tbody>
-                </table>
-              </div>
-            </div>
-
-            <div id="apexCategories"></div>
-          </section>
 
           <!-- ---------------------------------------------- season -->
           <!-- ------------------------------------------ season (player) -->
@@ -2391,13 +2358,13 @@
             <div class="panel">
               <div class="phead">
                 <h2>Category ladders</h2>
-                <span class="note">sixteen ranks each, four windows deep</span>
+                <span class="note">four bands each, four ranks a band</span>
               </div>
               <div class="pbody">
                 <p class="rank-lede">
-                  Every category has its own sixteen ranks and its own names. The
-                  overall tier above is derived from all three, so climbing any of
-                  them moves it.
+                  Every category is cut into four bands, and each band is a whole
+                  benchmark with its own four ranks. The overall tier above is derived
+                  from all three categories, so climbing any of them moves it.
                 </p>
                 <div id="svCats"></div>
               </div>
@@ -2427,6 +2394,40 @@
                 </div>
               </div>
             </div>
+
+            <div class="sv-section">
+              <h2 class="sv-section-title">Past the top</h2>
+              <p class="sv-section-lede">
+                The ladder stops at its top rank, because a rank is a band and a band has
+                a top. This does not. It is where you sit on each scenario's KovaaK's
+                leaderboard, and a whole point is ten times fewer players above you.
+              </p>
+            </div>
+            <div class="panel">
+              <div class="phead">
+                <h2 id="apexName">Apex board</h2>
+                <span class="note" id="apexNote"></span>
+              </div>
+              <div class="pbody"><div class="sv-stats" id="apexStats"></div></div>
+            </div>
+
+            <div class="panel">
+              <div class="phead">
+                <h2>Leaderboard</h2>
+                <span class="note" id="apexBoardNote">sign in to see where you stand</span>
+              </div>
+              <div class="pbody">
+                <div class="apex-tabs" id="apexTabs"></div>
+                <table class="scen">
+                  <thead><tr>
+                    <th>#</th><th>Player</th><th>Points</th><th>Families</th>
+                  </tr></thead>
+                  <tbody id="apexBoardBody"></tbody>
+                </table>
+              </div>
+            </div>
+
+            <div id="apexCategories"></div>
           </section>
 
           <section class="screen" id="screen-season">
@@ -2588,15 +2589,15 @@
 
 
 <script id="apogee-snapshot" type="application/json">{
-  "generatedAt": "2026-08-31T19:08:19.719Z",
+  "generatedAt": "2026-08-31T23:04:09.233Z",
   "coverage": [
     {
       "category": "Clicking",
       "window": 0,
       "windowName": "Novice",
-      "total": 8,
+      "total": 9,
       "measured": 0,
-      "runs": 10,
+      "runs": 13,
       "matchable": false,
       "complete": false,
       "scenarios": [
@@ -2663,6 +2664,14 @@
           "runs": 2,
           "measured": false,
           "needs": 3
+        },
+        {
+          "scenario": "VT Popcorn Novice S5",
+          "label": "VT Popcorn Novice S5",
+          "family": "Popcorn",
+          "runs": 3,
+          "measured": false,
+          "needs": 2
         }
       ]
     },
@@ -2670,9 +2679,9 @@
       "category": "Clicking",
       "window": 1,
       "windowName": "Intermediate",
-      "total": 8,
-      "measured": 3,
-      "runs": 89,
+      "total": 9,
+      "measured": 5,
+      "runs": 132,
       "matchable": true,
       "complete": false,
       "scenarios": [
@@ -2680,14 +2689,6 @@
           "scenario": "VT 1w5ts Rasp Intermediate",
           "label": "VT 1w5ts Rasp Intermediate",
           "family": "Reload Wall",
-          "runs": 0,
-          "measured": false,
-          "needs": 5
-        },
-        {
-          "scenario": "B180 Voltaic Easy 92%",
-          "label": "B180 Voltaic Easy 92%",
-          "family": "Bounceshot",
           "runs": 0,
           "measured": false,
           "needs": 5
@@ -2701,20 +2702,28 @@
           "needs": 5
         },
         {
+          "scenario": "B180 Voltaic Easy 92%",
+          "label": "B180 Voltaic Easy 92%",
+          "family": "Bounceshot",
+          "runs": 1,
+          "measured": false,
+          "needs": 4
+        },
+        {
           "scenario": "1w2ts reload smallflicks larger",
           "label": "1w2ts reload smallflicks larger",
           "family": "Smallflicks",
-          "runs": 3,
+          "runs": 4,
           "measured": false,
-          "needs": 2
+          "needs": 1
         },
         {
           "scenario": "eth Pasu Micro Easier",
           "label": "eth Pasu Micro Easier",
           "family": "eth Pasu Micro",
-          "runs": 4,
-          "measured": false,
-          "needs": 1
+          "runs": 5,
+          "measured": true,
+          "needs": 0
         },
         {
           "scenario": "Wide Wall 3 Targets TE",
@@ -2739,6 +2748,14 @@
           "runs": 36,
           "measured": true,
           "needs": 0
+        },
+        {
+          "scenario": "VT Popcorn Intermediate S5",
+          "label": "VT Popcorn Intermediate S5",
+          "family": "Popcorn",
+          "runs": 40,
+          "measured": true,
+          "needs": 0
         }
       ]
     },
@@ -2746,12 +2763,20 @@
       "category": "Clicking",
       "window": 2,
       "windowName": "Advanced",
-      "total": 8,
+      "total": 9,
       "measured": 5,
-      "runs": 201,
+      "runs": 202,
       "matchable": true,
       "complete": false,
       "scenarios": [
+        {
+          "scenario": "VT Popcorn Advanced S5",
+          "label": "VT Popcorn Advanced S5",
+          "family": "Popcorn",
+          "runs": 1,
+          "measured": false,
+          "needs": 4
+        },
         {
           "scenario": "VT Pasu Advanced S5",
           "label": "VT Pasu Advanced S5",
@@ -2822,9 +2847,9 @@
       "category": "Clicking",
       "window": 3,
       "windowName": "Expert",
-      "total": 8,
+      "total": 9,
       "measured": 3,
-      "runs": 140,
+      "runs": 141,
       "matchable": true,
       "complete": false,
       "scenarios": [
@@ -2840,6 +2865,14 @@
           "scenario": "VoxTargetSwitch Click Small",
           "label": "VoxTargetSwitch Click Small",
           "family": "voxTS Click",
+          "runs": 0,
+          "measured": false,
+          "needs": 5
+        },
+        {
+          "scenario": "Popcorn MV Advanced",
+          "label": "Popcorn MV Advanced",
+          "family": "Popcorn",
           "runs": 0,
           "measured": false,
           "needs": 5
@@ -2880,7 +2913,7 @@
           "scenario": "Pasu Reload Goated",
           "label": "Pasu Reload Goated",
           "family": "Pasu",
-          "runs": 15,
+          "runs": 16,
           "measured": true,
           "needs": 0
         },
@@ -3138,9 +3171,9 @@
       "category": "Tracking",
       "window": 0,
       "windowName": "Novice",
-      "total": 8,
+      "total": 12,
       "measured": 1,
-      "runs": 13,
+      "runs": 17,
       "matchable": false,
       "complete": false,
       "scenarios": [
@@ -3156,6 +3189,30 @@
           "scenario": "Close Long Strafes Invincible",
           "label": "Close Long Strafes Invincible",
           "family": "Strafe Reading",
+          "runs": 0,
+          "measured": false,
+          "needs": 5
+        },
+        {
+          "scenario": "VT Plaza Novice",
+          "label": "VT Plaza Novice",
+          "family": "Plaza",
+          "runs": 0,
+          "measured": false,
+          "needs": 5
+        },
+        {
+          "scenario": "RawControlSphere Entry",
+          "label": "RawControlSphere Entry",
+          "family": "RawControlSphere",
+          "runs": 0,
+          "measured": false,
+          "needs": 5
+        },
+        {
+          "scenario": "Air Voltaic Invincible 4 Entry",
+          "label": "Air Voltaic Invincible 4 Entry",
+          "family": "Air Invincible 4",
           "runs": 0,
           "measured": false,
           "needs": 5
@@ -3201,6 +3258,14 @@
           "needs": 2
         },
         {
+          "scenario": "VT PGT Novice S5",
+          "label": "VT PGT Novice S5",
+          "family": "PGT",
+          "runs": 4,
+          "measured": false,
+          "needs": 1
+        },
+        {
           "scenario": "VT Aether Novice S5 Bot 2",
           "label": "VT Aether Novice S5 Bot 2",
           "family": "Air Voltaic",
@@ -3214,10 +3279,10 @@
       "category": "Tracking",
       "window": 1,
       "windowName": "Intermediate",
-      "total": 8,
-      "measured": 2,
-      "runs": 19,
-      "matchable": false,
+      "total": 12,
+      "measured": 4,
+      "runs": 79,
+      "matchable": true,
       "complete": false,
       "scenarios": [
         {
@@ -3240,6 +3305,14 @@
           "scenario": "Smooth Thin Strafes Raspberry Easy",
           "label": "Smooth Thin Strafes Raspberry Easy",
           "family": "Strafe Reading",
+          "runs": 0,
+          "measured": false,
+          "needs": 5
+        },
+        {
+          "scenario": "VT Plaza Intermediate",
+          "label": "VT Plaza Intermediate",
+          "family": "Plaza",
           "runs": 0,
           "measured": false,
           "needs": 5
@@ -3269,10 +3342,26 @@
           "needs": 3
         },
         {
+          "scenario": "Air Voltaic Invincible 4 Easier",
+          "label": "Air Voltaic Invincible 4 Easier",
+          "family": "Air Invincible 4",
+          "runs": 2,
+          "measured": false,
+          "needs": 3
+        },
+        {
           "scenario": "Air Voltaic Easy Invincible 4 80%",
           "label": "Air Voltaic Easy Invincible 4 80%",
           "family": "Air Voltaic",
           "runs": 5,
+          "measured": true,
+          "needs": 0
+        },
+        {
+          "scenario": "RawControlSphere Easier",
+          "label": "RawControlSphere Easier",
+          "family": "RawControlSphere",
+          "runs": 7,
           "measured": true,
           "needs": 0
         },
@@ -3283,6 +3372,14 @@
           "runs": 10,
           "measured": true,
           "needs": 0
+        },
+        {
+          "scenario": "VT PGT Intermediate S5",
+          "label": "VT PGT Intermediate S5",
+          "family": "PGT",
+          "runs": 51,
+          "measured": true,
+          "needs": 0
         }
       ]
     },
@@ -3290,9 +3387,9 @@
       "category": "Tracking",
       "window": 2,
       "windowName": "Advanced",
-      "total": 8,
-      "measured": 7,
-      "runs": 391,
+      "total": 12,
+      "measured": 9,
+      "runs": 469,
       "matchable": true,
       "complete": false,
       "scenarios": [
@@ -3303,6 +3400,22 @@
           "runs": 0,
           "measured": false,
           "needs": 5
+        },
+        {
+          "scenario": "VT Plaza Advanced",
+          "label": "VT Plaza Advanced",
+          "family": "Plaza",
+          "runs": 0,
+          "measured": false,
+          "needs": 5
+        },
+        {
+          "scenario": "VT PGT Advanced S5",
+          "label": "VT PGT Advanced S5",
+          "family": "PGT",
+          "runs": 1,
+          "measured": false,
+          "needs": 4
         },
         {
           "scenario": "Controlsphere",
@@ -3321,10 +3434,26 @@
           "needs": 0
         },
         {
+          "scenario": "RawControlSphere",
+          "label": "RawControlSphere",
+          "family": "RawControlSphere",
+          "runs": 31,
+          "measured": true,
+          "needs": 0
+        },
+        {
           "scenario": "Air Angelic 4 Voltaic Easy",
           "label": "Air Angelic 4 Voltaic Easy",
           "family": "Strafe Reading",
           "runs": 36,
+          "measured": true,
+          "needs": 0
+        },
+        {
+          "scenario": "Air Voltaic Invincible 4 Medium",
+          "label": "Air Voltaic Invincible 4 Medium",
+          "family": "Air Invincible 4",
+          "runs": 46,
           "measured": true,
           "needs": 0
         },
@@ -3366,9 +3495,9 @@
       "category": "Tracking",
       "window": 3,
       "windowName": "Expert",
-      "total": 8,
+      "total": 12,
       "measured": 3,
-      "runs": 30,
+      "runs": 31,
       "matchable": true,
       "complete": false,
       "scenarios": [
@@ -3376,6 +3505,30 @@
           "scenario": "VT Raw Control Intermediate S5 Hard",
           "label": "VT Raw Control Intermediate S5 Hard",
           "family": "Raw Control",
+          "runs": 0,
+          "measured": false,
+          "needs": 5
+        },
+        {
+          "scenario": "VT PGT Elite S5",
+          "label": "VT PGT Elite S5",
+          "family": "PGT",
+          "runs": 0,
+          "measured": false,
+          "needs": 5
+        },
+        {
+          "scenario": "VT Plaza Viscose Thin",
+          "label": "VT Plaza Viscose Thin",
+          "family": "Plaza",
+          "runs": 0,
+          "measured": false,
+          "needs": 5
+        },
+        {
+          "scenario": "Air Voltaic Invincible 4",
+          "label": "Air Voltaic Invincible 4",
+          "family": "Air Invincible 4",
           "runs": 0,
           "measured": false,
           "needs": 5
@@ -3408,6 +3561,14 @@
           "scenario": "Air Voltaic",
           "label": "Air Voltaic",
           "family": "Air Voltaic",
+          "runs": 1,
+          "measured": false,
+          "needs": 4
+        },
+        {
+          "scenario": "RawControlSphere Hard",
+          "label": "RawControlSphere Hard",
+          "family": "RawControlSphere",
           "runs": 1,
           "measured": false,
           "needs": 4
@@ -3475,17 +3636,17 @@
     "windowSize": 4
   },
   "player": {
-    "totalRuns": 12110,
-    "scenarioCount": 845,
+    "totalRuns": 12134,
+    "scenarioCount": 846,
     "streak": 30,
     "benchmarkRank": "Odyssey",
-    "benchmarkEnergy": 538641,
-    "progressToNextRank": 0.8682154151584607,
+    "benchmarkEnergy": 625797,
+    "progressToNextRank": 0.660039786329059,
     "nextRankName": "Arecibo",
     "apogee": {
       "rating": 1617,
       "rd": 105,
-      "percentile": 65.2,
+      "percentile": 62.9,
       "tier": {
         "id": "tier-5",
         "name": "Odyssey",
@@ -3619,7 +3780,7 @@
   "categories": [
     {
       "name": "Clicking",
-      "energy": 211907,
+      "energy": 229130,
       "rankName": "Rifle",
       "rankNames": [
         "Blunderbuss",
@@ -3658,25 +3819,25 @@
         "Photon Lance": "#FFFFFF"
       },
       "rankMaxes": [
-        20000,
-        40000,
-        60000,
-        80000,
-        100000,
-        120000,
-        140000,
-        160000,
+        22500,
+        45000,
+        67500,
+        90000,
+        112500,
+        135000,
+        157500,
         180000,
-        200000,
-        220000,
-        240000,
-        260000,
-        280000,
-        300000,
-        320000
+        202500,
+        225000,
+        247500,
+        270000,
+        292500,
+        315000,
+        337500,
+        360000
       ],
       "rankCount": 16,
-      "progressToNextRank": 0.5953692528735628,
+      "progressToNextRank": 0.18353810131971,
       "bands": [
         {
           "window": 0,
@@ -3696,16 +3857,16 @@
             "Longbow": "#2E7D4F"
           },
           "rankMaxes": [
-            20000,
-            40000,
-            60000,
-            80000
+            22500,
+            45000,
+            67500,
+            90000
           ],
-          "energy": 70000,
+          "energy": 80000,
           "rankCount": 4,
-          "progressToNextRank": 0.5,
-          "played": 7,
-          "total": 8
+          "progressToNextRank": 0.5555555555555556,
+          "played": 8,
+          "total": 9
         },
         {
           "window": 1,
@@ -3725,22 +3886,22 @@
             "Revolver": "#2B4B78"
           },
           "rankMaxes": [
-            20000,
-            40000,
-            60000,
-            80000
+            22500,
+            45000,
+            67500,
+            90000
           ],
-          "energy": 40805,
+          "energy": 58027,
           "rankCount": 4,
-          "progressToNextRank": 0.040251431388888884,
-          "played": 5,
-          "total": 8
+          "progressToNextRank": 0.5789889266666666,
+          "played": 7,
+          "total": 9
         },
         {
           "window": 2,
           "windowName": "Advanced",
-          "rankName": "Rifle",
-          "rankIndex": 1,
+          "rankName": "Carbine",
+          "rankIndex": 0,
           "rankNames": [
             "Carbine",
             "Rifle",
@@ -3754,16 +3915,16 @@
             "Match Rifle": "#17A583"
           },
           "rankMaxes": [
-            20000,
-            40000,
-            60000,
-            80000
+            22500,
+            45000,
+            67500,
+            90000
           ],
-          "energy": 43283,
+          "energy": 44552,
           "rankCount": 4,
-          "progressToNextRank": 0.16417391577316376,
-          "played": 8,
-          "total": 8
+          "progressToNextRank": 0.9800948903058306,
+          "played": 9,
+          "total": 9
         },
         {
           "window": 3,
@@ -3783,19 +3944,19 @@
             "Photon Lance": "#FFFFFF"
           },
           "rankMaxes": [
-            20000,
-            40000,
-            60000,
-            80000
+            22500,
+            45000,
+            67500,
+            90000
           ],
           "energy": 14251,
           "rankCount": 4,
-          "progressToNextRank": 0.7125640537798071,
+          "progressToNextRank": 0.6333902700264953,
           "played": 6,
-          "total": 8
+          "total": 9
         }
       ],
-      "perScenario": 26488,
+      "perScenario": 25459,
       "scenarios": [
         {
           "name": "Wide Wall 3 Targets TE",
@@ -3852,7 +4013,7 @@
           "nextRankWindowName": "Expert",
           "nextRankIsNewScenario": false,
           "gap": 18,
-          "runs": 15
+          "runs": 16
         },
         {
           "name": "VT Bounceshot Viscose Medium",
@@ -3948,13 +4109,32 @@
           "nextRankIsNewScenario": false,
           "gap": 21,
           "runs": 31
+        },
+        {
+          "name": "VT Popcorn Intermediate S5",
+          "label": "VT Popcorn Intermediate S5",
+          "family": "Popcorn",
+          "window": 1,
+          "windowName": "Intermediate",
+          "subCategory": "Dynamic Clicking",
+          "score": 770,
+          "rankName": "Musket",
+          "energy": 17222,
+          "nextRankName": "Flintlock",
+          "nextRankScore": 780,
+          "nextRankScenario": "VT Popcorn Intermediate S5",
+          "nextRankLabel": "VT Popcorn Intermediate S5",
+          "nextRankWindowName": "Intermediate",
+          "nextRankIsNewScenario": false,
+          "gap": 10,
+          "runs": 40
         }
       ]
     },
     {
       "name": "Tracking",
-      "energy": 190100,
-      "rankName": "Hominid",
+      "energy": 260033,
+      "rankName": "Chimp",
       "rankNames": [
         "Amoeba",
         "Multicellular",
@@ -3992,25 +4172,25 @@
         "Singularity": "#000000"
       },
       "rankMaxes": [
-        20000,
-        40000,
+        30000,
         60000,
-        80000,
-        100000,
+        90000,
         120000,
-        140000,
-        160000,
+        150000,
         180000,
-        200000,
-        220000,
+        210000,
         240000,
-        260000,
-        280000,
+        270000,
         300000,
-        320000
+        330000,
+        360000,
+        390000,
+        420000,
+        450000,
+        480000
       ],
       "rankCount": 16,
-      "progressToNextRank": 0.5049832051767676,
+      "progressToNextRank": 0.6677605837542089,
       "bands": [
         {
           "window": 0,
@@ -4030,16 +4210,16 @@
             "Amphibian": "#006eff"
           },
           "rankMaxes": [
-            20000,
-            40000,
+            30000,
             60000,
-            80000
+            90000,
+            120000
           ],
-          "energy": 56798,
+          "energy": 66798,
           "rankCount": 4,
-          "progressToNextRank": 0.8398958333333332,
-          "played": 6,
-          "total": 8
+          "progressToNextRank": 0.2265972222222219,
+          "played": 7,
+          "total": 12
         },
         {
           "window": 1,
@@ -4059,16 +4239,16 @@
             "Chimp": "#9a783c"
           },
           "rankMaxes": [
-            20000,
-            40000,
+            30000,
             60000,
-            80000
+            90000,
+            120000
           ],
-          "energy": 44571,
+          "energy": 71131,
           "rankCount": 4,
-          "progressToNextRank": 0.22854395604395614,
-          "played": 5,
-          "total": 8
+          "progressToNextRank": 0.37102930402930406,
+          "played": 8,
+          "total": 12
         },
         {
           "window": 2,
@@ -4088,16 +4268,16 @@
             "Homosapien": "#ff0000"
           },
           "rankMaxes": [
-            20000,
-            40000,
+            30000,
             60000,
-            80000
+            90000,
+            120000
           ],
-          "energy": 50100,
+          "energy": 64910,
           "rankCount": 4,
-          "progressToNextRank": 0.5049832051767673,
-          "played": 7,
-          "total": 8
+          "progressToNextRank": 0.16365848165210653,
+          "played": 10,
+          "total": 12
         },
         {
           "window": 3,
@@ -4117,19 +4297,19 @@
             "Singularity": "#000000"
           },
           "rankMaxes": [
-            20000,
-            40000,
+            30000,
             60000,
-            80000
+            90000,
+            120000
           ],
-          "energy": 14894,
+          "energy": 17010,
           "rankCount": 4,
-          "progressToNextRank": 0.7447046829829758,
-          "played": 7,
-          "total": 8
+          "progressToNextRank": 0.5670034313467325,
+          "played": 8,
+          "total": 12
         }
       ],
-      "perScenario": 23762,
+      "perScenario": 21669,
       "scenarios": [
         {
           "name": "VT Smoothbot Novice",
@@ -4282,6 +4462,82 @@
           "nextRankIsNewScenario": false,
           "gap": 508,
           "runs": 36
+        },
+        {
+          "name": "VT PGT Intermediate S5",
+          "label": "VT PGT Intermediate S5",
+          "family": "PGT",
+          "window": 1,
+          "windowName": "Intermediate",
+          "subCategory": "Precise Tracking",
+          "score": 2909,
+          "rankName": "Mammal",
+          "energy": 16560,
+          "nextRankName": "Primate",
+          "nextRankScore": 3050,
+          "nextRankScenario": "VT PGT Intermediate S5",
+          "nextRankLabel": "VT PGT Intermediate S5",
+          "nextRankWindowName": "Intermediate",
+          "nextRankIsNewScenario": false,
+          "gap": 141,
+          "runs": 51
+        },
+        {
+          "name": "VT Plaza Novice",
+          "label": "VT Plaza Novice",
+          "family": "Plaza",
+          "window": 0,
+          "windowName": "Novice",
+          "subCategory": "Reactive Tracking",
+          "score": 0,
+          "rankName": null,
+          "energy": 0,
+          "nextRankName": "Amoeba",
+          "nextRankScore": 2150,
+          "nextRankScenario": "VT Plaza Novice",
+          "nextRankLabel": "VT Plaza Novice",
+          "nextRankWindowName": "Novice",
+          "nextRankIsNewScenario": false,
+          "gap": 2150,
+          "runs": 0
+        },
+        {
+          "name": "RawControlSphere",
+          "label": "RawControlSphere",
+          "family": "RawControlSphere",
+          "window": 2,
+          "windowName": "Advanced",
+          "subCategory": "Control Tracking",
+          "score": 11853,
+          "rankName": "Homoerectus",
+          "energy": 27114,
+          "nextRankName": "Neanderthal",
+          "nextRankScore": 12100,
+          "nextRankScenario": "RawControlSphere",
+          "nextRankLabel": "RawControlSphere",
+          "nextRankWindowName": "Advanced",
+          "nextRankIsNewScenario": false,
+          "gap": 247,
+          "runs": 31
+        },
+        {
+          "name": "Air Voltaic Invincible 4 Medium",
+          "label": "Air Voltaic Invincible 4 Medium",
+          "family": "Air Invincible 4",
+          "window": 2,
+          "windowName": "Advanced",
+          "subCategory": "Reading Tracking",
+          "score": 3577,
+          "rankName": "Homoerectus",
+          "energy": 26259,
+          "nextRankName": "Neanderthal",
+          "nextRankScore": 3850,
+          "nextRankScenario": "Air Voltaic Invincible 4 Medium",
+          "nextRankLabel": "Air Voltaic Invincible 4 Medium",
+          "nextRankWindowName": "Advanced",
+          "nextRankIsNewScenario": false,
+          "gap": 273,
+          "runs": 46
         }
       ]
     },
@@ -4586,10 +4842,10 @@
   "consistency": {
     "method": "worstOfLast5",
     "ceilingRank": "Odyssey",
-    "ceilingEnergy": 538641,
+    "ceilingEnergy": 625797,
     "floorRank": "Odyssey",
-    "floorEnergy": 465898,
-    "gap": 0.11427038608436643,
+    "floorEnergy": 539722,
+    "gap": 0.12001409371912963,
     "scenarios": [
       {
         "name": "VT Ground Intermediate S5",
@@ -4600,12 +4856,28 @@
         "gap": 0.3034927093930146
       },
       {
+        "name": "VT PGT Intermediate S5",
+        "label": "VT PGT Intermediate S5 int",
+        "ceiling": 2909,
+        "floor": 2199,
+        "median": 2358,
+        "gap": 0.24407012719147472
+      },
+      {
         "name": "VT Pasu Intermediate S5",
         "label": "VT Pasu Intermediate S5 int",
         "ceiling": 944.336487,
         "floor": 714.510986,
         "median": 765.8069455,
         "gap": 0.24337246750903105
+      },
+      {
+        "name": "Pasu Reload Goated",
+        "label": "Pasu Reload Goated exp",
+        "ceiling": 112,
+        "floor": 86,
+        "median": 96.5,
+        "gap": 0.23214285714285715
       },
       {
         "name": "VT Floating Heads Intermediate S5",
@@ -4648,12 +4920,12 @@
         "gap": 0.1650485436893204
       },
       {
-        "name": "Pasu Reload Goated",
-        "label": "Pasu Reload Goated exp",
-        "ceiling": 112,
-        "floor": 95,
-        "median": 97,
-        "gap": 0.15178571428571427
+        "name": "eth Pasu Micro Easier",
+        "label": "eth Pasu Micro Easier int",
+        "ceiling": 1384,
+        "floor": 1178,
+        "median": 1302,
+        "gap": 0.14884393063583815
       },
       {
         "name": "1w3ts Pasu Perfected Micro Goated",
@@ -4661,6 +4933,14 @@
         "ceiling": 1106,
         "floor": 948,
         "median": 918,
+        "gap": 0.14285714285714285
+      },
+      {
+        "name": "VT Popcorn Intermediate S5",
+        "label": "VT Popcorn Intermediate S5 int",
+        "ceiling": 770,
+        "floor": 660,
+        "median": 610,
         "gap": 0.14285714285714285
       },
       {
@@ -4686,6 +4966,14 @@
         "floor": 2990,
         "median": 3089,
         "gap": 0.13758292471877703
+      },
+      {
+        "name": "RawControlSphere",
+        "label": "RawControlSphere adv",
+        "ceiling": 11853,
+        "floor": 10254,
+        "median": 10641,
+        "gap": 0.134902556314857
       },
       {
         "name": "kinTS Voltaic",
@@ -4742,6 +5030,14 @@
         "floor": 1238,
         "median": 1238,
         "gap": 0.1002906976744186
+      },
+      {
+        "name": "Air Voltaic Invincible 4 Medium",
+        "label": "Air Voltaic Invincible 4 Medium adv",
+        "ceiling": 3577,
+        "floor": 3224,
+        "median": 3204,
+        "gap": 0.0986860497623707
       },
       {
         "name": "kinTS Voltaic Easy",
@@ -4814,6 +5110,14 @@
         "floor": 129,
         "median": 129,
         "gap": 0.07327584209646208
+      },
+      {
+        "name": "RawControlSphere Easier",
+        "label": "RawControlSphere Easier int",
+        "ceiling": 13740,
+        "floor": 12759,
+        "median": 12861,
+        "gap": 0.07139737991266376
       },
       {
         "name": "VT DotTS Intermediate S5",
@@ -4944,8 +5248,8 @@
   },
   "quests": [
     {
-      "title": "Lift your VT Controlsphere Intermediate S5 int floor to Mammal",
-      "detail": "Your worst of the last 5 is 3029. All 5 need to clear 3175; 4 of them do right now.",
+      "title": "Lift your VT Popcorn Intermediate S5 int floor to Musket",
+      "detail": "Your worst of the last 5 is 660. All 5 need to clear 690; 4 of them do right now.",
       "xp": 500,
       "kind": "floor_rank_up",
       "progress": 0.8,
@@ -4968,8 +5272,8 @@
       }
     },
     {
-      "title": "Lift your VT Ground Intermediate S5 adv floor to Homoerectus",
-      "detail": "Your worst of the last 5 is 2054. All 5 need to clear 2250; 4 of them do right now.",
+      "title": "Lift your VT Controlsphere Intermediate S5 int floor to Mammal",
+      "detail": "Your worst of the last 5 is 3029. All 5 need to clear 3175; 4 of them do right now.",
       "xp": 500,
       "kind": "floor_rank_up",
       "progress": 0.8,
@@ -4980,20 +5284,20 @@
       }
     },
     {
-      "title": "Reach Neanderthal on Air Voltaic Easy adv",
-      "detail": "You are at 877. 890 takes you to Neanderthal, 13 more.",
+      "title": "Reach Flintlock on VT Popcorn Intermediate S5 int",
+      "detail": "You are at 770. 780 takes you to Flintlock, 10 more.",
       "xp": 300,
       "kind": "close_the_gap",
-      "progress": 0.9852185191011236,
+      "progress": 0.9871794871794872,
       "isFloor": false,
       "steps": {
-        "done": 877,
-        "total": 890
+        "done": 770,
+        "total": 780
       }
     },
     {
       "title": "Rank up any scenario in Season 1",
-      "detail": "21 scenarios are within reach of their next rank.",
+      "detail": "25 scenarios are within reach of their next rank.",
       "xp": 400,
       "kind": "rank_up_any",
       "progress": 0,
@@ -5002,7 +5306,7 @@
     }
   ]
 }</script>
-<script id="apogee-practice" type="application/json">{"families":[{"family":"Wide Wall","category":"Clicking","subCategory":"Static Clicking","rankIndex":4,"next":"Wide Wall 3 Targets TE"},{"family":"Reload Wall","category":"Clicking","subCategory":"Static Clicking","rankIndex":9,"next":"1w6ts reload v2 20% bigger"},{"family":"Pasu","category":"Clicking","subCategory":"Dynamic Clicking","rankIndex":12,"next":"Pasu Reload Goated"},{"family":"Bounceshot","category":"Clicking","subCategory":"Dynamic Clicking","rankIndex":9,"next":"VT Bounceshot Viscose Medium"},{"family":"Floating Heads","category":"Clicking","subCategory":"Linear Clicking","rankIndex":9,"next":"Floating Heads Timing 400% Larger"},{"family":"voxTS Click","category":"Clicking","subCategory":"Linear Clicking","rankIndex":8,"next":"voxTargetClick 20% Small"},{"family":"eth Pasu Micro","category":"Clicking","subCategory":"Micro Clicking","rankIndex":12,"next":"1w3ts Pasu Perfected Micro Goated"},{"family":"Smallflicks","category":"Clicking","subCategory":"Micro Clicking","rankIndex":10,"next":"1w2ts reload smallflicks slightly larger"},{"family":"Smoothbot","category":"Tracking","subCategory":"Precise Tracking","rankIndex":null,"next":"VT Smoothbot Novice"},{"family":"waldoTS","category":"Tracking","subCategory":"Precise Tracking","rankIndex":10,"next":"waldoTS Intermediate"},{"family":"Ground Plaza","category":"Tracking","subCategory":"Reactive Tracking","rankIndex":10,"next":"VT Ground Intermediate S5"},{"family":"Air CELESTIAL","category":"Tracking","subCategory":"Reactive Tracking","rankIndex":10,"next":"Air CELESTIAL No UFO Easy"},{"family":"Controlsphere","category":"Tracking","subCategory":"Control Tracking","rankIndex":9,"next":"Controlsphere"},{"family":"Raw Control","category":"Tracking","subCategory":"Control Tracking","rankIndex":9,"next":"Whisphere"},{"family":"Air Voltaic","category":"Tracking","subCategory":"Reading Tracking","rankIndex":9,"next":"Air Voltaic Easy"},{"family":"Strafe Reading","category":"Tracking","subCategory":"Reading Tracking","rankIndex":9,"next":"Air Angelic 4 Voltaic Easy"},{"family":"voxTS","category":"Switching","subCategory":"Speed Switching","rankIndex":5,"next":"voxTS Viscose Varied"},{"family":"DotTS","category":"Switching","subCategory":"Speed Switching","rankIndex":5,"next":"VT DotTS Intermediate S5"},{"family":"FlyTS","category":"Switching","subCategory":"Evasive Switching","rankIndex":5,"next":"VT FlyTS Intermediate S5"},{"family":"Smooth Switching","category":"Switching","subCategory":"Evasive Switching","rankIndex":9,"next":"tamTargetSwitch Smooth Easy"},{"family":"ControlTS","category":"Switching","subCategory":"Stability Switching","rankIndex":12,"next":"kinTS Voltaic"},{"family":"beanTS","category":"Switching","subCategory":"Stability Switching","rankIndex":9,"next":"beanTS"}],"scenarios":[{"scenario":"VT ww5t Novice S5","label":"VT ww5t Novice S5","category":"Clicking","subCategory":"Static Clicking","family":"Wide Wall","window":0,"windowName":"Novice","rankMaxes":[990,1090,1190,1290],"runs":1,"best":1330,"rankIndex":3,"nextRankIndex":4,"nextRankScore":null,"gap":null,"heldRankScore":1290,"progress":null,"isNext":false},{"scenario":"Wide Wall 3 Targets TE","label":"Wide Wall 3 Targets TE","category":"Clicking","subCategory":"Static Clicking","family":"Wide Wall","window":1,"windowName":"Intermediate","rankMaxes":[132,156,170,190],"runs":19,"best":151,"rankIndex":4,"nextRankIndex":5,"nextRankScore":156,"gap":5,"heldRankScore":132,"progress":0.7916666666666666,"isNext":true},{"scenario":"Wide Wall 4 Targets","label":"Wide Wall 4 Targets","category":"Clicking","subCategory":"Static Clicking","family":"Wide Wall","window":2,"windowName":"Advanced","rankMaxes":[132,150,165,180],"runs":107,"best":125,"rankIndex":null,"nextRankIndex":8,"nextRankScore":132,"gap":7,"heldRankScore":null,"progress":0.946969696969697,"isNext":false},{"scenario":"Wide Wall 3 Targets","label":"Wide Wall 3 Targets","category":"Clicking","subCategory":"Static Clicking","family":"Wide Wall","window":3,"windowName":"Expert","rankMaxes":[120,130,135,145],"runs":0,"best":null,"rankIndex":null,"nextRankIndex":12,"nextRankScore":120,"gap":null,"heldRankScore":null,"progress":0,"isNext":false},{"scenario":"VT 1w6ts Rasp Novice","label":"VT 1w6ts Rasp Novice","category":"Clicking","subCategory":"Static Clicking","family":"Reload Wall","window":0,"windowName":"Novice","rankMaxes":[650,750,850,950],"runs":1,"best":1070,"rankIndex":3,"nextRankIndex":4,"nextRankScore":null,"gap":null,"heldRankScore":950,"progress":null,"isNext":false},{"scenario":"VT 1w5ts Rasp Intermediate","label":"VT 1w5ts Rasp Intermediate","category":"Clicking","subCategory":"Static Clicking","family":"Reload Wall","window":1,"windowName":"Intermediate","rankMaxes":[1000,1100,1200,1300],"runs":0,"best":null,"rankIndex":null,"nextRankIndex":4,"nextRankScore":1000,"gap":null,"heldRankScore":null,"progress":0,"isNext":false},{"scenario":"1w6ts reload v2 20% bigger","label":"1w6ts reload v2 20% bigger","category":"Clicking","subCategory":"Static Clicking","family":"Reload Wall","window":2,"windowName":"Advanced","rankMaxes":[100,125,145,175],"runs":5,"best":131,"rankIndex":9,"nextRankIndex":10,"nextRankScore":145,"gap":14,"heldRankScore":125,"progress":0.3,"isNext":true},{"scenario":"1w6ts reload v2","label":"1w6ts reload v2","category":"Clicking","subCategory":"Static Clicking","family":"Reload Wall","window":3,"windowName":"Expert","rankMaxes":[135,160,170,190],"runs":108,"best":127,"rankIndex":null,"nextRankIndex":12,"nextRankScore":135,"gap":8,"heldRankScore":null,"progress":0.9407407407407408,"isNext":false},{"scenario":"VT Pasu Novice S5","label":"VT Pasu Novice S5","category":"Clicking","subCategory":"Dynamic Clicking","family":"Pasu","window":0,"windowName":"Novice","rankMaxes":[555,660,745,800],"runs":2,"best":917,"rankIndex":3,"nextRankIndex":4,"nextRankScore":null,"gap":null,"heldRankScore":800,"progress":null,"isNext":false},{"scenario":"VT Pasu Intermediate S5","label":"VT Pasu Intermediate S5","category":"Clicking","subCategory":"Dynamic Clicking","family":"Pasu","window":1,"windowName":"Intermediate","rankMaxes":[770,850,930,980],"runs":36,"best":944,"rankIndex":6,"nextRankIndex":7,"nextRankScore":980,"gap":36,"heldRankScore":930,"progress":0.2867297400000007,"isNext":false},{"scenario":"VT Pasu Advanced S5","label":"VT Pasu Advanced S5","category":"Clicking","subCategory":"Dynamic Clicking","family":"Pasu","window":2,"windowName":"Advanced","rankMaxes":[910,1020,1110,1235],"runs":2,"best":587,"rankIndex":null,"nextRankIndex":8,"nextRankScore":910,"gap":323,"heldRankScore":null,"progress":0.6446580824175825,"isNext":false},{"scenario":"Pasu Reload Goated","label":"Pasu Reload Goated","category":"Clicking","subCategory":"Dynamic Clicking","family":"Pasu","window":3,"windowName":"Expert","rankMaxes":[110,130,140,160],"runs":15,"best":112,"rankIndex":12,"nextRankIndex":13,"nextRankScore":130,"gap":18,"heldRankScore":110,"progress":0.1,"isNext":true},{"scenario":"VT Bounceshot Novice","label":"VT Bounceshot Novice","category":"Clicking","subCategory":"Dynamic Clicking","family":"Bounceshot","window":0,"windowName":"Novice","rankMaxes":[500,600,700,800],"runs":0,"best":null,"rankIndex":null,"nextRankIndex":0,"nextRankScore":500,"gap":null,"heldRankScore":null,"progress":0,"isNext":false},{"scenario":"B180 Voltaic Easy 92%","label":"B180 Voltaic Easy 92%","category":"Clicking","subCategory":"Dynamic Clicking","family":"Bounceshot","window":1,"windowName":"Intermediate","rankMaxes":[26,50,72,87],"runs":0,"best":null,"rankIndex":null,"nextRankIndex":4,"nextRankScore":26,"gap":null,"heldRankScore":null,"progress":0,"isNext":false},{"scenario":"VT Bounceshot Viscose Medium","label":"VT Bounceshot Viscose Medium","category":"Clicking","subCategory":"Dynamic Clicking","family":"Bounceshot","window":2,"windowName":"Advanced","rankMaxes":[560,770,915,1175],"runs":23,"best":880,"rankIndex":9,"nextRankIndex":10,"nextRankScore":915,"gap":35,"heldRankScore":770,"progress":0.7586206896551724,"isNext":true},{"scenario":"VT Bounceshot Advanced","label":"VT Bounceshot Advanced","category":"Clicking","subCategory":"Dynamic Clicking","family":"Bounceshot","window":3,"windowName":"Expert","rankMaxes":[730,850,910,1000],"runs":1,"best":450,"rankIndex":null,"nextRankIndex":12,"nextRankScore":730,"gap":280,"heldRankScore":null,"progress":0.6164383561643836,"isNext":false},{"scenario":"VT Floating Heads Novice S5","label":"VT Floating Heads Novice S5","category":"Clicking","subCategory":"Linear Clicking","family":"Floating Heads","window":0,"windowName":"Novice","rankMaxes":[375,460,540,640],"runs":2,"best":696,"rankIndex":3,"nextRankIndex":4,"nextRankScore":null,"gap":null,"heldRankScore":640,"progress":null,"isNext":false},{"scenario":"VT Floating Heads Intermediate S5","label":"VT Floating Heads Intermediate S5","category":"Clicking","subCategory":"Linear Clicking","family":"Floating Heads","window":1,"windowName":"Intermediate","rankMaxes":[610,690,770,860],"runs":27,"best":792,"rankIndex":6,"nextRankIndex":7,"nextRankScore":860,"gap":68,"heldRankScore":770,"progress":0.24361504444444412,"isNext":false},{"scenario":"Floating Heads Timing 400% Larger","label":"Floating Heads Timing 400% Larger","category":"Clicking","subCategory":"Linear Clicking","family":"Floating Heads","window":2,"windowName":"Advanced","rankMaxes":[1950,2650,3650,4200],"runs":4,"best":3096,"rankIndex":9,"nextRankIndex":10,"nextRankScore":3650,"gap":554,"heldRankScore":2650,"progress":0.446,"isNext":true},{"scenario":"Floating Heads Timing 400% FIXED","label":"Floating Heads Timing 400% FIXED","category":"Clicking","subCategory":"Linear Clicking","family":"Floating Heads","window":3,"windowName":"Expert","rankMaxes":[3200,3648,3848,4248],"runs":2,"best":2592,"rankIndex":null,"nextRankIndex":12,"nextRankScore":3200,"gap":608,"heldRankScore":null,"progress":0.81,"isNext":false},{"scenario":"VT Frogtagon Novice S5","label":"VT Frogtagon Novice S5","category":"Clicking","subCategory":"Linear Clicking","family":"voxTS Click","window":0,"windowName":"Novice","rankMaxes":[620,740,850,980],"runs":2,"best":1090,"rankIndex":3,"nextRankIndex":4,"nextRankScore":null,"gap":null,"heldRankScore":980,"progress":null,"isNext":false},{"scenario":"voxTargetSwitch Click","label":"voxTargetSwitch Click","category":"Clicking","subCategory":"Linear Clicking","family":"voxTS Click","window":1,"windowName":"Intermediate","rankMaxes":[49,67,88,100],"runs":0,"best":null,"rankIndex":null,"nextRankIndex":4,"nextRankScore":49,"gap":null,"heldRankScore":null,"progress":0,"isNext":false},{"scenario":"voxTargetClick 20% Small","label":"voxTargetClick 20% Small","category":"Clicking","subCategory":"Linear Clicking","family":"voxTS Click","window":2,"windowName":"Advanced","rankMaxes":[62,80,102,116],"runs":4,"best":76,"rankIndex":8,"nextRankIndex":9,"nextRankScore":80,"gap":4,"heldRankScore":62,"progress":0.7777777777777778,"isNext":true},{"scenario":"VoxTargetSwitch Click Small","label":"VoxTargetSwitch Click Small","category":"Clicking","subCategory":"Linear Clicking","family":"voxTS Click","window":3,"windowName":"Expert","rankMaxes":[90,101,106,115],"runs":0,"best":null,"rankIndex":null,"nextRankIndex":12,"nextRankScore":90,"gap":null,"heldRankScore":null,"progress":0,"isNext":false},{"scenario":"eth Pasu Micro Entry","label":"eth Pasu Micro Entry","category":"Clicking","subCategory":"Micro Clicking","family":"eth Pasu Micro","window":0,"windowName":"Novice","rankMaxes":[600,800,900,1100],"runs":1,"best":1558,"rankIndex":3,"nextRankIndex":4,"nextRankScore":null,"gap":null,"heldRankScore":1100,"progress":null,"isNext":false},{"scenario":"eth Pasu Micro Easier","label":"eth Pasu Micro Easier","category":"Clicking","subCategory":"Micro Clicking","family":"eth Pasu Micro","window":1,"windowName":"Intermediate","rankMaxes":[600,850,1000,1225],"runs":4,"best":1384,"rankIndex":7,"nextRankIndex":8,"nextRankScore":null,"gap":null,"heldRankScore":1225,"progress":null,"isNext":false},{"scenario":"eth Pasu Micro Medium","label":"eth Pasu Micro Medium","category":"Clicking","subCategory":"Micro Clicking","family":"eth Pasu Micro","window":2,"windowName":"Advanced","rankMaxes":[850,1150,1300,1650],"runs":25,"best":1376,"rankIndex":10,"nextRankIndex":11,"nextRankScore":1650,"gap":274,"heldRankScore":1300,"progress":0.21714285714285714,"isNext":false},{"scenario":"1w3ts Pasu Perfected Micro Goated","label":"1w3ts Pasu Perfected Micro Goated","category":"Clicking","subCategory":"Micro Clicking","family":"eth Pasu Micro","window":3,"windowName":"Expert","rankMaxes":[1040,1220,1410,1570],"runs":13,"best":1106,"rankIndex":12,"nextRankIndex":13,"nextRankScore":1220,"gap":114,"heldRankScore":1040,"progress":0.36666666666666664,"isNext":true},{"scenario":"1w2ts reload smallflicks Entry","label":"1w2ts reload smallflicks Entry","category":"Clicking","subCategory":"Micro Clicking","family":"Smallflicks","window":0,"windowName":"Novice","rankMaxes":[75,92,100,115],"runs":1,"best":153,"rankIndex":3,"nextRankIndex":4,"nextRankScore":null,"gap":null,"heldRankScore":115,"progress":null,"isNext":false},{"scenario":"1w2ts reload smallflicks larger","label":"1w2ts reload smallflicks larger","category":"Clicking","subCategory":"Micro Clicking","family":"Smallflicks","window":1,"windowName":"Intermediate","rankMaxes":[76,100,112,130],"runs":3,"best":145,"rankIndex":7,"nextRankIndex":8,"nextRankScore":null,"gap":null,"heldRankScore":130,"progress":null,"isNext":false},{"scenario":"1w2ts reload smallflicks slightly larger","label":"1w2ts reload smallflicks slightly larger","category":"Clicking","subCategory":"Micro Clicking","family":"Smallflicks","window":2,"windowName":"Advanced","rankMaxes":[99,127,142,169],"runs":31,"best":148,"rankIndex":10,"nextRankIndex":11,"nextRankScore":169,"gap":21,"heldRankScore":142,"progress":0.2222222222222222,"isNext":true},{"scenario":"1w2ts Pasu Perfected 30% Smaller","label":"1w2ts Pasu Perfected 30% Smaller","category":"Clicking","subCategory":"Micro Clicking","family":"Smallflicks","window":3,"windowName":"Expert","rankMaxes":[75,87,93,103],"runs":1,"best":65,"rankIndex":null,"nextRankIndex":12,"nextRankScore":75,"gap":10,"heldRankScore":null,"progress":0.8666666666666667,"isNext":false},{"scenario":"VT Smoothbot Novice","label":"VT Smoothbot Novice","category":"Tracking","subCategory":"Precise Tracking","family":"Smoothbot","window":0,"windowName":"Novice","rankMaxes":[2300,2500,3100,3500],"runs":0,"best":null,"rankIndex":null,"nextRankIndex":0,"nextRankScore":2300,"gap":null,"heldRankScore":null,"progress":0,"isNext":true},{"scenario":"VT Smoothbot Intermediate","label":"VT Smoothbot Intermediate","category":"Tracking","subCategory":"Precise Tracking","family":"Smoothbot","window":1,"windowName":"Intermediate","rankMaxes":[3225,3645,4000,4335],"runs":0,"best":null,"rankIndex":null,"nextRankIndex":4,"nextRankScore":3225,"gap":null,"heldRankScore":null,"progress":0,"isNext":false},{"scenario":"VT Smoothbot Advanced","label":"VT Smoothbot Advanced","category":"Tracking","subCategory":"Precise Tracking","family":"Smoothbot","window":2,"windowName":"Advanced","rankMaxes":[3225,3450,3705,3960],"runs":0,"best":null,"rankIndex":null,"nextRankIndex":8,"nextRankScore":3225,"gap":null,"heldRankScore":null,"progress":0,"isNext":false},{"scenario":"Smoothbot Pauer","label":"Smoothbot Pauer","category":"Tracking","subCategory":"Precise Tracking","family":"Smoothbot","window":3,"windowName":"Expert","rankMaxes":[4400,5050,5400,6250],"runs":1,"best":2982,"rankIndex":null,"nextRankIndex":12,"nextRankScore":4400,"gap":1418,"heldRankScore":null,"progress":0.6777272727272727,"isNext":false},{"scenario":"VT Snake Track Novice S5","label":"VT Snake Track Novice S5","category":"Tracking","subCategory":"Precise Tracking","family":"waldoTS","window":0,"windowName":"Novice","rankMaxes":[2400,2750,3125,3425],"runs":3,"best":4207,"rankIndex":3,"nextRankIndex":4,"nextRankScore":null,"gap":null,"heldRankScore":3425,"progress":null,"isNext":false},{"scenario":"waldoTS Novice","label":"waldoTS Novice","category":"Tracking","subCategory":"Precise Tracking","family":"waldoTS","window":1,"windowName":"Intermediate","rankMaxes":[58,88,114,140],"runs":2,"best":144,"rankIndex":7,"nextRankIndex":8,"nextRankScore":null,"gap":null,"heldRankScore":140,"progress":null,"isNext":false},{"scenario":"waldoTS Intermediate","label":"waldoTS Intermediate","category":"Tracking","subCategory":"Precise Tracking","family":"waldoTS","window":2,"windowName":"Advanced","rankMaxes":[100,126,149,171],"runs":62,"best":151,"rankIndex":10,"nextRankIndex":11,"nextRankScore":171,"gap":20,"heldRankScore":149,"progress":0.09999986363636347,"isNext":true},{"scenario":"waldoTS","label":"waldoTS","category":"Tracking","subCategory":"Precise Tracking","family":"waldoTS","window":3,"windowName":"Expert","rankMaxes":[140,155,167,178],"runs":9,"best":137,"rankIndex":null,"nextRankIndex":12,"nextRankScore":140,"gap":3,"heldRankScore":null,"progress":0.97642855,"isNext":false},{"scenario":"VT Ground Novice S5","label":"VT Ground Novice S5","category":"Tracking","subCategory":"Reactive Tracking","family":"Ground Plaza","window":0,"windowName":"Novice","rankMaxes":[2100,2500,2825,3100],"runs":1,"best":3754,"rankIndex":3,"nextRankIndex":4,"nextRankScore":null,"gap":null,"heldRankScore":3100,"progress":null,"isNext":false},{"scenario":"Ground Plaza Sparky v3 Easy","label":"Ground Plaza Sparky v3 Easy","category":"Tracking","subCategory":"Reactive Tracking","family":"Ground Plaza","window":1,"windowName":"Intermediate","rankMaxes":[811,849,865,882],"runs":1,"best":897,"rankIndex":7,"nextRankIndex":8,"nextRankScore":null,"gap":null,"heldRankScore":882,"progress":null,"isNext":false},{"scenario":"VT Ground Intermediate S5","label":"VT Ground Intermediate S5","category":"Tracking","subCategory":"Reactive Tracking","family":"Ground Plaza","window":2,"windowName":"Advanced","rankMaxes":[2000,2250,2750,3000],"runs":52,"best":2949,"rankIndex":10,"nextRankIndex":11,"nextRankScore":3000,"gap":51,"heldRankScore":2750,"progress":0.796,"isNext":true},{"scenario":"Ground Plaza Sparky v3 OW","label":"Ground Plaza Sparky v3 OW","category":"Tracking","subCategory":"Reactive Tracking","family":"Ground Plaza","window":3,"windowName":"Expert","rankMaxes":[874,884,895,903],"runs":8,"best":870,"rankIndex":null,"nextRankIndex":12,"nextRankScore":874,"gap":4,"heldRankScore":null,"progress":0.9950979130434783,"isNext":false},{"scenario":"VT Aether Novice S5","label":"VT Aether Novice S5","category":"Tracking","subCategory":"Reactive Tracking","family":"Air CELESTIAL","window":0,"windowName":"Novice","rankMaxes":[1525,1900,2250,2650],"runs":2,"best":2969,"rankIndex":3,"nextRankIndex":4,"nextRankScore":null,"gap":null,"heldRankScore":2650,"progress":null,"isNext":false},{"scenario":"Air CELESTIAL No UFO Easy Slowed","label":"Air CELESTIAL No UFO Easy Slowed","category":"Tracking","subCategory":"Reactive Tracking","family":"Air CELESTIAL","window":1,"windowName":"Intermediate","rankMaxes":[827,846,865,875],"runs":1,"best":892,"rankIndex":7,"nextRankIndex":8,"nextRankScore":null,"gap":null,"heldRankScore":875,"progress":null,"isNext":false},{"scenario":"Air CELESTIAL No UFO Easy","label":"Air CELESTIAL No UFO Easy","category":"Tracking","subCategory":"Reactive Tracking","family":"Air CELESTIAL","window":2,"windowName":"Advanced","rankMaxes":[831,852,880,895],"runs":26,"best":885,"rankIndex":10,"nextRankIndex":11,"nextRankScore":895,"gap":10,"heldRankScore":880,"progress":0.3391723333333327,"isNext":true},{"scenario":"Air CELESTIAL","label":"Air CELESTIAL","category":"Tracking","subCategory":"Reactive Tracking","family":"Air CELESTIAL","window":3,"windowName":"Expert","rankMaxes":[873,887,892,901],"runs":1,"best":794,"rankIndex":null,"nextRankIndex":12,"nextRankScore":873,"gap":79,"heldRankScore":null,"progress":0.9092930882016036,"isNext":false},{"scenario":"VT Controlsphere Novice S5","label":"VT Controlsphere Novice S5","category":"Tracking","subCategory":"Control Tracking","family":"Controlsphere","window":0,"windowName":"Novice","rankMaxes":[1575,1950,2400,2900],"runs":1,"best":3922,"rankIndex":3,"nextRankIndex":4,"nextRankScore":null,"gap":null,"heldRankScore":2900,"progress":null,"isNext":false},{"scenario":"VT Controlsphere Intermediate S5","label":"VT Controlsphere Intermediate S5","category":"Tracking","subCategory":"Control Tracking","family":"Controlsphere","window":1,"windowName":"Intermediate","rankMaxes":[2750,3175,3525,3825],"runs":10,"best":3270,"rankIndex":5,"nextRankIndex":6,"nextRankScore":3525,"gap":255,"heldRankScore":3175,"progress":0.2714285714285714,"isNext":false},{"scenario":"Controlsphere","label":"Controlsphere","category":"Tracking","subCategory":"Control Tracking","family":"Controlsphere","window":2,"windowName":"Advanced","rankMaxes":[8125,9450,10875,12225],"runs":11,"best":10167,"rankIndex":9,"nextRankIndex":10,"nextRankScore":10875,"gap":708,"heldRankScore":9450,"progress":0.5031578947368421,"isNext":true},{"scenario":"Controlsphere rAim","label":"Controlsphere rAim","category":"Tracking","subCategory":"Control Tracking","family":"Controlsphere","window":3,"windowName":"Expert","rankMaxes":[8500,9250,10375,10800],"runs":1,"best":6264,"rankIndex":null,"nextRankIndex":12,"nextRankScore":8500,"gap":2236,"heldRankScore":null,"progress":0.7369411764705882,"isNext":false},{"scenario":"VT Raw Control Novice S5","label":"VT Raw Control Novice S5","category":"Tracking","subCategory":"Control Tracking","family":"Raw Control","window":0,"windowName":"Novice","rankMaxes":[2125,2550,2975,3450],"runs":1,"best":3725,"rankIndex":3,"nextRankIndex":4,"nextRankScore":null,"gap":null,"heldRankScore":3450,"progress":null,"isNext":false},{"scenario":"Whisphere 80%","label":"Whisphere 80%","category":"Tracking","subCategory":"Control Tracking","family":"Raw Control","window":1,"windowName":"Intermediate","rankMaxes":[7150,9000,11000,12750],"runs":0,"best":null,"rankIndex":null,"nextRankIndex":4,"nextRankScore":7150,"gap":null,"heldRankScore":null,"progress":0,"isNext":false},{"scenario":"Whisphere","label":"Whisphere","category":"Tracking","subCategory":"Control Tracking","family":"Raw Control","window":2,"windowName":"Advanced","rankMaxes":[7625,10875,15625,17750],"runs":79,"best":13710,"rankIndex":9,"nextRankIndex":10,"nextRankScore":15625,"gap":1915,"heldRankScore":10875,"progress":0.5968421052631578,"isNext":true},{"scenario":"VT Raw Control Intermediate S5 Hard","label":"VT Raw Control Intermediate S5 Hard","category":"Tracking","subCategory":"Control Tracking","family":"Raw Control","window":3,"windowName":"Expert","rankMaxes":[2700,2800,3000,3100],"runs":0,"best":null,"rankIndex":null,"nextRankIndex":12,"nextRankScore":2700,"gap":null,"heldRankScore":null,"progress":0,"isNext":false},{"scenario":"VT Aether Novice S5 Bot 2","label":"VT Aether Novice S5 Bot 2","category":"Tracking","subCategory":"Reading Tracking","family":"Air Voltaic","window":0,"windowName":"Novice","rankMaxes":[1750,2550,3750,4450],"runs":5,"best":3413,"rankIndex":1,"nextRankIndex":2,"nextRankScore":3750,"gap":337,"heldRankScore":2550,"progress":0.7191666666666666,"isNext":false},{"scenario":"Air Voltaic Easy Invincible 4 80%","label":"Air Voltaic Easy Invincible 4 80%","category":"Tracking","subCategory":"Reading Tracking","family":"Air Voltaic","window":1,"windowName":"Intermediate","rankMaxes":[1100,2100,3150,3800],"runs":5,"best":3512,"rankIndex":6,"nextRankIndex":7,"nextRankScore":3800,"gap":288,"heldRankScore":3150,"progress":0.556923076923077,"isNext":false},{"scenario":"Air Voltaic Easy","label":"Air Voltaic Easy","category":"Tracking","subCategory":"Reading Tracking","family":"Air Voltaic","window":2,"windowName":"Advanced","rankMaxes":[845,872,890,905],"runs":125,"best":877,"rankIndex":9,"nextRankIndex":10,"nextRankScore":890,"gap":13,"heldRankScore":872,"progress":0.2691378888888873,"isNext":true},{"scenario":"Air Voltaic","label":"Air Voltaic","category":"Tracking","subCategory":"Reading Tracking","family":"Air Voltaic","window":3,"windowName":"Expert","rankMaxes":[879,887,895,903],"runs":1,"best":807,"rankIndex":null,"nextRankIndex":12,"nextRankScore":879,"gap":72,"heldRankScore":null,"progress":0.9182719124004551,"isNext":false},{"scenario":"Close Long Strafes Invincible","label":"Close Long Strafes Invincible","category":"Tracking","subCategory":"Reading Tracking","family":"Strafe Reading","window":0,"windowName":"Novice","rankMaxes":[6000,10000,15500,18000],"runs":0,"best":null,"rankIndex":null,"nextRankIndex":0,"nextRankScore":6000,"gap":null,"heldRankScore":null,"progress":0,"isNext":false},{"scenario":"Smooth Thin Strafes Raspberry Easy","label":"Smooth Thin Strafes Raspberry Easy","category":"Tracking","subCategory":"Reading Tracking","family":"Strafe Reading","window":1,"windowName":"Intermediate","rankMaxes":[7050,8200,9200,10300],"runs":0,"best":null,"rankIndex":null,"nextRankIndex":4,"nextRankScore":7050,"gap":null,"heldRankScore":null,"progress":0,"isNext":false},{"scenario":"Air Angelic 4 Voltaic Easy","label":"Air Angelic 4 Voltaic Easy","category":"Tracking","subCategory":"Reading Tracking","family":"Strafe Reading","window":2,"windowName":"Advanced","rankMaxes":[2325,3075,3975,4675],"runs":36,"best":3467,"rankIndex":9,"nextRankIndex":10,"nextRankScore":3975,"gap":508,"heldRankScore":3075,"progress":0.43555555555555553,"isNext":true},{"scenario":"Close Fast Strafes Invincible - Thin","label":"Close Fast Strafes Invincible - Thin","category":"Tracking","subCategory":"Reading Tracking","family":"Strafe Reading","window":3,"windowName":"Expert","rankMaxes":[9800,11200,13700,15400],"runs":9,"best":7290,"rankIndex":null,"nextRankIndex":12,"nextRankScore":9800,"gap":2510,"heldRankScore":null,"progress":0.7438775510204082,"isNext":false},{"scenario":"VT EddieTS Novice S5","label":"VT EddieTS Novice S5","category":"Switching","subCategory":"Speed Switching","family":"voxTS","window":0,"windowName":"Novice","rankMaxes":[640,730,810,890],"runs":1,"best":942,"rankIndex":3,"nextRankIndex":4,"nextRankScore":null,"gap":null,"heldRankScore":890,"progress":null,"isNext":false},{"scenario":"voxTS Viscose Varied","label":"voxTS Viscose Varied","category":"Switching","subCategory":"Speed Switching","family":"voxTS","window":1,"windowName":"Intermediate","rankMaxes":[86,100,112,154],"runs":4,"best":108,"rankIndex":5,"nextRankIndex":6,"nextRankScore":112,"gap":4,"heldRankScore":100,"progress":0.6875,"isNext":true},{"scenario":"voxTargetSwitch","label":"voxTargetSwitch","category":"Switching","subCategory":"Speed Switching","family":"voxTS","window":2,"windowName":"Advanced","rankMaxes":[104,112,120,128],"runs":19,"best":103,"rankIndex":null,"nextRankIndex":8,"nextRankScore":104,"gap":1,"heldRankScore":null,"progress":0.9903846153846154,"isNext":false},{"scenario":"VT skyTS Advanced","label":"VT skyTS Advanced","category":"Switching","subCategory":"Speed Switching","family":"voxTS","window":3,"windowName":"Expert","rankMaxes":[1200,1400,1500,1670],"runs":0,"best":null,"rankIndex":null,"nextRankIndex":12,"nextRankScore":1200,"gap":null,"heldRankScore":null,"progress":0,"isNext":false},{"scenario":"VT DotTS Novice S5","label":"VT DotTS Novice S5","category":"Switching","subCategory":"Speed Switching","family":"DotTS","window":0,"windowName":"Novice","rankMaxes":[845,940,1030,1090],"runs":2,"best":1240,"rankIndex":3,"nextRankIndex":4,"nextRankScore":null,"gap":null,"heldRankScore":1090,"progress":null,"isNext":false},{"scenario":"VT DotTS Intermediate S5","label":"VT DotTS Intermediate S5","category":"Switching","subCategory":"Speed Switching","family":"DotTS","window":1,"windowName":"Intermediate","rankMaxes":[1110,1180,1230,1280],"runs":46,"best":1210,"rankIndex":5,"nextRankIndex":6,"nextRankScore":1230,"gap":20,"heldRankScore":1180,"progress":0.6,"isNext":true},{"scenario":"VT DotTS Advanced S5","label":"VT DotTS Advanced S5","category":"Switching","subCategory":"Speed Switching","family":"DotTS","window":2,"windowName":"Advanced","rankMaxes":[1275,1350,1410,1485],"runs":1,"best":1051,"rankIndex":null,"nextRankIndex":8,"nextRankScore":1275,"gap":224,"heldRankScore":null,"progress":0.8243137254901961,"isNext":false},{"scenario":"VT psalmTS Advanced","label":"VT psalmTS Advanced","category":"Switching","subCategory":"Speed Switching","family":"DotTS","window":3,"windowName":"Expert","rankMaxes":[1000,1160,1220,1380],"runs":0,"best":null,"rankIndex":null,"nextRankIndex":12,"nextRankScore":1000,"gap":null,"heldRankScore":null,"progress":0,"isNext":false},{"scenario":"VT FlyTS Novice S5","label":"VT FlyTS Novice S5","category":"Switching","subCategory":"Evasive Switching","family":"FlyTS","window":0,"windowName":"Novice","rankMaxes":[420,460,500,535],"runs":2,"best":630,"rankIndex":3,"nextRankIndex":4,"nextRankScore":null,"gap":null,"heldRankScore":535,"progress":null,"isNext":false},{"scenario":"VT FlyTS Intermediate S5","label":"VT FlyTS Intermediate S5","category":"Switching","subCategory":"Evasive Switching","family":"FlyTS","window":1,"windowName":"Intermediate","rankMaxes":[520,570,610,650],"runs":15,"best":595,"rankIndex":5,"nextRankIndex":6,"nextRankScore":610,"gap":15,"heldRankScore":570,"progress":0.6350006000000008,"isNext":true},{"scenario":"VT FlyTS Advanced S5","label":"VT FlyTS Advanced S5","category":"Switching","subCategory":"Evasive Switching","family":"FlyTS","window":2,"windowName":"Advanced","rankMaxes":[540,600,655,705],"runs":1,"best":422,"rankIndex":null,"nextRankIndex":8,"nextRankScore":540,"gap":118,"heldRankScore":null,"progress":0.7811111444444445,"isNext":false},{"scenario":"domiSwitch","label":"domiSwitch","category":"Switching","subCategory":"Evasive Switching","family":"FlyTS","window":3,"windowName":"Expert","rankMaxes":[5775,6625,7200,7950],"runs":7,"best":5193,"rankIndex":null,"nextRankIndex":12,"nextRankScore":5775,"gap":582,"heldRankScore":null,"progress":0.8991861134199134,"isNext":false},{"scenario":"VT evaTS Novice","label":"VT evaTS Novice","category":"Switching","subCategory":"Evasive Switching","family":"Smooth Switching","window":0,"windowName":"Novice","rankMaxes":[450,510,560,620],"runs":0,"best":null,"rankIndex":null,"nextRankIndex":0,"nextRankScore":450,"gap":null,"heldRankScore":null,"progress":0,"isNext":false},{"scenario":"VT evaTS Intermediate","label":"VT evaTS Intermediate","category":"Switching","subCategory":"Evasive Switching","family":"Smooth Switching","window":1,"windowName":"Intermediate","rankMaxes":[550,600,650,700],"runs":0,"best":null,"rankIndex":null,"nextRankIndex":4,"nextRankScore":550,"gap":null,"heldRankScore":null,"progress":0,"isNext":false},{"scenario":"tamTargetSwitch Smooth Easy","label":"tamTargetSwitch Smooth Easy","category":"Switching","subCategory":"Evasive Switching","family":"Smooth Switching","window":2,"windowName":"Advanced","rankMaxes":[22,29,36,41],"runs":26,"best":35,"rankIndex":9,"nextRankIndex":10,"nextRankScore":36,"gap":1,"heldRankScore":29,"progress":0.8571428571428571,"isNext":true},{"scenario":"tamTargetSwitch Smooth Hard","label":"tamTargetSwitch Smooth Hard","category":"Switching","subCategory":"Evasive Switching","family":"Smooth Switching","window":3,"windowName":"Expert","rankMaxes":[32,33,34,35],"runs":0,"best":null,"rankIndex":null,"nextRankIndex":12,"nextRankScore":32,"gap":null,"heldRankScore":null,"progress":0,"isNext":false},{"scenario":"VT ControlTS Novice S5","label":"VT ControlTS Novice S5","category":"Switching","subCategory":"Stability Switching","family":"ControlTS","window":0,"windowName":"Novice","rankMaxes":[340,380,420,450],"runs":1,"best":543,"rankIndex":3,"nextRankIndex":4,"nextRankScore":null,"gap":null,"heldRankScore":450,"progress":null,"isNext":false},{"scenario":"VT ControlTS Intermediate S5","label":"VT ControlTS Intermediate S5","category":"Switching","subCategory":"Stability Switching","family":"ControlTS","window":1,"windowName":"Intermediate","rankMaxes":[420,460,485,520],"runs":18,"best":490,"rankIndex":6,"nextRankIndex":7,"nextRankScore":520,"gap":30,"heldRankScore":485,"progress":0.14285714285714285,"isNext":false},{"scenario":"kinTS Voltaic Easy","label":"kinTS Voltaic Easy","category":"Switching","subCategory":"Stability Switching","family":"ControlTS","window":2,"windowName":"Advanced","rankMaxes":[46,63,75,91],"runs":22,"best":74,"rankIndex":9,"nextRankIndex":10,"nextRankScore":75,"gap":1,"heldRankScore":63,"progress":0.9311860000000003,"isNext":false},{"scenario":"kinTS Voltaic","label":"kinTS Voltaic","category":"Switching","subCategory":"Stability Switching","family":"ControlTS","window":3,"windowName":"Expert","rankMaxes":[70,81,90,97],"runs":6,"best":71,"rankIndex":12,"nextRankIndex":13,"nextRankScore":81,"gap":10,"heldRankScore":70,"progress":0.08828245454545486,"isNext":true},{"scenario":"VT Penta Bounce Novice S5","label":"VT Penta Bounce Novice S5","category":"Switching","subCategory":"Stability Switching","family":"beanTS","window":0,"windowName":"Novice","rankMaxes":[290,340,390,445],"runs":1,"best":519,"rankIndex":3,"nextRankIndex":4,"nextRankScore":null,"gap":null,"heldRankScore":445,"progress":null,"isNext":false},{"scenario":"beanTS Larger","label":"beanTS Larger","category":"Switching","subCategory":"Stability Switching","family":"beanTS","window":1,"windowName":"Intermediate","rankMaxes":[65,90,120,142],"runs":55,"best":139,"rankIndex":6,"nextRankIndex":7,"nextRankScore":142,"gap":3,"heldRankScore":120,"progress":0.8727271363636362,"isNext":false},{"scenario":"beanTS","label":"beanTS","category":"Switching","subCategory":"Stability Switching","family":"beanTS","window":2,"windowName":"Advanced","rankMaxes":[88,115,143,156],"runs":81,"best":137,"rankIndex":9,"nextRankIndex":10,"nextRankScore":143,"gap":6,"heldRankScore":115,"progress":0.7857142857142857,"isNext":true},{"scenario":"B180T Voltaic","label":"B180T Voltaic","category":"Switching","subCategory":"Stability Switching","family":"beanTS","window":3,"windowName":"Expert","rankMaxes":[71,82,93,103],"runs":5,"best":57,"rankIndex":null,"nextRankIndex":12,"nextRankScore":71,"gap":14,"heldRankScore":null,"progress":0.7971831267605635,"isNext":false}],"season":{"name":"Season 1","status":"draft","windows":["Novice","Intermediate","Advanced","Expert"],"windowSize":4,"categories":[{"name":"Clicking","rankNames":["Blunderbuss","Slingshot","Dart","Longbow","Crossbow","Musket","Flintlock","Revolver","Carbine","Rifle","Marksman","Match Rifle","Sniper","Railgun","Gauss Cannon","Photon Lance"],"rankColors":{"Blunderbuss":"#B07A2E","Slingshot":"#8FA83C","Dart":"#E0455A","Longbow":"#2E7D4F","Crossbow":"#5B7C99","Musket":"#3F3B47","Flintlock":"#FF9B2A","Revolver":"#2B4B78","Carbine":"#6F8F2F","Rifle":"#8E4A2A","Marksman":"#E8BE45","Match Rifle":"#17A583","Sniper":"#A9DCEC","Railgun":"#00D9FF","Gauss Cannon":"#A855F7","Photon Lance":"#FFFFFF"}},{"name":"Tracking","rankNames":["Amoeba","Multicellular","Trilobite","Amphibian","Reptile","Mammal","Primate","Chimp","Hominid","Homoerectus","Neanderthal","Homosapien","Neolithic","Robosapien","HAL 9000","Singularity"],"rankColors":{"Amoeba":"#ffd1ea","Multicellular":"#550160","Trilobite":"#eeff00","Amphibian":"#006eff","Reptile":"#2bff00","Mammal":"#610000","Primate":"#331400","Chimp":"#9a783c","Hominid":"#7866ff","Homoerectus":"#95b300","Neanderthal":"#e100ff","Homosapien":"#ff0000","Neolithic":"#ff6600","Robosapien":"#00fbff","HAL 9000":"#ffffff","Singularity":"#000000"}},{"name":"Switching","rankNames":["Banana Slug","Sloth","Galapagos Turtle","Manatee","Koala","Slow Loris","Housecat","Ferret","Greyhound","Roadrunner","Jackrabbit","Hare","Pronghorn","Cheetah","Golden Eagle","Peregrine"],"rankColors":{"Banana Slug":"#fbff00","Sloth":"#4f4f4f","Galapagos Turtle":"#005c02","Manatee":"#3328cc","Koala":"#e6baf3","Slow Loris":"#ff9d2e","Housecat":"#d900ff","Ferret":"#ff0000","Greyhound":"#800000","Roadrunner":"#00fbff","Jackrabbit":"#00ffbf","Hare":"#ffffff","Pronghorn":"#421e00","Cheetah":"#ff7300","Golden Eagle":"#9e7c00","Peregrine":"#8000ff"}}]},"playlists":[{"name":"Apogee Clicking Novice","category":"Clicking","window":0,"scenarios":8},{"name":"Apogee Clicking Intermediate","category":"Clicking","window":1,"scenarios":8},{"name":"Apogee Clicking Advanced","category":"Clicking","window":2,"scenarios":8},{"name":"Apogee Clicking Expert","category":"Clicking","window":3,"scenarios":8},{"name":"Apogee Tracking Novice","category":"Tracking","window":0,"scenarios":8},{"name":"Apogee Tracking Intermediate","category":"Tracking","window":1,"scenarios":8},{"name":"Apogee Tracking Advanced","category":"Tracking","window":2,"scenarios":8},{"name":"Apogee Tracking Expert","category":"Tracking","window":3,"scenarios":8},{"name":"Apogee Switching Novice","category":"Switching","window":0,"scenarios":6},{"name":"Apogee Switching Intermediate","category":"Switching","window":1,"scenarios":6},{"name":"Apogee Switching Advanced","category":"Switching","window":2,"scenarios":6},{"name":"Apogee Switching Expert","category":"Switching","window":3,"scenarios":6},{"name":"Apogee All Novice","category":null,"window":0,"scenarios":22},{"name":"Apogee All Intermediate","category":null,"window":1,"scenarios":22},{"name":"Apogee All Advanced","category":null,"window":2,"scenarios":22},{"name":"Apogee All Expert","category":null,"window":3,"scenarios":22}],"playlistDir":null,"installed":0}</script>
+<script id="apogee-practice" type="application/json">{"families":[{"family":"Wide Wall","category":"Clicking","subCategory":"Static Clicking","rankIndex":4,"next":"Wide Wall 3 Targets TE"},{"family":"Reload Wall","category":"Clicking","subCategory":"Static Clicking","rankIndex":9,"next":"1w6ts reload v2 20% bigger"},{"family":"Pasu","category":"Clicking","subCategory":"Dynamic Clicking","rankIndex":12,"next":"Pasu Reload Goated"},{"family":"Bounceshot","category":"Clicking","subCategory":"Dynamic Clicking","rankIndex":9,"next":"VT Bounceshot Viscose Medium"},{"family":"Floating Heads","category":"Clicking","subCategory":"Linear Clicking","rankIndex":9,"next":"Floating Heads Timing 400% Larger"},{"family":"voxTS Click","category":"Clicking","subCategory":"Linear Clicking","rankIndex":8,"next":"voxTargetClick 20% Small"},{"family":"eth Pasu Micro","category":"Clicking","subCategory":"Micro Clicking","rankIndex":12,"next":"1w3ts Pasu Perfected Micro Goated"},{"family":"Smallflicks","category":"Clicking","subCategory":"Micro Clicking","rankIndex":10,"next":"1w2ts reload smallflicks slightly larger"},{"family":"Smoothbot","category":"Tracking","subCategory":"Precise Tracking","rankIndex":null,"next":"VT Smoothbot Novice"},{"family":"waldoTS","category":"Tracking","subCategory":"Precise Tracking","rankIndex":10,"next":"waldoTS Intermediate"},{"family":"Ground Plaza","category":"Tracking","subCategory":"Reactive Tracking","rankIndex":10,"next":"VT Ground Intermediate S5"},{"family":"Air CELESTIAL","category":"Tracking","subCategory":"Reactive Tracking","rankIndex":10,"next":"Air CELESTIAL No UFO Easy"},{"family":"Controlsphere","category":"Tracking","subCategory":"Control Tracking","rankIndex":9,"next":"Controlsphere"},{"family":"Raw Control","category":"Tracking","subCategory":"Control Tracking","rankIndex":9,"next":"Whisphere"},{"family":"Air Voltaic","category":"Tracking","subCategory":"Reading Tracking","rankIndex":9,"next":"Air Voltaic Easy"},{"family":"Strafe Reading","category":"Tracking","subCategory":"Reading Tracking","rankIndex":9,"next":"Air Angelic 4 Voltaic Easy"},{"family":"voxTS","category":"Switching","subCategory":"Speed Switching","rankIndex":5,"next":"voxTS Viscose Varied"},{"family":"DotTS","category":"Switching","subCategory":"Speed Switching","rankIndex":5,"next":"VT DotTS Intermediate S5"},{"family":"FlyTS","category":"Switching","subCategory":"Evasive Switching","rankIndex":5,"next":"VT FlyTS Intermediate S5"},{"family":"Smooth Switching","category":"Switching","subCategory":"Evasive Switching","rankIndex":9,"next":"tamTargetSwitch Smooth Easy"},{"family":"ControlTS","category":"Switching","subCategory":"Stability Switching","rankIndex":12,"next":"kinTS Voltaic"},{"family":"beanTS","category":"Switching","subCategory":"Stability Switching","rankIndex":9,"next":"beanTS"},{"family":"Popcorn","category":"Clicking","subCategory":"Dynamic Clicking","rankIndex":5,"next":"VT Popcorn Intermediate S5"},{"family":"PGT","category":"Tracking","subCategory":"Precise Tracking","rankIndex":5,"next":"VT PGT Intermediate S5"},{"family":"Plaza","category":"Tracking","subCategory":"Reactive Tracking","rankIndex":null,"next":"VT Plaza Novice"},{"family":"RawControlSphere","category":"Tracking","subCategory":"Control Tracking","rankIndex":9,"next":"RawControlSphere"},{"family":"Air Invincible 4","category":"Tracking","subCategory":"Reading Tracking","rankIndex":9,"next":"Air Voltaic Invincible 4 Medium"}],"scenarios":[{"scenario":"VT ww5t Novice S5","label":"VT ww5t Novice S5","category":"Clicking","subCategory":"Static Clicking","family":"Wide Wall","window":0,"windowName":"Novice","rankMaxes":[990,1090,1190,1290],"runs":1,"best":1330,"rankIndex":3,"nextRankIndex":4,"nextRankScore":null,"gap":null,"heldRankScore":1290,"progress":null,"isNext":false},{"scenario":"Wide Wall 3 Targets TE","label":"Wide Wall 3 Targets TE","category":"Clicking","subCategory":"Static Clicking","family":"Wide Wall","window":1,"windowName":"Intermediate","rankMaxes":[132,156,170,190],"runs":19,"best":151,"rankIndex":4,"nextRankIndex":5,"nextRankScore":156,"gap":5,"heldRankScore":132,"progress":0.7916666666666666,"isNext":true},{"scenario":"Wide Wall 4 Targets","label":"Wide Wall 4 Targets","category":"Clicking","subCategory":"Static Clicking","family":"Wide Wall","window":2,"windowName":"Advanced","rankMaxes":[132,150,165,180],"runs":107,"best":125,"rankIndex":null,"nextRankIndex":8,"nextRankScore":132,"gap":7,"heldRankScore":null,"progress":0.946969696969697,"isNext":false},{"scenario":"Wide Wall 3 Targets","label":"Wide Wall 3 Targets","category":"Clicking","subCategory":"Static Clicking","family":"Wide Wall","window":3,"windowName":"Expert","rankMaxes":[120,130,135,145],"runs":0,"best":null,"rankIndex":null,"nextRankIndex":12,"nextRankScore":120,"gap":null,"heldRankScore":null,"progress":0,"isNext":false},{"scenario":"VT 1w6ts Rasp Novice","label":"VT 1w6ts Rasp Novice","category":"Clicking","subCategory":"Static Clicking","family":"Reload Wall","window":0,"windowName":"Novice","rankMaxes":[650,750,850,950],"runs":1,"best":1070,"rankIndex":3,"nextRankIndex":4,"nextRankScore":null,"gap":null,"heldRankScore":950,"progress":null,"isNext":false},{"scenario":"VT 1w5ts Rasp Intermediate","label":"VT 1w5ts Rasp Intermediate","category":"Clicking","subCategory":"Static Clicking","family":"Reload Wall","window":1,"windowName":"Intermediate","rankMaxes":[1000,1100,1200,1300],"runs":0,"best":null,"rankIndex":null,"nextRankIndex":4,"nextRankScore":1000,"gap":null,"heldRankScore":null,"progress":0,"isNext":false},{"scenario":"1w6ts reload v2 20% bigger","label":"1w6ts reload v2 20% bigger","category":"Clicking","subCategory":"Static Clicking","family":"Reload Wall","window":2,"windowName":"Advanced","rankMaxes":[100,125,145,175],"runs":5,"best":131,"rankIndex":9,"nextRankIndex":10,"nextRankScore":145,"gap":14,"heldRankScore":125,"progress":0.3,"isNext":true},{"scenario":"1w6ts reload v2","label":"1w6ts reload v2","category":"Clicking","subCategory":"Static Clicking","family":"Reload Wall","window":3,"windowName":"Expert","rankMaxes":[135,160,170,190],"runs":108,"best":127,"rankIndex":null,"nextRankIndex":12,"nextRankScore":135,"gap":8,"heldRankScore":null,"progress":0.9407407407407408,"isNext":false},{"scenario":"VT Pasu Novice S5","label":"VT Pasu Novice S5","category":"Clicking","subCategory":"Dynamic Clicking","family":"Pasu","window":0,"windowName":"Novice","rankMaxes":[555,660,745,800],"runs":2,"best":917,"rankIndex":3,"nextRankIndex":4,"nextRankScore":null,"gap":null,"heldRankScore":800,"progress":null,"isNext":false},{"scenario":"VT Pasu Intermediate S5","label":"VT Pasu Intermediate S5","category":"Clicking","subCategory":"Dynamic Clicking","family":"Pasu","window":1,"windowName":"Intermediate","rankMaxes":[770,850,930,980],"runs":36,"best":944,"rankIndex":6,"nextRankIndex":7,"nextRankScore":980,"gap":36,"heldRankScore":930,"progress":0.2867297400000007,"isNext":false},{"scenario":"VT Pasu Advanced S5","label":"VT Pasu Advanced S5","category":"Clicking","subCategory":"Dynamic Clicking","family":"Pasu","window":2,"windowName":"Advanced","rankMaxes":[910,1020,1110,1235],"runs":2,"best":587,"rankIndex":null,"nextRankIndex":8,"nextRankScore":910,"gap":323,"heldRankScore":null,"progress":0.6446580824175825,"isNext":false},{"scenario":"Pasu Reload Goated","label":"Pasu Reload Goated","category":"Clicking","subCategory":"Dynamic Clicking","family":"Pasu","window":3,"windowName":"Expert","rankMaxes":[110,130,140,160],"runs":16,"best":112,"rankIndex":12,"nextRankIndex":13,"nextRankScore":130,"gap":18,"heldRankScore":110,"progress":0.1,"isNext":true},{"scenario":"VT Bounceshot Novice","label":"VT Bounceshot Novice","category":"Clicking","subCategory":"Dynamic Clicking","family":"Bounceshot","window":0,"windowName":"Novice","rankMaxes":[500,600,700,800],"runs":0,"best":null,"rankIndex":null,"nextRankIndex":0,"nextRankScore":500,"gap":null,"heldRankScore":null,"progress":0,"isNext":false},{"scenario":"B180 Voltaic Easy 92%","label":"B180 Voltaic Easy 92%","category":"Clicking","subCategory":"Dynamic Clicking","family":"Bounceshot","window":1,"windowName":"Intermediate","rankMaxes":[26,50,72,87],"runs":1,"best":101,"rankIndex":7,"nextRankIndex":8,"nextRankScore":null,"gap":null,"heldRankScore":87,"progress":null,"isNext":false},{"scenario":"VT Bounceshot Viscose Medium","label":"VT Bounceshot Viscose Medium","category":"Clicking","subCategory":"Dynamic Clicking","family":"Bounceshot","window":2,"windowName":"Advanced","rankMaxes":[560,770,915,1175],"runs":23,"best":880,"rankIndex":9,"nextRankIndex":10,"nextRankScore":915,"gap":35,"heldRankScore":770,"progress":0.7586206896551724,"isNext":true},{"scenario":"VT Bounceshot Advanced","label":"VT Bounceshot Advanced","category":"Clicking","subCategory":"Dynamic Clicking","family":"Bounceshot","window":3,"windowName":"Expert","rankMaxes":[730,850,910,1000],"runs":1,"best":450,"rankIndex":null,"nextRankIndex":12,"nextRankScore":730,"gap":280,"heldRankScore":null,"progress":0.6164383561643836,"isNext":false},{"scenario":"VT Floating Heads Novice S5","label":"VT Floating Heads Novice S5","category":"Clicking","subCategory":"Linear Clicking","family":"Floating Heads","window":0,"windowName":"Novice","rankMaxes":[375,460,540,640],"runs":2,"best":696,"rankIndex":3,"nextRankIndex":4,"nextRankScore":null,"gap":null,"heldRankScore":640,"progress":null,"isNext":false},{"scenario":"VT Floating Heads Intermediate S5","label":"VT Floating Heads Intermediate S5","category":"Clicking","subCategory":"Linear Clicking","family":"Floating Heads","window":1,"windowName":"Intermediate","rankMaxes":[610,690,770,860],"runs":27,"best":792,"rankIndex":6,"nextRankIndex":7,"nextRankScore":860,"gap":68,"heldRankScore":770,"progress":0.24361504444444412,"isNext":false},{"scenario":"Floating Heads Timing 400% Larger","label":"Floating Heads Timing 400% Larger","category":"Clicking","subCategory":"Linear Clicking","family":"Floating Heads","window":2,"windowName":"Advanced","rankMaxes":[1950,2650,3650,4200],"runs":4,"best":3096,"rankIndex":9,"nextRankIndex":10,"nextRankScore":3650,"gap":554,"heldRankScore":2650,"progress":0.446,"isNext":true},{"scenario":"Floating Heads Timing 400% FIXED","label":"Floating Heads Timing 400% FIXED","category":"Clicking","subCategory":"Linear Clicking","family":"Floating Heads","window":3,"windowName":"Expert","rankMaxes":[3200,3648,3848,4248],"runs":2,"best":2592,"rankIndex":null,"nextRankIndex":12,"nextRankScore":3200,"gap":608,"heldRankScore":null,"progress":0.81,"isNext":false},{"scenario":"VT Frogtagon Novice S5","label":"VT Frogtagon Novice S5","category":"Clicking","subCategory":"Linear Clicking","family":"voxTS Click","window":0,"windowName":"Novice","rankMaxes":[620,740,850,980],"runs":2,"best":1090,"rankIndex":3,"nextRankIndex":4,"nextRankScore":null,"gap":null,"heldRankScore":980,"progress":null,"isNext":false},{"scenario":"voxTargetSwitch Click","label":"voxTargetSwitch Click","category":"Clicking","subCategory":"Linear Clicking","family":"voxTS Click","window":1,"windowName":"Intermediate","rankMaxes":[49,67,88,100],"runs":0,"best":null,"rankIndex":null,"nextRankIndex":4,"nextRankScore":49,"gap":null,"heldRankScore":null,"progress":0,"isNext":false},{"scenario":"voxTargetClick 20% Small","label":"voxTargetClick 20% Small","category":"Clicking","subCategory":"Linear Clicking","family":"voxTS Click","window":2,"windowName":"Advanced","rankMaxes":[62,80,102,116],"runs":4,"best":76,"rankIndex":8,"nextRankIndex":9,"nextRankScore":80,"gap":4,"heldRankScore":62,"progress":0.7777777777777778,"isNext":true},{"scenario":"VoxTargetSwitch Click Small","label":"VoxTargetSwitch Click Small","category":"Clicking","subCategory":"Linear Clicking","family":"voxTS Click","window":3,"windowName":"Expert","rankMaxes":[90,101,106,115],"runs":0,"best":null,"rankIndex":null,"nextRankIndex":12,"nextRankScore":90,"gap":null,"heldRankScore":null,"progress":0,"isNext":false},{"scenario":"eth Pasu Micro Entry","label":"eth Pasu Micro Entry","category":"Clicking","subCategory":"Micro Clicking","family":"eth Pasu Micro","window":0,"windowName":"Novice","rankMaxes":[600,800,900,1100],"runs":1,"best":1558,"rankIndex":3,"nextRankIndex":4,"nextRankScore":null,"gap":null,"heldRankScore":1100,"progress":null,"isNext":false},{"scenario":"eth Pasu Micro Easier","label":"eth Pasu Micro Easier","category":"Clicking","subCategory":"Micro Clicking","family":"eth Pasu Micro","window":1,"windowName":"Intermediate","rankMaxes":[600,850,1000,1225],"runs":5,"best":1384,"rankIndex":7,"nextRankIndex":8,"nextRankScore":null,"gap":null,"heldRankScore":1225,"progress":null,"isNext":false},{"scenario":"eth Pasu Micro Medium","label":"eth Pasu Micro Medium","category":"Clicking","subCategory":"Micro Clicking","family":"eth Pasu Micro","window":2,"windowName":"Advanced","rankMaxes":[850,1150,1300,1650],"runs":25,"best":1376,"rankIndex":10,"nextRankIndex":11,"nextRankScore":1650,"gap":274,"heldRankScore":1300,"progress":0.21714285714285714,"isNext":false},{"scenario":"1w3ts Pasu Perfected Micro Goated","label":"1w3ts Pasu Perfected Micro Goated","category":"Clicking","subCategory":"Micro Clicking","family":"eth Pasu Micro","window":3,"windowName":"Expert","rankMaxes":[1040,1220,1410,1570],"runs":13,"best":1106,"rankIndex":12,"nextRankIndex":13,"nextRankScore":1220,"gap":114,"heldRankScore":1040,"progress":0.36666666666666664,"isNext":true},{"scenario":"1w2ts reload smallflicks Entry","label":"1w2ts reload smallflicks Entry","category":"Clicking","subCategory":"Micro Clicking","family":"Smallflicks","window":0,"windowName":"Novice","rankMaxes":[75,92,100,115],"runs":1,"best":153,"rankIndex":3,"nextRankIndex":4,"nextRankScore":null,"gap":null,"heldRankScore":115,"progress":null,"isNext":false},{"scenario":"1w2ts reload smallflicks larger","label":"1w2ts reload smallflicks larger","category":"Clicking","subCategory":"Micro Clicking","family":"Smallflicks","window":1,"windowName":"Intermediate","rankMaxes":[76,100,112,130],"runs":4,"best":148,"rankIndex":7,"nextRankIndex":8,"nextRankScore":null,"gap":null,"heldRankScore":130,"progress":null,"isNext":false},{"scenario":"1w2ts reload smallflicks slightly larger","label":"1w2ts reload smallflicks slightly larger","category":"Clicking","subCategory":"Micro Clicking","family":"Smallflicks","window":2,"windowName":"Advanced","rankMaxes":[99,127,142,169],"runs":31,"best":148,"rankIndex":10,"nextRankIndex":11,"nextRankScore":169,"gap":21,"heldRankScore":142,"progress":0.2222222222222222,"isNext":true},{"scenario":"1w2ts Pasu Perfected 30% Smaller","label":"1w2ts Pasu Perfected 30% Smaller","category":"Clicking","subCategory":"Micro Clicking","family":"Smallflicks","window":3,"windowName":"Expert","rankMaxes":[75,87,93,103],"runs":1,"best":65,"rankIndex":null,"nextRankIndex":12,"nextRankScore":75,"gap":10,"heldRankScore":null,"progress":0.8666666666666667,"isNext":false},{"scenario":"VT Smoothbot Novice","label":"VT Smoothbot Novice","category":"Tracking","subCategory":"Precise Tracking","family":"Smoothbot","window":0,"windowName":"Novice","rankMaxes":[2300,2500,3100,3500],"runs":0,"best":null,"rankIndex":null,"nextRankIndex":0,"nextRankScore":2300,"gap":null,"heldRankScore":null,"progress":0,"isNext":true},{"scenario":"VT Smoothbot Intermediate","label":"VT Smoothbot Intermediate","category":"Tracking","subCategory":"Precise Tracking","family":"Smoothbot","window":1,"windowName":"Intermediate","rankMaxes":[3225,3645,4000,4335],"runs":0,"best":null,"rankIndex":null,"nextRankIndex":4,"nextRankScore":3225,"gap":null,"heldRankScore":null,"progress":0,"isNext":false},{"scenario":"VT Smoothbot Advanced","label":"VT Smoothbot Advanced","category":"Tracking","subCategory":"Precise Tracking","family":"Smoothbot","window":2,"windowName":"Advanced","rankMaxes":[3225,3450,3705,3960],"runs":0,"best":null,"rankIndex":null,"nextRankIndex":8,"nextRankScore":3225,"gap":null,"heldRankScore":null,"progress":0,"isNext":false},{"scenario":"Smoothbot Pauer","label":"Smoothbot Pauer","category":"Tracking","subCategory":"Precise Tracking","family":"Smoothbot","window":3,"windowName":"Expert","rankMaxes":[4400,5050,5400,6250],"runs":1,"best":2982,"rankIndex":null,"nextRankIndex":12,"nextRankScore":4400,"gap":1418,"heldRankScore":null,"progress":0.6777272727272727,"isNext":false},{"scenario":"VT Snake Track Novice S5","label":"VT Snake Track Novice S5","category":"Tracking","subCategory":"Precise Tracking","family":"waldoTS","window":0,"windowName":"Novice","rankMaxes":[2400,2750,3125,3425],"runs":3,"best":4207,"rankIndex":3,"nextRankIndex":4,"nextRankScore":null,"gap":null,"heldRankScore":3425,"progress":null,"isNext":false},{"scenario":"waldoTS Novice","label":"waldoTS Novice","category":"Tracking","subCategory":"Precise Tracking","family":"waldoTS","window":1,"windowName":"Intermediate","rankMaxes":[58,88,114,140],"runs":2,"best":144,"rankIndex":7,"nextRankIndex":8,"nextRankScore":null,"gap":null,"heldRankScore":140,"progress":null,"isNext":false},{"scenario":"waldoTS Intermediate","label":"waldoTS Intermediate","category":"Tracking","subCategory":"Precise Tracking","family":"waldoTS","window":2,"windowName":"Advanced","rankMaxes":[100,126,149,171],"runs":62,"best":151,"rankIndex":10,"nextRankIndex":11,"nextRankScore":171,"gap":20,"heldRankScore":149,"progress":0.09999986363636347,"isNext":true},{"scenario":"waldoTS","label":"waldoTS","category":"Tracking","subCategory":"Precise Tracking","family":"waldoTS","window":3,"windowName":"Expert","rankMaxes":[140,155,167,178],"runs":9,"best":137,"rankIndex":null,"nextRankIndex":12,"nextRankScore":140,"gap":3,"heldRankScore":null,"progress":0.97642855,"isNext":false},{"scenario":"VT Ground Novice S5","label":"VT Ground Novice S5","category":"Tracking","subCategory":"Reactive Tracking","family":"Ground Plaza","window":0,"windowName":"Novice","rankMaxes":[2100,2500,2825,3100],"runs":1,"best":3754,"rankIndex":3,"nextRankIndex":4,"nextRankScore":null,"gap":null,"heldRankScore":3100,"progress":null,"isNext":false},{"scenario":"Ground Plaza Sparky v3 Easy","label":"Ground Plaza Sparky v3 Easy","category":"Tracking","subCategory":"Reactive Tracking","family":"Ground Plaza","window":1,"windowName":"Intermediate","rankMaxes":[811,849,865,882],"runs":1,"best":897,"rankIndex":7,"nextRankIndex":8,"nextRankScore":null,"gap":null,"heldRankScore":882,"progress":null,"isNext":false},{"scenario":"VT Ground Intermediate S5","label":"VT Ground Intermediate S5","category":"Tracking","subCategory":"Reactive Tracking","family":"Ground Plaza","window":2,"windowName":"Advanced","rankMaxes":[2000,2250,2750,3000],"runs":52,"best":2949,"rankIndex":10,"nextRankIndex":11,"nextRankScore":3000,"gap":51,"heldRankScore":2750,"progress":0.796,"isNext":true},{"scenario":"Ground Plaza Sparky v3 OW","label":"Ground Plaza Sparky v3 OW","category":"Tracking","subCategory":"Reactive Tracking","family":"Ground Plaza","window":3,"windowName":"Expert","rankMaxes":[874,884,895,903],"runs":8,"best":870,"rankIndex":null,"nextRankIndex":12,"nextRankScore":874,"gap":4,"heldRankScore":null,"progress":0.9950979130434783,"isNext":false},{"scenario":"VT Aether Novice S5","label":"VT Aether Novice S5","category":"Tracking","subCategory":"Reactive Tracking","family":"Air CELESTIAL","window":0,"windowName":"Novice","rankMaxes":[1525,1900,2250,2650],"runs":2,"best":2969,"rankIndex":3,"nextRankIndex":4,"nextRankScore":null,"gap":null,"heldRankScore":2650,"progress":null,"isNext":false},{"scenario":"Air CELESTIAL No UFO Easy Slowed","label":"Air CELESTIAL No UFO Easy Slowed","category":"Tracking","subCategory":"Reactive Tracking","family":"Air CELESTIAL","window":1,"windowName":"Intermediate","rankMaxes":[827,846,865,875],"runs":1,"best":892,"rankIndex":7,"nextRankIndex":8,"nextRankScore":null,"gap":null,"heldRankScore":875,"progress":null,"isNext":false},{"scenario":"Air CELESTIAL No UFO Easy","label":"Air CELESTIAL No UFO Easy","category":"Tracking","subCategory":"Reactive Tracking","family":"Air CELESTIAL","window":2,"windowName":"Advanced","rankMaxes":[831,852,880,895],"runs":26,"best":885,"rankIndex":10,"nextRankIndex":11,"nextRankScore":895,"gap":10,"heldRankScore":880,"progress":0.3391723333333327,"isNext":true},{"scenario":"Air CELESTIAL","label":"Air CELESTIAL","category":"Tracking","subCategory":"Reactive Tracking","family":"Air CELESTIAL","window":3,"windowName":"Expert","rankMaxes":[873,887,892,901],"runs":1,"best":794,"rankIndex":null,"nextRankIndex":12,"nextRankScore":873,"gap":79,"heldRankScore":null,"progress":0.9092930882016036,"isNext":false},{"scenario":"VT Controlsphere Novice S5","label":"VT Controlsphere Novice S5","category":"Tracking","subCategory":"Control Tracking","family":"Controlsphere","window":0,"windowName":"Novice","rankMaxes":[1575,1950,2400,2900],"runs":1,"best":3922,"rankIndex":3,"nextRankIndex":4,"nextRankScore":null,"gap":null,"heldRankScore":2900,"progress":null,"isNext":false},{"scenario":"VT Controlsphere Intermediate S5","label":"VT Controlsphere Intermediate S5","category":"Tracking","subCategory":"Control Tracking","family":"Controlsphere","window":1,"windowName":"Intermediate","rankMaxes":[2750,3175,3525,3825],"runs":10,"best":3270,"rankIndex":5,"nextRankIndex":6,"nextRankScore":3525,"gap":255,"heldRankScore":3175,"progress":0.2714285714285714,"isNext":false},{"scenario":"Controlsphere","label":"Controlsphere","category":"Tracking","subCategory":"Control Tracking","family":"Controlsphere","window":2,"windowName":"Advanced","rankMaxes":[8125,9450,10875,12225],"runs":11,"best":10167,"rankIndex":9,"nextRankIndex":10,"nextRankScore":10875,"gap":708,"heldRankScore":9450,"progress":0.5031578947368421,"isNext":true},{"scenario":"Controlsphere rAim","label":"Controlsphere rAim","category":"Tracking","subCategory":"Control Tracking","family":"Controlsphere","window":3,"windowName":"Expert","rankMaxes":[8500,9250,10375,10800],"runs":1,"best":6264,"rankIndex":null,"nextRankIndex":12,"nextRankScore":8500,"gap":2236,"heldRankScore":null,"progress":0.7369411764705882,"isNext":false},{"scenario":"VT Raw Control Novice S5","label":"VT Raw Control Novice S5","category":"Tracking","subCategory":"Control Tracking","family":"Raw Control","window":0,"windowName":"Novice","rankMaxes":[2125,2550,2975,3450],"runs":1,"best":3725,"rankIndex":3,"nextRankIndex":4,"nextRankScore":null,"gap":null,"heldRankScore":3450,"progress":null,"isNext":false},{"scenario":"Whisphere 80%","label":"Whisphere 80%","category":"Tracking","subCategory":"Control Tracking","family":"Raw Control","window":1,"windowName":"Intermediate","rankMaxes":[7150,9000,11000,12750],"runs":0,"best":null,"rankIndex":null,"nextRankIndex":4,"nextRankScore":7150,"gap":null,"heldRankScore":null,"progress":0,"isNext":false},{"scenario":"Whisphere","label":"Whisphere","category":"Tracking","subCategory":"Control Tracking","family":"Raw Control","window":2,"windowName":"Advanced","rankMaxes":[7625,10875,15625,17750],"runs":79,"best":13710,"rankIndex":9,"nextRankIndex":10,"nextRankScore":15625,"gap":1915,"heldRankScore":10875,"progress":0.5968421052631578,"isNext":true},{"scenario":"VT Raw Control Intermediate S5 Hard","label":"VT Raw Control Intermediate S5 Hard","category":"Tracking","subCategory":"Control Tracking","family":"Raw Control","window":3,"windowName":"Expert","rankMaxes":[2700,2800,3000,3100],"runs":0,"best":null,"rankIndex":null,"nextRankIndex":12,"nextRankScore":2700,"gap":null,"heldRankScore":null,"progress":0,"isNext":false},{"scenario":"VT Aether Novice S5 Bot 2","label":"VT Aether Novice S5 Bot 2","category":"Tracking","subCategory":"Reading Tracking","family":"Air Voltaic","window":0,"windowName":"Novice","rankMaxes":[1750,2550,3750,4450],"runs":5,"best":3413,"rankIndex":1,"nextRankIndex":2,"nextRankScore":3750,"gap":337,"heldRankScore":2550,"progress":0.7191666666666666,"isNext":false},{"scenario":"Air Voltaic Easy Invincible 4 80%","label":"Air Voltaic Easy Invincible 4 80%","category":"Tracking","subCategory":"Reading Tracking","family":"Air Voltaic","window":1,"windowName":"Intermediate","rankMaxes":[1100,2100,3150,3800],"runs":5,"best":3512,"rankIndex":6,"nextRankIndex":7,"nextRankScore":3800,"gap":288,"heldRankScore":3150,"progress":0.556923076923077,"isNext":false},{"scenario":"Air Voltaic Easy","label":"Air Voltaic Easy","category":"Tracking","subCategory":"Reading Tracking","family":"Air Voltaic","window":2,"windowName":"Advanced","rankMaxes":[845,872,890,905],"runs":125,"best":877,"rankIndex":9,"nextRankIndex":10,"nextRankScore":890,"gap":13,"heldRankScore":872,"progress":0.2691378888888873,"isNext":true},{"scenario":"Air Voltaic","label":"Air Voltaic","category":"Tracking","subCategory":"Reading Tracking","family":"Air Voltaic","window":3,"windowName":"Expert","rankMaxes":[879,887,895,903],"runs":1,"best":807,"rankIndex":null,"nextRankIndex":12,"nextRankScore":879,"gap":72,"heldRankScore":null,"progress":0.9182719124004551,"isNext":false},{"scenario":"Close Long Strafes Invincible","label":"Close Long Strafes Invincible","category":"Tracking","subCategory":"Reading Tracking","family":"Strafe Reading","window":0,"windowName":"Novice","rankMaxes":[6000,10000,15500,18000],"runs":0,"best":null,"rankIndex":null,"nextRankIndex":0,"nextRankScore":6000,"gap":null,"heldRankScore":null,"progress":0,"isNext":false},{"scenario":"Smooth Thin Strafes Raspberry Easy","label":"Smooth Thin Strafes Raspberry Easy","category":"Tracking","subCategory":"Reading Tracking","family":"Strafe Reading","window":1,"windowName":"Intermediate","rankMaxes":[7050,8200,9200,10300],"runs":0,"best":null,"rankIndex":null,"nextRankIndex":4,"nextRankScore":7050,"gap":null,"heldRankScore":null,"progress":0,"isNext":false},{"scenario":"Air Angelic 4 Voltaic Easy","label":"Air Angelic 4 Voltaic Easy","category":"Tracking","subCategory":"Reading Tracking","family":"Strafe Reading","window":2,"windowName":"Advanced","rankMaxes":[2325,3075,3975,4675],"runs":36,"best":3467,"rankIndex":9,"nextRankIndex":10,"nextRankScore":3975,"gap":508,"heldRankScore":3075,"progress":0.43555555555555553,"isNext":true},{"scenario":"Close Fast Strafes Invincible - Thin","label":"Close Fast Strafes Invincible - Thin","category":"Tracking","subCategory":"Reading Tracking","family":"Strafe Reading","window":3,"windowName":"Expert","rankMaxes":[9800,11200,13700,15400],"runs":9,"best":7290,"rankIndex":null,"nextRankIndex":12,"nextRankScore":9800,"gap":2510,"heldRankScore":null,"progress":0.7438775510204082,"isNext":false},{"scenario":"VT EddieTS Novice S5","label":"VT EddieTS Novice S5","category":"Switching","subCategory":"Speed Switching","family":"voxTS","window":0,"windowName":"Novice","rankMaxes":[640,730,810,890],"runs":1,"best":942,"rankIndex":3,"nextRankIndex":4,"nextRankScore":null,"gap":null,"heldRankScore":890,"progress":null,"isNext":false},{"scenario":"voxTS Viscose Varied","label":"voxTS Viscose Varied","category":"Switching","subCategory":"Speed Switching","family":"voxTS","window":1,"windowName":"Intermediate","rankMaxes":[86,100,112,154],"runs":4,"best":108,"rankIndex":5,"nextRankIndex":6,"nextRankScore":112,"gap":4,"heldRankScore":100,"progress":0.6875,"isNext":true},{"scenario":"voxTargetSwitch","label":"voxTargetSwitch","category":"Switching","subCategory":"Speed Switching","family":"voxTS","window":2,"windowName":"Advanced","rankMaxes":[104,112,120,128],"runs":19,"best":103,"rankIndex":null,"nextRankIndex":8,"nextRankScore":104,"gap":1,"heldRankScore":null,"progress":0.9903846153846154,"isNext":false},{"scenario":"VT skyTS Advanced","label":"VT skyTS Advanced","category":"Switching","subCategory":"Speed Switching","family":"voxTS","window":3,"windowName":"Expert","rankMaxes":[1200,1400,1500,1670],"runs":0,"best":null,"rankIndex":null,"nextRankIndex":12,"nextRankScore":1200,"gap":null,"heldRankScore":null,"progress":0,"isNext":false},{"scenario":"VT DotTS Novice S5","label":"VT DotTS Novice S5","category":"Switching","subCategory":"Speed Switching","family":"DotTS","window":0,"windowName":"Novice","rankMaxes":[845,940,1030,1090],"runs":2,"best":1240,"rankIndex":3,"nextRankIndex":4,"nextRankScore":null,"gap":null,"heldRankScore":1090,"progress":null,"isNext":false},{"scenario":"VT DotTS Intermediate S5","label":"VT DotTS Intermediate S5","category":"Switching","subCategory":"Speed Switching","family":"DotTS","window":1,"windowName":"Intermediate","rankMaxes":[1110,1180,1230,1280],"runs":46,"best":1210,"rankIndex":5,"nextRankIndex":6,"nextRankScore":1230,"gap":20,"heldRankScore":1180,"progress":0.6,"isNext":true},{"scenario":"VT DotTS Advanced S5","label":"VT DotTS Advanced S5","category":"Switching","subCategory":"Speed Switching","family":"DotTS","window":2,"windowName":"Advanced","rankMaxes":[1275,1350,1410,1485],"runs":1,"best":1051,"rankIndex":null,"nextRankIndex":8,"nextRankScore":1275,"gap":224,"heldRankScore":null,"progress":0.8243137254901961,"isNext":false},{"scenario":"VT psalmTS Advanced","label":"VT psalmTS Advanced","category":"Switching","subCategory":"Speed Switching","family":"DotTS","window":3,"windowName":"Expert","rankMaxes":[1000,1160,1220,1380],"runs":0,"best":null,"rankIndex":null,"nextRankIndex":12,"nextRankScore":1000,"gap":null,"heldRankScore":null,"progress":0,"isNext":false},{"scenario":"VT FlyTS Novice S5","label":"VT FlyTS Novice S5","category":"Switching","subCategory":"Evasive Switching","family":"FlyTS","window":0,"windowName":"Novice","rankMaxes":[420,460,500,535],"runs":2,"best":630,"rankIndex":3,"nextRankIndex":4,"nextRankScore":null,"gap":null,"heldRankScore":535,"progress":null,"isNext":false},{"scenario":"VT FlyTS Intermediate S5","label":"VT FlyTS Intermediate S5","category":"Switching","subCategory":"Evasive Switching","family":"FlyTS","window":1,"windowName":"Intermediate","rankMaxes":[520,570,610,650],"runs":15,"best":595,"rankIndex":5,"nextRankIndex":6,"nextRankScore":610,"gap":15,"heldRankScore":570,"progress":0.6350006000000008,"isNext":true},{"scenario":"VT FlyTS Advanced S5","label":"VT FlyTS Advanced S5","category":"Switching","subCategory":"Evasive Switching","family":"FlyTS","window":2,"windowName":"Advanced","rankMaxes":[540,600,655,705],"runs":1,"best":422,"rankIndex":null,"nextRankIndex":8,"nextRankScore":540,"gap":118,"heldRankScore":null,"progress":0.7811111444444445,"isNext":false},{"scenario":"domiSwitch","label":"domiSwitch","category":"Switching","subCategory":"Evasive Switching","family":"FlyTS","window":3,"windowName":"Expert","rankMaxes":[5775,6625,7200,7950],"runs":7,"best":5193,"rankIndex":null,"nextRankIndex":12,"nextRankScore":5775,"gap":582,"heldRankScore":null,"progress":0.8991861134199134,"isNext":false},{"scenario":"VT evaTS Novice","label":"VT evaTS Novice","category":"Switching","subCategory":"Evasive Switching","family":"Smooth Switching","window":0,"windowName":"Novice","rankMaxes":[450,510,560,620],"runs":0,"best":null,"rankIndex":null,"nextRankIndex":0,"nextRankScore":450,"gap":null,"heldRankScore":null,"progress":0,"isNext":false},{"scenario":"VT evaTS Intermediate","label":"VT evaTS Intermediate","category":"Switching","subCategory":"Evasive Switching","family":"Smooth Switching","window":1,"windowName":"Intermediate","rankMaxes":[550,600,650,700],"runs":0,"best":null,"rankIndex":null,"nextRankIndex":4,"nextRankScore":550,"gap":null,"heldRankScore":null,"progress":0,"isNext":false},{"scenario":"tamTargetSwitch Smooth Easy","label":"tamTargetSwitch Smooth Easy","category":"Switching","subCategory":"Evasive Switching","family":"Smooth Switching","window":2,"windowName":"Advanced","rankMaxes":[22,29,36,41],"runs":26,"best":35,"rankIndex":9,"nextRankIndex":10,"nextRankScore":36,"gap":1,"heldRankScore":29,"progress":0.8571428571428571,"isNext":true},{"scenario":"tamTargetSwitch Smooth Hard","label":"tamTargetSwitch Smooth Hard","category":"Switching","subCategory":"Evasive Switching","family":"Smooth Switching","window":3,"windowName":"Expert","rankMaxes":[32,33,34,35],"runs":0,"best":null,"rankIndex":null,"nextRankIndex":12,"nextRankScore":32,"gap":null,"heldRankScore":null,"progress":0,"isNext":false},{"scenario":"VT ControlTS Novice S5","label":"VT ControlTS Novice S5","category":"Switching","subCategory":"Stability Switching","family":"ControlTS","window":0,"windowName":"Novice","rankMaxes":[340,380,420,450],"runs":1,"best":543,"rankIndex":3,"nextRankIndex":4,"nextRankScore":null,"gap":null,"heldRankScore":450,"progress":null,"isNext":false},{"scenario":"VT ControlTS Intermediate S5","label":"VT ControlTS Intermediate S5","category":"Switching","subCategory":"Stability Switching","family":"ControlTS","window":1,"windowName":"Intermediate","rankMaxes":[420,460,485,520],"runs":18,"best":490,"rankIndex":6,"nextRankIndex":7,"nextRankScore":520,"gap":30,"heldRankScore":485,"progress":0.14285714285714285,"isNext":false},{"scenario":"kinTS Voltaic Easy","label":"kinTS Voltaic Easy","category":"Switching","subCategory":"Stability Switching","family":"ControlTS","window":2,"windowName":"Advanced","rankMaxes":[46,63,75,91],"runs":22,"best":74,"rankIndex":9,"nextRankIndex":10,"nextRankScore":75,"gap":1,"heldRankScore":63,"progress":0.9311860000000003,"isNext":false},{"scenario":"kinTS Voltaic","label":"kinTS Voltaic","category":"Switching","subCategory":"Stability Switching","family":"ControlTS","window":3,"windowName":"Expert","rankMaxes":[70,81,90,97],"runs":6,"best":71,"rankIndex":12,"nextRankIndex":13,"nextRankScore":81,"gap":10,"heldRankScore":70,"progress":0.08828245454545486,"isNext":true},{"scenario":"VT Penta Bounce Novice S5","label":"VT Penta Bounce Novice S5","category":"Switching","subCategory":"Stability Switching","family":"beanTS","window":0,"windowName":"Novice","rankMaxes":[290,340,390,445],"runs":1,"best":519,"rankIndex":3,"nextRankIndex":4,"nextRankScore":null,"gap":null,"heldRankScore":445,"progress":null,"isNext":false},{"scenario":"beanTS Larger","label":"beanTS Larger","category":"Switching","subCategory":"Stability Switching","family":"beanTS","window":1,"windowName":"Intermediate","rankMaxes":[65,90,120,142],"runs":55,"best":139,"rankIndex":6,"nextRankIndex":7,"nextRankScore":142,"gap":3,"heldRankScore":120,"progress":0.8727271363636362,"isNext":false},{"scenario":"beanTS","label":"beanTS","category":"Switching","subCategory":"Stability Switching","family":"beanTS","window":2,"windowName":"Advanced","rankMaxes":[88,115,143,156],"runs":81,"best":137,"rankIndex":9,"nextRankIndex":10,"nextRankScore":143,"gap":6,"heldRankScore":115,"progress":0.7857142857142857,"isNext":true},{"scenario":"B180T Voltaic","label":"B180T Voltaic","category":"Switching","subCategory":"Stability Switching","family":"beanTS","window":3,"windowName":"Expert","rankMaxes":[71,82,93,103],"runs":5,"best":57,"rankIndex":null,"nextRankIndex":12,"nextRankScore":71,"gap":14,"heldRankScore":null,"progress":0.7971831267605635,"isNext":false},{"scenario":"VT Popcorn Novice S5","label":"VT Popcorn Novice S5","category":"Clicking","subCategory":"Dynamic Clicking","family":"Popcorn","window":0,"windowName":"Novice","rankMaxes":[390,500,600,720],"runs":3,"best":830,"rankIndex":3,"nextRankIndex":4,"nextRankScore":null,"gap":null,"heldRankScore":720,"progress":null,"isNext":false},{"scenario":"VT Popcorn Intermediate S5","label":"VT Popcorn Intermediate S5","category":"Clicking","subCategory":"Dynamic Clicking","family":"Popcorn","window":1,"windowName":"Intermediate","rankMaxes":[600,690,780,860],"runs":40,"best":770,"rankIndex":5,"nextRankIndex":6,"nextRankScore":780,"gap":10,"heldRankScore":690,"progress":0.8888888888888888,"isNext":true},{"scenario":"VT Popcorn Advanced S5","label":"VT Popcorn Advanced S5","category":"Clicking","subCategory":"Dynamic Clicking","family":"Popcorn","window":2,"windowName":"Advanced","rankMaxes":[670,785,890,1000],"runs":1,"best":340,"rankIndex":null,"nextRankIndex":8,"nextRankScore":670,"gap":330,"heldRankScore":null,"progress":0.5074626865671642,"isNext":false},{"scenario":"Popcorn MV Advanced","label":"Popcorn MV Advanced","category":"Clicking","subCategory":"Dynamic Clicking","family":"Popcorn","window":3,"windowName":"Expert","rankMaxes":[325,445,495,575],"runs":0,"best":null,"rankIndex":null,"nextRankIndex":12,"nextRankScore":325,"gap":null,"heldRankScore":null,"progress":0,"isNext":false},{"scenario":"VT PGT Novice S5","label":"VT PGT Novice S5","category":"Tracking","subCategory":"Precise Tracking","family":"PGT","window":0,"windowName":"Novice","rankMaxes":[1900,2325,2775,3050],"runs":4,"best":3745,"rankIndex":3,"nextRankIndex":4,"nextRankScore":null,"gap":null,"heldRankScore":3050,"progress":null,"isNext":false},{"scenario":"VT PGT Intermediate S5","label":"VT PGT Intermediate S5","category":"Tracking","subCategory":"Precise Tracking","family":"PGT","window":1,"windowName":"Intermediate","rankMaxes":[2275,2675,3050,3325],"runs":51,"best":2909,"rankIndex":5,"nextRankIndex":6,"nextRankScore":3050,"gap":141,"heldRankScore":2675,"progress":0.624,"isNext":true},{"scenario":"VT PGT Advanced S5","label":"VT PGT Advanced S5","category":"Tracking","subCategory":"Precise Tracking","family":"PGT","window":2,"windowName":"Advanced","rankMaxes":[2775,3200,3643,4063],"runs":1,"best":1595,"rankIndex":null,"nextRankIndex":8,"nextRankScore":2775,"gap":1180,"heldRankScore":null,"progress":0.5747747747747748,"isNext":false},{"scenario":"VT PGT Elite S5","label":"VT PGT Elite S5","category":"Tracking","subCategory":"Precise Tracking","family":"PGT","window":3,"windowName":"Expert","rankMaxes":[2150,2900,3200,3425],"runs":0,"best":null,"rankIndex":null,"nextRankIndex":12,"nextRankScore":2150,"gap":null,"heldRankScore":null,"progress":0,"isNext":false},{"scenario":"VT Plaza Novice","label":"VT Plaza Novice","category":"Tracking","subCategory":"Reactive Tracking","family":"Plaza","window":0,"windowName":"Novice","rankMaxes":[2150,2450,2850,3050],"runs":0,"best":null,"rankIndex":null,"nextRankIndex":0,"nextRankScore":2150,"gap":null,"heldRankScore":null,"progress":0,"isNext":true},{"scenario":"VT Plaza Intermediate","label":"VT Plaza Intermediate","category":"Tracking","subCategory":"Reactive Tracking","family":"Plaza","window":1,"windowName":"Intermediate","rankMaxes":[2680,2980,3280,3530],"runs":0,"best":null,"rankIndex":null,"nextRankIndex":4,"nextRankScore":2680,"gap":null,"heldRankScore":null,"progress":0,"isNext":false},{"scenario":"VT Plaza Advanced","label":"VT Plaza Advanced","category":"Tracking","subCategory":"Reactive Tracking","family":"Plaza","window":2,"windowName":"Advanced","rankMaxes":[3275,3475,3600,3800],"runs":0,"best":null,"rankIndex":null,"nextRankIndex":8,"nextRankScore":3275,"gap":null,"heldRankScore":null,"progress":0,"isNext":false},{"scenario":"VT Plaza Viscose Thin","label":"VT Plaza Viscose Thin","category":"Tracking","subCategory":"Reactive Tracking","family":"Plaza","window":3,"windowName":"Expert","rankMaxes":[4000,4400,4575,5000],"runs":0,"best":null,"rankIndex":null,"nextRankIndex":12,"nextRankScore":4000,"gap":null,"heldRankScore":null,"progress":0,"isNext":false},{"scenario":"RawControlSphere Entry","label":"RawControlSphere Entry","category":"Tracking","subCategory":"Control Tracking","family":"RawControlSphere","window":0,"windowName":"Novice","rankMaxes":[5000,9000,10500,13400],"runs":0,"best":null,"rankIndex":null,"nextRankIndex":0,"nextRankScore":5000,"gap":null,"heldRankScore":null,"progress":0,"isNext":false},{"scenario":"RawControlSphere Easier","label":"RawControlSphere Easier","category":"Tracking","subCategory":"Control Tracking","family":"RawControlSphere","window":1,"windowName":"Intermediate","rankMaxes":[4700,8200,10400,13200],"runs":7,"best":13740,"rankIndex":7,"nextRankIndex":8,"nextRankScore":null,"gap":null,"heldRankScore":13200,"progress":null,"isNext":false},{"scenario":"RawControlSphere","label":"RawControlSphere","category":"Tracking","subCategory":"Control Tracking","family":"RawControlSphere","window":2,"windowName":"Advanced","rankMaxes":[6600,10500,12100,14900],"runs":31,"best":11853,"rankIndex":9,"nextRankIndex":10,"nextRankScore":12100,"gap":247,"heldRankScore":10500,"progress":0.845625,"isNext":true},{"scenario":"RawControlSphere Hard","label":"RawControlSphere Hard","category":"Tracking","subCategory":"Control Tracking","family":"RawControlSphere","window":3,"windowName":"Expert","rankMaxes":[10775,12000,13950,15200],"runs":1,"best":9120,"rankIndex":null,"nextRankIndex":12,"nextRankScore":10775,"gap":1655,"heldRankScore":null,"progress":0.8464037122969837,"isNext":false},{"scenario":"Air Voltaic Invincible 4 Entry","label":"Air Voltaic Invincible 4 Entry","category":"Tracking","subCategory":"Reading Tracking","family":"Air Invincible 4","window":0,"windowName":"Novice","rankMaxes":[2400,3300,3700,4400],"runs":0,"best":null,"rankIndex":null,"nextRankIndex":0,"nextRankScore":2400,"gap":null,"heldRankScore":null,"progress":0,"isNext":false},{"scenario":"Air Voltaic Invincible 4 Easier","label":"Air Voltaic Invincible 4 Easier","category":"Tracking","subCategory":"Reading Tracking","family":"Air Invincible 4","window":1,"windowName":"Intermediate","rankMaxes":[1750,3050,3500,4250],"runs":2,"best":4321,"rankIndex":7,"nextRankIndex":8,"nextRankScore":null,"gap":null,"heldRankScore":4250,"progress":null,"isNext":false},{"scenario":"Air Voltaic Invincible 4 Medium","label":"Air Voltaic Invincible 4 Medium","category":"Tracking","subCategory":"Reading Tracking","family":"Air Invincible 4","window":2,"windowName":"Advanced","rankMaxes":[2275,3300,3850,4600],"runs":46,"best":3577,"rankIndex":9,"nextRankIndex":10,"nextRankScore":3850,"gap":273,"heldRankScore":3300,"progress":0.5036363636363637,"isNext":true},{"scenario":"Air Voltaic Invincible 4","label":"Air Voltaic Invincible 4","category":"Tracking","subCategory":"Reading Tracking","family":"Air Invincible 4","window":3,"windowName":"Expert","rankMaxes":[3350,3700,4100,4300],"runs":0,"best":null,"rankIndex":null,"nextRankIndex":12,"nextRankScore":3350,"gap":null,"heldRankScore":null,"progress":0,"isNext":false}],"season":{"name":"Season 1","status":"draft","windows":["Novice","Intermediate","Advanced","Expert"],"windowSize":4,"categories":[{"name":"Clicking","rankNames":["Blunderbuss","Slingshot","Dart","Longbow","Crossbow","Musket","Flintlock","Revolver","Carbine","Rifle","Marksman","Match Rifle","Sniper","Railgun","Gauss Cannon","Photon Lance"],"rankColors":{"Blunderbuss":"#B07A2E","Slingshot":"#8FA83C","Dart":"#E0455A","Longbow":"#2E7D4F","Crossbow":"#5B7C99","Musket":"#3F3B47","Flintlock":"#FF9B2A","Revolver":"#2B4B78","Carbine":"#6F8F2F","Rifle":"#8E4A2A","Marksman":"#E8BE45","Match Rifle":"#17A583","Sniper":"#A9DCEC","Railgun":"#00D9FF","Gauss Cannon":"#A855F7","Photon Lance":"#FFFFFF"}},{"name":"Tracking","rankNames":["Amoeba","Multicellular","Trilobite","Amphibian","Reptile","Mammal","Primate","Chimp","Hominid","Homoerectus","Neanderthal","Homosapien","Neolithic","Robosapien","HAL 9000","Singularity"],"rankColors":{"Amoeba":"#ffd1ea","Multicellular":"#550160","Trilobite":"#eeff00","Amphibian":"#006eff","Reptile":"#2bff00","Mammal":"#610000","Primate":"#331400","Chimp":"#9a783c","Hominid":"#7866ff","Homoerectus":"#95b300","Neanderthal":"#e100ff","Homosapien":"#ff0000","Neolithic":"#ff6600","Robosapien":"#00fbff","HAL 9000":"#ffffff","Singularity":"#000000"}},{"name":"Switching","rankNames":["Banana Slug","Sloth","Galapagos Turtle","Manatee","Koala","Slow Loris","Housecat","Ferret","Greyhound","Roadrunner","Jackrabbit","Hare","Pronghorn","Cheetah","Golden Eagle","Peregrine"],"rankColors":{"Banana Slug":"#fbff00","Sloth":"#4f4f4f","Galapagos Turtle":"#005c02","Manatee":"#3328cc","Koala":"#e6baf3","Slow Loris":"#ff9d2e","Housecat":"#d900ff","Ferret":"#ff0000","Greyhound":"#800000","Roadrunner":"#00fbff","Jackrabbit":"#00ffbf","Hare":"#ffffff","Pronghorn":"#421e00","Cheetah":"#ff7300","Golden Eagle":"#9e7c00","Peregrine":"#8000ff"}}]},"playlists":[{"name":"Apogee Clicking Novice","category":"Clicking","window":0,"scenarios":9},{"name":"Apogee Clicking Intermediate","category":"Clicking","window":1,"scenarios":9},{"name":"Apogee Clicking Advanced","category":"Clicking","window":2,"scenarios":9},{"name":"Apogee Clicking Expert","category":"Clicking","window":3,"scenarios":9},{"name":"Apogee Tracking Novice","category":"Tracking","window":0,"scenarios":12},{"name":"Apogee Tracking Intermediate","category":"Tracking","window":1,"scenarios":12},{"name":"Apogee Tracking Advanced","category":"Tracking","window":2,"scenarios":12},{"name":"Apogee Tracking Expert","category":"Tracking","window":3,"scenarios":12},{"name":"Apogee Switching Novice","category":"Switching","window":0,"scenarios":6},{"name":"Apogee Switching Intermediate","category":"Switching","window":1,"scenarios":6},{"name":"Apogee Switching Advanced","category":"Switching","window":2,"scenarios":6},{"name":"Apogee Switching Expert","category":"Switching","window":3,"scenarios":6},{"name":"Apogee All Novice","category":null,"window":0,"scenarios":27},{"name":"Apogee All Intermediate","category":null,"window":1,"scenarios":27},{"name":"Apogee All Advanced","category":null,"window":2,"scenarios":27},{"name":"Apogee All Expert","category":null,"window":3,"scenarios":27}],"playlistDir":null,"installed":0}</script>
 <script>
   // Static host: hand the renderer its data instead of an Electron bridge.
   window.__APOGEE_SNAPSHOT__ = JSON.parse(
@@ -7970,6 +8274,12 @@ function renderSeasonView(data) {
         "</span>";
       group.append(subHead);
 
+      // The tiles sit in their own grid inside the group, so the sub-skill's label stays
+      // full-width above them rather than becoming a first column of the grid.
+      const tiles = document.createElement("div");
+      tiles.className = "pool-tiles";
+      group.append(tiles);
+
       inSub.forEach((v) => {
         const maxedHere = v.nextRankScore === null;
 
@@ -8042,11 +8352,9 @@ function renderSeasonView(data) {
             }
           });
           row.append(play);
-        } else {
-          row.append(document.createElement("span"));
         }
 
-        group.append(row);
+        tiles.append(row);
       });
 
       block.append(group);

@@ -1608,14 +1608,18 @@
      four and nothing else, and a row of buttons that all look alike makes you read them
      to find out which is on. */
   .pool-bands {
-    display: inline-flex; padding: 3px; margin-bottom: 20px; gap: 2px;
-    border: 1px solid var(--hair); border-radius: var(--r-sm); background: var(--sunken);
+    display: grid; grid-auto-flow: column; grid-auto-columns: 1fr;
+    padding: 4px; margin-bottom: 22px; gap: 3px;
+    border: 1px solid var(--hair); border-radius: var(--r); background: var(--sunken);
   }
+  /* Wide enough to be the thing you press. Picking a band is the one real choice on this
+     screen - it decides which twenty-seven scenarios you are looking at - and as a set of
+     small pills it read like a filter chip rather than a difficulty select. */
   .pool-band {
-    display: flex; align-items: center; gap: 8px;
-    font: inherit; font-size: 12px; font-weight: 560; color: var(--ink-dim);
-    background: transparent; border: 0; border-radius: var(--r-xs);
-    padding: 6px 13px; cursor: pointer;
+    display: flex; flex-direction: column-reverse; align-items: center; gap: 5px;
+    font: inherit; font-size: 13px; font-weight: 600; color: var(--ink-dim);
+    background: transparent; border: 0; border-radius: var(--r-sm);
+    padding: 11px 14px; cursor: pointer;
     transition: color .15s var(--ease), background .15s var(--ease);
   }
   .pool-band:hover { color: var(--ink-mid); }
@@ -1657,94 +1661,93 @@
      carry a fill it is a second vertical edge beside twenty-two horizontal ones - the
      thing that made this panel read as scaffolding rather than as a list. Eleven groups
      of two rows separate perfectly well on spacing. */
-  .pool-sub { display: grid; gap: 2px; }
-  .pool-sub + .pool-sub { margin-top: 16px; }
+  /* Sub-skill: a label over a grid of its scenarios.
+     This was a stack of full-width bars - twenty-seven of them at 1,200px wide, each one
+     a name at the far left and two numbers at the far right with a quarter of the screen
+     of nothing in between. Read down, it was a spreadsheet. Scenarios are things you pick
+     one of and go play, so they are tiles you scan, and a sub-skill's two or three sit
+     side by side where they can actually be compared. */
+  .pool-sub { display: grid; gap: 8px; }
+  .pool-sub + .pool-sub { margin-top: 22px; }
   .pool-sub-head {
-    display: flex; align-items: baseline; gap: 10px; margin-bottom: 6px; padding-left: 12px;
+    display: flex; align-items: baseline; gap: 10px; margin-bottom: 2px;
   }
   .pool-sub-name {
     font-family: var(--mono); font-size: 9.5px; letter-spacing: .15em;
     text-transform: uppercase; color: var(--ink-mid);
   }
   .pool-sub-note { font-family: var(--mono); font-size: 9.5px; color: var(--ink-dim); }
+  .pool-sub .pool-tiles {
+    display: grid; gap: 8px;
+    grid-template-columns: repeat(auto-fill, minmax(232px, 1fr));
+  }
 
-  /* The row.
-     It was five columns - name, bar, best, target, Play - on fixed widths that shared no
-     edge with anything, and the bar was a 4px sliver floating in an 86px column between
-     two numbers. Three columns now, and the bar is gone as an element: progress is the
-     row's own ground, so a band of twenty-two reads as one ragged edge scanned down
-     rather than twenty-two gauges read one at a time. */
+  /* The tile.
+     Progress is still the tile's own ground rather than a gauge in a column, but it fills
+     from the bottom now: a card that fills upward reads as a thing being completed, where
+     a horizontal sliver across a wide row read as a table cell. */
   .pool-row {
     --fill: 0%;
-    position: relative; isolation: isolate;
-    display: grid; grid-template-columns: 1fr auto 54px;
-    align-items: center; gap: 16px; padding: 9px 12px;
-    border: 1px solid transparent; border-radius: var(--r-xs);
-    transition: border-color .13s var(--ease);
+    position: relative; isolation: isolate; overflow: hidden;
+    display: grid; gap: 9px; align-content: start;
+    padding: 12px 13px 11px;
+    border: 1px solid var(--hair); border-radius: var(--r-sm);
+    background: var(--sunken);
+    transition: border-color .13s var(--ease), transform .13s var(--ease);
   }
-  /* Tint up to the fill, and one brighter line at the boundary. Without the line the
-     tint is a smudge and stops being a measurement; with it the row is a gauge.
-     Every state below sets background-IMAGE only, so the hover tint underneath it is a
-     background-colour that survives all three rather than being cancelled by whichever
-     rule happens to come last. */
+  /* Progress rides the bottom edge, not the tile's ground.
+     Filling the card bottom-up put the boundary line at whatever height the percentage
+     landed on, which was straight through the name or the numbers on about half of them -
+     it read as a strikethrough, not a measurement. A rail along the bottom is the same
+     fact, always in the same place, and the tile above it stays clean. */
   .pool-row::before {
-    content: ""; position: absolute; inset: 0; z-index: -1;
-    border-radius: inherit; pointer-events: none;
-    background-color: transparent;
-    background-image:
+    content: ""; position: absolute; inset: auto 0 0 0; height: 3px; z-index: -1;
+    background:
       linear-gradient(90deg,
-        transparent calc(var(--fill) - 1.5px),
-        color-mix(in srgb, var(--rank, var(--ink-mid)) 55%, transparent) calc(var(--fill) - 1.5px),
-        color-mix(in srgb, var(--rank, var(--ink-mid)) 55%, transparent) var(--fill),
-        transparent var(--fill)),
-      linear-gradient(90deg,
-        color-mix(in srgb, var(--rank, var(--ink-mid)) 11%, transparent) var(--fill),
-        transparent var(--fill));
+        var(--rank, var(--ink-mid)) var(--fill),
+        rgba(255, 255, 255, .06) var(--fill));
   }
-  /* Progress through the CURRENT rank step, not from zero - from zero everything a
-     player has touched reads as nearly full and the fill says nothing. */
-  .pool-row.done::before {
-    background-image: linear-gradient(90deg,
-      color-mix(in srgb, var(--up) 12%, transparent) 0 100%);
-  }
-  .pool-row.untouched::before { background-image: none; }
+  .pool-row.done::before { background: color-mix(in srgb, var(--up) 70%, transparent); }
+  .pool-row.untouched::before { background: rgba(255, 255, 255, .05); }
   .pool-row.untouched .nm { color: var(--ink-dim); }
-  .pool-row:hover { border-color: var(--hair); }
-  .pool-row:hover::before { background-color: rgba(255, 255, 255, .03); }
-  /* The row the next rank is scored on: the one line here that is an instruction rather
-     than a record, so it gets the accent and nothing else does. */
-  .pool-row.next { border-color: color-mix(in srgb, var(--accent) 40%, transparent); }
-  .pool-row.next .nm { color: var(--ink); font-weight: 580; }
+  .pool-row:hover {
+    border-color: var(--hair-2); transform: translateY(-1px);
+    background: color-mix(in srgb, var(--ink) 4%, var(--sunken));
+  }
+  .pool-row.done { background: color-mix(in srgb, var(--up) 6%, var(--sunken)); }
+  /* The scenario the next rank is scored on: the one tile here that is an instruction
+     rather than a record, so it gets the accent and nothing else does. */
+  .pool-row.next {
+    border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 18%, transparent),
+                0 10px 26px -18px var(--accent);
+  }
+  .pool-row.next .nm { color: var(--ink); font-weight: 600; }
 
   .pool-row .nm {
-    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-    font-size: 12.5px; color: var(--ink);
+    display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    font-size: 12.5px; font-weight: 560; color: var(--ink); line-height: 1.3;
   }
 
-  /* Best and target as one expression rather than two right-aligned columns. They are
-     one sentence - you have this, the rank wants that - and splitting them put a 14px
-     gap in the middle of it. The "+129" that used to follow is the same fact a third
-     time, and is on the title instead. */
   .pool-num {
-    display: flex; align-items: baseline; gap: 7px; justify-self: end;
-    font-family: var(--mono); font-size: 11.5px; white-space: nowrap;
+    display: flex; align-items: baseline; gap: 6px;
+    font-family: var(--mono); font-size: 12px; white-space: nowrap;
   }
-  .pool-num .pb { color: var(--ink); min-width: 52px; text-align: right; }
-  .pool-num .pb.none { color: var(--ink-dim); font-size: 10px; }
+  .pool-num .pb { color: var(--ink); }
+  .pool-num .pb.none { color: var(--ink-dim); font-size: 10.5px; }
   .pool-num .to { color: var(--ink-dim); }
-  .pool-num .tgt { color: var(--ink-mid); min-width: 52px; }
+  .pool-num .tgt { color: var(--ink-mid); }
   .pool-num .tgt.max {
-    color: var(--up); min-width: 0; font-size: 9.5px; letter-spacing: .1em;
-    text-transform: uppercase;
+    color: var(--up); font-size: 9.5px; letter-spacing: .1em; text-transform: uppercase;
   }
 
-  /* Present but quiet until the row is under the cursor - twenty-two live buttons at
-     full contrast is a wall, and the row is the thing being scanned. The column is held
-     open whether or not the button shows, so hovering a row does not reflow the list. */
+  /* Quiet until the tile is under the cursor - twenty-seven live buttons at full contrast
+     is a wall, and the tile is the thing being scanned. The row is held open either way so
+     hovering does not reflow the grid. */
   .pool-row .scen-play {
     font: inherit; font-size: 11px; font-weight: 560; color: var(--ink-mid);
     background: transparent; border: 1px solid var(--hair);
-    border-radius: var(--r-xs); padding: 4px 0; width: 100%; cursor: pointer;
+    border-radius: var(--r-xs); padding: 5px 0; width: 100%; cursor: pointer;
     opacity: 0; transition: opacity .13s var(--ease), color .13s var(--ease),
       border-color .13s var(--ease), background .13s var(--ease);
   }
@@ -1754,6 +1757,15 @@
     color: var(--ink); border-color: var(--hair-3); background: rgba(255, 255, 255, .06);
   }
   .pool-row .scen-play:disabled { opacity: .4; cursor: default; }
+
+  /* ---- the apex section, folded into this screen ---- */
+  .sv-section { margin: 34px 0 14px; }
+  .sv-section-title {
+    margin: 0 0 6px; font-size: 17px; font-weight: 660; letter-spacing: -.01em;
+  }
+  .sv-section-lede {
+    margin: 0; max-width: 66ch; font-size: 12.5px; line-height: 1.6; color: var(--ink-mid);
+  }
 
   /* ---- playlists for the band on screen ---- */
   .pool-lists {
@@ -1850,14 +1862,6 @@
         <span class="tab-key"></span>
       </button>
 
-      <button class="tab" role="tab" aria-selected="false" data-screen="apex">
-        <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M12 3.2L20.4 19.2H3.6z"/>
-          <path d="M8.4 13.2h7.2"/>
-        </svg></span>
-        <span class="tab-label">Apex</span>
-        <span class="tab-key"></span>
-      </button>
 
       <div class="nav-label">Practice</div>
 
@@ -2324,43 +2328,6 @@
           </section>
 
           <!-- ---------------------------------------------- apex -->
-          <section class="screen" id="screen-apex">
-            <div class="screen-head">
-              <h1>Apex</h1>
-              <p>
-                The ladder stops at its top rank, because a rank is a band and a band
-                has a top. This does not stop. It is where you sit on each scenario's
-                KovaaK's leaderboard, and a whole point is ten times fewer players
-                above you.
-              </p>
-            </div>
-
-            <div class="panel">
-              <div class="phead">
-                <h2 id="apexName">Apex board</h2>
-                <span class="note" id="apexNote"></span>
-              </div>
-              <div class="pbody"><div class="sv-stats" id="apexStats"></div></div>
-            </div>
-
-            <div class="panel">
-              <div class="phead">
-                <h2>Leaderboard</h2>
-                <span class="note" id="apexBoardNote">sign in to see where you stand</span>
-              </div>
-              <div class="pbody">
-                <div class="apex-tabs" id="apexTabs"></div>
-                <table class="scen">
-                  <thead><tr>
-                    <th>#</th><th>Player</th><th>Points</th><th>Families</th>
-                  </tr></thead>
-                  <tbody id="apexBoardBody"></tbody>
-                </table>
-              </div>
-            </div>
-
-            <div id="apexCategories"></div>
-          </section>
 
           <!-- ---------------------------------------------- season -->
           <!-- ------------------------------------------ season (player) -->
@@ -2398,13 +2365,13 @@
             <div class="panel">
               <div class="phead">
                 <h2>Category ladders</h2>
-                <span class="note">sixteen ranks each, four windows deep</span>
+                <span class="note">four bands each, four ranks a band</span>
               </div>
               <div class="pbody">
                 <p class="rank-lede">
-                  Every category has its own sixteen ranks and its own names. The
-                  overall tier above is derived from all three, so climbing any of
-                  them moves it.
+                  Every category is cut into four bands, and each band is a whole
+                  benchmark with its own four ranks. The overall tier above is derived
+                  from all three categories, so climbing any of them moves it.
                 </p>
                 <div id="svCats"></div>
               </div>
@@ -2434,6 +2401,40 @@
                 </div>
               </div>
             </div>
+
+            <div class="sv-section">
+              <h2 class="sv-section-title">Past the top</h2>
+              <p class="sv-section-lede">
+                The ladder stops at its top rank, because a rank is a band and a band has
+                a top. This does not. It is where you sit on each scenario's KovaaK's
+                leaderboard, and a whole point is ten times fewer players above you.
+              </p>
+            </div>
+            <div class="panel">
+              <div class="phead">
+                <h2 id="apexName">Apex board</h2>
+                <span class="note" id="apexNote"></span>
+              </div>
+              <div class="pbody"><div class="sv-stats" id="apexStats"></div></div>
+            </div>
+
+            <div class="panel">
+              <div class="phead">
+                <h2>Leaderboard</h2>
+                <span class="note" id="apexBoardNote">sign in to see where you stand</span>
+              </div>
+              <div class="pbody">
+                <div class="apex-tabs" id="apexTabs"></div>
+                <table class="scen">
+                  <thead><tr>
+                    <th>#</th><th>Player</th><th>Points</th><th>Families</th>
+                  </tr></thead>
+                  <tbody id="apexBoardBody"></tbody>
+                </table>
+              </div>
+            </div>
+
+            <div id="apexCategories"></div>
           </section>
 
           <section class="screen" id="screen-season">

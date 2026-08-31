@@ -2955,6 +2955,12 @@ function renderSeasonView(data) {
         "</span>";
       group.append(subHead);
 
+      // The tiles sit in their own grid inside the group, so the sub-skill's label stays
+      // full-width above them rather than becoming a first column of the grid.
+      const tiles = document.createElement("div");
+      tiles.className = "pool-tiles";
+      group.append(tiles);
+
       inSub.forEach((v) => {
         const maxedHere = v.nextRankScore === null;
 
@@ -3027,11 +3033,9 @@ function renderSeasonView(data) {
             }
           });
           row.append(play);
-        } else {
-          row.append(document.createElement("span"));
         }
 
-        group.append(row);
+        tiles.append(row);
       });
 
       block.append(group);
