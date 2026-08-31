@@ -871,7 +871,8 @@ first.
 ## 14. Seasons, and three ladders
 
 Two changes that belong together, because each answers the other's hardest question.
-Scheduled next; nothing here is built.
+Built. Both of the decisions this section originally recorded were reversed by
+measurement, and the reversals are kept below rather than tidied away.
 
 ### Three ranks, not one
 
@@ -887,16 +888,41 @@ This is a schema change: `ratings` is keyed on `player_id` alone today, and beco
 ### Where thresholds come from
 
 The obvious plan is to write our own numbers, and the obvious plan is a trap: it swaps
-*Voltaic changing them* for *us maintaining them*, and ours would be guesses where
-theirs are grounded in a real population. That is a worse position, and it fails the
-first time somebody asks why a rank is where it is.
+*Voltaic changing them* for *us maintaining them*, and ours would be guesses where theirs
+are grounded in a real population. That is a worse position, and it fails the first time
+somebody asks why a rank is where it is.
 
-Thresholds are therefore derived from Apogee's own population, the same principle
-§4 already uses for the ladder, applied one level down: a rank on a scenario is a
-percentile of what Apogee players actually score on it. Nothing to maintain, nothing to
-go stale, and the answer to "why is Diamond 930" is a fact rather than an opinion.
+The first answer to that was percentiles: a rank on a scenario is a percentile of what
+players actually score on it, the same principle §4 uses for the ladder, applied one level
+down. Nothing to maintain, nothing to go stale.
 
-### One ladder, four scenario windows
+It was wrong for a reason that only shows up once somebody is chasing a rank. **A
+percentile moves when the population moves.** The target slides while a player climbs
+toward it, and a benchmark for improvement wants a number that sits still. Worse, the
+number it produced could not be defended: "why is this rank 930" answered with "because
+of where everyone else is this week" is not the fact it looks like.
+
+The third answer is the one in the file, and it is neither ours nor a percentile: **the
+numbers the benchmark authors already published.** The pool is built out of twenty-three
+benchmarks; those authors set thresholds for these scenarios, and `data/pool.json` bands
+their difficulty tiers onto the four windows already. Adopting the numbers at the same
+time as the placement costs nothing and settles the question of authority - the answer to
+"why is this rank 930" is that Voltaic says so, with a citation.
+
+Where several authors rate the same band, the rank is the median of their tiers, each
+first reduced to as many evenly spread picks as the band has ranks. Where one does, it is
+adopted verbatim. Every threshold records which:
+
+```
+49 reconciled   38 adopted   1 authored   0 seeded
+```
+
+across 88 variants and 352 thresholds. `npm run validate:thresholds` re-derives the first
+two from `pool.json` and counts the last; `adoptThresholds.ts` is what produced them, and
+it refuses rather than nudges when a result would not ascend. None of the 352 sits above
+its board's world record, which is checked rather than assumed.
+
+### Four bands, four benchmarks
 
 A ladder has to hold both a first-week player and a good one, and one set of scenarios
 cannot measure that range. A perfect run on something easy stops proving anything at some
@@ -911,49 +937,76 @@ hard for a newcomer *and* too easy at the top" came from the same mistake.
 
 The fix is not several benchmarks a player chooses between - that re-imports the §4
 confusion one level down, and it makes matchmaking ask a question it should never have to.
-It is one ladder cut into windows:
+It is four windows of scenarios, each with its own four ranks:
 
 ```
-ranks  1- 4   Novice         VT Pasu Novice S5         555  660  745  800
-ranks  5- 8   Intermediate   VT Pasu Intermediate S5   770  850  930  980
-ranks  9-12   Advanced       VT Pasu Advanced S5       910 1020 1110 1240
-ranks 13-16   Expert         Pasu Reload Goated
+Novice         VT Pasu Novice S5         555  660  745  800
+Intermediate   VT Pasu Intermediate S5   770  850  930  980
+Advanced       VT Pasu Advanced S5       910 1020 1110 1240
+Expert         Pasu Reload Goated
 ```
 
 The twenty-two scenario families are the unit that gets graded, not the eighty-eight
-variants. A family's energy is the *best* of its variants, offset by the ranks below its
-window, so:
+variants, so a player only ever plays the scenarios their band uses.
 
-- a player only ever plays the scenarios their band uses, and the ladder is sixteen
-  ranks deep without being four times the grind
-- a maxed Novice scenario reads as "this proves rank 4, and cannot prove more", which is
-  the honest thing to say about a perfect run on something easy
-- above window 0 a variant is *silent* below its own first threshold rather than
-  interpolating from zero, so a bad score on a hard scenario cannot be credited as though
-  it were a good one on an easy scenario
-- the app can name the scenario the next rank is scored on, which is the one thing a
-  windowed ladder must never leave implicit
+**The windows do not chain, and that is the part that was measured.** They used to: one
+sixteen-rank ladder, a family graded on the best of its variants, each window's energy
+offset by the windows below it. That works while every threshold is cut from one
+percentile ladder, because such a ladder descends by construction. It does not survive
+authored numbers. Adopting what the benchmarks actually publish put **59 ranks beyond
+anyone's reach, 58 of them at a window handover.**
 
-Which window a scenario belongs to is a rule rather than a placement. `data/pool.json`
-bands each source benchmark's *difficulty tiers*, and a scenario sits in the hardest band
-any source gives it - hardest, because a scenario Voltaic calls Intermediate and snakbox
-calls Hard is being asked for more by snakbox, and grading it at the easier ask sets a
-rank that everyone in the harder band already holds. One row per tier rather than one per
-scenario, because a tier is what its author graded as a unit and eighty-eight hand
-placements is eighty-eight chances to put a Novice scenario at the top of the ladder.
+The obvious explanation is wrong, and the data says so precisely. It is not that different
+authors calibrate differently: of the 58, twenty-nine are at handovers where the two
+windows share an author and twenty-nine are where they do not. An even split, so mixing
+authors is not what breaks it.
 
-That leaves one judgement, and it is recorded as one: reading Aimerz+, Revosect S1, Jade
-Palace and snakbox's hardest tiers as sitting *above* Voltaic's Advanced is a claim none
-of those authors made. `npm run distribution` is what checks it - a band placed too high
-leaves ranks nobody holds. Where one window hands over to the next becomes a measurement
-in season 2: with players who have run both variants of a family, the handover point can
-be regressed rather than assumed.
+What breaks it is that **a benchmark's tiers are not rungs of one ladder.** Voltaic Novice
+and Voltaic Advanced are separate benchmarks. A player is Gold on one or Grandmaster on
+the other, and Voltaic never intended Advanced's first rank to be harder than Novice's
+last on a different scenario. Published hard numbers chain into a continuous ladder only
+by accident, and mostly they do not.
 
-How far that judgement actually reaches is now printed rather than left to be discovered.
-`npm run validate:pool` names every scenario whose window rests on a single source, and
-there are **twelve of the eighty-eight** - including three where the sole source is
-snakbox, the thinnest benchmark in the pool at 83 measured players against Viscose's
-60,536.
+Two decisions were therefore in tension - adopt published numbers, and climb one
+continuous ladder across four bands - and 58 of 66 handovers said which one to keep. A
+band is now what every benchmark this one is modelled on already makes it: a complete
+benchmark, with its own scenarios, its own four ranks and its own top.
+
+- a player holds a rank in **each band they have played**, and the question "is Advanced
+  rank 1 harder than Novice rank 4" is never asked
+- a maxed Novice scenario reads as "this proves Novice rank 4, and cannot prove more",
+  which is the honest thing to say about a perfect run on something easy
+- within a band a variant is still silent below its own first threshold, so a bad score
+  cannot be credited as though it were a good one on an easier scenario
+- the app names the scenario the next rank is scored on, which is the one thing a windowed
+  ladder must never leave implicit
+
+`seasonAsDifficulties` hands each band to the grading engine on its own. There is no new
+arithmetic: `evaluateCategory` already treats a flat ladder as the degenerate windowed
+one, so a band inherits every check `validateEngine` makes against KovaaK's own numbers.
+
+The ceiling moved, which was the point. Expert's top ranks now sit at these positions on
+the real KovaaK's boards:
+
+```
+#1.0 of 22,985   Smoothbot Pauer
+#1.5 of 33,566   Close Fast Strafes Invincible - Thin
+#1.5 of 20,738   VT psalmTS Advanced
+#1.8 of 27,851   VT skyTS Advanced
+#3.0 of 52,393   1w6ts reload v2
+```
+
+Median across the band, #35. The old top rank was the top 0.8% - eight hundred people on
+a hundred-thousand-entry board.
+
+Three states have to stay distinct wherever a band is shown, because flattening any two of
+them lies: a band with no runs is **unmeasured**, a band with runs but under its first
+threshold is **measured and unranked**, and the rest **hold a rank**. Drawing the first
+two alike tells a player they are bad at Expert when the truth is they have never launched
+it.
+
+An overall tier is still derived from the three categories, as above - a readout rather
+than a fourth thing to climb.
 
 ### One benchmark, one opinion
 

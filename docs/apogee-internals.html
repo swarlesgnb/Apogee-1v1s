@@ -768,7 +768,11 @@ gap     = (ceiling − floor) / ceiling</pre>
 <pre>name, status          draft | published | archived
 rankNames/Colors      the <em>overall</em> ladder
 categories[]          Clicking, Tracking, Switching
-  rankNames/Colors      each category's own ladder
+  bands[]               one per window, each graded on its own
+    window                which window it grades
+    rankNames/Colors      that band's own four ranks
+    rankMaxes             energy needed per rank in that band
+  rankNames/Colors      the chained ladder, kept for the overall readout
   rankMaxes             energy needed per rank in that category
 scenarios[]           the pool
   scenario, category    which ladder grades it
@@ -791,6 +795,37 @@ scenarios[]           the pool
         rank name alone breaks the season with an error about a scenario nobody touched,
         which is why the editor moves all three arrays together and
         <code>validateSeason</code> refuses a mismatch before anything is written.
+      </p>
+
+      <h3>A band is a whole benchmark</h3>
+      <p>
+        Each category is cut into four bands — Novice, Intermediate, Advanced, Expert —
+        and each band is graded entirely on its own: its own scenarios, its own four
+        ranks, its own top. A player holds a rank in every band they have played, and
+        nothing asks whether Advanced's first rank is above Novice's last.
+      </p>
+      <p>
+        They used to chain into one sixteen-rank ladder. That survived while every
+        threshold came from one percentile curve, which descends by construction, and it
+        did not survive adopting the numbers the benchmark authors publish: 59 ranks came
+        out unreachable, 58 of them at a window handover. The cause is not that authors
+        calibrate differently — of those 58, twenty-nine were handovers sharing an author
+        and twenty-nine were not — but that a benchmark's tiers are not rungs. Voltaic
+        Novice and Voltaic Advanced are separate benchmarks, and nobody meant one's first
+        rank to outrank the other's last on a different scenario.
+      </p>
+      <p class="note">
+        <span class="note-label">Three states, never two</span>
+        A band with no runs is unmeasured; a band with runs but under its first threshold
+        is measured and unranked; the rest hold a rank. Anything drawing the first two
+        alike tells a player they are bad at Expert when they have never launched it.
+      </p>
+      <p>
+        <code>seasonAsDifficulties</code> hands each band to the grading engine
+        separately, and there is no new arithmetic behind it:
+        <code>evaluateCategory</code> already treats a flat ladder as the degenerate
+        windowed one, so a band inherits every check <code>validate:engine</code> makes
+        against KovaaK's own numbers.
       </p>
 
       <h3>The overall rank is derived</h3>
