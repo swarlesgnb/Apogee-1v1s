@@ -3216,9 +3216,14 @@ function renderRanks(data) {
 
     bands.forEach((b) => {
       const unplayed = b.played === 0;
+      // The band matches are drawn from. Saying so here is what connects this screen to
+      // the Queue tab: without it the ladder and the thing you actually play are two
+      // unrelated lists that happen to share names.
+      const queued = (data.benchmark.matchPool?.window ?? -1) === b.window;
       const card = document.createElement("div");
       card.className =
-        "band-card" + (unplayed ? " unplayed" : b.rankName ? " held" : " below");
+        "band-card" + (unplayed ? " unplayed" : b.rankName ? " held" : " below") +
+        (queued ? " queued" : "");
       // An unplayed band is achromatic; one that is merely below its first rank still
       // shows that rank's colour, so the progress bar under it is pointing somewhere.
       card.style.setProperty(
@@ -3231,7 +3236,8 @@ function renderRanks(data) {
       const head = document.createElement("div");
       head.className = "band-head";
       head.innerHTML =
-        '<span class="band-title">' + esc(b.windowName) + "</span>" +
+        '<span class="band-title">' + esc(b.windowName) +
+        (queued ? ' <span class="band-q">queued</span>' : "") + "</span>" +
         '<span class="band-cov" title="scenarios in this band you have run">' +
         b.played + "/" + b.total + "</span>";
       card.append(head);

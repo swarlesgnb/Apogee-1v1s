@@ -901,6 +901,18 @@
     background: rgba(255, 255, 255, .06); overflow: hidden;
   }
   .band-track i { display: block; height: 100%; border-radius: inherit; background: var(--rank); }
+  /* A band under its first rank is showing a target, not an achievement, and at full
+     strength its bar drew the eye before the bands actually held. */
+  .band-card.below .band-track i { opacity: .5; }
+
+  /* Which band matches come from. Deliberately achromatic: it is a fact about the queue,
+     not another rank, and a second colour here would compete with the one that is. */
+  .band-q {
+    font-family: var(--mono); font-size: 8.5px; letter-spacing: .06em;
+    text-transform: none; color: var(--ink-mid);
+    border: 1px solid var(--hair-2); border-radius: var(--r-pill);
+    padding: 1px 5px; margin-left: 6px;
+  }
   .band-note { font-family: var(--mono); font-size: 9.5px; color: var(--ink-dim); }
   .band-note.top { color: color-mix(in srgb, var(--up) 70%, var(--ink-dim)); }
 
@@ -2138,9 +2150,9 @@
             <div class="screen-head">
               <h1>Ranks</h1>
               <p>
-                One ladder per category, and an overall tier derived from them.
-                Thresholds come from the season file, not from an outside
-                benchmark.
+                Four bands per category, each a benchmark in its own right, and
+                an overall tier derived from them. Every threshold traces to a
+                benchmark that published it.
               </p>
             </div>
 
@@ -2576,7 +2588,7 @@
 
 
 <script id="apogee-snapshot" type="application/json">{
-  "generatedAt": "2026-08-31T18:55:39.752Z",
+  "generatedAt": "2026-08-31T19:08:19.719Z",
   "coverage": [
     {
       "category": "Clicking",
@@ -8178,7 +8190,9 @@ function renderRanks(data) {
   $("benchNote").textContent = `${bench.name} ${bench.difficulty}`;
   $("benchLede").textContent =
     `Your ${bench.name} standing, which is a stat rather than a ladder position: it ` +
-    "says what your scores are worth, not who you beat. Overall you are " +
+    "says what your scores are worth, not who you beat. Each band is a whole benchmark " +
+    "with its own four ranks, so you hold a rank in every band you have played and " +
+    "nothing here claims one band's rank is above another's. Overall you are " +
     `${data.player.benchmarkRank} at ${num(data.player.benchmarkEnergy)} energy.`;
 
   const host = $("catRanks");
@@ -8217,9 +8231,14 @@ function renderRanks(data) {
 
     bands.forEach((b) => {
       const unplayed = b.played === 0;
+      // The band matches are drawn from. Saying so here is what connects this screen to
+      // the Queue tab: without it the ladder and the thing you actually play are two
+      // unrelated lists that happen to share names.
+      const queued = (data.benchmark.matchPool?.window ?? -1) === b.window;
       const card = document.createElement("div");
       card.className =
-        "band-card" + (unplayed ? " unplayed" : b.rankName ? " held" : " below");
+        "band-card" + (unplayed ? " unplayed" : b.rankName ? " held" : " below") +
+        (queued ? " queued" : "");
       // An unplayed band is achromatic; one that is merely below its first rank still
       // shows that rank's colour, so the progress bar under it is pointing somewhere.
       card.style.setProperty(
@@ -8232,7 +8251,8 @@ function renderRanks(data) {
       const head = document.createElement("div");
       head.className = "band-head";
       head.innerHTML =
-        '<span class="band-title">' + esc(b.windowName) + "</span>" +
+        '<span class="band-title">' + esc(b.windowName) +
+        (queued ? ' <span class="band-q">queued</span>' : "") + "</span>" +
         '<span class="band-cov" title="scenarios in this band you have run">' +
         b.played + "/" + b.total + "</span>";
       card.append(head);

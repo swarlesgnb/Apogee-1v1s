@@ -907,6 +907,18 @@
     background: rgba(255, 255, 255, .06); overflow: hidden;
   }
   .band-track i { display: block; height: 100%; border-radius: inherit; background: var(--rank); }
+  /* A band under its first rank is showing a target, not an achievement, and at full
+     strength its bar drew the eye before the bands actually held. */
+  .band-card.below .band-track i { opacity: .5; }
+
+  /* Which band matches come from. Deliberately achromatic: it is a fact about the queue,
+     not another rank, and a second colour here would compete with the one that is. */
+  .band-q {
+    font-family: var(--mono); font-size: 8.5px; letter-spacing: .06em;
+    text-transform: none; color: var(--ink-mid);
+    border: 1px solid var(--hair-2); border-radius: var(--r-pill);
+    padding: 1px 5px; margin-left: 6px;
+  }
   .band-note { font-family: var(--mono); font-size: 9.5px; color: var(--ink-dim); }
   .band-note.top { color: color-mix(in srgb, var(--up) 70%, var(--ink-dim)); }
 
