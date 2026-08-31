@@ -111,22 +111,51 @@ interface Ladder {
 
 function laddersOf(season: Season): Ladder[] {
   const size = season.windowSize ?? 0;
+  const unnamed = (names: string[]) => names.filter((n) => PLACEHOLDER.test(n)).length;
 
-  const categories: Ladder[] = season.categories.map((c) => ({
-    title: c.name,
+  // One section per band, because a band is a whole benchmark and its four ranks are its
+  // own. Numbering them 1-4 four times is the honest presentation: the sheet used to run
+  // one category to rank 16 with a band label every fourth rung, which reads as one climb
+  // and is the exact implication the split removed.
+  //
+  // A season built before the split has no bands, and then the old windowed ladder is
+  // rendered unchanged rather than nothing at all.
+  const ladderOfBand = (c: Season["categories"][number], b: NonNullable<typeof c.bands>[number]): Ladder => ({
+    title: `${c.name} · ${season.windows?.[b.window] ?? `band ${b.window + 1}`}`,
     theme: THEMES[c.name] ?? null,
-    rankNames: c.rankNames,
-    rankColors: c.rankColors,
-    rankMaxes: c.rankMaxes,
-    windows: size > 0 ? (season.windows ?? null) : null,
-    windowSize: size,
-  }));
+    rankNames: b.rankNames,
+    rankColors: b.rankColors,
+    rankMaxes: b.rankMaxes,
+    windows: null,
+    windowSize: 0,
+  });
 
-  // Most finished ladder first, least finished last. Reproduces the order the sheet was
+  // Most finished category first, least finished last. Reproduces the order the sheet was
   // hand-written in, and keeps doing the right thing as ranks get named: the one that
-  // still needs the most work is the one a reader ends on.
-  const unnamed = (l: Ladder) => l.rankNames.filter((n) => PLACEHOLDER.test(n)).length;
-  categories.sort((a, b) => unnamed(a) - unnamed(b) || a.title.localeCompare(b.title));
+  // still needs the most work is the one a reader ends on. Bands stay in their own order
+  // inside a category, which is difficulty order and never anything else.
+  const ordered = [...season.categories].sort(
+    (a, b) =>
+      unnamed((a.bands ?? []).flatMap((x) => x.rankNames).concat(a.bands?.length ? [] : a.rankNames)) -
+        unnamed((b.bands ?? []).flatMap((x) => x.rankNames).concat(b.bands?.length ? [] : b.rankNames)) ||
+      a.name.localeCompare(b.name),
+  );
+
+  const categories: Ladder[] = ordered.flatMap((c) =>
+    c.bands?.length
+      ? c.bands.map((b) => ladderOfBand(c, b))
+      : [
+          {
+            title: c.name,
+            theme: THEMES[c.name] ?? null,
+            rankNames: c.rankNames,
+            rankColors: c.rankColors,
+            rankMaxes: c.rankMaxes,
+            windows: size > 0 ? (season.windows ?? null) : null,
+            windowSize: size,
+          },
+        ],
+  );
 
   return [
     {
@@ -373,14 +402,32 @@ export function renderRankSheet(season: Season): string {
 
   const deepest = Math.max(0, ...ladders.filter((l) => l.windows).map((l) => l.rankNames.length));
 
+  const bandCount = Math.max(0, ...season.categories.map((c) => c.bands?.length ?? 0));
+  const bandDepth = Math.max(
+    0,
+    ...season.categories.flatMap((c) => (c.bands ?? []).map((b) => b.rankNames.length)),
+  );
+
+  // The band sentence, or the windowed one for a season built before the split. Neither
+  // is written when there is nothing to say: this used to describe a sixteen-rank climb,
+  // and once band ladders stopped carrying `windows` it evaluated to the empty string and
+  // took the whole explanation off the sheet without saying so.
   const windowSentence =
-    windowCount > 1 && season.windowSize && deepest > 0
-      ? `Each category ladder is ${words(deepest)} ranks deep, cut into ` +
-        `${words(windowCount)} windows of ${words(season.windowSize)} — ` +
+    bandCount > 1 && bandDepth > 0
+      ? `Each category is cut into ${words(bandCount)} bands — ` +
         `${(season.windows ?? []).join(", ")} — because one set of scenarios cannot measure ` +
-        `both a first-week player and a good one. You are graded against the window you are ` +
-        `in, and the scenarios get harder as you climb.`
-      : "";
+        `both a first-week player and a good one. Each band is a whole benchmark: its own ` +
+        `scenarios, its own ${words(bandDepth)} ranks, its own top. A player holds a rank in ` +
+        `every band they have played, so these are ${words(bandCount)} short ladders per ` +
+        `category rather than one long one, and nothing asks whether the top of a band is ` +
+        `below the bottom of the next.`
+      : windowCount > 1 && season.windowSize && deepest > 0
+        ? `Each category ladder is ${words(deepest)} ranks deep, cut into ` +
+          `${words(windowCount)} windows of ${words(season.windowSize)} — ` +
+          `${(season.windows ?? []).join(", ")} — because one set of scenarios cannot measure ` +
+          `both a first-week player and a good one. You are graded against the window you are ` +
+          `in, and the scenarios get harder as you climb.`
+        : "";
 
   return `<title>Apogee Rank Ladders</title>
 <style>
@@ -698,7 +745,8 @@ export function renderRankSheet(season: Season): string {
         <li>Do the names read as a <em>progression</em> — is it obvious which end is good?</li>
         <li>Does each ladder's theme land, or is it trying too hard?</li>
         <li>Would you be pleased to be told you're any of these?</li>
-        <li>The bottom four of every ladder are unnamed. What goes there?</li>
+        <li>Each band names its own four ranks, so a category's sixteen names are now
+          four sets of four. Does that hold up, or do the bands want their own themes?</li>
       </ol>
       <p>Each named rank is shown three ways: a colour chip, the name on dark, and the name
         on light. If it disappears in one of those, that's worth knowing.</p>
