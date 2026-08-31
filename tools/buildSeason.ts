@@ -186,6 +186,57 @@ function carryLadder(
   return { rankNames: names, rankColors: colors };
 }
 
+/**
+ * Seed a band's ladder from the chained one it replaces.
+ *
+ * The sixteen names were authored by hand against a ladder that no longer exists, and
+ * throwing them away to re-type the same words into four bands would be the only step of
+ * this split that loses something. A band takes the four names that used to sit at its
+ * own ranks, so a player who was a Musket yesterday is a Musket today - the name keeps
+ * describing the same scores, which is the same rule `carryLadder` follows when a ladder
+ * grows.
+ *
+ * Only used while the chained ladder is still in the file. Once it goes, a band's names
+ * are carried forward from the band itself and this returns undefined, which is what a
+ * season built from scratch has always done: placeholders, named later in the editor.
+ */
+const PLACEHOLDER_NAME = /^Rank \d+\**$/;
+
+/**
+ * Choose which ladder a band carries forward: its own, or a slice of the chained one.
+ *
+ * A band that has already been named keeps its names - that is `carryLadder`'s job and
+ * this must not undo it. The slice is only reached by a band still holding the
+ * placeholders the split created, which is the one case where there is nothing to lose
+ * and sixteen authored names sitting unused next to it.
+ */
+function seeded(
+  carried: { rankNames?: string[]; rankColors?: Record<string, string> } | undefined,
+  prior: { rankNames?: string[]; rankColors?: Record<string, string> } | undefined,
+  window: number,
+  depth: number,
+): { rankNames?: string[]; rankColors?: Record<string, string> } | undefined {
+  const named = (carried?.rankNames ?? []).some((n) => !PLACEHOLDER_NAME.test(n));
+  if (named) return carried;
+  return sliceChained(prior, window, depth) ?? carried;
+}
+
+function sliceChained(
+  prior: { rankNames?: string[]; rankColors?: Record<string, string> } | undefined,
+  window: number,
+  depth: number,
+): { rankNames?: string[]; rankColors?: Record<string, string> } | undefined {
+  const all = prior?.rankNames ?? [];
+  const slice = all.slice(window * depth, window * depth + depth);
+  if (slice.length !== depth) return undefined;
+  const colors: Record<string, string> = {};
+  for (const name of slice) {
+    const color = prior?.rankColors?.[name];
+    if (color !== undefined) colors[name] = color;
+  }
+  return { rankNames: slice, rankColors: colors };
+}
+
 function main(): void {
   const args = process.argv.slice(2);
   const statsAt = args.indexOf("--stats");
@@ -439,7 +490,7 @@ function main(): void {
       return {
         window,
         rankMaxes: Array.from({ length: windowSize }, (_, i) => perRank * (i + 1)),
-        ...carryLadder(carried, windowSize),
+        ...carryLadder(seeded(carried, prior, window, windowSize), windowSize),
       };
     });
 

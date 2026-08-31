@@ -44,16 +44,16 @@
             80000
           ],
           "rankNames": [
-            "Rank 1",
-            "Rank 2",
-            "Rank 3",
-            "Rank 4"
+            "Blunderbuss",
+            "Slingshot",
+            "Dart",
+            "Longbow"
           ],
           "rankColors": {
-            "Rank 1": "#3f4652",
-            "Rank 2": "#59606d",
-            "Rank 3": "#737b89",
-            "Rank 4": "#8d95a4"
+            "Blunderbuss": "#B07A2E",
+            "Slingshot": "#8FA83C",
+            "Dart": "#E0455A",
+            "Longbow": "#2E7D4F"
           }
         },
         {
@@ -65,16 +65,16 @@
             80000
           ],
           "rankNames": [
-            "Rank 1",
-            "Rank 2",
-            "Rank 3",
-            "Rank 4"
+            "Crossbow",
+            "Musket",
+            "Flintlock",
+            "Revolver"
           ],
           "rankColors": {
-            "Rank 1": "#3f4652",
-            "Rank 2": "#59606d",
-            "Rank 3": "#737b89",
-            "Rank 4": "#8d95a4"
+            "Crossbow": "#5B7C99",
+            "Musket": "#3F3B47",
+            "Flintlock": "#FF9B2A",
+            "Revolver": "#2B4B78"
           }
         },
         {
@@ -86,16 +86,16 @@
             80000
           ],
           "rankNames": [
-            "Rank 1",
-            "Rank 2",
-            "Rank 3",
-            "Rank 4"
+            "Carbine",
+            "Rifle",
+            "Marksman",
+            "Match Rifle"
           ],
           "rankColors": {
-            "Rank 1": "#3f4652",
-            "Rank 2": "#59606d",
-            "Rank 3": "#737b89",
-            "Rank 4": "#8d95a4"
+            "Carbine": "#6F8F2F",
+            "Rifle": "#8E4A2A",
+            "Marksman": "#E8BE45",
+            "Match Rifle": "#17A583"
           }
         },
         {
@@ -107,16 +107,16 @@
             80000
           ],
           "rankNames": [
-            "Rank 1",
-            "Rank 2",
-            "Rank 3",
-            "Rank 4"
+            "Sniper",
+            "Railgun",
+            "Gauss Cannon",
+            "Photon Lance"
           ],
           "rankColors": {
-            "Rank 1": "#3f4652",
-            "Rank 2": "#59606d",
-            "Rank 3": "#737b89",
-            "Rank 4": "#8d95a4"
+            "Sniper": "#A9DCEC",
+            "Railgun": "#00D9FF",
+            "Gauss Cannon": "#A855F7",
+            "Photon Lance": "#FFFFFF"
           }
         }
       ],
@@ -188,16 +188,16 @@
             80000
           ],
           "rankNames": [
-            "Rank 1",
-            "Rank 2",
-            "Rank 3",
-            "Rank 4"
+            "Amoeba",
+            "Multicellular",
+            "Trilobite",
+            "Amphibian"
           ],
           "rankColors": {
-            "Rank 1": "#3f4652",
-            "Rank 2": "#59606d",
-            "Rank 3": "#737b89",
-            "Rank 4": "#8d95a4"
+            "Amoeba": "#ffd1ea",
+            "Multicellular": "#550160",
+            "Trilobite": "#eeff00",
+            "Amphibian": "#006eff"
           }
         },
         {
@@ -209,16 +209,16 @@
             80000
           ],
           "rankNames": [
-            "Rank 1",
-            "Rank 2",
-            "Rank 3",
-            "Rank 4"
+            "Reptile",
+            "Mammal",
+            "Primate",
+            "Chimp"
           ],
           "rankColors": {
-            "Rank 1": "#3f4652",
-            "Rank 2": "#59606d",
-            "Rank 3": "#737b89",
-            "Rank 4": "#8d95a4"
+            "Reptile": "#2bff00",
+            "Mammal": "#610000",
+            "Primate": "#331400",
+            "Chimp": "#9a783c"
           }
         },
         {
@@ -230,16 +230,16 @@
             80000
           ],
           "rankNames": [
-            "Rank 1",
-            "Rank 2",
-            "Rank 3",
-            "Rank 4"
+            "Hominid",
+            "Homoerectus",
+            "Neanderthal",
+            "Homosapien"
           ],
           "rankColors": {
-            "Rank 1": "#3f4652",
-            "Rank 2": "#59606d",
-            "Rank 3": "#737b89",
-            "Rank 4": "#8d95a4"
+            "Hominid": "#7866ff",
+            "Homoerectus": "#95b300",
+            "Neanderthal": "#e100ff",
+            "Homosapien": "#ff0000"
           }
         },
         {
@@ -251,16 +251,16 @@
             80000
           ],
           "rankNames": [
-            "Rank 1",
-            "Rank 2",
-            "Rank 3",
-            "Rank 4"
+            "Neolithic",
+            "Robosapien",
+            "HAL 9000",
+            "Singularity"
           ],
           "rankColors": {
-            "Rank 1": "#3f4652",
-            "Rank 2": "#59606d",
-            "Rank 3": "#737b89",
-            "Rank 4": "#8d95a4"
+            "Neolithic": "#ff6600",
+            "Robosapien": "#00fbff",
+            "HAL 9000": "#ffffff",
+            "Singularity": "#000000"
           }
         }
       ],
@@ -332,16 +332,16 @@
             60000
           ],
           "rankNames": [
-            "Rank 1",
-            "Rank 2",
-            "Rank 3",
-            "Rank 4"
+            "Banana Slug",
+            "Sloth",
+            "Galapagos Turtle",
+            "Manatee"
           ],
           "rankColors": {
-            "Rank 1": "#3f4652",
-            "Rank 2": "#59606d",
-            "Rank 3": "#737b89",
-            "Rank 4": "#8d95a4"
+            "Banana Slug": "#fbff00",
+            "Sloth": "#4f4f4f",
+            "Galapagos Turtle": "#005c02",
+            "Manatee": "#3328cc"
           }
         },
         {
@@ -353,16 +353,16 @@
             60000
           ],
           "rankNames": [
-            "Rank 1",
-            "Rank 2",
-            "Rank 3",
-            "Rank 4"
+            "Koala",
+            "Slow Loris",
+            "Housecat",
+            "Ferret"
           ],
           "rankColors": {
-            "Rank 1": "#3f4652",
-            "Rank 2": "#59606d",
-            "Rank 3": "#737b89",
-            "Rank 4": "#8d95a4"
+            "Koala": "#e6baf3",
+            "Slow Loris": "#ff9d2e",
+            "Housecat": "#d900ff",
+            "Ferret": "#ff0000"
           }
         },
         {
@@ -374,16 +374,16 @@
             60000
           ],
           "rankNames": [
-            "Rank 1",
-            "Rank 2",
-            "Rank 3",
-            "Rank 4"
+            "Greyhound",
+            "Roadrunner",
+            "Jackrabbit",
+            "Hare"
           ],
           "rankColors": {
-            "Rank 1": "#3f4652",
-            "Rank 2": "#59606d",
-            "Rank 3": "#737b89",
-            "Rank 4": "#8d95a4"
+            "Greyhound": "#800000",
+            "Roadrunner": "#00fbff",
+            "Jackrabbit": "#00ffbf",
+            "Hare": "#ffffff"
           }
         },
         {
@@ -395,16 +395,16 @@
             60000
           ],
           "rankNames": [
-            "Rank 1",
-            "Rank 2",
-            "Rank 3",
-            "Rank 4"
+            "Pronghorn",
+            "Cheetah",
+            "Golden Eagle",
+            "Peregrine"
           ],
           "rankColors": {
-            "Rank 1": "#3f4652",
-            "Rank 2": "#59606d",
-            "Rank 3": "#737b89",
-            "Rank 4": "#8d95a4"
+            "Pronghorn": "#421e00",
+            "Cheetah": "#ff7300",
+            "Golden Eagle": "#9e7c00",
+            "Peregrine": "#8000ff"
           }
         }
       ],
@@ -480,7 +480,7 @@
     "leaderboardEntries": 6421748,
     "note": "The boards no longer set the thresholds; they audit them. Each scenario carries `sanity.clears` - what share of that leaderboard meets each rank - which is how a threshold nobody can reach, or one everybody clears, gets caught now that no percentile guarantees it by construction."
   },
-  "builtAt": "2026-08-30T21:33:51.222Z",
+  "builtAt": "2026-08-31T18:43:26.470Z",
   "scenarios": [
     {
       "scenario": "VT ww5t Novice S5",
@@ -642,7 +642,7 @@
         "sampledAt": "2026-08-30T15:59:54.202Z"
       },
       "corpus": {
-        "runs": 106,
+        "runs": 107,
         "best": 125,
         "median": 112,
         "reaches": null
@@ -734,6 +734,12 @@
           0.425
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
+      },
+      "corpus": {
+        "runs": 1,
+        "best": 1070,
+        "median": 1070,
+        "reaches": "rank 4"
       }
     },
     {
@@ -1849,6 +1855,12 @@
           0.669091
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
+      },
+      "corpus": {
+        "runs": 1,
+        "best": 1558,
+        "median": 1558,
+        "reaches": "rank 4"
       }
     },
     {
@@ -2086,6 +2098,12 @@
           0.65
         ],
         "sampledAt": "2026-08-30T15:59:54.202Z"
+      },
+      "corpus": {
+        "runs": 1,
+        "best": 153,
+        "median": 153,
+        "reaches": "rank 4"
       }
     },
     {
