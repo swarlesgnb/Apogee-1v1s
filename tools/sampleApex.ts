@@ -132,15 +132,25 @@ async function sampleApex(scenario: string, leaderboardId: number): Promise<Apex
 }
 
 async function main(): Promise<void> {
-  const season = loadSeason();
+  // The pool, not the season built from it. These anchors are what lets `buildSeason`
+  // tell a rank nobody can hold apart from one the fractional sampling cannot see, so a
+  // season with a new scenario cannot be built until that scenario has them - and reading
+  // the season here made that circular: the build refuses, so the season never names the
+  // scenario, so the sampler never fetches it. The pool is where a scenario enters the
+  // season anyway, which is what this file's own header already says it samples.
+  const pool = JSON.parse(readFileSync(dataFile("pool.json"), "utf8")) as {
+    windows?: string[];
+    families: { variants: { scenario: string; label?: string; leaderboardId: number | null; window: number }[] }[];
+  };
 
-  const wanted = season.scenarios
-    .filter((s) => s.leaderboardId != null)
-    .map((s) => ({
-      scenario: s.scenario,
-      label: s.label ?? s.scenario,
-      leaderboardId: s.leaderboardId as number,
-      window: s.window ?? 0,
+  const wanted = pool.families
+    .flatMap((f) => f.variants)
+    .filter((v) => v.leaderboardId != null)
+    .map((v) => ({
+      scenario: v.scenario,
+      label: v.label ?? v.scenario,
+      leaderboardId: v.leaderboardId as number,
+      window: v.window ?? 0,
     }));
 
   const cached = new Map<string, ApexBoard>();
@@ -197,7 +207,7 @@ async function main(): Promise<void> {
 
     const at = (r: number) => board!.points.find((p) => p.rank === r)?.score ?? "-";
     console.log(
-      `  ${`${s.label} ${(season.windows?.[s.window] ?? "").slice(0, 3)}`.padEnd(38)}` +
+      `  ${`${s.label} ${(pool.windows?.[s.window] ?? "").slice(0, 3)}`.padEnd(38)}` +
         `${String(board.total).padStart(7)} players   ` +
         `WR ${String(at(1)).padStart(8)}   #100 ${String(at(100)).padStart(8)}`,
     );

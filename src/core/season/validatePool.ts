@@ -784,12 +784,29 @@ console.log(
 // ---- population ---------------------------------------------------------------------
 console.log(`\n${BOLD}population${RESET}`);
 
-/** Fewest entries a board may carry to grade the given window. See MIN_ABOVE_HARDEST_RANK. */
-function minEntriesFor(window: number): number {
-  const ladder = pool.ladder?.perWindow?.[window] ?? [];
-  const hardest = ladder[ladder.length - 1];
-  if (typeof hardest !== "number" || hardest <= 0) return ENTRIES_FLOOR;
-  return Math.max(ENTRIES_FLOOR, Math.ceil(MIN_ABOVE_HARDEST_RANK / hardest));
+/**
+ * Fewest entries a board may carry to grade the given window.
+ *
+ * This used to derive from `ladder.perWindow`: seventy players above the hardest rank,
+ * divided by that rank's percentile, which put Expert at 8,750. The arithmetic was right
+ * for as long as a rank *was* a percentile of the board. It is not any more - every
+ * threshold is a score an author published - so dividing by a percentile is dividing by a
+ * number the ladder no longer uses, and it was rejecting boards for failing a standard
+ * nothing measures against.
+ *
+ * What survives is the floor, and it survives for its own reason rather than that one: a
+ * board under a thousand entries is one clan's scenario rather than a population, and the
+ * sampled distribution read off it is a fact about them. That still rejects - VT bounceTS
+ * Elite at 318 and VT DriftTS Elite at 619 are why Switching could not be widened at this
+ * corpus - so this is a check that can still fail rather than one relaxed into silence.
+ *
+ * The positional top rank (PLAN.md, stage 4) will need its own requirement here, because
+ * "top 3 on the board" is a claim about board depth again. It is not built, so it is not
+ * asserted: `window` stays in the signature for it to key off, and MIN_ABOVE_HARDEST_RANK
+ * stays documented above as the record of what the percentile era required.
+ */
+function minEntriesFor(_window: number): number {
+  return ENTRIES_FLOOR;
 }
 
 const thin: string[] = [];
