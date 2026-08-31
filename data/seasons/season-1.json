@@ -38,10 +38,10 @@
         {
           "window": 0,
           "rankMaxes": [
-            20000,
-            40000,
-            60000,
-            80000
+            22500,
+            45000,
+            67500,
+            90000
           ],
           "rankNames": [
             "Blunderbuss",
@@ -59,10 +59,10 @@
         {
           "window": 1,
           "rankMaxes": [
-            20000,
-            40000,
-            60000,
-            80000
+            22500,
+            45000,
+            67500,
+            90000
           ],
           "rankNames": [
             "Crossbow",
@@ -80,10 +80,10 @@
         {
           "window": 2,
           "rankMaxes": [
-            20000,
-            40000,
-            60000,
-            80000
+            22500,
+            45000,
+            67500,
+            90000
           ],
           "rankNames": [
             "Carbine",
@@ -101,10 +101,10 @@
         {
           "window": 3,
           "rankMaxes": [
-            20000,
-            40000,
-            60000,
-            80000
+            22500,
+            45000,
+            67500,
+            90000
           ],
           "rankNames": [
             "Sniper",
@@ -121,22 +121,22 @@
         }
       ],
       "rankMaxes": [
-        20000,
-        40000,
-        60000,
-        80000,
-        100000,
-        120000,
-        140000,
-        160000,
+        22500,
+        45000,
+        67500,
+        90000,
+        112500,
+        135000,
+        157500,
         180000,
-        200000,
-        220000,
-        240000,
-        260000,
-        280000,
-        300000,
-        320000
+        202500,
+        225000,
+        247500,
+        270000,
+        292500,
+        315000,
+        337500,
+        360000
       ],
       "rankNames": [
         "Blunderbuss",
@@ -182,10 +182,10 @@
         {
           "window": 0,
           "rankMaxes": [
-            20000,
-            40000,
+            30000,
             60000,
-            80000
+            90000,
+            120000
           ],
           "rankNames": [
             "Amoeba",
@@ -203,10 +203,10 @@
         {
           "window": 1,
           "rankMaxes": [
-            20000,
-            40000,
+            30000,
             60000,
-            80000
+            90000,
+            120000
           ],
           "rankNames": [
             "Reptile",
@@ -224,10 +224,10 @@
         {
           "window": 2,
           "rankMaxes": [
-            20000,
-            40000,
+            30000,
             60000,
-            80000
+            90000,
+            120000
           ],
           "rankNames": [
             "Hominid",
@@ -245,10 +245,10 @@
         {
           "window": 3,
           "rankMaxes": [
-            20000,
-            40000,
+            30000,
             60000,
-            80000
+            90000,
+            120000
           ],
           "rankNames": [
             "Neolithic",
@@ -265,22 +265,22 @@
         }
       ],
       "rankMaxes": [
-        20000,
-        40000,
+        30000,
         60000,
-        80000,
-        100000,
+        90000,
         120000,
-        140000,
-        160000,
+        150000,
         180000,
-        200000,
-        220000,
+        210000,
         240000,
-        260000,
-        280000,
+        270000,
         300000,
-        320000
+        330000,
+        360000,
+        390000,
+        420000,
+        450000,
+        480000
       ],
       "rankNames": [
         "Amoeba",
@@ -468,19 +468,19 @@
   "thresholds": {
     "owner": "data/pool.json",
     "sourced": {
-      "reconciled": 49,
-      "adopted": 38,
+      "reconciled": 57,
+      "adopted": 50,
       "authored": 1
     },
     "note": "Every threshold in this file is an authored score read from data/pool.json, not a percentile of anybody's population. A percentile moves when the population moves, so the target slides while somebody is chasing it, and a benchmark for improvement wants a number that sits still. Each one carries a `source` saying whether it was adopted verbatim from a published benchmark, reconciled between several, authored outright with a reason, or is still seeded - inherited from the percentile era and not yet given a source. npm run validate:thresholds re-derives the first two and counts the last."
   },
   "boards": {
     "source": "kovaaks.com/webapp-backend/leaderboard/scores/global",
-    "sampledAt": "2026-08-30T15:59:54.202Z",
-    "leaderboardEntries": 6421748,
+    "sampledAt": "2026-08-31T22:30:57.149Z",
+    "leaderboardEntries": 7044237,
     "note": "The boards no longer set the thresholds; they audit them. Each scenario carries `sanity.clears` - what share of that leaderboard meets each rank - which is how a threshold nobody can reach, or one everybody clears, gets caught now that no percentile guarantees it by construction."
   },
-  "builtAt": "2026-08-31T18:43:26.470Z",
+  "builtAt": "2026-08-31T22:31:17.347Z",
   "scenarios": [
     {
       "scenario": "VT ww5t Novice S5",
@@ -530,7 +530,7 @@
           0.583333,
           0.4
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 1,
@@ -584,7 +584,7 @@
           0.00251,
           0.000447
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 19,
@@ -639,7 +639,7 @@
           0.00012,
           0.000019
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 107,
@@ -693,7 +693,7 @@
           0.001303,
           0.000386
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       }
     },
     {
@@ -733,7 +733,7 @@
           0.66875,
           0.425
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 1,
@@ -779,7 +779,7 @@
           0.1,
           0.035
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       }
     },
     {
@@ -828,7 +828,7 @@
           0.011546,
           0.000462
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 5,
@@ -882,7 +882,7 @@
           0.000642,
           0.000057
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 108,
@@ -939,7 +939,7 @@
           0.579249,
           0.453194
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 2,
@@ -996,7 +996,7 @@
           0.099351,
           0.057637
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 36,
@@ -1053,7 +1053,7 @@
           0.002932,
           0.00061
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 2,
@@ -1144,10 +1144,10 @@
           0.007991,
           0.00117
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
-        "runs": 15,
+        "runs": 16,
         "best": 112,
         "median": 97,
         "reaches": "rank 13"
@@ -1190,7 +1190,7 @@
           0.516667,
           0.34
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       }
     },
     {
@@ -1240,7 +1240,7 @@
           0.38,
           0.15
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       }
     },
     {
@@ -1311,7 +1311,7 @@
           0.095833,
           0.003237
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 23,
@@ -1365,7 +1365,7 @@
           0.009597,
           0.002569
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 1,
@@ -1422,7 +1422,7 @@
           0.616204,
           0.412953
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 2,
@@ -1479,7 +1479,7 @@
           0.129516,
           0.061976
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 27,
@@ -1535,7 +1535,7 @@
           0.080093,
           0.012667
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 4,
@@ -1589,7 +1589,7 @@
           0.001595,
           0.000273
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 2,
@@ -1646,7 +1646,7 @@
           0.605,
           0.4
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 2,
@@ -1702,7 +1702,7 @@
           0.26,
           0.075
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       }
     },
     {
@@ -1752,7 +1752,7 @@
           0.0425,
           0.004045
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 4,
@@ -1806,7 +1806,7 @@
           0.001363,
           0.000278
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       }
     },
     {
@@ -1854,7 +1854,7 @@
           0.890698,
           0.669091
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 1,
@@ -1911,7 +1911,7 @@
           0.71,
           0.319643
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 4,
@@ -1968,7 +1968,7 @@
           0.22069,
           0.013471
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 25,
@@ -2043,7 +2043,7 @@
           0.00735,
           0.001262
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 13,
@@ -2097,7 +2097,7 @@
           0.846875,
           0.65
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 1,
@@ -2154,7 +2154,7 @@
           0.7,
           0.333333
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 3,
@@ -2211,7 +2211,7 @@
           0.2,
           0.014545
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 31,
@@ -2265,7 +2265,7 @@
           0.007607,
           0.001355
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 1,
@@ -2311,7 +2311,7 @@
           0.47,
           0.252564
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       }
     },
     {
@@ -2362,7 +2362,7 @@
           0.090417,
           0.025515
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       }
     },
     {
@@ -2413,7 +2413,7 @@
           0.009056,
           0.003313
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       }
     },
     {
@@ -2461,7 +2461,7 @@
           0.001356,
           0.000044
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 1,
@@ -2518,7 +2518,7 @@
           0.615652,
           0.465306
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 3,
@@ -2596,7 +2596,7 @@
           0.668557,
           0.216269
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 2,
@@ -2674,7 +2674,7 @@
           0.150806,
           0.013205
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 62,
@@ -2749,7 +2749,7 @@
           0.002389,
           0.000506
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 9,
@@ -2806,7 +2806,7 @@
           0.656929,
           0.509783
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 1,
@@ -2874,7 +2874,7 @@
           0.663645,
           0.412294
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 1,
@@ -2927,7 +2927,7 @@
           0.320253,
           0.193103
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 52,
@@ -2999,7 +2999,7 @@
           0.01668,
           0.002144
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 8,
@@ -3056,7 +3056,7 @@
           0.636446,
           0.43
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 2,
@@ -3123,7 +3123,7 @@
           0.696109,
           0.568744
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 1,
@@ -3197,7 +3197,7 @@
           0.266104,
           0.07958
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 26,
@@ -3270,7 +3270,7 @@
           0.006315,
           0.000371
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 1,
@@ -3327,7 +3327,7 @@
           0.649279,
           0.442282
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 1,
@@ -3384,7 +3384,7 @@
           0.159548,
           0.098718
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 10,
@@ -3457,7 +3457,7 @@
           0.042925,
           0.013273
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 11,
@@ -3547,7 +3547,7 @@
           0.017206,
           0.011143
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 1,
@@ -3604,7 +3604,7 @@
           0.643267,
           0.437838
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 1,
@@ -3671,7 +3671,7 @@
           0.518,
           0.337113
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       }
     },
     {
@@ -3739,7 +3739,7 @@
           0.095474,
           0.034257
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 79,
@@ -3792,7 +3792,7 @@
           0.035607,
           0.028173
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       }
     },
     {
@@ -3842,7 +3842,7 @@
           0.183117,
           0.050801
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 5,
@@ -3898,7 +3898,7 @@
           0.426207,
           0.101337
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 5,
@@ -3953,7 +3953,7 @@
           0.015,
           0.00059
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 125,
@@ -4025,7 +4025,7 @@
           0.000899,
           0.000092
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 1,
@@ -4081,7 +4081,7 @@
           0.098792,
           0.009615
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       }
     },
     {
@@ -4147,7 +4147,7 @@
           0.058521,
           0.017234
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       }
     },
     {
@@ -4217,7 +4217,7 @@
           0.032962,
           0.00213
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 36,
@@ -4270,7 +4270,7 @@
           0.000602,
           0.000044
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 9,
@@ -4327,7 +4327,7 @@
           0.585714,
           0.401235
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 1,
@@ -4382,7 +4382,7 @@
           0.02,
           0.000007
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 4,
@@ -4437,7 +4437,7 @@
           0.002121,
           0.000549
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 19,
@@ -4491,7 +4491,7 @@
           0.002359,
           0.000064
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       }
     },
     {
@@ -4542,7 +4542,7 @@
           0.603448,
           0.45
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 2,
@@ -4599,7 +4599,7 @@
           0.131746,
           0.075
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 46,
@@ -4656,7 +4656,7 @@
           0.003209,
           0.000557
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 1,
@@ -4710,7 +4710,7 @@
           0.002055,
           0.000074
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       }
     },
     {
@@ -4761,7 +4761,7 @@
           0.65,
           0.504972
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 2,
@@ -4818,7 +4818,7 @@
           0.15,
           0.075926
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 15,
@@ -4875,7 +4875,7 @@
           0.005601,
           0.00087
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 1,
@@ -4986,7 +4986,7 @@
           0.004285,
           0.000271
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 7,
@@ -5032,7 +5032,7 @@
           0.645661,
           0.402654
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       }
     },
     {
@@ -5072,7 +5072,7 @@
           0.151623,
           0.05639
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       }
     },
     {
@@ -5122,7 +5122,7 @@
           0.05,
           0.007216
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 26,
@@ -5157,7 +5157,7 @@
           0.007682,
           0.005432
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       }
     },
     {
@@ -5208,7 +5208,7 @@
           0.630058,
           0.5
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 1,
@@ -5265,7 +5265,7 @@
           0.156395,
           0.075
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 18,
@@ -5342,7 +5342,7 @@
           0.062125,
           0.001247
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 22,
@@ -5417,7 +5417,7 @@
           0.002697,
           0.000351
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 6,
@@ -5474,7 +5474,7 @@
           0.646429,
           0.426316
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 1,
@@ -5571,7 +5571,7 @@
           0.404762,
           0.092857
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 55,
@@ -5668,7 +5668,7 @@
           0.030822,
           0.004323
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 81,
@@ -5743,13 +5743,1137 @@
           0.00371,
           0.00026
         ],
-        "sampledAt": "2026-08-30T15:59:54.202Z"
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       },
       "corpus": {
         "runs": 5,
         "best": 57,
         "median": 54,
         "reaches": null
+      }
+    },
+    {
+      "scenario": "VT Popcorn Novice S5",
+      "category": "Clicking",
+      "family": "Popcorn",
+      "subCategory": "Dynamic Clicking",
+      "window": 0,
+      "label": "VT Popcorn Novice S5",
+      "leaderboardId": 98285,
+      "rankMaxes": [
+        390,
+        500,
+        600,
+        720
+      ],
+      "source": {
+        "kind": "reconciled",
+        "rule": "median per rank of 2 tiers this pool bands at Novice, each first reduced to 4 evenly spread picks",
+        "from": [
+          {
+            "benchmark": "Voltaic S5.5",
+            "difficulty": "Novice",
+            "rankMaxes": [
+              390,
+              500,
+              600,
+              720
+            ]
+          },
+          {
+            "benchmark": "Voltaic S5",
+            "difficulty": "Novice",
+            "rankMaxes": [
+              390,
+              500,
+              600,
+              720
+            ]
+          }
+        ]
+      },
+      "sanity": {
+        "leaderboardEntries": 103740,
+        "clears": [
+          0.852941,
+          0.731818,
+          0.59,
+          0.4
+        ],
+        "sampledAt": "2026-08-31T22:30:57.149Z"
+      },
+      "corpus": {
+        "runs": 3,
+        "best": 830,
+        "median": 780,
+        "reaches": "rank 4"
+      }
+    },
+    {
+      "scenario": "VT Popcorn Intermediate S5",
+      "category": "Clicking",
+      "family": "Popcorn",
+      "subCategory": "Dynamic Clicking",
+      "window": 1,
+      "label": "VT Popcorn Intermediate S5",
+      "leaderboardId": 98333,
+      "rankMaxes": [
+        600,
+        690,
+        780,
+        860
+      ],
+      "source": {
+        "kind": "reconciled",
+        "rule": "median per rank of 2 tiers this pool bands at Intermediate, each first reduced to 4 evenly spread picks",
+        "from": [
+          {
+            "benchmark": "Voltaic S5.5",
+            "difficulty": "Intermediate",
+            "rankMaxes": [
+              600,
+              690,
+              780,
+              860
+            ]
+          },
+          {
+            "benchmark": "Voltaic S5",
+            "difficulty": "Intermediate",
+            "rankMaxes": [
+              600,
+              690,
+              780,
+              860
+            ]
+          }
+        ]
+      },
+      "sanity": {
+        "leaderboardEntries": 62758,
+        "clears": [
+          0.4,
+          0.214286,
+          0.116667,
+          0.058333
+        ],
+        "sampledAt": "2026-08-31T22:30:57.149Z"
+      },
+      "corpus": {
+        "runs": 40,
+        "best": 770,
+        "median": 610,
+        "reaches": "rank 6"
+      }
+    },
+    {
+      "scenario": "VT Popcorn Advanced S5",
+      "category": "Clicking",
+      "family": "Popcorn",
+      "subCategory": "Dynamic Clicking",
+      "window": 2,
+      "label": "VT Popcorn Advanced S5",
+      "leaderboardId": 98024,
+      "rankMaxes": [
+        670,
+        785,
+        890,
+        1000
+      ],
+      "source": {
+        "kind": "reconciled",
+        "rule": "median per rank of 2 tiers this pool bands at Advanced, each first reduced to 4 evenly spread picks",
+        "from": [
+          {
+            "benchmark": "Voltaic S5.5",
+            "difficulty": "Advanced",
+            "rankMaxes": [
+              660,
+              770,
+              870,
+              980
+            ]
+          },
+          {
+            "benchmark": "Voltaic S5",
+            "difficulty": "Advanced",
+            "rankMaxes": [
+              680,
+              800,
+              910,
+              1020
+            ]
+          }
+        ]
+      },
+      "sanity": {
+        "leaderboardEntries": 14260,
+        "clears": [
+          0.06,
+          0.012178,
+          0.004018,
+          0.00085
+        ],
+        "sampledAt": "2026-08-31T22:30:57.149Z"
+      },
+      "corpus": {
+        "runs": 1,
+        "best": 340,
+        "median": 340,
+        "reaches": null
+      }
+    },
+    {
+      "scenario": "Popcorn MV Advanced",
+      "category": "Clicking",
+      "family": "Popcorn",
+      "subCategory": "Dynamic Clicking",
+      "window": 3,
+      "label": "Popcorn MV Advanced",
+      "leaderboardId": 76966,
+      "rankMaxes": [
+        325,
+        445,
+        495,
+        575
+      ],
+      "source": {
+        "kind": "reconciled",
+        "rule": "median per rank of 4 tiers this pool bands at Expert, each first reduced to 4 evenly spread picks",
+        "from": [
+          {
+            "benchmark": "Jade Palace Dynamic",
+            "difficulty": "Hard",
+            "rankMaxes": [
+              350,
+              440,
+              520,
+              600,
+              740
+            ],
+            "used": [
+              350,
+              440,
+              600,
+              740
+            ]
+          },
+          {
+            "benchmark": "snakbox Benchmark",
+            "difficulty": "Hard",
+            "rankMaxes": [
+              300,
+              380,
+              450,
+              500,
+              550,
+              600
+            ],
+            "used": [
+              300,
+              450,
+              500,
+              600
+            ]
+          },
+          {
+            "benchmark": "Viscose Benchmarks S2",
+            "difficulty": "Expert",
+            "rankMaxes": [
+              400,
+              430,
+              460,
+              490,
+              520,
+              550
+            ],
+            "used": [
+              400,
+              460,
+              490,
+              550
+            ]
+          },
+          {
+            "benchmark": "Viscose Benchmarks",
+            "difficulty": "Hard",
+            "rankMaxes": [
+              290,
+              330,
+              370,
+              420,
+              460,
+              500
+            ],
+            "used": [
+              290,
+              370,
+              420,
+              500
+            ]
+          }
+        ]
+      },
+      "sanity": {
+        "leaderboardEntries": 4511,
+        "clears": [
+          0.085469,
+          0.009875,
+          0.003126,
+          0.000428
+        ],
+        "sampledAt": "2026-08-31T22:30:57.149Z"
+      }
+    },
+    {
+      "scenario": "VT PGT Novice S5",
+      "category": "Tracking",
+      "family": "PGT",
+      "subCategory": "Precise Tracking",
+      "window": 0,
+      "label": "VT PGT Novice S5",
+      "leaderboardId": 98060,
+      "rankMaxes": [
+        1900,
+        2325,
+        2775,
+        3050
+      ],
+      "source": {
+        "kind": "reconciled",
+        "rule": "median per rank of 2 tiers this pool bands at Novice, each first reduced to 4 evenly spread picks",
+        "from": [
+          {
+            "benchmark": "Voltaic S5.5",
+            "difficulty": "Novice",
+            "rankMaxes": [
+              1900,
+              2325,
+              2775,
+              3050
+            ]
+          },
+          {
+            "benchmark": "Voltaic S5",
+            "difficulty": "Novice",
+            "rankMaxes": [
+              1900,
+              2325,
+              2775,
+              3050
+            ]
+          }
+        ]
+      },
+      "sanity": {
+        "leaderboardEntries": 93477,
+        "clears": [
+          0.881837,
+          0.789819,
+          0.633235,
+          0.511912
+        ],
+        "sampledAt": "2026-08-31T22:30:57.149Z"
+      },
+      "corpus": {
+        "runs": 4,
+        "best": 3745,
+        "median": 3227,
+        "reaches": "rank 4"
+      }
+    },
+    {
+      "scenario": "VT PGT Intermediate S5",
+      "category": "Tracking",
+      "family": "PGT",
+      "subCategory": "Precise Tracking",
+      "window": 1,
+      "label": "VT PGT Intermediate S5",
+      "leaderboardId": 98331,
+      "rankMaxes": [
+        2275,
+        2675,
+        3050,
+        3325
+      ],
+      "source": {
+        "kind": "reconciled",
+        "rule": "median per rank of 2 tiers this pool bands at Intermediate, each first reduced to 4 evenly spread picks",
+        "from": [
+          {
+            "benchmark": "Voltaic S5.5",
+            "difficulty": "Intermediate",
+            "rankMaxes": [
+              2275,
+              2675,
+              3050,
+              3325
+            ]
+          },
+          {
+            "benchmark": "Voltaic S5",
+            "difficulty": "Intermediate",
+            "rankMaxes": [
+              2275,
+              2675,
+              3050,
+              3325
+            ]
+          }
+        ]
+      },
+      "sanity": {
+        "leaderboardEntries": 56377,
+        "clears": [
+          0.501685,
+          0.293357,
+          0.171277,
+          0.105275
+        ],
+        "sampledAt": "2026-08-31T22:30:57.149Z"
+      },
+      "corpus": {
+        "runs": 51,
+        "best": 2909,
+        "median": 2358,
+        "reaches": "rank 6"
+      }
+    },
+    {
+      "scenario": "VT PGT Advanced S5",
+      "category": "Tracking",
+      "family": "PGT",
+      "subCategory": "Precise Tracking",
+      "window": 2,
+      "label": "VT PGT Advanced S5",
+      "leaderboardId": 98255,
+      "rankMaxes": [
+        2775,
+        3200,
+        3643,
+        4063
+      ],
+      "source": {
+        "kind": "reconciled",
+        "rule": "median per rank of 2 tiers this pool bands at Advanced, each first reduced to 4 evenly spread picks",
+        "from": [
+          {
+            "benchmark": "Voltaic S5.5",
+            "difficulty": "Advanced",
+            "rankMaxes": [
+              2800,
+              3225,
+              3660,
+              4075
+            ]
+          },
+          {
+            "benchmark": "Voltaic S5",
+            "difficulty": "Advanced",
+            "rankMaxes": [
+              2750,
+              3175,
+              3625,
+              4050
+            ]
+          }
+        ]
+      },
+      "sanity": {
+        "leaderboardEntries": 13518,
+        "clears": [
+          0.0985,
+          0.024219,
+          0.007379,
+          0.001794
+        ],
+        "sampledAt": "2026-08-31T22:30:57.149Z"
+      },
+      "corpus": {
+        "runs": 1,
+        "best": 1595,
+        "median": 1595,
+        "reaches": null
+      }
+    },
+    {
+      "scenario": "VT PGT Elite S5",
+      "category": "Tracking",
+      "family": "PGT",
+      "subCategory": "Precise Tracking",
+      "window": 3,
+      "label": "VT PGT Elite S5",
+      "leaderboardId": 104670,
+      "rankMaxes": [
+        2150,
+        2900,
+        3200,
+        3425
+      ],
+      "source": {
+        "kind": "adopted",
+        "from": [
+          {
+            "benchmark": "Voltaic S5",
+            "difficulty": "Elite (Unofficial)",
+            "rankMaxes": [
+              2150,
+              2525,
+              2900,
+              3200,
+              3350,
+              3425
+            ],
+            "used": [
+              2150,
+              2900,
+              3200,
+              3425
+            ]
+          }
+        ]
+      },
+      "sanity": {
+        "leaderboardEntries": 1727,
+        "clears": [
+          0.033746,
+          0.003366,
+          0.000903,
+          0.000587
+        ],
+        "sampledAt": "2026-08-31T22:30:57.149Z"
+      }
+    },
+    {
+      "scenario": "VT Plaza Novice",
+      "category": "Tracking",
+      "family": "Plaza",
+      "subCategory": "Reactive Tracking",
+      "window": 0,
+      "label": "VT Plaza Novice",
+      "leaderboardId": 43183,
+      "rankMaxes": [
+        2150,
+        2450,
+        2850,
+        3050
+      ],
+      "source": {
+        "kind": "adopted",
+        "from": [
+          {
+            "benchmark": "Voltaic S4",
+            "difficulty": "Novice",
+            "rankMaxes": [
+              2150,
+              2450,
+              2850,
+              3050
+            ]
+          }
+        ]
+      },
+      "sanity": {
+        "leaderboardEntries": 104603,
+        "clears": [
+          0.90586,
+          0.826074,
+          0.648694,
+          0.514772
+        ],
+        "sampledAt": "2026-08-31T22:30:57.149Z"
+      }
+    },
+    {
+      "scenario": "VT Plaza Intermediate",
+      "category": "Tracking",
+      "family": "Plaza",
+      "subCategory": "Reactive Tracking",
+      "window": 1,
+      "label": "VT Plaza Intermediate",
+      "leaderboardId": 43184,
+      "rankMaxes": [
+        2680,
+        2980,
+        3280,
+        3530
+      ],
+      "source": {
+        "kind": "adopted",
+        "from": [
+          {
+            "benchmark": "Voltaic S4",
+            "difficulty": "Intermediate",
+            "rankMaxes": [
+              2680,
+              2980,
+              3280,
+              3530
+            ]
+          }
+        ]
+      },
+      "sanity": {
+        "leaderboardEntries": 56398,
+        "clears": [
+          0.556686,
+          0.318607,
+          0.142363,
+          0.054546
+        ],
+        "sampledAt": "2026-08-31T22:30:57.149Z"
+      }
+    },
+    {
+      "scenario": "VT Plaza Advanced",
+      "category": "Tracking",
+      "family": "Plaza",
+      "subCategory": "Reactive Tracking",
+      "window": 2,
+      "label": "VT Plaza Advanced",
+      "leaderboardId": 43186,
+      "rankMaxes": [
+        3275,
+        3475,
+        3600,
+        3800
+      ],
+      "source": {
+        "kind": "adopted",
+        "from": [
+          {
+            "benchmark": "Voltaic S4",
+            "difficulty": "Advanced",
+            "rankMaxes": [
+              3275,
+              3475,
+              3600,
+              3800
+            ]
+          }
+        ]
+      },
+      "sanity": {
+        "leaderboardEntries": 16950,
+        "clears": [
+          0.070914,
+          0.023149,
+          0.010859,
+          0.002963
+        ],
+        "sampledAt": "2026-08-31T22:30:57.149Z"
+      }
+    },
+    {
+      "scenario": "VT Plaza Viscose Thin",
+      "category": "Tracking",
+      "family": "Plaza",
+      "subCategory": "Reactive Tracking",
+      "window": 3,
+      "label": "VT Plaza Viscose Thin",
+      "leaderboardId": 49624,
+      "rankMaxes": [
+        4000,
+        4400,
+        4575,
+        5000
+      ],
+      "source": {
+        "kind": "adopted",
+        "from": [
+          {
+            "benchmark": "Aimerz+ Reactive Tracking",
+            "difficulty": "Hard",
+            "rankMaxes": [
+              4000,
+              4250,
+              4400,
+              4575,
+              4775,
+              5000
+            ],
+            "used": [
+              4000,
+              4400,
+              4575,
+              5000
+            ]
+          }
+        ]
+      },
+      "sanity": {
+        "leaderboardEntries": 4420,
+        "clears": [
+          0.159876,
+          0.031059,
+          0.011369,
+          0.000315
+        ],
+        "sampledAt": "2026-08-31T22:30:57.149Z"
+      }
+    },
+    {
+      "scenario": "RawControlSphere Entry",
+      "category": "Tracking",
+      "family": "RawControlSphere",
+      "subCategory": "Control Tracking",
+      "window": 0,
+      "label": "RawControlSphere Entry",
+      "leaderboardId": 190185,
+      "rankMaxes": [
+        5000,
+        9000,
+        10500,
+        13400
+      ],
+      "source": {
+        "kind": "adopted",
+        "from": [
+          {
+            "benchmark": "Viscose Entry Benchmarks",
+            "difficulty": "Entry",
+            "rankMaxes": [
+              5000,
+              7000,
+              9000,
+              10500,
+              12000,
+              13400
+            ],
+            "used": [
+              5000,
+              9000,
+              10500,
+              13400
+            ]
+          }
+        ]
+      },
+      "sanity": {
+        "leaderboardEntries": 2767,
+        "clears": [
+          null,
+          0.823034,
+          0.690137,
+          0.376941
+        ],
+        "sampledAt": "2026-08-31T22:30:57.149Z"
+      }
+    },
+    {
+      "scenario": "RawControlSphere Easier",
+      "category": "Tracking",
+      "family": "RawControlSphere",
+      "subCategory": "Control Tracking",
+      "window": 1,
+      "label": "RawControlSphere Easier",
+      "leaderboardId": 185356,
+      "rankMaxes": [
+        4700,
+        8200,
+        10400,
+        13200
+      ],
+      "source": {
+        "kind": "adopted",
+        "from": [
+          {
+            "benchmark": "Viscose Benchmarks S2",
+            "difficulty": "Easier",
+            "rankMaxes": [
+              4700,
+              5900,
+              7400,
+              8200,
+              8900,
+              10400,
+              11000,
+              12300,
+              13200
+            ],
+            "used": [
+              4700,
+              8200,
+              10400,
+              13200
+            ]
+          }
+        ]
+      },
+      "sanity": {
+        "leaderboardEntries": 22930,
+        "clears": [
+          null,
+          0.807631,
+          0.572748,
+          0.229204
+        ],
+        "sampledAt": "2026-08-31T22:30:57.149Z"
+      },
+      "corpus": {
+        "runs": 7,
+        "best": 13740,
+        "median": 12861,
+        "reaches": "rank 8"
+      }
+    },
+    {
+      "scenario": "RawControlSphere",
+      "category": "Tracking",
+      "family": "RawControlSphere",
+      "subCategory": "Control Tracking",
+      "window": 2,
+      "label": "RawControlSphere",
+      "leaderboardId": 184301,
+      "rankMaxes": [
+        6600,
+        10500,
+        12100,
+        14900
+      ],
+      "source": {
+        "kind": "adopted",
+        "from": [
+          {
+            "benchmark": "Viscose Benchmarks S2",
+            "difficulty": "Medium",
+            "rankMaxes": [
+              6600,
+              8150,
+              9300,
+              10500,
+              11300,
+              12100,
+              13100,
+              14075,
+              14900
+            ],
+            "used": [
+              6600,
+              10500,
+              12100,
+              14900
+            ]
+          }
+        ]
+      },
+      "sanity": {
+        "leaderboardEntries": 14858,
+        "clears": [
+          0.903846,
+          0.528714,
+          0.245551,
+          0.020033
+        ],
+        "sampledAt": "2026-08-31T22:30:57.149Z"
+      },
+      "corpus": {
+        "runs": 31,
+        "best": 11853,
+        "median": 10641,
+        "reaches": "rank 10"
+      }
+    },
+    {
+      "scenario": "RawControlSphere Hard",
+      "category": "Tracking",
+      "family": "RawControlSphere",
+      "subCategory": "Control Tracking",
+      "window": 3,
+      "label": "RawControlSphere Hard",
+      "leaderboardId": 184794,
+      "rankMaxes": [
+        10775,
+        12000,
+        13950,
+        15200
+      ],
+      "source": {
+        "kind": "adopted",
+        "from": [
+          {
+            "benchmark": "Viscose Benchmarks S2",
+            "difficulty": "Hard",
+            "rankMaxes": [
+              10775,
+              11400,
+              12000,
+              12650,
+              13300,
+              13950,
+              14650,
+              15200
+            ],
+            "used": [
+              10775,
+              12000,
+              13950,
+              15200
+            ]
+          }
+        ]
+      },
+      "sanity": {
+        "leaderboardEntries": 1897,
+        "clears": [
+          0.427753,
+          0.210307,
+          0.040304,
+          0.007398
+        ],
+        "sampledAt": "2026-08-31T22:30:57.149Z"
+      },
+      "corpus": {
+        "runs": 1,
+        "best": 9120,
+        "median": 9120,
+        "reaches": null
+      }
+    },
+    {
+      "scenario": "Air Voltaic Invincible 4 Entry",
+      "category": "Tracking",
+      "family": "Air Invincible 4",
+      "subCategory": "Reading Tracking",
+      "window": 0,
+      "label": "Air Voltaic Invincible 4 Entry",
+      "leaderboardId": 143160,
+      "rankMaxes": [
+        2400,
+        3300,
+        3700,
+        4400
+      ],
+      "source": {
+        "kind": "adopted",
+        "from": [
+          {
+            "benchmark": "Viscose Entry Benchmarks",
+            "difficulty": "Entry",
+            "rankMaxes": [
+              2400,
+              2900,
+              3300,
+              3700,
+              4050,
+              4400
+            ],
+            "used": [
+              2400,
+              3300,
+              3700,
+              4400
+            ]
+          }
+        ]
+      },
+      "sanity": {
+        "leaderboardEntries": 3572,
+        "clears": [
+          null,
+          0.948268,
+          0.861688,
+          0.639952
+        ],
+        "sampledAt": "2026-08-31T22:30:57.149Z"
+      }
+    },
+    {
+      "scenario": "Air Voltaic Invincible 4 Easier",
+      "category": "Tracking",
+      "family": "Air Invincible 4",
+      "subCategory": "Reading Tracking",
+      "window": 1,
+      "label": "Air Voltaic Invincible 4 Easier",
+      "leaderboardId": 185406,
+      "rankMaxes": [
+        1750,
+        3050,
+        3500,
+        4250
+      ],
+      "source": {
+        "kind": "adopted",
+        "from": [
+          {
+            "benchmark": "Viscose Benchmarks S2",
+            "difficulty": "Easier",
+            "rankMaxes": [
+              1750,
+              2350,
+              2800,
+              3050,
+              3200,
+              3500,
+              3900,
+              4100,
+              4250
+            ],
+            "used": [
+              1750,
+              3050,
+              3500,
+              4250
+            ]
+          }
+        ]
+      },
+      "sanity": {
+        "leaderboardEntries": 20501,
+        "clears": [
+          null,
+          0.835569,
+          0.666168,
+          0.303211
+        ],
+        "sampledAt": "2026-08-31T22:30:57.149Z"
+      },
+      "corpus": {
+        "runs": 2,
+        "best": 4321,
+        "median": 4138,
+        "reaches": "rank 8"
+      }
+    },
+    {
+      "scenario": "Air Voltaic Invincible 4 Medium",
+      "category": "Tracking",
+      "family": "Air Invincible 4",
+      "subCategory": "Reading Tracking",
+      "window": 2,
+      "label": "Air Voltaic Invincible 4 Medium",
+      "leaderboardId": 184775,
+      "rankMaxes": [
+        2275,
+        3300,
+        3850,
+        4600
+      ],
+      "source": {
+        "kind": "adopted",
+        "from": [
+          {
+            "benchmark": "Viscose Benchmarks S2",
+            "difficulty": "Medium",
+            "rankMaxes": [
+              2275,
+              2700,
+              3025,
+              3300,
+              3575,
+              3850,
+              4075,
+              4375,
+              4600
+            ],
+            "used": [
+              2275,
+              3300,
+              3850,
+              4600
+            ]
+          }
+        ]
+      },
+      "sanity": {
+        "leaderboardEntries": 12715,
+        "clears": [
+          null,
+          0.58031,
+          0.234673,
+          0.020924
+        ],
+        "sampledAt": "2026-08-31T22:30:57.149Z"
+      },
+      "corpus": {
+        "runs": 46,
+        "best": 3577,
+        "median": 3204,
+        "reaches": "rank 10"
+      }
+    },
+    {
+      "scenario": "Air Voltaic Invincible 4",
+      "category": "Tracking",
+      "family": "Air Invincible 4",
+      "subCategory": "Reading Tracking",
+      "window": 3,
+      "label": "Air Voltaic Invincible 4",
+      "leaderboardId": 1092,
+      "rankMaxes": [
+        3350,
+        3700,
+        4100,
+        4300
+      ],
+      "source": {
+        "kind": "reconciled",
+        "rule": "median per rank of 3 tiers this pool bands at Expert, each first reduced to 4 evenly spread picks",
+        "from": [
+          {
+            "benchmark": "Jade Palace Air",
+            "difficulty": "Hard",
+            "rankMaxes": [
+              3350,
+              3700,
+              4000,
+              4250,
+              4700
+            ],
+            "used": [
+              3350,
+              3700,
+              4250,
+              4700
+            ]
+          },
+          {
+            "benchmark": "Viscose Benchmarks S2",
+            "difficulty": "Expert",
+            "rankMaxes": [
+              3650,
+              3800,
+              3950,
+              4100,
+              4200,
+              4300
+            ],
+            "used": [
+              3650,
+              3950,
+              4100,
+              4300
+            ]
+          },
+          {
+            "benchmark": "Viscose Benchmarks",
+            "difficulty": "Hard",
+            "rankMaxes": [
+              2800,
+              3150,
+              3450,
+              3700,
+              3900,
+              4100
+            ],
+            "used": [
+              2800,
+              3450,
+              3700,
+              4100
+            ]
+          }
+        ]
+      },
+      "sanity": {
+        "leaderboardEntries": 10510,
+        "clears": [
+          0.036489,
+          0.012036,
+          0.002475,
+          0.000703
+        ],
+        "sampledAt": "2026-08-31T22:30:57.149Z"
       }
     }
   ]

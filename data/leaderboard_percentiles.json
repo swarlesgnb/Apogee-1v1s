@@ -1,6 +1,6 @@
 {
   "source": "kovaaks.com/webapp-backend/leaderboard/scores/global",
-  "sampledAt": "2026-08-30T15:59:54.202Z",
+  "sampledAt": "2026-08-31T22:30:57.149Z",
   "samplePoints": [
     0.001,
     0.005,
@@ -5707,6 +5707,294 @@
         }
       ],
       "sampledAt": "2026-08-29T17:30:55.548Z"
+    },
+    {
+      "scenario": "Air Voltaic Invincible 4",
+      "leaderboardId": 1092,
+      "total": 10510,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 4230
+        },
+        {
+          "topFraction": 0.005,
+          "score": 3931
+        },
+        {
+          "topFraction": 0.01,
+          "score": 3759
+        },
+        {
+          "topFraction": 0.02,
+          "score": 3561
+        },
+        {
+          "topFraction": 0.035,
+          "score": 3367
+        },
+        {
+          "topFraction": 0.05,
+          "score": 3239
+        },
+        {
+          "topFraction": 0.075,
+          "score": 3084
+        },
+        {
+          "topFraction": 0.1,
+          "score": 2945
+        },
+        {
+          "topFraction": 0.15,
+          "score": 2774
+        },
+        {
+          "topFraction": 0.2,
+          "score": 2587
+        },
+        {
+          "topFraction": 0.3,
+          "score": 2318
+        },
+        {
+          "topFraction": 0.4,
+          "score": 2101
+        },
+        {
+          "topFraction": 0.5,
+          "score": 1917
+        },
+        {
+          "topFraction": 0.65,
+          "score": 1666
+        },
+        {
+          "topFraction": 0.8,
+          "score": 1416
+        },
+        {
+          "topFraction": 0.95,
+          "score": 1027
+        }
+      ],
+      "sampledAt": "2026-08-31T22:12:42.931Z"
+    },
+    {
+      "scenario": "Air Voltaic Invincible 4 Easier",
+      "leaderboardId": 185406,
+      "total": 20501,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 5488
+        },
+        {
+          "topFraction": 0.005,
+          "score": 5237
+        },
+        {
+          "topFraction": 0.01,
+          "score": 5110
+        },
+        {
+          "topFraction": 0.02,
+          "score": 4952
+        },
+        {
+          "topFraction": 0.035,
+          "score": 4796
+        },
+        {
+          "topFraction": 0.05,
+          "score": 4707
+        },
+        {
+          "topFraction": 0.075,
+          "score": 4598
+        },
+        {
+          "topFraction": 0.1,
+          "score": 4526
+        },
+        {
+          "topFraction": 0.15,
+          "score": 4422
+        },
+        {
+          "topFraction": 0.2,
+          "score": 4352
+        },
+        {
+          "topFraction": 0.3,
+          "score": 4257
+        },
+        {
+          "topFraction": 0.4,
+          "score": 4039
+        },
+        {
+          "topFraction": 0.5,
+          "score": 3859
+        },
+        {
+          "topFraction": 0.65,
+          "score": 3536
+        },
+        {
+          "topFraction": 0.8,
+          "score": 3202
+        },
+        {
+          "topFraction": 0.95,
+          "score": 2561
+        }
+      ],
+      "sampledAt": "2026-08-31T22:11:52.234Z"
+    },
+    {
+      "scenario": "Air Voltaic Invincible 4 Entry",
+      "leaderboardId": 143160,
+      "total": 3572,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 5964
+        },
+        {
+          "topFraction": 0.005,
+          "score": 5866
+        },
+        {
+          "topFraction": 0.01,
+          "score": 5814
+        },
+        {
+          "topFraction": 0.02,
+          "score": 5743
+        },
+        {
+          "topFraction": 0.035,
+          "score": 5645
+        },
+        {
+          "topFraction": 0.05,
+          "score": 5576
+        },
+        {
+          "topFraction": 0.075,
+          "score": 5479
+        },
+        {
+          "topFraction": 0.1,
+          "score": 5385
+        },
+        {
+          "topFraction": 0.15,
+          "score": 5247
+        },
+        {
+          "topFraction": 0.2,
+          "score": 5123
+        },
+        {
+          "topFraction": 0.3,
+          "score": 4930
+        },
+        {
+          "topFraction": 0.4,
+          "score": 4747
+        },
+        {
+          "topFraction": 0.5,
+          "score": 4595
+        },
+        {
+          "topFraction": 0.65,
+          "score": 4386
+        },
+        {
+          "topFraction": 0.8,
+          "score": 3985
+        },
+        {
+          "topFraction": 0.95,
+          "score": 3292
+        }
+      ],
+      "sampledAt": "2026-08-31T22:11:26.851Z"
+    },
+    {
+      "scenario": "Air Voltaic Invincible 4 Medium",
+      "leaderboardId": 184775,
+      "total": 12715,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 4984
+        },
+        {
+          "topFraction": 0.005,
+          "score": 4736
+        },
+        {
+          "topFraction": 0.01,
+          "score": 4667
+        },
+        {
+          "topFraction": 0.02,
+          "score": 4615
+        },
+        {
+          "topFraction": 0.035,
+          "score": 4459
+        },
+        {
+          "topFraction": 0.05,
+          "score": 4388
+        },
+        {
+          "topFraction": 0.075,
+          "score": 4234
+        },
+        {
+          "topFraction": 0.1,
+          "score": 4149
+        },
+        {
+          "topFraction": 0.15,
+          "score": 4040
+        },
+        {
+          "topFraction": 0.2,
+          "score": 3919
+        },
+        {
+          "topFraction": 0.3,
+          "score": 3720
+        },
+        {
+          "topFraction": 0.4,
+          "score": 3582
+        },
+        {
+          "topFraction": 0.5,
+          "score": 3421
+        },
+        {
+          "topFraction": 0.65,
+          "score": 3195
+        },
+        {
+          "topFraction": 0.8,
+          "score": 2866
+        },
+        {
+          "topFraction": 0.95,
+          "score": 2297
+        }
+      ],
+      "sampledAt": "2026-08-31T22:12:17.595Z"
     },
     {
       "scenario": "AngleSwitch Revosect",
@@ -14637,6 +14925,78 @@
       "sampledAt": "2026-08-25T20:30:58.888Z"
     },
     {
+      "scenario": "Popcorn MV Advanced",
+      "leaderboardId": 76966,
+      "total": 4511,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 530
+        },
+        {
+          "topFraction": 0.005,
+          "score": 480
+        },
+        {
+          "topFraction": 0.01,
+          "score": 450
+        },
+        {
+          "topFraction": 0.02,
+          "score": 420
+        },
+        {
+          "topFraction": 0.035,
+          "score": 380
+        },
+        {
+          "topFraction": 0.05,
+          "score": 360
+        },
+        {
+          "topFraction": 0.075,
+          "score": 340
+        },
+        {
+          "topFraction": 0.1,
+          "score": 320
+        },
+        {
+          "topFraction": 0.15,
+          "score": 290
+        },
+        {
+          "topFraction": 0.2,
+          "score": 270
+        },
+        {
+          "topFraction": 0.3,
+          "score": 230
+        },
+        {
+          "topFraction": 0.4,
+          "score": 190
+        },
+        {
+          "topFraction": 0.5,
+          "score": 160
+        },
+        {
+          "topFraction": 0.65,
+          "score": 120
+        },
+        {
+          "topFraction": 0.8,
+          "score": 90
+        },
+        {
+          "topFraction": 0.95,
+          "score": 40
+        }
+      ],
+      "sampledAt": "2026-08-31T22:30:57.148Z"
+    },
+    {
       "scenario": "Popcorn Sparky",
       "leaderboardId": 502,
       "total": 22336,
@@ -16147,6 +16507,366 @@
         }
       ],
       "sampledAt": "2026-08-25T20:29:56.085Z"
+    },
+    {
+      "scenario": "RawControlSphere",
+      "leaderboardId": 184301,
+      "total": 14858,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 16335
+        },
+        {
+          "topFraction": 0.005,
+          "score": 15546
+        },
+        {
+          "topFraction": 0.01,
+          "score": 15264
+        },
+        {
+          "topFraction": 0.02,
+          "score": 14985
+        },
+        {
+          "topFraction": 0.035,
+          "score": 14439
+        },
+        {
+          "topFraction": 0.05,
+          "score": 14139
+        },
+        {
+          "topFraction": 0.075,
+          "score": 13644
+        },
+        {
+          "topFraction": 0.1,
+          "score": 13371
+        },
+        {
+          "topFraction": 0.15,
+          "score": 12879
+        },
+        {
+          "topFraction": 0.2,
+          "score": 12402
+        },
+        {
+          "topFraction": 0.3,
+          "score": 11739
+        },
+        {
+          "topFraction": 0.4,
+          "score": 11238
+        },
+        {
+          "topFraction": 0.5,
+          "score": 10701
+        },
+        {
+          "topFraction": 0.65,
+          "score": 9651
+        },
+        {
+          "topFraction": 0.8,
+          "score": 8328
+        },
+        {
+          "topFraction": 0.95,
+          "score": 5832
+        }
+      ],
+      "sampledAt": "2026-08-31T22:10:35.997Z"
+    },
+    {
+      "scenario": "RawControlSphere Easier",
+      "leaderboardId": 185356,
+      "total": 22930,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 16920
+        },
+        {
+          "topFraction": 0.005,
+          "score": 16293
+        },
+        {
+          "topFraction": 0.01,
+          "score": 15879
+        },
+        {
+          "topFraction": 0.02,
+          "score": 15237
+        },
+        {
+          "topFraction": 0.035,
+          "score": 14727
+        },
+        {
+          "topFraction": 0.05,
+          "score": 14433
+        },
+        {
+          "topFraction": 0.075,
+          "score": 14154
+        },
+        {
+          "topFraction": 0.1,
+          "score": 13956
+        },
+        {
+          "topFraction": 0.15,
+          "score": 13623
+        },
+        {
+          "topFraction": 0.2,
+          "score": 13398
+        },
+        {
+          "topFraction": 0.3,
+          "score": 12720
+        },
+        {
+          "topFraction": 0.4,
+          "score": 11706
+        },
+        {
+          "topFraction": 0.5,
+          "score": 11046
+        },
+        {
+          "topFraction": 0.65,
+          "score": 9714
+        },
+        {
+          "topFraction": 0.8,
+          "score": 8325
+        },
+        {
+          "topFraction": 0.95,
+          "score": 5868
+        }
+      ],
+      "sampledAt": "2026-08-31T22:10:10.665Z"
+    },
+    {
+      "scenario": "RawControlSphere Entry",
+      "leaderboardId": 190185,
+      "total": 2767,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 17856
+        },
+        {
+          "topFraction": 0.005,
+          "score": 17487
+        },
+        {
+          "topFraction": 0.01,
+          "score": 17250
+        },
+        {
+          "topFraction": 0.02,
+          "score": 16971
+        },
+        {
+          "topFraction": 0.035,
+          "score": 16629
+        },
+        {
+          "topFraction": 0.05,
+          "score": 16215
+        },
+        {
+          "topFraction": 0.075,
+          "score": 15807
+        },
+        {
+          "topFraction": 0.1,
+          "score": 15441
+        },
+        {
+          "topFraction": 0.15,
+          "score": 14796
+        },
+        {
+          "topFraction": 0.2,
+          "score": 14355
+        },
+        {
+          "topFraction": 0.3,
+          "score": 13737
+        },
+        {
+          "topFraction": 0.4,
+          "score": 13299
+        },
+        {
+          "topFraction": 0.5,
+          "score": 12345
+        },
+        {
+          "topFraction": 0.65,
+          "score": 10911
+        },
+        {
+          "topFraction": 0.8,
+          "score": 9375
+        },
+        {
+          "topFraction": 0.95,
+          "score": 6933
+        }
+      ],
+      "sampledAt": "2026-08-31T22:09:45.260Z"
+    },
+    {
+      "scenario": "RawControlSphere Expert",
+      "leaderboardId": 184846,
+      "total": 710,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 14904
+        },
+        {
+          "topFraction": 0.005,
+          "score": 14208
+        },
+        {
+          "topFraction": 0.01,
+          "score": 13656
+        },
+        {
+          "topFraction": 0.02,
+          "score": 13233
+        },
+        {
+          "topFraction": 0.035,
+          "score": 12717
+        },
+        {
+          "topFraction": 0.05,
+          "score": 12297
+        },
+        {
+          "topFraction": 0.075,
+          "score": 11553
+        },
+        {
+          "topFraction": 0.1,
+          "score": 11220
+        },
+        {
+          "topFraction": 0.15,
+          "score": 10632
+        },
+        {
+          "topFraction": 0.2,
+          "score": 10260
+        },
+        {
+          "topFraction": 0.3,
+          "score": 9465
+        },
+        {
+          "topFraction": 0.4,
+          "score": 8313
+        },
+        {
+          "topFraction": 0.5,
+          "score": 7434
+        },
+        {
+          "topFraction": 0.65,
+          "score": 6270
+        },
+        {
+          "topFraction": 0.8,
+          "score": 4731
+        },
+        {
+          "topFraction": 0.95,
+          "score": 3111
+        }
+      ],
+      "sampledAt": "2026-08-31T22:11:01.461Z"
+    },
+    {
+      "scenario": "RawControlSphere Hard",
+      "leaderboardId": 184794,
+      "total": 1897,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 16284
+        },
+        {
+          "topFraction": 0.005,
+          "score": 15309
+        },
+        {
+          "topFraction": 0.01,
+          "score": 15168
+        },
+        {
+          "topFraction": 0.02,
+          "score": 14574
+        },
+        {
+          "topFraction": 0.035,
+          "score": 14061
+        },
+        {
+          "topFraction": 0.05,
+          "score": 13791
+        },
+        {
+          "topFraction": 0.075,
+          "score": 13392
+        },
+        {
+          "topFraction": 0.1,
+          "score": 13074
+        },
+        {
+          "topFraction": 0.15,
+          "score": 12537
+        },
+        {
+          "topFraction": 0.2,
+          "score": 12132
+        },
+        {
+          "topFraction": 0.3,
+          "score": 11421
+        },
+        {
+          "topFraction": 0.4,
+          "score": 10959
+        },
+        {
+          "topFraction": 0.5,
+          "score": 10296
+        },
+        {
+          "topFraction": 0.65,
+          "score": 8964
+        },
+        {
+          "topFraction": 0.8,
+          "score": 7563
+        },
+        {
+          "topFraction": 0.95,
+          "score": 5109
+        }
+      ],
+      "sampledAt": "2026-08-31T22:20:35.906Z"
     },
     {
       "scenario": "Smooth Thin Strafes Raspberry",
@@ -27307,6 +28027,78 @@
         }
       ],
       "sampledAt": "2026-08-18T23:59:22.954Z"
+    },
+    {
+      "scenario": "VT Plaza Viscose Thin",
+      "leaderboardId": 49624,
+      "total": 4420,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 4889.78
+        },
+        {
+          "topFraction": 0.005,
+          "score": 4692.81
+        },
+        {
+          "topFraction": 0.01,
+          "score": 4583.83
+        },
+        {
+          "topFraction": 0.02,
+          "score": 4476.84
+        },
+        {
+          "topFraction": 0.035,
+          "score": 4414.86
+        },
+        {
+          "topFraction": 0.05,
+          "score": 4326.87
+        },
+        {
+          "topFraction": 0.075,
+          "score": 4208.89
+        },
+        {
+          "topFraction": 0.1,
+          "score": 4141.9
+        },
+        {
+          "topFraction": 0.15,
+          "score": 4021.92
+        },
+        {
+          "topFraction": 0.2,
+          "score": 3910.94
+        },
+        {
+          "topFraction": 0.3,
+          "score": 3722.97
+        },
+        {
+          "topFraction": 0.4,
+          "score": 3542
+        },
+        {
+          "topFraction": 0.5,
+          "score": 3382.03
+        },
+        {
+          "topFraction": 0.65,
+          "score": 3109.06
+        },
+        {
+          "topFraction": 0.8,
+          "score": 2714.05
+        },
+        {
+          "topFraction": 0.95,
+          "score": 2017.03
+        }
+      ],
+      "sampledAt": "2026-08-31T22:20:10.499Z"
     },
     {
       "scenario": "VT Popcorn Advanced S5",

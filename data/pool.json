@@ -4061,6 +4061,839 @@
           }
         }
       ]
+    },
+    {
+      "family": "Popcorn",
+      "category": "Clicking",
+      "subCategory": "Dynamic Clicking",
+      "variants": [
+        {
+          "window": 0,
+          "scenario": "VT Popcorn Novice S5",
+          "label": "VT Popcorn Novice S5",
+          "leaderboardId": 98285,
+          "rankMaxes": [
+            390,
+            500,
+            600,
+            720
+          ],
+          "source": {
+            "kind": "reconciled",
+            "rule": "median per rank of 2 tiers this pool bands at Novice, each first reduced to 4 evenly spread picks",
+            "from": [
+              {
+                "benchmark": "Voltaic S5.5",
+                "difficulty": "Novice",
+                "rankMaxes": [
+                  390,
+                  500,
+                  600,
+                  720
+                ]
+              },
+              {
+                "benchmark": "Voltaic S5",
+                "difficulty": "Novice",
+                "rankMaxes": [
+                  390,
+                  500,
+                  600,
+                  720
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "window": 1,
+          "scenario": "VT Popcorn Intermediate S5",
+          "label": "VT Popcorn Intermediate S5",
+          "leaderboardId": 98333,
+          "rankMaxes": [
+            600,
+            690,
+            780,
+            860
+          ],
+          "source": {
+            "kind": "reconciled",
+            "rule": "median per rank of 2 tiers this pool bands at Intermediate, each first reduced to 4 evenly spread picks",
+            "from": [
+              {
+                "benchmark": "Voltaic S5.5",
+                "difficulty": "Intermediate",
+                "rankMaxes": [
+                  600,
+                  690,
+                  780,
+                  860
+                ]
+              },
+              {
+                "benchmark": "Voltaic S5",
+                "difficulty": "Intermediate",
+                "rankMaxes": [
+                  600,
+                  690,
+                  780,
+                  860
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "window": 2,
+          "scenario": "VT Popcorn Advanced S5",
+          "label": "VT Popcorn Advanced S5",
+          "leaderboardId": 98024,
+          "rankMaxes": [
+            670,
+            785,
+            890,
+            1000
+          ],
+          "source": {
+            "kind": "reconciled",
+            "rule": "median per rank of 2 tiers this pool bands at Advanced, each first reduced to 4 evenly spread picks",
+            "from": [
+              {
+                "benchmark": "Voltaic S5.5",
+                "difficulty": "Advanced",
+                "rankMaxes": [
+                  660,
+                  770,
+                  870,
+                  980
+                ]
+              },
+              {
+                "benchmark": "Voltaic S5",
+                "difficulty": "Advanced",
+                "rankMaxes": [
+                  680,
+                  800,
+                  910,
+                  1020
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "window": 3,
+          "scenario": "Popcorn MV Advanced",
+          "label": "Popcorn MV Advanced",
+          "leaderboardId": 76966,
+          "rankMaxes": [
+            325,
+            445,
+            495,
+            575
+          ],
+          "source": {
+            "kind": "reconciled",
+            "rule": "median per rank of 4 tiers this pool bands at Expert, each first reduced to 4 evenly spread picks",
+            "from": [
+              {
+                "benchmark": "Jade Palace Dynamic",
+                "difficulty": "Hard",
+                "rankMaxes": [
+                  350,
+                  440,
+                  520,
+                  600,
+                  740
+                ],
+                "used": [
+                  350,
+                  440,
+                  600,
+                  740
+                ]
+              },
+              {
+                "benchmark": "snakbox Benchmark",
+                "difficulty": "Hard",
+                "rankMaxes": [
+                  300,
+                  380,
+                  450,
+                  500,
+                  550,
+                  600
+                ],
+                "used": [
+                  300,
+                  450,
+                  500,
+                  600
+                ]
+              },
+              {
+                "benchmark": "Viscose Benchmarks S2",
+                "difficulty": "Expert",
+                "rankMaxes": [
+                  400,
+                  430,
+                  460,
+                  490,
+                  520,
+                  550
+                ],
+                "used": [
+                  400,
+                  460,
+                  490,
+                  550
+                ]
+              },
+              {
+                "benchmark": "Viscose Benchmarks",
+                "difficulty": "Hard",
+                "rankMaxes": [
+                  290,
+                  330,
+                  370,
+                  420,
+                  460,
+                  500
+                ],
+                "used": [
+                  290,
+                  370,
+                  420,
+                  500
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "family": "PGT",
+      "category": "Tracking",
+      "subCategory": "Precise Tracking",
+      "variants": [
+        {
+          "window": 0,
+          "scenario": "VT PGT Novice S5",
+          "label": "VT PGT Novice S5",
+          "leaderboardId": 98060,
+          "rankMaxes": [
+            1900,
+            2325,
+            2775,
+            3050
+          ],
+          "source": {
+            "kind": "reconciled",
+            "rule": "median per rank of 2 tiers this pool bands at Novice, each first reduced to 4 evenly spread picks",
+            "from": [
+              {
+                "benchmark": "Voltaic S5.5",
+                "difficulty": "Novice",
+                "rankMaxes": [
+                  1900,
+                  2325,
+                  2775,
+                  3050
+                ]
+              },
+              {
+                "benchmark": "Voltaic S5",
+                "difficulty": "Novice",
+                "rankMaxes": [
+                  1900,
+                  2325,
+                  2775,
+                  3050
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "window": 1,
+          "scenario": "VT PGT Intermediate S5",
+          "label": "VT PGT Intermediate S5",
+          "leaderboardId": 98331,
+          "rankMaxes": [
+            2275,
+            2675,
+            3050,
+            3325
+          ],
+          "source": {
+            "kind": "reconciled",
+            "rule": "median per rank of 2 tiers this pool bands at Intermediate, each first reduced to 4 evenly spread picks",
+            "from": [
+              {
+                "benchmark": "Voltaic S5.5",
+                "difficulty": "Intermediate",
+                "rankMaxes": [
+                  2275,
+                  2675,
+                  3050,
+                  3325
+                ]
+              },
+              {
+                "benchmark": "Voltaic S5",
+                "difficulty": "Intermediate",
+                "rankMaxes": [
+                  2275,
+                  2675,
+                  3050,
+                  3325
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "window": 2,
+          "scenario": "VT PGT Advanced S5",
+          "label": "VT PGT Advanced S5",
+          "leaderboardId": 98255,
+          "rankMaxes": [
+            2775,
+            3200,
+            3643,
+            4063
+          ],
+          "source": {
+            "kind": "reconciled",
+            "rule": "median per rank of 2 tiers this pool bands at Advanced, each first reduced to 4 evenly spread picks",
+            "from": [
+              {
+                "benchmark": "Voltaic S5.5",
+                "difficulty": "Advanced",
+                "rankMaxes": [
+                  2800,
+                  3225,
+                  3660,
+                  4075
+                ]
+              },
+              {
+                "benchmark": "Voltaic S5",
+                "difficulty": "Advanced",
+                "rankMaxes": [
+                  2750,
+                  3175,
+                  3625,
+                  4050
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "window": 3,
+          "scenario": "VT PGT Elite S5",
+          "label": "VT PGT Elite S5",
+          "leaderboardId": 104670,
+          "rankMaxes": [
+            2150,
+            2900,
+            3200,
+            3425
+          ],
+          "source": {
+            "kind": "adopted",
+            "from": [
+              {
+                "benchmark": "Voltaic S5",
+                "difficulty": "Elite (Unofficial)",
+                "rankMaxes": [
+                  2150,
+                  2525,
+                  2900,
+                  3200,
+                  3350,
+                  3425
+                ],
+                "used": [
+                  2150,
+                  2900,
+                  3200,
+                  3425
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "family": "Plaza",
+      "category": "Tracking",
+      "subCategory": "Reactive Tracking",
+      "variants": [
+        {
+          "window": 0,
+          "scenario": "VT Plaza Novice",
+          "label": "VT Plaza Novice",
+          "leaderboardId": 43183,
+          "rankMaxes": [
+            2150,
+            2450,
+            2850,
+            3050
+          ],
+          "source": {
+            "kind": "adopted",
+            "from": [
+              {
+                "benchmark": "Voltaic S4",
+                "difficulty": "Novice",
+                "rankMaxes": [
+                  2150,
+                  2450,
+                  2850,
+                  3050
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "window": 1,
+          "scenario": "VT Plaza Intermediate",
+          "label": "VT Plaza Intermediate",
+          "leaderboardId": 43184,
+          "rankMaxes": [
+            2680,
+            2980,
+            3280,
+            3530
+          ],
+          "source": {
+            "kind": "adopted",
+            "from": [
+              {
+                "benchmark": "Voltaic S4",
+                "difficulty": "Intermediate",
+                "rankMaxes": [
+                  2680,
+                  2980,
+                  3280,
+                  3530
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "window": 2,
+          "scenario": "VT Plaza Advanced",
+          "label": "VT Plaza Advanced",
+          "leaderboardId": 43186,
+          "rankMaxes": [
+            3275,
+            3475,
+            3600,
+            3800
+          ],
+          "source": {
+            "kind": "adopted",
+            "from": [
+              {
+                "benchmark": "Voltaic S4",
+                "difficulty": "Advanced",
+                "rankMaxes": [
+                  3275,
+                  3475,
+                  3600,
+                  3800
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "window": 3,
+          "scenario": "VT Plaza Viscose Thin",
+          "label": "VT Plaza Viscose Thin",
+          "leaderboardId": 49624,
+          "rankMaxes": [
+            4000,
+            4400,
+            4575,
+            5000
+          ],
+          "source": {
+            "kind": "adopted",
+            "from": [
+              {
+                "benchmark": "Aimerz+ Reactive Tracking",
+                "difficulty": "Hard",
+                "rankMaxes": [
+                  4000,
+                  4250,
+                  4400,
+                  4575,
+                  4775,
+                  5000
+                ],
+                "used": [
+                  4000,
+                  4400,
+                  4575,
+                  5000
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "family": "RawControlSphere",
+      "category": "Tracking",
+      "subCategory": "Control Tracking",
+      "variants": [
+        {
+          "window": 0,
+          "scenario": "RawControlSphere Entry",
+          "label": "RawControlSphere Entry",
+          "leaderboardId": 190185,
+          "rankMaxes": [
+            5000,
+            9000,
+            10500,
+            13400
+          ],
+          "source": {
+            "kind": "adopted",
+            "from": [
+              {
+                "benchmark": "Viscose Entry Benchmarks",
+                "difficulty": "Entry",
+                "rankMaxes": [
+                  5000,
+                  7000,
+                  9000,
+                  10500,
+                  12000,
+                  13400
+                ],
+                "used": [
+                  5000,
+                  9000,
+                  10500,
+                  13400
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "window": 1,
+          "scenario": "RawControlSphere Easier",
+          "label": "RawControlSphere Easier",
+          "leaderboardId": 185356,
+          "rankMaxes": [
+            4700,
+            8200,
+            10400,
+            13200
+          ],
+          "source": {
+            "kind": "adopted",
+            "from": [
+              {
+                "benchmark": "Viscose Benchmarks S2",
+                "difficulty": "Easier",
+                "rankMaxes": [
+                  4700,
+                  5900,
+                  7400,
+                  8200,
+                  8900,
+                  10400,
+                  11000,
+                  12300,
+                  13200
+                ],
+                "used": [
+                  4700,
+                  8200,
+                  10400,
+                  13200
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "window": 2,
+          "scenario": "RawControlSphere",
+          "label": "RawControlSphere",
+          "leaderboardId": 184301,
+          "rankMaxes": [
+            6600,
+            10500,
+            12100,
+            14900
+          ],
+          "source": {
+            "kind": "adopted",
+            "from": [
+              {
+                "benchmark": "Viscose Benchmarks S2",
+                "difficulty": "Medium",
+                "rankMaxes": [
+                  6600,
+                  8150,
+                  9300,
+                  10500,
+                  11300,
+                  12100,
+                  13100,
+                  14075,
+                  14900
+                ],
+                "used": [
+                  6600,
+                  10500,
+                  12100,
+                  14900
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "window": 3,
+          "scenario": "RawControlSphere Hard",
+          "label": "RawControlSphere Hard",
+          "leaderboardId": 184794,
+          "rankMaxes": [
+            10775,
+            12000,
+            13950,
+            15200
+          ],
+          "source": {
+            "kind": "adopted",
+            "from": [
+              {
+                "benchmark": "Viscose Benchmarks S2",
+                "difficulty": "Hard",
+                "rankMaxes": [
+                  10775,
+                  11400,
+                  12000,
+                  12650,
+                  13300,
+                  13950,
+                  14650,
+                  15200
+                ],
+                "used": [
+                  10775,
+                  12000,
+                  13950,
+                  15200
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "family": "Air Invincible 4",
+      "category": "Tracking",
+      "subCategory": "Reading Tracking",
+      "variants": [
+        {
+          "window": 0,
+          "scenario": "Air Voltaic Invincible 4 Entry",
+          "label": "Air Voltaic Invincible 4 Entry",
+          "leaderboardId": 143160,
+          "rankMaxes": [
+            2400,
+            3300,
+            3700,
+            4400
+          ],
+          "source": {
+            "kind": "adopted",
+            "from": [
+              {
+                "benchmark": "Viscose Entry Benchmarks",
+                "difficulty": "Entry",
+                "rankMaxes": [
+                  2400,
+                  2900,
+                  3300,
+                  3700,
+                  4050,
+                  4400
+                ],
+                "used": [
+                  2400,
+                  3300,
+                  3700,
+                  4400
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "window": 1,
+          "scenario": "Air Voltaic Invincible 4 Easier",
+          "label": "Air Voltaic Invincible 4 Easier",
+          "leaderboardId": 185406,
+          "rankMaxes": [
+            1750,
+            3050,
+            3500,
+            4250
+          ],
+          "source": {
+            "kind": "adopted",
+            "from": [
+              {
+                "benchmark": "Viscose Benchmarks S2",
+                "difficulty": "Easier",
+                "rankMaxes": [
+                  1750,
+                  2350,
+                  2800,
+                  3050,
+                  3200,
+                  3500,
+                  3900,
+                  4100,
+                  4250
+                ],
+                "used": [
+                  1750,
+                  3050,
+                  3500,
+                  4250
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "window": 2,
+          "scenario": "Air Voltaic Invincible 4 Medium",
+          "label": "Air Voltaic Invincible 4 Medium",
+          "leaderboardId": 184775,
+          "rankMaxes": [
+            2275,
+            3300,
+            3850,
+            4600
+          ],
+          "source": {
+            "kind": "adopted",
+            "from": [
+              {
+                "benchmark": "Viscose Benchmarks S2",
+                "difficulty": "Medium",
+                "rankMaxes": [
+                  2275,
+                  2700,
+                  3025,
+                  3300,
+                  3575,
+                  3850,
+                  4075,
+                  4375,
+                  4600
+                ],
+                "used": [
+                  2275,
+                  3300,
+                  3850,
+                  4600
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "window": 3,
+          "scenario": "Air Voltaic Invincible 4",
+          "label": "Air Voltaic Invincible 4",
+          "leaderboardId": 1092,
+          "rankMaxes": [
+            3350,
+            3700,
+            4100,
+            4300
+          ],
+          "source": {
+            "kind": "reconciled",
+            "rule": "median per rank of 3 tiers this pool bands at Expert, each first reduced to 4 evenly spread picks",
+            "from": [
+              {
+                "benchmark": "Jade Palace Air",
+                "difficulty": "Hard",
+                "rankMaxes": [
+                  3350,
+                  3700,
+                  4000,
+                  4250,
+                  4700
+                ],
+                "used": [
+                  3350,
+                  3700,
+                  4250,
+                  4700
+                ]
+              },
+              {
+                "benchmark": "Viscose Benchmarks S2",
+                "difficulty": "Expert",
+                "rankMaxes": [
+                  3650,
+                  3800,
+                  3950,
+                  4100,
+                  4200,
+                  4300
+                ],
+                "used": [
+                  3650,
+                  3950,
+                  4100,
+                  4300
+                ]
+              },
+              {
+                "benchmark": "Viscose Benchmarks",
+                "difficulty": "Hard",
+                "rankMaxes": [
+                  2800,
+                  3150,
+                  3450,
+                  3700,
+                  3900,
+                  4100
+                ],
+                "used": [
+                  2800,
+                  3450,
+                  3700,
+                  4100
+                ]
+              }
+            ]
+          }
+        }
+      ]
     }
   ],
   "overrides": {}

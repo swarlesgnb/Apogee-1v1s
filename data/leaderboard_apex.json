@@ -1,6 +1,6 @@
 {
   "source": "kovaaks.com/webapp-backend/leaderboard/scores/global",
-  "sampledAt": "2026-08-30T16:12:38.823Z",
+  "sampledAt": "2026-08-31T22:31:14.334Z",
   "sampleRanks": [
     1,
     2,
@@ -686,6 +686,198 @@
         }
       ],
       "sampledAt": "2026-08-30T06:22:25.421Z"
+    },
+    {
+      "scenario": "Air Voltaic Invincible 4",
+      "leaderboardId": 1092,
+      "total": 10510,
+      "points": [
+        {
+          "rank": 1,
+          "score": 4641
+        },
+        {
+          "rank": 2,
+          "score": 4453
+        },
+        {
+          "rank": 3,
+          "score": 4398
+        },
+        {
+          "rank": 5,
+          "score": 4390
+        },
+        {
+          "rank": 10,
+          "score": 4230
+        },
+        {
+          "rank": 25,
+          "score": 4110
+        },
+        {
+          "rank": 50,
+          "score": 3936
+        },
+        {
+          "rank": 100,
+          "score": 3769
+        },
+        {
+          "rank": 250,
+          "score": 3500
+        },
+        {
+          "rank": 500,
+          "score": 3257
+        }
+      ],
+      "sampledAt": "2026-08-31T22:29:35.880Z"
+    },
+    {
+      "scenario": "Air Voltaic Invincible 4 Easier",
+      "leaderboardId": 185406,
+      "total": 20503,
+      "points": [
+        {
+          "rank": 1,
+          "score": 5800
+        },
+        {
+          "rank": 2,
+          "score": 5778
+        },
+        {
+          "rank": 3,
+          "score": 5761
+        },
+        {
+          "rank": 5,
+          "score": 5728
+        },
+        {
+          "rank": 10,
+          "score": 5621
+        },
+        {
+          "rank": 25,
+          "score": 5451
+        },
+        {
+          "rank": 50,
+          "score": 5346
+        },
+        {
+          "rank": 100,
+          "score": 5239
+        },
+        {
+          "rank": 250,
+          "score": 5064
+        },
+        {
+          "rank": 500,
+          "score": 4898
+        }
+      ],
+      "sampledAt": "2026-08-31T22:29:04.106Z"
+    },
+    {
+      "scenario": "Air Voltaic Invincible 4 Entry",
+      "leaderboardId": 143160,
+      "total": 3572,
+      "points": [
+        {
+          "rank": 1,
+          "score": 5978
+        },
+        {
+          "rank": 2,
+          "score": 5965
+        },
+        {
+          "rank": 3,
+          "score": 5964
+        },
+        {
+          "rank": 5,
+          "score": 5956
+        },
+        {
+          "rank": 10,
+          "score": 5913
+        },
+        {
+          "rank": 25,
+          "score": 5837
+        },
+        {
+          "rank": 50,
+          "score": 5782
+        },
+        {
+          "rank": 100,
+          "score": 5676
+        },
+        {
+          "rank": 250,
+          "score": 5494
+        },
+        {
+          "rank": 500,
+          "score": 5280
+        }
+      ],
+      "sampledAt": "2026-08-31T22:28:48.230Z"
+    },
+    {
+      "scenario": "Air Voltaic Invincible 4 Medium",
+      "leaderboardId": 184775,
+      "total": 12716,
+      "points": [
+        {
+          "rank": 1,
+          "score": 5291
+        },
+        {
+          "rank": 2,
+          "score": 5211
+        },
+        {
+          "rank": 3,
+          "score": 5205
+        },
+        {
+          "rank": 5,
+          "score": 5114
+        },
+        {
+          "rank": 10,
+          "score": 5031
+        },
+        {
+          "rank": 25,
+          "score": 4864
+        },
+        {
+          "rank": 50,
+          "score": 4763
+        },
+        {
+          "rank": 100,
+          "score": 4680
+        },
+        {
+          "rank": 250,
+          "score": 4616
+        },
+        {
+          "rank": 500,
+          "score": 4438
+        }
+      ],
+      "sampledAt": "2026-08-31T22:29:19.994Z"
     },
     {
       "scenario": "B180 Voltaic Easy 92%",
@@ -1694,6 +1886,246 @@
         }
       ],
       "sampledAt": "2026-08-30T06:23:37.763Z"
+    },
+    {
+      "scenario": "Popcorn MV Advanced",
+      "leaderboardId": 76966,
+      "total": 4511,
+      "points": [
+        {
+          "rank": 1,
+          "score": 670
+        },
+        {
+          "rank": 2,
+          "score": 570
+        },
+        {
+          "rank": 3,
+          "score": 550
+        },
+        {
+          "rank": 5,
+          "score": 520
+        },
+        {
+          "rank": 10,
+          "score": 510
+        },
+        {
+          "rank": 25,
+          "score": 470
+        },
+        {
+          "rank": 50,
+          "score": 440
+        },
+        {
+          "rank": 100,
+          "score": 410
+        },
+        {
+          "rank": 250,
+          "score": 350
+        },
+        {
+          "rank": 500,
+          "score": 310
+        }
+      ],
+      "sampledAt": "2026-08-31T22:31:12.828Z"
+    },
+    {
+      "scenario": "RawControlSphere",
+      "leaderboardId": 184301,
+      "total": 14859,
+      "points": [
+        {
+          "rank": 1,
+          "score": 17391
+        },
+        {
+          "rank": 2,
+          "score": 17340
+        },
+        {
+          "rank": 3,
+          "score": 16905
+        },
+        {
+          "rank": 5,
+          "score": 16509
+        },
+        {
+          "rank": 10,
+          "score": 16404
+        },
+        {
+          "rank": 25,
+          "score": 16047
+        },
+        {
+          "rank": 50,
+          "score": 15705
+        },
+        {
+          "rank": 100,
+          "score": 15462
+        },
+        {
+          "rank": 250,
+          "score": 15042
+        },
+        {
+          "rank": 500,
+          "score": 14478
+        }
+      ],
+      "sampledAt": "2026-08-31T22:28:16.507Z"
+    },
+    {
+      "scenario": "RawControlSphere Easier",
+      "leaderboardId": 185356,
+      "total": 22933,
+      "points": [
+        {
+          "rank": 1,
+          "score": 17868
+        },
+        {
+          "rank": 2,
+          "score": 17814
+        },
+        {
+          "rank": 3,
+          "score": 17475
+        },
+        {
+          "rank": 5,
+          "score": 17412
+        },
+        {
+          "rank": 10,
+          "score": 17304
+        },
+        {
+          "rank": 25,
+          "score": 16878
+        },
+        {
+          "rank": 50,
+          "score": 16644
+        },
+        {
+          "rank": 100,
+          "score": 16329
+        },
+        {
+          "rank": 250,
+          "score": 15804
+        },
+        {
+          "rank": 500,
+          "score": 15156
+        }
+      ],
+      "sampledAt": "2026-08-31T22:28:00.546Z"
+    },
+    {
+      "scenario": "RawControlSphere Entry",
+      "leaderboardId": 190185,
+      "total": 2768,
+      "points": [
+        {
+          "rank": 1,
+          "score": 17967
+        },
+        {
+          "rank": 2,
+          "score": 17856
+        },
+        {
+          "rank": 3,
+          "score": 17781
+        },
+        {
+          "rank": 5,
+          "score": 17775
+        },
+        {
+          "rank": 10,
+          "score": 17559
+        },
+        {
+          "rank": 25,
+          "score": 17271
+        },
+        {
+          "rank": 50,
+          "score": 17034
+        },
+        {
+          "rank": 100,
+          "score": 16608
+        },
+        {
+          "rank": 250,
+          "score": 15561
+        },
+        {
+          "rank": 500,
+          "score": 14514
+        }
+      ],
+      "sampledAt": "2026-08-31T22:27:44.632Z"
+    },
+    {
+      "scenario": "RawControlSphere Hard",
+      "leaderboardId": 184794,
+      "total": 1897,
+      "points": [
+        {
+          "rank": 1,
+          "score": 16284
+        },
+        {
+          "rank": 2,
+          "score": 15846
+        },
+        {
+          "rank": 3,
+          "score": 15786
+        },
+        {
+          "rank": 5,
+          "score": 15624
+        },
+        {
+          "rank": 10,
+          "score": 15291
+        },
+        {
+          "rank": 25,
+          "score": 15045
+        },
+        {
+          "rank": 50,
+          "score": 14268
+        },
+        {
+          "rank": 100,
+          "score": 13749
+        },
+        {
+          "rank": 250,
+          "score": 12708
+        },
+        {
+          "rank": 500,
+          "score": 11658
+        }
+      ],
+      "sampledAt": "2026-08-31T22:28:32.347Z"
     },
     {
       "scenario": "Smooth Thin Strafes Raspberry Easy",
@@ -3614,6 +4046,582 @@
         }
       ],
       "sampledAt": "2026-08-30T06:24:40.450Z"
+    },
+    {
+      "scenario": "VT PGT Advanced S5",
+      "leaderboardId": 98255,
+      "total": 13974,
+      "points": [
+        {
+          "rank": 1,
+          "score": 4462
+        },
+        {
+          "rank": 2,
+          "score": 4367
+        },
+        {
+          "rank": 3,
+          "score": 4316
+        },
+        {
+          "rank": 5,
+          "score": 4274
+        },
+        {
+          "rank": 10,
+          "score": 4158
+        },
+        {
+          "rank": 25,
+          "score": 4064
+        },
+        {
+          "rank": 50,
+          "score": 3812
+        },
+        {
+          "rank": 100,
+          "score": 3655
+        },
+        {
+          "rank": 250,
+          "score": 3297
+        },
+        {
+          "rank": 500,
+          "score": 3075
+        }
+      ],
+      "sampledAt": "2026-08-31T22:26:09.022Z"
+    },
+    {
+      "scenario": "VT PGT Elite S5",
+      "leaderboardId": 104670,
+      "total": 1760,
+      "points": [
+        {
+          "rank": 1,
+          "score": 3442
+        },
+        {
+          "rank": 2,
+          "score": 3080
+        },
+        {
+          "rank": 3,
+          "score": 2958
+        },
+        {
+          "rank": 5,
+          "score": 2947
+        },
+        {
+          "rank": 10,
+          "score": 2755
+        },
+        {
+          "rank": 25,
+          "score": 2453
+        },
+        {
+          "rank": 50,
+          "score": 2226
+        },
+        {
+          "rank": 100,
+          "score": 1920
+        },
+        {
+          "rank": 250,
+          "score": 1474
+        },
+        {
+          "rank": 500,
+          "score": 1062
+        }
+      ],
+      "sampledAt": "2026-08-31T22:26:24.902Z"
+    },
+    {
+      "scenario": "VT PGT Intermediate S5",
+      "leaderboardId": 98331,
+      "total": 57776,
+      "points": [
+        {
+          "rank": 1,
+          "score": 5169
+        },
+        {
+          "rank": 2,
+          "score": 5100
+        },
+        {
+          "rank": 3,
+          "score": 5092
+        },
+        {
+          "rank": 5,
+          "score": 5043
+        },
+        {
+          "rank": 10,
+          "score": 4897
+        },
+        {
+          "rank": 25,
+          "score": 4737
+        },
+        {
+          "rank": 50,
+          "score": 4589
+        },
+        {
+          "rank": 100,
+          "score": 4401
+        },
+        {
+          "rank": 250,
+          "score": 4115
+        },
+        {
+          "rank": 500,
+          "score": 3908
+        }
+      ],
+      "sampledAt": "2026-08-31T22:25:52.780Z"
+    },
+    {
+      "scenario": "VT PGT Novice S5",
+      "leaderboardId": 98060,
+      "total": 95995,
+      "points": [
+        {
+          "rank": 1,
+          "score": 5534
+        },
+        {
+          "rank": 2,
+          "score": 5497
+        },
+        {
+          "rank": 3,
+          "score": 5488
+        },
+        {
+          "rank": 5,
+          "score": 5462
+        },
+        {
+          "rank": 10,
+          "score": 5440
+        },
+        {
+          "rank": 25,
+          "score": 5352
+        },
+        {
+          "rank": 50,
+          "score": 5262
+        },
+        {
+          "rank": 100,
+          "score": 5178
+        },
+        {
+          "rank": 250,
+          "score": 5033
+        },
+        {
+          "rank": 500,
+          "score": 4862
+        }
+      ],
+      "sampledAt": "2026-08-31T22:25:36.891Z"
+    },
+    {
+      "scenario": "VT Plaza Advanced",
+      "leaderboardId": 43186,
+      "total": 17081,
+      "points": [
+        {
+          "rank": 1,
+          "score": 4211.89
+        },
+        {
+          "rank": 2,
+          "score": 4099.91
+        },
+        {
+          "rank": 3,
+          "score": 4092.91
+        },
+        {
+          "rank": 5,
+          "score": 4007.92
+        },
+        {
+          "rank": 10,
+          "score": 3961.93
+        },
+        {
+          "rank": 25,
+          "score": 3874.95
+        },
+        {
+          "rank": 50,
+          "score": 3801.96
+        },
+        {
+          "rank": 100,
+          "score": 3688.98
+        },
+        {
+          "rank": 250,
+          "score": 3557
+        },
+        {
+          "rank": 500,
+          "score": 3433.02
+        }
+      ],
+      "sampledAt": "2026-08-31T22:27:12.585Z"
+    },
+    {
+      "scenario": "VT Plaza Intermediate",
+      "leaderboardId": 43184,
+      "total": 56749,
+      "points": [
+        {
+          "rank": 1,
+          "score": 4521.84
+        },
+        {
+          "rank": 2,
+          "score": 4465.85
+        },
+        {
+          "rank": 3,
+          "score": 4391.86
+        },
+        {
+          "rank": 5,
+          "score": 4378.86
+        },
+        {
+          "rank": 10,
+          "score": 4254.88
+        },
+        {
+          "rank": 25,
+          "score": 4175.9
+        },
+        {
+          "rank": 50,
+          "score": 4108.91
+        },
+        {
+          "rank": 100,
+          "score": 4017.92
+        },
+        {
+          "rank": 250,
+          "score": 3873.95
+        },
+        {
+          "rank": 500,
+          "score": 3750.97
+        }
+      ],
+      "sampledAt": "2026-08-31T22:26:56.702Z"
+    },
+    {
+      "scenario": "VT Plaza Novice",
+      "leaderboardId": 43183,
+      "total": 105195,
+      "points": [
+        {
+          "rank": 1,
+          "score": 4781.79
+        },
+        {
+          "rank": 2,
+          "score": 4741.8
+        },
+        {
+          "rank": 3,
+          "score": 4728.8
+        },
+        {
+          "rank": 5,
+          "score": 4713.8
+        },
+        {
+          "rank": 10,
+          "score": 4665.81
+        },
+        {
+          "rank": 25,
+          "score": 4584.83
+        },
+        {
+          "rank": 50,
+          "score": 4521.84
+        },
+        {
+          "rank": 100,
+          "score": 4435.85
+        },
+        {
+          "rank": 250,
+          "score": 4307.87
+        },
+        {
+          "rank": 500,
+          "score": 4199.89
+        }
+      ],
+      "sampledAt": "2026-08-31T22:26:40.780Z"
+    },
+    {
+      "scenario": "VT Plaza Viscose Thin",
+      "leaderboardId": 49624,
+      "total": 4420,
+      "points": [
+        {
+          "rank": 1,
+          "score": 5064.75
+        },
+        {
+          "rank": 2,
+          "score": 4929.77
+        },
+        {
+          "rank": 3,
+          "score": 4926.77
+        },
+        {
+          "rank": 5,
+          "score": 4856.78
+        },
+        {
+          "rank": 10,
+          "score": 4803.79
+        },
+        {
+          "rank": 25,
+          "score": 4675.81
+        },
+        {
+          "rank": 50,
+          "score": 4575.83
+        },
+        {
+          "rank": 100,
+          "score": 4460.85
+        },
+        {
+          "rank": 250,
+          "score": 4284.88
+        },
+        {
+          "rank": 500,
+          "score": 4115.91
+        }
+      ],
+      "sampledAt": "2026-08-31T22:27:28.520Z"
+    },
+    {
+      "scenario": "VT Popcorn Advanced S5",
+      "leaderboardId": 98024,
+      "total": 14799,
+      "points": [
+        {
+          "rank": 1,
+          "score": 1170
+        },
+        {
+          "rank": 2,
+          "score": 1090
+        },
+        {
+          "rank": 3,
+          "score": 1050
+        },
+        {
+          "rank": 5,
+          "score": 1040
+        },
+        {
+          "rank": 10,
+          "score": 1020
+        },
+        {
+          "rank": 25,
+          "score": 940
+        },
+        {
+          "rank": 50,
+          "score": 910
+        },
+        {
+          "rank": 100,
+          "score": 830
+        },
+        {
+          "rank": 250,
+          "score": 760
+        },
+        {
+          "rank": 500,
+          "score": 710
+        }
+      ],
+      "sampledAt": "2026-08-31T22:25:05.012Z"
+    },
+    {
+      "scenario": "VT Popcorn Elite S5",
+      "leaderboardId": 104674,
+      "total": 1066,
+      "points": [
+        {
+          "rank": 1,
+          "score": 790
+        },
+        {
+          "rank": 2,
+          "score": 740
+        },
+        {
+          "rank": 3,
+          "score": 690
+        },
+        {
+          "rank": 5,
+          "score": 610
+        },
+        {
+          "rank": 10,
+          "score": 580
+        },
+        {
+          "rank": 25,
+          "score": 520
+        },
+        {
+          "rank": 50,
+          "score": 480
+        },
+        {
+          "rank": 100,
+          "score": 420
+        },
+        {
+          "rank": 250,
+          "score": 290
+        },
+        {
+          "rank": 500,
+          "score": 190
+        }
+      ],
+      "sampledAt": "2026-08-31T22:25:20.871Z"
+    },
+    {
+      "scenario": "VT Popcorn Intermediate S5",
+      "leaderboardId": 98333,
+      "total": 64295,
+      "points": [
+        {
+          "rank": 1,
+          "score": 1410
+        },
+        {
+          "rank": 2,
+          "score": 1360
+        },
+        {
+          "rank": 3,
+          "score": 1330
+        },
+        {
+          "rank": 5,
+          "score": 1270
+        },
+        {
+          "rank": 10,
+          "score": 1230
+        },
+        {
+          "rank": 25,
+          "score": 1160
+        },
+        {
+          "rank": 50,
+          "score": 1100
+        },
+        {
+          "rank": 100,
+          "score": 1040
+        },
+        {
+          "rank": 250,
+          "score": 980
+        },
+        {
+          "rank": 500,
+          "score": 940
+        }
+      ],
+      "sampledAt": "2026-08-31T22:24:49.053Z"
+    },
+    {
+      "scenario": "VT Popcorn Novice S5",
+      "leaderboardId": 98285,
+      "total": 106408,
+      "points": [
+        {
+          "rank": 1,
+          "score": 1750
+        },
+        {
+          "rank": 2,
+          "score": 1670
+        },
+        {
+          "rank": 3,
+          "score": 1610
+        },
+        {
+          "rank": 5,
+          "score": 1550
+        },
+        {
+          "rank": 10,
+          "score": 1510
+        },
+        {
+          "rank": 25,
+          "score": 1420
+        },
+        {
+          "rank": 50,
+          "score": 1360
+        },
+        {
+          "rank": 100,
+          "score": 1290
+        },
+        {
+          "rank": 250,
+          "score": 1210
+        },
+        {
+          "rank": 500,
+          "score": 1140
+        }
+      ],
+      "sampledAt": "2026-08-31T22:24:33.151Z"
     },
     {
       "scenario": "VT psalmTS Advanced",

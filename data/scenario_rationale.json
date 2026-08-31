@@ -18,6 +18,26 @@
       "title": "Which are the best Target Switching Scenarios? - KovaaK's General Discussions",
       "url": "https://steamcommunity.com/app/824270/discussions/0/759554831917729263/",
       "kind": "community"
+    },
+    "viscose-s2": {
+      "title": "Viscose Benchmarks S2",
+      "url": "https://docs.google.com/spreadsheets/d/1WeuEk444WOkTpvOGMYiertxwlI9gRQSapYiwxjFbT08/edit?usp=sharing",
+      "kind": "design note"
+    },
+    "voltaic-s4": {
+      "title": "Voltaic S4 Benchmarks",
+      "url": "https://docs.google.com/spreadsheets/d/1qUzF2KHcfs_FgsaDFRfGsLgHhoC1Md5bzMOUbsYzSjg",
+      "kind": "design note"
+    },
+    "jade-palace": {
+      "title": "Jade Palace Benchmarks",
+      "url": "https://docs.google.com/spreadsheets/d/131tMwNmJY-lJPVdddpOWKY9uajDWWe3I5ym-UzmF0QE/edit?gid=0#gid=0",
+      "kind": "design note"
+    },
+    "aimerz-reactive": {
+      "title": "Aimerz+ Reactive Tracking",
+      "url": "https://docs.google.com/spreadsheets/d/15VloIkv-V-B3oq4JTbSnIKwsPMwccx2sQEwTohqlprw/edit?gid=0#gid=0",
+      "kind": "design note"
     }
   },
   "families": [
@@ -471,6 +491,126 @@
         "entries": 166119
       },
       "thin": "beanTS is one of the three pool scenarios KovaaK's publishes no aim type for, so its category cannot be checked against the game and validate:pool warns about it. Two things settle it instead. Its sibling beanTS Larger carries the same author description and IS classified Target Switching by KovaaK's. And the two measure the same mechanic: 28.5 shots per kill against 26.4, both with a lightning gun, over more than nine thousand and seven thousand kills respectively - a one-shot clicking scenario would be near 1.1. The method is the one described in data/aim_type_corrections.json; there is no correction to make here, because KovaaK's has said nothing to contradict."
+    },
+    {
+      "family": "Popcorn",
+      "subCategory": "Dynamic Clicking",
+      "isolates": "Dynamic clicking where the next target appears the moment the last one dies, so the cost is reacquisition rather than holding an aim.",
+      "why": "Popcorn is the dynamic-clicking lineage the corpus agrees on, and the agreement is strongest exactly where the ladder needs it. Voltaic rates it at every tier from Novice to Elite, which supplies three of the four windows from one author. The Expert rank is scored on Popcorn MV Advanced instead of Voltaic's own Elite variant, and that is a deliberate swap: four independent benchmarks name Popcorn MV Advanced at their hardest tier where only Voltaic names its Elite one, and the boards are 4,511 against 1,028. A rank set on the smaller board could not separate its own top two ranks - both cleared by 0.09% - which is a rank nobody can hold.",
+      "evidence": [
+        {
+          "source": "voltaic-s5",
+          "scenario": "VT Popcorn Advanced S5",
+          "says": "Voltaic's S5 and S5.5 sheets both carry Popcorn, and agree on its Novice and Intermediate numbers."
+        },
+        {
+          "source": "viscose-s2",
+          "scenario": "Popcorn MV Advanced",
+          "says": "Viscose S2 files Popcorn MV Advanced at Expert; Viscose, Jade Palace and snakbox each place it at their own hardest tier."
+        },
+        {
+          "source": "jade-palace",
+          "scenario": "Popcorn MV Advanced",
+          "says": "Jade Palace Dynamic rates Popcorn MV Advanced Hard, the fourth independent author to name it at the top."
+        }
+      ],
+      "audience": {
+        "scenario": "VT Popcorn Advanced S5",
+        "plays": 483965,
+        "entries": 28730
+      }
+    },
+    {
+      "family": "PGT",
+      "subCategory": "Precise Tracking",
+      "isolates": "Precise tracking on a small target that keeps moving, where the score is time on target rather than a flick landed.",
+      "why": "Precise Tracking carried two families and needed a third that was not another sphere. PGT is Voltaic's own precise-tracking lineage across all four of its tiers, so every window is one author's opinion of the same skill rather than four authors' opinions stitched together, and its Novice board is the largest of any scenario entering the pool at 208,370 entries. Its Expert board is the thinnest thing here at 1,727, which clears the floor and is recorded rather than hidden.",
+      "evidence": [
+        {
+          "source": "voltaic-s5",
+          "scenario": "VT PGT Advanced S5",
+          "says": "Voltaic S5 and S5.5 both rate PGT, and disagree by under 2% at Advanced - the numbers are reconciled to the median."
+        },
+        {
+          "source": "kovaaks-scenario",
+          "scenario": "VT PGT Novice S5",
+          "says": "The author's own description files it under precise tracking."
+        }
+      ],
+      "audience": {
+        "scenario": "VT PGT Novice S5",
+        "plays": 1271794,
+        "entries": 208370
+      }
+    },
+    {
+      "family": "Plaza",
+      "subCategory": "Reactive Tracking",
+      "isolates": "Reactive tracking against a target that changes direction without telegraphing it, so reading the change is the whole cost.",
+      "why": "Plaza is Voltaic S4's reactive lineage and the one scenario in the corpus that four authors place in the reactive band. Its first three windows come from S4 unchanged. The Expert rank moved off VT Plaza Elite, whose board carries 324 players, onto VT Plaza Viscose Thin at 4,420 - a rank read off three hundred people is a fact about them rather than about the skill, which is the same objection this pool already records against its thinnest sources.",
+      "evidence": [
+        {
+          "source": "voltaic-s4",
+          "scenario": "VT Plaza Advanced",
+          "says": "Voltaic S4 rates Plaza from Novice to Advanced, supplying the first three windows from one author."
+        },
+        {
+          "source": "aimerz-reactive",
+          "scenario": "VT Plaza Viscose Thin",
+          "says": "Aimerz+ Reactive Tracking files VT Plaza Viscose Thin at Hard, which is what bands it to Expert."
+        }
+      ],
+      "audience": {
+        "scenario": "VT Plaza Advanced",
+        "plays": 966473,
+        "entries": 29633
+      }
+    },
+    {
+      "family": "RawControlSphere",
+      "subCategory": "Control Tracking",
+      "isolates": "Control tracking with the target's movement unsmoothed, so a correction has to be made continuously rather than once per pass.",
+      "why": "Control Tracking's two families were Controlsphere and Raw Control, both of which reward a settled crosshair. RawControlSphere is Viscose's lineage across Entry, Easier, Medium and Hard, which makes it the only control family whose four windows are one author's graded progression. The Expert rank is scored on RawControlSphere Hard rather than the Expert-tier scenario of the same name: 1,897 players against 710, and the thinner board is not worth the tier's label.",
+      "evidence": [
+        {
+          "source": "viscose-s2",
+          "scenario": "RawControlSphere",
+          "says": "Viscose S2 rates the RawControlSphere lineage at Entry, Easier, Medium, Hard and Expert - every window this family needs."
+        },
+        {
+          "source": "kovaaks-scenario",
+          "scenario": "RawControlSphere",
+          "says": "The author's description marks it as the unsmoothed variant of Controlsphere."
+        }
+      ],
+      "audience": {
+        "scenario": "RawControlSphere",
+        "plays": 304758,
+        "entries": 29711
+      }
+    },
+    {
+      "family": "Air Invincible 4",
+      "subCategory": "Reading Tracking",
+      "isolates": "Reading tracking in the air, where the target cannot be killed and the only score is how much of its path was followed.",
+      "why": "Reading Tracking is the sub-skill the old two-per-sub-skill rule left thinnest, and Air Voltaic Invincible 4 is the most-agreed reading scenario outside the pool - five independent benchmarks name it. Unlike every other family added here its Expert board is not thin at all: it was the only one of the seven candidates whose top window cleared the old percentile-derived board requirement as well as the floor that replaced it, and the only one that needed no substitution at Expert to do so.",
+      "evidence": [
+        {
+          "source": "viscose-s2",
+          "scenario": "Air Voltaic Invincible 4",
+          "says": "Viscose S2 rates the Invincible 4 lineage at Easier, Medium and Expert; Viscose Entry supplies the Novice window."
+        },
+        {
+          "source": "jade-palace",
+          "scenario": "Air Voltaic Invincible 4",
+          "says": "Jade Palace Air files Air Voltaic Invincible 4 at Hard, agreeing on where the top of the lineage sits."
+        }
+      ],
+      "audience": {
+        "scenario": "Air Voltaic Invincible 4",
+        "plays": 181517,
+        "entries": 19081
+      }
     }
   ]
 }
