@@ -811,6 +811,42 @@ function contrastRatio(a, b) {
   return (Math.max(la, lb) + 0.05) / (Math.min(la, lb) + 0.05);
 }
 
+/** Blend two hex colours, `pct` percent of the way from `a` to `b`. */
+function mixHex(a, b, pct) {
+  const hex = (c) => parseInt(/^#?([0-9a-f]{6})$/i.exec(String(c).trim())[1], 16);
+  const x = hex(a);
+  const y = hex(b);
+  const t = pct / 100;
+  const ch = (sh) => Math.round((((x >> sh) & 255) * (1 - t)) + (((y >> sh) & 255) * t));
+  return (
+    "#" +
+    [16, 8, 0].map((sh) => ch(sh).toString(16).padStart(2, "0")).join("")
+  );
+}
+
+/**
+ * A rank colour lifted far enough to be visible on the dark ground.
+ *
+ * The authored colour is the identity and stays the identity - this only raises it to the
+ * same 2:1 the season editor already refuses to accept below. Seven of season 1's
+ * forty-eight rank colours sit under that line, and three of those are under 1.5:1:
+ * Singularity is #000000, which as a card accent draws something that reads as broken
+ * rather than as dark.
+ *
+ * Lifting here rather than in the season file is deliberate. The file is Rylee's, the
+ * editor flags every colour that needs this, and a fix written into the data would hide
+ * the fact that it was needed. Anything already clear of the line is returned untouched,
+ * so this is invisible on a season whose colours are fine.
+ */
+function legibleOnDark(color) {
+  if (!/^#[0-9a-f]{6}$/i.test(String(color).trim())) return color;
+  let out = color;
+  for (let pct = 5; pct <= 100 && contrastRatio(out, DARK_GROUND) < MIN_CONTRAST; pct += 5) {
+    out = mixHex(color, LIGHT_GROUND, pct);
+  }
+  return out;
+}
+
 /** What is wrong with a rank colour, or null when nothing is. */
 function colourNote(color) {
   const onDark = contrastRatio(color, DARK_GROUND);
@@ -3139,69 +3175,110 @@ function renderRanks(data) {
   $("benchNote").textContent = `${bench.name} ${bench.difficulty}`;
   $("benchLede").textContent =
     `Your ${bench.name} standing, which is a stat rather than a ladder position: it ` +
-    "says what your scores are worth, not who you beat. Overall you are " +
+    "says what your scores are worth, not who you beat. Each band is a whole benchmark " +
+    "with its own four ranks, so you hold a rank in every band you have played and " +
+    "nothing here claims one band's rank is above another's. Overall you are " +
     `${data.player.benchmarkRank} at ${num(data.player.benchmarkEnergy)} energy.`;
 
   const host = $("catRanks");
   host.textContent = "";
 
-  // One twelve-rank ladder per category, cut into its windows.
+  // Four ladders per category, not one ladder cut into four.
   //
-  // This used to be a single bar of six coloured segments, which was right when a category
-  // had four ranks and one set of scenarios. With twelve ranks across three difficulties
-  // the useful questions changed: how far up am I, which difficulty am I being graded in,
-  // and what does the next rank cost - on which scenario, since every fourth rank is graded
-  // by a harder one than the rank below it.
+  // A band is a complete benchmark - its own scenarios, its own four ranks, its own top -
+  // so a player holds a rank in each band they have played and there is no single rung to
+  // point at. The strip this replaces drew one sixteen-rung ladder grouped by window,
+  // which looked almost exactly like this and meant something else: rung 5 sat above rung
+  // 4, and comparing those two is precisely the question the split refuses to answer.
+  //
+  // Three states here, and flattening any two of them lies. A band with no runs is
+  // unmeasured; a band with runs but below its first threshold is measured and unranked;
+  // the rest hold a rank. Drawing the first two the same way tells a player they are bad
+  // at Expert when the truth is they have never launched it.
   data.categories.forEach((cat) => {
-    const size = data.benchmark.windowSize ?? cat.rankNames.length;
-    const windows = data.benchmark.windows ?? [];
-    const depth = cat.rankNames.length;
-    const here = cat.rankNames.indexOf(cat.rankName); // -1 when unranked
-    const colour = rankColor(data, cat.rankName, cat);
+    const bands = cat.bands ?? [];
 
     const el = document.createElement("div");
     el.className = "cat-rank";
 
+    const held = bands.filter((b) => b.rankName).length;
     const top = document.createElement("div");
     top.className = "cat-rank-top";
     top.innerHTML =
       '<span class="cat-rank-name">' + esc(cat.name) + "</span>" +
-      '<span class="cat-rank-rank" style="color:' + esc(colour) + '">' +
-      esc(cat.rankName || "unranked") + " · " + num(cat.energy) + " energy</span>";
+      '<span class="cat-rank-rank">' +
+      (bands.length ? held + " of " + bands.length + " bands held" : esc(cat.rankName || "unranked")) +
+      "</span>";
     el.append(top);
 
-    // The ladder itself: one cell per rank, grouped into window bands.
-    const strip = document.createElement("div");
-    strip.className = "ladder-strip";
+    const grid = document.createElement("div");
+    grid.className = "band-grid";
 
-    for (let w = 0; w * size < depth; w++) {
-      const band = document.createElement("div");
-      band.className = "band";
+    bands.forEach((b) => {
+      const unplayed = b.played === 0;
+      const card = document.createElement("div");
+      card.className =
+        "band-card" + (unplayed ? " unplayed" : b.rankName ? " held" : " below");
+      // An unplayed band is achromatic; one that is merely below its first rank still
+      // shows that rank's colour, so the progress bar under it is pointing somewhere.
+      card.style.setProperty(
+        "--rank",
+        unplayed
+          ? "var(--ink-dim)"
+          : legibleOnDark(rankColor(data, b.rankName ?? b.rankNames[0], b)),
+      );
 
-      const label = document.createElement("span");
-      label.className = "band-name";
-      label.textContent = windows[w] ?? `window ${w + 1}`;
-      band.append(label);
+      const head = document.createElement("div");
+      head.className = "band-head";
+      head.innerHTML =
+        '<span class="band-title">' + esc(b.windowName) + "</span>" +
+        '<span class="band-cov" title="scenarios in this band you have run">' +
+        b.played + "/" + b.total + "</span>";
+      card.append(head);
 
+      const name = document.createElement("div");
+      name.className = "band-rank";
+      name.textContent = unplayed
+        ? "not played"
+        : (b.rankName ?? "below " + (b.rankNames[0] ?? "rank 1"));
+      card.append(name);
+
+      // One pip per rank in this band, and only this band. The pip the player holds is
+      // filled and ringed; the ones under it are filled; the ones above are outlines.
       const rungs = document.createElement("div");
       rungs.className = "band-rungs";
+      b.rankNames.forEach((rankName, i) => {
+        const pip = document.createElement("span");
+        pip.className =
+          "pip" + (i < b.rankIndex ? " done" : i === b.rankIndex ? " here" : "");
+        // No per-pip colour: within one band these are four steps of one climb, and
+        // painting each its own rank colour made a four-colour jumble that read as a
+        // legend for something. The name in its own colour is above them; the pips say
+        // how far along it you are.
+        pip.title = rankName + " · " + num(b.rankMaxes[i] ?? 0) + " energy";
+        rungs.append(pip);
+      });
+      card.append(rungs);
 
-      for (let i = w * size; i < Math.min(depth, w * size + size); i++) {
-        const name = cat.rankNames[i];
-        const rung = document.createElement("span");
-        rung.className =
-          "rung" + (i < here ? " done" : i === here ? " here" : "");
-        rung.style.setProperty("--rank", rankColor(data, name, cat));
-        rung.title = `${name} · rank ${i + 1} of ${depth} · ${num(cat.rankMaxes ? cat.rankMaxes[i] : 0)} energy`;
-        rung.textContent = String(i + 1);
-        rungs.append(rung);
+      const foot = document.createElement("div");
+      foot.className = "band-foot";
+      const next = b.rankNames[b.rankIndex + 1] ?? null;
+      if (unplayed) {
+        foot.innerHTML = '<span class="band-note">no runs yet</span>';
+      } else if (!next) {
+        foot.innerHTML = '<span class="band-note top">band maxed</span>';
+      } else {
+        const pct = Math.round((b.progressToNextRank ?? 0) * 100);
+        foot.innerHTML =
+          '<span class="band-track"><i style="width:' + pct + '%"></i></span>' +
+          '<span class="band-note">' + pct + "% to " + esc(next) + "</span>";
       }
+      card.append(foot);
 
-      band.append(rungs);
-      strip.append(band);
-    }
+      grid.append(card);
+    });
 
-    el.append(strip);
+    el.append(grid);
 
     // What the next rank costs, and where it is scored.
     const climbing = cat.scenarios

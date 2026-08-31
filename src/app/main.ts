@@ -883,6 +883,45 @@ function runSmokeTest(): void {
             `${apex.panels} categories painted, ${apex.tabs} board tabs`
       }`,
     );
+    // The Ranks screen draws one card per band per category, and the three states it
+    // distinguishes - unplayed, played but under the first threshold, holding a rank -
+    // are the whole point of the split. Counting cards alone would pass on a screen that
+    // painted every band identically, so the states are counted too.
+    const ranks = await probe.webContents.executeJavaScript(`(() => {
+      const tab = document.querySelector('.tab[data-screen="ranks"]');
+      if (tab) tab.click();
+      const cards = [...document.querySelectorAll("#catRanks .band-card")];
+      return {
+        cats: document.querySelectorAll("#catRanks .cat-rank").length,
+        cards: cards.length,
+        held: cards.filter((c) => c.classList.contains("held")).length,
+        pips: cards.every((c) => c.querySelectorAll(".pip").length > 0),
+        named: cards.every((c) => (c.querySelector(".band-rank")?.textContent ?? "").trim() !== ""),
+        legend: document.querySelectorAll("#catRanks .band-title").length,
+        perCat: [...document.querySelectorAll("#catRanks .cat-rank")].map(
+          (c) => c.querySelectorAll(".band-card").length,
+        ),
+      };
+    })()`);
+
+    if (ranks.cats === 0) problems.push("the Ranks screen paints no category");
+    else if (ranks.cards === 0) {
+      // A season split into bands that draws none of them is the exact regression this
+      // whole change could suffer silently: the old chained strip looked almost the same.
+      problems.push("the Ranks screen shows no bands");
+    } else if (ranks.perCat.some((n: number) => n !== ranks.perCat[0])) {
+      // Every category is cut into the same windows, so an uneven count means one
+      // category dropped a band rather than that it legitimately has fewer.
+      problems.push("the categories do not all show the same number of bands");
+    } else if (!ranks.pips) problems.push("a band card shows no ranks to climb");
+    else if (!ranks.named) problems.push("a band card does not say where the player stands");
+    else if (ranks.legend !== ranks.cards) problems.push("a band card does not name its band");
+
+    console.log(
+      `band ranks   : ${ranks.cards} cards over ${ranks.cats} categories, ` +
+        `${ranks.held} held`,
+    );
+
     console.log(`preload      : ${hasBridge ? "bridge exposed" : "MISSING"}`);
     console.log(`renderer     : ${rendered ? "loaded" : "EMPTY"}`);
 

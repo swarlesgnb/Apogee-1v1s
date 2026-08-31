@@ -841,34 +841,74 @@
   .cat-rank-note { margin-top: 10px; font-size: 11.5px; color: var(--ink-dim); line-height: 1.55; }
   .cat-rank-note b { color: var(--ink-mid); font-weight: 620; }
 
-  /* The ladder, cut into its difficulty bands. Each rung carries its own rank
-     colour; the ones below the player are filled, the one they hold is ringed. */
-  .ladder-strip { display: flex; gap: 16px; flex-wrap: wrap; }
-  .ladder-strip .band { display: grid; gap: 6px; }
-  .ladder-strip .band-name {
+  /* One card per band, because a band is a whole benchmark and not a stretch of a longer
+     ladder. Colour is the band's own held rank; an unplayed band stays achromatic, so
+     "never ran it" can never be misread as "ranked low in it". */
+  .band-grid {
+    display: grid; gap: 8px;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+  .band-card {
+    position: relative; overflow: hidden;
+    padding: 11px 12px 12px; border-radius: var(--r-sm);
+    border: 1px solid var(--hair); background: var(--sunken);
+    display: grid; gap: 9px; align-content: start;
+    transition: border-color .15s var(--ease), transform .15s var(--ease);
+  }
+  .band-card.held {
+    border-color: color-mix(in srgb, var(--rank) 32%, transparent);
+    background:
+      radial-gradient(120% 100% at 0% 0%,
+        color-mix(in srgb, var(--rank) 13%, transparent), transparent 68%),
+      var(--sunken);
+  }
+  /* A hairline of the rank colour down the leading edge. Enough to find the band you hold
+     at a glance, without a second block of colour competing with the pips. */
+  .band-card.held::before {
+    content: ""; position: absolute; inset: 0 auto 0 0; width: 2px;
+    background: var(--rank);
+    box-shadow: 0 0 12px color-mix(in srgb, var(--rank) 60%, transparent);
+  }
+  .band-card.unplayed { opacity: .48; }
+  .band-card:hover { transform: translateY(-1px); }
+
+  .band-head {
+    display: flex; align-items: baseline; justify-content: space-between; gap: 8px;
+  }
+  .band-title {
     font-family: var(--mono); font-size: 9.5px; letter-spacing: .14em;
     text-transform: uppercase; color: var(--ink-dim);
   }
-  .ladder-strip .band-rungs { display: flex; gap: 4px; }
-  .ladder-strip .rung {
-    width: 28px; height: 24px; border-radius: var(--r-xs);
-    display: grid; place-items: center;
-    font-family: var(--mono); font-size: 10.5px; color: var(--ink-dim);
-    background: rgba(255, 255, 255, .03); border: 1px solid var(--hair);
-    transition: transform .13s var(--ease);
+  .band-cov { font-family: var(--mono); font-size: 9.5px; color: var(--ink-dim); }
+
+  .band-rank { font-size: 13.5px; font-weight: 640; line-height: 1.2; color: var(--ink); }
+  .band-card.held .band-rank { color: var(--rank); }
+  /* Unranked and unplayed are statements about measurement, not standing, so they drop
+     out of the display face into the mono one the rest of the metadata uses. */
+  .band-card.below .band-rank,
+  .band-card.unplayed .band-rank {
+    font-family: var(--mono); font-size: 11px; font-weight: 500; color: var(--ink-dim);
   }
-  .ladder-strip .rung:hover { transform: translateY(-2px); }
-  .ladder-strip .rung.done {
-    background: color-mix(in srgb, var(--rank) 26%, transparent);
-    border-color: color-mix(in srgb, var(--rank) 45%, transparent);
-    color: var(--ink);
+
+  .band-rungs { display: flex; gap: 3px; }
+  .band-rungs .pip {
+    flex: 1; height: 4px; border-radius: var(--r-pill);
+    background: rgba(255, 255, 255, .07);
   }
-  .ladder-strip .rung.here {
-    background: var(--rank); border-color: var(--rank);
-    color: #06080c; font-weight: 700;
-    box-shadow: 0 0 0 2px color-mix(in srgb, var(--rank) 35%, transparent),
-                0 6px 18px -6px var(--rank);
+  .band-rungs .pip.done { background: color-mix(in srgb, var(--rank) 52%, transparent); }
+  .band-rungs .pip.here {
+    background: var(--rank);
+    box-shadow: 0 0 10px -1px color-mix(in srgb, var(--rank) 78%, transparent);
   }
+
+  .band-foot { display: grid; gap: 5px; }
+  .band-track {
+    display: block; height: 2px; border-radius: var(--r-pill);
+    background: rgba(255, 255, 255, .06); overflow: hidden;
+  }
+  .band-track i { display: block; height: 100%; border-radius: inherit; background: var(--rank); }
+  .band-note { font-family: var(--mono); font-size: 9.5px; color: var(--ink-dim); }
+  .band-note.top { color: color-mix(in srgb, var(--up) 70%, var(--ink-dim)); }
 
   /* ==================================================================
      Profile
@@ -2105,9 +2145,9 @@
             <div class="screen-head">
               <h1>Ranks</h1>
               <p>
-                One ladder per category, and an overall tier derived from them.
-                Thresholds come from the season file, not from an outside
-                benchmark.
+                Four bands per category, each a benchmark in its own right, and
+                an overall tier derived from them. Every threshold traces to a
+                benchmark that published it.
               </p>
             </div>
 

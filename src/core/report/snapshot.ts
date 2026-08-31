@@ -17,6 +17,7 @@ import {
   matchPoolFor,
   matchPoolName,
   matchPoolWindow,
+  seasonAsDifficulties,
   seasonAsDifficulty,
   seasonLabels,
   type MatchPool,
@@ -29,6 +30,30 @@ import { generateQuests, playStreak, questProgress } from "../quests/generate.ts
 import { defaultRating, updateRating, winProbability } from "../rating/glicko2.ts";
 import { loadRankTheme, tierForPercentile, type RankTier } from "../ranks/apogeeRanks.ts";
 import { floorsFor, overallGap } from "../consistency/floor.ts";
+
+/**
+ * One category's standing inside one band.
+ *
+ * Bands do not chain, so this is a complete answer on its own: `rankIndex` counts from
+ * the band's own first rank and `rankNames` is the band's own four, never a slice of a
+ * longer ladder that would have to be offset to read.
+ */
+export interface BandStanding {
+  window: number;
+  windowName: string;
+  rankName: string | null;
+  /** -1 when the band is unplayed, which is not the same as being at its bottom rank. */
+  rankIndex: number;
+  rankNames: string[];
+  rankColors: Record<string, string>;
+  rankMaxes: number[];
+  energy: number;
+  rankCount: number;
+  progressToNextRank: number | null;
+  /** Scenarios in this band with any history, and how many it has. */
+  played: number;
+  total: number;
+}
 
 export interface SnapshotOptions {
   statsDir: string;
@@ -222,6 +247,46 @@ export function buildSnapshot(options: SnapshotOptions): Snapshot | null {
 
   const result = evaluateBenchmark(difficulty, scores);
 
+  // Each band graded as its own benchmark, which is what a season now is: four of them,
+  // not four stretches of one ladder. A player holds a rank in each band they have
+  // played, so there is no single number to reduce these to and the UI shows all four.
+  //
+  // `seasonAsDifficulties` yields nothing for a season built before the split, and every
+  // reader below treats an empty list as 'not split yet' rather than 'no ranks'.
+  const bandResults = (season ? seasonAsDifficulties(season) : []).map((def) => ({
+    def,
+    result: evaluateBenchmark(def, scores),
+  }));
+
+  /** Each category's standing in every band, in band order. */
+  const bandsOf = new Map<string, BandStanding[]>(
+    difficulty.categories.map((cat) => [
+      cat.name,
+      bandResults.map(({ def, result: banded }, window) => {
+        const ladder = def.categories.find((c) => c.name === cat.name);
+        const stood = banded.categories.find((c) => c.name === cat.name);
+        const scenarios = ladder?.scenarios ?? [];
+        // Played, not maxed: a band nobody has touched is unmeasured rather than bottom
+        // rank, and the two look identical if only the rank is shown.
+        const played = scenarios.filter((sc) => history.has(sc.name)).length;
+        return {
+          window,
+          windowName: season?.windows?.[window] ?? `Band ${window + 1}`,
+          rankName: played === 0 ? null : (stood?.rankName ?? null),
+          rankIndex: played === 0 ? -1 : (stood?.rankIndex ?? -1),
+          rankNames: ladder?.rankNames ?? [],
+          rankColors: ladder?.rankColors ?? {},
+          rankMaxes: ladder?.rankMaxes ?? [],
+          energy: Math.round(stood?.energy ?? 0),
+          rankCount: stood?.rankCount ?? (ladder?.rankNames?.length ?? 0),
+          progressToNextRank: played === 0 ? null : (stood?.progressToNextRank ?? null),
+          played,
+          total: scenarios.length,
+        };
+      }),
+    ]),
+  );
+
   // With no live population, tier placement is estimated from benchmark standing and
   // labelled as provisional in the UI. Replaced by a real percentile once the ladder
   // has players.
@@ -271,6 +336,7 @@ export function buildSnapshot(options: SnapshotOptions): Snapshot | null {
     rankMaxes: ladderOf.get(cat.name)?.rankMaxes ?? [],
     rankCount: cat.rankCount,
     progressToNextRank: cat.progressToNextRank,
+    bands: bandsOf.get(cat.name) ?? [],
     perScenario: Math.round(cat.energy / Math.max(1, cat.scenarios.length)),
     scenarios: cat.scenarios.map((s) => ({
       name: s.scenario.name,
