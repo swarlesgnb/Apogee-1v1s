@@ -35,13 +35,17 @@
 		{
 			"scenario_name": "1w2ts reload smallflicks Entry",
 			"play_Count": 1
+		},
+		{
+			"scenario_name": "VT Popcorn Novice S5",
+			"play_Count": 1
 		}
 	],
-	"description": "Season 1 practice. 8 scenarios, the ones this season ranks you on. Play them as often as you like - nothing here is a match, and none of it settles anything.",
+	"description": "Season 1 practice. 9 scenarios, the ones this season ranks you on. Play them as often as you like - nothing here is a match, and none of it settles anything.",
 	"hasOfflineScenarios": false,
 	"hasEdited": true,
 	"shareCode": "",
 	"version": 31,
-	"updated": 1788031556,
+	"updated": 1788216304,
 	"isPrivate": false
 }

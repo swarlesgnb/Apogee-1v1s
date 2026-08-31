@@ -25,6 +25,10 @@
 			"play_Count": 1
 		},
 		{
+			"scenario_name": "Popcorn MV Advanced",
+			"play_Count": 1
+		},
+		{
 			"scenario_name": "VoxTargetSwitch Click Small",
 			"play_Count": 1
 		},
@@ -41,7 +45,7 @@
 			"play_Count": 1
 		},
 		{
-			"scenario_name": "Bounce 180 Tracking",
+			"scenario_name": "domiSwitch",
 			"play_Count": 1
 		},
 		{
@@ -49,15 +53,15 @@
 			"play_Count": 1
 		},
 		{
-			"scenario_name": "patCircleSwitch NR",
-			"play_Count": 1
-		},
-		{
 			"scenario_name": "tamTargetSwitch Smooth Hard",
 			"play_Count": 1
 		},
 		{
-			"scenario_name": "voxTS Viscose Varied",
+			"scenario_name": "VT psalmTS Advanced",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "VT skyTS Advanced",
 			"play_Count": 1
 		},
 		{
@@ -66,6 +70,10 @@
 		},
 		{
 			"scenario_name": "Air Voltaic",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "Air Voltaic Invincible 4",
 			"play_Count": 1
 		},
 		{
@@ -81,7 +89,19 @@
 			"play_Count": 1
 		},
 		{
+			"scenario_name": "RawControlSphere Hard",
+			"play_Count": 1
+		},
+		{
 			"scenario_name": "Smoothbot Pauer",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "VT PGT Elite S5",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "VT Plaza Viscose Thin",
 			"play_Count": 1
 		},
 		{
@@ -93,11 +113,11 @@
 			"play_Count": 1
 		}
 	],
-	"description": "Season 1 practice. 22 scenarios, the ones this season ranks you on. Play them as often as you like - nothing here is a match, and none of it settles anything.",
+	"description": "Season 1 practice. 27 scenarios, the ones this season ranks you on. Play them as often as you like - nothing here is a match, and none of it settles anything.",
 	"hasOfflineScenarios": false,
 	"hasEdited": true,
 	"shareCode": "",
 	"version": 31,
-	"updated": 1788031556,
+	"updated": 1788216304,
 	"isPrivate": false
 }

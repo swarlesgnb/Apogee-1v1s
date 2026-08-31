@@ -33,6 +33,10 @@
 			"play_Count": 1
 		},
 		{
+			"scenario_name": "VT Popcorn Intermediate S5",
+			"play_Count": 1
+		},
+		{
 			"scenario_name": "Wide Wall 3 Targets TE",
 			"play_Count": 1
 		},
@@ -41,7 +45,7 @@
 			"play_Count": 1
 		},
 		{
-			"scenario_name": "voxTargetSwitch 2 Large",
+			"scenario_name": "voxTS Viscose Varied",
 			"play_Count": 1
 		},
 		{
@@ -69,7 +73,15 @@
 			"play_Count": 1
 		},
 		{
+			"scenario_name": "Air Voltaic Invincible 4 Easier",
+			"play_Count": 1
+		},
+		{
 			"scenario_name": "Ground Plaza Sparky v3 Easy",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "RawControlSphere Easier",
 			"play_Count": 1
 		},
 		{
@@ -78,6 +90,14 @@
 		},
 		{
 			"scenario_name": "VT Controlsphere Intermediate S5",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "VT PGT Intermediate S5",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "VT Plaza Intermediate",
 			"play_Count": 1
 		},
 		{
@@ -93,11 +113,11 @@
 			"play_Count": 1
 		}
 	],
-	"description": "Season 1 practice. 22 scenarios, the ones this season ranks you on. Play them as often as you like - nothing here is a match, and none of it settles anything.",
+	"description": "Season 1 practice. 27 scenarios, the ones this season ranks you on. Play them as often as you like - nothing here is a match, and none of it settles anything.",
 	"hasOfflineScenarios": false,
 	"hasEdited": true,
 	"shareCode": "",
 	"version": 31,
-	"updated": 1788031556,
+	"updated": 1788216304,
 	"isPrivate": false
 }

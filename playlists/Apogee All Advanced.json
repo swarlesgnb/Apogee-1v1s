@@ -33,6 +33,10 @@
 			"play_Count": 1
 		},
 		{
+			"scenario_name": "VT Popcorn Advanced S5",
+			"play_Count": 1
+		},
+		{
 			"scenario_name": "Wide Wall 4 Targets",
 			"play_Count": 1
 		},
@@ -73,11 +77,27 @@
 			"play_Count": 1
 		},
 		{
+			"scenario_name": "Air Voltaic Invincible 4 Medium",
+			"play_Count": 1
+		},
+		{
 			"scenario_name": "Controlsphere",
 			"play_Count": 1
 		},
 		{
+			"scenario_name": "RawControlSphere",
+			"play_Count": 1
+		},
+		{
 			"scenario_name": "VT Ground Intermediate S5",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "VT PGT Advanced S5",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "VT Plaza Advanced",
 			"play_Count": 1
 		},
 		{
@@ -93,11 +113,11 @@
 			"play_Count": 1
 		}
 	],
-	"description": "Season 1 practice. 22 scenarios, the ones this season ranks you on. Play them as often as you like - nothing here is a match, and none of it settles anything.",
+	"description": "Season 1 practice. 27 scenarios, the ones this season ranks you on. Play them as often as you like - nothing here is a match, and none of it settles anything.",
 	"hasOfflineScenarios": false,
 	"hasEdited": true,
 	"shareCode": "",
 	"version": 31,
-	"updated": 1788031556,
+	"updated": 1788216304,
 	"isPrivate": false
 }
