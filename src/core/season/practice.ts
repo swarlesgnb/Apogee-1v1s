@@ -251,6 +251,8 @@ export interface PracticeRow extends VariantProgress {
   label: string;
   category: string;
   subCategory: string | null;
+  /** Viscose's Arm/Wrist/Fingertip/Blending, where published. Null for most of the pool. */
+  mechanic: string | null;
   family: string;
   windowName: string;
   rankMaxes: number[];
@@ -278,6 +280,8 @@ export interface FamilyStanding {
   family: string;
   category: string;
   subCategory: string | null;
+  /** Viscose's Arm/Wrist/Fingertip/Blending, where published. Null for most of the pool. */
+  mechanic: string | null;
   /** Highest ladder rank any variant reaches, or null for none. */
   rankIndex: number | null;
   /** Scenario name of the variant to play next, or null when the family is maxed. */
@@ -295,6 +299,7 @@ interface GradedSeason extends SeasonLike {
     label?: string;
     category: string;
     subCategory?: string;
+    mechanic?: string;
     family?: string;
     window?: number;
     rankMaxes: number[];
@@ -354,6 +359,7 @@ export function practiceRows(
       label: s.label ?? s.scenario,
       category: s.category,
       subCategory: s.subCategory ?? null,
+      mechanic: s.mechanic ?? null,
       family: s.family ?? s.scenario,
       window,
       windowName: windows[window] ?? `window ${window + 1}`,
@@ -383,6 +389,7 @@ export function practiceRows(
       family: variants[0].family,
       category: variants[0].category,
       subCategory: variants[0].subCategory,
+      mechanic: variants[0].mechanic,
       rankIndex: familyRank(variants),
       next: target?.scenario ?? null,
     };

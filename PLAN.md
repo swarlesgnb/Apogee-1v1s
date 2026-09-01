@@ -1049,6 +1049,40 @@ server-side too - and that means the energy ladder running in the edge function,
 does not today. The rank is correct for the player looking at their own client, and
 unclaimed anywhere else.
 
+### The mechanic, and how far it actually reaches
+
+A second cut, taken from the authors rather than invented: what part of the arm a scenario
+asks for. Viscose is the only benchmark in the corpus that publishes it, grouping every
+scenario under **Arm**, **Wrist**, **Fingertip** or **Blending**. `deriveSubskills` carries
+it verbatim where an author names it and null everywhere else - **91 scenarios, and zero
+that two authors file differently.**
+
+The number it was scoped on turned out to be the wrong shape, and this is the useful part:
+**all 91 are Tracking.** Not 91 spread across the pool - Viscose names these for tracking
+alone, so it is not a second axis over three categories but a finer cut inside one of them.
+Twenty-four of the hundred and eight pool scenarios carry one, which is six of the twelve
+Tracking families and none of the other fifteen.
+
+Scoped that way it earns its place, because it splits a sub-skill the sub-skills cannot:
+
+```
+Control Tracking    Controlsphere      Wrist
+                    Raw Control        Arm
+                    RawControlSphere   Blending
+```
+
+Three families Apogee calls the same thing, that Viscose says ask for three different
+motions. That is the claim worth surfacing, and it is why the tag rides the scenario rather
+than the sub-skill heading - a single tag over that group would have mislabelled two of the
+three.
+
+What is deliberately **not** built on it: the weakness map and the quests. Both rank what a
+player is worst at, and a dimension that is null for twenty-one of twenty-seven families
+would rank almost nothing while looking like it ranked everything. It stays a label on the
+scenarios that have one until an author publishes enough for it to mean more, and
+`validate:pool` prints the coverage every run so that decision is made against a number
+rather than an impression.
+
 ### One benchmark, one opinion
 
 Printing that list exposed a fault in the rule itself. Aimerz+ SpeedTS lists **the same

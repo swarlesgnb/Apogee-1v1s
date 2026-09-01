@@ -2949,6 +2949,7 @@ function renderSeasonView(data) {
       const maxed = inSub.filter((r) => r.nextRankScore === null).length;
       subHead.innerHTML =
         '<span class="pool-sub-name">' + esc(sub) + "</span>" +
+
         '<span class="pool-sub-note">' +
         (maxed === inSub.length
           ? "maxed here"
@@ -2979,7 +2980,22 @@ function renderSeasonView(data) {
 
         const nm = document.createElement("span");
         nm.className = "nm";
-        nm.textContent = v.label;
+        const nmText = document.createElement("span");
+        nmText.className = "nm-text";
+        nmText.textContent = v.label;
+        nm.append(nmText);
+        // Only Viscose publishes a mechanic, and only for tracking, so this shows on
+        // twenty-four of the hundred and eight and nowhere else. It sits on the tile
+        // rather than the sub-skill heading because it belongs to the family: Control
+        // Tracking holds a Wrist family, an Arm one and a Blending one, and a single tag
+        // over the group would have mislabelled two of the three.
+        if (v.mechanic) {
+          const mech = document.createElement("span");
+          mech.className = "pool-mech";
+          mech.textContent = v.mechanic;
+          mech.title = "Viscose files this family under " + v.mechanic;
+          nm.append(mech);
+        }
         // The three facts the row no longer spends a column on, on the one element
         // wide enough to be an easy hover target.
         nm.title =

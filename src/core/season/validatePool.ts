@@ -151,6 +151,8 @@ interface SubSkills {
     category: string | null;
     subSkill: string | null;
     via: string | null;
+    /** Viscose's Arm/Wrist/Fingertip/Blending, where an author publishes it. */
+    mechanic: string | null;
   }[];
 }
 
@@ -1018,6 +1020,64 @@ for (const category of pool.categories) {
     `  ${category.padEnd(11)}` +
       [...counts].map(([sub, n]) => `${sub} ${n}`).join(", "),
   );
+}
+
+// ---- the mechanic ---------------------------------------------------------------------
+//
+// A second axis where a benchmark publishes one, and only there. Viscose is the only
+// author in the corpus who names what part of the arm a scenario asks for, and it names
+// it for tracking alone - all 91 tagged scenarios in the corpus are Tracking, so this is
+// not a dimension across the pool but a cut inside one category of it. Printed rather
+// than asserted broadly, because the useful question is how far it reaches.
+console.log(`
+${BOLD}mechanic${RESET}`);
+{
+  const published = new Map<string, string>();
+  for (const s of derivedSubSkills?.scenarios ?? []) {
+    if (s.mechanic) published.set(s.scenario, s.mechanic);
+  }
+
+  const invented: string[] = [];
+  const disagreeing: string[] = [];
+  for (const f of pool.families) {
+    const mech = (f as { mechanic?: string }).mechanic;
+    if (!mech) continue;
+    const said = new Set(f.variants.map((v) => published.get(v.scenario)).filter(Boolean));
+    if (said.size === 0) invented.push(`${f.family}: ${mech}, which no benchmark publishes`);
+    else if (!said.has(mech)) {
+      disagreeing.push(`${f.family}: ${mech}, but its scenarios are ${[...said].join("/")}`);
+    }
+  }
+
+  check(
+    "every family's mechanic is one a benchmark published for its own scenarios",
+    invented.length === 0 && disagreeing.length === 0,
+    [...invented, ...disagreeing].join("; "),
+  );
+
+  const tracking = pool.families.filter((f) => f.category === "Tracking");
+  const withMech = tracking.filter((f) => (f as { mechanic?: string }).mechanic);
+  const others = pool.families.filter(
+    (f) => f.category !== "Tracking" && (f as { mechanic?: string }).mechanic,
+  );
+  check(
+    "no family outside Tracking claims a mechanic",
+    others.length === 0,
+    others.map((f) => f.family).join(", "),
+  );
+
+  const byMech = new Map<string, string[]>();
+  for (const f of withMech) {
+    const m = (f as { mechanic?: string }).mechanic!;
+    byMech.set(m, (byMech.get(m) ?? []).concat(f.family));
+  }
+  console.log(
+    `  ${DIM}${withMech.length} of ${tracking.length} Tracking families carry one; ` +
+      `${pool.families.length - withMech.length} of ${pool.families.length} in the pool have none${RESET}`,
+  );
+  for (const [m, fams] of [...byMech].sort()) {
+    console.log(`  ${DIM}${m.padEnd(10)} ${fams.join(", ")}${RESET}`);
+  }
 }
 
 // ---- verdict ------------------------------------------------------------------------

@@ -286,6 +286,23 @@ interface TaxonomyEntry {
   leaderboardId: number | null;
 }
 
+/**
+ * The mechanics a benchmark may publish, and their canonical spelling.
+ *
+ * Viscose's four, which are the only ones anybody publishes. Matched on the author's own
+ * category name rather than on anything derived, so a benchmark that starts naming these
+ * tomorrow is picked up without a code change and one that never does stays null.
+ */
+const MECHANICS = new Map([
+  ["arm", "Arm"],
+  ["wrist", "Wrist"],
+  ["fingertip", "Fingertip"],
+  ["blending", "Blending"],
+]);
+
+/** Scenarios two benchmarks file under different mechanics. Expected empty; checked. */
+const mechanicConflicts: string[] = [];
+
 /** One scenario, everything known about it. */
 interface Scenario {
   scenario: string;
@@ -296,6 +313,15 @@ interface Scenario {
   subSkill: string | null;
   /** How the sub-skill was reached: the authors' own labels, or Voltaic's sheet. */
   via: "label" | "voltaic" | null;
+  /**
+   * Which part of the arm the scenario asks for, where a benchmark says so.
+   *
+   * A second axis, orthogonal to the sub-skill: Static Clicking is what you are doing,
+   * Wrist is what you are doing it with. Only Viscose publishes it - its three books group
+   * every scenario under Arm, Wrist, Fingertip or Blending - so this is null for most of
+   * the corpus and null is the answer, not a gap to fill by reading scenario names.
+   */
+  mechanic: string | null;
   entries: number | null;
   plays: number | null;
   /** Every benchmark tier that names it, and the label it carries there. */
@@ -355,10 +381,21 @@ for (const file of readdirSync(BENCH_DIR).filter((f) => f.endsWith(".json"))) {
           categoryFrom: correctedAimType(s.name, meta?.aimType) ? "kovaaks" : null,
           subSkill: null,
           via: null,
+          mechanic: null,
           entries: meta?.entries ?? null,
           plays: meta?.plays ?? null,
           from: [],
         };
+        // The author's own grouping, taken verbatim where it is a mechanic. Nothing here
+        // resolves a disagreement because there is none to resolve: across the corpus no
+        // scenario is filed under two different mechanics, which `mechanicConflicts`
+        // below re-checks rather than assumes.
+        const asMechanic = MECHANICS.get((category.name ?? "").trim().toLowerCase());
+        if (asMechanic) {
+          if (entry.mechanic && entry.mechanic !== asMechanic) mechanicConflicts.push(s.name);
+          entry.mechanic = asMechanic;
+        }
+
         entry.from.push({
           benchmark: def.benchmarkName,
           difficulty: difficulty.name,
@@ -655,6 +692,8 @@ writeFileSync(
         classified: classified.length,
         fromLabels: classified.filter((s) => s.via === "label").length,
         fromVoltaicSheet: classified.filter((s) => s.via === "voltaic").length,
+        withMechanic: [...scenarios.values()].filter((s) => s.mechanic !== null).length,
+        mechanicConflicts: mechanicConflicts.length,
         aimTypeFromKovaaks: [...scenarios.values()].filter((s) => s.categoryFrom === "kovaaks").length,
         aimTypeFromBenchmarkWord: inferred.fromWord,
         aimTypeFromBenchmarkGroup: inferred.fromGroup,
@@ -680,6 +719,7 @@ writeFileSync(
           categoryFrom: s.categoryFrom,
           subSkill: s.subSkill,
           via: s.via,
+          mechanic: s.mechanic,
           entries: s.entries,
           plays: s.plays,
           from: s.from,

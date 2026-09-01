@@ -2027,6 +2027,7 @@
       "family": "Air CELESTIAL",
       "category": "Tracking",
       "subCategory": "Reactive Tracking",
+      "mechanic": "Blending",
       "variants": [
         {
           "window": 0,
@@ -2229,6 +2230,7 @@
       "family": "Controlsphere",
       "category": "Tracking",
       "subCategory": "Control Tracking",
+      "mechanic": "Wrist",
       "variants": [
         {
           "window": 0,
@@ -2437,6 +2439,7 @@
       "family": "Raw Control",
       "category": "Tracking",
       "subCategory": "Control Tracking",
+      "mechanic": "Arm",
       "variants": [
         {
           "window": 0,
@@ -2789,6 +2792,7 @@
       "family": "Strafe Reading",
       "category": "Tracking",
       "subCategory": "Reading Tracking",
+      "mechanic": "Fingertip",
       "variants": [
         {
           "window": 0,
@@ -4555,6 +4559,7 @@
       "family": "RawControlSphere",
       "category": "Tracking",
       "subCategory": "Control Tracking",
+      "mechanic": "Blending",
       "variants": [
         {
           "window": 0,
@@ -4710,6 +4715,7 @@
       "family": "Air Invincible 4",
       "category": "Tracking",
       "subCategory": "Reading Tracking",
+      "mechanic": "Arm",
       "variants": [
         {
           "window": 0,

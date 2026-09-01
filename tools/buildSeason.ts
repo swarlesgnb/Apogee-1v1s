@@ -91,6 +91,8 @@ interface Pool {
     family: string;
     category: string;
     subCategory?: string;
+  /** Viscose's Arm/Wrist/Fingertip/Blending, where a benchmark publishes one. */
+  mechanic?: string;
     variants: {
       window: number;
       scenario: string;
@@ -395,6 +397,9 @@ function main(): void {
         category: family.category,
         family: family.family,
         ...(family.subCategory ? { subCategory: family.subCategory } : {}),
+        // Carried only where an author published it. Absent is the answer for most of the
+        // pool rather than a field waiting to be filled.
+        ...(family.mechanic ? { mechanic: family.mechanic } : {}),
         window: v.window,
         label: v.label,
         leaderboardId: v.leaderboardId,

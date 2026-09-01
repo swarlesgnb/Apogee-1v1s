@@ -118,6 +118,14 @@ export interface SeasonScenario {
    */
   family?: string;
   /**
+   * What part of the arm the family asks for, where a benchmark publishes it.
+   *
+   * A second cut, and a narrow one: only Viscose names these, and only for tracking, so
+   * all 91 tagged scenarios in the corpus are Tracking and most of the pool has none.
+   * Absent means unpublished, never unknown-and-guessable.
+   */
+  mechanic?: string;
+  /**
    * The sub-skill the family trains, in the pool's two-word form: "Static Clicking",
    * "Reading Tracking". Carried into the season rather than looked up because the season
    * is what the app and the database read, and a sub-skill that only exists in the pool
