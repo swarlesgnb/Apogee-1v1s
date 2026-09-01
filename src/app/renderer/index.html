@@ -921,6 +921,9 @@
   }
   .band-note { font-family: var(--mono); font-size: 9.5px; color: var(--ink-dim); }
   .band-note.top { color: color-mix(in srgb, var(--up) 70%, var(--ink-dim)); }
+  /* Eligible for the positional rank but not holding it. Warn rather than up: this is a
+     pending state, and colouring it like an achievement would read as the rank itself. */
+  .band-note.await { color: color-mix(in srgb, var(--warn) 78%, var(--ink-dim)); }
 
   /* ==================================================================
      Profile

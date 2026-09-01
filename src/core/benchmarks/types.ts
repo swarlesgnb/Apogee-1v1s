@@ -50,6 +50,14 @@ export interface CategoryDef {
    */
   rankNames?: string[];
   rankColors?: Record<string, string>;
+  /**
+   * A top rank awarded by board position rather than by energy.
+   *
+   * When set, `rankNames` carries one more entry than `rankMaxes` and the last of them is
+   * this rank. The engine cannot award it - `rankIndex` only ever reads `rankMaxes` - and
+   * reports eligibility instead, for a caller that knows the board order to resolve.
+   */
+  positional?: { topN: number };
 }
 
 export interface DifficultyDef {

@@ -200,6 +200,15 @@ function carryLadder(
  * are carried forward from the band itself and this returns undefined, which is what a
  * season built from scratch has always done: placeholders, named later in the editor.
  */
+/**
+ * How many places on the apex board hold the top rank.
+ *
+ * Three, which is Voltaic's Celestial and is a number rather than a percentile on purpose:
+ * a share of the board grows with the board, and the point of this rank is that it does
+ * not. It is a real ceiling that a season can be finished against.
+ */
+const POSITIONAL_TOP_N = 3;
+
 const PLACEHOLDER_NAME = /^Rank \d+\**$/;
 
 /**
@@ -487,10 +496,34 @@ function main(): void {
     // what makes it a benchmark rather than a stretch of a longer one.
     const bands = pool.windows.map((_, window) => {
       const carried = prior?.bands?.find((b) => b.window === window);
+      const ladder = carryLadder(seeded(carried, prior, window, windowSize), windowSize);
+      const top = window === pool.windows.length - 1;
+      if (!top) {
+        return {
+          window,
+          rankMaxes: Array.from({ length: windowSize }, (_, i) => perRank * (i + 1)),
+          ...ladder,
+        };
+      }
+
+      // The hardest band carries one rank more than it has thresholds, held by position on
+      // the apex board rather than by a score. `carryLadder` cannot make it: growing a
+      // ladder aligns to the top so a name somebody chose keeps describing the same
+      // scores, which means it adds placeholders at the *bottom* - and this rank is the
+      // very top. So it is appended, and it is a placeholder until it is named in the
+      // editor, exactly as any other new rank is.
+      const prev = carried?.rankNames ?? [];
+      const named = prev.length > windowSize ? prev[prev.length - 1] : null;
+      const name = named && !PLACEHOLDER_NAME.test(named) ? named : `Rank ${windowSize + 1}`;
       return {
         window,
         rankMaxes: Array.from({ length: windowSize }, (_, i) => perRank * (i + 1)),
-        ...carryLadder(seeded(carried, prior, window, windowSize), windowSize),
+        rankNames: [...ladder.rankNames, name],
+        rankColors: {
+          ...ladder.rankColors,
+          [name]: carried?.rankColors?.[name] ?? PLACEHOLDER_COLORS[0],
+        },
+        positional: { topN: POSITIONAL_TOP_N },
       };
     });
 

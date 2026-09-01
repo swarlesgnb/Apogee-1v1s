@@ -125,6 +125,15 @@ export interface CategoryResult {
   rankCount: number;
   /** Fraction of the way from this rank to the next, or null at the top. */
   progressToNextRank: number | null;
+  /**
+   * The positional top rank, when this category has one.
+   *
+   * `eligible` says the player holds the highest rank energy can prove, which is the
+   * precondition and not the rank. Whether they actually hold it depends on where they
+   * sit on the apex board, which this module cannot see and must not guess - so it says
+   * "eligible" and stops. Null when the category has no positional rank.
+   */
+  positional: { rankName: string; topN: number; eligible: boolean } | null;
 }
 
 export interface BenchmarkResult {
@@ -266,6 +275,17 @@ function evaluateCategory(
     progressToNextRank = hi > lo ? Math.min(1, Math.max(0, (energy - lo) / (hi - lo))) : 1;
   }
 
+  // The positional rank is the name past the last threshold. `idx` comes from
+  // `rankIndex`, which reads `rankMaxes` alone, so it can never point at this one - the
+  // rank is unreachable by arithmetic on purpose, and eligibility is all that is reported.
+  const positional = category.positional
+    ? {
+        rankName: rankNames[category.rankMaxes.length] ?? "",
+        topN: category.positional.topN,
+        eligible: idx === category.rankMaxes.length - 1,
+      }
+    : null;
+
   return {
     name: category.name,
     energy,
@@ -274,6 +294,7 @@ function evaluateCategory(
     scenarios,
     rankCount: category.rankMaxes.length,
     progressToNextRank,
+    positional,
   };
 }
 

@@ -1008,6 +1008,47 @@ it.
 An overall tier is still derived from the three categories, as above - a readout rather
 than a fourth thing to climb.
 
+### The top rank is a position, not a score
+
+Three of the sixteen ranks are now held by clearing a number. The sixteenth is not.
+
+A threshold cannot make a rank rare. Whether one person clears it or fifty is an accident
+of where the number landed, and the number has to be chosen before anybody has played -
+which is exactly how the old top rank ended up at the top 0.8%, eight hundred people on a
+hundred-thousand-entry board. Voltaic defines Celestial the other way: **top 3 on the
+leaderboard, provided the score also meets the tier below it.** That two-part definition
+is what makes one person hold it, and a pure threshold never can.
+
+So each category's Expert band carries one rank more than it has thresholds, and that rank
+is awarded by position on the apex board.
+
+The client cannot award it, and this is structural rather than a promise. `rankIndex`
+reads `rankMaxes`; the positional name lives one past the end of it; the two arrays differ
+in length by exactly one. An infinite score on every scenario in the band returns the last
+*hard* rank and `eligible: true`, never the rank itself - `validate:season` maxes the band
+and asserts that no category claimed it, and the check was confirmed to fail when the
+engine was temporarily allowed to reach one name higher.
+
+Eligibility and position are deliberately held apart:
+
+- **Eligibility** is a pure function of scores, so the client computes it offline like
+  every other rank.
+- **Position** is `apex-board`'s, computed server-side from `apex_standing` order, which
+  is the one fact a client cannot know or forge about itself.
+
+The rank is held only where the two meet. Neither half is sufficient: eligibility alone is
+a claim a client could make about itself, and position alone would hand the rank to
+whoever is third on a board they never qualified for. Until both are true the app says
+**"eligible - awaiting the board"** rather than naming the rank, because a client that
+prints the rarest rank in the game off data it cannot verify is a client that will
+eventually print it wrongly.
+
+What is not built yet: the *public* board still shows points and position, not the
+positional rank, because rendering it for other players needs eligibility computed
+server-side too - and that means the energy ladder running in the edge function, which it
+does not today. The rank is correct for the player looking at their own client, and
+unclaimed anywhere else.
+
 ### One benchmark, one opinion
 
 Printing that list exposed a fault in the rule itself. Aimerz+ SpeedTS lists **the same

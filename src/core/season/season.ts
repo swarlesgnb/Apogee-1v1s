@@ -52,6 +52,27 @@ export interface SeasonBand {
   rankColors: Record<string, string>;
   /** Category energy thresholds within this band, one per rank. */
   rankMaxes: number[];
+  /**
+   * A top rank held by position on the board rather than by a score.
+   *
+   * A threshold cannot make a rank rare. Whether one person or fifty clear it is an
+   * accident of the number, and the number has to be set before anyone has played - which
+   * is how the old top rank ended up at the top 0.8%, eight hundred people on a
+   * hundred-thousand-entry board. Voltaic's Celestial is defined the other way, as top 3
+   * on the leaderboard *and* the hard requirement below it, and that two-part definition
+   * is what makes one person hold it.
+   *
+   * When this is set the band carries one more name than it has thresholds, and the extra
+   * name is this rank. Nothing in the energy path can award it: `rankIndex` reads
+   * `rankMaxes`, so the highest index it can return is the last *hard* rank, and the
+   * positional name sits above anything the arithmetic can reach. That is deliberate
+   * rather than incidental - the client must not be able to claim this rank, because the
+   * only thing that knows the board order is the server.
+   */
+  positional?: {
+    /** How many places on the apex board hold it. */
+    topN: number;
+  };
 }
 
 export interface SeasonCategory {
@@ -446,6 +467,45 @@ export function validateSeason(season: Season): void {
     }
   }
 
+  // The bands, which are what actually grades anybody now.
+  //
+  // Nothing checked these until the positional rank needed them to be checkable: the
+  // chained ladder above was validated in full while the four ladders that replaced it
+  // were not looked at once, so a band could carry three names against four thresholds
+  // and every suite would pass.
+  for (const c of season.categories) {
+    for (const b of c.bands ?? []) {
+      const where = `category ${c.name}, band ${season.windows?.[b.window] ?? b.window}`;
+
+      if (!Array.isArray(b.rankNames) || b.rankNames.length === 0) {
+        throw new Error(`${where} has no ranks`);
+      }
+      if (b.rankNames.some((n) => !n || !n.trim())) {
+        throw new Error(`${where} has a rank with no name`);
+      }
+      if (b.rankMaxes.findIndex((v, i) => i > 0 && v <= b.rankMaxes[i - 1]) > 0) {
+        throw new Error(`${where}: energy thresholds must ascend`);
+      }
+
+      // A positional band carries exactly one name more than it has thresholds, and that
+      // name is the rank the board awards. One more than that is a rank with no threshold
+      // and no position, which nothing could ever hand out.
+      const expected = b.rankMaxes.length + (b.positional ? 1 : 0);
+      if (b.rankNames.length !== expected) {
+        throw new Error(
+          `${where} has ${b.rankMaxes.length} energy thresholds but ` +
+            `${b.rankNames.length} ranks` +
+            (b.positional
+              ? " - a band with a positional top rank carries exactly one name more than it has thresholds"
+              : ""),
+        );
+      }
+      if (b.positional && !(Number.isInteger(b.positional.topN) && b.positional.topN >= 1)) {
+        throw new Error(`${where}: positional topN must be a whole number of places, at least 1`);
+      }
+    }
+  }
+
   // A scenario in no category is graded by nothing and would vanish from every screen
   // without any error to explain where it went.
   const known = new Set(season.categories.map((c) => c.name));
@@ -504,6 +564,7 @@ export function seasonAsDifficulties(season: Season): DifficultyDef[] {
         rankMaxes: ladder?.rankMaxes ?? [],
         rankNames: ladder?.rankNames ?? [],
         rankColors: ladder?.rankColors ?? {},
+        positional: ladder?.positional,
         // Deliberately no windowSize: inside a band every scenario is its own family in
         // window 0, which is the flat case, and that is the point of splitting them.
         scenarios: (byCategory.get(c.name) ?? [])

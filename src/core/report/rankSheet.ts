@@ -107,6 +107,8 @@ interface Ladder {
   /** Window each rank belongs to, or null when the ladder is not windowed. */
   windows: string[] | null;
   windowSize: number;
+  /** Places on the apex board that hold the top rank, when it is held by position. */
+  positionalTopN: number | null;
 }
 
 function laddersOf(season: Season): Ladder[] {
@@ -128,6 +130,7 @@ function laddersOf(season: Season): Ladder[] {
     rankMaxes: b.rankMaxes,
     windows: null,
     windowSize: 0,
+    positionalTopN: b.positional?.topN ?? null,
   });
 
   // Most finished category first, least finished last. Reproduces the order the sheet was
@@ -153,6 +156,7 @@ function laddersOf(season: Season): Ladder[] {
             rankMaxes: c.rankMaxes,
             windows: size > 0 ? (season.windows ?? null) : null,
             windowSize: size,
+            positionalTopN: null,
           },
         ],
   );
@@ -166,6 +170,7 @@ function laddersOf(season: Season): Ladder[] {
       rankMaxes: null,
       windows: null,
       windowSize: 0,
+      positionalTopN: null,
     },
     ...categories,
   ];
@@ -183,9 +188,16 @@ function renderLadder(ladder: Ladder): string {
     // A named rank is shown on light as well as on dark, because that is the column that
     // catches a colour working on only one ground. A placeholder has no name worth
     // judging, so the energy it costs is the more useful thing in that space.
-    const right = isPlaceholder
+    // The positional rank has no threshold by construction, so it says what it costs
+    // instead: a place on the board rather than a score.
+    const positional = ladder.positionalTopN !== null && i === ladder.rankNames.length - 1;
+    const right = positional
+      ? `<span class="energy">top ${ladder.positionalTopN} on the board</span>`
+      : isPlaceholder
       ? `<span class="energy">${
-          ladder.rankMaxes ? ladder.rankMaxes[i].toLocaleString("en-US") : ""
+          ladder.rankMaxes?.[i] === undefined
+            ? ""
+            : ladder.rankMaxes[i].toLocaleString("en-US")
         }</span>`
       : `<span class="onlight" style="color:${esc(color)}">${esc(name)}</span>`;
 

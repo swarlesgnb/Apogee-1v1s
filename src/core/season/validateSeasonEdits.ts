@@ -183,7 +183,7 @@ if (base.windowSize) {
 // silently drops every time one category is shorter than another. These pin the ends,
 // which is where a derivation of this kind goes wrong first.
 import { evaluateBenchmark } from "../benchmarks/energy.ts";
-import { seasonAsDifficulty } from "./season.ts";
+import { seasonAsDifficulties, seasonAsDifficulty } from "./season.ts";
 
 console.log("\n-- derived overall --");
 
@@ -228,6 +228,40 @@ check(
   unevenMaxed.rankName === uneven.rankNames[uneven.rankNames.length - 1],
   `${unevenMaxed.rankName}`,
 );
+
+// ---- the positional top rank is unreachable by any score ---------------------------
+//
+// This is the whole safety property. The rank is meant to be handed out by the server
+// from board order, so if energy could ever reach it the client would be awarding itself
+// the rarest rank in the game off numbers it computed locally. It cannot, structurally:
+// `rankIndex` reads `rankMaxes`, the positional name lives past the end of it, and the
+// two arrays differ in length by exactly one. Asserted rather than assumed, because that
+// invariant is one careless `rankNames.length` away from silently going.
+{
+  const bands = seasonAsDifficulties(base);
+  const top = bands[bands.length - 1];
+
+  if (top && top.categories.some((c) => c.positional)) {
+    const maxed = new Map<string, number>();
+    for (const c of top.categories) for (const sc of c.scenarios) maxed.set(sc.name, 1e9);
+
+    const graded = evaluateBenchmark(top, maxed);
+    const positional = graded.categories.filter((c) => c.positional);
+    const claimed = positional.filter((c) => c.rankName === c.positional!.rankName);
+    const eligible = positional.filter((c) => c.positional!.eligible);
+
+    check(
+      "no score can reach the positional top rank",
+      claimed.length === 0,
+      `${claimed.length} category(ies) awarded it on energy alone`,
+    );
+    check(
+      "maxing the band makes a player eligible for it",
+      positional.length > 0 && eligible.length === positional.length,
+      `${eligible.length} of ${positional.length} eligible`,
+    );
+  }
+}
 
 console.log(
   failures === 0

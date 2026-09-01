@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-31T23:04:09.233Z",
+  "generatedAt": "2026-09-01T01:03:12.543Z",
   "coverage": [
     {
       "category": "Clicking",
@@ -907,7 +907,7 @@
       "windowName": "Expert",
       "total": 12,
       "measured": 3,
-      "runs": 31,
+      "runs": 34,
       "matchable": true,
       "complete": false,
       "scenarios": [
@@ -984,14 +984,6 @@
           "needs": 4
         },
         {
-          "scenario": "Ground Plaza Sparky v3 OW",
-          "label": "Ground Plaza Sparky v3 OW",
-          "family": "Ground Plaza",
-          "runs": 8,
-          "measured": true,
-          "needs": 0
-        },
-        {
           "scenario": "waldoTS",
           "label": "waldoTS",
           "family": "waldoTS",
@@ -1000,10 +992,18 @@
           "needs": 0
         },
         {
+          "scenario": "Ground Plaza Sparky v3 OW",
+          "label": "Ground Plaza Sparky v3 OW",
+          "family": "Ground Plaza",
+          "runs": 9,
+          "measured": true,
+          "needs": 0
+        },
+        {
           "scenario": "Close Fast Strafes Invincible - Thin",
           "label": "Close Fast Strafes Invincible - Thin",
           "family": "Strafe Reading",
-          "runs": 9,
+          "runs": 11,
           "measured": true,
           "needs": 0
         }
@@ -1046,7 +1046,7 @@
     "windowSize": 4
   },
   "player": {
-    "totalRuns": 12134,
+    "totalRuns": 12144,
     "scenarioCount": 846,
     "streak": 30,
     "benchmarkRank": "Odyssey",
@@ -1276,7 +1276,8 @@
           "rankCount": 4,
           "progressToNextRank": 0.5555555555555556,
           "played": 8,
-          "total": 9
+          "total": 9,
+          "positional": null
         },
         {
           "window": 1,
@@ -1305,7 +1306,8 @@
           "rankCount": 4,
           "progressToNextRank": 0.5789889266666666,
           "played": 7,
-          "total": 9
+          "total": 9,
+          "positional": null
         },
         {
           "window": 2,
@@ -1334,7 +1336,8 @@
           "rankCount": 4,
           "progressToNextRank": 0.9800948903058306,
           "played": 9,
-          "total": 9
+          "total": 9,
+          "positional": null
         },
         {
           "window": 3,
@@ -1345,13 +1348,15 @@
             "Sniper",
             "Railgun",
             "Gauss Cannon",
-            "Photon Lance"
+            "Photon Lance",
+            "Rank 5"
           ],
           "rankColors": {
             "Sniper": "#A9DCEC",
             "Railgun": "#00D9FF",
             "Gauss Cannon": "#A855F7",
-            "Photon Lance": "#FFFFFF"
+            "Photon Lance": "#FFFFFF",
+            "Rank 5": "#3f4652"
           },
           "rankMaxes": [
             22500,
@@ -1363,7 +1368,12 @@
           "rankCount": 4,
           "progressToNextRank": 0.6333902700264953,
           "played": 6,
-          "total": 9
+          "total": 9,
+          "positional": {
+            "rankName": "Rank 5",
+            "topN": 3,
+            "eligible": false
+          }
         }
       ],
       "perScenario": 25459,
@@ -1629,7 +1639,8 @@
           "rankCount": 4,
           "progressToNextRank": 0.2265972222222219,
           "played": 7,
-          "total": 12
+          "total": 12,
+          "positional": null
         },
         {
           "window": 1,
@@ -1658,7 +1669,8 @@
           "rankCount": 4,
           "progressToNextRank": 0.37102930402930406,
           "played": 8,
-          "total": 12
+          "total": 12,
+          "positional": null
         },
         {
           "window": 2,
@@ -1687,7 +1699,8 @@
           "rankCount": 4,
           "progressToNextRank": 0.16365848165210653,
           "played": 10,
-          "total": 12
+          "total": 12,
+          "positional": null
         },
         {
           "window": 3,
@@ -1698,13 +1711,15 @@
             "Neolithic",
             "Robosapien",
             "HAL 9000",
-            "Singularity"
+            "Singularity",
+            "Rank 5"
           ],
           "rankColors": {
             "Neolithic": "#ff6600",
             "Robosapien": "#00fbff",
             "HAL 9000": "#ffffff",
-            "Singularity": "#000000"
+            "Singularity": "#000000",
+            "Rank 5": "#3f4652"
           },
           "rankMaxes": [
             30000,
@@ -1712,11 +1727,16 @@
             90000,
             120000
           ],
-          "energy": 17010,
+          "energy": 17042,
           "rankCount": 4,
-          "progressToNextRank": 0.5670034313467325,
+          "progressToNextRank": 0.568074859918161,
           "played": 8,
-          "total": 12
+          "total": 12,
+          "positional": {
+            "rankName": "Rank 5",
+            "topN": 3,
+            "eligible": false
+          }
         }
       ],
       "perScenario": 21669,
@@ -2039,7 +2059,8 @@
           "rankCount": 4,
           "progressToNextRank": 0.3333333333333333,
           "played": 5,
-          "total": 6
+          "total": 6,
+          "positional": null
         },
         {
           "window": 1,
@@ -2068,7 +2089,8 @@
           "rankCount": 4,
           "progressToNextRank": 0.4896808132034634,
           "played": 5,
-          "total": 6
+          "total": 6,
+          "positional": null
         },
         {
           "window": 2,
@@ -2097,7 +2119,8 @@
           "rankCount": 4,
           "progressToNextRank": 0.8616421046960665,
           "played": 6,
-          "total": 6
+          "total": 6,
+          "positional": null
         },
         {
           "window": 3,
@@ -2108,13 +2131,15 @@
             "Pronghorn",
             "Cheetah",
             "Golden Eagle",
-            "Peregrine"
+            "Peregrine",
+            "Rank 5"
           ],
           "rankColors": {
             "Pronghorn": "#421e00",
             "Cheetah": "#ff7300",
             "Golden Eagle": "#9e7c00",
-            "Peregrine": "#8000ff"
+            "Peregrine": "#8000ff",
+            "Rank 5": "#3f4652"
           },
           "rankMaxes": [
             15000,
@@ -2126,7 +2151,12 @@
           "rankCount": 4,
           "progressToNextRank": 0.4641086157876553,
           "played": 3,
-          "total": 6
+          "total": 6,
+          "positional": {
+            "rankName": "Rank 5",
+            "topN": 3,
+            "eligible": false
+          }
         }
       ],
       "perScenario": 22772,
@@ -2255,7 +2285,7 @@
     "ceilingEnergy": 625797,
     "floorRank": "Odyssey",
     "floorEnergy": 539722,
-    "gap": 0.12001409371912963,
+    "gap": 0.11852167857922852,
     "scenarios": [
       {
         "name": "VT Ground Intermediate S5",
@@ -2312,14 +2342,6 @@
         "floor": 106,
         "median": 114,
         "gap": 0.19083969465648856
-      },
-      {
-        "name": "Close Fast Strafes Invincible - Thin",
-        "label": "Close Fast Strafes Invincible - Thin exp",
-        "ceiling": 7290,
-        "floor": 6030,
-        "median": 6948,
-        "gap": 0.1728395061728395
       },
       {
         "name": "voxTargetSwitch",
@@ -2400,6 +2422,14 @@
         "floor": 8898,
         "median": 9084,
         "gap": 0.12481557981705518
+      },
+      {
+        "name": "Close Fast Strafes Invincible - Thin",
+        "label": "Close Fast Strafes Invincible - Thin exp",
+        "ceiling": 7416,
+        "floor": 6588,
+        "median": 6948,
+        "gap": 0.11165048543689321
       },
       {
         "name": "Wide Wall 3 Targets TE",
@@ -2574,7 +2604,7 @@
         "label": "Ground Plaza Sparky v3 OW exp",
         "ceiling": 869.715576,
         "floor": 859.947327,
-        "median": 863.133514,
+        "median": 864.129272,
         "gap": 0.0112315442767235
       },
       {

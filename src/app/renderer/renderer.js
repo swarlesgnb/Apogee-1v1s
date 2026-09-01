@@ -524,6 +524,7 @@ let selectedCategory = null;
 let pendingScenarios = [];
 
 function render(data) {
+  lastSnapshot = data;
   current = data;
   $("app").hidden = false;
   $("empty").hidden = true;
@@ -3257,7 +3258,7 @@ function renderRanks(data) {
       // filled and ringed; the ones under it are filled; the ones above are outlines.
       const rungs = document.createElement("div");
       rungs.className = "band-rungs";
-      b.rankNames.forEach((rankName, i) => {
+      b.rankNames.slice(0, b.positional ? -1 : undefined).forEach((rankName, i) => {
         const pip = document.createElement("span");
         pip.className =
           "pip" + (i < b.rankIndex ? " done" : i === b.rankIndex ? " here" : "");
@@ -3272,9 +3273,21 @@ function renderRanks(data) {
 
       const foot = document.createElement("div");
       foot.className = "band-foot";
-      const next = b.rankNames[b.rankIndex + 1] ?? null;
+      // The positional rank is not in the ladder a score can climb, so it is not what
+      // comes "next" - `rankNames` carries it but `rankMaxes` does not, and the engine
+      // stops one below it. Named separately or it would read as an ordinary rank the
+      // player is a few points short of.
+      const hardRanks = b.positional ? b.rankNames.length - 1 : b.rankNames.length;
+      const next = b.rankIndex + 1 < hardRanks ? b.rankNames[b.rankIndex + 1] : null;
       if (unplayed) {
         foot.innerHTML = '<span class="band-note">no runs yet</span>';
+      } else if (!next && b.positional && b.positional.eligible) {
+        // Eligible is the whole claim. Only the server sees the board order, so saying
+        // anything stronger here would be the client awarding itself the rarest rank in
+        // the game off data it does not have.
+        foot.innerHTML =
+          '<span class="band-note await">eligible for ' + esc(b.positional.rankName) +
+          " · awaiting the board</span>";
       } else if (!next) {
         foot.innerHTML = '<span class="band-note top">band maxed</span>';
       } else {
@@ -4016,6 +4029,17 @@ let apexBoardCategory = "Overall";
 let apexBoard = null;
 
 /**
+ * The last snapshot rendered, so the board can read the season's positional rank.
+ *
+ * The board knows where a player sits and nothing about what that position is worth; the
+ * snapshot knows the rank and whether they are eligible and nothing about position. The
+ * rank is held only where the two meet, and neither half can be dropped: eligibility on
+ * its own is a claim the client could make about itself, and position on its own would
+ * hand the rank to whoever is third on a board they have not qualified for.
+ */
+let lastSnapshot = null;
+
+/**
  * The public board: who is ahead of you, and by how much.
  *
  * Server-served rather than read from a table. `apex_standing` is read-self, because a
@@ -4025,6 +4049,28 @@ let apexBoard = null;
  * Absent rows are absent players, not zeros: somebody who has never refreshed is simply
  * not on the board yet, and showing them at zero would be inventing a standing.
  */
+/**
+ * What the board position is worth, when the season has a rank only it can award.
+ *
+ * Says nothing unless the player is eligible - the rank is not something to dangle at
+ * somebody who has not cleared the band under it, and the board already says where they
+ * sit.
+ */
+function positionalNote() {
+  const cat = (lastSnapshot?.categories ?? []).find((c) => c.name === apexBoardCategory);
+  const band = (cat?.bands ?? []).find((b) => b.positional);
+  const p = band?.positional;
+  if (!p || !p.eligible) return "";
+
+  const rank = apexBoard?.you?.rank ?? null;
+  if (rank === null) {
+    return " \u00b7 eligible for " + p.rankName + ", once you are on the board";
+  }
+  return rank <= p.topN
+    ? " \u00b7 you hold " + p.rankName
+    : " \u00b7 eligible for " + p.rankName + " at #" + p.topN;
+}
+
 function renderApexBoard() {
   const note = $("apexBoardNote");
   const body = $("apexBoardBody");
@@ -4051,7 +4097,7 @@ function renderApexBoard() {
     // standing that did not update look like one that did.
     const stale = apexBoard.refreshed === false ? " \u00b7 not refreshed just now" : "";
     note.textContent =
-      mine + " \u00b7 " + num(apexBoard.population) + " ranked" + stale;
+      mine + " \u00b7 " + num(apexBoard.population) + " ranked" + stale + positionalNote();
   }
 
   if (apexBoard.entries.length === 0) {

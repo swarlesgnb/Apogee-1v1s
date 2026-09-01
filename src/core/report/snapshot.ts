@@ -53,6 +53,14 @@ export interface BandStanding {
   /** Scenarios in this band with any history, and how many it has. */
   played: number;
   total: number;
+  /**
+   * The band's positional top rank, when it has one.
+   *
+   * `eligible` means the player holds the highest rank a score can prove. It is never a
+   * claim to the rank itself: only the server sees the board order, so the client says
+   * "eligible" and waits to be told.
+   */
+  positional: { rankName: string; topN: number; eligible: boolean } | null;
 }
 
 export interface SnapshotOptions {
@@ -282,6 +290,7 @@ export function buildSnapshot(options: SnapshotOptions): Snapshot | null {
           progressToNextRank: played === 0 ? null : (stood?.progressToNextRank ?? null),
           played,
           total: scenarios.length,
+          positional: played === 0 ? null : (stood?.positional ?? null),
         };
       }),
     ]),
