@@ -77,7 +77,7 @@ for help.
 ## 3. Fill in `.env`
 
 A `.env` file has been created for you with the blanks marked. Open it and paste each
-value after its `=`, with no quotes and no spaces — the value is read verbatim to the end
+value after its `=`, with no quotes and no spaces. The value is read verbatim to the end
 of the line, so a stray quote becomes part of the key:
 
 ```
@@ -147,7 +147,7 @@ takes any number of assignments, so setting just the one is fine.
 Three things that are easy to get wrong, all of which bit during the real deploy:
 
 - Do not reach for `--include-seed`. `db push` on its own does not apply the seed,
-  which is what sends people looking for the flag — but `--include-seed` **silently skips
+  which is what sends people looking for the flag, but `--include-seed` **silently skips
   a seed it has already recorded**. On the second run it updates the stored hash, reports
   success, and applies nothing. The columns exist and stay null, which looks like a code
   bug rather than a deploy one. `npm run sync:reference` replaces it: an idempotent
@@ -183,7 +183,7 @@ npm run deploy:functions
 
 Every function except `steam-auth` requires a session, and `npm run verify:deployment`
 asserts all seven refuse anonymous callers. It goes one step further for `find-match` and
-`settle-match` — the two that can move a rating on their own — and proves they also
+`settle-match`, the two that can move a rating on their own, and proves they also
 refuse the anon key as a caller identity. The anon key identifies the app, never a player.
 
 `submit-run` takes the raw CSV rather than a parsed summary, so the integrity checks
@@ -199,8 +199,8 @@ npm start          # build the client and launch it
 
 `npm run dev` is the same as `npm start` but rebuilds and relaunches on every save, which
 is what you want while changing anything under `src/app/`. `npm run smoke` boots
-headlessly, asserts the window rendered, and exits — useful over SSH or in a check
-script, where there is nobody to look at a window.
+headlessly, asserts the window rendered, and exits. That is useful over SSH or in a
+check script, where there is nobody to look at a window.
 
 Run `doctor` first. Every line in it exists because the answer to a real half-hour of
 confusion was further up the stack than where the looking started.
@@ -208,14 +208,15 @@ confusion was further up the stack than where the looking started.
 Apogee reads scores from your KovaaK's stats folder. It finds it by asking the
 registry where Steam is, then walking `libraryfolders.vdf` for every library on the
 machine and probing `steamapps/common/FPSAimTrainer/FPSAimTrainer/stats` in each. That
-covers a normal install on any drive. When it comes up empty — a moved folder, a
-non-Steam copy — `doctor` prints every path it tried, and Apogee → Choose folder… in
-the menu points it at the right one. That choice is remembered, so it is asked once.
+covers a normal install on any drive. When it comes up empty, whether from a moved
+folder or a non-Steam copy, `doctor` prints every path it tried, and Apogee → Choose
+folder… in the menu points it at the right one. That choice is remembered, so it is asked
+once.
 
 `.env` is baked into the client at build time. The project URL, anon key and auth
 function URL are compiled into `dist/app/main.cjs` (`clientEnv` in `tools/buildApp.mjs`);
 the service role key is never read there and would be a serious mistake to include.
-Editing `.env` therefore changes nothing until the next `npm run build:app` — which
+Editing `.env` therefore changes nothing until the next `npm run build:app`, which
 `npm start` and `npm run dev` do for you, but which matters after
 [rotating a key](#rotate-the-keys-when-convenient). Building with any of the three
 missing prints a warning and produces a client with sign-in disabled, rather than failing.
@@ -247,7 +248,7 @@ rolled once things work. Rotate them from the API keys page under Project Settin
 then:
 
 1. Update `APOGEE_SUPABASE_ANON_KEY` and `SUPABASE_SERVICE_ROLE_KEY` in `.env`.
-2. **Rebuild the client** — `npm run build:app`. The old anon key is compiled into the
+2. **Rebuild the client** with `npm run build:app`. The old anon key is compiled into the
    existing bundle and goes on being used until you do.
 3. `npm run verify:deployment`, to confirm the new keys work against the live project.
 

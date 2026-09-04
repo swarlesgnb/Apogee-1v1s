@@ -27,11 +27,25 @@ const out = join(root, "docs", "season-1-ranks.html");
 mkdirSync(dirname(out), { recursive: true });
 writeFileSync(out, renderRankSheet(season), "utf8");
 
+// Counted off the bands, which is what the sheet draws. Counting the categories' own
+// flat rankNames instead had this line printing "4 ladders, 56 ranks" under a page
+// headlined "Thirteen ladders, fifty-nine ranks", which is exactly the drift the sheet is
+// generated to prevent, printed by the command that generates it.
+const ladders = season.categories.reduce((n, c) => n + (c.bands?.length || 1), 1);
 const ranks =
-  season.rankNames.length + season.categories.reduce((n, c) => n + c.rankNames.length, 0);
+  season.rankNames.length +
+  season.categories.reduce(
+    (n, c) =>
+      n +
+      (c.bands?.length
+        ? c.bands.reduce((m, b) => m + b.rankNames.length, 0)
+        : c.rankNames.length),
+    0,
+  );
 
 console.log(
-  `wrote ${out}\n` +
-    `  ${season.categories.length + 1} ladders, ${ranks} ranks` +
-    (season.windowSize ? `, ${season.windows?.length ?? 0} windows of ${season.windowSize}` : ""),
+  `wrote ${out}
+` +
+    `  ${ladders} ladders, ${ranks} ranks` +
+    (season.windows?.length ? `, ${season.windows.length} bands per category` : ""),
 );

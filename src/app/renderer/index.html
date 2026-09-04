@@ -7,16 +7,25 @@
 <title>Apogee</title>
 <style>
   /* ==================================================================
-     Apogee — one committed theme.
+     Apogee - one committed theme.
 
      This is a game client, not a document: it lives in a single visual
      world rather than adapting to a reader's light/dark preference, and
      every colour is painted explicitly, including the body ground.
 
+     The model is an instrument panel rather than an application. Regions
+     are separated by drawn rules, not by cards floating on a ground:
+     nothing is elevated, nothing glows, and the only round corner in the
+     file is the status lamp. Hairlines are opaque greys rather than
+     white-alpha, because alpha over near-black reads as a lit edge and a
+     grey reads as a ruled one - which is the whole difference between a
+     panel and a card.
+
      The chrome is achromatic on purpose. The only chroma is --accent,
      which the renderer sets to the player's own rank colour on every
      snapshot, so rank reads as the signal it is and the app takes on the
-     player's colour rather than a brand one.
+     player's colour rather than a brand one. Colour marks things here;
+     it never washes them.
 
      Layout is a fixed rail and one scrolling column. The rail is the
      whole navigation: it never scrolls away, it holds who you are at the
@@ -25,47 +34,102 @@
      ================================================================== */
 
   :root {
-    /* grounds, darkest to lightest */
-    --void:      #05060a;
-    --rail:      #080a0f;
-    --surface:   #0c0f15;
-    --surface-2: #11151d;
-    --surface-3: #171c26;
-    --sunken:    #07090e;
+    /* Grounds. Three, not six. A panel that needs to separate from the
+       ground gets a rule; only a genuinely different surface gets a
+       different value. All three sit warm of neutral, and well up from
+       black: this is a window that stays open for an evening, not a
+       backdrop for a screenshot. The first cut of these was a few points
+       off black, which photographs beautifully and reads as a machine
+       that is switched off - the lift is about eight percent of relative
+       luminance, which is the difference between charcoal and a hole. */
+    --ground: #1e1b18;
+    --panel:  #272320;
+    --well:   #171513;
 
-    /* hairlines: light-on-dark rather than a grey, so one value works on
-       every ground instead of a different border colour per surface */
-    --hair:   rgba(255, 255, 255, .055);
-    --hair-2: rgba(255, 255, 255, .10);
-    --hair-3: rgba(255, 255, 255, .17);
+    /* A control is a painted part sitting on one of those grounds, not a pane of
+       translucent white over it. Every chip, button and tag in the file was a
+       white-alpha wash before this, which is what made them all read as glass. */
+    --control:    #2e2a26;
+    --control-hi: #3a3531;
 
-    --ink:     #eef1f7;
-    --ink-mid: #9aa4b6;
-    --ink-dim: #626c80;
+    /* Rules are drawn, not lit: opaque greys, so an edge on --well and an
+       edge on --panel are the same line rather than two different alphas. */
+    --rule:   #38332f;
+    --rule-2: #4a443f;
+    --rule-3: #5f5851;
 
-    --up:   #3fd6a0;
-    --down: #ff5f78;
-    --warn: #f5b93f;
+    /* Warm and neutral. The blue-grey-on-near-black this replaces is the one
+       thing every dark web app has in common, and it made a client somebody
+       has open all evening feel colder than it needed to. */
+    --ink:     #f6f3ee;
+    --ink-mid: #bbb4aa;
+    --ink-dim: #8e867c;
+
+    /* Indicator lamps rather than confectionery: a green that is green,
+       a red that is red, an amber that is amber. Lifted with the grounds
+       so they keep the same weight against a lighter panel rather than
+       quietly losing a point of contrast. */
+    --up:   #6fce8b;
+    --down: #ef6f68;
+    --warn: #e8b34a;
 
     /* Overwritten per snapshot with the player's rank colour. */
-    --accent: #7d879b;
+    --accent: #8a9196;
 
-    --r-xs: 6px;
-    --r-sm: 9px;
-    --r:    13px;
-    --r-lg: 18px;
-    --r-pill: 999px;
+    /* One radius, for controls only. Regions, panels and tables are
+       square. The status lamp is the sole exception and says 50% itself. */
+    --r: 2px;
 
-    --shadow-2: 0 10px 30px -12px rgba(0, 0, 0, .8);
-    --shadow-3: 0 28px 70px -20px rgba(0, 0, 0, .85);
+    /* Spacing. There was no scale before this and every padding was a
+       hand-picked number, which is why the rhythm read as arbitrary. */
+    --s1: 4px;
+    --s2: 8px;
+    --s3: 12px;
+    --s4: 16px;
+    --s5: 24px;
+    --s6: 32px;
+    --s7: 48px;
 
-    --rail-w: 226px;
+    /* Integers. The half-pixel sizes this replaces (14.5, 13.5, 12.5,
+       11.5, 10.5) were nudged by hand and blur at non-integer DPI, which
+       is most Windows machines. */
+    --t-2xs: 10px;
+    --t-xs:  11px;
+    --t-sm:  12px;
+    --t:     13px;
+    --t-md:  15px;
+    --t-lg:  19px;
+    --t-xl:  26px;
+    --t-2xl: 34px;
+
+    --rail-w: 208px;
+    /* Must equal titleBarOverlay.height in main.ts: the operating system
+       draws the window buttons on this strip. */
     --bar-h: 46px;
 
     --font: "Segoe UI Variable Text", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
     --mono: "Cascadia Mono", ui-monospace, Consolas, "SF Mono", monospace;
 
-    --ease: cubic-bezier(.2, .7, .3, 1);
+    --ease: cubic-bezier(.2, .6, .35, 1);
+    --fast: 90ms;
+
+    /* Stronger curves than the built-ins, which are too weak to read as
+       deliberate. Both are standard published curves rather than hand-rolled
+       ones: an eased line nobody can name is a line nobody can check.
+
+       Never ease-in on a control. It withholds movement for the first frames,
+       which are the ones the player is watching, so the same duration reads as
+       slower than an ease-out of identical length. Entering and exiting take
+       --ease-out; something travelling across the screen takes --ease-in-out.
+
+       Durations are budgets. A control that answers a press in 140ms feels
+       attached to the finger; the same control at 400ms feels like it is
+       deciding whether to. Nothing on a screen the player opens daily goes
+       over --enter. */
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+    --press: 140ms;
+    --enter: 220ms;
   }
 
   * { box-sizing: border-box; }
@@ -74,10 +138,10 @@
 
   body {
     margin: 0;
-    background: var(--void);
+    background: var(--ground);
     color: var(--ink);
     font-family: var(--font);
-    font-size: 14.5px;
+    font-size: var(--t);
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
     overflow: hidden;
@@ -89,16 +153,160 @@
   ::-webkit-scrollbar { width: 11px; height: 11px; }
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, .09);
+    background: var(--rule-2);
     border: 3px solid transparent;
     background-clip: content-box;
-    border-radius: var(--r-pill);
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, .18); background-clip: content-box;
+    background: var(--rule-3); background-clip: content-box;
   }
 
-  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  :focus-visible { outline: 1px solid var(--accent); outline-offset: 1px; }
+
+  /* ==================================================================
+     Admin
+
+     An editor for the thing it is drawn in, which is the one screen in
+     the client that has to survive being made ugly: a person part-way
+     through a repaint still needs to find the reset button. So its own
+     structure leans on rules and layout rather than on colour, and the
+     only chroma on it is the swatch of whatever is being edited.
+     ================================================================== */
+
+  .adm-lede {
+    margin: 0 0 var(--s4); font-size: var(--t-sm); color: var(--ink-mid);
+    line-height: 1.6; max-width: 74ch;
+  }
+
+  .adm-group {
+    font-family: var(--mono); font-size: var(--t-2xs); font-weight: 600;
+    letter-spacing: .18em; text-transform: uppercase; color: var(--ink-dim);
+    padding: var(--s4) 0 var(--s2); border-top: 1px solid var(--rule);
+  }
+  .adm-tokens > .adm-group:first-child { border-top: 0; padding-top: 0; }
+
+  .adm-row {
+    display: grid; grid-template-columns: 26px minmax(0, 190px) 104px minmax(0, 1fr) auto;
+    gap: var(--s3); align-items: center;
+    padding: var(--s2) 0; border-top: 1px solid var(--rule);
+  }
+  /* The colour itself, at the size a colour needs to be judged at. Bordered, because a
+     swatch of the ground on the ground is otherwise an invisible cell. */
+  .adm-swatch {
+    width: 26px; height: 22px; border: 1px solid var(--rule-3); padding: 0;
+    cursor: pointer; background: none;
+  }
+  .adm-name { font-size: var(--t-sm); color: var(--ink); }
+  .adm-name span {
+    display: block; font-family: var(--mono); font-size: var(--t-2xs); color: var(--ink-dim);
+  }
+  .adm-hex {
+    font-family: var(--mono); font-size: var(--t-sm); text-transform: lowercase;
+    color: var(--ink); background: var(--well); border: 1px solid var(--rule-2);
+    padding: 5px 8px; width: 100%;
+  }
+  .adm-hex:focus-visible { border-color: var(--accent); }
+  .adm-hex.bad { border-color: var(--down); color: var(--down); }
+  .adm-note { font-size: var(--t-xs); color: var(--ink-dim); line-height: 1.5; }
+  .adm-reset {
+    font-family: var(--mono); font-size: var(--t-2xs); letter-spacing: .1em;
+    text-transform: uppercase; color: var(--ink-dim);
+    background: none; border: 1px solid var(--rule-2); padding: 4px 9px; cursor: pointer;
+  }
+  .adm-reset:hover:not(:disabled) { color: var(--ink); border-color: var(--rule-3); }
+  .adm-reset:disabled { opacity: .35; cursor: default; }
+
+  /* Measured, and reported rather than enforced: refusing to save a palette part-way
+     through a repaint would trap somebody in the worst state of it. */
+  .adm-warn {
+    margin-top: var(--s4); padding: var(--s3);
+    background: var(--well);
+    border: 1px solid color-mix(in srgb, var(--warn) 45%, transparent);
+    font-size: var(--t-sm); color: var(--ink-mid); line-height: 1.6;
+  }
+  .adm-warn::before {
+    content: "Contrast"; display: block; margin-bottom: var(--s1);
+    font-family: var(--mono); font-size: var(--t-2xs); font-weight: 600;
+    letter-spacing: .18em; text-transform: uppercase; color: var(--warn);
+  }
+  .adm-warn b { font-family: var(--mono); color: var(--ink); font-weight: 600; }
+
+  .adm-search {
+    font: inherit; font-size: var(--t-sm); color: var(--ink);
+    background: var(--well); border: 1px solid var(--rule-2);
+    padding: 8px 11px; width: 100%; max-width: 380px; margin-bottom: var(--s3);
+  }
+  .adm-search:focus-visible { border-color: var(--accent); }
+
+  .adm-copy-row {
+    display: grid; grid-template-columns: minmax(0, 220px) minmax(0, 1fr) auto;
+    gap: var(--s3); align-items: start;
+    padding: var(--s3) 0; border-top: 1px solid var(--rule);
+  }
+  .adm-copy > .adm-copy-row:first-child { border-top: 0; }
+  .adm-key {
+    font-family: var(--mono); font-size: var(--t-2xs); color: var(--ink-mid);
+    word-break: break-all;
+  }
+  /* What the string says with no override, so an edit is always a comparison. */
+  .adm-key span {
+    display: block; margin-top: 3px; font-family: var(--font); font-size: var(--t-xs);
+    color: var(--ink-dim); line-height: 1.5; word-break: normal;
+  }
+  .adm-text {
+    font: inherit; font-size: var(--t-sm); color: var(--ink); line-height: 1.5;
+    background: var(--well); border: 1px solid var(--rule-2);
+    padding: 7px 10px; width: 100%; min-height: 34px; resize: vertical;
+  }
+  .adm-text:focus-visible { border-color: var(--accent); }
+  .adm-text.bad { border-color: var(--down); }
+  .adm-copy-row.changed .adm-key { color: var(--ink); }
+
+  .adm-cat {
+    font-family: var(--mono); font-size: var(--t-2xs); font-weight: 600;
+    letter-spacing: .18em; text-transform: uppercase; color: var(--ink-mid);
+    padding: var(--s5) 0 var(--s2); border-top: 1px solid var(--rule-2);
+  }
+  .adm-ranks > .adm-cat:first-child { border-top: 0; padding-top: 0; }
+  .adm-rank-row {
+    display: grid; grid-template-columns: 26px minmax(0, 1fr) 104px 92px auto;
+    gap: var(--s3); align-items: center;
+    padding: var(--s2) 0; border-top: 1px solid var(--rule);
+  }
+  .adm-rank-name {
+    font: inherit; font-size: var(--t-sm); color: var(--ink);
+    background: var(--well); border: 1px solid var(--rule-2); padding: 5px 8px; width: 100%;
+  }
+  .adm-rank-name:focus-visible { border-color: var(--accent); }
+  .adm-rank-name.bad { border-color: var(--down); }
+  /* The figure that decides whether a colour can be used as a name at all. */
+  .adm-ratio {
+    font-family: var(--mono); font-size: var(--t-xs); color: var(--ink-dim);
+    text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap;
+  }
+  .adm-ratio.low { color: var(--warn); }
+
+  .adm-actions { display: flex; flex-wrap: wrap; gap: var(--s2); margin-bottom: var(--s4); }
+  .adm-actions button {
+    font-family: var(--mono); font-size: var(--t-xs); font-weight: 600;
+    letter-spacing: .1em; text-transform: uppercase; color: var(--ink-mid);
+    background: var(--control); border: 1px solid var(--rule-2);
+    padding: var(--s2) var(--s4); cursor: pointer;
+  }
+  .adm-actions button:hover:not(:disabled) { color: var(--ink); border-color: var(--rule-3); }
+  .adm-actions button:disabled { opacity: .45; cursor: default; }
+  .adm-actions button.adm-go {
+    color: var(--ground); background: var(--ink); border-color: var(--ink);
+  }
+  .adm-actions button.adm-go:hover:not(:disabled) { filter: brightness(1.08); color: var(--ground); }
+
+  @media (max-width: 900px) {
+    .adm-row { grid-template-columns: 26px minmax(0, 1fr) 104px auto; }
+    .adm-row .adm-note { grid-column: 2 / -1; }
+    .adm-copy-row { grid-template-columns: minmax(0, 1fr); }
+    .adm-rank-row { grid-template-columns: 26px minmax(0, 1fr) 104px auto; }
+    .adm-rank-row .adm-ratio { grid-column: 2 / -1; text-align: left; }
+  }
 
   /* ==================================================================
      Frame
@@ -111,8 +319,8 @@
   .rail {
     display: grid; grid-template-rows: var(--bar-h) 1fr auto;
     min-height: 0;
-    background: linear-gradient(180deg, #0a0d13 0%, var(--rail) 46%, #05070c 100%);
-    border-right: 1px solid var(--hair);
+    background: var(--ground);
+    border-right: 1px solid var(--rule-2);
   }
 
   /* The window draws no title bar of its own, so the top of each column is the
@@ -123,23 +331,20 @@
 
   .rail-top { display: flex; align-items: center; padding: 0 18px; }
 
+  /* The name, set. The hexagon-inside-a-hexagon this replaces was a shape any
+     product could have worn, and it sat next to the word saying the same thing. */
   .wordmark {
-    display: flex; align-items: center; gap: 9px;
-    font-size: 12.5px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase;
+    display: flex; align-items: center;
+    font-family: var(--mono); font-size: var(--t-sm); font-weight: 600;
+    letter-spacing: .34em; text-transform: uppercase; color: var(--ink);
   }
-  .wordmark .mark {
-    width: 15px; height: 17px; flex: none; color: var(--accent);
-    filter: drop-shadow(0 0 6px color-mix(in srgb, var(--accent) 55%, transparent));
-    transition: color .5s var(--ease);
-  }
-  .wordmark .mark svg { width: 100%; height: 100%; display: block; }
 
   /* -------------------------------------------------------- apex */
   .apex-tabs { display: flex; gap: 6px; margin-bottom: 10px; flex-wrap: wrap; }
   .apex-tab {
-    padding: 4px 10px; border-radius: 999px; cursor: pointer;
-    border: 1px solid var(--line); background: transparent;
-    color: inherit; font: inherit; font-size: 12px; opacity: .7;
+    padding: 4px 10px; border-radius: var(--r); cursor: pointer;
+    border: 1px solid var(--rule); background: transparent;
+    color: inherit; font: inherit; font-size: var(--t-sm); opacity: .7;
   }
   .apex-tab[aria-selected="true"] { opacity: 1; border-color: currentColor; }
   tr.apex-you { font-weight: 600; }
@@ -153,59 +358,53 @@
   }
 
   .nav-label {
-    font-size: 9.5px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase;
-    color: var(--ink-dim); padding: 12px 10px 6px;
+    font-family: var(--mono); font-size: var(--t-2xs); font-weight: 600;
+    letter-spacing: .18em; text-transform: uppercase;
+    color: var(--ink-dim); padding: 16px 8px 6px;
   }
   .nav-label:first-child { padding-top: 2px; }
 
+  /* A number and a word. The eight 24px stroke pictograms this replaces were the
+     stock set - crosshair, trophy, bar chart, line chart, pulse, checklist, star,
+     sliders - and a stock icon beside a word that already says the same thing is
+     decoration with a tooltip. The number is the control; it is printed on it. */
   .tab {
     position: relative;
-    display: grid; grid-template-columns: 20px 1fr auto; align-items: center; gap: 11px;
+    display: grid; grid-template-columns: 14px 1fr; align-items: baseline; gap: 10px;
     width: 100%; text-align: left;
-    font: inherit; font-size: 13.5px; font-weight: 550;
+    font: inherit; font-size: var(--t); font-weight: 500;
     color: var(--ink-mid); background: transparent;
-    border: 1px solid transparent; border-radius: var(--r-sm);
-    padding: 8px 10px; cursor: pointer;
-    transition: color .13s var(--ease), background .13s var(--ease);
+    border: 1px solid transparent;
+    padding: 7px 8px; cursor: pointer;
+    transition: color var(--fast) var(--ease), background var(--fast) var(--ease);
   }
-  .tab .ico { width: 20px; height: 20px; display: block; color: var(--ink-dim); }
-  .tab .ico svg {
-    width: 100%; height: 100%; display: block;
-    fill: none; stroke: currentColor; stroke-width: 1.6;
-    stroke-linecap: round; stroke-linejoin: round;
-  }
-  /* The number that selects this screen. Revealed on hover rather than always
-     on: it is a thing to learn once, not a thing to read every evening. */
+  /* Always on. It was revealed on hover, on the argument that it is learned once
+     rather than read every evening - but a shortcut nobody can see is a shortcut
+     nobody learns, and the column it sits in costs fourteen pixels. */
   .tab .tab-key {
-    font-family: var(--mono); font-size: 10px; color: var(--ink-dim);
-    border: 1px solid var(--hair); border-radius: 4px;
-    min-width: 17px; text-align: center; padding: 0 3px;
-    opacity: 0; transition: opacity .13s var(--ease);
+    font-family: var(--mono); font-size: var(--t-xs); color: var(--ink-dim);
+    text-align: right; font-variant-numeric: tabular-nums;
   }
-  .nav:hover .tab-key, .tab:focus-visible .tab-key { opacity: 1; }
 
-  .tab:hover { color: var(--ink); background: rgba(255, 255, 255, .035); }
-  .tab:hover .ico { color: var(--ink-mid); }
+  .tab:hover { color: var(--ink); background: var(--control); }
+  .tab:hover .tab-key { color: var(--ink-mid); }
 
+  /* Selection is a block of ground and full-strength ink. The coloured bar down the
+     leading edge that used to mark it was the same device as a callout stripe, and it
+     put the rank colour on screen twice over. */
   .tab[aria-selected="true"] {
-    color: var(--ink);
-    background: linear-gradient(90deg,
-      color-mix(in srgb, var(--accent) 16%, transparent), rgba(255, 255, 255, .045));
-    border-color: var(--hair);
+    color: var(--ink); font-weight: 600;
+    background: var(--panel);
+    border-color: var(--rule-2);
   }
-  .tab[aria-selected="true"] .ico { color: var(--accent); }
-  .tab[aria-selected="true"]::before {
-    content: ""; position: absolute; left: -12px; top: 50%; translate: 0 -50%;
-    width: 3px; height: 20px; border-radius: 0 3px 3px 0; background: var(--accent);
-    box-shadow: 0 0 12px color-mix(in srgb, var(--accent) 70%, transparent);
-  }
+  .tab[aria-selected="true"] .tab-key { color: var(--accent); }
 
   /* ---------------------------------------------------- rail footer */
 
   .rail-foot {
     display: grid; gap: 10px;
-    padding: 12px; border-top: 1px solid var(--hair);
-    background: rgba(0, 0, 0, .28);
+    padding: var(--s3); border-top: 1px solid var(--rule-2);
+    background: var(--well);
   }
 
   .whoami { display: grid; gap: 9px; }
@@ -216,34 +415,47 @@
     display: grid; grid-template-columns: 34px 1fr; align-items: center; gap: 11px;
     width: 100%; text-align: left;
     font: inherit; color: inherit; background: transparent;
-    border: 1px solid transparent; border-radius: var(--r-sm);
+    border: 1px solid transparent; border-radius: var(--r);
     padding: 6px; margin: -6px; cursor: pointer;
     transition: background .13s var(--ease), border-color .13s var(--ease);
   }
-  .rank-link:hover { background: rgba(255, 255, 255, .04); border-color: var(--hair); }
+  .rank-link:hover { background: var(--control); border-color: var(--rule); }
   .rank-link .badge { width: 34px; height: 39px; flex: none; }
   .rank-link .badge svg { width: 100%; height: 100%; display: block; overflow: visible; }
-  .rank-link .tier { display: block; font-size: 13.5px; font-weight: 650; line-height: 1.25; }
+  .rank-link .tier { display: block; font-size: var(--t); font-weight: 650; line-height: 1.25; }
   .rank-link .sub {
-    display: block; font-family: var(--mono); font-size: 10.5px; color: var(--ink-dim);
+    display: block; font-family: var(--mono); font-size: var(--t-xs); color: var(--ink-dim);
     font-variant-numeric: tabular-nums;
   }
 
   .rail-chips { display: flex; flex-wrap: wrap; gap: 6px; }
   .streak, .level-chip {
-    font-family: var(--mono); font-size: 10.5px; color: var(--ink-mid);
-    background: rgba(255, 255, 255, .035);
-    border: 1px solid var(--hair); border-radius: var(--r-pill);
+    font-family: var(--mono); font-size: var(--t-xs); color: var(--ink-mid);
+    background: var(--control);
+    border: 1px solid var(--rule); border-radius: var(--r);
     padding: 3px 10px; white-space: nowrap;
   }
+
+  /* Small, quiet, and always there. Policies that can only be found by going to the
+     repository are policies the people they are about will never read. */
+  .legal {
+    display: flex; flex-wrap: wrap; gap: var(--s2);
+    padding-top: var(--s3); margin-top: var(--s1);
+    border-top: 1px solid var(--rule);
+  }
+  .legal a {
+    font-family: var(--mono); font-size: var(--t-2xs); letter-spacing: .1em;
+    text-transform: uppercase; color: var(--ink-dim); text-decoration: none;
+  }
+  .legal a:hover { color: var(--ink-mid); text-decoration: underline; }
 
   /* ---------------------------------------------------------- account */
 
   .account { display: grid; }
   .signin {
-    font: inherit; font-size: 12.5px; font-weight: 640;
-    color: #06080c; background: var(--ink);
-    border: 0; border-radius: var(--r-sm); padding: 9px 14px; cursor: pointer;
+    font: inherit; font-size: var(--t-sm); font-weight: 640;
+    color: var(--ground); background: var(--ink);
+    border: 0; border-radius: var(--r); padding: 9px 14px; cursor: pointer;
     transition: filter .13s var(--ease);
   }
   .signin:hover { filter: brightness(1.12); }
@@ -251,21 +463,21 @@
 
   .signed-in {
     display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 8px;
-    padding: 7px 9px; background: rgba(255, 255, 255, .03);
-    border: 1px solid var(--hair); border-radius: var(--r-sm);
+    padding: 7px 9px; background: var(--control);
+    border: 1px solid var(--rule); border-radius: var(--r);
   }
   .signed-in > div { min-width: 0; }
   .signed-in .who-name {
-    font-size: 12.5px; font-weight: 620; line-height: 1.25;
+    font-size: var(--t-sm); font-weight: 620; line-height: 1.25;
     overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
   }
-  .signed-in .sub { font-family: var(--mono); font-size: 10px; color: var(--ink-dim); }
+  .signed-in .sub { font-family: var(--mono); font-size: var(--t-2xs); color: var(--ink-dim); }
   .signed-in button {
-    font: inherit; font-size: 11px; color: var(--ink-dim);
-    background: transparent; border: 1px solid var(--hair);
-    border-radius: var(--r-xs); padding: 3px 8px; cursor: pointer;
+    font: inherit; font-size: var(--t-xs); color: var(--ink-dim);
+    background: transparent; border: 1px solid var(--rule);
+    border-radius: var(--r); padding: 3px 8px; cursor: pointer;
   }
-  .signed-in button:hover { color: var(--ink); border-color: var(--hair-3); }
+  .signed-in button:hover { color: var(--ink); border-color: var(--rule-3); }
 
   /* ==================================================================
      Main column
@@ -275,18 +487,14 @@
     position: relative;
     display: grid; grid-template-rows: var(--bar-h) 1fr;
     min-width: 0; min-height: 0;
-    background:
-      radial-gradient(900px 460px at 82% -10%,
-        color-mix(in srgb, var(--accent) 10%, transparent) 0%, transparent 65%),
-      radial-gradient(700px 420px at -5% 105%, #0c1120 0%, transparent 60%),
-      var(--void);
+    background: var(--ground);
   }
 
   .topbar {
     position: relative; z-index: 20;
     display: flex; align-items: center; gap: 10px;
-    padding: 0 16px; border-bottom: 1px solid var(--hair);
-    background: rgba(6, 8, 12, .72); backdrop-filter: blur(14px);
+    padding: 0 16px; border-bottom: 1px solid var(--rule);
+    background: var(--ground);
   }
   /* Room for the operating system's window buttons, drawn over the top-right of
      this bar. Only in the app; the preview has no window. */
@@ -298,30 +506,30 @@
 
   .status-pill {
     display: flex; align-items: center; gap: 8px;
-    font-size: 12px; color: var(--ink-mid);
-    background: rgba(255, 255, 255, .03);
-    border: 1px solid var(--hair); border-radius: var(--r-pill);
+    font-family: var(--mono); font-size: var(--t-xs); color: var(--ink-mid);
+    background: var(--control);
+    border: 1px solid var(--rule); border-radius: var(--r);
     padding: 4px 11px; min-width: 0;
     list-style: none; cursor: pointer;
     transition: color .13s var(--ease), border-color .13s var(--ease);
   }
   .status-pill::-webkit-details-marker { display: none; }
-  .status-pill:hover { border-color: var(--hair-3); color: var(--ink); }
+  .status-pill:hover { border-color: var(--rule-3); color: var(--ink); }
 
   .dot {
     width: 7px; height: 7px; border-radius: 50%; flex: none;
-    background: var(--up); box-shadow: 0 0 0 3px color-mix(in srgb, var(--up) 18%, transparent);
+    background: var(--up);
   }
   .dot.scanning {
-    background: var(--warn); box-shadow: 0 0 0 3px color-mix(in srgb, var(--warn) 18%, transparent);
+    background: var(--warn);
   }
   .dot.bad {
-    background: var(--down); box-shadow: 0 0 0 3px color-mix(in srgb, var(--down) 20%, transparent);
+    background: var(--down);
   }
 
   /* Long paths matter at the end, not the start, so they are clipped from the left. */
   .status .path {
-    font-family: var(--mono); font-size: 11px; color: var(--ink-dim);
+    font-family: var(--mono); font-size: var(--t-xs); color: var(--ink-dim);
     overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 34ch;
     direction: rtl; text-align: left;
   }
@@ -333,30 +541,29 @@
   .status-menu {
     position: absolute; top: calc(100% + 9px); left: 0; z-index: 30;
     display: grid; gap: 9px; width: min(430px, 60vw);
-    padding: 13px; background: var(--surface-2);
-    border: 1px solid var(--hair-2); border-radius: var(--r);
-    box-shadow: var(--shadow-3);
+    padding: 13px; background: var(--panel);
+    border: 1px solid var(--rule-3);
   }
   /* Wrapped rather than scrolled: a scrollbar under a path is one more thing to
      operate, and the path is the whole reason the popover is open. */
   .status-menu .full-path {
-    font-family: var(--mono); font-size: 11px; color: var(--ink-mid);
-    background: var(--sunken); border: 1px solid var(--hair);
-    border-radius: var(--r-xs); padding: 8px 10px;
+    font-family: var(--mono); font-size: var(--t-xs); color: var(--ink-mid);
+    background: var(--well); border: 1px solid var(--rule);
+    border-radius: var(--r); padding: 8px 10px;
     word-break: break-all; line-height: 1.5;
   }
   .status-menu .row { display: flex; gap: 7px; flex-wrap: wrap; }
   .status-menu button {
-    font: inherit; font-size: 12px; color: var(--ink-mid);
-    background: rgba(255, 255, 255, .03); border: 1px solid var(--hair);
-    border-radius: var(--r-xs); padding: 6px 12px; cursor: pointer;
+    font: inherit; font-size: var(--t-sm); color: var(--ink-mid);
+    background: var(--control); border: 1px solid var(--rule);
+    border-radius: var(--r); padding: 6px 12px; cursor: pointer;
   }
-  .status-menu button:hover { color: var(--ink); border-color: var(--hair-3); }
-  .status-menu .hint { font-size: 11.5px; color: var(--ink-dim); line-height: 1.5; }
+  .status-menu button:hover { color: var(--ink); border-color: var(--rule-3); }
+  .status-menu .hint { font-size: var(--t-sm); color: var(--ink-dim); line-height: 1.5; }
 
   .topbar-right {
     margin-left: auto; display: flex; align-items: center; gap: 12px;
-    font-family: var(--mono); font-size: 10.5px; color: var(--ink-dim);
+    font-family: var(--mono); font-size: var(--t-xs); color: var(--ink-dim);
   }
   /* Which bundle this window is running. A window left open across a rebuild keeps
      the old code and looks identical to a fresh one, so the answer is on screen
@@ -366,7 +573,7 @@
   /* ---------------------------------------------------------- scroll */
 
   .scroll { overflow-y: auto; overflow-x: hidden; min-height: 0; }
-  .content { max-width: 1060px; margin: 0 auto; padding: 26px 28px 76px; }
+  .content { max-width: 1180px; margin: 0 auto; padding: var(--s5) var(--s6) var(--s7); }
 
   /* ==================================================================
      Notices
@@ -375,8 +582,8 @@
   .banner {
     display: none; align-items: flex-start; gap: 10px;
     padding: 12px 15px; border-radius: var(--r); margin-bottom: 16px;
-    font-size: 13px; line-height: 1.5;
-    background: color-mix(in srgb, var(--down) 12%, var(--surface));
+    font-size: var(--t); line-height: 1.5;
+    background: color-mix(in srgb, var(--down) 12%, var(--panel));
     border: 1px solid color-mix(in srgb, var(--down) 40%, transparent);
     color: #ffdbe0;
   }
@@ -384,70 +591,74 @@
   /* The same slot carrying something that went to plan. A forfeit confirmation in
      the red error styling reads as though the forfeit failed. */
   .banner.notice {
-    background: var(--surface-2); border-color: var(--hair-2); color: var(--ink-mid);
+    background: var(--panel); border-color: var(--rule-2); color: var(--ink-mid);
   }
 
   .preview-note, .signin-help {
     padding: 13px 16px; border-radius: var(--r); margin-bottom: 16px;
-    font-size: 13px; line-height: 1.55; color: var(--ink-mid);
-    background: var(--surface-2); border: 1px solid var(--hair-2);
+    font-size: var(--t); line-height: 1.55; color: var(--ink-mid);
+    background: var(--panel); border: 1px solid var(--rule-2);
   }
   .preview-note strong { color: var(--ink); font-weight: 640; }
   .preview-note code, .signin-help code {
-    font-family: var(--mono); font-size: 12px; color: var(--ink);
-    background: var(--sunken); border: 1px solid var(--hair);
-    border-radius: 5px; padding: 1px 6px;
+    font-family: var(--mono); font-size: var(--t-sm); color: var(--ink);
+    background: var(--well); border: 1px solid var(--rule);
+    border-radius: var(--r); padding: 1px 6px;
   }
   .signin-help p { margin: 0 0 10px; }
   .signin-link-row { display: flex; gap: 9px; align-items: center; }
   .signin-link-row code {
     flex: 1; min-width: 0; overflow-x: auto; white-space: nowrap;
-    font-size: 11.5px; padding: 7px 10px;
+    font-size: var(--t-sm); padding: 7px 10px;
   }
   .signin-link-row button {
-    font: inherit; font-size: 12px; color: var(--ink-mid);
-    background: rgba(255, 255, 255, .03); border: 1px solid var(--hair);
-    border-radius: var(--r-xs); padding: 7px 12px; cursor: pointer; white-space: nowrap;
+    font: inherit; font-size: var(--t-sm); color: var(--ink-mid);
+    background: var(--control); border: 1px solid var(--rule);
+    border-radius: var(--r); padding: 7px 12px; cursor: pointer; white-space: nowrap;
   }
-  .signin-link-row button:hover { color: var(--ink); border-color: var(--hair-3); }
+  .signin-link-row button:hover { color: var(--ink); border-color: var(--rule-3); }
 
   /* ==================================================================
      Screens and panels
      ================================================================== */
 
   .screen { display: none; }
-  .screen.active { display: grid; gap: 16px; }
+  .screen.active { display: grid; gap: var(--s5); }
 
   /* Every screen opens with a plain sentence saying what it is for. The app is
      full of derived numbers, and a heading alone does not say what they mean. */
-  .screen-head { margin-bottom: 2px; }
+  .screen-head { padding-bottom: var(--s3); border-bottom: 1px solid var(--rule-2); }
   .screen-head h1 {
-    margin: 0; font-size: 23px; font-weight: 700; letter-spacing: -.02em;
+    margin: 0; font-size: var(--t-lg); font-weight: 650; letter-spacing: -.01em;
   }
   .screen-head p {
-    margin: 5px 0 0; font-size: 13.5px; color: var(--ink-mid);
+    margin: var(--s1) 0 0; font-size: var(--t); color: var(--ink-mid);
     line-height: 1.55; max-width: 68ch;
   }
 
   .panel {
-    background: linear-gradient(180deg, rgba(255, 255, 255, .028), rgba(255, 255, 255, .008)),
-                var(--surface);
-    border: 1px solid var(--hair); border-radius: var(--r-lg);
-    overflow: hidden; box-shadow: var(--shadow-2);
+    background: var(--panel);
+    border: 1px solid var(--rule);
+    overflow: hidden;
   }
+  /* A panel head is a label on a rule, not a bar of its own colour. */
   .phead {
-    display: flex; align-items: baseline; justify-content: space-between; gap: 14px;
-    padding: 14px 18px; border-bottom: 1px solid var(--hair);
+    display: flex; align-items: baseline; justify-content: space-between; gap: var(--s4);
+    padding: var(--s3) var(--s4) var(--s2);
+    border-bottom: 1px solid var(--rule-2);
   }
   .phead h2 {
-    margin: 0; font-size: 10.5px; font-weight: 700; text-transform: uppercase;
-    letter-spacing: .13em; color: var(--ink-dim);
+    margin: 0; font-family: var(--mono); font-size: var(--t-2xs); font-weight: 600;
+    text-transform: uppercase; letter-spacing: .18em; color: var(--ink-mid);
   }
-  .phead .note { font-size: 12px; color: var(--ink-dim); text-align: right; }
-  .pbody { padding: 18px; }
+  .phead .note {
+    font-family: var(--mono); font-size: var(--t-xs); color: var(--ink-dim);
+    text-align: right;
+  }
+  .pbody { padding: var(--s4); }
 
   .rank-lede {
-    font-size: 13px; line-height: 1.65; color: var(--ink-mid);
+    font-size: var(--t); line-height: 1.65; color: var(--ink-mid);
     margin: 0 0 15px; max-width: 70ch;
   }
 
@@ -457,19 +668,9 @@
 
   .hero {
     position: relative;
-    display: flex; align-items: center; gap: 24px; flex-wrap: wrap;
-    padding: 26px 22px;
+    display: flex; align-items: center; gap: var(--s5); flex-wrap: wrap;
+    padding: var(--s5) var(--s4);
   }
-  /* The rank colour, bled behind the badge. It is the one thing on this screen
-     the player is here to see change. */
-  .hero::before {
-    content: ""; position: absolute; left: -40px; top: -60px;
-    width: 320px; height: 320px; border-radius: 50%;
-    background: radial-gradient(circle,
-      color-mix(in srgb, var(--accent) 22%, transparent) 0%, transparent 68%);
-    pointer-events: none;
-  }
-  .hero > * { position: relative; }
   /* The rail's version stretches to the rail; here it must not, or as a flex item at
      width:100% it takes the whole row and pushes everything else below it. */
   .hero .rank-link {
@@ -479,127 +680,225 @@
   .hero .badge { width: 104px; height: 118px; flex: none; }
   .hero .badge svg { width: 100%; height: 100%; display: block; overflow: visible; }
   .hero-kicker {
-    font-size: 10px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase;
-    color: var(--ink-dim); margin-bottom: 6px;
+    font-family: var(--mono); font-size: var(--t-2xs); font-weight: 600;
+    letter-spacing: .18em; text-transform: uppercase;
+    color: var(--ink-dim); margin-bottom: var(--s1);
   }
   .hero-id { flex: 1 1 260px; min-width: 0; }
   .hero .name {
-    font-size: 34px; font-weight: 750; letter-spacing: -.025em; line-height: 1.05;
+    font-size: var(--t-2xl); font-weight: 650; letter-spacing: -.02em; line-height: 1.05;
   }
   .hero .placement {
-    font-size: 12px; color: var(--ink-dim); margin: 12px 0 0; max-width: 46ch; line-height: 1.55;
+    font-size: var(--t-sm); color: var(--ink-dim); margin: var(--s3) 0 0;
+    max-width: 46ch; line-height: 1.55;
   }
+
+  /* How much of the current rank is behind you.
+     `progressToNextRank` was computed on every snapshot and shown nowhere, so the
+     screen you press Queue on said what you are and never what you are climbing
+     towards - which is the only reason to press it. Measured from the rank already
+     held rather than from zero, for the same reason the practice bars are: from zero
+     everyone who has played at all reads as nearly full. */
+  .climb { margin-top: var(--s4); max-width: 62ch; }
+  .climb-head {
+    display: flex; align-items: baseline; gap: var(--s2);
+    font-family: var(--mono); font-size: var(--t-2xs); font-weight: 600;
+    letter-spacing: .12em; text-transform: uppercase;
+  }
+  .climb-k { color: var(--ink-dim); }
+  .climb-to { color: var(--ink); letter-spacing: .08em; }
+  .climb-pct { margin-left: auto; color: var(--ink-mid); letter-spacing: .04em; }
+  .climb-track {
+    display: block; height: 6px; margin-top: var(--s2);
+    background: var(--well); border: 1px solid var(--rule);
+  }
+  /* Painted on render rather than transitioned into place. The bar repaints every
+     time a run lands, and a figure the player is reading that slides on its own
+     every few minutes is noise wearing the costume of feedback. */
+  /* Every determinate fill in the client, drawn the same way.
+
+     scaleX from the left edge rather than a width. Width is a layout property: a bar
+     animating it relays out its row on every frame, and five of these sit inside lists
+     that are being read while they move. The transform is composited and touches
+     nothing around it. It also means one geometry declaration instead of seven, which
+     is how three of them ended up with `width: 0` and four without it. */
+  .climb-fill, .gate-fill, .upload-fill, .meter-fill, .cover-fill, .qfill,
+  .celebrate-fill {
+    display: block; height: 100%; width: 100%;
+    transform: scaleX(0); transform-origin: left center;
+  }
+
+  .climb-fill { background: var(--accent); }
 
   /* The three numbers behind the tier, given their own column. As one run-on line
      under the name they were a caption nobody read; the badge also left half the
      panel empty, which is the widest thing on the screen doing the least. */
   .hero-stats {
-    display: grid; grid-auto-flow: column; gap: 10px;
-    padding-left: 22px; border-left: 1px solid var(--hair);
+    display: grid; grid-auto-flow: column; gap: var(--s4);
+    padding-left: var(--s5); border-left: 1px solid var(--rule-2);
   }
   .stat { min-width: 104px; }
   .stat-k {
-    font-size: 9.5px; font-weight: 700; letter-spacing: .13em; text-transform: uppercase;
-    color: var(--ink-dim);
+    font-family: var(--mono); font-size: var(--t-2xs); font-weight: 600;
+    letter-spacing: .16em; text-transform: uppercase; color: var(--ink-dim);
   }
   .stat-v {
-    font-family: var(--mono); font-size: 20px; font-weight: 650; color: var(--ink);
-    font-variant-numeric: tabular-nums; margin-top: 5px; line-height: 1.15;
+    font-family: var(--mono); font-size: var(--t-lg); font-weight: 600; color: var(--ink);
+    font-variant-numeric: tabular-nums; margin-top: var(--s1); line-height: 1.15;
   }
-  .stat-s { font-size: 11px; color: var(--ink-dim); margin-top: 3px; }
+  .stat-s { font-size: var(--t-xs); color: var(--ink-dim); margin-top: 2px; }
 
   @media (max-width: 1180px) {
     .hero-stats {
       grid-auto-flow: row; grid-template-columns: repeat(3, 1fr);
       flex: 1 1 100%; padding-left: 0; padding-top: 18px;
-      border-left: 0; border-top: 1px solid var(--hair);
+      border-left: 0; border-top: 1px solid var(--rule);
     }
   }
 
-  /* Numbered steps, because the order matters and nothing else on screen says so. */
-  .step { display: grid; grid-template-columns: 22px 1fr; gap: 13px; align-items: start; }
-  .step + .step { margin-top: 20px; }
-  .step-n {
-    width: 22px; height: 22px; border-radius: 50%;
-    display: grid; place-items: center;
-    font-family: var(--mono); font-size: 11px; color: var(--ink-mid);
-    background: rgba(255, 255, 255, .04); border: 1px solid var(--hair-2);
-  }
-  .step-title { font-size: 13px; font-weight: 620; margin-bottom: 9px; }
-  .step-title span { font-weight: 450; color: var(--ink-dim); }
+  /* ---- the lever ----------------------------------------------------
+     Everything above is a readout. This is the only control on the screen
+     that does anything, and it used to be a 165px chip at the bottom of a
+     numbered list, below a six-row table, off the bottom of a 1000px
+     window. The steps are gone: picking a category and pressing go is one
+     act, not a procedure, and numbering it 01/02 made a two-second thing
+     look like paperwork. */
 
-  .cats { display: flex; flex-wrap: wrap; gap: 7px; }
+  .queue-body { display: grid; gap: var(--s4); }
+  .queue-pick {
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+    gap: var(--s5); align-items: start;
+  }
+  @media (max-width: 900px) { .queue-pick { grid-template-columns: 1fr; } }
+
+  .field-k {
+    font-family: var(--mono); font-size: var(--t-2xs); font-weight: 600;
+    letter-spacing: .18em; text-transform: uppercase; color: var(--ink-dim);
+    margin-bottom: var(--s2);
+  }
+  .field-hint { font-weight: 400; letter-spacing: .1em; opacity: .72; }
+
+  /* Set like the labels on a control surface: the thing you are picking is one of a
+     fixed, known set, and it says so. */
+  .cats { display: flex; flex-wrap: wrap; gap: var(--s1); }
   .cat {
-    font: inherit; font-size: 12.5px; font-weight: 560; color: var(--ink-mid);
-    background: rgba(255, 255, 255, .03); border: 1px solid var(--hair);
-    border-radius: var(--r-pill); padding: 7px 15px; cursor: pointer;
-    transition: color .13s var(--ease), border-color .13s var(--ease), background .13s var(--ease);
+    font-family: var(--mono); font-size: var(--t-xs); font-weight: 600;
+    letter-spacing: .1em; text-transform: uppercase; color: var(--ink-mid);
+    background: var(--control); border: 1px solid var(--rule-2);
+    padding: var(--s2) var(--s3); cursor: pointer;
+    transition: color var(--fast) var(--ease-out),
+                border-color var(--fast) var(--ease-out),
+                background var(--fast) var(--ease-out);
   }
-  .cat:hover { color: var(--ink); border-color: var(--hair-3); }
+  .cat:hover { color: var(--ink); border-color: var(--rule-3); }
   .cat[aria-pressed="true"] {
-    color: #06080c; background: var(--ink); border-color: var(--ink); font-weight: 640;
+    color: var(--ground); background: var(--ink); border-color: var(--ink);
   }
 
-  .queue-btn {
-    font: inherit; font-size: 14.5px; font-weight: 660; letter-spacing: .01em;
-    color: #06080c; background: var(--ink); border: 0; border-radius: var(--r);
-    padding: 13px 26px; cursor: pointer;
-    box-shadow: 0 10px 30px -14px color-mix(in srgb, var(--accent) 90%, transparent);
-    transition: filter .13s var(--ease), transform .13s var(--ease);
+  .commit {
+    position: relative; overflow: hidden;
+    display: grid; grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center; gap: var(--s4);
+    width: 100%; text-align: left;
+    padding: var(--s4) var(--s5);
+    color: var(--ground); background: var(--ink);
+    border: 1px solid var(--ink); cursor: pointer;
+    /* Transform is deliberately absent: press-down/press-up own it for every
+       control in the file, and a transition on the same property truncates the
+       release. */
+    transition: background var(--press) var(--ease-out),
+                border-color var(--press) var(--ease-out),
+                color var(--press) var(--ease-out);
   }
-  .queue-btn:hover:not(:disabled) { filter: brightness(1.1); }
-  .queue-btn:active:not(:disabled) { transform: translateY(1px); }
-  .queue-btn[disabled] { opacity: .42; cursor: default; box-shadow: none; }
+  .commit-verb {
+    display: block; font-family: var(--mono); font-size: var(--t-md);
+    font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+  }
+  /* What pressing it will actually do, in the button rather than beside it. The
+     category and the difficulty are the two facts that decide the next ten
+     minutes, and they were two panels apart. */
+  .commit-sub {
+    display: block; margin-top: 3px; font-size: var(--t-sm);
+    opacity: .72; line-height: 1.45;
+  }
+  .commit-meta {
+    font-family: var(--mono); font-size: var(--t-sm); letter-spacing: .06em;
+    font-variant-numeric: tabular-nums; white-space: nowrap; opacity: .8;
+  }
+  .commit:hover:not(:disabled) { filter: brightness(1.08); }
+  .commit:disabled { opacity: .42; cursor: default; }
+
+  /* Waiting on the server, so the control stops claiming to be a button and
+     becomes a readout: unfilled, with the seconds counted off beside it. */
+  .commit.working {
+    color: var(--ink); background: var(--well); border-color: var(--rule-3);
+    cursor: default;
+  }
+  .commit.working .commit-sub { opacity: .6; }
+  /* The one piece of perpetual motion in the client, and it exists only while a
+     request is genuinely outstanding: it starts when the call goes out and stops
+     when it returns. Linear, because indeterminate progress that eases is
+     pretending to know how far along it is. */
+  .commit-sweep {
+    position: absolute; left: 0; bottom: 0; height: 2px; width: 34%;
+    background: var(--accent); opacity: 0; transform: translateX(-100%);
+  }
+  .commit.working .commit-sweep {
+    opacity: 1; animation: commit-sweep 1150ms linear infinite;
+  }
+  @keyframes commit-sweep {
+    from { transform: translateX(-100%); }
+    to   { transform: translateX(340%); }
+  }
+
+  /* Held: there is a match on the board, and pressing again would not help. */
+  .commit.held {
+    color: var(--ink); background: var(--panel); border-color: var(--rule-3);
+    cursor: default;
+  }
+  .commit.held .commit-verb { color: var(--accent); }
+
+  @media (prefers-reduced-motion: reduce) {
+    /* Gentler, not gone: the sweep stops travelling and the bar stays put as a
+       lit edge, which still says the request is out. */
+    .commit.working .commit-sweep { animation: none; width: 100%; opacity: .5; }
+  }
 
   /* Ranked needs a history behind the account. Shown as progress rather than as a
      refusal at the moment of pressing: "you cannot play" is a much worse thing to
      learn from a button that looked available. */
   .queue-gate {
-    display: none; margin-top: 12px; padding: 11px 14px; border-radius: var(--r);
-    background: var(--surface-2); border: 1px solid var(--hair-2);
-    font-size: 12.5px; color: var(--ink-mid); line-height: 1.55; max-width: 52ch;
+    display: none; padding: 11px 14px; border-radius: var(--r);
+    background: var(--well); border: 1px solid var(--rule-2);
+    font-size: var(--t-sm); color: var(--ink-mid); line-height: 1.55; max-width: 62ch;
   }
   .queue-gate.on { display: block; }
   .queue-gate .gate-count { font-family: var(--mono); color: var(--ink); }
   .queue-gate .gate-track {
-    height: 4px; border-radius: var(--r-pill); background: rgba(255, 255, 255, .08);
+    height: 4px; border-radius: var(--r); background: var(--rule-2);
     margin-top: 9px; overflow: hidden;
   }
-  .queue-gate .gate-fill {
-    height: 100%; width: 0; border-radius: var(--r-pill);
-    background: linear-gradient(90deg, var(--ink-dim), var(--accent));
-  }
-
-  .searching {
-    display: none; align-items: center; gap: 9px; margin-top: 13px;
-    font-family: var(--mono); font-size: 12.5px; color: var(--ink-mid);
-  }
-  .searching.on { display: flex; }
-  .searching::before {
-    content: ""; width: 8px; height: 8px; border-radius: 50%;
-    background: var(--accent);
-    box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 60%, transparent);
-    animation: ping 1.4s var(--ease) infinite;
-  }
-  @keyframes ping {
-    0%   { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 55%, transparent); }
-    70%  { box-shadow: 0 0 0 9px transparent; }
-    100% { box-shadow: 0 0 0 0 transparent; }
-  }
+  .queue-gate .gate-fill { background: var(--accent); }
 
   /* Which difficulty a match draws from, and whether the player is measured on it. */
+  /* A word saying what this is, then the fact. It carried a coloured bar down its
+     leading edge before, which is the callout-stripe device and told the reader
+     nothing the word does not. */
   .pool-note {
-    font-size: 12.5px; line-height: 1.6; color: var(--ink-mid);
-    margin-top: 11px; padding: 11px 13px;
-    background: rgba(255, 255, 255, .022); border: 1px solid var(--hair);
-    border-left: 2px solid var(--hair-3); border-radius: var(--r-sm);
+    font-size: var(--t-sm); line-height: 1.6; color: var(--ink-mid);
+    padding: var(--s3);
+    background: var(--well); border: 1px solid var(--rule);
+  }
+  .pool-note::before {
+    content: "Pool"; display: block; margin-bottom: var(--s1);
+    font-family: var(--mono); font-size: var(--t-2xs); font-weight: 600;
+    letter-spacing: .18em; text-transform: uppercase; color: var(--ink-dim);
   }
   .pool-note.warn {
-    border-color: color-mix(in srgb, var(--warn) 30%, transparent);
-    border-left-color: var(--warn);
-    background: color-mix(in srgb, var(--warn) 7%, transparent);
-    color: color-mix(in srgb, var(--warn) 55%, var(--ink));
+    border-color: color-mix(in srgb, var(--warn) 45%, transparent);
+    color: var(--ink-mid);
   }
+  .pool-note.warn::before { content: "Pool, short"; color: var(--warn); }
   .pool-note b { color: var(--ink); font-weight: 640; }
 
   /* ---------------------------------------------------------- opponent */
@@ -607,103 +906,153 @@
   .opponent { display: none; }
   .opponent.on { display: block; }
 
+  /* The payoff. Three scenarios and a named opponent used to teleport onto the
+     screen the frame the server answered, which reads as a repaint rather than as
+     something arriving. Entering costs 220ms once per match - rare enough to spend
+     it on, and the only reason it is a keyframe rather than a transition is that a
+     CSS animation runs off the main thread, which is exactly where this fires: on
+     the far side of an awaited network call.
+
+     Bridging a jarring change, not decoration. It plays when a match lands and at
+     no other time; a run landing mid-match repaints the same list without it. */
+  @keyframes arrive {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .opponent.on.arriving { animation: arrive var(--enter) var(--ease-out) both; }
+  /* 60ms apart: enough to read as one after another, short enough that the third
+     row is settled before a hand could reach it. */
+  .todo li.arriving {
+    animation: arrive var(--enter) var(--ease-out) both;
+    animation-delay: calc(var(--i, 0) * 60ms);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .opponent.on.arriving, .todo li.arriving {
+      animation-name: arrive-still; animation-delay: 0ms;
+    }
+    @keyframes arrive-still { from { opacity: 0; } to { opacity: 1; } }
+  }
+
   .opp-row {
     display: flex; align-items: center; justify-content: space-between; gap: 16px;
     padding: 14px 16px; flex-wrap: wrap;
-    background: rgba(255, 255, 255, .025);
-    border: 1px solid var(--hair-2); border-radius: var(--r);
+    background: var(--well);
+    border: 1px solid var(--rule-2); border-radius: var(--r);
   }
   .opp-who { display: flex; align-items: center; gap: 12px; }
   .opp-who .badge { width: 32px; height: 36px; flex: none; }
   .opp-who .badge svg { width: 100%; height: 100%; display: block; overflow: visible; }
-  .opp-name { font-size: 14px; font-weight: 640; }
-  .opp-row .sub { font-family: var(--mono); font-size: 11px; color: var(--ink-dim); }
+  .opp-name { font-size: var(--t-md); font-weight: 600; }
+  .opp-row .sub { font-family: var(--mono); font-size: var(--t-xs); color: var(--ink-dim); }
 
   .odds { margin-top: 14px; }
   .odds-bar {
-    height: 8px; border-radius: var(--r-pill); overflow: hidden; display: flex;
-    background: var(--sunken); border: 1px solid var(--hair);
+    height: 12px; overflow: hidden; display: flex;
+    background: var(--well); border: 1px solid var(--rule);
   }
   .odds-labels {
     display: flex; justify-content: space-between; margin-top: 7px;
-    font-family: var(--mono); font-size: 10.5px; color: var(--ink-dim);
+    font-family: var(--mono); font-size: var(--t-xs); color: var(--ink-dim);
   }
 
   /* ---------------------------------------------------------- to-do */
 
   .todo { margin-top: 20px; }
   .todo h3 {
-    margin: 0 0 10px; font-size: 10.5px; font-weight: 700; text-transform: uppercase;
-    letter-spacing: .13em; color: var(--ink-dim);
+    margin: 0 0 var(--s2); font-family: var(--mono); font-size: var(--t-2xs); font-weight: 600;
+    text-transform: uppercase; letter-spacing: .18em; color: var(--ink-dim);
   }
   .todo ol { margin: 0; padding: 0; list-style: none; display: grid; gap: 7px; }
   .todo li {
     display: flex; align-items: center; gap: 13px;
-    padding: 12px 14px; font-size: 13.5px;
-    background: rgba(255, 255, 255, .022);
-    border: 1px solid var(--hair); border-radius: var(--r-sm);
+    padding: 12px 14px; font-size: var(--t);
+    background: var(--well);
+    border: 1px solid var(--rule); border-radius: var(--r);
     transition: border-color .15s var(--ease), background .15s var(--ease);
   }
   .todo .n {
-    width: 22px; height: 22px; flex: none; border-radius: 50%;
+    width: 20px; height: 20px; flex: none;
     display: grid; place-items: center;
-    font-family: var(--mono); font-size: 11px; color: var(--ink-dim);
-    background: rgba(255, 255, 255, .04); border: 1px solid var(--hair-2);
+    font-family: var(--mono); font-size: var(--t-xs); color: var(--ink-dim);
+    background: var(--control); border: 1px solid var(--rule-2);
   }
   .todo li.done {
     border-color: color-mix(in srgb, var(--up) 32%, transparent);
     background: color-mix(in srgb, var(--up) 6%, transparent);
   }
+  /* Three times a match, on the row the player just finished. The list is rebuilt
+     rather than mutated when a run lands, so a transition would never fire; this
+     marks only the row that changed, and only on the render that changed it. */
+  @keyframes ticked {
+    from { transform: scale(.94); opacity: .55; }
+    to   { transform: scale(1); opacity: 1; }
+  }
+  .todo li.done.just .n { animation: ticked 200ms var(--ease-out) both; }
+  @media (prefers-reduced-motion: reduce) {
+    .todo li.done.just .n { animation: none; }
+  }
   .todo li.done .n {
-    color: #06110c; background: var(--up);
+    color: var(--ground); background: var(--up);
     border-color: var(--up); font-weight: 700;
   }
   .todo li .tier-tag {
-    margin-left: auto; font-family: var(--mono); font-size: 10px;
+    margin-left: auto; font-family: var(--mono); font-size: var(--t-2xs);
     text-transform: uppercase; letter-spacing: .07em; color: var(--ink-dim);
   }
+  /* The score the round is actually decided against, on the row that asks for it.
+     Pushed right, and first in the right-hand group, so the three rows read as a
+     column of figures rather than three names with space after them. */
+  .todo li .scen-best {
+    margin-left: auto; font-family: var(--mono); font-size: var(--t-sm);
+    color: var(--ink-dim); white-space: nowrap; font-variant-numeric: tabular-nums;
+  }
+  .todo li .scen-best b { color: var(--ink-mid); font-weight: 600; }
+  .todo li .tier-tag + .scen-best { margin-left: var(--s3); }
+  .todo li .scen-best + .scen-play { margin-left: var(--s3); }
   .todo li.pending { opacity: .72; }
   /* Pushed right, and exempt from the row dimming: a control the player is meant
      to click should not look as faded as the label it sits beside. */
   .todo li .scen-play {
-    margin-left: auto; font: inherit; font-size: 11.5px; font-weight: 560;
-    color: var(--ink); background: rgba(255, 255, 255, .05);
-    border: 1px solid var(--hair-2); border-radius: var(--r-xs);
+    margin-left: auto; font: inherit; font-size: var(--t-sm); font-weight: 560;
+    color: var(--ink); background: var(--control);
+    border: 1px solid var(--rule-2); border-radius: var(--r);
     padding: 4px 12px; cursor: pointer; opacity: 1;
   }
-  .todo li .scen-play:hover:not(:disabled) { border-color: var(--hair-3); }
+  .todo li .scen-play:hover:not(:disabled) { border-color: var(--rule-3); }
   .todo li .scen-play:disabled { opacity: .5; cursor: default; }
   .todo li .tier-tag + .scen-play { margin-left: 10px; }
 
   .match-actions {
     display: flex; align-items: center; justify-content: space-between;
     gap: 14px; margin-top: 16px; flex-wrap: wrap;
-    padding-top: 16px; border-top: 1px solid var(--hair);
+    padding-top: 16px; border-top: 1px solid var(--rule);
   }
-  .match-hint { font-size: 12.5px; color: var(--ink-dim); flex: 1 1 240px; line-height: 1.55; }
+  .match-hint { font-size: var(--t-sm); color: var(--ink-dim); flex: 1 1 240px; line-height: 1.55; }
   .match-buttons { display: flex; gap: 9px; align-items: center; }
   /* The deadline is short enough that finding out about it by losing would be the
      wrong way to learn it exists. */
   .match-clock {
-    font-family: var(--mono); font-size: 12px; letter-spacing: .04em;
-    color: var(--ink-mid); padding: 6px 11px; border-radius: var(--r-xs);
-    border: 1px solid var(--hair-2); background: var(--sunken); white-space: nowrap;
+    font-family: var(--mono); font-size: var(--t-sm); letter-spacing: .04em;
+    color: var(--ink-mid); padding: var(--s1) var(--s2);
+    border: 1px solid var(--rule-2); background: var(--well); white-space: nowrap;
+    font-variant-numeric: tabular-nums;
   }
   .match-clock.low { color: var(--warn); border-color: color-mix(in srgb, var(--warn) 40%, transparent); }
   .match-clock.out { color: var(--down); border-color: color-mix(in srgb, var(--down) 40%, transparent); }
   .match-actions button {
-    font: inherit; font-size: 12px; color: var(--ink-mid);
-    background: rgba(255, 255, 255, .03); border: 1px solid var(--hair);
-    border-radius: var(--r-xs); padding: 7px 13px; cursor: pointer;
+    font-family: var(--mono); font-size: var(--t-xs); font-weight: 600;
+    letter-spacing: .1em; text-transform: uppercase; color: var(--ink-mid);
+    background: var(--control); border: 1px solid var(--rule-2);
+    padding: var(--s2) var(--s3); cursor: pointer;
   }
-  .match-actions button:hover:not(:disabled) { color: var(--ink); border-color: var(--hair-3); }
+  .match-actions button:hover:not(:disabled) { color: var(--ink); border-color: var(--rule-3); }
   .match-actions button:disabled { opacity: .5; cursor: default; }
   /* The one action the player came here to take, so it does not read as a sibling
      of "Abandon match". */
   .match-actions button.go {
-    color: #06080c; background: var(--ink); border-color: var(--ink); font-weight: 640;
+    color: var(--ground); background: var(--ink); border-color: var(--ink);
   }
-  .match-actions button.go:hover:not(:disabled) { filter: brightness(1.1); color: #06080c; }
+  .match-actions button.go:hover:not(:disabled) { filter: brightness(1.1); color: var(--ground); }
 
   /* ---------------------------------------------------------- upload */
 
@@ -712,17 +1061,17 @@
     flex-wrap: wrap;
   }
   .upload-row > div { min-width: 0; flex: 1 1 320px; }
-  .upload-title { font-size: 13.5px; font-weight: 620; }
-  .upload-sub { font-size: 12.5px; color: var(--ink-dim); margin-top: 3px; }
+  .upload-title { font-size: var(--t); font-weight: 620; }
+  .upload-sub { font-size: var(--t-sm); color: var(--ink-dim); margin-top: 3px; }
   .upload-track {
-    height: 5px; background: rgba(255, 255, 255, .07); border-radius: var(--r-pill);
-    overflow: hidden; margin-top: 11px;
+    height: 4px; background: var(--rule-2);
+    overflow: hidden; margin-top: var(--s3);
   }
-  .upload-fill { height: 100%; width: 0%; background: var(--up); border-radius: var(--r-pill); }
+  .upload-fill { background: var(--up); }
   .upload-row button {
-    font: inherit; font-size: 12.5px; font-weight: 620; white-space: nowrap;
-    color: #06080c; background: var(--ink); border: 0;
-    border-radius: var(--r-sm); padding: 9px 17px; cursor: pointer;
+    font: inherit; font-size: var(--t-sm); font-weight: 620; white-space: nowrap;
+    color: var(--ground); background: var(--ink); border: 0;
+    border-radius: var(--r); padding: 9px 17px; cursor: pointer;
   }
   .upload-row button:hover:not([disabled]) { filter: brightness(1.1); }
   .upload-row button[disabled] { opacity: .5; cursor: default; }
@@ -732,23 +1081,51 @@
      ================================================================== */
 
   .verdict {
-    display: flex; align-items: center; justify-content: space-between; gap: 18px;
-    flex-wrap: wrap; padding: 24px 20px;
+    display: flex; align-items: center; justify-content: space-between; gap: var(--s4);
+    flex-wrap: wrap; padding: var(--s5) var(--s4);
   }
-  .verdict .big { font-size: 30px; font-weight: 760; letter-spacing: -.03em; line-height: 1.1; }
+  .verdict .big {
+    font-size: var(--t-xl); font-weight: 650; letter-spacing: -.02em; line-height: 1.1;
+  }
   .verdict .scores {
-    font-family: var(--mono); font-size: 13px; color: var(--ink-mid);
-    font-variant-numeric: tabular-nums; margin-top: 6px;
+    font-family: var(--mono); font-size: var(--t-sm); color: var(--ink-mid);
+    font-variant-numeric: tabular-nums; margin-top: var(--s1);
   }
+  /* The rounds as a scoreline.
+
+     A match is best of three and the screen never said so as a number: the three
+     outcomes were one mono word each in the last column of the table, so the shape of
+     the win - swept, or taken on the third - could only be reconstructed by reading it.
+     Three marks and a tally say it before the table is read at all.
+
+     Marks rather than pips: square, the same square the searching indicator uses, and
+     the same three colours the rest of the client uses for won, lost and neither. */
+  .scoreline { display: grid; gap: var(--s2); justify-items: end; }
+  .score-marks { display: flex; gap: 5px; }
+  .score-mark {
+    width: 22px; height: 8px; background: var(--rule-2);
+    border: 1px solid var(--rule-3);
+  }
+  .score-mark.won { background: var(--up); border-color: var(--up); }
+  .score-mark.lost { background: var(--down); border-color: var(--down); }
+  .score-tally {
+    font-family: var(--mono); font-size: var(--t-sm); color: var(--ink-dim);
+    letter-spacing: .1em; text-transform: uppercase;
+  }
+
   .delta-move {
-    font-family: var(--mono); font-size: 22px; font-weight: 680;
+    font-family: var(--mono); font-size: var(--t-lg); font-weight: 600;
     font-variant-numeric: tabular-nums;
   }
+  .delta-move .after {
+    display: block; font-size: var(--t-xs); font-weight: 400; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--ink-dim); text-align: right; margin-top: 2px;
+  }
   .explain {
-    margin: 0; padding: 14px 20px;
-    background: rgba(255, 255, 255, .022);
-    border-top: 1px solid var(--hair); border-bottom: 1px solid var(--hair);
-    font-size: 13px; color: var(--ink-mid); line-height: 1.6;
+    margin: 0; padding: var(--s3) var(--s4);
+    background: var(--well);
+    border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+    font-size: var(--t); color: var(--ink-mid); line-height: 1.6;
   }
 
   /* ==================================================================
@@ -759,86 +1136,94 @@
   table { width: 100%; border-collapse: collapse; }
   table.rounds { min-width: 560px; }
   table.scen { min-width: 620px; }
+  /* Column headings are set in the same face as the figures under them, so a column
+     reads as one object from its name to its last row. */
   th {
-    text-align: right; padding: 13px 18px 9px;
-    font-size: 9.5px; font-weight: 700; text-transform: uppercase;
-    letter-spacing: .1em; color: var(--ink-dim); white-space: nowrap;
+    text-align: right; padding: var(--s2) var(--s4) var(--s2);
+    font-family: var(--mono); font-size: var(--t-2xs); font-weight: 600; text-transform: uppercase;
+    letter-spacing: .14em; color: var(--ink-dim); white-space: nowrap;
+    border-bottom: 1px solid var(--rule-2);
   }
   th:first-child { text-align: left; }
   table.scen th:nth-child(2) { text-align: left; }
   td {
-    padding: 12px 18px; text-align: right; border-top: 1px solid var(--hair);
-    font-family: var(--mono); font-size: 13px; font-variant-numeric: tabular-nums;
+    padding: var(--s2) var(--s4); text-align: right; border-top: 1px solid var(--rule);
+    font-family: var(--mono); font-size: var(--t-sm); font-variant-numeric: tabular-nums;
   }
-  td:first-child { text-align: left; font-family: var(--font); font-size: 13.5px; font-weight: 560; }
-  table.scen td { padding: 10px 18px; font-size: 12.5px; }
-  table.scen td:first-child { font-size: 13px; font-weight: 550; }
+  thead + tbody tr:first-child td { border-top: 0; }
+  td:first-child { text-align: left; font-family: var(--font); font-size: var(--t); font-weight: 560; }
+  table.scen td { padding: var(--s2) var(--s4); font-size: var(--t-sm); }
+  table.scen td:first-child { font-size: var(--t); font-weight: 550; }
   table.scen td:nth-child(2) {
-    text-align: left; font-family: var(--font); font-size: 11.5px; color: var(--ink-dim);
+    text-align: left; font-family: var(--font); font-size: var(--t-sm); color: var(--ink-dim);
   }
-  tbody tr { transition: background .1s var(--ease); }
-  tbody tr:hover { background: rgba(255, 255, 255, .03); }
+  tbody tr { transition: background var(--fast) var(--ease); }
+  tbody tr:hover { background: var(--control); }
   /* Grouped tables put a header row inside the body; make those read as headers. */
   .scen tbody th {
-    text-align: left; font-size: 10.5px; text-transform: uppercase;
-    letter-spacing: .08em; color: var(--ink-dim); font-weight: 650; padding-top: 16px;
+    text-align: left; font-family: var(--mono); font-size: var(--t-2xs); text-transform: uppercase;
+    letter-spacing: .18em; color: var(--ink-mid); font-weight: 600;
+    padding-top: var(--s5); border-bottom: 1px solid var(--rule-2);
   }
-  .base { color: var(--ink-dim); font-size: 11px; }
+  .base { color: var(--ink-dim); font-size: var(--t-xs); }
   .up { color: var(--up); }
   .down { color: var(--down); }
-  .won-round { color: var(--up); font-weight: 640; }
+  .won-round { color: var(--up); font-weight: 600; }
 
   /* Which of a family's three variants a row is about, and where a target is
      scored. Both are quiet: they qualify the thing next to them rather than
      competing with it, and a name like "Pasu" is ambiguous without them. */
   .win {
-    font-family: var(--mono); font-size: 10px; letter-spacing: .06em;
+    font-family: var(--mono); font-size: var(--t-2xs); letter-spacing: .06em;
     text-transform: uppercase; color: var(--ink-dim);
   }
-  .onscen { font-size: 11px; color: var(--ink-dim); white-space: nowrap; }
+  .onscen { font-size: var(--t-xs); color: var(--ink-dim); white-space: nowrap; }
 
   /* ==================================================================
      Ranks
      ================================================================== */
 
-  .ladder { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+  .ladder { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--s1); }
   .ladder li {
-    display: grid; grid-template-columns: 36px 1fr auto; align-items: center;
-    gap: 14px; padding: 10px 14px; border-radius: var(--r-sm);
-    border: 1px solid var(--hair); background: rgba(255, 255, 255, .02);
+    display: grid; grid-template-columns: 30px 1fr auto; align-items: center;
+    gap: var(--s3); padding: var(--s2) var(--s3);
+    border: 1px solid var(--rule); background: var(--well);
   }
   /* The tier you are in is the one fact this list exists to convey, so it is the
      only row that carries its own colour. */
   .ladder li.here {
-    border-color: color-mix(in srgb, var(--tier) 45%, transparent);
-    background: color-mix(in srgb, var(--tier) 10%, transparent);
-    box-shadow: inset 3px 0 0 var(--tier);
+    border-color: var(--tier);
+    background: color-mix(in srgb, var(--tier) 12%, transparent);
   }
   .ladder .rung {
-    font-family: var(--mono); font-size: 10.5px; color: var(--ink-dim); text-align: right;
+    font-family: var(--mono); font-size: var(--t-xs); color: var(--ink-dim); text-align: right;
   }
-  .ladder .tier-name { font-size: 13.5px; font-weight: 620; }
+  .ladder .tier-name { font-size: var(--t); font-weight: 620; }
   .ladder li.here .tier-name { color: var(--tier); }
   .ladder .band {
-    font-family: var(--mono); font-size: 10.5px; color: var(--ink-dim); white-space: nowrap;
+    font-family: var(--mono); font-size: var(--t-xs); color: var(--ink-dim); white-space: nowrap;
   }
   .ladder .you {
-    font-family: var(--mono); font-size: 10px; text-transform: uppercase;
+    font-family: var(--mono); font-size: var(--t-2xs); text-transform: uppercase;
     letter-spacing: .08em; color: var(--tier);
   }
 
-  .cat-ranks { display: grid; gap: 12px; }
+  .cat-ranks { display: grid; gap: var(--s4); }
   .cat-rank {
-    padding: 14px 16px; border-radius: var(--r);
-    border: 1px solid var(--hair); background: rgba(255, 255, 255, .022);
+    padding: var(--s3) var(--s4);
+    border: 1px solid var(--rule); background: var(--well);
   }
   .cat-rank-top {
     display: flex; align-items: baseline; justify-content: space-between;
-    gap: 12px; margin-bottom: 10px;
+    gap: var(--s3); margin-bottom: var(--s2);
+    padding-bottom: var(--s2); border-bottom: 1px solid var(--rule);
   }
-  .cat-rank-name { font-size: 14px; font-weight: 640; }
-  .cat-rank-rank { font-family: var(--mono); font-size: 11.5px; }
-  .cat-rank-note { margin-top: 10px; font-size: 11.5px; color: var(--ink-dim); line-height: 1.55; }
+  .cat-rank-name {
+    font-family: var(--mono); font-size: var(--t-sm); font-weight: 600;
+    letter-spacing: .14em; text-transform: uppercase;
+  }
+  .cat-rank-rank { font-family: var(--mono); font-size: var(--t-sm); }
+  .cat-rank-note { margin-top: 10px; font-size: var(--t-sm); color: var(--ink-dim); line-height: 1.55; }
   .cat-rank-note b { color: var(--ink-mid); font-weight: 620; }
 
   /* One card per band, because a band is a whole benchmark and not a stretch of a longer
@@ -850,63 +1235,47 @@
   }
   .band-card {
     position: relative; overflow: hidden;
-    padding: 11px 12px 12px; border-radius: var(--r-sm);
-    border: 1px solid var(--hair); background: var(--sunken);
+    padding: var(--s3);
+    border: 1px solid var(--rule); background: var(--well);
     display: grid; gap: 9px; align-content: start;
-    transition: border-color .15s var(--ease), transform .15s var(--ease);
+    transition: border-color var(--fast) var(--ease);
   }
+  /* A held band is marked by its own border taking the rank colour. The bar down the
+     leading edge this replaces was the callout-stripe device, and the pips below say
+     the same thing more precisely. */
   .band-card.held {
-    border-color: color-mix(in srgb, var(--rank) 32%, transparent);
-    background:
-      radial-gradient(120% 100% at 0% 0%,
-        color-mix(in srgb, var(--rank) 13%, transparent), transparent 68%),
-      var(--sunken);
-  }
-  /* A hairline of the rank colour down the leading edge. Enough to find the band you hold
-     at a glance, without a second block of colour competing with the pips. */
-  .band-card.held::before {
-    content: ""; position: absolute; inset: 0 auto 0 0; width: 2px;
-    background: var(--rank);
-    box-shadow: 0 0 12px color-mix(in srgb, var(--rank) 60%, transparent);
+    border-color: color-mix(in srgb, var(--rank) 55%, transparent);
+    background: var(--well);
   }
   .band-card.unplayed { opacity: .48; }
-  .band-card:hover { transform: translateY(-1px); }
+  .band-card:hover { border-color: var(--rule-3); }
 
   .band-head {
     display: flex; align-items: baseline; justify-content: space-between; gap: 8px;
   }
   .band-title {
-    font-family: var(--mono); font-size: 9.5px; letter-spacing: .14em;
+    font-family: var(--mono); font-size: var(--t-2xs); letter-spacing: .14em;
     text-transform: uppercase; color: var(--ink-dim);
   }
-  .band-cov { font-family: var(--mono); font-size: 9.5px; color: var(--ink-dim); }
+  .band-cov { font-family: var(--mono); font-size: var(--t-2xs); color: var(--ink-dim); }
 
-  .band-rank { font-size: 13.5px; font-weight: 640; line-height: 1.2; color: var(--ink); }
-  .band-card.held .band-rank { color: var(--rank); }
+  .band-rank { font-size: var(--t); font-weight: 640; line-height: 1.2; color: var(--ink); }
+  .band-card.held .band-rank { color: var(--rank-ink, var(--rank)); }
   /* Unranked and unplayed are statements about measurement, not standing, so they drop
      out of the display face into the mono one the rest of the metadata uses. */
   .band-card.below .band-rank,
   .band-card.unplayed .band-rank {
-    font-family: var(--mono); font-size: 11px; font-weight: 500; color: var(--ink-dim);
+    font-family: var(--mono); font-size: var(--t-xs); font-weight: 500; color: var(--ink-dim);
   }
 
   .band-rungs { display: flex; gap: 3px; }
-  .band-rungs .pip {
-    flex: 1; height: 4px; border-radius: var(--r-pill);
-    background: rgba(255, 255, 255, .07);
-  }
+  .band-rungs .pip { flex: 1; height: 4px; background: var(--rule-2); }
   .band-rungs .pip.done { background: color-mix(in srgb, var(--rank) 52%, transparent); }
-  .band-rungs .pip.here {
-    background: var(--rank);
-    box-shadow: 0 0 10px -1px color-mix(in srgb, var(--rank) 78%, transparent);
-  }
+  .band-rungs .pip.here { background: var(--rank); }
 
   .band-foot { display: grid; gap: 5px; }
-  .band-track {
-    display: block; height: 2px; border-radius: var(--r-pill);
-    background: rgba(255, 255, 255, .06); overflow: hidden;
-  }
-  .band-track i { display: block; height: 100%; border-radius: inherit; background: var(--rank); }
+  .band-track { display: block; height: 2px; background: var(--rule-2); overflow: hidden; }
+  .band-track i { display: block; height: 100%; background: var(--rank); }
   /* A band under its first rank is showing a target, not an achievement, and at full
      strength its bar drew the eye before the bands actually held. */
   .band-card.below .band-track i { opacity: .5; }
@@ -914,31 +1283,101 @@
   /* Which band matches come from. Deliberately achromatic: it is a fact about the queue,
      not another rank, and a second colour here would compete with the one that is. */
   .band-q {
-    font-family: var(--mono); font-size: 8.5px; letter-spacing: .06em;
-    text-transform: none; color: var(--ink-mid);
-    border: 1px solid var(--hair-2); border-radius: var(--r-pill);
-    padding: 1px 5px; margin-left: 6px;
+    font-family: var(--mono); font-size: 9px; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--ink-mid);
+    border: 1px solid var(--rule-2);
+    padding: 1px 5px; margin-left: var(--s1);
   }
-  .band-note { font-family: var(--mono); font-size: 9.5px; color: var(--ink-dim); }
+  .band-note { font-family: var(--mono); font-size: var(--t-2xs); color: var(--ink-dim); }
   .band-note.top { color: color-mix(in srgb, var(--up) 70%, var(--ink-dim)); }
   /* Eligible for the positional rank but not holding it. Warn rather than up: this is a
      pending state, and colouring it like an achievement would read as the rank itself. */
   .band-note.await { color: color-mix(in srgb, var(--warn) 78%, var(--ink-dim)); }
 
+  /* ---- what the match will be drawn from --------------------------
+     The queue screen used to say how many scenarios you had baselines
+     on and never which ones, which left a third of the page empty and
+     the one question a player actually has unanswered. Ruled rows in
+     the table face, figures in mono, no card and no chart.
+
+     Each row carries a bar now, and the two bars mean different things
+     on purpose: a scenario that can already grade you shows how far into
+     its next rank your best sits, and one that cannot shows how many runs
+     are left before it can. The second is the actionable one - "two more
+     runs and this counts" is a reason to go and play, where "no baseline"
+     is only a complaint - so it is the one drawn in warn. */
+  .draw-rows { display: grid; }
+  .draw-row {
+    display: grid;
+    grid-template-columns: minmax(0, 40ch) minmax(0, 1fr) 108px;
+    gap: var(--s4); align-items: center;
+    padding: var(--s3) 0; border-top: 1px solid var(--rule);
+  }
+  /* Name and sub-category in one cell rather than two columns. Given a column each,
+     the 1fr name pushed them a third of the panel apart and every row read as two
+     unrelated facts with a hole between them. */
+  .draw-name {
+    display: flex; align-items: baseline; gap: var(--s3); min-width: 0;
+  }
+  .draw-row .nm {
+    font-size: var(--t-sm); color: var(--ink);
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .draw-row .sk {
+    font-family: var(--mono); font-size: var(--t-2xs); color: var(--ink-dim);
+    white-space: nowrap; flex: none;
+  }
+  .draw-row .meter {
+    display: block; height: 6px; background: var(--well);
+    border: 1px solid var(--rule); overflow: hidden;
+  }
+  .draw-row .meter-fill { background: var(--accent); }
+  .draw-row.short .meter-fill { background: var(--warn); }
+  /* Right-aligned on a fixed width so the column of figures reads down
+     as one object rather than as a ragged edge per row. */
+  .draw-row .base {
+    font-family: var(--mono); font-size: var(--t-sm); color: var(--ink-mid);
+    text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums;
+  }
+  .draw-row.short .base { color: var(--warn); }
+  .draw-row.none .base { color: var(--ink-dim); }
+  .draw-cat {
+    font-family: var(--mono); font-size: var(--t-2xs); font-weight: 600;
+    letter-spacing: .12em; text-transform: uppercase; color: var(--ink-dim);
+    padding: var(--s4) 0 var(--s1); border-top: 1px solid var(--rule);
+  }
+  .draw-rows > .draw-row:first-child, .draw-rows > .draw-cat:first-child { border-top: 0; }
+  /* Two bars in one column need saying once, here, rather than in a title
+     attribute nobody hovers. */
+  .draw-legend {
+    margin-top: var(--s4); padding-top: var(--s3); border-top: 1px solid var(--rule);
+    font-size: var(--t-sm); color: var(--ink-dim); line-height: 1.6;
+  }
+  .draw-legend b { color: var(--ink-mid); font-weight: 600; }
+
+  @media (max-width: 860px) {
+    .draw-row { grid-template-columns: minmax(0, 1fr) 100px; gap: var(--s2) var(--s3); }
+    .draw-row .meter { grid-column: 1 / -1; grid-row: 2; }
+  }
+
   /* ==================================================================
      Profile
      ================================================================== */
 
-  .wmap { display: grid; gap: 12px; }
-  .wrow { display: grid; grid-template-columns: 96px 1fr auto; gap: 14px; align-items: center; }
-  .wrow .lbl { font-size: 13px; font-weight: 600; }
-  .wtrack {
-    height: 28px; background: var(--sunken); border: 1px solid var(--hair);
-    border-radius: var(--r-sm); overflow: hidden;
+  .wmap { display: grid; gap: var(--s2); }
+  .wrow {
+    display: grid; grid-template-columns: 96px 1fr auto; gap: var(--s3); align-items: center;
   }
-  .wfill { height: 100%; border-radius: var(--r-sm) 0 0 var(--r-sm); }
+  .wrow .lbl {
+    font-family: var(--mono); font-size: var(--t-xs); font-weight: 600;
+    letter-spacing: .1em; text-transform: uppercase;
+  }
+  .wtrack {
+    height: 22px; background: var(--well); border: 1px solid var(--rule); overflow: hidden;
+  }
+  .wfill { height: 100%; }
   .wval {
-    font-family: var(--mono); font-size: 12px; color: var(--ink-mid);
+    font-family: var(--mono); font-size: var(--t-sm); color: var(--ink-mid);
     font-variant-numeric: tabular-nums; min-width: 112px; text-align: right;
   }
 
@@ -946,22 +1385,22 @@
   .cover { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
   .cover-cat { display: grid; gap: 6px; align-content: start; }
   .cover-head {
-    font-size: 10.5px; text-transform: uppercase; letter-spacing: .1em;
-    color: var(--ink-dim); font-weight: 650;
-    padding-bottom: 6px; border-bottom: 1px solid var(--hair);
+    font-family: var(--mono); font-size: var(--t-2xs); text-transform: uppercase; letter-spacing: .18em;
+    color: var(--ink-mid); font-weight: 600;
+    padding-bottom: var(--s2); border-bottom: 1px solid var(--rule-2);
   }
-  .cover-row { display: grid; grid-template-columns: 84px 1fr 58px; align-items: center; gap: 10px; }
-  .cover-name { font-size: 12px; color: var(--ink-mid); }
-  .cover-track {
-    height: 8px; background: var(--sunken); border-radius: var(--r-pill); overflow: hidden;
+  .cover-row {
+    display: grid; grid-template-columns: 84px 1fr 58px; align-items: center; gap: var(--s2);
   }
-  .cover-fill { display: block; height: 100%; border-radius: var(--r-pill); background: var(--ink-dim); }
+  .cover-name { font-size: var(--t-sm); color: var(--ink-mid); }
+  .cover-track { height: 6px; background: var(--well); overflow: hidden; }
+  .cover-fill { background: var(--ink-dim); }
   .cover-row.ready .cover-fill { background: var(--up); }
   .cover-val {
-    font-family: var(--mono); font-size: 10.5px; color: var(--ink-dim); text-align: right;
+    font-family: var(--mono); font-size: var(--t-xs); color: var(--ink-dim); text-align: right;
   }
   .cover-row.ready .cover-val { color: var(--up); }
-  .cover-next { font-size: 11.5px; color: var(--ink-dim); margin-top: 8px; line-height: 1.5; }
+  .cover-next { font-size: var(--t-sm); color: var(--ink-dim); margin-top: 8px; line-height: 1.5; }
 
   /* ==================================================================
      Consistency
@@ -970,39 +1409,41 @@
   .cf-pair { display: grid; grid-template-columns: 1fr auto 1fr; gap: 20px; align-items: center; }
   .cf-side { text-align: center; }
   .cf-label {
-    font-size: 9.5px; font-weight: 700; text-transform: uppercase;
-    letter-spacing: .14em; color: var(--ink-dim);
+    font-family: var(--mono); font-size: var(--t-2xs); font-weight: 600; text-transform: uppercase;
+    letter-spacing: .18em; color: var(--ink-dim);
   }
-  .cf-rank { font-size: 28px; font-weight: 740; letter-spacing: -.025em; margin-top: 6px; }
+  .cf-rank {
+    font-size: var(--t-xl); font-weight: 650; letter-spacing: -.02em; margin-top: var(--s2);
+  }
   .cf-energy {
-    font-family: var(--mono); font-size: 12px; color: var(--ink-mid);
-    font-variant-numeric: tabular-nums; margin-top: 3px;
+    font-family: var(--mono); font-size: var(--t-sm); color: var(--ink-mid);
+    font-variant-numeric: tabular-nums; margin-top: 2px;
   }
-  .cf-note { font-size: 11.5px; color: var(--ink-dim); margin-top: 7px; }
+  .cf-note { font-size: var(--t-sm); color: var(--ink-dim); margin-top: 7px; }
   .cf-gap {
     text-align: center; padding: 0 18px;
-    border-left: 1px solid var(--hair); border-right: 1px solid var(--hair);
+    border-left: 1px solid var(--rule); border-right: 1px solid var(--rule);
   }
   .cf-gap-val {
-    font-family: var(--mono); font-size: 34px; font-weight: 700;
+    font-family: var(--mono); font-size: var(--t-2xl); font-weight: 600;
     font-variant-numeric: tabular-nums; color: var(--warn); line-height: 1.1;
   }
   .cf-gap-label {
-    font-size: 9.5px; font-weight: 700; text-transform: uppercase;
-    letter-spacing: .14em; color: var(--ink-dim);
+    font-family: var(--mono); font-size: var(--t-2xs); font-weight: 600; text-transform: uppercase;
+    letter-spacing: .18em; color: var(--ink-dim);
   }
   .cf-explain {
-    margin: 18px 0 0; font-size: 12.5px; color: var(--ink-mid);
+    margin: 18px 0 0; font-size: var(--t-sm); color: var(--ink-mid);
     line-height: 1.65; max-width: 70ch;
   }
   .gapbar {
     display: inline-block; vertical-align: middle; height: 6px;
-    border-radius: var(--r-pill); background: var(--warn); min-width: 2px;
+    background: var(--warn); min-width: 2px;
   }
   @media (max-width: 720px) {
     .cf-pair { grid-template-columns: 1fr; }
     .cf-gap {
-      border: 0; border-top: 1px solid var(--hair); border-bottom: 1px solid var(--hair);
+      border: 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
       padding: 14px 0;
     }
   }
@@ -1011,36 +1452,39 @@
      Quests
      ================================================================== */
 
-  .quests { display: grid; gap: 11px; }
+  .quests { display: grid; gap: var(--s2); }
   .quest {
-    display: grid; grid-template-columns: 1fr auto; gap: 12px 18px;
-    padding: 16px 18px; background: rgba(255, 255, 255, .022);
-    border: 1px solid var(--hair); border-radius: var(--r);
+    display: grid; grid-template-columns: 1fr auto; gap: var(--s3) var(--s4);
+    padding: var(--s3) var(--s4); background: var(--well);
+    border: 1px solid var(--rule);
   }
-  .quest h3 { margin: 0; font-size: 14.5px; font-weight: 640; }
-  .quest p { margin: 5px 0 0; font-size: 12.5px; color: var(--ink-mid); line-height: 1.55; }
+  .quest h3 { margin: 0; font-size: var(--t); font-weight: 600; }
+  .quest p {
+    margin: var(--s1) 0 0; font-size: var(--t-sm); color: var(--ink-mid); line-height: 1.55;
+  }
   .xp {
-    font-family: var(--mono); font-size: 11px; color: var(--ink-dim);
+    font-family: var(--mono); font-size: var(--t-xs); color: var(--ink-dim);
     white-space: nowrap; align-self: start; text-align: right;
+    font-variant-numeric: tabular-nums;
   }
   .qtrack {
-    grid-column: 1 / -1; height: 5px; background: rgba(255, 255, 255, .07);
-    border-radius: var(--r-pill); overflow: hidden;
+    grid-column: 1 / -1; height: 4px; background: var(--rule-2); overflow: hidden;
   }
-  .qfill { height: 100%; border-radius: var(--r-pill); }
+  .qfill { background: var(--accent); }
 
   /* A floor quest asks for a window of clean runs rather than one good one, so it
      is marked rather than left to look like every other row. */
   .quest-floor { border-color: color-mix(in srgb, var(--warn) 28%, transparent); }
   .floor-tag {
     font-family: var(--mono); font-size: 9px; text-transform: uppercase;
-    letter-spacing: .1em; color: var(--warn);
-    border: 1px solid color-mix(in srgb, var(--warn) 35%, transparent);
-    border-radius: 4px; padding: 2px 6px; margin-left: 9px; vertical-align: 2px;
+    letter-spacing: .12em; color: var(--warn);
+    border: 1px solid color-mix(in srgb, var(--warn) 45%, transparent);
+    padding: 2px 6px; margin-left: var(--s2); vertical-align: 2px;
   }
   .qsteps {
-    display: block; font-family: var(--mono); font-size: 11px;
-    color: var(--ink-mid); margin-bottom: 4px; white-space: nowrap;
+    display: block; font-family: var(--mono); font-size: var(--t-xs);
+    color: var(--ink-mid); margin-bottom: var(--s1); white-space: nowrap;
+    font-variant-numeric: tabular-nums;
   }
 
   /* ---------------------------------------------------- celebration */
@@ -1048,44 +1492,46 @@
   .celebrate {
     position: fixed; inset: 0; z-index: 60;
     display: grid; place-items: center;
-    background: rgba(3, 4, 7, .74); backdrop-filter: blur(6px);
+    background: rgba(0, 0, 0, .62);
   }
   .celebrate[hidden] { display: none; }
   .celebrate-card {
     width: min(430px, calc(100vw - 40px));
-    padding: 30px 30px 24px; text-align: center;
-    background: linear-gradient(180deg, rgba(255, 255, 255, .05), transparent), var(--surface-2);
-    border: 1px solid var(--hair-2); border-radius: var(--r-lg);
-    box-shadow: var(--shadow-3);
+    padding: var(--s6) var(--s6) var(--s5); text-align: left;
+    background: var(--panel);
+    border: 1px solid var(--rule-3);
   }
   .celebrate-kicker {
-    font-family: var(--mono); font-size: 10px; letter-spacing: .2em;
+    font-family: var(--mono); font-size: var(--t-2xs); letter-spacing: .2em;
     text-transform: uppercase; color: var(--warn);
   }
   .celebrate-title {
-    font-size: 22px; font-weight: 720; letter-spacing: -.02em;
-    margin-top: 10px; text-wrap: balance;
+    font-size: var(--t-lg); font-weight: 650; letter-spacing: -.01em;
+    margin-top: var(--s2); text-wrap: balance;
   }
-  .celebrate-detail { font-size: 13px; color: var(--ink-mid); margin-top: 9px; line-height: 1.6; }
+  .celebrate-detail {
+    font-size: var(--t); color: var(--ink-mid); margin-top: var(--s2); line-height: 1.6;
+  }
   .celebrate-xp {
-    font-family: var(--mono); font-size: 28px; font-weight: 700;
-    color: var(--up); margin-top: 18px; font-variant-numeric: tabular-nums;
+    font-family: var(--mono); font-size: var(--t-xl); font-weight: 600;
+    color: var(--up); margin-top: var(--s4); font-variant-numeric: tabular-nums;
   }
   .celebrate-level { margin-top: 18px; text-align: left; }
   .celebrate-level-row {
     display: flex; justify-content: space-between; align-items: baseline;
-    font-size: 12px; color: var(--ink-mid); margin-bottom: 7px;
+    font-family: var(--mono); font-size: var(--t-xs); color: var(--ink-mid);
+    margin-bottom: var(--s2);
   }
-  .celebrate-level-xp { font-family: var(--mono); font-size: 11px; color: var(--ink-dim); }
+  .celebrate-level-xp { font-family: var(--mono); font-size: var(--t-xs); color: var(--ink-dim); }
   .celebrate-track {
-    height: 6px; background: var(--sunken); border: 1px solid var(--hair);
-    border-radius: var(--r-pill); overflow: hidden;
+    height: 5px; background: var(--well); border: 1px solid var(--rule); overflow: hidden;
   }
-  .celebrate-fill { height: 100%; background: var(--ink); width: 0%; }
+  .celebrate-fill { background: var(--ink); }
   .celebrate-card button {
-    font: inherit; font-size: 13px; font-weight: 640; margin-top: 22px;
-    color: #06080c; background: var(--ink); border: 0;
-    border-radius: var(--r-sm); padding: 10px 28px; cursor: pointer;
+    font-family: var(--mono); font-size: var(--t-sm); font-weight: 600;
+    letter-spacing: .12em; text-transform: uppercase; margin-top: var(--s5);
+    color: var(--ground); background: var(--ink); border: 0;
+    padding: var(--s2) var(--s5); cursor: pointer;
   }
   .celebrate-card button:hover { filter: brightness(1.1); }
 
@@ -1101,33 +1547,34 @@
   }
   .ladder-group { display: grid; gap: 8px; align-content: start; }
   .ladder-title {
-    font-size: 10.5px; text-transform: uppercase; letter-spacing: .1em; font-weight: 650;
-    color: var(--ink-dim); padding-bottom: 4px; border-bottom: 1px solid var(--hair);
+    font-family: var(--mono); font-size: var(--t-2xs); text-transform: uppercase;
+    letter-spacing: .18em; font-weight: 600; color: var(--ink-mid);
+    padding-bottom: var(--s1); border-bottom: 1px solid var(--rule-2);
   }
-  .ladder-note { font-size: 11px; color: var(--ink-dim); margin-top: -4px; }
+  .ladder-note { font-size: var(--t-xs); color: var(--ink-dim); margin-top: -4px; }
 
   .season-rank {
     display: grid; grid-template-columns: 22px 1fr 46px 14px 24px;
     align-items: center; gap: 10px;
   }
-  .season-rank .n { font-family: var(--mono); font-size: 10.5px; color: var(--ink-dim); }
+  .season-rank .n { font-family: var(--mono); font-size: var(--t-xs); color: var(--ink-dim); }
   .season-ranks input[type="text"] {
-    font: inherit; font-size: 13px; color: var(--ink);
-    background: var(--sunken); border: 1px solid var(--hair-2);
-    border-radius: var(--r-xs); padding: 6px 10px; width: 100%;
+    font: inherit; font-size: var(--t); color: var(--ink);
+    background: var(--well); border: 1px solid var(--rule-2);
+    border-radius: var(--r); padding: 6px 10px; width: 100%;
   }
   .season-ranks input[type="text"]:focus { outline: none; border-color: var(--accent); }
   .season-ranks input[type="color"] {
     width: 46px; height: 30px; padding: 2px; cursor: pointer;
-    background: var(--sunken); border: 1px solid var(--hair-2); border-radius: var(--r-xs);
+    background: var(--well); border: 1px solid var(--rule-2); border-radius: var(--r);
   }
   /* A colour that cannot be read, flagged where it is chosen. */
   .colourwarn {
-    font-size: 12px; font-weight: 700; color: var(--warn);
+    font-size: var(--t-sm); font-weight: 700; color: var(--warn);
     text-align: center; cursor: help; line-height: 1;
   }
   .season-rank button.rankdrop {
-    font: inherit; font-size: 13px; line-height: 1; color: var(--ink-dim);
+    font: inherit; font-size: var(--t); line-height: 1; color: var(--ink-dim);
     background: transparent; border: none; cursor: pointer; padding: 2px 4px;
   }
   .season-rank button.rankdrop:hover { color: var(--down); }
@@ -1135,63 +1582,63 @@
 
   .ladder-tools { display: flex; gap: 6px; padding-top: 4px; }
   .ladder-tools button {
-    font: inherit; font-size: 11px; color: var(--ink-dim);
-    background: transparent; border: 1px solid var(--hair);
-    border-radius: var(--r-xs); padding: 3px 9px; cursor: pointer;
+    font: inherit; font-size: var(--t-xs); color: var(--ink-dim);
+    background: transparent; border: 1px solid var(--rule);
+    border-radius: var(--r); padding: 3px 9px; cursor: pointer;
   }
-  .ladder-tools button:hover:not(:disabled) { color: var(--ink); border-color: var(--hair-3); }
+  .ladder-tools button:hover:not(:disabled) { color: var(--ink); border-color: var(--rule-3); }
   .ladder-tools button:disabled { opacity: .4; cursor: default; }
 
   .season-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
   .season-actions button {
-    font: inherit; font-size: 12px; color: var(--ink-mid);
-    background: rgba(255, 255, 255, .03); border: 1px solid var(--hair);
-    border-radius: var(--r-xs); padding: 7px 14px; cursor: pointer;
+    font: inherit; font-size: var(--t-sm); color: var(--ink-mid);
+    background: var(--control); border: 1px solid var(--rule);
+    border-radius: var(--r); padding: 7px 14px; cursor: pointer;
   }
-  .season-actions button:hover:not(:disabled) { color: var(--ink); border-color: var(--hair-3); }
+  .season-actions button:hover:not(:disabled) { color: var(--ink); border-color: var(--rule-3); }
   .season-actions button.go {
-    color: #06080c; background: var(--ink); border-color: var(--ink); font-weight: 640;
+    color: var(--ground); background: var(--ink); border-color: var(--ink); font-weight: 640;
   }
-  .season-actions button.go:hover:not(:disabled) { filter: brightness(1.1); color: #06080c; }
+  .season-actions button.go:hover:not(:disabled) { filter: brightness(1.1); color: var(--ground); }
   .season-actions button:disabled { opacity: .5; cursor: default; }
 
   .season-add { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
   .season-add input[type="search"], .season-add select {
-    font: inherit; font-size: 12.5px; color: var(--ink);
-    background: var(--sunken); border: 1px solid var(--hair-2);
-    border-radius: var(--r-xs); padding: 7px 10px;
+    font: inherit; font-size: var(--t-sm); color: var(--ink);
+    background: var(--well); border: 1px solid var(--rule-2);
+    border-radius: var(--r); padding: 7px 10px;
   }
   .season-add input[type="search"] { min-width: 200px; }
   .season-add select { max-width: 380px; }
   .season-add input:focus, .season-add select:focus { outline: none; border-color: var(--accent); }
   .season-add button {
-    font: inherit; font-size: 12px; color: var(--ink-mid);
-    background: rgba(255, 255, 255, .03); border: 1px solid var(--hair);
-    border-radius: var(--r-xs); padding: 7px 14px; cursor: pointer;
+    font: inherit; font-size: var(--t-sm); color: var(--ink-mid);
+    background: var(--control); border: 1px solid var(--rule);
+    border-radius: var(--r); padding: 7px 14px; cursor: pointer;
   }
-  .season-add button:hover:not(:disabled) { color: var(--ink); border-color: var(--hair-3); }
+  .season-add button:hover:not(:disabled) { color: var(--ink); border-color: var(--rule-3); }
   .season-add button:disabled { opacity: .5; cursor: default; }
 
   /* Only appears when there is something ungradeable to remove. */
   button.purge {
-    font: inherit; font-size: 12px; color: var(--down);
+    font: inherit; font-size: var(--t-sm); color: var(--down);
     background: transparent; border: 1px solid color-mix(in srgb, var(--down) 35%, transparent);
-    border-radius: var(--r-xs); padding: 7px 14px; cursor: pointer;
+    border-radius: var(--r); padding: 7px 14px; cursor: pointer;
   }
   button.purge:hover { border-color: var(--down); }
 
-  .season-status { font-size: 12px; color: var(--ink-dim); }
+  .season-status { font-size: var(--t-sm); color: var(--ink-dim); }
   .season-status.bad { color: var(--down); }
   .season-status.good { color: var(--up); }
 
   /* Number inputs sit inside table cells, so they carry no chrome until focused. */
   .scen input.thr {
-    font: inherit; font-family: var(--mono); font-size: 12px; color: var(--ink);
-    background: transparent; border: 1px solid transparent; border-radius: 5px;
+    font: inherit; font-family: var(--mono); font-size: var(--t-sm); color: var(--ink);
+    background: transparent; border: 1px solid transparent; border-radius: var(--r);
     padding: 3px 5px; width: 72px; text-align: right;
   }
-  .scen input.thr:hover { border-color: var(--hair); }
-  .scen input.thr:focus { border-color: var(--accent); outline: none; background: var(--sunken); }
+  .scen input.thr:hover { border-color: var(--rule); }
+  .scen input.thr:focus { border-color: var(--accent); outline: none; background: var(--well); }
   /* A threshold typed over the derivation. Marked, because "top 15% of the board"
      and "a number somebody chose" are different claims and should not look alike. */
   .scen input.thr.override {
@@ -1201,11 +1648,11 @@
   }
   .scen td.rowacts { display: flex; gap: 4px; white-space: nowrap; }
   .scen button.rowdrop {
-    font: inherit; font-size: 11px; color: var(--ink-dim);
-    background: transparent; border: 1px solid var(--hair);
-    border-radius: 5px; padding: 2px 8px; cursor: pointer;
+    font: inherit; font-size: var(--t-xs); color: var(--ink-dim);
+    background: transparent; border: 1px solid var(--rule);
+    border-radius: var(--r); padding: 2px 8px; cursor: pointer;
   }
-  .scen button.rowdrop:hover:not(:disabled) { color: var(--ink); border-color: var(--hair-3); }
+  .scen button.rowdrop:hover:not(:disabled) { color: var(--ink); border-color: var(--rule-3); }
   .scen button.rowdrop.danger:hover { color: var(--down); border-color: color-mix(in srgb, var(--down) 40%, transparent); }
   .scen button.rowdrop:disabled { opacity: .35; cursor: default; }
   .scen td.empty { color: var(--ink-dim); padding: 16px 0; }
@@ -1214,13 +1661,13 @@
      header row it governs rather than in a toolbar away from the numbers. */
   .scen tr.cat-head th { padding-top: 18px; }
   select.winpick {
-    font: inherit; font-size: 11px; font-family: var(--mono);
+    font: inherit; font-size: var(--t-xs); font-family: var(--mono);
     letter-spacing: .04em; text-transform: none;
-    color: var(--ink); background: var(--sunken);
-    border: 1px solid var(--hair-2); border-radius: var(--r-xs);
+    color: var(--ink); background: var(--well);
+    border: 1px solid var(--rule-2); border-radius: var(--r);
     padding: 3px 7px; margin-left: 12px; cursor: pointer;
   }
-  select.winpick:hover { border-color: var(--hair-3); }
+  select.winpick:hover { border-color: var(--rule-3); }
 
   /* A family or difficulty added but not yet filled. Marked rather than hidden:
      the work left is the point, and Save is held until there is none of it. */
@@ -1228,56 +1675,56 @@
   .scen tr.slot td { border-color: color-mix(in srgb, var(--warn) 22%, transparent); }
   .slotpick { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
   .slotpick input.slotsearch {
-    font: inherit; font-size: 12px; color: var(--ink);
-    background: var(--sunken); border: 1px solid var(--hair-2);
-    border-radius: var(--r-xs); padding: 5px 9px; width: 250px;
+    font: inherit; font-size: var(--t-sm); color: var(--ink);
+    background: var(--well); border: 1px solid var(--rule-2);
+    border-radius: var(--r); padding: 5px 9px; width: 250px;
   }
   .slotpick input.slotsearch:focus { outline: none; border-color: var(--accent); }
   .slotpick input.slotsearch:disabled { opacity: .6; }
   button.slotadd {
-    font: inherit; font-size: 12px; font-weight: 640;
-    color: #06080c; background: var(--ink);
-    border: 0; border-radius: var(--r-xs); padding: 5px 14px; cursor: pointer;
+    font: inherit; font-size: var(--t-sm); font-weight: 640;
+    color: var(--ground); background: var(--ink);
+    border: 0; border-radius: var(--r); padding: 5px 14px; cursor: pointer;
   }
   button.slotadd:hover:not(:disabled) { filter: brightness(1.1); }
   button.slotadd:disabled {
     color: var(--ink-dim); background: transparent;
-    border: 1px solid var(--hair-2); cursor: default;
+    border: 1px solid var(--rule-2); cursor: default;
   }
-  .slotnote { font-size: 11px; color: var(--warn); }
+  .slotnote { font-size: var(--t-xs); color: var(--warn); }
   .slotnote.bad { color: var(--down); }
 
   /* The percentile ladder, which is what actually decides every threshold. */
   .pct-row { display: flex; align-items: center; gap: 6px; }
   .pct-name {
-    font-size: 11.5px; color: var(--ink-mid); width: 66px; flex: none;
+    font-size: var(--t-sm); color: var(--ink-mid); width: 66px; flex: none;
     overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
   }
   input.pct {
-    font: inherit; font-family: var(--mono); font-size: 11.5px; color: var(--ink);
-    background: var(--sunken); border: 1px solid var(--hair);
-    border-radius: 5px; padding: 3px 5px; width: 52px; text-align: right;
+    font: inherit; font-family: var(--mono); font-size: var(--t-sm); color: var(--ink);
+    background: var(--well); border: 1px solid var(--rule);
+    border-radius: var(--r); padding: 3px 5px; width: 52px; text-align: right;
   }
   input.pct:focus { border-color: var(--accent); outline: none; }
 
   /* Naming happens where the thing will appear, not in a dialog. */
   input.inline-ask {
-    font: inherit; font-size: 12px; color: var(--ink);
-    background: var(--sunken); border: 1px solid var(--accent);
-    border-radius: var(--r-xs); padding: 3px 9px; margin-left: 10px; width: 190px;
+    font: inherit; font-size: var(--t-sm); color: var(--ink);
+    background: var(--well); border: 1px solid var(--accent);
+    border-radius: var(--r); padding: 3px 9px; margin-left: 10px; width: 190px;
   }
   input.inline-ask:focus { outline: none; }
 
   button.addfam {
-    font: inherit; font-size: 11px; font-weight: 500;
+    font: inherit; font-size: var(--t-xs); font-weight: 500;
     letter-spacing: .02em; text-transform: none;
     color: var(--ink-mid); background: transparent;
-    border: 1px solid var(--hair-2); border-radius: var(--r-xs);
+    border: 1px solid var(--rule-2); border-radius: var(--r);
     padding: 3px 9px; margin-left: 10px; cursor: pointer;
   }
-  button.addfam:hover { color: var(--ink); border-color: var(--hair-3); }
+  button.addfam:hover { color: var(--ink); border-color: var(--rule-3); }
 
-  .scen td.family { font-size: 11px; color: var(--ink-dim); white-space: nowrap; }
+  .scen td.family { font-size: var(--t-xs); color: var(--ink-dim); white-space: nowrap; }
   /* Which of a family's difficulties are filled, on every row of it. */
   .famstate {
     margin-left: 7px; letter-spacing: 2px; font-size: 9px; color: var(--ink-dim); cursor: help;
@@ -1287,7 +1734,7 @@
   /* Provenance. Dim by default - it is context, not the number being edited - and
      marked when the board behind it is too thin for a percentile to mean anything. */
   .scen td.source {
-    font-size: 11px; color: var(--ink-dim); max-width: 190px;
+    font-size: var(--t-xs); color: var(--ink-dim); max-width: 190px;
     overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
   }
   .scen td.source.thin { color: var(--down); }
@@ -1297,17 +1744,17 @@
      because the question is the shape of the spread rather than any single count. */
   .sources { display: flex; flex-direction: column; gap: 3px; }
   .source-row { display: grid; grid-template-columns: 190px 1fr 42px; gap: 10px; align-items: center; }
-  .source-row .sname { font-size: 12px; color: var(--ink-mid); overflow: hidden;
+  .source-row .sname { font-size: var(--t-sm); color: var(--ink-mid); overflow: hidden;
     text-overflow: ellipsis; white-space: nowrap; }
-  .source-row .sbar { height: 7px; background: var(--hair-2); border-radius: 2px; }
-  .source-row .sbar i { display: block; height: 100%; border-radius: 2px; background: var(--accent); }
-  .source-row .scount { font-family: var(--mono); font-size: 11px; color: var(--ink-dim);
+  .source-row .sbar { height: 7px; background: var(--rule-2); }
+  .source-row .sbar i { display: block; height: 100%; background: var(--accent); }
+  .source-row .scount { font-family: var(--mono); font-size: var(--t-xs); color: var(--ink-dim);
     text-align: right; font-variant-numeric: tabular-nums; }
   .source-row.unused .sname, .source-row.unused .scount { color: var(--ink-dim); opacity: .6; }
-  .source-row.unused .sbar i { background: var(--hair-3); }
+  .source-row.unused .sbar i { background: var(--rule-3); }
 
   .scen td.corpus {
-    font-family: var(--mono); font-size: 11px; color: var(--ink-mid);
+    font-family: var(--mono); font-size: var(--t-xs); color: var(--ink-mid);
     text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap;
   }
 
@@ -1316,28 +1763,28 @@
   .dist { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 22px; }
   .dist-cat { display: grid; gap: 4px; align-content: start; }
   .dist-head {
-    font-size: 10.5px; text-transform: uppercase; letter-spacing: .1em; font-weight: 650;
+    font-size: var(--t-xs); text-transform: uppercase; letter-spacing: .1em; font-weight: 650;
     color: var(--ink-dim); padding-bottom: 6px; margin-bottom: 4px;
-    border-bottom: 1px solid var(--hair);
+    border-bottom: 1px solid var(--rule);
   }
   .dist-row { display: grid; grid-template-columns: 108px 1fr 52px; align-items: center; gap: 9px; }
   .dist-name {
-    font-size: 11.5px; color: var(--ink-mid);
+    font-size: var(--t-sm); color: var(--ink-mid);
     overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
   }
-  .dist-track { height: 9px; background: var(--sunken); border-radius: var(--r-pill); overflow: hidden; }
-  .dist-fill { display: block; height: 100%; background: var(--ink-dim); border-radius: var(--r-pill); }
+  .dist-track { height: 9px; background: var(--well); border-radius: var(--r); overflow: hidden; }
+  .dist-fill { display: block; height: 100%; background: var(--ink-dim); border-radius: var(--r); }
   .dist-val {
-    font-family: var(--mono); font-size: 10.5px; color: var(--ink-dim);
+    font-family: var(--mono); font-size: var(--t-xs); color: var(--ink-dim);
     text-align: right; font-variant-numeric: tabular-nums;
   }
   .dist-row.empty .dist-name, .dist-row.empty .dist-val { color: var(--warn); }
   .dist-note {
-    font-size: 11.5px; color: var(--warn); line-height: 1.5;
+    font-size: var(--t-sm); color: var(--warn); line-height: 1.5;
     margin-top: 10px; padding: 9px 12px;
     background: color-mix(in srgb, var(--warn) 8%, transparent);
     border: 1px solid color-mix(in srgb, var(--warn) 25%, transparent);
-    border-radius: var(--r-xs);
+    border-radius: var(--r);
   }
 
   /* ==================================================================
@@ -1345,49 +1792,76 @@
      ================================================================== */
 
   .toast {
-    position: fixed; right: 22px; bottom: 22px; z-index: 40;
-    display: none; align-items: center; gap: 14px;
-    padding: 13px 17px; background: var(--surface-3);
-    border: 1px solid var(--hair-2); border-radius: var(--r);
-    box-shadow: var(--shadow-3); max-width: 340px;
+    position: fixed; right: var(--s5); bottom: var(--s5); z-index: 40;
+    display: none; align-items: center; gap: var(--s3);
+    padding: var(--s3); background: var(--panel);
+    border: 1px solid var(--rule-3);
+    max-width: 340px;
   }
   .toast.on { display: flex; }
-  .toast .t-scen { font-size: 13px; font-weight: 620; }
-  .toast .sub { font-size: 11.5px; color: var(--ink-dim); }
+  .toast .t-scen { font-size: var(--t); font-weight: 600; }
+  .toast .sub {
+    font-family: var(--mono); font-size: var(--t-2xs); letter-spacing: .1em;
+    text-transform: uppercase; color: var(--ink-dim);
+  }
   .toast .t-score {
-    font-family: var(--mono); font-size: 17px; font-weight: 680;
+    font-family: var(--mono); font-size: var(--t-md); font-weight: 600;
     font-variant-numeric: tabular-nums; margin-left: auto;
   }
 
-  /* First run: no stats folder yet, so there is nothing else to show. */
-  .empty { padding: 44px 32px; text-align: center; }
-  .empty h2 { margin: 0 0 10px; font-size: 21px; font-weight: 680; letter-spacing: -.02em; }
-  .empty > p { margin: 0 auto; max-width: 54ch; font-size: 13.5px; color: var(--ink-mid); }
-  .empty-steps {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-    gap: 12px; margin: 26px auto 0; max-width: 720px; text-align: left;
-  }
+  /* First run: no stats folder yet, so there is nothing else to show.
+
+     Three steps, read in order, so they are a numbered list down the page rather than
+     three cards across it. Three equal cards in a row say the three things are
+     alternatives to choose between; these are stages, and only the first one is
+     anything the reader has to do. */
+  .empty { padding: var(--s7) var(--s6); max-width: 620px; }
+  .empty h2 { margin: 0 0 var(--s2); font-size: var(--t-lg); font-weight: 650; }
+  .empty > p { margin: 0; max-width: 58ch; font-size: var(--t); color: var(--ink-mid); }
+  .empty-steps { display: grid; gap: 0; margin: var(--s5) 0 0; }
   .empty-step {
-    padding: 14px; border-radius: var(--r);
-    background: rgba(255, 255, 255, .022); border: 1px solid var(--hair);
+    display: grid; grid-template-columns: 34px 1fr; gap: var(--s3);
+    padding: var(--s3) 0; border-top: 1px solid var(--rule);
   }
+  .empty-step:last-child { border-bottom: 1px solid var(--rule); }
   .empty-step .n {
-    font-family: var(--mono); font-size: 10.5px; color: var(--accent);
-    letter-spacing: .1em; text-transform: uppercase;
+    font-family: var(--mono); font-size: var(--t-sm); font-weight: 600;
+    color: var(--ink-dim); letter-spacing: .04em;
   }
-  .empty-step h3 { margin: 7px 0 4px; font-size: 13.5px; font-weight: 620; }
-  .empty-step p { margin: 0; font-size: 12px; color: var(--ink-dim); line-height: 1.5; }
+  .empty-step h3 { margin: 0 0 2px; font-size: var(--t); font-weight: 600; }
+  .empty-step p { margin: 0; font-size: var(--t-sm); color: var(--ink-dim); line-height: 1.5; }
   .empty button {
-    font: inherit; font-size: 13px; font-weight: 640; margin-top: 26px;
-    color: #06080c; background: var(--ink); border: 0;
-    border-radius: var(--r-sm); padding: 11px 22px; cursor: pointer;
+    font-family: var(--mono); font-size: var(--t-sm); font-weight: 600;
+    letter-spacing: .12em; text-transform: uppercase; margin-top: var(--s5);
+    color: var(--ground); background: var(--ink); border: 0;
+    padding: var(--s3) var(--s5); cursor: pointer;
   }
   .empty button:hover { filter: brightness(1.1); }
 
   .footnote {
-    margin: 8px 0 0; font-size: 11.5px; color: var(--ink-dim);
+    margin: 8px 0 0; font-size: var(--t-sm); color: var(--ink-dim);
     line-height: 1.6; max-width: 76ch;
   }
+
+  /* A table waiting for its rows.
+
+     The busy states elsewhere are words - "Reading your history...", "Searching..." -
+     which say more than a shimmer does and are kept. What was missing is height: a
+     table drawn empty and then filled reflowed the whole column under it the moment
+     the data landed. This reserves the rows at their final height and rules them, so
+     what arrives lands in the shape that was already there.
+
+     Deliberately not animated. A sweeping gradient over a grey block is the most
+     imitated loading state there is, and it would be the only thing on screen
+     pretending to be busy while nothing moves. */
+  .pending td, .pending th { color: transparent; }
+  .pending td::after {
+    content: "\2013"; color: var(--rule-3); font-family: var(--mono);
+  }
+  .pending th::after {
+    content: "\2013"; color: var(--rule-2); font-family: var(--mono);
+  }
+  .pending tbody tr:hover { background: transparent; }
 
   /* ==================================================================
      Press
@@ -1423,25 +1897,27 @@
     .released { animation: press-up .34s cubic-bezier(.2, .9, .3, 1); }
   }
 
-  /* The ring a press leaves behind.
+  /* The mark a press leaves behind.
 
      Drawn in a fixed overlay at the pointer rather than inside the
-     control. A ripple parented to a button needs that button to be
-     `position: relative; overflow: hidden`, and clipping the queue
-     button's glow or the selected tab's marker to get one would cost
-     more than the effect is worth. It takes the player's rank colour,
-     like everything else that carries chroma here. */
+     control: a ripple parented to a button needs that button to be
+     `position: relative; overflow: hidden`, and several of these
+     controls are neither. It takes the player's rank colour, like
+     everything else that carries chroma here.
+
+     Square and hairline. As a soft expanding circle it was the one
+     thing left in the client that looked like a material ripple. */
   .fx-layer {
     position: fixed; inset: 0; z-index: 90;
     pointer-events: none; overflow: hidden;
   }
   .fx-ring {
-    position: absolute; width: 14px; height: 14px; margin: -7px 0 0 -7px;
-    border-radius: 50%; border: 1.5px solid var(--accent);
+    position: absolute; width: 16px; height: 16px; margin: -8px 0 0 -8px;
+    border: 1px solid var(--accent);
   }
   @keyframes fx-ring {
-    from { transform: scale(.5); opacity: .5; }
-    to   { transform: scale(4.6); opacity: 0; }
+    from { transform: scale(.4); opacity: .55; }
+    to   { transform: scale(3.4); opacity: 0; }
   }
   @media (prefers-reduced-motion: no-preference) {
     .fx-ring { animation: fx-ring .42s cubic-bezier(.2, .7, .3, 1) forwards; }
@@ -1454,11 +1930,11 @@
     display: grid; place-items: center;
     width: 26px; height: 26px; padding: 0;
     color: var(--ink-dim); background: transparent;
-    border: 1px solid transparent; border-radius: var(--r-xs);
+    border: 1px solid transparent; border-radius: var(--r);
     cursor: pointer;
     transition: color .13s var(--ease), border-color .13s var(--ease);
   }
-  .sound-toggle:hover { color: var(--ink); border-color: var(--hair-2); }
+  .sound-toggle:hover { color: var(--ink); border-color: var(--rule-2); }
   .sound-toggle svg {
     width: 15px; height: 15px; display: block;
     fill: none; stroke: currentColor; stroke-width: 1.6;
@@ -1475,36 +1951,70 @@
      Motion and small windows
      ================================================================== */
 
+  /* Reduced motion means fewer and gentler, not none.
+     `* { transition: none }` was the whole rule here, and it took the colour and
+     opacity transitions with it - so a player who asks for less motion got a client
+     where every state change snapped, which is harder to follow rather than calmer.
+     What has to go is travel: things sliding in from somewhere, and anything that
+     moves a surface the eye is tracking. Colour, opacity and border stay. */
   @media (prefers-reduced-motion: reduce) {
-    * { animation: none !important; transition: none !important; }
+    * { animation: none !important; }
+    *, *::before, *::after { transition-property: opacity, color, background-color,
+      background, border-color, fill, stroke, filter !important; }
     .scroll { scroll-behavior: auto; }
+    /* The entrances above are keyframes, so they are already off; these are the two
+       that would otherwise arrive with no bridge at all. */
+    .screen.active, .toast.on, .status-menu, .opponent.on.arriving { opacity: 1; }
   }
 
   @media (prefers-reduced-motion: no-preference) {
-    .screen.active { animation: rise .24s var(--ease) both; }
-    @keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; } }
+    /* Screens carry no entrance. Seven of them sit behind number keys and the rail is
+       the whole navigation, so this is the most-repeated action in the client - and a
+       keyboard-initiated action that animates feels slower than the same action that
+       does not, however short the animation is. What is left is the crossfade, which
+       costs nothing to read and stops a whole column of figures replacing another
+       between two frames. */
+    .screen.active { animation: screen-in .12s linear both; }
+    @keyframes screen-in { from { opacity: 0; } to { opacity: 1; } }
+
+    /* Rare, and the one place in the client with a delight budget. */
     .celebrate-card { animation: pop .32s cubic-bezier(.2, .9, .3, 1) both; }
     @keyframes pop {
       from { opacity: 0; transform: translateY(16px) scale(.96); }
       to { opacity: 1; transform: none; }
     }
-    .celebrate-fill { transition: width .6s var(--ease); }
-    .toast.on { animation: slide .28s var(--ease) both; }
+    .celebrate-fill { transition: transform .6s var(--ease-out); }
+
+    /* Arriving, so ease-out: the movement is over before the eye finishes finding it.
+       These carried the weak default curve, which is the one thing every dark web app
+       animates with. */
+    .toast.on { animation: slide .28s var(--ease-out) both; }
     @keyframes slide { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; } }
-    .status-menu { animation: slide .16s var(--ease) both; }
-    .upload-fill, .gate-fill, .qfill, .cover-fill { transition: width .4s var(--ease); }
+    .status-menu { animation: slide .16s var(--ease-out) both; }
+
+    /* Fills move by transform rather than width: width is a layout property and
+       animating it relays out the row on every frame, where a scaleX from the left
+       edge is composited and touches nothing around it. */
+    .upload-fill, .gate-fill, .qfill, .cover-fill, .climb-fill, .meter-fill {
+      transition: transform .4s var(--ease-out);
+    }
   }
 
-  /* At the window's minimum size the rail's labels cost more room than they earn,
-     so it keeps the icons and drops the words. The number keys still work, and the
-     tooltip still names the screen. Pitched just under the minimum window width so
-     it is a deliberately-shrunk window that gets this, not an ordinary one. */
+  /* At the window's minimum size the rail's labels cost more room than they earn, so
+     it keeps the numbers and drops the words - the numbers being the control, and the
+     tooltip still naming the screen. It used to keep a column of icons and drop both,
+     which left no way to read what any of them was for. Pitched just under the minimum
+     window width, so it is a deliberately-shrunk window that gets this, not an
+     ordinary one. */
   @media (max-width: 960px) {
-    :root { --rail-w: 62px; }
+    :root { --rail-w: 46px; }
     .rail-top { justify-content: center; padding: 0; }
-    .wordmark span, .nav-label, .tab .tab-label, .tab .tab-key { display: none; }
-    .tab { grid-template-columns: 1fr; justify-items: center; padding: 10px 0; }
-    .tab[aria-selected="true"]::before { left: -12px; }
+    .wordmark { font-size: 0; letter-spacing: 0; }
+    .wordmark::after { content: "A"; font-size: var(--t-md); letter-spacing: 0; }
+    .nav-label, .tab .tab-label { display: none; }
+    .nav { padding: 14px 6px; }
+    .tab { grid-template-columns: 1fr; justify-items: center; padding: 9px 0; }
+    .tab .tab-key { text-align: center; font-size: var(--t-sm); }
     .rail-foot { padding: 10px 8px; justify-items: center; }
     /* Scoped to the rail. The hero's rank-link holds only the badge, so hiding a
        last child there would hide the badge itself. */
@@ -1514,8 +2024,9 @@
        shrink to the glyph that fits. */
     .signin, .signed-in button { font-size: 0; padding: 9px 0; width: 100%; }
     .signin::after { content: "→"; font-size: 14px; }
-    .signed-in button::after { content: "⏻"; font-size: 13px; }
+    .signed-in button::after { content: "⏻"; font-size: var(--t); }
     .signed-in { grid-template-columns: 1fr; padding: 4px; }
+    .legal { display: none; }
     .content { padding: 22px 20px 64px; }
   }
 
@@ -1528,78 +2039,87 @@
 
   .sv-stats { display: flex; flex-wrap: wrap; gap: 12px 30px; }
   .sv-stat { display: grid; gap: 2px; }
-  .sv-stat .v { font-family: var(--mono); font-size: 19px; font-weight: 600; color: var(--ink); }
+  .sv-stat .v {
+    font-family: var(--mono); font-size: var(--t-lg); font-weight: 600; color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
   .sv-stat .k {
-    font-family: var(--mono); font-size: 9.5px; letter-spacing: .14em;
+    font-family: var(--mono); font-size: var(--t-2xs); letter-spacing: .14em;
     text-transform: uppercase; color: var(--ink-dim);
   }
 
-  .sv-tiers { display: grid; gap: 7px; }
+  .sv-tiers { display: grid; gap: var(--s1); }
   .sv-tier {
-    position: relative; display: grid; grid-template-columns: 62px 1fr auto auto;
-    align-items: center; gap: 16px; padding: 11px 15px;
-    border: 1px solid var(--hair); border-radius: var(--r-sm);
-    background: rgba(255, 255, 255, .02); overflow: hidden;
-    transition: transform .14s var(--ease), border-color .14s var(--ease);
+    position: relative; display: grid; grid-template-columns: 1fr auto auto;
+    align-items: center; gap: var(--s4); padding: var(--s2) var(--s3);
+    border: 1px solid var(--rule);
+    background: var(--well); overflow: hidden;
+    transition: border-color var(--fast) var(--ease);
   }
-  .sv-tier::before {
-    content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .10;
-    background: linear-gradient(100deg, var(--g1), var(--g2));
-  }
-  .sv-tier:hover { transform: translateX(3px); border-color: var(--hair-3); }
-  .sv-tier.here { border-color: color-mix(in srgb, var(--tier) 55%, transparent); }
-  .sv-tier.here::before { opacity: .26; }
+  .sv-tier:hover { border-color: var(--rule-3); }
+  .sv-tier.here { border-color: var(--tier); background: var(--panel); }
   .sv-tier > * { position: relative; }
-  .sv-tier .swatch {
-    width: 62px; height: 32px; border-radius: var(--r-xs);
-    background: linear-gradient(135deg, var(--g1), var(--g2));
-    box-shadow: 0 0 18px -5px var(--glow), inset 0 0 0 1px rgba(255, 255, 255, .14);
-  }
-  .sv-tier .nm { font-size: 14.5px; font-weight: 650; color: var(--tier); }
-  .sv-tier .pc { font-family: var(--mono); font-size: 11px; color: var(--ink-dim); }
+  /* There is no swatch.
+     Eight rows each carrying a 44x22 block of a saturated ramp colour is a paint chart:
+     the ladder is the subject of this screen and the plates were shouting over the names
+     on it, all eight at once and none of them ranked against the others. Shrinking one
+     to a rule down the leading edge only traded a paint chart for a coloured stripe,
+     which is its own tell and says nothing the name does not. The name carries the
+     colour, which is how the Ranks screen draws this same ladder, and the row it sits on
+     is ruled like every other row in the client. No rank colour is altered. */
+  .sv-tier .nm { font-size: var(--t); font-weight: 600; color: var(--tier-ink, var(--tier)); }
+  .sv-tier .pc { font-family: var(--mono); font-size: var(--t-xs); color: var(--ink-dim); }
   .sv-tier .you {
-    font-family: var(--mono); font-size: 9.5px; letter-spacing: .1em;
-    text-transform: uppercase; color: var(--tier);
+    font-family: var(--mono); font-size: var(--t-2xs); letter-spacing: .1em;
+    text-transform: uppercase; color: var(--tier-ink, var(--tier));
   }
 
-  .sv-cat { display: grid; gap: 13px; }
-  .sv-cat + .sv-cat { margin-top: 22px; padding-top: 22px; border-top: 1px solid var(--hair); }
-  .sv-cat-head { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; }
-  .sv-cat-name { font-size: 15px; font-weight: 660; }
-  .sv-cat-now { font-family: var(--mono); font-size: 11.5px; }
+  .sv-cat { display: grid; gap: var(--s3); }
+  .sv-cat + .sv-cat {
+    margin-top: var(--s5); padding-top: var(--s5); border-top: 1px solid var(--rule-2);
+  }
+  .sv-cat-head {
+    display: flex; align-items: baseline; justify-content: space-between; gap: var(--s3);
+  }
+  .sv-cat-name {
+    font-family: var(--mono); font-size: var(--t-sm); font-weight: 600;
+    letter-spacing: .14em; text-transform: uppercase;
+  }
+  .sv-cat-now { font-family: var(--mono); font-size: var(--t-sm); }
 
   /* Sixteen ranks as one continuous bar, lit up to where the player stands, so the
      climb is legible before any of the names are read. */
   .sv-rail {
-    display: flex; height: 7px; border-radius: 99px; overflow: hidden;
-    border: 1px solid var(--hair); background: var(--sunken);
+    display: flex; height: 7px; overflow: hidden;
+    border: 1px solid var(--rule); background: var(--well);
   }
   .sv-rail span { flex: 1 1 0; }
 
   .sv-wins { display: grid; gap: 14px; }
   .sv-win { display: grid; gap: 7px; }
   .sv-win-name {
-    font-family: var(--mono); font-size: 9.5px; letter-spacing: .14em;
+    font-family: var(--mono); font-size: var(--t-2xs); letter-spacing: .14em;
     text-transform: uppercase; color: var(--ink-dim);
   }
   .sv-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(136px, 1fr)); gap: 7px; }
+  /* The rank's colour is on its name, which is the thing being named. It was also a
+     three-pixel bar down the leading edge - the callout-stripe device, and a hundred
+     and ninety-two of them on one screen. */
   .sv-rank {
-    display: grid; gap: 4px; padding: 9px 11px;
-    border: 1px solid var(--hair); border-left: 3px solid var(--rank);
-    border-radius: var(--r-xs); background: rgba(255, 255, 255, .02);
-    transition: transform .13s var(--ease), background .13s var(--ease);
+    display: grid; gap: var(--s1); padding: var(--s2) var(--s3);
+    border: 1px solid var(--rule); background: var(--well);
+    transition: background var(--fast) var(--ease), border-color var(--fast) var(--ease);
   }
-  .sv-rank:hover { transform: translateY(-2px); background: rgba(255, 255, 255, .05); }
-  .sv-rank.done { background: color-mix(in srgb, var(--rank) 10%, transparent); }
+  .sv-rank:hover { border-color: var(--rule-3); }
+  .sv-rank.done { background: color-mix(in srgb, var(--rank) 12%, transparent); }
   .sv-rank.here {
     border-color: var(--rank);
-    background: color-mix(in srgb, var(--rank) 20%, transparent);
-    box-shadow: 0 0 0 1px var(--rank), 0 8px 22px -10px var(--rank);
+    background: color-mix(in srgb, var(--rank) 24%, transparent);
   }
   .sv-rank .rn { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
-  .sv-rank .nm { font-size: 12.5px; font-weight: 620; color: var(--rank); }
-  .sv-rank .ix { font-family: var(--mono); font-size: 9.5px; color: var(--ink-dim); }
-  .sv-rank .en { font-family: var(--mono); font-size: 10px; color: var(--ink-dim); }
+  .sv-rank .nm { font-size: var(--t-sm); font-weight: 600; color: var(--rank-ink, var(--rank)); }
+  .sv-rank .ix { font-family: var(--mono); font-size: var(--t-2xs); color: var(--ink-dim); }
+  .sv-rank .en { font-family: var(--mono); font-size: var(--t-2xs); color: var(--ink-dim); }
 
   /* ---- the pool as something to run, not a list to read ----
      Namespaced `pool-` rather than `sv-`. The season screen above already owns .sv-cat
@@ -1612,37 +2132,36 @@
      to find out which is on. */
   .pool-bands {
     display: grid; grid-auto-flow: column; grid-auto-columns: 1fr;
-    padding: 4px; margin-bottom: 22px; gap: 3px;
-    border: 1px solid var(--hair); border-radius: var(--r); background: var(--sunken);
+    padding: 3px; margin-bottom: var(--s5); gap: 3px;
+    border: 1px solid var(--rule-2); background: var(--well);
   }
   /* Wide enough to be the thing you press. Picking a band is the one real choice on this
      screen - it decides which twenty-seven scenarios you are looking at - and as a set of
      small pills it read like a filter chip rather than a difficulty select. */
   .pool-band {
-    display: flex; flex-direction: column-reverse; align-items: center; gap: 5px;
-    font: inherit; font-size: 13px; font-weight: 600; color: var(--ink-dim);
-    background: transparent; border: 0; border-radius: var(--r-sm);
-    padding: 11px 14px; cursor: pointer;
-    transition: color .15s var(--ease), background .15s var(--ease);
+    display: flex; flex-direction: column-reverse; align-items: center; gap: var(--s1);
+    font-family: var(--mono); font-size: var(--t-xs); font-weight: 600;
+    letter-spacing: .1em; text-transform: uppercase; color: var(--ink-dim);
+    background: transparent; border: 0;
+    padding: var(--s3); cursor: pointer;
+    transition: color var(--fast) var(--ease), background var(--fast) var(--ease);
   }
   .pool-band:hover { color: var(--ink-mid); }
   .pool-band.on {
-    color: var(--ink); background: var(--surface-3);
-    box-shadow: 0 1px 0 rgba(255, 255, 255, .06) inset, var(--shadow-2);
+    color: var(--ink); background: var(--panel);
   }
   /* The count sat on the text baseline while the dot sat on the centre line, which put
-     three things on one 12px row at three different heights. All centred now, and the
-     count is a pill so it reads as an annotation rather than a second word. */
+     three things on one row at three different heights. All centred now, and the count
+     is boxed so it reads as an annotation rather than as a second word. */
   .pool-band .n {
-    font-family: var(--mono); font-size: 9.5px; line-height: 1; padding: 3px 5px;
-    border-radius: var(--r-pill); background: rgba(255, 255, 255, .05); opacity: .75;
+    font-family: var(--mono); font-size: var(--t-2xs); line-height: 1; padding: 3px 5px;
+    background: var(--control); opacity: .75;
   }
-  .pool-band.on .n { background: rgba(255, 255, 255, .09); opacity: 1; }
+  .pool-band.on .n { background: var(--control-hi); opacity: 1; }
   /* A dot for a band holding ranks the player is next in line for. The count itself
      would be a second number competing with the scenario count for the same glance. */
   .pool-band .due {
-    width: 5px; height: 5px; border-radius: 50%; background: var(--accent);
-    box-shadow: 0 0 7px -1px var(--accent);
+    width: 5px; height: 5px; background: var(--accent);
   }
 
   .pool-grid { display: grid; gap: 30px; }
@@ -1650,13 +2169,14 @@
   .pool-cat { display: grid; gap: 16px; }
   .pool-cat-head { display: flex; align-items: center; gap: 14px; }
   .pool-cat-head h3 {
-    margin: 0; font-size: 14.5px; font-weight: 660; letter-spacing: -.01em;
-    white-space: nowrap;
+    margin: 0; font-family: var(--mono); font-size: var(--t-sm); font-weight: 600;
+    letter-spacing: .14em; text-transform: uppercase; white-space: nowrap;
   }
-  .pool-cat-head .rule { flex: 1; height: 1px; background: var(--hair); }
+  .pool-cat-head .rule { flex: 1; height: 1px; background: var(--rule); }
   .pool-cat-head .rk {
-    font-family: var(--mono); font-size: 10px; letter-spacing: .08em;
-    text-transform: uppercase; color: var(--rank, var(--ink-dim)); white-space: nowrap;
+    font-family: var(--mono); font-size: var(--t-2xs); letter-spacing: .08em;
+    text-transform: uppercase; color: var(--rank-ink, var(--rank, var(--ink-dim)));
+    white-space: nowrap;
   }
 
   /* Sub-skill: a label and the space above it, and no rail.
@@ -1676,17 +2196,17 @@
     display: flex; align-items: baseline; gap: 10px; margin-bottom: 2px;
   }
   .pool-sub-name {
-    font-family: var(--mono); font-size: 9.5px; letter-spacing: .15em;
+    font-family: var(--mono); font-size: var(--t-2xs); letter-spacing: .15em;
     text-transform: uppercase; color: var(--ink-mid);
   }
-  .pool-sub-note { font-family: var(--mono); font-size: 9.5px; color: var(--ink-dim); }
+  .pool-sub-note { font-family: var(--mono); font-size: var(--t-2xs); color: var(--ink-dim); }
   /* The mechanic, where an author published one. Outlined rather than filled: it is a
      second, sparser fact about the scenario and must not outrank its name. */
   .pool-mech {
     flex: none;
     font-family: var(--mono); font-size: 8px; letter-spacing: .1em;
     text-transform: uppercase; color: var(--ink-dim); vertical-align: 1px;
-    border: 1px solid var(--hair-2); border-radius: var(--r-pill); padding: 1px 5px;
+    border: 1px solid var(--rule-2); border-radius: var(--r); padding: 1px 5px;
   }
   .pool-sub .pool-tiles {
     display: grid; gap: 8px;
@@ -1702,9 +2222,9 @@
     position: relative; isolation: isolate; overflow: hidden;
     display: grid; gap: 9px; align-content: start;
     padding: 12px 13px 11px;
-    border: 1px solid var(--hair); border-radius: var(--r-sm);
-    background: var(--sunken);
-    transition: border-color .13s var(--ease), transform .13s var(--ease);
+    border: 1px solid var(--rule); border-radius: var(--r);
+    background: var(--well);
+    transition: border-color var(--fast) var(--ease);
   }
   /* Progress rides the bottom edge, not the tile's ground.
      Filling the card bottom-up put the boundary line at whatever height the percentage
@@ -1716,23 +2236,19 @@
     background:
       linear-gradient(90deg,
         var(--rank, var(--ink-mid)) var(--fill),
-        rgba(255, 255, 255, .06) var(--fill));
+        var(--rule) var(--fill));
   }
   .pool-row.done::before { background: color-mix(in srgb, var(--up) 70%, transparent); }
-  .pool-row.untouched::before { background: rgba(255, 255, 255, .05); }
+  .pool-row.untouched::before { background: var(--rule); }
   .pool-row.untouched .nm { color: var(--ink-dim); }
   .pool-row:hover {
-    border-color: var(--hair-2); transform: translateY(-1px);
-    background: color-mix(in srgb, var(--ink) 4%, var(--sunken));
+    border-color: var(--rule-3);
+    background: color-mix(in srgb, var(--ink) 4%, var(--well));
   }
-  .pool-row.done { background: color-mix(in srgb, var(--up) 6%, var(--sunken)); }
+  .pool-row.done { background: color-mix(in srgb, var(--up) 6%, var(--well)); }
   /* The scenario the next rank is scored on: the one tile here that is an instruction
      rather than a record, so it gets the accent and nothing else does. */
-  .pool-row.next {
-    border-color: color-mix(in srgb, var(--accent) 45%, transparent);
-    box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 18%, transparent),
-                0 10px 26px -18px var(--accent);
-  }
+  .pool-row.next { border-color: var(--accent); }
   .pool-row.next .nm { color: var(--ink); font-weight: 600; }
 
   /* The name truncates; the tag beside it does not. Both were in one ellipsised block,
@@ -1740,7 +2256,7 @@
      showing it, because a truncated label still looks like information. */
   .pool-row .nm {
     display: flex; align-items: center; gap: 6px; min-width: 0;
-    font-size: 12.5px; font-weight: 560; color: var(--ink); line-height: 1.3;
+    font-size: var(--t-sm); font-weight: 560; color: var(--ink); line-height: 1.3;
   }
   .pool-row .nm > .nm-text {
     overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0;
@@ -1748,70 +2264,70 @@
 
   .pool-num {
     display: flex; align-items: baseline; gap: 6px;
-    font-family: var(--mono); font-size: 12px; white-space: nowrap;
+    font-family: var(--mono); font-size: var(--t-sm); white-space: nowrap;
   }
   .pool-num .pb { color: var(--ink); }
-  .pool-num .pb.none { color: var(--ink-dim); font-size: 10.5px; }
+  .pool-num .pb.none { color: var(--ink-dim); font-size: var(--t-xs); }
   .pool-num .to { color: var(--ink-dim); }
   .pool-num .tgt { color: var(--ink-mid); }
   .pool-num .tgt.max {
-    color: var(--up); font-size: 9.5px; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--up); font-size: var(--t-2xs); letter-spacing: .1em; text-transform: uppercase;
   }
 
   /* Quiet until the tile is under the cursor - twenty-seven live buttons at full contrast
      is a wall, and the tile is the thing being scanned. The row is held open either way so
      hovering does not reflow the grid. */
   .pool-row .scen-play {
-    font: inherit; font-size: 11px; font-weight: 560; color: var(--ink-mid);
-    background: transparent; border: 1px solid var(--hair);
-    border-radius: var(--r-xs); padding: 5px 0; width: 100%; cursor: pointer;
+    font: inherit; font-size: var(--t-xs); font-weight: 560; color: var(--ink-mid);
+    background: transparent; border: 1px solid var(--rule);
+    border-radius: var(--r); padding: 5px 0; width: 100%; cursor: pointer;
     opacity: 0; transition: opacity .13s var(--ease), color .13s var(--ease),
       border-color .13s var(--ease), background .13s var(--ease);
   }
   .pool-row:hover .scen-play, .pool-row.next .scen-play,
   .pool-row .scen-play:focus-visible { opacity: 1; }
   .pool-row .scen-play:hover:not(:disabled) {
-    color: var(--ink); border-color: var(--hair-3); background: rgba(255, 255, 255, .06);
+    color: var(--ink); border-color: var(--rule-3); background: var(--control-hi);
   }
   .pool-row .scen-play:disabled { opacity: .4; cursor: default; }
 
   /* ---- the apex section, folded into this screen ---- */
   .sv-section { margin: 34px 0 14px; }
   .sv-section-title {
-    margin: 0 0 6px; font-size: 17px; font-weight: 660; letter-spacing: -.01em;
+    margin: 0 0 6px; font-size: var(--t-md); font-weight: 660; letter-spacing: -.01em;
   }
   .sv-section-lede {
-    margin: 0; max-width: 66ch; font-size: 12.5px; line-height: 1.6; color: var(--ink-mid);
+    margin: 0; max-width: 66ch; font-size: var(--t-sm); line-height: 1.6; color: var(--ink-mid);
   }
 
   /* ---- playlists for the band on screen ---- */
   .pool-lists {
-    margin-top: 8px; padding-top: 20px; border-top: 1px solid var(--hair);
+    margin-top: 8px; padding-top: 20px; border-top: 1px solid var(--rule);
     display: grid; gap: 12px;
   }
   .pool-lists-head { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
   .pool-lists-head h4 {
-    margin: 0; font-family: var(--mono); font-size: 9.5px; letter-spacing: .15em;
+    margin: 0; font-family: var(--mono); font-size: var(--t-2xs); letter-spacing: .15em;
     text-transform: uppercase; color: var(--ink-mid); font-weight: 500;
   }
-  .pool-lists-head .note { font-size: 11.5px; color: var(--ink-dim); }
+  .pool-lists-head .note { font-size: var(--t-sm); color: var(--ink-dim); }
   .pool-chips { display: flex; gap: 8px; flex-wrap: wrap; }
   .pool-chip {
     display: flex; align-items: center; gap: 8px;
-    font: inherit; font-size: 11.5px; color: var(--ink-mid);
-    background: rgba(255, 255, 255, .022); border: 1px solid var(--hair);
-    border-radius: var(--r-pill); padding: 6px 13px; cursor: pointer;
+    font: inherit; font-size: var(--t-sm); color: var(--ink-mid);
+    background: var(--well); border: 1px solid var(--rule);
+    border-radius: var(--r); padding: 6px 13px; cursor: pointer;
     transition: color .13s var(--ease), border-color .13s var(--ease), background .13s var(--ease);
   }
   .pool-chip:hover:not(:disabled) {
-    color: var(--ink); border-color: var(--hair-3); background: rgba(255, 255, 255, .06);
+    color: var(--ink); border-color: var(--rule-3); background: var(--control-hi);
   }
   .pool-chip:disabled { opacity: .5; cursor: default; }
   .pool-chip .n {
-    font-family: var(--mono); font-size: 9.5px; line-height: 1; padding: 3px 5px;
-    border-radius: var(--r-pill); background: rgba(255, 255, 255, .05); color: var(--ink-dim);
+    font-family: var(--mono); font-size: var(--t-2xs); line-height: 1; padding: 3px 5px;
+    border-radius: var(--r); background: var(--control); color: var(--ink-dim);
   }
-  .pool-chip.all { border-color: var(--hair-2); color: var(--ink); }
+  .pool-chip.all { border-color: var(--rule-2); color: var(--ink); }
 
 </style>
 </head>
@@ -1821,93 +2337,64 @@
   <!-- ============================================================ rail -->
   <aside class="rail">
     <div class="rail-top">
-      <div class="wordmark">
-        <span class="mark"><svg viewBox="0 0 60 68" aria-hidden="true">
-          <path d="M30 1.5 56.5 15v27.5L30 66.5 3.5 42.5V15z" fill="currentColor" opacity=".9"/>
-          <path d="M30 14 44 21.5v18L30 51 16 39.5v-18z" fill="#05060a"/>
-        </svg></span>
-        <span>Apogee</span>
-      </div>
+      <div class="wordmark"><span>Apogee</span></div>
     </div>
 
     <nav class="nav" role="tablist" aria-label="Screens">
-      <div class="nav-label">Play</div>
+      <div class="nav-label" data-copy="nav.group.play">Play</div>
 
       <button class="tab" role="tab" aria-selected="true" data-screen="queue">
-        <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true">
-          <circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2.6"/>
-          <path d="M12 1.6v3.2M12 19.2v3.2M1.6 12h3.2M19.2 12h3.2"/>
-        </svg></span>
-        <span class="tab-label">Find a match</span>
         <span class="tab-key"></span>
+        <span class="tab-label" data-copy="nav.tab.queue">Find a match</span>
       </button>
 
       <button class="tab" role="tab" aria-selected="false" data-screen="result">
-        <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M7 3.6h10v4.6a5 5 0 0 1-10 0z"/>
-          <path d="M7 5.6H4v1.2a4 4 0 0 0 3.6 4M17 5.6h3v1.2a4 4 0 0 1-3.6 4"/>
-          <path d="M12 13.2v3.1M8.4 20.4h7.2l-.9-4.1H9.3z"/>
-        </svg></span>
-        <span class="tab-label">Last match</span>
         <span class="tab-key"></span>
+        <span class="tab-label" data-copy="nav.tab.result">Last match</span>
       </button>
 
-      <div class="nav-label">Where you stand</div>
+      <div class="nav-label" data-copy="nav.group.standing">Where you stand</div>
 
       <button class="tab" role="tab" aria-selected="false" data-screen="ranks">
-        <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M5 20.4V14M12 20.4V8.4M19 20.4V3.6"/>
-        </svg></span>
-        <span class="tab-label">Ranks</span>
         <span class="tab-key"></span>
+        <span class="tab-label" data-copy="nav.tab.ranks">Ranks</span>
       </button>
 
       <button class="tab" role="tab" aria-selected="false" data-screen="profile">
-        <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M3.6 3.6v16.8h16.8"/>
-          <path d="M7.2 15.6l3.4-4.6 3.1 3 4.5-6.6"/>
-        </svg></span>
-        <span class="tab-label">Your aim</span>
         <span class="tab-key"></span>
+        <span class="tab-label" data-copy="nav.tab.profile">Your aim</span>
       </button>
 
       <button class="tab" role="tab" aria-selected="false" data-screen="consistency">
-        <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M2.4 12h3l2.2-6.6 3.4 13.2 2.8-8.4 1.9 3.6h5.9"/>
-        </svg></span>
-        <span class="tab-label">Consistency</span>
         <span class="tab-key"></span>
+        <span class="tab-label" data-copy="nav.tab.consistency">Consistency</span>
       </button>
 
 
-      <div class="nav-label">Practice</div>
+      <div class="nav-label" data-copy="nav.group.practice">Practice</div>
 
       <button class="tab" role="tab" aria-selected="false" data-screen="quests">
-        <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M10 6h10M10 12h10M10 18h10"/>
-          <path d="M3.6 6l1.3 1.3L7.4 4.8M3.6 12l1.3 1.3L7.4 10.8M3.6 18l1.3 1.3L7.4 16.8"/>
-        </svg></span>
-        <span class="tab-label">Quests</span>
         <span class="tab-key"></span>
+        <span class="tab-label" data-copy="nav.tab.quests">Quests</span>
       </button>
 
       <button class="tab" role="tab" aria-selected="false" data-screen="seasonview">
-        <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M12 3.2l2.6 5.5 6 .9-4.3 4.3 1 6.1-5.3-2.9-5.3 2.9 1-6.1L3.4 9.6l6-.9z"/>
-        </svg></span>
-        <span class="tab-label">Season</span>
         <span class="tab-key"></span>
+        <span class="tab-label" data-copy="nav.tab.seasonview">Season</span>
       </button>
 
-      <button class="tab" role="tab" aria-selected="false" data-screen="season" id="tabSeason" hidden>
-        <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M3.6 7.2h9.6M17.4 7.2h3M3.6 16.8h3.6M11.4 16.8h9"/>
-          <circle cx="15.2" cy="7.2" r="2.2"/><circle cx="9.2" cy="16.8" r="2.2"/>
-        </svg></span>
-        <span class="tab-label">Season editor</span>
+      <button class="tab" role="tab" aria-selected="false" data-screen="admin" id="tabAdmin" hidden>
         <span class="tab-key"></span>
+        <span class="tab-label" data-copy="nav.tab.admin">Admin</span>
       </button>
-    </nav>
+
+      <!-- Admin-only, revealed after boot by `refreshSeasonTab`, and a different thing
+           from the Season tab above it: that one is the player's read-only view, this one
+           writes the season file. Both are wanted. -->
+      <button class="tab" role="tab" aria-selected="false" data-screen="season" id="tabSeason" hidden>
+        <span class="tab-key"></span>
+        <span class="tab-label" data-copy="nav.tab.season">Season editor</span>
+      </button>
 
     <div class="rail-foot">
       <div class="whoami" id="whoami" hidden>
@@ -1936,6 +2423,15 @@
           <button type="button" id="btnSignOut" title="Sign out">Sign out</button>
         </div>
       </div>
+
+      <!-- The three documents that say what this does with your files, what it checks,
+           and what it asks of you. They existed before this and were reachable only by
+           finding the repository, which is the same as not having them. -->
+      <nav class="legal" aria-label="Policies">
+        <a href="https://github.com/swarlesgnb/Apogee-1v1s/blob/main/PRIVACY.md" target="_blank" rel="noreferrer" data-copy="legal.privacy">Privacy</a>
+        <a href="https://github.com/swarlesgnb/Apogee-1v1s/blob/main/FAIR-PLAY.md" target="_blank" rel="noreferrer" data-copy="legal.fairplay">Fair play</a>
+        <a href="https://github.com/swarlesgnb/Apogee-1v1s/blob/main/TERMS.md" target="_blank" rel="noreferrer" data-copy="legal.terms">Terms</a>
+      </nav>
     </div>
   </aside>
 
@@ -1967,7 +2463,7 @@
 
       <div class="topbar-right">
         <button type="button" class="sound-toggle" id="soundToggle"
-                aria-pressed="true" title="Sound on — mute (M)">
+                aria-pressed="true" title="Sound on. Press M to mute">
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5H4z"/>
             <path class="wave" d="M15.4 9.3a4 4 0 0 1 0 5.4"/>
@@ -2008,8 +2504,8 @@
           <!-- ------------------------------------------------ play -->
           <section class="screen active" id="screen-queue">
             <div class="screen-head">
-              <h1>Find a match</h1>
-              <p>
+              <h1 data-copy="queue.title">Find a match</h1>
+              <p data-copy="queue.lede">
                 Pick a category, play three scenarios in KovaaK's, and the ladder
                 settles itself. Rounds are scored on how far above your own past
                 scores you played.
@@ -2025,6 +2521,14 @@
                 <div class="hero-id">
                   <div class="hero-kicker">Your rank</div>
                   <div class="name" id="heroName"></div>
+                  <div class="climb" id="heroClimb" hidden>
+                    <div class="climb-head">
+                      <span class="climb-k">Climbing to</span>
+                      <span class="climb-to" id="heroClimbTo"></span>
+                      <span class="climb-pct" id="heroClimbPct"></span>
+                    </div>
+                    <span class="climb-track"><span class="climb-fill" id="heroClimbFill"></span></span>
+                  </div>
                   <p class="placement" id="heroPlacement"></p>
                 </div>
                 <div class="hero-stats">
@@ -2049,40 +2553,51 @@
 
             <div class="panel">
               <div class="phead">
-                <h2>Queue</h2>
-                <span class="note" id="queueNote">three scenarios, scored against your own baseline</span>
+                <h2 data-copy="queue.p1.head">Queue</h2>
+                <span class="note" data-copy="queue.p1.note" id="queueNote">three scenarios, best two of three</span>
               </div>
-              <div class="pbody">
+              <div class="pbody queue-body">
 
-                <div class="step">
-                  <div class="step-n">1</div>
+                <div class="queue-pick">
                   <div>
-                    <div class="step-title">Choose a category <span>— weakest is marked</span></div>
+                    <div class="field-k">Category <span class="field-hint">weakest is marked</span></div>
                     <div class="cats" id="cats"></div>
-                    <div class="pool-note" id="poolNote"></div>
                   </div>
+                  <div class="pool-note" id="poolNote"></div>
                 </div>
 
-                <div class="step">
-                  <div class="step-n">2</div>
-                  <div>
-                    <div class="step-title">Find someone to play <span>— matched on rating</span></div>
-                    <button class="queue-btn" id="queueBtn">Find opponent</button>
-                    <div class="queue-gate" id="queueGate">
-                      <span id="queueGateText"></span>
-                      <div class="gate-track"><div class="gate-fill" id="queueGateFill"></div></div>
-                    </div>
-                    <div class="searching" id="searching">searching the pool…</div>
-                  </div>
+                <button type="button" class="commit" id="queueBtn">
+                  <span>
+                    <span class="commit-verb" id="queueVerb" data-copy="queue.commit.verb">Find opponent</span>
+                    <span class="commit-sub" id="queueSub"></span>
+                  </span>
+                  <span class="commit-meta" id="queueMeta"></span>
+                  <span class="commit-sweep" aria-hidden="true"></span>
+                </button>
+
+                <div class="queue-gate" id="queueGate">
+                  <span id="queueGateText"></span>
+                  <div class="gate-track"><div class="gate-fill" id="queueGateFill"></div></div>
                 </div>
 
               </div>
             </div>
 
+            <div class="panel" id="drawPanel" hidden>
+              <div class="phead">
+                <h2 data-copy="queue.p2.head">Drawn from</h2>
+                <span class="note" data-copy="queue.p2.note" id="drawCount"></span>
+              </div>
+              <div class="pbody">
+                <div class="draw-rows" id="drawRows"></div>
+                <p class="draw-legend" id="drawLegend"></p>
+              </div>
+            </div>
+
             <div class="panel opponent" id="opponent">
               <div class="phead">
-                <h2>Your match</h2>
-                <span class="note">only your first run on each scenario counts</span>
+                <h2 data-copy="queue.p3.head">Your match</h2>
+                <span class="note" data-copy="queue.p3.note">only your first run on each scenario counts</span>
               </div>
               <div class="pbody">
                 <div class="opp-row">
@@ -2102,7 +2617,7 @@
                 </div>
 
                 <div class="todo">
-                  <h3>Play these in KovaaK's</h3>
+                  <h3 data-copy="queue.todo.head">Play these in KovaaK's</h3>
                   <ol id="todoList"></ol>
                   <div class="match-actions" id="matchActions" hidden>
                     <span class="match-hint" id="matchHint">
@@ -2121,8 +2636,8 @@
 
             <div class="panel" id="uploadRow" hidden>
               <div class="phead">
-                <h2>Your history</h2>
-                <span class="note">safe to run more than once</span>
+                <h2 data-copy="queue.p4.head">Your history</h2>
+                <span class="note" data-copy="queue.p4.note">safe to run more than once</span>
               </div>
               <div class="pbody">
                 <div class="upload-row">
@@ -2145,8 +2660,8 @@
           <!-- ---------------------------------------------- result -->
           <section class="screen" id="screen-result">
             <div class="screen-head">
-              <h1>Last match</h1>
-              <p>
+              <h1 data-copy="result.title">Last match</h1>
+              <p data-copy="result.lede">
                 Each round is won by the bigger improvement over your own baseline, not by
                 the bigger score. Two out of three takes the match.
               </p>
@@ -2157,6 +2672,10 @@
                 <div>
                   <div class="big" id="verdictBig"></div>
                   <div class="scores" id="verdictScores"></div>
+                </div>
+                <div class="scoreline" id="scoreline" hidden>
+                  <div class="score-marks" id="scoreMarks"></div>
+                  <div class="score-tally" id="scoreTally"></div>
                 </div>
                 <div class="delta-move" id="ratingMove"></div>
               </div>
@@ -2176,8 +2695,8 @@
           <!-- ----------------------------------------------- ranks -->
           <section class="screen" id="screen-ranks">
             <div class="screen-head">
-              <h1>Ranks</h1>
-              <p>
+              <h1 data-copy="ranks.title">Ranks</h1>
+              <p data-copy="ranks.lede">
                 Four bands per category, each a benchmark in its own right, and
                 an overall tier derived from them. Every threshold traces to a
                 benchmark that published it.
@@ -2186,8 +2705,8 @@
 
             <div class="panel">
               <div class="phead">
-                <h2>Apogee ladder</h2>
-                <span class="note" id="ladderNote"></span>
+                <h2 data-copy="ranks.p1.head">Apogee ladder</h2>
+                <span class="note" data-copy="ranks.p1.note" id="ladderNote"></span>
               </div>
               <div class="pbody">
                 <p class="rank-lede" id="ladderLede"></p>
@@ -2197,8 +2716,8 @@
 
             <div class="panel">
               <div class="phead">
-                <h2>Benchmark standing</h2>
-                <span class="note" id="benchNote"></span>
+                <h2 data-copy="ranks.p2.head">Benchmark standing</h2>
+                <span class="note" data-copy="ranks.p2.note" id="benchNote"></span>
               </div>
               <div class="pbody">
                 <p class="rank-lede" id="benchLede"></p>
@@ -2208,8 +2727,8 @@
 
             <div class="panel">
               <div class="phead">
-                <h2>What it takes</h2>
-                <span class="note">closest first</span>
+                <h2 data-copy="ranks.p3.head">What it takes</h2>
+                <span class="note" data-copy="ranks.p3.note">closest first</span>
               </div>
               <div class="scen-wrap">
                 <table class="scen">
@@ -2226,22 +2745,22 @@
           <!-- --------------------------------------------- profile -->
           <section class="screen" id="screen-profile">
             <div class="screen-head">
-              <h1>Your aim</h1>
-              <p>
+              <h1 data-copy="profile.title">Your aim</h1>
+              <p data-copy="profile.lede">
                 Where your energy is, where it is missing, and which difficulties
                 have enough history to grade.
               </p>
             </div>
 
             <div class="panel">
-              <div class="phead"><h2>Weakness map</h2><span class="note" id="weakNote"></span></div>
+              <div class="phead"><h2 data-copy="profile.p1.head">Weakness map</h2><span class="note" id="weakNote"></span></div>
               <div class="pbody"><div class="wmap" id="wmap"></div></div>
             </div>
 
             <div class="panel">
               <div class="phead">
-                <h2>What you are measured on</h2>
-                <span class="note">a baseline needs 5 runs</span>
+                <h2 data-copy="profile.p2.head">What you are measured on</h2>
+                <span class="note" data-copy="profile.p2.note">a baseline needs 5 runs</span>
               </div>
               <div class="pbody">
                 <p class="rank-lede">
@@ -2254,7 +2773,7 @@
             </div>
 
             <div class="panel">
-              <div class="phead"><h2>Scenarios</h2><span class="note">weakest first</span></div>
+              <div class="phead"><h2 data-copy="profile.p3.head">Scenarios</h2><span class="note">weakest first</span></div>
               <div class="scen-wrap">
                 <table class="scen">
                   <thead><tr>
@@ -2270,8 +2789,8 @@
           <!-- ----------------------------------------- consistency -->
           <section class="screen" id="screen-consistency">
             <div class="screen-head">
-              <h1>Consistency</h1>
-              <p>
+              <h1 data-copy="consistency.title">Consistency</h1>
+              <p data-copy="consistency.lede">
                 A benchmark scores your best run. A match has no retry, so this
                 screen ranks your worst recent run instead.
               </p>
@@ -2279,8 +2798,8 @@
 
             <div class="panel">
               <div class="phead">
-                <h2>Ceiling vs floor</h2>
-                <span class="note">worst of your last 5 runs, ranked the same way</span>
+                <h2 data-copy="consistency.p1.head">Ceiling vs floor</h2>
+                <span class="note" data-copy="consistency.p1.note">worst of your last 5 runs, ranked the same way</span>
               </div>
               <div class="pbody">
                 <div class="cf-pair">
@@ -2311,8 +2830,8 @@
 
             <div class="panel">
               <div class="phead">
-                <h2>Least reliable first</h2>
-                <span class="note">widest gaps first</span>
+                <h2 data-copy="consistency.p2.head">Least reliable first</h2>
+                <span class="note" data-copy="consistency.p2.note">widest gaps first</span>
               </div>
               <div class="scen-wrap">
                 <table class="scen">
@@ -2328,8 +2847,8 @@
           <!-- ---------------------------------------------- quests -->
           <section class="screen" id="screen-quests">
             <div class="screen-head">
-              <h1>Quests</h1>
-              <p>
+              <h1 data-copy="quests.title">Quests</h1>
+              <p data-copy="quests.lede">
                 Today's practice, generated from the benchmark you track and your
                 recent runs.
               </p>
@@ -2337,8 +2856,8 @@
 
             <div class="panel">
               <div class="phead">
-                <h2>Today</h2>
-                <span class="note">generated from the benchmark you track</span>
+                <h2 data-copy="quests.p1.head">Today</h2>
+                <span class="note" data-copy="quests.p1.note">generated from the benchmark you track</span>
               </div>
               <div class="pbody"><div class="quests" id="questList"></div></div>
             </div>
@@ -2350,8 +2869,8 @@
           <!-- ------------------------------------------ season (player) -->
           <section class="screen" id="screen-seasonview">
             <div class="screen-head">
-              <h1>Season</h1>
-              <p>
+              <h1 data-copy="seasonview.title">Season</h1>
+              <p data-copy="seasonview.lede">
                 What a rank means right now, and everything in the pool you can
                 climb it on. Ranks move while the season is a draft.
               </p>
@@ -2360,19 +2879,19 @@
             <div class="panel">
               <div class="phead">
                 <h2 id="svName">Season</h2>
-                <span class="note" id="svNote"></span>
+                <span class="note" data-copy="seasonview.p1.note" id="svNote"></span>
               </div>
               <div class="pbody"><div class="sv-stats" id="svStats"></div></div>
             </div>
 
             <div class="panel">
               <div class="phead">
-                <h2>Overall tier</h2>
-                <span class="note">by population percentile</span>
+                <h2 data-copy="seasonview.p2.head">Overall tier</h2>
+                <span class="note" data-copy="seasonview.p2.note">by population percentile</span>
               </div>
               <div class="pbody">
                 <p class="rank-lede">
-                  Your standing across all three categories. Tiers are shares of the
+                  Your standing across all six categories. Tiers are shares of the
                   population, so one keeps its meaning as the ladder grows.
                 </p>
                 <div class="sv-tiers" id="svTiers"></div>
@@ -2381,14 +2900,14 @@
 
             <div class="panel">
               <div class="phead">
-                <h2>Category ladders</h2>
-                <span class="note">four bands each, four ranks a band</span>
+                <h2 data-copy="seasonview.p3.head">Category ladders</h2>
+                <span class="note" data-copy="seasonview.p3.note">four bands each, six ranks a band</span>
               </div>
               <div class="pbody">
                 <p class="rank-lede">
-                  Every category is cut into four bands, and each band is a whole
-                  benchmark with its own four ranks. The overall tier above is derived
-                  from all three categories, so climbing any of them moves it.
+                  Four bands per category, each a whole benchmark with its own ranks. They
+                  overlap by two, so the next band's first ranks are reachable from
+                  this one. The overall tier is derived from all six categories.
                 </p>
                 <div id="svCats"></div>
               </div>
@@ -2396,16 +2915,13 @@
 
             <div class="panel">
               <div class="phead">
-                <h2>The pool</h2>
-                <span class="note" id="svPoolNote"></span>
+                <h2 data-copy="seasonview.p4.head">The pool</h2>
+                <span class="note" data-copy="seasonview.p4.note" id="svPoolNote"></span>
               </div>
               <div class="pbody">
                 <p class="rank-lede">
-                  One difficulty at a time, the way every benchmark this is drawn from is
-                  played. Your best on each scenario, and the score the next rank wants.
-                  Play any of them whenever you like — nothing here queues you and nothing
-                  here settles anything. A highlighted row is one your next rank is scored
-                  on.
+                  One difficulty at a time. Your best on each scenario, and what the next rank
+                  asks for. A highlighted row is one your next rank is scored on.
                 </p>
                 <div class="pool-bands" id="svDiffs"></div>
                 <div class="pool-grid" id="svPool"></div>
@@ -2430,15 +2946,15 @@
             <div class="panel">
               <div class="phead">
                 <h2 id="apexName">Apex board</h2>
-                <span class="note" id="apexNote"></span>
+                <span class="note" data-copy="seasonview.p5.note" id="apexNote"></span>
               </div>
               <div class="pbody"><div class="sv-stats" id="apexStats"></div></div>
             </div>
 
             <div class="panel">
               <div class="phead">
-                <h2>Leaderboard</h2>
-                <span class="note" id="apexBoardNote">sign in to see where you stand</span>
+                <h2 data-copy="seasonview.p6.head">Leaderboard</h2>
+                <span class="note" data-copy="seasonview.p6.note" id="apexBoardNote">sign in to see where you stand</span>
               </div>
               <div class="pbody">
                 <div class="apex-tabs" id="apexTabs"></div>
@@ -2452,6 +2968,87 @@
             </div>
 
             <div id="apexCategories"></div>
+          </section>
+
+          <!-- ----------------------------------------------- admin -->
+          <section class="screen" id="screen-admin">
+            <div class="screen-head">
+              <h1 data-copy="admin.title">Admin</h1>
+              <p data-copy="admin.lede">
+                Repaint the chrome and rewrite the copy, on this machine. Rank names and
+                colours are written back to the season and validated the same way the
+                app validates any other season edit.
+              </p>
+            </div>
+
+            <div class="banner" id="adminNote"></div>
+
+            <div class="panel">
+              <div class="phead">
+                <h2 data-copy="admin.p1.head">Chrome</h2>
+                <span class="note" id="adminTokenNote"></span>
+              </div>
+              <div class="pbody">
+                <p class="adm-lede" data-copy="admin.p1.lede">
+                  Every colour in the client that is not a rank. Changes show as you make
+                  them; nothing is written until you save.
+                </p>
+                <div class="adm-tokens" id="adminTokens"></div>
+                <div class="adm-warn" id="adminContrast" hidden></div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="phead">
+                <h2 data-copy="admin.p2.head">Copy</h2>
+                <span class="note" id="adminCopyNote"></span>
+              </div>
+              <div class="pbody">
+                <p class="adm-lede">
+                  The app's own words. Anything derived from your runs is computed rather than
+                  written, so it is not here.
+                </p>
+                <input class="adm-search" id="adminCopySearch" type="search"
+                       placeholder="Filter by key or text" autocomplete="off">
+                <div class="adm-copy" id="adminCopy"></div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="phead">
+                <h2 data-copy="admin.p3.head">Rank names and colours</h2>
+                <span class="note" id="adminRankNote"></span>
+              </div>
+              <div class="pbody">
+                <p class="adm-lede" data-copy="admin.p3.lede">
+                  These belong to the season, not to this machine, so they save through the
+                  season and are refused once it is published. Contrast against the ground
+                  is measured beside each one.
+                </p>
+                <div class="adm-ranks" id="adminRanks"></div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="phead">
+                <h2 data-copy="admin.p4.head">Store</h2>
+                <span class="note" id="adminPath"></span>
+              </div>
+              <div class="pbody">
+                <div class="adm-actions">
+                  <button type="button" class="adm-go" id="adminSave">Save</button>
+                  <button type="button" id="adminRevert">Revert</button>
+                  <button type="button" id="adminReset">Reset to defaults</button>
+                  <button type="button" id="adminExport">Export</button>
+                  <button type="button" id="adminImport">Import</button>
+                </div>
+                <p class="adm-lede" data-copy="admin.p4.lede">
+                  Overrides live on this machine only. Export writes the current set to a
+                  file you can keep, commit as the shipped defaults, or hand to another
+                  install.
+                </p>
+              </div>
+            </div>
           </section>
 
           <section class="screen" id="screen-season">
@@ -2562,19 +3159,25 @@
           </p>
           <div class="empty-steps">
             <div class="empty-step">
-              <div class="n">Step one</div>
-              <h3>Point it at your stats</h3>
-              <p>Usually found on its own. If not, choose the folder yourself below.</p>
+              <div class="n">01</div>
+              <div>
+                <h3>Point it at your stats</h3>
+                <p>Usually found on its own. If not, choose the folder yourself below.</p>
+              </div>
             </div>
             <div class="empty-step">
-              <div class="n">Step two</div>
-              <h3>Play as you normally would</h3>
-              <p>Every run is read as it lands. Nothing in the game changes.</p>
+              <div class="n">02</div>
+              <div>
+                <h3>Play as you normally would</h3>
+                <p>Every run is read as it lands. Nothing in the game changes.</p>
+              </div>
             </div>
             <div class="empty-step">
-              <div class="n">Step three</div>
-              <h3>Queue a category</h3>
-              <p>Three scenarios against a real opponent, scored against your own past.</p>
+              <div class="n">03</div>
+              <div>
+                <h3>Queue a category</h3>
+                <p>Three scenarios against a real opponent, scored against your own past.</p>
+              </div>
             </div>
           </div>
           <button type="button" id="emptyChoose">Choose stats folder…</button>

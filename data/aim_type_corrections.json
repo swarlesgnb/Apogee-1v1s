@@ -124,13 +124,13 @@
       "aimType": "Switching",
       "kovaaksSays": "Clicking",
       "measured": {
-        "runs": 4,
-        "kills": 198,
-        "shotsPerKill": 94.7,
+        "runs": 5,
+        "kills": 251,
+        "shotsPerKill": 93.3,
         "weapon": "Poke-Drill",
         "bot": "regen_dot"
       },
-      "why": "The third member of the domiSwitch lineage, same Poke-Drill against the same regenerating dot, 94.7 shots per kill over 198 kills. Viscose Benchmarks S2 files it under Post-Flick, which is a switching label. Corrected for the same reason as its siblings: a lineage split across two categories is invisible to both the weakness map and the sub-skill queues.",
+      "why": "The third member of the domiSwitch lineage, same Poke-Drill against the same regenerating dot, 93.3 shots per kill over 198 kills. Viscose Benchmarks S2 files it under Post-Flick, which is a switching label. Corrected for the same reason as its siblings: a lineage split across two categories is invisible to both the weakness map and the sub-skill queues.",
       "namedBy": [
         {
           "benchmark": "Viscose Benchmarks S2",
@@ -254,6 +254,11 @@
       "kovaaksSays": "Clicking",
       "measured": null,
       "why": "Sibling of a corrected scenario and almost certainly the same mislabel, but there are no local runs of it and this file does not correct on inference. It will be corrected the first time somebody runs it."
+    },
+    "domiSwitch Hard": {
+      "kovaaksSays": "Clicking",
+      "measured": null,
+      "why": "Its three siblings measure 93.3, 136.6 and 177.4 shots per kill on the same Poke-Drill against the same regen_dot bot, and the base scenario is corrected to Switching on that evidence - but no benchmark names this cut and nobody here has played it, so there is nothing to measure and this file does not correct on inference. It is no longer in the pool: it was the domiSwitch family's Expert rung until the board floor took it out, on 804 entries against the 1,667 an Expert window needs. Kept here because the mislabel is real whether or not this season grades it, and one run settles it."
     }
   }
 }

@@ -145,12 +145,39 @@ check(
   "a score above the world record still reads as rank 1",
   boardRankOfScore(sample, sample.points[0].score * 2) === 1,
 );
+// Every anchor on every board, not one board's.
+//
+// This used to read `variants[0]`, whichever top-window scenario happened to sort first,
+// which is a check that mostly cannot fail and then fails for the wrong reason: swapping
+// one family's Expert rung changed which board it looked at, and it started reporting a
+// tie as a defect.
+//
+// A tie is not a defect. Where two anchors share a score - 1w2ts Pasu Perfected 30%
+// Smaller has ranks 3 and 5 both at 121 points of nothing between them - `boardRankOfScore`
+// deliberately returns the worse of them, because that is the rank the score is *known* to
+// have reached and the anchors say nothing about the ranks between. So the rank an anchor
+// must read back as is the worst rank sharing its score, not its own.
+const anchorMisreads: string[] = [];
+for (const board of sources.boards.values()) {
+  for (const p of board.points) {
+    const worstTied = board.points
+      .filter((q) => q.score === p.score)
+      .reduce((a, b) => (b.rank > a.rank ? b : a));
+    const r = boardRankOfScore(board, p.score);
+    if (r === null || Math.abs(r - worstTied.rank) >= 0.5) {
+      anchorMisreads.push(
+        `${board.scenario} rank ${p.rank} at ${p.score} reads back as ` +
+          `${r === null ? "nothing" : r.toFixed(1)}, not ${worstTied.rank}`,
+      );
+    }
+  }
+}
 check(
-  "every sampled anchor reads back as its own rank",
-  sample.points.every((p) => {
-    const r = boardRankOfScore(sample, p.score);
-    return r !== null && Math.abs(r - p.rank) < 0.5;
-  }),
+  "every sampled anchor reads back as its own rank, or the worst it ties with",
+  anchorMisreads.length === 0,
+  anchorMisreads.length
+    ? anchorMisreads.slice(0, 4).join("; ")
+    : `${sources.boards.size} boards`,
 );
 check(
   "a score below the last anchor is not placed by the apex board",
@@ -329,6 +356,11 @@ const graded = variants
 
 let tiedByLadder = 0;
 let separatedByApex = 0;
+// Counted rather than assumed to be every graded variant. A variant whose top threshold is
+// at or above its board's world record has no "somebody far past it" to test with, so it is
+// skipped - and holding the ratio against every graded variant then reported those skips as
+// failures of a property they were never measured on.
+let comparableTops = 0;
 
 for (const { v, board } of graded) {
   const top = v.rankMaxes[v.rankMaxes.length - 1];
@@ -336,6 +368,7 @@ for (const { v, board } of graded) {
   const atTop = top;
   const wayPast = board.points[0].score;
   if (!(wayPast > atTop)) continue;
+  comparableTops++;
 
   const eA = scenarioEnergy(atTop, v.rankMaxes);
   const eB = scenarioEnergy(wayPast, v.rankMaxes);
@@ -348,13 +381,13 @@ for (const { v, board } of graded) {
 
 check(
   "the ladder ties a maxed score with a world record",
-  tiedByLadder === graded.length,
-  `${tiedByLadder}/${graded.length} families`,
+  tiedByLadder === comparableTops,
+  `${tiedByLadder}/${comparableTops} families with a score above their own top threshold`,
 );
 check(
   "the apex board separates them",
-  separatedByApex === graded.length,
-  `${separatedByApex}/${graded.length} families`,
+  separatedByApex === comparableTops,
+  `${separatedByApex}/${comparableTops} families`,
 );
 check(
   "points never cap: ten times fewer players above is always one more point",
@@ -452,6 +485,45 @@ check(
   "the standing is graded on the top-window variant and no other",
   standingScenarios.length > 0 && standingScenarios.every((s) => gradedScenarios.has(s)),
   `${standingScenarios.length} families`,
+);
+
+// ---- the weighting -------------------------------------------------------------------
+//
+// A category's points are the mean over its families and the overall is the mean over the
+// categories, so a deeper category cannot outscore a shallower one for the same play.
+//
+// Asserted rather than assumed because it is one line away from being wrong in either of
+// two files: `standing.ts` computes what the client shows, `refresh-apex` computes what the
+// board sorts on, and a sum in one of them is invisible until two players compare screens.
+// This holds the client side; the function is held to it by reading the same shape.
+//
+// Season 1 makes the difference concrete: eleven families in Precise Tracking against six
+// in Evasive Switching, so a sum would read almost two to one apart for identical standing.
+
+const weighted = apexStanding(season, corpusScores, sources);
+const offBy = 1e-9;
+
+const categoryMeans = weighted.categories.filter((c) => c.total > 0);
+const notMean = categoryMeans.filter((c) => {
+  const mean = c.families.reduce((sum, f) => sum + f.points, 0) / c.families.length;
+  return Math.abs(c.points - mean) > offBy;
+});
+check(
+  "a category's points are the mean over its families, not the sum",
+  categoryMeans.length > 0 && notMean.length === 0,
+  notMean.length
+    ? notMean.map((c) => `${c.name} is ${c.points.toFixed(4)}`).join(", ")
+    : `${categoryMeans.length} categories`,
+);
+
+const overallMean =
+  categoryMeans.length > 0
+    ? categoryMeans.reduce((sum, c) => sum + c.points, 0) / categoryMeans.length
+    : 0;
+check(
+  "the overall is the mean over the categories, so depth does not weight it",
+  Math.abs(weighted.points - overallMean) <= offBy,
+  `${weighted.points.toFixed(4)} against ${overallMean.toFixed(4)}`,
 );
 
 // ---- the real corpus -----------------------------------------------------------------

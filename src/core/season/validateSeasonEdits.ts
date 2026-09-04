@@ -5,6 +5,7 @@
  */
 import { loadSeason, validateSeason, type Season } from "./season.ts";
 import { ENERGY_PER_RANK } from "../benchmarks/energy.ts";
+import { windowRankCount } from "./windows.ts";
 
 const base = loadSeason();
 const clone = (): Season => JSON.parse(JSON.stringify(base));
@@ -58,6 +59,38 @@ check(
   refuses(energyOff) ?? "accepted",
 );
 
+/**
+ * Give every variant of a category as many thresholds as its window now grades.
+ *
+ * Adding or dropping a window is not purely additive once windows overlap: the window that
+ * used to be top had nothing above to reach into and carried the short ladder, and the
+ * moment a harder one appears above it, it grades two more ranks. So a fixture that changes
+ * the depth has to restate the widths, exactly as `buildSeason` does.
+ */
+function resizeVariants(season: Season, category: string): void {
+  const stride = season.windowSize ?? 1;
+  const overlap = season.windowOverlap ?? 0;
+  const depth =
+    season.categories.find((c) => c.name === category)?.rankNames.length ??
+    season.rankNames.length;
+
+  for (const s of season.scenarios) {
+    if (s.category !== category) continue;
+    const want = windowRankCount(s.window ?? 0, stride, depth, overlap);
+    const have = s.rankMaxes.length;
+    if (have === want) continue;
+    if (have > want) {
+      s.rankMaxes = s.rankMaxes.slice(0, want);
+      continue;
+    }
+    // Extended by the last step it already takes, so the ladder keeps ascending.
+    const step = have > 1 ? s.rankMaxes[have - 1] - s.rankMaxes[have - 2] : 1;
+    const out = [...s.rankMaxes];
+    while (out.length < want) out.push(out[out.length - 1] + Math.max(1, step));
+    s.rankMaxes = out;
+  }
+}
+
 // A correct add.
 //
 // On a windowed season a ladder grows by a whole window, not by one rank: the ranks a
@@ -91,6 +124,8 @@ for (const family of new Set(
     rankMaxes: hardest.rankMaxes.map((v) => Math.round(v * 1.1)),
   });
 }
+
+resizeVariants(good, cat.name);
 
 check(
   "a window added everywhere it belongs is accepted",
@@ -166,9 +201,13 @@ if (base.windowSize) {
     refuses(doubled) ?? "accepted",
   );
 
+  // Deliberately not the first window-2 scenario: the destination is categories[1], and
+  // the first one is already in it, so the move was a no-op and the check could not fail.
+  // Re-ordering the pool is all it took - this passed for a whole rebuild saying nothing.
   const split = clone();
-  const moved = split.scenarios.find((s) => (s.window ?? 0) === 2)!;
-  moved.category = split.categories[1].name;
+  const destination = split.categories[1].name;
+  const moved = split.scenarios.find((s) => (s.window ?? 0) === 2 && s.category !== destination)!;
+  moved.category = destination;
   check(
     "a family split across categories is refused",
     refuses(split) !== null,
@@ -219,6 +258,8 @@ short.rankMaxes = short.rankMaxes.slice(0, keep);
 uneven.scenarios = uneven.scenarios.filter(
   (s) => s.category !== short.name || (s.window ?? 0) < keep / size,
 );
+
+resizeVariants(uneven, short.name);
 
 check("a season with uneven ladders is valid", refuses(uneven) === null, refuses(uneven) ?? "");
 

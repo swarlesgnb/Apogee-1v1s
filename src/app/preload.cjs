@@ -150,8 +150,22 @@ contextBridge.exposeInMainWorld("apogee", {
   /** Reveal the watched folder in the OS file manager. */
   openStatsFolder: () => ipcRenderer.invoke("apogee:openStatsFolder"),
 
-  /** Whether the signed-in player may edit the season. Gates the editor, nothing else. */
+  /** Whether the signed-in player holds the admin role. Gates the editors, nothing else. */
   isAdmin: () => ipcRenderer.invoke("apogee:isAdmin"),
+
+  /**
+   * This machine's look-and-copy overrides.
+   *
+   * Reading is open, because the app has to be painted before there is a session to
+   * check. Every write below re-checks the role in main, so the hidden tab is a
+   * convenience rather than the thing keeping anybody out.
+   */
+  adminOverrides: () => ipcRenderer.invoke("apogee:adminOverrides"),
+  saveAdminOverrides: (overrides) =>
+    ipcRenderer.invoke("apogee:saveAdminOverrides", { overrides }),
+  resetAdminOverrides: () => ipcRenderer.invoke("apogee:resetAdminOverrides"),
+  exportAdminOverrides: () => ipcRenderer.invoke("apogee:exportAdminOverrides"),
+  importAdminOverrides: () => ipcRenderer.invoke("apogee:importAdminOverrides"),
 
   /** The season definition currently on disk. */
   getSeason: () => ipcRenderer.invoke("apogee:getSeason"),
@@ -167,6 +181,14 @@ contextBridge.exposeInMainWorld("apogee", {
 
   /** Fires whenever the snapshot is rebuilt. */
   onSnapshot: (handler) => subscribe("apogee:snapshot", handler),
+
+  /**
+   * Fires after the season on disk has been rewritten by the editor.
+   *
+   * Separate from `onSnapshot` because a snapshot is not always sent: it needs a stats
+   * folder with runs in it, and the season can be edited without either.
+   */
+  onSeasonChanged: (handler) => subscribe("apogee:seasonChanged", handler),
 
   /** Fires the moment a new run is parsed, before the snapshot rebuild lands. */
   onRun: (handler) => subscribe("apogee:run", handler),

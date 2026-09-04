@@ -23,6 +23,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { dataFile } from "../dataDir.ts";
 import { ENERGY_PER_RANK } from "../benchmarks/energy.ts";
 import type { DifficultyDef } from "../benchmarks/types.ts";
+import { windowRankCount } from "./windows.ts";
 
 /**
  * One band of one category, graded on its own.
@@ -206,11 +207,22 @@ export interface Season {
    * family carries one variant per window.
    */
   windowSize?: number;
+  /**
+   * How many ranks each window reaches into the one above it. Zero on a season whose
+   * windows abut.
+   *
+   * `windowSize` stays the stride between windows; this is how far past its own stride a
+   * window keeps grading. See `windows.ts` for what that buys and why the top window is
+   * short by it.
+   */
+  windowOverlap?: number;
   /** Display name per window, low to high, e.g. ["Novice", "Intermediate", "Advanced"]. */
   windows?: string[];
   /** Defaults to DEFAULT_MATCH_POOL when absent. */
   matchPool?: MatchPool;
   seededFrom?: { benchmark: string; difficulty: string; note?: string };
+  /** When buildSeason last wrote the file. Shown on the rank sheet so a printed copy dates itself. */
+  builtAt?: string;
 }
 
 /** The pool matches draw from, for a season that may not name one. */
@@ -296,6 +308,7 @@ export function validateSeason(season: Season): void {
 
   const windowed = isWindowed(season);
   const windowSize = season.windowSize ?? 0;
+  const overlap = season.windowOverlap ?? 0;
 
   if (windowed) {
     if (!Number.isInteger(windowSize) || windowSize < 1) {
@@ -329,8 +342,12 @@ export function validateSeason(season: Season): void {
     // can differ, and checking the wrong one would pass a scenario that grades to a
     // rank its category has never heard of.
     const depth = ranksByCategory.get(s.category) ?? ranks;
-    // A windowed variant carries its window's thresholds, not the whole ladder's.
-    const expected = windowed ? windowSize : depth;
+    // A windowed variant carries its window's thresholds, not the whole ladder's - and
+    // with an overlap that is more than the stride, because the window reaches into the
+    // one above it. The top window is short by the overlap, so this is asked per window.
+    const expected = windowed
+      ? windowRankCount(s.window ?? 0, windowSize, depth, overlap)
+      : depth;
     if (windowed) {
       if (!s.family || !s.family.trim()) {
         throw new Error(`${s.label ?? s.scenario} has no family, which a windowed season needs`);
@@ -608,6 +625,7 @@ export function seasonAsDifficulty(season: Season): DifficultyDef {
       rankNames: c.rankNames ?? season.rankNames,
       rankColors: c.rankColors ?? season.rankColors,
       windowSize: season.windowSize,
+      windowOverlap: season.windowOverlap,
       scenarios: (byCategory.get(c.name) ?? []).map((s) => ({
         name: s.scenario,
         leaderboardId: s.leaderboardId,

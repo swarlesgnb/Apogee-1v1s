@@ -27,6 +27,8 @@ import { join } from "node:path";
 
 import { dataFile } from "../dataDir.ts";
 import { checkAgainstSource, type ThresholdSource } from "./thresholds.ts";
+import { thresholdsFrom, type Distribution } from "./percentiles.ts";
+import { windowRankCount } from "./windows.ts";
 
 const BOLD = "\x1b[1m";
 const DIM = "\x1b[2m";
@@ -42,10 +44,18 @@ interface Variant {
 interface Pool {
   windowSize: number;
   windows: string[];
+  ladder: { ranks: number[]; overlap: number };
   families: { family: string; category: string; variants: Variant[] }[];
 }
 
 const pool = JSON.parse(readFileSync(dataFile("pool.json"), "utf8")) as Pool;
+const sampled = new Map(
+  (
+    JSON.parse(readFileSync(dataFile("leaderboard_percentiles.json"), "utf8")) as {
+      distributions: Distribution[];
+    }
+  ).distributions.map((d) => [d.scenario, d]),
+);
 
 /** Every (benchmark, difficulty) tier that publishes scores for a scenario. */
 const published = new Map<string, { benchmark: string; difficulty: string; rankMaxes: number[] }[]>();
@@ -76,8 +86,15 @@ const variants = pool.families.flatMap((f) =>
   f.variants.map((v) => ({ ...v, family: f.family, category: f.category })),
 );
 
+const totalRanks = pool.windowSize * pool.windows.length;
+const overlap = pool.ladder.overlap ?? 0;
+/** How many scores a variant in this window carries. Wider than the stride by the overlap. */
+const widthOf = (window: number): number =>
+  windowRankCount(window, pool.windowSize, totalRanks, overlap);
+
 console.log(
-  `\n${BOLD}thresholds${RESET}  ${variants.length} variants, ${pool.windowSize} ranks each`,
+  `\n${BOLD}thresholds${RESET}  ${variants.length} variants, ` +
+    `${pool.windowSize}-rank windows overlapping by ${overlap}`,
 );
 
 // ---- shape --------------------------------------------------------------------------------
@@ -85,12 +102,14 @@ console.log(
 console.log(`\n${BOLD}shape${RESET}`);
 
 const wrongWidth = variants.filter(
-  (v) => !Array.isArray(v.rankMaxes) || v.rankMaxes.length !== pool.windowSize,
+  (v) => !Array.isArray(v.rankMaxes) || v.rankMaxes.length !== widthOf(v.window),
 );
 check(
   "every variant carries one score per rank in its window",
   wrongWidth.length === 0,
-  wrongWidth.map((v) => `${v.scenario} has ${v.rankMaxes?.length ?? 0}`).join(", "),
+  wrongWidth
+    .map((v) => `${v.scenario} has ${v.rankMaxes?.length ?? 0}, not ${widthOf(v.window)}`)
+    .join(", "),
 );
 
 const notAscending = variants.filter((v) =>
@@ -114,6 +133,7 @@ const byKind = new Map<string, number>();
 const wrong: string[] = [];
 const unreasoned: string[] = [];
 const uncitable: string[] = [];
+const miscut: string[] = [];
 
 for (const v of variants) {
   const source = v.source;
@@ -125,6 +145,36 @@ for (const v of variants) {
     continue;
   }
   if (source.kind === "seeded") continue;
+
+  // A percentile cut carries the board, the ranks and the shares it used, so the whole
+  // thing is redone here rather than taken on the word of its `why`. Two ways it can be
+  // wrong and both matter: the numbers no longer being what those shares give, and the
+  // shares no longer being what the pool's ladder asks for at those ranks - the second is
+  // what a half-applied ladder change looks like.
+  if (source.kind === "percentile") {
+    const dist = sampled.get(v.scenario);
+    if (!dist) {
+      miscut.push(`${v.scenario} cites a board that is no longer sampled`);
+      continue;
+    }
+    const wanted = source.cut.ranks.map((r) => pool.ladder.ranks[r]);
+    if (wanted.join(",") !== source.cut.topFractions.join(",")) {
+      miscut.push(
+        `${v.scenario} was cut at ${source.cut.topFractions.join(", ")}, but the ladder ` +
+          `now asks ${wanted.join(", ")} at ranks ` +
+          `${source.cut.ranks.map((r) => r + 1).join(", ")}`,
+      );
+      continue;
+    }
+    const redone = thresholdsFrom(dist, source.cut.topFractions);
+    if (!redone || redone.join(",") !== (v.rankMaxes ?? []).join(",")) {
+      miscut.push(
+        `${v.scenario} is [${(v.rankMaxes ?? []).join(", ")}], its own cut re-derives ` +
+          `[${redone?.join(", ") ?? "nothing"}]`,
+      );
+    }
+    continue;
+  }
 
   // A cited tier has to be one that exists and actually publishes what the citation says.
   for (const cited of source.from) {
@@ -143,10 +193,50 @@ for (const v of variants) {
     }
   }
 
+  // The tail an adoption was extended by is re-derived, not believed: the ratio has to be
+  // the one the cited tier's own numbers give, and the numbers have to be that ratio applied.
+  if (source.extended && source.extended.ranks.length > 0) {
+    const all = v.rankMaxes ?? [];
+    const tail = all.slice(all.length - source.extended.ranks.length);
+    const head = all.slice(0, all.length - source.extended.ranks.length);
+    const first = head[0];
+    const top = head[head.length - 1];
+    const ratio =
+      head.length >= 2 && first > 0 && top > first
+        ? Math.pow(top / first, 1 / (head.length - 1))
+        : null;
+
+    if (ratio === null) {
+      miscut.push(`${v.scenario} is extended from a tier with no step to continue`);
+    } else if (Math.abs(ratio - source.extended.ratio) > 1e-4) {
+      miscut.push(
+        `${v.scenario} records a step of ${source.extended.ratio}, its own tier gives ` +
+          `${ratio.toFixed(6)}`,
+      );
+    } else {
+      const redone = tail.map((_, i) => Math.round(top * Math.pow(ratio, i + 1)));
+      for (let i = 0; i < redone.length; i++) {
+        const under = i === 0 ? top : redone[i - 1];
+        if (redone[i] <= under) redone[i] = under + 1;
+      }
+      if (redone.join(",") !== tail.join(",")) {
+        miscut.push(
+          `${v.scenario} is extended to [${tail.join(", ")}], its own step re-derives ` +
+            `[${redone.join(", ")}]`,
+        );
+      }
+    }
+  }
+
   const problem = checkAgainstSource(v.rankMaxes ?? [], source);
   if (problem) wrong.push(`${v.scenario} ${problem}`);
 }
 
+check(
+  "every percentile cut re-derives from the board it names, at the ladder's shares",
+  miscut.length === 0,
+  miscut.length ? `\n       ${miscut.slice(0, 6).join("\n       ")}` : "",
+);
 check(
   "every citation names a tier that publishes the scenario, and quotes it correctly",
   uncitable.length === 0,

@@ -3,95 +3,286 @@
   "$evidence": "Three kinds, in descending order of what they can settle. A benchmark author's published design note is the strongest: it says what the scenario was built to isolate, in the words of the person who built it. KovaaK's own in-game scenario description is next, and is first-party for scenarios no benchmark documents. Community discussion is last and is used only where it says something the other two do not - which is mostly about scenarios that predate the benchmarks that later adopted them. Where a family's evidence is thin, this file says so rather than padding it: 'thin' is a fact about the pool worth being able to see.",
   "$audience": "plays and entries are KovaaK's own counters for the named scenario, copied from data/scenario_taxonomy.json and checked against it. They are here because 'the community plays this' is a claim that should carry a number. Read entries as people who have posted a score and plays as runs; the least-played scenario in the pool has 13,262 plays, so nothing here is obscure.",
   "sources": {
-    "voltaic-s5": {
-      "title": "Announcing the Voltaic Season 5 Aiming Benchmarks BETA for KovaaKs!",
-      "url": "https://blog.voltaic.gg/announcing-the-voltaic-season-5-aiming-benchmarks-beta-for-kovaaks/",
+    "aimerz-dynamic-clicking": {
+      "title": "Aimerz+ Dynamic Clicking",
+      "url": "https://docs.google.com/spreadsheets/d/1HGXrHC-3aMi0F0bmfN7rZE6j2oLGJsvGn3r6uKDrp70",
       "kind": "design note"
     },
-    "kovaaks-scenario": {
-      "title": "KovaaK's scenario metadata, author-written descriptions",
-      "url": "https://kovaaks.com/webapp-backend/scenario/popular",
+    "aimerz-evasive-switching": {
+      "title": "Aimerz+ Evasive Switching",
+      "url": "https://docs.google.com/spreadsheets/d/1kxI184tdhT55k98gsfCHy_CRBznu84aaJP8PAJg6-dU/edit?gid=0#gid=0",
+      "kind": "design note"
+    },
+    "aimerz-precise-tracking": {
+      "title": "Aimerz+ Precise Tracking",
+      "url": "https://docs.google.com/spreadsheets/d/1czvuvgks1SoMNUH_aevVPm5lOgqCQHa_UVR8izpUxfg/edit?gid=373225919#gid=373225919",
+      "kind": "design note"
+    },
+    "aimerz-reactive-tracking": {
+      "title": "Aimerz+ Reactive Tracking",
+      "url": "https://docs.google.com/spreadsheets/d/15VloIkv-V-B3oq4JTbSnIKwsPMwccx2sQEwTohqlprw/edit?gid=0#gid=0",
+      "kind": "design note"
+    },
+    "aimerz-s0": {
+      "title": "Aimerz+ S0",
+      "url": "https://docs.google.com/spreadsheets/d/1UttTs6aNPzwAWCEKnRUc8hC0AzbZI2esLq4x8ngcVpU/edit?gid=876421041#gid=876421041",
+      "kind": "design note"
+    },
+    "aimerz-s1": {
+      "title": "Aimerz+ S1",
+      "url": "https://docs.google.com/spreadsheets/d/1z-XwvdEXZ7rip2ZJ9aVff0-YqrnX6Yluf89f9LBbroc",
+      "kind": "design note"
+    },
+    "aimerz-speedts": {
+      "title": "Aimerz+ SpeedTS",
+      "url": "https://docs.google.com/spreadsheets/d/1-9-RQ5-a78HF49eMsYcf7PjBkpbgIahpBwTLYSu9RK4/edit?gid=373225919#gid=373225919",
+      "kind": "design note"
+    },
+    "aimerz-static-clicking": {
+      "title": "Aimerz+ Static Clicking",
+      "url": "https://docs.google.com/spreadsheets/d/1rvrijNj9JY4WHhrWrojtk_Q2hvsFzO2-laUsPHxOMSs/edit?gid=0#gid=0",
+      "kind": "design note"
+    },
+    "aimspeed-benchmarks": {
+      "title": "AimSpeed Benchmarks",
+      "url": "https://docs.google.com/spreadsheets/d/1V3UE_NltXh8YL0gYueJ6jarVZy8lxH7xcYT9K_9Z-Jo",
+      "kind": "design note"
+    },
+    "aimspeed-benchmarks-2-0": {
+      "title": "AimSpeed Benchmarks 2.0",
+      "url": "https://evxl.app/benchmarks/AimSpeed%20Benchmarks%202.0",
+      "kind": "design note"
+    },
+    "anima-micro-v1": {
+      "title": "Anima Micro v1",
+      "url": "https://docs.google.com/spreadsheets/d/1H8WPvDyOGtSb9f-lNocNxULRDhptG5PlE2mcpyxnaSY",
+      "kind": "design note"
+    },
+    "anima-micro-v2": {
+      "title": "Anima Micro v2",
+      "url": "https://t.co/3h621dLfcM",
+      "kind": "design note"
+    },
+    "astro-tracking-benchmark": {
+      "title": "Astro Tracking Benchmark",
+      "url": "https://docs.google.com/spreadsheets/d/1KXrXJpCl8xnoa3JuFcthE306Q9R9MOAJWhXj_xXzLOQ/edit?gid=788802502#gid=788802502",
+      "kind": "design note"
+    },
+    "ca-static-s1": {
+      "title": "cA Static S1",
+      "url": "https://docs.google.com/spreadsheets/u/0/d/18YMQQZs7qy2xKxCEwHkTG4DeQTuEr0Z05cmAIvuuieE",
+      "kind": "design note"
+    },
+    "e1se-smooth-benchmark": {
+      "title": "e1se Smooth Benchmark",
+      "url": "https://docs.google.com/spreadsheets/d/1IXyjASZHs8yaVgS_os0wMLuvHIdZ2L8wrah_ShjXQ7w/edit?gid=0#gid=0",
+      "kind": "design note"
+    },
+    "jade-palace-air": {
+      "title": "Jade Palace Air",
+      "url": "https://docs.google.com/spreadsheets/d/11-E1KWTCw27s6fhW4nwB0F_2ckbdv5RDcBiseUcm1E4/edit?usp=sharing",
+      "kind": "design note"
+    },
+    "jade-palace-dynamic": {
+      "title": "Jade Palace Dynamic",
+      "url": "https://docs.google.com/spreadsheets/d/1W_RYk3_xbvsS4BHnTItgkwWIoEVh-dbAWDhAWUyvnZU/edit?gid=532719343#gid=532719343",
+      "kind": "design note"
+    },
+    "jade-palace-ground": {
+      "title": "Jade Palace Ground",
+      "url": "https://docs.google.com/spreadsheets/d/131tMwNmJY-lJPVdddpOWKY9uajDWWe3I5ym-UzmF0QE/edit?gid=0#gid=0",
+      "kind": "design note"
+    },
+    "kovaaks-leaderboard": {
+      "title": "KovaaK's global leaderboards",
+      "url": "https://kovaaks.com/webapp-backend/leaderboard/scores/global",
       "kind": "first-party",
-      "note": "Mirrored into data/scenario_taxonomy.json; the description quoted is the author's own."
+      "note": "The endpoint this season cuts its percentiles from; the totals are mirrored into data/leaderboard_percentiles.json."
     },
-    "steam-ts-thread": {
-      "title": "Which are the best Target Switching Scenarios? - KovaaK's General Discussions",
-      "url": "https://steamcommunity.com/app/824270/discussions/0/759554831917729263/",
-      "kind": "community"
+    "lemon-static-benchmark": {
+      "title": "Lemon Static Benchmark",
+      "url": "https://docs.google.com/spreadsheets/d/1V9lt5BjKLpzoKBPd-4WgStzhKv-javTWaNcISaLJERg",
+      "kind": "design note"
     },
-    "viscose-s2": {
+    "revosect-s1": {
+      "title": "Revosect S1",
+      "url": "https://docs.google.com/spreadsheets/d/1MQujX14dooQWcHu4mvvP5fetHVIr7Apg1taR96hSho0",
+      "kind": "design note"
+    },
+    "revosect-s5": {
+      "title": "Revosect S5",
+      "url": "https://docs.google.com/spreadsheets/d/1aHN2bdUehBtmx5COqsMT1q8SN_JImQYUfsSN73uQyEE/edit?usp=sharing",
+      "kind": "design note"
+    },
+    "snakbox-benchmark": {
+      "title": "snakbox Benchmark",
+      "url": "https://evxl.app/benchmarks/snakbox%20Benchmark",
+      "kind": "design note"
+    },
+    "sparky-voltaic-s1": {
+      "title": "Sparky (Voltaic) S1",
+      "url": "https://docs.google.com/spreadsheets/d/1UttTs6aNPzwAWCEKnRUc8hC0AzbZI2esLq4x8ngcVpU",
+      "kind": "design note"
+    },
+    "tsk-mixed-benchmarks": {
+      "title": "TSK Mixed Benchmarks",
+      "url": "https://docs.google.com/spreadsheets/d/1QlmPnGcQ9joO49Fx3wVmEGyYIWzEGlPgDdpfAulAu-E",
+      "kind": "design note"
+    },
+    "viscose-benchmarks": {
+      "title": "Viscose Benchmarks",
+      "url": "https://docs.google.com/spreadsheets/d/1bFAlt6g_Gm8P9RBkcAoObpbIGFwVS5gXIdIK9B_YyZE",
+      "kind": "design note"
+    },
+    "viscose-benchmarks-s2": {
       "title": "Viscose Benchmarks S2",
       "url": "https://docs.google.com/spreadsheets/d/1WeuEk444WOkTpvOGMYiertxwlI9gRQSapYiwxjFbT08/edit?usp=sharing",
       "kind": "design note"
     },
+    "voltaic-s3": {
+      "title": "Voltaic S3",
+      "url": "https://docs.google.com/spreadsheets/d/1yHj87rQNW2WsuH24UoKZajNwNpI6CVyUjR3AwBMbnnY",
+      "kind": "design note"
+    },
     "voltaic-s4": {
-      "title": "Voltaic S4 Benchmarks",
+      "title": "Voltaic S4",
       "url": "https://docs.google.com/spreadsheets/d/1qUzF2KHcfs_FgsaDFRfGsLgHhoC1Md5bzMOUbsYzSjg",
       "kind": "design note"
     },
-    "jade-palace": {
-      "title": "Jade Palace Benchmarks",
-      "url": "https://docs.google.com/spreadsheets/d/131tMwNmJY-lJPVdddpOWKY9uajDWWe3I5ym-UzmF0QE/edit?gid=0#gid=0",
+    "voltaic-s5": {
+      "title": "Voltaic S5",
+      "url": "https://docs.google.com/spreadsheets/d/1RjVJi9AdWLXIOkKR8z6mhmRo_SNokJPxKtLXHWk12Z4",
       "kind": "design note"
     },
-    "aimerz-reactive": {
-      "title": "Aimerz+ Reactive Tracking",
-      "url": "https://docs.google.com/spreadsheets/d/15VloIkv-V-B3oq4JTbSnIKwsPMwccx2sQEwTohqlprw/edit?gid=0#gid=0",
+    "voltaic-s5-5": {
+      "title": "Voltaic S5.5",
+      "url": "https://docs.google.com/spreadsheets/d/1kiS9CvXTQjLsm42nBafhddu2Q7XdWtxaMtumeZ_sV-c",
       "kind": "design note"
     }
   },
   "families": [
     {
-      "family": "Wide Wall",
-      "subCategory": "Static Clicking",
-      "isolates": "Static clicking over long travel, at a sensitivity the scenario itself argues against lowering.",
-      "why": "Two claims have to hold for a static family: that it measures clicking rather than pathing, and that it does not quietly reward a sensitivity nobody plays at. Voltaic built ww5t for the second, and the Wide Wall lineage above it is the oldest and most-played static test in the game - 5,601,340 plays on the top-window variant alone, which is more evidence about what a static score means than any benchmark can supply.",
+      "family": "Angelic",
+      "subCategory": "Dynamic Clicking",
+      "isolates": "Leading a small target that changes direction, where the shot has to be placed ahead of it.",
+      "why": "The angelic bot, which drifts rather than strafes, so the lead is continuous instead of stepped. No single author cut it at four difficulties; psalmTS and Pasu each cut it at two, and the four ascend across them.",
       "evidence": [
         {
-          "source": "voltaic-s5",
-          "scenario": "VT ww5t Novice S5",
-          "says": "Medium targets on a curved, exceptionally wide spawn region, designed \"to discourage the use of very low sensitivities\"."
+          "source": "aimerz-dynamic-clicking",
+          "scenario": "Pasu Angelic",
+          "says": "Grades \"Pasu Angelic\" in its Hard tier, filed under Dynamic Clicking."
+        },
+        {
+          "source": "viscose-benchmarks",
+          "scenario": "Pasu Angelic",
+          "says": "Grades \"Pasu Angelic\" in its Hard tier, filed under Precision."
+        },
+        {
+          "source": "snakbox-benchmark",
+          "scenario": "psalmTS angelic click",
+          "says": "Grades \"psalmTS angelic click\" in its Hard tier, filed under Linear Clicking."
         }
       ],
       "audience": {
-        "scenario": "Wide Wall 3 Targets",
-        "plays": 5601340,
-        "entries": 554846
+        "scenario": "Pasu Angelic",
+        "plays": 633974,
+        "entries": 64898
       }
     },
     {
-      "family": "Reload Wall",
-      "subCategory": "Static Clicking",
-      "isolates": "Static clicking where accuracy is enforced by the ammo economy rather than by a score curve.",
-      "why": "The second static family deliberately measures the same skill under a different scoring rule. Square-root accuracy lets a fast spammer trade precision for volume; a reload clip does not, because a miss costs more ammo than a hit returns. Two static families that both reward spam would be one family measured twice.",
+      "family": "B180",
+      "subCategory": "Dynamic Clicking",
+      "isolates": "Clicking a target that reverses through 180 degrees, so the lead has to be re-aimed mid-flick.",
+      "why": "A target that reverses through 180 degrees, which is the sharpest lead-change in the sub-skill. Voltaic's two cuts then Revosect's two, ascending across the pair. B180 rAim Easy is Revosect's Easy cut and sat at Advanced, above B180 Voltaic, which Voltaic grades Advanced and Jade Palace grades Easy. Two sheets put the standard cut above the easy one and the ladder had them the other way round, so the two are swapped.",
       "evidence": [
         {
-          "source": "voltaic-s5",
-          "scenario": "VT 1w6ts Rasp Novice",
-          "says": "1wXts is \"low target count and on the smaller side for small static targets to minimise pathing and to increase focus on pure static technique\"."
+          "source": "jade-palace-dynamic",
+          "scenario": "B180 Voltaic",
+          "says": "Grades \"B180 Voltaic\" in its Easy tier, filed under Arc."
         },
         {
-          "source": "voltaic-s5",
-          "scenario": "1w6ts reload v2",
-          "says": "The reload mechanic replaces square-root accuracy with a modified ammo system forcing higher accuracy: misses cost more than hits restore."
+          "source": "revosect-s1",
+          "scenario": "B180 rAim Easy",
+          "says": "Grades \"B180 rAim Easy\" in its Easy tier, filed under Kinetic."
+        },
+        {
+          "source": "viscose-benchmarks",
+          "scenario": "B180 Voltaic Easy 92%",
+          "says": "Grades \"B180 Voltaic Easy 92%\" in its Easier tier, filed under Reading."
         }
       ],
       "audience": {
-        "scenario": "1w6ts reload v2",
-        "plays": 1518127,
-        "entries": 89714
+        "scenario": "B180 Voltaic",
+        "plays": 1558726,
+        "entries": 75976
+      }
+    },
+    {
+      "family": "Bounceshot",
+      "subCategory": "Dynamic Clicking",
+      "isolates": "Clicking a target bouncing on an unpredictable path, with no repeating rhythm to settle into.",
+      "why": "Targets that change direction on contact, so the lead has to be re-taken mid-shot. Voltaic and Viscose both grade it and their tiers interleave, which is what fills all four windows here.",
+      "evidence": [
+        {
+          "source": "viscose-benchmarks",
+          "scenario": "VT Bounceshot Advanced",
+          "says": "Grades \"VT Bounceshot Advanced\" in its Hard tier, filed under Reading."
+        },
+        {
+          "source": "viscose-benchmarks-s2",
+          "scenario": "VT Bounceshot Viscose Easier",
+          "says": "Grades \"VT Bounceshot Viscose Easier\" in its Easier tier, filed under Reading."
+        },
+        {
+          "source": "voltaic-s4",
+          "scenario": "VT Bounceshot Advanced",
+          "says": "Grades \"VT Bounceshot Advanced\" in its Advanced tier, filed under Clicking."
+        }
+      ],
+      "audience": {
+        "scenario": "VT Bounceshot Intermediate",
+        "plays": 3106438,
+        "entries": 152437
+      }
+    },
+    {
+      "family": "CatClick",
+      "subCategory": "Dynamic Clicking",
+      "isolates": "Dynamic clicking at close range, where target speed rather than distance sets the difficulty.",
+      "why": "Erratic direction changes with no fixed path, which is the reading end of dynamic clicking rather than the timing end. One author, four cuts.",
+      "evidence": [
+        {
+          "source": "viscose-benchmarks-s2",
+          "scenario": "CatClick",
+          "says": "Grades \"CatClick\" in its Hard tier, filed under Reading."
+        }
+      ],
+      "audience": {
+        "scenario": "CatClick Medium",
+        "plays": 216616,
+        "entries": 33698
       }
     },
     {
       "family": "Pasu",
       "subCategory": "Dynamic Clicking",
-      "isolates": "Clicking a target that is moving diagonally and continuously - aiming while tracking.",
-      "why": "Pasu is the scenario the phrase 'dynamic clicking' is usually pointing at, and Voltaic kept it across seasons while fixing what was wrong with it. Its scoring is the interesting part: square-root accuracy is applied specifically to stop the scenario paying for spam, which is the failure mode that would make a dynamic score mean nothing.",
+      "isolates": "Voltaic's reference dynamic click: a strafing bot shot on the move, on the deepest boards in the sub-skill.",
+      "why": "Voltaic's own dynamic clicking ladder, on the largest boards in the sub-skill - 230,670 entries at Novice. If one family has to be right, it is this one.",
       "evidence": [
         {
+          "source": "jade-palace-dynamic",
+          "scenario": "Pasu Voltaic",
+          "says": "Grades \"Pasu Voltaic\" in its Hard tier, filed under Reading."
+        },
+        {
+          "source": "voltaic-s3",
+          "scenario": "Pasu Voltaic",
+          "says": "Grades \"Pasu Voltaic\" in its Advanced tier, filed under Clicking."
+        },
+        {
           "source": "voltaic-s5",
-          "scenario": "VT Pasu Novice S5",
-          "says": "Diagonally moving targets; the air-jump bug and awkward wall interaction were fixed, and it \"uses square root accuracy to balance the tendency for Pasu to be a more spam heavy clicking scenario\"."
+          "scenario": "VT Pasu Advanced S5",
+          "says": "Grades \"VT Pasu Advanced S5\" in its Advanced tier, filed under Clicking."
         }
       ],
       "audience": {
@@ -101,347 +292,255 @@
       }
     },
     {
-      "family": "Bounceshot",
+      "family": "Pasu Classic",
       "subCategory": "Dynamic Clicking",
-      "isolates": "Clicking targets whose direction changes on a bounce, so the timing is read rather than followed.",
-      "why": "Pasu's targets move predictably once read; a bouncing target resets that read every time it hits a surface. Pairing them keeps the sub-skill from resting entirely on how well a player has learned one movement pattern.",
+      "isolates": "The original Pasu wall, where reloading forces the click to be timed rather than sprayed.",
+      "why": "The original 1wall5targets lineage, which is where dynamic clicking was measured before any benchmark existed and still the most-played of it - 389,281 entries on the reload cut. Slowed, standard, shrunk, then the no-quick-swap variant. pasu nqs reload sat at Expert on a board of 9,541 and is the one cut of this lineage Aimerz+ grades Easy - the Expert rung was the easiest scenario in the family. The four are reordered onto what the sheets grade: the slow and no-quickswap cuts at the bottom, then the canonical 1wall5targets_pasu Reload, then the small-target cut that Aimerz+ and Jade Palace both grade Hard.",
       "evidence": [
         {
-          "source": "kovaaks-scenario",
-          "scenario": "VT Bounceshot Novice",
-          "says": "The author's description: \"Four single-click bots leap in mid-high arcs on top of a flat surface, changing depths as they traverse. The player's weapon has three shots and empty magazines recover in their entirety upon each elimination.\" - the arc and the depth change are what make the timing a read rather than a follow, and the three-shot magazine is what stops it paying for spam."
-        }
-      ],
-      "audience": {
-        "scenario": "VT Bounceshot Advanced",
-        "plays": 583247,
-        "entries": 38381
-      },
-      "thin": "The hardest windows here are the least documented in the Clicking pool. Voltaic dropped Bounceshot after S4 rather than replacing it, so there is no current design note for the lineage above Novice."
-    },
-    {
-      "family": "Floating Heads",
-      "subCategory": "Linear Clicking",
-      "isolates": "Clicking small targets on a predictable horizontal path, weighted toward precision over speed.",
-      "why": "Linear clicking is the bridge between static and dynamic, and it splits into a precision half and a speed half. This is the precision half, and Voltaic says so explicitly - small targets and square-root accuracy, against Frogtagon's speed focus.",
-      "evidence": [
-        {
-          "source": "voltaic-s5",
-          "scenario": "VT Floating Heads Novice S5",
-          "says": "Heads strafing horizontally with a vertical bob; it \"focuses more on precision, so the targets are fairly small and square root accuracy is used\"."
-        }
-      ],
-      "audience": {
-        "scenario": "Floating Heads Timing 400% FIXED",
-        "plays": 2732923,
-        "entries": 277773
-      }
-    },
-    {
-      "family": "voxTS Click",
-      "subCategory": "Linear Clicking",
-      "isolates": "Linear clicking at speed, where the cost is the travel between targets rather than the shot itself.",
-      "why": "The speed half of linear clicking. Frogtagon opens it because Voltaic tuned it for exactly that, and the vox lineage above it is the widely-played wide-angle version of the same question.",
-      "evidence": [
-        {
-          "source": "voltaic-s5",
-          "scenario": "VT Frogtagon Novice S5",
-          "says": "Frogs moving in straight lines, offering \"predictable strafes\" with intuitive bounce timing, \"intended to be more speed focused\"."
-        }
-      ],
-      "audience": {
-        "scenario": "VoxTargetSwitch Click Small",
-        "plays": 4528032,
-        "entries": 194707
-      }
-    },
-    {
-      "family": "Smallflicks",
-      "subCategory": "Micro Clicking",
-      "isolates": "Repeated short flicks between two close targets, under a reload clip.",
-      "why": "Micro clicking is the sub-skill Voltaic's nine do not name, and it is not static clicking made smaller: the limiting factor is the correction at the end of a very short flick, not target acquisition. The smallflicks lineage is the community's standard test of it and long predates the benchmarks that adopted it.",
-      "evidence": [
-        {
-          "source": "kovaaks-scenario",
-          "scenario": "1w2ts reload smallflicks larger",
-          "says": "Two close small targets that respawn instantly - practice for micro corrections, micro flicking and cluster work."
-        }
-      ],
-      "audience": {
-        "scenario": "1w2ts reload smallflicks slightly larger",
-        "plays": 370212,
-        "entries": 41462
-      }
-    },
-    {
-      "family": "eth Pasu Micro",
-      "subCategory": "Micro Clicking",
-      "isolates": "Micro clicking on a target that is also moving, so the correction is against a shifting point.",
-      "why": "Smallflicks holds the static half of micro clicking; this holds the moving half. Grading micro on two static scenarios would measure one skill twice and leave the harder version of it unmeasured.",
-      "evidence": [
-        {
-          "source": "kovaaks-scenario",
-          "scenario": "eth Pasu Micro Medium",
-          "says": "A Pasu-derived scenario scaled down to micro distances, so the target moves while the correction is being made."
-        }
-      ],
-      "audience": {
-        "scenario": "eth Pasu Micro Medium",
-        "plays": 303768,
-        "entries": 38904
-      },
-      "thin": "The Entry variant that opens this family has 13,262 plays, the smallest audience in the pool. It is used because it is the only novice-tier micro scenario the 43-benchmark corpus contains."
-    },
-    {
-      "family": "Smoothbot",
-      "subCategory": "Precise Tracking",
-      "isolates": "Holding a crosshair on a small target moving smoothly and predictably.",
-      "why": "The purest precise-tracking test in the pool: predictable movement, so what is being measured is how steadily the crosshair is held rather than how well the movement is read. That separation is the whole reason Precise and Reading are different sub-skills here.",
-      "evidence": [
-        {
-          "source": "kovaaks-scenario",
-          "scenario": "VT Smoothbot Novice",
-          "says": "A smoothly moving bot with no direction changes to react to, which is what isolates holding from reading."
-        }
-      ],
-      "audience": {
-        "scenario": "VT Smoothbot Novice",
-        "plays": 4442796,
-        "entries": 326600
-      }
-    },
-    {
-      "family": "waldoTS",
-      "subCategory": "Precise Tracking",
-      "isolates": "Precise tracking where the target's speed changes, so a learned rhythm stops working.",
-      "why": "Smoothbot can be beaten by settling into the target's rhythm. Voltaic built Snake Track specifically to stop that, which makes the two a genuine pair rather than a duplicate: one measures the hold, the other measures the hold when the rhythm is taken away.",
-      "evidence": [
-        {
-          "source": "voltaic-s5",
-          "scenario": "VT Snake Track Novice S5",
-          "says": "A thin snake with accelerating and decelerating strafes, which prevents pure centering and forces \"a higher focus on tracking and less on rhythm\"."
-        }
-      ],
-      "audience": {
-        "scenario": "waldoTS",
-        "plays": 3698827,
-        "entries": 240024
-      }
-    },
-    {
-      "family": "Air CELESTIAL",
-      "subCategory": "Reactive Tracking",
-      "isolates": "Reacting to direction changes in the air, where there is no floor to constrain the movement.",
-      "why": "Reactive tracking is about the cost of a direction change, and air targets make that cost highest because the change can come on any axis. Voltaic rebuilt Aether for movement variety rather than difficulty, which is the right property for the novice end of a reactive ladder.",
-      "evidence": [
-        {
-          "source": "voltaic-s5",
-          "scenario": "VT Aether Novice S5",
-          "says": "Aerial strafes both vertical and horizontal, with greater movement variety than typical Air variants and an emphasis on reactivity."
-        }
-      ],
-      "audience": {
-        "scenario": "Air CELESTIAL No UFO Easy",
-        "plays": 428376,
-        "entries": 59429
-      }
-    },
-    {
-      "family": "Ground Plaza",
-      "subCategory": "Reactive Tracking",
-      "isolates": "Reacting to horizontal-only strafes, which is the shape an actual duel takes.",
-      "why": "The counterpart to the air family, and the more transferable of the two: enemies in most FPS titles strafe on a plane. Voltaic's Ground exists precisely to hold the horizontal-only case apart from the free-movement one.",
-      "evidence": [
-        {
-          "source": "voltaic-s5",
-          "scenario": "VT Ground Novice S5",
-          "says": "Horizontal strafes only, inspired by Plink Plaza; the distinction from the air scenarios is the horizontal-only focus."
-        }
-      ],
-      "audience": {
-        "scenario": "Ground Plaza Sparky v3 OW",
-        "plays": 465924,
-        "entries": 39243
-      }
-    },
-    {
-      "family": "Controlsphere",
-      "subCategory": "Control Tracking",
-      "isolates": "Sustained tracking of a target circling at varying distance, with conventional strafing.",
-      "why": "Control tracking is the long-hold case: the target does not try to break the track, it simply keeps moving, and the score is how much of the time the crosshair was on it. Controlsphere is the most-played scenario in the entire pool at 10.9 million plays, which makes it about as close to a community standard as a scenario gets.",
-      "evidence": [
-        {
-          "source": "voltaic-s5",
-          "scenario": "Controlsphere",
-          "says": "Aerial strafes in a circular arena; it \"focuses less on forward and backwards movement and also has more conventional strafing behavior\"."
+          "source": "aimerz-dynamic-clicking",
+          "scenario": "1wall5targets_pasu Reload",
+          "says": "Grades \"1wall5targets_pasu Reload\" in its Easy tier, filed under Dynamic Clicking."
         },
         {
-          "source": "kovaaks-scenario",
-          "scenario": "Controlsphere",
-          "says": "The author's description: \"Tracking a small gently jumping dot as it flies around you at varying distance and speed.\""
+          "source": "jade-palace-dynamic",
+          "scenario": "pasu small reload",
+          "says": "Grades \"pasu small reload\" in its Hard tier, filed under Reading."
+        },
+        {
+          "source": "sparky-voltaic-s1",
+          "scenario": "1wall5targets_pasu Reload",
+          "says": "Grades \"1wall5targets_pasu Reload\" in its All tier, filed under Clicking."
         }
       ],
       "audience": {
-        "scenario": "Controlsphere",
-        "plays": 10881494,
-        "entries": 253971
+        "scenario": "1wall5targets_pasu Reload",
+        "plays": 4551035,
+        "entries": 389281
       }
     },
     {
-      "family": "Raw Control",
-      "subCategory": "Control Tracking",
-      "isolates": "Control tracking on all three axes, including movement toward and away from the player.",
-      "why": "Controlsphere deliberately plays down forward and backward movement; this family is where that movement is the point. The Whisphere variants sit here rather than in Precise on Voltaic's own authority: they name whisphere as one of the two scenarios Controlsphere was derived from, which places it in the same lineage rather than a neighbouring one.",
+      "family": "Pasu Rasp",
+      "subCategory": "Dynamic Clicking",
+      "isolates": "Pasu at raspberry spacing, which shortens the lead and leaves less time to correct it.",
+      "why": "The raspberry-target cut of the same bot: smaller targets, same movement, so it separates target size from the leading. Expert takes 1w4t Pasu Raspberry Grandmaster over VT Pasu Rasp Elite, whose board carries 829.",
       "evidence": [
         {
-          "source": "voltaic-s5",
-          "scenario": "VT Raw Control Novice S5",
-          "says": "\"Designed to focus on XYZ tracking with a target that doesn't collide with the walls.\""
+          "source": "aimerz-dynamic-clicking",
+          "scenario": "1w4t Pasu Raspberry Grandmaster",
+          "says": "Grades \"1w4t Pasu Raspberry Grandmaster\" in its Hard tier, filed under Dynamic Clicking."
+        },
+        {
+          "source": "voltaic-s4",
+          "scenario": "VT Pasu Rasp Advanced",
+          "says": "Grades \"VT Pasu Rasp Advanced\" in its Advanced tier, filed under Clicking."
+        }
+      ],
+      "audience": {
+        "scenario": "VT Pasu Rasp Intermediate",
+        "plays": 3726569,
+        "entries": 144350
+      }
+    },
+    {
+      "family": "Pasu Reload",
+      "subCategory": "Dynamic Clicking",
+      "isolates": "Dynamic clicking where the reload is the constraint, so a missed shot costs the next one too.",
+      "why": "Voltaic's reload cuts, which ask the same shot under magazine pressure. A different test from Pasu Classic despite the shared word: these are Voltaic's own four difficulties, authored as a ladder.",
+      "evidence": [
+        {
+          "source": "jade-palace-dynamic",
+          "scenario": "Pasu Reload Goated",
+          "says": "Grades \"Pasu Reload Goated\" in its Easy tier, filed under Reading."
+        },
+        {
+          "source": "revosect-s1",
+          "scenario": "Pasu Reload Goated",
+          "says": "Grades \"Pasu Reload Goated\" in its Advanced tier, filed under Kinetic."
+        },
+        {
+          "source": "viscose-benchmarks",
+          "scenario": "Pasu Reload Goated",
+          "says": "Grades \"Pasu Reload Goated\" in its Hard tier, filed under Reading."
+        }
+      ],
+      "audience": {
+        "scenario": "Pasu Reload Goated",
+        "plays": 539939,
+        "entries": 38352
+      }
+    },
+    {
+      "family": "PipeClick",
+      "subCategory": "Dynamic Clicking",
+      "isolates": "Clicking a target moving down a fixed track, which isolates lead from target-finding entirely.",
+      "why": "Aimerz+'s pipe lineage: targets travelling a fixed path, so the shot is a timing problem rather than a reading one. Four tiers by one author across two seasons of their sheet.",
+      "evidence": [
+        {
+          "source": "aimerz-s0",
+          "scenario": "aimerz+ PipeClick Hard",
+          "says": "Grades \"aimerz+ PipeClick Hard\" in its Hard tier, filed under Clicking."
+        },
+        {
+          "source": "aimerz-s1",
+          "scenario": "Aimerz+ pipeClick Easy S1",
+          "says": "Grades \"Aimerz+ pipeClick Easy S1\" in its Easy tier, filed under CLICKING."
+        }
+      ],
+      "audience": {
+        "scenario": "Aimerz+ pipeClick Easy S1",
+        "plays": 450524,
+        "entries": 67034
+      }
+    },
+    {
+      "family": "Popcorn",
+      "subCategory": "Dynamic Clicking",
+      "isolates": "Multiple moving targets at once, where choosing which to shoot is part of what is graded.",
+      "why": "Many small targets moving at once, which tests target selection as much as the click. Voltaic's three tiers then rAim's Goated cut, the thinnest of them carrying 7,917 entries.",
+      "evidence": [
+        {
+          "source": "aimerz-dynamic-clicking",
+          "scenario": "Popcorn Goated rAim",
+          "says": "Grades \"Popcorn Goated rAim\" in its Hard tier, filed under Dynamic Clicking."
+        },
+        {
+          "source": "revosect-s1",
+          "scenario": "Popcorn Goated rAim",
+          "says": "Grades \"Popcorn Goated rAim\" in its Advanced tier, filed under Kinetic."
         },
         {
           "source": "voltaic-s5",
-          "scenario": "Whisphere",
-          "says": "Controlsphere is described as inspired by 'cloverrawcontrol' and 'whisphere', which is what puts Whisphere in the control lineage."
+          "scenario": "VT Popcorn Advanced S5",
+          "says": "Grades \"VT Popcorn Advanced S5\" in its Advanced tier, filed under Clicking."
         }
       ],
       "audience": {
-        "scenario": "Whisphere",
-        "plays": 2581721,
-        "entries": 107258
+        "scenario": "VT Popcorn Intermediate S5",
+        "plays": 2219510,
+        "entries": 125608
       }
     },
     {
-      "family": "Air Voltaic",
-      "subCategory": "Reading Tracking",
-      "isolates": "Tracking where the difficulty is predicting where the target goes next, not holding the crosshair steady.",
-      "why": "Reading is the second sub-skill Voltaic's nine do not name, and separating it from Precise is what stops a smooth-hands player and a good-reads player getting the same tracking rank for different reasons. Air Voltaic is the long-standing test of the reading half.",
-      "evidence": [
-        {
-          "source": "kovaaks-scenario",
-          "scenario": "Air Voltaic Easy",
-          "says": "An air target whose strafe pattern is unpredictable enough that the limiting factor is the read rather than the hold."
-        }
-      ],
-      "audience": {
-        "scenario": "Air Voltaic Easy",
-        "plays": 1240728,
-        "entries": 108257
-      }
-    },
-    {
-      "family": "Strafe Reading",
-      "subCategory": "Reading Tracking",
-      "isolates": "Reading strafe direction changes at close range, where the angular speed is highest.",
-      "why": "The close-range half of reading. These are among the oldest scenarios in KovaaK's and were the community's standard tracking routine long before any benchmark adopted them - the reason the top-window variant still carries 761,427 plays without appearing in a current benchmark tier.",
-      "evidence": [
-        {
-          "source": "kovaaks-scenario",
-          "scenario": "Close Long Strafes Invincible",
-          "says": "The author's description is \"Close Fast Strafes, but the bots are invincible\" - the invincible variants exist so the score is time-on-target over a fixed period rather than a kill count."
-        },
-        {
-          "source": "kovaaks-scenario",
-          "scenario": "Air Angelic 4 Voltaic Easy",
-          "says": "Easy-to-read movement, used in community routines specifically for smoothness work rather than reading difficulty."
-        }
-      ],
-      "audience": {
-        "scenario": "Close Fast Strafes Invincible - Thin",
-        "plays": 761427,
-        "entries": 51437
-      },
-      "thin": "Two of this family's variants are among the three scenarios in the pool for which KovaaK's publishes no aim type and no benchmark tier settles one, so their category rests on the pool's own classification. The author descriptions above are what supports it."
-    },
-    {
-      "family": "DotTS",
-      "subCategory": "Speed Switching",
-      "isolates": "Switching between static targets, where all of the cost is the travel and none is the track.",
-      "why": "The cleanest possible speed-switching test: the targets do not move, so the only thing being measured is how fast the crosshair gets to the next one and stops. Voltaic built it as their first static target-switching scenario for that reason. The Expert variant is psalmTS rather than a DotTS variant, and that is the point of it: Voltaic retired PsalmTS in S5 by replacing it with EddieTS specifically to get more regular and predictable movement, which makes the scenario they moved away from the less predictable member of the same lineage - the right thing to ask at the top of a speed ladder, and a claim from the author who made it.",
+      "family": "DriftTS",
+      "subCategory": "Evasive Switching",
+      "isolates": "Switching between drifting targets, where the lead is small but never zero.",
+      "why": "Targets that drift rather than strafe, so the switch lands on something still moving. Four Voltaic tiers.",
       "evidence": [
         {
           "source": "voltaic-s5",
-          "scenario": "VT DotTS Novice S5",
-          "says": "Static dots with a notably longer time-to-kill than Pokeball scenarios - their first static target switching scenario."
-        },
-        {
-          "source": "voltaic-s5",
-          "scenario": "VT psalmTS Advanced",
-          "says": "EddieTS is introduced as a replacement for PsalmTS with \"more regular and predictable movement, to lean into the speed target switching design\" - so PsalmTS is the same lineage with the predictability taken out."
+          "scenario": "VT DriftTS Advanced S5",
+          "says": "Grades \"VT DriftTS Advanced S5\" in its Advanced tier, filed under Switching."
         }
       ],
       "audience": {
-        "scenario": "VT DotTS Intermediate S5",
-        "plays": 2730409,
-        "entries": 115024
-      }
-    },
-    {
-      "family": "voxTS",
-      "subCategory": "Speed Switching",
-      "isolates": "Speed switching across wide angles, where the travel is long enough to dominate the shot.",
-      "why": "DotTS holds the short-travel case; the vox lineage holds the wide one, and the community treats it as the wide-angle switch-speed reference. Voltaic's EddieTS opens the family because it was rebuilt specifically to be predictable, which is what a speed test wants at the novice end. voxTS Viscose Varied grades the Intermediate window rather than the Expert one: Aimerz+ SpeedTS runs the same twelve scenarios at both its difficulties, so its Hard listing asks a higher score of the same scenario rather than naming a harder one, and reading it as difficulty had this scenario grading Expert while the only other source that names it said Intermediate.",
-      "evidence": [
-        {
-          "source": "voltaic-s5",
-          "scenario": "VT EddieTS Novice S5",
-          "says": "A replacement for PsalmTS with \"more regular and predictable movement, to lean into the speed target switching design\"."
-        },
-        {
-          "source": "steam-ts-thread",
-          "scenario": "voxTargetSwitch",
-          "says": "Recommended in community discussion for speed switching specifically, as against the evasive long-TTK scenarios in the same thread."
-        }
-      ],
-      "audience": {
-        "scenario": "voxTS Viscose Varied",
-        "plays": 4585828,
-        "entries": 429489
+        "scenario": "VT DriftTS Intermediate S5",
+        "plays": 1145463,
+        "entries": 95674
       }
     },
     {
       "family": "FlyTS",
       "subCategory": "Evasive Switching",
-      "isolates": "Switching onto targets that are actively evading on all three axes.",
-      "why": "Evasive switching is where the target does not cooperate: acquisition is only half the job and the other half is staying on it. Voltaic's FlyTS is built around unpredictable strafe directions and a long time-to-kill, which is exactly that split, and it carries the family through three windows. The Expert variant is domiSwitch, the best-evidenced placement in the pool: four independent sources - Aimerz+, both Viscose seasons and snakbox - all file it in their hardest tier, none of them lists it twice, and it is one of the two scenarios the community names when asked what trains evasive switching. The other is tamTargetSwitch Smooth, which the Smooth Switching family grades, so the sub-skill's two families are the two scenarios people actually point at.",
+      "isolates": "Switching between flying targets, which adds height to the evasion.",
+      "why": "Voltaic's evasive ladder, four tiers, opening at 177,146 entries.",
       "evidence": [
         {
           "source": "voltaic-s5",
-          "scenario": "VT FlyTS Novice S5",
-          "says": "\"Heavier focus on XYZ movement with a fairly high TTK, with the bots strafing in less conventional and predictable directions.\""
+          "scenario": "VT FlyTS Advanced S5",
+          "says": "Grades \"VT FlyTS Advanced S5\" in its Advanced tier, filed under Switching."
         },
         {
-          "source": "steam-ts-thread",
-          "scenario": "domiSwitch",
-          "says": "Named alongside tamTargetSwitch Smooth as an \"evasive long TTK\" scenario that emphasises landing accuracy and post-flick micro correction, which the thread calls \"pretty pivotal for good TS\"."
-        },
-        {
-          "source": "kovaaks-scenario",
-          "scenario": "domiSwitch",
-          "says": "The author's description is \"55 hp, regen after 0.3 seconds without damage\" - a regenerating health pool makes the score depend on staying on the target after the flick rather than on reaching it, which is the property the sub-skill is named for."
+          "source": "voltaic-s5-5",
+          "scenario": "VT FlyTS Advanced S5",
+          "says": "Grades \"VT FlyTS Advanced S5\" in its Advanced tier, filed under Evasive."
         }
       ],
       "audience": {
-        "scenario": "domiSwitch",
-        "plays": 387700,
-        "entries": 36637
-      },
-      "thin": "KovaaK's classifies this scenario Clicking, and it is the one place in the pool where Apogee overrules a first-party source. It is overruled on a measurement rather than an opinion: domiSwitch fires 177 shots per kill at a regenerating target, against the 1.1 to 1.3 every clicking scenario in the corpus produces. The correction and its re-derivation live in data/aim_type_corrections.json and npm run validate:aimtypes. Worth knowing because aim_type is the column find-match partitions the queue on, so if the correction were ever dropped this scenario would be graded as Switching and matched as Clicking."
+        "scenario": "VT FlyTS Intermediate S5",
+        "plays": 1301048,
+        "entries": 111165
+      }
     },
     {
-      "family": "Smooth Switching",
+      "family": "bounceTS",
       "subCategory": "Evasive Switching",
-      "isolates": "Switching where holding the target after the flick is what scores, not the flick.",
-      "why": "The clearest statement of the evasive half, and the one the community makes itself: the regenerating-dot scenarios pay for what happens after the flick lands. That is the property the sub-skill is named for, and it is why this family sits beside FlyTS rather than under Speed.",
+      "isolates": "Switching between targets that bounce away, so the next target has moved by the time the flick lands.",
+      "why": "Targets that reverse on contact, the sharpest direction change in the sub-skill. Four Voltaic tiers; the Elite board carries 645.",
       "evidence": [
         {
-          "source": "steam-ts-thread",
-          "scenario": "tamTargetSwitch Smooth Hard",
-          "says": "Recommended as an \"evasive long TTK\" scenario that emphasises landing accuracy and post-flick micro correction, which the thread calls \"pretty pivotal for good TS\"."
+          "source": "voltaic-s4",
+          "scenario": "VT bounceTS Advanced",
+          "says": "Grades \"VT bounceTS Advanced\" in its Advanced tier, filed under Switching."
+        }
+      ],
+      "audience": {
+        "scenario": "VT bounceTS Intermediate",
+        "plays": 1738926,
+        "entries": 87801
+      }
+    },
+    {
+      "family": "domiSwitch",
+      "subCategory": "Evasive Switching",
+      "isolates": "Switching under sustained fire against regenerating targets, the reference evasive switching test.",
+      "why": "Four cuts of one scenario, sized and sped: easier, easy, standard, hard.",
+      "evidence": [
+        {
+          "source": "aimerz-evasive-switching",
+          "scenario": "domiSwitch",
+          "says": "Grades \"domiSwitch\" in its Hard tier, filed under Evasive Switch."
         },
         {
-          "source": "kovaaks-scenario",
+          "source": "anima-micro-v2",
+          "scenario": "domiSwitch Avasive",
+          "says": "Grades \"domiSwitch Avasive\" in its All tier, filed under Micro-Switching."
+        },
+        {
+          "source": "viscose-benchmarks",
+          "scenario": "domiSwitch",
+          "says": "Grades \"domiSwitch\" in its Hard tier, filed under Evasive."
+        }
+      ],
+      "audience": {
+        "scenario": "domiSwitch Easy",
+        "plays": 713438,
+        "entries": 77522
+      }
+    },
+    {
+      "family": "evaTS",
+      "subCategory": "Evasive Switching",
+      "isolates": "Switching between targets that actively evade, the hardest read in the sub-skill.",
+      "why": "Evasive movement on no fixed pattern, so the switch cannot be pre-aimed. Four Voltaic tiers; the Elite board carries 367 and is the thinnest rung in the whole pool.",
+      "evidence": [
+        {
+          "source": "voltaic-s4",
+          "scenario": "VT evaTS Advanced",
+          "says": "Grades \"VT evaTS Advanced\" in its Advanced tier, filed under Switching."
+        }
+      ],
+      "audience": {
+        "scenario": "VT evaTS Intermediate",
+        "plays": 1358966,
+        "entries": 86597
+      }
+    },
+    {
+      "family": "tamTargetSwitch Smooth",
+      "subCategory": "Evasive Switching",
+      "isolates": "Evasive switching with smooth rather than sharp evasion, so the read is continuous.",
+      "why": "The smooth cut of tam's switching lineage, which asks for a controlled switch rather than a flicked one. Four cuts by one author, on boards from 4,255 to 138,805.",
+      "evidence": [
+        {
+          "source": "aimerz-evasive-switching",
           "scenario": "tamTargetSwitch Smooth Hard",
-          "says": "The author's description: small regenerating dots circling the player, 0.5s TTK, regeneration starting immediately on going off target."
+          "says": "Grades \"tamTargetSwitch Smooth Hard\" in its Hard tier, filed under Evasive Switch."
+        },
+        {
+          "source": "viscose-benchmarks",
+          "scenario": "tamTargetSwitch Smooth",
+          "says": "Grades \"tamTargetSwitch Smooth\" in its Hard tier, filed under Evasive."
         }
       ],
       "audience": {
@@ -451,165 +550,931 @@
       }
     },
     {
-      "family": "ControlTS",
-      "subCategory": "Stability Switching",
-      "isolates": "Switching onto small, slow targets where precision rather than speed is the limit.",
-      "why": "Stability switching is the third switching sub-skill, and it is the one that is not about speed at all. Voltaic describes ControlTS as DriftTS with the emphasis moved to precision, which is the distinction the sub-skill exists to hold.",
+      "family": "Controlsphere",
+      "subCategory": "Precise Tracking",
+      "isolates": "Precise tracking on a sphere that resists correction, where the error is the measure rather than the hit.",
+      "why": "A sphere held at distance, graded by size and range rather than speed - so the four rungs are one test at four target sizes and nothing else moving. The cleanest difficulty axis in the pool.",
       "evidence": [
         {
-          "source": "voltaic-s5",
-          "scenario": "VT ControlTS Novice S5",
-          "says": "Gently jumping targets, similar to DriftTS but with \"greater focus on precision, so the targets are slower and smaller\"."
+          "source": "aimerz-precise-tracking",
+          "scenario": "Extra Controlsphere",
+          "says": "Grades \"Extra Controlsphere\" in its Hard tier, filed under Precise."
+        },
+        {
+          "source": "anima-micro-v1",
+          "scenario": "Extra Controlsphere",
+          "says": "Grades \"Extra Controlsphere\" in its All tier, filed under Micro-Tracking."
+        },
+        {
+          "source": "astro-tracking-benchmark",
+          "scenario": "Controlsphere Far",
+          "says": "Grades \"Controlsphere Far\" in its Advanced tier, filed under Micro."
         }
       ],
       "audience": {
-        "scenario": "kinTS Voltaic",
-        "plays": 588780,
-        "entries": 44253
-      }
-    },
-    {
-      "family": "beanTS",
-      "subCategory": "Stability Switching",
-      "isolates": "Switching between close targets, where the flick is short enough that stability dominates.",
-      "why": "The short-range half of stability switching, and the family that sits closest to micro clicking without crossing into it - the author says as much. Penta Bounce opens it because Voltaic built it for predictable straight-line movement at varying angles, which is the novice form of the same question.",
-      "evidence": [
-        {
-          "source": "voltaic-s5",
-          "scenario": "VT Penta Bounce Novice S5",
-          "says": "Targets ricocheting inside a pentagon, built as a \"smoothness target switching scenario with predictable movement in straight lines at varying angles\"."
-        },
-        {
-          "source": "kovaaks-scenario",
-          "scenario": "beanTS",
-          "says": "The author's description: \"1w2t Smallflicks and voxTS had baby, and they named it beanTS\" - explicitly a cross of the micro-clicking and switching lineages."
-        }
-      ],
-      "audience": {
-        "scenario": "beanTS",
-        "plays": 2334521,
-        "entries": 166119
-      },
-      "thin": "beanTS is one of the three pool scenarios KovaaK's publishes no aim type for, so its category cannot be checked against the game and validate:pool warns about it. Two things settle it instead. Its sibling beanTS Larger carries the same author description and IS classified Target Switching by KovaaK's. And the two measure the same mechanic: 28.5 shots per kill against 26.4, both with a lightning gun, over more than nine thousand and seven thousand kills respectively - a one-shot clicking scenario would be near 1.1. The method is the one described in data/aim_type_corrections.json; there is no correction to make here, because KovaaK's has said nothing to contradict."
-    },
-    {
-      "family": "Popcorn",
-      "subCategory": "Dynamic Clicking",
-      "isolates": "Dynamic clicking where the next target appears the moment the last one dies, so the cost is reacquisition rather than holding an aim.",
-      "why": "Popcorn is the dynamic-clicking lineage the corpus agrees on, and the agreement is strongest exactly where the ladder needs it. Voltaic rates it at every tier from Novice to Elite, which supplies three of the four windows from one author. The Expert rank is scored on Popcorn MV Advanced instead of Voltaic's own Elite variant, and that is a deliberate swap: four independent benchmarks name Popcorn MV Advanced at their hardest tier where only Voltaic names its Elite one, and the boards are 4,511 against 1,028. A rank set on the smaller board could not separate its own top two ranks - both cleared by 0.09% - which is a rank nobody can hold.",
-      "evidence": [
-        {
-          "source": "voltaic-s5",
-          "scenario": "VT Popcorn Advanced S5",
-          "says": "Voltaic's S5 and S5.5 sheets both carry Popcorn, and agree on its Novice and Intermediate numbers."
-        },
-        {
-          "source": "viscose-s2",
-          "scenario": "Popcorn MV Advanced",
-          "says": "Viscose S2 files Popcorn MV Advanced at Expert; Viscose, Jade Palace and snakbox each place it at their own hardest tier."
-        },
-        {
-          "source": "jade-palace",
-          "scenario": "Popcorn MV Advanced",
-          "says": "Jade Palace Dynamic rates Popcorn MV Advanced Hard, the fourth independent author to name it at the top."
-        }
-      ],
-      "audience": {
-        "scenario": "VT Popcorn Advanced S5",
-        "plays": 483965,
-        "entries": 28730
+        "scenario": "Extra Controlsphere",
+        "plays": 2534486,
+        "entries": 77178
       }
     },
     {
       "family": "PGT",
       "subCategory": "Precise Tracking",
-      "isolates": "Precise tracking on a small target that keeps moving, where the score is time on target rather than a flick landed.",
-      "why": "Precise Tracking carried two families and needed a third that was not another sphere. PGT is Voltaic's own precise-tracking lineage across all four of its tiers, so every window is one author's opinion of the same skill rather than four authors' opinions stitched together, and its Novice board is the largest of any scenario entering the pool at 208,370 entries. Its Expert board is the thinnest thing here at 1,727, which clears the floor and is recorded rather than hidden.",
+      "isolates": "Voltaic's precise ground track, the reference for tracking a target that stays on one plane.",
+      "why": "Precise ground tracking, Voltaic's own four tiers end to end. The Elite board is 3,674 - thin for this sub-skill, but a ladder one author wrote rather than one assembled here.",
       "evidence": [
         {
           "source": "voltaic-s5",
           "scenario": "VT PGT Advanced S5",
-          "says": "Voltaic S5 and S5.5 both rate PGT, and disagree by under 2% at Advanced - the numbers are reconciled to the median."
+          "says": "Grades \"VT PGT Advanced S5\" in its Advanced tier, filed under Tracking."
         },
         {
-          "source": "kovaaks-scenario",
-          "scenario": "VT PGT Novice S5",
-          "says": "The author's own description files it under precise tracking."
+          "source": "voltaic-s5-5",
+          "scenario": "VT PGT Advanced S5",
+          "says": "Grades \"VT PGT Advanced S5\" in its Advanced tier, filed under Precise."
         }
       ],
       "audience": {
-        "scenario": "VT PGT Novice S5",
-        "plays": 1271794,
-        "entries": 208370
+        "scenario": "VT PGT Intermediate S5",
+        "plays": 2418953,
+        "entries": 130299
+      }
+    },
+    {
+      "family": "PGTI",
+      "subCategory": "Precise Tracking",
+      "isolates": "Precise ground tracking with invincibility, so the score is time-on-target rather than a kill.",
+      "why": "The invincible cut of the same test: no kill, so the run never resets and the score is time on target alone. Revosect and Voltaic each cut it twice and the four ascend across them.",
+      "evidence": [
+        {
+          "source": "revosect-s1",
+          "scenario": "PGTI rAim",
+          "says": "Grades \"PGTI rAim\" in its Advanced tier, filed under Precise."
+        },
+        {
+          "source": "viscose-benchmarks",
+          "scenario": "PGTI Voltaic",
+          "says": "Grades \"PGTI Voltaic\" in its Hard tier, filed under Blending."
+        },
+        {
+          "source": "viscose-benchmarks-s2",
+          "scenario": "PGTI Voltaic",
+          "says": "Grades \"PGTI Voltaic\" in its Expert tier, filed under Blending."
+        }
+      ],
+      "audience": {
+        "scenario": "PGTI Voltaic Easy",
+        "plays": 3244218,
+        "entries": 156104
+      }
+    },
+    {
+      "family": "Pauer Glider",
+      "subCategory": "Precise Tracking",
+      "isolates": "Smooth tracking on a glider, at the gentlest end of precise tracking the corpus offers.",
+      "why": "A glider path - long, shallow direction changes that punish over-correction rather than slow reaction. Opens on Level 1 rather than the 60% Larger cut, which KovaaK's types as Switching.",
+      "evidence": [
+        {
+          "source": "aimerz-precise-tracking",
+          "scenario": "Smoothbot Pauer Glider",
+          "says": "Grades \"Smoothbot Pauer Glider\" in its Hard tier, filed under Precise."
+        },
+        {
+          "source": "astro-tracking-benchmark",
+          "scenario": "Smoothbot Pauer Glider Intermediate",
+          "says": "Grades \"Smoothbot Pauer Glider Intermediate\" in its Advanced tier, filed under Precision."
+        }
+      ],
+      "audience": {
+        "scenario": "Smoothbot Pauer Glider",
+        "plays": 428316,
+        "entries": 29342
+      }
+    },
+    {
+      "family": "PreciseOrb",
+      "subCategory": "Precise Tracking",
+      "isolates": "Tracking a small orb where the tolerance is tighter than the hand's natural tremor.",
+      "why": "A small orb on a smooth path. The 15% Slower cut sits between Novice and Intermediate, which is what lets this family avoid VT PreciseOrb Elite and its board of 273.",
+      "evidence": [
+        {
+          "source": "viscose-benchmarks-s2",
+          "scenario": "VT PreciseOrb Intermediate 15% Slower",
+          "says": "Grades \"VT PreciseOrb Intermediate 15% Slower\" in its Medium tier, filed under Blending."
+        },
+        {
+          "source": "voltaic-s4",
+          "scenario": "VT PreciseOrb Advanced",
+          "says": "Grades \"VT PreciseOrb Advanced\" in its Advanced tier, filed under Tracking."
+        }
+      ],
+      "audience": {
+        "scenario": "VT PreciseOrb Intermediate",
+        "plays": 2418273,
+        "entries": 91064
+      }
+    },
+    {
+      "family": "PreciseTrack",
+      "subCategory": "Precise Tracking",
+      "isolates": "Aimerz+'s precise track, which grades holding a line rather than reacting to a change in one.",
+      "why": "Aimerz+'s precise lineage, all four rungs from their S1 sheet. Their earlier Normal and Hard cuts are typed Clicking by KovaaK's and are left out for it.",
+      "evidence": [
+        {
+          "source": "aimerz-precise-tracking",
+          "scenario": "Aimerz+ PreciseTrack Med S1",
+          "says": "Grades \"Aimerz+ PreciseTrack Med S1\" in its Easy tier, filed under Precise."
+        },
+        {
+          "source": "aimerz-s1",
+          "scenario": "Aimerz+ PreciseTrack Easy S1",
+          "says": "Grades \"Aimerz+ PreciseTrack Easy S1\" in its Easy tier, filed under TRACKING."
+        }
+      ],
+      "audience": {
+        "scenario": "Aimerz+ PreciseTrack Easy S1",
+        "plays": 133090,
+        "entries": 19582
+      }
+    },
+    {
+      "family": "Smoothbot",
+      "subCategory": "Precise Tracking",
+      "isolates": "Tracking a bot moving smoothly, which is the cleanest separation of precision from reaction.",
+      "why": "Voltaic's smoothness ladder, on the largest board in tracking at 326,600 entries. Expert is Pauer's cut rather than VT Smoothbot Elite, whose board carries 691.",
+      "evidence": [
+        {
+          "source": "aimerz-precise-tracking",
+          "scenario": "Smoothbot Pauer",
+          "says": "Grades \"Smoothbot Pauer\" in its Hard tier, filed under Precise."
+        },
+        {
+          "source": "voltaic-s4",
+          "scenario": "VT Smoothbot Advanced",
+          "says": "Grades \"VT Smoothbot Advanced\" in its Advanced tier, filed under Tracking."
+        },
+        {
+          "source": "e1se-smooth-benchmark",
+          "scenario": "VT Smoothbot Advanced",
+          "says": "Grades \"VT Smoothbot Advanced\" in its Hard tier, filed under Smoothbot."
+        }
+      ],
+      "audience": {
+        "scenario": "VT Smoothbot Novice",
+        "plays": 4442796,
+        "entries": 326600
+      }
+    },
+    {
+      "family": "Smoothsphere",
+      "subCategory": "Precise Tracking",
+      "isolates": "Smooth tracking on a sphere, the most-graded precise tracking test across the sheets.",
+      "why": "Smoothness on a sphere rather than a bot, which removes the strafe pattern entirely. Viscose's easier cut, the base scenario, then Astro's two. Smoothsphere Diamond sat at Advanced above the standard Smoothsphere. Astro is the only author who grades both and grades Diamond Easy against Smoothsphere Normal, so the two are swapped to the order its own author published.",
+      "evidence": [
+        {
+          "source": "astro-tracking-benchmark",
+          "scenario": "Smoothsphere",
+          "says": "Grades \"Smoothsphere\" in its Normal tier, filed under Precision."
+        },
+        {
+          "source": "viscose-benchmarks-s2",
+          "scenario": "Smoothsphere Viscose Horizontal Entry",
+          "says": "Grades \"Smoothsphere Viscose Horizontal Entry\" in its Easier tier, filed under Arm."
+        },
+        {
+          "source": "e1se-smooth-benchmark",
+          "scenario": "Smoothsphere",
+          "says": "Grades \"Smoothsphere\" in its Normal tier, filed under Sphere."
+        }
+      ],
+      "audience": {
+        "scenario": "Smoothsphere",
+        "plays": 2421014,
+        "entries": 99071
+      }
+    },
+    {
+      "family": "Snake Track",
+      "subCategory": "Precise Tracking",
+      "isolates": "Tracking a target on a winding path, where the curve is predictable and the tolerance is not.",
+      "why": "A target on a winding path, so the hand keeps turning instead of settling. Four Voltaic tiers, including the Novice Hard cut that fills the gap to Intermediate.",
+      "evidence": [
+        {
+          "source": "astro-tracking-benchmark",
+          "scenario": "VT Snake Track Intermediate S5",
+          "says": "Grades \"VT Snake Track Intermediate S5\" in its Normal tier, filed under Precision."
+        },
+        {
+          "source": "voltaic-s5",
+          "scenario": "VT Snake Track Advanced S5",
+          "says": "Grades \"VT Snake Track Advanced S5\" in its Advanced tier, filed under Tracking."
+        },
+        {
+          "source": "voltaic-s5-5",
+          "scenario": "VT Snake Track Advanced S5",
+          "says": "Grades \"VT Snake Track Advanced S5\" in its Advanced tier, filed under Precise."
+        }
+      ],
+      "audience": {
+        "scenario": "VT Snake Track Intermediate S5",
+        "plays": 2896668,
+        "entries": 136997
+      }
+    },
+    {
+      "family": "cloverRawControl",
+      "subCategory": "Precise Tracking",
+      "isolates": "Holding a crosshair on a target with no smoothing at all, which is control tracking stripped to the mouse.",
+      "why": "Raw control with no strafe pattern to read, which isolates the hand from the head. Viscose's entry cut, then Aimerz+ and Astro's three.",
+      "evidence": [
+        {
+          "source": "aimerz-precise-tracking",
+          "scenario": "cloverRawControl",
+          "says": "Grades \"cloverRawControl\" in its Hard tier, filed under Precise."
+        },
+        {
+          "source": "anima-micro-v1",
+          "scenario": "cloverRawControl",
+          "says": "Grades \"cloverRawControl\" in its All tier, filed under Micro-Tracking."
+        },
+        {
+          "source": "anima-micro-v2",
+          "scenario": "cloverRawControl",
+          "says": "Grades \"cloverRawControl\" in its All tier, filed under Micro-Tracking."
+        }
+      ],
+      "audience": {
+        "scenario": "cloverRawControl Easy",
+        "plays": 3972941,
+        "entries": 159515
+      }
+    },
+    {
+      "family": "waldoTS",
+      "subCategory": "Precise Tracking",
+      "isolates": "Precise tracking that also has to find its target first, which is why it sits at the easy end here.",
+      "why": "Viscose's precise lineage: four tiers by one author, on boards from 7,830 to 240,024.",
+      "evidence": [
+        {
+          "source": "aimspeed-benchmarks-2-0",
+          "scenario": "waldoTS",
+          "says": "Grades \"waldoTS\" in its Normal tier, filed under Assorted."
+        },
+        {
+          "source": "viscose-benchmarks",
+          "scenario": "waldoTS",
+          "says": "Grades \"waldoTS\" in its Hard tier, filed under Micro."
+        },
+        {
+          "source": "viscose-benchmarks-s2",
+          "scenario": "waldoTS",
+          "says": "Grades \"waldoTS\" in its Hard tier, filed under Micro."
+        }
+      ],
+      "audience": {
+        "scenario": "waldoTS",
+        "plays": 3698827,
+        "entries": 240024
+      }
+    },
+    {
+      "family": "Aether",
+      "subCategory": "Reactive Tracking",
+      "isolates": "Reacting to a target that changes direction in the air, where the change is the whole test.",
+      "why": "Voltaic S5's air scenario, opened on its own Entry cut so the family has a real beginner rung instead of starting at Novice.",
+      "evidence": [
+        {
+          "source": "voltaic-s5",
+          "scenario": "VT Aether Advanced S5",
+          "says": "Grades \"VT Aether Advanced S5\" in its Advanced tier, filed under Tracking."
+        },
+        {
+          "source": "voltaic-s5-5",
+          "scenario": "VT Aether Advanced S5",
+          "says": "Grades \"VT Aether Advanced S5\" in its Advanced tier, filed under Reactive."
+        }
+      ],
+      "audience": {
+        "scenario": "VT Aether Intermediate S5",
+        "plays": 1845226,
+        "entries": 109700
+      }
+    },
+    {
+      "family": "Air",
+      "subCategory": "Reactive Tracking",
+      "isolates": "Tracking a target off the ground, so the vertical axis carries as much of the error as the horizontal.",
+      "why": "Voltaic's air ladder - a target free in three dimensions, which is the hardest reading in the game. Expert is Air Angelic, the drifting cut.",
+      "evidence": [
+        {
+          "source": "astro-tracking-benchmark",
+          "scenario": "Air Angelic",
+          "says": "Grades \"Air Angelic\" in its Advanced tier, filed under Reactive."
+        },
+        {
+          "source": "jade-palace-air",
+          "scenario": "Air Angelic",
+          "says": "Grades \"Air Angelic\" in its Hard tier, filed under Reading."
+        },
+        {
+          "source": "revosect-s1",
+          "scenario": "Air Angelic",
+          "says": "Grades \"Air Angelic\" in its Advanced tier, filed under Precise."
+        }
+      ],
+      "audience": {
+        "scenario": "VT Air Intermediate",
+        "plays": 1943386,
+        "entries": 92756
+      }
+    },
+    {
+      "family": "Air CELESTIAL",
+      "subCategory": "Reactive Tracking",
+      "isolates": "Reactive air tracking at speeds where the correction has to start before the change is confirmed.",
+      "why": "The celestial air lineage at four speeds, from the slowed no-UFO cut up to Divine. One test, four difficulties, boards from 17,531 to 117,829.",
+      "evidence": [
+        {
+          "source": "aimerz-reactive-tracking",
+          "scenario": "Air CELESTIAL",
+          "says": "Grades \"Air CELESTIAL\" in its Hard tier, filed under Reactive."
+        },
+        {
+          "source": "astro-tracking-benchmark",
+          "scenario": "Air CELESTIAL No UFO Easy",
+          "says": "Grades \"Air CELESTIAL No UFO Easy\" in its Normal tier, filed under Reactive."
+        },
+        {
+          "source": "tsk-mixed-benchmarks",
+          "scenario": "Air Divine",
+          "says": "Grades \"Air Divine\" in its Reactive by slapped tier, filed under Air."
+        }
+      ],
+      "audience": {
+        "scenario": "Air CELESTIAL No UFO Easy Slowed",
+        "plays": 594418,
+        "entries": 117829
+      }
+    },
+    {
+      "family": "Ground",
+      "subCategory": "Reactive Tracking",
+      "isolates": "Reacting to direction changes along the ground, the plainest form of the sub-skill.",
+      "why": "The same reading held to the floor plane. Four Voltaic tiers, including the Novice Hard cut.",
+      "evidence": [
+        {
+          "source": "astro-tracking-benchmark",
+          "scenario": "VT Ground Intermediate S5",
+          "says": "Grades \"VT Ground Intermediate S5\" in its Normal tier, filed under Reactive."
+        },
+        {
+          "source": "voltaic-s5",
+          "scenario": "VT Ground Advanced S5",
+          "says": "Grades \"VT Ground Advanced S5\" in its Advanced tier, filed under Tracking."
+        },
+        {
+          "source": "voltaic-s5-5",
+          "scenario": "VT Ground Advanced S5",
+          "says": "Grades \"VT Ground Advanced S5\" in its Advanced tier, filed under Reactive."
+        }
+      ],
+      "audience": {
+        "scenario": "VT Ground Intermediate S5",
+        "plays": 2560574,
+        "entries": 116821
+      }
+    },
+    {
+      "family": "Invincible Strafes",
+      "subCategory": "Reactive Tracking",
+      "isolates": "Strafe reading with no kill to end it, so the score is how long the read holds.",
+      "why": "The invincible strafe lineage: no kill, so the target never stops changing direction. Long, fast, thin, then raspberry, which is the order those cuts get harder.",
+      "evidence": [
+        {
+          "source": "aimerz-reactive-tracking",
+          "scenario": "Close Fast Strafes Invincible",
+          "says": "Grades \"Close Fast Strafes Invincible\" in its Hard tier, filed under Reactive."
+        },
+        {
+          "source": "jade-palace-ground",
+          "scenario": "Close Fast Strafes Invincible - Thin",
+          "says": "Grades \"Close Fast Strafes Invincible - Thin\" in its Hard tier, filed under Reading."
+        },
+        {
+          "source": "tsk-mixed-benchmarks",
+          "scenario": "Close Fast Strafes Invincible - Thin",
+          "says": "Grades \"Close Fast Strafes Invincible - Thin\" in its Reactive by slapped tier, filed under Ground."
+        }
+      ],
+      "audience": {
+        "scenario": "Close Long Strafes Invincible",
+        "plays": 4659947,
+        "entries": 224790
       }
     },
     {
       "family": "Plaza",
       "subCategory": "Reactive Tracking",
-      "isolates": "Reactive tracking against a target that changes direction without telegraphing it, so reading the change is the whole cost.",
-      "why": "Plaza is Voltaic S4's reactive lineage and the one scenario in the corpus that four authors place in the reactive band. Its first three windows come from S4 unchanged. The Expert rank moved off VT Plaza Elite, whose board carries 324 players, onto VT Plaza Viscose Thin at 4,420 - a rank read off three hundred people is a fact about them rather than about the skill, which is the same objection this pool already records against its thinnest sources.",
+      "isolates": "Reactive tracking in the open, where the target has room to make the change large.",
+      "why": "Reactive tracking with cover and depth, so the target leaves the plane. Voltaic's three tiers, then Viscose's thin cut.",
       "evidence": [
+        {
+          "source": "aimerz-reactive-tracking",
+          "scenario": "VT Plaza Viscose Thin",
+          "says": "Grades \"VT Plaza Viscose Thin\" in its Hard tier, filed under Reactive."
+        },
+        {
+          "source": "jade-palace-ground",
+          "scenario": "VT Plaza Viscose Thin",
+          "says": "Grades \"VT Plaza Viscose Thin\" in its Easy tier, filed under Hybrid."
+        },
         {
           "source": "voltaic-s4",
           "scenario": "VT Plaza Advanced",
-          "says": "Voltaic S4 rates Plaza from Novice to Advanced, supplying the first three windows from one author."
-        },
-        {
-          "source": "aimerz-reactive",
-          "scenario": "VT Plaza Viscose Thin",
-          "says": "Aimerz+ Reactive Tracking files VT Plaza Viscose Thin at Hard, which is what bands it to Expert."
+          "says": "Grades \"VT Plaza Advanced\" in its Advanced tier, filed under Tracking."
         }
       ],
       "audience": {
-        "scenario": "VT Plaza Advanced",
-        "plays": 966473,
-        "entries": 29633
+        "scenario": "VT Plaza Intermediate",
+        "plays": 2417685,
+        "entries": 97139
       }
     },
     {
-      "family": "RawControlSphere",
-      "subCategory": "Control Tracking",
-      "isolates": "Control tracking with the target's movement unsmoothed, so a correction has to be made continuously rather than once per pass.",
-      "why": "Control Tracking's two families were Controlsphere and Raw Control, both of which reward a settled crosshair. RawControlSphere is Viscose's lineage across Entry, Easier, Medium and Hard, which makes it the only control family whose four windows are one author's graded progression. The Expert rank is scored on RawControlSphere Hard rather than the Expert-tier scenario of the same name: 1,897 players against 710, and the thinner board is not worth the tier's label.",
+      "family": "Sparky",
+      "subCategory": "Reactive Tracking",
+      "isolates": "Voltaic's reactive reference, and the scenario most of the sheets grade reactive tracking against.",
+      "why": "Sparky's ground plaza, the most-played reactive scenario outside Voltaic. Easy, the one-way cut, the base scenario, then thin. Ground Plaza Sparky v3 OW sat at Intermediate below the standard V3. Aimerz+ grades OW Hard and Astro grades it Advanced, against Normal and Easy for the plain V3, so the Overwatch cut moves up one and the standard cut down one.",
       "evidence": [
         {
-          "source": "viscose-s2",
-          "scenario": "RawControlSphere",
-          "says": "Viscose S2 rates the RawControlSphere lineage at Entry, Easier, Medium, Hard and Expert - every window this family needs."
+          "source": "aimerz-reactive-tracking",
+          "scenario": "Ground Plaza Sparky v3 OW",
+          "says": "Grades \"Ground Plaza Sparky v3 OW\" in its Hard tier, filed under Reactive."
         },
         {
-          "source": "kovaaks-scenario",
-          "scenario": "RawControlSphere",
-          "says": "The author's description marks it as the unsmoothed variant of Controlsphere."
+          "source": "astro-tracking-benchmark",
+          "scenario": "Ground Plaza Sparky V3",
+          "says": "Grades \"Ground Plaza Sparky V3\" in its Normal tier, filed under Reactive."
+        },
+        {
+          "source": "jade-palace-ground",
+          "scenario": "Ground Plaza Sparky V3",
+          "says": "Grades \"Ground Plaza Sparky V3\" in its Easy tier, filed under Hybrid."
         }
       ],
       "audience": {
-        "scenario": "RawControlSphere",
-        "plays": 304758,
-        "entries": 29711
+        "scenario": "Ground Plaza Sparky V3",
+        "plays": 1480257,
+        "entries": 97347
       }
     },
     {
-      "family": "Air Invincible 4",
-      "subCategory": "Reading Tracking",
-      "isolates": "Reading tracking in the air, where the target cannot be killed and the only score is how much of its path was followed.",
-      "why": "Reading Tracking is the sub-skill the old two-per-sub-skill rule left thinnest, and Air Voltaic Invincible 4 is the most-agreed reading scenario outside the pool - five independent benchmarks name it. Unlike every other family added here its Expert board is not thin at all: it was the only one of the seven candidates whose top window cleared the old percentile-derived board requirement as well as the floor that replaced it, and the only one that needed no substitution at Expert to do so.",
+      "family": "Aimerz+ Static Switching",
+      "subCategory": "Speed Switching",
+      "isolates": "Switching between static targets at speed, with no evasion to read.",
+      "why": "Aimerz+'s static switching set, ordered by bot count and then by size: six bots slightly larger, five bots slightly larger, the standard week five cut, and that cut shrunk 30%.",
       "evidence": [
         {
-          "source": "viscose-s2",
-          "scenario": "Air Voltaic Invincible 4",
-          "says": "Viscose S2 rates the Invincible 4 lineage at Easier, Medium and Expert; Viscose Entry supplies the Novice window."
+          "source": "aimerz-speedts",
+          "scenario": "Aimerz+ Week #5 - Static Switching",
+          "says": "Grades \"Aimerz+ Week #5 - Static Switching\" in its Easy tier, filed under SpeedTS."
         },
         {
-          "source": "jade-palace",
-          "scenario": "Air Voltaic Invincible 4",
-          "says": "Jade Palace Air files Air Voltaic Invincible 4 at Hard, agreeing on where the top of the lineage sits."
+          "source": "lemon-static-benchmark",
+          "scenario": "Aimerz+ Week #5 - Static Switching 30% smaller",
+          "says": "Grades \"Aimerz+ Week #5 - Static Switching 30% smaller\" in its Advanced tier, filed under Stability."
+        },
+        {
+          "source": "viscose-benchmarks-s2",
+          "scenario": "aimerz+ Static Switching 5 Bot Slightly Larger",
+          "says": "Grades \"aimerz+ Static Switching 5 Bot Slightly Larger\" in its Medium tier, filed under Speed."
         }
       ],
       "audience": {
-        "scenario": "Air Voltaic Invincible 4",
-        "plays": 181517,
-        "entries": 19081
+        "scenario": "Aimerz+ Week #5 - Static Switching",
+        "plays": 1460346,
+        "entries": 98820
+      }
+    },
+    {
+      "family": "DotTS",
+      "subCategory": "Speed Switching",
+      "isolates": "Switching between small static dots, which puts the precision of the stop under the speed.",
+      "why": "Small dots at speed, which puts the cost on the stop rather than the travel. Opened on the 30% larger community cut so the beginner rung is easier than Voltaic's Novice.",
+      "evidence": [
+        {
+          "source": "aimspeed-benchmarks",
+          "scenario": "DotTS 30% Larger",
+          "says": "Grades \"DotTS 30% Larger\" in its Easy tier, filed under Other."
+        },
+        {
+          "source": "aimspeed-benchmarks-2-0",
+          "scenario": "DotTS 30% Larger",
+          "says": "Grades \"DotTS 30% Larger\" in its Normal tier, filed under Varied."
+        },
+        {
+          "source": "aimerz-speedts",
+          "scenario": "DotTS 30% Larger",
+          "says": "Grades \"DotTS 30% Larger\" in its Easy tier, filed under SpeedTS."
+        }
+      ],
+      "audience": {
+        "scenario": "VT DotTS Intermediate S5",
+        "plays": 2730409,
+        "entries": 115024
+      }
+    },
+    {
+      "family": "EddieTS",
+      "subCategory": "Speed Switching",
+      "isolates": "Voltaic's speed switching reference at S5, on the deepest switching boards available.",
+      "why": "Voltaic S5's speed scenario, four tiers end to end.",
+      "evidence": [
+        {
+          "source": "voltaic-s5",
+          "scenario": "VT EddieTS Advanced S5",
+          "says": "Grades \"VT EddieTS Advanced S5\" in its Advanced tier, filed under Switching."
+        },
+        {
+          "source": "voltaic-s5-5",
+          "scenario": "VT EddieTS Advanced S5",
+          "says": "Grades \"VT EddieTS Advanced S5\" in its Advanced tier, filed under Speed."
+        }
+      ],
+      "audience": {
+        "scenario": "VT EddieTS Intermediate S5",
+        "plays": 1756304,
+        "entries": 103628
+      }
+    },
+    {
+      "family": "Pokeball",
+      "subCategory": "Speed Switching",
+      "isolates": "Switching between static spheres that have to be drilled rather than clicked, so the aim has to hold through the kill.",
+      "why": "Hand-built into Static Clicking over two hours and moved here on a measurement, not a preference. All four rungs fire a Poke-Drill at 22.1, 27.7, 31.8 and 54.4 shots per kill across 119 runs of the corpus; the 191 correctly-labelled clicking scenarios sit between 1.0 and 1.3, so a single click kills nothing here and the family cannot be clicking of any kind. KovaaK's types all sixteen Pokeball scenarios in the corpus as Switching, and the benchmark labels land eight of them on Speed Switching - AimSpeed, Viscose, Avasive and Revosect - against two Lemon calls Stability. The rungs are unchanged from the Static Clicking build.",
+      "evidence": [
+        {
+          "source": "aimerz-static-clicking",
+          "scenario": "Pokeball Frenzy Auto Small Wide",
+          "says": "Grades \"Pokeball Frenzy Auto Small Wide\" in its Hard tier, filed under Static Clicking."
+        },
+        {
+          "source": "lemon-static-benchmark",
+          "scenario": "Pokeball 1w4ts 30%",
+          "says": "Grades \"Pokeball 1w4ts 30%\" in its Advanced tier, filed under Stability."
+        },
+        {
+          "source": "revosect-s1",
+          "scenario": "Pokeball Wide rAim",
+          "says": "Grades \"Pokeball Wide rAim\" in its Advanced tier, filed under Flick TS."
+        }
+      ],
+      "audience": {
+        "scenario": "Pokeball 1w4ts 30%",
+        "plays": 2445758,
+        "entries": 153619
+      }
+    },
+    {
+      "family": "StaticSwitchingVox",
+      "subCategory": "Speed Switching",
+      "isolates": "Static switching at four target sizes, which grades speed against precision on one axis.",
+      "why": "The same author's static cut, again sized rather than re-authored: jumbo, standard, small, extra small.",
+      "evidence": [
+        {
+          "source": "aimspeed-benchmarks",
+          "scenario": "StaticSwitchingVox Jumbo",
+          "says": "Grades \"StaticSwitchingVox Jumbo\" in its Easy tier, filed under voxTS."
+        },
+        {
+          "source": "aimspeed-benchmarks-2-0",
+          "scenario": "StaticSwitchingVox Jumbo",
+          "says": "Grades \"StaticSwitchingVox Jumbo\" in its Easy tier, filed under voxTS."
+        },
+        {
+          "source": "aimerz-speedts",
+          "scenario": "StaticSwitchingVox xxSmall",
+          "says": "Grades \"StaticSwitchingVox xxSmall\" in its Easy tier, filed under SpeedTS."
+        }
+      ],
+      "audience": {
+        "scenario": "StaticSwitchingVox Small",
+        "plays": 314721,
+        "entries": 40109
+      }
+    },
+    {
+      "family": "devTS",
+      "subCategory": "Speed Switching",
+      "isolates": "Target switching where the targets are still and the only cost is the travel between them.",
+      "why": "The goated dev lineage - easy, no-reload, no-reload static, then static small, which is the order its author cut them in.",
+      "evidence": [
+        {
+          "source": "aimspeed-benchmarks",
+          "scenario": "devTS Goated Easy",
+          "says": "Grades \"devTS Goated Easy\" in its Easy tier, filed under devTS."
+        },
+        {
+          "source": "aimspeed-benchmarks-2-0",
+          "scenario": "devTS Goated Easy",
+          "says": "Grades \"devTS Goated Easy\" in its Easy tier, filed under devTS."
+        },
+        {
+          "source": "sparky-voltaic-s1",
+          "scenario": "devTS Goated NR",
+          "says": "Grades \"devTS Goated NR\" in its All tier, filed under Switching."
+        }
+      ],
+      "audience": {
+        "scenario": "devTS Goated NR Static Small",
+        "plays": 7192860,
+        "entries": 234610
+      }
+    },
+    {
+      "family": "psalmTS",
+      "subCategory": "Speed Switching",
+      "isolates": "Speed switching at close spacing, where the flick is short enough that overshoot dominates.",
+      "why": "Voltaic's three tiers, then the community scenario they were cut from - harder than Advanced, on a 42,007-entry board. psalmTS Voltaic is Voltaic S3's cut and sat at Expert above VT psalmTS Advanced, which S4 grades Advanced and snakbox additionally grades Hard. The S4 cut is the harder of the two on the only evidence there is, so it takes the Expert rung.",
+      "evidence": [
+        {
+          "source": "voltaic-s3",
+          "scenario": "psalmTS Voltaic",
+          "says": "Grades \"psalmTS Voltaic\" in its Advanced tier, filed under Switching."
+        },
+        {
+          "source": "voltaic-s4",
+          "scenario": "VT psalmTS Advanced",
+          "says": "Grades \"VT psalmTS Advanced\" in its Advanced tier, filed under Switching."
+        },
+        {
+          "source": "snakbox-benchmark",
+          "scenario": "VT psalmTS Advanced",
+          "says": "Grades \"VT psalmTS Advanced\" in its Hard tier, filed under Speed Switching."
+        }
+      ],
+      "audience": {
+        "scenario": "VT psalmTS Novice",
+        "plays": 1913960,
+        "entries": 192428
+      }
+    },
+    {
+      "family": "skyTS",
+      "subCategory": "Speed Switching",
+      "isolates": "Speed switching with vertical separation, so the travel is not confined to one axis.",
+      "why": "Voltaic's speed ladder, four tiers, opening on the largest switching board in the game at 348,412 entries. Its Elite board is 933, the thinnest rung in this category.",
+      "evidence": [
+        {
+          "source": "voltaic-s4",
+          "scenario": "VT skyTS Advanced",
+          "says": "Grades \"VT skyTS Advanced\" in its Advanced tier, filed under Switching."
+        },
+        {
+          "source": "snakbox-benchmark",
+          "scenario": "VT skyTS Advanced",
+          "says": "Grades \"VT skyTS Advanced\" in its Hard tier, filed under Speed Switching."
+        }
+      ],
+      "audience": {
+        "scenario": "VT skyTS Novice",
+        "plays": 7735104,
+        "entries": 348412
+      }
+    },
+    {
+      "family": "voxTargetSwitch",
+      "subCategory": "Speed Switching",
+      "isolates": "Target switching across four sizes of the same test, isolating size from every other variable.",
+      "why": "The oldest switching lineage in the game, graded by target size across four cuts - jumbo, large, standard, small. One test at four difficulties with nothing else changing.",
+      "evidence": [
+        {
+          "source": "aimspeed-benchmarks",
+          "scenario": "voxTargetSwitch Jumbo",
+          "says": "Grades \"voxTargetSwitch Jumbo\" in its Easy tier, filed under voxTS."
+        },
+        {
+          "source": "aimspeed-benchmarks-2-0",
+          "scenario": "voxTargetSwitch",
+          "says": "Grades \"voxTargetSwitch\" in its Normal tier, filed under voxTS."
+        },
+        {
+          "source": "sparky-voltaic-s1",
+          "scenario": "voxTargetSwitch",
+          "says": "Grades \"voxTargetSwitch\" in its All tier, filed under Switching."
+        }
+      ],
+      "audience": {
+        "scenario": "voxTargetSwitch",
+        "plays": 3190698,
+        "entries": 149475
+      }
+    },
+    {
+      "family": "2Guys",
+      "subCategory": "Static Clicking",
+      "isolates": "Two static targets close together, where the cost is the flick between them rather than finding either one.",
+      "why": "The two-target flick is the oldest static test there is, and the one with the most agreement behind it: Lemon, snakbox, Aimerz+ and Viscose all grade a 1w2ts Perfected cut, which is four independent authors deciding the same scenario measures the same thing. What it adds over the wide-wall families is a flick short enough that the stop matters more than the travel. Its Novice rung is a jumbo Tile Frenzy cut nobody grades, because none of those four sheets reaches below their own entry tier and a static family still needs a bottom rung.",
+      "evidence": [
+        {
+          "source": "aimerz-static-clicking",
+          "scenario": "1w2ts Perfected",
+          "says": "Grades \"1w2ts Perfected\" in its Hard tier, filed under Static Clicking."
+        },
+        {
+          "source": "lemon-static-benchmark",
+          "scenario": "1w2ts Pasu Perfected 30% Smaller",
+          "says": "Grades \"1w2ts Pasu Perfected 30% Smaller\" in its Advanced tier, filed under Micro."
+        },
+        {
+          "source": "viscose-benchmarks",
+          "scenario": "1w2ts Pasu Perfected 30% Smaller",
+          "says": "Grades \"1w2ts Pasu Perfected 30% Smaller\" in its Hard tier, filed under Precision."
+        }
+      ],
+      "audience": {
+        "scenario": "1w2ts Perfected",
+        "plays": 1480204,
+        "entries": 99608
+      }
+    },
+    {
+      "family": "Diagonal",
+      "subCategory": "Static Clicking",
+      "isolates": "Static clicking along a diagonal path, so neither axis of the mouse can be relaxed.",
+      "why": "The diagonal ClickTrack path, where neither axis of the mouse can be relaxed - which is the whole reason to keep an axis family beyond Horizontal. Its Expert board is the thinnest kept anywhere in this season and is held on a written exception rather than on merit: the lineage has three cuts above the Expert floor and Triangle and Horizontal hold two of them. If the boards grow, the exception retires itself.",
+      "evidence": [
+        {
+          "source": "tsk-mixed-benchmarks",
+          "scenario": "ClickTrack Diagonal 2t",
+          "says": "Grades \"ClickTrack Diagonal 2t\" in its Static tier, filed under Normal."
+        }
+      ],
+      "audience": {
+        "scenario": "ClickTrack Diagonal 2t",
+        "plays": 14668,
+        "entries": 3075
+      }
+    },
+    {
+      "family": "Horizontal",
+      "subCategory": "Static Clicking",
+      "isolates": "Static clicking along one horizontal line, which removes vertical correction and leaves travel and stopping.",
+      "why": "ClickTrack along one axis, which removes vertical correction and leaves travel and stopping. It is the only one of the four ClickTrack axis families besides Triangle whose boards reach the Expert floor, which is why it survived and Vertical did not. Same caveat as Triangle: TSK Mixed grades the lineage but bands it by category name, so the difficulty order here is the lineage's own - shorter to longer travel, three targets to two.",
+      "evidence": [
+        {
+          "source": "tsk-mixed-benchmarks",
+          "scenario": "ClickTrack Horizontal 2t",
+          "says": "Grades \"ClickTrack Horizontal 2t\" in its Static tier, filed under Normal."
+        }
+      ],
+      "audience": {
+        "scenario": "ClickTrack Horizontal 2t",
+        "plays": 25690,
+        "entries": 3978
+      }
+    },
+    {
+      "family": "Micro",
+      "subCategory": "Static Clicking",
+      "isolates": "Static clicking at target sizes where the click is smaller than a comfortable stop, so overshoot is the whole difficulty.",
+      "why": "Micro clicking is graded only at the hard end - Aimerz+ S1 and Anima Micro are the sheets, and both sit near the top of this ladder - so the family is built downwards from a graded Expert rung rather than upwards from a graded Novice one. That is the opposite of how the other static families are assembled and it is why two of its four rungs are hand-picked. What it isolates is real and not covered elsewhere: at these target sizes the limit is the tremor in the stop, not the speed of the travel.",
+      "evidence": [
+        {
+          "source": "aimerz-s1",
+          "scenario": "Aimerz+ 1w4ts HF Hard S1",
+          "says": "Grades \"Aimerz+ 1w4ts HF Hard S1\" in its Hard tier, filed under Static."
+        },
+        {
+          "source": "lemon-static-benchmark",
+          "scenario": "1w2ts Pasu Perfected",
+          "says": "Grades \"1w2ts Pasu Perfected\" in its Intermediate tier, filed under Micro."
+        },
+        {
+          "source": "viscose-benchmarks",
+          "scenario": "1w2ts Pasu Perfected",
+          "says": "Grades \"1w2ts Pasu Perfected\" in its Medium tier, filed under Precision."
+        }
+      ],
+      "audience": {
+        "scenario": "Aimerz+ 1w4ts HF Hard S1",
+        "plays": 1286561,
+        "entries": 123394
+      }
+    },
+    {
+      "family": "Micro Pressure",
+      "subCategory": "Static Clicking",
+      "isolates": "Micro clicking under a time pressure that punishes the second attempt, not just the first miss.",
+      "why": "Micro clicking with a shot clock. cA Static S1 and Aimerz+ Static Clicking both grade the fuglaapressure lineage, and what the pressure adds is that a miss is not merely a miss - the recovery has to happen inside the same window, which is a different skill from the untimed micro next door. The easy rung is the lineage author's own supereasy cut, made for people who cannot yet hold the graded ones, which is exactly what a Novice rung is for.",
+      "evidence": [
+        {
+          "source": "aimerz-static-clicking",
+          "scenario": "fuglaaPressure 6 Sphere Hipfire no reload",
+          "says": "Grades \"fuglaaPressure 6 Sphere Hipfire no reload\" in its Hard tier, filed under Static Clicking."
+        },
+        {
+          "source": "ca-static-s1",
+          "scenario": "cA fuglaapressure",
+          "says": "Grades \"cA fuglaapressure\" in its All tier, filed under Consciousness."
+        }
+      ],
+      "audience": {
+        "scenario": "cA fuglaapressure",
+        "plays": 139877,
+        "entries": 15771
+      }
+    },
+    {
+      "family": "Speed",
+      "subCategory": "Static Clicking",
+      "isolates": "Raw click rate on targets already easy to hit, which is the one static quality no benchmark grades.",
+      "why": "The one family in the pool no benchmark sheet grades at any difficulty, and it is here because that absence is a gap rather than a verdict. Raw click speed on targets a player can already hit is a thing the community tests constantly and the sheets do not cover, so all four rungs are picked and the family is documented as thin. 1wall9000targets is the reference scenario for it and carries a larger board than most graded scenarios in this season.",
+      "evidence": [
+        {
+          "source": "kovaaks-leaderboard",
+          "scenario": "1wall9000targets",
+          "says": "108,729 players have posted a score on it, which is a larger board than most graded scenarios in this season carry - the absence of a benchmark tier is not an absence of an audience."
+        }
+      ],
+      "audience": {
+        "scenario": "1wall9000targets",
+        "boardEntries": 108729
+      },
+      "thin": "No benchmark sheet grades this lineage at any difficulty, so there is no design note to cite and the family rests on the pool's own reading of the test. That is a fact about the sheets rather than the scenario, and it is recorded here rather than papered over."
+    },
+    {
+      "family": "Triangle",
+      "subCategory": "Static Clicking",
+      "isolates": "Static clicking around three fixed points, where the return path is as graded as the outward one.",
+      "why": "The unsuffixed ClickTrack cuts, which are the deepest boards in that lineage and the only ones that reach the Expert board floor. Three fixed points rather than a line: the return path is graded as well as the outward one, which is what separates it from Horizontal. TSK Mixed is the only sheet that carries ClickTrack at all, and it names its tiers after categories rather than difficulties, so the rungs are ordered by the lineage's own axis and not by a published tier.",
+      "evidence": [
+        {
+          "source": "tsk-mixed-benchmarks",
+          "scenario": "ClickTrack 3t",
+          "says": "Grades \"ClickTrack 3t\" in its Static tier, filed under Normal."
+        }
+      ],
+      "audience": {
+        "scenario": "ClickTrack 3t",
+        "plays": 42111,
+        "entries": 5695
+      }
+    },
+    {
+      "family": "Wide Pressure",
+      "subCategory": "Static Clicking",
+      "isolates": "Wide static clicking under pressure, at spacings that make the flick long enough to be planned.",
+      "why": "Wide static clicking with a shot clock, and the family with the widest spread of sources behind it - Revosect S5 grades the entry and intermediate cuts, cA Static S1 and Aimerz+ Static Clicking grade the hard ones. The spacing is what separates it from Micro Pressure: the flick is long enough to be planned, so what is under pressure is the plan rather than the tremor.",
+      "evidence": [
+        {
+          "source": "aimerz-static-clicking",
+          "scenario": "darkPressure",
+          "says": "Grades \"darkPressure\" in its Hard tier, filed under Static Clicking."
+        },
+        {
+          "source": "revosect-s5",
+          "scenario": "1w4t Pressure Revosect Entry",
+          "says": "Grades \"1w4t Pressure Revosect Entry\" in its Entry tier, filed under Static."
+        },
+        {
+          "source": "ca-static-s1",
+          "scenario": "cA 7ts pressure",
+          "says": "Grades \"cA 7ts pressure\" in its All tier, filed under Pace Control."
+        }
+      ],
+      "audience": {
+        "scenario": "cA 7ts pressure",
+        "plays": 93169,
+        "entries": 10495
+      }
+    },
+    {
+      "family": "Wide wall",
+      "subCategory": "Static Clicking",
+      "isolates": "Static clicking over long travel, at a sensitivity the scenario itself argues against lowering.",
+      "why": "Two claims have to hold for a static family: that it measures clicking rather than pathing, and that it does not quietly reward a sensitivity nobody plays at. Voltaic built ww5t for the second, and the Wide Wall lineage above it is the oldest and most-played static test in the game - more evidence about what a static score means than any benchmark can supply. Its Novice rung comes from Avasive, a sheet this pool deliberately does not name as a source, so it is admitted on the shape of the test rather than on Avasive's grading.",
+      "evidence": [
+        {
+          "source": "lemon-static-benchmark",
+          "scenario": "Wide Wall 3 Targets",
+          "says": "Grades \"Wide Wall 3 Targets\" in its Advanced tier, filed under Wide Wall."
+        },
+        {
+          "source": "revosect-s1",
+          "scenario": "Wide Wall 3 Targets",
+          "says": "Grades \"Wide Wall 3 Targets\" in its Advanced tier, filed under Static."
+        },
+        {
+          "source": "viscose-benchmarks-s2",
+          "scenario": "ww4t Voltaic",
+          "says": "Grades \"ww4t Voltaic\" in its Medium tier, filed under Speed."
+        }
+      ],
+      "audience": {
+        "scenario": "Wide Wall 3 Targets",
+        "plays": 5601340,
+        "entries": 554846
       }
     }
   ]

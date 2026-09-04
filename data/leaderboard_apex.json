@@ -1,6 +1,6 @@
 {
   "source": "kovaaks.com/webapp-backend/leaderboard/scores/global",
-  "sampledAt": "2026-08-31T22:31:14.334Z",
+  "sampledAt": "2026-09-04T00:09:16.472Z",
   "sampleRanks": [
     1,
     2,
@@ -15,6 +15,54 @@
   ],
   "$comment": "The score at fixed board ranks, for the scenarios the season pool names. Serves the post-rank board only: no season threshold is cut from this file. It exists because a percentile stops resolving at the top - the finest fraction sampled into leaderboard_percentiles.json is 0.1%, and the ladder's own hardest rank is already 0.8% - so the range a post-rank board has to separate is inside the clamp. A rank means the same thing on a board of any size, which is what a fraction stops doing up here. Re-run tools/sampleApex.ts when the pool changes.",
   "boards": [
+    {
+      "scenario": "1w2ts Pasu Perfected",
+      "leaderboardId": 22601,
+      "total": 44011,
+      "points": [
+        {
+          "rank": 1,
+          "score": 149
+        },
+        {
+          "rank": 2,
+          "score": 145
+        },
+        {
+          "rank": 3,
+          "score": 145
+        },
+        {
+          "rank": 5,
+          "score": 142
+        },
+        {
+          "rank": 10,
+          "score": 133
+        },
+        {
+          "rank": 25,
+          "score": 126
+        },
+        {
+          "rank": 50,
+          "score": 122
+        },
+        {
+          "rank": 100,
+          "score": 118
+        },
+        {
+          "rank": 250,
+          "score": 115
+        },
+        {
+          "rank": 500,
+          "score": 112
+        }
+      ],
+      "sampledAt": "2026-09-02T21:03:16.561Z"
+    },
     {
       "scenario": "1w2ts Pasu Perfected 30% Smaller",
       "leaderboardId": 28243,
@@ -62,6 +110,102 @@
         }
       ],
       "sampledAt": "2026-08-30T06:20:20.640Z"
+    },
+    {
+      "scenario": "1w2ts Perfected",
+      "leaderboardId": 565,
+      "total": 51663,
+      "points": [
+        {
+          "rank": 1,
+          "score": 174
+        },
+        {
+          "rank": 2,
+          "score": 168
+        },
+        {
+          "rank": 3,
+          "score": 167
+        },
+        {
+          "rank": 5,
+          "score": 166
+        },
+        {
+          "rank": 10,
+          "score": 163
+        },
+        {
+          "rank": 25,
+          "score": 156
+        },
+        {
+          "rank": 50,
+          "score": 151
+        },
+        {
+          "rank": 100,
+          "score": 145
+        },
+        {
+          "rank": 250,
+          "score": 138
+        },
+        {
+          "rank": 500,
+          "score": 132
+        }
+      ],
+      "sampledAt": "2026-09-02T21:02:43.692Z"
+    },
+    {
+      "scenario": "1w2ts Perfected Easier",
+      "leaderboardId": 160751,
+      "total": 2891,
+      "points": [
+        {
+          "rank": 1,
+          "score": 171
+        },
+        {
+          "rank": 2,
+          "score": 166
+        },
+        {
+          "rank": 3,
+          "score": 165
+        },
+        {
+          "rank": 5,
+          "score": 164
+        },
+        {
+          "rank": 10,
+          "score": 162
+        },
+        {
+          "rank": 25,
+          "score": 154
+        },
+        {
+          "rank": 50,
+          "score": 148
+        },
+        {
+          "rank": 100,
+          "score": 142
+        },
+        {
+          "rank": 250,
+          "score": 133
+        },
+        {
+          "rank": 500,
+          "score": 126
+        }
+      ],
+      "sampledAt": "2026-09-02T21:02:38.826Z"
     },
     {
       "scenario": "1w2ts reload smallflicks Entry",
@@ -256,6 +400,150 @@
       "sampledAt": "2026-08-30T06:20:01.299Z"
     },
     {
+      "scenario": "1w4t Pasu Raspberry Grandmaster",
+      "leaderboardId": 14778,
+      "total": 9224,
+      "points": [
+        {
+          "rank": 1,
+          "score": 133
+        },
+        {
+          "rank": 2,
+          "score": 121
+        },
+        {
+          "rank": 3,
+          "score": 121
+        },
+        {
+          "rank": 5,
+          "score": 118
+        },
+        {
+          "rank": 10,
+          "score": 108
+        },
+        {
+          "rank": 25,
+          "score": 99
+        },
+        {
+          "rank": 50,
+          "score": 91
+        },
+        {
+          "rank": 100,
+          "score": 85
+        },
+        {
+          "rank": 250,
+          "score": 77
+        },
+        {
+          "rank": 500,
+          "score": 70
+        }
+      ],
+      "sampledAt": "2026-09-03T01:17:39.144Z"
+    },
+    {
+      "scenario": "1w4t Pressure Revosect Entry",
+      "leaderboardId": 142878,
+      "total": 1780,
+      "points": [
+        {
+          "rank": 1,
+          "score": 2130.69
+        },
+        {
+          "rank": 2,
+          "score": 2070.62
+        },
+        {
+          "rank": 3,
+          "score": 2045.85
+        },
+        {
+          "rank": 5,
+          "score": 2005.01
+        },
+        {
+          "rank": 10,
+          "score": 1928.02
+        },
+        {
+          "rank": 25,
+          "score": 1821.24
+        },
+        {
+          "rank": 50,
+          "score": 1755.02
+        },
+        {
+          "rank": 100,
+          "score": 1670.34
+        },
+        {
+          "rank": 250,
+          "score": 1547.15
+        },
+        {
+          "rank": 500,
+          "score": 1447.23
+        }
+      ],
+      "sampledAt": "2026-09-02T21:05:20.481Z"
+    },
+    {
+      "scenario": "1w4t Pressure Revosect Int",
+      "leaderboardId": 143201,
+      "total": 1206,
+      "points": [
+        {
+          "rank": 1,
+          "score": 2076.38
+        },
+        {
+          "rank": 2,
+          "score": 2070.07
+        },
+        {
+          "rank": 3,
+          "score": 1955.89
+        },
+        {
+          "rank": 5,
+          "score": 1916.49
+        },
+        {
+          "rank": 10,
+          "score": 1836.55
+        },
+        {
+          "rank": 25,
+          "score": 1750.08
+        },
+        {
+          "rank": 50,
+          "score": 1693.91
+        },
+        {
+          "rank": 100,
+          "score": 1651.36
+        },
+        {
+          "rank": 250,
+          "score": 1551.44
+        },
+        {
+          "rank": 500,
+          "score": 1426.96
+        }
+      ],
+      "sampledAt": "2026-09-02T21:05:25.279Z"
+    },
+    {
       "scenario": "1w6ts reload v2",
       "leaderboardId": 666,
       "total": 52393,
@@ -350,6 +638,1110 @@
         }
       ],
       "sampledAt": "2026-08-30T06:18:20.642Z"
+    },
+    {
+      "scenario": "1wall5targets_pasu Reload",
+      "leaderboardId": 43,
+      "total": 298301,
+      "points": [
+        {
+          "rank": 1,
+          "score": 241
+        },
+        {
+          "rank": 2,
+          "score": 223
+        },
+        {
+          "rank": 3,
+          "score": 221
+        },
+        {
+          "rank": 5,
+          "score": 215
+        },
+        {
+          "rank": 10,
+          "score": 207
+        },
+        {
+          "rank": 25,
+          "score": 199
+        },
+        {
+          "rank": 50,
+          "score": 190
+        },
+        {
+          "rank": 100,
+          "score": 183
+        },
+        {
+          "rank": 250,
+          "score": 172
+        },
+        {
+          "rank": 500,
+          "score": 166
+        }
+      ],
+      "sampledAt": "2026-09-03T01:17:48.849Z"
+    },
+    {
+      "scenario": "1wall5targets_pasu slow",
+      "leaderboardId": 544,
+      "total": 148703,
+      "points": [
+        {
+          "rank": 1,
+          "score": 266
+        },
+        {
+          "rank": 2,
+          "score": 257
+        },
+        {
+          "rank": 3,
+          "score": 243
+        },
+        {
+          "rank": 5,
+          "score": 233
+        },
+        {
+          "rank": 10,
+          "score": 221
+        },
+        {
+          "rank": 25,
+          "score": 213
+        },
+        {
+          "rank": 50,
+          "score": 204
+        },
+        {
+          "rank": 100,
+          "score": 196
+        },
+        {
+          "rank": 250,
+          "score": 185
+        },
+        {
+          "rank": 500,
+          "score": 176
+        }
+      ],
+      "sampledAt": "2026-09-03T01:17:44.021Z"
+    },
+    {
+      "scenario": "1wall6targets TE Horizontalish",
+      "leaderboardId": 2561,
+      "total": 2838,
+      "points": [
+        {
+          "rank": 1,
+          "score": 327.09
+        },
+        {
+          "rank": 2,
+          "score": 311.83
+        },
+        {
+          "rank": 3,
+          "score": 299.29
+        },
+        {
+          "rank": 5,
+          "score": 287.8
+        },
+        {
+          "rank": 10,
+          "score": 268.28
+        },
+        {
+          "rank": 25,
+          "score": 255.06
+        },
+        {
+          "rank": 50,
+          "score": 240.25
+        },
+        {
+          "rank": 100,
+          "score": 231.2
+        },
+        {
+          "rank": 250,
+          "score": 212.14
+        },
+        {
+          "rank": 500,
+          "score": 195.87
+        }
+      ],
+      "sampledAt": "2026-09-02T21:04:32.019Z"
+    },
+    {
+      "scenario": "1wall9000targets",
+      "leaderboardId": 470,
+      "total": 108731,
+      "points": [
+        {
+          "rank": 1,
+          "score": 401.45
+        },
+        {
+          "rank": 2,
+          "score": 387.61
+        },
+        {
+          "rank": 3,
+          "score": 380.14
+        },
+        {
+          "rank": 5,
+          "score": 370.12
+        },
+        {
+          "rank": 10,
+          "score": 360.2
+        },
+        {
+          "rank": 25,
+          "score": 339.33
+        },
+        {
+          "rank": 50,
+          "score": 329.79
+        },
+        {
+          "rank": 100,
+          "score": 322.1
+        },
+        {
+          "rank": 250,
+          "score": 307.11
+        },
+        {
+          "rank": 500,
+          "score": 294.03
+        }
+      ],
+      "sampledAt": "2026-09-02T21:04:27.189Z"
+    },
+    {
+      "scenario": "2 Tile Jumbo Tile Frenzy",
+      "leaderboardId": 1469,
+      "total": 37539,
+      "points": [
+        {
+          "rank": 1,
+          "score": 212
+        },
+        {
+          "rank": 2,
+          "score": 210
+        },
+        {
+          "rank": 3,
+          "score": 206
+        },
+        {
+          "rank": 5,
+          "score": 204
+        },
+        {
+          "rank": 10,
+          "score": 200
+        },
+        {
+          "rank": 25,
+          "score": 191
+        },
+        {
+          "rank": 50,
+          "score": 185
+        },
+        {
+          "rank": 100,
+          "score": 178
+        },
+        {
+          "rank": 250,
+          "score": 171
+        },
+        {
+          "rank": 500,
+          "score": 165
+        }
+      ],
+      "sampledAt": "2026-09-02T21:02:33.948Z"
+    },
+    {
+      "scenario": "6 Sphere Hipfire 200% Size",
+      "leaderboardId": 3982,
+      "total": 3270,
+      "points": [
+        {
+          "rank": 1,
+          "score": 338
+        },
+        {
+          "rank": 2,
+          "score": 324
+        },
+        {
+          "rank": 3,
+          "score": 300
+        },
+        {
+          "rank": 5,
+          "score": 293
+        },
+        {
+          "rank": 10,
+          "score": 281
+        },
+        {
+          "rank": 25,
+          "score": 269
+        },
+        {
+          "rank": 50,
+          "score": 256
+        },
+        {
+          "rank": 100,
+          "score": 242
+        },
+        {
+          "rank": 250,
+          "score": 224
+        },
+        {
+          "rank": 500,
+          "score": 207
+        }
+      ],
+      "sampledAt": "2026-09-02T21:04:36.870Z"
+    },
+    {
+      "scenario": "Aimerz+ 1w4ts HF Hard S1",
+      "leaderboardId": 68287,
+      "total": 62566,
+      "points": [
+        {
+          "rank": 1,
+          "score": 244
+        },
+        {
+          "rank": 2,
+          "score": 239
+        },
+        {
+          "rank": 3,
+          "score": 238
+        },
+        {
+          "rank": 5,
+          "score": 237
+        },
+        {
+          "rank": 10,
+          "score": 228
+        },
+        {
+          "rank": 25,
+          "score": 222
+        },
+        {
+          "rank": 50,
+          "score": 215
+        },
+        {
+          "rank": 100,
+          "score": 205
+        },
+        {
+          "rank": 250,
+          "score": 195
+        },
+        {
+          "rank": 500,
+          "score": 186
+        }
+      ],
+      "sampledAt": "2026-09-02T21:03:21.374Z"
+    },
+    {
+      "scenario": "Aimerz+ pipeClick Easy S1",
+      "leaderboardId": 68431,
+      "total": 34752,
+      "points": [
+        {
+          "rank": 1,
+          "score": 2000
+        },
+        {
+          "rank": 2,
+          "score": 1760
+        },
+        {
+          "rank": 3,
+          "score": 1710
+        },
+        {
+          "rank": 5,
+          "score": 1650
+        },
+        {
+          "rank": 10,
+          "score": 1600
+        },
+        {
+          "rank": 25,
+          "score": 1460
+        },
+        {
+          "rank": 50,
+          "score": 1390
+        },
+        {
+          "rank": 100,
+          "score": 1320
+        },
+        {
+          "rank": 250,
+          "score": 1220
+        },
+        {
+          "rank": 500,
+          "score": 1150
+        }
+      ],
+      "sampledAt": "2026-09-03T01:19:02.478Z"
+    },
+    {
+      "scenario": "aimerz+ PipeClick Hard",
+      "leaderboardId": 44342,
+      "total": 17574,
+      "points": [
+        {
+          "rank": 1,
+          "score": 161
+        },
+        {
+          "rank": 2,
+          "score": 149
+        },
+        {
+          "rank": 3,
+          "score": 147
+        },
+        {
+          "rank": 5,
+          "score": 141
+        },
+        {
+          "rank": 10,
+          "score": 135
+        },
+        {
+          "rank": 25,
+          "score": 129
+        },
+        {
+          "rank": 50,
+          "score": 123
+        },
+        {
+          "rank": 100,
+          "score": 115
+        },
+        {
+          "rank": 250,
+          "score": 105
+        },
+        {
+          "rank": 500,
+          "score": 97
+        }
+      ],
+      "sampledAt": "2026-09-03T01:19:12.249Z"
+    },
+    {
+      "scenario": "Aimerz+ pipeClick Hard S1",
+      "leaderboardId": 68391,
+      "total": 5210,
+      "points": [
+        {
+          "rank": 1,
+          "score": 1410
+        },
+        {
+          "rank": 2,
+          "score": 1410
+        },
+        {
+          "rank": 3,
+          "score": 1330
+        },
+        {
+          "rank": 5,
+          "score": 1220
+        },
+        {
+          "rank": 10,
+          "score": 1150
+        },
+        {
+          "rank": 25,
+          "score": 1080
+        },
+        {
+          "rank": 50,
+          "score": 1010
+        },
+        {
+          "rank": 100,
+          "score": 960
+        },
+        {
+          "rank": 250,
+          "score": 850
+        },
+        {
+          "rank": 500,
+          "score": 780
+        }
+      ],
+      "sampledAt": "2026-09-03T01:19:17.162Z"
+    },
+    {
+      "scenario": "aimerz+ PipeClick Normal",
+      "leaderboardId": 44344,
+      "total": 27372,
+      "points": [
+        {
+          "rank": 1,
+          "score": 173
+        },
+        {
+          "rank": 2,
+          "score": 171
+        },
+        {
+          "rank": 3,
+          "score": 167
+        },
+        {
+          "rank": 5,
+          "score": 165
+        },
+        {
+          "rank": 10,
+          "score": 157
+        },
+        {
+          "rank": 25,
+          "score": 148
+        },
+        {
+          "rank": 50,
+          "score": 141
+        },
+        {
+          "rank": 100,
+          "score": 135
+        },
+        {
+          "rank": 250,
+          "score": 126
+        },
+        {
+          "rank": 500,
+          "score": 119
+        }
+      ],
+      "sampledAt": "2026-09-03T01:19:07.363Z"
+    },
+    {
+      "scenario": "Aimerz+ pivoTS Hard S1",
+      "leaderboardId": 68313,
+      "total": 5874,
+      "points": [
+        {
+          "rank": 1,
+          "score": 156
+        },
+        {
+          "rank": 2,
+          "score": 149.87
+        },
+        {
+          "rank": 3,
+          "score": 148.81
+        },
+        {
+          "rank": 5,
+          "score": 143
+        },
+        {
+          "rank": 10,
+          "score": 141.93
+        },
+        {
+          "rank": 25,
+          "score": 135
+        },
+        {
+          "rank": 50,
+          "score": 131.87
+        },
+        {
+          "rank": 100,
+          "score": 126
+        },
+        {
+          "rank": 250,
+          "score": 119
+        },
+        {
+          "rank": 500,
+          "score": 114
+        }
+      ],
+      "sampledAt": "2026-09-02T21:05:57.267Z"
+    },
+    {
+      "scenario": "Aimerz+ PreciseTrack Easy S1",
+      "leaderboardId": 68361,
+      "total": 10410,
+      "points": [
+        {
+          "rank": 1,
+          "score": 4097
+        },
+        {
+          "rank": 2,
+          "score": 4082
+        },
+        {
+          "rank": 3,
+          "score": 4081
+        },
+        {
+          "rank": 5,
+          "score": 4057
+        },
+        {
+          "rank": 10,
+          "score": 4010
+        },
+        {
+          "rank": 25,
+          "score": 3863
+        },
+        {
+          "rank": 50,
+          "score": 3777
+        },
+        {
+          "rank": 100,
+          "score": 3626
+        },
+        {
+          "rank": 250,
+          "score": 3383
+        },
+        {
+          "rank": 500,
+          "score": 3186
+        }
+      ],
+      "sampledAt": "2026-09-03T01:22:19.519Z"
+    },
+    {
+      "scenario": "Aimerz+ PreciseTrack Hard S1",
+      "leaderboardId": 68330,
+      "total": 4025,
+      "points": [
+        {
+          "rank": 1,
+          "score": 3730
+        },
+        {
+          "rank": 2,
+          "score": 3517
+        },
+        {
+          "rank": 3,
+          "score": 3502
+        },
+        {
+          "rank": 5,
+          "score": 3461
+        },
+        {
+          "rank": 10,
+          "score": 3371
+        },
+        {
+          "rank": 25,
+          "score": 3118
+        },
+        {
+          "rank": 50,
+          "score": 2938
+        },
+        {
+          "rank": 100,
+          "score": 2757
+        },
+        {
+          "rank": 250,
+          "score": 2445
+        },
+        {
+          "rank": 500,
+          "score": 2155
+        }
+      ],
+      "sampledAt": "2026-09-03T01:22:39.361Z"
+    },
+    {
+      "scenario": "Aimerz+ PreciseTrack Med S1",
+      "leaderboardId": 69248,
+      "total": 5479,
+      "points": [
+        {
+          "rank": 1,
+          "score": 3954
+        },
+        {
+          "rank": 2,
+          "score": 3922
+        },
+        {
+          "rank": 3,
+          "score": 3885
+        },
+        {
+          "rank": 5,
+          "score": 3839
+        },
+        {
+          "rank": 10,
+          "score": 3716
+        },
+        {
+          "rank": 25,
+          "score": 3581
+        },
+        {
+          "rank": 50,
+          "score": 3394
+        },
+        {
+          "rank": 100,
+          "score": 3255
+        },
+        {
+          "rank": 250,
+          "score": 3020
+        },
+        {
+          "rank": 500,
+          "score": 2862
+        }
+      ],
+      "sampledAt": "2026-09-03T01:22:29.292Z"
+    },
+    {
+      "scenario": "aimerz+ PreciseTrack Normal",
+      "leaderboardId": 44354,
+      "total": 10497,
+      "points": [
+        {
+          "rank": 1,
+          "score": 4511
+        },
+        {
+          "rank": 2,
+          "score": 4438
+        },
+        {
+          "rank": 3,
+          "score": 4405
+        },
+        {
+          "rank": 5,
+          "score": 4348
+        },
+        {
+          "rank": 10,
+          "score": 4261
+        },
+        {
+          "rank": 25,
+          "score": 4167
+        },
+        {
+          "rank": 50,
+          "score": 4037
+        },
+        {
+          "rank": 100,
+          "score": 3868
+        },
+        {
+          "rank": 250,
+          "score": 3607
+        },
+        {
+          "rank": 500,
+          "score": 3390
+        }
+      ],
+      "sampledAt": "2026-09-03T01:22:24.387Z"
+    },
+    {
+      "scenario": "Aimerz+ PreciseTrack S1 Modified",
+      "leaderboardId": 84339,
+      "total": 960,
+      "points": [
+        {
+          "rank": 1,
+          "score": 3642
+        },
+        {
+          "rank": 2,
+          "score": 3609
+        },
+        {
+          "rank": 3,
+          "score": 3595
+        },
+        {
+          "rank": 5,
+          "score": 3483
+        },
+        {
+          "rank": 10,
+          "score": 3439
+        },
+        {
+          "rank": 25,
+          "score": 3190
+        },
+        {
+          "rank": 50,
+          "score": 2998
+        },
+        {
+          "rank": 100,
+          "score": 2726
+        },
+        {
+          "rank": 250,
+          "score": 2336
+        },
+        {
+          "rank": 500,
+          "score": 1805
+        }
+      ],
+      "sampledAt": "2026-09-04T00:08:37.293Z"
+    },
+    {
+      "scenario": "aimerz+ Static Switching 5 Bot Slightly Larger",
+      "leaderboardId": 185211,
+      "total": 14947,
+      "points": [
+        {
+          "rank": 1,
+          "score": 185
+        },
+        {
+          "rank": 2,
+          "score": 183
+        },
+        {
+          "rank": 3,
+          "score": 182
+        },
+        {
+          "rank": 5,
+          "score": 180
+        },
+        {
+          "rank": 10,
+          "score": 178
+        },
+        {
+          "rank": 25,
+          "score": 171
+        },
+        {
+          "rank": 50,
+          "score": 168
+        },
+        {
+          "rank": 100,
+          "score": 164
+        },
+        {
+          "rank": 250,
+          "score": 161
+        },
+        {
+          "rank": 500,
+          "score": 156
+        }
+      ],
+      "sampledAt": "2026-09-03T01:25:16.668Z"
+    },
+    {
+      "scenario": "aimerz+ Static Switching 6 Bot Slightly Larger",
+      "leaderboardId": 185407,
+      "total": 22291,
+      "points": [
+        {
+          "rank": 1,
+          "score": 194
+        },
+        {
+          "rank": 2,
+          "score": 191
+        },
+        {
+          "rank": 3,
+          "score": 189
+        },
+        {
+          "rank": 5,
+          "score": 184
+        },
+        {
+          "rank": 10,
+          "score": 180
+        },
+        {
+          "rank": 25,
+          "score": 174
+        },
+        {
+          "rank": 50,
+          "score": 167
+        },
+        {
+          "rank": 100,
+          "score": 161
+        },
+        {
+          "rank": 250,
+          "score": 154
+        },
+        {
+          "rank": 500,
+          "score": 148
+        }
+      ],
+      "sampledAt": "2026-09-03T01:25:11.796Z"
+    },
+    {
+      "scenario": "Aimerz+ Week #5 - Static Switching",
+      "leaderboardId": 38996,
+      "total": 49841,
+      "points": [
+        {
+          "rank": 1,
+          "score": 20081
+        },
+        {
+          "rank": 2,
+          "score": 19945
+        },
+        {
+          "rank": 3,
+          "score": 19699
+        },
+        {
+          "rank": 5,
+          "score": 19533
+        },
+        {
+          "rank": 10,
+          "score": 19118
+        },
+        {
+          "rank": 25,
+          "score": 18188
+        },
+        {
+          "rank": 50,
+          "score": 17782
+        },
+        {
+          "rank": 100,
+          "score": 17350
+        },
+        {
+          "rank": 250,
+          "score": 16570
+        },
+        {
+          "rank": 500,
+          "score": 16070
+        }
+      ],
+      "sampledAt": "2026-09-03T01:25:21.570Z"
+    },
+    {
+      "scenario": "Aimerz+ Week #5 - Static Switching 30% smaller",
+      "leaderboardId": 64673,
+      "total": 5096,
+      "points": [
+        {
+          "rank": 1,
+          "score": 17025
+        },
+        {
+          "rank": 2,
+          "score": 16977
+        },
+        {
+          "rank": 3,
+          "score": 16969
+        },
+        {
+          "rank": 5,
+          "score": 16840
+        },
+        {
+          "rank": 10,
+          "score": 16512
+        },
+        {
+          "rank": 25,
+          "score": 16062
+        },
+        {
+          "rank": 50,
+          "score": 15769
+        },
+        {
+          "rank": 100,
+          "score": 15339
+        },
+        {
+          "rank": 250,
+          "score": 14648
+        },
+        {
+          "rank": 500,
+          "score": 14113
+        }
+      ],
+      "sampledAt": "2026-09-03T01:25:26.412Z"
+    },
+    {
+      "scenario": "Air Angelic",
+      "leaderboardId": 419,
+      "total": 15446,
+      "points": [
+        {
+          "rank": 1,
+          "score": 940.23
+        },
+        {
+          "rank": 2,
+          "score": 938.49
+        },
+        {
+          "rank": 3,
+          "score": 937.86
+        },
+        {
+          "rank": 5,
+          "score": 937.78
+        },
+        {
+          "rank": 10,
+          "score": 935.47
+        },
+        {
+          "rank": 25,
+          "score": 933.57
+        },
+        {
+          "rank": 50,
+          "score": 931.48
+        },
+        {
+          "rank": 100,
+          "score": 929.76
+        },
+        {
+          "rank": 250,
+          "score": 925.08
+        },
+        {
+          "rank": 500,
+          "score": 919.79
+        }
+      ],
+      "sampledAt": "2026-09-02T21:06:50.795Z"
+    },
+    {
+      "scenario": "Air Angelic 4 Voltaic",
+      "leaderboardId": 30,
+      "total": 82768,
+      "points": [
+        {
+          "rank": 1,
+          "score": 4838
+        },
+        {
+          "rank": 2,
+          "score": 4751
+        },
+        {
+          "rank": 3,
+          "score": 4727
+        },
+        {
+          "rank": 5,
+          "score": 4628
+        },
+        {
+          "rank": 10,
+          "score": 4507
+        },
+        {
+          "rank": 25,
+          "score": 4397
+        },
+        {
+          "rank": 50,
+          "score": 4323
+        },
+        {
+          "rank": 100,
+          "score": 4242
+        },
+        {
+          "rank": 250,
+          "score": 4084
+        },
+        {
+          "rank": 500,
+          "score": 3872
+        }
+      ],
+      "sampledAt": "2026-09-02T21:06:45.837Z"
     },
     {
       "scenario": "Air Angelic 4 Voltaic Easy",
@@ -542,6 +1934,54 @@
         }
       ],
       "sampledAt": "2026-08-30T06:21:27.904Z"
+    },
+    {
+      "scenario": "Air Divine",
+      "leaderboardId": 645,
+      "total": 10690,
+      "points": [
+        {
+          "rank": 1,
+          "score": 907.58
+        },
+        {
+          "rank": 2,
+          "score": 905.74
+        },
+        {
+          "rank": 3,
+          "score": 903.97
+        },
+        {
+          "rank": 5,
+          "score": 902.39
+        },
+        {
+          "rank": 10,
+          "score": 901.06
+        },
+        {
+          "rank": 25,
+          "score": 897.28
+        },
+        {
+          "rank": 50,
+          "score": 893.66
+        },
+        {
+          "rank": 100,
+          "score": 890.43
+        },
+        {
+          "rank": 250,
+          "score": 882.14
+        },
+        {
+          "rank": 500,
+          "score": 873.89
+        }
+      ],
+      "sampledAt": "2026-09-03T01:23:18.799Z"
     },
     {
       "scenario": "Air Voltaic",
@@ -880,6 +2320,102 @@
       "sampledAt": "2026-08-31T22:29:19.994Z"
     },
     {
+      "scenario": "B180 rAim Easy",
+      "leaderboardId": 781,
+      "total": 6752,
+      "points": [
+        {
+          "rank": 1,
+          "score": 157
+        },
+        {
+          "rank": 2,
+          "score": 143
+        },
+        {
+          "rank": 3,
+          "score": 135
+        },
+        {
+          "rank": 5,
+          "score": 133
+        },
+        {
+          "rank": 10,
+          "score": 126
+        },
+        {
+          "rank": 25,
+          "score": 120
+        },
+        {
+          "rank": 50,
+          "score": 113
+        },
+        {
+          "rank": 100,
+          "score": 106
+        },
+        {
+          "rank": 250,
+          "score": 98
+        },
+        {
+          "rank": 500,
+          "score": 92
+        }
+      ],
+      "sampledAt": "2026-09-03T01:18:52.754Z"
+    },
+    {
+      "scenario": "B180 Voltaic",
+      "leaderboardId": 9,
+      "total": 50896,
+      "points": [
+        {
+          "rank": 1,
+          "score": 163
+        },
+        {
+          "rank": 2,
+          "score": 160
+        },
+        {
+          "rank": 3,
+          "score": 146
+        },
+        {
+          "rank": 5,
+          "score": 137
+        },
+        {
+          "rank": 10,
+          "score": 134
+        },
+        {
+          "rank": 25,
+          "score": 128
+        },
+        {
+          "rank": 50,
+          "score": 123
+        },
+        {
+          "rank": 100,
+          "score": 118
+        },
+        {
+          "rank": 250,
+          "score": 110
+        },
+        {
+          "rank": 500,
+          "score": 103
+        }
+      ],
+      "sampledAt": "2026-09-03T01:18:47.893Z"
+    },
+    {
       "scenario": "B180 Voltaic Easy 92%",
       "leaderboardId": 12018,
       "total": 55094,
@@ -1072,6 +2608,54 @@
       "sampledAt": "2026-08-30T06:24:45.282Z"
     },
     {
+      "scenario": "Bounce 180 rAim",
+      "leaderboardId": 526,
+      "total": 4858,
+      "points": [
+        {
+          "rank": 1,
+          "score": 131
+        },
+        {
+          "rank": 2,
+          "score": 119
+        },
+        {
+          "rank": 3,
+          "score": 118
+        },
+        {
+          "rank": 5,
+          "score": 114
+        },
+        {
+          "rank": 10,
+          "score": 110
+        },
+        {
+          "rank": 25,
+          "score": 106
+        },
+        {
+          "rank": 50,
+          "score": 101
+        },
+        {
+          "rank": 100,
+          "score": 94
+        },
+        {
+          "rank": 250,
+          "score": 85
+        },
+        {
+          "rank": 500,
+          "score": 77
+        }
+      ],
+      "sampledAt": "2026-09-03T01:18:57.551Z"
+    },
+    {
       "scenario": "Bounce 180 Tracking",
       "leaderboardId": 122,
       "total": 128448,
@@ -1118,6 +2702,1494 @@
         }
       ],
       "sampledAt": "2026-08-30T06:23:57.065Z"
+    },
+    {
+      "scenario": "Bounce 180 Tracking Small",
+      "leaderboardId": 105,
+      "total": 10175,
+      "points": [
+        {
+          "rank": 1,
+          "score": 106
+        },
+        {
+          "rank": 2,
+          "score": 100
+        },
+        {
+          "rank": 3,
+          "score": 98
+        },
+        {
+          "rank": 5,
+          "score": 96
+        },
+        {
+          "rank": 10,
+          "score": 94
+        },
+        {
+          "rank": 25,
+          "score": 90
+        },
+        {
+          "rank": 50,
+          "score": 81
+        },
+        {
+          "rank": 100,
+          "score": 77
+        },
+        {
+          "rank": 250,
+          "score": 70
+        },
+        {
+          "rank": 500,
+          "score": 65
+        }
+      ],
+      "sampledAt": "2026-09-02T21:06:07.026Z"
+    },
+    {
+      "scenario": "cA 7ts pressure",
+      "leaderboardId": 96432,
+      "total": 5292,
+      "points": [
+        {
+          "rank": 1,
+          "score": 197
+        },
+        {
+          "rank": 2,
+          "score": 197
+        },
+        {
+          "rank": 3,
+          "score": 195
+        },
+        {
+          "rank": 5,
+          "score": 192
+        },
+        {
+          "rank": 10,
+          "score": 190
+        },
+        {
+          "rank": 25,
+          "score": 185
+        },
+        {
+          "rank": 50,
+          "score": 179
+        },
+        {
+          "rank": 100,
+          "score": 171
+        },
+        {
+          "rank": 250,
+          "score": 161
+        },
+        {
+          "rank": 500,
+          "score": 153
+        }
+      ],
+      "sampledAt": "2026-09-02T21:05:30.147Z"
+    },
+    {
+      "scenario": "cA fuglaapressure",
+      "leaderboardId": 94284,
+      "total": 7915,
+      "points": [
+        {
+          "rank": 1,
+          "score": 207
+        },
+        {
+          "rank": 2,
+          "score": 204
+        },
+        {
+          "rank": 3,
+          "score": 201
+        },
+        {
+          "rank": 5,
+          "score": 198
+        },
+        {
+          "rank": 10,
+          "score": 197
+        },
+        {
+          "rank": 25,
+          "score": 191
+        },
+        {
+          "rank": 50,
+          "score": 186
+        },
+        {
+          "rank": 100,
+          "score": 180
+        },
+        {
+          "rank": 250,
+          "score": 171
+        },
+        {
+          "rank": 500,
+          "score": 163
+        }
+      ],
+      "sampledAt": "2026-09-02T21:03:35.931Z"
+    },
+    {
+      "scenario": "Cartoon's Micro RawMouseControlReact 30s",
+      "leaderboardId": 80173,
+      "total": 533,
+      "points": [
+        {
+          "rank": 1,
+          "score": 70
+        },
+        {
+          "rank": 2,
+          "score": 68
+        },
+        {
+          "rank": 3,
+          "score": 68
+        },
+        {
+          "rank": 5,
+          "score": 63
+        },
+        {
+          "rank": 10,
+          "score": 57
+        },
+        {
+          "rank": 25,
+          "score": 48
+        },
+        {
+          "rank": 50,
+          "score": 43
+        },
+        {
+          "rank": 100,
+          "score": 35
+        },
+        {
+          "rank": 250,
+          "score": 21
+        },
+        {
+          "rank": 500,
+          "score": 2
+        }
+      ],
+      "sampledAt": "2026-09-02T21:03:11.667Z"
+    },
+    {
+      "scenario": "CatClick",
+      "leaderboardId": 179408,
+      "total": 1466,
+      "points": [
+        {
+          "rank": 1,
+          "score": 134
+        },
+        {
+          "rank": 2,
+          "score": 129
+        },
+        {
+          "rank": 3,
+          "score": 122
+        },
+        {
+          "rank": 5,
+          "score": 115
+        },
+        {
+          "rank": 10,
+          "score": 112
+        },
+        {
+          "rank": 25,
+          "score": 106
+        },
+        {
+          "rank": 50,
+          "score": 98
+        },
+        {
+          "rank": 100,
+          "score": 92
+        },
+        {
+          "rank": 250,
+          "score": 84
+        },
+        {
+          "rank": 500,
+          "score": 74
+        }
+      ],
+      "sampledAt": "2026-09-03T01:19:31.649Z"
+    },
+    {
+      "scenario": "CatClick Easier",
+      "leaderboardId": 184866,
+      "total": 19557,
+      "points": [
+        {
+          "rank": 1,
+          "score": 174
+        },
+        {
+          "rank": 2,
+          "score": 166
+        },
+        {
+          "rank": 3,
+          "score": 155
+        },
+        {
+          "rank": 5,
+          "score": 143
+        },
+        {
+          "rank": 10,
+          "score": 133
+        },
+        {
+          "rank": 25,
+          "score": 126
+        },
+        {
+          "rank": 50,
+          "score": 119
+        },
+        {
+          "rank": 100,
+          "score": 115
+        },
+        {
+          "rank": 250,
+          "score": 107
+        },
+        {
+          "rank": 500,
+          "score": 100
+        }
+      ],
+      "sampledAt": "2026-09-03T01:19:22.011Z"
+    },
+    {
+      "scenario": "CatClick Harder",
+      "leaderboardId": 184865,
+      "total": 666,
+      "points": [
+        {
+          "rank": 1,
+          "score": 118
+        },
+        {
+          "rank": 2,
+          "score": 107
+        },
+        {
+          "rank": 3,
+          "score": 104
+        },
+        {
+          "rank": 5,
+          "score": 96
+        },
+        {
+          "rank": 10,
+          "score": 90
+        },
+        {
+          "rank": 25,
+          "score": 81
+        },
+        {
+          "rank": 50,
+          "score": 73
+        },
+        {
+          "rank": 100,
+          "score": 63
+        },
+        {
+          "rank": 250,
+          "score": 45
+        },
+        {
+          "rank": 500,
+          "score": 22
+        }
+      ],
+      "sampledAt": "2026-09-03T01:19:36.596Z"
+    },
+    {
+      "scenario": "CatClick Medium",
+      "leaderboardId": 184780,
+      "total": 17403,
+      "points": [
+        {
+          "rank": 1,
+          "score": 145
+        },
+        {
+          "rank": 2,
+          "score": 136
+        },
+        {
+          "rank": 3,
+          "score": 134
+        },
+        {
+          "rank": 5,
+          "score": 128
+        },
+        {
+          "rank": 10,
+          "score": 120
+        },
+        {
+          "rank": 25,
+          "score": 115
+        },
+        {
+          "rank": 50,
+          "score": 111
+        },
+        {
+          "rank": 100,
+          "score": 107
+        },
+        {
+          "rank": 250,
+          "score": 103
+        },
+        {
+          "rank": 500,
+          "score": 96
+        }
+      ],
+      "sampledAt": "2026-09-03T01:19:26.817Z"
+    },
+    {
+      "scenario": "ClickTrack 3t",
+      "leaderboardId": 102616,
+      "total": 2887,
+      "points": [
+        {
+          "rank": 1,
+          "score": 108.5
+        },
+        {
+          "rank": 2,
+          "score": 104.05
+        },
+        {
+          "rank": 3,
+          "score": 103.5
+        },
+        {
+          "rank": 5,
+          "score": 102.5
+        },
+        {
+          "rank": 10,
+          "score": 100.53
+        },
+        {
+          "rank": 25,
+          "score": 95.5
+        },
+        {
+          "rank": 50,
+          "score": 93
+        },
+        {
+          "rank": 100,
+          "score": 88.01
+        },
+        {
+          "rank": 250,
+          "score": 81.5
+        },
+        {
+          "rank": 500,
+          "score": 74.01
+        }
+      ],
+      "sampledAt": "2026-09-02T21:04:46.483Z"
+    },
+    {
+      "scenario": "ClickTrack 3t Long",
+      "leaderboardId": 115474,
+      "total": 810,
+      "points": [
+        {
+          "rank": 1,
+          "score": 69
+        },
+        {
+          "rank": 2,
+          "score": 64
+        },
+        {
+          "rank": 3,
+          "score": 63.5
+        },
+        {
+          "rank": 5,
+          "score": 62
+        },
+        {
+          "rank": 10,
+          "score": 60.5
+        },
+        {
+          "rank": 25,
+          "score": 55.78
+        },
+        {
+          "rank": 50,
+          "score": 52.55
+        },
+        {
+          "rank": 100,
+          "score": 50.02
+        },
+        {
+          "rank": 250,
+          "score": 45.03
+        },
+        {
+          "rank": 500,
+          "score": 38.29
+        }
+      ],
+      "sampledAt": "2026-09-02T21:04:51.309Z"
+    },
+    {
+      "scenario": "ClickTrack 3t Short",
+      "leaderboardId": 115370,
+      "total": 1230,
+      "points": [
+        {
+          "rank": 1,
+          "score": 155.03
+        },
+        {
+          "rank": 2,
+          "score": 152.08
+        },
+        {
+          "rank": 3,
+          "score": 150.5
+        },
+        {
+          "rank": 5,
+          "score": 149.52
+        },
+        {
+          "rank": 10,
+          "score": 144.58
+        },
+        {
+          "rank": 25,
+          "score": 132.8
+        },
+        {
+          "rank": 50,
+          "score": 122.39
+        },
+        {
+          "rank": 100,
+          "score": 114.64
+        },
+        {
+          "rank": 250,
+          "score": 103.53
+        },
+        {
+          "rank": 500,
+          "score": 89.68
+        }
+      ],
+      "sampledAt": "2026-09-02T21:04:41.691Z"
+    },
+    {
+      "scenario": "ClickTrack 5t",
+      "leaderboardId": 102615,
+      "total": 2218,
+      "points": [
+        {
+          "rank": 1,
+          "score": 109.52
+        },
+        {
+          "rank": 2,
+          "score": 106.01
+        },
+        {
+          "rank": 3,
+          "score": 103.5
+        },
+        {
+          "rank": 5,
+          "score": 101.53
+        },
+        {
+          "rank": 10,
+          "score": 97.05
+        },
+        {
+          "rank": 25,
+          "score": 94.01
+        },
+        {
+          "rank": 50,
+          "score": 90.5
+        },
+        {
+          "rank": 100,
+          "score": 87.01
+        },
+        {
+          "rank": 250,
+          "score": 80.5
+        },
+        {
+          "rank": 500,
+          "score": 74.07
+        }
+      ],
+      "sampledAt": "2026-09-02T21:04:56.165Z"
+    },
+    {
+      "scenario": "ClickTrack Diagonal 2t",
+      "leaderboardId": 102618,
+      "total": 1562,
+      "points": [
+        {
+          "rank": 1,
+          "score": 80.07
+        },
+        {
+          "rank": 2,
+          "score": 78.54
+        },
+        {
+          "rank": 3,
+          "score": 78.5
+        },
+        {
+          "rank": 5,
+          "score": 78
+        },
+        {
+          "rank": 10,
+          "score": 75
+        },
+        {
+          "rank": 25,
+          "score": 70.54
+        },
+        {
+          "rank": 50,
+          "score": 67.54
+        },
+        {
+          "rank": 100,
+          "score": 65
+        },
+        {
+          "rank": 250,
+          "score": 59.55
+        },
+        {
+          "rank": 500,
+          "score": 54.5
+        }
+      ],
+      "sampledAt": "2026-09-04T00:08:46.884Z"
+    },
+    {
+      "scenario": "ClickTrack Diagonal 2t Long",
+      "leaderboardId": 115477,
+      "total": 606,
+      "points": [
+        {
+          "rank": 1,
+          "score": 61
+        },
+        {
+          "rank": 2,
+          "score": 61
+        },
+        {
+          "rank": 3,
+          "score": 60.55
+        },
+        {
+          "rank": 5,
+          "score": 59.5
+        },
+        {
+          "rank": 10,
+          "score": 57
+        },
+        {
+          "rank": 25,
+          "score": 53.02
+        },
+        {
+          "rank": 50,
+          "score": 50.5
+        },
+        {
+          "rank": 100,
+          "score": 47.56
+        },
+        {
+          "rank": 250,
+          "score": 42.57
+        },
+        {
+          "rank": 500,
+          "score": 34.51
+        }
+      ],
+      "sampledAt": "2026-09-02T21:04:00.117Z"
+    },
+    {
+      "scenario": "ClickTrack Diagonal 2t Short",
+      "leaderboardId": 115390,
+      "total": 772,
+      "points": [
+        {
+          "rank": 1,
+          "score": 156.55
+        },
+        {
+          "rank": 2,
+          "score": 146.61
+        },
+        {
+          "rank": 3,
+          "score": 146.44
+        },
+        {
+          "rank": 5,
+          "score": 142.01
+        },
+        {
+          "rank": 10,
+          "score": 136.16
+        },
+        {
+          "rank": 25,
+          "score": 126.65
+        },
+        {
+          "rank": 50,
+          "score": 119.62
+        },
+        {
+          "rank": 100,
+          "score": 112.57
+        },
+        {
+          "rank": 250,
+          "score": 98
+        },
+        {
+          "rank": 500,
+          "score": 80.53
+        }
+      ],
+      "sampledAt": "2026-09-04T00:08:42.115Z"
+    },
+    {
+      "scenario": "ClickTrack Diagonal 3t",
+      "leaderboardId": 102635,
+      "total": 1356,
+      "points": [
+        {
+          "rank": 1,
+          "score": 94.06
+        },
+        {
+          "rank": 2,
+          "score": 91
+        },
+        {
+          "rank": 3,
+          "score": 89.5
+        },
+        {
+          "rank": 5,
+          "score": 89.01
+        },
+        {
+          "rank": 10,
+          "score": 85.01
+        },
+        {
+          "rank": 25,
+          "score": 82.01
+        },
+        {
+          "rank": 50,
+          "score": 78.5
+        },
+        {
+          "rank": 100,
+          "score": 74.16
+        },
+        {
+          "rank": 250,
+          "score": 68.5
+        },
+        {
+          "rank": 500,
+          "score": 62.5
+        }
+      ],
+      "sampledAt": "2026-09-02T21:03:50.459Z"
+    },
+    {
+      "scenario": "ClickTrack Diagonal 3t Long",
+      "leaderboardId": 115516,
+      "total": 566,
+      "points": [
+        {
+          "rank": 1,
+          "score": 77
+        },
+        {
+          "rank": 2,
+          "score": 73
+        },
+        {
+          "rank": 3,
+          "score": 71.02
+        },
+        {
+          "rank": 5,
+          "score": 70
+        },
+        {
+          "rank": 10,
+          "score": 67.02
+        },
+        {
+          "rank": 25,
+          "score": 62.55
+        },
+        {
+          "rank": 50,
+          "score": 59.02
+        },
+        {
+          "rank": 100,
+          "score": 56.02
+        },
+        {
+          "rank": 250,
+          "score": 49.56
+        },
+        {
+          "rank": 500,
+          "score": 38.57
+        }
+      ],
+      "sampledAt": "2026-09-02T21:03:55.287Z"
+    },
+    {
+      "scenario": "ClickTrack Diagonal 3t Short",
+      "leaderboardId": 115375,
+      "total": 690,
+      "points": [
+        {
+          "rank": 1,
+          "score": 157.5
+        },
+        {
+          "rank": 2,
+          "score": 157.5
+        },
+        {
+          "rank": 3,
+          "score": 156
+        },
+        {
+          "rank": 5,
+          "score": 150.52
+        },
+        {
+          "rank": 10,
+          "score": 141.52
+        },
+        {
+          "rank": 25,
+          "score": 134.56
+        },
+        {
+          "rank": 50,
+          "score": 128.56
+        },
+        {
+          "rank": 100,
+          "score": 121.01
+        },
+        {
+          "rank": 250,
+          "score": 107.43
+        },
+        {
+          "rank": 500,
+          "score": 89.79
+        }
+      ],
+      "sampledAt": "2026-09-02T21:03:45.538Z"
+    },
+    {
+      "scenario": "ClickTrack Horizontal 2t",
+      "leaderboardId": 102619,
+      "total": 2030,
+      "points": [
+        {
+          "rank": 1,
+          "score": 86.6
+        },
+        {
+          "rank": 2,
+          "score": 86.06
+        },
+        {
+          "rank": 3,
+          "score": 85.5
+        },
+        {
+          "rank": 5,
+          "score": 82.01
+        },
+        {
+          "rank": 10,
+          "score": 80.01
+        },
+        {
+          "rank": 25,
+          "score": 74.5
+        },
+        {
+          "rank": 50,
+          "score": 71.54
+        },
+        {
+          "rank": 100,
+          "score": 68.73
+        },
+        {
+          "rank": 250,
+          "score": 63.32
+        },
+        {
+          "rank": 500,
+          "score": 58.55
+        }
+      ],
+      "sampledAt": "2026-09-04T00:08:56.573Z"
+    },
+    {
+      "scenario": "ClickTrack Horizontal 2t Long",
+      "leaderboardId": 115475,
+      "total": 748,
+      "points": [
+        {
+          "rank": 1,
+          "score": 64
+        },
+        {
+          "rank": 2,
+          "score": 63.02
+        },
+        {
+          "rank": 3,
+          "score": 62.5
+        },
+        {
+          "rank": 5,
+          "score": 61.02
+        },
+        {
+          "rank": 10,
+          "score": 60
+        },
+        {
+          "rank": 25,
+          "score": 57
+        },
+        {
+          "rank": 50,
+          "score": 54.1
+        },
+        {
+          "rank": 100,
+          "score": 51
+        },
+        {
+          "rank": 250,
+          "score": 46.03
+        },
+        {
+          "rank": 500,
+          "score": 40
+        }
+      ],
+      "sampledAt": "2026-09-02T21:03:03.044Z"
+    },
+    {
+      "scenario": "ClickTrack Horizontal 2t Short",
+      "leaderboardId": 115374,
+      "total": 977,
+      "points": [
+        {
+          "rank": 1,
+          "score": 148.61
+        },
+        {
+          "rank": 2,
+          "score": 142.62
+        },
+        {
+          "rank": 3,
+          "score": 142.16
+        },
+        {
+          "rank": 5,
+          "score": 141.09
+        },
+        {
+          "rank": 10,
+          "score": 136.09
+        },
+        {
+          "rank": 25,
+          "score": 124.63
+        },
+        {
+          "rank": 50,
+          "score": 113.71
+        },
+        {
+          "rank": 100,
+          "score": 107.2
+        },
+        {
+          "rank": 250,
+          "score": 95.22
+        },
+        {
+          "rank": 500,
+          "score": 82.82
+        }
+      ],
+      "sampledAt": "2026-09-04T00:08:51.715Z"
+    },
+    {
+      "scenario": "ClickTrack Horizontal 3t",
+      "leaderboardId": 102627,
+      "total": 1692,
+      "points": [
+        {
+          "rank": 1,
+          "score": 97.12
+        },
+        {
+          "rank": 2,
+          "score": 97
+        },
+        {
+          "rank": 3,
+          "score": 95.01
+        },
+        {
+          "rank": 5,
+          "score": 89.5
+        },
+        {
+          "rank": 10,
+          "score": 86.53
+        },
+        {
+          "rank": 25,
+          "score": 83.06
+        },
+        {
+          "rank": 50,
+          "score": 80
+        },
+        {
+          "rank": 100,
+          "score": 76.07
+        },
+        {
+          "rank": 250,
+          "score": 70.62
+        },
+        {
+          "rank": 500,
+          "score": 65.18
+        }
+      ],
+      "sampledAt": "2026-09-02T21:02:53.365Z"
+    },
+    {
+      "scenario": "ClickTrack Horizontal 3t Long",
+      "leaderboardId": 115517,
+      "total": 664,
+      "points": [
+        {
+          "rank": 1,
+          "score": 77
+        },
+        {
+          "rank": 2,
+          "score": 75.5
+        },
+        {
+          "rank": 3,
+          "score": 73.54
+        },
+        {
+          "rank": 5,
+          "score": 72.5
+        },
+        {
+          "rank": 10,
+          "score": 69
+        },
+        {
+          "rank": 25,
+          "score": 65.54
+        },
+        {
+          "rank": 50,
+          "score": 62.75
+        },
+        {
+          "rank": 100,
+          "score": 58.02
+        },
+        {
+          "rank": 250,
+          "score": 52
+        },
+        {
+          "rank": 500,
+          "score": 44.25
+        }
+      ],
+      "sampledAt": "2026-09-02T21:02:58.172Z"
+    },
+    {
+      "scenario": "ClickTrack Horizontal 3t Short",
+      "leaderboardId": 115480,
+      "total": 860,
+      "points": [
+        {
+          "rank": 1,
+          "score": 155
+        },
+        {
+          "rank": 2,
+          "score": 150.55
+        },
+        {
+          "rank": 3,
+          "score": 150
+        },
+        {
+          "rank": 5,
+          "score": 148.52
+        },
+        {
+          "rank": 10,
+          "score": 140.9
+        },
+        {
+          "rank": 25,
+          "score": 131.52
+        },
+        {
+          "rank": 50,
+          "score": 123.82
+        },
+        {
+          "rank": 100,
+          "score": 116.64
+        },
+        {
+          "rank": 250,
+          "score": 104.01
+        },
+        {
+          "rank": 500,
+          "score": 90.93
+        }
+      ],
+      "sampledAt": "2026-09-02T21:02:48.533Z"
+    },
+    {
+      "scenario": "ClickTrack Vertical 2t",
+      "leaderboardId": 116393,
+      "total": 1174,
+      "points": [
+        {
+          "rank": 1,
+          "score": 81.53
+        },
+        {
+          "rank": 2,
+          "score": 78
+        },
+        {
+          "rank": 3,
+          "score": 77.01
+        },
+        {
+          "rank": 5,
+          "score": 76.01
+        },
+        {
+          "rank": 10,
+          "score": 74
+        },
+        {
+          "rank": 25,
+          "score": 70.07
+        },
+        {
+          "rank": 50,
+          "score": 66.54
+        },
+        {
+          "rank": 100,
+          "score": 64
+        },
+        {
+          "rank": 250,
+          "score": 58.02
+        },
+        {
+          "rank": 500,
+          "score": 52.65
+        }
+      ],
+      "sampledAt": "2026-09-04T00:09:11.165Z"
+    },
+    {
+      "scenario": "ClickTrack Vertical 2t Long",
+      "leaderboardId": 116392,
+      "total": 582,
+      "points": [
+        {
+          "rank": 1,
+          "score": 67
+        },
+        {
+          "rank": 2,
+          "score": 63
+        },
+        {
+          "rank": 3,
+          "score": 62.5
+        },
+        {
+          "rank": 5,
+          "score": 61
+        },
+        {
+          "rank": 10,
+          "score": 59
+        },
+        {
+          "rank": 25,
+          "score": 55.5
+        },
+        {
+          "rank": 50,
+          "score": 51.56
+        },
+        {
+          "rank": 100,
+          "score": 48.5
+        },
+        {
+          "rank": 250,
+          "score": 43.57
+        },
+        {
+          "rank": 500,
+          "score": 34.58
+        }
+      ],
+      "sampledAt": "2026-09-02T21:05:15.660Z"
+    },
+    {
+      "scenario": "ClickTrack Vertical 2t Short",
+      "leaderboardId": 115725,
+      "total": 655,
+      "points": [
+        {
+          "rank": 1,
+          "score": 153.08
+        },
+        {
+          "rank": 2,
+          "score": 151.77
+        },
+        {
+          "rank": 3,
+          "score": 150.61
+        },
+        {
+          "rank": 5,
+          "score": 149.61
+        },
+        {
+          "rank": 10,
+          "score": 140.02
+        },
+        {
+          "rank": 25,
+          "score": 131.49
+        },
+        {
+          "rank": 50,
+          "score": 121.1
+        },
+        {
+          "rank": 100,
+          "score": 113.29
+        },
+        {
+          "rank": 250,
+          "score": 97.47
+        },
+        {
+          "rank": 500,
+          "score": 77.83
+        }
+      ],
+      "sampledAt": "2026-09-04T00:09:06.287Z"
+    },
+    {
+      "scenario": "ClickTrack Vertical 3t",
+      "leaderboardId": 116394,
+      "total": 1016,
+      "points": [
+        {
+          "rank": 1,
+          "score": 99.5
+        },
+        {
+          "rank": 2,
+          "score": 88.53
+        },
+        {
+          "rank": 3,
+          "score": 88.5
+        },
+        {
+          "rank": 5,
+          "score": 87.5
+        },
+        {
+          "rank": 10,
+          "score": 83.53
+        },
+        {
+          "rank": 25,
+          "score": 81.06
+        },
+        {
+          "rank": 50,
+          "score": 76.54
+        },
+        {
+          "rank": 100,
+          "score": 73
+        },
+        {
+          "rank": 250,
+          "score": 66.31
+        },
+        {
+          "rank": 500,
+          "score": 59.76
+        }
+      ],
+      "sampledAt": "2026-09-02T21:05:05.924Z"
+    },
+    {
+      "scenario": "ClickTrack Vertical 3t Long",
+      "leaderboardId": 116398,
+      "total": 560,
+      "points": [
+        {
+          "rank": 1,
+          "score": 82
+        },
+        {
+          "rank": 2,
+          "score": 73.5
+        },
+        {
+          "rank": 3,
+          "score": 73.01
+        },
+        {
+          "rank": 5,
+          "score": 71.54
+        },
+        {
+          "rank": 10,
+          "score": 69.54
+        },
+        {
+          "rank": 25,
+          "score": 64.02
+        },
+        {
+          "rank": 50,
+          "score": 61.02
+        },
+        {
+          "rank": 100,
+          "score": 57.55
+        },
+        {
+          "rank": 250,
+          "score": 50.66
+        },
+        {
+          "rank": 500,
+          "score": 39.1
+        }
+      ],
+      "sampledAt": "2026-09-02T21:05:10.830Z"
+    },
+    {
+      "scenario": "ClickTrack Vertical 3t Short",
+      "leaderboardId": 116396,
+      "total": 616,
+      "points": [
+        {
+          "rank": 1,
+          "score": 154.61
+        },
+        {
+          "rank": 2,
+          "score": 154.5
+        },
+        {
+          "rank": 3,
+          "score": 151.52
+        },
+        {
+          "rank": 5,
+          "score": 146.08
+        },
+        {
+          "rank": 10,
+          "score": 139.56
+        },
+        {
+          "rank": 25,
+          "score": 133.7
+        },
+        {
+          "rank": 50,
+          "score": 128.01
+        },
+        {
+          "rank": 100,
+          "score": 118.64
+        },
+        {
+          "rank": 250,
+          "score": 106.58
+        },
+        {
+          "rank": 500,
+          "score": 85.7
+        }
+      ],
+      "sampledAt": "2026-09-02T21:05:01.039Z"
+    },
+    {
+      "scenario": "Close Fast Strafes Invincible",
+      "leaderboardId": 494,
+      "total": 81935,
+      "points": [
+        {
+          "rank": 1,
+          "score": 17190
+        },
+        {
+          "rank": 2,
+          "score": 17118
+        },
+        {
+          "rank": 3,
+          "score": 17046
+        },
+        {
+          "rank": 5,
+          "score": 16650
+        },
+        {
+          "rank": 10,
+          "score": 16506
+        },
+        {
+          "rank": 25,
+          "score": 15876
+        },
+        {
+          "rank": 50,
+          "score": 15480
+        },
+        {
+          "rank": 100,
+          "score": 15030
+        },
+        {
+          "rank": 250,
+          "score": 14094
+        },
+        {
+          "rank": 500,
+          "score": 13302
+        }
+      ],
+      "sampledAt": "2026-09-03T01:23:28.581Z"
     },
     {
       "scenario": "Close Fast Strafes Invincible - Thin",
@@ -1216,6 +4288,198 @@
       "sampledAt": "2026-08-30T06:22:39.787Z"
     },
     {
+      "scenario": "cloverRawControl",
+      "leaderboardId": 68993,
+      "total": 45984,
+      "points": [
+        {
+          "rank": 1,
+          "score": 12696
+        },
+        {
+          "rank": 2,
+          "score": 12072
+        },
+        {
+          "rank": 3,
+          "score": 11994
+        },
+        {
+          "rank": 5,
+          "score": 11424
+        },
+        {
+          "rank": 10,
+          "score": 11232
+        },
+        {
+          "rank": 25,
+          "score": 10674
+        },
+        {
+          "rank": 50,
+          "score": 10104
+        },
+        {
+          "rank": 100,
+          "score": 9420
+        },
+        {
+          "rank": 250,
+          "score": 8709
+        },
+        {
+          "rank": 500,
+          "score": 8133
+        }
+      ],
+      "sampledAt": "2026-09-03T01:21:04.639Z"
+    },
+    {
+      "scenario": "cloverRawControl Big",
+      "leaderboardId": 69579,
+      "total": 33631,
+      "points": [
+        {
+          "rank": 1,
+          "score": 17205
+        },
+        {
+          "rank": 2,
+          "score": 17106
+        },
+        {
+          "rank": 3,
+          "score": 16809
+        },
+        {
+          "rank": 5,
+          "score": 16446
+        },
+        {
+          "rank": 10,
+          "score": 16119
+        },
+        {
+          "rank": 25,
+          "score": 15780
+        },
+        {
+          "rank": 50,
+          "score": 15414
+        },
+        {
+          "rank": 100,
+          "score": 15051
+        },
+        {
+          "rank": 250,
+          "score": 14598
+        },
+        {
+          "rank": 500,
+          "score": 14043
+        }
+      ],
+      "sampledAt": "2026-09-03T01:20:54.950Z"
+    },
+    {
+      "scenario": "cloverRawControl Easy",
+      "leaderboardId": 69150,
+      "total": 79718,
+      "points": [
+        {
+          "rank": 1,
+          "score": 15225
+        },
+        {
+          "rank": 2,
+          "score": 14721
+        },
+        {
+          "rank": 3,
+          "score": 14409
+        },
+        {
+          "rank": 5,
+          "score": 14151
+        },
+        {
+          "rank": 10,
+          "score": 13896
+        },
+        {
+          "rank": 25,
+          "score": 13434
+        },
+        {
+          "rank": 50,
+          "score": 13014
+        },
+        {
+          "rank": 100,
+          "score": 12552
+        },
+        {
+          "rank": 250,
+          "score": 11976
+        },
+        {
+          "rank": 500,
+          "score": 11700
+        }
+      ],
+      "sampledAt": "2026-09-03T01:20:59.831Z"
+    },
+    {
+      "scenario": "cloverRawControl Viscose Entry",
+      "leaderboardId": 190024,
+      "total": 3199,
+      "points": [
+        {
+          "rank": 1,
+          "score": 17757
+        },
+        {
+          "rank": 2,
+          "score": 17694
+        },
+        {
+          "rank": 3,
+          "score": 17631
+        },
+        {
+          "rank": 5,
+          "score": 17598
+        },
+        {
+          "rank": 10,
+          "score": 17442
+        },
+        {
+          "rank": 25,
+          "score": 16857
+        },
+        {
+          "rank": 50,
+          "score": 16410
+        },
+        {
+          "rank": 100,
+          "score": 15879
+        },
+        {
+          "rank": 250,
+          "score": 14778
+        },
+        {
+          "rank": 500,
+          "score": 13824
+        }
+      ],
+      "sampledAt": "2026-09-03T01:20:50.089Z"
+    },
+    {
       "scenario": "Controlsphere",
       "leaderboardId": 392,
       "total": 150652,
@@ -1262,6 +4526,150 @@
         }
       ],
       "sampledAt": "2026-08-30T06:21:51.957Z"
+    },
+    {
+      "scenario": "Controlsphere Far",
+      "leaderboardId": 24247,
+      "total": 15892,
+      "points": [
+        {
+          "rank": 1,
+          "score": 13926
+        },
+        {
+          "rank": 2,
+          "score": 13836
+        },
+        {
+          "rank": 3,
+          "score": 13128
+        },
+        {
+          "rank": 5,
+          "score": 12561
+        },
+        {
+          "rank": 10,
+          "score": 12255
+        },
+        {
+          "rank": 25,
+          "score": 12036
+        },
+        {
+          "rank": 50,
+          "score": 11337
+        },
+        {
+          "rank": 100,
+          "score": 10686
+        },
+        {
+          "rank": 250,
+          "score": 9825
+        },
+        {
+          "rank": 500,
+          "score": 9027
+        }
+      ],
+      "sampledAt": "2026-09-03T01:21:19.336Z"
+    },
+    {
+      "scenario": "Controlsphere Far Larger",
+      "leaderboardId": 124981,
+      "total": 33754,
+      "points": [
+        {
+          "rank": 1,
+          "score": 16512
+        },
+        {
+          "rank": 2,
+          "score": 16425
+        },
+        {
+          "rank": 3,
+          "score": 15906
+        },
+        {
+          "rank": 5,
+          "score": 15645
+        },
+        {
+          "rank": 10,
+          "score": 15123
+        },
+        {
+          "rank": 25,
+          "score": 14754
+        },
+        {
+          "rank": 50,
+          "score": 14265
+        },
+        {
+          "rank": 100,
+          "score": 13998
+        },
+        {
+          "rank": 250,
+          "score": 13725
+        },
+        {
+          "rank": 500,
+          "score": 13254
+        }
+      ],
+      "sampledAt": "2026-09-03T01:21:14.425Z"
+    },
+    {
+      "scenario": "Controlsphere Far, Far Larger 90%",
+      "leaderboardId": 128692,
+      "total": 67320,
+      "points": [
+        {
+          "rank": 1,
+          "score": 15804
+        },
+        {
+          "rank": 2,
+          "score": 15636
+        },
+        {
+          "rank": 3,
+          "score": 15519
+        },
+        {
+          "rank": 5,
+          "score": 15144
+        },
+        {
+          "rank": 10,
+          "score": 15051
+        },
+        {
+          "rank": 25,
+          "score": 14670
+        },
+        {
+          "rank": 50,
+          "score": 14331
+        },
+        {
+          "rank": 100,
+          "score": 13977
+        },
+        {
+          "rank": 250,
+          "score": 13560
+        },
+        {
+          "rank": 500,
+          "score": 13140
+        }
+      ],
+      "sampledAt": "2026-09-03T01:21:09.520Z"
     },
     {
       "scenario": "Controlsphere rAim",
@@ -1312,6 +4720,326 @@
       "sampledAt": "2026-08-30T06:21:56.733Z"
     },
     {
+      "scenario": "darkPressure",
+      "leaderboardId": 16344,
+      "total": 4439,
+      "points": [
+        {
+          "rank": 1,
+          "score": 10300
+        },
+        {
+          "rank": 2,
+          "score": 10100
+        },
+        {
+          "rank": 3,
+          "score": 10100
+        },
+        {
+          "rank": 5,
+          "score": 9950
+        },
+        {
+          "rank": 10,
+          "score": 9600
+        },
+        {
+          "rank": 25,
+          "score": 9400
+        },
+        {
+          "rank": 50,
+          "score": 8900
+        },
+        {
+          "rank": 100,
+          "score": 8500
+        },
+        {
+          "rank": 250,
+          "score": 7650
+        },
+        {
+          "rank": 500,
+          "score": 6250
+        }
+      ],
+      "sampledAt": "2026-09-02T21:05:35.010Z"
+    },
+    {
+      "scenario": "devTS Goated Easy",
+      "leaderboardId": 1333,
+      "total": 9508,
+      "points": [
+        {
+          "rank": 1,
+          "score": 879
+        },
+        {
+          "rank": 2,
+          "score": 877
+        },
+        {
+          "rank": 3,
+          "score": 870
+        },
+        {
+          "rank": 5,
+          "score": 869
+        },
+        {
+          "rank": 10,
+          "score": 856
+        },
+        {
+          "rank": 25,
+          "score": 827
+        },
+        {
+          "rank": 50,
+          "score": 815
+        },
+        {
+          "rank": 100,
+          "score": 790
+        },
+        {
+          "rank": 250,
+          "score": 749
+        },
+        {
+          "rank": 500,
+          "score": 723
+        }
+      ],
+      "sampledAt": "2026-09-03T01:24:51.994Z"
+    },
+    {
+      "scenario": "devTS Goated NR",
+      "leaderboardId": 532,
+      "total": 12400,
+      "points": [
+        {
+          "rank": 1,
+          "score": 762
+        },
+        {
+          "rank": 2,
+          "score": 756
+        },
+        {
+          "rank": 3,
+          "score": 742
+        },
+        {
+          "rank": 5,
+          "score": 726
+        },
+        {
+          "rank": 10,
+          "score": 720
+        },
+        {
+          "rank": 25,
+          "score": 695
+        },
+        {
+          "rank": 50,
+          "score": 671
+        },
+        {
+          "rank": 100,
+          "score": 647
+        },
+        {
+          "rank": 250,
+          "score": 618
+        },
+        {
+          "rank": 500,
+          "score": 594
+        }
+      ],
+      "sampledAt": "2026-09-03T01:24:56.897Z"
+    },
+    {
+      "scenario": "devTS Goated NR Static",
+      "leaderboardId": 2109,
+      "total": 21746,
+      "points": [
+        {
+          "rank": 1,
+          "score": 966
+        },
+        {
+          "rank": 2,
+          "score": 953
+        },
+        {
+          "rank": 3,
+          "score": 945
+        },
+        {
+          "rank": 5,
+          "score": 931
+        },
+        {
+          "rank": 10,
+          "score": 912
+        },
+        {
+          "rank": 25,
+          "score": 897
+        },
+        {
+          "rank": 50,
+          "score": 876
+        },
+        {
+          "rank": 100,
+          "score": 855
+        },
+        {
+          "rank": 250,
+          "score": 821
+        },
+        {
+          "rank": 500,
+          "score": 792
+        }
+      ],
+      "sampledAt": "2026-09-03T01:25:01.806Z"
+    },
+    {
+      "scenario": "devTS Goated NR Static Small",
+      "leaderboardId": 1633,
+      "total": 143620,
+      "points": [
+        {
+          "rank": 1,
+          "score": 881
+        },
+        {
+          "rank": 2,
+          "score": 873
+        },
+        {
+          "rank": 3,
+          "score": 871
+        },
+        {
+          "rank": 5,
+          "score": 864
+        },
+        {
+          "rank": 10,
+          "score": 833
+        },
+        {
+          "rank": 25,
+          "score": 816
+        },
+        {
+          "rank": 50,
+          "score": 798
+        },
+        {
+          "rank": 100,
+          "score": 780
+        },
+        {
+          "rank": 250,
+          "score": 762
+        },
+        {
+          "rank": 500,
+          "score": 742
+        }
+      ],
+      "sampledAt": "2026-09-03T01:25:06.930Z"
+    },
+    {
+      "scenario": "DM 1w6ts Pokeball",
+      "leaderboardId": 26407,
+      "total": 215,
+      "points": [
+        {
+          "rank": 1,
+          "score": 1630
+        },
+        {
+          "rank": 2,
+          "score": 1580
+        },
+        {
+          "rank": 3,
+          "score": 1550
+        },
+        {
+          "rank": 5,
+          "score": 1530
+        },
+        {
+          "rank": 10,
+          "score": 1470
+        },
+        {
+          "rank": 25,
+          "score": 1390
+        },
+        {
+          "rank": 50,
+          "score": 1300
+        },
+        {
+          "rank": 100,
+          "score": 1200
+        }
+      ],
+      "sampledAt": "2026-09-02T21:04:12.700Z"
+    },
+    {
+      "scenario": "DM ww6t Pokeball",
+      "leaderboardId": 34581,
+      "total": 111,
+      "points": [
+        {
+          "rank": 1,
+          "score": 1840
+        },
+        {
+          "rank": 2,
+          "score": 1790
+        },
+        {
+          "rank": 3,
+          "score": 1750
+        },
+        {
+          "rank": 5,
+          "score": 1700
+        },
+        {
+          "rank": 10,
+          "score": 1580
+        },
+        {
+          "rank": 25,
+          "score": 1470
+        },
+        {
+          "rank": 50,
+          "score": 1370
+        },
+        {
+          "rank": 100,
+          "score": 1050
+        }
+      ],
+      "sampledAt": "2026-09-02T21:04:08.913Z"
+    },
+    {
       "scenario": "domiSwitch",
       "leaderboardId": 83035,
       "total": 18273,
@@ -1358,6 +5086,246 @@
         }
       ],
       "sampledAt": "2026-08-30T15:56:56.689Z"
+    },
+    {
+      "scenario": "domiSwitch Avasive",
+      "leaderboardId": 129746,
+      "total": 8397,
+      "points": [
+        {
+          "rank": 1,
+          "score": 7224
+        },
+        {
+          "rank": 2,
+          "score": 6966.4
+        },
+        {
+          "rank": 3,
+          "score": 6896.8
+        },
+        {
+          "rank": 5,
+          "score": 6810.4
+        },
+        {
+          "rank": 10,
+          "score": 6770.4
+        },
+        {
+          "rank": 25,
+          "score": 6517.6
+        },
+        {
+          "rank": 50,
+          "score": 6306.4
+        },
+        {
+          "rank": 100,
+          "score": 6126.4
+        },
+        {
+          "rank": 250,
+          "score": 5728.8
+        },
+        {
+          "rank": 500,
+          "score": 5424.8
+        }
+      ],
+      "sampledAt": "2026-09-04T00:08:27.618Z"
+    },
+    {
+      "scenario": "domiSwitch Easier",
+      "leaderboardId": 185428,
+      "total": 20299,
+      "points": [
+        {
+          "rank": 1,
+          "score": 10628
+        },
+        {
+          "rank": 2,
+          "score": 10448
+        },
+        {
+          "rank": 3,
+          "score": 10441.59
+        },
+        {
+          "rank": 5,
+          "score": 10200.8
+        },
+        {
+          "rank": 10,
+          "score": 10072.8
+        },
+        {
+          "rank": 25,
+          "score": 9765.59
+        },
+        {
+          "rank": 50,
+          "score": 9447.2
+        },
+        {
+          "rank": 100,
+          "score": 9181.59
+        },
+        {
+          "rank": 250,
+          "score": 8740
+        },
+        {
+          "rank": 500,
+          "score": 8417.59
+        }
+      ],
+      "sampledAt": "2026-09-03T01:26:34.681Z"
+    },
+    {
+      "scenario": "domiSwitch Easy",
+      "leaderboardId": 83043,
+      "total": 39480,
+      "points": [
+        {
+          "rank": 1,
+          "score": 9536.8
+        },
+        {
+          "rank": 2,
+          "score": 9362.4
+        },
+        {
+          "rank": 3,
+          "score": 9285.59
+        },
+        {
+          "rank": 5,
+          "score": 9019.2
+        },
+        {
+          "rank": 10,
+          "score": 8725.59
+        },
+        {
+          "rank": 25,
+          "score": 8512
+        },
+        {
+          "rank": 50,
+          "score": 8288.8
+        },
+        {
+          "rank": 100,
+          "score": 8044.8
+        },
+        {
+          "rank": 250,
+          "score": 7845.6
+        },
+        {
+          "rank": 500,
+          "score": 7697.6
+        }
+      ],
+      "sampledAt": "2026-09-03T01:26:39.584Z"
+    },
+    {
+      "scenario": "domiSwitch Hard",
+      "leaderboardId": 83042,
+      "total": 821,
+      "points": [
+        {
+          "rank": 1,
+          "score": 6607.2
+        },
+        {
+          "rank": 2,
+          "score": 6304
+        },
+        {
+          "rank": 3,
+          "score": 6227.2
+        },
+        {
+          "rank": 5,
+          "score": 5812
+        },
+        {
+          "rank": 10,
+          "score": 5510.4
+        },
+        {
+          "rank": 25,
+          "score": 5032.79
+        },
+        {
+          "rank": 50,
+          "score": 4657.6
+        },
+        {
+          "rank": 100,
+          "score": 4266.4
+        },
+        {
+          "rank": 250,
+          "score": 3363.2
+        },
+        {
+          "rank": 500,
+          "score": 2252
+        }
+      ],
+      "sampledAt": "2026-09-03T01:26:44.518Z"
+    },
+    {
+      "scenario": "DotTS 30% Larger",
+      "leaderboardId": 75698,
+      "total": 17483,
+      "points": [
+        {
+          "rank": 1,
+          "score": 3316
+        },
+        {
+          "rank": 2,
+          "score": 3298
+        },
+        {
+          "rank": 3,
+          "score": 3250
+        },
+        {
+          "rank": 5,
+          "score": 3200
+        },
+        {
+          "rank": 10,
+          "score": 3150
+        },
+        {
+          "rank": 25,
+          "score": 3078
+        },
+        {
+          "rank": 50,
+          "score": 3025
+        },
+        {
+          "rank": 100,
+          "score": 2937
+        },
+        {
+          "rank": 250,
+          "score": 2850
+        },
+        {
+          "rank": 500,
+          "score": 2742
+        }
+      ],
+      "sampledAt": "2026-09-03T01:23:42.936Z"
     },
     {
       "scenario": "eth Pasu Micro Easier",
@@ -1504,6 +5472,54 @@
       "sampledAt": "2026-08-30T06:19:56.466Z"
     },
     {
+      "scenario": "Extra Controlsphere",
+      "leaderboardId": 562,
+      "total": 47588,
+      "points": [
+        {
+          "rank": 1,
+          "score": 12309
+        },
+        {
+          "rank": 2,
+          "score": 12306
+        },
+        {
+          "rank": 3,
+          "score": 12195
+        },
+        {
+          "rank": 5,
+          "score": 11715
+        },
+        {
+          "rank": 10,
+          "score": 11406
+        },
+        {
+          "rank": 25,
+          "score": 10611
+        },
+        {
+          "rank": 50,
+          "score": 10242
+        },
+        {
+          "rank": 100,
+          "score": 9786
+        },
+        {
+          "rank": 250,
+          "score": 8922
+        },
+        {
+          "rank": 500,
+          "score": 8352
+        }
+      ],
+      "sampledAt": "2026-09-03T01:21:25.287Z"
+    },
+    {
       "scenario": "Floating Heads Timing 400% FIXED",
       "leaderboardId": 1730,
       "total": 182853,
@@ -1598,6 +5614,102 @@
         }
       ],
       "sampledAt": "2026-08-30T06:19:18.032Z"
+    },
+    {
+      "scenario": "fuglaaPressure 6 Sphere Hipfire no reload",
+      "leaderboardId": 30400,
+      "total": 4888,
+      "points": [
+        {
+          "rank": 1,
+          "score": 12875.62
+        },
+        {
+          "rank": 2,
+          "score": 12250.2
+        },
+        {
+          "rank": 3,
+          "score": 12209.49
+        },
+        {
+          "rank": 5,
+          "score": 11655.14
+        },
+        {
+          "rank": 10,
+          "score": 11420.16
+        },
+        {
+          "rank": 25,
+          "score": 11070.53
+        },
+        {
+          "rank": 50,
+          "score": 10708.5
+        },
+        {
+          "rank": 100,
+          "score": 10274.58
+        },
+        {
+          "rank": 250,
+          "score": 9600.9
+        },
+        {
+          "rank": 500,
+          "score": 9010.66
+        }
+      ],
+      "sampledAt": "2026-09-02T21:03:40.744Z"
+    },
+    {
+      "scenario": "Ground Plaza Sparky V3",
+      "leaderboardId": 517,
+      "total": 52189,
+      "points": [
+        {
+          "rank": 1,
+          "score": 922.1
+        },
+        {
+          "rank": 2,
+          "score": 921.03
+        },
+        {
+          "rank": 3,
+          "score": 920.44
+        },
+        {
+          "rank": 5,
+          "score": 920.04
+        },
+        {
+          "rank": 10,
+          "score": 918.93
+        },
+        {
+          "rank": 25,
+          "score": 917.13
+        },
+        {
+          "rank": 50,
+          "score": 915.58
+        },
+        {
+          "rank": 100,
+          "score": 914.2
+        },
+        {
+          "rank": 250,
+          "score": 911.84
+        },
+        {
+          "rank": 500,
+          "score": 909.82
+        }
+      ],
+      "sampledAt": "2026-09-02T21:07:00.421Z"
     },
     {
       "scenario": "Ground Plaza Sparky v3 Easy",
@@ -1696,6 +5808,102 @@
       "sampledAt": "2026-08-30T06:21:18.335Z"
     },
     {
+      "scenario": "Ground Plaza Sparky V3 Thin",
+      "leaderboardId": 1408,
+      "total": 8593,
+      "points": [
+        {
+          "rank": 1,
+          "score": 912.57
+        },
+        {
+          "rank": 2,
+          "score": 912.12
+        },
+        {
+          "rank": 3,
+          "score": 910.65
+        },
+        {
+          "rank": 5,
+          "score": 909.41
+        },
+        {
+          "rank": 10,
+          "score": 907.62
+        },
+        {
+          "rank": 25,
+          "score": 904.97
+        },
+        {
+          "rank": 50,
+          "score": 902.73
+        },
+        {
+          "rank": 100,
+          "score": 899.87
+        },
+        {
+          "rank": 250,
+          "score": 894.32
+        },
+        {
+          "rank": 500,
+          "score": 888.59
+        }
+      ],
+      "sampledAt": "2026-09-03T01:23:23.701Z"
+    },
+    {
+      "scenario": "Jumbo1wall9000targets",
+      "leaderboardId": 1912,
+      "total": 10231,
+      "points": [
+        {
+          "rank": 1,
+          "score": 452.13
+        },
+        {
+          "rank": 2,
+          "score": 429.08
+        },
+        {
+          "rank": 3,
+          "score": 428.37
+        },
+        {
+          "rank": 5,
+          "score": 419.43
+        },
+        {
+          "rank": 10,
+          "score": 391.19
+        },
+        {
+          "rank": 25,
+          "score": 372.42
+        },
+        {
+          "rank": 50,
+          "score": 355.26
+        },
+        {
+          "rank": 100,
+          "score": 343.36
+        },
+        {
+          "rank": 250,
+          "score": 324.9
+        },
+        {
+          "rank": 500,
+          "score": 309.05
+        }
+      ],
+      "sampledAt": "2026-09-02T21:04:22.315Z"
+    },
+    {
       "scenario": "kinTS Voltaic",
       "leaderboardId": 604,
       "total": 29081,
@@ -1792,6 +6000,294 @@
       "sampledAt": "2026-08-30T06:24:30.800Z"
     },
     {
+      "scenario": "MFSI rAim",
+      "leaderboardId": 5075,
+      "total": 21435,
+      "points": [
+        {
+          "rank": 1,
+          "score": 17622
+        },
+        {
+          "rank": 2,
+          "score": 16434
+        },
+        {
+          "rank": 3,
+          "score": 16182
+        },
+        {
+          "rank": 5,
+          "score": 16092
+        },
+        {
+          "rank": 10,
+          "score": 15498
+        },
+        {
+          "rank": 25,
+          "score": 14958
+        },
+        {
+          "rank": 50,
+          "score": 14490
+        },
+        {
+          "rank": 100,
+          "score": 14094
+        },
+        {
+          "rank": 250,
+          "score": 13428
+        },
+        {
+          "rank": 500,
+          "score": 12762
+        }
+      ],
+      "sampledAt": "2026-09-02T21:07:24.581Z"
+    },
+    {
+      "scenario": "Midrange Short Strafes Invincible Raspberry",
+      "leaderboardId": 1484,
+      "total": 19373,
+      "points": [
+        {
+          "rank": 1,
+          "score": 10935
+        },
+        {
+          "rank": 2,
+          "score": 10779
+        },
+        {
+          "rank": 3,
+          "score": 10626
+        },
+        {
+          "rank": 5,
+          "score": 10407
+        },
+        {
+          "rank": 10,
+          "score": 10242
+        },
+        {
+          "rank": 25,
+          "score": 9714
+        },
+        {
+          "rank": 50,
+          "score": 9090
+        },
+        {
+          "rank": 100,
+          "score": 8754
+        },
+        {
+          "rank": 250,
+          "score": 8100
+        },
+        {
+          "rank": 500,
+          "score": 7521
+        }
+      ],
+      "sampledAt": "2026-09-03T01:23:33.435Z"
+    },
+    {
+      "scenario": "No23 ca micropressure supereasy",
+      "leaderboardId": 114049,
+      "total": 720,
+      "points": [
+        {
+          "rank": 1,
+          "score": 254
+        },
+        {
+          "rank": 2,
+          "score": 244
+        },
+        {
+          "rank": 3,
+          "score": 236
+        },
+        {
+          "rank": 5,
+          "score": 228
+        },
+        {
+          "rank": 10,
+          "score": 216
+        },
+        {
+          "rank": 25,
+          "score": 203
+        },
+        {
+          "rank": 50,
+          "score": 194
+        },
+        {
+          "rank": 100,
+          "score": 185
+        },
+        {
+          "rank": 250,
+          "score": 165
+        },
+        {
+          "rank": 500,
+          "score": 137
+        }
+      ],
+      "sampledAt": "2026-09-02T21:03:26.201Z"
+    },
+    {
+      "scenario": "Pasu Angelic",
+      "leaderboardId": 38540,
+      "total": 32851,
+      "points": [
+        {
+          "rank": 1,
+          "score": 160
+        },
+        {
+          "rank": 2,
+          "score": 150
+        },
+        {
+          "rank": 3,
+          "score": 144
+        },
+        {
+          "rank": 5,
+          "score": 138
+        },
+        {
+          "rank": 10,
+          "score": 135
+        },
+        {
+          "rank": 25,
+          "score": 129
+        },
+        {
+          "rank": 50,
+          "score": 126
+        },
+        {
+          "rank": 100,
+          "score": 120
+        },
+        {
+          "rank": 250,
+          "score": 112
+        },
+        {
+          "rank": 500,
+          "score": 105
+        }
+      ],
+      "sampledAt": "2026-09-03T01:19:56.441Z"
+    },
+    {
+      "scenario": "Pasu Angelic 20% Larger",
+      "leaderboardId": 89821,
+      "total": 28623,
+      "points": [
+        {
+          "rank": 1,
+          "score": 168
+        },
+        {
+          "rank": 2,
+          "score": 157
+        },
+        {
+          "rank": 3,
+          "score": 155
+        },
+        {
+          "rank": 5,
+          "score": 151
+        },
+        {
+          "rank": 10,
+          "score": 144
+        },
+        {
+          "rank": 25,
+          "score": 135
+        },
+        {
+          "rank": 50,
+          "score": 131
+        },
+        {
+          "rank": 100,
+          "score": 126
+        },
+        {
+          "rank": 250,
+          "score": 121
+        },
+        {
+          "rank": 500,
+          "score": 117
+        }
+      ],
+      "sampledAt": "2026-09-03T01:19:46.421Z"
+    },
+    {
+      "scenario": "pasu nqs reload",
+      "leaderboardId": 89599,
+      "total": 4758,
+      "points": [
+        {
+          "rank": 1,
+          "score": 206
+        },
+        {
+          "rank": 2,
+          "score": 175
+        },
+        {
+          "rank": 3,
+          "score": 169
+        },
+        {
+          "rank": 5,
+          "score": 160
+        },
+        {
+          "rank": 10,
+          "score": 146
+        },
+        {
+          "rank": 25,
+          "score": 136
+        },
+        {
+          "rank": 50,
+          "score": 133
+        },
+        {
+          "rank": 100,
+          "score": 128
+        },
+        {
+          "rank": 250,
+          "score": 118
+        },
+        {
+          "rank": 500,
+          "score": 110
+        }
+      ],
+      "sampledAt": "2026-09-03T01:17:58.564Z"
+    },
+    {
       "scenario": "Pasu Reload Goated",
       "leaderboardId": 583,
       "total": 26047,
@@ -1838,6 +6334,246 @@
         }
       ],
       "sampledAt": "2026-08-30T06:18:44.572Z"
+    },
+    {
+      "scenario": "pasu small reload",
+      "leaderboardId": 95,
+      "total": 59928,
+      "points": [
+        {
+          "rank": 1,
+          "score": 159
+        },
+        {
+          "rank": 2,
+          "score": 142
+        },
+        {
+          "rank": 3,
+          "score": 141
+        },
+        {
+          "rank": 5,
+          "score": 138
+        },
+        {
+          "rank": 10,
+          "score": 130
+        },
+        {
+          "rank": 25,
+          "score": 125
+        },
+        {
+          "rank": 50,
+          "score": 119
+        },
+        {
+          "rank": 100,
+          "score": 114
+        },
+        {
+          "rank": 250,
+          "score": 106
+        },
+        {
+          "rank": 500,
+          "score": 99
+        }
+      ],
+      "sampledAt": "2026-09-03T01:17:53.665Z"
+    },
+    {
+      "scenario": "Pasu Voltaic",
+      "leaderboardId": 6,
+      "total": 61869,
+      "points": [
+        {
+          "rank": 1,
+          "score": 144.3
+        },
+        {
+          "rank": 2,
+          "score": 135.8
+        },
+        {
+          "rank": 3,
+          "score": 132.22
+        },
+        {
+          "rank": 5,
+          "score": 130.49
+        },
+        {
+          "rank": 10,
+          "score": 126.08
+        },
+        {
+          "rank": 25,
+          "score": 116.72
+        },
+        {
+          "rank": 50,
+          "score": 113.3
+        },
+        {
+          "rank": 100,
+          "score": 109.51
+        },
+        {
+          "rank": 250,
+          "score": 101
+        },
+        {
+          "rank": 500,
+          "score": 95.24
+        }
+      ],
+      "sampledAt": "2026-09-03T01:17:19.621Z"
+    },
+    {
+      "scenario": "Pasu Voltaic Reload",
+      "leaderboardId": 10412,
+      "total": 1805,
+      "points": [
+        {
+          "rank": 1,
+          "score": 156
+        },
+        {
+          "rank": 2,
+          "score": 147
+        },
+        {
+          "rank": 3,
+          "score": 130
+        },
+        {
+          "rank": 5,
+          "score": 128
+        },
+        {
+          "rank": 10,
+          "score": 123
+        },
+        {
+          "rank": 25,
+          "score": 119
+        },
+        {
+          "rank": 50,
+          "score": 113
+        },
+        {
+          "rank": 100,
+          "score": 106
+        },
+        {
+          "rank": 250,
+          "score": 97
+        },
+        {
+          "rank": 500,
+          "score": 89
+        }
+      ],
+      "sampledAt": "2026-09-03T01:18:13.170Z"
+    },
+    {
+      "scenario": "Pasu Voltaic Reload Easier",
+      "leaderboardId": 185636,
+      "total": 20848,
+      "points": [
+        {
+          "rank": 1,
+          "score": 178
+        },
+        {
+          "rank": 2,
+          "score": 160
+        },
+        {
+          "rank": 3,
+          "score": 157
+        },
+        {
+          "rank": 5,
+          "score": 156
+        },
+        {
+          "rank": 10,
+          "score": 150
+        },
+        {
+          "rank": 25,
+          "score": 138
+        },
+        {
+          "rank": 50,
+          "score": 133
+        },
+        {
+          "rank": 100,
+          "score": 128
+        },
+        {
+          "rank": 250,
+          "score": 120
+        },
+        {
+          "rank": 500,
+          "score": 114
+        }
+      ],
+      "sampledAt": "2026-09-03T01:18:03.440Z"
+    },
+    {
+      "scenario": "Pasu Voltaic Reload Easy",
+      "leaderboardId": 163323,
+      "total": 19822,
+      "points": [
+        {
+          "rank": 1,
+          "score": 171
+        },
+        {
+          "rank": 2,
+          "score": 160
+        },
+        {
+          "rank": 3,
+          "score": 156
+        },
+        {
+          "rank": 5,
+          "score": 152
+        },
+        {
+          "rank": 10,
+          "score": 144
+        },
+        {
+          "rank": 25,
+          "score": 137
+        },
+        {
+          "rank": 50,
+          "score": 131
+        },
+        {
+          "rank": 100,
+          "score": 126
+        },
+        {
+          "rank": 250,
+          "score": 121
+        },
+        {
+          "rank": 500,
+          "score": 115
+        }
+      ],
+      "sampledAt": "2026-09-03T01:18:08.289Z"
     },
     {
       "scenario": "patCircleSwitch NR",
@@ -1888,6 +6624,438 @@
       "sampledAt": "2026-08-30T06:23:37.763Z"
     },
     {
+      "scenario": "PGTI rAim",
+      "leaderboardId": 4686,
+      "total": 11933,
+      "points": [
+        {
+          "rank": 1,
+          "score": 3222
+        },
+        {
+          "rank": 2,
+          "score": 3183
+        },
+        {
+          "rank": 3,
+          "score": 3004
+        },
+        {
+          "rank": 5,
+          "score": 2802
+        },
+        {
+          "rank": 10,
+          "score": 2624
+        },
+        {
+          "rank": 25,
+          "score": 2442
+        },
+        {
+          "rank": 50,
+          "score": 2314
+        },
+        {
+          "rank": 100,
+          "score": 2134
+        },
+        {
+          "rank": 250,
+          "score": 1835
+        },
+        {
+          "rank": 500,
+          "score": 1613
+        }
+      ],
+      "sampledAt": "2026-09-02T21:07:10.140Z"
+    },
+    {
+      "scenario": "PGTI rAim Easy",
+      "leaderboardId": 655,
+      "total": 9986,
+      "points": [
+        {
+          "rank": 1,
+          "score": 4385
+        },
+        {
+          "rank": 2,
+          "score": 4286
+        },
+        {
+          "rank": 3,
+          "score": 4178
+        },
+        {
+          "rank": 5,
+          "score": 3851
+        },
+        {
+          "rank": 10,
+          "score": 3690
+        },
+        {
+          "rank": 25,
+          "score": 3440
+        },
+        {
+          "rank": 50,
+          "score": 3206
+        },
+        {
+          "rank": 100,
+          "score": 2949
+        },
+        {
+          "rank": 250,
+          "score": 2610
+        },
+        {
+          "rank": 500,
+          "score": 2328
+        }
+      ],
+      "sampledAt": "2026-09-03T01:20:15.930Z"
+    },
+    {
+      "scenario": "PGTI Voltaic",
+      "leaderboardId": 99,
+      "total": 33315,
+      "points": [
+        {
+          "rank": 1,
+          "score": 3855
+        },
+        {
+          "rank": 2,
+          "score": 3727
+        },
+        {
+          "rank": 3,
+          "score": 3696
+        },
+        {
+          "rank": 5,
+          "score": 3610
+        },
+        {
+          "rank": 10,
+          "score": 3069
+        },
+        {
+          "rank": 25,
+          "score": 2839
+        },
+        {
+          "rank": 50,
+          "score": 2722
+        },
+        {
+          "rank": 100,
+          "score": 2615
+        },
+        {
+          "rank": 250,
+          "score": 2280
+        },
+        {
+          "rank": 500,
+          "score": 2054
+        }
+      ],
+      "sampledAt": "2026-09-03T01:20:25.701Z"
+    },
+    {
+      "scenario": "PGTI Voltaic Easy",
+      "leaderboardId": 510,
+      "total": 103335,
+      "points": [
+        {
+          "rank": 1,
+          "score": 4587
+        },
+        {
+          "rank": 2,
+          "score": 4490
+        },
+        {
+          "rank": 3,
+          "score": 4366
+        },
+        {
+          "rank": 5,
+          "score": 4223
+        },
+        {
+          "rank": 10,
+          "score": 4047
+        },
+        {
+          "rank": 25,
+          "score": 3788
+        },
+        {
+          "rank": 50,
+          "score": 3590
+        },
+        {
+          "rank": 100,
+          "score": 3408
+        },
+        {
+          "rank": 250,
+          "score": 3228
+        },
+        {
+          "rank": 500,
+          "score": 2972
+        }
+      ],
+      "sampledAt": "2026-09-03T01:20:20.820Z"
+    },
+    {
+      "scenario": "Pokeball 1w4ts 30%",
+      "leaderboardId": 456,
+      "total": 88469,
+      "points": [
+        {
+          "rank": 1,
+          "score": 146
+        },
+        {
+          "rank": 2,
+          "score": 145
+        },
+        {
+          "rank": 3,
+          "score": 145
+        },
+        {
+          "rank": 5,
+          "score": 143
+        },
+        {
+          "rank": 10,
+          "score": 141
+        },
+        {
+          "rank": 25,
+          "score": 138
+        },
+        {
+          "rank": 50,
+          "score": 135
+        },
+        {
+          "rank": 100,
+          "score": 131
+        },
+        {
+          "rank": 250,
+          "score": 125
+        },
+        {
+          "rank": 500,
+          "score": 121
+        }
+      ],
+      "sampledAt": "2026-09-04T00:09:01.453Z"
+    },
+    {
+      "scenario": "Pokeball 1w4ts 30% Easy",
+      "leaderboardId": 178814,
+      "total": 4129,
+      "points": [
+        {
+          "rank": 1,
+          "score": 154
+        },
+        {
+          "rank": 2,
+          "score": 152
+        },
+        {
+          "rank": 3,
+          "score": 152
+        },
+        {
+          "rank": 5,
+          "score": 151
+        },
+        {
+          "rank": 10,
+          "score": 148
+        },
+        {
+          "rank": 25,
+          "score": 143
+        },
+        {
+          "rank": 50,
+          "score": 138
+        },
+        {
+          "rank": 100,
+          "score": 134
+        },
+        {
+          "rank": 250,
+          "score": 126
+        },
+        {
+          "rank": 500,
+          "score": 120
+        }
+      ],
+      "sampledAt": "2026-09-02T21:04:04.997Z"
+    },
+    {
+      "scenario": "Pokeball Frenzy Auto Small Wide",
+      "leaderboardId": 106,
+      "total": 57374,
+      "points": [
+        {
+          "rank": 1,
+          "score": 3720
+        },
+        {
+          "rank": 2,
+          "score": 3570
+        },
+        {
+          "rank": 3,
+          "score": 3540
+        },
+        {
+          "rank": 5,
+          "score": 3480
+        },
+        {
+          "rank": 10,
+          "score": 3390
+        },
+        {
+          "rank": 25,
+          "score": 3300
+        },
+        {
+          "rank": 50,
+          "score": 3210
+        },
+        {
+          "rank": 100,
+          "score": 3120
+        },
+        {
+          "rank": 250,
+          "score": 3000
+        },
+        {
+          "rank": 500,
+          "score": 2880
+        }
+      ],
+      "sampledAt": "2026-09-02T21:04:17.434Z"
+    },
+    {
+      "scenario": "Pokeball Wide rAim",
+      "leaderboardId": 527,
+      "total": 8886,
+      "points": [
+        {
+          "rank": 1,
+          "score": 179
+        },
+        {
+          "rank": 2,
+          "score": 178
+        },
+        {
+          "rank": 3,
+          "score": 174
+        },
+        {
+          "rank": 5,
+          "score": 170
+        },
+        {
+          "rank": 10,
+          "score": 167
+        },
+        {
+          "rank": 25,
+          "score": 161
+        },
+        {
+          "rank": 50,
+          "score": 158
+        },
+        {
+          "rank": 100,
+          "score": 154
+        },
+        {
+          "rank": 250,
+          "score": 147
+        },
+        {
+          "rank": 500,
+          "score": 142
+        }
+      ],
+      "sampledAt": "2026-09-02T21:06:02.192Z"
+    },
+    {
+      "scenario": "Popcorn Goated rAim",
+      "leaderboardId": 777,
+      "total": 7936,
+      "points": [
+        {
+          "rank": 1,
+          "score": 640
+        },
+        {
+          "rank": 2,
+          "score": 520
+        },
+        {
+          "rank": 3,
+          "score": 520
+        },
+        {
+          "rank": 5,
+          "score": 460
+        },
+        {
+          "rank": 10,
+          "score": 440
+        },
+        {
+          "rank": 25,
+          "score": 410
+        },
+        {
+          "rank": 50,
+          "score": 390
+        },
+        {
+          "rank": 100,
+          "score": 360
+        },
+        {
+          "rank": 250,
+          "score": 320
+        },
+        {
+          "rank": 500,
+          "score": 280
+        }
+      ],
+      "sampledAt": "2026-09-03T01:18:28.075Z"
+    },
+    {
       "scenario": "Popcorn MV Advanced",
       "leaderboardId": 76966,
       "total": 4511,
@@ -1934,6 +7102,294 @@
         }
       ],
       "sampledAt": "2026-08-31T22:31:12.828Z"
+    },
+    {
+      "scenario": "Popcorn MV Easier",
+      "leaderboardId": 185398,
+      "total": 18968,
+      "points": [
+        {
+          "rank": 1,
+          "score": 910
+        },
+        {
+          "rank": 2,
+          "score": 880
+        },
+        {
+          "rank": 3,
+          "score": 850
+        },
+        {
+          "rank": 5,
+          "score": 840
+        },
+        {
+          "rank": 10,
+          "score": 800
+        },
+        {
+          "rank": 25,
+          "score": 750
+        },
+        {
+          "rank": 50,
+          "score": 720
+        },
+        {
+          "rank": 100,
+          "score": 670
+        },
+        {
+          "rank": 250,
+          "score": 610
+        },
+        {
+          "rank": 500,
+          "score": 570
+        }
+      ],
+      "sampledAt": "2026-09-03T01:18:33.277Z"
+    },
+    {
+      "scenario": "Popcorn MV Intermediate",
+      "leaderboardId": 76960,
+      "total": 28321,
+      "points": [
+        {
+          "rank": 1,
+          "score": 810
+        },
+        {
+          "rank": 2,
+          "score": 760
+        },
+        {
+          "rank": 3,
+          "score": 670
+        },
+        {
+          "rank": 5,
+          "score": 610
+        },
+        {
+          "rank": 10,
+          "score": 600
+        },
+        {
+          "rank": 25,
+          "score": 560
+        },
+        {
+          "rank": 50,
+          "score": 530
+        },
+        {
+          "rank": 100,
+          "score": 510
+        },
+        {
+          "rank": 250,
+          "score": 490
+        },
+        {
+          "rank": 500,
+          "score": 450
+        }
+      ],
+      "sampledAt": "2026-09-03T01:18:43.038Z"
+    },
+    {
+      "scenario": "Popcorn MV Novice",
+      "leaderboardId": 76965,
+      "total": 54398,
+      "points": [
+        {
+          "rank": 1,
+          "score": 930
+        },
+        {
+          "rank": 2,
+          "score": 750
+        },
+        {
+          "rank": 3,
+          "score": 740
+        },
+        {
+          "rank": 5,
+          "score": 720
+        },
+        {
+          "rank": 10,
+          "score": 660
+        },
+        {
+          "rank": 25,
+          "score": 650
+        },
+        {
+          "rank": 50,
+          "score": 610
+        },
+        {
+          "rank": 100,
+          "score": 570
+        },
+        {
+          "rank": 250,
+          "score": 530
+        },
+        {
+          "rank": 500,
+          "score": 490
+        }
+      ],
+      "sampledAt": "2026-09-03T01:18:38.187Z"
+    },
+    {
+      "scenario": "psalmTS angelic click",
+      "leaderboardId": 578,
+      "total": 22207,
+      "points": [
+        {
+          "rank": 1,
+          "score": 136
+        },
+        {
+          "rank": 2,
+          "score": 118
+        },
+        {
+          "rank": 3,
+          "score": 116
+        },
+        {
+          "rank": 5,
+          "score": 113
+        },
+        {
+          "rank": 10,
+          "score": 110
+        },
+        {
+          "rank": 25,
+          "score": 101
+        },
+        {
+          "rank": 50,
+          "score": 97
+        },
+        {
+          "rank": 100,
+          "score": 92
+        },
+        {
+          "rank": 250,
+          "score": 86
+        },
+        {
+          "rank": 500,
+          "score": 80
+        }
+      ],
+      "sampledAt": "2026-09-03T01:19:51.336Z"
+    },
+    {
+      "scenario": "psalmTS angelic click 30% Larger",
+      "leaderboardId": 89546,
+      "total": 3421,
+      "points": [
+        {
+          "rank": 1,
+          "score": 131
+        },
+        {
+          "rank": 2,
+          "score": 126
+        },
+        {
+          "rank": 3,
+          "score": 124
+        },
+        {
+          "rank": 5,
+          "score": 122
+        },
+        {
+          "rank": 10,
+          "score": 120
+        },
+        {
+          "rank": 25,
+          "score": 108
+        },
+        {
+          "rank": 50,
+          "score": 103
+        },
+        {
+          "rank": 100,
+          "score": 97
+        },
+        {
+          "rank": 250,
+          "score": 90
+        },
+        {
+          "rank": 500,
+          "score": 83
+        }
+      ],
+      "sampledAt": "2026-09-03T01:19:41.601Z"
+    },
+    {
+      "scenario": "psalmTS Voltaic",
+      "leaderboardId": 1114,
+      "total": 42191,
+      "points": [
+        {
+          "rank": 1,
+          "score": 136.05
+        },
+        {
+          "rank": 2,
+          "score": 130.9
+        },
+        {
+          "rank": 3,
+          "score": 130.1
+        },
+        {
+          "rank": 5,
+          "score": 129.6
+        },
+        {
+          "rank": 10,
+          "score": 124.85
+        },
+        {
+          "rank": 25,
+          "score": 121
+        },
+        {
+          "rank": 50,
+          "score": 119
+        },
+        {
+          "rank": 100,
+          "score": 115.85
+        },
+        {
+          "rank": 250,
+          "score": 108
+        },
+        {
+          "rank": 500,
+          "score": 102
+        }
+      ],
+      "sampledAt": "2026-09-03T01:23:57.766Z"
     },
     {
       "scenario": "RawControlSphere",
@@ -2128,6 +7584,142 @@
       "sampledAt": "2026-08-31T22:28:32.347Z"
     },
     {
+      "scenario": "SCS 8xs Uniform",
+      "leaderboardId": 188314,
+      "total": 175,
+      "points": [
+        {
+          "rank": 1,
+          "score": 145
+        },
+        {
+          "rank": 2,
+          "score": 141
+        },
+        {
+          "rank": 3,
+          "score": 136
+        },
+        {
+          "rank": 5,
+          "score": 129
+        },
+        {
+          "rank": 10,
+          "score": 121
+        },
+        {
+          "rank": 25,
+          "score": 114
+        },
+        {
+          "rank": 50,
+          "score": 105
+        },
+        {
+          "rank": 100,
+          "score": 97
+        }
+      ],
+      "sampledAt": "2026-09-02T21:03:06.916Z"
+    },
+    {
+      "scenario": "shimPressure Micro",
+      "leaderboardId": 84026,
+      "total": 24506,
+      "points": [
+        {
+          "rank": 1,
+          "score": 475
+        },
+        {
+          "rank": 2,
+          "score": 425
+        },
+        {
+          "rank": 3,
+          "score": 400
+        },
+        {
+          "rank": 5,
+          "score": 350
+        },
+        {
+          "rank": 10,
+          "score": 263
+        },
+        {
+          "rank": 25,
+          "score": 245
+        },
+        {
+          "rank": 50,
+          "score": 236
+        },
+        {
+          "rank": 100,
+          "score": 228
+        },
+        {
+          "rank": 250,
+          "score": 218
+        },
+        {
+          "rank": 500,
+          "score": 210
+        }
+      ],
+      "sampledAt": "2026-09-02T21:03:31.102Z"
+    },
+    {
+      "scenario": "Smooth Thin Strafes Raspberry",
+      "leaderboardId": 3696,
+      "total": 28732,
+      "points": [
+        {
+          "rank": 1,
+          "score": 10110
+        },
+        {
+          "rank": 2,
+          "score": 10008
+        },
+        {
+          "rank": 3,
+          "score": 9918
+        },
+        {
+          "rank": 5,
+          "score": 9786
+        },
+        {
+          "rank": 10,
+          "score": 9393
+        },
+        {
+          "rank": 25,
+          "score": 9024
+        },
+        {
+          "rank": 50,
+          "score": 8544
+        },
+        {
+          "rank": 100,
+          "score": 8121
+        },
+        {
+          "rank": 250,
+          "score": 7518
+        },
+        {
+          "rank": 500,
+          "score": 6990
+        }
+      ],
+      "sampledAt": "2026-09-02T21:07:05.264Z"
+    },
+    {
       "scenario": "Smooth Thin Strafes Raspberry Easy",
       "leaderboardId": 5536,
       "total": 74881,
@@ -2224,6 +7816,678 @@
       "sampledAt": "2026-08-30T06:20:39.908Z"
     },
     {
+      "scenario": "Smoothbot Pauer Glider",
+      "leaderboardId": 32,
+      "total": 18230,
+      "points": [
+        {
+          "rank": 1,
+          "score": 5064
+        },
+        {
+          "rank": 2,
+          "score": 4830
+        },
+        {
+          "rank": 3,
+          "score": 4770
+        },
+        {
+          "rank": 5,
+          "score": 4650
+        },
+        {
+          "rank": 10,
+          "score": 4362
+        },
+        {
+          "rank": 25,
+          "score": 3936
+        },
+        {
+          "rank": 50,
+          "score": 3750
+        },
+        {
+          "rank": 100,
+          "score": 3492
+        },
+        {
+          "rank": 250,
+          "score": 3120
+        },
+        {
+          "rank": 500,
+          "score": 2838
+        }
+      ],
+      "sampledAt": "2026-09-03T01:22:14.666Z"
+    },
+    {
+      "scenario": "Smoothbot Pauer Glider 60% Larger",
+      "leaderboardId": 85148,
+      "total": 5029,
+      "points": [
+        {
+          "rank": 1,
+          "score": 5880
+        },
+        {
+          "rank": 2,
+          "score": 5796
+        },
+        {
+          "rank": 3,
+          "score": 5754
+        },
+        {
+          "rank": 5,
+          "score": 5556
+        },
+        {
+          "rank": 10,
+          "score": 5232
+        },
+        {
+          "rank": 25,
+          "score": 4890
+        },
+        {
+          "rank": 50,
+          "score": 4536
+        },
+        {
+          "rank": 100,
+          "score": 4278
+        },
+        {
+          "rank": 250,
+          "score": 3960
+        },
+        {
+          "rank": 500,
+          "score": 3540
+        }
+      ],
+      "sampledAt": "2026-09-03T01:22:00.107Z"
+    },
+    {
+      "scenario": "Smoothbot Pauer Glider Intermediate",
+      "leaderboardId": 109836,
+      "total": 17007,
+      "points": [
+        {
+          "rank": 1,
+          "score": 3589
+        },
+        {
+          "rank": 2,
+          "score": 3577
+        },
+        {
+          "rank": 3,
+          "score": 3531
+        },
+        {
+          "rank": 5,
+          "score": 3522
+        },
+        {
+          "rank": 10,
+          "score": 3263
+        },
+        {
+          "rank": 25,
+          "score": 3045
+        },
+        {
+          "rank": 50,
+          "score": 2843
+        },
+        {
+          "rank": 100,
+          "score": 2651
+        },
+        {
+          "rank": 250,
+          "score": 2365
+        },
+        {
+          "rank": 500,
+          "score": 2168
+        }
+      ],
+      "sampledAt": "2026-09-03T01:22:09.808Z"
+    },
+    {
+      "scenario": "Smoothbot Pauer Glider Level 1",
+      "leaderboardId": 106199,
+      "total": 600,
+      "points": [
+        {
+          "rank": 1,
+          "score": 6138
+        },
+        {
+          "rank": 2,
+          "score": 6048
+        },
+        {
+          "rank": 3,
+          "score": 5232
+        },
+        {
+          "rank": 5,
+          "score": 5124
+        },
+        {
+          "rank": 10,
+          "score": 4332
+        },
+        {
+          "rank": 25,
+          "score": 3762
+        },
+        {
+          "rank": 50,
+          "score": 3450
+        },
+        {
+          "rank": 100,
+          "score": 3054
+        },
+        {
+          "rank": 250,
+          "score": 2418
+        },
+        {
+          "rank": 500,
+          "score": 1602
+        }
+      ],
+      "sampledAt": "2026-09-04T00:08:32.423Z"
+    },
+    {
+      "scenario": "Smoothbot Pauer Glider Novice",
+      "leaderboardId": 109838,
+      "total": 9279,
+      "points": [
+        {
+          "rank": 1,
+          "score": 4294
+        },
+        {
+          "rank": 2,
+          "score": 4002
+        },
+        {
+          "rank": 3,
+          "score": 3951
+        },
+        {
+          "rank": 5,
+          "score": 3906
+        },
+        {
+          "rank": 10,
+          "score": 3401
+        },
+        {
+          "rank": 25,
+          "score": 3137
+        },
+        {
+          "rank": 50,
+          "score": 2957
+        },
+        {
+          "rank": 100,
+          "score": 2633
+        },
+        {
+          "rank": 250,
+          "score": 2322
+        },
+        {
+          "rank": 500,
+          "score": 2056
+        }
+      ],
+      "sampledAt": "2026-09-03T01:22:04.958Z"
+    },
+    {
+      "scenario": "Smoothbot rAim",
+      "leaderboardId": 5151,
+      "total": 5792,
+      "points": [
+        {
+          "rank": 1,
+          "score": 6234
+        },
+        {
+          "rank": 2,
+          "score": 6144
+        },
+        {
+          "rank": 3,
+          "score": 5940
+        },
+        {
+          "rank": 5,
+          "score": 5814
+        },
+        {
+          "rank": 10,
+          "score": 5694
+        },
+        {
+          "rank": 25,
+          "score": 5376
+        },
+        {
+          "rank": 50,
+          "score": 5250
+        },
+        {
+          "rank": 100,
+          "score": 5016
+        },
+        {
+          "rank": 250,
+          "score": 4662
+        },
+        {
+          "rank": 500,
+          "score": 4314
+        }
+      ],
+      "sampledAt": "2026-09-02T21:07:29.314Z"
+    },
+    {
+      "scenario": "Smoothsphere",
+      "leaderboardId": 396,
+      "total": 69068,
+      "points": [
+        {
+          "rank": 1,
+          "score": 13959
+        },
+        {
+          "rank": 2,
+          "score": 13779
+        },
+        {
+          "rank": 3,
+          "score": 13332
+        },
+        {
+          "rank": 5,
+          "score": 13089
+        },
+        {
+          "rank": 10,
+          "score": 12690
+        },
+        {
+          "rank": 25,
+          "score": 12315
+        },
+        {
+          "rank": 50,
+          "score": 11769
+        },
+        {
+          "rank": 100,
+          "score": 11370
+        },
+        {
+          "rank": 250,
+          "score": 10593
+        },
+        {
+          "rank": 500,
+          "score": 10041
+        }
+      ],
+      "sampledAt": "2026-09-03T01:21:39.920Z"
+    },
+    {
+      "scenario": "Smoothsphere Diamond",
+      "leaderboardId": 11939,
+      "total": 31394,
+      "points": [
+        {
+          "rank": 1,
+          "score": 16092
+        },
+        {
+          "rank": 2,
+          "score": 16038
+        },
+        {
+          "rank": 3,
+          "score": 16005
+        },
+        {
+          "rank": 5,
+          "score": 15726
+        },
+        {
+          "rank": 10,
+          "score": 15225
+        },
+        {
+          "rank": 25,
+          "score": 14706
+        },
+        {
+          "rank": 50,
+          "score": 14358
+        },
+        {
+          "rank": 100,
+          "score": 13863
+        },
+        {
+          "rank": 250,
+          "score": 13221
+        },
+        {
+          "rank": 500,
+          "score": 12726
+        }
+      ],
+      "sampledAt": "2026-09-03T01:21:44.898Z"
+    },
+    {
+      "scenario": "Smoothsphere Master",
+      "leaderboardId": 14854,
+      "total": 4422,
+      "points": [
+        {
+          "rank": 1,
+          "score": 11427
+        },
+        {
+          "rank": 2,
+          "score": 11361
+        },
+        {
+          "rank": 3,
+          "score": 11028
+        },
+        {
+          "rank": 5,
+          "score": 10392
+        },
+        {
+          "rank": 10,
+          "score": 9783
+        },
+        {
+          "rank": 25,
+          "score": 8880
+        },
+        {
+          "rank": 50,
+          "score": 8436
+        },
+        {
+          "rank": 100,
+          "score": 7935
+        },
+        {
+          "rank": 250,
+          "score": 7194
+        },
+        {
+          "rank": 500,
+          "score": 6678
+        }
+      ],
+      "sampledAt": "2026-09-03T01:21:54.985Z"
+    },
+    {
+      "scenario": "Smoothsphere Viscose Easier",
+      "leaderboardId": 185342,
+      "total": 34300,
+      "points": [
+        {
+          "rank": 1,
+          "score": 17649
+        },
+        {
+          "rank": 2,
+          "score": 17622
+        },
+        {
+          "rank": 3,
+          "score": 17544
+        },
+        {
+          "rank": 5,
+          "score": 17466
+        },
+        {
+          "rank": 10,
+          "score": 17331
+        },
+        {
+          "rank": 25,
+          "score": 17037
+        },
+        {
+          "rank": 50,
+          "score": 16890
+        },
+        {
+          "rank": 100,
+          "score": 16686
+        },
+        {
+          "rank": 250,
+          "score": 16350
+        },
+        {
+          "rank": 500,
+          "score": 16011
+        }
+      ],
+      "sampledAt": "2026-09-03T01:21:35.043Z"
+    },
+    {
+      "scenario": "StaticSwitchingVox",
+      "leaderboardId": 15659,
+      "total": 26440,
+      "points": [
+        {
+          "rank": 1,
+          "score": 188
+        },
+        {
+          "rank": 2,
+          "score": 182.05
+        },
+        {
+          "rank": 3,
+          "score": 182
+        },
+        {
+          "rank": 5,
+          "score": 178.05
+        },
+        {
+          "rank": 10,
+          "score": 176.15
+        },
+        {
+          "rank": 25,
+          "score": 166.3
+        },
+        {
+          "rank": 50,
+          "score": 161.6
+        },
+        {
+          "rank": 100,
+          "score": 158
+        },
+        {
+          "rank": 250,
+          "score": 151.65
+        },
+        {
+          "rank": 500,
+          "score": 146.65
+        }
+      ],
+      "sampledAt": "2026-09-03T01:24:37.376Z"
+    },
+    {
+      "scenario": "StaticSwitchingVox Jumbo",
+      "leaderboardId": 15654,
+      "total": 6568,
+      "points": [
+        {
+          "rank": 1,
+          "score": 208
+        },
+        {
+          "rank": 2,
+          "score": 200.95
+        },
+        {
+          "rank": 3,
+          "score": 200.65
+        },
+        {
+          "rank": 5,
+          "score": 197.85
+        },
+        {
+          "rank": 10,
+          "score": 195.55
+        },
+        {
+          "rank": 25,
+          "score": 192
+        },
+        {
+          "rank": 50,
+          "score": 189.3
+        },
+        {
+          "rank": 100,
+          "score": 183.15
+        },
+        {
+          "rank": 250,
+          "score": 175.9
+        },
+        {
+          "rank": 500,
+          "score": 170.1
+        }
+      ],
+      "sampledAt": "2026-09-03T01:24:32.117Z"
+    },
+    {
+      "scenario": "StaticSwitchingVox Small",
+      "leaderboardId": 15662,
+      "total": 20327,
+      "points": [
+        {
+          "rank": 1,
+          "score": 174.55
+        },
+        {
+          "rank": 2,
+          "score": 171.55
+        },
+        {
+          "rank": 3,
+          "score": 167.15
+        },
+        {
+          "rank": 5,
+          "score": 166.15
+        },
+        {
+          "rank": 10,
+          "score": 164.7
+        },
+        {
+          "rank": 25,
+          "score": 160.1
+        },
+        {
+          "rank": 50,
+          "score": 156
+        },
+        {
+          "rank": 100,
+          "score": 152.1
+        },
+        {
+          "rank": 250,
+          "score": 149
+        },
+        {
+          "rank": 500,
+          "score": 146
+        }
+      ],
+      "sampledAt": "2026-09-03T01:24:42.278Z"
+    },
+    {
+      "scenario": "StaticSwitchingVox xxSmall",
+      "leaderboardId": 18203,
+      "total": 10757,
+      "points": [
+        {
+          "rank": 1,
+          "score": 154.95
+        },
+        {
+          "rank": 2,
+          "score": 153.7
+        },
+        {
+          "rank": 3,
+          "score": 151.45
+        },
+        {
+          "rank": 5,
+          "score": 149.85
+        },
+        {
+          "rank": 10,
+          "score": 148
+        },
+        {
+          "rank": 25,
+          "score": 143
+        },
+        {
+          "rank": 50,
+          "score": 138.8
+        },
+        {
+          "rank": 100,
+          "score": 135
+        },
+        {
+          "rank": 250,
+          "score": 130
+        },
+        {
+          "rank": 500,
+          "score": 125.45
+        }
+      ],
+      "sampledAt": "2026-09-03T01:24:47.180Z"
+    },
+    {
       "scenario": "tamTargetSwitch Control Hard",
       "leaderboardId": 757,
       "total": 60383,
@@ -2270,6 +8534,54 @@
         }
       ],
       "sampledAt": "2026-08-30T16:00:09.082Z"
+    },
+    {
+      "scenario": "tamTargetSwitch Smooth",
+      "leaderboardId": 56,
+      "total": 51563,
+      "points": [
+        {
+          "rank": 1,
+          "score": 53
+        },
+        {
+          "rank": 2,
+          "score": 52
+        },
+        {
+          "rank": 3,
+          "score": 52
+        },
+        {
+          "rank": 5,
+          "score": 50
+        },
+        {
+          "rank": 10,
+          "score": 47
+        },
+        {
+          "rank": 25,
+          "score": 46
+        },
+        {
+          "rank": 50,
+          "score": 45
+        },
+        {
+          "rank": 100,
+          "score": 44
+        },
+        {
+          "rank": 250,
+          "score": 41
+        },
+        {
+          "rank": 500,
+          "score": 39
+        }
+      ],
+      "sampledAt": "2026-09-03T01:26:29.727Z"
     },
     {
       "scenario": "tamTargetSwitch Smooth Easy",
@@ -2366,6 +8678,102 @@
         }
       ],
       "sampledAt": "2026-08-30T06:24:16.271Z"
+    },
+    {
+      "scenario": "tamTargetSwitch Smooth Hard 30% Larger",
+      "leaderboardId": 96201,
+      "total": 2143,
+      "points": [
+        {
+          "rank": 1,
+          "score": 51
+        },
+        {
+          "rank": 2,
+          "score": 49
+        },
+        {
+          "rank": 3,
+          "score": 49
+        },
+        {
+          "rank": 5,
+          "score": 48
+        },
+        {
+          "rank": 10,
+          "score": 46
+        },
+        {
+          "rank": 25,
+          "score": 44
+        },
+        {
+          "rank": 50,
+          "score": 42
+        },
+        {
+          "rank": 100,
+          "score": 40
+        },
+        {
+          "rank": 250,
+          "score": 38
+        },
+        {
+          "rank": 500,
+          "score": 35
+        }
+      ],
+      "sampledAt": "2026-09-03T01:26:24.494Z"
+    },
+    {
+      "scenario": "ToonsClick rAim",
+      "leaderboardId": 5053,
+      "total": 10349,
+      "points": [
+        {
+          "rank": 1,
+          "score": 113
+        },
+        {
+          "rank": 2,
+          "score": 103
+        },
+        {
+          "rank": 3,
+          "score": 102
+        },
+        {
+          "rank": 5,
+          "score": 100
+        },
+        {
+          "rank": 10,
+          "score": 94
+        },
+        {
+          "rank": 25,
+          "score": 91
+        },
+        {
+          "rank": 50,
+          "score": 86
+        },
+        {
+          "rank": 100,
+          "score": 79
+        },
+        {
+          "rank": 250,
+          "score": 71
+        },
+        {
+          "rank": 500,
+          "score": 64
+        }
+      ],
+      "sampledAt": "2026-09-02T21:06:21.542Z"
     },
     {
       "scenario": "voxTargetClick 20% Small",
@@ -2608,6 +9016,198 @@
       "sampledAt": "2026-08-30T06:19:41.988Z"
     },
     {
+      "scenario": "voxTargetSwitch Jumbo",
+      "leaderboardId": 413,
+      "total": 12053,
+      "points": [
+        {
+          "rank": 1,
+          "score": 180
+        },
+        {
+          "rank": 2,
+          "score": 178
+        },
+        {
+          "rank": 3,
+          "score": 177
+        },
+        {
+          "rank": 5,
+          "score": 172.5
+        },
+        {
+          "rank": 10,
+          "score": 169
+        },
+        {
+          "rank": 25,
+          "score": 164.45
+        },
+        {
+          "rank": 50,
+          "score": 161.14
+        },
+        {
+          "rank": 100,
+          "score": 157.39
+        },
+        {
+          "rank": 250,
+          "score": 150.89
+        },
+        {
+          "rank": 500,
+          "score": 145
+        }
+      ],
+      "sampledAt": "2026-09-03T01:24:17.444Z"
+    },
+    {
+      "scenario": "voxTargetSwitch Large",
+      "leaderboardId": 731,
+      "total": 22462,
+      "points": [
+        {
+          "rank": 1,
+          "score": 158.05
+        },
+        {
+          "rank": 2,
+          "score": 157
+        },
+        {
+          "rank": 3,
+          "score": 153.45
+        },
+        {
+          "rank": 5,
+          "score": 150
+        },
+        {
+          "rank": 10,
+          "score": 145.84
+        },
+        {
+          "rank": 25,
+          "score": 141.64
+        },
+        {
+          "rank": 50,
+          "score": 138.45
+        },
+        {
+          "rank": 100,
+          "score": 133.05
+        },
+        {
+          "rank": 250,
+          "score": 127
+        },
+        {
+          "rank": 500,
+          "score": 122
+        }
+      ],
+      "sampledAt": "2026-09-03T01:24:22.350Z"
+    },
+    {
+      "scenario": "voxTargetSwitch Small",
+      "leaderboardId": 1106,
+      "total": 16260,
+      "points": [
+        {
+          "rank": 1,
+          "score": 107
+        },
+        {
+          "rank": 2,
+          "score": 103.05
+        },
+        {
+          "rank": 3,
+          "score": 101.2
+        },
+        {
+          "rank": 5,
+          "score": 100
+        },
+        {
+          "rank": 10,
+          "score": 97.5
+        },
+        {
+          "rank": 25,
+          "score": 92
+        },
+        {
+          "rank": 50,
+          "score": 90
+        },
+        {
+          "rank": 100,
+          "score": 86.8
+        },
+        {
+          "rank": 250,
+          "score": 83
+        },
+        {
+          "rank": 500,
+          "score": 79.04
+        }
+      ],
+      "sampledAt": "2026-09-03T01:24:27.215Z"
+    },
+    {
+      "scenario": "voxTS rAim",
+      "leaderboardId": 528,
+      "total": 16872,
+      "points": [
+        {
+          "rank": 1,
+          "score": 137
+        },
+        {
+          "rank": 2,
+          "score": 136.14
+        },
+        {
+          "rank": 3,
+          "score": 136
+        },
+        {
+          "rank": 5,
+          "score": 132.09
+        },
+        {
+          "rank": 10,
+          "score": 129.14
+        },
+        {
+          "rank": 25,
+          "score": 123
+        },
+        {
+          "rank": 50,
+          "score": 119.14
+        },
+        {
+          "rank": 100,
+          "score": 115.75
+        },
+        {
+          "rank": 250,
+          "score": 109.25
+        },
+        {
+          "rank": 500,
+          "score": 105
+        }
+      ],
+      "sampledAt": "2026-09-02T21:06:36.145Z"
+    },
+    {
       "scenario": "voxTS Viscose Varied",
       "leaderboardId": 417,
       "total": 269052,
@@ -2752,6 +9352,150 @@
       "sampledAt": "2026-08-30T06:18:11.064Z"
     },
     {
+      "scenario": "VT Aether Advanced S5",
+      "leaderboardId": 100140,
+      "total": 14842,
+      "points": [
+        {
+          "rank": 1,
+          "score": 4212
+        },
+        {
+          "rank": 2,
+          "score": 4091
+        },
+        {
+          "rank": 3,
+          "score": 4058
+        },
+        {
+          "rank": 5,
+          "score": 4036
+        },
+        {
+          "rank": 10,
+          "score": 3973
+        },
+        {
+          "rank": 25,
+          "score": 3863
+        },
+        {
+          "rank": 50,
+          "score": 3691
+        },
+        {
+          "rank": 100,
+          "score": 3544
+        },
+        {
+          "rank": 250,
+          "score": 3240
+        },
+        {
+          "rank": 500,
+          "score": 2981
+        }
+      ],
+      "sampledAt": "2026-09-03T01:23:13.946Z"
+    },
+    {
+      "scenario": "VT Aether Entry S5 Precision Focus",
+      "leaderboardId": 104846,
+      "total": 5942,
+      "points": [
+        {
+          "rank": 1,
+          "score": 5570
+        },
+        {
+          "rank": 2,
+          "score": 5550
+        },
+        {
+          "rank": 3,
+          "score": 5543
+        },
+        {
+          "rank": 5,
+          "score": 5463
+        },
+        {
+          "rank": 10,
+          "score": 5368
+        },
+        {
+          "rank": 25,
+          "score": 5266
+        },
+        {
+          "rank": 50,
+          "score": 5124
+        },
+        {
+          "rank": 100,
+          "score": 5013
+        },
+        {
+          "rank": 250,
+          "score": 4799
+        },
+        {
+          "rank": 500,
+          "score": 4632
+        }
+      ],
+      "sampledAt": "2026-09-03T01:23:04.195Z"
+    },
+    {
+      "scenario": "VT Aether Intermediate S5",
+      "leaderboardId": 101369,
+      "total": 56218,
+      "points": [
+        {
+          "rank": 1,
+          "score": 4717
+        },
+        {
+          "rank": 2,
+          "score": 4691
+        },
+        {
+          "rank": 3,
+          "score": 4657
+        },
+        {
+          "rank": 5,
+          "score": 4625
+        },
+        {
+          "rank": 10,
+          "score": 4402
+        },
+        {
+          "rank": 25,
+          "score": 4273
+        },
+        {
+          "rank": 50,
+          "score": 4139
+        },
+        {
+          "rank": 100,
+          "score": 4006
+        },
+        {
+          "rank": 250,
+          "score": 3764
+        },
+        {
+          "rank": 500,
+          "score": 3575
+        }
+      ],
+      "sampledAt": "2026-09-03T01:23:09.076Z"
+    },
+    {
       "scenario": "VT Aether Novice S5",
       "leaderboardId": 101370,
       "total": 95275,
@@ -2848,6 +9592,150 @@
       "sampledAt": "2026-08-30T06:22:20.677Z"
     },
     {
+      "scenario": "VT Air Advanced",
+      "leaderboardId": 43182,
+      "total": 15310,
+      "points": [
+        {
+          "rank": 1,
+          "score": 4028.92
+        },
+        {
+          "rank": 2,
+          "score": 3943.93
+        },
+        {
+          "rank": 3,
+          "score": 3901.94
+        },
+        {
+          "rank": 5,
+          "score": 3852.95
+        },
+        {
+          "rank": 10,
+          "score": 3818.95
+        },
+        {
+          "rank": 25,
+          "score": 3691.98
+        },
+        {
+          "rank": 50,
+          "score": 3585.99
+        },
+        {
+          "rank": 100,
+          "score": 3470.01
+        },
+        {
+          "rank": 250,
+          "score": 3284.04
+        },
+        {
+          "rank": 500,
+          "score": 3112.06
+        }
+      ],
+      "sampledAt": "2026-09-03T01:22:49.136Z"
+    },
+    {
+      "scenario": "VT Air Intermediate",
+      "leaderboardId": 43181,
+      "total": 53956,
+      "points": [
+        {
+          "rank": 1,
+          "score": 4258.88
+        },
+        {
+          "rank": 2,
+          "score": 4188.89
+        },
+        {
+          "rank": 3,
+          "score": 4183.89
+        },
+        {
+          "rank": 5,
+          "score": 4158.9
+        },
+        {
+          "rank": 10,
+          "score": 4099.91
+        },
+        {
+          "rank": 25,
+          "score": 3952.93
+        },
+        {
+          "rank": 50,
+          "score": 3847.95
+        },
+        {
+          "rank": 100,
+          "score": 3758.97
+        },
+        {
+          "rank": 250,
+          "score": 3602.99
+        },
+        {
+          "rank": 500,
+          "score": 3485.01
+        }
+      ],
+      "sampledAt": "2026-09-03T01:22:44.233Z"
+    },
+    {
+      "scenario": "VT Air Novice",
+      "leaderboardId": 43180,
+      "total": 107724,
+      "points": [
+        {
+          "rank": 1,
+          "score": 4190.89
+        },
+        {
+          "rank": 2,
+          "score": 4184.89
+        },
+        {
+          "rank": 3,
+          "score": 4180.89
+        },
+        {
+          "rank": 5,
+          "score": 4159.9
+        },
+        {
+          "rank": 10,
+          "score": 4129.9
+        },
+        {
+          "rank": 25,
+          "score": 4089.91
+        },
+        {
+          "rank": 50,
+          "score": 4051.92
+        },
+        {
+          "rank": 100,
+          "score": 4007.92
+        },
+        {
+          "rank": 250,
+          "score": 3931.94
+        },
+        {
+          "rank": 500,
+          "score": 3858.95
+        }
+      ],
+      "sampledAt": "2026-09-02T21:06:41.006Z"
+    },
+    {
       "scenario": "VT Bounceshot Advanced",
       "leaderboardId": 25154,
       "total": 22361,
@@ -2894,6 +9782,54 @@
         }
       ],
       "sampledAt": "2026-08-30T06:19:03.715Z"
+    },
+    {
+      "scenario": "VT Bounceshot Intermediate",
+      "leaderboardId": 24955,
+      "total": 89035,
+      "points": [
+        {
+          "rank": 1,
+          "score": 1450
+        },
+        {
+          "rank": 2,
+          "score": 1350
+        },
+        {
+          "rank": 3,
+          "score": 1350
+        },
+        {
+          "rank": 5,
+          "score": 1340
+        },
+        {
+          "rank": 10,
+          "score": 1280
+        },
+        {
+          "rank": 25,
+          "score": 1210
+        },
+        {
+          "rank": 50,
+          "score": 1160
+        },
+        {
+          "rank": 100,
+          "score": 1120
+        },
+        {
+          "rank": 250,
+          "score": 1070
+        },
+        {
+          "rank": 500,
+          "score": 1020
+        }
+      ],
+      "sampledAt": "2026-09-03T01:18:23.243Z"
     },
     {
       "scenario": "VT Bounceshot Novice",
@@ -2944,6 +9880,54 @@
       "sampledAt": "2026-08-30T06:18:49.364Z"
     },
     {
+      "scenario": "VT Bounceshot Viscose Easier",
+      "leaderboardId": 185392,
+      "total": 19742,
+      "points": [
+        {
+          "rank": 1,
+          "score": 1730
+        },
+        {
+          "rank": 2,
+          "score": 1560
+        },
+        {
+          "rank": 3,
+          "score": 1550
+        },
+        {
+          "rank": 5,
+          "score": 1500
+        },
+        {
+          "rank": 10,
+          "score": 1430
+        },
+        {
+          "rank": 25,
+          "score": 1310
+        },
+        {
+          "rank": 50,
+          "score": 1260
+        },
+        {
+          "rank": 100,
+          "score": 1210
+        },
+        {
+          "rank": 250,
+          "score": 1120
+        },
+        {
+          "rank": 500,
+          "score": 1060
+        }
+      ],
+      "sampledAt": "2026-09-03T01:18:18.073Z"
+    },
+    {
       "scenario": "VT Bounceshot Viscose Medium",
       "leaderboardId": 185237,
       "total": 16843,
@@ -2990,6 +9974,242 @@
         }
       ],
       "sampledAt": "2026-08-30T06:18:58.858Z"
+    },
+    {
+      "scenario": "VT bounceTS Advanced",
+      "leaderboardId": 25160,
+      "total": 16889,
+      "points": [
+        {
+          "rank": 1,
+          "score": 1110
+        },
+        {
+          "rank": 2,
+          "score": 1092
+        },
+        {
+          "rank": 3,
+          "score": 1090
+        },
+        {
+          "rank": 5,
+          "score": 1060
+        },
+        {
+          "rank": 10,
+          "score": 1020
+        },
+        {
+          "rank": 25,
+          "score": 978
+        },
+        {
+          "rank": 50,
+          "score": 940
+        },
+        {
+          "rank": 100,
+          "score": 920
+        },
+        {
+          "rank": 250,
+          "score": 848
+        },
+        {
+          "rank": 500,
+          "score": 820
+        }
+      ],
+      "sampledAt": "2026-09-03T01:26:06.242Z"
+    },
+    {
+      "scenario": "VT bounceTS Elite",
+      "leaderboardId": 86808,
+      "total": 327,
+      "points": [
+        {
+          "rank": 1,
+          "score": 970
+        },
+        {
+          "rank": 2,
+          "score": 862
+        },
+        {
+          "rank": 3,
+          "score": 860
+        },
+        {
+          "rank": 5,
+          "score": 854
+        },
+        {
+          "rank": 10,
+          "score": 810
+        },
+        {
+          "rank": 25,
+          "score": 742
+        },
+        {
+          "rank": 50,
+          "score": 660
+        },
+        {
+          "rank": 100,
+          "score": 580
+        },
+        {
+          "rank": 250,
+          "score": 388
+        }
+      ],
+      "sampledAt": "2026-09-03T01:26:10.861Z"
+    },
+    {
+      "scenario": "VT bounceTS Intermediate",
+      "leaderboardId": 24953,
+      "total": 53289,
+      "points": [
+        {
+          "rank": 1,
+          "score": 1176
+        },
+        {
+          "rank": 2,
+          "score": 1086
+        },
+        {
+          "rank": 3,
+          "score": 1048
+        },
+        {
+          "rank": 5,
+          "score": 1006
+        },
+        {
+          "rank": 10,
+          "score": 976
+        },
+        {
+          "rank": 25,
+          "score": 942
+        },
+        {
+          "rank": 50,
+          "score": 902
+        },
+        {
+          "rank": 100,
+          "score": 864
+        },
+        {
+          "rank": 250,
+          "score": 828
+        },
+        {
+          "rank": 500,
+          "score": 804
+        }
+      ],
+      "sampledAt": "2026-09-03T01:26:01.428Z"
+    },
+    {
+      "scenario": "VT bounceTS Novice",
+      "leaderboardId": 24973,
+      "total": 108293,
+      "points": [
+        {
+          "rank": 1,
+          "score": 1314
+        },
+        {
+          "rank": 2,
+          "score": 1282
+        },
+        {
+          "rank": 3,
+          "score": 1258
+        },
+        {
+          "rank": 5,
+          "score": 1230
+        },
+        {
+          "rank": 10,
+          "score": 1192
+        },
+        {
+          "rank": 25,
+          "score": 1128
+        },
+        {
+          "rank": 50,
+          "score": 1086
+        },
+        {
+          "rank": 100,
+          "score": 1046
+        },
+        {
+          "rank": 250,
+          "score": 990
+        },
+        {
+          "rank": 500,
+          "score": 944
+        }
+      ],
+      "sampledAt": "2026-09-03T01:25:56.606Z"
+    },
+    {
+      "scenario": "VT Controlsphere Advanced S5",
+      "leaderboardId": 103114,
+      "total": 13861,
+      "points": [
+        {
+          "rank": 1,
+          "score": 4506
+        },
+        {
+          "rank": 2,
+          "score": 4463
+        },
+        {
+          "rank": 3,
+          "score": 4326
+        },
+        {
+          "rank": 5,
+          "score": 4296
+        },
+        {
+          "rank": 10,
+          "score": 4216
+        },
+        {
+          "rank": 25,
+          "score": 4112
+        },
+        {
+          "rank": 50,
+          "score": 3903
+        },
+        {
+          "rank": 100,
+          "score": 3809
+        },
+        {
+          "rank": 250,
+          "score": 3537
+        },
+        {
+          "rank": 500,
+          "score": 3327
+        }
+      ],
+      "sampledAt": "2026-09-02T21:06:55.592Z"
     },
     {
       "scenario": "VT Controlsphere Intermediate S5",
@@ -3086,6 +10306,54 @@
         }
       ],
       "sampledAt": "2026-08-30T06:21:42.305Z"
+    },
+    {
+      "scenario": "VT ControlTS Advanced S5",
+      "leaderboardId": 104833,
+      "total": 10104,
+      "points": [
+        {
+          "rank": 1,
+          "score": 590.8
+        },
+        {
+          "rank": 2,
+          "score": 582.8
+        },
+        {
+          "rank": 3,
+          "score": 567.8
+        },
+        {
+          "rank": 5,
+          "score": 561.8
+        },
+        {
+          "rank": 10,
+          "score": 559.2
+        },
+        {
+          "rank": 25,
+          "score": 550
+        },
+        {
+          "rank": 50,
+          "score": 527.2
+        },
+        {
+          "rank": 100,
+          "score": 514.2
+        },
+        {
+          "rank": 250,
+          "score": 490
+        },
+        {
+          "rank": 500,
+          "score": 462
+        }
+      ],
+      "sampledAt": "2026-09-02T21:05:52.440Z"
     },
     {
       "scenario": "VT ControlTS Intermediate S5",
@@ -3328,6 +10596,342 @@
       "sampledAt": "2026-08-30T06:23:18.207Z"
     },
     {
+      "scenario": "VT DriftTS Advanced S5",
+      "leaderboardId": 104866,
+      "total": 9209,
+      "points": [
+        {
+          "rank": 1,
+          "score": 590
+        },
+        {
+          "rank": 2,
+          "score": 580
+        },
+        {
+          "rank": 3,
+          "score": 560
+        },
+        {
+          "rank": 5,
+          "score": 553.2
+        },
+        {
+          "rank": 10,
+          "score": 546.6
+        },
+        {
+          "rank": 25,
+          "score": 540
+        },
+        {
+          "rank": 50,
+          "score": 520
+        },
+        {
+          "rank": 100,
+          "score": 500.2
+        },
+        {
+          "rank": 250,
+          "score": 471
+        },
+        {
+          "rank": 500,
+          "score": 442.6
+        }
+      ],
+      "sampledAt": "2026-09-03T01:25:46.812Z"
+    },
+    {
+      "scenario": "VT DriftTS Elite S5",
+      "leaderboardId": 104867,
+      "total": 634,
+      "points": [
+        {
+          "rank": 1,
+          "score": 430
+        },
+        {
+          "rank": 2,
+          "score": 426.4
+        },
+        {
+          "rank": 3,
+          "score": 420.4
+        },
+        {
+          "rank": 5,
+          "score": 402.6
+        },
+        {
+          "rank": 10,
+          "score": 392.8
+        },
+        {
+          "rank": 25,
+          "score": 365
+        },
+        {
+          "rank": 50,
+          "score": 340.2
+        },
+        {
+          "rank": 100,
+          "score": 310
+        },
+        {
+          "rank": 250,
+          "score": 242
+        },
+        {
+          "rank": 500,
+          "score": 144.6
+        }
+      ],
+      "sampledAt": "2026-09-03T01:25:51.699Z"
+    },
+    {
+      "scenario": "VT DriftTS Intermediate S5",
+      "leaderboardId": 104863,
+      "total": 48884,
+      "points": [
+        {
+          "rank": 1,
+          "score": 673.2
+        },
+        {
+          "rank": 2,
+          "score": 638.2
+        },
+        {
+          "rank": 3,
+          "score": 638
+        },
+        {
+          "rank": 5,
+          "score": 632.6
+        },
+        {
+          "rank": 10,
+          "score": 620.4
+        },
+        {
+          "rank": 25,
+          "score": 604.2
+        },
+        {
+          "rank": 50,
+          "score": 587.6
+        },
+        {
+          "rank": 100,
+          "score": 563
+        },
+        {
+          "rank": 250,
+          "score": 534.4
+        },
+        {
+          "rank": 500,
+          "score": 520
+        }
+      ],
+      "sampledAt": "2026-09-03T01:25:41.975Z"
+    },
+    {
+      "scenario": "VT DriftTS Novice S5",
+      "leaderboardId": 104862,
+      "total": 86589,
+      "points": [
+        {
+          "rank": 1,
+          "score": 778.6
+        },
+        {
+          "rank": 2,
+          "score": 750
+        },
+        {
+          "rank": 3,
+          "score": 721
+        },
+        {
+          "rank": 5,
+          "score": 714
+        },
+        {
+          "rank": 10,
+          "score": 700
+        },
+        {
+          "rank": 25,
+          "score": 673.6
+        },
+        {
+          "rank": 50,
+          "score": 660.6
+        },
+        {
+          "rank": 100,
+          "score": 637.2
+        },
+        {
+          "rank": 250,
+          "score": 600
+        },
+        {
+          "rank": 500,
+          "score": 577.4
+        }
+      ],
+      "sampledAt": "2026-09-03T01:25:36.103Z"
+    },
+    {
+      "scenario": "VT EddieTS Advanced S5",
+      "leaderboardId": 104864,
+      "total": 11725,
+      "points": [
+        {
+          "rank": 1,
+          "score": 1370
+        },
+        {
+          "rank": 2,
+          "score": 1360
+        },
+        {
+          "rank": 3,
+          "score": 1339.5
+        },
+        {
+          "rank": 5,
+          "score": 1313.5
+        },
+        {
+          "rank": 10,
+          "score": 1295.5
+        },
+        {
+          "rank": 25,
+          "score": 1220
+        },
+        {
+          "rank": 50,
+          "score": 1200
+        },
+        {
+          "rank": 100,
+          "score": 1150
+        },
+        {
+          "rank": 250,
+          "score": 1090
+        },
+        {
+          "rank": 500,
+          "score": 1038
+        }
+      ],
+      "sampledAt": "2026-09-03T01:24:07.572Z"
+    },
+    {
+      "scenario": "VT EddieTS Elite S5",
+      "leaderboardId": 104858,
+      "total": 734,
+      "points": [
+        {
+          "rank": 1,
+          "score": 1058.5
+        },
+        {
+          "rank": 2,
+          "score": 1033.5
+        },
+        {
+          "rank": 3,
+          "score": 999
+        },
+        {
+          "rank": 5,
+          "score": 951
+        },
+        {
+          "rank": 10,
+          "score": 943.5
+        },
+        {
+          "rank": 25,
+          "score": 890
+        },
+        {
+          "rank": 50,
+          "score": 860
+        },
+        {
+          "rank": 100,
+          "score": 812.5
+        },
+        {
+          "rank": 250,
+          "score": 707.5
+        },
+        {
+          "rank": 500,
+          "score": 560
+        }
+      ],
+      "sampledAt": "2026-09-03T01:24:12.511Z"
+    },
+    {
+      "scenario": "VT EddieTS Intermediate S5",
+      "leaderboardId": 105176,
+      "total": 53126,
+      "points": [
+        {
+          "rank": 1,
+          "score": 1459.5
+        },
+        {
+          "rank": 2,
+          "score": 1430
+        },
+        {
+          "rank": 3,
+          "score": 1430
+        },
+        {
+          "rank": 5,
+          "score": 1399
+        },
+        {
+          "rank": 10,
+          "score": 1370
+        },
+        {
+          "rank": 25,
+          "score": 1319
+        },
+        {
+          "rank": 50,
+          "score": 1269
+        },
+        {
+          "rank": 100,
+          "score": 1220
+        },
+        {
+          "rank": 250,
+          "score": 1167
+        },
+        {
+          "rank": 500,
+          "score": 1131.5
+        }
+      ],
+      "sampledAt": "2026-09-03T01:24:02.664Z"
+    },
+    {
       "scenario": "VT EddieTS Novice S5",
       "leaderboardId": 104835,
       "total": 88513,
@@ -3374,6 +10978,94 @@
         }
       ],
       "sampledAt": "2026-08-30T06:22:58.955Z"
+    },
+    {
+      "scenario": "VT evaTS Advanced",
+      "leaderboardId": 25181,
+      "total": 13047,
+      "points": [
+        {
+          "rank": 1,
+          "score": 880.04
+        },
+        {
+          "rank": 2,
+          "score": 862.52
+        },
+        {
+          "rank": 3,
+          "score": 843.33
+        },
+        {
+          "rank": 5,
+          "score": 836.66
+        },
+        {
+          "rank": 10,
+          "score": 826.65
+        },
+        {
+          "rank": 25,
+          "score": 791.62
+        },
+        {
+          "rank": 50,
+          "score": 780.77
+        },
+        {
+          "rank": 100,
+          "score": 750.74
+        },
+        {
+          "rank": 250,
+          "score": 714.04
+        },
+        {
+          "rank": 500,
+          "score": 690.68
+        }
+      ],
+      "sampledAt": "2026-09-03T01:26:15.730Z"
+    },
+    {
+      "scenario": "VT evaTS Elite",
+      "leaderboardId": 86809,
+      "total": 183,
+      "points": [
+        {
+          "rank": 1,
+          "score": 769.93
+        },
+        {
+          "rank": 2,
+          "score": 679.84
+        },
+        {
+          "rank": 3,
+          "score": 671.5
+        },
+        {
+          "rank": 5,
+          "score": 652.31
+        },
+        {
+          "rank": 10,
+          "score": 644.81
+        },
+        {
+          "rank": 25,
+          "score": 596.43
+        },
+        {
+          "rank": 50,
+          "score": 532.2
+        },
+        {
+          "rank": 100,
+          "score": 445.44
+        }
+      ],
+      "sampledAt": "2026-09-03T01:26:19.709Z"
     },
     {
       "scenario": "VT evaTS Intermediate",
@@ -3616,6 +11308,54 @@
       "sampledAt": "2026-08-30T06:23:52.286Z"
     },
     {
+      "scenario": "VT FlyTS Elite S5",
+      "leaderboardId": 106747,
+      "total": 633,
+      "points": [
+        {
+          "rank": 1,
+          "score": 580
+        },
+        {
+          "rank": 2,
+          "score": 537.6
+        },
+        {
+          "rank": 3,
+          "score": 523.4
+        },
+        {
+          "rank": 5,
+          "score": 520.2
+        },
+        {
+          "rank": 10,
+          "score": 504.8
+        },
+        {
+          "rank": 25,
+          "score": 473
+        },
+        {
+          "rank": 50,
+          "score": 450.4
+        },
+        {
+          "rank": 100,
+          "score": 413.8
+        },
+        {
+          "rank": 250,
+          "score": 340
+        },
+        {
+          "rank": 500,
+          "score": 233
+        }
+      ],
+      "sampledAt": "2026-09-03T01:25:31.253Z"
+    },
+    {
       "scenario": "VT FlyTS Intermediate S5",
       "leaderboardId": 105142,
       "total": 49196,
@@ -3760,6 +11500,54 @@
       "sampledAt": "2026-08-30T06:19:27.617Z"
     },
     {
+      "scenario": "VT Ground Advanced S5",
+      "leaderboardId": 100768,
+      "total": 18240,
+      "points": [
+        {
+          "rank": 1,
+          "score": 4107
+        },
+        {
+          "rank": 2,
+          "score": 3995
+        },
+        {
+          "rank": 3,
+          "score": 3969
+        },
+        {
+          "rank": 5,
+          "score": 3903
+        },
+        {
+          "rank": 10,
+          "score": 3785
+        },
+        {
+          "rank": 25,
+          "score": 3739
+        },
+        {
+          "rank": 50,
+          "score": 3589
+        },
+        {
+          "rank": 100,
+          "score": 3464
+        },
+        {
+          "rank": 250,
+          "score": 3249
+        },
+        {
+          "rank": 500,
+          "score": 3102
+        }
+      ],
+      "sampledAt": "2026-09-03T01:22:58.918Z"
+    },
+    {
       "scenario": "VT Ground Intermediate S5",
       "leaderboardId": 101743,
       "total": 59482,
@@ -3854,6 +11642,54 @@
         }
       ],
       "sampledAt": "2026-08-30T06:21:03.927Z"
+    },
+    {
+      "scenario": "VT Ground Novice S5 Hard",
+      "leaderboardId": 107511,
+      "total": 5835,
+      "points": [
+        {
+          "rank": 1,
+          "score": 4631
+        },
+        {
+          "rank": 2,
+          "score": 4586
+        },
+        {
+          "rank": 3,
+          "score": 4556
+        },
+        {
+          "rank": 5,
+          "score": 4515
+        },
+        {
+          "rank": 10,
+          "score": 4463
+        },
+        {
+          "rank": 25,
+          "score": 4254
+        },
+        {
+          "rank": 50,
+          "score": 4121
+        },
+        {
+          "rank": 100,
+          "score": 3935
+        },
+        {
+          "rank": 250,
+          "score": 3646
+        },
+        {
+          "rank": 500,
+          "score": 3322
+        }
+      ],
+      "sampledAt": "2026-09-03T01:22:54.070Z"
     },
     {
       "scenario": "VT Pasu Advanced S5",
@@ -3998,6 +11834,246 @@
         }
       ],
       "sampledAt": "2026-08-30T06:18:30.206Z"
+    },
+    {
+      "scenario": "VT Pasu Rasp Advanced",
+      "leaderboardId": 29492,
+      "total": 37683,
+      "points": [
+        {
+          "rank": 1,
+          "score": 1480
+        },
+        {
+          "rank": 2,
+          "score": 1400
+        },
+        {
+          "rank": 3,
+          "score": 1390
+        },
+        {
+          "rank": 5,
+          "score": 1340
+        },
+        {
+          "rank": 10,
+          "score": 1290
+        },
+        {
+          "rank": 25,
+          "score": 1240
+        },
+        {
+          "rank": 50,
+          "score": 1170
+        },
+        {
+          "rank": 100,
+          "score": 1120
+        },
+        {
+          "rank": 250,
+          "score": 1050
+        },
+        {
+          "rank": 500,
+          "score": 990
+        }
+      ],
+      "sampledAt": "2026-09-03T01:17:34.279Z"
+    },
+    {
+      "scenario": "VT Pasu Rasp Intermediate",
+      "leaderboardId": 29493,
+      "total": 84691,
+      "points": [
+        {
+          "rank": 1,
+          "score": 1770
+        },
+        {
+          "rank": 2,
+          "score": 1540
+        },
+        {
+          "rank": 3,
+          "score": 1530
+        },
+        {
+          "rank": 5,
+          "score": 1480
+        },
+        {
+          "rank": 10,
+          "score": 1430
+        },
+        {
+          "rank": 25,
+          "score": 1370
+        },
+        {
+          "rank": 50,
+          "score": 1290
+        },
+        {
+          "rank": 100,
+          "score": 1240
+        },
+        {
+          "rank": 250,
+          "score": 1180
+        },
+        {
+          "rank": 500,
+          "score": 1140
+        }
+      ],
+      "sampledAt": "2026-09-03T01:17:29.412Z"
+    },
+    {
+      "scenario": "VT Pasu Rasp Novice",
+      "leaderboardId": 29489,
+      "total": 143766,
+      "points": [
+        {
+          "rank": 1,
+          "score": 1920
+        },
+        {
+          "rank": 2,
+          "score": 1730
+        },
+        {
+          "rank": 3,
+          "score": 1720
+        },
+        {
+          "rank": 5,
+          "score": 1630
+        },
+        {
+          "rank": 10,
+          "score": 1590
+        },
+        {
+          "rank": 25,
+          "score": 1500
+        },
+        {
+          "rank": 50,
+          "score": 1440
+        },
+        {
+          "rank": 100,
+          "score": 1380
+        },
+        {
+          "rank": 250,
+          "score": 1300
+        },
+        {
+          "rank": 500,
+          "score": 1240
+        }
+      ],
+      "sampledAt": "2026-09-03T01:17:24.561Z"
+    },
+    {
+      "scenario": "VT Penta Bounce Advanced S5",
+      "leaderboardId": 98619,
+      "total": 9804,
+      "points": [
+        {
+          "rank": 1,
+          "score": 711.2
+        },
+        {
+          "rank": 2,
+          "score": 684.2
+        },
+        {
+          "rank": 3,
+          "score": 679.8
+        },
+        {
+          "rank": 5,
+          "score": 679
+        },
+        {
+          "rank": 10,
+          "score": 671.2
+        },
+        {
+          "rank": 25,
+          "score": 641.4
+        },
+        {
+          "rank": 50,
+          "score": 630
+        },
+        {
+          "rank": 100,
+          "score": 600
+        },
+        {
+          "rank": 250,
+          "score": 580
+        },
+        {
+          "rank": 500,
+          "score": 545.8
+        }
+      ],
+      "sampledAt": "2026-09-02T21:06:16.698Z"
+    },
+    {
+      "scenario": "VT Penta Bounce Intermediate S5",
+      "leaderboardId": 103261,
+      "total": 48669,
+      "points": [
+        {
+          "rank": 1,
+          "score": 753.4
+        },
+        {
+          "rank": 2,
+          "score": 746.2
+        },
+        {
+          "rank": 3,
+          "score": 739.8
+        },
+        {
+          "rank": 5,
+          "score": 735
+        },
+        {
+          "rank": 10,
+          "score": 712.2
+        },
+        {
+          "rank": 25,
+          "score": 690
+        },
+        {
+          "rank": 50,
+          "score": 670.8
+        },
+        {
+          "rank": 100,
+          "score": 654.4
+        },
+        {
+          "rank": 250,
+          "score": 629.4
+        },
+        {
+          "rank": 500,
+          "score": 612
+        }
+      ],
+      "sampledAt": "2026-09-02T21:06:11.842Z"
     },
     {
       "scenario": "VT Penta Bounce Novice S5",
@@ -4624,6 +12700,198 @@
       "sampledAt": "2026-08-31T22:24:33.151Z"
     },
     {
+      "scenario": "VT PreciseOrb Advanced",
+      "leaderboardId": 25176,
+      "total": 13788,
+      "points": [
+        {
+          "rank": 1,
+          "score": 4080
+        },
+        {
+          "rank": 2,
+          "score": 4045
+        },
+        {
+          "rank": 3,
+          "score": 3946
+        },
+        {
+          "rank": 5,
+          "score": 3774
+        },
+        {
+          "rank": 10,
+          "score": 3534
+        },
+        {
+          "rank": 25,
+          "score": 3322
+        },
+        {
+          "rank": 50,
+          "score": 3228
+        },
+        {
+          "rank": 100,
+          "score": 2931
+        },
+        {
+          "rank": 250,
+          "score": 2617
+        },
+        {
+          "rank": 500,
+          "score": 2465
+        }
+      ],
+      "sampledAt": "2026-09-03T01:20:45.121Z"
+    },
+    {
+      "scenario": "VT PreciseOrb Intermediate",
+      "leaderboardId": 24958,
+      "total": 55623,
+      "points": [
+        {
+          "rank": 1,
+          "score": 4501
+        },
+        {
+          "rank": 2,
+          "score": 4264
+        },
+        {
+          "rank": 3,
+          "score": 4212
+        },
+        {
+          "rank": 5,
+          "score": 4147
+        },
+        {
+          "rank": 10,
+          "score": 3930
+        },
+        {
+          "rank": 25,
+          "score": 3739
+        },
+        {
+          "rank": 50,
+          "score": 3579
+        },
+        {
+          "rank": 100,
+          "score": 3402
+        },
+        {
+          "rank": 250,
+          "score": 3145
+        },
+        {
+          "rank": 500,
+          "score": 3013
+        }
+      ],
+      "sampledAt": "2026-09-03T01:20:40.214Z"
+    },
+    {
+      "scenario": "VT PreciseOrb Intermediate 15% Slower",
+      "leaderboardId": 41595,
+      "total": 14602,
+      "points": [
+        {
+          "rank": 1,
+          "score": 4115
+        },
+        {
+          "rank": 2,
+          "score": 4060
+        },
+        {
+          "rank": 3,
+          "score": 3899
+        },
+        {
+          "rank": 5,
+          "score": 3807
+        },
+        {
+          "rank": 10,
+          "score": 3756
+        },
+        {
+          "rank": 25,
+          "score": 3665
+        },
+        {
+          "rank": 50,
+          "score": 3481
+        },
+        {
+          "rank": 100,
+          "score": 3378
+        },
+        {
+          "rank": 250,
+          "score": 3291
+        },
+        {
+          "rank": 500,
+          "score": 3099
+        }
+      ],
+      "sampledAt": "2026-09-03T01:20:35.363Z"
+    },
+    {
+      "scenario": "VT PreciseOrb Novice",
+      "leaderboardId": 24968,
+      "total": 113906,
+      "points": [
+        {
+          "rank": 1,
+          "score": 4366
+        },
+        {
+          "rank": 2,
+          "score": 4320
+        },
+        {
+          "rank": 3,
+          "score": 4305
+        },
+        {
+          "rank": 5,
+          "score": 4235
+        },
+        {
+          "rank": 10,
+          "score": 4176
+        },
+        {
+          "rank": 25,
+          "score": 4092
+        },
+        {
+          "rank": 50,
+          "score": 4009
+        },
+        {
+          "rank": 100,
+          "score": 3901
+        },
+        {
+          "rank": 250,
+          "score": 3706
+        },
+        {
+          "rank": 500,
+          "score": 3558
+        }
+      ],
+      "sampledAt": "2026-09-03T01:20:30.528Z"
+    },
+    {
       "scenario": "VT psalmTS Advanced",
       "leaderboardId": 25177,
       "total": 20738,
@@ -4670,6 +12938,198 @@
         }
       ],
       "sampledAt": "2026-08-30T15:47:04.618Z"
+    },
+    {
+      "scenario": "VT psalmTS Intermediate",
+      "leaderboardId": 24960,
+      "total": 57024,
+      "points": [
+        {
+          "rank": 1,
+          "score": 1433.04
+        },
+        {
+          "rank": 2,
+          "score": 1420.54
+        },
+        {
+          "rank": 3,
+          "score": 1337.53
+        },
+        {
+          "rank": 5,
+          "score": 1320.03
+        },
+        {
+          "rank": 10,
+          "score": 1288.03
+        },
+        {
+          "rank": 25,
+          "score": 1260.03
+        },
+        {
+          "rank": 50,
+          "score": 1214.02
+        },
+        {
+          "rank": 100,
+          "score": 1167.02
+        },
+        {
+          "rank": 250,
+          "score": 1112.52
+        },
+        {
+          "rank": 500,
+          "score": 1081.52
+        }
+      ],
+      "sampledAt": "2026-09-03T01:23:52.892Z"
+    },
+    {
+      "scenario": "VT psalmTS Novice",
+      "leaderboardId": 24979,
+      "total": 113363,
+      "points": [
+        {
+          "rank": 1,
+          "score": 1320.03
+        },
+        {
+          "rank": 2,
+          "score": 1310.53
+        },
+        {
+          "rank": 3,
+          "score": 1307.03
+        },
+        {
+          "rank": 5,
+          "score": 1264.53
+        },
+        {
+          "rank": 10,
+          "score": 1250.03
+        },
+        {
+          "rank": 25,
+          "score": 1220.02
+        },
+        {
+          "rank": 50,
+          "score": 1186.52
+        },
+        {
+          "rank": 100,
+          "score": 1132.52
+        },
+        {
+          "rank": 250,
+          "score": 1079.01
+        },
+        {
+          "rank": 500,
+          "score": 1036.01
+        }
+      ],
+      "sampledAt": "2026-09-03T01:23:47.774Z"
+    },
+    {
+      "scenario": "VT Raw Control Advanced S5",
+      "leaderboardId": 98253,
+      "total": 17877,
+      "points": [
+        {
+          "rank": 1,
+          "score": 4643
+        },
+        {
+          "rank": 2,
+          "score": 4575
+        },
+        {
+          "rank": 3,
+          "score": 4569
+        },
+        {
+          "rank": 5,
+          "score": 4460
+        },
+        {
+          "rank": 10,
+          "score": 4311
+        },
+        {
+          "rank": 25,
+          "score": 4163
+        },
+        {
+          "rank": 50,
+          "score": 4007
+        },
+        {
+          "rank": 100,
+          "score": 3905
+        },
+        {
+          "rank": 250,
+          "score": 3622
+        },
+        {
+          "rank": 500,
+          "score": 3410
+        }
+      ],
+      "sampledAt": "2026-09-02T21:07:19.740Z"
+    },
+    {
+      "scenario": "VT Raw Control Intermediate S5",
+      "leaderboardId": 98048,
+      "total": 59860,
+      "points": [
+        {
+          "rank": 1,
+          "score": 5437
+        },
+        {
+          "rank": 2,
+          "score": 5328
+        },
+        {
+          "rank": 3,
+          "score": 5275
+        },
+        {
+          "rank": 5,
+          "score": 5211
+        },
+        {
+          "rank": 10,
+          "score": 5081
+        },
+        {
+          "rank": 25,
+          "score": 4979
+        },
+        {
+          "rank": 50,
+          "score": 4831
+        },
+        {
+          "rank": 100,
+          "score": 4665
+        },
+        {
+          "rank": 250,
+          "score": 4453
+        },
+        {
+          "rank": 500,
+          "score": 4281
+        }
+      ],
+      "sampledAt": "2026-09-02T21:07:14.923Z"
     },
     {
       "scenario": "VT Raw Control Intermediate S5 Hard",
@@ -4816,6 +13276,146 @@
       "sampledAt": "2026-08-30T15:46:59.769Z"
     },
     {
+      "scenario": "VT skyTS Elite",
+      "leaderboardId": 86810,
+      "total": 435,
+      "points": [
+        {
+          "rank": 1,
+          "score": 1469.37
+        },
+        {
+          "rank": 2,
+          "score": 1430
+        },
+        {
+          "rank": 3,
+          "score": 1425
+        },
+        {
+          "rank": 5,
+          "score": 1380
+        },
+        {
+          "rank": 10,
+          "score": 1321.25
+        },
+        {
+          "rank": 25,
+          "score": 1250
+        },
+        {
+          "rank": 50,
+          "score": 1193.75
+        },
+        {
+          "rank": 100,
+          "score": 1107.5
+        },
+        {
+          "rank": 250,
+          "score": 900
+        }
+      ],
+      "sampledAt": "2026-09-03T01:23:38.067Z"
+    },
+    {
+      "scenario": "VT skyTS Intermediate",
+      "leaderboardId": 24964,
+      "total": 64006,
+      "points": [
+        {
+          "rank": 1,
+          "score": 1686.87
+        },
+        {
+          "rank": 2,
+          "score": 1670
+        },
+        {
+          "rank": 3,
+          "score": 1658.12
+        },
+        {
+          "rank": 5,
+          "score": 1640.62
+        },
+        {
+          "rank": 10,
+          "score": 1596.25
+        },
+        {
+          "rank": 25,
+          "score": 1528.12
+        },
+        {
+          "rank": 50,
+          "score": 1491.87
+        },
+        {
+          "rank": 100,
+          "score": 1449.37
+        },
+        {
+          "rank": 250,
+          "score": 1396.25
+        },
+        {
+          "rank": 500,
+          "score": 1360
+        }
+      ],
+      "sampledAt": "2026-09-02T21:06:31.277Z"
+    },
+    {
+      "scenario": "VT skyTS Novice",
+      "leaderboardId": 24971,
+      "total": 211399,
+      "points": [
+        {
+          "rank": 1,
+          "score": 1730
+        },
+        {
+          "rank": 2,
+          "score": 1730
+        },
+        {
+          "rank": 3,
+          "score": 1690
+        },
+        {
+          "rank": 5,
+          "score": 1650.62
+        },
+        {
+          "rank": 10,
+          "score": 1628.75
+        },
+        {
+          "rank": 25,
+          "score": 1580.62
+        },
+        {
+          "rank": 50,
+          "score": 1520
+        },
+        {
+          "rank": 100,
+          "score": 1480
+        },
+        {
+          "rank": 250,
+          "score": 1415.62
+        },
+        {
+          "rank": 500,
+          "score": 1366.25
+        }
+      ],
+      "sampledAt": "2026-09-02T21:06:26.384Z"
+    },
+    {
       "scenario": "VT Smoothbot Advanced",
       "leaderboardId": 25151,
       "total": 39729,
@@ -4960,6 +13560,102 @@
       "sampledAt": "2026-08-30T06:20:25.484Z"
     },
     {
+      "scenario": "VT Snake Track Advanced S5",
+      "leaderboardId": 98297,
+      "total": 20042,
+      "points": [
+        {
+          "rank": 1,
+          "score": 4761
+        },
+        {
+          "rank": 2,
+          "score": 4480
+        },
+        {
+          "rank": 3,
+          "score": 4437
+        },
+        {
+          "rank": 5,
+          "score": 4362
+        },
+        {
+          "rank": 10,
+          "score": 4233
+        },
+        {
+          "rank": 25,
+          "score": 4112
+        },
+        {
+          "rank": 50,
+          "score": 4051
+        },
+        {
+          "rank": 100,
+          "score": 3822
+        },
+        {
+          "rank": 250,
+          "score": 3585
+        },
+        {
+          "rank": 500,
+          "score": 3433
+        }
+      ],
+      "sampledAt": "2026-09-03T01:20:11.021Z"
+    },
+    {
+      "scenario": "VT Snake Track Intermediate S5",
+      "leaderboardId": 98045,
+      "total": 60918,
+      "points": [
+        {
+          "rank": 1,
+          "score": 5323
+        },
+        {
+          "rank": 2,
+          "score": 5123
+        },
+        {
+          "rank": 3,
+          "score": 5070
+        },
+        {
+          "rank": 5,
+          "score": 5056
+        },
+        {
+          "rank": 10,
+          "score": 4962
+        },
+        {
+          "rank": 25,
+          "score": 4767
+        },
+        {
+          "rank": 50,
+          "score": 4626
+        },
+        {
+          "rank": 100,
+          "score": 4510
+        },
+        {
+          "rank": 250,
+          "score": 4288
+        },
+        {
+          "rank": 500,
+          "score": 4123
+        }
+      ],
+      "sampledAt": "2026-09-03T01:20:06.163Z"
+    },
+    {
       "scenario": "VT Snake Track Novice S5",
       "leaderboardId": 101560,
       "total": 96076,
@@ -5006,6 +13702,54 @@
         }
       ],
       "sampledAt": "2026-08-30T06:20:44.708Z"
+    },
+    {
+      "scenario": "VT Snake Track Novice S5 Hard",
+      "leaderboardId": 104620,
+      "total": 8104,
+      "points": [
+        {
+          "rank": 1,
+          "score": 5526
+        },
+        {
+          "rank": 2,
+          "score": 5281
+        },
+        {
+          "rank": 3,
+          "score": 5268
+        },
+        {
+          "rank": 5,
+          "score": 5195
+        },
+        {
+          "rank": 10,
+          "score": 5059
+        },
+        {
+          "rank": 25,
+          "score": 4889
+        },
+        {
+          "rank": 50,
+          "score": 4667
+        },
+        {
+          "rank": 100,
+          "score": 4421
+        },
+        {
+          "rank": 250,
+          "score": 4026
+        },
+        {
+          "rank": 500,
+          "score": 3697
+        }
+      ],
+      "sampledAt": "2026-09-03T01:20:01.282Z"
     },
     {
       "scenario": "VT ww5t Novice S5",
@@ -5102,6 +13846,54 @@
         }
       ],
       "sampledAt": "2026-08-30T06:20:59.044Z"
+    },
+    {
+      "scenario": "waldoTS Entry",
+      "leaderboardId": 111840,
+      "total": 3900,
+      "points": [
+        {
+          "rank": 1,
+          "score": 223.25
+        },
+        {
+          "rank": 2,
+          "score": 208.79
+        },
+        {
+          "rank": 3,
+          "score": 207.6
+        },
+        {
+          "rank": 5,
+          "score": 204.95
+        },
+        {
+          "rank": 10,
+          "score": 201.15
+        },
+        {
+          "rank": 25,
+          "score": 195.6
+        },
+        {
+          "rank": 50,
+          "score": 186.4
+        },
+        {
+          "rank": 100,
+          "score": 178.3
+        },
+        {
+          "rank": 250,
+          "score": 165.45
+        },
+        {
+          "rank": 500,
+          "score": 150.2
+        }
+      ],
+      "sampledAt": "2026-09-03T01:21:30.134Z"
     },
     {
       "scenario": "waldoTS Intermediate",
@@ -5438,6 +14230,182 @@
         }
       ],
       "sampledAt": "2026-08-30T06:18:01.548Z"
+    },
+    {
+      "scenario": "Wide Wall 4 Targets Small",
+      "leaderboardId": 339,
+      "total": 228655,
+      "points": [
+        {
+          "rank": 1,
+          "score": 142
+        },
+        {
+          "rank": 2,
+          "score": 142
+        },
+        {
+          "rank": 3,
+          "score": 142
+        },
+        {
+          "rank": 5,
+          "score": 137
+        },
+        {
+          "rank": 10,
+          "score": 133
+        },
+        {
+          "rank": 25,
+          "score": 126
+        },
+        {
+          "rank": 50,
+          "score": 122
+        },
+        {
+          "rank": 100,
+          "score": 120
+        },
+        {
+          "rank": 250,
+          "score": 114
+        },
+        {
+          "rank": 500,
+          "score": 109
+        }
+      ],
+      "sampledAt": "2026-09-02T21:05:47.509Z"
+    },
+    {
+      "scenario": "ww4t Avasive Medium",
+      "leaderboardId": 203368,
+      "total": 153,
+      "points": [
+        {
+          "rank": 1,
+          "score": 1540
+        },
+        {
+          "rank": 2,
+          "score": 1460
+        },
+        {
+          "rank": 3,
+          "score": 1440
+        },
+        {
+          "rank": 5,
+          "score": 1440
+        },
+        {
+          "rank": 10,
+          "score": 1410
+        },
+        {
+          "rank": 25,
+          "score": 1330
+        },
+        {
+          "rank": 50,
+          "score": 1250
+        },
+        {
+          "rank": 100,
+          "score": 1120
+        }
+      ],
+      "sampledAt": "2026-09-02T21:05:42.752Z"
+    },
+    {
+      "scenario": "ww4t Voltaic",
+      "leaderboardId": 23921,
+      "total": 22993,
+      "points": [
+        {
+          "rank": 1,
+          "score": 206
+        },
+        {
+          "rank": 2,
+          "score": 205
+        },
+        {
+          "rank": 3,
+          "score": 202
+        },
+        {
+          "rank": 5,
+          "score": 200
+        },
+        {
+          "rank": 10,
+          "score": 189
+        },
+        {
+          "rank": 25,
+          "score": 181
+        },
+        {
+          "rank": 50,
+          "score": 174
+        },
+        {
+          "rank": 100,
+          "score": 167
+        },
+        {
+          "rank": 250,
+          "score": 162
+        },
+        {
+          "rank": 500,
+          "score": 158
+        }
+      ],
+      "sampledAt": "2026-09-04T00:09:16.059Z"
+    },
+    {
+      "scenario": "ww6t Avasive Easier",
+      "leaderboardId": 203401,
+      "total": 226,
+      "points": [
+        {
+          "rank": 1,
+          "score": 1920
+        },
+        {
+          "rank": 2,
+          "score": 1840
+        },
+        {
+          "rank": 3,
+          "score": 1780
+        },
+        {
+          "rank": 5,
+          "score": 1750
+        },
+        {
+          "rank": 10,
+          "score": 1680
+        },
+        {
+          "rank": 25,
+          "score": 1510
+        },
+        {
+          "rank": 50,
+          "score": 1400
+        },
+        {
+          "rank": 100,
+          "score": 1300
+        }
+      ],
+      "sampledAt": "2026-09-02T21:05:38.964Z"
     }
   ]
 }

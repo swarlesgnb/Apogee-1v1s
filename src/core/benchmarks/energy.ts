@@ -34,6 +34,7 @@
  */
 
 import type { CategoryDef, DifficultyDef, ScenarioDef } from "./types.ts";
+import { windowForRank } from "../season/windows.ts";
 
 /** Energy granted per rank step at a scenario's threshold. */
 export const ENERGY_PER_RANK = 2500;
@@ -182,6 +183,7 @@ function evaluateFamily(
   scores: Map<string, number>,
   rankNames: string[],
   windowSize: number,
+  overlap: number,
 ): ScenarioResult {
   let best = { energy: 0, rankIndex: -1, scenario: variants[0], score: scores.get(variants[0].name) ?? 0 };
 
@@ -206,12 +208,17 @@ function evaluateFamily(
   const hasNext = nextIdx < totalRanks;
 
   // The next rank belongs to whichever window contains it, which is not always the
-  // window the player is being graded in.
-  const nextWindow = Math.floor(nextIdx / windowSize);
+  // window the player is being graded in. Where windows overlap, two of them contain it,
+  // and the lower one is the answer: it is the easier scenario, and the one the player is
+  // more likely to have launched. Naming the harder one is how a target reads as
+  // impossible when it is one good run away on a scenario they already play.
+  const nextWindow = windowForRank(nextIdx, windowSize, overlap);
   const target = hasNext
     ? (variants.find((v) => (v.window ?? 0) === nextWindow) ?? null)
     : null;
-  const nextRankScore = target ? (target.rankMaxes[nextIdx % windowSize] ?? null) : null;
+  const nextRankScore = target
+    ? (target.rankMaxes[nextIdx - nextWindow * windowSize] ?? null)
+    : null;
   const nextRankFromScore = target ? (scores.get(target.name) ?? 0) : null;
 
   return {
@@ -242,6 +249,7 @@ function evaluateCategory(
   // one path through this code rather than two, and so the KovaaK's numbers this module
   // is validated against keep coming out of the same arithmetic they always did.
   const windowSize = category.windowSize ?? category.rankMaxes.length;
+  const overlap = category.windowOverlap ?? 0;
 
   const families = new Map<string, ScenarioDef[]>();
   for (const s of category.scenarios) {
@@ -258,6 +266,7 @@ function evaluateCategory(
       scores,
       rankNames,
       windowSize,
+      overlap,
     ),
   );
 

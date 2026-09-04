@@ -42,7 +42,13 @@ import { readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import type { ThresholdCitation, ThresholdSource } from "../src/core/season/thresholds.ts";
+import type {
+  ExtendedTail,
+  ThresholdCitation,
+  ThresholdSource,
+} from "../src/core/season/thresholds.ts";
+import { thresholdsFrom, type Distribution } from "../src/core/season/percentiles.ts";
+import { windowRankIndices } from "../src/core/season/windows.ts";
 
 const root = join(fileURLToPath(new URL(".", import.meta.url)), "..");
 const POOL = join(root, "data", "pool.json");
@@ -63,12 +69,45 @@ interface Pool {
   windowSize: number;
   windows: string[];
   sources: string[];
+  ladder: { ranks: number[]; overlap: number };
   bands: Record<string, Record<string, number>>;
   families: { family: string; category: string; variants: Variant[] }[];
 }
 
 const pool = JSON.parse(readFileSync(POOL, "utf8")) as Pool;
 const sources = new Set(pool.sources);
+
+// The boards, for the ranks a window grades past the last one anybody published.
+const boards = new Map(
+  (
+    JSON.parse(readFileSync(join(root, "data", "leaderboard_percentiles.json"), "utf8")) as {
+      distributions: Distribution[];
+    }
+  ).distributions.map((d) => [d.scenario, d]),
+);
+const totalRanks = pool.windowSize * pool.windows.length;
+const overlap = pool.ladder.overlap ?? 0;
+
+/**
+ * The best score anybody has posted on each board.
+ *
+ * A published tier can ask for more than that, and Elite tiers routinely do - they are
+ * targets rather than descriptions. Adopting one is fine at the very top of the ladder,
+ * where an unreached rank is aspirational, and not fine anywhere else: a rank in the middle
+ * that no variant can award is a rung with nothing under it.
+ */
+const records = new Map<string, number>();
+try {
+  const apex = JSON.parse(
+    readFileSync(join(root, "data", "leaderboard_apex.json"), "utf8"),
+  ) as { boards: { scenario: string; points: { score: number }[] }[] };
+  for (const b of apex.boards) {
+    const best = b.points[0]?.score;
+    if (typeof best === "number") records.set(b.scenario, best);
+  }
+} catch {
+  // No apex file: the check below cannot run and adoption proceeds as it always did.
+}
 
 /** Every tier that publishes scores for a scenario, with the window the pool bands it into. */
 const tiers = new Map<string, (ThresholdCitation & { window: number | undefined })[]>();
@@ -94,6 +133,22 @@ for (const file of readdirSync(BENCH).filter((f) => f.endsWith(".json"))) {
       }
     }
   }
+}
+
+/**
+ * The step to continue a published tier by, as a per-rank multiplier.
+ *
+ * The geometric mean of the tier's own ratios rather than its last one: a published ladder
+ * is not evenly spaced, and the final gap is as often an outlier as it is the trend. Null
+ * where there is nothing to average or the numbers do not ascend, which is reported rather
+ * than replaced with a guess.
+ */
+function continuedRatio(values: number[]): number | null {
+  if (values.length < 2) return null;
+  const first = values[0];
+  const last = values[values.length - 1];
+  if (!(first > 0) || !(last > first)) return null;
+  return Math.pow(last / first, 1 / (values.length - 1));
 }
 
 /** `count` values spread across `from`, first and last always included. */
@@ -145,18 +200,73 @@ for (const family of pool.families) {
         ? picks[0]
         : Array.from({ length: size }, (_, i) => median(picks.map((p) => p[i])));
 
+    // The ranks this window grades past the author's own tier.
+    //
+    // A tier is a complete ladder for its band - four numbers - and a window grades six,
+    // because it reaches two ranks into the one above. Nobody published those two for this
+    // scenario, so they are cut from its board at the ladder's shares and recorded as a
+    // separate thing. Adopting a tier and then quietly inventing two more numbers under the
+    // same label would be the exact failure this file exists to prevent.
+    const ranks = windowRankIndices(v.window, pool.windowSize, totalRanks, overlap);
+    const tailRanks = ranks.slice(size);
+    let extended: ExtendedTail | undefined;
+    let tail: number[] = [];
+
+    if (tailRanks.length > 0) {
+      const ratio = continuedRatio(proposed);
+      if (ratio === null) {
+        refused.push(
+          `${v.scenario} (${pool.windows[v.window]}) publishes [${proposed.join(", ")}], ` +
+            `which gives no step to continue over ranks ` +
+            `${tailRanks.map((r) => r + 1).join(", ")}`,
+        );
+        continue;
+      }
+      const top = proposed[proposed.length - 1];
+      tail = tailRanks.map((_, i) => Math.round(top * Math.pow(ratio, i + 1)));
+      for (let i = 0; i < tail.length; i++) {
+        const under = i === 0 ? top : tail[i - 1];
+        if (tail[i] <= under) tail[i] = under + 1;
+      }
+      extended = {
+        ranks: tailRanks,
+        ratio: Number(ratio.toFixed(6)),
+        rule:
+          `continued from the cited tier at the geometric mean of its own steps, ` +
+          `${ratio.toFixed(4)} per rank - no benchmark publishes this scenario at ranks ` +
+          `${tailRanks.map((r) => r + 1).join(" or ")}`,
+      };
+    }
+
+    const full = [...proposed, ...tail];
+
+    // Refuse a tier that asks for more than the board has ever seen, except on the top
+    // window where an unreached rank is the point. PreciseTrack and domiSwitch both had
+    // their Intermediate tier adopted at numbers above their own board's record, which left
+    // rank 8 held by nobody in the middle of two ladders. Refusing hands the variant to
+    // cut:thresholds, whose numbers are cut from that board and therefore reachable on it.
+    const record = records.get(v.scenario);
+    const topWindow = v.window === pool.windows.length - 1;
+    if (!topWindow && record !== undefined && full[full.length - 1] > record) {
+      refused.push(
+        `${v.scenario} (${pool.windows[v.window]}) would ask ${full[full.length - 1]}, ` +
+          `above the ${record} nobody on its board has beaten - left to the percentile cut`,
+      );
+      continue;
+    }
+
     // Ascent is the one property a rank ladder cannot do without, and a reconciliation that
     // breaks it is reported rather than repaired - a nudged number is neither the author's
     // nor explained, which is exactly the state this file exists to eliminate.
-    if (proposed.some((n, i) => i > 0 && n <= proposed[i - 1])) {
+    if (full.some((n, i) => i > 0 && n <= full[i - 1])) {
       refused.push(
-        `${v.scenario} (${pool.windows[v.window]}) would be [${proposed.join(", ")}], which does not ascend`,
+        `${v.scenario} (${pool.windows[v.window]}) would be [${full.join(", ")}], which does not ascend`,
       );
       continue;
     }
 
     const before = v.rankMaxes ? [...v.rankMaxes] : null;
-    v.rankMaxes = proposed;
+    v.rankMaxes = full;
 
     const citations: ThresholdCitation[] = candidates.map((c, i) => ({
       benchmark: c.benchmark,
@@ -169,7 +279,7 @@ for (const family of pool.families) {
     }));
 
     if (candidates.length === 1) {
-      v.source = { kind: "adopted", from: citations };
+      v.source = { kind: "adopted", from: citations, ...(extended ? { extended } : {}) };
       adopted++;
     } else {
       v.source = {
@@ -178,12 +288,13 @@ for (const family of pool.families) {
           `median per rank of ${candidates.length} tiers this pool bands at ` +
           `${pool.windows[v.window]}, each first reduced to ${size} evenly spread picks`,
         from: citations,
+        ...(extended ? { extended } : {}),
       };
       reconciled++;
     }
 
-    if (before && before.join(",") !== proposed.join(",")) {
-      changed.push(`${v.scenario}: [${before.join(", ")}] -> [${proposed.join(", ")}]`);
+    if (before && before.join(",") !== full.join(",")) {
+      changed.push(`${v.scenario}: [${before.join(", ")}] -> [${full.join(", ")}]`);
     }
   }
 }

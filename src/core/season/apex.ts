@@ -94,15 +94,38 @@ export function boardRankOfScore(board: ApexBoard, score: number): number | null
   const points = board.points;
   if (points.length === 0 || !Number.isFinite(score)) return null;
 
-  if (score >= points[0].score) return points[0].rank;
+  // Strictly better than the world record is rank 1. Equal to it is not, where somebody
+  // else already holds the same score: the same tie rule as below, and it matters most here
+  // because the top rank of a season is held by place on this board.
+  if (score > points[0].score) return points[0].rank;
+  if (score === points[0].score) {
+    let at = 0;
+    while (points[at + 1]?.score === score) at++;
+    return points[at].rank;
+  }
 
   for (let i = 0; i < points.length - 1; i++) {
     const better = points[i];
-    const worse = points[i + 1];
+    let worse = points[i + 1];
     if (score >= worse.score) {
+      // A score that ties an anchor ties everyone down to the last anchor holding the same
+      // score, and the anchors say nothing about who sits between them. The worse rank is
+      // the honest read: it is the one the score is *known* to have reached.
+      //
+      // The tie has to be walked forward, not just noticed. 1w2ts Pasu Perfected 30%
+      // Smaller has ranks 3 and 5 both at 114, and a score of 114 lands on the 120-to-114
+      // pair one step earlier - where the span is six, not zero - so interpolating there
+      // returned rank 3 and never reached the tied pair at all. That overstates a position,
+      // which is the direction that matters: the top rank of a season is held by place on
+      // this board, and handing it to somebody tied at fifth is the failure this measure
+      // exists to avoid.
+      while (worse.score === score && points[i + 2]?.score === score) {
+        i++;
+        worse = points[i + 1];
+      }
+      if (score === worse.score) return worse.rank;
+
       const span = better.score - worse.score;
-      // A tied anchor pair carries no information about what sits between them, so the
-      // worse rank is the honest read: it is the one the score is known to have reached.
       if (span <= 0) return worse.rank;
       const t = (better.score - score) / span;
       const logRank =
@@ -182,28 +205,65 @@ export function apexTopFraction(
  * a tie makes the answer generous it is generous, never short, and `validateStanding`
  * asserts that one-sided property rather than a round trip the data cannot support.
  *
+ * Which means a tie has to be climbed out of, not interpolated across. Asking for rank 1.5
+ * on that board interpolates between 53 and 53 and gets 53 - and 53 is rank 2, because
+ * `boardRankOfScore` resolves a tie to the worse rank it is known to reach. Naming 53 as
+ * the way to rank 1.5 is precisely the broken promise the paragraph above says not to make,
+ * so the answer steps up to the next score the anchors distinguish.
+ *
  * Null when the rank is past the last anchor, where the apex board has no opinion and the
- * fractional distribution is the thing to ask.
+ * fractional distribution is the thing to ask - and null too when a tie at the top means no
+ * score the board knows reaches the rank asked for.
  */
 export function scoreAtBoardRank(board: ApexBoard, rank: number): number | null {
   const points = board.points;
   if (points.length === 0 || !Number.isFinite(rank)) return null;
 
   // Better than the world record is the world record's score: nothing above it is known.
-  if (rank <= points[0].rank) return points[0].score;
+  if (rank <= points[0].rank) return clearOfTies(board, points[0].score, rank);
 
   for (let i = 0; i < points.length - 1; i++) {
     const better = points[i];
     const worse = points[i + 1];
     if (rank <= worse.rank) {
       const span = Math.log(worse.rank) - Math.log(better.rank);
-      if (span <= 0) return worse.score;
-      const t = (Math.log(rank) - Math.log(better.rank)) / span;
-      return better.score + t * (worse.score - better.score);
+      const raw =
+        span <= 0
+          ? worse.score
+          : better.score +
+            ((Math.log(rank) - Math.log(better.rank)) / span) * (worse.score - better.score);
+      return clearOfTies(board, raw, rank);
     }
   }
 
   return null;
+}
+
+/**
+ * Raise a score until it actually reads back at the rank it is being offered for.
+ *
+ * Only ever moves up, and only ever to a score the anchors already contain, so nothing here
+ * invents precision the board does not have. On a board with no tie at the asked rank the
+ * first read already passes and this returns what it was given.
+ */
+function clearOfTies(board: ApexBoard, score: number, rank: number): number | null {
+  let out = score;
+  for (let guard = 0; guard < board.points.length; guard++) {
+    const back = boardRankOfScore(board, out);
+    if (back === null || back <= rank + 0.01) return out;
+    const next = board.points
+      .map((p) => p.score)
+      .filter((sc) => sc > out)
+      .sort((a, b) => a - b)[0];
+    // Nothing left to climb to. Ten of the pool's boards have their world record held by
+    // two people at once, and on those there is no score the anchors know that reaches rank
+    // 1.5 - beating the tie means setting a new record, and above the record the board has
+    // no opinion at all. That is the same "ask the fractional distribution" answer null
+    // already means everywhere else, and it beats naming a score that does not do it.
+    if (next === undefined) return null;
+    out = next;
+  }
+  return out;
 }
 
 /**
@@ -229,8 +289,15 @@ export function nextWholePoint(
     // Above the world record: no score reaches it, so there is nothing to name.
     if (rank < board.points[0].rank) return null;
 
-    const score = scoreAtBoardRank(board, rank);
-    if (score !== null) return { points: target, score, rank };
+    // Inside the sampled top, the board is the authority and its silence is an answer.
+    // Falling through to the fractional curve here was wrong in the one case it fires: a
+    // board whose record is held by two people cannot name a score for the rank just below
+    // it, and the coarse curve happily names one anyway - a score the player has often
+    // already beaten. A target behind you is worse than no target.
+    if (rank <= board.points[board.points.length - 1].rank) {
+      const score = scoreAtBoardRank(board, rank);
+      return score === null ? null : { points: target, score, rank };
+    }
   }
 
   if (dist) {

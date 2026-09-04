@@ -13,8 +13,27 @@
  */
 
 /** The two grounds every rank name has to survive. Must match the client and the sheet. */
-export const DARK_GROUND = "#06080c";
+export const DARK_GROUND = "#1e1b18";
 export const LIGHT_GROUND = "#eef1f6";
+
+/**
+ * The dark chrome, in one place.
+ *
+ * The same nine values were written out by hand in the client, the rank sheet, the theme
+ * editor and the Electron window options, which is four chances for a palette change to
+ * land in three of them. The client's `:root` is still where a human edits them - a
+ * stylesheet is the right home for a stylesheet - but everything that generates a document
+ * reads them from here, so a sheet cannot be built on a ground the app stopped using.
+ */
+export const DARK_CHROME = {
+  ground: DARK_GROUND,
+  panel: "#272320",
+  well: "#171513",
+  rule: "#38332f",
+  ink: "#f6f3ee",
+  inkMid: "#bbb4aa",
+  inkDim: "#8e867c",
+} as const;
 
 /**
  * Contrast ratios below this are treated as "this colour disappears".
@@ -81,4 +100,49 @@ export function readabilityNote(color: string): string | null {
   return r.fails === "dark"
     ? `disappears on dark (${r.onDark.toFixed(2)}:1) - the client's own background`
     : `disappears on light (${r.onLight.toFixed(2)}:1) - screenshots and the web`;
+}
+
+/** Blend two hex colours, `pct` percent of the way from `a` to `b`. */
+export function mix(a: string, b: string, pct: number): string {
+  const value = (c: string) => parseInt(/^#?([0-9a-f]{6})$/i.exec(c.trim())?.[1] ?? "000000", 16);
+  const x = value(a);
+  const y = value(b);
+  const t = pct / 100;
+  const channel = (shift: number) =>
+    Math.round((((x >> shift) & 255) * (1 - t) + ((y >> shift) & 255) * t));
+  return "#" + [16, 8, 0].map((s) => channel(s).toString(16).padStart(2, "0")).join("");
+}
+
+/**
+ * A rank colour moved just far enough to be read on the ground it is being set on.
+ *
+ * The client has had this in one direction since the grounds were lifted out of near-black,
+ * and the reasoning there is the whole argument: the authored colour is the identity and
+ * stays the identity, so the correction belongs where the colour is painted rather than in
+ * the season file. Singularity is #000000 because that is what a singularity is; writing
+ * #2f2f2f into the data would lose the joke *and* hide the fact that it had to be lost.
+ *
+ * What was missing is the other direction. Every rank gets shown outside the client too,
+ * and forty-two of season 1's names sit under 2:1 on paper against ten on dark, because
+ * three of the six ladders ascend by getting lighter and their top halves land in the
+ * near-whites. Lifting only towards white fixes the ten and does nothing for the
+ * forty-two, so the ground is a parameter now and the colour moves away from it either way.
+ *
+ * Five percent at a time towards the other ground, which is what the two grounds are for:
+ * they are the poles of everything this palette is ever painted on, so a colour pushed
+ * towards one is a colour the app already knows how to show. Stepping finely enough to land
+ * on the floor exactly would be truer to the colour and much worse to look at, because
+ * neighbouring rungs that each needed a slightly different lift stop being evenly spaced -
+ * the ladder reads as a climb, and preserving that matters more here than the last two
+ * percent of a colour nobody can see anyway. Anything already clear of the line is returned
+ * untouched, so this is invisible on a palette that does not need it.
+ */
+export function legibleOn(color: string, ground: string, min: number = MIN_CONTRAST): string {
+  if (!/^#[0-9a-f]{6}$/i.test(color.trim())) return color;
+  const away = luminance(ground) > 0.4 ? DARK_GROUND : LIGHT_GROUND;
+  let out = color;
+  for (let pct = 5; pct <= 100 && contrast(out, ground) < min; pct += 5) {
+    out = mix(color, away, pct);
+  }
+  return out;
 }

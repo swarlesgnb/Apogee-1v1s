@@ -47,13 +47,35 @@
  * Summing raw fractions would be dominated by the family a player is worst at, and
  * averaging them would make the difference between top 2% and top 1% look like the
  * difference between 51% and 50%. `apexPoints` takes -log10, so a whole point always
- * means "ten times fewer people above you" wherever on the scale it falls, and the sum
- * across families behaves the way category energy already does.
+ * means "ten times fewer people above you" wherever on the scale it falls.
+ *
+ * WHY THE MEAN AND NOT THE SUM
+ *
+ * A category's points are the mean over its families, and the overall is the mean over the
+ * categories. Both used to be sums, which made the number a fact about how many families a
+ * category happens to hold as much as about the player: Precise Tracking carries eleven and
+ * Evasive Switching six, so identical play up the two boards read almost two to one apart,
+ * and the overall then added those uneven numbers together.
+ *
+ * The season's own ladder never had this problem, which is what makes the sum look wrong
+ * rather than merely different: a category's energy thresholds are `familyCount *
+ * ENERGY_PER_RANK * rank`, so a category rank has always been the MEAN family rank, and the
+ * overall rank has always been the mean of each category's fraction along its own ladder.
+ * The apex board was the one measure in the season still counting families.
+ *
+ * The mean is over every family in the category, not only the graded ones - an unplayed
+ * family contributes zero, exactly as it contributes zero energy. `graded` and `total` are
+ * reported alongside so a partial standing can be shown as partial rather than as weak.
  */
 
 import { apexPoints, apexTopFraction, nextWholePoint, type ApexBoard } from "./apex.ts";
 import type { Distribution } from "./percentiles.ts";
 import type { Season } from "./season.ts";
+
+/** Mean, and zero for nothing - an empty category is no standing, not a negative one. */
+function mean(values: number[]): number {
+  return values.length === 0 ? 0 : values.reduce((a, b) => a + b, 0) / values.length;
+}
 
 export interface FamilyStanding {
   family: string;
@@ -212,7 +234,7 @@ export function apexStanding(
     );
     return {
       name: c.name,
-      points: families.reduce((sum, f) => sum + f.points, 0),
+      points: mean(families.map((f) => f.points)),
       families,
       graded: families.filter((f) => f.score !== null).length,
       total: families.length,
@@ -230,7 +252,10 @@ export function apexStanding(
 
   return {
     categories,
-    points: categories.reduce((sum, c) => sum + c.points, 0),
+    // The mean of the categories, not of every family: each category counts once, which is
+    // the same weighting the derived overall rank uses. Averaging families instead would put
+    // the overall back where it started, weighted by how many families each category holds.
+    points: mean(categories.filter((c) => c.total > 0).map((c) => c.points)),
     graded: categories.reduce((sum, c) => sum + c.graded, 0),
     total: categories.reduce((sum, c) => sum + c.total, 0),
     sampledAt: used.length ? used.reduce((a, b) => (a < b ? a : b)) : null,

@@ -767,7 +767,7 @@ gap     = (ceiling − floor) / ceiling</pre>
         <div class="exhibit-body">
 <pre>name, status          draft | published | archived
 rankNames/Colors      the <em>overall</em> ladder
-categories[]          Clicking, Tracking, Switching
+categories[]          the six: two clicking, two tracking, two switching
   bands[]               one per window, each graded on its own
     window                which window it grades
     rankNames/Colors      that band's own four ranks
@@ -781,12 +781,21 @@ scenarios[]           the pool
         </div>
       </div>
 
-      <h3>Three ladders, not one</h3>
+      <h3>Six ladders, not one</h3>
       <p>
-        Clicking, Tracking and Switching each name and colour their own ranks. The claims
-        are separate — being near the top of Tracking says nothing about Clicking — and a
-        shared vocabulary would quietly imply otherwise. They can be different depths:
-        Tracking can have six ranks where Clicking has four.
+        Each category names and colours its own ranks. The claims are separate — being
+        near the top of Precise Tracking says nothing about Static Clicking — and a shared
+        vocabulary would quietly imply otherwise. They can be different depths: one
+        category can have six ranks where another has four.
+      </p>
+      <p>
+        Three was the original shape, and it weighted the pool by accident. Category
+        energy is the sum of its families, so a hand-built Clicking section that grew to
+        eleven families while Switching sat at five counted for more than twice as much
+        towards the overall. Splitting each aim type along the sub-skill lines the corpus
+        already names — static against dynamic, precise against reactive, speed against
+        evasive — gives six categories that can each be brought to the same depth, and
+        equal depth is equal weight by construction.
       </p>
       <p class="note">
         <span class="note-label">Watch for</span>
@@ -1622,10 +1631,10 @@ smoke                 boot the client headlessly and check it renders</pre>
           the win/loss path and the rating change have never run against a real opponent.
         </li>
         <li>
-          <strong>Ratings are still one per player, not three.</strong> The season splits
-          Clicking, Tracking and Switching into separate ladders for grading, but
-          <code>ratings</code> is keyed on <code>player_id</code> alone, so "my Tracking
-          rank" has no answer yet. Splitting it is the next real piece of PLAN.md §14.
+          <strong>Ratings are still one per player, not six.</strong> The season splits
+          the six categories into separate ladders for grading, but
+          <code>ratings</code> is keyed on <code>player_id</code> alone, so "my Precise
+          Tracking rank" has no answer yet. Splitting it is the next real piece of PLAN.md §14.
         </li>
         <li>
           <strong>Season rollover is not built.</strong> Season 1's thresholds are seeded

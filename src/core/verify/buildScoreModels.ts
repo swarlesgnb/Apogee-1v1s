@@ -142,9 +142,9 @@ export function deriveShotRate(runs: ParsedRun[], seconds: number): number | nul
  * a run has no kill rows to reconstruct from (PLAN.md §5).
  *
  * Both relations are required. `Damage Possible = Shots * damagePerShot` is the one
- * that does the real work — it pins the only column with no copy in the summary tail —
- * and it is worthless without a score relation to pin the shot count to in the first
- * place, so a scenario that yields only one of the two is left unmodelled.
+ * that does the real work, since it pins the only column with no copy in the summary
+ * tail, and it is worthless without a score relation to pin the shot count to in the
+ * first place, so a scenario that yields only one of the two is left unmodelled.
  *
  * `Damage Done` rather than `Hits` as the score's source: measured across the runs that
  * have no kill rows, the damage relation holds for all 85 scenarios with enough

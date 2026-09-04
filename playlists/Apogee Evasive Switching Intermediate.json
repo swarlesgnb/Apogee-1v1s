@@ -1,31 +1,31 @@
 {
-	"playlistName": "Apogee Switching Novice",
+	"playlistName": "Apogee Evasive Switching Intermediate",
 	"playlistId": 0,
 	"authorSteamId": "",
 	"authorName": "",
 	"scenarioList": [
 		{
-			"scenario_name": "VT EddieTS Novice S5",
+			"scenario_name": "VT bounceTS Intermediate",
 			"play_Count": 1
 		},
 		{
-			"scenario_name": "VT DotTS Novice S5",
+			"scenario_name": "domiSwitch Easy",
 			"play_Count": 1
 		},
 		{
-			"scenario_name": "VT FlyTS Novice S5",
+			"scenario_name": "VT DriftTS Intermediate S5",
 			"play_Count": 1
 		},
 		{
-			"scenario_name": "VT evaTS Novice",
+			"scenario_name": "VT evaTS Intermediate",
 			"play_Count": 1
 		},
 		{
-			"scenario_name": "VT ControlTS Novice S5",
+			"scenario_name": "VT FlyTS Intermediate S5",
 			"play_Count": 1
 		},
 		{
-			"scenario_name": "VT Penta Bounce Novice S5",
+			"scenario_name": "tamTargetSwitch Smooth Easy",
 			"play_Count": 1
 		}
 	],
@@ -34,6 +34,6 @@
 	"hasEdited": true,
 	"shareCode": "",
 	"version": 31,
-	"updated": 1788216304,
+	"updated": 1788481006,
 	"isPrivate": false
 }

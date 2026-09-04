@@ -205,7 +205,7 @@ export function buildSnapshot(options: SnapshotOptions): Snapshot | null {
 
   // A season has no difficulties to pick between: splitting one benchmark into four
   // was Voltaic's way of covering a skill range, and owning the pool means the split is
-  // three categories instead.
+  // six categories, each banded into four windows of its own.
   const season = useSeason ? loadSeason() : null;
 
   /** Scenario -> the sub-skill its family trains, as the season declares it. */

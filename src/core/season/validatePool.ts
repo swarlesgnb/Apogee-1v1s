@@ -46,6 +46,7 @@ import { join } from "node:path";
 
 import { dataFile } from "../dataDir.ts";
 import type { Distribution } from "./percentiles.ts";
+import { windowRankCount } from "./windows.ts";
 
 const BOLD = "\x1b[1m";
 const DIM = "\x1b[2m";
@@ -103,7 +104,7 @@ interface Pool {
   windowSize: number;
   windows: string[];
   /** Percentiles from the top of each board, one array per window. See ladder.$comment. */
-  ladder: { perWindow: number[][] };
+  ladder: { ranks: number[]; overlap: number };
   categories: string[];
   /** The sub-skills each category is cut into. Apogee's own, derived in data/subskills.json. */
   subCategories: Record<string, string[]>;
@@ -124,7 +125,48 @@ interface Pool {
      * themselves call each scenario, and the declaration is checked against it below.
      */
     subCategory?: string;
-    variants: { window: number; scenario: string; label: string; leaderboardId: number | null }[];
+    /**
+     * Why this family's rungs disagree with the order its sources publish them in.
+     *
+     * The ascent check reads the bands; this is how a family says the bands are wrong
+     * about it. The usual cause is a size or speed modifier in the scenario name that no
+     * sheet graded - a "30% Larger" cut carries its parent's band and is plainly easier.
+     */
+    $order?: { why: string };
+    variants: {
+      window: number;
+      scenario: string;
+      label: string;
+      leaderboardId: number | null;
+      /**
+       * Why a scenario no named benchmark publishes is in the pool anyway.
+       *
+       * The pool used to admit a scenario only if one of the benchmarks in `sources`
+       * published it, which made the 23 sheets the whole universe of what a season could
+       * grade. Picking by hand from all of KovaaK's is the better method - it is what took
+       * Static Clicking from six families to eleven - so the rule is now that an
+       * unpublished pick needs a REASON rather than a citation, written here and checked
+       * for by validate:pool.
+       *
+       * It is not a loophole for a scenario a sheet does publish: the check only looks at
+       * this when nothing in `sources` names the scenario, so an admitted variant is always
+       * one nobody else has graded. Such a variant also declares its window, since there is
+       * no tier to derive it from.
+       */
+      admitted?: { why: string };
+      /** Where the thresholds came from. Only the kind matters here; see thresholds.ts. */
+      source?: { kind?: string };
+      /**
+       * Why this rung keeps a board too thin to separate the ranks it grades.
+       *
+       * The floor is derived from the ladder and is not negotiable arithmetic - a board
+       * under it genuinely cannot tell two of its ranks apart. What this records is that
+       * the alternative was worse: usually that the whole lineage is thinner still, so the
+       * choice is this board or no family. It has to say which, and it is listed on every
+       * run rather than disappearing into a pass.
+       */
+      thinBoard?: { why: string };
+    }[];
   }[];
 }
 
@@ -430,11 +472,30 @@ for (const v of variants) {
     untyped.push(v.scenario);
     continue;
   }
-  if (source.category !== v.category) {
+  if (source.category !== aimTypeOf(v.category)) {
     miscategorised.push(
       `${v.scenario} is ${v.category} here, ${source.category} to ${source.who}`,
     );
   }
+}
+
+/**
+ * The aim type a category belongs to.
+ *
+ * A category is a sub-skill now - "Dynamic Clicking", "Evasive Switching" - and the two-word
+ * form carries its aim type as the second word, which is exactly why the sub-skill names are
+ * two words (see `$subCategories`). So the aim type is the last word, and nothing else.
+ *
+ * Both halves of the comparison are already through `normaliseSkill`, which is where
+ * KovaaK's "Target Switching" becomes "Switching". Mapping the word back to KovaaK's
+ * spelling here made the check unsatisfiable for every switching scenario in the pool - 53
+ * of them, all reported for agreeing.
+ *
+ * The check before that compared the category to the aim type directly, which was right
+ * while a category WAS an aim type and reported all 216 variants once it was not.
+ */
+function aimTypeOf(category: string): string {
+  return category.trim().split(/\s+/).pop() ?? category;
 }
 
 for (const line of corrected) {
@@ -479,10 +540,29 @@ check(
   uncommitted.length === 0 ? "" : `${uncommitted.join(", ")} - run tools/fetch_benchmark_defs.py`,
 );
 
+// A scenario is admitted by a benchmark that graded it, or by a written reason. The
+// second route is not a weakening: a citation says somebody else thought the scenario
+// was worth grading, and a sentence says what THIS pool wants it for, which is the more
+// useful claim and the harder one to fake. What it replaces was a rule that made the 23
+// sheets the whole universe a season could be built from - and the sheets do not cover
+// the easy end at all. Voltaic has four novice-band precise-tracking scenarios in the
+// entire committed set, so every family's Novice rung had to come from outside or be a
+// scenario nobody sane would put there.
+//
+// The floor is a real sentence rather than a non-empty string. `why` is free text and a
+// field that accepts "authored" teaches everyone to write "authored".
+const MIN_WHY = 60;
+
 const offPool: string[] = [];
+const shortWhy: string[] = [];
+const admitted: string[] = [];
+
 for (const v of variants) {
   const benchmarks = fromBenchmarks.get(v.scenario)?.benchmarks ?? new Set<string>();
-  if (![...benchmarks].some((b) => sources.has(b))) {
+  if ([...benchmarks].some((b) => sources.has(b))) continue;
+
+  const why = v.admitted?.why?.trim() ?? "";
+  if (why === "") {
     offPool.push(
       `${v.scenario}${
         benchmarks.size > 0
@@ -490,13 +570,28 @@ for (const v of variants) {
           : " (in no committed benchmark)"
       }`,
     );
+  } else if (why.length < MIN_WHY) {
+    shortWhy.push(`${v.scenario} (${why.length} characters)`);
+  } else {
+    admitted.push(v.scenario);
   }
 }
+
 check(
-  "every scenario comes from a benchmark the pool names",
+  "every scenario is published by a benchmark the pool names, or says why it is here",
   offPool.length === 0,
   offPool.join("; "),
 );
+check(
+  `every admitted scenario's reason is a sentence (${MIN_WHY} characters)`,
+  shortWhy.length === 0,
+  shortWhy.join("; "),
+);
+if (admitted.length > 0) {
+  console.log(
+    `  ${DIM}${admitted.length} admitted on a written reason rather than a citation${RESET}`,
+  );
+}
 
 // A source nothing is drawn from is not an error - it is there to be drawn from next
 // season, and dropping it would make the list a log of what happened rather than a
@@ -667,16 +762,103 @@ for (const v of variants) {
   }
 }
 
-check(
-  "every scenario's tier is banded",
-  unbanded.length === 0,
-  unbanded.length === 0 ? "" : `${unbanded.join("; ")} - add the tier to pool.bands`,
+// Being unbanded is a fact about the sheets, not a fault in the pool.
+//
+// Three of the sources carry no difficulty to band by - TSK Mixed names its tiers after
+// categories, cA Static S1 has one tier called "All" - and the scenarios admitted on a
+// written reason have no sheet at all. Refusing those was refusing the whole method that
+// built this season. What replaces it is the ascent check below, which asks a question
+// the sheets can actually answer.
+if (unbanded.length > 0) {
+  console.log(
+    `  ${DIM}${unbanded.length} variant(s) no tier can place, so their window is ` +
+      `declared and held by the ascent check${RESET}`,
+  );
+}
+
+// ---- the order of a family's rungs ----------------------------------------------------
+//
+// WHAT THIS REPLACED, AND WHY
+//
+// The check here used to be "every scenario sits in the window its hardest tier bands it
+// into" - each rung had to match a number somebody else published. That was right while
+// the pool was assembled out of whole benchmark tiers. It stopped being right when the
+// season was deliberately re-pitched about two ranks harder: the Advanced window now runs
+// Expert-tier scenarios ON PURPOSE, and the old check reported 71 variants for it. A check
+// that fires on the feature it is meant to protect teaches everybody to ignore it.
+//
+// What still has to hold is the thing that would actually break a ladder: a family's four
+// rungs must get harder as the window rises. Shift a whole family up or down and every
+// rung moves together, which is a re-pitch. Swap two of them and a player climbing the
+// family meets an easier scenario at a higher rank, which is a hole nothing downstream can
+// see - the family is graded on the best of its variants, so the ladder simply stops
+// paying and no rank is ever reported as missing.
+//
+// Measured against published bands rather than against scores, because scores are not
+// comparable across scenarios and bands are the one difficulty signal every source states
+// outright. Only rungs a source actually bands take part; an unbanded rung is skipped
+// rather than assumed, which is why the count is printed.
+//
+// Measured before it was allowed to reject anything: 130 adjacent banded pairs across the
+// 53 families, 8 of which are out of order. Not vacuous, and not a check nothing can fail.
+const outOfOrder: string[] = [];
+let orderPairs = 0;
+
+for (const f of pool.families) {
+  const banded = [...f.variants]
+    .sort((a, b) => a.window - b.window)
+    .map((v) => ({
+      v,
+      band: derivedWindow(
+        (fromBenchmarks.get(v.scenario)?.tiers ?? []).filter((t) => sources.has(t.benchmark)),
+      ).window,
+    }))
+    .filter((r): r is { v: (typeof f.variants)[number]; band: number } => r.band !== null);
+
+  for (let i = 0; i + 1 < banded.length; i++) {
+    orderPairs++;
+    const lower = banded[i];
+    const upper = banded[i + 1];
+    if (lower.band > upper.band) {
+      outOfOrder.push(
+        `${f.category}/${f.family}: ${lower.v.scenario} (banded ${lower.band}) sits at ` +
+          `window ${lower.v.window}, below ${upper.v.scenario} (banded ${upper.band}) at ` +
+          `window ${upper.v.window}`,
+      );
+    }
+  }
+}
+
+// A family may say the published bands are wrong about it, and the commonest reason is
+// real: two rungs from different sheets, where what sets the difficulty is a size or speed
+// modifier in the scenario name that neither sheet graded. "DotTS 30% Larger" is banded by
+// AimSpeed's Normal tier and is plainly easier than Voltaic's DotTS Novice. The exception
+// has to be written per family, and it is listed on every run so it stays visible.
+const excused = new Set(
+  pool.families.filter((f) => (f.$order?.why ?? "").trim().length >= MIN_WHY).map((f) => f.family),
 );
+const unexcused = outOfOrder.filter((line) => !excused.has(line.split(": ")[0].split("/")[1]));
+
 check(
-  "every scenario sits in the window its hardest tier bands it into",
-  misbanded.length === 0,
-  misbanded.join("; "),
+  "every family's rungs get harder as the window rises",
+  unexcused.length === 0,
+  unexcused.length === 0 ? `${orderPairs} adjacent banded pairs` : unexcused.join("; "),
 );
+if (excused.size > 0) {
+  console.log(
+    `  ${DIM}${excused.size} family/families overrule their published bands, with a ` +
+      `written reason${RESET}`,
+  );
+}
+
+// Kept as a report: a rung far from where its own sheet graded it is not wrong, but it is
+// worth seeing how far the season has moved from the benchmarks it was cut from.
+if (misbanded.length > 0) {
+  console.log(
+    `  ${DIM}${misbanded.length} variant(s) sit in a different window from their hardest ` +
+      `published tier - the season is re-pitched, see $bands${RESET}`,
+  );
+}
 
 // Which windows rest on one benchmark's opinion alone.
 //
@@ -789,30 +971,75 @@ console.log(`\n${BOLD}population${RESET}`);
 /**
  * Fewest entries a board may carry to grade the given window.
  *
- * This used to derive from `ladder.perWindow`: seventy players above the hardest rank,
- * divided by that rank's percentile, which put Expert at 8,750. The arithmetic was right
- * for as long as a rank *was* a percentile of the board. It is not any more - every
- * threshold is a score an author published - so dividing by a percentile is dividing by a
- * number the ladder no longer uses, and it was rejecting boards for failing a standard
- * nothing measures against.
+ * WHAT THE OLD FLOOR GOT WRONG
  *
- * What survives is the floor, and it survives for its own reason rather than that one: a
- * board under a thousand entries is one clan's scenario rather than a population, and the
- * sampled distribution read off it is a fact about them. That still rejects - VT bounceTS
- * Elite at 318 and VT DriftTS Elite at 619 are why Switching could not be widened at this
- * corpus - so this is a check that can still fail rather than one relaxed into silence.
+ * A flat 1,000 for every window, which is a number about the board and not about what the
+ * board is being asked. Measured against this pool it was wrong in both directions:
  *
- * The positional top rank (PLAN.md, stage 4) will need its own requirement here, because
- * "top 3 on the board" is a claim about board depth again. It is not built, so it is not
- * asserted: `window` stays in the signature for it to key off, and MIN_ABOVE_HARDEST_RANK
- * stays documented above as the record of what the percentile era required.
+ *   SCS 8xs Uniform    175 entries, refused - but it grades Novice, whose hardest rank is
+ *                      the top 22%. That is 38 players. Coarse, and real.
+ *   ClickTrack 5t    2,218 entries, passed - but it grades Expert, whose hardest rank is
+ *                      the top 0.8%. That is 17 players deciding the top of a ladder.
+ *
+ * WHAT REPLACED IT
+ *
+ * The requirement is not "enough people" in the abstract, it is that this board can tell
+ * two consecutive ranks apart. A rank is a position on the board, so the gap between rank
+ * 15 and rank 16 is `total * (p15 - p16)` players - and on a 582-entry board that is 1.7
+ * people. Those are not two ranks; they are one rank and a rounding error.
+ *
+ * So the floor is derived from the ladder rather than chosen: take the TIGHTEST gap
+ * between consecutive ranks the window grades, and require at least MIN_PLAYERS_BETWEEN
+ * players to sit in it. Falls out as roughly 55 / 250 / 714 / 1,666 for the four windows,
+ * which is the shape the old constant was groping for - the Expert figure lands near 1,000
+ * at three players, which is why a flat 1,000 looked reasonable while being far too strict
+ * at the easy end.
+ *
+ * Five players, not three: three is close enough to a tie that a handful of new scores
+ * reorders the rungs, and the pool has boards that move that much between samplings. At
+ * five, 10 of the 123 percentile-cut variants are refused; at three, 6 - and the four the
+ * difference turns on are all Advanced or Expert rungs on boards under 800.
+ *
+ * Only the ladder is consulted, so re-cutting the percentiles moves the floor with them
+ * and nobody has to remember to update a constant.
  */
-function minEntriesFor(_window: number): number {
-  return ENTRIES_FLOOR;
+const MIN_PLAYERS_BETWEEN = 5;
+
+function minEntriesFor(window: number): number {
+  const first = window * pool.windowSize;
+  const width = windowRankCount(window, pool.windowSize, pool.ladder.ranks.length, pool.ladder.overlap);
+  const slice = pool.ladder.ranks.slice(first, first + width);
+
+  let tightest = Infinity;
+  for (let i = 1; i < slice.length; i++) tightest = Math.min(tightest, slice[i - 1] - slice[i]);
+  if (!Number.isFinite(tightest) || tightest <= 0) return ENTRIES_FLOOR;
+
+  return Math.ceil(MIN_PLAYERS_BETWEEN / tightest);
 }
 
+// WHAT THE FLOOR IS ACTUALLY PROTECTING
+//
+// A thin board is only dangerous when the ladder's numbers were CUT from it. A percentile
+// cut off 151 entries is a statement about 151 people, and rank 7 on it is wherever the
+// eleventh of them happened to land. A threshold ADOPTED from a benchmark is a score its
+// author published: the board is not in that arithmetic anywhere, and refusing it was
+// refusing a number on the strength of a statistic it does not use.
+//
+// Measured on the pool as it stands: 27 boards under the floor, 7 of them adopted and 20
+// cut. All 7 are Voltaic and Viscose Elite tiers - the hardest cut of a scenario is played
+// by fewer people almost by definition, which is a fact about who plays Elite scenarios and
+// not about whether Voltaic's Elite score is real. The 20 stay refused.
+//
+// The board is still used for the apex placement and for "what would the next rank be", so
+// a thin one is worth seeing even when it is allowed. It is reported, not silent.
 const thin: string[] = [];
+const thinButAdopted: string[] = [];
+const thinButExcused: string[] = [];
 const unsampled: string[] = [];
+
+/** A threshold cut from this scenario's own board, so the board's size is load-bearing. */
+const cutFromOwnBoard = (kind: string | undefined): boolean =>
+  kind === undefined || kind === "percentile" || kind === "seeded";
 
 for (const v of variants) {
   const distribution = sampled.get(v.scenario);
@@ -821,11 +1048,25 @@ for (const v of variants) {
     continue;
   }
   const minimum = minEntriesFor(v.window);
-  if (distribution.total < minimum) {
-    thin.push(
-      `${v.scenario} has ${distribution.total.toLocaleString()} for ` +
-        `${pool.windows[v.window]}, which needs ${minimum.toLocaleString()}`,
+  if (distribution.total >= minimum) continue;
+
+  const line =
+    `${v.scenario} has ${distribution.total.toLocaleString()} for ` +
+    `${pool.windows[v.window]}, which needs ${minimum.toLocaleString()}`;
+
+  if (!cutFromOwnBoard(v.source?.kind)) {
+    thinButAdopted.push(`${v.scenario} (${v.source?.kind}, ${distribution.total.toLocaleString()})`);
+    continue;
+  }
+
+  const excuse = v.thinBoard?.why?.trim() ?? "";
+  if (excuse.length >= MIN_WHY) {
+    thinButExcused.push(
+      `${v.scenario} (${distribution.total.toLocaleString()} of ${minimum.toLocaleString()}, ` +
+        `${Math.round((distribution.total / minimum) * 100)}%)`,
     );
+  } else {
+    thin.push(line);
   }
 }
 
@@ -836,11 +1077,23 @@ if (unsampled.length > 0) {
   );
 }
 check(
-  `every board is big enough for the window it grades ` +
+  `every board a threshold was CUT from is big enough for the window it grades ` +
     `(${pool.windows.map((w, i) => `${w} ${minEntriesFor(i).toLocaleString()}`).join(", ")})`,
   thin.length === 0,
   thin.join("; "),
 );
+if (thinButExcused.length > 0) {
+  console.log(
+    `  ${DIM}${thinButExcused.length} board(s) below the floor and kept on a written ` +
+      `reason: ${thinButExcused.join(", ")}${RESET}`,
+  );
+}
+if (thinButAdopted.length > 0) {
+  console.log(
+    `  ${DIM}${thinButAdopted.length} thin board(s) carry a threshold their author ` +
+      `published rather than one cut from the board: ${thinButAdopted.join(", ")}${RESET}`,
+  );
+}
 
 const totals = variants
   .map((v) => sampled.get(v.scenario)?.total)
@@ -918,7 +1171,13 @@ if (!derivedSubSkills) {
 
   for (const v of variants) {
     const derived = derivedFor.get(v.scenario);
-    if (!derived || derived.category !== v.category) continue;
+    // The guard here used to be `derived.category !== v.category`, comparing KovaaK's aim
+    // type against the pool's category. That held while a category was Clicking, Tracking or
+    // Switching. A category is a sub-skill now - "Dynamic Clicking" - so the comparison
+    // matched nothing and the check silently fell to zero scenarios, which is the shape of a
+    // check that cannot fail. The sub-skill name carries the aim type inside it, so
+    // comparing the sub-skills directly is both sufficient and the thing actually claimed.
+    if (!derived) continue;
     const declared = subCategoryOf(
       pool.families.find((f) => f.family === v.family && f.category === v.category)!,
     );
@@ -985,15 +1244,27 @@ if (Object.keys(overrides).length > 0) {
   }
 }
 
-// A category whose families all train one sub-skill is a category that measures one
-// thing and calls it three. Reported rather than refused: it is a design smell, not a
-// broken definition.
+// A category should train the sub-skills it declares, and no others.
+//
+// This used to warn when a category covered fewer than three sub-skills, which was the
+// right shape while a category was an aim type holding several. Since the six-category
+// rebuild a category IS a sub-skill, so that warning fired for all six on every run - a
+// warning nothing can act on, which is the fastest way to teach everybody to skim past the
+// ones that matter. What is worth knowing now is the opposite: a family whose sub-skill is
+// not the one its category declares, which means the pool disagrees with itself about what
+// the category measures.
 for (const category of pool.categories) {
-  const subs = new Set(
-    pool.families.filter((f) => f.category === category).map((f) => subCategoryOf(f)),
-  );
-  if (subs.size < 3) {
-    warn(`${category} covers only ${subs.size} sub-skill${subs.size === 1 ? "" : "s"}`);
+  const declared = new Set(pool.subCategories?.[category] ?? []);
+  const stray = pool.families
+    .filter((f) => f.category === category)
+    .map((f) => ({ family: f.family, sub: subCategoryOf(f) }))
+    .filter((f) => f.sub !== null && !declared.has(f.sub));
+  if (stray.length > 0) {
+    warn(
+      `${category} holds ${stray.length} family/families training a sub-skill it does not ` +
+        `declare`,
+      stray.map((f) => `${f.family} trains ${f.sub}`).join(", "),
+    );
   }
 }
 
@@ -1016,8 +1287,11 @@ for (const category of pool.categories) {
     const sub = subCategoryOf(f) ?? "(none)";
     counts.set(sub, (counts.get(sub) ?? 0) + 1);
   }
+  // Padded to the longest category name rather than a constant: 11 fitted "Clicking" and
+  // ran "Static Clicking" straight into its own sub-skill on every line.
+  const width = Math.max(...pool.categories.map((c) => c.length)) + 2;
   console.log(
-    `  ${category.padEnd(11)}` +
+    `  ${category.padEnd(width)}` +
       [...counts].map(([sub, n]) => `${sub} ${n}`).join(", "),
   );
 }

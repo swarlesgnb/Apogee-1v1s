@@ -15,6 +15,7 @@ import {
   tierForPercentile,
   type RankTheme,
 } from "./apogeeRanks.ts";
+import { readability, readabilityNote } from "../report/contrast.ts";
 
 let failures = 0;
 
@@ -25,6 +26,18 @@ function check(label: string, condition: boolean, detail = ""): void {
     failures++;
     console.log(`  FAIL ${label}${detail ? `: ${detail}` : ""}`);
   }
+}
+
+/**
+ * A thing worth knowing that is not a thing worth blocking on.
+ *
+ * The tier colours are chosen to match the tier names, not to satisfy a contrast
+ * formula, and that is the right trade for a ladder whose whole job is to be
+ * recognisable. Where the trade costs something, saying so beats either failing the
+ * build over it or pretending it is not true.
+ */
+function note(label: string, quiet: boolean, detail = ""): void {
+  console.log(quiet ? `  ok   ${label}` : `  note ${label}${detail ? `: ${detail}` : ""}`);
 }
 
 function expectThrow(label: string, fn: () => unknown): void {
@@ -76,11 +89,29 @@ check(
 check("out-of-range percentiles clamp", tierForPercentile(theme, 999).id === theme.tiers[theme.tiers.length - 1].id);
 
 // Colours must be usable by the UI without further parsing.
-const badHex = theme.tiers.filter(
-  (t) =>
-    ![t.color, t.glow, ...t.gradient].every((c) => /^#[0-9a-f]{6}$/i.test(c)),
-);
+const badHex = theme.tiers.filter((t) => !/^#[0-9a-f]{6}$/i.test(t.color));
 check("all colours are 6-digit hex", badHex.length === 0, badHex.map((t) => t.name).join(", "));
+
+// A rank name is drawn on the client's near-black ground and again on a light one - a
+// screenshot, a profile, a web page. Measured, but reported rather than enforced: the
+// colours name the tiers on purpose, and Quasar not being a dark colour is what makes it
+// Quasar. legibleOnDark() in the renderer handles the dark side at draw time; the light
+// side is a thing to know about a screenshot, not a reason to fail a build.
+const unreadable = theme.tiers.filter((t) => !readability(t.color).ok);
+note(
+  "every tier colour survives both grounds",
+  unreadable.length === 0,
+  unreadable.map((t) => `${t.name}: ${readabilityNote(t.color)}`).join("; "),
+);
+
+// A colour shared by two tiers is two ranks that look like one.
+const shared = new Map<string, string[]>();
+for (const t of theme.tiers) {
+  const key = t.color.toLowerCase();
+  shared.set(key, [...(shared.get(key) ?? []), t.name]);
+}
+const dupes = [...shared.values()].filter((names) => names.length > 1);
+check("no two tiers share a colour", dupes.length === 0, dupes.map((n) => n.join(" = ")).join("; "));
 
 // Percentile helper.
 const population = [1200, 1300, 1400, 1500, 1600];

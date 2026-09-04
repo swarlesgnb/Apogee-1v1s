@@ -194,9 +194,9 @@ Both levels are authoritative and neither is guessed. The three skills come from
 category names the benchmarks themselves publish: forty-three of them, normalised for case
 and spacing and keyed by aim type so that "Micro" can mean the clicking sub-skill in Lemon
 Static and precise tracking in Astro without either being special-cased. They are named in
-two words — `Static Clicking`, not `Static` — because the bare word does not survive being
-read on its own, and a weakness map or a queue name showing "Speed" cannot say which
-category it means.
+two words, `Static Clicking` rather than `Static`, because the bare word does not survive
+being read on its own, and a weakness map or a queue name showing "Speed" cannot say
+which category it means.
 
 **Nothing here is inferred from a scenario's description, because that was tried and was
 wrong on 6 of 18.** The hand-derived version swapped Tracking's Precise and Reactive
@@ -208,42 +208,42 @@ right, which is exactly what made the wrong groupings easy to believe.
 What replaced it is a check rather than a promise. Voltaic published their own mapping,
 `tools/fetch_voltaic_subcategories.py` regenerates it from
 [their spreadsheet](https://docs.google.com/spreadsheets/d/1RjVJi9AdWLXIOkKR8z6mhmRo_SNokJPxKtLXHWk12Z4),
-and Voltaic's scenarios go through the same normalisation as everybody else's — so the
+and Voltaic's scenarios go through the same normalisation as everybody else's, so the
 derivation has to land where Voltaic says they land, on all 106. It does, and that is the
 reason to believe the same treatment of Jade Palace is not making things up.
 
-Where KovaaK's has no aim type at all — about a hundred scenarios — the category comes
-from the author's own *word*: "Evasive Switch" is a key in the Switching table and nowhere
-else, so an author using it has said Switching whatever else is in the box. Dropping those
-instead cost more than it looked like it would: `tamTargetSwitch Control Hard` and
-`tamTargetSwitch Smooth Hard` carry 60,325 and 46,012 leaderboard entries between them,
-and Evasive Switching appeared to have one usable Expert scenario in the whole corpus when
-it has three.
+Where KovaaK's has no aim type at all, which is about a hundred scenarios, the category
+comes from the author's own *word*: "Evasive Switch" is a key in the Switching table and
+nowhere else, so an author using it has said Switching whatever else is in the box.
+Dropping those instead cost more than it looked like it would: `tamTargetSwitch Control
+Hard` and `tamTargetSwitch Smooth Hard` carry 60,325 and 46,012 leaderboard entries
+between them, and Evasive Switching appeared to have one usable Expert scenario in the
+whole corpus when it has three.
 
 **A word two of the three tables claim is a refusal, not a licence to guess.** The first
-version of that fallback took a vote inside the box instead — a benchmark's category slot
-in one difficulty looked homogeneous by construction — and was confidently wrong, putting a
-target-switching scenario into Linear Clicking with nothing to say so. Voting is kept only
-for words that appear in no table at all — "Varied", "Other", "Horizontal" — where the box
-is the only evidence there is. 23 scenarios are refused outright, which is the right number
-to leave unclassified.
+version of that fallback took a vote inside the box instead, since a benchmark's category
+slot in one difficulty looked homogeneous by construction, and was confidently wrong,
+putting a target-switching scenario into Linear Clicking with nothing to say so. Voting is
+kept only for words that appear in no table at all ("Varied", "Other", "Horizontal"),
+where the box is the only evidence there is. 23 scenarios are refused outright, which is
+the right number to leave unclassified.
 
 The example this used to give was itself the mistake. It cited Viscose's Hard tier filing
 `domiSwitch` and `tamTargetSwitch Smooth` both under "Evasive" and called one of them
-clicking — which was KovaaK's aim type for `domiSwitch`, believed rather than measured.
+clicking, which was KovaaK's aim type for `domiSwitch`, believed rather than measured.
 Both are target switching. See *Correcting a first-party source* below.
 
 Two of the eleven are not Voltaic's, and are named by benchmarks their sheet cannot see:
 
-- **Micro Clicking** — Anima Micro v1 and v2 are built entirely around it; Lemon Static,
+- **Micro Clicking.** Anima Micro v1 and v2 are built entirely around it; Lemon Static,
   cA Static ("Microadjust"), Viscose, Viscose S2 and Viscose Entry name it too. Eight
   benchmarks.
-- **Reading Tracking** — cA Ground Tracking, all three Jade Palace benchmarks, Viscose,
+- **Reading Tracking.** cA Ground Tracking, all three Jade Palace benchmarks, Viscose,
   Viscose S2 and Viscose Entry. Seven.
 
 Queue options: the 3 skills, the 11 sub-skills, or Any. A sub-skill queue draws its 3
 scenarios from an 8-scenario pool across four difficulties, which is what having two
-families each buys — the previous cut had sub-skills of one, and a queue for one of those
+families each buys; the previous cut had sub-skills of one, and a queue for one of those
 would have drawn three scenarios from a pool of four.
 
 ### Scenario selection is seeded, not random
@@ -732,7 +732,7 @@ benchmark's real scenarios and thresholds.
 │  │ https://evxl.app/benchmarks/Voltaic%20S5       │  │
 │  └────────────────────────────────────────────────┘  │
 │                                                      │
-│  ✓ Voltaic S5 — Intermediate                         │
+│  ✓ Voltaic S5 · Intermediate                         │
 │    18 scenarios · Platinum → Master                  │
 │    You currently sit: Diamond (4 scenarios to Jade)  │
 └──────────────────────────────────────────────────────┘
@@ -791,7 +791,7 @@ service being reachable at runtime:**
    `rankColors`, category structure. evxl publishes the registry at
    `evxl.app/data/benchmarks`; it is re-read at most once a day, at his request, and
    an unchanged registry costs a 304. Reading it out of the client bundle came first
-   and was retired — that copy had drifted 15 benchmarks behind.
+   and was retired, because that copy had drifted 15 benchmarks behind.
 
 2. `tools/fetch_benchmark_defs.py`
    → `data/benchmarks/*.json`, per difficulty: rank names, **per-scenario
@@ -937,17 +937,35 @@ hard for a newcomer *and* too easy at the top" came from the same mistake.
 
 The fix is not several benchmarks a player chooses between - that re-imports the §4
 confusion one level down, and it makes matchmaking ask a question it should never have to.
-It is four windows of scenarios, each with its own four ranks:
+It is four windows of scenarios, each grading six of the sixteen ranks:
 
 ```
-Novice         VT Pasu Novice S5         555  660  745  800
-Intermediate   VT Pasu Intermediate S5   770  850  930  980
-Advanced       VT Pasu Advanced S5       910 1020 1110 1240
-Expert         Pasu Reload Goated
+               scenario                   grades ranks
+Novice         VT Pasu Novice S5           1  2  3  4  5  6
+Intermediate   VT Pasu Intermediate S5           5  6  7  8  9 10
+Advanced       VT Pasu Advanced S5                     9 10 11 12 13 14
+Expert         Pasu Reload Goated                           13 14 15 16
 ```
 
-The twenty-two scenario families are the unit that gets graded, not the eighty-eight
-variants, so a player only ever plays the scenarios their band uses.
+The scenario families are the unit that gets graded, not the individual variants, so a
+player only ever plays the scenarios their band uses.
+
+**The windows overlap by two ranks, and that is not slack.** They used to abut - Novice
+graded ranks 1 to 4 and stopped - which put a cliff at every handover: a player on the
+Novice scenarios topped out at the fourth rank however well they played, and the fifth
+could only be had by launching a scenario they had never opened. Three cliffs up a
+sixteen-rank ladder, each landing exactly where somebody is most likely to stop.
+
+So window *w* grades ranks `4w+1` through `4w+6`. Intermediate can award the ninth rank;
+so can Advanced, from its own harder scenarios at its own numbers. A family takes the best
+of its variants, so nothing has to decide between them - the harder scenario simply starts
+paying better at some point and the player crosses over when it does. The top window is
+short by the overlap, having nothing above it to reach into.
+
+This is only possible because bands do not chain, below. If they were rungs of one ladder,
+two bands awarding the same rank would be a contradiction; because each is a complete
+benchmark, it is two independent claims that a player has reached the same standing, which
+is exactly what it should mean. `src/core/season/windows.ts` owns the arithmetic.
 
 **The windows do not chain, and that is the part that was measured.** They used to: one
 sixteen-rank ladder, a family graded on the best of its variants, each window's energy
@@ -1005,7 +1023,7 @@ threshold is **measured and unranked**, and the rest **hold a rank**. Drawing th
 two alike tells a player they are bad at Expert when the truth is they have never launched
 it.
 
-An overall tier is still derived from the three categories, as above - a readout rather
+An overall tier is still derived from the six categories, as above - a readout rather
 than a fourth thing to climb.
 
 ### The top rank is a position, not a score
@@ -1059,26 +1077,31 @@ that two authors file differently.**
 
 The number it was scoped on turned out to be the wrong shape, and this is the useful part:
 **all 91 are Tracking.** Not 91 spread across the pool - Viscose names these for tracking
-alone, so it is not a second axis over three categories but a finer cut inside one of them.
-Twenty-four of the hundred and eight pool scenarios carry one, which is six of the twelve
-Tracking families and none of the other fifteen.
+alone, so it is not a second axis over the six categories but a finer cut inside one aim
+type. Fourteen of the two hundred and eight pool scenarios carry one, which is six of the
+fifty-two families and none of the other forty-six.
 
 Scoped that way it earns its place, because it splits a sub-skill the sub-skills cannot:
 
 ```
-Control Tracking    Controlsphere      Wrist
-                    Raw Control        Arm
-                    RawControlSphere   Blending
+Precise Tracking    Smoothsphere       Arm
+                    Controlsphere      Wrist
+                    cloverRawControl   Fingertip
+                    PGTI               Blending
 ```
 
-Three families Apogee calls the same thing, that Viscose says ask for three different
-motions. That is the claim worth surfacing, and it is why the tag rides the scenario rather
-than the sub-skill heading - a single tag over that group would have mislabelled two of the
-three.
+Four families Apogee calls the same thing, that Viscose says ask for four different
+motions - the whole of its vocabulary, inside one sub-skill. That is the claim worth
+surfacing, and it is why the tag rides the scenario rather than the sub-skill heading: a
+single tag over that group would have mislabelled three of the four.
+
+Controlsphere then makes the same argument against itself. Its entry rung is Wrist and the
+two above it are Fingertip, so even one family is not uniform, and a family-level tag would
+have had to pick one of them and be wrong about the rest.
 
 What is deliberately **not** built on it: the weakness map and the quests. Both rank what a
-player is worst at, and a dimension that is null for twenty-one of twenty-seven families
-would rank almost nothing while looking like it ranked everything. It stays a label on the
+player is worst at, and a dimension that is null for forty-six of fifty-two families would
+rank almost nothing while looking like it ranked everything. It stays a label on the
 scenarios that have one until an author publishes enough for it to mean more, and
 `validate:pool` prints the coverage every run so that decision is made against a number
 rather than an impression.
@@ -1467,7 +1490,7 @@ The corpus these facts were measured against
 - Located by reading Steam's own library folders, not by assuming a drive
 - CSV exposes `Score:`, `Scenario:`, `Hash:`, `Challenge Start:`, per-kill rows, sens, FPS
 - One folder is enough to prove a check does not reject honest runs, and not enough to
-  prove it catches dishonest ones — which is why the attack scripts exist beside it
+  prove it catches dishonest ones, which is why the attack scripts exist beside it
 
 KovaaK's public API, unauthenticated, and the backbone of this design
 - `scenario/popular` → `leaderboardId`, `aimType`, `topScore`. 668 scenarios resolved

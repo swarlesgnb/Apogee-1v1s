@@ -29,6 +29,8 @@ import {
   log,
 } from "./crashLog.ts";
 import { loadQuestState, saveQuestState } from "./questStore.ts";
+import { clearOverrides, loadOverrides, overridesPath, saveOverrides } from "./adminStore.ts";
+import { TOKENS } from "../core/admin/overrides.ts";
 import { buildSnapshot, type Snapshot } from "../core/report/snapshot.ts";
 import { renderRankSheet } from "../core/report/rankSheet.ts";
 import { scanStatsFolder, type ScenarioHistory } from "../core/history/history.ts";
@@ -442,7 +444,7 @@ function createWindow(): void {
     ...openingBounds(settings.window),
     minWidth: DEFAULT_MIN_WIDTH,
     minHeight: DEFAULT_MIN_HEIGHT,
-    backgroundColor: "#05060a",
+    backgroundColor: "#1e1b18",
     show: false,
     title: "Apogee",
     // The app draws its own top bar. `hidden` with an overlay rather than a fully
@@ -455,8 +457,8 @@ function createWindow(): void {
     // overlay is not supported everywhere, and the failure mode is a light grey
     // block in the corner of a black app.
     titleBarOverlay: {
-      color: "#070910",
-      symbolColor: "#9aa4b6",
+      color: "#1e1b18",
+      symbolColor: "#bbb4aa",
       height: 46,
     },
     // The menu is entirely duplicated by buttons on screen, and a Windows menu bar
@@ -1255,6 +1257,118 @@ ipcMain.handle("apogee:isAdmin", async () => {
   }
 });
 
+/* ------------------------------------------------------------------ admin mode
+ *
+ * What an admin may change about this client, and what they may not.
+ *
+ * May: the chrome's colours and the app's own copy, stored per machine in userData, and
+ * the season's rank names and colours - those through `saveSeason` below, which validates
+ * the ladder and refuses a published season, rather than through a second path that
+ * would let a machine drift from what it is graded against.
+ *
+ * May not: anything a rank is computed from. Ratings, deltas, verification tiers and
+ * baselines are server-side and RLS gives this client no write grant on any of them, so
+ * the strongest thing on this page is a repaint. That is not an accident of scope - it is
+ * why unlocking an editor with a role check is a reasonable thing to do at all.
+ *
+ * Reading is ungated. The overrides have to be applied before the first paint, which
+ * happens long before a session exists, and they are this machine's own file rather than
+ * anybody else's secret. Every write re-checks the role in main: the hidden tab in the
+ * renderer is a courtesy, and the side that decides is the side that checks.
+ */
+
+async function adminOrRefusal(): Promise<string | null> {
+  if (!state.session) return "sign in first";
+  if (!(await isAdmin().catch(() => false))) return "only an admin can change how this looks";
+  return null;
+}
+
+ipcMain.handle("apogee:adminOverrides", () => {
+  const loaded = loadOverrides();
+  return {
+    overrides: loaded.overrides,
+    rejected: loaded.rejected,
+    error: loaded.error,
+    path: overridesPath(),
+    tokens: TOKENS,
+  };
+});
+
+ipcMain.handle("apogee:saveAdminOverrides", async (_e, { overrides }) => {
+  const refusal = await adminOrRefusal();
+  if (refusal) return { error: refusal };
+  try {
+    const saved = saveOverrides(overrides);
+    return { overrides: saved.overrides, rejected: saved.rejected, path: overridesPath() };
+  } catch (err) {
+    return { error: err instanceof Error ? err.message : String(err) };
+  }
+});
+
+ipcMain.handle("apogee:resetAdminOverrides", async () => {
+  const refusal = await adminOrRefusal();
+  if (refusal) return { error: refusal };
+  try {
+    const cleared = clearOverrides();
+    return { overrides: cleared.overrides, rejected: [], path: overridesPath() };
+  } catch (err) {
+    return { error: err instanceof Error ? err.message : String(err) };
+  }
+});
+
+/**
+ * Write the current set somewhere a person can keep it.
+ *
+ * The one answer to overrides being per-machine: a file that can be moved, committed as
+ * the shipped defaults, or handed to somebody else's install.
+ */
+ipcMain.handle("apogee:exportAdminOverrides", async () => {
+  const refusal = await adminOrRefusal();
+  if (refusal) return { error: refusal };
+
+  const win = BrowserWindow.getAllWindows()[0];
+  const target = await dialog.showSaveDialog(win, {
+    title: "Export look and copy",
+    defaultPath: "apogee-look.json",
+    filters: [{ name: "JSON", extensions: ["json"] }],
+  });
+  if (target.canceled || !target.filePath) return { canceled: true };
+
+  try {
+    writeFileSync(
+      target.filePath,
+      JSON.stringify(loadOverrides().overrides, null, 2) + "\n",
+      "utf8",
+    );
+    return { path: target.filePath };
+  } catch (err) {
+    return { error: err instanceof Error ? err.message : String(err) };
+  }
+});
+
+ipcMain.handle("apogee:importAdminOverrides", async () => {
+  const refusal = await adminOrRefusal();
+  if (refusal) return { error: refusal };
+
+  const win = BrowserWindow.getAllWindows()[0];
+  const picked = await dialog.showOpenDialog(win, {
+    title: "Import look and copy",
+    properties: ["openFile"],
+    filters: [{ name: "JSON", extensions: ["json"] }],
+  });
+  if (picked.canceled || picked.filePaths.length === 0) return { canceled: true };
+
+  try {
+    // Through the same validation as anything else. A file from another machine is the
+    // least trusted input this feature has.
+    const parsed: unknown = JSON.parse(readFileSync(picked.filePaths[0], "utf8"));
+    const saved = saveOverrides(parsed);
+    return { overrides: saved.overrides, rejected: saved.rejected, path: overridesPath() };
+  } catch (err) {
+    return { error: err instanceof Error ? err.message : String(err) };
+  }
+});
+
 /**
  * Scenarios that could be added to the season, and what this machine knows about them.
  *
@@ -1931,7 +2045,24 @@ ipcMain.handle("apogee:saveSeason", async (_e, { season }) => {
     return { error: `could not write the season: ${err instanceof Error ? err.message : err}` };
   }
 
+  // Rebuild, then say so separately, because the rebuild is not guaranteed to say
+  // anything at all.
+  //
+  // A rank name or a colour changed in the editor has to reach every screen that draws
+  // one, and `rebuild` was the only thing telling the renderer to redraw. It returns
+  // early when no stats folder is set, and `buildSnapshot` returns null when the folder
+  // holds no runs - both of which are ordinary states for the machine doing the editing,
+  // and in both of them a save repainted the editor and left the rest of the window
+  // showing the old ladder until it was restarted. It also cannot help the views that do
+  // not come from the snapshot: the practice list and the apex board fetch the season
+  // themselves.
+  //
+  // Ratings, standings and the public board are deliberately *not* in this: those come
+  // from Supabase, and they do not change until `npm run push:season`. Refreshing them
+  // here would draw the old server ladder over the new local one and look like the save
+  // had failed.
   rebuild("season edited");
+  broadcast("apogee:seasonChanged", { at: Date.now() });
   return { ok: true, path: written[0], paths: written };
 });
 

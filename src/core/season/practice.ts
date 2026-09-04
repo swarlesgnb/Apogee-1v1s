@@ -24,6 +24,7 @@
 import { existsSync, mkdirSync, readdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
+import { MIN_RUNS_FOR_BASELINE } from "../history/baseline.ts";
 import {
   MATCH_PLAYLIST_PREFIX,
   serializePlaylist,
@@ -75,11 +76,14 @@ export function practicePlaylists(season: SeasonLike): PracticePlaylist[] {
     `Play them as often as you like - nothing here is a match, and none of it settles ` +
     `anything.`;
 
+  // `scenario`, never `label`. A label is display identity and the two do differ - the
+  // season shows "Aimerz+ 1w4ts HF Hard" for a scenario KovaaK's calls "... Hard S1" -
+  // and a playlist entry that is not the exact name is a row the game cannot launch.
   for (const category of categories) {
     for (let w = 0; w < windows.length; w++) {
       const scenarios = season.scenarios
         .filter((s) => s.category === category && (s.window ?? 0) === w)
-        .map((s) => s.label ?? s.scenario);
+        .map((s) => s.scenario);
       if (scenarios.length === 0) continue;
       out.push({
         name: `Apogee ${category} ${windows[w]}`,
@@ -95,7 +99,7 @@ export function practicePlaylists(season: SeasonLike): PracticePlaylist[] {
     const scenarios = season.scenarios
       .filter((s) => (s.window ?? 0) === w)
       .sort((a, b) => a.category.localeCompare(b.category) || a.scenario.localeCompare(b.scenario))
-      .map((s) => s.label ?? s.scenario);
+      .map((s) => s.scenario);
     if (scenarios.length === 0) continue;
     out.push({
       name: `Apogee All ${windows[w]}`,
@@ -253,6 +257,14 @@ export interface PracticeRow extends VariantProgress {
   subCategory: string | null;
   /** Viscose's Arm/Wrist/Fingertip/Blending, where published. Null for most of the pool. */
   mechanic: string | null;
+  /**
+   * Whether this scenario holds a baseline a match could be scored against.
+   *
+   * Not `runs > 0`. Below MIN_RUNS_FOR_BASELINE there is no usable median, so a screen
+   * counting any run as a baseline disagrees with `windowCoverage` about the same pool -
+   * which is exactly what the queue screen did, saying five where coverage said four.
+   */
+  measured: boolean;
   family: string;
   windowName: string;
   rankMaxes: number[];
@@ -365,6 +377,7 @@ export function practiceRows(
       windowName: windows[window] ?? `window ${window + 1}`,
       rankMaxes: s.rankMaxes,
       runs: scores.length,
+      measured: scores.length >= MIN_RUNS_FOR_BASELINE,
       best: best === null ? null : Math.round(best),
       rankIndex,
       nextRankIndex: rankIndex === null ? base : rankIndex + 1,

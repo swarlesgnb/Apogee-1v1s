@@ -204,7 +204,16 @@ Deno.serve(handler(async (req, admin) => {
   const now = new Date().toISOString();
   const rows: Record<string, unknown>[] = [];
 
-  let overall = { points: 0, graded: 0, families: 0 };
+  // Accumulated as a mean per category, then a mean of those - the same shape as
+  // `src/core/season/standing.ts`, and it has to stay the same shape: this function and that
+  // module compute the number the client shows and the number the board sorts on, and a
+  // player whose two disagree has no way to tell which is wrong.
+  //
+  // Both used to sum. A category's points then rose with how many families it holds - eleven
+  // for Precise Tracking against six for Evasive Switching - so the board ranked the deeper
+  // categories higher for identical play, and the overall added those uneven numbers up.
+  const categoryPoints: number[] = [];
+  let overall = { graded: 0, families: 0 };
 
   // A category nothing is graded in does not get a row.
   //
@@ -220,20 +229,30 @@ Deno.serve(handler(async (req, admin) => {
   for (const [category, bucket] of perCategory) {
     if (bucket.graded === 0) continue;
 
+    // The mean is over every family in the category, not only the graded ones: an unplayed
+    // family contributes zero here exactly as it contributes zero energy to the rank.
+    const points = bucket.families > 0 ? bucket.points / bucket.families : 0;
+    categoryPoints.push(points);
+
     rows.push({
       player_id: caller.playerId,
       category,
-      points: bucket.points,
+      points,
       graded: bucket.graded,
       family_count: bucket.families,
       updated_at: now,
     });
     overall = {
-      points: overall.points + bucket.points,
       graded: overall.graded + bucket.graded,
       families: overall.families + bucket.families,
     };
   }
+
+  // Each category counts once, which is the weighting the derived overall rank already uses.
+  const overallPoints =
+    categoryPoints.length > 0
+      ? categoryPoints.reduce((a, b) => a + b, 0) / categoryPoints.length
+      : 0;
 
   // The overall is a row like any other so the board can be sorted by one query
   // whichever tab is showing, rather than summing three rows per player on read. Same
@@ -243,7 +262,7 @@ Deno.serve(handler(async (req, admin) => {
     rows.push({
       player_id: caller.playerId,
       category: OVERALL,
-      points: overall.points,
+      points: overallPoints,
       graded: overall.graded,
       family_count: overall.families,
       updated_at: now,
@@ -272,7 +291,7 @@ Deno.serve(handler(async (req, admin) => {
         families: Number(r.family_count),
       })),
     overall: {
-      points: Number(overall.points.toFixed(4)),
+      points: Number(overallPoints.toFixed(4)),
       graded: overall.graded,
       families: overall.families,
     },

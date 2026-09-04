@@ -49,8 +49,8 @@ export interface ScoreModel {
  * These exist because 3,159 of 11,427 parsed runs carry no kill rows at all: tracking
  * scenarios built around an invincible target (`Controlsphere`, `Raw Control`,
  * `Snake Track`) score at a rate and never register a kill. Every one of those runs
- * does carry a weapon block — measured, all 3,159, always exactly one weapon row — so
- * that block is what the score has to be reconstructed from instead.
+ * does carry a weapon block (measured, all 3,159, always exactly one weapon row), so that
+ * block is what the score has to be reconstructed from instead.
  */
 export interface WeaponScoreModel {
   /** `score = Damage Done * scorePerDamage` */
@@ -345,14 +345,14 @@ function agrees(actual: number, expected: number): boolean {
  * only counter left that moves with the score.
  *
  * Measured: `score / Damage Done` is constant for **85 of 85** kill-row-less scenarios
- * with enough history — a better fit than `score / Hits`, which loses
+ * with enough history, a better fit than `score / Hits`, which loses
  * `UnderTrack - THE FINALS` to a varying rate. Together with the rate below that covers
  * 2,776 of the 3,159 runs with no kill rows; the rest are scenarios with too little
  * history to learn from, and they skip.
  *
  * It is not merely `score_matches_model` restated. The weapon block mirrors the tail
  * exactly (`Hits` = `Hit Count:` in 11,416 of 11,416 runs, `Damage Done` = `Damage
- * Done:` in 11,415 of 11,415), so this check is worth little alone — its work is done
+ * Done:` in 11,415 of 11,415), so this check is worth little alone. Its work is done
  * alongside `damage_possible_rate`, which pins the one column the tail has no copy of.
  *
  * Skipped when no model is known, so an unmodelled scenario is never punished.
@@ -389,11 +389,11 @@ function checkWeaponBlockScore(run: ParsedRun, ctx: ConsistencyContext): CheckRe
  * nowhere else, because raising the shot count raises the damage that was possible.
  *
  * Measured: constant for **287 of 287** scenarios with enough history, across all 9,962
- * runs that have a weapon block — the cleanest relation in the corpus.
+ * runs that have a weapon block, the cleanest relation in the corpus.
  *
  * A model-free version was tried first and rejected. `Damage Done / Hits` should equal
  * `Damage Possible / Shots` if a shot and a hit were worth the same, which would have
- * needed no learned rate at all — but **37.2%** of weapon rows disagree, because a
+ * needed no learned rate at all, but **37.2%** of weapon rows disagree, because a
  * weapon with a headshot multiplier counts what was possible at the higher rate
  * (`pistol`: 25 damage per hit, 50 per shot). A learned per-scenario rate is what
  * survives.

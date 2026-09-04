@@ -27,15 +27,23 @@ const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const ranks = JSON.parse(readFileSync(join(root, "data", "apogee_ranks.json"), "utf8"));
 const tier = (name) => ranks.tiers.find((t) => t.name === name);
 
-const ORBIT = hex(tier("Stargazer").color);   // #00EAEA
-const POINT = hex(tier("Supernova").color);   // #FF8000
-const FLARE = hex(tier("Supernova").gradient[0]); // #FFFF00
-const BODY = hex(tier("Lunar").color);        // #2F2FFF
-const BACKDROP = [10, 14, 32];
+// The ends of the ladder and a point in its middle. The flare used to come from
+// Supernova's gradient; there is no gradient in the rank data any more, so it is a
+// lifted Supernova instead - the same colour the top rank actually wears.
+const ORBIT = hex(tier("Stargazer").color);
+const POINT = hex(tier("Supernova").color);
+const FLARE = lift(hex(tier("Supernova").color), 0.45);
+const BODY = hex(tier("Lunar").color);
+const BACKDROP = [11, 13, 15];
 
 function hex(s) {
   const n = parseInt(s.slice(1), 16);
   return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+}
+
+/** The same colour, pulled `t` of the way to white. */
+function lift(rgb, t) {
+  return rgb.map((v) => Math.round(v + (255 - v) * t));
 }
 
 const SIZE = 512;

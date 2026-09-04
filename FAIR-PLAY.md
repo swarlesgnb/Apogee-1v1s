@@ -6,7 +6,7 @@ Apogee verifies runs by asking KovaaK's own servers what you scored, rather than
 trusting the file on your disk. A forged or edited stats file does not survive that
 check, and every local integrity check was measured against 11,058 genuine runs before
 it was allowed to reject anything. **What Apogee cannot catch is a cheat that makes
-KovaaK's itself record a real score** — an aimbot or hardware assistance produces a
+KovaaK's itself record a real score.** An aimbot or hardware assistance produces a
 genuine leaderboard entry, and no amount of reading that entry will reveal it. That
 class of cheating is addressed by statistical review of top-end accounts and human
 review at the top of the ladder, which is the same answer every competitive game
@@ -18,7 +18,7 @@ Every submitted run gets a tier, and the tier is shown on the match screen.
 
 | Tier | What it means | Effect on rating |
 |---|---|---|
-| **Verified** | KovaaK's servers hold a matching record — same hash, challenge start, Steam ID, and time window | Counts in full |
+| **Verified** | KovaaK's servers hold a matching record: same hash, challenge start, Steam ID, and time window | Counts in full |
 | **Consistent** | No server record, but the file is internally coherent, was played inside the match window, and is within 2% of your verified personal best | Counts in full, flagged |
 | **Suspect** | Above your verified personal best with no server record | Counts, held for review, **not** auto-voided |
 | **Rejected** | The file contradicts itself, has been submitted before, or was played outside the match window | Match void, account flagged |
@@ -58,7 +58,7 @@ dispute answerable:
    deletes it. It is the evidence, and without it there is very little to review.
 2. **When the match was, and which scenario.** Enough to find the record.
 3. **The app log**, via `Help > Open log`. Optional, and it is your choice whether to
-   send it — see [PRIVACY.md](PRIVACY.md).
+   send it; see [PRIVACY.md](PRIVACY.md).
 
 A review re-runs verification against the stored file and the stored verification notes.
 The outcome is either that the run is reinstated and the match re-settled, or that the

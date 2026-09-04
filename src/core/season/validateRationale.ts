@@ -41,7 +41,19 @@ interface FamilyRationale {
   isolates: string;
   why: string;
   evidence: Evidence[];
-  audience: { scenario: string; plays: number; entries: number };
+  /**
+   * How many people this family's best-known scenario reaches.
+   *
+   * Two shapes, because there are two committed sources and they count different things.
+   * `plays`/`entries` are KovaaK's own counters from the taxonomy. `boardEntries` is the
+   * leaderboard's own total, and is the only figure available for a scenario the taxonomy
+   * does not list - it is built from /scenario/popular, which is a curated list rather than
+   * every scenario, and the Speed family's four are real boards that simply are not on it.
+   * Exactly one shape per family, checked against the source it names.
+   */
+  audience:
+    | { scenario: string; plays: number; entries: number; boardEntries?: never }
+    | { scenario: string; boardEntries: number; plays?: never; entries?: never };
   thin?: string;
 }
 
@@ -162,21 +174,46 @@ check("every declared source is actually cited", unusedSource.length === 0, unus
 
 console.log(`\n${BOLD}quoted numbers${RESET}  ${DIM}re-derived from scenario_taxonomy.json${RESET}`);
 
+const boardTotals = new Map(percentiles.distributions.map((d) => [d.scenario, d.total]));
+
 const wrongNumbers: string[] = [];
 for (const f of rationale.families) {
-  const t = tax.get(f.audience.scenario);
-  if (!t) {
-    wrongNumbers.push(`${f.family}: ${f.audience.scenario} is not in the taxonomy`);
+  const a = f.audience;
+
+  if (a.boardEntries !== undefined) {
+    const total = boardTotals.get(a.scenario);
+    if (total === undefined) {
+      wrongNumbers.push(`${f.family}: ${a.scenario} has no sampled board to check against`);
+    } else if (total !== a.boardEntries) {
+      wrongNumbers.push(
+        `${f.family}: ${a.scenario} board quoted ${a.boardEntries.toLocaleString()}, actual ${total.toLocaleString()}`,
+      );
+    }
+    // Claiming the board only where the taxonomy has nothing to say, so this stays the
+    // exception it is meant to be rather than the easy way past a stale figure.
+    if (tax.has(a.scenario)) {
+      wrongNumbers.push(
+        `${f.family}: ${a.scenario} is in the taxonomy, so quote plays and entries rather than the board`,
+      );
+    }
     continue;
   }
-  if (t.plays !== f.audience.plays) {
+
+  const t = tax.get(a.scenario);
+  if (!t) {
     wrongNumbers.push(
-      `${f.family}: ${f.audience.scenario} plays quoted ${f.audience.plays.toLocaleString()}, actual ${(t.plays ?? 0).toLocaleString()}`,
+      `${f.family}: ${a.scenario} is not in the taxonomy - quote boardEntries instead`,
+    );
+    continue;
+  }
+  if (t.plays !== a.plays) {
+    wrongNumbers.push(
+      `${f.family}: ${a.scenario} plays quoted ${a.plays.toLocaleString()}, actual ${(t.plays ?? 0).toLocaleString()}`,
     );
   }
-  if (t.entries !== f.audience.entries) {
+  if (t.entries !== a.entries) {
     wrongNumbers.push(
-      `${f.family}: ${f.audience.scenario} entries quoted ${f.audience.entries.toLocaleString()}, actual ${(t.entries ?? 0).toLocaleString()}`,
+      `${f.family}: ${a.scenario} entries quoted ${a.entries.toLocaleString()}, actual ${(t.entries ?? 0).toLocaleString()}`,
     );
   }
 }

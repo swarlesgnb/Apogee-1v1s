@@ -572,9 +572,8 @@ function main(): void {
 
   // Victim selection is where this harness could most easily fool itself. A run that
   // scores 0 with no misses satisfies every structural predicate below and yields a
-  // forgery that gains nothing, which then reports as "SLIPPED" while proving nothing
-  // — the same shape of vacuous pass PLAN.md §5 records already having hidden a real
-  // bug. So every victim must have something to inflate, and the richest qualifying
+  // forgery that gains nothing, which then reports as "SLIPPED" while proving nothing:
+  // the same shape of vacuous pass PLAN.md §5 records already having hidden a real bug. So every victim must have something to inflate, and the richest qualifying
   // run is taken rather than the first.
   const richest = (ok: (l: Loaded) => boolean) =>
     loaded.filter(ok).sort((a, b) => b.run.score - a.run.score)[0];

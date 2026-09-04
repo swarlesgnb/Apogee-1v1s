@@ -1,0 +1,55 @@
+{
+	"playlistName": "Apogee Dynamic Clicking Novice",
+	"playlistId": 0,
+	"authorSteamId": "",
+	"authorName": "",
+	"scenarioList": [
+		{
+			"scenario_name": "psalmTS angelic click 30% Larger",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "B180 Voltaic Easy 92%",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "VT Bounceshot Novice",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "CatClick Easier",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "VT Pasu Novice S5",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "1wall5targets_pasu slow",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "VT Pasu Rasp Novice",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "Pasu Voltaic Reload Easier",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "Aimerz+ pipeClick Easy S1",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "VT Popcorn Novice S5",
+			"play_Count": 1
+		}
+	],
+	"description": "Season 1 practice. 10 scenarios, the ones this season ranks you on. Play them as often as you like - nothing here is a match, and none of it settles anything.",
+	"hasOfflineScenarios": false,
+	"hasEdited": true,
+	"shareCode": "",
+	"version": 31,
+	"updated": 1788481006,
+	"isPrivate": false
+}

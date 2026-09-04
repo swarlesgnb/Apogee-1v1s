@@ -23,11 +23,19 @@ const root = join(fileURLToPath(new URL(".", import.meta.url)), "..");
 
 type Level = "ok" | "warn" | "bad";
 
-let worst: Level = "ok";
 const RANK: Record<Level, number> = { ok: 0, warn: 1, bad: 2 };
 
+// Recorded rather than accumulated into a variable. `worst` used to be a `let` that `say`
+// reassigned, and the compiler cannot see a mutation made inside a function it is only
+// called through - so it narrowed the type to "ok" at the declaration and read the exit
+// code below as comparing two things that can never be equal. The code was right and the
+// check was reporting on a fiction; deriving the answer means there is nothing to narrow.
+const seen: Level[] = [];
+const worstOf = (levels: Level[]): Level =>
+  levels.reduce<Level>((a, b) => (RANK[b] > RANK[a] ? b : a), "ok");
+
 function say(level: Level, label: string, detail: string, fix?: string): void {
-  if (RANK[level] > RANK[worst]) worst = level;
+  seen.push(level);
   const mark = level === "ok" ? "  ok  " : level === "warn" ? " warn " : " BAD  ";
   console.log(`${mark}${label.padEnd(16)}${detail}`);
   if (fix) console.log(`${" ".repeat(22)}-> ${fix}`);
@@ -272,12 +280,12 @@ try {
 
 console.log("");
 console.log(
-  worst === "ok"
+  worstOf(seen) === "ok"
     ? "everything checks out"
-    : worst === "warn"
+    : worstOf(seen) === "warn"
       ? "usable, with the warnings above"
       : "something above needs fixing first",
 );
 console.log("");
 
-process.exit(worst === "bad" ? 1 : 0);
+process.exit(worstOf(seen) === "bad" ? 1 : 0);

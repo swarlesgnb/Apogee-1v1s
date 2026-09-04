@@ -24,15 +24,27 @@
  *               from data/benchmarks/*.json to the digit.
  *   reconciled  several benchmarks publish it and they disagree; the number is a stated
  *               function of the cited ones. Also re-derivable to the digit.
+ *   percentile  cut from this scenario's own KovaaK's board at a stated share of it. Also
+ *               re-derivable to the digit, against the sampled distribution.
  *   seeded      carried over from the percentile era and not yet given a source. A debt,
  *               counted and printed on every run so it cannot be forgotten.
  *   authored    nobody published it, so somebody decided it. Requires a written reason.
  *
- * `npm run validate:thresholds` re-derives the first two, demands a reason for the fourth,
- * and burns the third down. The point is not that authored numbers are bad - a benchmark is
+ * `npm run validate:thresholds` re-derives the first three, demands a reason for the last,
+ * and burns `seeded` down. The point is not that authored numbers are bad - a benchmark is
  * a set of opinions about what is worth achieving - but that the reader can always tell
  * which kind they are looking at.
- */
+ *
+ * WHY `percentile` IS BACK, WHEN THE FIRST PARAGRAPH SAYS IT WENT AWAY
+ *
+ * Because the objection was to deriving at *read* time, not to a percentile being the
+ * reason a number is what it is. A pool of 264 hand-picked scenarios has no published tier
+ * for most of them - they are community variants nobody graded, which is the whole reason
+ * they are worth having - so the choice is between a percentile written down once and a
+ * number somebody typed. Written down once, the target sits still: it is a fact about the
+ * board on the day it was sampled, it is stamped with that day, and re-cutting it is a
+ * deliberate act with a diff. That is a different thing from a threshold that moves under a
+ * player between two Tuesdays.
 
 /** One published source: a benchmark tier that names this scenario with scores. */
 export interface ThresholdCitation {
@@ -53,9 +65,54 @@ export interface ThresholdCitation {
   used?: number[];
 }
 
+/**
+ * The ranks a window grades past the last one anybody published for it.
+ *
+ * A benchmark tier is its author's whole ladder for that band - Voltaic Advanced publishes
+ * four numbers - and a window grades six, because it reaches two ranks into the one above.
+ * Nobody published those two for this scenario, so they have to come from somewhere, and
+ * the choice is not obvious.
+ *
+ * Cutting them from the scenario's own board was tried first and is wrong: measured across
+ * the pool it collapsed 12 of 16 extended windows, because a benchmark's top rank for a
+ * band is consistently harder than this ladder's share for the two ranks above it, so the
+ * cut landed *below* the number it was supposed to continue from and got floored to a
+ * one-point step. Two ranks a single point apart is two ranks nobody holds separately.
+ *
+ * So the tail continues the author's own ladder at the author's own step: the geometric
+ * mean of the ratios inside their published tier, applied twice. That keeps a window on one
+ * scale rather than splicing two instruments together in the middle of it, and `ratio` is
+ * re-derivable from the citation the source already carries.
+ *
+ * It is still an extrapolation, and it is honest that it is one. The alternative - letting
+ * an adopted variant grade only the four ranks its author published - was rejected because
+ * it would mean the families a benchmark covers are exactly the families that keep the
+ * handover cliff the overlap exists to remove.
+ */
+export interface ExtendedTail {
+  /** Global rank indices the tail covers, zero-based, ascending. */
+  ranks: number[];
+  /** Per-rank multiplier, continued from the cited tier. */
+  ratio: number;
+  rule: string;
+}
+
+/** A cut from one scenario's own leaderboard, carrying everything needed to redo it. */
+export interface PercentileCut {
+  /** Global rank indices this variant grades, zero-based. */
+  ranks: number[];
+  /** Share of the board each of those ranks asks for, in the same order. */
+  topFractions: number[];
+  leaderboardId: number | null;
+  /** Entries on the board when it was sampled, and when. Both are why the numbers moved. */
+  total: number;
+  sampledAt: string;
+}
+
 export type ThresholdSource =
-  | { kind: "adopted"; from: ThresholdCitation[] }
-  | { kind: "reconciled"; rule: string; from: ThresholdCitation[] }
+  | { kind: "adopted"; from: ThresholdCitation[]; extended?: ExtendedTail }
+  | { kind: "reconciled"; rule: string; from: ThresholdCitation[]; extended?: ExtendedTail }
+  | { kind: "percentile"; cut: PercentileCut; why: string }
   | { kind: "seeded"; note: string }
   | { kind: "authored"; why: string };
 
@@ -93,13 +150,26 @@ export function isSubsequenceOf(values: number[], published: number[]): boolean 
  * Does the number match what its source claims?
  *
  * Returns null when it does, or a sentence saying how it does not. Only `adopted` and
- * `reconciled` are checkable here - the other two are checked for having a reason at all,
- * which is a different question and lives in the validator.
+ * `reconciled` are checkable here, because they need nothing but the citation they carry.
+ * `percentile` is checkable too but needs the sampled board, so it is re-cut in the
+ * validator; the other two are checked for having a reason at all, which is a different
+ * question and lives there as well.
  */
 export function checkAgainstSource(
   values: number[],
   source: ThresholdSource,
 ): string | null {
+  // Only the published prefix is the author's. Where a window reaches past their tier, the
+  // tail is a percentile cut with its own record, and holding it to the citation would
+  // report every extended variant as wrong.
+  if (
+    (source.kind === "adopted" || source.kind === "reconciled") &&
+    source.extended &&
+    source.extended.ranks.length > 0
+  ) {
+    values = values.slice(0, values.length - source.extended.ranks.length);
+  }
+
   if (source.kind === "adopted") {
     if (source.from.length !== 1) {
       return `adopted from ${source.from.length} sources; adopted means exactly one, use reconciled`;

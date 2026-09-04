@@ -428,7 +428,7 @@ for (const item of [
   "Decide what happens to ratings when the beta ends: reset, or carry over",
   "Talk to KovaaK's about the API usage before, not after, traffic appears",
   "Confirm the benchmark authors are comfortable with their work being used",
-  "Choose a licence — with no LICENSE file the repository is all rights reserved",
+  "Choose a licence; with no LICENSE file the repository is all rights reserved",
 ]) {
   console.log(`  [ ] ${item}`);
 }

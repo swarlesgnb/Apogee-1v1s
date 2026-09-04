@@ -61,6 +61,8 @@ import { type Distribution } from "../src/core/season/percentiles.ts";
 import { apexTopFraction, type ApexBoard } from "../src/core/season/apex.ts";
 import { validateSeason, type Season } from "../src/core/season/season.ts";
 import { ENERGY_PER_RANK } from "../src/core/benchmarks/energy.ts";
+import { windowRankCount, windowRankIndices } from "../src/core/season/windows.ts";
+import type { ThresholdSource } from "../src/core/season/thresholds.ts";
 
 
 
@@ -75,7 +77,7 @@ const PLACEHOLDER_COLORS = ["#3f4652", "#59606d", "#737b89", "#8d95a4"];
 interface Pool {
   windowSize: number;
   windows: string[];
-  ladder: { perWindow: number[][] };
+  ladder: { ranks: number[]; overlap: number };
   /**
    * Thresholds set by hand, keyed on scenario name.
    *
@@ -91,13 +93,16 @@ interface Pool {
     family: string;
     category: string;
     subCategory?: string;
-  /** Viscose's Arm/Wrist/Fingertip/Blending, where a benchmark publishes one. */
-  mechanic?: string;
+    /** Viscose's Arm/Wrist/Fingertip/Blending, where a benchmark publishes one. */
+    mechanic?: string;
     variants: {
       window: number;
       scenario: string;
       label: string;
       leaderboardId: number | null;
+      /** One score per rank the variant's window grades. The pool owns these. */
+      rankMaxes?: number[];
+      source?: ThresholdSource;
     }[];
   }[];
 }
@@ -132,6 +137,19 @@ interface SeasonScenarioOut {
   derivedRankMaxes?: number[];
   /** Where this machine's own history sits against this window. */
   corpus?: { runs: number; best: number; median: number; reaches: string | null };
+  /** Carried straight from the pool, so a season says where each number came from. */
+  source?: ThresholdSource;
+  /**
+   * What the board says about the numbers, rather than what it dictated to them.
+   *
+   * `clears[i]` is the share of the leaderboard meeting rank i, or null where that sits
+   * outside the sampled curve and there is no measurement to report.
+   */
+  sanity?: {
+    leaderboardEntries: number;
+    clears: (number | null)[];
+    sampledAt: string;
+  };
 }
 
 function median(values: number[]): number {
@@ -225,21 +243,28 @@ function seeded(
   carried: { rankNames?: string[]; rankColors?: Record<string, string> } | undefined,
   prior: { rankNames?: string[]; rankColors?: Record<string, string> } | undefined,
   window: number,
-  depth: number,
+  stride: number,
+  width: number,
 ): { rankNames?: string[]; rankColors?: Record<string, string> } | undefined {
   const named = (carried?.rankNames ?? []).some((n) => !PLACEHOLDER_NAME.test(n));
   if (named) return carried;
-  return sliceChained(prior, window, depth) ?? carried;
+  return sliceChained(prior, window, stride, width) ?? carried;
 }
 
+/**
+ * `stride` is where the window starts, `width` is how many ranks it grades. They differ by
+ * the overlap: two adjacent bands take slices that share their last and first names, which
+ * is the point - both of them really do award those ranks.
+ */
 function sliceChained(
   prior: { rankNames?: string[]; rankColors?: Record<string, string> } | undefined,
   window: number,
-  depth: number,
+  stride: number,
+  width: number,
 ): { rankNames?: string[]; rankColors?: Record<string, string> } | undefined {
   const all = prior?.rankNames ?? [];
-  const slice = all.slice(window * depth, window * depth + depth);
-  if (slice.length !== depth) return undefined;
+  const slice = all.slice(window * stride, window * stride + width);
+  if (slice.length !== width) return undefined;
   const colors: Record<string, string> = {};
   for (const name of slice) {
     const color = prior?.rankColors?.[name];
@@ -301,18 +326,24 @@ function main(): void {
 
   const windowSize = pool.windowSize;
   const ranks = windowSize * pool.windows.length;
-  // `pool.ladder.perWindow` used to be checked here for shape, because it was the
-  // source of every threshold. It is not a source any more; what is checked instead is
-  // that every variant carries as many scores as a window has ranks, which is the same
-  // guarantee moved to where the numbers now live.
+  const overlap = pool.ladder.overlap ?? 0;
+  /** How many ranks this window grades: the stride, plus its reach into the one above. */
+  const widthOf = (window: number): number =>
+    windowRankCount(window, windowSize, ranks, overlap);
+
+  // `pool.ladder` used to be checked here for shape, because it was the source of every
+  // threshold. It is not a source any more; what is checked instead is that every variant
+  // carries as many scores as its own window grades, which is the same guarantee moved to
+  // where the numbers now live.
   const wrongWidth = pool.families.flatMap((f) =>
     f.variants
-      .filter((v) => !Array.isArray(v.rankMaxes) || v.rankMaxes.length !== windowSize)
-      .map((v) => `${v.scenario} has ${v.rankMaxes?.length ?? 0}`),
+      .filter((v) => !Array.isArray(v.rankMaxes) || v.rankMaxes.length !== widthOf(v.window))
+      .map((v) => `${v.scenario} has ${v.rankMaxes?.length ?? 0}, not ${widthOf(v.window)}`),
   );
   if (wrongWidth.length > 0) {
     console.error(
-      `a window is ${windowSize} ranks, so every variant needs ${windowSize} scores:\n  ` +
+      `a window grades ${windowSize} ranks plus an overlap of ${overlap}, so a ` +
+        `variant needs one score per rank its window covers:\n  ` +
         wrongWidth.join("\n  "),
     );
     process.exit(1);
@@ -338,6 +369,8 @@ function main(): void {
 
   const scenarios: SeasonScenarioOut[] = [];
   const missing: string[] = [];
+  /** Global rank indices some variant of each family can award. */
+  const awardable = new Map<string, Set<number>>();
 
   for (const family of pool.families) {
     for (const v of family.variants) {
@@ -385,12 +418,33 @@ function main(): void {
       // So it reports null, the same answer apexTopFraction gives above rank 500 and for the
       // same reason. A number nobody can measure is not a number to publish, and null is
       // what the readers already handle.
+      // And the same at the other end, which the overlap made reachable.
+      //
+      // Above the best score anybody has posted, the board has nothing left to say: rank 1
+      // is the answer for every score past it, so two thresholds beyond the record read as
+      // one number. That is the measurement running out again, not two ranks colliding.
+      // Ten of the pool's Advanced variants land there now, because a window that reaches
+      // two ranks into the next one is asking that scenario for scores past its own record
+      // - which is fine and expected: those ranks are the Expert variant's to award, and a
+      // family takes the best of its variants. What would not be fine is a rank no variant
+      // can award, and that is a fact about a family rather than about one board.
       const floorScore = dist.points[dist.points.length - 1]?.score ?? -Infinity;
+      const recordScore = board?.points[0]?.score ?? dist.points[0]?.score ?? Infinity;
       const clears = rankMaxes.map((score) => {
-        if (score < floorScore) return null;
+        if (score < floorScore || score > recordScore) return null;
         const f = apexTopFraction(board, dist, score);
         return f === null ? null : Number(f.toFixed(6));
       });
+
+      // Which of the ladder's ranks this variant can actually award: the ones its window
+      // grades, whose threshold its board has somebody at or above. A threshold past the
+      // world record is a rank this scenario cannot give out, whatever the ladder says.
+      const covers = windowRankIndices(v.window, windowSize, ranks, overlap);
+      const awarded = awardable.get(family.family) ?? new Set<number>();
+      covers.forEach((rank, i) => {
+        if (rankMaxes[i] !== undefined && rankMaxes[i] <= recordScore) awarded.add(rank);
+      });
+      awardable.set(family.family, awarded);
 
       const entry: SeasonScenarioOut = {
         scenario: v.scenario,
@@ -466,6 +520,52 @@ function main(): void {
     }
   }
 
+  // The rank no variant of a family can award.
+  //
+  // This is what the per-band collision check above stops being able to see once a
+  // threshold sits past its own board's record, and it is the property that actually
+  // matters. A rank unreachable on the Advanced scenario is fine - the Expert variant
+  // grades it too, and a family takes the best of its variants. A rank unreachable on
+  // every variant a family has is a rung with nothing under it.
+  const unawardable: { line: string; ranks: number[] }[] = [];
+  for (const family of pool.families) {
+    const awarded = awardable.get(family.family) ?? new Set<number>();
+    const gaps = Array.from({ length: ranks }, (_, r) => r).filter((r) => !awarded.has(r));
+    if (gaps.length > 0) {
+      unawardable.push({
+        ranks: gaps,
+        line:
+          `${family.family} (${family.category}) cannot award rank` +
+          `${gaps.length > 1 ? "s" : ""} ${gaps.map((r) => r + 1).join(", ")}`,
+      });
+    }
+  }
+
+  // A hole in the middle of a ladder and a top rank nobody has reached yet are different
+  // things, and only one of them is a defect. Rank 16 asking more than the best score
+  // anybody has posted is a published Elite target adopted faithfully: it is aspirational,
+  // it is what its author wrote, and the positional rank above it was always going to be
+  // empty at the start of a season. A rank in the MIDDLE that no variant can award is a
+  // rung with nothing under it, and a player climbing past it has no way through.
+  const topRank = ranks - 1;
+  const holes = unawardable.filter((u) => !u.ranks.every((r) => r >= topRank - 1));
+  const tips = unawardable.filter((u) => u.ranks.every((r) => r >= topRank - 1));
+
+  if (tips.length > 0) {
+    console.warn(
+      `\n${tips.length} family/families whose top rank asks more than anybody has ` +
+        `scored on it:\n  ` +
+        tips.map((u) => u.line).join("\n  "),
+    );
+  }
+  if (holes.length > 0) {
+    console.error(
+      `\n${holes.length} family/families with a rank in the middle of the ladder that ` +
+        `no variant can award:\n  ` +
+        holes.map((u) => u.line).join("\n  "),
+    );
+  }
+
   if (notFalling.length > 0) {
     console.error(
       `\n${notFalling.length} rank(s) within a band that nobody can hold separately:\n  ` +
@@ -495,18 +595,22 @@ function main(): void {
 
     // One ladder per band, each grading only that band's scenarios.
     //
-    // A band's ceiling is its own families at its own top rank - familyCount * windowSize
-    // ranks of energy - not a slice of a sixteen-rank total, because nothing is being
+    // A band's ceiling is its own families at its own top rank - familyCount times the
+    // ranks it grades - not a slice of a sixteen-rank total, because nothing is being
     // sliced any more. Every band starts at zero and tops out at its own maximum, which is
-    // what makes it a benchmark rather than a stretch of a longer one.
+    // what makes it a benchmark rather than a stretch of a longer one. It grades more ranks
+    // than it strides: see `windowRankCount`. Two neighbouring bands therefore both award
+    // the ranks in their overlap, from their own scenarios and at their own numbers, which
+    // is what stops a handover being a cliff.
     const bands = pool.windows.map((_, window) => {
+      const width = widthOf(window);
       const carried = prior?.bands?.find((b) => b.window === window);
-      const ladder = carryLadder(seeded(carried, prior, window, windowSize), windowSize);
+      const ladder = carryLadder(seeded(carried, prior, window, windowSize, width), width);
       const top = window === pool.windows.length - 1;
       if (!top) {
         return {
           window,
-          rankMaxes: Array.from({ length: windowSize }, (_, i) => perRank * (i + 1)),
+          rankMaxes: Array.from({ length: width }, (_, i) => perRank * (i + 1)),
           ...ladder,
         };
       }
@@ -518,11 +622,11 @@ function main(): void {
       // very top. So it is appended, and it is a placeholder until it is named in the
       // editor, exactly as any other new rank is.
       const prev = carried?.rankNames ?? [];
-      const named = prev.length > windowSize ? prev[prev.length - 1] : null;
-      const name = named && !PLACEHOLDER_NAME.test(named) ? named : `Rank ${windowSize + 1}`;
+      const named = prev.length > width ? prev[prev.length - 1] : null;
+      const name = named && !PLACEHOLDER_NAME.test(named) ? named : `Rank ${width + 1}`;
       return {
         window,
-        rankMaxes: Array.from({ length: windowSize }, (_, i) => perRank * (i + 1)),
+        rankMaxes: Array.from({ length: width }, (_, i) => perRank * (i + 1)),
         rankNames: [...ladder.rankNames, name],
         rankColors: {
           ...ladder.rankColors,
@@ -559,6 +663,7 @@ function main(): void {
         "Tier IV": "#C75FA8",
       },
     windowSize,
+    windowOverlap: overlap,
     windows: pool.windows,
     matchPool: { window: pool.matchWindow },
     categories,

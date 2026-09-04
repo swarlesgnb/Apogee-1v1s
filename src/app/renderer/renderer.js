@@ -361,7 +361,7 @@ function setSound(on, announce) {
   const btn = $("soundToggle");
   if (btn) {
     btn.setAttribute("aria-pressed", on ? "true" : "false");
-    btn.title = on ? "Sound on — mute (M)" : "Muted — unmute (M)";
+    btn.title = on ? "Sound on. Press M to mute" : "Muted. Press M to unmute";
   }
   try {
     localStorage.setItem(SOUND_KEY, on ? "on" : "off");
@@ -376,12 +376,26 @@ function setSound(on, announce) {
 /**
  * The colour of a rank, looked up on the ladder that graded it.
  *
- * Clicking, Tracking and Switching each name and colour their own ranks, so the overall
- * ladder's palette has no entry for "D" or "Neanderthal": looking a category rank up
+ * Every category names and colours its own ranks, so the overall ladder's palette has no
+ * entry for "Blunderbuss" or "Amoeba": looking a category rank up
  * there returned undefined and every one of them rendered grey. `cat` is the category
  * object from the snapshot, which now carries its own ladder; omit it for a rank that
  * genuinely belongs to the overall ladder, like the consistency ceiling and floor.
  */
+/**
+ * Set a determinate fill, 0..1.
+ *
+ * Every bar in the client is one element scaled from its left edge rather than one
+ * given a width, so this is where the clamp lives too - three of the callers were
+ * clamping and three were not, and an unclamped share past 1 draws a bar out past the
+ * end of its own track.
+ */
+function setFill(el, share) {
+  if (!el) return;
+  const at = Number.isFinite(share) ? Math.max(0, Math.min(1, share)) : 0;
+  el.style.transform = "scaleX(" + at.toFixed(4) + ")";
+}
+
 function rankColor(data, rankName, cat) {
   if (!rankName) return "var(--ink-dim)";
   return (
@@ -389,6 +403,24 @@ function rankColor(data, rankName, cat) {
     data.benchmark.rankColors[rankName] ||
     "#8891a3"
   );
+}
+
+/**
+ * A rank's colour, lifted until it can be read on the ground.
+ *
+ * Rank colours are chosen to match rank names - Quasar is cyan because a quasar is,
+ * Singularity is black because a singularity is - and several of them land below 2:1
+ * against the client's near-black. Printed raw as text, that made whole columns of the
+ * scenario tables unreadable: Musket is a dark grey on a dark ground, Primate a dark red.
+ *
+ * Mixed toward the light ground in 5% steps until it clears, which keeps the hue and
+ * moves only what has to move. It is the same function the rank sheet measures with, so
+ * a colour the sheet reports as failing is the colour this lifts, rather than two
+ * different ideas of legible. Backgrounds and bars keep the raw colour: the problem is
+ * text on a ground, not the colour.
+ */
+function rankInk(data, rankName, cat) {
+  return legibleOnDark(rankColor(data, rankName, cat), RANK_TEXT_CONTRAST);
 }
 
 /**
@@ -407,26 +439,39 @@ function targetName(s) {
 }
 
 /**
- * A faceted emblem rather than a plain disc: rank badges are read at a glance and at
- * small sizes, so the silhouette has to carry identity before the colour does.
+ * A plate, stamped with the tier's rung.
+ *
+ * It was a faceted hexagon filled with a two-stop gradient and thrown behind a
+ * coloured drop-shadow, on the argument that a silhouette carries identity before a
+ * colour does. It does - but eight identical hexagons in eight colours is one
+ * silhouette, so the argument bought nothing and the glow made the badge the brightest
+ * thing on a screen it is not the subject of. This is flat, square, and carries the
+ * rung number, which is the fact the badge is standing in for.
+ *
+ * The rung is punched out of the plate in whichever of the ground or the ink reads
+ * better on that tier's colour. It cannot be a fixed dark: the tier colours are chosen
+ * to match the tier names, so the ladder runs from Cosmonaut's #008080 to Quasar's
+ * #00FFFF, and a single stamp colour is unreadable on one end or the other.
+ *
+ * `uid` is no longer needed - nothing here is referenced by id - but the call sites
+ * pass it and it costs nothing to keep the signature.
  */
 function badge(tier, uid) {
-  const g = "g" + uid;
-  const f = "f" + uid;
+  // Tier ids are "tier-1" through "tier-8"; the number in one is the rung.
+  const rung = /^tier-(\d+)$/.exec(String(tier.id ?? ""))?.[1] ?? "";
+  const stamp =
+    contrastRatio(tier.color, DARK_GROUND) >= contrastRatio(tier.color, LIGHT_GROUND)
+      ? DARK_GROUND
+      : LIGHT_GROUND;
   return (
     '<svg viewBox="0 0 60 68" role="img" aria-label="' + esc(tier.name) + '">' +
-    '<defs><linearGradient id="' + g + '" x1="0" y1="0" x2="0.35" y2="1">' +
-    '<stop offset="0" stop-color="' + esc(tier.gradient[1]) + '"/>' +
-    '<stop offset="1" stop-color="' + esc(tier.gradient[0]) + '"/></linearGradient>' +
-    '<filter id="' + f + '" x="-60%" y="-60%" width="220%" height="220%">' +
-    '<feDropShadow dx="0" dy="0" stdDeviation="3.2" flood-color="' + esc(tier.glow) +
-    '" flood-opacity="0.85"/></filter></defs>' +
-    '<path d="M30 1.5 56.5 15v27.5L30 66.5 3.5 42.5V15z" fill="url(#' + g +
-    ')" filter="url(#' + f + ')"/>' +
-    '<path d="M30 1.5 56.5 15v27.5L30 66.5 3.5 42.5V15z" fill="none" stroke="' +
-    esc(tier.glow) + '" stroke-opacity=".5" stroke-width="1.1"/>' +
-    '<path d="M30 12 46 20.5v20L30 55 14 40.5v-20z" fill="none" stroke="#fff" ' +
-    'stroke-opacity=".22" stroke-width="1.3"/></svg>'
+    '<rect x="3" y="4" width="54" height="60" fill="' + esc(tier.color) + '"/>' +
+    (rung
+      ? '<text x="30" y="43" text-anchor="middle" fill="' + esc(stamp) + '" ' +
+        'font-family="Cascadia Mono, ui-monospace, Consolas, monospace" ' +
+        'font-size="30" font-weight="600">' + esc(rung) + "</text>"
+      : "") +
+    "</svg>"
   );
 }
 
@@ -532,21 +577,21 @@ function render(data) {
 
   const me = data.player.apogee;
 
-  // The whole chrome takes the player's rank colour: nav selection, the glow behind the
-  // badge, focus rings, the queue button's shadow. The alternative is a brand accent
-  // sitting next to the rank colour and competing with the one signal that means
-  // something here.
+  // The whole chrome takes the player's rank colour: the selected tab's number, focus
+  // rings, the badge, the one tile on the pool screen that is an instruction. The
+  // alternative is a brand accent sitting next to the rank colour and competing with
+  // the one signal that means something here.
   document.documentElement.style.setProperty("--accent", me.tier.color);
 
   $("myBadge").innerHTML = badge(me.tier, "me");
   $("myTier").textContent = me.tier.name;
-  $("myTier").style.color = me.tier.color;
+  $("myTier").style.color = legibleOnDark(me.tier.color, RANK_TEXT_CONTRAST);
   $("myRating").textContent = me.rating + " ±" + me.rd;
   $("myStreak").textContent = data.player.streak + "-day streak";
 
   $("heroBadge").innerHTML = badge(me.tier, "hero");
   $("heroName").textContent = me.tier.name;
-  $("heroName").style.color = me.tier.color;
+  $("heroName").style.color = legibleOnDark(me.tier.color, RANK_TEXT_CONTRAST);
 
   // Three separate facts, so they read as three. Run together on one line they were a
   // caption, and nobody reads a caption under a 34px tier name.
@@ -560,6 +605,7 @@ function render(data) {
     "from your " + data.benchmark.name + " " + data.benchmark.difficulty + " standing (" +
     data.player.benchmarkRank + ", " + num(data.player.benchmarkEnergy) + " energy).";
 
+  renderClimb(data);
   renderCategories(data);
   renderPool(data);
 
@@ -586,6 +632,38 @@ function render(data) {
 }
 
 /**
+ * How much of the current rank is behind you, and whose name is above it.
+ *
+ * `progressToNextRank` and `nextRankName` were on every snapshot and rendered nowhere.
+ * The screen the player presses Queue on said what they are and never what they are
+ * climbing towards, which is the only reason to press it - so the one derived figure
+ * that answers "what is this for" was the one figure being thrown away.
+ *
+ * The target's own colour on the target's name, because that is what the ladder uses
+ * everywhere else and a rank named in plain ink reads as a label rather than a rank.
+ */
+function renderClimb(data) {
+  const box = $("heroClimb");
+  if (!box) return;
+
+  const next = data.player.nextRankName;
+  const at = data.player.progressToNextRank;
+
+  // Nothing above the top rank, and nothing to draw for a player the snapshot has no
+  // progress figure for. An empty bar reads as zero progress, which is a claim.
+  if (!next || typeof at !== "number" || !Number.isFinite(at)) {
+    box.hidden = true;
+    return;
+  }
+
+  box.hidden = false;
+  $("heroClimbTo").textContent = next;
+  $("heroClimbTo").style.color = rankInk(data, next);
+  $("heroClimbPct").textContent = Math.round(at * 100) + "% there";
+  setFill($("heroClimbFill"), at);
+}
+
+/**
  * Which difficulty a match draws from, and whether the player is measured on it.
  *
  * A match is decided on delta against your own baseline, so a difficulty with no history
@@ -593,7 +671,154 @@ function render(data) {
  * difficulties in a season, nothing on screen said which one the player was about to be
  * handed.
  */
+/**
+ * The scenarios a match can actually draw, and your best on each.
+ *
+ * The queue screen said "baselines on 4 of 6 of its scenarios" and never which six, which
+ * is the one thing a player wants before pressing the button: a match is three of these,
+ * and a scenario with no baseline is scored against nothing you have set. Reading the
+ * practice pool rather than the snapshot's category rows on purpose - those carry one row
+ * per family at whichever variant earned its rank, so filtering them by window returns the
+ * scenarios that graded you rather than the ones you are about to be handed.
+ */
+function renderDraw(data) {
+  const box = $("drawPanel");
+  const host = $("drawRows");
+  if (!box || !host) return;
+
+  const all = practice && Array.isArray(practice.scenarios) ? practice.scenarios : null;
+  const window = data.benchmark.matchPool ? data.benchmark.matchPool.window : null;
+  if (!all || window === null || window === undefined) {
+    box.hidden = true;
+    return;
+  }
+
+  const everyCategory = selectedCategory === null || selectedCategory === "Any";
+  const rows = all.filter(
+    (s) => s.window === window && (everyCategory || s.category === selectedCategory),
+  );
+  if (rows.length === 0) {
+    box.hidden = true;
+    return;
+  }
+  box.hidden = false;
+
+  // `measured`, not `runs > 0`: a baseline needs enough runs for a median, and counting
+  // any single run put this line at five where the pool note above it said four. One
+  // screen, two numbers for the same fact, is worse than the number being absent.
+  const measured = rows.filter((r) => r.measured).length;
+  const count = $("drawCount");
+  if (count) {
+    count.textContent =
+      "three of " + rows.length + ", " + measured + " with a baseline";
+  }
+
+  host.textContent = "";
+  let heading = null;
+  for (const r of rows) {
+    // Queueing Any draws from every category, so the list says which is which. One
+    // category needs no heading: the chip above it already answered that.
+    if (everyCategory && r.category !== heading) {
+      const h = document.createElement("div");
+      h.className = "draw-cat";
+      h.textContent = r.category;
+      host.append(h);
+      heading = r.category;
+    }
+
+    const el = document.createElement("div");
+
+    const nm = document.createElement("span");
+    nm.className = "nm";
+    nm.textContent = r.label;
+    nm.title = r.scenario;
+
+    const sk = document.createElement("span");
+    sk.className = "sk";
+    sk.textContent = r.subCategory ?? "";
+
+    const meter = document.createElement("span");
+    meter.className = "meter";
+    const bar = document.createElement("span");
+    bar.className = "meter-fill";
+    meter.append(bar);
+
+    const base = document.createElement("span");
+    base.className = "base";
+
+    // Two bars, two meanings, decided by whether this scenario could grade a match at
+    // all. A scenario that can shows how far into its next rank the player's best sits;
+    // one that cannot shows the runs left before it can, which is the only one of the
+    // two that is a reason to go and play something. `needsFor` reads the count off the
+    // snapshot's own coverage rather than repeating MIN_RUNS_FOR_BASELINE here, so the
+    // two cannot drift.
+    if (r.measured) {
+      const at = typeof r.progress === "number" ? r.progress : 0;
+      setFill(bar, at);
+      base.textContent = r.best === null ? "unplayed" : num(r.best);
+      base.title =
+        num(r.runs) + " runs, enough to score a match against" +
+        (r.nextRankScore !== null && r.gap !== null
+          ? ". " + num(r.gap) + " more points reaches the next rank on it"
+          : "");
+      el.className = "draw-row";
+    } else {
+      const left = needsFor(data, r.scenario);
+      const of = r.runs + (left ?? 0);
+      setFill(bar, of > 0 ? r.runs / of : 0);
+      // A best that is not yet a baseline is still the player's own number, so it stays
+      // in the title rather than being hidden. What the column says is the thing they
+      // can act on.
+      base.textContent =
+        left === null ? "no baseline" : left + (left === 1 ? " run to go" : " runs to go");
+      base.title =
+        (r.runs === 0
+          ? "nothing of yours on this scenario yet"
+          : (r.runs === 1 ? "1 run" : num(r.runs) + " runs") + ", best " + num(r.best)) +
+        ". A scenario with no baseline is scored against a guess.";
+      el.className = "draw-row short" + (r.runs === 0 ? " none" : "");
+    }
+
+    const who = document.createElement("span");
+    who.className = "draw-name";
+    who.append(nm, sk);
+
+    el.append(who, meter, base);
+    host.append(el);
+  }
+
+  const legend = $("drawLegend");
+  if (legend) {
+    legend.innerHTML =
+      "A match is three of these, drawn at random. The bar on a scenario you have a " +
+      "baseline for is <b>how far into its next rank</b> your best sits; on one you do " +
+      "not, it is <b>how close it is to counting</b>.";
+  }
+}
+
+/**
+ * Runs still needed before a scenario holds a baseline, or null if it is not in coverage.
+ *
+ * The snapshot already computes this per scenario, so reading it is the difference
+ * between one definition of "enough runs" and two that can disagree on screen.
+ */
+function needsFor(data, scenario) {
+  for (const c of data.coverage ?? []) {
+    for (const s of c.scenarios ?? []) {
+      if (s.scenario === scenario) return typeof s.needs === "number" ? s.needs : null;
+    }
+  }
+  return null;
+}
+
 function renderPool(data) {
+  renderDraw(data);
+  const btn = $("queueBtn");
+  if (btn && !btn.classList.contains("working") && !btn.classList.contains("held")) {
+    $("queueSub").textContent = commitSub(data);
+    $("queueMeta").textContent = "matched on rating";
+  }
+
   const note = $("poolNote");
   if (!note) return;
 
@@ -637,6 +862,62 @@ function renderPool(data) {
     `is worth and can void it. Play a few runs of them first.`;
 }
 
+/**
+ * The one control on this screen, and the only place its text is written.
+ *
+ * It used to be a bare button whose label was assigned from five different places with
+ * `textContent`, which is also why it could only ever say one word. It now carries what
+ * pressing it will do - the category and the difficulty, the two facts that decide the
+ * next ten minutes and which used to live two panels apart - so the sentence and the
+ * button cannot drift apart.
+ */
+function setCommit(state, verb, sub, meta) {
+  const btn = $("queueBtn");
+  if (!btn) return;
+  btn.classList.toggle("working", state === "working");
+  btn.classList.toggle("held", state === "held");
+  $("queueVerb").textContent = verb;
+  $("queueSub").textContent = sub ?? "";
+  $("queueMeta").textContent = meta ?? "";
+}
+
+/** What a press would queue, in the button. */
+function commitSub(data) {
+  const where = !selectedCategory || selectedCategory === "Any"
+    ? "Any category"
+    : selectedCategory;
+  const pool = data.benchmark.matchPoolName;
+  return where + (pool ? " · " + pool : "") + " · three scenarios";
+}
+
+/** Back to offering a match, whatever it was last saying. */
+function resetCommit(data) {
+  const btn = $("queueBtn");
+  if (!btn) return;
+  setCommit("idle", "Find opponent", data ? commitSub(data) : "", "matched on rating");
+  if (btn.dataset.gated !== "1") btn.disabled = false;
+}
+
+let searchTimer = null;
+
+/** Seconds the server has been looking. The one honest thing to show while waiting. */
+function startSearchClock() {
+  const started = Date.now();
+  stopSearchClock();
+  const tick = () => {
+    const total = Math.floor((Date.now() - started) / 1000);
+    $("queueMeta").textContent =
+      Math.floor(total / 60) + ":" + String(total % 60).padStart(2, "0");
+  };
+  tick();
+  searchTimer = setInterval(tick, 1000);
+}
+
+function stopSearchClock() {
+  if (searchTimer) clearInterval(searchTimer);
+  searchTimer = null;
+}
+
 function renderCategories(data) {
   const host = $("cats");
   host.textContent = "";
@@ -655,12 +936,27 @@ function renderCategories(data) {
         c.setAttribute("aria-pressed", "false"));
       b.setAttribute("aria-pressed", "true");
       $("opponent").classList.remove("on");
-      $("queueBtn").disabled = false;
-      $("queueBtn").textContent = "Find opponent";
+      resetCommit(data);
       renderEligibility();
     });
     host.append(b);
   });
+}
+
+/**
+ * How the round is expected to go, drawn as one bar.
+ *
+ * Your side takes the rank colour and theirs takes a grey, rather than one rank colour
+ * each. Queueing matches on rating, so most opponents hold the same rank you do - which
+ * made the common case a single solid block of one colour and the split invisible. The
+ * question this bar answers is how much of it is yours, and that has one subject.
+ */
+function drawOdds(p, color) {
+  const yours = Math.max(0, Math.min(1, p));
+  $("oddsBar").innerHTML =
+    '<div style="flex:' + yours + ';background:' + esc(color) + '"></div>' +
+    '<div style="flex:' + (1 - yours) + ';background:var(--rule-3);' +
+    'border-left:1px solid var(--well)"></div>';
 }
 
 function showOpponent(data) {
@@ -670,20 +966,18 @@ function showOpponent(data) {
   $("oppBadge").innerHTML = badge(m.opponent.tier, "opp");
   $("oppName").textContent = m.opponent.name;
   $("oppTier").textContent = m.opponent.tier.name + " · " + m.opponent.rating;
-  $("oppTier").style.color = m.opponent.tier.color;
+  $("oppTier").style.color = legibleOnDark(m.opponent.tier.color, RANK_TEXT_CONTRAST);
   $("oppAge").textContent = "stored run · 3 days ago";
 
   const p = m.winProbability;
-  $("oddsBar").innerHTML =
-    '<div style="flex:' + p + ';background:' + esc(me.tier.color) + '"></div>' +
-    '<div style="flex:' + (1 - p) + ';background:' + esc(m.opponent.tier.color) + '"></div>';
+  drawOdds(p, me.tier.color);
   $("oddsYou").textContent = "you " + (p * 100).toFixed(0) + "%";
   $("oddsThem").textContent = (100 - p * 100).toFixed(0) + "% " + m.opponent.name;
 
   pendingScenarios = m.rounds.map((r) => ({ label: r.label, done: false }));
-  renderTodo();
+  renderTodo(true);
 
-  $("opponent").classList.add("on");
+  arrive($("opponent"));
 }
 
 /* ----------------------------------------------------------- season editor */
@@ -781,13 +1075,15 @@ function seasonLadder(window) {
 /*
  * Mirrors core/report/contrast.ts. The renderer cannot import core - it is a plain script
  * with no bundler - so the arithmetic is repeated here and the two are kept deliberately
- * identical. Both grounds and the threshold are the same values; if one moves, move both.
+ * identical. Both grounds and the threshold are the same values; if one moves, move both -
+ * and DARK_GROUND is also `--ground` in this file's own :root and DARK_CHROME.ground in
+ * core/report/contrast.ts, which is the list the last palette change was missed on.
  *
  * It is worth the duplication: a colour that disappears is invisible to the person
  * choosing it, because the editor's own background is neither of the grounds it has to
  * survive, and finding out from a generated sheet after the fact is finding out too late.
  */
-const DARK_GROUND = "#06080c";
+const DARK_GROUND = "#1e1b18";
 const LIGHT_GROUND = "#eef1f6";
 const MIN_CONTRAST = 2;
 
@@ -826,27 +1122,60 @@ function mixHex(a, b, pct) {
 }
 
 /**
- * A rank colour lifted far enough to be visible on the dark ground.
+ * A rank colour moved far enough from a ground to be read on it.
  *
- * The authored colour is the identity and stays the identity - this only raises it to the
- * same 2:1 the season editor already refuses to accept below. Seven of season 1's
- * forty-eight rank colours sit under that line, and three of those are under 1.5:1:
- * Singularity is #000000, which as a card accent draws something that reads as broken
- * rather than as dark.
+ * The authored colour is the identity and stays the identity - this only moves it to the
+ * same 2:1 the season editor flags below. Seventeen of season 1's 153 named ranks sit
+ * under that line on the dark ground; Gauss Cannon and Primate are #331400 at 1.01, and
+ * Orca and Rifle are #000000 at 1.23, which as a card accent draws something that reads as
+ * broken rather than as dark. `npm run audit:look` re-derives the count.
  *
- * Lifting here rather than in the season file is deliberate. The file is Rylee's, the
- * editor flags every colour that needs this, and a fix written into the data would hide
- * the fact that it was needed. Anything already clear of the line is returned untouched,
- * so this is invisible on a season whose colours are fine.
+ * Correcting here rather than in the season file is deliberate. The colours are chosen to
+ * match the names - Singularity is black because that is what a singularity is - and a fix
+ * written into the data would both lose that and hide the fact that it was needed. Anything
+ * already clear of the line is returned untouched, so this is invisible on a season whose
+ * colours are fine.
+ *
+ * The mirror of `src/core/report/contrast.ts`, which the rank sheet and the season editor
+ * use. The renderer runs as plain script in two hosts and cannot import it, so it is
+ * written twice on purpose - but only once each way, which is why the ground is an argument
+ * rather than two near-identical functions.
  */
-function legibleOnDark(color) {
+function legibleOn(color, ground, min) {
   if (!/^#[0-9a-f]{6}$/i.test(String(color).trim())) return color;
+  const floor = min ?? MIN_CONTRAST;
+  const away = luminance(ground) > 0.4 ? DARK_GROUND : LIGHT_GROUND;
   let out = color;
-  for (let pct = 5; pct <= 100 && contrastRatio(out, DARK_GROUND) < MIN_CONTRAST; pct += 5) {
-    out = mixHex(color, LIGHT_GROUND, pct);
+  for (let pct = 5; pct <= 100 && contrastRatio(out, ground) < floor; pct += 5) {
+    out = mixHex(color, away, pct);
   }
   return out;
 }
+
+const legibleOnDark = (color, min) => legibleOn(color, DARK_GROUND, min);
+const legibleOnLight = (color, min) => legibleOn(color, LIGHT_GROUND, min);
+
+/**
+ * The floor for a rank name set as text.
+ *
+ * MIN_CONTRAST is 2, which the rank sheet uses because the names there are set at 29px
+ * beside a printed specimen of the same colour, and large text carries a low ratio. In
+ * the client the same names are 12px in a column forty rows deep.
+ *
+ * Measured against the season rather than picked: of its 153 named colours, 17 sit below
+ * 2:1 on this ground and 42 below 3.5:1, with Gauss Cannon and Primate at 1.01, Pronghorn
+ * at 1.16 and Orca at 1.23. At the sheet's threshold those seventeen still came out as
+ * smudges at table size. 3.5 is WCAG's large-text floor of 3 with a little over, which is
+ * the honest description of this text: small, but bold and in a column of its own.
+ *
+ * The counts rose when the grounds were lifted out of near-black: 13 were under 2:1 and 32
+ * under 3.5:1 on the old ground. A lighter ground costs a dark rank colour contrast, and
+ * absorbing exactly that is what this function is for, so nothing else had to move - but
+ * the numbers are restated rather than left describing a ground the app no longer paints.
+ *
+ * `npm run audit:look` re-derives the three counts above.
+ */
+const RANK_TEXT_CONTRAST = 3.5;
 
 /** What is wrong with a rank colour, or null when nothing is. */
 function colourNote(color) {
@@ -1451,7 +1780,7 @@ function fillSeasonPicker(query) {
   $("seasonAdd").disabled = true;
   $("seasonAddNote").textContent =
     matches.length > SEASON_PICK_LIMIT
-      ? `showing ${SEASON_PICK_LIMIT} of ${matches.length} — narrow the search`
+      ? `showing ${SEASON_PICK_LIMIT} of ${matches.length}; narrow the search`
       : `${matches.length} match${matches.length === 1 ? "" : "es"}`;
 }
 
@@ -1846,7 +2175,7 @@ function renderSeasonEditor() {
   // ---- scenario thresholds, one category and one difficulty at a time ----
   //
   // Each category gets its own block with its own difficulty dropdown, so what is on
-  // screen is six scenarios against the four ranks of one window. The whole ladder is
+  // screen is one category's scenarios against the ranks of one window. The whole ladder is
   // still editable; it is just not all editable at once, which is the difference between
   // a table you can work in and one you can only stare at.
   const head = $("seasonHead");
@@ -2015,7 +2344,7 @@ async function rederiveWindow(windowIndex, index, input) {
     // being edited.
     const collision =
       wrong > 0 && (wrong === at || wrong - 1 === at)
-        ? ` — rank ${wrong + 1} asks for the top ${(every[wrong] * 100).toFixed(1)}%, ` +
+        ? `: rank ${wrong + 1} asks for the top ${(every[wrong] * 100).toFixed(1)}%, ` +
           `which is no harder than rank ${wrong} at ${(every[wrong - 1] * 100).toFixed(1)}%`
         : "";
 
@@ -2122,7 +2451,7 @@ function slotPicker(scenario) {
     const board =
       option.entries == null
         ? "board not sampled"
-        : `${num(option.entries)} on the board${option.entries < MIN_BOARD ? " — thin" : ""}`;
+        : `${num(option.entries)} on the board${option.entries < MIN_BOARD ? ", thin" : ""}`;
 
     opt.label = !option.leaderboardId
       ? "no leaderboard - cannot derive thresholds"
@@ -2719,7 +3048,13 @@ function renderSeasonView(data) {
   const stats = $("svStats");
   if (stats) {
     stats.textContent = "";
-    const pool = seasonPool && Array.isArray(seasonPool.scenarios) ? seasonPool.scenarios : null;
+    // seasonPool arrives over IPC and is null until it does - and never arrives at all
+    // in the static preview, which is the file people are shown. The practice pool holds
+    // the same scenarios, so the two headline counts on this panel fall back to it
+    // rather than printing an em dash where a number belongs.
+    const pool = seasonPool && Array.isArray(seasonPool.scenarios)
+      ? seasonPool.scenarios
+      : practice && Array.isArray(practice.scenarios) ? practice.scenarios : null;
     const families = pool ? new Set(pool.map((x) => x.family)).size : null;
     const cells = [
       [pool ? num(pool.length) : "\u2014", "scenarios"],
@@ -2750,15 +3085,13 @@ function renderSeasonView(data) {
     host.textContent = "";
     [...tiers].reverse().forEach((tier) => {
       const here = me && tier.id === me.tier.id;
-      const g = Array.isArray(tier.gradient) ? tier.gradient : [tier.color, tier.color];
+
       const el = document.createElement("div");
       el.className = "sv-tier" + (here ? " here" : "");
       el.style.setProperty("--tier", tier.color);
-      el.style.setProperty("--glow", tier.glow ?? tier.color);
-      el.style.setProperty("--g1", g[0]);
-      el.style.setProperty("--g2", g[1] ?? g[0]);
+      // The rule keeps the season's colour; the name takes the readable version of it.
+      el.style.setProperty("--tier-ink", legibleOnDark(tier.color, RANK_TEXT_CONTRAST));
       el.innerHTML =
-        '<span class="swatch"></span>' +
         '<span class="nm">' + esc(tier.name) + '</span>' +
         '<span class="pc">' + esc(tierBand(tier.percentile)) + '</span>' +
         '<span class="you">' +
@@ -2775,7 +3108,14 @@ function renderSeasonView(data) {
   data.categories.forEach((cat) => {
     const names = cat.rankNames ?? [];
     const maxes = cat.rankMaxes ?? [];
-    const colorOf = (n) => (cat.rankColors && cat.rankColors[n]) || "var(--ink-dim)";
+    // Two of them, and the names say which is safe where: a plate is a background and
+    // keeps the season's colour exactly; ink is text on the ground and gets lifted.
+    const plateOf = (n) =>
+      cat.rankColors && cat.rankColors[n] ? cat.rankColors[n] : "var(--ink-dim)";
+    const inkOf = (n) =>
+      cat.rankColors && cat.rankColors[n]
+        ? legibleOnDark(cat.rankColors[n], RANK_TEXT_CONTRAST)
+        : "var(--ink-dim)";
     const here = names.indexOf(cat.rankName); // -1 when unranked
 
     const box = document.createElement("div");
@@ -2785,7 +3125,7 @@ function renderSeasonView(data) {
     head.className = "sv-cat-head";
     head.innerHTML =
       '<span class="sv-cat-name">' + esc(cat.name) + '</span>' +
-      '<span class="sv-cat-now" style="color:' + esc(colorOf(cat.rankName)) + '">' +
+      '<span class="sv-cat-now" style="color:' + esc(inkOf(cat.rankName)) + '">' +
       esc(cat.rankName || "unranked") + ' \u00b7 ' + num(cat.energy) + ' energy</span>';
     box.append(head);
 
@@ -2794,7 +3134,7 @@ function renderSeasonView(data) {
     rail.className = "sv-rail";
     names.forEach((n, i) => {
       const seg = document.createElement("span");
-      if (i <= here) seg.style.background = colorOf(n);
+      if (i <= here) seg.style.background = plateOf(n);
       rail.append(seg);
     });
     box.append(rail);
@@ -2818,7 +3158,8 @@ function renderSeasonView(data) {
         const i = w * size + j;
         const cell = document.createElement("div");
         cell.className = "sv-rank" + (i === here ? " here" : i < here ? " done" : "");
-        cell.style.setProperty("--rank", colorOf(n));
+        cell.style.setProperty("--rank", plateOf(n));
+        cell.style.setProperty("--rank-ink", inkOf(n));
         cell.innerHTML =
           '<span class="rn"><span class="nm">' + esc(n) + '</span>' +
           '<span class="ix">' + (i + 1) + '</span></span>' +
@@ -2927,7 +3268,9 @@ function renderSeasonView(data) {
     head.innerHTML =
       "<h3>" + esc(category.name) + "</h3>" +
       '<span class="rule"></span>' +
-      '<span class="rk"' + (colour ? ' style="--rank:' + esc(colour) + '"' : "") + ">" +
+      '<span class="rk"' +
+        (colour ? ' style="--rank-ink:' + esc(legibleOnDark(colour, RANK_TEXT_CONTRAST)) + '"' : "") +
+        ">" +
       esc((standing && standing.rankName) || "unranked") +
       "</span>";
     block.append(head);
@@ -2975,7 +3318,10 @@ function renderSeasonView(data) {
           (v.isNext ? " next" : "") +
           (maxedHere ? " done" : "") +
           (v.runs === 0 ? " untouched" : "");
-        if (colour) row.style.setProperty("--rank", colour);
+        if (colour) {
+          row.style.setProperty("--rank", colour);
+          row.style.setProperty("--rank-ink", legibleOnDark(colour, RANK_TEXT_CONTRAST));
+        }
         row.style.setProperty("--fill", (maxedHere ? 1 : (v.progress ?? 0)) * 100 + "%");
 
         const nm = document.createElement("span");
@@ -3068,10 +3414,10 @@ function renderSeasonView(data) {
  * The playlists for the band on screen.
  *
  * A deep link opens one scenario and needs nothing on disk; a playlist is how a whole
- * band gets run back to back. There is one per category per band - Clicking, Tracking and
- * Switching separately - plus one of everything at that band, and each is installable on
- * its own because an evening of tracking should not require writing twelve files for
- * skills you are not practising.
+ * band gets run back to back. There is one per category per band - all six separately -
+ * plus one of everything at that band, and each is installable on its own because an
+ * evening of tracking should not require writing every file for skills you are not
+ * practising.
  *
  * KovaaK's reads playlists at startup, so the restart caveat is printed rather than left
  * to be discovered: a playlist that is genuinely on disk and genuinely not in the menu
@@ -3170,7 +3516,7 @@ function renderRanks(data) {
   $("ladderNote").textContent = `${tiers.length} tiers · by population percentile`;
   $("ladderLede").textContent =
     "Where you sit against everyone else playing. Tiers are population percentiles, " +
-    "so a tier keeps its meaning as the ladder grows rather than inflating.";
+    "so they keep their meaning as the ladder grows.";
 
   const ladder = $("ladder");
   ladder.textContent = "";
@@ -3195,11 +3541,9 @@ function renderRanks(data) {
   const bench = data.benchmark;
   $("benchNote").textContent = `${bench.name} ${bench.difficulty}`;
   $("benchLede").textContent =
-    `Your ${bench.name} standing, which is a stat rather than a ladder position: it ` +
-    "says what your scores are worth, not who you beat. Each band is a whole benchmark " +
-    "with its own four ranks, so you hold a rank in every band you have played and " +
-    "nothing here claims one band's rank is above another's. Overall you are " +
-    `${data.player.benchmarkRank} at ${num(data.player.benchmarkEnergy)} energy.`;
+    `Your ${bench.name} standing: what your scores are worth, not who you beat. Each ` +
+    "band is its own benchmark, so you hold a rank in every band you have played. " +
+    `Overall you are ${data.player.benchmarkRank} at ${num(data.player.benchmarkEnergy)} energy.`;
 
   const host = $("catRanks");
   host.textContent = "";
@@ -3247,11 +3591,13 @@ function renderRanks(data) {
         (queued ? " queued" : "");
       // An unplayed band is achromatic; one that is merely below its first rank still
       // shows that rank's colour, so the progress bar under it is pointing somewhere.
+      const plate = unplayed
+        ? "var(--ink-dim)"
+        : rankColor(data, b.rankName ?? b.rankNames[0], b);
+      card.style.setProperty("--rank", plate);
       card.style.setProperty(
-        "--rank",
-        unplayed
-          ? "var(--ink-dim)"
-          : legibleOnDark(rankColor(data, b.rankName ?? b.rankNames[0], b)),
+        "--rank-ink",
+        unplayed ? "var(--ink-dim)" : legibleOnDark(plate, RANK_TEXT_CONTRAST),
       );
 
       const head = document.createElement("div");
@@ -3348,6 +3694,7 @@ function renderRanks(data) {
     .sort((a, b) => a.s.gap - b.s.gap);
 
   const body = $("nextRankBody");
+  settled(body);
   body.textContent = "";
 
   if (rows.length === 0) {
@@ -3358,8 +3705,8 @@ function renderRanks(data) {
   }
 
   rows.forEach(({ s, cat }) => {
-    const colour = rankColor(data, s.rankName, cat);
-    const next = rankColor(data, s.nextRankName, cat);
+    const ink = rankInk(data, s.rankName, cat);
+    const nextInk = rankInk(data, s.nextRankName, cat);
     const tr = document.createElement("tr");
 
     // Where the target score is scored. On a windowed ladder the next rank crosses into a
@@ -3372,9 +3719,9 @@ function renderRanks(data) {
 
     tr.innerHTML =
       "<td>" + esc(s.label) + (s.windowName ? ' <span class="win">' + esc(s.windowName) + "</span>" : "") + "</td>" +
-      '<td style="color:' + esc(colour) + '">' + esc(s.rankName || "unranked") + "</td>" +
+      '<td style="color:' + esc(ink) + '">' + esc(s.rankName || "unranked") + "</td>" +
       "<td>" + num(s.score) + "</td>" +
-      '<td style="color:' + esc(next) + '">' + esc(s.nextRankName) + "</td>" +
+      '<td style="color:' + esc(nextInk) + '">' + esc(s.nextRankName) + "</td>" +
       "<td>" + num(s.nextRankScore) + target + "</td>" +
       "<td>+" + num(s.gap) + "</td>";
     body.append(tr);
@@ -3432,17 +3779,56 @@ function stopMatchClock() {
   clockTimer = null;
 }
 
-function renderTodo() {
+/**
+ * The three scenarios, and which of them are done.
+ *
+ * `arriving` is passed only when a match has just landed. The list is rebuilt from
+ * scratch every time a run comes in, so animating unconditionally would replay the
+ * entrance under the player three times a match, on rows they are in the middle of
+ * reading, for an event they did not cause. It plays once, when the match appears.
+ */
+/**
+ * The player's own best on a scenario a match is asking for, or null.
+ *
+ * A match round is won on the bigger improvement over your own baseline, so the number
+ * that decides it is your own best - and the to-do list named three scenarios and left
+ * the rest of the row empty. Matched on the scenario name first; a match round can carry
+ * a display label with the window appended ("beanTS Larger int"), so a practice row whose
+ * scenario name begins the label counts too. No match means nothing is drawn rather than
+ * a zero, which would read as a best of nothing.
+ */
+function bestOn(label) {
+  const rows = practice && Array.isArray(practice.scenarios) ? practice.scenarios : null;
+  if (!rows || !label) return null;
+  let hit = rows.find((r) => r.scenario === label);
+  if (!hit) hit = rows.find((r) => r.scenario && label.indexOf(r.scenario) === 0);
+  return hit && hit.best !== null && hit.best !== undefined ? hit : null;
+}
+
+function renderTodo(arriving) {
   const list = $("todoList");
   list.textContent = "";
 
   pendingScenarios.forEach((s, i) => {
     const li = document.createElement("li");
-    li.className = s.done ? "done" : "pending";
+    li.className =
+      (s.done ? "done" : "pending") +
+      (arriving ? " arriving" : "") +
+      // Marked by the run that landed, cleared here, so the tick plays on the one row
+      // that changed and on the one render that changed it.
+      (s.justDone ? " just" : "");
+    s.justDone = false;
+    li.style.setProperty("--i", String(i));
+    const mine = bestOn(s.label);
     li.innerHTML =
       '<span class="n">' + (s.done ? "✓" : i + 1) + "</span>" +
       "<span>" + esc(s.label) + "</span>" +
-      (s.tier ? '<span class="tier-tag">' + esc(s.tier) + "</span>" : "");
+      (s.tier ? '<span class="tier-tag">' + esc(s.tier) + "</span>" : "") +
+      (mine
+        ? '<span class="scen-best" title="' +
+          esc(num(mine.runs) + " runs on this scenario") +
+          '">to beat <b>' + esc(num(mine.best)) + "</b></span>"
+        : "");
 
     // Each scenario opens itself. KovaaK's reads its playlists at startup, so a playlist
     // written mid-session is not in the menu; a deep link needs nothing on disk and
@@ -3487,11 +3873,18 @@ function renderResult(data) {
   $("verdictScores").textContent =
     pct(m.playerMatchScore) + " vs " + pct(m.opponentMatchScore) + " against baseline" +
     (m.ratingWeight < 1 ? "   ·   reduced weight (provisional baselines)" : "");
-  $("ratingMove").textContent = won ? "+18 SR" : "−14 SR";
+  renderScoreline(m.rounds.map((r) => ({
+    counted: true,
+    delta: r.you.delta,
+    opponentDelta: r.them.delta,
+  })));
+  $("ratingMove").innerHTML =
+    (won ? "+18" : "−14") + '<span class="after">rating</span>';
   $("ratingMove").style.color = won ? "var(--up)" : "var(--down)";
   $("explain").textContent = m.explanation;
 
   const body = $("roundsBody");
+  settled(body);
   body.textContent = "";
   m.rounds.forEach((r) => {
     const youWon = r.you.delta > r.them.delta;
@@ -3517,9 +3910,12 @@ function renderNoResultYet() {
   $("verdictScores").textContent =
     "Queue for a category, play the three scenarios, and the result lands here.";
   $("ratingMove").textContent = "";
+  // Nothing has been played, so there are no rounds to score.
+  if ($("scoreline")) $("scoreline").hidden = true;
   $("explain").textContent =
     "Matches are decided on how far above your own baseline you played, not on raw " +
     "score, so both players get a real contest whatever their rank.";
+  settled($("roundsBody"));
   $("roundsBody").textContent = "";
 }
 
@@ -3530,6 +3926,56 @@ function renderNoResultYet() {
  * shows what actually happened, including the rating change and each run's verification
  * tier, because a player is entitled to see why a result went the way it did.
  */
+/**
+ * The three rounds as marks and a tally.
+ *
+ * A match is best of three, and the only place that said so was the last column of the
+ * table underneath. Drawn from the same test the table rows use, so the marks and the
+ * words in the column can never disagree; a round nobody could win - unopposed, or
+ * excluded - is neither colour rather than being counted as a loss.
+ */
+function renderScoreline(rounds) {
+  const box = $("scoreline");
+  const marks = $("scoreMarks");
+  if (!box || !marks) return;
+
+  const list = Array.isArray(rounds) ? rounds : [];
+  if (list.length === 0) {
+    box.hidden = true;
+    return;
+  }
+  box.hidden = false;
+
+  marks.textContent = "";
+  let mine = 0;
+  let theirs = 0;
+  for (const r of list) {
+    const hasOpponent = r.opponentDelta != null;
+    const contested = r.counted && hasOpponent;
+    const youWon = contested && (r.delta ?? 0) > (r.opponentDelta ?? 0);
+    if (contested) {
+      if (youWon) mine++;
+      else theirs++;
+    }
+    const m = document.createElement("span");
+    m.className = "score-mark" + (contested ? (youWon ? " won" : " lost") : "");
+    m.title = !r.counted
+      ? r.excludedReason || "excluded"
+      : !hasOpponent ? "recorded, nobody on the other side"
+      : youWon ? "won" : "lost";
+    marks.append(m);
+  }
+
+  const tally = $("scoreTally");
+  if (tally) {
+    // Nothing was contested, so there is no score to print - and "0-0" would read as a
+    // draw rather than as a set of runs with nobody on the other side.
+    tally.textContent = mine + theirs === 0
+      ? list.length + (list.length === 1 ? " round recorded" : " rounds recorded")
+      : mine + "–" + theirs + " on rounds";
+  }
+}
+
 function renderSettled(s) {
   hasRealResult = true;
 
@@ -3558,11 +4004,16 @@ function renderSettled(s) {
         " against baseline" +
         (s.ratingWeight < 1 ? `   ·   ${Math.round(s.ratingWeight * 100)}% weight (provisional)` : "");
 
+  renderScoreline(s.rounds);
+
   const change = s.ratingChange;
-  $("ratingMove").textContent = isSeeding
-    ? "not rated"
-    : isVoid ? "no change"
-    : `${change >= 0 ? "+" : "−"}${Math.abs(change)} · ${s.ratingAfter}`;
+  // The change is the news and the new rating is the context, so they stop being one
+  // run-on mono string with a middot in it.
+  $("ratingMove").innerHTML = isSeeding
+    ? 'not rated<span class="after">seeding</span>'
+    : isVoid ? 'no change<span class="after">void</span>'
+    : `${change >= 0 ? "+" : "−"}${Math.abs(change)}` +
+      `<span class="after">rating ${esc(String(s.ratingAfter))}</span>`;
   $("ratingMove").style.color = isSeeding || isVoid
     ? "var(--ink-dim)"
     : change > 0 ? "var(--up)" : change < 0 ? "var(--down)" : "var(--ink-mid)";
@@ -3570,6 +4021,7 @@ function renderSettled(s) {
   $("explain").textContent = s.explanation;
 
   const body = $("roundsBody");
+  settled(body);
   body.textContent = "";
   s.rounds.forEach((r) => {
     const yours = r.delta ?? 0;
@@ -3645,10 +4097,10 @@ function renderCoverage(data) {
 
       const track = document.createElement("span");
       track.className = "cover-track";
-      const fill = document.createElement("span");
-      fill.className = "cover-fill";
-      fill.style.width = `${row.total > 0 ? (row.measured / row.total) * 100 : 0}%`;
-      track.append(fill);
+      const fillEl = document.createElement("span");
+      fillEl.className = "cover-fill";
+      setFill(fillEl, row.total > 0 ? row.measured / row.total : 0);
+      track.append(fillEl);
 
       const value = document.createElement("span");
       value.className = "cover-val";
@@ -3697,19 +4149,28 @@ function renderProfile(data) {
   wmap.textContent = "";
 
   data.categories.forEach((cat) => {
-    const colour = rankColor(data, cat.rankName, cat);
+    // Flat, not a gradient fading up from 25% alpha.
+    //
+    // The bar is a measurement - this category's energy against the strongest one - and
+    // a bar that is dark at the start and full at the end reads as though the left half
+    // counts for less than the right half. It does not. The three of these were also the
+    // only gradients left in the client, and being written as an inline style is the
+    // reason `npm run audit:look` never saw them.
+    const ink = legibleOnDark(rankColor(data, cat.rankName, cat), RANK_TEXT_CONTRAST);
     const row = document.createElement("div");
     row.className = "wrow";
     row.innerHTML =
       '<div class="lbl">' + esc(cat.name) + "</div>" +
       '<div class="wtrack"><div class="wfill" style="width:' +
         ((cat.energy / maxEnergy) * 100).toFixed(1) +
-        "%;background:linear-gradient(90deg," + esc(colour) + "40," + esc(colour) + ')"></div></div>' +
-      '<div class="wval">' + num(cat.energy) + " · " + esc(cat.rankName || "—") + "</div>";
+        "%;background:" + esc(ink) + '"></div></div>' +
+      '<div class="wval">' + num(cat.energy) + " · " +
+        '<span style="color:' + esc(ink) + '">' + esc(cat.rankName || "—") + "</span></div>";
     wmap.append(row);
   });
 
   const body = $("scenBody");
+  settled(body);
   body.textContent = "";
 
   // One row per family, showing the variant that earned the rank. Which variant that is
@@ -3719,14 +4180,14 @@ function renderProfile(data) {
     .reduce((all, c) => all.concat(c.scenarios.map((s) => ({ s, cat: c }))), [])
     .sort((a, b) => a.s.energy - b.s.energy)
     .forEach(({ s, cat }) => {
-      const colour = rankColor(data, s.rankName, cat);
+      const ink = rankInk(data, s.rankName, cat);
       const tr = document.createElement("tr");
       tr.innerHTML =
         "<td>" + esc(s.label) +
           (s.windowName ? ' <span class="win">' + esc(s.windowName) + "</span>" : "") + "</td>" +
         "<td>" + esc(s.subCategory || "—") + "</td>" +
         "<td>" + (s.score ? num(s.score) : "—") + "</td>" +
-        '<td style="color:' + esc(colour) + '">' + esc(s.rankName || "—") + "</td>" +
+        '<td style="color:' + esc(ink) + '">' + esc(s.rankName || "—") + "</td>" +
         "<td>" + num(s.energy) + "</td>" +
         "<td>" + s.runs + "</td>" +
         "<td>" +
@@ -3752,19 +4213,23 @@ function renderConsistency(data) {
   const c = data.consistency;
   if (!c) return;
 
-  const colorOf = (rank) => data.benchmark.rankColors[rank] || "var(--ink-mid)";
+  const inkOf = (rank) =>
+    data.benchmark.rankColors[rank]
+      ? legibleOnDark(data.benchmark.rankColors[rank], RANK_TEXT_CONTRAST)
+      : "var(--ink-mid)";
 
   $("ceilRank").textContent = c.ceilingRank || "unranked";
-  $("ceilRank").style.color = colorOf(c.ceilingRank);
+  $("ceilRank").style.color = inkOf(c.ceilingRank);
   $("ceilEnergy").textContent = num(c.ceilingEnergy) + " energy";
 
   $("floorRank").textContent = c.floorRank || "unranked";
-  $("floorRank").style.color = colorOf(c.floorRank);
+  $("floorRank").style.color = inkOf(c.floorRank);
   $("floorEnergy").textContent = num(c.floorEnergy) + " energy";
 
   $("gapVal").textContent = (c.gap * 100).toFixed(1) + "%";
 
   const body = $("consistencyBody");
+  settled(body);
   body.textContent = "";
 
   const worst = c.scenarios.length ? c.scenarios[0].gap : 1;
@@ -3788,12 +4253,18 @@ function renderConsistency(data) {
 function renderQuests(data) {
   const host = $("questList");
   host.textContent = "";
-  data.quests.forEach((q, i) => {
-    // Floor quests get a single consistent colour rather than one from the rank ramp:
-    // they are a different kind of ask, and looking different is the point.
-    const colour = q.isFloor
-      ? "var(--warn)"
-      : data.theme[Math.min(data.theme.length - 1, 3 + i)].color;
+  data.quests.forEach((q) => {
+    // Two colours, and both of them mean something.
+    //
+    // Every quest used to take `theme[3 + i]` - the i-th tier's colour, by row position.
+    // It said nothing: the fourth quest was blue because it was fourth. Five saturated
+    // ramp colours down one column is the rainbow this client is otherwise careful not
+    // to be, and it made five bars compete when the list has no ranking in it.
+    //
+    // A floor quest is warn because it is a different ask: every run in the window has
+    // to clear the bar, not one of them. Everything else takes the player's own rank
+    // colour, which is what carries chroma everywhere else here.
+    const colour = q.isFloor ? "var(--warn)" : "var(--accent)";
 
     const el = document.createElement("div");
     el.className = "quest" + (q.isFloor ? " quest-floor" : "");
@@ -3809,8 +4280,9 @@ function renderQuests(data) {
         (q.isFloor ? '<span class="floor-tag">floor</span>' : "") +
         "</h3><p>" + esc(q.detail) + "</p></div>" +
       '<div class="xp">' + counter + q.xp + " XP</div>" +
-      '<div class="qtrack"><div class="qfill" style="width:' +
-        (q.progress * 100).toFixed(1) + "%;background:" + esc(colour) + '"></div></div>';
+      '<div class="qtrack"><div class="qfill" style="transform:scaleX(' +
+        Math.max(0, Math.min(1, q.progress)).toFixed(4) +
+        ");background:" + esc(colour) + '"></div></div>';
     host.append(el);
   });
 }
@@ -3859,9 +4331,9 @@ function nextCelebration() {
   $("celebrate").hidden = false;
   playSound("celebrate");
   // Fill from zero so the bar visibly moves rather than appearing already full.
-  $("celebrateFill").style.width = "0%";
+  setFill($("celebrateFill"), 0);
   requestAnimationFrame(() => {
-    $("celebrateFill").style.width = (level.progress * 100).toFixed(1) + "%";
+    setFill($("celebrateFill"), level.progress);
   });
 
   // More waiting? Say so, so the button does not look like it dismissed them all.
@@ -3914,7 +4386,7 @@ function renderEligibility() {
     'Ranked opens at <span class="gate-count">' + num(required) + "</span> uploaded runs. " +
     'You have <span class="gate-count">' + num(uploaded) + "</span> \u2014 " +
     num(missing) + " to go.";
-  $("queueGateFill").style.width = Math.min(100, (uploaded / required) * 100).toFixed(1) + "%";
+  setFill($("queueGateFill"), uploaded / required);
   gate.classList.add("on");
 
   // Marked so the paths that re-enable the button on a category change or a finished
@@ -3954,6 +4426,7 @@ function showRunToast(run) {
   pendingScenarios.forEach((s) => {
     if (!s.done && run.scenario.indexOf(s.label) !== -1) {
       s.done = true;
+      s.justDone = true;
       changed = true;
     }
   });
@@ -4281,14 +4754,28 @@ function refreshPractice() {
   void api.practice().then((r) => {
     if (!r || r.error) return;
     practice = r;
-    if (current) renderSeasonView(current);
+    if (current) {
+      renderSeasonView(current);
+      // The queue screen lists what a match can draw, which is the same pool. Without
+      // this it stays empty until something else happens to re-render it, which on the
+      // screen the app opens on is until the player leaves and comes back.
+      renderDraw(current);
+    }
   });
   refreshApex();
 }
 
 refreshPractice();
 
-if (HOST === "electron" && window.apogee.isAdmin) {
+// The editor's markup, and not just the admin flag: everything below binds to elements
+// by id, so a rebuild that drops the Season section throws on the first `addEventListener`
+// and takes the whole renderer down with it - sign-in unbound, Ranks unpainted, every
+// button dead. And only for an admin, which is the one person who would not read it as
+// somebody else's bug. Cost of the guard is one lookup; cost of not having it was a
+// client that would not start.
+const hasSeasonEditor = HOST === "electron" && window.apogee.isAdmin && $("seasonSave") !== null;
+
+if (hasSeasonEditor) {
   void refreshSeasonTab();
 
   $("seasonSave").addEventListener("click", async () => {
@@ -4563,7 +5050,7 @@ function showRealMatch(match, data) {
     $("oppBadge").innerHTML = badge(me.tier, "opp");
     $("oppName").textContent = "No opponent yet";
     $("oppTier").textContent = "seeding the pool";
-    $("oppTier").style.color = me.tier.color;
+    $("oppTier").style.color = legibleOnDark(me.tier.color, RANK_TEXT_CONTRAST);
     $("oppAge").textContent =
       match.poolSize == null
         ? "match already in progress"
@@ -4583,7 +5070,7 @@ function showRealMatch(match, data) {
     $("oppName").textContent = match.opponent.displayName;
     $("oppTier").textContent = `rating ${match.opponent.rating}` +
       (match.opponent.provisional ? " · provisional" : "");
-    $("oppTier").style.color = oppTier.color;
+    $("oppTier").style.color = legibleOnDark(oppTier.color, RANK_TEXT_CONTRAST);
 
     const played = new Date(match.opponent.playedAt);
     const days = Math.max(0, Math.round((Date.now() - played.getTime()) / 86400000));
@@ -4592,9 +5079,7 @@ function showRealMatch(match, data) {
       ` · pool of ${match.poolSize}`;
 
     const p = match.winProbability ?? 0.5;
-    $("oddsBar").innerHTML =
-      '<div style="flex:' + p + ';background:' + esc(me.tier.color) + '"></div>' +
-      '<div style="flex:' + (1 - p) + ';background:' + esc(oppTier.color) + '"></div>';
+    drawOdds(p, me.tier.color);
     $("oddsYou").textContent = "you " + (p * 100).toFixed(0) + "%";
     $("oddsThem").textContent = (100 - p * 100).toFixed(0) + "% " + match.opponent.displayName;
   }
@@ -4605,7 +5090,7 @@ function showRealMatch(match, data) {
     done: false,
     tier: null,
   }));
-  renderTodo();
+  renderTodo(true);
 
   // A new match means a new playlist to write, so the button goes back to offering it.
   $("playMatchBtn").textContent = "Play in KovaaK's";
@@ -4620,7 +5105,26 @@ function showRealMatch(match, data) {
   startMatchClock(match.expiresAt);
 
   $("matchActions").hidden = false;
-  $("opponent").classList.add("on");
+  arrive($("opponent"));
+}
+
+/**
+ * Show a panel as something that arrived rather than as a repaint.
+ *
+ * The class is stripped once the animation has run so a later repaint of the same
+ * panel - a run landing, a category chip - does not replay it. Removing it on
+ * `animationend` rather than a timer keeps the two from disagreeing about the length.
+ */
+function arrive(el) {
+  if (!el) return;
+  el.classList.add("on");
+  el.classList.remove("arriving");
+  // Reading offsetWidth restarts the animation when a second match lands in the same
+  // session; without it the class is re-added in the same frame it was removed and the
+  // browser never sees a change.
+  void el.offsetWidth;
+  el.classList.add("arriving");
+  el.addEventListener("animationend", () => el.classList.remove("arriving"), { once: true });
 }
 
 $("queueBtn").addEventListener("click", async () => {
@@ -4635,18 +5139,19 @@ $("queueBtn").addEventListener("click", async () => {
   }
 
   btn.disabled = true;
-  btn.textContent = "Searching…";
-  $("searching").classList.add("on");
+  setCommit("working", "Searching", "matching you on rating in " +
+    (!selectedCategory || selectedCategory === "Any" ? "any category" : selectedCategory), "0:00");
+  startSearchClock();
   $("opponent").classList.remove("on");
   showError(null);
 
   const result = await window.apogee.findMatch(selectedCategory, current.benchmark.matchPool);
 
-  $("searching").classList.remove("on");
+  stopSearchClock();
   btn.disabled = false;
 
   if (result.error) {
-    btn.textContent = "Find opponent";
+    resetCommit(current);
     showError(result.error);
     // The server refuses a queue with too little history behind it. Re-read the count so
     // the gate below the button agrees with what was just said, however the two got out
@@ -4658,11 +5163,18 @@ $("queueBtn").addEventListener("click", async () => {
   // Neither an empty pool nor an existing match is an error now: the server hands back
   // a seeding match for the first, and the match you already have for the second, so
   // there is always something on screen and always a way out of it.
-  btn.textContent = result.match.resumed
-    ? "Match already open"
-    : result.match.seeding
-      ? "Seeding the pool"
-      : "Match in progress";
+  setCommit(
+    "held",
+    result.match.resumed
+      ? "Match already open"
+      : result.match.seeding
+        ? "Seeding the pool"
+        : "Match in progress",
+    "Play the three below in KovaaK's. Abandon it to queue again.",
+    "",
+  );
+  // Nothing to press while a match is open; the way out is Abandon, on the match.
+  btn.disabled = true;
   activeMatch = result.match;
   showRealMatch(result.match, current);
 });
@@ -4697,7 +5209,48 @@ function renderSession(session, configured) {
     : "This build has no Supabase settings. Fill in .env and rebuild.";
 }
 
+/**
+ * Give every table its rows before there are any.
+ *
+ * A table drawn empty and then filled moves everything under it the moment the first
+ * snapshot lands, which on this app is every table on five screens at once. These are
+ * the real rows at their real height, ruled, holding a dash in each cell, and they are
+ * replaced wholesale by the first render.
+ *
+ * Not animated. A gradient sweeping across grey blocks is the most imitated loading
+ * state there is, and it would be the only thing on screen pretending to be busy while
+ * the app is genuinely just reading a folder - which the status bar already says.
+ */
+function reserveTables() {
+  // Roughly what each one holds once the folder has been read. Short is better than
+  // long: a table that shrinks looks finished, one that grows looks like it stalled.
+  const tables = [
+    ["roundsBody", 3],
+    ["nextRankBody", 5],
+    ["scenBody", 8],
+    ["consistencyBody", 6],
+  ];
+
+  for (const [id, rows] of tables) {
+    const body = $(id);
+    if (!body || body.children.length > 0) continue;
+
+    const columns = body.closest("table")?.querySelectorAll("thead th").length ?? 0;
+    if (columns === 0) continue;
+
+    body.innerHTML = ("<tr>" + "<td></td>".repeat(columns) + "</tr>").repeat(rows);
+    body.closest("table")?.classList.add("pending");
+  }
+}
+
+/** Drop the reserved rows the first time a table is written for real. */
+function settled(body) {
+  body?.closest("table")?.classList.remove("pending");
+}
+
 if (HOST === "electron") {
+  reserveTables();
+
   $("btnRescan").addEventListener("click", () => api.rescan());
   $("btnOpen").addEventListener("click", () => api.openStatsFolder());
   const choose = () => api.chooseFolder();
@@ -4771,12 +5324,12 @@ if (HOST === "electron") {
 
   api.onUploadProgress((p) => {
     if (p.phase === "baselines") {
-      $("uploadFill").style.width = "100%";
+      setFill($("uploadFill"), 1);
       $("uploadSub").textContent = "Computing your baselines…";
       return;
     }
     const pct = p.total ? (p.uploaded / p.total) * 100 : 0;
-    $("uploadFill").style.width = pct.toFixed(1) + "%";
+    setFill($("uploadFill"), pct / 100);
     $("uploadSub").textContent =
       `${p.uploaded.toLocaleString()} of ${p.total.toLocaleString()} runs` +
       ` · batch ${p.batch}/${p.batches}`;
@@ -4788,8 +5341,7 @@ if (HOST === "electron") {
     if (!match) {
       $("opponent").classList.remove("on");
       $("matchActions").hidden = true;
-      $("queueBtn").textContent = "Find opponent";
-      $("queueBtn").disabled = false;
+      resetCommit(current);
       renderEligibility();
     }
   });
@@ -4824,8 +5376,7 @@ if (HOST === "electron") {
     activeMatch = null;
     $("matchActions").hidden = true;
     $("opponent").classList.remove("on");
-    $("queueBtn").textContent = "Find opponent";
-    $("queueBtn").disabled = false;
+    resetCommit(current);
     renderEligibility();
     renderSettled(settled);
     playSound(settled && settled.verdict === "win" ? "victory"
@@ -4873,8 +5424,7 @@ if (HOST === "electron") {
       // A countdown still ticking on a match that no longer exists is its own bug.
       stopMatchClock();
       $("matchClock").hidden = true;
-      $("queueBtn").textContent = "Find opponent";
-      $("queueBtn").disabled = false;
+      resetCommit(current);
       renderEligibility();
       $("opponent").classList.remove("on");
       activeMatch = null;
@@ -4916,7 +5466,7 @@ if (HOST === "electron") {
         ? `Playlist "${result.playlistName}" is ready, but Steam did not start the game. ` +
           "Launch KovaaK's yourself, or use the Play buttons above."
         : result.jumpedTo
-          ? `Opening ${result.jumpedTo}. Use the Play buttons for the other two — ` +
+          ? `Opening ${result.jumpedTo}. Use the Play buttons for the other two, ` +
             `or restart KovaaK's to get the "${result.playlistName}" playlist, which it ` +
             "only picks up at startup."
           : `In KovaaK's, open Playlists and pick "${result.playlistName}".`;
@@ -4979,6 +5529,20 @@ if (HOST === "electron") {
     // A new snapshot means a new run landed, which means a personal best on the practice
     // list may have moved. Re-read rather than leave it: the number this screen shows is
     // the same one the player just watched KovaaK's print.
+    refreshPractice();
+  });
+
+  // A saved season has to land on every screen that draws a rank, not just the editor.
+  //
+  // `render` repaints the ladders, the family rows and the weakness map off the snapshot;
+  // the practice list and the apex board hold their own copy and have to be asked again.
+  // Pulling state rather than waiting for `onSnapshot` is deliberate: on a machine with no
+  // stats folder, or one whose folder holds no runs yet, no snapshot is ever sent and the
+  // window would keep the old names until it was restarted.
+  api.onSeasonChanged(() => {
+    void api.getState().then((state) => {
+      if (state.snapshot) render(state.snapshot);
+    });
     refreshPractice();
   });
 
@@ -5075,7 +5639,7 @@ function ring(x, y) {
  */
 function pressSound(el) {
   if (el.classList.contains("tab")) return null;
-  if (el.classList.contains("queue-btn")) return "press";
+  if (el.classList.contains("commit")) return "press";
   if (el.hasAttribute("aria-pressed")) {
     return el.getAttribute("aria-pressed") === "true" ? "toggleOff" : "toggleOn";
   }

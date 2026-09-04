@@ -2,7 +2,7 @@
 
 Apogee reads a folder that another program wrote, and uploads some of it to a server so
 a ladder can be settled. That is worth stating plainly rather than burying, because the
-alternative — a tool that quietly reads your files and sends them somewhere — is exactly
+alternative, a tool that quietly reads your files and sends them somewhere, is exactly
 what people are right to be suspicious of.
 
 This describes what the software actually does. If something here disagrees with the
@@ -52,7 +52,7 @@ Your player row is readable only by you. This is enforced by the database, not b
 the client:
 
 - Row-level security restricts every player table to the signed-in owner's rows.
-- Moderation flags are not readable even by you — an account that can see it is under
+- Moderation flags are not readable even by you: an account that can see it is under
   review knows exactly when to stop.
 - Opponent information reaches your client only as the server chooses to release it:
   a display name and the scores of the match you are actually in.
@@ -84,7 +84,7 @@ by hand today; that is honest rather than ideal, and it is tracked as something 
 self-service.
 
 Uninstalling the app removes it from your computer but does not delete server-side data
-on its own — ask for deletion if that is what you want.
+on its own; ask for deletion if that is what you want.
 
 ## Changes
 

@@ -7,10 +7,12 @@ are read straight from the stats folder, never typed in.
 See [PLAN.md](PLAN.md) for the full design: match format, rating, anti-cheat, and the
 phased build.
 
-Before installing, two things worth reading rather than assuming:
-[PRIVACY.md](PRIVACY.md) — exactly what is uploaded and what is not.
-[FAIR-PLAY.md](FAIR-PLAY.md) — what the anti-cheat catches, what it cannot, and how to
+Before installing, three things worth reading rather than assuming:
+[PRIVACY.md](PRIVACY.md): exactly what is uploaded and what is not.
+[FAIR-PLAY.md](FAIR-PLAY.md): what the anti-cheat catches, what it cannot, and how to
 dispute a voided match.
+[TERMS.md](TERMS.md): what the service asks of you and what it does not promise.
+All three are linked from the bottom of the client's rail as well.
 
 ## Status
 
@@ -74,14 +76,27 @@ as the player base grows.
 Eight tiers run from Stargazer to Supernova, defined in `data/apogee_ranks.json`.
 Nothing in the code keys off the names, so they can be renamed freely.
 
-This is the *rating* ladder, and it is one of four. The three category ladders and the
+This is the *rating* ladder, and it is one of seven. The six category ladders and the
 season's overall standing live in `data/seasons/season-1.json` and are edited in the
-app's Season tab. All four use separate names and separate hue bands, on purpose.
+app's Season tab. All of them use separate names and separate hue bands, on purpose.
+
+### The colours match the names
+
+Every rank colour is chosen for the thing the rank is called: Arecibo is dish phosphor,
+Supernova is the orange of one, Blunderbuss is old brass and Photon Lance is white. That
+is the point of them, so nothing re-derives them from a formula. A ladder people talk
+about by name should look like the names.
 
 Open `tools/rank-theme-editor.html` in a browser to edit the palette visually: badges,
 ladder distribution, a match card built from real scores, and the promotion moment all
 update live. Copy the generated JSON back into `data/apogee_ranks.json`, then run
 `npm run ranks` to confirm the bands still tile 0 to 100 with no gap or overlap.
+
+`npm run ranks` also reports, without failing, any colour that would disappear against a
+light ground - a screenshot or a web page. Some of them do, deliberately. The dark side is
+handled at draw time by `legibleOnDark()` in the renderer, which lifts a colour just far
+enough to be visible without changing what it is. `npm run docs:ranks` renders every rank
+name on both grounds if you want to look.
 
 ## Layout
 
@@ -309,41 +324,40 @@ resolves to nothing rather than silently tracking the wrong season.
 ## Practice: the season without the queue
 
 The season is a benchmark, and grinding it should not require an opponent. The Season
-screen shows the pool **one difficulty at a time** — the way every benchmark it is drawn
-from is played — grouped by category and sub-skill and no further, with your personal
+screen shows the pool **one difficulty at a time**, the way every benchmark it is drawn
+from is played, grouped by category and sub-skill and no further, with your personal
 best, the score the next rank wants, and a **Play** button that deep-links straight into
 KovaaK's. Rows your next rank is actually scored on are highlighted, and the screen opens
 on the band holding the most of them.
 
 Which family a scenario belongs to is how the ladder grades it (§14) and is deliberately
-not shown: `Reactive Tracking` is one comprehensive list, not two lists called
-`Ground Plaza` and `Air CELESTIAL`.
+not shown: `Reactive Tracking` is one list, not two called `Ground Plaza` and
+`Air CELESTIAL`.
 
 How far through its *current* rank step a score is fills the row itself, measured from
-the threshold already cleared rather than from zero — from zero everything you have
-touched reads as nearly full and the fill says nothing. Filling the row rather than a bar
-inside it means a band of twenty-two is one ragged edge to scan down instead of
+the threshold already cleared rather than from zero. Measured from zero, everything you
+have touched reads as nearly full and the fill says nothing. Filling the row rather than
+a bar inside it means a band of twenty-two is one ragged edge to scan down instead of
 twenty-two gauges to read one at a time.
 
-For a whole session at one difficulty there are sixteen KovaaK's playlists: **Clicking,
-Tracking and Switching separately at each of the four bands**, plus one of everything at
-each band. They install from the same screen, one at a time or all sixteen, straight into
-KovaaK's own Playlists folder.
+For a whole session at one difficulty there are twenty-eight KovaaK's playlists: **each of
+the six categories at each of the four bands**, plus one of everything at each band. They
+install from the same screen, one at a time or all twenty-eight, straight into KovaaK's own
+Playlists folder.
 
 ```
-Apogee Clicking Novice          8      Apogee Tracking Novice          8
-Apogee Clicking Intermediate    8      Apogee Tracking Intermediate    8
-Apogee Clicking Advanced        8      Apogee Tracking Advanced        8
-Apogee Clicking Expert          8      Apogee Tracking Expert          8
-Apogee Switching Novice         6      Apogee All Novice              22
-Apogee Switching Intermediate   6      Apogee All Intermediate        22
-Apogee Switching Advanced       6      Apogee All Advanced            22
-Apogee Switching Expert         6      Apogee All Expert              22
+Apogee Static Clicking     9      Apogee Speed Switching      9
+Apogee Dynamic Clicking   10      Apogee Evasive Switching    6
+Apogee Precise Tracking   11      Apogee All                 52
+Apogee Reactive Tracking   7
 ```
+
+Each of those is four playlists, one per band, ending `Novice`, `Intermediate`, `Advanced`
+or `Expert`. A category's count is its families, because a band takes one variant of each.
 
 KovaaK's reads playlists at startup, so the app says so rather than leaving anyone hunting
 a menu for a file that is genuinely on disk. The names never begin `Apogee Match`, which
-is the prefix the client sweeps between matches — a practice playlist deleted mid-session
+is the prefix the client sweeps between matches; a practice playlist deleted mid-session
 would look exactly like the app losing your things.
 
 ```bash
@@ -433,35 +447,35 @@ requires more energy for the same rank than Clicking, which is easy to get backw
 Apogee is built on work other people published, and it would not exist without it.
 
 The benchmark authors. Season 1's pool is 88 scenarios drawn from twenty-three
-benchmarks, and every one of them is somebody's design work — deciding which scenario
-measures which sub-skill, and at what difficulty, is the hard part and it was already
+benchmarks, and every one of them is somebody's design work. Deciding which scenario
+measures which sub-skill, and at what difficulty, is the hard part, and it was already
 done. Each links to its own published sheet, which is the source Apogee reads rather than
 a hand-copied version of it. The counts overlap, because a scenario several benchmarks
 name is credited to all of them:
 
-- [Viscose Benchmarks](https://docs.google.com/spreadsheets/d/1bFAlt6g_Gm8P9RBkcAoObpbIGFwVS5gXIdIK9B_YyZE) — 25 scenarios
+- [Viscose Benchmarks](https://docs.google.com/spreadsheets/d/1bFAlt6g_Gm8P9RBkcAoObpbIGFwVS5gXIdIK9B_YyZE) (25 scenarios)
 - [Voltaic S5](https://docs.google.com/spreadsheets/d/1RjVJi9AdWLXIOkKR8z6mhmRo_SNokJPxKtLXHWk12Z4)
-  and [S5.5](https://docs.google.com/spreadsheets/d/1kiS9CvXTQjLsm42nBafhddu2Q7XdWtxaMtumeZ_sV-c) — 24 scenarios
-- [Viscose Benchmarks S2](https://docs.google.com/spreadsheets/d/1WeuEk444WOkTpvOGMYiertxwlI9gRQSapYiwxjFbT08) — 18 scenarios
-- [snakbox Benchmark](https://evxl.app/benchmarks/snakbox%20Benchmark) — 11 scenarios
-- [Astro Tracking Benchmark](https://docs.google.com/spreadsheets/d/1KXrXJpCl8xnoa3JuFcthE306Q9R9MOAJWhXj_xXzLOQ) — 10 scenarios
-- [Voltaic S4](https://docs.google.com/spreadsheets/d/1qUzF2KHcfs_FgsaDFRfGsLgHhoC1Md5bzMOUbsYzSjg) — 9 scenarios
-- [Voltaic S3](https://docs.google.com/spreadsheets/d/1yHj87rQNW2WsuH24UoKZajNwNpI6CVyUjR3AwBMbnnY) — 6 scenarios
-- [AimSpeed Benchmarks 2.0](https://evxl.app/benchmarks/AimSpeed%20Benchmarks%202.0) — 6 scenarios
-- [Jade Palace Air](https://docs.google.com/spreadsheets/d/11-E1KWTCw27s6fhW4nwB0F_2ckbdv5RDcBiseUcm1E4) — 5 scenarios
-- [Lemon Static Benchmark](https://docs.google.com/spreadsheets/d/1V9lt5BjKLpzoKBPd-4WgStzhKv-javTWaNcISaLJERg) — 5 scenarios
-- [Jade Palace Ground](https://docs.google.com/spreadsheets/d/131tMwNmJY-lJPVdddpOWKY9uajDWWe3I5ym-UzmF0QE) — 4 scenarios
-- [Revosect S1](https://docs.google.com/spreadsheets/d/1MQujX14dooQWcHu4mvvP5fetHVIr7Apg1taR96hSho0) — 4 scenarios
-- [Sparky (Voltaic) S1](https://docs.google.com/spreadsheets/d/1UttTs6aNPzwAWCEKnRUc8hC0AzbZI2esLq4x8ngcVpU) — 3 scenarios
-- [e1se Smooth Benchmark](https://docs.google.com/spreadsheets/d/1IXyjASZHs8yaVgS_os0wMLuvHIdZ2L8wrah_ShjXQ7w) — 3 scenarios
-- [Aimerz+ SpeedTS](https://docs.google.com/spreadsheets/d/1-9-RQ5-a78HF49eMsYcf7PjBkpbgIahpBwTLYSu9RK4) — 3 scenarios
+  and [S5.5](https://docs.google.com/spreadsheets/d/1kiS9CvXTQjLsm42nBafhddu2Q7XdWtxaMtumeZ_sV-c) (24 scenarios)
+- [Viscose Benchmarks S2](https://docs.google.com/spreadsheets/d/1WeuEk444WOkTpvOGMYiertxwlI9gRQSapYiwxjFbT08) (18 scenarios)
+- [snakbox Benchmark](https://evxl.app/benchmarks/snakbox%20Benchmark) (11 scenarios)
+- [Astro Tracking Benchmark](https://docs.google.com/spreadsheets/d/1KXrXJpCl8xnoa3JuFcthE306Q9R9MOAJWhXj_xXzLOQ) (10 scenarios)
+- [Voltaic S4](https://docs.google.com/spreadsheets/d/1qUzF2KHcfs_FgsaDFRfGsLgHhoC1Md5bzMOUbsYzSjg) (9 scenarios)
+- [Voltaic S3](https://docs.google.com/spreadsheets/d/1yHj87rQNW2WsuH24UoKZajNwNpI6CVyUjR3AwBMbnnY) (6 scenarios)
+- [AimSpeed Benchmarks 2.0](https://evxl.app/benchmarks/AimSpeed%20Benchmarks%202.0) (6 scenarios)
+- [Jade Palace Air](https://docs.google.com/spreadsheets/d/11-E1KWTCw27s6fhW4nwB0F_2ckbdv5RDcBiseUcm1E4) (5 scenarios)
+- [Lemon Static Benchmark](https://docs.google.com/spreadsheets/d/1V9lt5BjKLpzoKBPd-4WgStzhKv-javTWaNcISaLJERg) (5 scenarios)
+- [Jade Palace Ground](https://docs.google.com/spreadsheets/d/131tMwNmJY-lJPVdddpOWKY9uajDWWe3I5ym-UzmF0QE) (4 scenarios)
+- [Revosect S1](https://docs.google.com/spreadsheets/d/1MQujX14dooQWcHu4mvvP5fetHVIr7Apg1taR96hSho0) (4 scenarios)
+- [Sparky (Voltaic) S1](https://docs.google.com/spreadsheets/d/1UttTs6aNPzwAWCEKnRUc8hC0AzbZI2esLq4x8ngcVpU) (3 scenarios)
+- [e1se Smooth Benchmark](https://docs.google.com/spreadsheets/d/1IXyjASZHs8yaVgS_os0wMLuvHIdZ2L8wrah_ShjXQ7w) (3 scenarios)
+- [Aimerz+ SpeedTS](https://docs.google.com/spreadsheets/d/1-9-RQ5-a78HF49eMsYcf7PjBkpbgIahpBwTLYSu9RK4) (3 scenarios)
 - [Aimerz+ Precise Tracking](https://docs.google.com/spreadsheets/d/1czvuvgks1SoMNUH_aevVPm5lOgqCQHa_UVR8izpUxfg),
   [Reactive Tracking](https://docs.google.com/spreadsheets/d/15VloIkv-V-B3oq4JTbSnIKwsPMwccx2sQEwTohqlprw) and
-  [Evasive Switching](https://docs.google.com/spreadsheets/d/1kxI184tdhT55k98gsfCHy_CRBznu84aaJP8PAJg6-dU) — 2 scenarios each
-- [Viscose Entry Benchmarks](https://docs.google.com/spreadsheets/d/1wMKCKhFQDwGvFgo9KvfbpNYzJ05XQ8gnyXjxNOhdCww) — 2 scenarios
+  [Evasive Switching](https://docs.google.com/spreadsheets/d/1kxI184tdhT55k98gsfCHy_CRBznu84aaJP8PAJg6-dU) (2 scenarios each)
+- [Viscose Entry Benchmarks](https://docs.google.com/spreadsheets/d/1wMKCKhFQDwGvFgo9KvfbpNYzJ05XQ8gnyXjxNOhdCww) (2 scenarios)
 - [Anima Micro v1](https://docs.google.com/spreadsheets/d/1H8WPvDyOGtSb9f-lNocNxULRDhptG5PlE2mcpyxnaSY),
   [Anima Micro v2](https://evxl.app/benchmarks/Anima%20Micro%20v2) and
-  [Jade Palace Dynamic](https://docs.google.com/spreadsheets/d/1W_RYk3_xbvsS4BHnTItgkwWIoEVh-dbAWDhAWUyvnZU) — 1 scenario each
+  [Jade Palace Dynamic](https://docs.google.com/spreadsheets/d/1W_RYk3_xbvsS4BHnTItgkwWIoEVh-dbAWDhAWUyvnZU) (1 scenario each)
 
 Forty-three benchmarks are read in total, not twenty-three. The other twenty set no
 threshold and appear in no season, but they are what `data/subskills.json` is derived
@@ -474,7 +488,7 @@ pool changes.
 
 No benchmark's thresholds appear anywhere in a season. Where one is consulted it is
 converted to percentiles and discarded (`tools/calibrateLadder.ts`). A rank in Apogee is
-a share of a scenario's KovaaK's leaderboard, not a borrowed number — an earlier
+a share of a scenario's KovaaK's leaderboard, not a borrowed number. An earlier
 hand-derived sub-category mapping turned out to be wrong on 6 of 18 scenarios, which is
 the argument for reading the source and deriving the rest.
 
@@ -483,12 +497,12 @@ category ladders and the season's overall standing use four separate vocabularie
 four separate hue bands, none of them any benchmark's, so a rank here can never be
 mistaken for a Voltaic or Revosect rank in either direction.
 
-[KovaaK's](https://store.steampowered.com/app/824270/) (The Meta) — the game. Every
+[KovaaK's](https://store.steampowered.com/app/824270/) (The Meta) is the game. Every
 score Apogee reads was produced by KovaaK's, and its servers are what make verification
 possible at all: they are the referee, and Apogee is a client of their record rather
 than an authority on its own, driving play *to* KovaaK's rather than away from it.
 
-[evxl.app](https://evxl.app) — the benchmark registry, read from the route it
+[evxl.app](https://evxl.app) is the benchmark registry, read from the route it
 publishes, which is what makes 121 benchmarks trackable instead of one hard-coded list.
 
 Scenario and playlist authors, whose scenarios are the actual content of every match.

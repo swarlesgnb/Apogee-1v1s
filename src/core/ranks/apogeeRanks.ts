@@ -19,8 +19,6 @@ export interface RankTier {
   /** [inclusiveLower, exclusiveUpper) percentile band, 0..100. */
   percentile: [number, number];
   color: string;
-  glow: string;
-  gradient: [string, string];
   /**
    * Cap the tier at a fixed number of players, regardless of percentile.
    *

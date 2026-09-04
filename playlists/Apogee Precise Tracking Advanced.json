@@ -1,0 +1,59 @@
+{
+	"playlistName": "Apogee Precise Tracking Advanced",
+	"playlistId": 0,
+	"authorSteamId": "",
+	"authorName": "",
+	"scenarioList": [
+		{
+			"scenario_name": "cloverRawControl Easy",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "Controlsphere Far",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "Smoothbot Pauer Glider Intermediate",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "VT PGT Advanced S5",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "PGTI Voltaic",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "VT PreciseOrb Intermediate",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "Aimerz+ PreciseTrack S1 Modified",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "VT Smoothbot Advanced",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "Smoothsphere",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "VT Snake Track Intermediate S5",
+			"play_Count": 1
+		},
+		{
+			"scenario_name": "waldoTS Intermediate",
+			"play_Count": 1
+		}
+	],
+	"description": "Season 1 practice. 11 scenarios, the ones this season ranks you on. Play them as often as you like - nothing here is a match, and none of it settles anything.",
+	"hasOfflineScenarios": false,
+	"hasEdited": true,
+	"shareCode": "",
+	"version": 31,
+	"updated": 1788481006,
+	"isPrivate": false
+}

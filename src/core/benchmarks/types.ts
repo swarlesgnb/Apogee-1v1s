@@ -41,6 +41,15 @@ export interface CategoryDef {
    */
   windowSize?: number;
   /**
+   * How many ranks each window reaches past its own stride, into the window above.
+   *
+   * Absent or zero on a ladder whose windows abut. Grading does not need it - a family
+   * takes the best of its variants and an overlapping rank resolves itself - but naming
+   * the *next* rank does, because two windows can grade it and only the lower one names a
+   * scenario the player has a reason to have launched.
+   */
+  windowOverlap?: number;
+  /**
    * This category's own ladder, when it has one.
    *
    * A season gives Clicking, Tracking and Switching separate ranks (PLAN.md §14), so
