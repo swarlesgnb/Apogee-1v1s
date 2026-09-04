@@ -6,7 +6,7 @@
   "$refusals": "A correction needs its measurement to REFUTE the assigned label by a factor of ten, not merely sit near its edge. It needs at least one benchmark that names the scenario, and `namedBy` is checked pair by pair against the committed definitions so a claim of support cannot be invented - the check caught exactly that while this file was being written. A correction that agrees with KovaaK's is refused rather than ignored, because a correction nobody is checking is how a wrong label becomes permanent. npm run validate:aimtypes re-derives every figure below from the stats folder and fails if the separation has closed.",
   "$subCategory": "Deliberately not recorded here. The sub-skill is derived from (benchmark label, aim type) by tools/deriveSubskills.ts, so fixing the aim type fixes the sub-skill on its own - domiSwitch went from Linear Clicking to Evasive Switching with no sub-skill written anywhere. Naming it here as well would be a second source of truth for a field that already has one.",
   "measurement": {
-    "statistic": "shots per kill, summed over every kill row in every local run whose filename begins '<scenario> - '. The exact prefix matters: matching '<scenario>*' instead sweeps in every variant sharing the stem, which is how the first draft of these figures had VT DotTS Intermediate S5 at 33.6 over 28,299 kills rather than 40.5 over 5,184. Splitting the filename on ' - ' instead is also wrong, and loses every scenario whose own name contains it - Star Tracking Regen - @wa11p1per among them.",
+    "statistic": "shots per kill, summed over every kill row in every local run whose filename begins '<scenario> - '. The exact prefix matters: matching '<scenario>*' instead sweeps in every variant sharing the stem, which is how the first draft of these figures had VT DotTS Intermediate S5 at 33.6 over 28,299 kills rather than 40.4 over 5,649. Splitting the filename on ' - ' instead is also wrong, and loses every scenario whose own name contains it - Star Tracking Regen - @wa11p1per among them.",
     "source": "the KovaaK's stats folder, parsed by src/core/stats/parseStatsFile.ts",
     "sampledAt": "2026-08-30",
     "corpus": "365 of the scenarios KovaaK's publishes have local runs: 197 labelled Clicking, 72 Target Switching, 60 Tracking.",
@@ -34,8 +34,8 @@
         "examples": [
           {
             "scenario": "VT DotTS Intermediate S5",
-            "kills": 5184,
-            "shotsPerKill": 40.5,
+            "kills": 5649,
+            "shotsPerKill": 40.4,
             "weapon": "Track Master 100"
           },
           {
