@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-04T23:07:15.005Z",
+  "generatedAt": "2026-09-04T23:25:12.956Z",
   "coverage": [
     {
       "category": "Dynamic Clicking",
@@ -191,7 +191,7 @@
       "windowName": "Advanced",
       "total": 10,
       "measured": 6,
-      "runs": 105,
+      "runs": 107,
       "matchable": true,
       "complete": false,
       "scenarios": [
@@ -223,9 +223,9 @@
           "scenario": "VT Pasu Advanced S5",
           "label": "VT Pasu Advanced S5",
           "family": "Pasu",
-          "runs": 2,
+          "runs": 3,
           "measured": false,
-          "needs": 3
+          "needs": 2
         },
         {
           "scenario": "psalmTS angelic click",
@@ -247,7 +247,7 @@
           "scenario": "Pasu Voltaic Reload",
           "label": "Pasu Voltaic Reload",
           "family": "Pasu Reload",
-          "runs": 9,
+          "runs": 10,
           "measured": true,
           "needs": 0
         },
@@ -1990,7 +1990,7 @@
     "windowSize": 4
   },
   "player": {
-    "totalRuns": 12510,
+    "totalRuns": 12517,
     "scenarioCount": 909,
     "streak": 34,
     "benchmarkRank": "Snowline",
@@ -2630,9 +2630,9 @@
             125000,
             150000
           ],
-          "energy": 24780,
+          "energy": 24950,
           "rankCount": 6,
-          "progressToNextRank": 0.9912065637668519,
+          "progressToNextRank": 0.9980196368207442,
           "played": 8,
           "total": 10,
           "positional": null
@@ -4526,7 +4526,7 @@
         "label": "Pasu Voltaic Reload adv",
         "ceiling": 79,
         "floor": 64,
-        "median": 74,
+        "median": 73.5,
         "gap": 0.189873417721519
       },
       {

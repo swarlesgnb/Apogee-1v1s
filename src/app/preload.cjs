@@ -170,6 +170,14 @@ contextBridge.exposeInMainWorld("apogee", {
   /** The season definition currently on disk. */
   getSeason: () => ipcRenderer.invoke("apogee:getSeason"),
 
+  /**
+   * The rating ladder - `data/apogee_ranks.json` - which is a different file from the
+   * season and paints the accent colour, the header, the hero and the Ranks page.
+   */
+  getRankTheme: () => ipcRenderer.invoke("apogee:getRankTheme"),
+  saveRankTheme: (theme, fingerprint) =>
+    ipcRenderer.invoke("apogee:saveRankTheme", { theme, fingerprint }),
+
   /** Scenarios that could be added, with a suggested category and thresholds. */
   availableScenarios: () => ipcRenderer.invoke("apogee:availableScenarios"),
 

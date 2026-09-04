@@ -993,6 +993,10 @@ function showOpponent(data) {
 let seasonDraft = null;
 /** The season and pool as they were when `seasonDraft` was taken. Null on an old main. */
 let seasonFingerprint = null;
+/** `data/apogee_ranks.json`, edited on the same screen and saved by the same button. */
+let rankTheme = null;
+let rankThemeFingerprint = null;
+let rankThemeDirty = false;
 /**
  * Energy one rank of one family is worth.
  *
@@ -1190,6 +1194,39 @@ function colourNote(color) {
   if (darkBad) return `disappears on dark (${onDark.toFixed(1)}:1)`;
   if (lightBad) return `disappears on light (${onLight.toFixed(1)}:1)`;
   return null;
+}
+
+/**
+ * The rating ladder, presented the way the season's ladders are.
+ *
+ * A live view rather than a copy: the getters read `rankTheme.tiers` and the setters write
+ * back into them, so an edit made through the rows below is an edit to the theme that gets
+ * saved. Building a snapshot and copying it back afterwards was the obvious shape and it
+ * loses a rename, because the rows key colours by name and a copy has no way to know which
+ * old name a new one came from.
+ */
+function ratingLadder() {
+  const tiers = () => (rankTheme && rankTheme.tiers) || [];
+  return {
+    get rankNames() {
+      return tiers().map((t) => t.name);
+    },
+    set rankNames(names) {
+      tiers().forEach((t, i) => { t.name = names[i]; });
+    },
+    rankColors: new Proxy({}, {
+      ownKeys: () => tiers().map((t) => t.name),
+      getOwnPropertyDescriptor: () => ({ enumerable: true, configurable: true }),
+      has: (_t, name) => tiers().some((x) => x.name === name),
+      get: (_t, name) => tiers().find((x) => x.name === name)?.color,
+      set: (_t, name, value) => {
+        const tier = tiers().find((x) => x.name === name);
+        if (tier) tier.color = value;
+        return true;
+      },
+      deleteProperty: () => true,
+    }),
+  };
 }
 
 /** Every colour used by more than one rank anywhere in the season. */
@@ -1714,6 +1751,17 @@ async function loadSeasonEditor() {
   }
 
   seasonDraft = result.season;
+  // The rating ladder rides along, because it is edited on this screen and saved by the
+  // same button. A main process without the handler simply leaves it null and the section
+  // does not render, rather than failing the whole editor.
+  if (window.apogee.getRankTheme) {
+    const ranks = await window.apogee.getRankTheme();
+    if (ranks && !ranks.error) {
+      rankTheme = ranks.theme;
+      rankThemeFingerprint = ranks.fingerprint ?? null;
+      rankThemeDirty = false;
+    }
+  }
   // What the files looked like when this draft was taken. Sent back with the save, which
   // main refuses if they have moved on - see the note on `apogee:saveSeason`.
   seasonFingerprint = result.fingerprint ?? null;
@@ -1918,13 +1966,30 @@ function renderSeasonEditor() {
   const ranks = $("seasonRanks");
   ranks.textContent = "";
 
+  // The rating ladder is edited here too, through an adapter rather than a second editor.
+  //
+  // `data/apogee_ranks.json` is a different file with a different shape - tiers carrying a
+  // percentile band, not names and colours keyed by name - but it is the same job, and it
+  // paints more of the window than the season does. Presenting it as `rankNames` and
+  // `rankColors` lets it reuse the rows below, including the contrast warning and the
+  // duplicate-colour check, and writes straight back through to the tiers.
   const ladders = s.categories
     .map((c) => ({ title: c.name, owner: c, isCategory: true }))
-    .concat([{ title: "Overall", owner: s, isCategory: false }]);
+    .concat([{ title: "Overall", owner: s, isCategory: false }])
+    .concat(
+      rankTheme
+        ? [{ title: "Rating tiers", owner: ratingLadder(), isCategory: false, isRating: true }]
+        : [],
+    );
 
   const size = seasonWindowSize();
 
-  ladders.forEach(({ title, owner, isCategory }) => {
+  ladders.forEach(({ title, owner, isCategory, isRating }) => {
+    // Both files are saved by one button, so an edit has to mark the right one dirty.
+    const touched = () => {
+      if (isRating) rankThemeDirty = true;
+      seasonDirty(true);
+    };
     // Only a category's ladder is windowed. The overall one is a readout derived from
     // the three (PLAN.md §14) and has no scenarios under it, so it stays freely editable.
     const windowed = isCategory && size > 0;
@@ -1967,7 +2032,7 @@ function renderSeasonEditor() {
           owner.rankColors[text.value] = owner.rankColors[previous];
           delete owner.rankColors[previous];
         }
-        seasonDirty(true);
+        touched();
       });
 
       const colour = document.createElement("input");
@@ -1999,7 +2064,7 @@ function renderSeasonEditor() {
       colour.addEventListener("input", () => {
         owner.rankColors[owner.rankNames[i]] = colour.value;
         judge();
-        seasonDirty(true);
+        touched();
       });
 
       judge();
@@ -4829,6 +4894,24 @@ if (hasSeasonEditor) {
     const btn = $("seasonSave");
     btn.disabled = true;
     setSeasonStatus("saving…", "");
+
+    // The rating ladder first, and only when it changed. It is a separate file, so a
+    // season that saves while the ranks fail to leaves the two disagreeing - and the
+    // ranks are the cheaper of the two to redo.
+    if (rankThemeDirty && rankTheme && window.apogee.saveRankTheme) {
+      const ranks = await window.apogee.saveRankTheme(rankTheme, rankThemeFingerprint);
+      if (ranks && ranks.error) {
+        setSeasonStatus(ranks.error, "bad");
+        if (ranks.stale) $("seasonReload").classList.add("wants-attention");
+        btn.disabled = false;
+        return;
+      }
+      rankThemeDirty = false;
+      if (window.apogee.getRankTheme) {
+        const fresh = await window.apogee.getRankTheme();
+        if (fresh && !fresh.error) rankThemeFingerprint = fresh.fingerprint ?? null;
+      }
+    }
 
     const result = await window.apogee.saveSeason(seasonDraft, seasonFingerprint);
 

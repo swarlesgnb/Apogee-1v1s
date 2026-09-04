@@ -12,7 +12,7 @@
  */
 
 import { app, BrowserWindow, ipcMain, screen, shell, dialog } from "electron";
-import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, readFileSync, unlinkSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { createHash } from "node:crypto";
 
@@ -29,6 +29,7 @@ import {
   suppressCrashDialogs,
   log,
 } from "./crashLog.ts";
+import { loadRankTheme } from "../core/ranks/apogeeRanks.ts";
 import { loadQuestState, saveQuestState } from "./questStore.ts";
 import { clearOverrides, loadOverrides, overridesPath, saveOverrides } from "./adminStore.ts";
 import { TOKENS } from "../core/admin/overrides.ts";
@@ -1857,16 +1858,16 @@ function suggestThresholds(scores: number[], ranks: number): number[] {
  * the season it is given. An editor that never saw a change to `data/pool.json` will
  * happily rebuild it from a stale draft and take the change out again.
  */
-function seasonFingerprint(): string {
-  const parts: string[] = [];
-  for (const file of [seasonPath(), dataFile("pool.json")]) {
-    try {
-      parts.push(createHash("sha256").update(readFileSync(file)).digest("hex").slice(0, 16));
-    } catch {
-      parts.push("missing");
-    }
+function fileFingerprint(file: string): string {
+  try {
+    return createHash("sha256").update(readFileSync(file)).digest("hex").slice(0, 16);
+  } catch {
+    return "missing";
   }
-  return parts.join(".");
+}
+
+function seasonFingerprint(): string {
+  return [seasonPath(), dataFile("pool.json")].map(fileFingerprint).join(".");
 }
 
 ipcMain.handle("apogee:getSeason", () => {
@@ -1893,6 +1894,85 @@ ipcMain.handle("apogee:getSeason", () => {
  * score, and writing it first would mean the app is already broken by the time anyone
  * finds out.
  */
+/**
+ * The rating ladder: the eight tiers in `data/apogee_ranks.json`.
+ *
+ * Separate from the season on purpose - a tier says where you sit against other players
+ * and a season rank says what your scores are worth - but it had no editor in the app at
+ * all, and it paints more of the window than the season does: the accent colour on every
+ * screen, the badge and name in the header, the hero, the opponent card, the Ranks page's
+ * top ladder and the Season page's overall tier. Editing ranks in the season editor and
+ * watching none of that move is indistinguishable from the editor being broken, which is
+ * exactly how it was reported. `tools/rank-theme-editor.html` could always do this; a
+ * standalone browser page is not where somebody looks when the app is open in front of
+ * them.
+ */
+ipcMain.handle("apogee:getRankTheme", () => {
+  try {
+    const path = dataFile("apogee_ranks.json");
+    return {
+      theme: loadRankTheme(),
+      path,
+      fingerprint: fileFingerprint(path),
+    };
+  } catch (err) {
+    return { error: err instanceof Error ? err.message : String(err) };
+  }
+});
+
+ipcMain.handle("apogee:saveRankTheme", async (_e, { theme, fingerprint }) => {
+  if (!state.session || !(await isAdmin().catch(() => false))) {
+    return { error: "only an admin can edit the ranks" };
+  }
+
+  const path = dataFile("apogee_ranks.json");
+  if (fingerprint && fingerprint !== fileFingerprint(path)) {
+    return {
+      error:
+        "the ranks on disk have changed since this editor loaded them - saving now would " +
+        "put those changes back. Discard to reload, then make the edit again.",
+      stale: true,
+    };
+  }
+
+  const body = JSON.stringify(theme, null, 2) + "\n";
+  const written: string[] = [];
+
+  try {
+    // Written to a scratch path and loaded back before either real copy is touched.
+    // `loadRankTheme` is where the percentile bands are checked for gaps and overlaps,
+    // and a theme with a gap mis-ranks every player silently - so it has to fail here,
+    // with the file still the way it was, rather than after the app is already wrong.
+    const probe = join(app.getPath("temp"), `apogee-ranks-${process.pid}.json`);
+    writeFileSync(probe, body, "utf8");
+    try {
+      loadRankTheme(probe);
+    } finally {
+      try { unlinkSync(probe); } catch { /* a temp file that will not delete is not an error */ }
+    }
+  } catch (err) {
+    return { error: err instanceof Error ? err.message : String(err) };
+  }
+
+  try {
+    writeFileSync(path, body, "utf8");
+    written.push(path);
+
+    const source = sourceDataDir();
+    const sourcePath = source ? join(source, "apogee_ranks.json") : null;
+    if (sourcePath && sourcePath !== path) {
+      writeFileSync(sourcePath, body, "utf8");
+      written.push(sourcePath);
+    }
+  } catch (err) {
+    return { error: `could not write the ranks: ${err instanceof Error ? err.message : err}` };
+  }
+
+  rebuild("ranks edited");
+  broadcast("apogee:seasonChanged", { at: Date.now() });
+  return { ok: true, paths: written };
+});
+
 ipcMain.handle("apogee:saveSeason", async (_e, { season, fingerprint }) => {
   if (!state.session || !(await isAdmin().catch(() => false))) {
     return { error: "only an admin can edit the season" };
