@@ -222,12 +222,12 @@
             "Wingshot"
           ],
           "rankColors": {
-            "Rock": "#8d5a35",
-            "Bolas": "#9a6637",
-            "Boomerang": "#a77338",
-            "Sling": "#b58239",
-            "Net": "#c4923a",
-            "Wingshot": "#cba142"
+            "Rock": "#986b49",
+            "Bolas": "#9d714a",
+            "Boomerang": "#a3774b",
+            "Sling": "#a87e4c",
+            "Net": "#ae854d",
+            "Wingshot": "#b38c4f"
           }
         },
         {
@@ -249,12 +249,12 @@
             "Tracer"
           ],
           "rankColors": {
-            "Net": "#c4923a",
-            "Wingshot": "#cba142",
-            "Skeet": "#d1af4b",
-            "Buckshot": "#d6bd54",
-            "Flak": "#dbca5e",
-            "Tracer": "#e0d668"
+            "Net": "#ae854d",
+            "Wingshot": "#b38c4f",
+            "Skeet": "#b89452",
+            "Buckshot": "#bd9c55",
+            "Flak": "#c2a558",
+            "Tracer": "#c6ae5d"
           }
         },
         {
@@ -276,12 +276,12 @@
             "Heat Seeker"
           ],
           "rankColors": {
-            "Flak": "#dbca5e",
-            "Tracer": "#e0d668",
-            "Lead Sight": "#e5e173",
-            "Proximity Fuse": "#e6e97e",
-            "Radar Lock": "#e4ed89",
-            "Heat Seeker": "#e3f094"
+            "Flak": "#c2a558",
+            "Tracer": "#c6ae5d",
+            "Lead Sight": "#cbb762",
+            "Proximity Fuse": "#cfc168",
+            "Radar Lock": "#d3cb6f",
+            "Heat Seeker": "#d7d677"
           }
         },
         {
@@ -300,10 +300,10 @@
             "Rank 5"
           ],
           "rankColors": {
-            "Radar Lock": "#e4ed89",
-            "Heat Seeker": "#e3f094",
-            "CIWS": "#e3f3a0",
-            "Kill Vehicle": "#e3f6ac",
+            "Radar Lock": "#d3cb6f",
+            "Heat Seeker": "#d7d677",
+            "CIWS": "#dae17f",
+            "Kill Vehicle": "#deed89",
             "Rank 5": "#3f4652"
           },
           "positional": {
@@ -556,12 +556,12 @@
             "Downdraft"
           ],
           "rankColors": {
-            "Ripple": "#356f8d",
-            "Gust": "#37729a",
-            "Squall": "#3872a7",
-            "Crosswind": "#3971b5",
-            "Shear": "#3a6ec4",
-            "Downdraft": "#426ccb"
+            "Ripple": "#497a97",
+            "Gust": "#4f7fa1",
+            "Squall": "#5684ab",
+            "Crosswind": "#5d8ab5",
+            "Shear": "#668fbf",
+            "Downdraft": "#6f94ca"
           }
         },
         {
@@ -583,12 +583,12 @@
             "Waterspout"
           ],
           "rankColors": {
-            "Shear": "#3a6ec4",
-            "Downdraft": "#426ccb",
-            "Microburst": "#4b6ad1",
-            "Whirlwind": "#5469d6",
-            "Dust Devil": "#5e69db",
-            "Waterspout": "#686ae0"
+            "Shear": "#668fbf",
+            "Downdraft": "#6f94ca",
+            "Microburst": "#799ad4",
+            "Whirlwind": "#84a0df",
+            "Dust Devil": "#90a6e9",
+            "Waterspout": "#9cacf4"
           }
         },
         {
@@ -610,12 +610,12 @@
             "Typhoon"
           ],
           "rankColors": {
-            "Dust Devil": "#5e69db",
-            "Waterspout": "#686ae0",
-            "Twister": "#7973e5",
-            "Derecho": "#8b7ee9",
-            "Cyclone": "#9d89ed",
-            "Typhoon": "#ad94f0"
+            "Dust Devil": "#90a6e9",
+            "Waterspout": "#9cacf4",
+            "Twister": "#a9b2ff",
+            "Derecho": "#b8bafe",
+            "Cyclone": "#c6c2ff",
+            "Typhoon": "#d3cbfe"
           }
         },
         {
@@ -634,10 +634,10 @@
             "Rank 5"
           ],
           "rankColors": {
-            "Cyclone": "#9d89ed",
-            "Typhoon": "#ad94f0",
-            "Supercell": "#bda0f3",
-            "Maelstrom": "#cbacf6",
+            "Cyclone": "#c6c2ff",
+            "Typhoon": "#d3cbfe",
+            "Supercell": "#dfd5ff",
+            "Maelstrom": "#e9e0fe",
             "Rank 5": "#3f4652"
           },
           "positional": {
@@ -890,12 +890,12 @@
             "Chaser"
           ],
           "rankColors": {
-            "Raft": "#358d44",
-            "Canoe": "#379a4c",
-            "Skiff": "#38a754",
-            "Launch": "#39b55e",
-            "Cutter": "#3ac468",
-            "Chaser": "#42cb76"
+            "Raft": "#4e8055",
+            "Canoe": "#4f865c",
+            "Skiff": "#518c64",
+            "Launch": "#52936b",
+            "Cutter": "#549a73",
+            "Chaser": "#55a17c"
           }
         },
         {
@@ -917,12 +917,12 @@
             "Hunter"
           ],
           "rankColors": {
-            "Cutter": "#3ac468",
-            "Chaser": "#42cb76",
-            "Corvette": "#4bd183",
-            "Frigate": "#54d690",
-            "Destroyer": "#5edb9d",
-            "Hunter": "#68e0aa"
+            "Cutter": "#549a73",
+            "Chaser": "#55a17c",
+            "Corvette": "#57a985",
+            "Frigate": "#5ab08e",
+            "Destroyer": "#5cb898",
+            "Hunter": "#5fc0a2"
           }
         },
         {
@@ -944,12 +944,12 @@
             "Wraith"
           ],
           "rankColors": {
-            "Destroyer": "#5edb9d",
-            "Hunter": "#68e0aa",
-            "Interdictor": "#73e5b6",
-            "Marauder": "#7ee9c1",
-            "Reaper": "#89edcc",
-            "Wraith": "#94f0d6"
+            "Destroyer": "#5cb898",
+            "Hunter": "#5fc0a2",
+            "Interdictor": "#62c9ad",
+            "Marauder": "#66d2b8",
+            "Reaper": "#6adbc4",
+            "Wraith": "#6fe5d1"
           }
         },
         {
@@ -968,10 +968,10 @@
             "Rank 5"
           ],
           "rankColors": {
-            "Reaper": "#89edcc",
-            "Wraith": "#94f0d6",
-            "Phantom": "#a0f3df",
-            "Nemesis": "#acf6e7",
+            "Reaper": "#6adbc4",
+            "Wraith": "#6fe5d1",
+            "Phantom": "#74eede",
+            "Nemesis": "#7af9eb",
             "Rank 5": "#3f4652"
           },
           "positional": {

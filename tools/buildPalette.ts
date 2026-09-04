@@ -1,5 +1,6 @@
 /**
- * A rank ladder's colours, generated so that every rung survives both grounds.
+ * A rank ladder's colours, generated so that its rungs are evenly spaced on the screen
+ * they are read on.
  *
  *   npx tsx tools/buildPalette.ts                  print what would change
  *   npx tsx tools/buildPalette.ts --write          write it into the season
@@ -7,56 +8,78 @@
  *
  * WHY THIS EXISTS
  *
- * Three of the six ladders were ramped by hand from a start colour to an end colour, and
- * all three ran the same way into the same wall: they ascend by getting lighter, so their
- * top halves land in the near-whites. That reads beautifully in the client, which is dark,
- * and vanishes the moment a rank is screenshotted onto anything pale - twenty-two of the
- * forty-two names the rank sheet reports as disappearing on paper are the top rungs of
- * these three, and not one of them fails on dark.
- *
- * The band a colour has to stay inside to clear MIN_CONTRAST against both grounds is
- * narrow and it is arithmetic, not taste:
- *
- *     dark  #1e1b18   Y >= 2 * (0.0116 + 0.05) - 0.05  =  0.073
- *     light #eef1f6   Y <= (0.7998 + 0.05) / 2 - 0.05  =  0.375
- *
- * Five times in relative luminance for seventeen rungs. Lightness alone cannot carry a
- * ladder that narrow, so these ramps carry their hue as well, and the endpoints of each
- * hue sweep are the two colours the ladder was already built from. The identity survives;
- * only the range it is drawn over changes.
+ * Three of the six ladders were ramped by interpolating a start hex and an end hex channel
+ * by channel, and sRGB does not space anything evenly. `Reactive Tracking` spent nine of
+ * its sixteen rungs between 3.29:1 and 3.86:1 against the client's ground - over half the
+ * climb reading as one colour, with the difference between rank 1 and rank 9 being a thing
+ * you can only find by sampling pixels. A ladder is a sequence or it is a gradient, and
+ * this one had become a gradient.
  *
  * WHY OKLCH
  *
- * The first version interpolated the hex endpoints channel by channel in sRGB, which is
- * how the current ramps were made, and it is why `Reactive Tracking` spends nine of its
- * sixteen rungs between 3.29:1 and 3.86:1 on dark - visually one colour, and the ladder
- * stops reading as a climb. OKLab spaces its steps by perceived lightness, so equal steps
- * look equal. The luminance target is still solved in sRGB afterwards, because WCAG
- * contrast is defined there and nowhere else.
+ * OKLab spaces its steps by perceived lightness, so equal steps look equal - which is the
+ * entire ask. The luminance target is still solved back in sRGB afterwards, because WCAG
+ * contrast is defined there and nowhere else, and the contrast is what the floor is
+ * expressed in.
+ *
+ * WHAT IT DOES NOT DO
+ *
+ * It does not try to make a colour legible on paper. That was the first version's goal and
+ * it was the wrong place for it: see the band below. `legibleOn` corrects a rank colour
+ * towards whichever ground it is painted on, so every light surface handles itself, and
+ * this file is free to answer only to the client.
  *
  * WHAT IT REFUSES
  *
- * A ramp whose luminance stops ascending, and any rung under MIN_CONTRAST on either
- * ground. Both are checked on the colours actually produced rather than on the request,
- * so a hue that cannot be made to hit its target in gamut fails here instead of shipping.
+ * A ramp that stops ascending *as the client paints it*, a rung under the client's text
+ * floor, and a rung no amount of correction can get onto a light ground. All three are
+ * checked on the colours actually produced rather than on the request, so a hue that
+ * cannot hit its target in gamut fails here instead of shipping.
  */
 
 import { readFileSync, writeFileSync } from "node:fs";
 
-import { contrast, DARK_GROUND, LIGHT_GROUND, MIN_CONTRAST } from "../src/core/report/contrast.ts";
+import {
+  contrast,
+  DARK_GROUND,
+  legibleOn,
+  LIGHT_GROUND,
+  MIN_CONTRAST,
+  RANK_TEXT_CONTRAST,
+} from "../src/core/report/contrast.ts";
 import { dataFile, sourceDataDir } from "../src/core/dataDir.ts";
 
 const PLACEHOLDER = /^Rank \d+\**$/;
 
 /**
- * The legible band, derived rather than typed, so it moves if a ground does.
+ * The band the ramp is drawn across, in contrast against the client's own ground.
  *
- * A little inside the true edge on each side: a rung solved to land exactly on 2.00:1 is
- * one rounding away from being reported as a failure by the sheet that reads it back.
+ * The floor is the client's text floor and not MIN_CONTRAST, which is the whole lesson of
+ * the first version. Solving to 2:1 put the bottom seven rungs of every ladder under the
+ * 3.5:1 the client sets a rank name at, so the client lifted them - and the lift moves in
+ * five percent steps, which is coarse enough to reorder rungs that were only five percent
+ * apart to begin with. Measured on the result: Rock to Bolas went *down*, Boomerang up,
+ * Sling down, Net up. Half of every generated ladder stopped ascending on the one screen
+ * it is read on, to fix a paper problem, and it was strictly worse than the ramp it
+ * replaced.
+ *
+ * There is no light ceiling any more either, for the same reason there is no lift needed
+ * at the bottom: `legibleOn` corrects a colour towards whatever ground it is being painted
+ * on, so the sheet, a printout and anything else light already darken these themselves.
+ * Trying to satisfy both grounds in the data at once left a band of five times in
+ * luminance for seventeen rungs, and pinning the floor at 3.5:1 as well would have left
+ * 2.3 - about one perceptual step per rank, which is a ladder nobody can see the rungs of.
+ *
+ * So the ramp answers to the client, the paint answers to the ground, and each is solved
+ * where it can actually be solved.
  */
-const MARGIN = 1.06;
-const Y_MIN = MIN_CONTRAST * MARGIN * (luminance(DARK_GROUND) + 0.05) - 0.05;
-const Y_MAX = (luminance(LIGHT_GROUND) + 0.05) / (MIN_CONTRAST * MARGIN) - 0.05;
+// A little above the client's floor rather than exactly on it. A rung solved to land on
+// 3.50:1 comes back as 3.49 once it is rounded to eight bits per channel, and then the
+// client lifts the one rung the whole exercise was about not lifting.
+const FLOOR = RANK_TEXT_CONTRAST + 0.2;
+const CEILING = 13.5;
+const Y_MIN = FLOOR * (luminance(DARK_GROUND) + 0.05) - 0.05;
+const Y_MAX = CEILING * (luminance(DARK_GROUND) + 0.05) - 0.05;
 
 /**
  * Where each generated ladder starts and ends, in OKLCH hue and chroma.
@@ -227,10 +250,18 @@ for (const category of season.categories) {
     const l = contrast(hex, LIGHT_GROUND);
     const y = luminance(hex);
 
-    if (y <= previous) problems.push(`${category.name} / ${name} does not ascend`);
-    previous = y;
-    if (d < MIN_CONTRAST) problems.push(`${category.name} / ${name} is ${d.toFixed(2)}:1 on dark`);
-    if (l < MIN_CONTRAST) problems.push(`${category.name} / ${name} is ${l.toFixed(2)}:1 on light`);
+    // Checked on the colour the client will actually paint, not on the one solved for.
+    // A ramp that ascends in the file and not on the screen is the bug this whole band
+    // exists to have avoided, so it is the screen that gets asserted about.
+    const painted = luminance(legibleOn(hex, DARK_GROUND, RANK_TEXT_CONTRAST));
+    if (painted <= previous) problems.push(`${category.name} / ${name} does not ascend`);
+    previous = painted;
+    if (d < RANK_TEXT_CONTRAST) {
+      problems.push(`${category.name} / ${name} is ${d.toFixed(2)}:1 on dark`);
+    }
+    if (contrast(legibleOn(hex, LIGHT_GROUND), LIGHT_GROUND) < MIN_CONTRAST) {
+      problems.push(`${category.name} / ${name} cannot be corrected onto light`);
+    }
     if (hex !== was) changed++;
 
     console.log(

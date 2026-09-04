@@ -44,6 +44,23 @@ export const DARK_CHROME = {
  */
 export const MIN_CONTRAST = 2;
 
+/**
+ * The floor for a rank name set as body text, which is a different thing again.
+ *
+ * MIN_CONTRAST is for a name set large beside a specimen of its own colour. In the client
+ * the same names are 12px in a column forty rows deep, and at that size the seventeen
+ * placements under 2:1 still came out as smudges. 3.5 is WCAG's large-text floor of 3 with
+ * a little over, which is the honest description of this text: small, but bold and in a
+ * column of its own.
+ *
+ * The renderer holds its own copy - it runs as plain script in two hosts and cannot import
+ * this - so anything that *generates* a colour has to read the number from here, or a ramp
+ * gets built against one floor and painted against another. That is not hypothetical: the
+ * first generated palette was solved to 2:1, the client lifted its bottom seven rungs to
+ * 3.5, and the lift's five percent steps reordered them.
+ */
+export const RANK_TEXT_CONTRAST = 3.5;
+
 /** sRGB relative luminance, per WCAG. */
 export function luminance(hex: string): number {
   const m = /^#?([0-9a-f]{6})$/i.exec(hex.trim());
