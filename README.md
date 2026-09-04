@@ -334,6 +334,24 @@ Which family a scenario belongs to is how the ladder grades it (§14) and is del
 not shown: `Reactive Tracking` is one list, not two called `Ground Plaza` and
 `Air CELESTIAL`.
 
+### You are grinding other benchmarks at the same time
+
+Nothing in the pool was invented. Every family was picked out of the corpus the community
+already grades itself against, and **197 of the 208 scenarios appear in at least one of the
+43 benchmarks under `data/benchmarks/`** - a third of them in two or more. Voltaic S5 shares
+34 of them, Viscose 28, Astro Tracking 19; thirty-three benchmarks in total.
+
+So each row carries a mark per benchmark that names it, in that benchmark's own colour,
+filled in once your score holds a rank there. `1wall5targets_pasu Reload` is one scenario
+and five ladders: Viscose Medium, Aimerz+ Easy and Hard, Sparky S1, snakbox Medium.
+
+The rank is always per *scenario*, never per benchmark. Every benchmark file publishes
+score thresholds for the scenarios it names, so "this score is Cerulean in Viscose" is read
+straight off the author's own table. "Your Viscose rank is Cerulean" is not: the pool takes
+some of a benchmark's scenarios and not all of them, and a figure computed from a partial
+sheet would be wrong in the flattering direction. A benchmark's overall rank belongs to the
+benchmark.
+
 How far through its *current* rank step a score is fills the row itself, measured from
 the threshold already cleared rather than from zero. Measured from zero, everything you
 have touched reads as nearly full and the fill says nothing. Filling the row rather than

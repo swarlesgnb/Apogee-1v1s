@@ -16,6 +16,7 @@ import {
   type RankTheme,
 } from "./apogeeRanks.ts";
 import { readability, readabilityNote } from "../report/contrast.ts";
+import { hasSeason, loadSeason } from "../season/season.ts";
 
 let failures = 0;
 
@@ -112,6 +113,41 @@ for (const t of theme.tiers) {
 }
 const dupes = [...shared.values()].filter((names) => names.length > 1);
 check("no two tiers share a colour", dupes.length === 0, dupes.map((n) => n.join(" = ")).join("; "));
+
+// And no tier shares a *name* with anything the season ranks, which is the rule
+// `apogeeRanks.ts` opens by stating and nothing asserted.
+//
+// It had been broken for the whole life of the season file. Both ladders ran Stargazer,
+// Astrologist, Cosmonaut, Lunar, Odyssey, Arecibo, Quasar, Supernova - the same eight
+// words for two different claims, in two different sets of colours. The Ranks page paints
+// its top ladder from the tiers and everything else from the season, so Stargazer was
+// #00EAEA in one place and #4824ff in every other, and no amount of editing in the season
+// editor could reconcile them because they are different files.
+//
+// A rating tier says where you sit against other players. A season rank says what your
+// scores are worth. Sharing a vocabulary makes those one sentence, which is the thing the
+// module comment says must never happen.
+const seasonNames = new Map<string, string>();
+if (hasSeason()) {
+  const season = loadSeason();
+  for (const name of season.rankNames) seasonNames.set(name.toLowerCase(), "the overall ladder");
+  for (const category of season.categories) {
+    for (const band of category.bands ?? []) {
+      for (const name of band.rankNames) seasonNames.set(name.toLowerCase(), category.name);
+    }
+    for (const name of category.rankNames) {
+      if (!seasonNames.has(name.toLowerCase())) seasonNames.set(name.toLowerCase(), category.name);
+    }
+  }
+}
+const collisions = theme.tiers
+  .filter((t) => seasonNames.has(t.name.toLowerCase()))
+  .map((t) => `${t.name} is also in ${seasonNames.get(t.name.toLowerCase())}`);
+check(
+  "no tier shares a name with a season rank",
+  collisions.length === 0,
+  collisions.join("; "),
+);
 
 // Percentile helper.
 const population = [1200, 1300, 1400, 1500, 1600];

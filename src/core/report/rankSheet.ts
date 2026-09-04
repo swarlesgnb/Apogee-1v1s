@@ -59,12 +59,24 @@ import {
  * nobody has decided about yet.
  */
 const THEMES: Record<string, string> = {
-  Tracking: "evolution",
-  Switching: "speed",
+  "Static Clicking": "weapons, by how much they ask of the hand",
+  "Dynamic Clicking": "thrown, then aimed, then guided",
+  "Precise Tracking": "evolution",
+  "Reactive Tracking": "weather you have to stand in",
+  "Speed Switching": "animals, slowest to fastest",
+  "Evasive Switching": "boats, then things that are not seen",
 };
 
-/** The theme of the overall ladder, which is not a category and has no entry above. */
-const OVERALL_THEME = "space";
+/**
+ * The theme of the overall ladder, which is not a category and has no entry above.
+ *
+ * It used to be space, and space belongs to the rating ladder: `data/apogee_ranks.json`
+ * names its eight tiers Stargazer to Supernova and README explains each colour by that
+ * name. Both ladders carried the same eight words, which meant the app painted Stargazer
+ * cyan on the Ranks page and blue-violet on every other screen, and no edit in the season
+ * editor could ever fix it. `validate:ranks` refuses the collision now.
+ */
+const OVERALL_THEME = "an ascent, rock to snow";
 
 /**
  * Notes that are judgements rather than measurements.

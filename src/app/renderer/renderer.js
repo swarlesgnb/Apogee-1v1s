@@ -3246,8 +3246,13 @@ function renderSeasonView(data) {
   const shown = rows.filter((r) => r.window === seasonBand);
   if ($("svPoolNote")) {
     const played = shown.filter((r) => r.runs > 0).length;
+    // Counted from the rows on screen rather than stated, so the claim is about the band
+    // being looked at and cannot go stale when the pool changes underneath it.
+    const from = new Set();
+    for (const r of shown) for (const o of r.origins ?? []) from.add(o.benchmark);
     $("svPoolNote").textContent =
-      num(shown.length) + " scenarios · " + num(played) + " played";
+      num(shown.length) + " scenarios · " + num(played) + " played" +
+      (from.size > 0 ? " · from " + num(from.size) + " benchmarks" : "");
   }
 
   poolHost.textContent = "";
@@ -3342,6 +3347,43 @@ function renderSeasonView(data) {
           mech.title = "Viscose files this family under " + v.mechanic;
           nm.append(mech);
         }
+        // Where the scenario came from, and what this score is worth there.
+        //
+        // This is the argument for the whole pool on one line: nothing here was invented,
+        // and a session on this ladder is a session on the ladders people already grind.
+        // 197 of the 208 carry at least one mark, a third of them two or more.
+        //
+        // The mark is the benchmark's own abbreviation in the benchmark's own brand
+        // colour, and it fills in solid once the score holds a rank there - so an unplayed
+        // row shows where it counts and a played one shows how it is doing, in the same
+        // width. The rank name is not printed: five marks with five rank names is a
+        // paragraph, and the row already has a rank of its own that this must not compete
+        // with. It is on the hover instead, which is where the rest of the row's detail
+        // already lives.
+        if (v.origins && v.origins.length > 0) {
+          const marks = document.createElement("span");
+          marks.className = "pool-from";
+          for (const o of v.origins) {
+            const chip = document.createElement("span");
+            chip.className = "from-chip" + (o.rankName ? " held" : "");
+            chip.textContent = o.abbreviation;
+            chip.style.setProperty("--from", o.color);
+            if (o.rankName && o.rankColor) {
+              chip.style.setProperty("--from-rank", legibleOnDark(o.rankColor, RANK_TEXT_CONTRAST));
+            }
+            chip.title =
+              o.benchmark + (o.difficulty ? " " + o.difficulty : "") +
+              " · " +
+              (o.rankName
+                ? o.rankName + (o.nextName ? ", " + num(o.nextScore) + " for " + o.nextName : "")
+                : o.nextName
+                  ? num(o.nextScore) + " for " + o.nextName
+                  : "not ranked here");
+            marks.append(chip);
+          }
+          nm.append(marks);
+        }
+
         // The three facts the row no longer spends a column on, on the one element
         // wide enough to be an easy hover target.
         nm.title =

@@ -102,6 +102,10 @@ const RAMPS: Record<string, { from: { h: number; c: number }; to: { h: number; c
   "Reactive Tracking": { from: { h: 236, c: 0.07 }, to: { h: 300, c: 0.13 } },
   // #358d44 hull green to #acf6e7 wake - a boat becoming something that is not seen.
   "Evasive Switching": { from: { h: 148, c: 0.085 }, to: { h: 186, c: 0.115 } },
+  // Rock to snow, and the only ladder here whose chroma *falls*: the six categories are
+  // the colourful ones and the overall sits above them as a readout, so it wants to look
+  // like weather and stone rather than like a seventh thing competing for attention.
+  "Overall": { from: { h: 66, c: 0.055 }, to: { h: 245, c: 0.035 } },
 };
 
 /* ---------------------------------------------------------------- colour ---- */
@@ -218,14 +222,30 @@ const at = args.indexOf("--ladder");
 const only = at === -1 ? null : args[at + 1];
 
 const path = dataFile("seasons/season-1.json");
-const season = JSON.parse(readFileSync(path, "utf8")) as { categories: Category[] };
+const season = JSON.parse(readFileSync(path, "utf8")) as {
+  rankNames: string[];
+  rankColors: Record<string, string>;
+  categories: Category[];
+};
+
+/**
+ * The overall ladder is a category as far as this file is concerned.
+ *
+ * It has no bands - it is derived from the six that do - so its ranks live at the top
+ * level of the season rather than inside a `bands` array. Wrapping it here keeps one loop
+ * instead of two nearly identical ones.
+ */
+const ladders: Category[] = [
+  { name: "Overall", rankNames: season.rankNames, rankColors: season.rankColors },
+  ...season.categories,
+];
 
 const DIM = "\x1b[2m";
 const RESET = "\x1b[0m";
 const problems: string[] = [];
 let changed = 0;
 
-for (const category of season.categories) {
+for (const category of ladders) {
   const spec = RAMPS[category.name];
   if (!spec) continue;
   if (only && category.name !== only) continue;
@@ -237,6 +257,7 @@ for (const category of season.categories) {
   for (const band of category.bands ?? []) {
     for (const name of band.rankNames) if (!order.includes(name)) order.push(name);
   }
+  if (order.length === 0) order.push(...category.rankNames);
   const named = order.filter((n) => !PLACEHOLDER.test(n));
   const colors = ramp(named.length, spec);
   const assigned = new Map(named.map((n, i) => [n, colors[i]]));
@@ -245,7 +266,10 @@ for (const category of season.categories) {
   let previous = -1;
   for (const [i, name] of named.entries()) {
     const hex = colors[i];
-    const was = category.bands?.find((b) => b.rankColors[name])?.rankColors[name] ?? "?";
+    const was =
+      category.bands?.find((b) => b.rankColors[name])?.rankColors[name] ??
+      category.rankColors[name] ??
+      "?";
     const d = contrast(hex, DARK_GROUND);
     const l = contrast(hex, LIGHT_GROUND);
     const y = luminance(hex);

@@ -25,6 +25,7 @@ import { existsSync, mkdirSync, readdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
 import { MIN_RUNS_FOR_BASELINE } from "../history/baseline.ts";
+import { originsOf, type OriginRank } from "../benchmarks/origins.ts";
 import {
   MATCH_PLAYLIST_PREFIX,
   serializePlaylist,
@@ -258,6 +259,16 @@ export interface PracticeRow extends VariantProgress {
   /** Viscose's Arm/Wrist/Fingertip/Blending, where published. Null for most of the pool. */
   mechanic: string | null;
   /**
+   * The published benchmarks that also name this scenario, and what `best` is worth in
+   * each of them.
+   *
+   * 197 of the 208 in the pool carry at least one. Empty for the rest, which are the
+   * hand-picked easier rungs no author has graded - and an empty list renders as nothing
+   * rather than as "no benchmarks", because a scenario the community has not graded is
+   * not a scenario that failed to be graded.
+   */
+  origins: OriginRank[];
+  /**
    * Whether this scenario holds a baseline a match could be scored against.
    *
    * Not `runs > 0`. Below MIN_RUNS_FOR_BASELINE there is no usable median, so a screen
@@ -372,6 +383,7 @@ export function practiceRows(
       category: s.category,
       subCategory: s.subCategory ?? null,
       mechanic: s.mechanic ?? null,
+      origins: originsOf(s.scenario, best),
       family: s.family ?? s.scenario,
       window,
       windowName: windows[window] ?? `window ${window + 1}`,
