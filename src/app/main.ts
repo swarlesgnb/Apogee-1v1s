@@ -14,6 +14,7 @@
 import { app, BrowserWindow, ipcMain, screen, shell, dialog } from "electron";
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
+import { createHash } from "node:crypto";
 
 import { dataFile, setDataDir, sourceDataDir } from "../core/dataDir.ts";
 import {
@@ -1845,12 +1846,40 @@ function suggestThresholds(scores: number[], ranks: number): number[] {
   return out;
 }
 
+/**
+ * What the files looked like when the editor was handed them.
+ *
+ * Not a version number and not a lock: a hash of the two files the save rewrites, taken
+ * when they are read and checked when they are written back. Cheap, needs nothing kept in
+ * memory between an open and a save, and survives the app being restarted in between.
+ *
+ * The pool is in it as well as the season, because `saveSeason` reconstructs the pool from
+ * the season it is given. An editor that never saw a change to `data/pool.json` will
+ * happily rebuild it from a stale draft and take the change out again.
+ */
+function seasonFingerprint(): string {
+  const parts: string[] = [];
+  for (const file of [seasonPath(), dataFile("pool.json")]) {
+    try {
+      parts.push(createHash("sha256").update(readFileSync(file)).digest("hex").slice(0, 16));
+    } catch {
+      parts.push("missing");
+    }
+  }
+  return parts.join(".");
+}
+
 ipcMain.handle("apogee:getSeason", () => {
   try {
     // energyPerRank travels with the season because the renderer needs it to rebalance a
     // category's ladder and cannot import it - it is a browser script. It used to be a
     // literal 2500 there, a third copy of a constant that has one owner.
-    return { season: loadSeason(), path: seasonPath(), energyPerRank: ENERGY_PER_RANK };
+    return {
+      season: loadSeason(),
+      path: seasonPath(),
+      energyPerRank: ENERGY_PER_RANK,
+      fingerprint: seasonFingerprint(),
+    };
   } catch (err) {
     return { error: err instanceof Error ? err.message : String(err) };
   }
@@ -1864,9 +1893,32 @@ ipcMain.handle("apogee:getSeason", () => {
  * score, and writing it first would mean the app is already broken by the time anyone
  * finds out.
  */
-ipcMain.handle("apogee:saveSeason", async (_e, { season }) => {
+ipcMain.handle("apogee:saveSeason", async (_e, { season, fingerprint }) => {
   if (!state.session || !(await isAdmin().catch(() => false))) {
     return { error: "only an admin can edit the season" };
+  }
+
+  // Refuse to write over a season that changed since this editor read it.
+  //
+  // The draft is the whole file, so a save is a whole-file overwrite: whatever the editor
+  // was handed at load is what goes back, and anything that happened to those files in
+  // between is gone without a message. That is not hypothetical. A client left open across
+  // an afternoon of work on the pool put every one of those edits back the way they were,
+  // twice - once silently reverting `data/pool.json`, and once undoing a rank rename and
+  // all forty-eight regenerated colours, which read from the outside as "saving does not
+  // do anything" because the app faithfully repainted itself to the season it had just
+  // been told to use.
+  //
+  // A missing fingerprint is allowed through: an editor from a build before this one has
+  // no way to send it, and refusing every one of those saves would be a worse failure than
+  // the one being fixed.
+  if (fingerprint && fingerprint !== seasonFingerprint()) {
+    return {
+      error:
+        "the season on disk has changed since this editor loaded it - saving now would " +
+        "put those changes back. Discard to reload it, then make the edit again.",
+      stale: true,
+    };
   }
 
   try {

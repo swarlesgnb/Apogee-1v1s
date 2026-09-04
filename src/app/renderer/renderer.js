@@ -991,6 +991,8 @@ function showOpponent(data) {
  * and a renderer is the wrong place for a rule that decides what a rank means.
  */
 let seasonDraft = null;
+/** The season and pool as they were when `seasonDraft` was taken. Null on an old main. */
+let seasonFingerprint = null;
 /**
  * Energy one rank of one family is worth.
  *
@@ -1712,6 +1714,9 @@ async function loadSeasonEditor() {
   }
 
   seasonDraft = result.season;
+  // What the files looked like when this draft was taken. Sent back with the save, which
+  // main refuses if they have moved on - see the note on `apogee:saveSeason`.
+  seasonFingerprint = result.fingerprint ?? null;
   // Owned by src/core/benchmarks/energy.ts and sent with the season. The fallback is
   // only for an older main process; the value is not a preference.
   if (typeof result.energyPerRank === "number") energyPerRank = result.energyPerRank;
@@ -4825,15 +4830,21 @@ if (hasSeasonEditor) {
     btn.disabled = true;
     setSeasonStatus("saving…", "");
 
-    const result = await window.apogee.saveSeason(seasonDraft);
+    const result = await window.apogee.saveSeason(seasonDraft, seasonFingerprint);
 
     if (result && result.error) {
       // Say what is wrong and leave the draft alone: the numbers on screen are the ones
       // that need fixing, so throwing them away would be the worst possible response.
+      //
+      // A stale draft is the one case where the draft is the problem rather than the
+      // numbers in it, so the message points at Discard - which is the only way out, and
+      // is not obvious from a status line that has only ever meant "fix this row".
       setSeasonStatus(result.error, "bad");
+      if (result.stale) $("seasonReload").classList.add("wants-attention");
       btn.disabled = false;
       return;
     }
+    $("seasonReload").classList.remove("wants-attention");
 
     // Name the files. A save that reports success without saying where wrote to the
     // build output for an afternoon before anybody noticed.

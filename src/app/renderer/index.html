@@ -2216,6 +2216,13 @@
      answers both questions in one width - where this counts, and how it is going. The
      rank name lives on the hover. Printing it would put five rank names on a tile that
      already carries a rank of its own, and the one that matters is Apogee's. */
+  /* The way out of a refused save. Discard is normally the least interesting control on
+     the screen, and for exactly one failure it is the only one that helps. */
+  .wants-attention {
+    border-color: var(--warn) !important;
+    color: var(--warn) !important;
+  }
+
   .pool-from {
     display: flex; flex-wrap: wrap; gap: 3px;
     margin-top: 4px; width: 100%;

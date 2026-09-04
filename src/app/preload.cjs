@@ -177,7 +177,12 @@ contextBridge.exposeInMainWorld("apogee", {
    * Write the season back and rebuild from it.
    * Main validates before writing and refuses a non-admin.
    */
-  saveSeason: (season) => ipcRenderer.invoke("apogee:saveSeason", { season }),
+  /**
+   * `fingerprint` is what `getSeason` reported when this draft was loaded. Main refuses
+   * the write if the files have moved on since, rather than putting them back.
+   */
+  saveSeason: (season, fingerprint) =>
+    ipcRenderer.invoke("apogee:saveSeason", { season, fingerprint }),
 
   /** Fires whenever the snapshot is rebuilt. */
   onSnapshot: (handler) => subscribe("apogee:snapshot", handler),
