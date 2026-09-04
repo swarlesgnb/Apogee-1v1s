@@ -997,6 +997,8 @@ let seasonFingerprint = null;
 let rankTheme = null;
 let rankThemeFingerprint = null;
 let rankThemeDirty = false;
+/** Set after a refused save, so pressing Save again writes over what is on disk. */
+let seasonForce = false;
 /**
  * Energy one rank of one family is worth.
  *
@@ -4899,10 +4901,10 @@ if (hasSeasonEditor) {
     // season that saves while the ranks fail to leaves the two disagreeing - and the
     // ranks are the cheaper of the two to redo.
     if (rankThemeDirty && rankTheme && window.apogee.saveRankTheme) {
-      const ranks = await window.apogee.saveRankTheme(rankTheme, rankThemeFingerprint);
+      const ranks = await window.apogee.saveRankTheme(rankTheme, rankThemeFingerprint, seasonForce);
       if (ranks && ranks.error) {
         setSeasonStatus(ranks.error, "bad");
-        if (ranks.stale) $("seasonReload").classList.add("wants-attention");
+        if (ranks.stale) seasonForce = true;
         btn.disabled = false;
         return;
       }
@@ -4913,7 +4915,7 @@ if (hasSeasonEditor) {
       }
     }
 
-    const result = await window.apogee.saveSeason(seasonDraft, seasonFingerprint);
+    const result = await window.apogee.saveSeason(seasonDraft, seasonFingerprint, seasonForce);
 
     if (result && result.error) {
       // Say what is wrong and leave the draft alone: the numbers on screen are the ones
@@ -4923,11 +4925,14 @@ if (hasSeasonEditor) {
       // numbers in it, so the message points at Discard - which is the only way out, and
       // is not obvious from a status line that has only ever meant "fix this row".
       setSeasonStatus(result.error, "bad");
-      if (result.stale) $("seasonReload").classList.add("wants-attention");
+      // Arm the override rather than blocking. The draft on screen can be the only copy of
+      // an afternoon's work, and a guard whose only other exit is Discard trades "you might
+      // overwrite the file" for "you will certainly lose your own".
+      if (result.stale) seasonForce = true;
       btn.disabled = false;
       return;
     }
-    $("seasonReload").classList.remove("wants-attention");
+    seasonForce = false;
 
     // Name the files. A save that reports success without saying where wrote to the
     // build output for an afternoon before anybody noticed.

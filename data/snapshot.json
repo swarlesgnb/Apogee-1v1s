@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-04T23:25:12.956Z",
+  "generatedAt": "2026-09-04T23:43:35.777Z",
   "coverage": [
     {
       "category": "Dynamic Clicking",
@@ -435,7 +435,7 @@
       "windowName": "Intermediate",
       "total": 6,
       "measured": 4,
-      "runs": 107,
+      "runs": 108,
       "matchable": true,
       "complete": false,
       "scenarios": [
@@ -467,7 +467,7 @@
           "scenario": "VT FlyTS Intermediate S5",
           "label": "VT FlyTS Intermediate S5",
           "family": "FlyTS",
-          "runs": 16,
+          "runs": 17,
           "measured": true,
           "needs": 0
         },
@@ -1371,7 +1371,7 @@
       "windowName": "Intermediate",
       "total": 9,
       "measured": 3,
-      "runs": 128,
+      "runs": 130,
       "matchable": true,
       "complete": false,
       "scenarios": [
@@ -1443,7 +1443,7 @@
           "scenario": "VT EddieTS Intermediate S5",
           "label": "VT EddieTS Intermediate S5",
           "family": "EddieTS",
-          "runs": 46,
+          "runs": 48,
           "measured": true,
           "needs": 0
         }
@@ -1455,7 +1455,7 @@
       "windowName": "Advanced",
       "total": 9,
       "measured": 3,
-      "runs": 99,
+      "runs": 100,
       "matchable": true,
       "complete": false,
       "scenarios": [
@@ -1527,7 +1527,7 @@
           "scenario": "VT DotTS Intermediate S5",
           "label": "VT DotTS Intermediate S5",
           "family": "DotTS",
-          "runs": 49,
+          "runs": 50,
           "measured": true,
           "needs": 0
         }
@@ -1539,7 +1539,7 @@
       "windowName": "Expert",
       "total": 9,
       "measured": 1,
-      "runs": 58,
+      "runs": 59,
       "matchable": false,
       "complete": false,
       "scenarios": [
@@ -1595,9 +1595,9 @@
           "scenario": "VT DotTS Advanced S5",
           "label": "VT DotTS Advanced S5",
           "family": "DotTS",
-          "runs": 1,
+          "runs": 2,
           "measured": false,
-          "needs": 4
+          "needs": 3
         },
         {
           "scenario": "StaticSwitchingVox xxSmall",
@@ -1990,12 +1990,12 @@
     "windowSize": 4
   },
   "player": {
-    "totalRuns": 12517,
+    "totalRuns": 12527,
     "scenarioCount": 909,
     "streak": 34,
     "benchmarkRank": "Snowline",
-    "benchmarkEnergy": 908122,
-    "progressToNextRank": 0.49590134108117434,
+    "benchmarkEnergy": 908402,
+    "progressToNextRank": 0.49742581614731174,
     "nextRankName": "Headwall",
     "apogee": {
       "rating": 1617,
@@ -3632,8 +3632,8 @@
     },
     {
       "name": "Speed Switching",
-      "energy": 157486,
-      "rankName": "Slow Loris",
+      "energy": 157504,
+      "rankName": "Housecat",
       "rankNames": [
         "Banana Slug",
         "Sloth",
@@ -3689,7 +3689,7 @@
         360000
       ],
       "rankCount": 16,
-      "progressToNextRank": 0.9993801326984125,
+      "progressToNextRank": 0.00017378349206280999,
       "bands": [
         {
           "window": 0,
@@ -3756,9 +3756,9 @@
             112500,
             135000
           ],
-          "energy": 49906,
+          "energy": 49924,
           "rankCount": 6,
-          "progressToNextRank": 0.2180609649250617,
+          "progressToNextRank": 0.21885461571871226,
           "played": 6,
           "total": 9,
           "positional": null
@@ -3824,9 +3824,9 @@
             67500,
             90000
           ],
-          "energy": 8615,
+          "energy": 8661,
           "rankCount": 4,
-          "progressToNextRank": 0.38290339786214334,
+          "progressToNextRank": 0.38494213384583337,
           "played": 4,
           "total": 9,
           "positional": {
@@ -3836,7 +3836,7 @@
           }
         }
       ],
-      "perScenario": 17498,
+      "perScenario": 17500,
       "scenarios": [
         {
           "name": "aimerz+ Static Switching 5 Bot Slightly Larger",
@@ -3902,17 +3902,17 @@
           "window": 1,
           "windowName": "Intermediate",
           "subCategory": "Speed Switching",
-          "score": 986,
+          "score": 986.5,
           "rankName": "Slow Loris",
-          "energy": 16286,
+          "energy": 16304,
           "nextRankName": "Housecat",
           "nextRankScore": 1020,
           "nextRankScenario": "VT EddieTS Intermediate S5",
           "nextRankLabel": "VT EddieTS Intermediate S5",
           "nextRankWindowName": "Intermediate",
           "nextRankIsNewScenario": false,
-          "gap": 34,
-          "runs": 46
+          "gap": 33.5,
+          "runs": 48
         },
         {
           "name": "VT psalmTS Novice",
@@ -4013,7 +4013,7 @@
     },
     {
       "name": "Evasive Switching",
-      "energy": 111507,
+      "energy": 111770,
       "rankName": "Hawk",
       "rankNames": [
         "Plankton",
@@ -4070,7 +4070,7 @@
         240000
       ],
       "rankCount": 16,
-      "progressToNextRank": 0.4338188547826081,
+      "progressToNextRank": 0.45131890478260855,
       "bands": [
         {
           "window": 0,
@@ -4137,9 +4137,9 @@
             75000,
             90000
           ],
-          "energy": 36183,
+          "energy": 36445,
           "rankCount": 6,
-          "progressToNextRank": 0.4121912242798353,
+          "progressToNextRank": 0.4296912742798352,
           "played": 4,
           "total": 6,
           "positional": null
@@ -4217,7 +4217,7 @@
           }
         }
       ],
-      "perScenario": 18585,
+      "perScenario": 18628,
       "scenarios": [
         {
           "name": "VT bounceTS Novice",
@@ -4302,17 +4302,17 @@
           "window": 1,
           "windowName": "Intermediate",
           "subCategory": "Evasive Switching",
-          "score": 599,
+          "score": 603.200012,
           "rankName": "Viper",
-          "energy": 16813,
+          "energy": 17075,
           "nextRankName": "Hawk",
           "nextRankScore": 610,
           "nextRankScenario": "VT FlyTS Intermediate S5",
           "nextRankLabel": "VT FlyTS Intermediate S5",
           "nextRankWindowName": "Intermediate",
           "nextRankIsNewScenario": false,
-          "gap": 11,
-          "runs": 16
+          "gap": 6.799987999999985,
+          "runs": 17
         },
         {
           "name": "tamTargetSwitch Smooth Easy",
@@ -4340,10 +4340,10 @@
   "consistency": {
     "method": "worstOfLast5",
     "ceilingRank": "Snowline",
-    "ceilingEnergy": 908122,
+    "ceilingEnergy": 908402,
     "floorRank": "Ridge",
     "floorEnergy": 585486,
-    "gap": 0.16667338311870247,
+    "gap": 0.16573871056170097,
     "scenarios": [
       {
         "name": "1w2ts Pasu Perfected",
@@ -4738,14 +4738,6 @@
         "gap": 0.11862820845639895
       },
       {
-        "name": "VT EddieTS Intermediate S5",
-        "label": "VT EddieTS Intermediate S5 int",
-        "ceiling": 986,
-        "floor": 880,
-        "median": 883.5,
-        "gap": 0.1075050709939148
-      },
-      {
         "name": "1w2ts Perfected",
         "label": "1w2ts Perfected adv",
         "ceiling": 112,
@@ -4776,14 +4768,6 @@
         "floor": 7055.200195,
         "median": 7513.600098,
         "gap": 0.09622875568438156
-      },
-      {
-        "name": "VT FlyTS Intermediate S5",
-        "label": "VT FlyTS Intermediate S5 int",
-        "ceiling": 599,
-        "floor": 542.200012,
-        "median": 557.900024,
-        "gap": 0.09482468781302168
       },
       {
         "name": "1w2ts Perfected Easier",
@@ -4842,11 +4826,19 @@
         "gap": 0.07348629339274121
       },
       {
+        "name": "VT FlyTS Intermediate S5",
+        "label": "VT FlyTS Intermediate S5 int",
+        "ceiling": 603.200012,
+        "floor": 559.400024,
+        "median": 559.400024,
+        "gap": 0.07261271075704154
+      },
+      {
         "name": "VT DotTS Intermediate S5",
         "label": "VT DotTS Intermediate S5 adv",
         "ceiling": 1210,
         "floor": 1129,
-        "median": 1149,
+        "median": 1149.25,
         "gap": 0.06694214876033058
       },
       {
@@ -4864,6 +4856,14 @@
         "floor": 131,
         "median": 130,
         "gap": 0.06428571428571428
+      },
+      {
+        "name": "VT EddieTS Intermediate S5",
+        "label": "VT EddieTS Intermediate S5 int",
+        "ceiling": 986.5,
+        "floor": 924,
+        "median": 889.75,
+        "gap": 0.06335529650278764
       },
       {
         "name": "StaticSwitchingVox Small",

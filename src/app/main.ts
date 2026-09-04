@@ -1920,17 +1920,17 @@ ipcMain.handle("apogee:getRankTheme", () => {
   }
 });
 
-ipcMain.handle("apogee:saveRankTheme", async (_e, { theme, fingerprint }) => {
+ipcMain.handle("apogee:saveRankTheme", async (_e, { theme, fingerprint, force }) => {
   if (!state.session || !(await isAdmin().catch(() => false))) {
     return { error: "only an admin can edit the ranks" };
   }
 
   const path = dataFile("apogee_ranks.json");
-  if (fingerprint && fingerprint !== fileFingerprint(path)) {
+  if (!force && fingerprint && fingerprint !== fileFingerprint(path)) {
     return {
       error:
-        "the ranks on disk have changed since this editor loaded them - saving now would " +
-        "put those changes back. Discard to reload, then make the edit again.",
+        "the ranks on disk have changed since this editor loaded them. Save again to write " +
+        "this draft over them, or Discard to reload and start from what is there.",
       stale: true,
     };
   }
@@ -1973,7 +1973,7 @@ ipcMain.handle("apogee:saveRankTheme", async (_e, { theme, fingerprint }) => {
   return { ok: true, paths: written };
 });
 
-ipcMain.handle("apogee:saveSeason", async (_e, { season, fingerprint }) => {
+ipcMain.handle("apogee:saveSeason", async (_e, { season, fingerprint, force }) => {
   if (!state.session || !(await isAdmin().catch(() => false))) {
     return { error: "only an admin can edit the season" };
   }
@@ -1992,11 +1992,16 @@ ipcMain.handle("apogee:saveSeason", async (_e, { season, fingerprint }) => {
   // A missing fingerprint is allowed through: an editor from a build before this one has
   // no way to send it, and refusing every one of those saves would be a worse failure than
   // the one being fixed.
-  if (fingerprint && fingerprint !== seasonFingerprint()) {
+  //
+  // And the refusal is a warning, not a wall. The first version of this had no way past it,
+  // which turns "you might lose the file's version" into "you will lose yours" - the draft
+  // on screen can be an afternoon of work that exists nowhere else, and Discard is the only
+  // other exit. Pressing Save a second time sends `force` and writes it.
+  if (!force && fingerprint && fingerprint !== seasonFingerprint()) {
     return {
       error:
-        "the season on disk has changed since this editor loaded it - saving now would " +
-        "put those changes back. Discard to reload it, then make the edit again.",
+        "the season on disk has changed since this editor loaded it. Save again to write " +
+        "this draft over it, or Discard to reload and start from what is there.",
       stale: true,
     };
   }

@@ -175,8 +175,8 @@ contextBridge.exposeInMainWorld("apogee", {
    * season and paints the accent colour, the header, the hero and the Ranks page.
    */
   getRankTheme: () => ipcRenderer.invoke("apogee:getRankTheme"),
-  saveRankTheme: (theme, fingerprint) =>
-    ipcRenderer.invoke("apogee:saveRankTheme", { theme, fingerprint }),
+  saveRankTheme: (theme, fingerprint, force) =>
+    ipcRenderer.invoke("apogee:saveRankTheme", { theme, fingerprint, force }),
 
   /** Scenarios that could be added, with a suggested category and thresholds. */
   availableScenarios: () => ipcRenderer.invoke("apogee:availableScenarios"),
@@ -189,8 +189,8 @@ contextBridge.exposeInMainWorld("apogee", {
    * `fingerprint` is what `getSeason` reported when this draft was loaded. Main refuses
    * the write if the files have moved on since, rather than putting them back.
    */
-  saveSeason: (season, fingerprint) =>
-    ipcRenderer.invoke("apogee:saveSeason", { season, fingerprint }),
+  saveSeason: (season, fingerprint, force) =>
+    ipcRenderer.invoke("apogee:saveSeason", { season, fingerprint, force }),
 
   /** Fires whenever the snapshot is rebuilt. */
   onSnapshot: (handler) => subscribe("apogee:snapshot", handler),
