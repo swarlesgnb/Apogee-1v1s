@@ -3620,6 +3620,155 @@ function renderPlaylists() {
   chips.append(all);
 }
 
+/**
+ * One band, in full: every rank it can award and what each one asks for.
+ *
+ * A band card on the Ranks page says which rank you hold and how far through it you are,
+ * and that is all it has room for. The question it raises - what are the others, and what
+ * would it take - had no answer anywhere in the app. Energy is the only thing the ladder
+ * grades on, and energy is a sum over scenarios, so "what would it take" is genuinely a
+ * per-scenario question and cannot be answered by one number.
+ *
+ * Hence the matrix. One row per scenario, one column per rank, and the cell is the score
+ * that rank wants on that scenario. A row reads as a run of filled cells ending where the
+ * player is, and the first unfilled cell in each row is the only number on the page that is
+ * an instruction.
+ *
+ * Drawn entirely from the snapshot and the practice list, both of which the window already
+ * holds, so opening this fetches nothing and works with the app offline.
+ */
+function openBand(category, window_) {
+  bandOpen = { category, window: window_ };
+  renderBand();
+  const tab = document.querySelector('.tab[data-screen="band"]');
+  if (tab) tab.click();
+}
+
+/** Which band the detail page is showing, or null. */
+let bandOpen = null;
+
+function renderBand() {
+  if (!bandOpen || !current) return;
+  const cat = current.categories.find((c) => c.name === bandOpen.category);
+  const band = cat && (cat.bands ?? []).find((b) => b.window === bandOpen.window);
+  if (!band) return;
+
+  const bandName = band.windowName || "Band " + (band.window + 1);
+  $("bandTitle").textContent = cat.name + " · " + bandName;
+  $("bandLede").textContent =
+    "Every rank this band can award, and the score each one wants on each of its " +
+    band.total + " scenarios. A band is a whole benchmark: these ranks are its own, and " +
+    "holding one says nothing about the band above it.";
+
+  $("bandNote").textContent =
+    band.played === 0
+      ? "not played yet"
+      : (band.rankName ? band.rankName : "below the first rank") +
+        " · " + num(band.energy) + " energy";
+
+  // ---- the ladder ----
+  const ladder = $("bandLadder");
+  ladder.textContent = "";
+
+  band.rankNames.forEach((name, i) => {
+    const positional = band.positional && i === band.rankNames.length - 1;
+    const colour = band.rankColors?.[name] ?? null;
+    const held = band.rankName === name;
+    const above = band.rankIndex === null || band.rankIndex === undefined
+      ? !held
+      : i > band.rankIndex;
+
+    const li = document.createElement("li");
+    li.className = "band-rung" + (held ? " here" : above ? " above" : "");
+    if (colour) li.style.setProperty("--rank-ink", legibleOnDark(colour, RANK_TEXT_CONTRAST));
+
+    li.innerHTML =
+      '<span class="idx">' + (i + 1) + "</span>" +
+      '<span class="swatch" style="background:' + esc(colour || "var(--rule-3)") + '"></span>' +
+      '<span class="nm">' + esc(name) + "</span>" +
+      '<span class="cost">' +
+      // The positional rank has no threshold by construction: it is held by standing on the
+      // board, so printing a number beside it would be inventing one.
+      (positional
+        ? "top " + band.positional.topN + " on the board"
+        : band.rankMaxes && band.rankMaxes[i] !== undefined
+          ? num(band.rankMaxes[i]) + " energy"
+          : "") +
+      "</span>" +
+      '<span class="state">' + (held ? "you" : above ? "" : "cleared") + "</span>";
+    ladder.append(li);
+  });
+
+  // ---- the matrix ----
+  const rows = (practice?.scenarios ?? []).filter(
+    (r) => r.category === cat.name && r.window === band.window,
+  );
+  const scored = band.rankNames.filter(
+    (_, i) => !(band.positional && i === band.rankNames.length - 1),
+  );
+
+  $("bandGridNote").textContent = rows.length + " scenarios";
+  $("bandGridLede").textContent = rows.length === 0
+    ? "The practice list has not loaded, so the per-scenario scores are not available yet."
+    : "A filled cell is a score you have already beaten. The outlined one in each row is " +
+      "the next score that moves you, and every scenario counts the same, so the cheapest " +
+      "outlined cell is the cheapest rank.";
+
+  const table = $("bandMatrix");
+  table.textContent = "";
+  if (rows.length === 0) return;
+
+  const head = document.createElement("thead");
+  head.innerHTML =
+    "<tr><th style=\"text-align:left\">Scenario</th><th>Best</th>" +
+    scored.map((n) => "<th>" + esc(n) + "</th>").join("") +
+    "</tr>";
+  table.append(head);
+
+  const body = document.createElement("tbody");
+  for (const r of rows) {
+    const tr = document.createElement("tr");
+
+    const nameCell = document.createElement("td");
+    nameCell.className = "scen-name";
+    nameCell.textContent = r.label;
+    nameCell.title = r.scenario;
+    tr.append(nameCell);
+
+    const bestCell = document.createElement("td");
+    bestCell.className = "best" + (r.best === null ? " none" : "");
+    bestCell.textContent = r.best === null ? "unplayed" : num(r.best);
+    tr.append(bestCell);
+
+    // The first threshold this score has not beaten. Marked once per row: the ones above
+    // it are also unbeaten, and outlining all of them would say "everything is next".
+    const nextIndex = r.rankMaxes.findIndex((t) => r.best === null || r.best < t);
+
+    scored.forEach((name, i) => {
+      const target = r.rankMaxes[i];
+      const td = document.createElement("td");
+      const cleared = target !== undefined && r.best !== null && r.best >= target;
+      td.className = "cell" + (cleared ? " cleared" : i === nextIndex ? " next" : "");
+      const colour = band.rankColors?.[name];
+      if (colour) td.style.setProperty("--cell", colour);
+      td.textContent = target === undefined ? "" : num(target);
+      td.title =
+        esc(r.label) + " · " + name +
+        (target === undefined
+          ? ""
+          : cleared
+            ? " · cleared"
+            : r.best === null
+              ? " · wants " + num(target)
+              : " · " + num(Math.round(target - r.best)) + " to go");
+      tr.append(td);
+    });
+
+    body.append(tr);
+  }
+  table.append(body);
+}
+
 function renderRanks(data) {
   const me = data.player.apogee;
   const tiers = data.theme;
@@ -3706,10 +3855,15 @@ function renderRanks(data) {
       // the Queue tab: without it the ladder and the thing you actually play are two
       // unrelated lists that happen to share names.
       const queued = (data.benchmark.matchPool?.window ?? -1) === b.window;
-      const card = document.createElement("div");
+      // A button, not a div. The card opens a page, so it has to be reachable by keyboard
+      // and announced as something that does anything - which a div with a click handler
+      // is not, however it looks.
+      const card = document.createElement("button");
+      card.type = "button";
       card.className =
         "band-card" + (unplayed ? " unplayed" : b.rankName ? " held" : " below") +
         (queued ? " queued" : "");
+      card.addEventListener("click", () => openBand(cat.name, b.window));
       // An unplayed band is achromatic; one that is merely below its first rank still
       // shows that rank's colour, so the progress bar under it is pointing somewhere.
       const plate = unplayed
@@ -5078,6 +5232,13 @@ document.querySelectorAll(".tab").forEach((tab) => {
   });
 });
 
+if ($("bandBack")) {
+  $("bandBack").addEventListener("click", () => {
+    const tab = document.querySelector('.tab[data-screen="ranks"]');
+    if (tab) tab.click();
+  });
+}
+
 restoreScreen();
 
 /**
@@ -5695,6 +5856,10 @@ if (HOST === "electron") {
   });
 
   api.onRun((run) => showRunToast(run));
+
+  // The band page is drawn from the snapshot, so a run landing while it is open has to
+  // redraw it. `render` does not, because the page is not part of the snapshot's own tree.
+  api.onSnapshot(() => renderBand());
 
   api.onScanning(({ scanning }) => {
     setStatus(scanning ? "scanning" : "ok", scanning ? "Scanning…" : "Watching", currentPath);

@@ -1233,6 +1233,87 @@
     display: grid; gap: 8px;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   }
+  /* ---------------- one band, in detail ---------------- */
+
+  /* Back to where you came from, set as a label rather than a button: it is a return, and
+     a filled control here would outrank the page it sits above. */
+  .band-back {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-bottom: var(--s2); padding: 0;
+    background: none; border: 0; cursor: pointer;
+    font-family: var(--mono); font-size: var(--t-2xs); letter-spacing: .14em;
+    text-transform: uppercase; color: var(--ink-dim);
+  }
+  .band-back::before { content: "90"; font-size: 13px; }
+  .band-back:hover { color: var(--ink-mid); }
+
+  .band-ladder { list-style: none; margin: 0; padding: 0; }
+  .band-rung {
+    display: grid; align-items: center; gap: var(--s3);
+    grid-template-columns: 22px 13px minmax(0, 1fr) auto auto;
+    padding: var(--s2) 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .band-rung:last-child { border-bottom: 0; }
+  .band-rung .idx {
+    font-family: var(--mono); font-size: var(--t-2xs); color: var(--ink-dim);
+    font-variant-numeric: tabular-nums; text-align: right;
+  }
+  .band-rung .swatch { width: 13px; height: 13px; border: 1px solid var(--rule-3); }
+  .band-rung .nm { font-size: var(--t-sm); font-weight: 640; }
+  .band-rung .cost {
+    font-family: var(--mono); font-size: var(--t-xs); color: var(--ink-mid);
+    font-variant-numeric: tabular-nums; white-space: nowrap;
+  }
+  .band-rung .state {
+    font-family: var(--mono); font-size: var(--t-2xs); letter-spacing: .12em;
+    text-transform: uppercase; color: var(--ink-dim); white-space: nowrap;
+  }
+  /* Held is stated once, on the rank you are on, rather than by filling every rung under
+     it: a ladder that fills upward reads as progress through one thing, and these are
+     separate ranks you either hold or do not. */
+  .band-rung.here .state { color: var(--up); }
+  .band-rung.here .nm { color: var(--rank-ink, var(--ink)); }
+  .band-rung.above .nm, .band-rung.above .cost { color: var(--ink-dim); }
+
+  .band-grid-wrap { overflow-x: auto; }
+  table.band-matrix { min-width: 560px; }
+  /* The cell is the score that rank wants on that scenario. Cleared cells carry the rank's
+     colour at low strength so a row reads as a run of solid blocks ending where you are;
+     the first uncleared one is outlined, because it is the only number on the page that is
+     an instruction. */
+  .band-matrix td.cell {
+    text-align: right; font-family: var(--mono); font-size: var(--t-xs);
+    font-variant-numeric: tabular-nums; color: var(--ink-dim);
+    padding: var(--s2) var(--s3); border-bottom: 1px solid var(--rule);
+  }
+  .band-matrix td.cell.cleared {
+    color: var(--ink); background: color-mix(in srgb, var(--cell) 16%, transparent);
+  }
+  /* An outline rather than an inset shadow. The two draw the same ring here and only one
+     of them is a shadow; `npm run audit:look` counts shadows, and it was right to. */
+  .band-matrix td.cell.next {
+    color: var(--ink);
+    outline: 1px solid color-mix(in srgb, var(--cell) 70%, transparent);
+    outline-offset: -1px;
+  }
+  .band-matrix td.scen-name {
+    padding: var(--s2) var(--s3); border-bottom: 1px solid var(--rule);
+    font-size: var(--t-xs); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    max-width: 220px;
+  }
+  .band-matrix td.best {
+    text-align: right; padding: var(--s2) var(--s3); border-bottom: 1px solid var(--rule);
+    font-family: var(--mono); font-size: var(--t-xs); font-variant-numeric: tabular-nums;
+    color: var(--ink-mid); white-space: nowrap;
+  }
+  .band-matrix td.best.none { color: var(--ink-dim); }
+
+  /* A band card is a link now, so it has to say so before it is clicked. */
+  .band-card { cursor: pointer; }
+  .band-card:hover { border-color: var(--rule-3); }
+  .band-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
   .band-card {
     position: relative; overflow: hidden;
     padding: var(--s3);
@@ -2423,6 +2504,15 @@
         <span class="tab-label" data-copy="nav.tab.admin">Admin</span>
       </button>
 
+      <!-- No label and never shown in the rail. A band's detail page is reached by clicking
+           a band, not by navigating to it, but it is a screen like any other - giving it a
+           tab means it uses the one switcher instead of a parallel one, and `hidden` is
+           what makes `restoreScreen` skip it when the app reopens. -->
+      <button class="tab" role="tab" aria-selected="false" data-screen="band" id="tabBand" hidden>
+        <span class="tab-key"></span>
+        <span class="tab-label">Band</span>
+      </button>
+
       <!-- Admin-only, revealed after boot by `refreshSeasonTab`, and a different thing
            from the Season tab above it: that one is the player's read-only view, this one
            writes the season file. Both are wanted. -->
@@ -2723,6 +2813,40 @@
                   </tr></thead>
                   <tbody id="roundsBody"></tbody>
                 </table>
+              </div>
+            </div>
+          </section>
+
+          <!-- ------------------------------------------ one band -->
+          <!-- Reached by clicking a band card on Ranks. Everything on it is derived from
+               the snapshot and the practice list, so it needs no fetch of its own. -->
+          <section class="screen" id="screen-band">
+            <div class="screen-head">
+              <button class="band-back" id="bandBack" type="button">Ranks</button>
+              <h1 id="bandTitle">Band</h1>
+              <p id="bandLede"></p>
+            </div>
+
+            <div class="panel">
+              <div class="phead">
+                <h2>The ranks in this band</h2>
+                <span class="note" id="bandNote"></span>
+              </div>
+              <div class="pbody">
+                <ol class="band-ladder" id="bandLadder"></ol>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="phead">
+                <h2>What each rank asks of each scenario</h2>
+                <span class="note" id="bandGridNote"></span>
+              </div>
+              <div class="pbody">
+                <p class="rank-lede" id="bandGridLede"></p>
+                <div class="band-grid-wrap">
+                  <table class="band-matrix" id="bandMatrix"></table>
+                </div>
               </div>
             </div>
           </section>

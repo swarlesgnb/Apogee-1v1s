@@ -929,6 +929,60 @@ function runSmokeTest(): void {
         `${ranks.held} held`,
     );
 
+    // Clicking a band opens its own page, so the check clicks one. Asserting that the
+    // markup exists would pass on a page that never filled, and this screen is built
+    // entirely at click time - nothing about it is in the HTML.
+    //
+    // The *last* band of the first category, not the first. Only the top band carries the
+    // rank held by a place on the board, and opening Novice tests every path except the
+    // one that is easiest to get wrong. The first draft of this check clicked the first
+    // card and failed for that reason.
+    const band = await probe.webContents.executeJavaScript(`(() => {
+      const cards = document.querySelectorAll("#catRanks .cat-rank:first-child .band-card");
+      const card = cards[cards.length - 1];
+      if (!card) return { opened: false };
+      card.click();
+      const rows = [...document.querySelectorAll("#bandMatrix tbody tr")];
+      return {
+        opened: document.getElementById("screen-band")?.classList.contains("active") ?? false,
+        title: (document.getElementById("bandTitle")?.textContent ?? "").trim(),
+        rungs: document.querySelectorAll("#bandLadder .band-rung").length,
+        columns: document.querySelectorAll("#bandMatrix thead th").length,
+        rows: rows.length,
+        cells: document.querySelectorAll("#bandMatrix td.cell").length,
+        cleared: document.querySelectorAll("#bandMatrix td.cell.cleared").length,
+        next: document.querySelectorAll("#bandMatrix td.cell.next").length,
+        positional: [...document.querySelectorAll("#bandLadder .cost")].some(
+          (e) => (e.textContent ?? "").includes("on the board"),
+        ),
+        back: !!document.getElementById("bandBack"),
+      };
+    })()`);
+
+    if (!band.opened) problems.push("clicking a band does not open its page");
+    else if (!band.title) problems.push("the band page does not say which band it is");
+    else if (band.rungs === 0) problems.push("the band page lists no ranks");
+    else if (!band.positional) {
+      // The one rank a score cannot buy. If it prints an energy figure like the others,
+      // the page is inventing a threshold for a rank that has none.
+      problems.push("the band page does not mark the rank held by board place");
+    } else if (band.rows === 0) problems.push("the band page shows no scenarios");
+    else if (band.cells === 0) problems.push("the band page asks nothing of any scenario");
+    else if (band.next === 0 && band.cleared === 0) {
+      problems.push("the band page marks no cell as cleared or next");
+    } else if (!band.back) problems.push("the band page has no way back");
+
+    console.log(
+      `band detail  : ${band.opened ? `"${band.title}"` : "DID NOT OPEN"}, ` +
+        `${band.rungs} ranks, ${band.rows}x${band.columns - 2} grid, ` +
+        `${band.cleared} cleared, ${band.next} next`,
+    );
+
+    // Left where it was found, or a later check reads a screen nobody asked for.
+    await probe.webContents.executeJavaScript(
+      `document.querySelector('.tab[data-screen="ranks"]')?.click()`,
+    );
+
     console.log(`preload      : ${hasBridge ? "bridge exposed" : "MISSING"}`);
     console.log(`renderer     : ${rendered ? "loaded" : "EMPTY"}`);
 

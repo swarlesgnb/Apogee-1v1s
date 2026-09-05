@@ -1227,6 +1227,87 @@
     display: grid; gap: 8px;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   }
+  /* ---------------- one band, in detail ---------------- */
+
+  /* Back to where you came from, set as a label rather than a button: it is a return, and
+     a filled control here would outrank the page it sits above. */
+  .band-back {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-bottom: var(--s2); padding: 0;
+    background: none; border: 0; cursor: pointer;
+    font-family: var(--mono); font-size: var(--t-2xs); letter-spacing: .14em;
+    text-transform: uppercase; color: var(--ink-dim);
+  }
+  .band-back::before { content: "90"; font-size: 13px; }
+  .band-back:hover { color: var(--ink-mid); }
+
+  .band-ladder { list-style: none; margin: 0; padding: 0; }
+  .band-rung {
+    display: grid; align-items: center; gap: var(--s3);
+    grid-template-columns: 22px 13px minmax(0, 1fr) auto auto;
+    padding: var(--s2) 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .band-rung:last-child { border-bottom: 0; }
+  .band-rung .idx {
+    font-family: var(--mono); font-size: var(--t-2xs); color: var(--ink-dim);
+    font-variant-numeric: tabular-nums; text-align: right;
+  }
+  .band-rung .swatch { width: 13px; height: 13px; border: 1px solid var(--rule-3); }
+  .band-rung .nm { font-size: var(--t-sm); font-weight: 640; }
+  .band-rung .cost {
+    font-family: var(--mono); font-size: var(--t-xs); color: var(--ink-mid);
+    font-variant-numeric: tabular-nums; white-space: nowrap;
+  }
+  .band-rung .state {
+    font-family: var(--mono); font-size: var(--t-2xs); letter-spacing: .12em;
+    text-transform: uppercase; color: var(--ink-dim); white-space: nowrap;
+  }
+  /* Held is stated once, on the rank you are on, rather than by filling every rung under
+     it: a ladder that fills upward reads as progress through one thing, and these are
+     separate ranks you either hold or do not. */
+  .band-rung.here .state { color: var(--up); }
+  .band-rung.here .nm { color: var(--rank-ink, var(--ink)); }
+  .band-rung.above .nm, .band-rung.above .cost { color: var(--ink-dim); }
+
+  .band-grid-wrap { overflow-x: auto; }
+  table.band-matrix { min-width: 560px; }
+  /* The cell is the score that rank wants on that scenario. Cleared cells carry the rank's
+     colour at low strength so a row reads as a run of solid blocks ending where you are;
+     the first uncleared one is outlined, because it is the only number on the page that is
+     an instruction. */
+  .band-matrix td.cell {
+    text-align: right; font-family: var(--mono); font-size: var(--t-xs);
+    font-variant-numeric: tabular-nums; color: var(--ink-dim);
+    padding: var(--s2) var(--s3); border-bottom: 1px solid var(--rule);
+  }
+  .band-matrix td.cell.cleared {
+    color: var(--ink); background: color-mix(in srgb, var(--cell) 16%, transparent);
+  }
+  /* An outline rather than an inset shadow. The two draw the same ring here and only one
+     of them is a shadow; `npm run audit:look` counts shadows, and it was right to. */
+  .band-matrix td.cell.next {
+    color: var(--ink);
+    outline: 1px solid color-mix(in srgb, var(--cell) 70%, transparent);
+    outline-offset: -1px;
+  }
+  .band-matrix td.scen-name {
+    padding: var(--s2) var(--s3); border-bottom: 1px solid var(--rule);
+    font-size: var(--t-xs); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    max-width: 220px;
+  }
+  .band-matrix td.best {
+    text-align: right; padding: var(--s2) var(--s3); border-bottom: 1px solid var(--rule);
+    font-family: var(--mono); font-size: var(--t-xs); font-variant-numeric: tabular-nums;
+    color: var(--ink-mid); white-space: nowrap;
+  }
+  .band-matrix td.best.none { color: var(--ink-dim); }
+
+  /* A band card is a link now, so it has to say so before it is clicked. */
+  .band-card { cursor: pointer; }
+  .band-card:hover { border-color: var(--rule-3); }
+  .band-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
   .band-card {
     position: relative; overflow: hidden;
     padding: var(--s3);
@@ -2416,6 +2497,15 @@
         <span class="tab-label" data-copy="nav.tab.admin">Admin</span>
       </button>
 
+      <!-- No label and never shown in the rail. A band's detail page is reached by clicking
+           a band, not by navigating to it, but it is a screen like any other - giving it a
+           tab means it uses the one switcher instead of a parallel one, and `hidden` is
+           what makes `restoreScreen` skip it when the app reopens. -->
+      <button class="tab" role="tab" aria-selected="false" data-screen="band" id="tabBand" hidden>
+        <span class="tab-key"></span>
+        <span class="tab-label">Band</span>
+      </button>
+
       <!-- Admin-only, revealed after boot by `refreshSeasonTab`, and a different thing
            from the Season tab above it: that one is the player's read-only view, this one
            writes the season file. Both are wanted. -->
@@ -2716,6 +2806,40 @@
                   </tr></thead>
                   <tbody id="roundsBody"></tbody>
                 </table>
+              </div>
+            </div>
+          </section>
+
+          <!-- ------------------------------------------ one band -->
+          <!-- Reached by clicking a band card on Ranks. Everything on it is derived from
+               the snapshot and the practice list, so it needs no fetch of its own. -->
+          <section class="screen" id="screen-band">
+            <div class="screen-head">
+              <button class="band-back" id="bandBack" type="button">Ranks</button>
+              <h1 id="bandTitle">Band</h1>
+              <p id="bandLede"></p>
+            </div>
+
+            <div class="panel">
+              <div class="phead">
+                <h2>The ranks in this band</h2>
+                <span class="note" id="bandNote"></span>
+              </div>
+              <div class="pbody">
+                <ol class="band-ladder" id="bandLadder"></ol>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="phead">
+                <h2>What each rank asks of each scenario</h2>
+                <span class="note" id="bandGridNote"></span>
+              </div>
+              <div class="pbody">
+                <p class="rank-lede" id="bandGridLede"></p>
+                <div class="band-grid-wrap">
+                  <table class="band-matrix" id="bandMatrix"></table>
+                </div>
               </div>
             </div>
           </section>
@@ -3252,7 +3376,7 @@
 
 
 <script id="apogee-snapshot" type="application/json">{
-  "generatedAt": "2026-09-05T00:52:28.045Z",
+  "generatedAt": "2026-09-05T01:01:30.489Z",
   "coverage": [
     {
       "category": "Dynamic Clicking",
@@ -5243,7 +5367,7 @@
     "windowSize": 4
   },
   "player": {
-    "totalRuns": 12543,
+    "totalRuns": 12544,
     "scenarioCount": 915,
     "streak": 34,
     "benchmarkRank": "Lunar",
@@ -11899,6 +12023,155 @@ function renderPlaylists() {
   chips.append(all);
 }
 
+/**
+ * One band, in full: every rank it can award and what each one asks for.
+ *
+ * A band card on the Ranks page says which rank you hold and how far through it you are,
+ * and that is all it has room for. The question it raises - what are the others, and what
+ * would it take - had no answer anywhere in the app. Energy is the only thing the ladder
+ * grades on, and energy is a sum over scenarios, so "what would it take" is genuinely a
+ * per-scenario question and cannot be answered by one number.
+ *
+ * Hence the matrix. One row per scenario, one column per rank, and the cell is the score
+ * that rank wants on that scenario. A row reads as a run of filled cells ending where the
+ * player is, and the first unfilled cell in each row is the only number on the page that is
+ * an instruction.
+ *
+ * Drawn entirely from the snapshot and the practice list, both of which the window already
+ * holds, so opening this fetches nothing and works with the app offline.
+ */
+function openBand(category, window_) {
+  bandOpen = { category, window: window_ };
+  renderBand();
+  const tab = document.querySelector('.tab[data-screen="band"]');
+  if (tab) tab.click();
+}
+
+/** Which band the detail page is showing, or null. */
+let bandOpen = null;
+
+function renderBand() {
+  if (!bandOpen || !current) return;
+  const cat = current.categories.find((c) => c.name === bandOpen.category);
+  const band = cat && (cat.bands ?? []).find((b) => b.window === bandOpen.window);
+  if (!band) return;
+
+  const bandName = band.windowName || "Band " + (band.window + 1);
+  $("bandTitle").textContent = cat.name + " · " + bandName;
+  $("bandLede").textContent =
+    "Every rank this band can award, and the score each one wants on each of its " +
+    band.total + " scenarios. A band is a whole benchmark: these ranks are its own, and " +
+    "holding one says nothing about the band above it.";
+
+  $("bandNote").textContent =
+    band.played === 0
+      ? "not played yet"
+      : (band.rankName ? band.rankName : "below the first rank") +
+        " · " + num(band.energy) + " energy";
+
+  // ---- the ladder ----
+  const ladder = $("bandLadder");
+  ladder.textContent = "";
+
+  band.rankNames.forEach((name, i) => {
+    const positional = band.positional && i === band.rankNames.length - 1;
+    const colour = band.rankColors?.[name] ?? null;
+    const held = band.rankName === name;
+    const above = band.rankIndex === null || band.rankIndex === undefined
+      ? !held
+      : i > band.rankIndex;
+
+    const li = document.createElement("li");
+    li.className = "band-rung" + (held ? " here" : above ? " above" : "");
+    if (colour) li.style.setProperty("--rank-ink", legibleOnDark(colour, RANK_TEXT_CONTRAST));
+
+    li.innerHTML =
+      '<span class="idx">' + (i + 1) + "</span>" +
+      '<span class="swatch" style="background:' + esc(colour || "var(--rule-3)") + '"></span>' +
+      '<span class="nm">' + esc(name) + "</span>" +
+      '<span class="cost">' +
+      // The positional rank has no threshold by construction: it is held by standing on the
+      // board, so printing a number beside it would be inventing one.
+      (positional
+        ? "top " + band.positional.topN + " on the board"
+        : band.rankMaxes && band.rankMaxes[i] !== undefined
+          ? num(band.rankMaxes[i]) + " energy"
+          : "") +
+      "</span>" +
+      '<span class="state">' + (held ? "you" : above ? "" : "cleared") + "</span>";
+    ladder.append(li);
+  });
+
+  // ---- the matrix ----
+  const rows = (practice?.scenarios ?? []).filter(
+    (r) => r.category === cat.name && r.window === band.window,
+  );
+  const scored = band.rankNames.filter(
+    (_, i) => !(band.positional && i === band.rankNames.length - 1),
+  );
+
+  $("bandGridNote").textContent = rows.length + " scenarios";
+  $("bandGridLede").textContent = rows.length === 0
+    ? "The practice list has not loaded, so the per-scenario scores are not available yet."
+    : "A filled cell is a score you have already beaten. The outlined one in each row is " +
+      "the next score that moves you, and every scenario counts the same, so the cheapest " +
+      "outlined cell is the cheapest rank.";
+
+  const table = $("bandMatrix");
+  table.textContent = "";
+  if (rows.length === 0) return;
+
+  const head = document.createElement("thead");
+  head.innerHTML =
+    "<tr><th style=\"text-align:left\">Scenario</th><th>Best</th>" +
+    scored.map((n) => "<th>" + esc(n) + "</th>").join("") +
+    "</tr>";
+  table.append(head);
+
+  const body = document.createElement("tbody");
+  for (const r of rows) {
+    const tr = document.createElement("tr");
+
+    const nameCell = document.createElement("td");
+    nameCell.className = "scen-name";
+    nameCell.textContent = r.label;
+    nameCell.title = r.scenario;
+    tr.append(nameCell);
+
+    const bestCell = document.createElement("td");
+    bestCell.className = "best" + (r.best === null ? " none" : "");
+    bestCell.textContent = r.best === null ? "unplayed" : num(r.best);
+    tr.append(bestCell);
+
+    // The first threshold this score has not beaten. Marked once per row: the ones above
+    // it are also unbeaten, and outlining all of them would say "everything is next".
+    const nextIndex = r.rankMaxes.findIndex((t) => r.best === null || r.best < t);
+
+    scored.forEach((name, i) => {
+      const target = r.rankMaxes[i];
+      const td = document.createElement("td");
+      const cleared = target !== undefined && r.best !== null && r.best >= target;
+      td.className = "cell" + (cleared ? " cleared" : i === nextIndex ? " next" : "");
+      const colour = band.rankColors?.[name];
+      if (colour) td.style.setProperty("--cell", colour);
+      td.textContent = target === undefined ? "" : num(target);
+      td.title =
+        esc(r.label) + " · " + name +
+        (target === undefined
+          ? ""
+          : cleared
+            ? " · cleared"
+            : r.best === null
+              ? " · wants " + num(target)
+              : " · " + num(Math.round(target - r.best)) + " to go");
+      tr.append(td);
+    });
+
+    body.append(tr);
+  }
+  table.append(body);
+}
+
 function renderRanks(data) {
   const me = data.player.apogee;
   const tiers = data.theme;
@@ -11985,10 +12258,15 @@ function renderRanks(data) {
       // the Queue tab: without it the ladder and the thing you actually play are two
       // unrelated lists that happen to share names.
       const queued = (data.benchmark.matchPool?.window ?? -1) === b.window;
-      const card = document.createElement("div");
+      // A button, not a div. The card opens a page, so it has to be reachable by keyboard
+      // and announced as something that does anything - which a div with a click handler
+      // is not, however it looks.
+      const card = document.createElement("button");
+      card.type = "button";
       card.className =
         "band-card" + (unplayed ? " unplayed" : b.rankName ? " held" : " below") +
         (queued ? " queued" : "");
+      card.addEventListener("click", () => openBand(cat.name, b.window));
       // An unplayed band is achromatic; one that is merely below its first rank still
       // shows that rank's colour, so the progress bar under it is pointing somewhere.
       const plate = unplayed
@@ -13357,6 +13635,13 @@ document.querySelectorAll(".tab").forEach((tab) => {
   });
 });
 
+if ($("bandBack")) {
+  $("bandBack").addEventListener("click", () => {
+    const tab = document.querySelector('.tab[data-screen="ranks"]');
+    if (tab) tab.click();
+  });
+}
+
 restoreScreen();
 
 /**
@@ -13974,6 +14259,10 @@ if (HOST === "electron") {
   });
 
   api.onRun((run) => showRunToast(run));
+
+  // The band page is drawn from the snapshot, so a run landing while it is open has to
+  // redraw it. `render` does not, because the page is not part of the snapshot's own tree.
+  api.onSnapshot(() => renderBand());
 
   api.onScanning(({ scanning }) => {
     setStatus(scanning ? "scanning" : "ok", scanning ? "Scanning…" : "Watching", currentPath);
