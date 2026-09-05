@@ -2062,9 +2062,9 @@ ipcMain.handle("apogee:saveSeason", async (_e, { season, fingerprint, force }) =
   // between is gone without a message. That is not hypothetical. A client left open across
   // an afternoon of work on the pool put every one of those edits back the way they were,
   // twice - once silently reverting `data/pool.json`, and once undoing a rank rename and
-  // all forty-eight regenerated colours, which read from the outside as "saving does not
-  // do anything" because the app faithfully repainted itself to the season it had just
-  // been told to use.
+  // all forty-eight colours a palette pass had just written, which read from the outside
+  // as "saving does not do anything" because the app faithfully repainted itself to the
+  // season it had just been told to use.
   //
   // A missing fingerprint is allowed through: an editor from a build before this one has
   // no way to send it, and refusing every one of those saves would be a worse failure than

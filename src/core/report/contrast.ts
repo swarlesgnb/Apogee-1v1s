@@ -54,10 +54,11 @@ export const MIN_CONTRAST = 2;
  * column of its own.
  *
  * The renderer holds its own copy - it runs as plain script in two hosts and cannot import
- * this - so anything that *generates* a colour has to read the number from here, or a ramp
- * gets built against one floor and painted against another. That is not hypothetical: the
- * first generated palette was solved to 2:1, the client lifted its bottom seven rungs to
- * 3.5, and the lift's five percent steps reordered them.
+ * this - and the two have to be moved together. A colour solved against one floor and
+ * painted against another does not simply come out dim: the generated palette this repo
+ * used to carry was solved to 2:1, the client lifted its bottom seven rungs to 3.5, and
+ * the lift's five percent steps reordered them. The palette is hand-picked now, which
+ * removes the generator from that list and leaves these two copies on it.
  */
 export const RANK_TEXT_CONTRAST = 3.5;
 

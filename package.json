@@ -55,7 +55,6 @@
     "cut:thresholds": "tsx tools/cutThresholds.ts",
     "propose:families": "tsx tools/proposeFamilies.ts",
     "docs:ranks": "tsx tools/buildRankSheet.ts",
-    "build:palette": "tsx tools/buildPalette.ts",
     "push:season": "tsx tools/pushSeason.ts",
     "fetch:evxl": "tsx tools/fetchEvxlRegistry.ts",
     "sync:reference": "tsx tools/syncReferenceData.ts",

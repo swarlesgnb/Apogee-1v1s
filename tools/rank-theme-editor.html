@@ -398,9 +398,9 @@
      shadow. Nothing in the client draws either any more, so authoring them here was
      authoring fields no reader would ever see.
 
-     The shipped palette is not picked here at all: tools/buildRankPalette.ts generates
-     all four ladders as ramps and refuses to write one whose worst colour cannot be
-     read on both grounds. This is for trying a tier by hand against real rounds. */
+     The shipped colours used to be generated as ramps and are not any more: they are
+     chosen to match the names, which is a thing no ramp can do and the reason the
+     generator was deleted. This is for trying a tier by hand against real rounds. */
   const DEFAULTS = [
     { id: "tier-1", name: "Tier I",    percentile: [0, 15],   color: "#344F6B" },
     { id: "tier-2", name: "Tier II",   percentile: [15, 33],  color: "#466576" },
