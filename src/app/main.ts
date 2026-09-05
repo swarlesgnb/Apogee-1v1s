@@ -1040,16 +1040,26 @@ function runSmokeTest(): void {
     // not behind the admin check - the app has to paint before there is a session to ask
     // about - so the editor populates on any account and can be checked on this one. What
     // the role gates is saving, and main re-checks that on all four write handlers.
-    const editor = await probe.webContents.executeJavaScript(`(() => ({
-      tokens: document.querySelectorAll("#adminTokens .adm-row").length,
-      copy: document.querySelectorAll("#adminCopy .adm-copy-row").length,
-      ranks: document.querySelectorAll("#adminRanks .adm-rank-row").length,
-      save: document.getElementById("adminSave") !== null,
-    }))()`);
+    // Opened the way a person opens it. The editors are drawn on the way into the screen
+    // and not at boot, so checking the DOM without the click would check an empty screen
+    // and pass forever. `.click()` works on the hidden tab, which is what this account is
+    // looking at: reading the overrides is open to everyone, and only saving is not.
+    const editor = await probe.webContents.executeJavaScript(`(() => {
+      document.getElementById("tabAdmin").click();
+      return {
+        tokens: document.querySelectorAll("#adminTokens .adm-row").length,
+        copy: document.querySelectorAll("#adminCopy .adm-copy-row").length,
+        ranks: document.querySelectorAll("#adminRanks .adm-rank-row").length,
+        save: document.getElementById("adminSave") !== null,
+        path: (document.getElementById("adminPath").textContent || "").trim().length > 0,
+      };
+    })()`);
 
     if (editor.tokens === 0) problems.push("the look editor drew no colours");
     else if (editor.copy === 0) problems.push("the look editor drew no copy");
+    else if (editor.ranks === 0) problems.push("the look editor drew no ranks");
     else if (!editor.save) problems.push("the look editor has no save button");
+    else if (!editor.path) problems.push("the look editor does not say where it writes");
     console.log(
       `look editor  : ${editor.tokens} colours, ${editor.copy} strings, ${editor.ranks} ranks`,
     );

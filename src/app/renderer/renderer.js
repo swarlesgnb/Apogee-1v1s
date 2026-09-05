@@ -4753,6 +4753,11 @@ async function refreshAdminTabs() {
   }
 
   numberTabs();
+  // The remembered screen is restored at boot, before this has run, so a tab that is
+  // still hidden at that point is skipped and an admin who was last in one of these two
+  // screens always reopens on Queue. Try again now that they exist - but only from the
+  // default screen, so this can never pull somebody off a screen they chose since.
+  if (admin && $("screen-queue").classList.contains("active")) restoreScreen();
   if (admin) await loadSeasonEditor();
 }
 
@@ -4765,6 +4770,9 @@ if (HOST === "electron" && window.apogee && window.apogee.getSeason) {
     seasonPool = r.season;
     if (typeof r.energyPerRank === "number") energyPerRank = r.energyPerRank;
     if (current) renderSeasonView(current);
+    // Somebody already standing on the look editor when the season lands would otherwise
+    // be looking at "the season has not loaded yet" until they navigated away and back.
+    if ($("screen-admin")?.classList.contains("active")) renderAdminRanks();
   });
 }
 
@@ -5232,6 +5240,10 @@ document.querySelectorAll(".tab").forEach((tab) => {
     document.querySelectorAll(".screen").forEach((s) => s.classList.remove("active"));
     $("screen-" + tab.dataset.screen).classList.add("active");
     rememberScreen(tab.dataset.screen);
+    // Drawn on the way in rather than at boot: the editors are cheap to build and stale
+    // the moment the season or a save lands, so the screen is always redrawn from the
+    // draft it is about to show.
+    if (tab.dataset.screen === "admin") renderAdmin();
   });
 });
 
@@ -5651,8 +5663,7 @@ function markAdminDirty() {
   const copy = Object.keys(adminDraft.copy).length;
   $("adminTokenNote").textContent = tokens + " changed";
   $("adminCopyNote").textContent = copy + " changed";
-  $("adminPath").textContent =
-    tokens + " colour(s), " + copy + " string(s)" + (dirty ? ", unsaved" : "");
+  $("adminPath").textContent = adminPath;
 }
 
 function adminNote(message, kind) {
@@ -5981,14 +5992,14 @@ function adminRejections(rejected) {
   return " Refused: " + named + rest + ".";
 }
 
-function adoptOverrides(overrides) {
+function adoptOverrides(overrides, options) {
   adminSaved = overrides || adminSaved;
   adminDraft = {
     tokens: Object.assign({}, adminSaved.tokens),
     copy: Object.assign({}, adminSaved.copy),
   };
   applyLook();
-  renderAdmin();
+  if (!options || options.draw !== false) renderAdmin();
 }
 
 /*
@@ -6010,7 +6021,7 @@ async function loadAdminLook() {
   };
   adminPath = r.path || "";
   readTokenDefaults();
-  adoptOverrides(r.overrides);
+  adoptOverrides(r.overrides, { draw: false });
 
   if (r.error) {
     adminNote("The overrides file could not be read, so none are applied: " + r.error);
