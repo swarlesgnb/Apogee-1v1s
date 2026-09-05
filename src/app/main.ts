@@ -52,6 +52,11 @@ import {
   settleMatch,
   submitRun,
   uploadBackfill,
+  answerDuel,
+  fetchDuels,
+  sendDuel,
+  setFriend,
+  type DuelBoard,
   type FoundMatch,
 } from "./api.ts";
 import {
@@ -117,6 +122,8 @@ interface State {
   uploading: boolean;
   /** Quest completions and lifetime XP, persisted between launches. */
   quests: QuestProgressState | null;
+  /** The inbox, what was sent, who else plays. Null until signed in and read once. */
+  duels: DuelBoard | null;
 }
 
 const state: State = {
@@ -130,7 +137,11 @@ const state: State = {
   submitted: new Set(),
   uploading: false,
   quests: null,
+  duels: null,
 };
+
+/** What the renderer was last told, so an unchanged board is not broadcast again. */
+let duelBoardKey = "";
 
 let window: BrowserWindow | null = null;
 let watcher: StatsWatcher | null = null;
@@ -1036,6 +1047,72 @@ function runSmokeTest(): void {
     }
     console.log(`copy keys    : ${copy === null ? "NOT CAPTURED" : `${copy} authored`}`);
 
+    // The duel bridge, and the wiring that puts a match on screen.
+    //
+    // Pushed down the real channel rather than by calling the painter: the bug this
+    // covers is that `onMatch` used to set a variable and paint nothing, so a match
+    // recovered on restart left an empty Play screen while the watcher submitted runs
+    // against a match the player could not see. Calling the painter directly would prove
+    // the painter works and say nothing about whether anything calls it.
+    const bridgeGaps = await probe.webContents.executeJavaScript(
+      `["duels", "sendDuel", "answerDuel", "setFriend", "onDuels"]
+         .filter((k) => typeof window.apogee[k] !== "function")`,
+    );
+    if (bridgeGaps.length > 0) {
+      problems.push(`the duel bridge is missing: ${bridgeGaps.join(", ")}`);
+    }
+
+    probe.webContents.send("apogee:match", {
+      matchId: "smoke",
+      category: "Static Clicking",
+      difficulty: "Intermediate",
+      expiresAt: new Date(Date.now() + 60_000).toISOString(),
+      scenarios: [
+        { id: 1, name: "one" },
+        { id: 2, name: "two" },
+        { id: 3, name: "three" },
+      ],
+      opponent: null,
+      seeding: true,
+      winProbability: null,
+      poolSize: 0,
+      duel: { id: "d", to: "somebody" },
+    });
+
+    const painted = await probe.webContents.executeJavaScript(`(async () => {
+      await new Promise((r) => setTimeout(r, 120));
+      const shown = {
+        on: document.getElementById("opponent").classList.contains("on"),
+        named: document.getElementById("oppName").textContent,
+        verb: document.getElementById("queueVerb").textContent,
+      };
+      return shown;
+    })()`).catch((err) => ({ failed: String(err && err.message ? err.message : err) }));
+
+    if (painted.failed) {
+      problems.push(`the match broadcast threw: ${painted.failed}`);
+    } else if (!painted.on) {
+      problems.push("a match pushed to the client never reaches the screen");
+    } else if (painted.named !== "somebody") {
+      problems.push(`a duel names "${painted.named}" rather than who it was sent to`);
+    }
+
+    // Clear it the same way, which also exercises the other half of the handler.
+    probe.webContents.send("apogee:match", null);
+    const cleared = await probe.webContents.executeJavaScript(`(async () => {
+      await new Promise((r) => setTimeout(r, 120));
+      return document.getElementById("opponent").classList.contains("on");
+    })()`).catch(() => true);
+    if (cleared) problems.push("clearing the match leaves its panel on screen");
+
+    console.log(
+      `duels        : ${
+        painted.failed
+          ? "THREW"
+          : `bridge complete, a pushed match paints "${painted.verb}" for ${painted.named}`
+      }`,
+    );
+
     // Whether you are in a queue has to be legible without scrolling, and the Play screen
     // cannot promise that: the button saying "Searching" sits under a tall rank panel and
     // above a list of every scenario in the window. The bar can, so the state is mirrored
@@ -1280,6 +1357,13 @@ app.whenReady().then(() => {
         // Best effort. Queueing surfaces the same match anyway, so a failure here
         // costs a convenience rather than the match.
       }
+
+      // And the duel board, for the same reason: somebody who was challenged while the
+      // app was shut should be told on the way in rather than the next time they think
+      // to look. Nothing here is on a timer - this fires on the way in and after every
+      // action - so a duel that arrives mid-session appears when the player next does
+      // something, which is the honest limit of it until there is a reason to poll.
+      void refreshDuels("session restored");
     })
     .catch(() => undefined);
 
@@ -1364,6 +1448,7 @@ ipcMain.handle("apogee:signIn", async () => {
     state.session = session;
     state.lastError = null;
     broadcast("apogee:session", session);
+    void refreshDuels("signed in");
     return { session };
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
@@ -1381,6 +1466,10 @@ ipcMain.handle("apogee:signOut", async () => {
   state.session = null;
   state.match = null;
   state.submitted.clear();
+  // Somebody else's inbox must not be left on screen for whoever signs in next.
+  state.duels = null;
+  duelBoardKey = "";
+  broadcast("apogee:duels", null);
   broadcast("apogee:session", null);
   return { ok: true };
 });
@@ -1433,39 +1522,136 @@ ipcMain.handle("apogee:uploadHistory", async () => {
   }
 });
 
+/**
+ * Take up a new match: remember it, write its playlist, and tell the renderer.
+ *
+ * Four steps, and all four have to happen together. Three paths create a match now - the
+ * queue, sending a duel and accepting one - and the third copy of this is where somebody
+ * forgets `writeMatchPlaylist` and the playlist silently never appears in KovaaK's, which
+ * is the failure the paragraph below is about.
+ */
+function adoptMatch(match: FoundMatch): void {
+  state.match = match;
+  state.submitted.clear();
+
+  // Write the playlist now, not when the player presses Play.
+  //
+  // KovaaK's reads its playlists folder once, at startup. A playlist written after
+  // the game is already open never appears in the menu however correct the file is,
+  // which is exactly what it looked like when the file on disk matched the match and
+  // the game still listed the previous one. Writing at match creation means the
+  // common order - queue, then launch the game - finds it there.
+  //
+  // It still cannot help someone who already had KovaaK's open. That is what the
+  // per-scenario deep links are for: they need nothing on disk.
+  if (state.statsDir) {
+    const written = writeMatchPlaylist(state.statsDir, {
+      scenarios: match.scenarios.map((s) => s.name),
+      matchId: match.matchId,
+      opponent: match.opponent?.displayName ?? null,
+    });
+    if (!written.ok) console.warn(`could not write the match playlist: ${written.error}`);
+  }
+
+  broadcast("apogee:match", match);
+}
+
 ipcMain.handle("apogee:findMatch", async (_e, { category, pool }) => {
   if (!state.session) return { error: "sign in first" };
   if (typeof pool?.window !== "number") return { error: "no match pool: rebuild the snapshot" };
 
   try {
     const match = await findMatch(category, pool);
-    state.match = match;
-    state.submitted.clear();
-
-    // Write the playlist now, not when the player presses Play.
-    //
-    // KovaaK's reads its playlists folder once, at startup. A playlist written after
-    // the game is already open never appears in the menu however correct the file is,
-    // which is exactly what it looked like when the file on disk matched the match and
-    // the game still listed the previous one. Writing at match creation means the
-    // common order - queue, then launch the game - finds it there.
-    //
-    // It still cannot help someone who already had KovaaK's open. That is what the
-    // per-scenario deep links are for: they need nothing on disk.
-    if (state.statsDir) {
-      const written = writeMatchPlaylist(state.statsDir, {
-        scenarios: match.scenarios.map((s) => s.name),
-        matchId: match.matchId,
-        opponent: match.opponent?.displayName ?? null,
-      });
-      if (!written.ok) console.warn(`could not write the match playlist: ${written.error}`);
-    }
-
-    broadcast("apogee:match", match);
+    adoptMatch(match);
     return { match };
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
     return { error: message };
+  }
+});
+
+/* ------------------------------------------------------------------------ duels ---- */
+
+/**
+ * Re-read the duel board and tell the renderer only when it actually changed.
+ *
+ * The panel is repainted from this, and repainting it on an unchanged board would throw
+ * away a scroll position and a half-typed filter for nothing. Comparing the ids is enough:
+ * everything else on a duel that can move - ready, played, status - moves with them.
+ */
+async function refreshDuels(reason: string): Promise<void> {
+  if (!state.session) {
+    state.duels = null;
+    return;
+  }
+
+  try {
+    const board = await fetchDuels();
+    const key = JSON.stringify([
+      board.incoming.map((d) => `${d.id}:${d.ready}`),
+      board.outgoing.map((d) => `${d.id}:${d.status}:${d.played}`),
+      board.friends.map((f) => f.playerId),
+    ]);
+
+    const changed = key !== duelBoardKey;
+    duelBoardKey = key;
+    state.duels = board;
+    if (changed) broadcast("apogee:duels", board);
+  } catch (err) {
+    // Best effort, and quiet. The board is a convenience: failing to read it should not
+    // put an error banner over a screen the player is using for something else.
+    console.warn(`could not read duels (${reason}):`, err instanceof Error ? err.message : err);
+  }
+}
+
+ipcMain.handle("apogee:duels", async () => {
+  if (!state.session) return { error: "sign in first" };
+  try {
+    const board = await fetchDuels();
+    state.duels = board;
+    return { board };
+  } catch (err) {
+    return { error: err instanceof Error ? err.message : String(err) };
+  }
+});
+
+ipcMain.handle("apogee:sendDuel", async (_e, { to, category, pool }) => {
+  if (!state.session) return { error: "sign in first" };
+  if (typeof pool?.window !== "number") return { error: "no match pool: rebuild the snapshot" };
+
+  try {
+    const match = await sendDuel(to, category, pool);
+    adoptMatch(match);
+    void refreshDuels("sent a duel");
+    return { match };
+  } catch (err) {
+    return { error: err instanceof Error ? err.message : String(err) };
+  }
+});
+
+ipcMain.handle("apogee:answerDuel", async (_e, { duelId, action }) => {
+  if (!state.session) return { error: "sign in first" };
+
+  try {
+    const result = await answerDuel(duelId, action);
+    // Accepting hands back a whole match; declining and cancelling hand back a verdict.
+    // Taking up a match that is not there would wipe the one the player is playing.
+    if (action === "accept" && result.matchId) adoptMatch(result);
+    void refreshDuels(`answered a duel: ${action}`);
+    return { ok: true, status: result.status, match: action === "accept" ? result : undefined };
+  } catch (err) {
+    return { error: err instanceof Error ? err.message : String(err) };
+  }
+});
+
+ipcMain.handle("apogee:setFriend", async (_e, { playerId, friend }) => {
+  if (!state.session) return { error: "sign in first" };
+  try {
+    await setFriend(playerId, friend);
+    void refreshDuels("changed the shortlist");
+    return { ok: true };
+  } catch (err) {
+    return { error: err instanceof Error ? err.message : String(err) };
   }
 });
 

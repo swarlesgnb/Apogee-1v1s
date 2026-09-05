@@ -160,6 +160,11 @@ export interface FoundMatch {
   winProbability: number | null;
   /** Null when the pool was not searched, which is the case for a resumed match. */
   poolSize: number | null;
+  /**
+   * Set when this match came from a duel rather than the queue, naming whoever is on the
+   * other end of it. find-match never sets it, so every existing caller sees undefined.
+   */
+  duel?: { id: string; to?: string; from?: string } | null;
 }
 
 /**
@@ -175,6 +180,127 @@ export function findMatch(
   pool: { window: number },
 ): Promise<FoundMatch> {
   return callFunction<FoundMatch>("find-match", { category, window: pool.window });
+}
+
+/* ------------------------------------------------------------------------ duels ---- */
+
+/**
+ * Somebody else, as much of them as the server is willing to say.
+ *
+ * A name, a rating and when they last played. `playerId` is here because a duel has to be
+ * addressed and nothing else can address one - see the header of `list-duels` for why that
+ * is a narrowing of a rule this codebase otherwise holds to, and what it buys.
+ */
+export interface Person {
+  playerId: string;
+  displayName: string;
+  rating: number;
+  provisional: boolean;
+  lastPlayedAt: string | null;
+  friend: boolean;
+}
+
+export interface IncomingDuel {
+  id: string;
+  from: Person;
+  status: "open";
+  createdAt: string;
+  expiresAt: string;
+  /**
+   * They have finished their three, so there is something to accept.
+   *
+   * Whether, never how well. The score is not in this payload and must not be: choosing
+   * which duels to answer by how the sender did is picking the ones you expect to win.
+   */
+  ready: boolean;
+}
+
+export interface OutgoingDuel {
+  id: string;
+  to: Person;
+  status: "open" | "accepted" | "declined" | "cancelled" | "expired";
+  createdAt: string;
+  expiresAt: string;
+  answeredAt: string | null;
+  /** Whether you have played your own three yet. Until you have, nobody can answer it. */
+  played: boolean;
+}
+
+export interface DuelBoard {
+  incoming: IncomingDuel[];
+  outgoing: OutgoingDuel[];
+  /** Everyone who has actually played, most recent first. */
+  roster: Person[];
+  friends: Person[];
+}
+
+/** The inbox, what you sent, who else plays, and your shortlist. */
+export function fetchDuels(): Promise<DuelBoard> {
+  return callFunction<DuelBoard>("list-duels", {});
+}
+
+/**
+ * Challenge a named player.
+ *
+ * Creates your own match, which you play before they can answer. Comes back in the same
+ * shape as `findMatch`, so the caller stores it, writes the playlist and paints the match
+ * panel through the path that already exists.
+ */
+export function sendDuel(
+  to: string,
+  category: string,
+  pool: { window: number },
+): Promise<FoundMatch> {
+  return callFunction<FoundMatch>("send-duel", { to, category, window: pool.window });
+}
+
+export interface DuelAnswer {
+  ok: boolean;
+  status: string;
+  /** Present only on accept: the contested match this just created. */
+  matchId?: string;
+}
+
+/**
+ * Accept, decline, or take back one you sent.
+ *
+ * Accepting returns a whole match rather than an acknowledgement, for the same reason
+ * find-match does: the client needs the scenarios and the opponent to show anything at
+ * all, and a second round trip to fetch what the first one already knew is a screen that
+ * flickers for no reason.
+ */
+export function answerDuel(
+  duelId: string,
+  action: "accept" | "decline" | "cancel",
+): Promise<FoundMatch & DuelAnswer> {
+  return callFunction<FoundMatch & DuelAnswer>("answer-duel", { duelId, action });
+}
+
+/**
+ * Add or remove somebody from your shortlist.
+ *
+ * A direct table write, which is rare here and deliberate. `friendships` decides nothing -
+ * a forged row only clutters the forger's own picker - so RLS scopes it to the caller and
+ * there is no Edge Function whose whole job would be to insert a row the player is already
+ * allowed to insert. The rule that keeps clients out of `ratings` and `match_sides` has
+ * nothing to protect here.
+ */
+export async function setFriend(playerId: string, friend: boolean): Promise<void> {
+  const client = supabase();
+  const token = await accessToken();
+  if (!token) throw new ApiError("you are not signed in", 401);
+
+  const me = (await client.auth.getUser()).data.user?.id;
+  if (!me) throw new ApiError("you are not signed in", 401);
+
+  const { error } = friend
+    ? await client.from("friendships").upsert(
+        { player_id: me, friend_id: playerId },
+        { onConflict: "player_id,friend_id" },
+      )
+    : await client.from("friendships").delete().eq("player_id", me).eq("friend_id", playerId);
+
+  if (error) throw new ApiError(error.message);
 }
 
 /**

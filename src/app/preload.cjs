@@ -153,6 +153,28 @@ contextBridge.exposeInMainWorld("apogee", {
   /** Pasteable support text: build, folder, run count. Never anything private. */
   diagnostics: () => ipcRenderer.invoke("apogee:diagnostics"),
 
+  // ---- duels -------------------------------------------------------------
+  /** The inbox, what you sent, who else plays, and your shortlist. */
+  duels: () => ipcRenderer.invoke("apogee:duels"),
+
+  /**
+   * Challenge a named player. Creates your own match, which you play before they can
+   * answer, so this hands back a match exactly as findMatch does.
+   */
+  sendDuel: (to, category, pool) =>
+    ipcRenderer.invoke("apogee:sendDuel", { to, category, pool }),
+
+  /** Accept, decline, or take back one you sent. Accepting starts a rated match. */
+  answerDuel: (duelId, action) =>
+    ipcRenderer.invoke("apogee:answerDuel", { duelId, action }),
+
+  /** Add or remove somebody from your shortlist. */
+  setFriend: (playerId, friend) =>
+    ipcRenderer.invoke("apogee:setFriend", { playerId, friend }),
+
+  /** Fires when the duel board changes, and with null on sign-out. */
+  onDuels: (handler) => subscribe("apogee:duels", handler),
+
   /** Whether the signed-in player holds the admin role. Gates the editors, nothing else. */
   isAdmin: () => ipcRenderer.invoke("apogee:isAdmin"),
 

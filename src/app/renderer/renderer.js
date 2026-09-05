@@ -5486,6 +5486,37 @@ let activeMatch = null;
  * Takes a real match from the server when there is one, and falls back to the snapshot's
  * illustrative match only in the static preview, where no server exists.
  */
+/**
+ * Put the match the client is holding back on screen.
+ *
+ * Called from three places that all mean the same thing - it was just created, it was
+ * recovered on restart, or a snapshot finally arrived to paint it against - so the
+ * decision about what the button says lives here rather than three times.
+ *
+ * Does nothing without a snapshot. Recovery fires before the first render, and painting a
+ * match against no player would be a panel of blanks.
+ */
+function paintActiveMatch() {
+  if (!activeMatch || !current) return;
+
+  setCommit(
+    "held",
+    activeMatch.duel?.to
+      ? "Duel sent"
+      : activeMatch.duel?.from
+        ? "Duel accepted"
+        : activeMatch.resumed
+          ? "Match already open"
+          : activeMatch.seeding
+            ? "Seeding the pool"
+            : "Match in progress",
+    "Play the three below in KovaaK's. Abandon it to queue again.",
+    "",
+  );
+  $("queueBtn").disabled = true;
+  showRealMatch(activeMatch, current);
+}
+
 function showRealMatch(match, data) {
   const me = data.player.apogee;
 
@@ -5498,11 +5529,16 @@ function showRealMatch(match, data) {
   // point, so only the opponent card changes.
   if (match.seeding || !match.opponent) {
     $("oppBadge").innerHTML = badge(me.tier, "opp");
-    $("oppName").textContent = "No opponent yet";
-    $("oppTier").textContent = "seeding the pool";
+    // A duel you sent looks like a seeding match to everything downstream, because that
+    // is what it is - but it is not waiting on a pool, it is waiting on a person, and
+    // saying "no opponent yet" about somebody you just named would be nonsense.
+    const sentTo = match.duel?.to ?? null;
+    $("oppName").textContent = sentTo ? esc(sentTo) : "No opponent yet";
+    $("oppTier").textContent = sentTo ? "duel sent" : "seeding the pool";
     $("oppTier").style.color = legibleOnDark(me.tier.color, RANK_TEXT_CONTRAST);
-    $("oppAge").textContent =
-      match.poolSize == null
+    $("oppAge").textContent = sentTo
+      ? "play your three, then it is theirs to answer"
+      : match.poolSize == null
         ? "match already in progress"
         : match.poolSize === 0
           ? "you are first in this category"
@@ -5613,20 +5649,11 @@ $("queueBtn").addEventListener("click", async () => {
   // Neither an empty pool nor an existing match is an error now: the server hands back
   // a seeding match for the first, and the match you already have for the second, so
   // there is always something on screen and always a way out of it.
-  setCommit(
-    "held",
-    result.match.resumed
-      ? "Match already open"
-      : result.match.seeding
-        ? "Seeding the pool"
-        : "Match in progress",
-    "Play the three below in KovaaK's. Abandon it to queue again.",
-    "",
-  );
   // Nothing to press while a match is open; the way out is Abandon, on the match.
-  btn.disabled = true;
+  // paintActiveMatch owns what the button says, so the queue and the three other routes
+  // into a match cannot describe the same state differently.
   activeMatch = result.match;
-  showRealMatch(result.match, current);
+  paintActiveMatch();
 });
 
 /* ------------------------------------------------------------------ account */
@@ -6309,7 +6336,13 @@ if (HOST === "electron") {
       $("matchActions").hidden = true;
       resetCommit(current);
       renderEligibility();
+      return;
     }
+    // A non-null match used to set the variable and paint nothing, which was already
+    // wrong before duels: main recovers a match left open by a previous run and
+    // broadcasts it, so restarting mid-match showed an empty Play screen while the
+    // watcher quietly submitted runs against a match the player could not see.
+    paintActiveMatch();
   });
 
   api.onMatchProgress((p) => {
@@ -6542,6 +6575,11 @@ if (HOST === "electron") {
     // list may have moved. Re-read rather than leave it: the number this screen shows is
     // the same one the player just watched KovaaK's print.
     refreshPractice();
+
+    // A match recovered on restart arrives before the first snapshot, so there was
+    // nothing to paint it against when it did. This is the other half of that: if the
+    // client is holding a match and the panel is not up, put it up now.
+    if (activeMatch && !$("opponent").classList.contains("on")) paintActiveMatch();
   });
 
   // A saved season has to land on every screen that draws a rank, not just the editor.
