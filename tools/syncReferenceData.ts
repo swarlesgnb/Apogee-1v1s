@@ -205,11 +205,24 @@ async function main(): Promise<void> {
     >;
   }>("data", "scenario_identity.json").scenarios;
 
-  const existing = await fetch(`${URL_BASE}/rest/v1/scenarios?select=name`, {
-    headers: { apikey: SECRET!, Authorization: `Bearer ${SECRET}` },
-  }).then((r) => r.json() as Promise<{ name: string }[]>);
-
-  const live = new Set(existing.map((s) => s.name));
+  // Paged, because PostgREST caps a request at its own `db-max-rows` and says nothing
+  // about having done it. This read came back with exactly 1000 names on a project
+  // holding more, so the count printed below was the cap rather than the table, and
+  // "481 new to the project" was measured against a table this only saw two thirds of.
+  // A short page is the last one; an exactly-full page is never assumed to be.
+  const live = new Set<string>();
+  const PAGE = 1000;
+  for (let from = 0; ; from += PAGE) {
+    const page = await fetch(`${URL_BASE}/rest/v1/scenarios?select=name`, {
+      headers: {
+        apikey: SECRET!,
+        Authorization: `Bearer ${SECRET}`,
+        Range: `${from}-${from + PAGE - 1}`,
+      },
+    }).then((r) => r.json() as Promise<{ name: string }[]>);
+    for (const s of page) live.add(s.name);
+    if (page.length < PAGE) break;
+  }
 
   // Every scenario the committed definitions name, whether or not the project has it.
   //

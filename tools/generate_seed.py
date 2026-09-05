@@ -157,6 +157,7 @@ def main() -> int:
     # The season pool's own decisions, keyed by scenario name. Apogee owns its families,
     # so where the pool names one its sub-category is the answer, not a fallback.
     pool_of: dict[str, dict] = {}
+    pool_variants: dict[str, dict] = {}
     if POOL.exists():
         for fam in json.loads(POOL.read_text(encoding="utf-8")).get("families", []):
             mapping = {
@@ -166,6 +167,10 @@ def main() -> int:
             }
             for variant in fam.get("variants", []):
                 pool_of[variant["scenario"]] = mapping
+                pool_variants[variant["scenario"]] = {
+                    "leaderboardId": variant.get("leaderboardId"),
+                    "subCategory": mapping["subCategory"],
+                }
 
     # Verification data the Edge Functions read. Absent entries simply mean the
     # corresponding check is skipped server-side, never that a run is rejected.
@@ -236,6 +241,32 @@ def main() -> int:
     if not identities:
         print("no scenarios found - run fetch_benchmark_defs.py first")
         return 1
+
+    # The pool's own scenarios, for the families nobody published.
+    #
+    # A season family can be sampled straight off KovaaK's leaderboards instead of taken
+    # from a benchmark - `Speed` is four scenarios of exactly that - and those names are
+    # in no benchmark file, so the loop above never reaches them. Eleven pool scenarios
+    # were therefore missing from `scenarios`, which is the table find-match resolves a
+    # pool against, and pushing the season failed outright on the list of them. Every one
+    # was sitting in data/pool.json with a leaderboard id beside it.
+    #
+    # aim_type stays null. The pool decided the sub-category so it is the authority on
+    # that, but the aim type is KovaaK's and the taxonomy has never heard of these
+    # scenarios. The column is nullable for exactly this case; deriving one from the
+    # sub-category would dress a guess as the authority the column is named for.
+    pool_only = 0
+    for name, variant in pool_variants.items():
+        if name in identities:
+            continue
+        corrected = corrections.get(name)
+        identities[name] = {
+            "leaderboardId": variant["leaderboardId"],
+            "aimType": (normalise_skill(corrected["aimType"]) if corrected else None)
+            or normalise_skill(taxonomy.get(name, {}).get("aimType")),
+            "subCategory": variant["subCategory"],
+        }
+        pool_only += 1
 
     def scenario_row(name: str, ident: dict) -> str:
         model = score_models.get(name) or {}
@@ -349,7 +380,10 @@ on conflict (benchmark_name, difficulty, scenario_id) do update set
 
     no_sub = sum(1 for i in identities.values() if not i["subCategory"])
 
-    print(f"wrote {len(identities)} scenarios, {len(memberships)} memberships")
+    print(
+        f"wrote {len(identities)} scenarios, {len(memberships)} memberships"
+        + (f" ({pool_only} named by the pool alone)" if pool_only else "")
+    )
     print(f"  -> {OUT.relative_to(ROOT)}")
     print(f"  -> {IDENTITY.relative_to(ROOT)}")
     if no_sub:
