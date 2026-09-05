@@ -2693,7 +2693,7 @@
 
                 <button type="button" class="commit" id="queueBtn">
                   <span>
-                    <span class="commit-verb" id="queueVerb" data-copy="queue.commit.verb">Find opponent</span>
+                    <span class="commit-verb" id="queueVerb">Find opponent</span>
                     <span class="commit-sub" id="queueSub"></span>
                   </span>
                   <span class="commit-meta" id="queueMeta"></span>
@@ -2711,7 +2711,7 @@
             <div class="panel" id="drawPanel" hidden>
               <div class="phead">
                 <h2 data-copy="queue.p2.head">Drawn from</h2>
-                <span class="note" data-copy="queue.p2.note" id="drawCount"></span>
+                <span class="note" id="drawCount"></span>
               </div>
               <div class="pbody">
                 <div class="draw-rows" id="drawRows"></div>
@@ -2865,7 +2865,7 @@
             <div class="panel">
               <div class="phead">
                 <h2 data-copy="ranks.p1.head">Apogee ladder</h2>
-                <span class="note" data-copy="ranks.p1.note" id="ladderNote"></span>
+                <span class="note" id="ladderNote"></span>
               </div>
               <div class="pbody">
                 <p class="rank-lede" id="ladderLede"></p>
@@ -2876,7 +2876,7 @@
             <div class="panel">
               <div class="phead">
                 <h2 data-copy="ranks.p2.head">Benchmark standing</h2>
-                <span class="note" data-copy="ranks.p2.note" id="benchNote"></span>
+                <span class="note" id="benchNote"></span>
               </div>
               <div class="pbody">
                 <p class="rank-lede" id="benchLede"></p>
@@ -3040,7 +3040,7 @@
             <div class="panel">
               <div class="phead">
                 <h2 id="svName">Season</h2>
-                <span class="note" data-copy="seasonview.p1.note" id="svNote"></span>
+                <span class="note" id="svNote"></span>
               </div>
               <div class="pbody"><div class="sv-stats" id="svStats"></div></div>
             </div>
@@ -3077,7 +3077,7 @@
             <div class="panel">
               <div class="phead">
                 <h2 data-copy="seasonview.p4.head">The pool</h2>
-                <span class="note" data-copy="seasonview.p4.note" id="svPoolNote"></span>
+                <span class="note" id="svPoolNote"></span>
               </div>
               <div class="pbody">
                 <p class="rank-lede">
@@ -3113,7 +3113,7 @@
             <div class="panel">
               <div class="phead">
                 <h2 id="apexName">Apex board</h2>
-                <span class="note" data-copy="seasonview.p5.note" id="apexNote"></span>
+                <span class="note" id="apexNote"></span>
               </div>
               <div class="pbody"><div class="sv-stats" id="apexStats"></div></div>
             </div>
@@ -3121,7 +3121,7 @@
             <div class="panel">
               <div class="phead">
                 <h2 data-copy="seasonview.p6.head">Leaderboard</h2>
-                <span class="note" data-copy="seasonview.p6.note" id="apexBoardNote">sign in to see where you stand</span>
+                <span class="note" id="apexBoardNote">sign in to see where you stand</span>
               </div>
               <div class="pbody">
                 <div class="apex-tabs" id="apexTabs"></div>
@@ -3383,7 +3383,7 @@
 
 
 <script id="apogee-snapshot" type="application/json">{
-  "generatedAt": "2026-09-05T15:18:01.714Z",
+  "generatedAt": "2026-09-05T15:49:31.171Z",
   "coverage": [
     {
       "category": "Dynamic Clicking",
@@ -5374,7 +5374,7 @@
     "windowSize": 4
   },
   "player": {
-    "totalRuns": 12575,
+    "totalRuns": 12578,
     "scenarioCount": 915,
     "streak": 35,
     "benchmarkRank": "Lunar",
@@ -13146,20 +13146,22 @@ function openScreen(name) {
  * season handlers, so nothing could be written, but a stranded editor showing the
  * pool and its thresholds is not something to hand a player.
  */
-async function refreshSeasonTab() {
-  const tab = $("tabSeason");
-  if (!tab || !window.apogee || !window.apogee.isAdmin) return;
+async function refreshAdminTabs() {
+  const tabs = [$("tabSeason"), $("tabAdmin")].filter(Boolean);
+  if (tabs.length === 0 || !window.apogee || !window.apogee.isAdmin) return;
 
   const r = await window.apogee.isAdmin().catch(() => null);
   const admin = Boolean(r && r.admin);
 
-  // Hiding the tab out from under someone standing on it would leave the screen up
-  // with no way back to it, so send them to Queue first.
-  if (!admin && tab.getAttribute("aria-selected") === "true") {
-    document.querySelector('.tab[data-screen="queue"]').click();
+  for (const tab of tabs) {
+    // Hiding a tab out from under someone standing on it would leave the screen up
+    // with no way back to it, so send them to Queue first.
+    if (!admin && tab.getAttribute("aria-selected") === "true") {
+      document.querySelector('.tab[data-screen="queue"]').click();
+    }
+    tab.hidden = !admin;
   }
 
-  tab.hidden = !admin;
   numberTabs();
   if (admin) await loadSeasonEditor();
 }
@@ -13462,7 +13464,7 @@ refreshPractice();
 const hasSeasonEditor = HOST === "electron" && window.apogee.isAdmin && $("seasonSave") !== null;
 
 if (hasSeasonEditor) {
-  void refreshSeasonTab();
+  void refreshAdminTabs();
 
   $("seasonSave").addEventListener("click", async () => {
     const btn = $("seasonSave");
@@ -13968,8 +13970,525 @@ function settled(body) {
   body?.closest("table")?.classList.remove("pending");
 }
 
+/* ====================================================== admin: look and copy ====
+ *
+ * The chrome's colours and the app's own words, edited from inside the app.
+ *
+ * The validator, the store and the four IPC handlers were already here and this is the
+ * half that draws them. Every change is painted onto the live document first and written
+ * only on Save, because the thing being judged is the app and not a swatch of it: whether
+ * a ground is too warm is a question about the screen it is read on.
+ *
+ * Nothing here can change what a rank means. Ratings, deltas, verification tiers and
+ * thresholds are computed server-side and the client has no write grant on any of them,
+ * so the worst a bad override does is make one machine ugly - which is why this is
+ * allowed to be a local file, and why Reset sits on the same screen as the damage.
+ *
+ * Rank names and colours are the exception and are shown here read-only. They belong to
+ * the season, a database trigger freezes them once it is published, and the season editor
+ * already writes them through the checks that enforce it. A second write path into the
+ * same file would be a quiet way to desync the two.
+ */
+
+/*
+ * The stylesheet's own values and the markup's own words, captured before anything is
+ * painted over them.
+ *
+ * Without this an override is a one-way door. Read the ground back after setting it and
+ * the answer is the override, so the default is gone the moment it is used and Reset has
+ * nothing to reset to - which is the state a half-finished repaint least survives.
+ */
+const tokenDefaults = {};
+const copyDefaults = new Map();
+
+let adminSpec = { tokens: [], pairs: [], maxCopy: 600 };
+let adminSaved = { version: 1, updatedAt: null, tokens: {}, copy: {} };
+let adminDraft = { tokens: {}, copy: {} };
+let adminPath = "";
+
+function captureCopyDefaults() {
+  for (const el of document.querySelectorAll("[data-copy]")) {
+    const key = el.dataset.copy;
+    // Collapsed, because the markup wraps its longer strings across lines and the browser
+    // renders that as single spaces anyway. An editor showing the source indentation is
+    // showing something nobody typed and nobody sees.
+    if (!copyDefaults.has(key)) {
+      copyDefaults.set(key, el.textContent.replace(/\s+/g, " ").trim());
+    }
+  }
+}
+
+function readTokenDefaults() {
+  const root = getComputedStyle(document.documentElement);
+  for (const spec of adminSpec.tokens) {
+    const raw = root.getPropertyValue(spec.name).trim().toLowerCase();
+    if (/^#[0-9a-f]{6}$/.test(raw)) tokenDefaults[spec.name] = raw;
+  }
+}
+
+/** What is painted right now: the stylesheet, with the draft over the top. */
+function resolvedTokens() {
+  return Object.assign({}, tokenDefaults, adminDraft.tokens);
+}
+
+function applyLook() {
+  const root = document.documentElement;
+  for (const spec of adminSpec.tokens) {
+    const override = adminDraft.tokens[spec.name];
+    if (override) root.style.setProperty(spec.name, override);
+    else root.style.removeProperty(spec.name);
+  }
+  for (const [key, fallback] of copyDefaults) {
+    const text = key in adminDraft.copy ? adminDraft.copy[key] : fallback;
+    for (const el of document.querySelectorAll('[data-copy="' + key + '"]')) {
+      if (el.textContent !== text) el.textContent = text;
+    }
+  }
+  // A tab's number and its tooltip are read off its label, so both follow a renamed tab.
+  numberTabs();
+}
+
+function adminChanged() {
+  return JSON.stringify([adminDraft.tokens, adminDraft.copy]) !==
+    JSON.stringify([adminSaved.tokens, adminSaved.copy]);
+}
+
+function markAdminDirty() {
+  const dirty = adminChanged();
+  $("adminSave").disabled = !dirty;
+  $("adminRevert").disabled = !dirty;
+  const tokens = Object.keys(adminDraft.tokens).length;
+  const copy = Object.keys(adminDraft.copy).length;
+  $("adminTokenNote").textContent = tokens + " changed";
+  $("adminCopyNote").textContent = copy + " changed";
+  $("adminPath").textContent =
+    tokens + " colour(s), " + copy + " string(s)" + (dirty ? ", unsaved" : "");
+}
+
+function adminNote(message, kind) {
+  const banner = $("adminNote");
+  banner.classList.remove("notice");
+  if (!message) {
+    banner.classList.remove("on");
+    return;
+  }
+  banner.textContent = message;
+  if (kind === "notice") banner.classList.add("notice");
+  banner.classList.add("on");
+}
+
+/* ---------------------------------------------------------------- chrome ---- */
+
+function renderAdminTokens() {
+  const host = $("adminTokens");
+  host.textContent = "";
+  let group = null;
+  for (const spec of adminSpec.tokens) {
+    if (spec.group !== group) {
+      group = spec.group;
+      const head = document.createElement("div");
+      head.className = "adm-group";
+      head.textContent = group;
+      host.appendChild(head);
+    }
+    host.appendChild(adminTokenRow(spec));
+  }
+  renderAdminContrast();
+}
+
+function adminTokenRow(spec) {
+  const row = document.createElement("div");
+  row.className = "adm-row";
+
+  const current = () => adminDraft.tokens[spec.name] || tokenDefaults[spec.name] || "#000000";
+
+  const swatch = document.createElement("input");
+  swatch.type = "color";
+  swatch.className = "adm-swatch";
+  swatch.value = current();
+  swatch.setAttribute("aria-label", spec.label + ", pick a colour");
+
+  const name = document.createElement("div");
+  name.className = "adm-name";
+  name.textContent = spec.label;
+  const variable = document.createElement("span");
+  variable.textContent = spec.name;
+  name.appendChild(variable);
+
+  const hex = document.createElement("input");
+  hex.type = "text";
+  hex.className = "adm-hex";
+  hex.spellcheck = false;
+  hex.value = current();
+  hex.setAttribute("aria-label", spec.label + " as hex");
+
+  const note = document.createElement("p");
+  note.className = "adm-note";
+  note.textContent = spec.note;
+
+  const reset = document.createElement("button");
+  reset.type = "button";
+  reset.className = "adm-reset";
+  reset.textContent = "Reset";
+  reset.disabled = !(spec.name in adminDraft.tokens);
+
+  // `from` keeps a field out of its own way: writing the parsed value back into the text
+  // box on every keystroke moves the caret to the end, which makes editing the middle of
+  // a hex impossible.
+  const set = (next, from) => {
+    const value = String(next).trim().toLowerCase();
+    const ok = /^#[0-9a-f]{6}$/.test(value);
+    hex.classList.toggle("bad", !ok);
+    if (!ok) return;
+
+    // Only what differs from the stylesheet is stored, so a colour typed back to its own
+    // default leaves no entry behind to explain later.
+    if (value === tokenDefaults[spec.name]) delete adminDraft.tokens[spec.name];
+    else adminDraft.tokens[spec.name] = value;
+
+    if (from !== "hex") hex.value = value;
+    if (from !== "swatch") swatch.value = value;
+    reset.disabled = !(spec.name in adminDraft.tokens);
+    applyLook();
+    renderAdminContrast();
+    markAdminDirty();
+  };
+
+  hex.addEventListener("input", () => set(hex.value, "hex"));
+  swatch.addEventListener("input", () => set(swatch.value, "swatch"));
+  reset.addEventListener("click", () => set(tokenDefaults[spec.name], "reset"));
+
+  row.append(swatch, name, hex, note, reset);
+  return row;
+}
+
+/*
+ * Measured and reported, never enforced.
+ *
+ * Refusing to save a palette that fails would trap somebody in the middle of a repaint,
+ * and the middle is nearly always worse than either end of it. Saying "Ink on Ground is
+ * 2.10:1" while they work is the useful half; deciding for them is not.
+ */
+function renderAdminContrast() {
+  const box = $("adminContrast");
+  const resolved = resolvedTokens();
+  const label = (token) => {
+    const spec = adminSpec.tokens.find((t) => t.name === token);
+    return spec ? spec.label : token;
+  };
+
+  const failing = [];
+  for (const pair of adminSpec.pairs) {
+    const a = resolved[pair.token];
+    const b = resolved[pair.against];
+    if (!a || !b) continue;
+    const ratio = contrastRatio(a, b);
+    if (ratio < pair.need) failing.push({ pair, ratio });
+  }
+
+  box.textContent = "";
+  box.hidden = failing.length === 0;
+  if (box.hidden) return;
+
+  for (const entry of failing) {
+    const line = document.createElement("div");
+    line.append(label(entry.pair.token) + " on " + label(entry.pair.against) + " is ");
+    const figure = document.createElement("b");
+    figure.textContent = entry.ratio.toFixed(2) + ":1";
+    line.append(figure, ", under the " + entry.pair.need + " it needs.");
+    box.appendChild(line);
+  }
+}
+
+/* ------------------------------------------------------------------ copy ---- */
+
+function renderAdminCopy() {
+  const host = $("adminCopy");
+  const filter = $("adminCopySearch").value.trim().toLowerCase();
+  host.textContent = "";
+
+  let shown = 0;
+  for (const key of [...copyDefaults.keys()].sort()) {
+    const fallback = copyDefaults.get(key);
+    const current = key in adminDraft.copy ? adminDraft.copy[key] : fallback;
+    if (
+      filter &&
+      !key.includes(filter) &&
+      !fallback.toLowerCase().includes(filter) &&
+      !current.toLowerCase().includes(filter)
+    ) continue;
+    host.appendChild(adminCopyRow(key, fallback));
+    shown++;
+  }
+
+  if (shown === 0) {
+    const empty = document.createElement("p");
+    empty.className = "adm-lede";
+    empty.textContent = "Nothing matches that.";
+    host.appendChild(empty);
+  }
+}
+
+function adminCopyRow(key, fallback) {
+  const row = document.createElement("div");
+  row.className = "adm-copy-row";
+  if (key in adminDraft.copy) row.classList.add("changed");
+
+  const label = document.createElement("div");
+  label.className = "adm-key";
+  label.textContent = key;
+  // What the string says with no override, so an edit is always a comparison.
+  const original = document.createElement("span");
+  original.textContent = fallback;
+  label.appendChild(original);
+
+  const box = document.createElement("textarea");
+  box.className = "adm-text";
+  box.rows = 1;
+  box.spellcheck = false;
+  box.value = key in adminDraft.copy ? adminDraft.copy[key] : fallback;
+  box.setAttribute("aria-label", key);
+
+  const reset = document.createElement("button");
+  reset.type = "button";
+  reset.className = "adm-reset";
+  reset.textContent = "Reset";
+  reset.disabled = !(key in adminDraft.copy);
+
+  // The three rules main validates by, checked here so a refusal is visible as it is
+  // typed rather than at the end of a long session of it. Main checks again, because the
+  // side that decides is the side that checks.
+  const set = (next, fromBox) => {
+    const value = String(next);
+    const ok =
+      value.length <= adminSpec.maxCopy &&
+      !/[<>]/.test(value) &&
+      !/[\u0000-\u001f\u007f]/.test(value);
+    box.classList.toggle("bad", !ok);
+    if (!ok) return;
+
+    if (value === fallback) delete adminDraft.copy[key];
+    else adminDraft.copy[key] = value;
+
+    if (!fromBox) box.value = value;
+    row.classList.toggle("changed", key in adminDraft.copy);
+    reset.disabled = !(key in adminDraft.copy);
+    applyLook();
+    markAdminDirty();
+  };
+
+  box.addEventListener("input", () => set(box.value, true));
+  reset.addEventListener("click", () => set(fallback, false));
+
+  row.append(label, box, reset);
+  return row;
+}
+
+/* -------------------------------------------------------- ranks, read only ---- */
+
+/*
+ * The season's ranks with their contrast against the ground, and no way to edit them here.
+ *
+ * The measurement is the reason to show them at all: it is the figure that decides
+ * whether a colour can carry a name, and the season editor makes you go looking for it.
+ * Editing stays there, where the fingerprint check and the published-season refusal live.
+ */
+function renderAdminRanks() {
+  const host = $("adminRanks");
+  host.textContent = "";
+
+  if (!seasonPool) {
+    const waiting = document.createElement("p");
+    waiting.className = "adm-lede";
+    waiting.textContent = "The season has not loaded yet.";
+    host.appendChild(waiting);
+    $("adminRankNote").textContent = "";
+    return;
+  }
+
+  const ground = resolvedTokens()["--ground"] || DARK_GROUND;
+  const ladders = [{
+    title: "Overall",
+    names: seasonPool.rankNames || [],
+    colors: seasonPool.rankColors || {},
+  }];
+  for (const cat of seasonPool.categories || []) {
+    ladders.push({ title: cat.name, names: cat.rankNames || [], colors: cat.rankColors || {} });
+  }
+
+  let low = 0;
+  let total = 0;
+  for (const ladder of ladders) {
+    const head = document.createElement("div");
+    head.className = "adm-cat";
+    head.textContent = ladder.title;
+    host.appendChild(head);
+
+    for (const rankName of ladder.names) {
+      const colour = ladder.colors[rankName];
+      if (!colour) continue;
+      total++;
+      const ratio = contrastRatio(colour, ground);
+      if (ratio < MIN_CONTRAST) low++;
+      host.appendChild(adminRankRow(rankName, colour, ratio));
+    }
+  }
+
+  $("adminRankNote").textContent =
+    total + " ranks, " + low + " under " + MIN_CONTRAST + ":1 on this ground";
+
+  const go = document.createElement("button");
+  go.type = "button";
+  go.className = "adm-reset";
+  go.style.marginTop = "var(--s3)";
+  go.textContent = "Edit in the season editor";
+  go.addEventListener("click", () => {
+    const tab = $("tabSeason");
+    if (tab && !tab.hidden) tab.click();
+    else adminNote("The season editor is not open on this account.");
+  });
+  host.appendChild(go);
+}
+
+function adminRankRow(rankName, colour, ratio) {
+  const row = document.createElement("div");
+  row.className = "adm-rank-row";
+
+  const swatch = document.createElement("span");
+  swatch.className = "adm-swatch";
+  swatch.style.background = colour;
+  swatch.style.cursor = "default";
+
+  const name = document.createElement("div");
+  name.className = "adm-name";
+  name.textContent = rankName;
+
+  const hex = document.createElement("div");
+  hex.className = "adm-key";
+  hex.textContent = colour;
+
+  const figure = document.createElement("div");
+  figure.className = "adm-ratio" + (ratio < MIN_CONTRAST ? " low" : "");
+  figure.textContent = ratio.toFixed(2) + ":1";
+
+  row.append(swatch, name, hex, figure, document.createElement("span"));
+  return row;
+}
+
+/* ----------------------------------------------------------------- store ---- */
+
+function renderAdmin() {
+  renderAdminTokens();
+  renderAdminCopy();
+  renderAdminRanks();
+  markAdminDirty();
+}
+
+function adminRejections(rejected) {
+  if (!rejected || rejected.length === 0) return "";
+  const named = rejected.slice(0, 4).map((r) => r.key + " (" + r.why + ")").join(", ");
+  const rest = rejected.length > 4 ? ", and " + (rejected.length - 4) + " more" : "";
+  return " Refused: " + named + rest + ".";
+}
+
+function adoptOverrides(overrides) {
+  adminSaved = overrides || adminSaved;
+  adminDraft = {
+    tokens: Object.assign({}, adminSaved.tokens),
+    copy: Object.assign({}, adminSaved.copy),
+  };
+  applyLook();
+  renderAdmin();
+}
+
+/*
+ * Read on every boot, by everybody.
+ *
+ * Not behind the admin check: the app has to be painted before there is a session to ask
+ * about, and a machine that has overrides should show them in the first frame rather than
+ * snapping to them a second later. Writing is what the role gates, and main re-checks it
+ * on all four write handlers.
+ */
+async function loadAdminLook() {
+  const r = await api.adminOverrides().catch(() => null);
+  if (!r) return;
+
+  adminSpec = {
+    tokens: r.tokens || [],
+    pairs: r.pairs || [],
+    maxCopy: r.maxCopy || adminSpec.maxCopy,
+  };
+  adminPath = r.path || "";
+  readTokenDefaults();
+  adoptOverrides(r.overrides);
+
+  if (r.error) {
+    adminNote("The overrides file could not be read, so none are applied: " + r.error);
+  } else if (r.rejected && r.rejected.length > 0) {
+    adminNote("Some overrides on disk are not allowed and were not applied." +
+      adminRejections(r.rejected));
+  }
+}
+
+function wireAdmin() {
+  $("adminCopySearch").addEventListener("input", renderAdminCopy);
+
+  $("adminSave").addEventListener("click", async () => {
+    const r = await api
+      .saveAdminOverrides({ version: 1, tokens: adminDraft.tokens, copy: adminDraft.copy })
+      .catch((err) => ({ error: String(err) }));
+    if (!r || r.error) {
+      adminNote(r && r.error ? r.error : "the save did not go through");
+      return;
+    }
+    adminPath = r.path || adminPath;
+    adoptOverrides(r.overrides);
+    adminNote("Saved." + adminRejections(r.rejected), "notice");
+  });
+
+  $("adminRevert").addEventListener("click", () => {
+    adoptOverrides(adminSaved);
+    adminNote("Back to the last save.", "notice");
+  });
+
+  $("adminReset").addEventListener("click", async () => {
+    const r = await api.resetAdminOverrides().catch((err) => ({ error: String(err) }));
+    if (!r || r.error) {
+      adminNote(r && r.error ? r.error : "the reset did not go through");
+      return;
+    }
+    adoptOverrides(r.overrides);
+    adminNote("Back to the stylesheet and the markup.", "notice");
+  });
+
+  $("adminExport").addEventListener("click", async () => {
+    const r = await api.exportAdminOverrides().catch((err) => ({ error: String(err) }));
+    if (!r || r.canceled) return;
+    if (r.error) adminNote(r.error);
+    else adminNote("Written to " + r.path, "notice");
+  });
+
+  $("adminImport").addEventListener("click", async () => {
+    const r = await api.importAdminOverrides().catch((err) => ({ error: String(err) }));
+    if (!r || r.canceled) return;
+    if (r.error) {
+      adminNote(r.error);
+      return;
+    }
+    adoptOverrides(r.overrides);
+    adminNote("Imported." + adminRejections(r.rejected), "notice");
+  });
+}
+
+// Before anything can paint over them. Everything below reads these as the value to
+// go back to, so they have to be taken while they are still the only value there is.
+captureCopyDefaults();
+
 if (HOST === "electron") {
   reserveTables();
+
+  wireAdmin();
+  void loadAdminLook();
 
   $("btnRescan").addEventListener("click", () => api.rescan());
   $("btnOpen").addEventListener("click", () => api.openStatsFolder());
@@ -14255,8 +14774,12 @@ if (HOST === "electron") {
       // Falls through to opening the page. Help > Copy diagnostics still works.
     }
     if (copied) {
+      // Put back whatever it said, not the string this file was written with: the label
+      // is overridable copy, and restoring a literal would quietly undo the override the
+      // first time anybody used the link.
+      const label = link.textContent;
       link.textContent = "Diagnostics copied";
-      setTimeout(() => { link.textContent = "Report a problem"; }, 2400);
+      setTimeout(() => { link.textContent = label; }, 2400);
     }
     window.open(url, "_blank", "noreferrer");
   });

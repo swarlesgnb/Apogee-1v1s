@@ -261,7 +261,7 @@ export interface ContrastWarning {
  * The floors are the ones the client already lives by: body text at 4.5, supporting text
  * at 4.5, and dim labels at 3 because they are small print that is meant to recede.
  */
-const PAIRS: { token: string; against: string; need: number }[] = [
+export const PAIRS: { token: string; against: string; need: number }[] = [
   { token: "--ink", against: "--ground", need: 4.5 },
   { token: "--ink", against: "--panel", need: 4.5 },
   { token: "--ink-mid", against: "--ground", need: 4.5 },

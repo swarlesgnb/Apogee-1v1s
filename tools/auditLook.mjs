@@ -331,6 +331,44 @@ report("the rank sheet", [
     declaredIn("paper") === constantOf("LIGHT_GROUND") ? 0 : 1],
 ]);
 
+/* ------------------------------------------------- copy keys and live readouts
+ *
+ * `data-copy` marks a string an admin may rewrite. The override is applied by setting
+ * `textContent`, which is also how the renderer writes a computed figure, so a key on an
+ * element the renderer writes puts the two in a fight: the override wins until the next
+ * render and the figure wins after it, and the app looks like it forgets a number.
+ *
+ * Eight readouts carried keys when the copy editor was built - the queue verb, the draw
+ * count, four panel notes and the two apex notes - and the one that failed loudly was the
+ * apex board losing the date its boards were sampled on. The rest would have failed
+ * quietly.
+ *
+ * Static, and deliberately so. The runtime version of this raced the render: whichever of
+ * the two wrote last looked correct, so the same collision passed or failed depending on
+ * timing. An element either carries a key or is written by the renderer.
+ */
+const copyKeyed = [...html.matchAll(/data-copy="([a-z0-9.-]+)"/g)].map((m) => m[1]);
+const copyIds = [...html.matchAll(/<[^>]*data-copy="([a-z0-9.-]+)"[^>]*>/g)]
+  .map((m) => ({ key: m[1], id: (/ id="([A-Za-z0-9_]+)"/.exec(m[0]) ?? [])[1] }))
+  .filter((el) => el.id);
+
+// Matched as a string rather than a pattern, against the one idiom this file writes text
+// with. It does not catch a lookup stashed in a local first - the report link does that,
+// and it restores whatever the label currently says rather than a literal, which is what
+// makes it safe to keep a key on.
+const written = copyIds.filter(
+  (el) =>
+    js.includes('$("' + el.id + '").textContent') ||
+    js.includes('$("' + el.id + '").innerHTML'),
+);
+
+report("copy the admin editor can rewrite", [
+  ["keys on readouts the renderer writes", written.length],
+]);
+for (const el of written) {
+  console.log(`        ${el.key} is on #${el.id}, which the renderer writes`);
+}
+
 // The things that should be there. A file with no mono figures and no reduced-motion
 // guard has not drifted back to a dashboard, it has been rewritten.
 const mono = count(/var\(--mono\)/g);

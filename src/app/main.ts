@@ -34,7 +34,7 @@ import { rebuildPool } from "../core/season/rebuildPool.ts";
 import { syncBandLadders, syncOverallLadder } from "../core/season/bandLadders.ts";
 import { loadQuestState, saveQuestState } from "./questStore.ts";
 import { clearOverrides, loadOverrides, overridesPath, saveOverrides } from "./adminStore.ts";
-import { TOKENS } from "../core/admin/overrides.ts";
+import { MAX_COPY, PAIRS, TOKENS } from "../core/admin/overrides.ts";
 import { buildSnapshot, type Snapshot } from "../core/report/snapshot.ts";
 import { renderRankSheet } from "../core/report/rankSheet.ts";
 import { scanStatsFolder, type ScenarioHistory } from "../core/history/history.ts";
@@ -1021,6 +1021,38 @@ function runSmokeTest(): void {
       `document.querySelector('.tab[data-screen="ranks"]')?.click()`,
     );
 
+    // The override machinery has to have captured the markup's own words before
+    // anything paints over them, because those defaults are what Reset resets to and
+    // they are unrecoverable once overwritten. Which elements may carry a key at all is
+    // a static question and `npm run audit:look` answers it; this is the runtime half:
+    // that the capture happened, and how much copy it covers.
+    const copy = await probe.webContents.executeJavaScript(
+      'typeof copyDefaults === "undefined" ? null : copyDefaults.size',
+    );
+    if (copy === null) {
+      problems.push("the copy defaults were never captured, so Reset has nothing to restore");
+    } else if (copy === 0) {
+      problems.push("no authored copy was found, so the copy editor would be empty");
+    }
+    console.log(`copy keys    : ${copy === null ? "NOT CAPTURED" : `${copy} authored`}`);
+
+    // The three panels of the look editor, drawn. Reading the overrides is deliberately
+    // not behind the admin check - the app has to paint before there is a session to ask
+    // about - so the editor populates on any account and can be checked on this one. What
+    // the role gates is saving, and main re-checks that on all four write handlers.
+    const editor = await probe.webContents.executeJavaScript(`(() => ({
+      tokens: document.querySelectorAll("#adminTokens .adm-row").length,
+      copy: document.querySelectorAll("#adminCopy .adm-copy-row").length,
+      ranks: document.querySelectorAll("#adminRanks .adm-rank-row").length,
+      save: document.getElementById("adminSave") !== null,
+    }))()`);
+
+    if (editor.tokens === 0) problems.push("the look editor drew no colours");
+    else if (editor.copy === 0) problems.push("the look editor drew no copy");
+    else if (!editor.save) problems.push("the look editor has no save button");
+    console.log(
+      `look editor  : ${editor.tokens} colours, ${editor.copy} strings, ${editor.ranks} ranks`,
+    );
     console.log(`preload      : ${hasBridge ? "bridge exposed" : "MISSING"}`);
     console.log(`renderer     : ${rendered ? "loaded" : "EMPTY"}`);
 
@@ -1387,6 +1419,12 @@ ipcMain.handle("apogee:adminOverrides", () => {
     error: loaded.error,
     path: overridesPath(),
     tokens: TOKENS,
+    // Handed over rather than restated in the renderer, which measures these live as
+    // an admin types and has no way to import the module that decides them. Same for the
+    // length cap: two copies of a limit drift, and the one the editor shows would be the
+    // one that is wrong.
+    pairs: PAIRS,
+    maxCopy: MAX_COPY,
   };
 });
 
