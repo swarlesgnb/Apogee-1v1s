@@ -225,8 +225,20 @@ if (!existsSync(statsDir)) {
         lo: Math.min(b.lo, got.shotsPerKill),
         hi: Math.max(b.hi, got.shotsPerKill),
       });
-      // A tenth of a shot per kill: enough that a quoted figure has to be the real one.
-      if (Math.abs(got.shotsPerKill - ex.shotsPerKill) > 0.1) {
+      // Five percent, not a tenth of a shot per kill.
+      //
+      // A tenth was the first rule and it fails on ordinary play: these figures are
+      // averages over a growing corpus, so every session on a reference scenario moves the
+      // last digit and breaks the build. It did, three times, and each time the fix was to
+      // retype a number nobody had reason to doubt - which is how a check stops being read.
+      //
+      // Five percent is chosen against what the figure is *for*. A correction has to refute
+      // its KovaaK's label by a factor of ten, and the bands it separates are 1.0-1.3
+      // against about 40, so a figure would have to be wrong by more than an order of
+      // magnitude to threaten the claim. Anything inside five percent cannot; anything
+      // outside it is a scenario that has genuinely changed and wants looking at rather
+      // than rounding.
+      if (Math.abs(got.shotsPerKill - ex.shotsPerKill) > ex.shotsPerKill * 0.05) {
         refWrong.push(
           `${ex.scenario} quoted ${ex.shotsPerKill}, measured ${got.shotsPerKill.toFixed(1)}`,
         );

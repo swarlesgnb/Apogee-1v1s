@@ -1,6 +1,6 @@
 {
   "source": "kovaaks.com/webapp-backend/leaderboard/scores/global",
-  "sampledAt": "2026-09-04T00:09:16.472Z",
+  "sampledAt": "2026-09-05T01:18:26.509Z",
   "sampleRanks": [
     1,
     2,
@@ -1502,6 +1502,54 @@
         }
       ],
       "sampledAt": "2026-09-03T01:25:16.668Z"
+    },
+    {
+      "scenario": "aimerz+ Static Switching 6 Bot Larger",
+      "leaderboardId": 190025,
+      "total": 2967,
+      "points": [
+        {
+          "rank": 1,
+          "score": 201
+        },
+        {
+          "rank": 2,
+          "score": 194
+        },
+        {
+          "rank": 3,
+          "score": 193
+        },
+        {
+          "rank": 5,
+          "score": 187
+        },
+        {
+          "rank": 10,
+          "score": 176
+        },
+        {
+          "rank": 25,
+          "score": 169
+        },
+        {
+          "rank": 50,
+          "score": 160
+        },
+        {
+          "rank": 100,
+          "score": 152
+        },
+        {
+          "rank": 250,
+          "score": 142
+        },
+        {
+          "rank": 500,
+          "score": 132
+        }
+      ],
+      "sampledAt": "2026-09-05T01:18:26.097Z"
     },
     {
       "scenario": "aimerz+ Static Switching 6 Bot Slightly Larger",
@@ -4720,6 +4768,54 @@
       "sampledAt": "2026-08-30T06:21:56.733Z"
     },
     {
+      "scenario": "Controlsphere Viscose Entry",
+      "leaderboardId": 190002,
+      "total": 3621,
+      "points": [
+        {
+          "rank": 1,
+          "score": 17985
+        },
+        {
+          "rank": 2,
+          "score": 17955
+        },
+        {
+          "rank": 3,
+          "score": 17940
+        },
+        {
+          "rank": 5,
+          "score": 17805
+        },
+        {
+          "rank": 10,
+          "score": 17697
+        },
+        {
+          "rank": 25,
+          "score": 17511
+        },
+        {
+          "rank": 50,
+          "score": 17289
+        },
+        {
+          "rank": 100,
+          "score": 16995
+        },
+        {
+          "rank": 250,
+          "score": 16527
+        },
+        {
+          "rank": 500,
+          "score": 15882
+        }
+      ],
+      "sampledAt": "2026-09-05T01:18:06.445Z"
+    },
+    {
       "scenario": "darkPressure",
       "leaderboardId": 16344,
       "total": 4439,
@@ -5760,6 +5856,54 @@
       "sampledAt": "2026-08-30T06:21:08.679Z"
     },
     {
+      "scenario": "Ground Plaza Sparky v3 Invincible 5",
+      "leaderboardId": 1090,
+      "total": 20129,
+      "points": [
+        {
+          "rank": 1,
+          "score": 5352
+        },
+        {
+          "rank": 2,
+          "score": 5324
+        },
+        {
+          "rank": 3,
+          "score": 5322
+        },
+        {
+          "rank": 5,
+          "score": 5281
+        },
+        {
+          "rank": 10,
+          "score": 5196
+        },
+        {
+          "rank": 25,
+          "score": 5106
+        },
+        {
+          "rank": 50,
+          "score": 5059
+        },
+        {
+          "rank": 100,
+          "score": 4984
+        },
+        {
+          "rank": 250,
+          "score": 4864
+        },
+        {
+          "rank": 500,
+          "score": 4750
+        }
+      ],
+      "sampledAt": "2026-09-05T01:18:21.191Z"
+    },
+    {
       "scenario": "Ground Plaza Sparky v3 OW",
       "leaderboardId": 871,
       "total": 22360,
@@ -6718,6 +6862,54 @@
         }
       ],
       "sampledAt": "2026-09-03T01:20:15.930Z"
+    },
+    {
+      "scenario": "PGTI Vertical Iron",
+      "leaderboardId": 29252,
+      "total": 3105,
+      "points": [
+        {
+          "rank": 1,
+          "score": 4050
+        },
+        {
+          "rank": 2,
+          "score": 4013
+        },
+        {
+          "rank": 3,
+          "score": 4004
+        },
+        {
+          "rank": 5,
+          "score": 3999
+        },
+        {
+          "rank": 10,
+          "score": 3949
+        },
+        {
+          "rank": 25,
+          "score": 3872
+        },
+        {
+          "rank": 50,
+          "score": 3792
+        },
+        {
+          "rank": 100,
+          "score": 3667
+        },
+        {
+          "rank": 250,
+          "score": 3448
+        },
+        {
+          "rank": 500,
+          "score": 3241
+        }
+      ],
+      "sampledAt": "2026-09-05T01:18:11.365Z"
     },
     {
       "scenario": "PGTI Voltaic",
@@ -8294,6 +8486,54 @@
         }
       ],
       "sampledAt": "2026-09-03T01:21:35.043Z"
+    },
+    {
+      "scenario": "Smoothsphere Viscose Horizontal Entry",
+      "leaderboardId": 189903,
+      "total": 4452,
+      "points": [
+        {
+          "rank": 1,
+          "score": 17904
+        },
+        {
+          "rank": 2,
+          "score": 17892
+        },
+        {
+          "rank": 3,
+          "score": 17874
+        },
+        {
+          "rank": 5,
+          "score": 17853
+        },
+        {
+          "rank": 10,
+          "score": 17802
+        },
+        {
+          "rank": 25,
+          "score": 17607
+        },
+        {
+          "rank": 50,
+          "score": 17397
+        },
+        {
+          "rank": 100,
+          "score": 17154
+        },
+        {
+          "rank": 250,
+          "score": 16734
+        },
+        {
+          "rank": 500,
+          "score": 16158
+        }
+      ],
+      "sampledAt": "2026-09-05T01:18:16.271Z"
     },
     {
       "scenario": "StaticSwitchingVox",
