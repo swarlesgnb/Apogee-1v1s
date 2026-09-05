@@ -148,6 +148,56 @@ check(
   missingSymbol.length ? `\n       ${missingSymbol.join("\n       ")}` : `${checkedSymbols} symbol(s)`,
 );
 
+// ---- a function that exists but is not wired up ---------------------------------
+//
+// Three files have to name a new Edge Function and none of them fails loudly when one
+// does not. Missing from the deploy chain, it is simply never deployed and the client
+// gets a 404 nobody wrote. Missing from LIMITS, `enforceRateLimit` returns on an unknown
+// key and it runs unlimited - stated outright in that file, and the reason it is stated
+// is that it had already happened. Missing from verifyDeployment, nothing ever checks it
+// refuses an anonymous caller.
+//
+// So the directory listing is the source of truth and the three lists are checked against
+// it. `_shared` is not a function; `steam-auth` is deliberately reachable without a
+// session, which is what signing in means, so it is exempt from the last list only.
+const deployChain = readFileSync(join(root, "package.json"), "utf8");
+const limitsFile = readFileSync(join(root, "supabase/functions/_shared/rateLimit.ts"), "utf8");
+const deployCheck = readFileSync(join(root, "tools/verifyDeployment.ts"), "utf8");
+
+const functionDirs = readdirSync(FUNCTIONS, { withFileTypes: true })
+  .filter((e) => e.isDirectory() && e.name !== "_shared")
+  .map((e) => e.name)
+  .sort();
+
+const unshipped = functionDirs.filter(
+  (name) => !deployChain.includes(`functions deploy ${name}`),
+);
+// steam-auth is exempt from both. It is the function you reach before you have a session,
+// which is what signing in means, so it cannot refuse an anonymous caller and it cannot be
+// rate limited by a player id that does not exist yet. Worth knowing rather than worth
+// hiding: it is the one door with no per-caller ceiling on it.
+const UNAUTHENTICATED = ["steam-auth"];
+
+const unlimited = functionDirs.filter(
+  (name) => !UNAUTHENTICATED.includes(name) && !limitsFile.includes(`"${name}":`),
+);
+const unchecked = functionDirs.filter(
+  (name) => !UNAUTHENTICATED.includes(name) && !deployCheck.includes(`"${name}"`),
+);
+
+check("every edge function is in the deploy chain", unshipped.length === 0, unshipped.join(", "));
+check("every edge function has a rate limit", unlimited.length === 0, unlimited.join(", "));
+check(
+  "every edge function is checked against the live project",
+  unchecked.length === 0,
+  unchecked.join(", "),
+);
+check(
+  "the directory scan found functions to check",
+  functionDirs.length > 0,
+  `${functionDirs.length}: ${functionDirs.join(", ")}`,
+);
+
 // A check that cannot fail is worse than no check. If the import scan ever stops finding
 // anything - a refactor to default imports, a moved directory - it would pass in silence.
 check(

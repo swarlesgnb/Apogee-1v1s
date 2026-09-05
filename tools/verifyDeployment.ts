@@ -477,7 +477,21 @@ async function main(): Promise<void> {
 
   // These three move ratings and settle matches, so unlike steam-auth they must refuse
   // anyone without a session. An unauthenticated 200 here would be a total bypass.
-  for (const name of ["submit-run", "find-match", "settle-match", "abandon-match", "refresh-baselines", "refresh-apex", "apex-board"]) {
+  const authedFunctions = [
+    "submit-run",
+    "find-match",
+    "settle-match",
+    "abandon-match",
+    "refresh-baselines",
+    "refresh-apex",
+    "apex-board",
+    // A duel names a second player and starts a rated match, so all three refuse a caller
+    // without a session for the same reason the match engine does.
+    "send-duel",
+    "answer-duel",
+    "list-duels",
+  ];
+  for (const name of authedFunctions) {
     const res = await fetch(`${fnBase}/${name}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },

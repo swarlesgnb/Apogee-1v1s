@@ -13,24 +13,20 @@
  */
 
 import {
-  forfeitMatch,
-  IDLE_ALLOWANCE_MS,
-  LAUNCH_ALLOWANCE_MS,
   handler,
+  INITIAL_TTL_MS,
   json,
+  loadSeasonPool,
   readJson,
   requireCaller,
+  requireEligible,
+  sweepStaleMatches,
   HttpError,
 } from "../_shared/apogee.ts";
 import { enforceRateLimit } from "../_shared/rateLimit.ts";
 
-import { selectScenarios, type SelectableScenario } from "../../../src/core/match/scenarioSelection.ts";
+import { selectScenarios } from "../../../src/core/match/scenarioSelection.ts";
 import { ANY_CATEGORY, findOpponent, type StoredRunSet } from "../../../src/core/match/matchmaking.ts";
-import {
-  eligibilityMessage,
-  MIN_RUNS_TO_QUEUE,
-  queueEligibility,
-} from "../../../src/core/match/eligibility.ts";
 import { defaultRating, updateRating, winProbability, type Rating } from "../../../src/core/rating/glicko2.ts";
 
 interface Body {
@@ -46,15 +42,6 @@ interface Body {
   window: number;
 }
 
-/**
- * How long a new match has before it expires, if nothing is ever played.
- *
- * Not a total for the match: submit-run pushes the deadline forward every time a run
- * lands, so this is only the allowance for getting the first one done, and it carries
- * the extra time a cold start of Steam and the game can need. See IDLE_ALLOWANCE_MS.
- */
-const INITIAL_TTL_MS = IDLE_ALLOWANCE_MS + LAUNCH_ALLOWANCE_MS;
-
 /** Opponents faced this recently are deprioritised, so the ladder feels bigger. */
 const RECENT_OPPONENT_WINDOW_MS = 7 * 24 * 60 * 60 * 1000;
 
@@ -67,41 +54,10 @@ Deno.serve(handler(async (req, admin) => {
     throw new HttpError(400, "category and window are required");
   }
 
-  // Refuse to stack matches. Without this a player could open several, cherry-pick the
-  // one that went well, and abandon the rest.
-  const { data: openMatches } = await admin
-    .from("match_sides")
-    .select("match_id, matches!inner(id, status, category, difficulty, scenario_ids, expires_at)")
-    .eq("player_id", caller.playerId)
-    .in("matches.status", ["open", "awaiting_runs"]);
-
-  // Retire anything past its deadline first.
-  //
-  // Nothing else does this. Matches were given an expires_at and then nobody ever acted
-  // on it, so a match the player walked away from blocked the queue permanently rather
-  // than until it expired: the guard above reads only the status, and the status never
-  // changed on its own.
-  const now = Date.now();
-  const stale = (openMatches ?? []).filter((row: any) => {
-    const expiresAt = row.matches?.expires_at;
-    return expiresAt != null && new Date(expiresAt).getTime() < now;
-  });
-
-  // Running out of time is a forfeit, not a free pass.
-  //
-  // It used to void, which was right when a match lasted six hours: expiry meant the
-  // player had forgotten, not decided. At five minutes it means they did not finish,
-  // and if that costs nothing then waiting out the clock is strictly cheaper than
-  // pressing Abandon - so the button that costs a loss would never be used again.
-  //
-  // forfeitMatch is shared with abandon-match so the two cannot disagree, and it still
-  // charges nothing for a seeding match or one whose runs are already in.
-  for (const row of stale) {
-    await forfeitMatch(admin, (row as any).match_id, caller.playerId, updateRating);
-  }
-
-  const staleIds = new Set(stale.map((row: any) => row.match_id));
-  const liveMatch = (openMatches ?? []).find((row: any) => !staleIds.has(row.match_id));
+  // One match at a time, and anything past its deadline retired first. Both live in
+  // sweepStaleMatches now, because duels start matches too and the rule has to be the
+  // same rule in all three places.
+  const liveMatch = await sweepStaleMatches(admin, caller.playerId, updateRating);
 
   // Already in a match: hand that one back rather than refusing.
   //
@@ -111,7 +67,7 @@ Deno.serve(handler(async (req, admin) => {
   // panel, and the panel only appears when the client knows about a match. Returning
   // the match is also just the honest answer: you asked for one, you have one.
   if (liveMatch) {
-    const existing = (liveMatch as any).matches;
+    const existing = liveMatch.match;
     const existingIds: number[] = existing.scenario_ids ?? [];
 
     const { data: names } = await admin
@@ -124,12 +80,12 @@ Deno.serve(handler(async (req, admin) => {
     const { data: existingSides } = await admin
       .from("match_sides")
       .select("player_id, match_score, provisional, rating_before, submitted_at, players!inner(display_name)")
-      .eq("match_id", liveMatch.match_id);
+      .eq("match_id", liveMatch.matchId);
 
     const other = (existingSides ?? []).find((s: any) => s.player_id !== caller.playerId);
 
     return json({
-      matchId: liveMatch.match_id,
+      matchId: liveMatch.matchId,
       category: existing.category,
       difficulty: existing.difficulty,
       expiresAt: existing.expires_at,
@@ -155,74 +111,10 @@ Deno.serve(handler(async (req, admin) => {
   //
   // Deliberately below the resume path: a player already in a match gets it back
   // whatever their history says, because refusing there would strand them in a match
-  // they cannot see or abandon.
-  //
-  // Counted here rather than trusted from the client, and rejected runs are left out of
-  // the count - a rejection is the file failing local integrity, so uploading garbage
-  // must not buy a ticket. See eligibility.ts for where the number comes from and, more
-  // importantly, for what this check does not prove.
-  const { count: uploadedRuns, error: countError } = await admin
-    .from("runs")
-    .select("id", { count: "exact", head: true })
-    .eq("player_id", caller.playerId)
-    .neq("verification_tier", "rejected");
+  // they cannot see or abandon. What the bar is and why is in requireEligible.
+  await requireEligible(admin, caller.playerId);
 
-  if (countError) throw new HttpError(500, countError.message);
-
-  const eligibility = queueEligibility(uploadedRuns ?? 0, MIN_RUNS_TO_QUEUE);
-  if (!eligibility.eligible) {
-    throw new HttpError(403, eligibilityMessage(eligibility));
-  }
-
-  // ---- the season, and the pool for the requested window -------------------------
-  //
-  // The season owns the pool (PLAN.md §14), so this reads `season_scenarios` rather than a
-  // benchmark's membership table. Published wins over draft: a published season is frozen,
-  // which is the whole reason to publish one, and a draft is what is being worked on.
-  const { data: seasons, error: seasonError } = await admin
-    .from("seasons")
-    .select("id, name, status, windows, window_size")
-    .in("status", ["published", "draft"])
-    .order("created_at", { ascending: false })
-    .limit(10);
-
-  if (seasonError) throw new HttpError(500, seasonError.message);
-
-  // Published first, then the newest draft. Ordering by date alone would let a draft
-  // somebody is still editing take over from the frozen season people are playing.
-  const season =
-    (seasons ?? []).find((s: any) => s.status === "published") ?? (seasons ?? [])[0];
-
-  if (!season) {
-    // Explicit rather than falling back to some other pool. A match drawn from scenarios
-    // the season does not contain would be graded against thresholds that do not describe
-    // it, and would be worse than no match at all.
-    throw new HttpError(503, "no season is loaded: push one with npm run push:season");
-  }
-
-  const windowName: string = season.windows?.[body.window] ?? `window ${body.window + 1}`;
-
-  const { data: pool, error: poolError } = await admin
-    .from("season_scenarios")
-    .select("scenario_id, window_index, scenarios!inner(id, name, aim_type, sub_category)")
-    .eq("season_id", season.id)
-    .eq("window_index", body.window);
-
-  if (poolError) throw new HttpError(500, poolError.message);
-
-  const selectable: SelectableScenario[] = (pool ?? []).map((row: any) => ({
-    id: row.scenarios.id,
-    name: row.scenarios.name,
-    aimType: row.scenarios.aim_type,
-    subCategory: row.scenarios.sub_category,
-  }));
-
-  if (selectable.length === 0) {
-    throw new HttpError(
-      404,
-      `${season.name} has no scenarios in ${windowName}`,
-    );
-  }
+  const { season, windowName, selectable } = await loadSeasonPool(admin, body.window);
 
   // ---- the caller's rating ------------------------------------------------------
   const { data: ratingRow } = await admin

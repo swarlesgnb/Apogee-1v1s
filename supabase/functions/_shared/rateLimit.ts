@@ -82,6 +82,24 @@ export const LIMITS: Record<string, Limit> = {
    * that a few times in a session should never meet a limit they did nothing to earn.
    */
   "apex-board": { max: 60, windowSeconds: 300 },
+
+  /**
+   * 10 per 5 minutes. The expensive one of the three and the only abusable one: each call
+   * inserts a match and a duel, and a loop here fills somebody else's inbox rather than
+   * costing only the caller. Reasoned rather than measured - there is no corpus of duels,
+   * which is the honest state - and set well above what anybody sends in a sitting.
+   */
+  "send-duel": { max: 10, windowSeconds: 300 },
+
+  /** Accepting creates a match; declining is free. One limit, set by the expensive half. */
+  "answer-duel": { max: 30, windowSeconds: 300 },
+
+  /**
+   * 60 per 5 minutes. A read, and the client refreshes it after every action as well as
+   * on the way in, so this is loose on purpose: somebody working through an inbox of five
+   * should never meet a limit they did nothing to earn.
+   */
+  "list-duels": { max: 60, windowSeconds: 300 },
 };
 
 /**

@@ -12,6 +12,13 @@
  * accident, which is the mistake that would quietly undo the whole design.
  */
 
+import {
+  eligibilityMessage,
+  MIN_RUNS_TO_QUEUE,
+  queueEligibility,
+} from "../../../src/core/match/eligibility.ts";
+import type { SelectableScenario } from "../../../src/core/match/scenarioSelection.ts";
+
 import { createClient, type SupabaseClient } from "jsr:@supabase/supabase-js@2";
 
 export const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
@@ -356,6 +363,166 @@ export async function forfeitMatch(
  * decides.
  */
 
+/**
+ * Refuse a caller who has not uploaded enough history to play a rated match.
+ *
+ * Shared rather than copied because it now guards three doors - the queue, sending a
+ * duel and accepting one - and a gate enforced in three places is a gate that will be
+ * enforced in two of them. A duel is rated exactly like a queued match, so a duel that
+ * skipped this would be a documented way around the only thing standing between a fresh
+ * Steam account and a rated result.
+ *
+ * Rejected runs are excluded from the count: a rejection is the file failing local
+ * integrity, so uploading garbage must not buy a ticket. See eligibility.ts for where the
+ * number comes from and, more importantly, for what this does not prove.
+ */
+export async function requireEligible(
+  admin: SupabaseClient,
+  playerId: string,
+): Promise<void> {
+  const { count, error } = await admin
+    .from("runs")
+    .select("id", { count: "exact", head: true })
+    .eq("player_id", playerId)
+    .neq("verification_tier", "rejected");
+
+  if (error) throw new HttpError(500, error.message);
+
+  const eligibility = queueEligibility(count ?? 0, MIN_RUNS_TO_QUEUE);
+  if (!eligibility.eligible) throw new HttpError(403, eligibilityMessage(eligibility));
+}
+
+export interface SeasonPool {
+  season: { id: string; name: string; status: string; windows: string[] | null };
+  windowName: string;
+  selectable: SelectableScenario[];
+}
+
+/**
+ * The season everybody is playing, and the scenarios in one of its windows.
+ *
+ * The season owns the pool (PLAN.md §14), so this reads `season_scenarios` rather than a
+ * benchmark's membership table. Published wins over draft even when the draft is newer:
+ * a published season is frozen, which is the entire reason to publish one, and a draft is
+ * what somebody is still editing.
+ */
+export async function loadSeasonPool(
+  admin: SupabaseClient,
+  windowIndex: number,
+): Promise<SeasonPool> {
+  const { data: seasons, error: seasonError } = await admin
+    .from("seasons")
+    .select("id, name, status, windows, window_size")
+    .in("status", ["published", "draft"])
+    .order("created_at", { ascending: false })
+    .limit(10);
+
+  if (seasonError) throw new HttpError(500, seasonError.message);
+
+  const season =
+    (seasons ?? []).find((s: any) => s.status === "published") ?? (seasons ?? [])[0];
+
+  if (!season) {
+    // Explicit rather than falling back to some other pool. A match drawn from scenarios
+    // the season does not contain would be graded against thresholds that do not
+    // describe it, which is worse than no match at all.
+    throw new HttpError(503, "no season is loaded: push one with npm run push:season");
+  }
+
+  const windowName: string = season.windows?.[windowIndex] ?? `window ${windowIndex + 1}`;
+
+  const { data: pool, error: poolError } = await admin
+    .from("season_scenarios")
+    .select("scenario_id, window_index, scenarios!inner(id, name, aim_type, sub_category)")
+    .eq("season_id", season.id)
+    .eq("window_index", windowIndex);
+
+  if (poolError) throw new HttpError(500, poolError.message);
+
+  const selectable: SelectableScenario[] = (pool ?? []).map((row: any) => ({
+    id: row.scenarios.id,
+    name: row.scenarios.name,
+    aimType: row.scenarios.aim_type,
+    subCategory: row.scenarios.sub_category,
+  }));
+
+  if (selectable.length === 0) {
+    throw new HttpError(404, `${season.name} has no scenarios in ${windowName}`);
+  }
+
+  return { season, windowName, selectable };
+}
+
+export interface LiveMatch {
+  matchId: string;
+  /** The joined `matches` row, so a caller can answer with it rather than re-reading. */
+  match: {
+    id: string;
+    status: string;
+    category: string;
+    difficulty: string;
+    scenario_ids: number[];
+    expires_at: string | null;
+  };
+}
+
+/**
+ * Retire this player's expired matches, and report whether a live one is left.
+ *
+ * THE RULE THIS CARRIES
+ *
+ * A player may hold one match at a time. Without that they could open several, play the
+ * scenarios, see which set went best, submit that one and abandon the rest - and because
+ * scores are read from a stats folder rather than typed in, every one of those matches is
+ * playable before the choice is made. It is the only thing standing between the ladder
+ * and a free reroll.
+ *
+ * It lived inside find-match while find-match was the only way to start a match. Duels
+ * are a second and a third, and a rule enforced in three places is a rule that will be
+ * enforced in two of them.
+ *
+ * WHY IT SWEEPS BEFORE IT ANSWERS
+ *
+ * Matches were given an `expires_at` and for a while nothing ever acted on it, so a match
+ * somebody walked away from blocked them permanently rather than until it expired: the
+ * guard reads the status, and the status never changed on its own. Running out of time is
+ * a forfeit rather than a free pass - at eight minutes it means they did not finish, and
+ * if that costs nothing then waiting out the clock is strictly cheaper than pressing
+ * Abandon, so the button that costs a loss would never be pressed again.
+ *
+ * `forfeitMatch` does the charging, shared with abandon-match so the two cannot disagree,
+ * and it still costs nothing for a seeding match or one whose runs are already in.
+ */
+export async function sweepStaleMatches(
+  admin: SupabaseClient,
+  playerId: string,
+  updateRating: (
+    player: { rating: number; rd: number; volatility: number },
+    games: { opponent: { rating: number; rd: number; volatility: number }; score: number }[],
+  ) => { rating: number; rd: number; volatility: number },
+): Promise<LiveMatch | null> {
+  const { data: openMatches } = await admin
+    .from("match_sides")
+    .select("match_id, matches!inner(id, status, category, difficulty, scenario_ids, expires_at)")
+    .eq("player_id", playerId)
+    .in("matches.status", ["open", "awaiting_runs"]);
+
+  const now = Date.now();
+  const stale = (openMatches ?? []).filter((row: any) => {
+    const expiresAt = row.matches?.expires_at;
+    return expiresAt != null && new Date(expiresAt).getTime() < now;
+  });
+
+  for (const row of stale) {
+    await forfeitMatch(admin, (row as any).match_id, playerId, updateRating);
+  }
+
+  const staleIds = new Set(stale.map((row: any) => row.match_id));
+  const live = (openMatches ?? []).find((row: any) => !staleIds.has(row.match_id));
+
+  return live ? { matchId: (live as any).match_id, match: (live as any).matches } : null;
+}
+
 export interface ChallengerOutcome {
   rated: boolean;
   reason: "not-a-duel" | "already-rated" | "no-deltas" | "rated";
@@ -519,6 +686,19 @@ export const IDLE_ALLOWANCE_MS = 3 * 60_000;
  * to do with how long the player is willing to take.
  */
 export const LAUNCH_ALLOWANCE_MS = 5 * 60_000;
+
+/**
+ * How long a new match has before it is forfeit.
+ *
+ * Long enough to start Steam, launch the game and play three scenarios, and no longer.
+ * Shared because three paths create matches now - the queue and both ends of a duel - and
+ * a deadline that differed between them would be a match that expired early on one route
+ * and late on another.
+ *
+ * Not to be confused with a duel's own clock, which is days: that one is how long a
+ * person has to notice an invitation, this one is how long a session takes.
+ */
+export const INITIAL_TTL_MS = IDLE_ALLOWANCE_MS + LAUNCH_ALLOWANCE_MS;
 
 /** When a match should expire, given the moment the last run finished. */
 export function deadlineAfterRun(lastRunEndedAt: Date): Date {
