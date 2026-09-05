@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-05T21:20:44.797Z",
+  "generatedAt": "2026-09-05T21:31:27.570Z",
   "coverage": [
     {
       "category": "Dynamic Clicking",
@@ -1151,7 +1151,7 @@
       "windowName": "Advanced",
       "total": 7,
       "measured": 4,
-      "runs": 189,
+      "runs": 192,
       "matchable": true,
       "complete": false,
       "scenarios": [
@@ -1207,7 +1207,7 @@
           "scenario": "VT Aether Intermediate S5",
           "label": "VT Aether Intermediate S5",
           "family": "Aether",
-          "runs": 108,
+          "runs": 111,
           "measured": true,
           "needs": 0
         }
@@ -1990,7 +1990,7 @@
     "windowSize": 4
   },
   "player": {
-    "totalRuns": 12600,
+    "totalRuns": 12604,
     "scenarioCount": 915,
     "streak": 35,
     "benchmarkRank": "Lunar",
@@ -4343,7 +4343,7 @@
     "ceilingEnergy": 910044,
     "floorRank": "Cosmonaut",
     "floorEnergy": 589608,
-    "gap": 0.16465961305741889,
+    "gap": 0.1645327256065878,
     "scenarios": [
       {
         "name": "1w2ts Pasu Perfected",
@@ -4634,14 +4634,6 @@
         "gap": 0.14285714285714285
       },
       {
-        "name": "VT Aether Intermediate S5",
-        "label": "VT Aether Intermediate S5 adv",
-        "ceiling": 2775,
-        "floor": 2381,
-        "median": 2239,
-        "gap": 0.14198198198198198
-      },
-      {
         "name": "ClickTrack Horizontal 3t",
         "label": "ClickTrack Horizontal 3t int",
         "ceiling": 68.021225,
@@ -4688,6 +4680,14 @@
         "floor": 2556,
         "median": 2631,
         "gap": 0.13326551373346898
+      },
+      {
+        "name": "VT Aether Intermediate S5",
+        "label": "VT Aether Intermediate S5 adv",
+        "ceiling": 2775,
+        "floor": 2406,
+        "median": 2270,
+        "gap": 0.13297297297297297
       },
       {
         "name": "CatClick Medium",

@@ -1105,6 +1105,89 @@ function runSmokeTest(): void {
     })()`).catch(() => true);
     if (cleared) problems.push("clearing the match leaves its panel on screen");
 
+    // The panel, driven with a board rather than a live session.
+    //
+    // This account is signed out, so list-duels would refuse it and the panel would stay
+    // empty forever - which is exactly the shape of an assertion that can only pass. So
+    // renderDuels is handed a board directly: what is under test is that a duel becomes a
+    // row with two answers, that a name reaches the screen, and that the score never does.
+    const panel = await probe.webContents.executeJavaScript(`(() => {
+      if (typeof renderDuels !== "function") return null;
+      renderDuels(null);
+      const hiddenWhenSignedOut = document.getElementById("duels").hidden;
+
+      renderDuels({
+        incoming: [
+          { id: "a", from: { playerId: "p1", displayName: "ready one", rating: 1500,
+              provisional: false, lastPlayedAt: null, friend: false },
+            status: "open", createdAt: new Date().toISOString(),
+            expiresAt: new Date(Date.now() + 86400000).toISOString(), ready: true },
+          { id: "b", from: { playerId: "p2", displayName: "still playing", rating: 1400,
+              provisional: true, lastPlayedAt: null, friend: false },
+            status: "open", createdAt: new Date().toISOString(),
+            expiresAt: new Date(Date.now() + 86400000).toISOString(), ready: false },
+        ],
+        outgoing: [
+          { id: "c", to: { playerId: "p3", displayName: "sent to", rating: 1600,
+              provisional: false, lastPlayedAt: null, friend: false },
+            status: "open", createdAt: new Date().toISOString(),
+            expiresAt: new Date(Date.now() + 86400000).toISOString(),
+            answeredAt: null, played: true },
+        ],
+        roster: [], friends: [],
+      });
+
+      const rows = [...document.querySelectorAll("#duelList .duel-row")];
+      const accepts = [...document.querySelectorAll("#duelList button")]
+        .filter((b) => b.textContent === "Accept");
+
+      const shown = {
+        hiddenWhenSignedOut,
+        visible: !document.getElementById("duels").hidden,
+        rows: rows.length,
+        names: rows.map((r) => r.querySelector(".duel-name").textContent),
+        acceptEnabled: accepts.map((b) => !b.disabled),
+        chip: document.getElementById("duelLive").hidden,
+        chipText: document.getElementById("duelLiveText").textContent,
+        // Nothing on this panel may carry a score or a delta. It is not in the payload by
+        // construction, and this is the only place that can be checked end to end.
+        leaks: /\\d+\\.\\d{2}|match_score|delta/i.test(
+          document.getElementById("duelList").textContent,
+        ),
+      };
+
+      renderDuels(null);
+      return shown;
+    })()`).catch((err) => ({ failed: String(err && err.message ? err.message : err) }));
+
+    if (panel === null) {
+      problems.push("nothing renders the duel panel");
+    } else if (panel.failed) {
+      problems.push(`the duel panel threw: ${panel.failed}`);
+    } else if (!panel.hiddenWhenSignedOut) {
+      problems.push("the duel panel shows before there is a board to show");
+    } else if (panel.rows !== 3) {
+      problems.push(`three duels drew ${panel.rows} rows`);
+    } else if (!panel.names.includes("ready one") || !panel.names.includes("sent to")) {
+      problems.push(`the duel rows name ${panel.names.join(", ")}`);
+    } else if (panel.acceptEnabled.join() !== "true,false") {
+      problems.push("a duel nobody has finished playing can still be accepted");
+    } else if (panel.chip) {
+      problems.push("the bar says nothing while a duel is waiting to be answered");
+    } else if (panel.chipText !== "1 duel") {
+      problems.push(`the bar counts "${panel.chipText}" for one answerable duel`);
+    } else if (panel.leaks) {
+      problems.push("the duel panel shows the sender's score, which decides who to answer");
+    }
+
+    console.log(
+      `duel panel   : ${
+        panel && !panel.failed
+          ? `${panel.rows} rows, bar reads "${panel.chipText}", no scores shown`
+          : "MISSING"
+      }`,
+    );
+
     console.log(
       `duels        : ${
         painted.failed

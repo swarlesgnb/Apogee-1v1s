@@ -463,7 +463,93 @@
     width: 6px; height: 6px; border-radius: 50%; background: var(--warn);
   }
   .queue-live.held .queue-live-dot { background: var(--up); }
+  /* A duel waiting is somebody else's move, not a state of yours, so it reads as an
+     indicator rather than as the queue running. */
+  .queue-live.duels .queue-live-dot { background: var(--accent); }
   .queue-live-meta { color: var(--ink-dim); font-variant-numeric: tabular-nums; }
+
+  /* ==================================================================
+     Duels
+     Rows, not cards. A duel is a line with a name and two answers, and
+     the list is short by nature - if it ever is not, that is the
+     interesting problem, not the layout.
+     ================================================================== */
+
+  .duel-list { display: grid; }
+  .duel-list:empty { display: none; }
+
+  .duel-row {
+    display: grid; grid-template-columns: 1fr auto; gap: var(--s3);
+    align-items: center; padding: var(--s3) 0;
+    border-top: 1px solid var(--rule);
+  }
+  .duel-list > .duel-row:first-child { border-top: 0; }
+
+  .duel-who { min-width: 0; }
+  .duel-name { font-size: var(--t-sm); color: var(--ink); }
+  /* Who they are and where the duel stands, on one line under the name. */
+  .duel-sub {
+    display: block; margin-top: 3px;
+    font-family: var(--mono); font-size: var(--t-2xs); color: var(--ink-dim);
+  }
+  /* Sent but not yet playable: the sender has not finished their three. Dimmed rather
+     than hidden, because "somebody is playing one at you right now" is the most
+     interesting thing this panel ever says. */
+  .duel-row.waiting .duel-name { color: var(--ink-mid); }
+
+  .duel-answers { display: flex; gap: var(--s2); align-items: center; }
+  .duel-answers button {
+    font-family: var(--mono); font-size: var(--t-2xs); letter-spacing: .1em;
+    text-transform: uppercase; color: var(--ink-mid);
+    background: var(--control); border: 1px solid var(--rule-2);
+    padding: 5px var(--s3); cursor: pointer; white-space: nowrap;
+  }
+  .duel-answers button:hover:not(:disabled) { color: var(--ink); border-color: var(--rule-3); }
+  .duel-answers button:disabled { opacity: .45; cursor: default; }
+  /* The one action somebody opened this panel to take. */
+  .duel-answers button.go {
+    color: var(--ground); background: var(--ink); border-color: var(--ink);
+  }
+  .duel-answers button.go:hover:not(:disabled) { filter: brightness(1.1); color: var(--ground); }
+
+  .duel-foot {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    gap: var(--s4); flex-wrap: wrap;
+    padding-top: var(--s3); margin-top: var(--s3); border-top: 1px solid var(--rule);
+  }
+  .duel-list:empty + .duel-foot { border-top: 0; margin-top: 0; padding-top: 0; }
+  .duel-lede {
+    margin: 0; flex: 1 1 260px;
+    font-size: var(--t-xs); color: var(--ink-dim); line-height: 1.55;
+  }
+  .duel-foot button {
+    font-family: var(--mono); font-size: var(--t-xs); font-weight: 600;
+    letter-spacing: .1em; text-transform: uppercase; color: var(--ink-mid);
+    background: var(--control); border: 1px solid var(--rule-2);
+    padding: var(--s2) var(--s4); cursor: pointer;
+  }
+  .duel-foot button:hover { color: var(--ink); border-color: var(--rule-3); }
+
+  .roster { margin-top: var(--s4); padding-top: var(--s4); border-top: 1px solid var(--rule-2); }
+  .roster-top { display: grid; gap: var(--s3); margin-bottom: var(--s3); }
+  .roster-list { display: grid; max-height: 320px; overflow-y: auto; }
+  .roster-row {
+    display: grid; grid-template-columns: 1fr auto auto; gap: var(--s3);
+    align-items: center; padding: var(--s2) 0; border-top: 1px solid var(--rule);
+  }
+  .roster-list > .roster-row:first-child { border-top: 0; }
+  .roster-rating {
+    font-family: var(--mono); font-size: var(--t-xs); color: var(--ink-dim);
+    font-variant-numeric: tabular-nums;
+  }
+  /* A star, not a heart. It is a shortlist, and it says nothing to the other person. */
+  .roster-star {
+    font-size: var(--t-sm); line-height: 1; color: var(--ink-dim);
+    background: none; border: 1px solid transparent; padding: 3px 6px; cursor: pointer;
+  }
+  .roster-star:hover { color: var(--ink); }
+  .roster-star.on { color: var(--warn); }
+  .roster-empty { font-size: var(--t-sm); color: var(--ink-dim); padding: var(--s3) 0; }
 
   /* ---------------------------------------------------------- account */
 
@@ -2619,6 +2705,14 @@
         <span class="queue-live-meta" id="queueLiveMeta"></span>
       </button>
 
+      <!-- Beside the queue readout and driven by its own single writer, not through
+           setCommit. Routing it through that would defeat the exact invariant that chip
+           exists for - one writer each, two elements. -->
+      <button type="button" class="queue-live duels" id="duelLive" hidden>
+        <span class="queue-live-dot"></span>
+        <span id="duelLiveText"></span>
+      </button>
+
       <div class="topbar-right">
         <button type="button" class="sound-toggle" id="soundToggle"
                 aria-pressed="true" title="Sound on. Press M to mute">
@@ -2738,6 +2832,40 @@
                   <div class="gate-track"><div class="gate-fill" id="queueGateFill"></div></div>
                 </div>
 
+              </div>
+            </div>
+
+            <!-- Duels sit above the match they produce and below the button that is the
+                 other way to start one. Hidden until there is something in it: an empty
+                 panel saying "no duels" every launch is a permanent reminder of nothing,
+                 and the way to send one lives on the button inside it. -->
+            <div class="panel" id="duels" hidden>
+              <div class="phead">
+                <h2 data-copy="duels.head">Duels</h2>
+                <span class="note" id="duelNote"></span>
+              </div>
+              <div class="pbody">
+                <div class="duel-list" id="duelList"></div>
+
+                <div class="duel-foot">
+                  <p class="duel-lede" data-copy="duels.lede">
+                    Send one and you play your three first. It waits a week for an answer,
+                    and whatever happens your run set joins the pool.
+                  </p>
+                  <button type="button" id="duelPickBtn" data-copy="duels.send">Duel someone…</button>
+                </div>
+
+                <!-- In place rather than in a modal, because the app has no modals and a
+                     picker that covers the inbox hides the thing you were reading. -->
+                <div class="roster" id="duelRoster" hidden>
+                  <div class="roster-top">
+                    <input type="search" id="rosterFilter" class="adm-search"
+                           placeholder="Filter by name" autocomplete="off"
+                           aria-label="Filter players">
+                    <div class="cats" id="duelCats"></div>
+                  </div>
+                  <div class="roster-list" id="rosterList"></div>
+                </div>
               </div>
             </div>
 

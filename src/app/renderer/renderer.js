@@ -6234,6 +6234,330 @@ function wireAdmin() {
   });
 }
 
+/* ====================================================================== duels ====
+ *
+ * The inbox, what you sent, and who else is here.
+ *
+ * A duel is a match somebody addressed at you. Answering one starts an ordinary rated
+ * match against the three scenarios they already played, so everything below is a list
+ * and two buttons - the interesting parts are all server-side and none of them are here.
+ *
+ * What this deliberately never shows is how the sender did. It is not in the payload, and
+ * if it were, choosing which duels to answer by the sender's score is picking the ones you
+ * expect to win.
+ */
+
+let duelBoard = null;
+let duelCategory = null;
+
+/** How long is left, in the roughest unit that is still true. */
+function untilExpiry(iso) {
+  const ms = new Date(iso).getTime() - Date.now();
+  if (ms <= 0) return "expired";
+  const hours = Math.round(ms / 3600000);
+  if (hours < 1) return "under an hour left";
+  if (hours < 48) return hours + "h left";
+  return Math.round(hours / 24) + "d left";
+}
+
+/**
+ * Run an action on a row's button, saying so while it happens.
+ *
+ * The shape every per-row action here uses: disable it, say what is happening, put the
+ * label back whatever the outcome. A button left greyed after a failure looks like the
+ * app broke rather than like the action did.
+ */
+async function onRowAction(button, working, run) {
+  const label = button.textContent;
+  button.disabled = true;
+  button.textContent = working;
+  try {
+    const result = await run();
+    if (result && result.error) showError(result.error);
+    return result;
+  } catch (err) {
+    showError(err instanceof Error ? err.message : String(err));
+    return null;
+  } finally {
+    button.disabled = false;
+    button.textContent = label;
+  }
+}
+
+function renderDuels(board) {
+  duelBoard = board;
+  const panel = $("duels");
+  const list = $("duelList");
+  if (!panel || !list) return;
+
+  const incoming = (board && board.incoming) || [];
+  const outgoing = (board && board.outgoing) || [];
+
+  panel.hidden = !board;
+  setDuelCount(incoming.filter((d) => d.ready).length);
+  if (!board) return;
+
+  list.textContent = "";
+  for (const duel of incoming) list.append(incomingRow(duel));
+  for (const duel of outgoing) list.append(outgoingRow(duel));
+
+  const ready = incoming.filter((d) => d.ready).length;
+  const waiting = incoming.length - ready;
+  $("duelNote").textContent = incoming.length
+    ? [ready ? ready + " waiting on you" : null, waiting ? waiting + " still being played" : null]
+        .filter(Boolean)
+        .join(" \u00b7 ")
+    : outgoing.length
+      ? outgoing.length + " sent"
+      : "";
+}
+
+function incomingRow(duel) {
+  const row = document.createElement("div");
+  row.className = "duel-row" + (duel.ready ? "" : " waiting");
+
+  const who = document.createElement("div");
+  who.className = "duel-who";
+  const name = document.createElement("div");
+  name.className = "duel-name";
+  // Steam-supplied text. textContent rather than markup, for the same reason every other
+  // player's name on this screen goes through esc().
+  name.textContent = duel.from.displayName;
+  const sub = document.createElement("span");
+  sub.className = "duel-sub";
+  sub.textContent = duel.ready
+    ? "rating " + duel.from.rating + (duel.from.provisional ? " \u00b7 provisional" : "") +
+      " \u00b7 " + untilExpiry(duel.expiresAt)
+    : "playing their three now";
+  who.append(name, sub);
+
+  const answers = document.createElement("div");
+  answers.className = "duel-answers";
+
+  const accept = document.createElement("button");
+  accept.type = "button";
+  accept.className = "go";
+  accept.textContent = "Accept";
+
+  // Said here rather than discovered on the server. A button that can only fail is worse
+  // than one that says why it is off.
+  if (!duel.ready) {
+    accept.disabled = true;
+    accept.title = "They have not finished playing this one yet";
+  } else if (activeMatch) {
+    accept.disabled = true;
+    accept.title = "Finish or abandon your current match first";
+  }
+
+  accept.addEventListener("click", async () => {
+    // Accepting is rated and starts a match on the spot, which is a bigger commitment
+    // than anything else on this panel. Declining costs nothing and does not ask.
+    const ok = window.confirm(
+      "Accept " + duel.from.displayName + "'s duel?\n\n" +
+        "You play the same three scenarios they did, and it counts towards your rating.",
+    );
+    if (!ok) return;
+
+    const result = await onRowAction(accept, "Starting\u2026", () =>
+      api.answerDuel(duel.id, "accept"));
+    if (result && result.match) {
+      activeMatch = result.match;
+      paintActiveMatch();
+      showNotice("Duel accepted. Play the three below in KovaaK's.");
+    }
+  });
+
+  const decline = document.createElement("button");
+  decline.type = "button";
+  decline.textContent = "Decline";
+  decline.addEventListener("click", () =>
+    onRowAction(decline, "\u2026", () => api.answerDuel(duel.id, "decline")));
+
+  answers.append(accept, decline);
+  row.append(who, answers);
+  return row;
+}
+
+function outgoingRow(duel) {
+  const row = document.createElement("div");
+  row.className = "duel-row" + (duel.status === "open" ? "" : " waiting");
+
+  const who = document.createElement("div");
+  who.className = "duel-who";
+  const name = document.createElement("div");
+  name.className = "duel-name";
+  name.textContent = duel.to.displayName;
+  const sub = document.createElement("span");
+  sub.className = "duel-sub";
+  sub.textContent =
+    duel.status !== "open"
+      ? "you sent this \u00b7 " + duel.status
+      : !duel.played
+        ? "you sent this \u00b7 play your three so they can answer"
+        : "you sent this \u00b7 waiting on them \u00b7 " + untilExpiry(duel.expiresAt);
+  who.append(name, sub);
+
+  const answers = document.createElement("div");
+  answers.className = "duel-answers";
+
+  // Only an open one can be taken back. A resolved row is here to be read.
+  if (duel.status === "open") {
+    const cancel = document.createElement("button");
+    cancel.type = "button";
+    cancel.textContent = "Take back";
+    cancel.addEventListener("click", () =>
+      onRowAction(cancel, "\u2026", () => api.answerDuel(duel.id, "cancel")));
+    answers.append(cancel);
+  }
+
+  row.append(who, answers);
+  return row;
+}
+
+/* ----------------------------------------------------------------- picking ---- */
+
+function renderRoster() {
+  const host = $("rosterList");
+  if (!host || !duelBoard) return;
+
+  const filter = ($("rosterFilter").value || "").trim().toLowerCase();
+  const friendIds = new Set((duelBoard.friends || []).map((f) => f.playerId));
+
+  // Shortlist first, then everybody, each by how recently they played. A roster you have
+  // to search to find the three people you actually duel is working against you.
+  const seen = new Set();
+  const people = [...(duelBoard.friends || []), ...(duelBoard.roster || [])].filter((p) => {
+    if (seen.has(p.playerId)) return false;
+    seen.add(p.playerId);
+    return !filter || p.displayName.toLowerCase().includes(filter);
+  });
+
+  host.textContent = "";
+  if (people.length === 0) {
+    const empty = document.createElement("p");
+    empty.className = "roster-empty";
+    empty.textContent = filter
+      ? "Nobody by that name has played yet."
+      : "Nobody else has finished a match yet. You are early.";
+    host.append(empty);
+    return;
+  }
+
+  for (const person of people) host.append(rosterRow(person, friendIds.has(person.playerId)));
+}
+
+function rosterRow(person, isFriend) {
+  const row = document.createElement("div");
+  row.className = "roster-row";
+
+  const who = document.createElement("div");
+  who.className = "duel-who";
+  const name = document.createElement("div");
+  name.className = "duel-name";
+  name.textContent = person.displayName;
+  const sub = document.createElement("span");
+  sub.className = "duel-sub";
+  sub.textContent = person.lastPlayedAt
+    ? "last played " + new Date(person.lastPlayedAt).toLocaleDateString()
+    : "no matches yet";
+  who.append(name, sub);
+
+  const rating = document.createElement("span");
+  rating.className = "roster-rating";
+  // A question mark rather than a hidden number: a rating that has not settled is still
+  // the best guess anybody has, and hiding it says less than marking it.
+  rating.textContent = person.provisional ? person.rating + "?" : String(person.rating);
+  rating.title = person.provisional ? "Their rating has not settled yet" : "Their rating";
+
+  const send = document.createElement("button");
+  send.type = "button";
+  send.className = "go";
+  send.textContent = "Duel";
+  send.addEventListener("click", async () => {
+    if (!duelCategory) {
+      showError("Pick a category to duel in first.");
+      return;
+    }
+    if (!current || !current.benchmark || !current.benchmark.matchPool) {
+      showError("The season pool has not loaded yet.");
+      return;
+    }
+    const result = await onRowAction(send, "\u2026", () =>
+      api.sendDuel(person.playerId, duelCategory, current.benchmark.matchPool));
+    if (result && result.match) {
+      showNotice("Duel sent to " + person.displayName + ". Play your three and it is theirs.");
+      $("duelRoster").hidden = true;
+      activeMatch = result.match;
+      paintActiveMatch();
+    }
+  });
+
+  const star = document.createElement("button");
+  star.type = "button";
+  star.className = "roster-star" + (isFriend ? " on" : "");
+  star.textContent = isFriend ? "\u2605" : "\u2606";
+  star.title = isFriend ? "Remove from your shortlist" : "Keep them at the top of this list";
+  star.addEventListener("click", async () => {
+    star.disabled = true;
+    try {
+      const r = await api.setFriend(person.playerId, !isFriend);
+      if (r && r.error) showError(r.error);
+    } finally {
+      star.disabled = false;
+    }
+  });
+
+  const actions = document.createElement("div");
+  actions.className = "duel-answers";
+  actions.append(send, star);
+
+  row.append(who, rating, actions);
+  return row;
+}
+
+/**
+ * The category a duel is sent in.
+ *
+ * Its own choice rather than the queue's, because they are different questions. The queue
+ * can say Any; a duel cannot, since there is one opponent and they were chosen, so
+ * "whatever you have" describes nothing. send-duel refuses it either way.
+ */
+function renderDuelCategories() {
+  const host = $("duelCats");
+  if (!host || !current) return;
+
+  const names = (current.categories || []).map((c) => c.name).filter(Boolean);
+  if (!duelCategory || !names.includes(duelCategory)) duelCategory = names[0] || null;
+
+  host.textContent = "";
+  for (const name of names) {
+    const chip = document.createElement("button");
+    chip.type = "button";
+    chip.className = "cat";
+    chip.textContent = name;
+    chip.setAttribute("aria-pressed", String(name === duelCategory));
+    chip.addEventListener("click", () => {
+      duelCategory = name;
+      renderDuelCategories();
+    });
+    host.append(chip);
+  }
+}
+
+/**
+ * The count on the bar, so an inbox is visible from every screen.
+ *
+ * Only the ones that can actually be answered. A duel somebody is still playing is worth
+ * a line in the panel and is not worth a number on the chrome, because there is nothing
+ * to go and do about it.
+ */
+function setDuelCount(ready) {
+  const chip = $("duelLive");
+  if (!chip) return;
+  chip.hidden = ready === 0;
+  if (ready > 0) $("duelLiveText").textContent = ready === 1 ? "1 duel" : ready + " duels";
+}
+
 // Before anything can paint over them. Everything below reads these as the value to
 // go back to, so they have to be taken while they are still the only value there is.
 captureCopyDefaults();
@@ -6243,6 +6567,13 @@ if (HOST === "electron") {
 
   wireAdmin();
   void loadAdminLook();
+
+  // The board once on the way in. Main broadcasts it after the session is restored, but
+  // that is a network round trip and this window may have finished loading long before -
+  // so the panel asks as well as listening, and whichever arrives first paints it.
+  void api.duels().then((r) => {
+    if (r && r.board) renderDuels(r.board);
+  }).catch(() => undefined);
 
   $("btnRescan").addEventListener("click", () => api.rescan());
   $("btnOpen").addEventListener("click", () => api.openStatsFolder());
@@ -6523,6 +6854,36 @@ if (HOST === "electron") {
    */
   // The chip is a way back to the thing it is reporting on, from wherever you drifted to
   // while the queue ran.
+  api.onDuels((board) => renderDuels(board));
+
+  // Opened in place. The picker is built on the way in rather than kept current, because
+  // it is a list of everybody and most sessions never look at it.
+  $("duelPickBtn").addEventListener("click", async () => {
+    const roster = $("duelRoster");
+    const opening = roster.hidden;
+    roster.hidden = !opening;
+    if (!opening) return;
+
+    renderDuelCategories();
+    renderRoster();
+    // Re-read on open, so somebody who signed in five minutes ago sees whoever has played
+    // since. The board is refreshed after every action anyway; this covers doing nothing.
+    const r = await api.duels();
+    if (r && r.board) {
+      renderDuels(r.board);
+      renderRoster();
+    }
+  });
+
+  $("rosterFilter").addEventListener("input", renderRoster);
+
+  $("duelLive").addEventListener("click", () => {
+    const tab = document.querySelector('.tab[data-screen="queue"]');
+    if (tab) tab.click();
+    const panel = $("duels");
+    if (panel && !panel.hidden) panel.scrollIntoView({ block: "nearest" });
+  });
+
   $("queueLive").addEventListener("click", () => {
     const tab = document.querySelector('.tab[data-screen="queue"]');
     if (tab) tab.click();
