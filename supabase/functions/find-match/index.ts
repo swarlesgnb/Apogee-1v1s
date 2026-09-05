@@ -25,7 +25,7 @@ import {
 import { enforceRateLimit } from "../_shared/rateLimit.ts";
 
 import { selectScenarios, type SelectableScenario } from "../../../src/core/match/scenarioSelection.ts";
-import { findOpponent, type StoredRunSet } from "../../../src/core/match/matchmaking.ts";
+import { ANY_CATEGORY, findOpponent, type StoredRunSet } from "../../../src/core/match/matchmaking.ts";
 import {
   eligibilityMessage,
   MIN_RUNS_TO_QUEUE,
@@ -239,8 +239,15 @@ Deno.serve(handler(async (req, admin) => {
       }
     : defaultRating();
 
-  // ---- candidate opponents: settled sides in the same category ------------------
-  const { data: candidates } = await admin
+  // ---- candidate opponents: settled sides that could be this match ---------------
+  //
+  // Narrowed to the caller's category unless they asked for Any, which is a wildcard: the
+  // match is played on the opponent's own three scenarios, so Any really can be answered
+  // by any of them. Filtering it to matches literally recorded as "Any" split the pool
+  // seven ways and left the option most people pick with the fewest opponents in it.
+  // `findOpponent` applies the same rule again on what comes back, which is where it is
+  // stated and tested; this is only the narrowing that keeps the query cheap.
+  let candidateQuery = admin
     .from("match_sides")
     .select(
       "match_id, player_id, deltas, match_score, provisional, submitted_at, " +
@@ -250,8 +257,13 @@ Deno.serve(handler(async (req, admin) => {
     )
     .not("match_score", "is", null)
     .neq("player_id", caller.playerId)
-    .eq("matches.category", body.category)
-    .eq("matches.window_index", body.window)
+    .eq("matches.window_index", body.window);
+
+  if (body.category !== ANY_CATEGORY) {
+    candidateQuery = candidateQuery.eq("matches.category", body.category);
+  }
+
+  const { data: candidates } = await candidateQuery
     .order("submitted_at", { ascending: false })
     .limit(200);
 
@@ -392,11 +404,24 @@ Deno.serve(handler(async (req, admin) => {
   const opponent = result.opponent;
   const seed = crypto.randomUUID();
 
+  // What was actually drawn, which is not always what was asked for.
+  //
+  // Queueing Any and drawing a Tracking run set is a Tracking match: those are the three
+  // scenarios both sides play. Recording it as "Any" would file the caller's own side in
+  // a bucket describing nothing, where only another Any queue could ever find it - so the
+  // wildcard would keep refilling the bucket it exists to drain. A seeding match stays
+  // "Any", because with no opponent its three scenarios genuinely can span categories.
+  const playedCategory = opponent.category;
+
   // Reuse the opponent's scenarios so both sides genuinely played the same three.
+  //
+  // The fallback draws from the category the match is being recorded as, not the one that
+  // was asked for: an Any queue that lands here would otherwise get three scenarios from
+  // across the pool while the match claims to be the opponent's single category.
   const scenarioIds: number[] =
     opponent.scenarioIds.length === 3
       ? opponent.scenarioIds
-      : selectScenarios(selectable, seed, { category: body.category }).map((s) => s.id);
+      : selectScenarios(selectable, seed, { category: playedCategory }).map((s) => s.id);
 
   const expiresAt = new Date(Date.now() + INITIAL_TTL_MS).toISOString();
 
@@ -404,7 +429,7 @@ Deno.serve(handler(async (req, admin) => {
     .from("matches")
     .insert({
       mode: "async",
-      category: body.category,
+      category: playedCategory,
       benchmark_name: season.name,
       difficulty: windowName,
       window_index: body.window,
@@ -440,7 +465,7 @@ Deno.serve(handler(async (req, admin) => {
 
   return json({
     matchId: match.id,
-    category: body.category,
+    category: playedCategory,
     difficulty: windowName,
     expiresAt,
     scenarios: scenarioIds.map((id) => ({ id, name: byId.get(id)?.name ?? `scenario ${id}` })),

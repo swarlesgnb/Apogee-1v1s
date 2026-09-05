@@ -12,6 +12,14 @@
 
 import { winProbability, type Rating } from "../rating/glicko2.ts";
 
+/**
+ * The category that means "whatever you have".
+ *
+ * The client's own word for it, and the value stored on a match created from that
+ * queue, so this is the one place that has to know the string.
+ */
+export const ANY_CATEGORY = "Any";
+
 /** A completed set of rounds someone left behind, available as an opponent. */
 export interface StoredRunSet {
   id: string;
@@ -130,7 +138,15 @@ export function findOpponent(
       reject("own run set");
       return false;
     }
-    if (runSet.category !== criteria.category) {
+    // "Any" is a wildcard over categories, and only over categories.
+    //
+    // A match is played on the opponent's own three scenarios, so somebody who asked for
+    // Any can play a Tracking run set exactly as well as a Clicking one - which is what
+    // the word promises. Holding it to its own bucket split a small pool seven ways and
+    // made the option most people pick the emptiest one. It does not widen the other way:
+    // a player who asked for Clicking is not handed three Tracking scenarios because
+    // their owner happened to queue Any.
+    if (criteria.category !== ANY_CATEGORY && runSet.category !== criteria.category) {
       reject("different category");
       return false;
     }

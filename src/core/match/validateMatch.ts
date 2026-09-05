@@ -315,6 +315,29 @@ function main(): void {
   const wrongDiff = findOpponent(me, [makeSet({ id: "d", difficulty: "Advanced" })]);
   check("a different difficulty is not offered", wrongDiff.opponent === null);
 
+  // Queueing Any means "I will play whatever", and the match is played on the opponent's
+  // three scenarios anyway - so holding Any to its own bucket split the pool seven ways
+  // and left the option most people pick as the emptiest one. It is a wildcard over
+  // categories and nothing else: difficulty still has to agree, because a window is a
+  // different set of thresholds rather than a different taste.
+  const anyone = { ...me, category: "Any" };
+  const anyFound = findOpponent(anyone, [makeSet({ id: "t", category: "Tracking" })]);
+  check("queueing Any is matched across categories", anyFound.opponent?.id === "t",
+    anyFound.opponent?.id ?? "none");
+
+  const anyWrongDiff = findOpponent(anyone, [
+    makeSet({ id: "d", category: "Tracking", difficulty: "Advanced" }),
+  ]);
+  check("queueing Any still respects the difficulty", anyWrongDiff.opponent === null);
+
+  const anySelf = findOpponent(anyone, [makeSet({ id: "mine", playerId: "me", category: "Tracking" })]);
+  check("queueing Any is still never matched against yourself", anySelf.opponent === null);
+
+  // The other direction stays closed: somebody who asked for Clicking is not handed a
+  // set of Tracking scenarios because its owner happened to queue Any.
+  const asked = findOpponent(me, [makeSet({ id: "a", category: "Any" })]);
+  check("asking for a category is not answered with an Any run set", asked.opponent === null);
+
   check("an empty pool returns no opponent", findOpponent(me, []).opponent === null);
 
   const stale = scoreCandidate(me, makeSet({ id: "old", createdAt: new Date("2026-01-01") }));
