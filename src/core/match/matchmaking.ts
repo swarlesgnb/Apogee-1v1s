@@ -45,6 +45,16 @@ export interface MatchmakingCriteria {
   now?: Date;
   /** Opponents this player has already faced recently, to avoid repeats. */
   recentOpponentIds?: Set<string>;
+  /**
+   * Run sets this player has already been matched against, by `StoredRunSet.id`.
+   *
+   * Excluded rather than penalised. `recentOpponentIds` is the right shape for "you two
+   * have met lately" and costs 25; this is a different thing entirely, because the same
+   * run set is the same three scenarios against the same frozen deltas. That is not a
+   * worse pairing, it is a match whose answer is already known - and on a thin pool a
+   * penalty gets paid gladly, because there is nothing else to spend it on.
+   */
+  facedRunSetIds?: Set<string>;
 }
 
 export interface Candidate {
@@ -152,6 +162,10 @@ export function findOpponent(
     }
     if (runSet.difficulty !== criteria.difficulty) {
       reject("different difficulty");
+      return false;
+    }
+    if (criteria.facedRunSetIds?.has(runSet.id)) {
+      reject("already played against this run set");
       return false;
     }
     if (runSet.deltas.length === 0) {

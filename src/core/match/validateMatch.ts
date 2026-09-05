@@ -338,6 +338,33 @@ function main(): void {
   const asked = findOpponent(me, [makeSet({ id: "a", category: "Any" })]);
   check("asking for a category is not answered with an Any run set", asked.opponent === null);
 
+  // A run set already played against is excluded outright, not merely deprioritised.
+  //
+  // `recentOpponentIds` keys on the player and costs 25, which is the right shape for
+  // "you two have met lately" and the wrong one for "these are the same three scenarios
+  // against the same frozen numbers". Replaying an identical match is not a slightly
+  // worse pairing, it is not a match: the answer is already known, and on a thin pool
+  // the penalty is paid gladly because there is nothing else to spend it on.
+  const faced = { ...me, facedRunSetIds: new Set(["seen"]) };
+  const onlyFaced = findOpponent(faced, [makeSet({ id: "seen" })]);
+  check("a run set already played against is never offered again", onlyFaced.opponent === null);
+
+  const facedOrNew = findOpponent(faced, [
+    makeSet({ id: "seen", rating: { rating: 1500, rd: 60, volatility: 0.06 } }),
+    makeSet({ id: "fresh", rating: { rating: 1900, rd: 60, volatility: 0.06 } }),
+  ]);
+  check("a worse pairing is preferred over one already played",
+    facedOrNew.opponent?.id === "fresh", facedOrNew.opponent?.id ?? "none");
+
+  // Same player, different sitting. The person penalty still applies and still is not
+  // an exclusion, so a small pool keeps working.
+  const sameOpponentNewSet = findOpponent(
+    { ...me, facedRunSetIds: new Set(["seen"]), recentOpponentIds: new Set(["them"]) },
+    [makeSet({ id: "later", playerId: "them" })],
+  );
+  check("the same opponent's newer run set is still offered",
+    sameOpponentNewSet.opponent?.id === "later", sameOpponentNewSet.opponent?.id ?? "none");
+
   check("an empty pool returns no opponent", findOpponent(me, []).opponent === null);
 
   const stale = scoreCandidate(me, makeSet({ id: "old", createdAt: new Date("2026-01-01") }));

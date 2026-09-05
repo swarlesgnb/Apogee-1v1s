@@ -284,24 +284,51 @@ Deno.serve(handler(async (req, admin) => {
     }
   }
 
-  // Who the caller has faced lately.
-  const since = new Date(Date.now() - RECENT_OPPONENT_WINDOW_MS).toISOString();
-  const { data: recentMine } = await admin
+  // Who the caller has faced, and which exact run sets they have already played.
+  //
+  // Two different questions off one pair of queries. "Faced them lately" is a person and
+  // decays - it costs 25 and expires after a week, so a small pool still works. "Played
+  // this run set" is not a person and does not decay: a stored side is never consumed, it
+  // answers as many callers as draw it, and drawing it twice is the same three scenarios
+  // against the same frozen deltas. That is a match whose answer is already known, so it
+  // is excluded outright rather than priced.
+  //
+  // The exclusion is therefore read over the caller's whole history rather than the last
+  // week, bounded only to keep the query flat. The candidates above are the 200 most
+  // recent sides in this category, so 500 of the caller's own matches covers everything
+  // that could be offered several times over.
+  const FACED_SCAN = 500;
+  const { data: myGames } = await admin
     .from("match_sides")
-    .select("match_id")
+    .select("match_id, submitted_at")
     .eq("player_id", caller.playerId)
-    .gte("submitted_at", since);
+    .not("submitted_at", "is", null)
+    .order("submitted_at", { ascending: false })
+    .limit(FACED_SCAN);
 
-  const recentMatchIds = new Set((recentMine ?? []).map((m: any) => m.match_id));
-  const { data: recentOpponents } = recentMatchIds.size
+  const playedAtByMatch = new Map<string, number>(
+    (myGames ?? []).map((m: any) => [m.match_id, new Date(m.submitted_at).getTime()]),
+  );
+
+  const { data: theirSides } = playedAtByMatch.size
     ? await admin
         .from("match_sides")
-        .select("player_id")
-        .in("match_id", [...recentMatchIds])
+        .select("match_id, player_id")
+        .in("match_id", [...playedAtByMatch.keys()])
         .neq("player_id", caller.playerId)
-    : { data: [] as { player_id: string }[] };
+    : { data: [] as { match_id: string; player_id: string }[] };
 
-  const recentOpponentIds = new Set((recentOpponents ?? []).map((r: any) => r.player_id));
+  const recentSince = Date.now() - RECENT_OPPONENT_WINDOW_MS;
+  const recentOpponentIds = new Set<string>();
+  const facedRunSetIds = new Set<string>();
+
+  for (const side of (theirSides ?? []) as { match_id: string; player_id: string }[]) {
+    // The id shape findOpponent assigns to a candidate below: match id, then player id.
+    facedRunSetIds.add(`${side.match_id}:${side.player_id}`);
+    if ((playedAtByMatch.get(side.match_id) ?? 0) >= recentSince) {
+      recentOpponentIds.add(side.player_id);
+    }
+  }
 
   const runSets: StoredRunSet[] = (candidates ?? [])
     .filter((c: any) => ratingByPlayer.has(c.player_id))
@@ -326,6 +353,7 @@ Deno.serve(handler(async (req, admin) => {
       category: body.category,
       difficulty: windowName,
       recentOpponentIds,
+      facedRunSetIds,
     },
     runSets,
   );
