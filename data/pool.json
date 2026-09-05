@@ -6686,6 +6686,166 @@
       ]
     },
     {
+      "family": "Pokeball",
+      "category": "Speed Switching",
+      "subCategory": "Speed Switching",
+      "variants": [
+        {
+          "window": 0,
+          "scenario": "Pokeball 1w4ts 30% Easy",
+          "label": "Pokeball 1w4ts 30% Easy",
+          "leaderboardId": 178814,
+          "rankMaxes": [
+            77,
+            93,
+            101,
+            107,
+            111,
+            116
+          ],
+          "source": {
+            "kind": "percentile",
+            "cut": {
+              "ranks": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5
+              ],
+              "topFractions": [
+                0.86,
+                0.66,
+                0.49,
+                0.36,
+                0.26,
+                0.18
+              ],
+              "leaderboardId": 178814,
+              "total": 4128,
+              "sampledAt": "2026-09-02T19:35:51.823Z"
+            },
+            "why": "Cut from this scenario's own KovaaK's board at the pool ladder's ranks 1, 2, 3, 4, 5, 6 - the top 86%, 66%, 49%, 36%, 26%, 18% of 4,128 entries. No benchmark publishes a tier for this scenario at this window, so there is nothing to adopt. Re-cut with npm run cut:thresholds."
+          }
+        },
+        {
+          "window": 1,
+          "scenario": "Pokeball 1w4ts 30%",
+          "label": "Pokeball 1w4ts 30%",
+          "leaderboardId": 456,
+          "rankMaxes": [
+            88,
+            93,
+            95,
+            99,
+            102,
+            104
+          ],
+          "source": {
+            "kind": "percentile",
+            "cut": {
+              "ranks": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9
+              ],
+              "topFractions": [
+                0.26,
+                0.18,
+                0.15,
+                0.105,
+                0.075,
+                0.055
+              ],
+              "leaderboardId": 456,
+              "total": 88469,
+              "sampledAt": "2026-09-04T00:05:31.680Z"
+            },
+            "why": "Cut from this scenario's own KovaaK's board at the pool ladder's ranks 5, 6, 7, 8, 9, 10 - the top 26%, 18%, 15%, 11%, 7.5%, 5.5% of 88,469 entries. No benchmark publishes a tier for this scenario at this window, so there is nothing to adopt. Re-cut with npm run cut:thresholds."
+          }
+        },
+        {
+          "window": 2,
+          "scenario": "Pokeball Wide rAim",
+          "label": "Pokeball Wide rAim",
+          "leaderboardId": 527,
+          "rankMaxes": [
+            139,
+            142,
+            144,
+            146,
+            148,
+            152
+          ],
+          "source": {
+            "kind": "percentile",
+            "cut": {
+              "ranks": [
+                8,
+                9,
+                10,
+                11,
+                12,
+                13
+              ],
+              "topFractions": [
+                0.075,
+                0.055,
+                0.04,
+                0.03,
+                0.022,
+                0.015
+              ],
+              "leaderboardId": 527,
+              "total": 8872,
+              "sampledAt": "2026-08-25T20:27:25.705Z"
+            },
+            "why": "Cut from this scenario's own KovaaK's board at the pool ladder's ranks 9, 10, 11, 12, 13, 14 - the top 7.5%, 5.5%, 4.0%, 3.0%, 2.2%, 1.5% of 8,872 entries. No benchmark publishes a tier for this scenario at this window, so there is nothing to adopt. Re-cut with npm run cut:thresholds."
+          }
+        },
+        {
+          "window": 3,
+          "scenario": "Pokeball Frenzy Auto Small Wide",
+          "label": "Pokeball Frenzy Auto Small Wide",
+          "leaderboardId": 106,
+          "rankMaxes": [
+            2670,
+            3030,
+            3180,
+            3810
+          ],
+          "source": {
+            "kind": "adopted",
+            "from": [
+              {
+                "benchmark": "Aimerz+ Static Clicking",
+                "difficulty": "Hard",
+                "rankMaxes": [
+                  2670,
+                  2850,
+                  3030,
+                  3180,
+                  3390,
+                  3810
+                ],
+                "used": [
+                  2670,
+                  3030,
+                  3180,
+                  3810
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "$why": "Hand-built into Static Clicking and moved here on a measurement, not a preference. All four rungs fire a Poke-Drill at 22.1, 27.7, 31.8 and 54.4 shots per kill across 119 runs of the corpus, against 1.0 to 1.3 for the 191 correctly-labelled clicking scenarios - a single click kills nothing here, so the family cannot be clicking of any kind. KovaaK's types all sixteen Pokeball scenarios in the corpus as Switching, and the benchmark labels land eight of them on Speed Switching (AimSpeed, Viscose, Avasive, Revosect) against two Lemon calls Stability. The rungs are unchanged from the Static Clicking build."
+    },
+    {
       "family": "psalmTS",
       "category": "Speed Switching",
       "subCategory": "Speed Switching",
@@ -8202,166 +8362,6 @@
           }
         }
       ]
-    },
-    {
-      "family": "Pokeball",
-      "category": "Speed Switching",
-      "subCategory": "Speed Switching",
-      "variants": [
-        {
-          "window": 0,
-          "scenario": "Pokeball 1w4ts 30% Easy",
-          "label": "Pokeball 1w4ts 30% Easy",
-          "leaderboardId": 178814,
-          "rankMaxes": [
-            77,
-            93,
-            101,
-            107,
-            111,
-            116
-          ],
-          "source": {
-            "kind": "percentile",
-            "cut": {
-              "ranks": [
-                0,
-                1,
-                2,
-                3,
-                4,
-                5
-              ],
-              "topFractions": [
-                0.86,
-                0.66,
-                0.49,
-                0.36,
-                0.26,
-                0.18
-              ],
-              "leaderboardId": 178814,
-              "total": 4128,
-              "sampledAt": "2026-09-02T19:35:51.823Z"
-            },
-            "why": "Cut from this scenario's own KovaaK's board at the pool ladder's ranks 1, 2, 3, 4, 5, 6 - the top 86%, 66%, 49%, 36%, 26%, 18% of 4,128 entries. No benchmark publishes a tier for this scenario at this window, so there is nothing to adopt. Re-cut with npm run cut:thresholds."
-          }
-        },
-        {
-          "window": 1,
-          "scenario": "Pokeball 1w4ts 30%",
-          "label": "Pokeball 1w4ts 30%",
-          "leaderboardId": 456,
-          "rankMaxes": [
-            88,
-            93,
-            95,
-            99,
-            102,
-            104
-          ],
-          "source": {
-            "kind": "percentile",
-            "cut": {
-              "ranks": [
-                4,
-                5,
-                6,
-                7,
-                8,
-                9
-              ],
-              "topFractions": [
-                0.26,
-                0.18,
-                0.15,
-                0.105,
-                0.075,
-                0.055
-              ],
-              "leaderboardId": 456,
-              "total": 88469,
-              "sampledAt": "2026-09-04T00:05:31.680Z"
-            },
-            "why": "Cut from this scenario's own KovaaK's board at the pool ladder's ranks 5, 6, 7, 8, 9, 10 - the top 26%, 18%, 15%, 11%, 7.5%, 5.5% of 88,469 entries. No benchmark publishes a tier for this scenario at this window, so there is nothing to adopt. Re-cut with npm run cut:thresholds."
-          }
-        },
-        {
-          "window": 2,
-          "scenario": "Pokeball Wide rAim",
-          "label": "Pokeball Wide rAim",
-          "leaderboardId": 527,
-          "rankMaxes": [
-            139,
-            142,
-            144,
-            146,
-            148,
-            152
-          ],
-          "source": {
-            "kind": "percentile",
-            "cut": {
-              "ranks": [
-                8,
-                9,
-                10,
-                11,
-                12,
-                13
-              ],
-              "topFractions": [
-                0.075,
-                0.055,
-                0.04,
-                0.03,
-                0.022,
-                0.015
-              ],
-              "leaderboardId": 527,
-              "total": 8872,
-              "sampledAt": "2026-08-25T20:27:25.705Z"
-            },
-            "why": "Cut from this scenario's own KovaaK's board at the pool ladder's ranks 9, 10, 11, 12, 13, 14 - the top 7.5%, 5.5%, 4.0%, 3.0%, 2.2%, 1.5% of 8,872 entries. No benchmark publishes a tier for this scenario at this window, so there is nothing to adopt. Re-cut with npm run cut:thresholds."
-          }
-        },
-        {
-          "window": 3,
-          "scenario": "Pokeball Frenzy Auto Small Wide",
-          "label": "Pokeball Frenzy Auto Small Wide",
-          "leaderboardId": 106,
-          "rankMaxes": [
-            2670,
-            3030,
-            3180,
-            3810
-          ],
-          "source": {
-            "kind": "adopted",
-            "from": [
-              {
-                "benchmark": "Aimerz+ Static Clicking",
-                "difficulty": "Hard",
-                "rankMaxes": [
-                  2670,
-                  2850,
-                  3030,
-                  3180,
-                  3390,
-                  3810
-                ],
-                "used": [
-                  2670,
-                  3030,
-                  3180,
-                  3810
-                ]
-              }
-            ]
-          }
-        }
-      ],
-      "$why": "Hand-built into Static Clicking and moved here on a measurement, not a preference. All four rungs fire a Poke-Drill at 22.1, 27.7, 31.8 and 54.4 shots per kill across 119 runs of the corpus, against 1.0 to 1.3 for the 191 correctly-labelled clicking scenarios - a single click kills nothing here, so the family cannot be clicking of any kind. KovaaK's types all sixteen Pokeball scenarios in the corpus as Switching, and the benchmark labels land eight of them on Speed Switching (AimSpeed, Viscose, Avasive, Revosect) against two Lemon calls Stability. The rungs are unchanged from the Static Clicking build."
     },
     {
       "family": "Speed",

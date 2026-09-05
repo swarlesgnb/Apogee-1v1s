@@ -30,6 +30,7 @@ import {
   log,
 } from "./crashLog.ts";
 import { loadRankTheme } from "../core/ranks/apogeeRanks.ts";
+import { rebuildPool } from "../core/season/rebuildPool.ts";
 import { loadQuestState, saveQuestState } from "./questStore.ts";
 import { clearOverrides, loadOverrides, overridesPath, saveOverrides } from "./adminStore.ts";
 import { TOKENS } from "../core/admin/overrides.ts";
@@ -2027,108 +2028,7 @@ ipcMain.handle("apogee:saveSeason", async (_e, { season, fingerprint, force }) =
   const poolBody = (() => {
     try {
       const pool = JSON.parse(readFileSync(dataFile("pool.json"), "utf8"));
-
-      // Thresholds live in the pool now, so this rebuild has to carry them.
-      //
-      // It did not, and that was the sharpest edge in the whole conversion: the rebuild
-      // reconstructs every variant from the season, and a variant without `rankMaxes` is a
-      // variant with no numbers. One save from the season editor would have emptied every
-      // threshold in the pool, and the next build would have refused with 88 scenarios
-      // missing scores.
-      //
-      // `overrides` is gone with the derivation. It existed so a hand-set number could
-      // survive a rebuild that recomputed over it; nothing recomputes now, so there is
-      // nothing to override and no diff to take.
-      const sourceOf = new Map<string, unknown>(
-        (pool.families ?? []).flatMap((f: { variants?: { scenario: string; source?: unknown }[] }) =>
-          (f.variants ?? []).map((v) => [v.scenario, v.source] as [string, unknown]),
-        ),
-      );
-      const priorMaxes = new Map<string, number[]>(
-        (pool.families ?? []).flatMap((f: { variants?: { scenario: string; rankMaxes?: number[] }[] }) =>
-          (f.variants ?? [])
-            .filter((v) => Array.isArray(v.rankMaxes))
-            .map((v) => [v.scenario, v.rankMaxes!] as [string, number[]]),
-        ),
-      );
-
-      const families: Record<string, {
-        family: string;
-        category: string;
-        subCategory?: string;
-        variants: {
-          window: number;
-          scenario: string;
-          label: string;
-          leaderboardId: number | null;
-          rankMaxes: number[];
-          source: unknown;
-        }[];
-      }> = {};
-
-      // The season does not carry a sub-skill - it is a property of the family, and the
-      // pool is where families are declared - so it has to be read back off the pool being
-      // rewritten. Dropping it would leave the family unclassified, which fails no build
-      // and quietly removes it from the weakness map and the sub-category queues.
-      const subCategoryOf = new Map<string, string>(
-        (pool.families ?? [])
-          .filter((f: { subCategory?: string }) => typeof f.subCategory === "string")
-          .map((f: { category: string; family: string; subCategory: string }) => [
-            `${f.category}/${f.family}`,
-            f.subCategory,
-          ]),
-      );
-
-      for (const scen of season.scenarios) {
-        const key = `${scen.category}/${scen.family}`;
-        families[key] ??= {
-          family: scen.family,
-          category: scen.category,
-          ...(subCategoryOf.has(key) ? { subCategory: subCategoryOf.get(key)! } : {}),
-          variants: [],
-        };
-        // A number the editor changed is a number somebody authored, and it says so.
-        // Keeping the old source would let an edit inherit a citation it no longer
-        // matches, which is the one thing the provenance is there to prevent.
-        const prior = priorMaxes.get(scen.scenario);
-        const edited =
-          !prior ||
-          prior.length !== scen.rankMaxes.length ||
-          prior.some((n, i) => n !== scen.rankMaxes[i]);
-
-        families[key].variants.push({
-          window: scen.window ?? 0,
-          scenario: scen.scenario,
-          label: scen.label,
-          leaderboardId: scen.leaderboardId ?? null,
-          rankMaxes: scen.rankMaxes.slice(),
-          source: edited
-            ? {
-                kind: "authored",
-                why:
-                  "Changed in the season editor and not yet explained. Replace this with " +
-                  "the reason the number is what it is, or run the adoption tool to trace " +
-                  "it to a benchmark that publishes it.",
-              }
-            : (sourceOf.get(scen.scenario) ?? {
-                kind: "seeded",
-                note: "no source recorded when this variant was written back",
-              }),
-        });
-      }
-
-      for (const f of Object.values(families)) f.variants.sort((a, b) => a.window - b.window);
-
-      pool.windowSize = season.windowSize ?? pool.windowSize;
-      pool.windows = season.windows ?? pool.windows;
-      pool.matchWindow = season.matchPool?.window ?? pool.matchWindow;
-      pool.categories = season.categories.map((c: { name: string }) => c.name);
-      pool.families = Object.values(families).sort(
-        (a, b) => a.category.localeCompare(b.category) || a.family.localeCompare(b.family),
-      );
-      delete pool.overrides;
-
-      return JSON.stringify(pool, null, 2) + "\n";
+      return JSON.stringify(rebuildPool(pool, season), null, 2) + "\n";
     } catch {
       // A pool we could not rebuild must not stop the season being saved: the season is
       // the thing the app grades against, and losing that edit would be worse.

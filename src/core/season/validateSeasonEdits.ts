@@ -3,9 +3,13 @@
  * guarantee that a season stays coherent rests on validateSeason refusing a desynced
  * one before main writes it. This checks that net actually holds.
  */
+import { readFileSync } from "node:fs";
+
 import { loadSeason, validateSeason, type Season } from "./season.ts";
+import { rebuildPool, type RebuildSeason } from "./rebuildPool.ts";
 import { ENERGY_PER_RANK } from "../benchmarks/energy.ts";
 import { windowRankCount } from "./windows.ts";
+import { dataFile } from "../dataDir.ts";
 
 const base = loadSeason();
 const clone = (): Season => JSON.parse(JSON.stringify(base));
@@ -302,6 +306,47 @@ check(
       `${eligible.length} of ${positional.length} eligible`,
     );
   }
+}
+
+// Saving the season rewrites the pool from it, and the pool holds things the season has no
+// field for. Rebuilding from a season the pool itself produced therefore has to be a no-op:
+// anything that changes here is something a save silently deletes.
+//
+// Not hypothetical. Before the rebuild carried the fields it does not own, one save from
+// the editor removed twelve `admitted` reasons, three `$order` exceptions and one
+// `thinBoard` exception - every written justification for a hand-picked rung in the pool -
+// and turned a passing `validate:pool` into three failures. Nothing said a word at any
+// point, and it was twice diagnosed as something else entirely.
+{
+  const pool = JSON.parse(readFileSync(dataFile("pool.json"), "utf8"));
+  const again = rebuildPool(pool, base as unknown as RebuildSeason);
+
+  const differences: string[] = [];
+  const walk = (a: unknown, b: unknown, path: string) => {
+    if (differences.length >= 6) return;
+    if (JSON.stringify(a) === JSON.stringify(b)) return;
+    if (a && b && typeof a === "object" && typeof b === "object") {
+      // Arrays by index, which is sound here because the rebuild sorts families and
+      // variants the same way the pool is written - and a change in that order is itself
+      // worth reporting rather than hiding behind a set comparison.
+      for (const k of new Set([...Object.keys(a), ...Object.keys(b)])) {
+        walk((a as Record<string, unknown>)[k], (b as Record<string, unknown>)[k], `${path}.${k}`);
+      }
+      return;
+    }
+    differences.push(
+      b === undefined ? `${path} is dropped`
+        : a === undefined ? `${path} is added`
+        : `${path} changes`,
+    );
+  };
+  walk(pool, again, "pool");
+
+  check(
+    "rewriting the pool from the season it produced changes nothing",
+    differences.length === 0,
+    differences.join("; "),
+  );
 }
 
 console.log(
