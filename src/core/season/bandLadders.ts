@@ -91,3 +91,46 @@ export function syncBandLadders(season: SeasonLike): string[] {
 
   return changed;
 }
+
+/**
+ * The overall readout takes its names and colours from the rating ladder.
+ *
+ * These were two eight-rung ladders describing the same position. `data/apogee_ranks.json`
+ * says where a player sits against everyone else and the season's overall rank says what
+ * their scores are worth - a real distinction, and one that is not measured yet: with no
+ * live population, `snapshot.ts` derives the percentile straight from the benchmark rank,
+ * so the two are the same number by construction and were only ever two sets of words for
+ * it. Carrying both meant every screen naming an overall standing used a vocabulary that
+ * appeared nowhere else in the app.
+ *
+ * Derived rather than copied, so there is one place to edit and they cannot drift. The
+ * season file still stores them, because everything downstream reads the season and a
+ * published season has to be a complete record of what its ranks were.
+ *
+ * WHEN THIS STOPS BEING RIGHT
+ *
+ * The day the ladder has players. Then the rating is a real percentile, the two numbers
+ * come apart, and the same word means two things on one screen. The fix then is to label
+ * them - "your rating" against "what your scores are worth" - rather than to invent a
+ * second vocabulary, because the second vocabulary is what this removed.
+ */
+export function syncOverallLadder(
+  season: { rankNames: string[]; rankColors: Record<string, string> },
+  tiers: { name: string; color: string }[],
+): boolean {
+  // Only when the depths match. A ladder of a different length is a deliberate difference
+  // rather than drift, and silently truncating one to the other would lose ranks.
+  if (tiers.length !== season.rankNames.length) return false;
+
+  const names = tiers.map((t) => t.name);
+  const colors: Record<string, string> = {};
+  for (const t of tiers) colors[t.name] = t.color;
+
+  const changed =
+    JSON.stringify(names) !== JSON.stringify(season.rankNames) ||
+    JSON.stringify(colors) !== JSON.stringify(season.rankColors);
+
+  season.rankNames = names;
+  season.rankColors = colors;
+  return changed;
+}

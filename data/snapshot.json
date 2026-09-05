@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-05T00:12:43.190Z",
+  "generatedAt": "2026-09-05T00:37:53.909Z",
   "coverage": [
     {
       "category": "Dynamic Clicking",
@@ -1958,24 +1958,24 @@
     "name": "Season 1",
     "difficulty": "",
     "rankNames": [
-      "Foothill",
-      "Treeline",
-      "Ridge",
-      "Snowline",
-      "Headwall",
-      "Cornice",
-      "Spire",
-      "Summit"
+      "Stargazer",
+      "Astrologist",
+      "Cosmonaut",
+      "Lunar",
+      "Odyssey",
+      "Arecibo",
+      "Quasar",
+      "Supernova"
     ],
     "rankColors": {
-      "Foothill": "#8c6f53",
-      "Treeline": "#8c805d",
-      "Ridge": "#8a916f",
-      "Snowline": "#8ba388",
-      "Headwall": "#90b4a5",
-      "Cornice": "#9ec4c3",
-      "Spire": "#b4d5e0",
-      "Summit": "#d1e7fa"
+      "Stargazer": "#00EAEA",
+      "Astrologist": "#8080FF",
+      "Cosmonaut": "#008080",
+      "Lunar": "#2F2FFF",
+      "Odyssey": "#FF46FF",
+      "Arecibo": "#00FF00",
+      "Quasar": "#00FFFF",
+      "Supernova": "#FF8000"
     },
     "matchPool": {
       "window": 1
@@ -1990,13 +1990,13 @@
     "windowSize": 4
   },
   "player": {
-    "totalRuns": 12542,
+    "totalRuns": 12543,
     "scenarioCount": 915,
     "streak": 34,
-    "benchmarkRank": "Snowline",
+    "benchmarkRank": "Lunar",
     "benchmarkEnergy": 908402,
     "progressToNextRank": 0.49742581614731174,
-    "nextRankName": "Headwall",
+    "nextRankName": "Odyssey",
     "apogee": {
       "rating": 1617,
       "rd": 105,
@@ -4339,9 +4339,9 @@
   "weakest": "Reactive Tracking",
   "consistency": {
     "method": "worstOfLast5",
-    "ceilingRank": "Snowline",
+    "ceilingRank": "Lunar",
     "ceilingEnergy": 908402,
-    "floorRank": "Ridge",
+    "floorRank": "Cosmonaut",
     "floorEnergy": 585486,
     "gap": 0.16573871056170097,
     "scenarios": [

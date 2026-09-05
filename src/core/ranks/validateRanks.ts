@@ -130,7 +130,29 @@ check("no two tiers share a colour", dupes.length === 0, dupes.map((n) => n.join
 const seasonNames = new Map<string, string>();
 if (hasSeason()) {
   const season = loadSeason();
-  for (const name of season.rankNames) seasonNames.set(name.toLowerCase(), "the overall ladder");
+
+  // The overall readout is the exception, and a deliberate one: it takes its names AND its
+  // colours from these tiers, so it is not a second ladder wearing the same words - it is
+  // this ladder, shown against energy instead of against other players. Checked as an
+  // exact match rather than waved through, because a partial one is the original bug back:
+  // the same eight words in two different sets of colours, with the app painting Stargazer
+  // cyan on one screen and blue-violet on every other.
+  const tierNames = theme.tiers.map((t) => t.name);
+  const tierColors = Object.fromEntries(theme.tiers.map((t) => [t.name, t.color]));
+  const overallIsTheTiers =
+    JSON.stringify(season.rankNames) === JSON.stringify(tierNames) &&
+    JSON.stringify(season.rankColors) === JSON.stringify(tierColors);
+
+  check(
+    "the overall readout is the rating ladder exactly, or shares nothing with it",
+    overallIsTheTiers ||
+      !season.rankNames.some((n) => tierNames.some((t) => t.toLowerCase() === n.toLowerCase())),
+    overallIsTheTiers ? "" : "same names, different colours",
+  );
+
+  if (!overallIsTheTiers) {
+    for (const name of season.rankNames) seasonNames.set(name.toLowerCase(), "the overall ladder");
+  }
   for (const category of season.categories) {
     for (const band of category.bands ?? []) {
       for (const name of band.rankNames) seasonNames.set(name.toLowerCase(), category.name);

@@ -31,7 +31,7 @@ import {
 } from "./crashLog.ts";
 import { loadRankTheme } from "../core/ranks/apogeeRanks.ts";
 import { rebuildPool } from "../core/season/rebuildPool.ts";
-import { syncBandLadders } from "../core/season/bandLadders.ts";
+import { syncBandLadders, syncOverallLadder } from "../core/season/bandLadders.ts";
 import { loadQuestState, saveQuestState } from "./questStore.ts";
 import { clearOverrides, loadOverrides, overridesPath, saveOverrides } from "./adminStore.ts";
 import { TOKENS } from "../core/admin/overrides.ts";
@@ -1970,6 +1970,27 @@ ipcMain.handle("apogee:saveRankTheme", async (_e, { theme, fingerprint, force })
     return { error: `could not write the ranks: ${err instanceof Error ? err.message : err}` };
   }
 
+  // The overall readout is these names, so renaming a tier has to reach the season as
+  // well - otherwise editing the ranks here puts the two ladders back out of step, which
+  // is the thing deriving them was for.
+  try {
+    const season = loadSeason();
+    if (syncOverallLadder(season, loadRankTheme().tiers)) {
+      const seasonBody = JSON.stringify(season, null, 2) + "\n";
+      writeFileSync(seasonPath(), seasonBody, "utf8");
+      written.push(seasonPath());
+      const dir = sourceDataDir();
+      const seasonSource = dir ? join(dir, "seasons", "season-1.json") : null;
+      if (seasonSource && seasonSource !== seasonPath()) {
+        writeFileSync(seasonSource, seasonBody, "utf8");
+        written.push(seasonSource);
+      }
+    }
+  } catch {
+    // A season that will not load is a separate problem with its own message elsewhere;
+    // it must not make renaming a tier fail.
+  }
+
   rebuild("ranks edited");
   broadcast("apogee:seasonChanged", { at: Date.now() });
   return { ok: true, paths: written };
@@ -2014,6 +2035,9 @@ ipcMain.handle("apogee:saveSeason", async (_e, { season, fingerprint, force }) =
   // three whole ladders. Derived rather than reconciled: the bands are slices of the ladder
   // by construction, so the ladder is where the information is.
   syncBandLadders(season);
+  // And the overall readout takes its names from the rating ladder, which is now the only
+  // place they are chosen.
+  syncOverallLadder(season, loadRankTheme().tiers);
 
   try {
     validateSeason(season);

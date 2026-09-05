@@ -1975,12 +1975,19 @@ function renderSeasonEditor() {
   // paints more of the window than the season does. Presenting it as `rankNames` and
   // `rankColors` lets it reuse the rows below, including the contrast warning and the
   // duplicate-colour check, and writes straight back through to the tiers.
+  // No Overall section: it is not edited any more, it is derived. The overall readout takes
+  // its names and colours from the rating tiers below, so a box here would be one you could
+  // type into and watch get overwritten on save.
   const ladders = s.categories
     .map((c) => ({ title: c.name, owner: c, isCategory: true }))
-    .concat([{ title: "Overall", owner: s, isCategory: false }])
     .concat(
       rankTheme
-        ? [{ title: "Rating tiers", owner: ratingLadder(), isCategory: false, isRating: true }]
+        ? [{
+            title: "Rating tiers, and the overall readout",
+            owner: ratingLadder(),
+            isCategory: false,
+            isRating: true,
+          }]
         : [],
     );
 
