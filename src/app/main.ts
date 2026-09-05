@@ -31,6 +31,7 @@ import {
 } from "./crashLog.ts";
 import { loadRankTheme } from "../core/ranks/apogeeRanks.ts";
 import { rebuildPool } from "../core/season/rebuildPool.ts";
+import { syncBandLadders } from "../core/season/bandLadders.ts";
 import { loadQuestState, saveQuestState } from "./questStore.ts";
 import { clearOverrides, loadOverrides, overridesPath, saveOverrides } from "./adminStore.ts";
 import { TOKENS } from "../core/admin/overrides.ts";
@@ -2006,6 +2007,13 @@ ipcMain.handle("apogee:saveSeason", async (_e, { season, fingerprint, force }) =
       stale: true,
     };
   }
+
+  // The editor edits `category.rankNames`, and every screen in the app reads
+  // `category.bands[].rankNames`. Nothing kept them in step, so a rank renamed here landed
+  // in a field nothing displays - which is what "the season editor is not saving" was, for
+  // three whole ladders. Derived rather than reconciled: the bands are slices of the ladder
+  // by construction, so the ladder is where the information is.
+  syncBandLadders(season);
 
   try {
     validateSeason(season);

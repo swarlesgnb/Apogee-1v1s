@@ -87,7 +87,7 @@
             "Flintlock": "#ff6600",
             "Revolver": "#0400ff",
             "Carbine": "#588ffd",
-            "Rifle": "#000000"
+            "Rifle": "#4d1f00"
           }
         },
         {
@@ -110,7 +110,7 @@
           ],
           "rankColors": {
             "Carbine": "#588ffd",
-            "Rifle": "#000000",
+            "Rifle": "#4d1f00",
             "Marksman": "#ffffff",
             "Match Rifle": "#757575",
             "Sniper": "#ff0000",
@@ -135,7 +135,7 @@
           "rankColors": {
             "Sniper": "#ff0000",
             "Railgun": "#ee00ff",
-            "Gauss Cannon": "#331400",
+            "Gauss Cannon": "#000000",
             "Photon Lance": "#1100ff",
             "Rank 5": "#3f4652"
           },
@@ -214,20 +214,20 @@
             150000
           ],
           "rankNames": [
-            "Rock",
-            "Bolas",
-            "Boomerang",
-            "Sling",
-            "Net",
-            "Wingshot"
+            "Tardigrade",
+            "Mosquito",
+            "Bee",
+            "Hornet",
+            "Hummingbird",
+            "Falcon"
           ],
           "rankColors": {
-            "Rock": "#986b49",
-            "Bolas": "#9d714a",
-            "Boomerang": "#a3774b",
-            "Sling": "#a87e4c",
-            "Net": "#ae854d",
-            "Wingshot": "#b38c4f"
+            "Tardigrade": "#94abf0",
+            "Mosquito": "#4d2400",
+            "Bee": "#ffea00",
+            "Hornet": "#ff7300",
+            "Hummingbird": "#008a87",
+            "Falcon": "#ff0000"
           }
         },
         {
@@ -241,20 +241,20 @@
             150000
           ],
           "rankNames": [
-            "Net",
-            "Wingshot",
-            "Skeet",
-            "Buckshot",
-            "Flak",
-            "Tracer"
+            "Hummingbird",
+            "Falcon",
+            "Lynx",
+            "Wolverine",
+            "Lionesse",
+            "Grizzly Bear"
           ],
           "rankColors": {
-            "Net": "#ae854d",
-            "Wingshot": "#b38c4f",
-            "Skeet": "#b89452",
-            "Buckshot": "#bd9c55",
-            "Flak": "#c2a558",
-            "Tracer": "#c6ae5d"
+            "Hummingbird": "#008a87",
+            "Falcon": "#ff0000",
+            "Lynx": "#fb00ff",
+            "Wolverine": "#0e5700",
+            "Lionesse": "#c28400",
+            "Grizzly Bear": "#6e6b5e"
           }
         },
         {
@@ -268,20 +268,20 @@
             150000
           ],
           "rankNames": [
-            "Flak",
-            "Tracer",
-            "Lead Sight",
-            "Proximity Fuse",
-            "Radar Lock",
-            "Heat Seeker"
+            "Lionesse",
+            "Grizzly Bear",
+            "Sabretooth",
+            "White Rhino",
+            "Mammoth",
+            "Giant Squid"
           ],
           "rankColors": {
-            "Flak": "#c2a558",
-            "Tracer": "#c6ae5d",
-            "Lead Sight": "#cbb762",
-            "Proximity Fuse": "#cfc168",
-            "Radar Lock": "#d3cb6f",
-            "Heat Seeker": "#d7d677"
+            "Lionesse": "#c28400",
+            "Grizzly Bear": "#6e6b5e",
+            "Sabretooth": "#ff8080",
+            "White Rhino": "#00ffe1",
+            "Mammoth": "#e4ed89",
+            "Giant Squid": "#0040ff"
           }
         },
         {
@@ -293,17 +293,17 @@
             100000
           ],
           "rankNames": [
-            "Radar Lock",
-            "Heat Seeker",
-            "CIWS",
-            "Kill Vehicle",
+            "Mammoth",
+            "Giant Squid",
+            "Sperm Whale",
+            "Megalodon",
             "Rank 5"
           ],
           "rankColors": {
-            "Radar Lock": "#d3cb6f",
-            "Heat Seeker": "#d7d677",
-            "CIWS": "#dae17f",
-            "Kill Vehicle": "#deed89",
+            "Mammoth": "#e4ed89",
+            "Giant Squid": "#0040ff",
+            "Sperm Whale": "#ffffff",
+            "Megalodon": "#04ff00",
             "Rank 5": "#3f4652"
           },
           "positional": {
@@ -548,20 +548,20 @@
             105000
           ],
           "rankNames": [
-            "Ripple",
-            "Gust",
-            "Squall",
-            "Crosswind",
-            "Shear",
-            "Downdraft"
+            "Absolute Zero",
+            "Nitrogen",
+            "Dry Ice",
+            "Permafrost",
+            "Lukewarm",
+            "Sweaty"
           ],
           "rankColors": {
-            "Ripple": "#497a97",
-            "Gust": "#4f7fa1",
-            "Squall": "#5684ab",
-            "Crosswind": "#5d8ab5",
-            "Shear": "#668fbf",
-            "Downdraft": "#6f94ca"
+            "Absolute Zero": "#005248",
+            "Nitrogen": "#4f008f",
+            "Dry Ice": "#00fffb",
+            "Permafrost": "#ff00a2",
+            "Lukewarm": "#ffbb00",
+            "Sweaty": "#00ff04"
           }
         },
         {
@@ -575,20 +575,20 @@
             105000
           ],
           "rankNames": [
-            "Shear",
-            "Downdraft",
-            "Microburst",
-            "Whirlwind",
-            "Dust Devil",
-            "Waterspout"
+            "Lukewarm",
+            "Sweaty",
+            "Scalding",
+            "Bonfire",
+            "Blowtorch",
+            "Magma"
           ],
           "rankColors": {
-            "Shear": "#668fbf",
-            "Downdraft": "#6f94ca",
-            "Microburst": "#799ad4",
-            "Whirlwind": "#84a0df",
-            "Dust Devil": "#90a6e9",
-            "Waterspout": "#9cacf4"
+            "Lukewarm": "#ffbb00",
+            "Sweaty": "#00ff04",
+            "Scalding": "#883f3f",
+            "Bonfire": "#ff7b00",
+            "Blowtorch": "#9c9afe",
+            "Magma": "#c27070"
           }
         },
         {
@@ -602,20 +602,20 @@
             105000
           ],
           "rankNames": [
-            "Dust Devil",
-            "Waterspout",
-            "Twister",
-            "Derecho",
-            "Cyclone",
-            "Typhoon"
+            "Blowtorch",
+            "Magma",
+            "Acetylene",
+            "Thermite",
+            "Cyanogen",
+            "Subnitride"
           ],
           "rankColors": {
-            "Dust Devil": "#90a6e9",
-            "Waterspout": "#9cacf4",
-            "Twister": "#a9b2ff",
-            "Derecho": "#b8bafe",
-            "Cyclone": "#c6c2ff",
-            "Typhoon": "#d3cbfe"
+            "Blowtorch": "#9c9afe",
+            "Magma": "#c27070",
+            "Acetylene": "#ff4d00",
+            "Thermite": "#404040",
+            "Cyanogen": "#007d80",
+            "Subnitride": "#ae00ff"
           }
         },
         {
@@ -627,17 +627,17 @@
             70000
           ],
           "rankNames": [
-            "Cyclone",
-            "Typhoon",
-            "Supercell",
-            "Maelstrom",
+            "Cyanogen",
+            "Subnitride",
+            "Sol",
+            "Planck",
             "Rank 5"
           ],
           "rankColors": {
-            "Cyclone": "#c6c2ff",
-            "Typhoon": "#d3cbfe",
-            "Supercell": "#dfd5ff",
-            "Maelstrom": "#e9e0fe",
+            "Cyanogen": "#007d80",
+            "Subnitride": "#ae00ff",
+            "Sol": "#fbff00",
+            "Planck": "#ffffff",
             "Rank 5": "#3f4652"
           },
           "positional": {
@@ -882,20 +882,20 @@
             90000
           ],
           "rankNames": [
-            "Raft",
-            "Canoe",
-            "Skiff",
-            "Launch",
-            "Cutter",
-            "Chaser"
+            "Plankton",
+            "Tadpole",
+            "Minnow",
+            "Prarie Dog",
+            "Toad",
+            "Viper"
           ],
           "rankColors": {
-            "Raft": "#4e8055",
-            "Canoe": "#4f865c",
-            "Skiff": "#518c64",
-            "Launch": "#52936b",
-            "Cutter": "#549a73",
-            "Chaser": "#55a17c"
+            "Plankton": "#857829",
+            "Tadpole": "#7affb4",
+            "Minnow": "#707aff",
+            "Prarie Dog": "#6b5400",
+            "Toad": "#00e604",
+            "Viper": "#fbff00"
           }
         },
         {
@@ -909,20 +909,20 @@
             90000
           ],
           "rankNames": [
-            "Cutter",
-            "Chaser",
-            "Corvette",
-            "Frigate",
-            "Destroyer",
-            "Hunter"
+            "Toad",
+            "Viper",
+            "Hawk",
+            "Honey Badger",
+            "Hyena",
+            "Jaguar"
           ],
           "rankColors": {
-            "Cutter": "#549a73",
-            "Chaser": "#55a17c",
-            "Corvette": "#57a985",
-            "Frigate": "#5ab08e",
-            "Destroyer": "#5cb898",
-            "Hunter": "#5fc0a2"
+            "Toad": "#00e604",
+            "Viper": "#fbff00",
+            "Hawk": "#ff0000",
+            "Honey Badger": "#787878",
+            "Hyena": "#a600ff",
+            "Jaguar": "#ffbb00"
           }
         },
         {
@@ -936,20 +936,20 @@
             90000
           ],
           "rankNames": [
-            "Destroyer",
-            "Hunter",
-            "Interdictor",
-            "Marauder",
-            "Reaper",
-            "Wraith"
+            "Hyena",
+            "Jaguar",
+            "Siberian Tiger",
+            "Crocodile",
+            "African Elephant",
+            "Polar Bear"
           ],
           "rankColors": {
-            "Destroyer": "#5cb898",
-            "Hunter": "#5fc0a2",
-            "Interdictor": "#62c9ad",
-            "Marauder": "#66d2b8",
-            "Reaper": "#6adbc4",
-            "Wraith": "#6fe5d1"
+            "Hyena": "#a600ff",
+            "Jaguar": "#ffbb00",
+            "Siberian Tiger": "#b86200",
+            "Crocodile": "#005c2c",
+            "African Elephant": "#575757",
+            "Polar Bear": "#ffffff"
           }
         },
         {
@@ -961,17 +961,17 @@
             60000
           ],
           "rankNames": [
-            "Reaper",
-            "Wraith",
-            "Phantom",
-            "Nemesis",
+            "African Elephant",
+            "Polar Bear",
+            "Orca",
+            "Apex",
             "Rank 5"
           ],
           "rankColors": {
-            "Reaper": "#6adbc4",
-            "Wraith": "#6fe5d1",
-            "Phantom": "#74eede",
-            "Nemesis": "#7af9eb",
+            "African Elephant": "#575757",
+            "Polar Bear": "#ffffff",
+            "Orca": "#000000",
+            "Apex": "#ffb3fc",
             "Rank 5": "#3f4652"
           },
           "positional": {

@@ -308,6 +308,27 @@ check(
   }
 }
 
+// A category carries its ranks twice: the ladder the editor edits, and the bands every
+// screen reads. They have to say the same thing.
+//
+// They did not, and nothing noticed. Three categories' worth of names and colours sat in
+// `category.rankNames` while the app went on painting `category.bands[].rankNames` - so
+// the editor showed the new names, because the editor reads what it writes, and everything
+// else showed the old ones. That is what "the season editor is not saving" was.
+{
+  const drifted: string[] = [];
+  for (const c of base.categories) {
+    if (!c.bands?.length) continue;
+    const seen: string[] = [];
+    for (const b of c.bands) {
+      for (const n of b.rankNames) if (!seen.includes(n)) seen.push(n);
+    }
+    const named = seen.filter((n) => !/^Rank \d+\**$/.test(n));
+    if (JSON.stringify(named) !== JSON.stringify(c.rankNames)) drifted.push(c.name);
+  }
+  check("every category's bands name the same ranks as its ladder", drifted.length === 0, drifted.join(", "));
+}
+
 // Saving the season rewrites the pool from it, and the pool holds things the season has no
 // field for. Rebuilding from a season the pool itself produced therefore has to be a no-op:
 // anything that changes here is something a save silently deletes.
