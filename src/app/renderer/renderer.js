@@ -5821,6 +5821,37 @@ if (HOST === "electron") {
     $("signinLink").dataset.url = url;
   });
 
+  /*
+   * Report a problem: the diagnostics on the clipboard, then the issue page.
+   *
+   * The navigation is cancelled and re-issued rather than left to the anchor, because
+   * the clipboard write needs this document focused and opening the browser first takes
+   * that away - the copy then rejects with "Document is not focused" and the report
+   * arrives with nothing attached, which is the failure this link exists to prevent.
+   *
+   * The page opens either way. A report without the build stamp is worth more than no
+   * report, so a clipboard that refuses is not a reason to strand somebody here.
+   */
+  $("reportProblem").addEventListener("click", async (event) => {
+    event.preventDefault();
+    const link = $("reportProblem");
+    const url = link.href;
+    let copied = false;
+    try {
+      const text = await api.diagnostics();
+      await navigator.clipboard.writeText(text);
+      copied = true;
+    } catch {
+      // Falls through to opening the page. Help > Copy diagnostics still works.
+    }
+    if (copied) {
+      link.textContent = "Diagnostics copied";
+      setTimeout(() => { link.textContent = "Report a problem"; }, 2400);
+    }
+    window.open(url, "_blank", "noreferrer");
+  });
+  $("reportProblem").dataset.wired = "1";
+
   $("signinCopy").addEventListener("click", async () => {
     const url = $("signinLink").dataset.url || "";
     try {

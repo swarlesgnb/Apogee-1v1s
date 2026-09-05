@@ -150,6 +150,9 @@ contextBridge.exposeInMainWorld("apogee", {
   /** Reveal the watched folder in the OS file manager. */
   openStatsFolder: () => ipcRenderer.invoke("apogee:openStatsFolder"),
 
+  /** Pasteable support text: build, folder, run count. Never anything private. */
+  diagnostics: () => ipcRenderer.invoke("apogee:diagnostics"),
+
   /** Whether the signed-in player holds the admin role. Gates the editors, nothing else. */
   isAdmin: () => ipcRenderer.invoke("apogee:isAdmin"),
 

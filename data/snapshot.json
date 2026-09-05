@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-05T14:25:08.279Z",
+  "generatedAt": "2026-09-05T15:18:01.714Z",
   "coverage": [
     {
       "category": "Dynamic Clicking",
@@ -715,7 +715,7 @@
       "windowName": "Intermediate",
       "total": 11,
       "measured": 6,
-      "runs": 198,
+      "runs": 199,
       "matchable": true,
       "complete": false,
       "scenarios": [
@@ -803,7 +803,7 @@
           "scenario": "VT PGT Intermediate S5",
           "label": "VT PGT Intermediate S5",
           "family": "PGT",
-          "runs": 53,
+          "runs": 54,
           "measured": true,
           "needs": 0
         }
@@ -1151,7 +1151,7 @@
       "windowName": "Advanced",
       "total": 7,
       "measured": 4,
-      "runs": 186,
+      "runs": 187,
       "matchable": true,
       "complete": false,
       "scenarios": [
@@ -1191,7 +1191,7 @@
           "scenario": "Close Fast Strafes Invincible - Thin",
           "label": "Close Fast Strafes Invincible - Thin",
           "family": "Invincible Strafes",
-          "runs": 15,
+          "runs": 16,
           "measured": true,
           "needs": 0
         },
@@ -1371,7 +1371,7 @@
       "windowName": "Intermediate",
       "total": 9,
       "measured": 3,
-      "runs": 133,
+      "runs": 134,
       "matchable": true,
       "complete": false,
       "scenarios": [
@@ -1443,7 +1443,7 @@
           "scenario": "VT EddieTS Intermediate S5",
           "label": "VT EddieTS Intermediate S5",
           "family": "EddieTS",
-          "runs": 51,
+          "runs": 52,
           "measured": true,
           "needs": 0
         }
@@ -1455,7 +1455,7 @@
       "windowName": "Advanced",
       "total": 9,
       "measured": 3,
-      "runs": 104,
+      "runs": 105,
       "matchable": true,
       "complete": false,
       "scenarios": [
@@ -1527,7 +1527,7 @@
           "scenario": "VT DotTS Intermediate S5",
           "label": "VT DotTS Intermediate S5",
           "family": "DotTS",
-          "runs": 54,
+          "runs": 55,
           "measured": true,
           "needs": 0
         }
@@ -1990,9 +1990,9 @@
     "windowSize": 4
   },
   "player": {
-    "totalRuns": 12559,
+    "totalRuns": 12575,
     "scenarioCount": 915,
-    "streak": 34,
+    "streak": 35,
     "benchmarkRank": "Lunar",
     "benchmarkEnergy": 910044,
     "progressToNextRank": 0.5043768830289257,
@@ -3150,7 +3150,7 @@
           "nextRankWindowName": "Intermediate",
           "nextRankIsNewScenario": false,
           "gap": 141,
-          "runs": 53
+          "runs": 54
         },
         {
           "name": "PGTI Voltaic Easy",
@@ -3912,7 +3912,7 @@
           "nextRankWindowName": "Intermediate",
           "nextRankIsNewScenario": false,
           "gap": 10,
-          "runs": 51
+          "runs": 52
         },
         {
           "name": "VT psalmTS Novice",
@@ -4343,7 +4343,7 @@
     "ceilingEnergy": 910044,
     "floorRank": "Cosmonaut",
     "floorEnergy": 585486,
-    "gap": 0.16603753099081495,
+    "gap": 0.16638621974619855,
     "scenarios": [
       {
         "name": "1w2ts Pasu Perfected",
@@ -4402,14 +4402,6 @@
         "gap": 0.2616822429906542
       },
       {
-        "name": "VT PGT Intermediate S5",
-        "label": "VT PGT Intermediate S5 int",
-        "ceiling": 2909,
-        "floor": 2199,
-        "median": 2358,
-        "gap": 0.24407012719147472
-      },
-      {
         "name": "VT Pasu Intermediate S5",
         "label": "VT Pasu Intermediate S5 int",
         "ceiling": 944.336487,
@@ -4422,7 +4414,7 @@
         "label": "Close Fast Strafes Invincible - Thin adv",
         "ceiling": 7416,
         "floor": 5652,
-        "median": 6840,
+        "median": 6813,
         "gap": 0.23786407766990292
       },
       {
@@ -4432,6 +4424,14 @@
         "floor": 82,
         "median": 87,
         "gap": 0.2336448598130841
+      },
+      {
+        "name": "VT PGT Intermediate S5",
+        "label": "VT PGT Intermediate S5 int",
+        "ceiling": 2909,
+        "floor": 2231,
+        "median": 2362,
+        "gap": 0.2330697834307322
       },
       {
         "name": "Pasu Reload Goated",
@@ -4738,6 +4738,14 @@
         "gap": 0.11862820845639895
       },
       {
+        "name": "VT EddieTS Intermediate S5",
+        "label": "VT EddieTS Intermediate S5 int",
+        "ceiling": 1010,
+        "floor": 900,
+        "median": 900.25,
+        "gap": 0.10891089108910891
+      },
+      {
         "name": "1w2ts Perfected",
         "label": "1w2ts Perfected adv",
         "ceiling": 112,
@@ -4818,14 +4826,6 @@
         "gap": 0.08411214953271028
       },
       {
-        "name": "VT EddieTS Intermediate S5",
-        "label": "VT EddieTS Intermediate S5 int",
-        "ceiling": 1010,
-        "floor": 929.5,
-        "median": 900.5,
-        "gap": 0.0797029702970297
-      },
-      {
         "name": "domiSwitch",
         "label": "domiSwitch exp",
         "ceiling": 5192.799805,
@@ -4842,6 +4842,14 @@
         "gap": 0.07259650476443648
       },
       {
+        "name": "VT DotTS Intermediate S5",
+        "label": "VT DotTS Intermediate S5 adv",
+        "ceiling": 1221.5,
+        "floor": 1140,
+        "median": 1149.5,
+        "gap": 0.06672124437167418
+      },
+      {
         "name": "Aimerz+ 1w4ts HF Hard S1",
         "label": "Aimerz+ 1w4ts HF Hard exp",
         "ceiling": 154,
@@ -4856,14 +4864,6 @@
         "floor": 131,
         "median": 130,
         "gap": 0.06428571428571428
-      },
-      {
-        "name": "VT DotTS Intermediate S5",
-        "label": "VT DotTS Intermediate S5 adv",
-        "ceiling": 1221.5,
-        "floor": 1148,
-        "median": 1149.75,
-        "gap": 0.06017191977077364
       },
       {
         "name": "StaticSwitchingVox Small",

@@ -667,6 +667,44 @@ function runSmokeTest(): void {
           : "MISSING"
       }`,
     );
+    // The footer link that carries a bug report. Checked the same way as sign-in and for
+    // the same reason: it is present, visible and bound, and the text it copies is real.
+    // The menu item beside it was reachable only behind Alt, so this is the path anybody
+    // will actually find, and a dead one costs a report nobody knows was lost.
+    const report = await probe.webContents.executeJavaScript(`(() => {
+      const a = document.getElementById("reportProblem");
+      if (!a) return { present: false };
+      const s = getComputedStyle(a);
+      return {
+        present: true,
+        href: a.getAttribute("href") || "",
+        display: s.display,
+        visibility: s.visibility,
+        bridged: typeof window.apogee?.diagnostics === "function",
+      };
+    })()`);
+
+    const support = diagnostics();
+
+    if (!report.present) problems.push("the report-a-problem link is not in the DOM");
+    else if (report.display === "none" || report.visibility === "hidden") {
+      problems.push("the report-a-problem link is present but not visible");
+    } else if (!report.href) {
+      problems.push("the report-a-problem link has no href to fall back on");
+    } else if (!report.bridged) {
+      problems.push("the report-a-problem link cannot reach diagnostics over the bridge");
+    } else if (!support.trim()) {
+      problems.push("diagnostics came back empty, so the link would copy nothing");
+    }
+
+    console.log(
+      `report link  : ${
+        report.present
+          ? `${report.display === "none" ? "hidden" : "visible"}, ` +
+            `${support.trim().length} characters of diagnostics`
+          : "MISSING"
+      }`,
+    );
     console.log(`session      : ${state.session ? state.session.displayName : "signed out"}`);
 
     // The renderer's failure surface, proved rather than assumed. An unhandled rejection
@@ -2192,6 +2230,11 @@ ipcMain.handle("apogee:saveSeason", async (_e, { season, fingerprint, force }) =
 ipcMain.handle("apogee:openStatsFolder", () => {
   if (state.statsDir) void shell.openPath(state.statsDir);
 });
+
+// The same text as Copy diagnostics on the menu, for the footer link. The menu is
+// hidden under the custom title bar, so until this existed the one thing worth
+// attaching to a bug report was reachable only by somebody who knew to press Alt.
+ipcMain.handle("apogee:diagnostics", () => diagnostics());
 
 /**
  * Write the current match as a KovaaK's playlist and start the game.
