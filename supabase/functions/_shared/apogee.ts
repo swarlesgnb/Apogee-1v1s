@@ -356,6 +356,151 @@ export async function forfeitMatch(
  * decides.
  */
 
+export interface ChallengerOutcome {
+  rated: boolean;
+  reason: "not-a-duel" | "already-rated" | "no-deltas" | "rated";
+  ratingBefore?: number;
+  ratingAfter?: number;
+  ratingChange?: number;
+}
+
+/**
+ * Rate the player whose stored run set was just played against, when it was a duel.
+ *
+ * WHY THIS DOES NOT APPLY TO THE QUEUE
+ *
+ * `settle-match` rates the caller and nobody else, and for the pool that is right rather
+ * than an oversight. A stored side is never consumed: it answers as many callers as draw
+ * it, so rating its owner on every one would multiply a single afternoon's performance
+ * into ten rating changes they did not play for. You are rated for matches you played,
+ * not for being a record somebody else played against.
+ *
+ * A duel is the one case where that reasoning does not hold. It is addressed at exactly
+ * one person and answered exactly once, so the run set is used for one contest and its
+ * owner sat down to play it knowing who it was for. Leaving them unrated is what makes
+ * sending a duel a purely charitable act - it would move nothing for the sender, so the
+ * only rated thing anybody could do is answer one, and a feature nobody has a reason to
+ * start is a feature that does not happen.
+ *
+ * WHAT KEEPS IT FROM RUNNING TWICE
+ *
+ * The challenger's side carries no `result` until this writes one, so a second call finds
+ * one and stops. That is the guard rather than a unique constraint because `rating_history`
+ * deliberately has none - it is a log, and a log that refuses duplicates cannot record a
+ * player meeting the same opponent twice.
+ *
+ * Their rating is read live from `ratings` rather than from `rating_before` on the frozen
+ * side, which was written when they played and may be days and several matches stale. Same
+ * split `forfeitMatch` makes above, and for the same reason.
+ */
+export async function rateChallenger(
+  admin: SupabaseClient,
+  answerMatchId: string,
+  challengerVerdict: "win" | "loss" | "draw",
+  weight: number,
+  updateRating: (
+    player: { rating: number; rd: number; volatility: number },
+    games: { opponent: { rating: number; rd: number; volatility: number }; score: number }[],
+  ) => { rating: number; rd: number; volatility: number },
+): Promise<ChallengerOutcome> {
+  const { data: duel } = await admin
+    .from("duels")
+    .select("id, challenger_id")
+    .eq("answer_match_id", answerMatchId)
+    .maybeSingle();
+
+  if (!duel) return { rated: false, reason: "not-a-duel" };
+
+  const { data: sides } = await admin
+    .from("match_sides")
+    .select("player_id, deltas, result, rating_before, rd_before")
+    .eq("match_id", answerMatchId);
+
+  const theirs = (sides ?? []).find(
+    (s: { player_id: string }) => s.player_id === duel.challenger_id,
+  );
+  const opponent = (sides ?? []).find(
+    (s: { player_id: string }) => s.player_id !== duel.challenger_id,
+  );
+
+  if (!theirs || !opponent) return { rated: false, reason: "not-a-duel" };
+  if (theirs.result != null) return { rated: false, reason: "already-rated" };
+  if (!Array.isArray(theirs.deltas) || theirs.deltas.length === 0) {
+    return { rated: false, reason: "no-deltas" };
+  }
+
+  const settledAt = new Date().toISOString();
+
+  const { data: ratingRow } = await admin
+    .from("ratings")
+    .select("rating, rd, volatility, matches_played")
+    .eq("player_id", duel.challenger_id)
+    .maybeSingle();
+
+  const before = {
+    rating: Number(ratingRow?.rating ?? 1500),
+    rd: Number(ratingRow?.rd ?? 350),
+    volatility: Number(ratingRow?.volatility ?? 0.06),
+  };
+
+  const score = challengerVerdict === "win" ? 1 : challengerVerdict === "loss" ? 0 : 0.5;
+
+  const after = updateRating(before, [
+    {
+      opponent: {
+        rating: Number(opponent.rating_before ?? 1500),
+        rd: Number(opponent.rd_before ?? 350),
+        volatility: 0.06,
+      },
+      score,
+    },
+  ]);
+
+  await admin
+    .from("match_sides")
+    .update({
+      result: challengerVerdict,
+      rating_before: before.rating,
+      rating_after: after.rating,
+      rd_before: before.rd,
+      rd_after: after.rd,
+    })
+    .eq("match_id", answerMatchId)
+    .eq("player_id", duel.challenger_id);
+
+  await admin.from("ratings").upsert(
+    {
+      player_id: duel.challenger_id,
+      rating: after.rating,
+      rd: after.rd,
+      volatility: after.volatility,
+      matches_played: Number(ratingRow?.matches_played ?? 0) + 1,
+      updated_at: settledAt,
+    },
+    { onConflict: "player_id" },
+  );
+
+  await admin.from("rating_history").insert({
+    player_id: duel.challenger_id,
+    match_id: answerMatchId,
+    rating_before: before.rating,
+    rating_after: after.rating,
+    rd_before: before.rd,
+    rd_after: after.rd,
+    result: score,
+    weight,
+  });
+
+  return {
+    rated: true,
+    reason: "rated",
+    ratingBefore: Math.round(before.rating),
+    ratingAfter: Math.round(after.rating),
+    ratingChange: Math.round(after.rating - before.rating),
+  };
+}
+
+
 /**
  * How long a player may idle between runs before the match expires.
  *

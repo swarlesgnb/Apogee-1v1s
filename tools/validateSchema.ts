@@ -112,8 +112,12 @@ async function main(): Promise<void> {
     policyname: string;
     cmd: string;
     qual: string | null;
+    with_check: string | null;
   }>(
-    `select tablename, policyname, cmd, qual from pg_policies
+    // `with_check` as well as `qual`: a policy can read narrowly and write widely, and
+    // the two are different columns. friendships is the first table here a client may
+    // write to, so the write half now has to be asserted rather than assumed.
+    `select tablename, policyname, cmd, qual, with_check from pg_policies
      where schemaname = 'public' order by tablename, policyname`,
   );
   check("policies were created", policies.rows.length > 0, `${policies.rows.length} policies`);
@@ -129,6 +133,10 @@ async function main(): Promise<void> {
     // here would let a client post its own standing on a leaderboard.
     "apex_standing",
     "scenario_boards",
+    // A duel names two players and points at their matches. A client write policy here
+    // would let one of them forge an accepted duel and mint a contested match out of
+    // somebody else's run set.
+    "duels",
   ];
   const writable = policies.rows.filter(
     (p) => protectedTables.includes(p.tablename) && p.cmd.toUpperCase() !== "SELECT",
@@ -162,6 +170,227 @@ async function main(): Promise<void> {
     standing.length === 1 && /auth\.uid\(\)/.test(standing[0].qual ?? ""),
     standing.length ? `${standing[0].policyname}: ${standing[0].qual}` : "no select policy",
   );
+  // ---- duels ---------------------------------------------------------------------
+  //
+  // The protected-list check above passes trivially for a table that is not there, so
+  // presence is asserted separately from behaviour. Both matter and they fail for
+  // different reasons.
+  const duelTables = await db.query<{ tablename: string }>(
+    `select tablename from pg_tables where schemaname = 'public'
+       and tablename in ('duels', 'friendships') order by tablename`,
+  );
+  check("the duel tables exist", duelTables.rows.length === 2,
+    duelTables.rows.map((t) => t.tablename).join(", ") || "neither");
+
+  const duelRead = policies.rows.filter((p) => p.tablename === "duels");
+  check(
+    "a duel is readable only by the two players it names",
+    duelRead.length === 1 &&
+      duelRead[0].cmd.toUpperCase() === "SELECT" &&
+      /auth\.uid\(\)/.test(duelRead[0].qual ?? ""),
+    duelRead.length ? `${duelRead[0].policyname}: ${duelRead[0].cmd}` : "no policy",
+  );
+
+  // friendships is the exception: client-writable, because it decides nothing. What has
+  // to hold is that it is scoped to the caller - a widening here would let anybody write
+  // anybody's list, and the protected-list check will never catch it because the table
+  // is deliberately not on that list.
+  const friendPolicies = policies.rows.filter((p) => p.tablename === "friendships");
+  check(
+    "a friends list is writable only by its owner",
+    friendPolicies.length === 1 &&
+      /auth\.uid\(\) = player_id/.test(friendPolicies[0].qual ?? "") &&
+      /auth\.uid\(\) = player_id/.test(friendPolicies[0].with_check ?? ""),
+    friendPolicies.length
+      ? `${friendPolicies[0].cmd} using(${friendPolicies[0].qual}) check(${friendPolicies[0].with_check})`
+      : "no policy",
+  );
+
+  // The partial index is the whole duplicate rule, and it is exactly the kind of thing
+  // somebody later "fixes" into a plain unique constraint - which would block every
+  // rematch for good. Assert it is partial, not merely unique.
+  const duelIdx = await db.query<{ indexname: string; indexdef: string }>(
+    `select indexname, indexdef from pg_indexes
+      where schemaname = 'public' and tablename = 'duels' order by indexname`,
+  );
+  const oneOpen = duelIdx.rows.find((i) => i.indexname === "duels_one_open_idx");
+  check(
+    "only one duel at a time may be open between the same two players",
+    !!oneOpen && /UNIQUE/i.test(oneOpen.indexdef) && /WHERE/i.test(oneOpen.indexdef),
+    oneOpen?.indexdef ?? "missing",
+  );
+  check("the inbox has an index",
+    duelIdx.rows.some((i) => i.indexname === "duels_inbox_idx"),
+    duelIdx.rows.map((i) => i.indexname).join(", "));
+
+  // ---- duels, against the real constraints -------------------------------------
+  //
+  // The rules above are read off the catalogue, which says what was declared. These say
+  // what actually happens, and they are the half that catches a constraint written the
+  // way it was meant rather than the way it reads.
+  const duelPlayers: string[] = [];
+  for (const [i, name] of ["duel one", "duel two"].entries()) {
+    const u = await db.query<{ id: string }>(
+      `insert into auth.users (email) values ('duel${i}@arena.invalid') returning id`,
+    );
+    const id = u.rows[0].id;
+    duelPlayers.push(id);
+    await db.exec(
+      `insert into players (id, steam_id, display_name)
+       values ('${id}', '7656119900000002${i}', '${name}')`,
+    );
+  }
+  const [duelA, duelB] = duelPlayers;
+
+  const duelMatch = await db.query<{ id: string }>(
+    `insert into matches
+       (mode, category, benchmark_name, difficulty, window_index, seed, scenario_ids, status)
+     values ('async', 'Static Clicking', 'Season 1', 'Intermediate', 1, 'duel-seed',
+             '{1,2,3}', 'settled')
+     returning id`,
+  );
+  const duelMatchId = duelMatch.rows[0].id;
+
+  /** Ran and threw, which for a constraint is the passing case. */
+  const refused = async (write: () => Promise<unknown>): Promise<boolean> => {
+    try {
+      await write();
+      return false;
+    } catch {
+      return true;
+    }
+  };
+
+  const sendDuel = (from: string, to: string, status = "open") =>
+    db.exec(
+      `insert into duels (challenger_id, challenged_id, match_id, status, expires_at)
+       values ('${from}', '${to}', '${duelMatchId}', '${status}', now() + interval '7 days')`,
+    );
+
+  check("a duel to yourself is refused", await refused(() => sendDuel(duelA, duelA)));
+
+  await sendDuel(duelA, duelB);
+  check("a second open duel to the same player is refused",
+    await refused(() => sendDuel(duelA, duelB)));
+
+  // The other half of the partial index, and the reason it is partial. Without this a
+  // plain unique constraint would pass the check above and block every rematch forever.
+  await db.exec(
+    `update duels set status = 'declined' where challenger_id = '${duelA}'`,
+  );
+  let rematch = true;
+  try {
+    await sendDuel(duelA, duelB);
+  } catch {
+    rematch = false;
+  }
+  check("but one is allowed again once the last was answered", rematch);
+
+  // The reverse pairing is a different duel. Two people may each have one out.
+  let bothWays = true;
+  try {
+    await sendDuel(duelB, duelA);
+  } catch {
+    bothWays = false;
+  }
+  check("and each player may have one out to the other at once", bothWays);
+
+  const beforeDelete = await db.query<{ n: string }>(`select count(*) as n from duels`);
+  await db.exec(`delete from matches where id = '${duelMatchId}'`);
+  const afterDelete = await db.query<{ n: string }>(`select count(*) as n from duels`);
+  check("deleting the match a duel points at removes the duel",
+    Number(beforeDelete.rows[0].n) > 0 && Number(afterDelete.rows[0].n) === 0,
+    `${beforeDelete.rows[0].n} then ${afterDelete.rows[0].n}`);
+
+  check("a friendship with yourself is refused",
+    await refused(() =>
+      db.exec(`insert into friendships (player_id, friend_id) values ('${duelA}', '${duelA}')`)));
+
+  await db.exec(
+    `insert into friendships (player_id, friend_id) values ('${duelA}', '${duelB}')`,
+  );
+  check("the same friend cannot be added twice",
+    await refused(() =>
+      db.exec(`insert into friendships (player_id, friend_id) values ('${duelA}', '${duelB}')`)));
+
+
+  // ---- what rateChallenger stands on -------------------------------------------
+  //
+  // The function itself is an Edge Function: tsc never sees it and there is no Deno
+  // here to run it. What can be checked is the contract underneath, which is where a
+  // typo would actually bite, and it is all SQL.
+  const answerMatch = await db.query<{ id: string }>(
+    `insert into matches
+       (mode, category, benchmark_name, difficulty, window_index, seed, scenario_ids, status)
+     values ('async', 'Static Clicking', 'Season 1', 'Intermediate', 1, 'answer-seed',
+             '{1,2,3}', 'settled')
+     returning id`,
+  );
+  const answerId = answerMatch.rows[0].id;
+  const seedMatch = await db.query<{ id: string }>(
+    `insert into matches
+       (mode, category, benchmark_name, difficulty, window_index, seed, scenario_ids, status)
+     values ('async', 'Static Clicking', 'Season 1', 'Intermediate', 1, 'sent-seed',
+             '{1,2,3}', 'settled')
+     returning id`,
+  );
+  await db.exec(
+    `insert into duels (challenger_id, challenged_id, match_id, answer_match_id, status, expires_at)
+     values ('${duelA}', '${duelB}', '${seedMatch.rows[0].id}', '${answerId}', 'accepted',
+             now() + interval '7 days')`,
+  );
+
+  const foundByAnswer = await db.query<{ challenger_id: string }>(
+    `select challenger_id from duels where answer_match_id = '${answerId}'`,
+  );
+  check("a settled match can be traced back to the duel that made it",
+    foundByAnswer.rows.length === 1 && foundByAnswer.rows[0].challenger_id === duelA,
+    `${foundByAnswer.rows.length} row(s)`);
+
+  const poolMatch = await db.query<{ n: string }>(
+    `select count(*) as n from duels where answer_match_id = '${seedMatch.rows[0].id}'`,
+  );
+  check("and an ordinary pool match traces back to nothing",
+    Number(poolMatch.rows[0].n) === 0);
+
+  // The idempotency guard has to be `result is null` on the side, because rating_history
+  // deliberately accepts a second row for the same player and match - it is a log, and a
+  // log that refused duplicates could not record two meetings. Assert that, so nobody
+  // later "hardens" it with a unique constraint and silently turns the real guard into a
+  // second one that is doing nothing.
+  await db.exec(
+    `insert into match_sides (match_id, player_id, deltas, match_score)
+     values ('${answerId}', '${duelA}', '{0.01,0.02,0.03}', 0.02)`,
+  );
+  let logAcceptsDuplicates = true;
+  try {
+    for (let i = 0; i < 2; i++) {
+      await db.exec(
+        `insert into rating_history
+           (player_id, match_id, rating_before, rating_after, rd_before, rd_after, result, weight)
+         values ('${duelA}', '${answerId}', 1500, 1512, 200, 195, 1, 1)`,
+      );
+    }
+  } catch {
+    logAcceptsDuplicates = false;
+  }
+  check("rating history takes a second row, so the guard cannot live there",
+    logAcceptsDuplicates);
+
+  const sideResult = await db.query<{ result: string | null }>(
+    `select result from match_sides where match_id = '${answerId}' and player_id = '${duelA}'`,
+  );
+  check("a challenger's side starts with no result, which is what the guard reads",
+    sideResult.rows.length === 1 && sideResult.rows[0].result === null,
+    String(sideResult.rows[0]?.result));
+
+  const answerIdx = await db.query<{ indexname: string }>(
+    `select indexname from pg_indexes
+      where schemaname = 'public' and tablename = 'duels' and indexname = 'duels_answer_idx'`,
+  );
+  check("the lookup settlement makes on every match is indexed",
+    answerIdx.rows.length === 1);
+
   // ---- the apex board's data contract ------------------------------------------------
   //
   // `apex-board` is the least-verifiable code in the repo: an Edge Function, so tsc never

@@ -14,6 +14,7 @@
 import {
   handler,
   json,
+  rateChallenger,
   readJson,
   requireCaller,
   HttpError,
@@ -394,6 +395,26 @@ Deno.serve(handler(async (req, admin) => {
       settled_at: settledAt,
     })
     .eq("id", matchId);
+
+  // If this was somebody's duel, rate them too.
+  //
+  // The block above rates the caller and nobody else, which is right for the pool: a
+  // stored side answers as many callers as draw it, so rating its owner every time would
+  // charge one performance ten ways. A duel is answered once, by the person it was sent
+  // to, so the sender did play this contest and is rated for it.
+  //
+  // A void rates nobody, on either side. Failure here is logged rather than thrown: the
+  // caller's own result is already written and returned, and losing the sender's rating
+  // update is a thing to repair, not a reason to fail a match that finished.
+  if (settlement.verdict !== "void") {
+    const theirVerdict =
+      settlement.verdict === "win" ? "loss" : settlement.verdict === "loss" ? "win" : "draw";
+    try {
+      await rateChallenger(admin, matchId, theirVerdict, settlement.ratingWeight, updateRating);
+    } catch (err) {
+      console.error(`could not rate the duel sender on ${matchId}:`, err);
+    }
+  }
 
   return json({
     matchId,
