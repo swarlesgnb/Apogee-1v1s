@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Apogee desktop client: the Electron main process.
  *
  * Responsibilities, and deliberately nothing else:
@@ -7,7 +7,7 @@
  *   - serve that snapshot to the renderer over a narrow IPC surface
  *
  * All parsing and computation happens here rather than in the renderer, which keeps
- * the renderer a pure view. That mirrors the server-side rule from PLAN.md Â§7: the
+ * the renderer a pure view. That mirrors the server-side rule from PLAN.md §7: the
  * layer that can be tampered with is never the layer that decides anything.
  */
 
@@ -231,7 +231,7 @@ async function chooseStatsFolder(): Promise<string | null> {
  * Everything worth knowing when someone reports a problem, as pasteable text.
  *
  * Deliberately free of anything private: no SteamID, no session, no display name. The
- * questions this answers are "which build", "which folder", "how many runs" â€” the three
+ * questions this answers are "which build", "which folder", "how many runs": the three
  * that otherwise take a round trip each to establish.
  */
 function diagnostics(): string {
@@ -388,7 +388,7 @@ async function settleActiveMatch(): Promise<void> {
  *
  * A remembered position is only honoured if it still lands on a display that exists.
  * Unplugging a second monitor otherwise reopens the app at coordinates nothing can
- * reach, and the fix â€” delete a JSON file you have never heard of â€” is not one anybody
+ * reach, and the fix (delete a JSON file you have never heard of) is not one anybody
  * is going to find.
  */
 function openingBounds(remembered: WindowBounds | null): {
@@ -1054,7 +1054,7 @@ app.whenReady().then(() => {
     startWatching(found);
   } else {
     state.lastError =
-      "Could not find your KovaaK's stats folder. Use â€œChoose folderâ€¦â€ to point Apogee at it.";
+      "Could not find your KovaaK's stats folder. Use \"Choose folder…\" to point Apogee at it.";
   }
 
   app.on("activate", () => {

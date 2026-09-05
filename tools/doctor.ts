@@ -169,6 +169,61 @@ if (!existsSync(bundle)) {
   }
 }
 
+// ---- text encoding --------------------------------------------------------
+//
+// An editor once opened three files under src/app/, guessed cp1252 for the bytes it did
+// not recognise, and saved them back as UTF-8 with a byte order mark. Every typographic
+// character in them became three Latin-1 glyphs. The first-run message telling a player
+// where to point Apogee shipped with its quotation marks and its ellipsis mangled, and
+// nothing noticed, because that message is only reachable on a machine where the stats
+// folder is not where Steam usually puts it.
+//
+// The byte order mark is the fingerprint - no other file in the repository carries one,
+// and all three that did were corrupt - so both are checked together. Reading the file
+// as UTF-8 and looking for the mangled text would miss the case where the corruption is
+// still legal UTF-8, which is exactly what this was.
+// The five bytes a mangled dash, quote or ellipsis all begin with.
+const MOJIBAKE = Buffer.from([0xc3, 0xa2, 0xe2, 0x82, 0xac]);
+const BOM = Buffer.from([0xef, 0xbb, 0xbf]);
+const TEXT = /\.(ts|js|mjs|cjs|html|css|json|md|sql)$/;
+
+function textFilesUnder(dir: string, out: string[] = []): string[] {
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    if (entry.name === "node_modules" || entry.name.startsWith(".")) continue;
+    const path = join(dir, entry.name);
+    if (entry.isDirectory()) textFilesUnder(path, out);
+    else if (TEXT.test(entry.name)) out.push(path);
+  }
+  return out;
+}
+
+const suspect: string[] = [];
+for (const path of [
+  ...textFilesUnder(join(root, "src")),
+  ...textFilesUnder(join(root, "tools")),
+  ...textFilesUnder(join(root, "supabase")),
+]) {
+  const bytes = readFileSync(path);
+  const why = bytes.includes(MOJIBAKE)
+    ? "double-encoded"
+    : bytes.subarray(0, 3).equals(BOM)
+      ? "byte order mark"
+      : null;
+  if (why) suspect.push(`${path.replace(root, ".")} (${why})`);
+}
+
+if (suspect.length === 0) {
+  say("ok", "encoding", "no byte order marks, no double-encoded text");
+} else {
+  say(
+    "bad",
+    "encoding",
+    `${suspect.length} file(s) were re-saved in the wrong encoding`,
+    "re-save as UTF-8 without a byte order mark; check every non-ASCII character in them",
+  );
+  for (const s of suspect) console.log(`${" ".repeat(22)}   ${s}`);
+}
+
 // ---- the stats folder -----------------------------------------------------
 const stats = findStatsFolder();
 if (!stats) {

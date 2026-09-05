@@ -1,8 +1,8 @@
-﻿/**
+/**
  * Remember the handful of things a player should never have to tell Apogee twice.
  *
  * Two, currently: the stats folder they picked, and where they left the window. Both
- * are conveniences â€” nothing here is authoritative, and a missing or corrupt file costs
+ * are conveniences; nothing here is authoritative, and a missing or corrupt file costs
  * a re-pick and a default-sized window, never data. That is why it is deliberately
  * separate from quests.json, which holds earned XP and is worth being careful about.
  *

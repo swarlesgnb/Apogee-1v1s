@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Watch the KovaaK's stats folder for new runs.
  *
  * Two things make this fiddly in practice, both learned from how KovaaK's actually
@@ -190,7 +190,7 @@ function unique(paths: string[]): string[] {
  *
  * This is what makes an install on `G:\Games\SteamLibrary` findable. Guessing drive
  * letters only ever covered the common cases, and the player it missed had to point at
- * the folder by hand â€” on every launch, since nothing remembered the answer. Steam has
+ * the folder by hand on every launch, since nothing remembered the answer. Steam has
  * always kept the real list of libraries; nobody was reading it.
  *
  * VDF is Valve's own key-value format. Only `"path" "..."` is wanted, so it is matched
