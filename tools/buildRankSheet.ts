@@ -25,7 +25,8 @@ const season = loadSeason();
 const out = join(root, "docs", "season-1-ranks.html");
 
 mkdirSync(dirname(out), { recursive: true });
-writeFileSync(out, renderRankSheet(season), "utf8");
+const sheet = renderRankSheet(season);
+writeFileSync(out, sheet, "utf8");
 
 // Counted off the bands, which is what the sheet draws. Counting the categories' own
 // flat rankNames instead had this line printing "4 ladders, 56 ranks" under a page
@@ -43,9 +44,17 @@ const ranks =
     0,
   );
 
+// Lifted out of the page rather than re-derived, so this can never report a different
+// number from the one a reader is looking at. The findings are the reason the sheet is
+// sent to anybody: which names vanish, on which ground, and how many.
+const findings = [...sheet.matchAll(/<span class="flag-text"><b>([^<]*)<\/b>/g)].map(
+  (m) => m[1].replace(/&#39;/g, "'").replace(/&amp;/g, "&"),
+);
+
 console.log(
   `wrote ${out}
 ` +
     `  ${ladders} ladders, ${ranks} ranks` +
     (season.windows?.length ? `, ${season.windows.length} bands per category` : ""),
 );
+for (const finding of findings) console.log(`  ${finding}`);

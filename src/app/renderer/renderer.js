@@ -1133,10 +1133,11 @@ function mixHex(a, b, pct) {
  * A rank colour moved far enough from a ground to be read on it.
  *
  * The authored colour is the identity and stays the identity - this only moves it to the
- * same 2:1 the season editor flags below. Seventeen of season 1's 153 named ranks sit
- * under that line on the dark ground; Gauss Cannon and Primate are #331400 at 1.01, and
- * Orca and Rifle are #000000 at 1.23, which as a card accent draws something that reads as
- * broken rather than as dark. `npm run audit:look` re-derives the count.
+ * same 2:1 the season editor flags below. Sixteen of season 1's ranks sit under that line
+ * on the dark ground and ten of those are under 1.5:1; Primate is #331400 at 1.01, and
+ * Gauss Cannon, Singularity and Orca are #000000, which as a card accent draws something
+ * that reads as broken rather than as dark. `npm run docs:ranks` prints the count, and the
+ * sheet it writes names all sixteen.
  *
  * Correcting here rather than in the season file is deliberate. The colours are chosen to
  * match the names - Singularity is black because that is what a singularity is - and a fix
