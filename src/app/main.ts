@@ -1063,6 +1063,134 @@ function runSmokeTest(): void {
     console.log(
       `look editor  : ${editor.tokens} colours, ${editor.copy} strings, ${editor.ranks} ranks`,
     );
+
+    // The season editor, driven the way an evening of pool building drives it.
+    //
+    // Neither read behind it is admin-gated - the role gates writing, not looking - so
+    // this signed-out account can open it and add a family in memory. Nothing is saved
+    // and the window is discarded when the run ends.
+    //
+    // What is worth checking is the part that only appears under load. A family opens one
+    // slot per difficulty in the draft, though the table shows one difficulty at a time so
+    // only one of them is on screen. Each slot's list is every scenario this machine knows,
+    // and it is built when the input takes focus rather than at render: four slots holding
+    // seventeen hundred options each, rebuilt on every edit, is what an evening of adding
+    // families used to cost. Each slot also has to say which family and window it is, or
+    // the caret cannot move to the next one after a fill.
+    // Caught here as well as inside. A rejected executeJavaScript leaves this handler's
+    // await pending for ever, and the smoke run then hangs with no output rather than
+    // failing - which is the worst way for a check to break.
+    const season = await probe.webContents.executeJavaScript(`(async () => {
+      try {
+      if (typeof loadSeasonEditor !== "function" || typeof addFamily !== "function") return null;
+
+      // The editor stashes an unfinished draft in localStorage so a restart does not throw
+      // an afternoon away, and this window shares that storage with the real app. Whatever
+      // is in there before this runs is put back exactly afterwards - the probe adds a
+      // family, and without this it added one to the user's own unsaved work, every run,
+      // for good.
+      const KEY = "apogee.seasonDraft";
+      const stashBefore = localStorage.getItem(KEY);
+
+      await loadSeasonEditor();
+      const rows = document.querySelectorAll("#seasonBody tr").length;
+      if (!seasonDraft || !(seasonDraft.categories || []).length) return { rows, noSeason: true };
+
+      // The screen has to be the visible one: a slot builds its list when the input takes
+      // focus, and focus does nothing to an element inside a hidden screen.
+      document.getElementById("tabSeason").click();
+
+      const category = seasonDraft.categories[0].name;
+      const family = "ZZ smoke probe";
+      addFamily(category, family);
+      renderSeasonEditor();
+
+      const mine = [...document.querySelectorAll(".slotsearch")]
+        .filter((el) => el.dataset.family === family);
+      const first = mine[0];
+      const list = first ? document.getElementById(first.getAttribute("list")) : null;
+
+      // Dispatched rather than called. This window is created with show:false, so a real
+      // focus() may never land and the listener would look broken when it is only unfocused.
+      // The listener is what is under test; the browser delivering the event is not.
+      const before = list ? list.options.length : -1;
+      if (first) first.dispatchEvent(new Event("focus"));
+      const after = list ? list.options.length : -1;
+
+      // Put back what was there, and take out anything a run of this left behind before
+      // the restore existed.
+      const clean = (raw) => {
+        if (!raw) return null;
+        try {
+          const draft = JSON.parse(raw);
+          draft.scenarios = (draft.scenarios || []).filter((x) => x.family !== family);
+          return JSON.stringify(draft);
+        } catch {
+          return raw;
+        }
+      };
+      const restored = clean(stashBefore);
+      if (restored) localStorage.setItem(KEY, restored);
+      else localStorage.removeItem(KEY);
+
+      return {
+        rows,
+        stashRestored: localStorage.getItem(KEY) === restored,
+        leftBehind: restored ? (JSON.parse(restored).scenarios || [])
+          .filter((x) => x.family === family).length : 0,
+        onScreen: mine.length,
+        inDraft: seasonDraft.scenarios.filter((x) => x.family === family).length,
+        draftWindows: seasonDraft.scenarios
+          .filter((x) => x.family === family)
+          .map((x) => x.window)
+          .join(","),
+        windows: (seasonDraft.windows || []).length,
+        available: seasonAvailable.length,
+        tagged: mine.filter((el) => el.dataset.category === category).length,
+        lazyBefore: before,
+        lazyAfter: after,
+      };
+      } catch (err) {
+        return { failed: String(err && err.message ? err.message : err) };
+      }
+    })()`).catch((err) => ({ failed: String(err && err.message ? err.message : err) }));
+
+    if (season === null) {
+      problems.push("the season editor is not reachable from the renderer");
+    } else if (season.failed) {
+      problems.push(`the season editor threw: ${season.failed}`);
+    } else if (season.noSeason) {
+      problems.push("the season editor loaded no season to edit");
+    } else if (season.rows === 0) {
+      problems.push("the season editor drew no scenario rows");
+    } else if (season.available === 0) {
+      problems.push("the season editor knows no scenarios to add");
+    } else if (season.inDraft !== season.windows) {
+      problems.push(
+        `a new family opened ${season.inDraft} slots for ${season.windows} difficulties`,
+      );
+    } else if (season.onScreen === 0) {
+      problems.push("a family was added and no slot picker rendered for it");
+    } else if (season.tagged !== season.onScreen) {
+      problems.push("a slot does not say which family it is, so the caret cannot move on");
+    } else if (season.lazyBefore !== 0) {
+      problems.push(`a slot built ${season.lazyBefore} options before anyone focused it`);
+    } else if (season.lazyAfter !== season.available) {
+      problems.push(
+        `a focused slot offers ${season.lazyAfter} of ${season.available} scenarios`,
+      );
+    } else if (season.leftBehind !== 0) {
+      problems.push("the probe left its own family in the stashed draft");
+    } else if (!season.stashRestored) {
+      problems.push("the probe did not put the stashed draft back as it found it");
+    }
+
+    console.log(
+      `season editor: ${season && season.rows} rows, ${season && season.inDraft} slots per family, ` +
+        `${season && season.lazyAfter} of ${season && season.available} scenarios on focus ` +
+        `(${season && season.lazyBefore} before) [${season && season.draftWindows}]`,
+    );
+
     console.log(`preload      : ${hasBridge ? "bridge exposed" : "MISSING"}`);
     console.log(`renderer     : ${rendered ? "loaded" : "EMPTY"}`);
 

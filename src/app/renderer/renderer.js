@@ -2316,6 +2316,9 @@ function renderSeasonEditor() {
           addFamily(cat.name, name);
           renderSeasonEditor();
           seasonDirty(true);
+          // Straight into the first of the four slots it just opened, so naming a family
+          // and filling it is one movement rather than a name, a redraw and a hunt.
+          focusNextSlot(cat.name, name, -1);
         });
       });
       title.append(add);
@@ -2477,6 +2480,25 @@ async function rederiveWindow(windowIndex, index, input) {
  * than typed. The main process samples it (and caches it, so `build:season` later derives
  * the same numbers this showed) and the four thresholds land in the row.
  */
+/**
+ * Put the caret in the slot somebody is most likely to fill next.
+ *
+ * The next unfilled difficulty of the same family, or the first slot of the next family
+ * once this one is complete. Called after the redraw, because the redraw replaces every
+ * input on the screen and an element captured before it is no longer in the document.
+ */
+function focusNextSlot(category, family, from) {
+  const slots = [...document.querySelectorAll(".slotsearch")];
+  if (slots.length === 0) return;
+
+  const siblings = slots.filter(
+    (el) => el.dataset.category === category && el.dataset.family === family,
+  );
+  const next =
+    siblings.find((el) => Number(el.dataset.window) > from) ?? siblings[0] ?? slots[0];
+  next.focus();
+}
+
 function slotPicker(scenario) {
   const wrap = document.createElement("div");
   wrap.className = "slotpick";
@@ -2493,6 +2515,11 @@ function slotPicker(scenario) {
   input.placeholder = `Search scenarios for ${scenario.family ?? "this slot"}…`;
   input.autocomplete = "off";
   input.spellcheck = false;
+  // The redraw after a fill throws every one of these away, so the next slot is found
+  // again from the DOM rather than held across it.
+  input.dataset.category = scenario.category ?? "";
+  input.dataset.family = scenario.family ?? "";
+  input.dataset.window = String(scenario.window ?? 0);
 
   const listId = `slots-${(scenario.family ?? "x").replace(/\W/g, "")}-${scenario.window ?? 0}`;
   const list = document.createElement("datalist");
@@ -2515,31 +2542,44 @@ function slotPicker(scenario) {
   // with where it is published and how many people are on it.
   const usable = (o) => !!o.leaderboardId && (o.entries ?? 0) >= MIN_BOARD;
 
-  const options = [...seasonAvailable].sort(
-    (a, b) =>
-      Number(b.category === scenario.category) - Number(a.category === scenario.category) ||
-      Number(usable(b)) - Number(usable(a)) ||
-      (b.entries ?? 0) - (a.entries ?? 0) ||
-      a.name.localeCompare(b.name),
-  );
+  // Built on first focus rather than at render.
+  //
+  // A slot's list is every scenario this machine knows - the stats folder, the taxonomy
+  // and every benchmark file, about 1,700 names - and `+ family` opens four slots at
+  // once. Building them all up front meant an evening that added five families before
+  // filling them rebuilt some 34,000 option elements, and re-sorted the whole list once
+  // per slot, on every edit that redrew the editor. Nothing reads the list until the
+  // input has focus, and `resolve` matches against `seasonAvailable` directly rather
+  // than against the options, so the button and its status work before it exists.
+  const buildOptions = () => {
+    const options = [...seasonAvailable].sort(
+      (a, b) =>
+        Number(b.category === scenario.category) - Number(a.category === scenario.category) ||
+        Number(usable(b)) - Number(usable(a)) ||
+        (b.entries ?? 0) - (a.entries ?? 0) ||
+        a.name.localeCompare(b.name),
+    );
 
-  for (const option of options) {
-    const opt = document.createElement("option");
-    opt.value = option.name;
+    for (const option of options) {
+      const opt = document.createElement("option");
+      opt.value = option.name;
 
-    const where = option.tiers?.length > 0 ? option.tiers.join(", ") : null;
-    const board =
-      option.entries == null
-        ? "board not sampled"
-        : `${num(option.entries)} on the board${option.entries < MIN_BOARD ? ", thin" : ""}`;
+      const where = option.tiers?.length > 0 ? option.tiers.join(", ") : null;
+      const board =
+        option.entries == null
+          ? "board not sampled"
+          : `${num(option.entries)} on the board${option.entries < MIN_BOARD ? ", thin" : ""}`;
 
-    opt.label = !option.leaderboardId
-      ? "no leaderboard - cannot derive thresholds"
-      : [where, board, option.runs > 0 ? `${option.runs} runs here` : null]
-          .filter(Boolean)
-          .join("  ·  ");
-    list.append(opt);
-  }
+      opt.label = !option.leaderboardId
+        ? "no leaderboard - cannot derive thresholds"
+        : [where, board, option.runs > 0 ? `${option.runs} runs here` : null]
+            .filter(Boolean)
+            .join("  ·  ");
+      list.append(opt);
+    }
+  };
+
+  input.addEventListener("focus", buildOptions, { once: true });
 
   const status = document.createElement("span");
   status.className = "slotnote";
@@ -2589,6 +2629,10 @@ function slotPicker(scenario) {
 
     renderSeasonEditor();
     seasonDirty(true);
+    // A family is four slots and they are filled one after another, so the next one is
+    // where the caret wants to be. Without this every scenario costs a trip to the mouse
+    // to click the box directly below the one just finished.
+    focusNextSlot(scenario.category, scenario.family, scenario.window ?? 0);
   };
 
   // An explicit button, not only the change event.
@@ -2652,68 +2696,116 @@ function slotPicker(scenario) {
     }
   };
 
-  input.addEventListener("change", () => {
-    refresh();
-    if (!add.disabled) fill();
-  });
-
-  input.addEventListener("keydown", (e) => {
-    if (e.key !== "Enter") return;
-    refresh();
-    if (!add.disabled) fill();
-  });
-
   // Typing searches KovaaK's itself, not only the few hundred names some committed file
   // happens to mention. Debounced so a word costs one request rather than one per letter,
   // and merged into the same datalist so local and remote results read as one list.
   let searchTimer = null;
   const remote = new Map();
 
+  const searchRemote = async (term) => {
+    if (term.length < 2) return;
+    // One request per term for the life of the slot, and the same promise handed to
+    // everyone waiting on it, so pressing Enter mid-search joins the search already
+    // running instead of starting a second one.
+    if (!remote.has(term)) remote.set(term, doSearch(term));
+    await remote.get(term);
+  };
+
+  const doSearch = async (term) => {
+    const found = await window.apogee.searchScenarios(term);
+    if (!found || found.error || !found.scenarios) return;
+
+    for (const hit of found.scenarios) {
+      // A scenario already in the list is usually one from the stats folder, which knows
+      // the name and not the board. Skipping the remote hit left it permanently
+      // unaddable - findable, selectable, and refused for want of an id the search had
+      // just returned. So an existing entry is completed rather than passed over.
+      const existing = seasonAvailable.find((o) => o.name === hit.name);
+      if (existing) {
+        if (!existing.leaderboardId) existing.leaderboardId = hit.leaderboardId;
+        if (!existing.category && hit.aimType) {
+          existing.category = hit.aimType === "Target Switching" ? "Switching" : hit.aimType;
+        }
+        continue;
+      }
+      // Added to the shared list, so a scenario found once stays findable for every
+      // other slot in this session without asking again.
+      seasonAvailable.push({
+        name: hit.name,
+        category: hit.aimType === "Target Switching" ? "Switching" : hit.aimType,
+        difficulty: null,
+        leaderboardId: hit.leaderboardId,
+        runs: 0,
+        best: null,
+        suggested: {},
+      });
+
+      const opt = document.createElement("option");
+      opt.value = hit.name;
+      opt.label = `${hit.entries.toLocaleString()} on the leaderboard`;
+      list.append(opt);
+    }
+
+    // The typed name may have only just become resolvable.
+    refresh();
+  };
+
   input.addEventListener("input", () => {
     const term = input.value.trim();
     refresh();
     if (searchTimer) clearTimeout(searchTimer);
     if (term.length < 2 || remote.has(term)) return;
+    searchTimer = setTimeout(() => void searchRemote(term), 350);
+  });
 
-    searchTimer = setTimeout(async () => {
-      const found = await window.apogee.searchScenarios(term);
-      if (!found || found.error || !found.scenarios) return;
-      remote.set(term, true);
+  /*
+   * Enter does whatever it takes, rather than whatever is ready.
+   *
+   * Both of the waits in this control are invisible, and Enter used to fall into either
+   * of them silently. A name only KovaaK's knows is not resolvable until the debounced
+   * search returns, so typing it and pressing Enter straight away did nothing at all. A
+   * name the stats folder knows carries no leaderboard id, so the button was disabled
+   * while the id was being fetched, and Enter did nothing then either. In both cases the
+   * next keystroke or click worked, which reads as the key being unreliable rather than
+   * as something still loading.
+   *
+   * So Enter flushes the debounce, waits for the search, fetches the id if that is what
+   * is missing, and only then decides. Filling four slots is four names and four Enters.
+   */
+  const commit = async () => {
+    if (searchTimer) clearTimeout(searchTimer);
+    const term = input.value.trim();
+    if (!term) return;
 
-      for (const hit of found.scenarios) {
-        // A scenario already in the list is usually one from the stats folder, which knows
-        // the name and not the board. Skipping the remote hit left it permanently
-        // unaddable - findable, selectable, and refused for want of an id the search had
-        // just returned. So an existing entry is completed rather than passed over.
-        const existing = seasonAvailable.find((o) => o.name === hit.name);
-        if (existing) {
-          if (!existing.leaderboardId) existing.leaderboardId = hit.leaderboardId;
-          if (!existing.category && hit.aimType) {
-            existing.category = hit.aimType === "Target Switching" ? "Switching" : hit.aimType;
-          }
-          continue;
-        }
-        // Added to the shared list, so a scenario found once stays findable for every
-        // other slot in this session without asking again.
-        seasonAvailable.push({
-          name: hit.name,
-          category: hit.aimType === "Target Switching" ? "Switching" : hit.aimType,
-          difficulty: null,
-          leaderboardId: hit.leaderboardId,
-          runs: 0,
-          best: null,
-          suggested: {},
-        });
-
-        const opt = document.createElement("option");
-        opt.value = hit.name;
-        opt.label = `${hit.entries.toLocaleString()} on the leaderboard`;
-        list.append(opt);
+    // Neither wait is allowed to escape. Both reach KovaaK's, and a throw here would be
+    // an unhandled rejection landing in the app-wide error banner - which says nothing
+    // useful about a lookup that failed and buries the message that does.
+    try {
+      if (!resolve()) {
+        status.textContent = "searching KovaaK's…";
+        status.className = "slotnote";
+        await searchRemote(term);
       }
 
-      // The typed name may have only just become resolvable.
-      refresh();
-    }, 350);
+      const match = resolve();
+      if (match && !match.leaderboardId) await findLeaderboardId(match, refresh, status);
+    } catch {
+      status.textContent = "could not reach KovaaK's - try again";
+      status.className = "slotnote bad";
+      return;
+    }
+
+    refresh();
+    if (!add.disabled) await fill();
+  };
+
+  input.addEventListener("change", () => void commit());
+
+  input.addEventListener("keydown", (e) => {
+    if (e.key !== "Enter") return;
+    // The datalist swallows Enter as "accept this suggestion" and then submits nothing.
+    e.preventDefault();
+    void commit();
   });
 
   wrap.append(input, add, status);
@@ -2729,12 +2821,20 @@ function slotPicker(scenario) {
  * not enough: thresholds come from the board. One lookup turns "cannot be derived" into an
  * ordinary addable scenario, which is what somebody who has played it expects.
  */
-const idLookups = new Set();
+// Keyed on the name and holding the promise, not just the fact of having asked. `refresh`
+// fires this on every keystroke and Enter now waits on it, so a second caller has to join
+// the lookup already running rather than return straight away and report "cannot derive"
+// against an id that arrives a moment later.
+const idLookups = new Map();
 
-async function findLeaderboardId(option, refresh, status) {
-  if (idLookups.has(option.name)) return;
-  idLookups.add(option.name);
+function findLeaderboardId(option, refresh, status) {
+  if (!idLookups.has(option.name)) {
+    idLookups.set(option.name, lookUpLeaderboardId(option, refresh, status));
+  }
+  return idLookups.get(option.name);
+}
 
+async function lookUpLeaderboardId(option, refresh, status) {
   const found = await window.apogee.searchScenarios(option.name);
   if (!found || found.error || !found.scenarios) {
     status.textContent = found?.error ?? "could not reach KovaaK's to look it up";
