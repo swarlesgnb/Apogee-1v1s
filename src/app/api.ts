@@ -476,6 +476,16 @@ export async function submitRun(
 export interface SettledMatch {
   matchId: string;
   verdict: "win" | "loss" | "draw" | "void";
+  /**
+   * Who it was against, so the result can offer a rematch.
+   *
+   * Null on a seeding match, which had nobody, and on a void, which did not count. The
+   * client knew this name when the match was handed out and threw it away on settlement,
+   * which is why the result screen could never say who you had just beaten.
+   */
+  opponent?: { playerId: string; displayName: string } | null;
+  /** The category it was played in, which is the one a rematch would be sent in. */
+  category?: string;
   explanation: string;
   voidReason: string | null;
   ratingWeight: number;

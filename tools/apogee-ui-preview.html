@@ -545,6 +545,22 @@
   .roster-star.on { color: var(--warn); }
   .roster-empty { font-size: var(--t-sm); color: var(--ink-dim); padding: var(--s3) 0; }
 
+  /* A rematch, offered where the result is rather than two screens away. */
+  .rematch {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: var(--s4); flex-wrap: wrap;
+    padding-top: var(--s3); margin-top: var(--s3); border-top: 1px solid var(--rule);
+  }
+  .rematch-note { font-size: var(--t-xs); color: var(--ink-dim); flex: 1 1 220px; }
+  .rematch button {
+    font-family: var(--mono); font-size: var(--t-xs); font-weight: 600;
+    letter-spacing: .1em; text-transform: uppercase;
+    color: var(--ground); background: var(--ink); border: 1px solid var(--ink);
+    padding: var(--s2) var(--s4); cursor: pointer;
+  }
+  .rematch button:hover:not(:disabled) { filter: brightness(1.1); }
+  .rematch button:disabled { opacity: .45; cursor: default; filter: none; }
+
   /* ---------------------------------------------------------- account */
 
   .account { display: grid; }
@@ -2964,6 +2980,16 @@
                 <div class="delta-move" id="ratingMove"></div>
               </div>
               <p class="explain" id="explain"></p>
+
+              <!-- The one thing anybody wants immediately after a result, and it was two
+                   screens away: back to Play, open the picker, find the name, send. Hidden
+                   unless there is somebody to send it to - a seeding match has nobody and a
+                   void did not count. -->
+              <div class="rematch" id="rematch" hidden>
+                <span class="rematch-note" id="rematchNote"></span>
+                <button type="button" class="go" id="rematchBtn"></button>
+              </div>
+
               <div class="rounds-wrap">
                 <table class="rounds">
                   <thead><tr>
@@ -3542,7 +3568,7 @@
 
 
 <script id="apogee-snapshot" type="application/json">{
-  "generatedAt": "2026-09-05T21:31:27.570Z",
+  "generatedAt": "2026-09-05T21:50:27.305Z",
   "coverage": [
     {
       "category": "Dynamic Clicking",
@@ -5512,13 +5538,13 @@
     ],
     "rankColors": {
       "Stargazer": "#00EAEA",
-      "Astrologist": "#8080FF",
-      "Cosmonaut": "#008080",
-      "Lunar": "#2F2FFF",
+      "Astrologist": "#ff7300",
+      "Cosmonaut": "#fff700",
+      "Lunar": "#29008a",
       "Odyssey": "#FF46FF",
       "Arecibo": "#00FF00",
       "Quasar": "#00FFFF",
-      "Supernova": "#FF8000"
+      "Supernova": "#ff0000"
     },
     "matchPool": {
       "window": 1
@@ -5572,7 +5598,7 @@
         5,
         20
       ],
-      "color": "#8080FF"
+      "color": "#ff7300"
     },
     {
       "id": "tier-3",
@@ -5581,7 +5607,7 @@
         20,
         35
       ],
-      "color": "#008080"
+      "color": "#fff700"
     },
     {
       "id": "tier-4",
@@ -5590,7 +5616,7 @@
         35,
         50
       ],
-      "color": "#2F2FFF"
+      "color": "#29008a"
     },
     {
       "id": "tier-5",
@@ -5626,7 +5652,7 @@
         97,
         100
       ],
-      "color": "#FF8000"
+      "color": "#ff0000"
     }
   ],
   "categories": [
@@ -8471,7 +8497,7 @@
           35,
           50
         ],
-        "color": "#2F2FFF"
+        "color": "#29008a"
       }
     },
     "winProbability": 0.552728316151137,
@@ -12947,8 +12973,71 @@ function renderScoreline(rounds) {
   }
 }
 
+/**
+ * Offer to duel the player you just finished against.
+ *
+ * The obvious thing to want after a result, and until now it was two screens away: back
+ * to Play, open the picker, find the name, send. It sends a duel rather than requeueing,
+ * because "again, with them" is a person and the queue cannot be asked for one.
+ *
+ * Hidden when there is nobody to send it to. A seeding match had no opponent, a void did
+ * not count, and a match still open is one you are in the middle of.
+ */
+/** The result currently on the Last match screen, so its rematch can be redrawn. */
+let lastSettled = null;
+
+function renderRematch(settled) {
+  const box = $("rematch");
+  if (!box) return;
+
+  // Held, because whether this button can be pressed depends on the match state and that
+  // moves after the result is drawn: queue again and it must go dead, abandon and it must
+  // come back. Redrawing from the stored result is cheaper than tracking both.
+  if (settled) lastSettled = settled;
+
+  const opponent = settled && settled.opponent;
+  const category = settled && settled.category;
+  // Void is refused here as well as server-side, where the opponent already comes back
+  // null. Whether to draw a button is this side's decision, so it is this side's job to
+  // check it rather than to lean on the shape of somebody else's answer.
+  //
+  // "Any" never reaches a contested result - the server records the category actually
+  // drawn - but a duel cannot be sent in one, so refusing beats offering a button whose
+  // only outcome is a 400.
+  const sendable =
+    opponent && category && category !== "Any" && settled.verdict !== "void";
+
+  box.hidden = !sendable;
+  if (!sendable) return;
+
+  const button = $("rematchBtn");
+  button.textContent = "Duel " + opponent.displayName;
+  button.disabled = Boolean(activeMatch);
+  $("rematchNote").textContent = activeMatch
+    ? "Finish or abandon your current match first."
+    : "You play your three first, then it is theirs to answer.";
+
+  // Replaced rather than added to. This runs on every result, and a listener per match
+  // would send one duel for every match played this session.
+  button.onclick = async () => {
+    if (!current || !current.benchmark || !current.benchmark.matchPool) {
+      showError("The season pool has not loaded yet.");
+      return;
+    }
+    const result = await onRowAction(button, "Sending\u2026", () =>
+      api.sendDuel(opponent.playerId, category, current.benchmark.matchPool));
+    if (result && result.match) {
+      showNotice("Duel sent to " + opponent.displayName + ". Play your three and it is theirs.");
+      activeMatch = result.match;
+      paintActiveMatch();
+      document.querySelector('.tab[data-screen="queue"]').click();
+    }
+  };
+}
+
 function renderSettled(s) {
   hasRealResult = true;
+  renderRematch(s);
 
   // A seeding match has no opponent and therefore no verdict. Without this it fell
   // through to the losing branch and announced DEFEAT in red over three runs that beat
@@ -15236,6 +15325,7 @@ if (HOST === "electron") {
       $("matchActions").hidden = true;
       resetCommit(current);
       renderEligibility();
+      if (lastSettled) renderRematch(lastSettled);
       return;
     }
     // A non-null match used to set the variable and paint nothing, which was already
@@ -15243,6 +15333,8 @@ if (HOST === "electron") {
     // broadcasts it, so restarting mid-match showed an empty Play screen while the
     // watcher quietly submitted runs against a match the player could not see.
     paintActiveMatch();
+    // The rematch button on the last result is only pressable with no match open.
+    if (lastSettled) renderRematch(lastSettled);
   });
 
   api.onMatchProgress((p) => {

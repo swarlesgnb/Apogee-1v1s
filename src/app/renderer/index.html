@@ -551,6 +551,22 @@
   .roster-star.on { color: var(--warn); }
   .roster-empty { font-size: var(--t-sm); color: var(--ink-dim); padding: var(--s3) 0; }
 
+  /* A rematch, offered where the result is rather than two screens away. */
+  .rematch {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: var(--s4); flex-wrap: wrap;
+    padding-top: var(--s3); margin-top: var(--s3); border-top: 1px solid var(--rule);
+  }
+  .rematch-note { font-size: var(--t-xs); color: var(--ink-dim); flex: 1 1 220px; }
+  .rematch button {
+    font-family: var(--mono); font-size: var(--t-xs); font-weight: 600;
+    letter-spacing: .1em; text-transform: uppercase;
+    color: var(--ground); background: var(--ink); border: 1px solid var(--ink);
+    padding: var(--s2) var(--s4); cursor: pointer;
+  }
+  .rematch button:hover:not(:disabled) { filter: brightness(1.1); }
+  .rematch button:disabled { opacity: .45; cursor: default; filter: none; }
+
   /* ---------------------------------------------------------- account */
 
   .account { display: grid; }
@@ -2971,6 +2987,16 @@
                 <div class="delta-move" id="ratingMove"></div>
               </div>
               <p class="explain" id="explain"></p>
+
+              <!-- The one thing anybody wants immediately after a result, and it was two
+                   screens away: back to Play, open the picker, find the name, send. Hidden
+                   unless there is somebody to send it to - a seeding match has nobody and a
+                   void did not count. -->
+              <div class="rematch" id="rematch" hidden>
+                <span class="rematch-note" id="rematchNote"></span>
+                <button type="button" class="go" id="rematchBtn"></button>
+              </div>
+
               <div class="rounds-wrap">
                 <table class="rounds">
                   <thead><tr>

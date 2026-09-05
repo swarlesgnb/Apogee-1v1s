@@ -4378,8 +4378,71 @@ function renderScoreline(rounds) {
   }
 }
 
+/**
+ * Offer to duel the player you just finished against.
+ *
+ * The obvious thing to want after a result, and until now it was two screens away: back
+ * to Play, open the picker, find the name, send. It sends a duel rather than requeueing,
+ * because "again, with them" is a person and the queue cannot be asked for one.
+ *
+ * Hidden when there is nobody to send it to. A seeding match had no opponent, a void did
+ * not count, and a match still open is one you are in the middle of.
+ */
+/** The result currently on the Last match screen, so its rematch can be redrawn. */
+let lastSettled = null;
+
+function renderRematch(settled) {
+  const box = $("rematch");
+  if (!box) return;
+
+  // Held, because whether this button can be pressed depends on the match state and that
+  // moves after the result is drawn: queue again and it must go dead, abandon and it must
+  // come back. Redrawing from the stored result is cheaper than tracking both.
+  if (settled) lastSettled = settled;
+
+  const opponent = settled && settled.opponent;
+  const category = settled && settled.category;
+  // Void is refused here as well as server-side, where the opponent already comes back
+  // null. Whether to draw a button is this side's decision, so it is this side's job to
+  // check it rather than to lean on the shape of somebody else's answer.
+  //
+  // "Any" never reaches a contested result - the server records the category actually
+  // drawn - but a duel cannot be sent in one, so refusing beats offering a button whose
+  // only outcome is a 400.
+  const sendable =
+    opponent && category && category !== "Any" && settled.verdict !== "void";
+
+  box.hidden = !sendable;
+  if (!sendable) return;
+
+  const button = $("rematchBtn");
+  button.textContent = "Duel " + opponent.displayName;
+  button.disabled = Boolean(activeMatch);
+  $("rematchNote").textContent = activeMatch
+    ? "Finish or abandon your current match first."
+    : "You play your three first, then it is theirs to answer.";
+
+  // Replaced rather than added to. This runs on every result, and a listener per match
+  // would send one duel for every match played this session.
+  button.onclick = async () => {
+    if (!current || !current.benchmark || !current.benchmark.matchPool) {
+      showError("The season pool has not loaded yet.");
+      return;
+    }
+    const result = await onRowAction(button, "Sending\u2026", () =>
+      api.sendDuel(opponent.playerId, category, current.benchmark.matchPool));
+    if (result && result.match) {
+      showNotice("Duel sent to " + opponent.displayName + ". Play your three and it is theirs.");
+      activeMatch = result.match;
+      paintActiveMatch();
+      document.querySelector('.tab[data-screen="queue"]').click();
+    }
+  };
+}
+
 function renderSettled(s) {
   hasRealResult = true;
+  renderRematch(s);
 
   // A seeding match has no opponent and therefore no verdict. Without this it fell
   // through to the losing branch and announced DEFEAT in red over three runs that beat
@@ -6667,6 +6730,7 @@ if (HOST === "electron") {
       $("matchActions").hidden = true;
       resetCommit(current);
       renderEligibility();
+      if (lastSettled) renderRematch(lastSettled);
       return;
     }
     // A non-null match used to set the variable and paint nothing, which was already
@@ -6674,6 +6738,8 @@ if (HOST === "electron") {
     // broadcasts it, so restarting mid-match showed an empty Play screen while the
     // watcher quietly submitted runs against a match the player could not see.
     paintActiveMatch();
+    // The rematch button on the last result is only pressable with no match open.
+    if (lastSettled) renderRematch(lastSettled);
   });
 
   api.onMatchProgress((p) => {

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-05T21:31:27.570Z",
+  "generatedAt": "2026-09-05T21:50:27.305Z",
   "coverage": [
     {
       "category": "Dynamic Clicking",
@@ -1969,13 +1969,13 @@
     ],
     "rankColors": {
       "Stargazer": "#00EAEA",
-      "Astrologist": "#8080FF",
-      "Cosmonaut": "#008080",
-      "Lunar": "#2F2FFF",
+      "Astrologist": "#ff7300",
+      "Cosmonaut": "#fff700",
+      "Lunar": "#29008a",
       "Odyssey": "#FF46FF",
       "Arecibo": "#00FF00",
       "Quasar": "#00FFFF",
-      "Supernova": "#FF8000"
+      "Supernova": "#ff0000"
     },
     "matchPool": {
       "window": 1
@@ -2029,7 +2029,7 @@
         5,
         20
       ],
-      "color": "#8080FF"
+      "color": "#ff7300"
     },
     {
       "id": "tier-3",
@@ -2038,7 +2038,7 @@
         20,
         35
       ],
-      "color": "#008080"
+      "color": "#fff700"
     },
     {
       "id": "tier-4",
@@ -2047,7 +2047,7 @@
         35,
         50
       ],
-      "color": "#2F2FFF"
+      "color": "#29008a"
     },
     {
       "id": "tier-5",
@@ -2083,7 +2083,7 @@
         97,
         100
       ],
-      "color": "#FF8000"
+      "color": "#ff0000"
     }
   ],
   "categories": [
@@ -4928,7 +4928,7 @@
           35,
           50
         ],
-        "color": "#2F2FFF"
+        "color": "#29008a"
       }
     },
     "winProbability": 0.552728316151137,

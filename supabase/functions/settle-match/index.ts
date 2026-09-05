@@ -416,9 +416,31 @@ Deno.serve(handler(async (req, admin) => {
     }
   }
 
+  // Who it was against, so the result screen can offer a rematch.
+  //
+  // The client learned this opponent's name when the match was handed out and then threw
+  // it away on settlement, which is why the result screen has never been able to say who
+  // you beat. The id comes with it because a duel has to be addressed and a display name
+  // cannot address one - the same reason list-duels hands one over, and about somebody
+  // you have just finished playing rather than about the population.
+  //
+  // Null on a void: there is nothing to rematch about a match that did not count.
+  const { data: opponentPlayer } = theirs
+    ? await admin
+        .from("players")
+        .select("id, display_name")
+        .eq("id", theirs.player_id)
+        .maybeSingle()
+    : { data: null };
+
   return json({
     matchId,
     verdict: settlement.verdict,
+    opponent:
+      opponentPlayer && settlement.verdict !== "void"
+        ? { playerId: opponentPlayer.id, displayName: opponentPlayer.display_name }
+        : null,
+    category: match.category,
     explanation: explainVerdict(settlement),
     voidReason: settlement.voidReason ?? null,
     ratingWeight: settlement.ratingWeight,

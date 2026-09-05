@@ -1188,6 +1188,58 @@ function runSmokeTest(): void {
       }`,
     );
 
+    // The rematch offer, which only exists for a result that had somebody in it.
+    const rematch = await probe.webContents.executeJavaScript(`(() => {
+      if (typeof renderRematch !== "function") return null;
+      const box = document.getElementById("rematch");
+      const base = {
+        matchId: "m", verdict: "win", explanation: "", voidReason: null, ratingWeight: 1,
+        yourMatchScore: 0.05, theirMatchScore: 0.02, ratingBefore: 1500, ratingAfter: 1512,
+        ratingChange: 12, rounds: [],
+      };
+
+      renderRematch({ ...base, seeding: true, verdict: null, opponent: null, category: null });
+      const afterSeeding = box.hidden;
+
+      renderRematch({ ...base, verdict: "void", opponent: { playerId: "p", displayName: "x" },
+        category: "Static Clicking" });
+      const afterVoid = box.hidden;
+
+      renderRematch({ ...base, opponent: { playerId: "p9", displayName: "rival" },
+        category: "Static Clicking" });
+      const shown = {
+        afterSeeding, afterVoid,
+        offered: !box.hidden,
+        label: document.getElementById("rematchBtn").textContent,
+        bound: typeof document.getElementById("rematchBtn").onclick === "function",
+      };
+
+      renderRematch({ ...base, seeding: true, verdict: null, opponent: null, category: null });
+      return shown;
+    })()`).catch((err) => ({ failed: String(err && err.message ? err.message : err) }));
+
+    if (rematch === null) {
+      problems.push("nothing offers a rematch after a result");
+    } else if (rematch.failed) {
+      problems.push(`the rematch offer threw: ${rematch.failed}`);
+    } else if (!rematch.afterSeeding) {
+      problems.push("a seeding match offers a rematch against nobody");
+    } else if (!rematch.afterVoid) {
+      problems.push("a void match offers a rematch, though it did not count");
+    } else if (!rematch.offered) {
+      problems.push("a contested result offers no rematch");
+    } else if (rematch.label !== "Duel rival") {
+      problems.push(`the rematch button reads "${rematch.label}"`);
+    } else if (!rematch.bound) {
+      problems.push("the rematch button is present but nothing is bound to it");
+    }
+
+    console.log(
+      `rematch      : ${
+        rematch && !rematch.failed ? `offered as "${rematch.label}", hidden on void and seeding` : "MISSING"
+      }`,
+    );
+
     console.log(
       `duels        : ${
         painted.failed
