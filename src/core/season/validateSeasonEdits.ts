@@ -321,10 +321,14 @@ check(
     if (!c.bands?.length) continue;
     const seen: string[] = [];
     for (const b of c.bands) {
-      for (const n of b.rankNames) if (!seen.includes(n)) seen.push(n);
+      // The seventeenth rank is dropped, not the placeholder-shaped one. A band that
+      // declares `positional` carries a rank the ladder does not contain - it is held by
+      // standing in the top few of the board rather than by a score - and matching it by
+      // name only worked while nobody had named one.
+      const ranks = b.positional ? b.rankNames.slice(0, -1) : b.rankNames;
+      for (const n of ranks) if (!seen.includes(n)) seen.push(n);
     }
-    const named = seen.filter((n) => !/^Rank \d+\**$/.test(n));
-    if (JSON.stringify(named) !== JSON.stringify(c.rankNames)) drifted.push(c.name);
+    if (JSON.stringify(seen) !== JSON.stringify(c.rankNames)) drifted.push(c.name);
   }
   check("every category's bands name the same ranks as its ladder", drifted.length === 0, drifted.join(", "));
 }

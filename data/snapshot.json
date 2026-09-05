@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-05T00:37:53.909Z",
+  "generatedAt": "2026-09-05T00:52:32.845Z",
   "coverage": [
     {
       "category": "Dynamic Clicking",
@@ -2266,14 +2266,14 @@
             "Railgun",
             "Gauss Cannon",
             "Photon Lance",
-            "Rank 5"
+            "Deadeye"
           ],
           "rankColors": {
             "Sniper": "#ff0000",
             "Railgun": "#ee00ff",
             "Gauss Cannon": "#000000",
             "Photon Lance": "#1100ff",
-            "Rank 5": "#3f4652"
+            "Deadeye": "#e8b13a"
           },
           "rankMaxes": [
             22500,
@@ -2287,7 +2287,7 @@
           "played": 9,
           "total": 9,
           "positional": {
-            "rankName": "Rank 5",
+            "rankName": "Deadeye",
             "topN": 3,
             "eligible": false
           }
@@ -2647,14 +2647,14 @@
             "Giant Squid",
             "Sperm Whale",
             "Megalodon",
-            "Rank 5"
+            "Leviathan"
           ],
           "rankColors": {
             "Mammoth": "#e4ed89",
             "Giant Squid": "#0040ff",
             "Sperm Whale": "#ffffff",
             "Megalodon": "#04ff00",
-            "Rank 5": "#3f4652"
+            "Leviathan": "#2fa8b8"
           },
           "rankMaxes": [
             25000,
@@ -2668,7 +2668,7 @@
           "played": 8,
           "total": 10,
           "positional": {
-            "rankName": "Rank 5",
+            "rankName": "Leviathan",
             "topN": 3,
             "eligible": false
           }
@@ -3047,14 +3047,14 @@
             "Robosapien",
             "HAL 9000",
             "Singularity",
-            "Rank 5"
+            "Omega"
           ],
           "rankColors": {
             "Neolithic": "#ff6600",
             "Robosapien": "#00fbff",
             "HAL 9000": "#ffffff",
             "Singularity": "#000000",
-            "Rank 5": "#3f4652"
+            "Omega": "#b48cff"
           },
           "rankMaxes": [
             27500,
@@ -3068,7 +3068,7 @@
           "played": 6,
           "total": 11,
           "positional": {
-            "rankName": "Rank 5",
+            "rankName": "Omega",
             "topN": 3,
             "eligible": false
           }
@@ -3466,14 +3466,14 @@
             "Subnitride",
             "Sol",
             "Planck",
-            "Rank 5"
+            "Big Bang"
           ],
           "rankColors": {
             "Cyanogen": "#007d80",
             "Subnitride": "#ae00ff",
             "Sol": "#fbff00",
             "Planck": "#ffffff",
-            "Rank 5": "#3f4652"
+            "Big Bang": "#ff7a33"
           },
           "rankMaxes": [
             17500,
@@ -3487,7 +3487,7 @@
           "played": 5,
           "total": 7,
           "positional": {
-            "rankName": "Rank 5",
+            "rankName": "Big Bang",
             "topN": 3,
             "eligible": false
           }
@@ -3809,14 +3809,14 @@
             "Cheetah",
             "Golden Eagle",
             "Peregrine",
-            "Rank 5"
+            "Terminal Velocity"
           ],
           "rankColors": {
             "Pronghorn": "#421e00",
             "Cheetah": "#ff7300",
             "Golden Eagle": "#9e7c00",
             "Peregrine": "#8000ff",
-            "Rank 5": "#3f4652"
+            "Terminal Velocity": "#5ce1ff"
           },
           "rankMaxes": [
             22500,
@@ -3830,7 +3830,7 @@
           "played": 4,
           "total": 9,
           "positional": {
-            "rankName": "Rank 5",
+            "rankName": "Terminal Velocity",
             "topN": 3,
             "eligible": false
           }
@@ -4190,14 +4190,14 @@
             "Polar Bear",
             "Orca",
             "Apex",
-            "Rank 5"
+            "Extinction"
           ],
           "rankColors": {
             "African Elephant": "#575757",
             "Polar Bear": "#ffffff",
             "Orca": "#000000",
             "Apex": "#ffb3fc",
-            "Rank 5": "#3f4652"
+            "Extinction": "#d43b52"
           },
           "rankMaxes": [
             15000,
@@ -4211,7 +4211,7 @@
           "played": 1,
           "total": 6,
           "positional": {
-            "rankName": "Rank 5",
+            "rankName": "Extinction",
             "topN": 3,
             "eligible": false
           }

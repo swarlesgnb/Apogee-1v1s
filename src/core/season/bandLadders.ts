@@ -68,11 +68,21 @@ export function syncBandLadders(season: SeasonLike): string[] {
       const width = windowRankCount(band.window, size, category.rankNames.length, overlap);
       const names = category.rankNames.slice(first, first + width);
 
-      // The positional top rank, where this band has one. Recognised by being a
-      // placeholder at the end rather than by its index, because a named top rank is a
-      // thing somebody may have done and must not be thrown away.
+      // The positional top rank, where this band has one.
+      //
+      // It is a rank the ladder does not contain: sixteen names for sixteen scored ranks,
+      // and this seventeenth is held by standing in the top few of the board instead. So it
+      // has nothing to be derived from and has to be carried across by hand.
+      //
+      // Recognised by the band declaring `positional`, not by the name matching the
+      // placeholder pattern. Matching on the pattern worked only while these were unnamed:
+      // the moment somebody named one it stopped being a placeholder, stopped being carried,
+      // and the next save would have deleted the top rank of every category.
       const tail = band.rankNames[band.rankNames.length - 1];
-      if (tail !== undefined && PLACEHOLDER.test(tail)) names.push(tail);
+      const hasTop =
+        tail !== undefined && (band.positional != null || PLACEHOLDER.test(tail)) &&
+        !names.includes(tail);
+      if (hasTop) names.push(tail);
 
       const colors: Record<string, string> = {};
       for (const name of names) {
