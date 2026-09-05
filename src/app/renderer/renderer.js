@@ -879,6 +879,29 @@ function setCommit(state, verb, sub, meta) {
   $("queueVerb").textContent = verb;
   $("queueSub").textContent = sub ?? "";
   $("queueMeta").textContent = meta ?? "";
+  setQueueLive(state, verb, meta);
+}
+
+/**
+ * The same state, on the bar that never scrolls.
+ *
+ * Driven from `setCommit` rather than from the six call sites that reach it, so the bar
+ * cannot disagree with the button: there is one place that decides what the queue is
+ * doing and it now tells both. Idle says nothing at all - a chip reading "not queued" is
+ * a permanent reminder of nothing.
+ */
+function setQueueLive(state, verb, meta) {
+  const chip = $("queueLive");
+  if (!chip) return;
+
+  chip.hidden = state === "idle";
+  chip.classList.toggle("held", state === "held");
+  if (chip.hidden) return;
+
+  $("queueLiveText").textContent = verb;
+  $("queueLiveMeta").textContent = meta ?? "";
+  chip.title =
+    state === "working" ? "Searching for an opponent - click to watch" : "Open your match";
 }
 
 /** What a press would queue, in the button. */
@@ -906,8 +929,11 @@ function startSearchClock() {
   stopSearchClock();
   const tick = () => {
     const total = Math.floor((Date.now() - started) / 1000);
-    $("queueMeta").textContent =
-      Math.floor(total / 60) + ":" + String(total % 60).padStart(2, "0");
+    const clock = Math.floor(total / 60) + ":" + String(total % 60).padStart(2, "0");
+    $("queueMeta").textContent = clock;
+    // The clock is written here rather than through setCommit, so the bar is written here
+    // too. A chip that froze at 0:00 while the button counted would read as a stuck queue.
+    if ($("queueLiveMeta")) $("queueLiveMeta").textContent = clock;
   };
   tick();
   searchTimer = setInterval(tick, 1000);
@@ -6462,6 +6488,17 @@ if (HOST === "electron") {
    * The page opens either way. A report without the build stamp is worth more than no
    * report, so a clipboard that refuses is not a reason to strand somebody here.
    */
+  // The chip is a way back to the thing it is reporting on, from wherever you drifted to
+  // while the queue ran.
+  $("queueLive").addEventListener("click", () => {
+    const tab = document.querySelector('.tab[data-screen="queue"]');
+    if (tab) tab.click();
+    const match = $("opponent");
+    if (match && match.classList.contains("on")) {
+      match.scrollIntoView({ block: "nearest" });
+    }
+  });
+
   $("reportProblem").addEventListener("click", async (event) => {
     event.preventDefault();
     const link = $("reportProblem");

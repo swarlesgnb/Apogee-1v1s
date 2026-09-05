@@ -1036,6 +1036,37 @@ function runSmokeTest(): void {
     }
     console.log(`copy keys    : ${copy === null ? "NOT CAPTURED" : `${copy} authored`}`);
 
+    // Whether you are in a queue has to be legible without scrolling, and the Play screen
+    // cannot promise that: the button saying "Searching" sits under a tall rank panel and
+    // above a list of every scenario in the window. The bar can, so the state is mirrored
+    // there - hidden while idle, and driven from the same function as the button so the
+    // two cannot disagree.
+    const chip = await probe.webContents.executeJavaScript(`(() => {
+      const el = document.getElementById("queueLive");
+      if (!el) return null;
+      const idle = el.hidden;
+      setCommit("working", "Searching", "", "0:07");
+      const working = { hidden: el.hidden, text: document.getElementById("queueLiveText").textContent };
+      setCommit("idle", "Find opponent", "", "");
+      return { idle, working, hiddenAgain: el.hidden, drag: getComputedStyle(el).webkitAppRegion };
+    })()`).catch(() => null);
+
+    if (chip === null) {
+      problems.push("the queue readout is not on the bar");
+    } else if (!chip.idle) {
+      problems.push("the queue readout shows while nothing is queued");
+    } else if (chip.working.hidden) {
+      problems.push("the queue readout stays hidden while searching");
+    } else if (chip.working.text !== "Searching") {
+      problems.push(`the queue readout says "${chip.working.text}" while searching`);
+    } else if (!chip.hiddenAgain) {
+      problems.push("the queue readout stays up after the queue ends");
+    } else if (chip.drag === "drag") {
+      problems.push("the queue readout is part of the window drag region, so it cannot be clicked");
+    }
+
+    console.log(`queue chip   : ${chip === null ? "MISSING" : "hidden idle, shows while searching"}`);
+
     // The three panels of the look editor, drawn. Reading the overrides is deliberately
     // not behind the admin check - the app has to paint before there is a session to ask
     // about - so the editor populates on any account and can be checked on this one. What

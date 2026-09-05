@@ -449,6 +449,22 @@
   }
   .legal a:hover { color: var(--ink-mid); text-decoration: underline; }
 
+  /* The queue, on the bar. Square, quiet, and it only exists while a queue does. */
+  .queue-live {
+    display: flex; align-items: center; gap: var(--s2);
+    margin-left: var(--s4); padding: 4px var(--s3);
+    font-family: var(--mono); font-size: var(--t-2xs); letter-spacing: .1em;
+    text-transform: uppercase; color: var(--ink-mid);
+    background: var(--control); border: 1px solid var(--rule-2); cursor: pointer;
+    -webkit-app-region: no-drag;
+  }
+  .queue-live:hover { color: var(--ink); border-color: var(--rule-3); }
+  .queue-live-dot {
+    width: 6px; height: 6px; border-radius: 50%; background: var(--warn);
+  }
+  .queue-live.held .queue-live-dot { background: var(--up); }
+  .queue-live-meta { color: var(--ink-dim); font-variant-numeric: tabular-nums; }
+
   /* ---------------------------------------------------------- account */
 
   .account { display: grid; }
@@ -2593,6 +2609,16 @@
         </details>
       </div>
 
+      <!-- Whether you are in a queue is not a fact about the Play screen. It belongs on
+           the one strip that is on every screen and never scrolls: the button that says
+           "Searching" sits under a tall rank panel, and the moment you scroll down to read
+           the pool it is gone. Hidden unless there is something to say. -->
+      <button type="button" class="queue-live" id="queueLive" hidden>
+        <span class="queue-live-dot"></span>
+        <span id="queueLiveText"></span>
+        <span class="queue-live-meta" id="queueLiveMeta"></span>
+      </button>
+
       <div class="topbar-right">
         <button type="button" class="sound-toggle" id="soundToggle"
                 aria-pressed="true" title="Sound on. Press M to mute">
@@ -2715,17 +2741,11 @@
               </div>
             </div>
 
-            <div class="panel" id="drawPanel" hidden>
-              <div class="phead">
-                <h2 data-copy="queue.p2.head">Drawn from</h2>
-                <span class="note" id="drawCount"></span>
-              </div>
-              <div class="pbody">
-                <div class="draw-rows" id="drawRows"></div>
-                <p class="draw-legend" id="drawLegend"></p>
-              </div>
-            </div>
-
+            <!-- Above the pool it draws from, not below it. "Drawn from" is a list of
+                 every scenario in the window - fifty-odd of them when the queue is set to
+                 any category - and the match was underneath all of them, so finding out
+                 who you had drawn meant scrolling past the reference material to reach the
+                 thing you act on. -->
             <div class="panel opponent" id="opponent">
               <div class="phead">
                 <h2 data-copy="queue.p3.head">Your match</h2>
@@ -2787,6 +2807,17 @@
                 </div>
               </div>
             </div>
+            <div class="panel" id="drawPanel" hidden>
+              <div class="phead">
+                <h2 data-copy="queue.p2.head">Drawn from</h2>
+                <span class="note" id="drawCount"></span>
+              </div>
+              <div class="pbody">
+                <div class="draw-rows" id="drawRows"></div>
+                <p class="draw-legend" id="drawLegend"></p>
+              </div>
+            </div>
+
           </section>
 
           <!-- ---------------------------------------------- result -->
