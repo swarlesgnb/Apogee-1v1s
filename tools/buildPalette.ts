@@ -96,16 +96,16 @@ const Y_MAX = CEILING * (luminance(DARK_GROUND) + 0.05) - 0.05;
  * an average.
  */
 const RAMPS: Record<string, { from: { h: number; c: number }; to: { h: number; c: number } }> = {
-  // #8d5a35 leather to #e3f6ac ripened - a thrown rock becoming a guided one.
-  "Dynamic Clicking": { from: { h: 58, c: 0.075 }, to: { h: 116, c: 0.125 } },
-  // #356f8d overcast to #cbacf6 storm light - weather that gets harder to stand in.
-  "Reactive Tracking": { from: { h: 236, c: 0.07 }, to: { h: 300, c: 0.13 } },
-  // #358d44 hull green to #acf6e7 wake - a boat becoming something that is not seen.
-  "Evasive Switching": { from: { h: 148, c: 0.085 }, to: { h: 186, c: 0.115 } },
   // Rock to snow, and the only ladder here whose chroma *falls*: the six categories are
   // the colourful ones and the overall sits above them as a readout, so it wants to look
   // like weather and stone rather than like a seventh thing competing for attention.
   "Overall": { from: { h: 66, c: 0.055 }, to: { h: 245, c: 0.035 } },
+
+  // Dynamic Clicking, Reactive Tracking and Evasive Switching were in here and are not any
+  // more. Their colours are chosen now, the same way the other three categories' are, and
+  // running this over a chosen palette replaces a decision with an average - which it did
+  // once, and the names went with them. A ladder belongs here only while nobody has an
+  // opinion about it; the moment somebody does, it comes out.
 };
 
 /* ---------------------------------------------------------------- colour ---- */
