@@ -46,6 +46,96 @@ const esc = (s) =>
 const pct = (v) => (v >= 0 ? "+" : "−") + Math.abs(v * 100).toFixed(1) + "%";
 const num = (v) => Math.round(v).toLocaleString();
 
+/**
+ * Declared up here rather than beside the press effects that used to own it: `countTo`
+ * reads it too, and `render` runs at the bottom of this file in the static preview -
+ * before the old declaration was reached, which made this a boot-time ReferenceError
+ * rather than a missing animation.
+ */
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+/* ================================================================== counters */
+
+/**
+ * Move a readout to a new number instead of replacing it.
+ *
+ * Every figure in this file was assigned with `textContent`, which is correct and
+ * silent: the rating after a match landed the same way it landed on the first paint,
+ * so the one number the whole app exists to move changed without saying it had.
+ *
+ * Three rules, and the first is the one that matters:
+ *
+ * It only runs on a *change*. A readout with no previous value is set outright. A
+ * counter that spins up from zero every time the app opens is decoration - it says
+ * "here is a number" when the number has not done anything. This says "this moved",
+ * which is a fact, and it is only true when something moved.
+ *
+ * The duration follows the distance. A rating that gained two points and one that
+ * gained forty should not take the same time to arrive, or the small change reads as
+ * laboured and the large one as instant. Both ends are clamped: under COUNT_MIN it is a
+ * flicker nobody resolves, and over COUNT_MAX the player is waiting on an animation to
+ * tell them something they can already read.
+ *
+ * It never runs on a hidden screen. `render` repaints every screen, not just the one
+ * showing, and tweening nine readouts nobody is looking at is a frame the client is
+ * spending beside a game that wants it.
+ */
+const COUNT_MIN = 320;
+const COUNT_MAX = 800;
+/** Milliseconds of travel per unit of change, before the clamp. */
+const COUNT_PER_UNIT = 12;
+
+/**
+ * The JS twin of --ease-out. Quintic rather than the stylesheet's exact bezier: this is
+ * the same family and the same shape to the eye, and a hand-solved bezier here would be
+ * a second definition of the curve that could drift from the first.
+ */
+const easeOutQuint = (t) => 1 - Math.pow(1 - t, 5);
+
+/**
+ * `format` turns the running value into what the element shows, so a counter can carry
+ * a suffix or a separator without this knowing what either means.
+ */
+function countTo(el, value, format = (v) => String(Math.round(v))) {
+  if (!el) return;
+
+  // Cancel whatever was already running, and count from where it actually is rather
+  // than from where the last tween was aiming: two results landing quickly should not
+  // make the second one jump back to the first one's start.
+  if (el._countRaf) {
+    cancelAnimationFrame(el._countRaf);
+    el._countRaf = 0;
+  }
+
+  const from = el._countValue;
+  const settle = () => {
+    el._countValue = value;
+    el.textContent = format(value);
+  };
+
+  // No previous value, no change, reduced motion, or nobody looking: just be the number.
+  if (from === undefined || from === value || reduceMotion.matches || !el.offsetParent) {
+    settle();
+    return;
+  }
+
+  const span = Math.abs(value - from);
+  const ms = Math.min(COUNT_MAX, Math.max(COUNT_MIN, COUNT_MIN + span * COUNT_PER_UNIT));
+  const start = performance.now();
+
+  const step = (now) => {
+    const t = Math.min(1, (now - start) / ms);
+    if (t >= 1) {
+      el._countRaf = 0;
+      settle();
+      return;
+    }
+    el.textContent = format(from + (value - from) * easeOutQuint(t));
+    el._countRaf = requestAnimationFrame(step);
+  };
+  el._countRaf = requestAnimationFrame(step);
+}
+
 /* ==================================================================== sound */
 
 /**
@@ -595,10 +685,13 @@ function render(data) {
 
   // Three separate facts, so they read as three. Run together on one line they were a
   // caption, and nobody reads a caption under a 34px tier name.
-  $("heroRating").textContent = me.rating;
-  $("heroRd").textContent = "±" + me.rd + " uncertainty";
-  $("heroPercentile").textContent = "top " + (100 - me.percentile).toFixed(1) + "%";
-  $("heroRuns").textContent = num(data.player.totalRuns);
+  // The four that move because the player played. The tier name, the scenario count and
+  // the placement sentence below are not counters - they change by becoming a different
+  // thing, not by travelling to a new value.
+  countTo($("heroRating"), me.rating);
+  countTo($("heroRd"), me.rd, (v) => "±" + Math.round(v) + " uncertainty");
+  countTo($("heroPercentile"), 100 - me.percentile, (v) => "top " + v.toFixed(1) + "%");
+  countTo($("heroRuns"), data.player.totalRuns, num);
   $("heroScenarios").textContent = "across " + data.player.scenarioCount + " scenarios";
   $("heroPlacement").textContent =
     "Placement is provisional: with no live population yet, your tier is estimated " +
@@ -876,6 +969,12 @@ function setCommit(state, verb, sub, meta) {
   if (!btn) return;
   btn.classList.toggle("working", state === "working");
   btn.classList.toggle("held", state === "held");
+  // Searching is the one state the orb field reacts to; see the orb notes in index.html.
+  document.body.dataset.queue = state;
+  // And the one state that owns a WebGL context. Driven from here rather than from the
+  // six call sites that reach it, so the context cannot outlive the search that made it.
+  if (state === "working") mountSearchOrb();
+  else unmountSearchOrb();
   $("queueVerb").textContent = verb;
   $("queueSub").textContent = sub ?? "";
   $("queueMeta").textContent = meta ?? "";
@@ -919,6 +1018,245 @@ function resetCommit(data) {
   if (!btn) return;
   setCommit("idle", "Find opponent", data ? commitSub(data) : "", "matched on rating");
   if (btn.dataset.gated !== "1") btn.disabled = false;
+}
+
+/* ============================================================ searching orb */
+
+/**
+ * A sphere with light moving inside it, while the server is looking for an opponent.
+ *
+ * Ported from a WebGL component published as a React one, and the port is the whole
+ * point: the client has no React, no bundler for the renderer and a `script-src 'self'`
+ * policy. A fragment shader survives all three - the GLSL is compiled by the driver, not
+ * evaluated as script, so the policy has no opinion about it - while the component
+ * around it does not.
+ *
+ * Two things were changed rather than copied.
+ *
+ * The colour ramp is inverted. The original builds up from vec3(0.99, 1.0, 1.0), so it
+ * is a near-white sphere with the tint showing through the shaded side. On this app's
+ * ground that is a 148px headlight, in a client whose stylesheet opens by saying nothing
+ * is elevated. Here the ramp starts at the ground itself and climbs to --accent, so the
+ * sphere is dark and the light is inside it. Same noise, opposite polarity.
+ *
+ * The lifetime is bounded. The original mounts with its component and runs until it
+ * unmounts. This is created when the queue starts working and destroyed when it stops,
+ * because a browser will only hand out a handful of WebGL contexts before it starts
+ * dropping the oldest, and a client somebody leaves open all evening should not be
+ * holding one to animate a state it left twenty minutes ago.
+ */
+
+const ORB_VERT = `
+attribute vec2 a_pos;
+void main() { gl_Position = vec4(a_pos, 0.0, 1.0); }
+`;
+
+/**
+ * Domain-warped value noise: fbm of a point that has itself been displaced by fbm. That
+ * is what makes the motion read as fluid rather than as a cloud sliding past - the warp
+ * turns straight drift into something that folds.
+ */
+const ORB_FRAG = `
+#ifdef GL_FRAGMENT_PRECISION_HIGH
+precision highp float;
+#else
+precision mediump float;
+#endif
+
+uniform vec2 u_resolution;
+uniform float u_time;
+uniform vec3 u_color;
+uniform vec3 u_ground;
+
+float hash(vec2 p) {
+  return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123);
+}
+
+float noise(vec2 p) {
+  vec2 i = floor(p);
+  vec2 f = fract(p);
+  vec2 u = f * f * (3.0 - 2.0 * f);
+  return mix(
+    mix(hash(i + vec2(0.0, 0.0)), hash(i + vec2(1.0, 0.0)), u.x),
+    mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), u.x),
+    u.y
+  );
+}
+
+float fbm(vec2 p) {
+  float v = 0.0;
+  float a = 0.6;
+  for (int i = 0; i < 3; i++) {
+    v += a * noise(p);
+    p *= 2.0;
+    a *= 0.5;
+  }
+  return v;
+}
+
+void main() {
+  vec2 uv = gl_FragCoord.xy / u_resolution.xy;
+  float t = u_time * 0.22;
+
+  vec2 drift = vec2(
+    sin(t) + 0.6 * sin(t * 1.7 + 1.3),
+    cos(t * 0.8) + 0.6 * cos(t * 1.3 + 2.1)
+  );
+
+  vec2 p = vec2(uv.x * 1.8, uv.y * 1.0) + drift * 0.7;
+
+  vec2 q = vec2(fbm(p + drift), fbm(p + vec2(3.2, 1.5) - drift));
+  float f = fbm(p + 1.2 * q);
+
+  float g = clamp(1.0 - uv.y, 0.0, 1.0);
+  float anchor = smoothstep(0.0, 0.3, uv.y);
+  float shade = clamp(g + (f - 0.5) * 0.8 * anchor, 0.0, 1.0);
+
+  // Dark to lit, rather than the original's white to tinted. The base sits a little
+  // off the ground so the disc has an edge to find; everything above it is accent.
+  vec3 base = mix(u_ground, u_color, 0.10);
+  vec3 mid  = mix(u_ground, u_color, 0.60);
+  vec3 hot  = mix(u_color, vec3(1.0), 0.22);
+
+  vec3 col = base;
+  col = mix(col, mid, smoothstep(0.26, 0.56, shade));
+  col = mix(col, hot, smoothstep(0.62, 0.92, shade));
+
+  float edge = smoothstep(0.5, 0.49, distance(uv, vec2(0.5)));
+  gl_FragColor = vec4(col * edge, edge);
+}
+`;
+
+/** `#rrggbb` to the 0-1 triple a uniform wants. */
+function orbRgb(hex, fallback) {
+  const h = String(hex ?? "").replace("#", "").trim();
+  const n = parseInt(h, 16);
+  if (h.length !== 6 || Number.isNaN(n)) return fallback;
+  return [((n >> 16) & 255) / 255, ((n >> 8) & 255) / 255, (n & 255) / 255];
+}
+
+function orbCompile(gl, type, src) {
+  const sh = gl.createShader(type);
+  gl.shaderSource(sh, src);
+  gl.compileShader(sh);
+  if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS)) {
+    // Not thrown: a driver that will not compile this should cost the player an
+    // animation, not the queue screen.
+    console.error("searching orb:", gl.getShaderInfoLog(sh));
+    gl.deleteShader(sh);
+    return null;
+  }
+  return sh;
+}
+
+/** Everything the running orb owns, so unmount can put all of it back. */
+let searchOrb = null;
+
+function mountSearchOrb() {
+  const host = $("orbSearch");
+  if (!host || searchOrb) return;
+
+  const canvas = document.createElement("canvas");
+  // `alpha` so the ground shows through outside the disc, `antialias` off because the
+  // only edge in the image is the one the shader already feathers itself.
+  const gl = canvas.getContext("webgl", { alpha: true, antialias: false, depth: false });
+  if (!gl) return;   // No WebGL: the button's sweep is still saying the same thing.
+
+  const program = gl.createProgram();
+  const vert = orbCompile(gl, gl.VERTEX_SHADER, ORB_VERT);
+  const frag = orbCompile(gl, gl.FRAGMENT_SHADER, ORB_FRAG);
+  if (!program || !vert || !frag) return;
+
+  gl.attachShader(program, vert);
+  gl.attachShader(program, frag);
+  gl.linkProgram(program);
+  if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+    console.error("searching orb:", gl.getProgramInfoLog(program));
+    return;
+  }
+  gl.useProgram(program);
+
+  const buffer = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+  gl.bufferData(
+    gl.ARRAY_BUFFER,
+    new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]),
+    gl.STATIC_DRAW,
+  );
+  const aPos = gl.getAttribLocation(program, "a_pos");
+  gl.enableVertexAttribArray(aPos);
+  gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
+
+  // Both colours are read off the live stylesheet rather than written here: --accent is
+  // the player's own tier colour and is rewritten on every snapshot, so the orb is their
+  // colour, and --ground is the value the ramp above is built to start from.
+  const css = getComputedStyle(document.documentElement);
+  const accent = css.getPropertyValue("--accent").trim();
+  const ground = css.getPropertyValue("--ground").trim();
+  gl.uniform3f(gl.getUniformLocation(program, "u_color"), ...orbRgb(accent, [0.54, 0.57, 0.59]));
+  gl.uniform3f(gl.getUniformLocation(program, "u_ground"), ...orbRgb(ground, [0.12, 0.11, 0.09]));
+
+  // Capped at 2: past that the shader is filling pixels nobody can resolve, and this is
+  // the one place in the client running a per-pixel loop.
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  const px = Math.round(148 * dpr);
+  canvas.width = px;
+  canvas.height = px;
+  gl.viewport(0, 0, px, px);
+  gl.uniform2f(gl.getUniformLocation(program, "u_resolution"), px, px);
+  const uTime = gl.getUniformLocation(program, "u_time");
+
+  host.textContent = "";
+  host.appendChild(canvas);
+  host.hidden = false;
+
+  // Reduced motion keeps the sphere and stops the weather: one frame, no loop. Same
+  // bargain the orb field behind the app makes.
+  const still = reduceMotion.matches;
+  const start = performance.now();
+  let raf = 0;
+  const draw = (now) => {
+    gl.uniform1f(uTime, still ? 0 : (now - start) / 1000);
+    gl.drawArrays(gl.TRIANGLES, 0, 6);
+    if (!still) raf = requestAnimationFrame(draw);
+  };
+
+  // A lost context leaves a blank canvas behind and never recovers on its own. Rebuild
+  // once, on the next frame, and only while the queue is still working.
+  const onLost = (e) => {
+    e.preventDefault();
+    unmountSearchOrb();
+    if (document.body.dataset.queue === "working") requestAnimationFrame(mountSearchOrb);
+  };
+  canvas.addEventListener("webglcontextlost", onLost);
+
+  searchOrb = {
+    stop() {
+      cancelAnimationFrame(raf);
+      canvas.removeEventListener("webglcontextlost", onLost);
+      gl.deleteProgram(program);
+      gl.deleteShader(vert);
+      gl.deleteShader(frag);
+      gl.deleteBuffer(buffer);
+      // Ask the driver for the context back rather than waiting to be garbage collected:
+      // the limit is on live contexts, not on unreachable ones.
+      gl.getExtension("WEBGL_lose_context")?.loseContext();
+      canvas.remove();
+    },
+  };
+  draw(start);
+}
+
+function unmountSearchOrb() {
+  const host = $("orbSearch");
+  if (searchOrb) {
+    searchOrb.stop();
+    searchOrb = null;
+  }
+  if (host) {
+    host.hidden = true;
+    host.textContent = "";
+  }
 }
 
 let searchTimer = null;
@@ -5428,6 +5766,9 @@ document.querySelectorAll(".tab").forEach((tab) => {
     tab.setAttribute("aria-selected", "true");
     document.querySelectorAll(".screen").forEach((s) => s.classList.remove("active"));
     $("screen-" + tab.dataset.screen).classList.add("active");
+    // The orb field reads this to decide how far to lift on this screen. Set here
+    // rather than in each caller because every route into a tab goes through .click().
+    document.body.dataset.screen = tab.dataset.screen;
     rememberScreen(tab.dataset.screen);
     // Drawn on the way in rather than at boot: the editors are cheap to build and stale
     // the moment the season or a save lands, so the screen is always redrawn from the
@@ -7092,8 +7433,6 @@ if (HOST === "electron") {
 
 /** Everything that takes a press. `summary` is here because the status pill is one. */
 const PRESSABLE = 'button, summary, [role="button"], .cat, .rank-link';
-
-const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
 /** The ring is drawn here rather than inside the control - see the CSS for why. */
 const fxLayer = document.createElement("div");

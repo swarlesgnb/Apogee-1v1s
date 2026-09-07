@@ -31,8 +31,12 @@ export const DARK_CHROME = {
   well: "#171513",
   rule: "#38332f",
   ink: "#f6f3ee",
-  inkMid: "#bbb4aa",
-  inkDim: "#8e867c",
+  // Lifted together with the client's :root when the orb field went in: the field
+  // lifts the ground these are painted on, so a ramp measured against the bare
+  // ground is no longer the ramp that ships. See the note at --ink in index.html,
+  // and npm run validate:orb, which re-derives both steps.
+  inkMid: "#ccc7c0",
+  inkDim: "#a8a19a",
 } as const;
 
 /**

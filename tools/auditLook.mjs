@@ -143,6 +143,14 @@ function longMotion() {
  * otherwise spends nothing on; the two fills are determinate progress moving at the
  * speed of the thing they measure.
  *
+ * The four orb entries are the exception this list was hardest to write. They are the
+ * only motion here measured in tens of seconds, and that is the point: the field behind
+ * the content column is weather rather than a transition, and weather that resolves in
+ * 300ms is a flicker. The periods are the primes 47, 61 and 73 so the three never come
+ * back into phase inside a session, and the 600ms is the field changing level when the
+ * player changes screen, which is slower than a control on purpose - a ground that
+ * snaps to a new brightness is the one way this layer could draw attention to itself.
+ *
  * Anything not on this list is new, and new long motion on a client somebody has open
  * all evening is the thing this check exists to notice.
  */
@@ -153,6 +161,10 @@ const LONG_ON_PURPOSE = [
   "animation: pop .32s cubic-bezier(.2, .9, .3, 1) both",
   "transition: transform .6s var(--ease-out)",
   "transition: transform .4s var(--ease-out)",
+  "transition: opacity 600ms var(--ease-out)",
+  "animation: orb-drift-a 47s var(--ease-in-out) infinite",
+  "animation: orb-drift-b 61s var(--ease-in-out) infinite",
+  "animation: orb-drift-c 73s var(--ease-in-out) infinite",
 ];
 
 let regressions = 0;
@@ -215,7 +227,11 @@ report("the client", [
       .filter((v) => !["0", "50%", "var(--r)", "inherit"].includes(v)).length],
   ["purple chrome", count(/#(?:a855f7|8000ff|7c3aed|9b5de5)/gi, css)],
   ["no loading geometry", css.includes(".pending td") ? 0 : 1],
-  ["radial orbs", count(/radial-gradient/g)],
+  ["radial orbs", count(/radial-gradient/g),
+    "one, and it is the orb field behind the content column - three blobs of it sharing " +
+    "a single rule. It is the one lit thing in the client and the only one: no control, " +
+    "panel or rule is gradient-filled. `npm run validate:orb` holds its opacities to " +
+    "what the palette can carry"],
   ["dot grids", count(/repeating-linear-gradient|repeating-radial-gradient/g)],
   ["sparkles", (both.match(/✨/g) ?? []).length + count(/sparkle/gi, both)],
   ["animated arrows", count(/translateX.*arrow|arrow.*animation/gi, both)],

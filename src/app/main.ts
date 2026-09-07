@@ -37,6 +37,7 @@ import { clearOverrides, loadOverrides, overridesPath, saveOverrides } from "./a
 import { MAX_COPY, PAIRS, TOKENS } from "../core/admin/overrides.ts";
 import { buildSnapshot, type Snapshot } from "../core/report/snapshot.ts";
 import { renderRankSheet } from "../core/report/rankSheet.ts";
+import { DARK_CHROME } from "../core/report/contrast.ts";
 import { scanStatsFolder, type ScenarioHistory } from "../core/history/history.ts";
 import { signInWithSteam } from "../core/sync/steamAuth.ts";
 import {
@@ -471,9 +472,12 @@ function createWindow(): void {
     // Opaque, and matched to the top bar rather than transparent: a translucent
     // overlay is not supported everywhere, and the failure mode is a light grey
     // block in the corner of a black app.
+    // Read from DARK_CHROME rather than written out again: these were the fourth
+    // hand-written copy of the palette, and they went stale the moment the ink ramp
+    // was lifted for the orb field while this kept the old --ink-mid.
     titleBarOverlay: {
-      color: "#1e1b18",
-      symbolColor: "#bbb4aa",
+      color: DARK_CHROME.ground,
+      symbolColor: DARK_CHROME.inkMid,
       height: 46,
     },
     // The menu is entirely duplicated by buttons on screen, and a Windows menu bar
@@ -1278,6 +1282,76 @@ function runSmokeTest(): void {
     }
 
     console.log(`queue chip   : ${chip === null ? "MISSING" : "hidden idle, shows while searching"}`);
+
+    // The searching orb is a fragment shader, and a shader that will not compile fails
+    // the way nothing else in this file does: silently, into a blank canvas, with the
+    // only complaint on a console nobody has open. So it is compiled here, against a
+    // real driver, and asked to produce a frame with something in it.
+    //
+    // A machine with no WebGL at all is reported rather than failed: that is the
+    // environment, not the code. A context that exists and then will not compile or
+    // draw is a genuine failure and is treated as one.
+    const orb = await probe.webContents.executeJavaScript(`(() => {
+      if (typeof mountSearchOrb !== "function") return { wired: false };
+      const probeGl = document.createElement("canvas").getContext("webgl");
+      if (!probeGl) return { wired: true, webgl: false };
+
+      mountSearchOrb();
+      const host = document.getElementById("orbSearch");
+      const canvas = host && host.querySelector("canvas");
+      if (!canvas) return { wired: true, webgl: true, mounted: false };
+
+      // Read the frame back. An orb that compiled but drew nothing comes back as an
+      // entirely transparent buffer, which is the failure this exists to catch.
+      const gl = canvas.getContext("webgl");
+      const px = new Uint8Array(canvas.width * canvas.height * 4);
+      gl.readPixels(0, 0, canvas.width, canvas.height, gl.RGBA, gl.UNSIGNED_BYTE, px);
+      let lit = 0;
+      for (let i = 3; i < px.length; i += 4) if (px[i] > 8) lit++;
+      const coverage = lit / (canvas.width * canvas.height);
+
+      const size = canvas.width;
+      mountSearchOrb();                       // must not stack a second context
+      const afterDouble = host.querySelectorAll("canvas").length;
+
+      unmountSearchOrb();
+      const afterUnmount = {
+        canvases: host.querySelectorAll("canvas").length,
+        hidden: host.hidden,
+        display: getComputedStyle(host).display,
+      };
+      return {
+        wired: true, webgl: true, mounted: true,
+        coverage, size, afterDouble, afterUnmount,
+      };
+    })()`);
+
+    if (!orb.wired) {
+      problems.push("the searching orb is not wired into the renderer");
+    } else if (orb.webgl === false) {
+      console.log("searching orb: no WebGL on this machine, shader not exercised");
+    } else if (!orb.mounted) {
+      problems.push("the searching orb mounted no canvas (the shader did not compile)");
+    } else if (orb.coverage < 0.5 || orb.coverage > 0.9) {
+      // A disc inscribed in its own square covers pi/4, about 0.785. Far under means the
+      // shader drew nothing; far over means the circular mask stopped working and it is
+      // painting the whole square.
+      problems.push(
+        `the searching orb drew ${(orb.coverage * 100).toFixed(1)}% of its canvas, ` +
+        "which is neither a disc nor nothing",
+      );
+    } else if (orb.afterDouble !== 1) {
+      problems.push(`mounting the searching orb twice left ${orb.afterDouble} canvases`);
+    } else if (orb.afterUnmount.canvases !== 0 || orb.afterUnmount.display !== "none") {
+      problems.push(
+        "the searching orb did not clean up: " + JSON.stringify(orb.afterUnmount),
+      );
+    } else {
+      console.log(
+        `searching orb: ${orb.size}px, ${(orb.coverage * 100).toFixed(1)}% covered, ` +
+        "one context, released on unmount",
+      );
+    }
 
     // The three panels of the look editor, drawn. Reading the overrides is deliberately
     // not behind the admin check - the app has to paint before there is a session to ask

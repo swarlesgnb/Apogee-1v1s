@@ -15,11 +15,21 @@
 
      The model is an instrument panel rather than an application. Regions
      are separated by drawn rules, not by cards floating on a ground:
-     nothing is elevated, nothing glows, and the only round corner in the
-     file is the status lamp. Hairlines are opaque greys rather than
-     white-alpha, because alpha over near-black reads as a lit edge and a
-     grey reads as a ruled one - which is the whole difference between a
-     panel and a card.
+     nothing is elevated and the only round corner in the file is the
+     status lamp. Hairlines are opaque greys rather than white-alpha,
+     because alpha over near-black reads as a lit edge and a grey reads as
+     a ruled one - which is the whole difference between a panel and a
+     card.
+
+     One thing glows, and only one: the orb field, painted into .main
+     behind the whole content column. The rule the rest of this file keeps
+     is that no *control* is lit - no chip, button, tag, panel or rule -
+     and that is what stops the app reading as glass. The ground underneath
+     them is a separate question, and letting it move slowly in the
+     player's own rank colour buys the warmth those flat controls give up
+     without putting a highlight on a single thing you can click. See the
+     orb field section further down for what it costs and why it is capped
+     where it is.
 
      The chrome is achromatic on purpose. The only chroma is --accent,
      which the renderer sets to the player's own rank colour on every
@@ -60,10 +70,23 @@
 
     /* Warm and neutral. The blue-grey-on-near-black this replaces is the one
        thing every dark web app has in common, and it made a client somebody
-       has open all evening feel colder than it needed to. */
+       has open all evening feel colder than it needed to.
+
+       The two lower tones sit higher than they read on paper, and the reason
+       is the orb field: it lifts the ground behind them, and a ramp measured
+       against #1e1b18 stops being true the moment something is painted over
+       it. The brightest ground the field can produce is #3a371c, and these
+       three clear 4.5:1 on that rather than on the bare ground.
+
+       They were lifted together rather than one at a time. Moving --ink-dim
+       alone - which is all the contrast floor strictly demands - closes the
+       step between it and --ink-mid from 1.75:1 to 1.24:1, and three tones
+       that read as two is a worse outcome than the dim text being dim. Both
+       steps are now 1.52:1: tighter than before, and even, so the hierarchy
+       still has three rungs. `npm run validate:orb` re-derives all of it. */
     --ink:     #f6f3ee;
-    --ink-mid: #bbb4aa;
-    --ink-dim: #8e867c;
+    --ink-mid: #ccc7c0;
+    --ink-dim: #a8a19a;
 
     /* Indicator lamps rather than confectionery: a green that is green,
        a red that is red, an amber that is amber. Lifted with the grounds
@@ -690,8 +713,187 @@
 
   /* ---------------------------------------------------------- scroll */
 
-  .scroll { overflow-y: auto; overflow-x: hidden; min-height: 0; }
+  .scroll {
+    overflow-y: auto; overflow-x: hidden; min-height: 0;
+    /* Above the orb field, which is painted into .main behind everything. */
+    position: relative; z-index: 1;
+  }
   .content { max-width: 1180px; margin: 0 auto; padding: var(--s5) var(--s6) var(--s7); }
+
+  /* ==================================================================
+     Orb field
+
+     The one lit thing in the client. Everything else here is a painted
+     part on a ground - see the note at the top of this file - and the
+     rule that nothing glows still holds for every control, panel and
+     rule in the app. This is the exception: the ground itself is alive,
+     so the chrome does not have to be.
+
+     Three blurred blobs drifting behind the content column, tinted from
+     --accent, which the renderer sets to the player's tier colour on
+     every snapshot. So the field is the player's colour, and changing
+     tier changes the weather rather than just a badge.
+
+     How bright it is, and what that cost
+     ------------------------------------
+     This layer lifts the ground it sits behind, and the ground is what
+     every contrast figure in this file was measured against. The field
+     and the ink ramp at --ink are therefore one decision, not two.
+
+     --accent is a tier colour, and the top of the ladder is saturated:
+     Arecibo is pure green, Quasar pure cyan, Cosmonaut near-pure yellow.
+     A blob tinted with one of those is the worst case, not a
+     hypothetical - a player at that tier sees it on every screen. The
+     colours are named here rather than written as hex because the tell
+     audit counts neon hex across this whole file, comments included.
+
+     `npm run validate:orb` re-derives all of it, by rasterising the three
+     blobs where the rules below put them. At the smallest window the app
+     allows - which is the worst case, because the blobs are sized in vmax
+     and a small column has proportionally more blob over it - they peak
+     at 0.125 alpha and put the ground at #3a371c, where the lifted ramp
+     leaves --ink-dim at 4.72:1. There is no headroom left at this ratio.
+
+     Two earlier cuts were wrong, in opposite directions, and both are
+     worth knowing about:
+
+     The first ran six times fainter than this on the unlifted ramp and
+     was invisible - which was correct for that ramp: at these opacities
+     the old --ink-dim would sit at 4.12:1, under the floor. A brighter
+     field genuinely does cost the ramp.
+
+     The second was invisible for a worse reason. That check summed the
+     three opacities as though all three gradient centres landed on one
+     pixel, which the rules below make impossible - they pin the blobs to
+     three different corners. It read the field as 2.09x brighter than
+     anything that reaches the screen, and the opacities were pushed down
+     to satisfy a number no pixel ever takes. A safety check that is
+     wrong in the safe direction still ships the wrong thing.
+
+     Going brighter was not free. The ramp's two steps were 1.86:1 and
+     1.75:1 against the bare ground and are now 1.52:1 each: secondary
+     text across the whole app is lighter than it was, on every screen,
+     including the ones where the field is turned most of the way down.
+     That is the trade - see the note at --ink for why both tones moved
+     rather than just the one the floor demanded.
+
+     What it costs to run
+     --------------------
+     Only transform and opacity are animated - both compositor
+     properties, so the blobs never touch layout or paint after the
+     first frame. The blur is baked into each blob with `filter`, which
+     keeps it on the blob's own layer rather than resampling the column
+     underneath it every frame. This runs beside KovaaK's and must not
+     take a frame off the game.
+
+     The blobs are sized in vmax and positioned off-edge, so no blob
+     edge is ever visible - only the falloff. A visible circle reads as
+     a bubble sitting on the app; only the falloff reads as depth.
+     ================================================================== */
+
+  .orbfield {
+    position: absolute; inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+    /* Per-screen, set on <body> by the tab handler. Never above 1: the
+       opacities below are the measured ceiling, so a lift over 1 would
+       push the ground past what validate:orb signed off. */
+    opacity: var(--orb-lift, .5);
+    transition: opacity 600ms var(--ease-out);
+  }
+
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    /* Off-centre highlight: a blob lit dead centre reads as a ball, and a
+       ball is an object. Lit off-axis it reads as a light source. The 78%
+       white mix at the first stop is the figure validate:orb measures
+       against; changing it changes the ceiling. */
+    background: radial-gradient(circle at 34% 30%,
+      color-mix(in srgb, var(--accent) 78%, #ffffff) 0%,
+      color-mix(in srgb, var(--accent) 62%, transparent) 38%,
+      transparent 72%);
+    will-change: transform;
+  }
+
+  /* Three, at different sizes and speeds. Two read as a pair and four
+     read as noise; three never resolves into a pattern the eye can
+     finish. The periods are the primes 47, 61 and 73, so the loop only
+     comes back into phase every 47x61x73 seconds - about 58 hours, which
+     is longer than any session.
+
+     The opacities are 0.105 / 0.084 / 0.068, a 1 / 0.8 / 0.65 ratio.
+     validate:orb reports the headroom left at that ratio and it is now
+     1.00x, so these are not eyeballed and there is no room above them. */
+  .orb-a {
+    width: 62vmax; height: 62vmax; top: -22vmax; left: -14vmax;
+    filter: blur(72px); opacity: .105;
+    animation: orb-drift-a 47s var(--ease-in-out) infinite;
+  }
+  .orb-b {
+    width: 48vmax; height: 48vmax; top: 34vmax; right: -18vmax;
+    filter: blur(64px); opacity: .084;
+    animation: orb-drift-b 61s var(--ease-in-out) infinite;
+  }
+  .orb-c {
+    width: 38vmax; height: 38vmax; bottom: -20vmax; left: 26vmax;
+    filter: blur(56px); opacity: .068;
+    animation: orb-drift-c 73s var(--ease-in-out) infinite;
+  }
+
+  /* Closed loops: every track ends where it started, so there is no jump
+     at the seam. Scale stays inside a few percent - a blob that visibly
+     breathes is a screensaver. */
+  @keyframes orb-drift-a {
+    0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+    33%      { transform: translate3d(7vmax, 4vmax, 0) scale(1.06); }
+    66%      { transform: translate3d(-3vmax, 8vmax, 0) scale(.97); }
+  }
+  @keyframes orb-drift-b {
+    0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+    40%      { transform: translate3d(-8vmax, -6vmax, 0) scale(1.08); }
+    70%      { transform: translate3d(-2vmax, 5vmax, 0) scale(.95); }
+  }
+  @keyframes orb-drift-c {
+    0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+    45%      { transform: translate3d(6vmax, -7vmax, 0) scale(1.05); }
+    75%      { transform: translate3d(-7vmax, -2vmax, 0) scale(1.02); }
+  }
+
+  /* Per-screen lift, all at or under 1. A screen that is mostly prose or
+     a single hero can carry the field; a screen that is a dense table
+     cannot, because the falloff crossing a row of numbers is exactly the
+     kind of thing that makes a table feel dirty rather than lit. */
+  body[data-screen="queue"]      .orbfield { --orb-lift: .85; }
+  body[data-screen="result"]     .orbfield { --orb-lift: .7; }
+  body[data-screen="profile"]    .orbfield { --orb-lift: .6; }
+  body[data-screen="ranks"]      .orbfield { --orb-lift: .5; }
+  body[data-screen="band"]       .orbfield { --orb-lift: .45; }
+  body[data-screen="quests"]     .orbfield { --orb-lift: .45; }
+  body[data-screen="seasonview"] .orbfield { --orb-lift: .4; }
+  /* The working screens. The season editor and the admin tables are the
+     two places in the app where somebody is reading numbers they will act
+     on, and the consistency report is a chart that owns its own ground. */
+  body[data-screen="consistency"] .orbfield { --orb-lift: .25; }
+  body[data-screen="season"]      .orbfield { --orb-lift: .18; }
+  body[data-screen="admin"]       .orbfield { --orb-lift: .18; }
+
+  /* Searching. The one state in the app where the player is waiting on
+     something they cannot hurry, and the only place the field is allowed
+     to be the thing moving on screen: it goes to the full measured
+     ceiling and quickens. It settles back the moment a match lands. */
+  body[data-queue="working"] .orbfield { --orb-lift: 1; }
+  body[data-queue="working"] .orb-a { animation-duration: 19s; }
+  body[data-queue="working"] .orb-b { animation-duration: 25s; }
+  body[data-queue="working"] .orb-c { animation-duration: 31s; }
+
+  /* Motion is the whole point of this layer, so reduced motion does not
+     dim it - it stops it. The tint stays, which is the part that carries
+     tier colour; only the drift goes. */
+  @media (prefers-reduced-motion: reduce) {
+    .orb { animation: none; }
+  }
 
   /* ==================================================================
      Notices
@@ -911,6 +1113,41 @@
   .cat:hover { color: var(--ink); border-color: var(--rule-3); }
   .cat[aria-pressed="true"] {
     color: var(--ground); background: var(--ink); border-color: var(--ink);
+  }
+
+  /* ==================================================================
+     The searching orb
+
+     A sphere with light moving inside it, drawn by a fragment shader, and
+     the only canvas in the client. It exists while the queue is working
+     and is destroyed the moment it stops - see mountSearchOrb().
+
+     Why this earns a WebGL context when the orb field behind the app is
+     three CSS gradients: this one is a discrete object rather than a
+     ground, and the effect is domain-warped noise, which CSS has no way
+     to express. It is also the one moment in the app where the player is
+     waiting on something they cannot hurry and is not in the game, so a
+     shader loop here is not competing with KovaaK's for frames. Anywhere
+     else in this file it would be.
+
+     The disc is the second round thing in the stylesheet, after the
+     status lamp. It is round because it is a sphere; the rule about
+     corners is about panels and controls, and this is neither.
+     ================================================================== */
+
+  .orb-search {
+    display: grid; place-items: center;
+    padding: var(--s5) 0 var(--s4);
+  }
+  /* `display: grid` above outranks the UA rule the hidden attribute relies on, so the
+     box would keep its padding while holding nothing. Same reason .celebrate carries
+     one. */
+  .orb-search[hidden] { display: none; }
+  .orb-search canvas {
+    /* Sized in CSS; the backing store is set in JS from devicePixelRatio, so
+       the shader is not asked to fill more pixels than the screen has. */
+    width: 148px; height: 148px;
+    display: block;
   }
 
   .commit {
@@ -2565,7 +2802,7 @@
 
 </style>
 </head>
-<body>
+<body data-screen="queue">
 <div class="frame">
 
   <!-- ============================================================ rail -->
@@ -2687,6 +2924,14 @@
 
   <!-- ============================================================ main -->
   <div class="main">
+
+    <!-- Behind everything in this column. Decorative: no text, no controls,
+         and aria-hidden so it is not a thing to land on. -->
+    <div class="orbfield" aria-hidden="true">
+      <div class="orb orb-a"></div>
+      <div class="orb orb-b"></div>
+      <div class="orb orb-c"></div>
+    </div>
 
     <header class="topbar">
       <div class="status" id="status">
@@ -2833,6 +3078,11 @@
                   </div>
                   <div class="pool-note" id="poolNote"></div>
                 </div>
+
+                <!-- Only while the server is looking; see the searching orb notes in
+                     the stylesheet and mountSearchOrb() in the renderer. Decorative,
+                     and the clock on the button is what actually reports progress. -->
+                <div class="orb-search" id="orbSearch" hidden aria-hidden="true"></div>
 
                 <button type="button" class="commit" id="queueBtn">
                   <span>
