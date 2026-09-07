@@ -93,10 +93,23 @@ const COUNT_PER_UNIT = 12;
 const easeOutQuint = (t) => 1 - Math.pow(1 - t, 5);
 
 /**
+ * What each keyed readout last showed.
+ *
+ * Keyed by a string the caller picks rather than by the element, because the screens
+ * that need this rebuild their elements. A key has to name the *thing*, not the node:
+ * "band:Static Clicking:2" is the same band across every render, while the div drawing
+ * it is a different div every time.
+ *
+ * It is never cleared. The whole map is a few dozen numbers, and forgetting one means a
+ * readout silently stops animating - which is the failure nobody would notice.
+ */
+const lastReadout = new Map();
+
+/**
  * `format` turns the running value into what the element shows, so a counter can carry
  * a suffix or a separator without this knowing what either means.
  */
-function countTo(el, value, format = (v) => String(Math.round(v))) {
+function countTo(el, value, format = (v) => String(Math.round(v)), key) {
   if (!el) return;
 
   // Cancel whatever was already running, and count from where it actually is rather
@@ -107,9 +120,14 @@ function countTo(el, value, format = (v) => String(Math.round(v))) {
     el._countRaf = 0;
   }
 
-  const from = el._countValue;
+  // Where it was. On the hero stats that is the element itself, because those elements
+  // outlive a render. The ranks and season screens throw their DOM away and build it
+  // again on every snapshot, so an element there has never held a value and nothing
+  // would ever animate - `key` is how a readout is recognised across the rebuild.
+  const from = key === undefined ? el._countValue : lastReadout.get(key);
   const settle = () => {
     el._countValue = value;
+    if (key !== undefined) lastReadout.set(key, value);
     el.textContent = format(value);
   };
 
@@ -692,7 +710,11 @@ function render(data) {
   countTo($("heroRd"), me.rd, (v) => "±" + Math.round(v) + " uncertainty");
   countTo($("heroPercentile"), 100 - me.percentile, (v) => "top " + v.toFixed(1) + "%");
   countTo($("heroRuns"), data.player.totalRuns, num);
-  $("heroScenarios").textContent = "across " + data.player.scenarioCount + " scenarios";
+  countTo(
+    $("heroScenarios"),
+    data.player.scenarioCount,
+    (v) => "across " + Math.round(v) + " scenarios",
+  );
   $("heroPlacement").textContent =
     "Placement is provisional: with no live population yet, your tier is estimated " +
     "from your " + data.benchmark.name + " " + data.benchmark.difficulty + " standing (" +
@@ -722,6 +744,10 @@ function render(data) {
     "Every number here is computed from " + num(data.player.totalRuns) +
     " real runs; the opponent is synthetic. Snapshot " +
     new Date(data.generatedAt).toLocaleString() + ".";
+
+  // Every bar queued by the screens above, moved together. One forced layout for the
+  // whole pass rather than one per bar, which on the ranks screen would be two dozen.
+  flushFills();
 }
 
 /**
@@ -1245,6 +1271,46 @@ function mountSearchOrb() {
     },
   };
   draw(start);
+}
+
+/**
+ * Bars, with the same rule the counters follow: move on a change, not on arrival.
+ *
+ * `setFill` alone cannot animate on these screens. A transition needs a previous value
+ * committed to a live element, and a bar that was created a moment ago has none - it
+ * simply renders at its final width, which is why the band cards' bars have never moved
+ * despite the transition on them.
+ *
+ * So a bar with a remembered value is painted at the old one first and told the new one
+ * afterwards. That costs a reflow to commit the starting frame, and doing it per bar
+ * would be two dozen forced layouts in a loop on the ranks screen - so callers queue
+ * their bars and `flushFills` pays for one reflow on behalf of all of them.
+ */
+const pendingFills = [];
+
+function fillTo(el, share, key) {
+  if (!el) return;
+  const to = Number.isFinite(share) ? Math.max(0, Math.min(1, share)) : 0;
+  const from = lastReadout.get(key);
+  lastReadout.set(key, to);
+
+  if (from === undefined || from === to || reduceMotion.matches) {
+    setFill(el, to);
+    return;
+  }
+  setFill(el, from);
+  pendingFills.push([el, to]);
+}
+
+/** One forced layout for every bar queued since the last flush, then the new values. */
+function flushFills() {
+  if (pendingFills.length === 0) return;
+  // Reading a layout property is what commits the starting transforms above; without it
+  // the browser coalesces both writes and the bar arrives at its new value with no
+  // transition. `void` because the value is not wanted, only the side effect.
+  void document.body.offsetWidth;
+  for (const [el, to] of pendingFills) setFill(el, to);
+  pendingFills.length = 0;
 }
 
 function unmountSearchOrb() {
@@ -3600,18 +3666,31 @@ function renderSeasonView(data) {
       ? seasonPool.scenarios
       : practice && Array.isArray(practice.scenarios) ? practice.scenarios : null;
     const families = pool ? new Set(pool.map((x) => x.family)).size : null;
+    // Four counts and a name. The counts travel when the pool changes - which is what
+    // editing a season does, and the reason this panel is worth watching while editing
+    // rather than a thing to re-read afterwards. The fifth cell is the window's name and
+    // is not a quantity, so it is written rather than counted.
     const cells = [
-      [pool ? num(pool.length) : "\u2014", "scenarios"],
-      [families === null ? "\u2014" : String(families), "families"],
-      [String(windows.length || "\u2014"), "difficulty windows"],
-      [String(data.categories.length), "categories"],
-      [windows[seasonPool ? (seasonPool.matchPool?.window ?? 1) : 1] ?? "\u2014", "matches draw from"],
+      [pool ? pool.length : null, "scenarios", num],
+      [families, "families"],
+      [windows.length || null, "difficulty windows"],
+      [data.categories.length, "categories"],
+      [windows[seasonPool ? (seasonPool.matchPool?.window ?? 1) : 1] ?? "\u2014", "matches draw from", null],
     ];
-    cells.forEach(([v, k]) => {
+    cells.forEach(([v, k, format]) => {
       const el = document.createElement("div");
       el.className = "sv-stat";
-      el.innerHTML = '<span class="v">' + esc(String(v)) + '</span>' +
-                     '<span class="k">' + esc(k) + '</span>';
+      el.innerHTML = '<span class="v"></span><span class="k">' + esc(k) + '</span>';
+      const slot = el.querySelector(".v");
+      if (format === null || typeof v !== "number") {
+        // An em dash where a number belongs is not a value to count to, and counting
+        // toward one from a real number would draw a bar back to nothing on a screen
+        // that has simply not received its pool yet.
+        slot.textContent = String(v ?? "\u2014");
+        lastReadout.delete("sv:" + k);
+      } else {
+        countTo(slot, v, format, "sv:" + k);
+      }
       stats.append(el);
     });
   }
@@ -3794,9 +3873,13 @@ function renderSeasonView(data) {
     // being looked at and cannot go stale when the pool changes underneath it.
     const from = new Set();
     for (const r of shown) for (const o of r.origins ?? []) from.add(o.benchmark);
-    $("svPoolNote").textContent =
-      num(shown.length) + " scenarios · " + num(played) + " played" +
+    $("svPoolNote").innerHTML =
+      num(shown.length) + ' scenarios · <span class="sv-played"></span> played' +
       (from.size > 0 ? " · from " + num(from.size) + " benchmarks" : "");
+    // Keyed to the band, because that is what the sentence is about. Switching bands
+    // changes this number for a different reason than playing does, and counting between
+    // two bands' totals would animate a comparison nobody asked for.
+    countTo($("svPoolNote").querySelector(".sv-played"), played, num, "svplayed:" + seasonBand);
   }
 
   poolHost.textContent = "";
@@ -3845,8 +3928,16 @@ function renderSeasonView(data) {
         '<span class="pool-sub-note">' +
         (maxed === inSub.length
           ? "maxed here"
-          : inSub.filter((r) => r.runs > 0).length + " of " + inSub.length + " played") +
+          : '<span class="sub-played"></span> of ' + inSub.length + " played") +
         "</span>";
+      if (maxed !== inSub.length) {
+        countTo(
+          subHead.querySelector(".sub-played"),
+          inSub.filter((r) => r.runs > 0).length,
+          undefined,
+          "subplayed:" + seasonBand + ":" + sub,
+        );
+      }
       group.append(subHead);
 
       // The tiles sit in their own grid inside the group, so the sub-skill's label stays
@@ -4172,7 +4263,7 @@ function renderBand() {
     (_, i) => !(band.positional && i === band.rankNames.length - 1),
   );
 
-  $("bandGridNote").textContent = rows.length + " scenarios";
+  countTo($("bandGridNote"), rows.length, (v) => Math.round(v) + " scenarios", "band:scenarios");
   $("bandGridLede").textContent = rows.length === 0
     ? "The practice list has not loaded, so the per-scenario scores are not available yet."
     : "A filled cell is a score you have already beaten. The outlined one in each row is " +
@@ -4267,8 +4358,14 @@ function renderRanks(data) {
       '<span class="rung">' + (tiers.indexOf(tier) + 1) + "</span>" +
       '<span class="tier-name">' + esc(tier.name) + "</span>" +
       (here
-        ? '<span class="you">you · top ' + (100 - me.percentile).toFixed(1) + "%</span>"
+        ? '<span class="you">you · top <span class="you-pc"></span>%</span>'
         : '<span class="band">' + esc(tierBand(tier.percentile)) + "</span>");
+    // One key for the line, not one per tier: the row moves between tiers as the player
+    // climbs, and a key per tier would make the percentile restart from nothing at every
+    // promotion - which is the one moment it most wants to be continuous.
+    if (here) {
+      countTo(li.querySelector(".you-pc"), 100 - me.percentile, (v) => v.toFixed(1), "ladder:you");
+    }
     ladder.append(li);
   });
 
@@ -4307,8 +4404,14 @@ function renderRanks(data) {
     top.innerHTML =
       '<span class="cat-rank-name">' + esc(cat.name) + "</span>" +
       '<span class="cat-rank-rank">' +
-      (bands.length ? held + " of " + bands.length + " bands held" : esc(cat.rankName || "unranked")) +
+      (bands.length
+        ? '<span class="held-n"></span> of ' + bands.length + " bands held"
+        : esc(cat.rankName || "unranked")) +
       "</span>";
+    // Taking a band is the thing this screen exists to report, so the count moves when
+    // it happens. It is a whole number that steps by one: the tween is short by its own
+    // clamp and reads as the number turning over rather than as a spinner.
+    if (bands.length) countTo(top.querySelector(".held-n"), held, undefined, "held:" + cat.name);
     el.append(top);
 
     const grid = document.createElement("div");
@@ -4393,10 +4496,21 @@ function renderRanks(data) {
       } else if (!next) {
         foot.innerHTML = '<span class="band-note top">band maxed</span>';
       } else {
-        const pct = Math.round((b.progressToNextRank ?? 0) * 100);
+        // Keyed on the band rather than on the element: this card is rebuilt on every
+        // snapshot, so the bar and the percentage only know they moved because the key
+        // remembers what they were. Playing a category lights up the bands that changed
+        // and leaves the rest still, which is the whole point of animating them at all.
+        const bandKey = cat.name + ":" + b.window;
         foot.innerHTML =
-          '<span class="band-track"><i style="width:' + pct + '%"></i></span>' +
-          '<span class="band-note">' + pct + "% to " + esc(next) + "</span>";
+          '<span class="band-track"><i></i></span>' +
+          '<span class="band-note"><span class="band-pct"></span>% to ' + esc(next) + "</span>";
+        fillTo(foot.querySelector(".band-track i"), b.progressToNextRank ?? 0, "bandbar:" + bandKey);
+        countTo(
+          foot.querySelector(".band-pct"),
+          Math.round((b.progressToNextRank ?? 0) * 100),
+          undefined,
+          "bandpct:" + bandKey,
+        );
       }
       card.append(foot);
 
@@ -4460,10 +4574,19 @@ function renderRanks(data) {
     tr.innerHTML =
       "<td>" + esc(s.label) + (s.windowName ? ' <span class="win">' + esc(s.windowName) + "</span>" : "") + "</td>" +
       '<td style="color:' + esc(ink) + '">' + esc(s.rankName || "unranked") + "</td>" +
-      "<td>" + num(s.score) + "</td>" +
+      '<td class="c-best"></td>' +
       '<td style="color:' + esc(nextInk) + '">' + esc(s.nextRankName) + "</td>" +
       "<td>" + num(s.nextRankScore) + target + "</td>" +
-      "<td>+" + num(s.gap) + "</td>";
+      '<td class="c-gap"></td>';
+
+    // The two columns that move because the player played. The target beside them is a
+    // threshold and does not move, so it is written rather than counted - a number that
+    // travels when it has not changed is a lie about what just happened.
+    //
+    // Keyed on the scenario, not the row: this table re-sorts as gaps close, so the row
+    // holding a scenario is a different row every render.
+    countTo(tr.querySelector(".c-best"), s.score, num, "best:" + s.label);
+    countTo(tr.querySelector(".c-gap"), s.gap, (v) => "+" + num(v), "gap:" + s.label);
     body.append(tr);
   });
 }

@@ -1711,7 +1711,14 @@
 
   .band-foot { display: grid; gap: 5px; }
   .band-track { display: block; height: 2px; background: var(--rule-2); overflow: hidden; }
-  .band-track i { display: block; height: 100%; background: var(--rank); }
+  /* Full width and scaled from the left, like every other bar in the file. It was the
+     one given a percentage width instead, which relaid the card out on every change and
+     - because a bar built fresh has no previous value to move from - meant the
+     transition below had never once run on it. */
+  .band-track i {
+    display: block; height: 100%; width: 100%; background: var(--rank);
+    transform-origin: left center;
+  }
   /* A band under its first rank is showing a target, not an achievement, and at full
      strength its bar drew the eye before the bands actually held. */
   .band-card.below .band-track i { opacity: .5; }
@@ -2431,7 +2438,8 @@
     /* Fills move by transform rather than width: width is a layout property and
        animating it relays out the row on every frame, where a scaleX from the left
        edge is composited and touches nothing around it. */
-    .upload-fill, .gate-fill, .qfill, .cover-fill, .climb-fill, .meter-fill {
+    .upload-fill, .gate-fill, .qfill, .cover-fill, .climb-fill, .meter-fill,
+    .band-track i {
       transition: transform .4s var(--ease-out);
     }
   }

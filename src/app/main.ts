@@ -982,6 +982,51 @@ function runSmokeTest(): void {
         `${ranks.held} held`,
     );
 
+
+    // Every readout that is counted rather than written.
+    //
+    // A counter is handed an element found by selector inside markup this file also
+    // builds, and the two can part company without anything throwing: countTo returns
+    // quietly on a null element, the span stays empty, and a number disappears off the
+    // screen while everything still renders. That is invisible from out here unless it
+    // is looked for, so it is looked for.
+    const counted = await probe.webContents.executeJavaScript(`(() => {
+      const classes = [
+        "band-pct", "held-n", "you-pc", "c-best", "c-gap",
+        "sv-played", "sub-played",
+      ];
+      const out = { total: 0, empty: [], byClass: {} };
+      for (const c of classes) {
+        const found = [...document.querySelectorAll("." + c)];
+        out.byClass[c] = found.length;
+        out.total += found.length;
+        for (const el of found) {
+          if (!el.textContent.trim()) out.empty.push(c);
+        }
+      }
+      // The season panel's five headline cells, which are built a different way.
+      const cells = [...document.querySelectorAll("#svStats .v")];
+      out.svStats = cells.length;
+      out.total += cells.length;
+      for (const el of cells) if (!el.textContent.trim()) out.empty.push("sv-stat");
+      return out;
+    })()`);
+
+    if (counted.total === 0) {
+      problems.push("no counted readouts were drawn at all, so nothing here was checked");
+    } else if (counted.empty.length > 0) {
+      problems.push(
+        `${counted.empty.length} counted readout(s) came out empty: ` +
+        [...new Set(counted.empty)].join(", "),
+      );
+    } else {
+      console.log(
+        `counted      : ${counted.total} readouts, none empty ` +
+        `(${counted.byClass["c-gap"]} gaps, ${counted.byClass["band-pct"]} band bars, ` +
+        `${counted.svStats} season cells)`,
+      );
+    }
+
     // Clicking a band opens its own page, so the check clicks one. Asserting that the
     // markup exists would pass on a page that never filled, and this screen is built
     // entirely at click time - nothing about it is in the HTML.
