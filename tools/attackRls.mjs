@@ -155,6 +155,42 @@ await attack("make myself an admin", `insert into admins (player_id) values ('${
 await attack("edit reference data (scenarios)", `update scenarios set world_record = 1 where id = ${scen}`);
 await attack("erase my own rate limit", `delete from rate_limits where player_id = '${attacker}'`);
 
+console.log("\n-- tournaments --");
+// A tournament somebody else hosts, created the way tournament-action does: by the server.
+await db.exec("reset role");
+const cupId = (await db.query("select gen_random_uuid() as id")).rows[0].id;
+const cupState = JSON.stringify({
+  schemaVersion: 1, id: cupId, revision: 0,
+  config: { name: "Victim Cup", groupCount: 2, groupSize: 3, qualifiers: 1, seeding: "seeded", randomSeed: "r" },
+  phase: "registration", entrants: [], groups: [], fixtures: [],
+});
+await db.query(
+  "insert into tournaments (id, host_id, name, category, window_index, window_name, state) values ($1, $2, 'Victim Cup', 'Any', 0, 'Intermediate', $3::jsonb)",
+  [cupId, victim, cupState],
+);
+await db.exec("set role authenticated");
+await db.exec("set test.player_id = '" + attacker + "'");
+
+await attack("host a tournament by inserting it directly",
+  `insert into tournaments (host_id, name, category, window_index, window_name, state)
+   values ('${attacker}', 'Mine', 'Any', 0, 'Intermediate', '{}'::jsonb)`);
+await attack("rewrite somebody else's tournament state",
+  `update tournaments set phase = 'completed' where id = '${cupId}'`);
+await attack("enter myself by writing the member row",
+  `insert into tournament_members (tournament_id, player_id, seed, checked_in) values ('${cupId}', '${attacker}', 1, true)`);
+await attack("claim a fixture leg against a match of my choosing",
+  `insert into tournament_legs (tournament_id, fixture_id, attempt, leg, player_id, match_id)
+   values ('${cupId}', 'f', 1, 2, '${attacker}', '${realMatch}')`);
+await attack("file my own receipt, naming myself the winner",
+  `insert into tournament_receipts (tournament_id, receipt_id, fixture_id, attempt, match_id, outcome)
+   values ('${cupId}', 'mine', 'f', 1, gen_random_uuid(), '{"kind":"win","winnerId":"${attacker}"}'::jsonb)`);
+await attack("call the aggregate commit directly",
+  `select tournament_commit('${cupId}', 0, '{}'::jsonb, null, null, null, 'result', null, '{}'::jsonb)`);
+await attack("call the leg reservation directly",
+  `select tournament_open_leg('${cupId}', 'f', 1, '${attacker}', 's', array[1,2,3]::bigint[], 'Any', 'S', 'I', 0, 480)`);
+await attack("mark my real match unrated so a loss costs nothing",
+  `update matches set rated = false where id = '${realMatch}'`);
+
 console.log("\n-- reading other people --");
 const readOthers = async (label, sql) => {
   try {
@@ -169,6 +205,11 @@ const readOthers = async (label, sql) => {
 await readOthers("another player's profile row", `select id, steam_id from players where id = '${victim}'`);
 await readOthers("another player's runs", `select id, score from runs where player_id = '${victim}'`);
 await readOthers("another player's baselines", `select * from baselines where player_id = '${victim}'`);
+// Closed outright, not narrowed: list-tournaments builds the only view there is.
+await readOthers("a tournament's stored state", `select id, state from tournaments`);
+await readOthers("who entered which tournament", `select * from tournament_members`);
+await readOthers("which match is which fixture leg", `select * from tournament_legs`);
+await readOthers("the receipts behind a bracket", `select * from tournament_receipts`);
 
 // Column privileges, on rows RLS does hand over.
 const readOwnColumn = async (label, column) => {

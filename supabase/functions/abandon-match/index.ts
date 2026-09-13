@@ -16,6 +16,7 @@
 
 import { forfeitMatch, handler, json, requireCaller } from "../_shared/apogee.ts";
 import { enforceRateLimit } from "../_shared/rateLimit.ts";
+import { afterLegSettled } from "../_shared/tournament.ts";
 import { updateRating } from "../../../src/core/rating/glicko2.ts";
 
 Deno.serve(handler(async (req, admin) => {
@@ -32,19 +33,21 @@ Deno.serve(handler(async (req, admin) => {
 
   if (!side) return json({ ok: true, nothingToAbandon: true });
 
-  const outcome = await forfeitMatch(
-    admin,
-    (side as { match_id: string }).match_id,
-    caller.playerId,
-    updateRating,
-  );
+  const matchId = (side as { match_id: string }).match_id;
+  const outcome = await forfeitMatch(admin, matchId, caller.playerId, updateRating);
 
-  const message =
-    outcome.reason === "seeding"
+  // If that was a tournament leg, the bracket should know now rather than at the next look.
+  const tournament = outcome.reason === "already-played" ? null : await afterLegSettled(admin, matchId);
+
+  const message = tournament
+    ? outcome.reason === "seeding"
+      ? "First leg abandoned, so the fixture will be replayed. Nothing was rated."
+      : `You forfeited ${tournament.label}. Nothing was rated.`
+    : outcome.reason === "seeding"
       ? "Nothing was rated: there was no opponent to play against."
       : outcome.reason === "already-played"
         ? "Your runs are already in, so this match will settle on its own."
         : "Match forfeited. You can queue again now.";
 
-  return json({ ok: true, ...outcome, message });
+  return json({ ok: true, ...outcome, tournament, message });
 }));

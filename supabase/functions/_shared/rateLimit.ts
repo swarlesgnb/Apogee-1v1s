@@ -24,7 +24,7 @@ export interface Limit {
  * The limits, and why each number is that number.
  *
  * MEASURED against the 11,606-file stats corpus that every verification check was
- * measured against (`scratchpad/measureGaps.mjs` derived these):
+ * measured against, by a one-off scan of gaps between consecutive runs:
  *
  *   shortest gap between two genuine consecutive runs   2.0s
  *   busiest genuine 60-second window                    12 runs
@@ -100,6 +100,32 @@ export const LIMITS: Record<string, Limit> = {
    * should never meet a limit they did nothing to earn.
    */
   "list-duels": { max: 60, windowSeconds: 300 },
+
+  /**
+   * 60 per 5 minutes, the same as the duel board and for the same reason: a read, and the
+   * client asks again after every action and every half minute while the tournament screen
+   * is open. Twenty seconds of polling is ten calls per window, a sixth of this.
+   */
+  "list-tournaments": { max: 60, windowSeconds: 300 },
+
+  /**
+   * 30 per 5 minutes. Entering, checking in and out, and a host sorting a roster of
+   * sixteen are a few calls each; nothing here is expensive, but every one is a write.
+   */
+  "tournament-action": { max: 30, windowSeconds: 300 },
+
+  /**
+   * 5 per hour, counted on top of tournament-action. Creating is the one action that adds
+   * a row to everybody's list, and one live tournament per host is already the rule, so
+   * anybody hitting this is creating and cancelling in a loop.
+   */
+  "tournament-create": { max: 5, windowSeconds: 3600 },
+
+  /**
+   * 20 per 5 minutes, the same as find-match: each call can create a match, and a player
+   * has at most one fixture open at a time.
+   */
+  "play-fixture": { max: 20, windowSeconds: 300 },
 };
 
 /**

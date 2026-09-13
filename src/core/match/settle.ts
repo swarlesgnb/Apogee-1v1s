@@ -234,8 +234,8 @@ export function explainVerdict(settlement: Settlement): string {
   // The specific case that reads as a bug unless it is named.
   if (lost && outscored) {
     return (
-      `${headline} They scored less in raw points but beat their baseline by more, ` +
-      `matches are decided on how far above your own average you played.`
+      `${headline} You scored more raw points, but they beat their own baseline by more, ` +
+      `and that is what decides a round.`
     );
   }
 

@@ -270,6 +270,25 @@ export async function forfeitMatch(
     return { matchId, rated: false, verdict: null, reason: "seeding" };
   }
 
+  // A tournament leg: the loss is recorded, because it decides the fixture, and nothing
+  // else moves. The rule that abandoning costs what losing costs still holds - in a
+  // tournament what losing costs is the fixture, not rating.
+  const { data: matchRow } = await admin.from("matches").select("rated").eq("id", matchId).maybeSingle();
+  if (matchRow?.rated === false) {
+    await admin
+      .from("match_sides")
+      .update({ result: "loss", submitted_at: settledAt })
+      .eq("match_id", matchId)
+      .eq("player_id", playerId);
+
+    await admin
+      .from("matches")
+      .update({ status: "settled", settled_at: settledAt })
+      .eq("id", matchId);
+
+    return { matchId, rated: false, verdict: "loss", reason: "forfeit" };
+  }
+
   const { data: ratingRow } = await admin
     .from("ratings")
     .select("rating, rd, volatility, matches_played")

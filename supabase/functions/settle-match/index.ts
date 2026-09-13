@@ -20,6 +20,7 @@ import {
   HttpError,
 } from "../_shared/apogee.ts";
 import { enforceRateLimit } from "../_shared/rateLimit.ts";
+import { afterLegSettled } from "../_shared/tournament.ts";
 
 import { baselineFromScores } from "../../../src/core/history/baseline.ts";
 import { isAbandonedRun } from "../../../src/core/stats/duration.ts";
@@ -45,11 +46,16 @@ Deno.serve(handler(async (req, admin) => {
 
   const { data: match } = await admin
     .from("matches")
-    .select("id, status, category, difficulty, scenario_ids, created_at, expires_at, settled_at")
+    .select("id, status, category, difficulty, scenario_ids, created_at, expires_at, settled_at, rated")
     .eq("id", matchId)
     .maybeSingle();
 
   if (!match) throw new HttpError(404, "no such match");
+
+  // False only for a tournament leg (migration 20260912000018). Everything below still runs
+  // - the runs, the baselines, the deltas, the verdict - and only the rating writes are
+  // skipped, so a tournament result is decided exactly the way a ladder one is.
+  const rated = match.rated !== false;
 
   const { data: sides } = await admin
     .from("match_sides")
@@ -67,6 +73,10 @@ Deno.serve(handler(async (req, admin) => {
       matchId,
       alreadySettled: true,
       seeding: !theirs,
+      rated,
+      // Folded in again on a repeat call, which is a no-op once it has landed and the
+      // retry that lands it if the first call died before it could.
+      tournament: rated ? null : await afterLegSettled(admin, matchId),
       verdict: mine.result,
       yourMatchScore: mine.match_score != null ? Number(mine.match_score) : null,
       theirMatchScore: theirs?.match_score != null ? Number(theirs.match_score) : null,
@@ -138,18 +148,23 @@ Deno.serve(handler(async (req, admin) => {
       .update({ status: "void", settled_at: settledAt })
       .eq("id", matchId);
 
+    const tournament = rated ? null : await afterLegSettled(admin, matchId);
+
     return json({
       matchId,
       verdict: "void",
       rated: false,
+      tournament,
       voidReason: "a scenario was left before it finished",
       scenario: abandonedRun.scenario_name,
       playedSeconds: abandonedRun.duration_seconds != null ? Number(abandonedRun.duration_seconds) : null,
       expectedSeconds: expectedSeconds.get(abandonedRun.scenario_id) ?? null,
       ratingChange: 0,
-      message:
-        `${abandonedRun.scenario_name} ended early, so this match is void. ` +
-        "Nothing was rated. You can queue again now.",
+      message: tournament
+        ? `${abandonedRun.scenario_name} ended early, so this leg is void and ${tournament.label} ` +
+          "will be replayed. Nothing was rated."
+        : `${abandonedRun.scenario_name} ended early, so this match is void. ` +
+          "Nothing was rated. You can queue again now.",
     });
   }
 
@@ -252,9 +267,20 @@ Deno.serve(handler(async (req, admin) => {
       .update({ status: "settled", settled_at: settledAt })
       .eq("id", matchId);
 
+    // The first leg of a tournament fixture. Same scoring, same storage, but it is not
+    // going to the pool (find-match reads `rated`), so the sentence about the pool below
+    // would be untrue.
+    const tournament = rated ? null : await afterLegSettled(admin, matchId);
+    const firstLeg = tournament
+      ? `Your three are in for ${tournament.label}. Your opponent plays the same three next, ` +
+        "and the fixture is decided when they have. Nothing is rated."
+      : null;
+
     return json({
       matchId,
       seeding: true,
+      rated: false,
+      tournament,
       verdict: null,
       yourMatchScore: side.matchScore,
       theirMatchScore: null,
@@ -279,15 +305,17 @@ Deno.serve(handler(async (req, admin) => {
       // The client reads `explanation` for the line under the verdict, so a seeding
       // result has to fill it or that line renders "undefined".
       explanation:
-        side.countedRounds === scenarioIds.length
+        firstLeg ??
+        (side.countedRounds === scenarioIds.length
           ? "Nothing was rated: there was no opponent to play against. Your run set is " +
             "now in the pool, and the next player to queue this category plays against it."
           : "Recorded, but not every scenario counted, so this run set is not in the " +
-            "pool yet.",
+            "pool yet."),
       message:
-        side.countedRounds === scenarioIds.length
+        firstLeg ??
+        (side.countedRounds === scenarioIds.length
           ? "Your run set is in the pool. The next player to queue this category plays against it."
-          : "Recorded, but not every scenario counted, so this run set is not in the pool yet.",
+          : "Recorded, but not every scenario counted, so this run set is not in the pool yet."),
     });
   }
 
@@ -326,7 +354,7 @@ Deno.serve(handler(async (req, admin) => {
   };
 
   let after = before;
-  if (settlement.verdict !== "void") {
+  if (settlement.verdict !== "void" && rated) {
     const raw = updateRating(before, [
       { opponent: opponentRating, score: verdictToScore(settlement.verdict) },
     ]);
@@ -363,7 +391,7 @@ Deno.serve(handler(async (req, admin) => {
 
   if (sideError) throw new HttpError(500, sideError.message);
 
-  if (settlement.verdict !== "void") {
+  if (settlement.verdict !== "void" && rated) {
     await admin.from("ratings").upsert(
       {
         player_id: caller.playerId,
@@ -406,7 +434,7 @@ Deno.serve(handler(async (req, admin) => {
   // A void rates nobody, on either side. Failure here is logged rather than thrown: the
   // caller's own result is already written and returned, and losing the sender's rating
   // update is a thing to repair, not a reason to fail a match that finished.
-  if (settlement.verdict !== "void") {
+  if (settlement.verdict !== "void" && rated) {
     const theirVerdict =
       settlement.verdict === "win" ? "loss" : settlement.verdict === "loss" ? "win" : "draw";
     try {
@@ -433,15 +461,23 @@ Deno.serve(handler(async (req, admin) => {
         .maybeSingle()
     : { data: null };
 
+  // The second leg of a tournament fixture decides it. Folded in before answering, so the
+  // result screen and the bracket agree the moment the player looks at either.
+  const tournament = rated ? null : await afterLegSettled(admin, matchId);
+
   return json({
     matchId,
     verdict: settlement.verdict,
+    rated,
+    tournament,
     opponent:
       opponentPlayer && settlement.verdict !== "void"
         ? { playerId: opponentPlayer.id, displayName: opponentPlayer.display_name }
         : null,
     category: match.category,
-    explanation: explainVerdict(settlement),
+    explanation: rated
+      ? explainVerdict(settlement)
+      : `${explainVerdict(settlement)} Unrated: this was a tournament fixture.`,
     voidReason: settlement.voidReason ?? null,
     ratingWeight: settlement.ratingWeight,
     yourMatchScore: settlement.player.matchScore,

@@ -20,6 +20,16 @@ import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 
+import {
+  addEntrant,
+  createTournament,
+  getReadyFixtures,
+  recordResult,
+  startTournament,
+  type Tournament,
+} from "../src/core/tournament/tournament.ts";
+import { receiptFor } from "../src/core/tournament/policy.ts";
+
 const root = join(fileURLToPath(new URL(".", import.meta.url)), "..");
 const migrationsDir = join(root, "supabase", "migrations");
 const seedPath = join(root, "supabase", "seed.sql");
@@ -561,6 +571,259 @@ async function main(): Promise<void> {
     apexIdx.rows.length === 1 && /points DESC/i.test(apexIdx.rows[0].indexdef),
     apexIdx.rows[0]?.indexdef ?? "missing",
   );
+
+  // ---- tournaments ---------------------------------------------------------------
+  //
+  // The two functions below are where every tournament rule the database can hold is
+  // held: the compare-and-swap on the aggregate, and the leg reservation with its
+  // one-match check. Both are driven here against the real constraints, including the
+  // refusals, because a refusal nobody has watched fire is a refusal nobody knows works.
+  //
+  // What PGlite cannot show is two connections at once, so the concurrency claims rest on
+  // the row lock and the conditional UPDATE rather than on a race run here. The stale write
+  // below is the sequential shadow of that race: the second writer arriving after the first.
+  console.log("\n── tournaments ──────────────────────────────────");
+
+  const tournamentTables = [
+    "tournaments", "tournament_members", "tournament_legs", "tournament_receipts", "tournament_log",
+  ];
+  const tPresent = await db.query<{ tablename: string }>(
+    `select tablename from pg_tables where schemaname = 'public' and tablename = any($1::text[])`,
+    [tournamentTables],
+  );
+  check("the five tournament tables exist", tPresent.rows.length === 5,
+    tPresent.rows.map((t) => t.tablename).join(", ") || "none");
+
+  const tPolicies = policies.rows.filter((p) => tournamentTables.includes(p.tablename));
+  check("no client policy of any kind on them", tPolicies.length === 0,
+    tPolicies.map((p) => `${p.tablename}:${p.cmd}`).join(", ") || "none");
+
+  const tGrants = await db.query<{ n: number }>(
+    `select count(*)::int as n from information_schema.role_table_grants
+      where table_name = any($1::text[]) and grantee in ('anon', 'authenticated')`,
+    [tournamentTables],
+  );
+  check("and no table grant to anon or authenticated", tGrants.rows[0].n === 0, `${tGrants.rows[0].n} grants`);
+
+  // Revoking from anon and authenticated alone is not enough for a function: both inherit
+  // PUBLIC's default EXECUTE. has_function_privilege follows that inheritance, which is
+  // why it is the question asked rather than the grant table.
+  for (const [label, signature] of [
+    ["tournament_commit", "tournament_commit(uuid, bigint, jsonb, jsonb, jsonb, uuid, text, uuid, jsonb)"],
+    ["tournament_open_leg", "tournament_open_leg(uuid, text, integer, uuid, text, bigint[], text, text, text, integer, integer)"],
+  ] as const) {
+    const who = await db.query<{ anon: boolean; authed: boolean; service: boolean }>(
+      `select has_function_privilege('anon', $1, 'EXECUTE') as anon,
+              has_function_privilege('authenticated', $1, 'EXECUTE') as authed,
+              has_function_privilege('service_role', $1, 'EXECUTE') as service`,
+      [signature],
+    );
+    const r = who.rows[0];
+    check(`${label} is callable by the service role and nobody else`, !r.anon && !r.authed && r.service,
+      `anon ${r.anon}, authenticated ${r.authed}, service ${r.service}`);
+  }
+
+  const defaultRated = await db.query<{ rated: boolean }>(
+    `insert into matches (mode, category, benchmark_name, difficulty, seed, scenario_ids, status)
+     values ('async', 'Any', 'Season 1', 'Intermediate', 'rated-default', '{1,2,3}', 'awaiting_runs')
+     returning rated`,
+  );
+  check("a match is rated unless the server says otherwise", defaultRated.rows[0].rated === true);
+
+  const tPlayers: string[] = [];
+  for (let i = 0; i < 7; i++) {
+    const u = await db.query<{ id: string }>(
+      `insert into auth.users (email) values ('cup${i}@arena.invalid') returning id`,
+    );
+    tPlayers.push(u.rows[0].id);
+    await db.exec(
+      `insert into players (id, steam_id, display_name)
+       values ('${u.rows[0].id}', '76561197000000${String(i).padStart(3, "0")}', 'cup ${i}')`,
+    );
+  }
+
+  const tId = crypto.randomUUID();
+  let tState = createTournament(tId, {
+    name: "Schema Cup", groupCount: 2, groupSize: 3, qualifiers: 1, seeding: "seeded", randomSeed: "schema",
+  });
+  for (let i = 0; i < 6; i++) {
+    tState = addEntrant(tState, { id: tPlayers[i], name: `cup ${i}`, seed: i + 1, checkedIn: true });
+  }
+  tState = startTournament(tState);
+
+  const insertTournament = (id: string, host: string, state: Tournament, revision = state.revision) =>
+    db.query(
+      `insert into tournaments (id, host_id, name, category, window_index, window_name, phase, revision, state)
+       values ($1, $2, $3, 'Any', 0, 'Intermediate', $4::tournament_phase, $5, $6::jsonb)`,
+      [id, host, state.config.name, state.phase, revision, JSON.stringify(state)],
+    );
+
+  check("a row whose columns disagree with its own document is refused",
+    await refused(() => insertTournament(tId, tPlayers[0], tState, tState.revision + 5)));
+  await insertTournament(tId, tPlayers[0], tState);
+
+  const tScenarios = (await db.query<{ id: number }>(`select id from scenarios order by id limit 3`)).rows.map((r) => r.id);
+
+  /** The code and message of a refusal, or null if it went through. */
+  const sqlRefusal = async (run: () => Promise<unknown>): Promise<string | null> => {
+    try {
+      await run();
+      return null;
+    } catch (err) {
+      return `${(err as { code?: string }).code ?? ""} ${err instanceof Error ? err.message : String(err)}`;
+    }
+  };
+
+  const openLeg = (fixtureId: string, attempt: number, player: string) =>
+    db.query<{ r: { matchId: string; leg: number; created: boolean } }>(
+      `select tournament_open_leg($1::uuid, $2, $3, $4::uuid, $5, $6::bigint[], 'Any', 'Season 1',
+                                  'Intermediate', 0, 480) as r`,
+      [tId, fixtureId, attempt, player, crypto.randomUUID(), tScenarios],
+    ).then((q) => q.rows[0].r);
+
+  const [fixtureOne, fixtureTwo] = getReadyFixtures(tState);
+  const [pA, pB] = [fixtureOne.playerA, fixtureOne.playerB];
+  const bystander = tPlayers.slice(0, 6).find((p) => p !== pA && p !== pB)!;
+
+  const notTheirs = await sqlRefusal(() => openLeg(fixtureOne.id, 1, bystander));
+  check("somebody not in the fixture cannot open a leg of it", /TN403/.test(notTheirs ?? ""), notTheirs ?? "went through");
+
+  const staleAttempt = await sqlRefusal(() => openLeg(fixtureOne.id, 2, pA));
+  check("an attempt that is not the fixture's current one is refused", /TN409/.test(staleAttempt ?? ""),
+    staleAttempt ?? "went through");
+
+  const legOne = await openLeg(fixtureOne.id, 1, pA);
+  const legOneMatch = await db.query<{ rated: boolean; status: string; sides: number }>(
+    `select m.rated, m.status::text as status,
+            (select count(*)::int from match_sides s where s.match_id = m.id) as sides
+       from matches m where m.id = $1`,
+    [legOne.matchId],
+  );
+  check("the first press opens a one-sided, unrated first leg",
+    legOne.created && legOne.leg === 1 && legOneMatch.rows[0]?.rated === false &&
+      legOneMatch.rows[0]?.sides === 1 && legOneMatch.rows[0]?.status === "awaiting_runs",
+    JSON.stringify({ ...legOne, ...legOneMatch.rows[0] }));
+
+  const again = await openLeg(fixtureOne.id, 1, pA);
+  check("pressing it again hands back the same match", !again.created && again.matchId === legOne.matchId);
+
+  const early = await sqlRefusal(() => openLeg(fixtureOne.id, 1, pB));
+  check("the other player cannot answer while the first leg is being played", /TN409/.test(early ?? ""),
+    early ?? "went through");
+
+  await db.exec(
+    `update match_sides set deltas = '{0.01,0.03,0.05}', match_score = 0.03,
+            submitted_at = now()
+      where match_id = '${legOne.matchId}' and player_id = '${pA}'`,
+  );
+  await db.exec(`update matches set status = 'settled' where id = '${legOne.matchId}'`);
+
+  const legTwo = await openLeg(fixtureOne.id, 1, pB);
+  const legTwoCheck = await db.query<{ same: boolean; frozen: string | null; sides: number; rated: boolean }>(
+    `select (select scenario_ids from matches where id = $1) = (select scenario_ids from matches where id = $2) as same,
+            (select deltas::text from match_sides where match_id = $1 and player_id = $3) as frozen,
+            (select count(*)::int from match_sides where match_id = $1) as sides,
+            (select rated from matches where id = $1) as rated`,
+    [legTwo.matchId, legOne.matchId, pA],
+  );
+  const l2 = legTwoCheck.rows[0];
+  check("once it has settled, the answer is built from it: same three, their frozen side, unrated",
+    legTwo.created && legTwo.leg === 2 && l2.same && l2.frozen === "{0.01,0.03,0.05}" && l2.sides === 2 && l2.rated === false,
+    JSON.stringify(l2));
+
+  // A player already in another live match cannot open a leg. The same rule as the queue.
+  const [pC] = [fixtureTwo.playerA];
+  const elsewhere = await db.query<{ id: string }>(
+    `insert into matches (mode, category, benchmark_name, difficulty, seed, scenario_ids, status, expires_at)
+     values ('async', 'Any', 'Season 1', 'Intermediate', 'busy', '{1,2,3}', 'awaiting_runs', now() + interval '1 hour')
+     returning id`,
+  );
+  await db.exec(`insert into match_sides (match_id, player_id) values ('${elsewhere.rows[0].id}', '${pC}')`);
+  const busy = await sqlRefusal(() => openLeg(fixtureTwo.id, 1, pC));
+  check("a player with another live match cannot open a leg", /TN409/.test(busy ?? "") && /current match/.test(busy ?? ""),
+    busy ?? "went through");
+
+  check("a second first leg for the same attempt is refused by the key",
+    await refused(() => db.exec(
+      `insert into tournament_legs (tournament_id, fixture_id, attempt, leg, player_id, match_id)
+       values ('${tId}', '${fixtureOne.id}', 1, 1, '${pB}', '${elsewhere.rows[0].id}')`)));
+
+  // The second leg settles as a win for its player; fold it in the way the server does.
+  await db.exec(
+    `update match_sides set result = 'win', match_score = 0.04 where match_id = '${legTwo.matchId}' and player_id = '${pB}'`,
+  );
+  await db.exec(`update matches set status = 'settled' where id = '${legTwo.matchId}'`);
+
+  const receipt = receiptFor(fixtureOne.id, 1, legTwo.matchId, { kind: "win", winnerId: pB });
+  const decided = recordResult(tState, receipt);
+  const commitTo = (expected: number, next: Tournament) =>
+    db.query<{ r: string | null }>(
+      `select tournament_commit($1::uuid, $2::bigint, $3::jsonb, $4::jsonb, $5::jsonb, $6::uuid,
+                                'result', null, '{}'::jsonb) as r`,
+      [
+        tId, expected, JSON.stringify(next),
+        JSON.stringify(next.entrants.map((e) => ({ player_id: e.id, seed: e.seed, checked_in: e.checkedIn }))),
+        JSON.stringify({ ...receipt, matchId: legTwo.matchId }),
+        legTwo.matchId,
+      ],
+    ).then((q) => q.rows[0].r);
+
+  const committed = await commitTo(tState.revision, decided);
+  const afterCommit = await db.query<{ revision: string; members: number; ingested: boolean; receipts: number; logged: number }>(
+    `select (select revision from tournaments where id = $1)::text as revision,
+            (select count(*)::int from tournament_members where tournament_id = $1) as members,
+            (select ingested_at is not null from tournament_legs where match_id = $2) as ingested,
+            (select count(*)::int from tournament_receipts where tournament_id = $1) as receipts,
+            (select count(*)::int from tournament_log where tournament_id = $1) as logged`,
+    [tId, legTwo.matchId],
+  );
+  const ac = afterCommit.rows[0];
+  check("a commit moves the revision and lands its members, receipt, leg and log line together",
+    Number(committed) === decided.revision && Number(ac.revision) === decided.revision &&
+      ac.members === 6 && ac.ingested && ac.receipts === 1 && ac.logged === 1,
+    JSON.stringify({ committed, ...ac }));
+
+  const stale = await commitTo(tState.revision, decided);
+  check("a writer holding the old revision gets nothing written", stale === null, String(stale));
+
+  check("a state that does not move the revision forward is refused",
+    await refused(() => commitTo(decided.revision, decided)));
+
+  const afterStale = await db.query<{ receipts: number }>(
+    `select count(*)::int as receipts from tournament_receipts where tournament_id = $1`, [tId],
+  );
+  check("and the refused writes left no second receipt behind", afterStale.rows[0].receipts === 1);
+
+  check("a receipt cannot be edited after the fact",
+    await refused(() => db.exec(`update tournament_receipts set outcome = '{"kind":"void"}' where tournament_id = '${tId}'`)));
+  check("a second receipt for the same match is refused",
+    await refused(() => db.exec(
+      `insert into tournament_receipts (tournament_id, receipt_id, fixture_id, attempt, match_id, outcome)
+       values ('${tId}', 'other', '${fixtureOne.id}', 1, '${legTwo.matchId}', '{"kind":"win"}')`)));
+  check("two players cannot hold the same seed",
+    await refused(() => db.exec(`update tournament_members set seed = 1 where tournament_id = '${tId}'`)));
+
+  const decidedFixture = await sqlRefusal(() => openLeg(fixtureOne.id, 1, pA));
+  check("a decided fixture opens nothing", /TN409/.test(decidedFixture ?? ""), decidedFixture ?? "went through");
+
+  let hostAgain = createTournament(crypto.randomUUID(), {
+    name: "Second Cup", groupCount: 2, groupSize: 3, qualifiers: 1, seeding: "seeded", randomSeed: "x",
+  });
+  check("a host cannot run two live tournaments at once",
+    await refused(() => insertTournament(hostAgain.id, tPlayers[0], hostAgain)));
+  hostAgain = createTournament(crypto.randomUUID(), { ...hostAgain.config });
+  await insertTournament(hostAgain.id, tPlayers[6], hostAgain);
+  check("but somebody else can", true);
+
+  await db.exec(`delete from tournaments where id = '${tId}'`);
+  const leftovers = await db.query<{ n: number }>(
+    `select ((select count(*) from tournament_members where tournament_id = $1) +
+             (select count(*) from tournament_legs where tournament_id = $1) +
+             (select count(*) from tournament_receipts where tournament_id = $1) +
+             (select count(*) from tournament_log where tournament_id = $1))::int as n`,
+    [tId],
+  );
+  check("deleting a tournament leaves nothing of it behind", leftovers.rows[0].n === 0, `${leftovers.rows[0].n} rows`);
 
   // Runs must be append-only.
   const runPolicies = policies.rows.filter((p) => p.tablename === "runs");

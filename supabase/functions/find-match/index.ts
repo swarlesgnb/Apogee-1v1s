@@ -149,7 +149,11 @@ Deno.serve(handler(async (req, admin) => {
     )
     .not("match_score", "is", null)
     .neq("player_id", caller.playerId)
-    .eq("matches.window_index", body.window);
+    .eq("matches.window_index", body.window)
+    // Never a tournament leg. Those run sets were played for one fixture against one named
+    // person, and drawing them into the pool would hand a stranger a rated match against a
+    // performance its owner agreed to only as unrated.
+    .eq("matches.rated", true);
 
   if (body.category !== ANY_CATEGORY) {
     candidateQuery = candidateQuery.eq("matches.category", body.category);

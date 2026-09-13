@@ -130,6 +130,42 @@ check("a consistently winning player climbs", climber.rating > 1800,
 check("their RD converges and stays bounded", climber.rd < 100 && climber.rd > 20,
   `${climber.rd.toFixed(1)}`);
 
+console.log("\n── duel farming does not pay ────────────────────");
+
+// Duels let a player choose their opponent, which no queued match does, so "pick weak
+// opponents and grind" is the obvious exploit to look for. There is no rule against it
+// because the arithmetic already refuses, and FAIR-PLAY.md prints this table as the
+// reason - so it is derived here rather than asserted there. If these numbers move, the
+// document is wrong and this fails.
+const farmer: Rating = { rating: 1800, rd: 60, volatility: 0.06 };
+const settled = (rating: number): Rating => ({ rating, rd: 60, volatility: 0.06 });
+
+console.log("    opponent   win      loss     losing costs");
+let lastGain = Infinity;
+let monotonic = true;
+for (const opponent of [1800, 1600, 1400, 1200, 1000, 800]) {
+  const gain = updateRating(farmer, [{ opponent: settled(opponent), score: 1 }]).rating - farmer.rating;
+  const cost = farmer.rating - updateRating(farmer, [{ opponent: settled(opponent), score: 0 }]).rating;
+  if (gain >= lastGain) monotonic = false;
+  lastGain = gain;
+  console.log(
+    `    ${String(opponent).padEnd(10)} ${("+" + gain.toFixed(2)).padStart(7)}` +
+      `  ${("-" + cost.toFixed(2)).padStart(7)}  ${(cost / gain).toFixed(1)}x`,
+  );
+}
+check("beating a weaker opponent pays less the weaker they are", monotonic);
+
+// The two figures FAIR-PLAY.md quotes in prose, so the sentence cannot drift from the
+// table above it.
+const gain400 = updateRating(farmer, [{ opponent: settled(1400), score: 1 }]).rating - farmer.rating;
+const cost400 = farmer.rating - updateRating(farmer, [{ opponent: settled(1400), score: 0 }]).rating;
+check("400 points down, a win is worth under two points",
+  gain400 < 2, `${gain400.toFixed(2)}`);
+check("and the upset loss still costs nearly a full one",
+  cost400 > 18, `${cost400.toFixed(2)}`);
+check("so losing costs at least 9x the win at that gap",
+  cost400 / gain400 > 9, `${(cost400 / gain400).toFixed(1)}x`);
+
 console.log("\n── helpers ──────────────────────────────────────");
 
 const even = winProbability(base, base);

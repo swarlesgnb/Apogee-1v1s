@@ -37,8 +37,14 @@ create table duels (
   match_id          uuid not null references matches (id) on delete cascade,
 
   -- The contested match created on accept. Null until then, which also makes it the
-  -- repair flag: 'accepted' with nothing here is a function that died between the
-  -- two writes, and the sweep reopens it.
+  -- repair flag: 'accepted' with nothing here is a function that died between the two
+  -- writes.
+  --
+  -- answer-duel claims by compare-and-swap and releases in a catch, so an error during
+  -- the accept reopens the duel. A hard death (timeout, eviction) runs no catch, and
+  -- nothing reopens those: sweepStaleMatches does not read this table. An earlier
+  -- version of this comment claimed a sweep that was never written. duels_answer_idx
+  -- below already indexes exactly the stuck rows, for when one is.
   answer_match_id   uuid references matches (id) on delete set null,
 
   status            duel_status not null default 'open',

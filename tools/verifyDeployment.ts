@@ -490,6 +490,11 @@ async function main(): Promise<void> {
     "send-duel",
     "answer-duel",
     "list-duels",
+    // A tournament mutates a shared aggregate and play-fixture creates matches, so none of
+    // the three may answer a caller who is not somebody.
+    "list-tournaments",
+    "tournament-action",
+    "play-fixture",
   ];
   for (const name of authedFunctions) {
     const res = await fetch(`${fnBase}/${name}`, {
