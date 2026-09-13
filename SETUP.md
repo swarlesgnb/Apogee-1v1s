@@ -4,10 +4,9 @@ Two halves: creating the Supabase project the client talks to, and running the c
 itself. Assumes no prior Supabase experience. Roughly 20 minutes, most of it waiting for
 the project to provision.
 
-Everything on the code side is already done and verified: the schema applies cleanly to
-a real Postgres, the seed loads, and the row-level security policies are proven correct
-(`npm run validate:schema`). This is only about pointing it at a live project and
-getting a window on screen.
+The code side needs nothing: the schema applies cleanly to a real Postgres, the seed
+loads, and the row-level security policies pass `npm run validate:schema`. What follows
+is pointing it at a live project and getting a window on screen.
 
 If the backend is already deployed and you only want the app running, skip to
 [§6, Run the client](#6-run-the-client).
@@ -76,8 +75,9 @@ for help.
 
 ## 3. Fill in `.env`
 
-A `.env` file has been created for you with the blanks marked. Open it and paste each
-value after its `=`, with no quotes and no spaces. The value is read verbatim to the end
+Copy `.env.example` to `.env` (`cp .env.example .env`, or `copy .env.example .env` in
+PowerShell); the blanks are marked. Paste each value after its `=`, with no quotes and no
+spaces. The value is read verbatim to the end
 of the line, so a stray quote becomes part of the key:
 
 ```
@@ -135,7 +135,7 @@ npx supabase login                            # interactive; needs a real termin
 npx supabase link --project-ref <ref>
 npx supabase db push --yes                    # tables, policies, triggers
 npm run sync:reference                        # scenarios, score models, world records
-npm run deploy:functions                      # all eight of them
+npm run deploy:functions                      # every one of them
 npx supabase secrets set \
   STEAM_AUTH_FUNCTION_URL=https://<ref>.supabase.co/functions/v1/steam-auth
 npm run verify:deployment                     # proves it against the live API
@@ -144,7 +144,7 @@ npm run verify:deployment                     # proves it against the live API
 Append `STEAM_WEB_API_KEY=...` to that `secrets set` line if you have one. The command
 takes any number of assignments, so setting just the one is fine.
 
-Three things that are easy to get wrong, all of which bit during the real deploy:
+Three mistakes, all of which happened during the real deploy:
 
 - Do not reach for `--include-seed`. `db push` on its own does not apply the seed,
   which is what sends people looking for the flag, but `--include-seed` **silently skips
@@ -154,12 +154,12 @@ Three things that are easy to get wrong, all of which bit during the real deploy
   upsert that never touches player rows, and can be re-run whenever reference data
   changes.
 
-- All eight functions have to go up, not just `steam-auth`.
+- Every function has to go up, not just `steam-auth`.
   `npm run deploy:functions` does them in one pass. `verify:deployment` asserts every one
   is live, so deploying only the auth bridge fails verification in a way that looks like a
   broken deploy rather than an incomplete one.
 
-- **`SUPABASE_*` names are reserved.** Supabase injects `SUPABASE_URL`,
+- `SUPABASE_*` names are reserved. Supabase injects `SUPABASE_URL`,
   `SUPABASE_SERVICE_ROLE_KEY` and friends into every Edge Function automatically, and
   refuses to let you set them as secrets. Only the custom `STEAM_*` names need setting,
   which is why `secrets set --env-file .env` is the wrong command here.
@@ -180,9 +180,12 @@ npm run deploy:functions
 | `refresh-baselines` | yes | Recomputes a player's baselines when their run history changes underneath them |
 | `refresh-apex` | yes | Recomputes a player's post-rank standing from their KovaaK's-verified bests, for the public apex board |
 | `apex-board` | yes | Serves the public apex leaderboard, joining display names with the service role so `apex_standing` never has to be world-readable |
+| `send-duel` | yes | Creates a seeding match addressed at one named player, plus the `duels` row pointing at it |
+| `answer-duel` | yes | Accepts, declines, or withdraws a duel; accepting builds the contested match from the challenger's side |
+| `list-duels` | yes | Everything the duel panel shows, with names joined under the service role since `players` is owner-only |
 
 Every function except `steam-auth` requires a session, and `npm run verify:deployment`
-asserts all seven refuse anonymous callers. It goes one step further for `find-match` and
+asserts they refuse anonymous callers. It goes one step further for `find-match` and
 `settle-match`, the two that can move a rating on their own, and proves they also
 refuse the anon key as a caller identity. The anon key identifies the app, never a player.
 
@@ -229,10 +232,10 @@ A running window keeps the bundle it started with, so a client change needs a re
 `npm run verify:deployment` checks the claims the design rests on against the deployed
 project, not a local copy:
 
-- 248 scenarios, 261 benchmark memberships, readable with the anon key
+- 1,498 scenarios and 261 benchmark memberships, readable with the anon key
 - the anon key cannot write to `ratings`, `matches`, `scenarios`, or `runs` (401)
 - an anonymous reader sees no other player's rows
-- all five authenticated functions are deployed and refuse anonymous callers
+- every authenticated function is deployed and refuses anonymous callers
 - `steam-auth` answers without a JWT, because Steam's servers call it directly and
   cannot supply one
 - `/start` redirects to Steam's OpenID endpoint with our callback as the return address

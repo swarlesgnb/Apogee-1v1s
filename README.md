@@ -7,46 +7,46 @@ are read straight from the stats folder, never typed in.
 See [PLAN.md](PLAN.md) for the full design: match format, rating, anti-cheat, and the
 phased build.
 
-Before installing, three things worth reading rather than assuming:
-[PRIVACY.md](PRIVACY.md): exactly what is uploaded and what is not.
-[FAIR-PLAY.md](FAIR-PLAY.md): what the anti-cheat catches, what it cannot, and how to
-dispute a voided match.
-[TERMS.md](TERMS.md): what the service asks of you and what it does not promise.
-All three are linked from the bottom of the client's rail as well.
+Before installing, read these. All three are also linked from the bottom of the
+client's rail.
+
+- [PRIVACY.md](PRIVACY.md): what is uploaded and what is not.
+- [FAIR-PLAY.md](FAIR-PLAY.md): what the anti-cheat catches, what it cannot, and how to
+  dispute a voided match.
+- [TERMS.md](TERMS.md): what the service asks of you and what it does not promise.
 
 ## Status
 
 | Phase | | |
 |---|---|---|
 | 0 | Scenario taxonomy | done, 1,386 of 1,487 scenarios with aim type and board id |
-| 0b | Benchmark data pipeline | done, 121 benchmarks, real thresholds |
-| 1 | Stats parser + validation | done, 100% of 12,080 real files, 0 exceptions |
+| 0b | Benchmark data pipeline | done, 128 benchmarks, real thresholds |
+| 1 | Stats parser + validation | done, 100% of 12,941 real files, 0 exceptions |
 | 2 | History, baselines, ranks, weakness map | done, engine matches KovaaK's exactly |
 | 3 | Apogee rank theme + visual editor | done, 8 named tiers |
 | 4 | Supabase schema, Steam auth, run upload | done, deployed and verified live |
 | 5 | Verification: local integrity + KovaaK's cross-check | done, 0% false positives |
 | 6 | Glicko-2, scenario selection, settlement, matchmaking | done, ladder sorts at r=0.998 |
 | 7 | Client UI | done, interactive preview on real data |
-| 8 | Quests from a pasted evxl link | done, all 121 benchmarks trackable |
+| 8 | Quests from a pasted evxl link | done, all 128 benchmarks trackable |
 | 9 | Electron desktop client | done, boots, watches, renders |
 | 10 | Closed beta | gated on population, preflight built |
 | 11 | Live sync matchmaking | done, starvation-free, awaiting population |
-| 12 | Server-side match engine | done, 6 Edge Functions deployed, `refresh-apex` awaiting |
+| 12 | Server-side match engine | done, 11 Edge Functions live; the 3 tournament functions are not deployed yet |
 | 13 | Client wired to the backend | done, sign-in + upload + match loop live |
 | 14 | First real match | **waiting on a benchmark run** |
-| 15 | Apex board, past the top of the ladder | built and validated, ships with phase 12's deploy |
+| 15 | Apex board, past the top of the ladder | done, deployed |
 
-### Where things actually stand
+### Where things stand
 
 The whole loop is built, deployed and verified against the live project: Steam sign-in,
 run backfill, run upload, verification, matchmaking, settlement and rating all work end
 to end. Eleven thousand real runs have been uploaded and graded, and baselines are
 computed from them.
 
-What has never happened is a settled match, and no amount of code will change that.
-Settling one needs a second player, and the queue stays empty until somebody other than
-the author plays a category through. That is the honest status: this is finished
-software waiting on a population, not a work in progress.
+No match has settled yet. Settling one needs a second player, and the queue stays empty
+until somebody other than the author plays a category through. The code is written; what
+is missing is a population.
 
 ## Quick start
 
@@ -76,16 +76,17 @@ as the player base grows.
 Eight tiers run from Stargazer to Supernova, defined in `data/apogee_ranks.json`.
 Nothing in the code keys off the names, so they can be renamed freely.
 
-This is the *rating* ladder, and it is one of seven. The six category ladders and the
-season's overall standing live in `data/seasons/season-1.json` and are edited in the
-app's Season tab. All of them use separate names and separate hue bands, on purpose.
+This is the *rating* ladder. The season's overall standing reuses its eight names, and
+each of the six category ladders has sixteen of its own, with no name shared between
+them. Both live in `data/seasons/season-1.json` and are edited in the app's Season
+editor.
 
 ### The colours match the names
 
-Every rank colour is chosen for the thing the rank is called: Arecibo is dish phosphor,
-Supernova is the orange of one, Blunderbuss is old brass and Photon Lance is white. That
-is the point of them, so nothing re-derives them from a formula. A ladder people talk
-about by name should look like the names.
+Every rank colour is chosen for the thing the rank is called: Arecibo is dish-phosphor
+green, Supernova is red, Blunderbuss is old brass and Photon Lance is a blue beam.
+Nothing re-derives them from a formula: a ladder people talk about by name should look
+like the names.
 
 Open `tools/rank-theme-editor.html` in a browser to edit the palette visually: badges,
 ladder distribution, a match card built from real scores, and the promotion moment all
@@ -93,7 +94,7 @@ update live. Copy the generated JSON back into `data/apogee_ranks.json`, then ru
 `npm run ranks` to confirm the bands still tile 0 to 100 with no gap or overlap.
 
 `npm run ranks` also reports, without failing, any colour that would disappear against a
-light ground - a screenshot or a web page. Some of them do, deliberately. The dark side is
+light ground, such as a screenshot or a web page. Some of them do, deliberately. The dark side is
 handled at draw time by `legibleOnDark()` in the renderer, which lifts a colour just far
 enough to be visible without changing what it is. `npm run docs:ranks` renders every rank
 name on both grounds if you want to look.
@@ -103,7 +104,7 @@ name on both grounds if you want to look.
 ```
 data/
   scenario_taxonomy.json     1,487 scenarios, aim types, leaderboard ids, play counts
-  evxl_registry.json         121 benchmarks with KovaaK's ids + rank colours
+  evxl_registry.json         128 benchmarks with KovaaK's ids + rank colours
   subskills.json             the eleven sub-skills, derived from what 43 benchmarks
                              call their own scenarios, and the evidence for each
   subcategories.json         the nine Voltaic sub-categories, from Voltaic's sheet
@@ -140,7 +141,7 @@ Nothing here is guessed or hand-transcribed.
 - The eleven sub-skills are derived from the category names the benchmarks themselves
   publish, normalised and counted in `data/subskills.json`. Nine of them are Voltaic's,
   and the derivation reproduces Voltaic's published spreadsheet on all 106 of their
-  scenarios - which is the check that makes the same treatment of everybody else's
+  scenarios, which is the check that makes the same treatment of everybody else's
   believable. Two are named by benchmarks Voltaic's sheet cannot see: Micro Clicking by
   eight of them, Reading Tracking by seven. Every family in `data/pool.json` declares its
   own, and `npm run validate:pool` holds the declaration to the derivation.
@@ -148,8 +149,8 @@ Nothing here is guessed or hand-transcribed.
 All of these are build-time steps. The results are committed to `data/`, so the app never
 depends on any of those services being reachable at runtime.
 
-To refresh, in this order - the taxonomy needs the benchmark definitions, and the
-sub-skills need the taxonomy:
+To refresh, run these in order (the taxonomy needs the benchmark definitions, and the
+sub-skills need the taxonomy):
 
 ```bash
 npm run fetch:evxl                              # cached 24h; --force to re-ask
@@ -167,13 +168,14 @@ Deployed and verified. See [SETUP.md](SETUP.md) for the full walkthrough.
 ```bash
 npm run validate:schema       # applies migrations + seed to Postgres-in-WASM, no Docker
 npm run verify:deployment     # proves RLS, auth and the match engine against the live project
-npm run deploy:functions      # redeploy all eight Edge Functions
+npm run deploy:functions      # redeploy every Edge Function
 npm run sync:reference        # push updated reference data (the seed will not)
 ```
 
-Eight Edge Functions carry the server side. `steam-auth` is deliberately public because
-Steam's servers call it directly; the other seven require a session, and verification
-asserts they refuse both anonymous callers and the anon key.
+The Edge Functions carry the server side. `steam-auth` is deliberately public because
+Steam's servers call it directly; the rest require a session. Verification asserts they
+refuse anonymous callers, and that `find-match` and `settle-match` also refuse the anon
+key.
 
 The functions import the shared core straight from `src/core`, so settlement, Glicko-2
 and the integrity checks are the *same* code the local validation suites exercise, with
@@ -182,9 +184,8 @@ no second implementation to drift.
 ### What is not wired yet
 
 Nothing, on the client side: it signs in over Steam, backfills its run history, and
-calls `find-match`, `submit-run` and `settle-match` for real. What has never happened is
-a settled match, because settling one needs an opponent and the pool stays empty until
-somebody plays a category through once.
+calls `find-match`, `submit-run` and `settle-match` for real. The missing piece is an
+opponent, as described under Status.
 
 `validate:schema` is the useful one during development: it runs the whole migration and
 seed against a real Postgres compiled to WASM, so schema errors surface without Docker,
@@ -244,8 +245,8 @@ were corrected rather than kept:
 Score models are the strongest check, and were discovered rather than designed.
 Most scenarios score as a fixed multiple of a countable stat (`Frogtagon = kills * 10`,
 `Aether = hitCount * 1`), so the score can be re-derived from the run's own counters.
-219 scenarios modelled (77.4%), and a +1% score edit is caught. Scenarios with no
-model skip the check rather than failing it.
+221 scenarios have a model, covering 9,576 of 11,896 real runs (80.5%), and a +1% score
+edit is caught. Scenarios with no model skip the check rather than failing it.
 
 ```bash
 npm run build:score-models    # rebuild data/score_models.json from your corpus
@@ -286,6 +287,25 @@ Matchmaking is asynchronous: you are matched against a stored run set from someo
 near your rating. It works with one player online, which is what makes launch survivable
 (PLAN.md §6). Live mode reuses all of it and adds only a queue and a countdown.
 
+### Duels
+
+A match aimed at one named player instead of at the pool. Pick somebody off the roster,
+play your three scenarios, and it sits in their inbox for seven days; accepting builds
+an ordinary contested match against the side you left behind. Nothing about settlement,
+rating or verification is different: a duel is the seeding match that already existed,
+with a name attached, and the ladder cannot
+tell the two apart afterwards.
+
+The other player cannot see your score until they answer. It is never copied onto the
+duel, so accepting is a decision made blind; being able to read it first would be
+cherry-picking, which the queue also refuses in the other direction.
+
+If they never answer, the session still counts. Your three runs settle as a seeding
+match regardless and go into the pool, where the ordinary queue can draw them.
+
+The friends list beside the picker is a one-sided shortlist. Adding somebody tells them
+nothing and decides nothing; it just puts them at the top of your own list.
+
 ### The baseline, corrected by measurement
 
 The baseline is the centre every match is measured from. The first implementation used
@@ -315,7 +335,7 @@ npm run compare:baselines    # reproduce the table above on your own history
 ## Quests
 
 Quests are generated against whichever benchmark the player tracks. Paste any evxl
-link. All 121 benchmarks in the registry are trackable, resolved entirely
+link. All 128 benchmarks in the registry are trackable, resolved entirely
 offline from committed data.
 
 Resolution refuses to guess: an ambiguous name (`"Voltaic"` matches S3, S4, S5, S5.5)
@@ -324,7 +344,7 @@ resolves to nothing rather than silently tracking the wrong season.
 ## Practice: the season without the queue
 
 The season is a benchmark, and grinding it should not require an opponent. The Season
-screen shows the pool **one difficulty at a time**, the way every benchmark it is drawn
+screen shows the pool one difficulty at a time, the way every benchmark it is drawn
 from is played, grouped by category and sub-skill and no further, with your personal
 best, the score the next rank wants, and a **Play** button that deep-links straight into
 KovaaK's. Rows your next rank is actually scored on are highlighted, and the screen opens
@@ -337,13 +357,17 @@ not shown: `Reactive Tracking` is one list, not two called `Ground Plaza` and
 ### You are grinding other benchmarks at the same time
 
 Nothing in the pool was invented. Every family was picked out of the corpus the community
-already grades itself against, and **197 of the 208 scenarios appear in at least one of the
-43 benchmarks under `data/benchmarks/`** - a third of them in two or more. Voltaic S5 shares
-34 of them, Viscose 28, Astro Tracking 19; thirty-three benchmarks in total.
+already grades itself against, and 146 of the 156 scenarios appear in at least one of the
+43 benchmarks under `data/benchmarks/`, 51 of them in two or more. Viscose shares 27 of
+them, Astro Tracking and Viscose S2 15 each; thirty-seven benchmarks in total. Voltaic's
+own seasons are deliberately a small part of it (8 scenarios from S5, 7 from S4, 6 from
+S5.5), so an evening on this ladder is mostly scenarios a Voltaic grinder isn't already
+playing.
 
 So each row carries a mark per benchmark that names it, in that benchmark's own colour,
-filled in once your score holds a rank there. `1wall5targets_pasu Reload` is one scenario
-and five ladders: Viscose Medium, Aimerz+ Easy and Hard, Sparky S1, snakbox Medium.
+filled in once your score holds a rank there. `voxTargetSwitch 2` is one scenario and
+five ladders: Aimerz+ SpeedTS Easy and Hard, Viscose Medium, Viscose S2 Medium and
+AimSpeed 2.0 Normal.
 
 The rank is always per *scenario*, never per benchmark. Every benchmark file publishes
 score thresholds for the scenarios it names, so "this score is Cerulean in Viscose" is read
@@ -355,19 +379,19 @@ benchmark.
 How far through its *current* rank step a score is fills the row itself, measured from
 the threshold already cleared rather than from zero. Measured from zero, everything you
 have touched reads as nearly full and the fill says nothing. Filling the row rather than
-a bar inside it means a band of twenty-two is one ragged edge to scan down instead of
-twenty-two gauges to read one at a time.
+a bar inside it means a band of thirty-nine is one ragged edge to scan down instead of
+thirty-nine gauges to read one at a time.
 
-For a whole session at one difficulty there are twenty-eight KovaaK's playlists: **each of
-the six categories at each of the four bands**, plus one of everything at each band. They
+For a whole session at one difficulty there are twenty-eight KovaaK's playlists: each of
+the six categories at each of the four bands, plus one of everything at each band. They
 install from the same screen, one at a time or all twenty-eight, straight into KovaaK's own
 Playlists folder.
 
 ```
-Apogee Static Clicking     9      Apogee Speed Switching      9
-Apogee Dynamic Clicking   10      Apogee Evasive Switching    6
-Apogee Precise Tracking   11      Apogee All                 52
-Apogee Reactive Tracking   7
+Apogee Static Clicking     9      Apogee Speed Switching      6
+Apogee Dynamic Clicking    6      Apogee Evasive Switching    6
+Apogee Precise Tracking    6      Apogee All                 39
+Apogee Reactive Tracking   6
 ```
 
 Each of those is four playlists, one per band, ending `Novice`, `Intermediate`, `Advanced`
@@ -411,7 +435,7 @@ That mirrors the server-side rule: the layer that can be tampered with is never 
 layer that decides anything.
 
 The renderer runs with a CSP, context isolation on, and no Node access. Its preload
-exposes eight named capabilities and no generic "invoke any channel" escape hatch.
+exposes 67 named methods and no generic "invoke any channel" escape hatch.
 
 The file watcher waits for a file's size to stop changing before parsing. KovaaK's
 writes stat files progressively, so parsing on the first filesystem event yields a
@@ -449,7 +473,7 @@ they're done.
 
 Reverse-engineered from KovaaK's API and validated against real accounts. Computed
 category and overall progress match the server to within 0.005 energy, and every rank
-matches, across 20 checks (`npm run validate:engine`).
+matches, across 24 checks (`npm run validate:engine`).
 
 - Each scenario threshold `i` is worth `2500 * (i + 1)` energy; between thresholds
   energy interpolates linearly, below the first it scales from zero, above the last it
@@ -464,64 +488,80 @@ requires more energy for the same rank than Clicking, which is easy to get backw
 
 Apogee is built on work other people published, and it would not exist without it.
 
-The benchmark authors. Season 1's pool is 88 scenarios drawn from twenty-three
-benchmarks, and every one of them is somebody's design work. Deciding which scenario
-measures which sub-skill, and at what difficulty, is the hard part, and it was already
-done. Each links to its own published sheet, which is the source Apogee reads rather than
-a hand-copied version of it. The counts overlap, because a scenario several benchmarks
-name is credited to all of them:
+The benchmark authors. Season 1's pool is 156 scenarios, 146 of them named by at least
+one of thirty-seven published benchmarks, and every one of those is somebody's design
+work. Deciding which scenario measures which sub-skill, and at what difficulty, is the
+hard part, and it was already done. Each links to its own published sheet, which is the
+source Apogee reads rather than a hand-copied version of it. The counts overlap, because
+a scenario several benchmarks name is credited to all of them:
 
-- [Viscose Benchmarks](https://docs.google.com/spreadsheets/d/1bFAlt6g_Gm8P9RBkcAoObpbIGFwVS5gXIdIK9B_YyZE) (25 scenarios)
-- [Voltaic S5](https://docs.google.com/spreadsheets/d/1RjVJi9AdWLXIOkKR8z6mhmRo_SNokJPxKtLXHWk12Z4)
-  and [S5.5](https://docs.google.com/spreadsheets/d/1kiS9CvXTQjLsm42nBafhddu2Q7XdWtxaMtumeZ_sV-c) (24 scenarios)
-- [Viscose Benchmarks S2](https://docs.google.com/spreadsheets/d/1WeuEk444WOkTpvOGMYiertxwlI9gRQSapYiwxjFbT08) (18 scenarios)
+- [Viscose Benchmarks](https://docs.google.com/spreadsheets/d/1bFAlt6g_Gm8P9RBkcAoObpbIGFwVS5gXIdIK9B_YyZE) (27 scenarios)
+- [Astro Tracking Benchmark](https://docs.google.com/spreadsheets/d/1KXrXJpCl8xnoa3JuFcthE306Q9R9MOAJWhXj_xXzLOQ) and
+  [Viscose Benchmarks S2](https://docs.google.com/spreadsheets/d/1WeuEk444WOkTpvOGMYiertxwlI9gRQSapYiwxjFbT08) (15 scenarios each)
+- [Aimerz+ S1](https://docs.google.com/spreadsheets/d/1z-XwvdEXZ7rip2ZJ9aVff0-YqrnX6Yluf89f9LBbroc) and
+  [TSK Mixed Benchmarks](https://docs.google.com/spreadsheets/d/1QlmPnGcQ9joO49Fx3wVmEGyYIWzEGlPgDdpfAulAu-E) (13 scenarios each)
 - [snakbox Benchmark](https://evxl.app/benchmarks/snakbox%20Benchmark) (11 scenarios)
-- [Astro Tracking Benchmark](https://docs.google.com/spreadsheets/d/1KXrXJpCl8xnoa3JuFcthE306Q9R9MOAJWhXj_xXzLOQ) (10 scenarios)
-- [Voltaic S4](https://docs.google.com/spreadsheets/d/1qUzF2KHcfs_FgsaDFRfGsLgHhoC1Md5bzMOUbsYzSjg) (9 scenarios)
-- [Voltaic S3](https://docs.google.com/spreadsheets/d/1yHj87rQNW2WsuH24UoKZajNwNpI6CVyUjR3AwBMbnnY) (6 scenarios)
-- [AimSpeed Benchmarks 2.0](https://evxl.app/benchmarks/AimSpeed%20Benchmarks%202.0) (6 scenarios)
-- [Jade Palace Air](https://docs.google.com/spreadsheets/d/11-E1KWTCw27s6fhW4nwB0F_2ckbdv5RDcBiseUcm1E4) (5 scenarios)
-- [Lemon Static Benchmark](https://docs.google.com/spreadsheets/d/1V9lt5BjKLpzoKBPd-4WgStzhKv-javTWaNcISaLJERg) (5 scenarios)
-- [Jade Palace Ground](https://docs.google.com/spreadsheets/d/131tMwNmJY-lJPVdddpOWKY9uajDWWe3I5ym-UzmF0QE) (4 scenarios)
-- [Revosect S1](https://docs.google.com/spreadsheets/d/1MQujX14dooQWcHu4mvvP5fetHVIr7Apg1taR96hSho0) (4 scenarios)
-- [Sparky (Voltaic) S1](https://docs.google.com/spreadsheets/d/1UttTs6aNPzwAWCEKnRUc8hC0AzbZI2esLq4x8ngcVpU) (3 scenarios)
-- [e1se Smooth Benchmark](https://docs.google.com/spreadsheets/d/1IXyjASZHs8yaVgS_os0wMLuvHIdZ2L8wrah_ShjXQ7w) (3 scenarios)
-- [Aimerz+ SpeedTS](https://docs.google.com/spreadsheets/d/1-9-RQ5-a78HF49eMsYcf7PjBkpbgIahpBwTLYSu9RK4) (3 scenarios)
+- [Revosect S1](https://docs.google.com/spreadsheets/d/1MQujX14dooQWcHu4mvvP5fetHVIr7Apg1taR96hSho0) (10 scenarios)
+- [Lemon Static Benchmark](https://docs.google.com/spreadsheets/d/1V9lt5BjKLpzoKBPd-4WgStzhKv-javTWaNcISaLJERg) and
+  [Voltaic S5](https://docs.google.com/spreadsheets/d/1RjVJi9AdWLXIOkKR8z6mhmRo_SNokJPxKtLXHWk12Z4) (8 scenarios each)
+- [Aimerz+ Dynamic Clicking](https://docs.google.com/spreadsheets/d/1HGXrHC-3aMi0F0bmfN7rZE6j2oLGJsvGn3r6uKDrp70) and
+  [Voltaic S4](https://docs.google.com/spreadsheets/d/1qUzF2KHcfs_FgsaDFRfGsLgHhoC1Md5bzMOUbsYzSjg) (7 scenarios each)
+- [Aimerz+ Evasive Switching](https://docs.google.com/spreadsheets/d/1kxI184tdhT55k98gsfCHy_CRBznu84aaJP8PAJg6-dU) and
+  [Voltaic S5.5](https://docs.google.com/spreadsheets/d/1kiS9CvXTQjLsm42nBafhddu2Q7XdWtxaMtumeZ_sV-c) (6 scenarios each)
 - [Aimerz+ Precise Tracking](https://docs.google.com/spreadsheets/d/1czvuvgks1SoMNUH_aevVPm5lOgqCQHa_UVR8izpUxfg),
-  [Reactive Tracking](https://docs.google.com/spreadsheets/d/15VloIkv-V-B3oq4JTbSnIKwsPMwccx2sQEwTohqlprw) and
-  [Evasive Switching](https://docs.google.com/spreadsheets/d/1kxI184tdhT55k98gsfCHy_CRBznu84aaJP8PAJg6-dU) (2 scenarios each)
-- [Viscose Entry Benchmarks](https://docs.google.com/spreadsheets/d/1wMKCKhFQDwGvFgo9KvfbpNYzJ05XQ8gnyXjxNOhdCww) (2 scenarios)
-- [Anima Micro v1](https://docs.google.com/spreadsheets/d/1H8WPvDyOGtSb9f-lNocNxULRDhptG5PlE2mcpyxnaSY),
-  [Anima Micro v2](https://evxl.app/benchmarks/Anima%20Micro%20v2) and
-  [Jade Palace Dynamic](https://docs.google.com/spreadsheets/d/1W_RYk3_xbvsS4BHnTItgkwWIoEVh-dbAWDhAWUyvnZU) (1 scenario each)
+  [AimSpeed Benchmarks 2.0](https://evxl.app/benchmarks/AimSpeed%20Benchmarks%202.0) and
+  [Viscose Entry Benchmarks](https://docs.google.com/spreadsheets/d/1wMKCKhFQDwGvFgo9KvfbpNYzJ05XQ8gnyXjxNOhdCww) (5 scenarios each)
+- [Aimerz+ S0](https://evxl.app/benchmarks/Aimerz%2B%20S0),
+  [Aimerz+ Static Clicking](https://docs.google.com/spreadsheets/d/1rvrijNj9JY4WHhrWrojtk_Q2hvsFzO2-laUsPHxOMSs),
+  [Community Benchmarks](https://docs.google.com/spreadsheets/d/1X43zejitcxnCwN6DJmInrouG4m-eNup8sBqCOdk93eg),
+  [Jade Palace Air](https://docs.google.com/spreadsheets/d/11-E1KWTCw27s6fhW4nwB0F_2ckbdv5RDcBiseUcm1E4) and
+  [SuperbAim S2](https://docs.google.com/spreadsheets/d/1u3aMTs-jM1zvXdsjtXh5hWSGnANJG7nUWCidQyvWQw4) (4 scenarios each)
+- [Aimerz+ SpeedTS](https://docs.google.com/spreadsheets/d/1-9-RQ5-a78HF49eMsYcf7PjBkpbgIahpBwTLYSu9RK4),
+  [e1se Smooth Benchmark](https://docs.google.com/spreadsheets/d/1IXyjASZHs8yaVgS_os0wMLuvHIdZ2L8wrah_ShjXQ7w),
+  [Jade Palace Dynamic](https://docs.google.com/spreadsheets/d/1W_RYk3_xbvsS4BHnTItgkwWIoEVh-dbAWDhAWUyvnZU),
+  [Jade Palace Ground](https://docs.google.com/spreadsheets/d/131tMwNmJY-lJPVdddpOWKY9uajDWWe3I5ym-UzmF0QE),
+  [Sparky (Voltaic) S1](https://evxl.app/benchmarks/Sparky%20%28Voltaic%29%20S1) and
+  [Voltaic S3](https://docs.google.com/spreadsheets/d/1yHj87rQNW2WsuH24UoKZajNwNpI6CVyUjR3AwBMbnnY) (3 scenarios each)
+- [Aimerz+ Reactive Tracking](https://docs.google.com/spreadsheets/d/15VloIkv-V-B3oq4JTbSnIKwsPMwccx2sQEwTohqlprw),
+  [Avasive S2](https://docs.google.com/spreadsheets/d/1yF2M1j_FSN5MXz-TdxEnvsdNZ_nFZhGDSBrygWFJdDE),
+  [cA Static S1](https://docs.google.com/spreadsheets/d/18YMQQZs7qy2xKxCEwHkTG4DeQTuEr0Z05cmAIvuuieE) and
+  [Revosect S5](https://docs.google.com/spreadsheets/d/1aHN2bdUehBtmx5COqsMT1q8SN_JImQYUfsSN73uQyEE) (2 scenarios each)
+- [AimSpeed Benchmarks](https://docs.google.com/spreadsheets/d/1V3UE_NltXh8YL0gYueJ6jarVZy8lxH7xcYT9K_9Z-Jo),
+  [Anima Micro v1](https://docs.google.com/spreadsheets/d/1H8WPvDyOGtSb9f-lNocNxULRDhptG5PlE2mcpyxnaSY),
+  [Anima Micro v2](https://evxl.app/benchmarks/Anima%20Micro%20v2),
+  [PureG S1](https://evxl.app/benchmarks/PureG%20S1),
+  [PureG S2](https://evxl.app/benchmarks/PureG%20S2) and
+  [wobin S1](https://docs.google.com/spreadsheets/d/1XhuTL78YAP4KIR7LfE6w66efKIvICGGmET6wU8zg5fE) (1 scenario each)
 
-Forty-three benchmarks are read in total, not twenty-three. The other twenty set no
-threshold and appear in no season, but they are what `data/subskills.json` is derived
-from: eleven sub-skills, and for each one a count of how many independent authors name
-it. A benchmark that classifies its own scenarios is doing work Apogee would otherwise
-have to guess at, and guessing at it was measurably wrong.
+Forty-three benchmarks are read in total, not thirty-seven. The other six name nothing
+in the pool, but they are part of what `data/subskills.json` is derived from: eleven
+sub-skills, and for each one a count of how many independent authors name it. A
+benchmark that classifies its own scenarios is doing work Apogee would otherwise have to
+guess at, and guessing at it was measurably wrong.
 
-`npm run validate:pool` prints this list from `data/pool.json`, so it stays true when the
+The counts are the benchmark marks the practice list puts on each scenario
+(`originsOf` in `src/core/season/practice.ts`), so they can be re-derived whenever the
 pool changes.
 
-No benchmark's thresholds appear anywhere in a season. Where one is consulted it is
-converted to percentiles and discarded (`tools/calibrateLadder.ts`). A rank in Apogee is
-a share of a scenario's KovaaK's leaderboard, not a borrowed number. An earlier
-hand-derived sub-category mapping turned out to be wrong on 6 of 18 scenarios, which is
-the argument for reading the source and deriving the rest.
+Every threshold in the season records where it came from, and
+`npm run validate:thresholds` counts them: 143 are cut from the scenario's own KovaaK's
+leaderboard, 9 are adopted verbatim from a benchmark that publishes that scenario at that
+difficulty, and 4 are set by hand where the board is too thin for a percentile cut. An
+earlier hand-derived sub-category mapping turned out to be wrong on 6 of 18 scenarios,
+which is the argument for reading the source and deriving the rest.
 
-Apogee's rank names and tiers are deliberately its own. The rating ladder, the three
-category ladders and the season's overall standing use four separate vocabularies and
-four separate hue bands, none of them any benchmark's, so a rank here can never be
+Apogee's rank names are its own. The rating ladder and the season's overall standing
+share the eight names from Stargazer to Supernova, and each of the six category ladders
+has sixteen of its own. None of them is any benchmark's, so a rank here can never be
 mistaken for a Voltaic or Revosect rank in either direction.
 
 [KovaaK's](https://store.steampowered.com/app/824270/) (The Meta) is the game. Every
 score Apogee reads was produced by KovaaK's, and its servers are what make verification
-possible at all: they are the referee, and Apogee is a client of their record rather
-than an authority on its own, driving play *to* KovaaK's rather than away from it.
+possible at all. They are the referee; Apogee reads their record and claims no authority
+of its own, and every match is played in KovaaK's itself.
 
 [evxl.app](https://evxl.app) is the benchmark registry, read from the route it
-publishes, which is what makes 121 benchmarks trackable instead of one hard-coded list.
+publishes, which is what makes 128 benchmarks trackable instead of one hard-coded list.
 
 Scenario and playlist authors, whose scenarios are the actual content of every match.
 
@@ -529,7 +569,15 @@ None of the above endorse Apogee or are responsible for it.
 
 ## Licence
 
-Not yet chosen. Until a `LICENSE` file exists, the default applies: all rights
-reserved, and no permission is granted to copy, modify or redistribute this code. The
-repository being public makes it readable, not reusable. If you want to use something
-here, ask first.
+GNU Affero General Public License, version 3 or later (AGPL-3.0-or-later). The full
+text is in `LICENSE`.
+
+Forking it and running your own ladder is allowed. The condition that matters here is
+the Affero one: Apogee is a desktop client in front of a hosted backend, and a plain GPL
+would let someone run a modified server for other people without ever publishing what
+they changed. Section 13 closes that. If you operate a modified Apogee as a service,
+the people using it are entitled to your source.
+
+Two things the licence does not cover, because they are not this project's to give:
+the benchmark thresholds under `data/` are derived from work by the benchmark authors
+credited above, and the scenarios themselves belong to their authors and to KovaaK's.

@@ -1,9 +1,8 @@
 # What Apogee collects, and what it does not
 
 Apogee reads a folder that another program wrote, and uploads some of it to a server so
-a ladder can be settled. That is worth stating plainly rather than burying, because the
-alternative, a tool that quietly reads your files and sends them somewhere, is exactly
-what people are right to be suspicious of.
+a ladder can be settled. People are right to be suspicious of a tool that reads their
+files and sends them somewhere, so this lists exactly what is sent.
 
 This describes what the software actually does. If something here disagrees with the
 code, the code is the bug.
@@ -80,8 +79,7 @@ deletes the runs, ratings, matches, baselines and quest state with it. There is 
 soft-delete and no archived copy.
 
 To request deletion, open an issue or use the contact address in the README. It is done
-by hand today; that is honest rather than ideal, and it is tracked as something to make
-self-service.
+by hand for now; making it self-service is on the list.
 
 Uninstalling the app removes it from your computer but does not delete server-side data
 on its own; ask for deletion if that is what you want.

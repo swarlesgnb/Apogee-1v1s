@@ -151,8 +151,8 @@ order:
 Matches settled on fallback baselines are marked *provisional* and carry reduced rating
 weight until the player has real history. Apogee's first-run backfill (§10) means an
 existing KovaaK's player skips this entirely: 11,000 historical runs produce real
-baselines instantly. **This is a genuine competitive moat: the app is most accurate for
-exactly the players most likely to try it.**
+baselines instantly. The app is therefore most accurate for exactly the players most
+likely to try it.
 
 ### Categories
 
@@ -380,7 +380,7 @@ primary test account on this machine does not have one. For those players the
 `last-scores` endpoint is unavailable and verification degrades to local checks plus
 benchmark progress, landing at Consistent rather than Verified.
 
-That is a graceful degradation, not a hole: local checks alone already reject every
+The degradation is graceful: local checks alone already reject every
 tampering method tested except ones that cannot inflate a score (§ below). Prompting
 players to link a KovaaK's account (and showing the Verified badge when they do) is
 the natural incentive, and costs nothing to build.
@@ -495,7 +495,7 @@ Verified by mutating genuine runs:
 | Genuine run, incl. legitimately negative scores | correctly accepted |
 | Run cut short by a crash | correctly accepted |
 
-The two gaps are stated rather than hidden. Neither row-level edit can inflate a score,
+Two gaps remain. Neither row-level edit can inflate a score,
 and the unmodelled-scenario gap shrinks as history accumulates and more models are
 learned. Both are covered by server-side verification where a KovaaK's account is
 linked.
@@ -576,8 +576,7 @@ corpus at ×1.25 and looks perfectly good. But at any tighter headroom every run
 is a *clicking* scenario where the player simply got faster (`10 Sphere Hipfire Extra
 Small`, `skyClick Goated Medium`), because the bound was really one player's clicking
 speed. On a real ladder a better player clears it by playing well, and the check accuses
-them for it. A
-tick rate is a fact about the scenario and cannot be outgrown.
+them for it. A tick rate is a fact about the scenario and cannot be outgrown.
 
 Because a learned bound cannot flag the corpus it was learned from, this one was
 measured out of sample as well: each scenario's rate fitted on its earlier runs and
@@ -585,7 +584,7 @@ tested on its later ones. **0.00% of 3,274 runs in sample, 0.00% of 1,559 out of
 sample.** The median rather than the fastest run sets the rate, so one bad training run
 cannot raise the bar for everyone.
 
-The gap left is stated rather than hidden: **a uniform scale-up of under 10% still fits
+One gap is left: **a uniform scale-up of under 10% still fits
 underneath it**, and no local check sees that. It is caught server-side wherever a
 KovaaK's account is linked.
 
@@ -621,6 +620,50 @@ Live mode ships at ~100 concurrent players. The matchmaking, rating,
 verification and settlement layers are identical for both modes; live adds a queue
 server, a countdown, and realtime score reveal, and nothing else. Building async first
 costs nothing later.
+
+### Duels: the half of cold start async does not solve
+
+Async makes a match possible with five users. It gives nobody a reason to come back on
+Tuesday: a pool match is against a stranger's stored run, and nobody notices when a
+player stops. At launch size, the one thing that brings somebody back is a named person
+waiting on an answer.
+
+A duel is a match addressed at somebody rather than at the pool, and it adds no new kind
+of match: the challenger plays the seeding match that already
+exists, and accepting creates the same two-sided contested match `find-match` has
+always created, with the opponent pinned by id instead of chosen by rating.
+Settlement, verification, forfeit and the match clock are untouched, and the `duels`
+table points at matches rather than duplicating anything a match already knows.
+
+Four decisions shape it.
+
+**The challenger plays first**, so sending one is never a wait. It also makes an
+unanswered duel cost nothing: the seeding match settles the way seeding matches always
+have and the run set joins the pool, where the ordinary queue can draw it. A duel that
+expires has still fed the ladder.
+
+**The recipient cannot see the challenger's score before answering.** The score is not
+copied onto the duel row; it lives on the challenger's side of the match, where the
+recipient has no side and therefore no read. Letting them see it first would be
+cherry-picking, which is what find-match's one-open-match rule exists to stop,
+pointed the other way.
+
+**Seven days, not eight minutes.** A match deadline is how long a player has to play three
+scenarios once it is open. A duel's deadline is how long somebody has to *notice* it,
+which is a different quantity by three orders of magnitude. Seven days is a week of
+evenings, which is the unit somebody who plays after work actually has. The constant
+lives in `src/core/match/duels.ts` rather than in the Edge Function's shared module
+because the client draws the countdown too, and a deadline the two disagree about ends
+at the wrong moment on one of them.
+
+**The friends list is one-sided and consent-free.** Adding somebody puts them at the
+top of the adder's picker and sends them nothing. Consent would guard nothing, because
+the roster is already open to everyone signed in and a friends list only reorders it.
+It is the one table in the match area a client may write to directly, for the same
+reason: a forged row only clutters the forger's own picker.
+
+The one new thing a duel lets the client decide is the recipient, which no queued
+match lets it name.
 
 ---
 
@@ -935,9 +978,9 @@ unranked and saw no progress at all, and the top four ranks were a straight line
 real curve steepens, so a strong player cleared all four at once. Both halves of "too
 hard for a newcomer *and* too easy at the top" came from the same mistake.
 
-The fix is not several benchmarks a player chooses between - that re-imports the §4
-confusion one level down, and it makes matchmaking ask a question it should never have to.
-It is four windows of scenarios, each grading six of the sixteen ranks:
+Several benchmarks for a player to choose between would re-import the §4 confusion one
+level down, and make matchmaking ask a question it should never have to. The fix is four
+windows of scenarios, each grading six of the sixteen ranks:
 
 ```
                scenario                   grades ranks
@@ -1075,10 +1118,9 @@ scenario under **Arm**, **Wrist**, **Fingertip** or **Blending**. `deriveSubskil
 it verbatim where an author names it and null everywhere else - **91 scenarios, and zero
 that two authors file differently.**
 
-The number it was scoped on turned out to be the wrong shape, and this is the useful part:
-**all 91 are Tracking.** Not 91 spread across the pool - Viscose names these for tracking
-alone, so it is not a second axis over the six categories but a finer cut inside one aim
-type. Fourteen of the two hundred and eight pool scenarios carry one, which is six of the
+The number it was scoped on turned out to be the wrong shape: **all 91 are Tracking.**
+Viscose names these for tracking alone, so the tag is a finer cut inside one aim type
+rather than a second axis over the six categories. Fourteen of the two hundred and eight pool scenarios carry one, which is six of the
 fifty-two families and none of the other forty-six.
 
 Scoped that way it earns its place, because it splits a sub-skill the sub-skills cannot:
@@ -1092,7 +1134,7 @@ Precise Tracking    Smoothsphere       Arm
 
 Four families Apogee calls the same thing, that Viscose says ask for four different
 motions - the whole of its vocabulary, inside one sub-skill. That is the claim worth
-surfacing, and it is why the tag rides the scenario rather than the sub-skill heading: a
+showing, and it is why the tag rides the scenario rather than the sub-skill heading: a
 single tag over that group would have mislabelled three of the four.
 
 Controlsphere then makes the same argument against itself. Its entry rung is Wrist and the
@@ -1105,6 +1147,15 @@ rank almost nothing while looking like it ranked everything. It stays a label on
 scenarios that have one until an author publishes enough for it to mean more, and
 `validate:pool` prints the coverage every run so that decision is made against a number
 rather than an impression.
+
+**The tile tag goes further than the mechanic, and says so.** Every scenario now carries
+an `arm` in the same four words, with `armFrom` naming whose word it is. Where Viscose
+tags that exact scenario the value is Viscose's, and `validate:pool` fails if the two
+ever disagree or if a published scenario is labelled as anything else. Everywhere else it
+is the season's own call from the family's motion, drawn with a dashed outline and titled
+as a call, never as a citation. The family-level `mechanic` above is untouched and still
+published-only, and nothing ranks on `arm`: the weakness map and the quests argument
+applies to a guessed dimension more strongly than to a sparse one.
 
 ### One benchmark, one opinion
 
@@ -1460,7 +1511,7 @@ Not scheduled. Recorded so they are not lost.
 Queue against *yourself*: your recent run set becomes the opponent, and the match is
 won by beating the version of you that played it.
 
-Worth noting how little this would cost. Async matchmaking already plays a live player
+It would cost very little. Async matchmaking already plays a live player
 against a stored run set (§6), and the only rule stopping a player facing their own
 is one explicit guard in `findOpponent`. Baselines, deltas, settlement and verification
 all work unchanged, because none of them care who the opponent is.

@@ -378,10 +378,10 @@
         competitive ladder, and why each part works the way it does.
       </p>
       <div class="meta">
-        <span><b>138</b> files</span>
-        <span><b>40,392</b> lines</span>
-        <span><b>22</b> validation suites</span>
-        <span><b>8</b> edge functions</span>
+        <span><b>170</b> files</span>
+        <span><b>57,230</b> lines</span>
+        <span><b>26</b> validation suites</span>
+        <span><b>14</b> edge functions</span>
         <span><b>12,080</b> runs uploaded</span>
       </div>
     </header>
@@ -409,7 +409,7 @@
           Everything else in the space is read-only. evxl shows you a number. KovaaK's
           leaderboards tell you that you are #4,182 of 58,017, which means nothing
           emotionally. Voltaic defines a standard, not a game. Nobody owns
-          <em>matched competitive aim</em>, and that gap is the whole opportunity.
+          <em>matched competitive aim</em>; that is the opening.
         </p>
       </div>
     </section>
@@ -418,8 +418,7 @@
     <section id="spine">
       <h2>The spine</h2>
       <p class="lede">
-        A run's journey, end to end. This is the sequence worth memorising; almost every
-        file in the project is a step on it.
+        A run's journey, end to end. Almost every file in the project is a step on it.
       </p>
 
       <div class="exhibit">
@@ -556,8 +555,8 @@
     <section id="concepts">
       <h2>Five concepts</h2>
       <p class="lede">
-        Learn these and the rest of the codebase reads easily. Every number below is from
-        your own data.
+        The rest of the codebase reads easily once these are clear. Every number below is
+        from the real corpus.
       </p>
 
       <h3>1. Baseline — what you normally score</h3>
@@ -573,15 +572,15 @@
       <p>
         A median, not a mean, because it ignores outliers in both directions: one
         disastrous run does not drag it down, one lucky run does not inflate it. The
-        floor at 90% of your KovaaK's-verified PB is what stops sandbagging — you cannot
-        claim a baseline far below what KovaaK's itself vouches you can do.
+        floor at 90% of the player's KovaaK's-verified PB is what stops sandbagging: nobody
+        can claim a baseline far below what KovaaK's itself vouches they can do.
       </p>
 
       <div class="note found">
         <div class="note-label">Corrected by measurement</div>
         <p>
-          The first version used the mean of your best 30% of recent runs, for sandbag
-          resistance. Measured across 156 scenarios of your history it was badly
+          The first version used the mean of the best 30% of recent runs, for sandbag
+          resistance. Measured across 156 scenarios of real history it was badly
           off-centre: only <strong>26%</strong> of genuine runs landed above their own
           baseline, so matches were decided by who avoided a disaster rather than who
           played well. The <em>PB floor</em> turned out to be doing the anti-sandbag work,
@@ -592,7 +591,7 @@
 
       <div class="exhibit">
         <div class="exhibit-head">
-          <span>Four definitions, tested on your history</span>
+          <span>Four definitions, tested on real history</span>
           <span class="src">npm run compare:baselines</span>
         </div>
         <div class="exhibit-body">
@@ -628,8 +627,8 @@ matchScore = mean(delta₁, delta₂, delta₃)     higher wins</pre>
       <div class="note trap">
         <div class="note-label">The cost, and it is real</div>
         <p>
-          <strong>You can score higher and still lose.</strong> That is intended, not a
-          bug — but it reads as broken unless it is explained the moment it happens. Every
+          <strong>You can score higher and still lose.</strong> That is intended, and it
+          reads as broken unless it is explained the moment it happens. Every
           result screen shows raw scores, baselines and deltas together, and
           <code>explainVerdict()</code> names the case in words when it occurs.
         </p>
@@ -682,14 +681,13 @@ gap     = (ceiling − floor) / ceiling</pre>
       </p>
       <div class="exhibit">
         <div class="exhibit-head">
-          <span>Your own numbers · Voltaic S5 Intermediate</span>
+          <span>One player's numbers · Voltaic S5 Intermediate</span>
           <span class="src">npm run consistency</span>
         </div>
         <div class="exhibit-body">
           <p style="max-width:none;margin:0 0 14px;font-size:14px;color:var(--ink-mid)">
             Ceiling <strong>Diamond</strong>, 120,692 energy. Floor
-            <strong>Platinum</strong>, 50,528 energy. <strong>Gap 16.1%</strong> — the
-            single number to close.
+            <strong>Platinum</strong>, 50,528 energy. <strong>Gap 16.1%</strong>.
           </p>
           <table>
             <thead>
@@ -723,7 +721,7 @@ gap     = (ceiling − floor) / ceiling</pre>
             <tbody>
               <tr><td><span class="pill good">verified</span></td><td>KovaaK's servers hold a matching record</td><td>counts fully</td></tr>
               <tr><td><span class="pill">consistent</span></td><td>internally coherent, no server record</td><td>counts fully</td></tr>
-              <tr><td><span class="pill warn">suspect</span></td><td>above your verified PB with no server record</td><td>counts, flagged for review</td></tr>
+              <tr><td><span class="pill warn">suspect</span></td><td>above the player's verified PB with no server record</td><td>counts, flagged for review</td></tr>
               <tr><td><span class="pill bad">rejected</span></td><td>the file disagrees with itself</td><td>voids the match</td></tr>
             </tbody>
           </table>
@@ -732,8 +730,8 @@ gap     = (ceiling − floor) / ceiling</pre>
       <div class="note found">
         <div class="note-label">Why suspect is not rejected</div>
         <p>
-          The original design auto-voided anything above your PB with no server record.
-          Testing that against your data showed it would produce false positives:
+          The original design auto-voided anything above the player's PB with no server
+          record. Testing that against real data showed it would produce false positives:
           <strong>16 of 18</strong> local bests matched KovaaK's exactly, but two did not,
           and both runs were genuine. Roughly <strong>1 in 9</strong> real personal bests
           never reaches KovaaK's servers — offline play, a crash, a failed submit. A rule
@@ -952,7 +950,7 @@ top 1%     2.0        top 0.01%   4.0</pre>
       <p>
         <strong>The handover had to be floored.</strong> The two samplings disagree by up to
         0.247% where they meet, because the fractional points interpolate linearly across a
-        convex curve. Left alone that is not untidy but exploitable: where the distribution
+        convex curve. Left alone that is exploitable: where the distribution
         read better than rank 500, a player could have gained standing by scoring
         <em>less</em>. Below the last anchor the answer is now floored at it.
       </p>
@@ -1054,6 +1052,109 @@ void            ended with nothing rated</pre>
         loss, and its rounds read <em>recorded</em> rather than won — a missing opponent
         delta is <code>null</code>, which is not the same as an opponent who scored exactly
         their baseline.
+      </p>
+
+      <h3>A duel is a seeding match with a name on it</h3>
+      <p>
+        Duels add no state to the table above. The challenger plays the seeding match just
+        described; accepting builds the ordinary contested match, with the opponent pinned
+        by id rather than picked by rating proximity. Submission, verification, forfeit,
+        the clock and settlement run on the existing paths unchanged, so a settled duel is
+        indistinguishable from a settled queue match afterwards.
+      </p>
+      <p>
+        The scenarios, category and window are <em>copied</em> off the challenger's match
+        rather than selected again. That makes &ldquo;both sides played the same three&rdquo;
+        structural instead of reconstructed: one row says what the three were, and
+        <code>answer-duel</code> reads it.
+      </p>
+      <p class="note">
+        <span class="note-label">What the answerer cannot see</span>
+        How the challenger did. The score is never copied onto the <code>duels</code> row;
+        it lives on the challenger's side of their own match, where the answerer has no
+        side and therefore no read. An answerer who could see it before deciding would be
+        cherry-picking, the same thing the one-match-at-a-time rule stops, pointed the
+        other way.
+      </p>
+
+      <div class="exhibit">
+        <div class="exhibit-head"><span>States</span><span class="src">duels.status</span></div>
+        <div class="exhibit-body">
+<pre>open        sent; the challenger has played, nobody has answered
+accepted    answer_match_id points at the contested match
+declined    answered, nothing rated
+cancelled   taken back by the sender
+expired     seven days passed with no answer</pre>
+        </div>
+      </div>
+
+      <p>
+        <code>answer_match_id</code> is null until the accept, which makes it the repair
+        flag as well as the link: a row reading <em>accepted</em> with nothing in it is a
+        function that died between the two writes. <code>answer-duel</code> claims the row
+        by compare-and-swap and releases it in a <code>catch</code>, so an <em>error</em>
+        during the accept puts the duel back to open and the player can retry.
+      </p>
+      <p class="note">
+        <span class="note-label">Known gap</span>
+        That release only runs if the function lives long enough to run it. A hard death
+        between the claim and the match insert (a timeout, an eviction) leaves the row
+        <em>accepted</em> with a null <code>answer_match_id</code>, and nothing reopens it:
+        <code>sweepStaleMatches</code> does not look at <code>duels</code>. The partial
+        index <code>duels_answer_idx</code> makes the stuck rows cheap to find, so the sweep
+        is a small addition. It is not written yet.
+      </p>
+      <p>
+        The deadline is seven days, not the eight minutes a match gets, because the two
+        measure different things: a match deadline is how long a player has to play three
+        scenarios, a duel's is how long somebody has to notice it. <code>DUEL_TTL_MS</code>
+        lives in <code>src/core/match/duels.ts</code> rather than the Edge Function's shared
+        module because the client draws the countdown too, and a deadline the two disagree
+        about ends at the wrong moment on one of them.
+      </p>
+
+      <h3>A tournament fixture is a duel with a bracket around it</h3>
+      <p>
+        Tournaments are round-robin groups followed by a single-elimination bracket, and
+        they add no new kind of match either. Each fixture is played as two legs, the way a
+        duel is: whoever presses Play first gets the one-sided match
+        <code>send-duel</code> would create, and once that settles the other player gets the
+        contested match built from its frozen side. Submission, verification, settlement,
+        forfeit and the clock are the ordinary paths.
+      </p>
+      <p>
+        What is new is one server-owned flag, <code>matches.rated</code>, false on every leg.
+        <code>settle-match</code> and <code>forfeitMatch</code> write the verdict and move no
+        rating when it is false, and <code>find-match</code> never offers an unrated side to
+        the pool. The engine itself (<code>src/core/tournament</code>) is a pure reducer over
+        one JSON document stored in <code>tournaments.state</code> and written back by
+        compare-and-swap on <code>revision</code> through <code>tournament_commit</code>.
+      </p>
+
+      <div class="exhibit">
+        <div class="exhibit-head"><span>A settled leg, read</span><span class="src">policy.ts readLeg</span></div>
+        <div class="exhibit-body">
+<pre>leg 1 settled, scored      the fixture waits for leg 2
+leg 1 void                 the attempt is void; the fixture replays
+leg 2 win / loss / draw    settle-match's verdict from the leg-2 side
+leg 2 loss, no score       forfeitMatch: the other player takes it
+leg 2 void                 replay (a playoff draw replays too)</pre>
+        </div>
+      </div>
+
+      <p>
+        Results are never submitted. <code>tournament_legs.ingested_at</code> null marks a
+        leg whose result has not been folded in, and every tournament request, plus
+        <code>settle-match</code> and <code>abandon-match</code> on a leg, folds in whatever
+        is outstanding. Nothing runs on a timer. <code>tournament_open_leg</code> reserves a
+        leg with the tournament row locked and checks the fixture's attempt, the caller's
+        place in it and the one-match rule in the same transaction.
+      </p>
+      <p class="note">
+        <span class="note-label">Not in v1</span>
+        No deadline or no-show timer: a player who never presses Play holds the round up
+        until the host cancels. No host ruling or adjudication, so a stuck playoff fixture has
+        no way to be awarded. Both are product decisions, not missing plumbing.
       </p>
 
       <h3>The clock only runs while nobody is playing</h3>
@@ -1197,7 +1298,7 @@ void            ended with nothing rated</pre>
       </p>
 
       <div class="exhibit">
-        <div class="exhibit-head"><span>Layout</span><span class="src">76 files · 18,496 lines</span></div>
+        <div class="exhibit-head"><span>Layout</span><span class="src">170 files · 57,230 lines</span></div>
         <div class="exhibit-body">
 <pre>src/core/                      the brain — pure, portable, no I/O assumptions
   stats/          parse KovaaK's CSVs, derive run length
@@ -1251,8 +1352,8 @@ data/                          committed reference data</pre>
     <section id="found">
       <h2>Found, not designed</h2>
       <p class="lede">
-        The most valuable parts of this system were discovered by measuring, not decided
-        up front. Worth studying because it is the pattern to repeat.
+        The most valuable parts of this system were found by measuring rather than decided
+        up front.
       </p>
 
       <h3>KovaaK's serves the thresholds itself</h3>
@@ -1272,7 +1373,7 @@ data/                          committed reference data</pre>
         property of the scenario.
       </p>
       <div class="exhibit">
-        <div class="exhibit-head"><span>Learned from your corpus</span><span class="src">data/score_models.json</span></div>
+        <div class="exhibit-head"><span>Learned from the corpus</span><span class="src">data/score_models.json</span></div>
         <div class="exhibit-body">
 <pre>VT Frogtagon Intermediate S5    score = kills    × 10
 VT Aether Intermediate S5       score = hitCount × 1
@@ -1329,7 +1430,7 @@ VT Aether Intermediate S5       score = hitCount × 1
       <h2>Bugs and lessons</h2>
       <p class="lede">
         Each of these cost real time. They are grouped by the lesson rather than the
-        symptom, because the lesson is the transferable part.
+        symptom, because the lesson is what applies next time.
       </p>
 
       <h3>Measure a check before you let it reject anything</h3>
@@ -1400,7 +1501,7 @@ VT Aether Intermediate S5       score = hitCount × 1
         A benchmark-name normaliser stripped everything outside <code>[a-z0-9]</code>,
         which reduced the registry's Chinese-named entry to an empty string. Since every
         string starts with <code>""</code>, that entry then matched <em>any</em> unknown
-        input — so a typo silently tracked a benchmark you had never heard of.
+        input — so a typo silently tracked a benchmark the player had never heard of.
       </p>
     </section>
 
@@ -1421,7 +1522,7 @@ npm run dev          the same, rebuilt and relaunched on every save
 npm run doctor       why is it not working: bundle, folder, keys, data
 npm run smoke        boot headlessly and check it renders — no window
 npm run typecheck    tsc, no emit
-npm run validate     every suite, against your real runs
+npm run validate     every suite, against real runs
 npm run ui           regenerate the shareable single-file preview</pre>
         </div>
       </div>
@@ -1454,7 +1555,7 @@ npm run ui           regenerate the shareable single-file preview</pre>
         <div class="exhibit-body">
 <pre>npx supabase db push --yes    migrations
 npm run sync:reference        score models, world records, durations
-npm run deploy:functions      all five Edge Functions
+npm run deploy:functions      every Edge Function
 npm run verify:deployment     prove it against the live project</pre>
         </div>
       </div>
@@ -1529,8 +1630,8 @@ python tools/fetch_voltaic_subcategories.py    Voltaic's nine, the check to hold
 npm run build:subskills                        the eleven, and the evidence for them
 python tools/generate_seed.py                  rebuild supabase/seed.sql
 
-npm run build:score-models   score = stat × k, from your corpus
-npm run build:durations      scenario lengths, from your corpus</pre>
+npm run build:score-models   score = stat × k, from the local corpus
+npm run build:durations      scenario lengths, from the local corpus</pre>
         </div>
       </div>
       <p>
@@ -1586,13 +1687,13 @@ a playlist is on disk but not in the game's menu
       <h2>Verify it yourself</h2>
       <p class="lede">
         Nothing here has to be taken on trust. Every claim above has a command that
-        re-derives it from your own data.
+        re-derives it from real data.
       </p>
 
       <div class="exhibit">
         <div class="exhibit-head"><span>Commands</span><span class="src">npm run …</span></div>
         <div class="exhibit-body">
-<pre>validate              all 22 suites, against your real runs
+<pre>validate              all 22 suites, against real runs
 validate:verify       false positives and tamper detection
 validate:engine       energy model vs KovaaK's live API
 validate:glicko       Glicko-2 vs Glickman's published example
@@ -1601,7 +1702,7 @@ validate:schema       migrations + seed on Postgres-in-WASM, no Docker
 verify:deployment     RLS, auth and the match engine, live
 beta                  pre-flight before inviting anyone
 
-consistency           your ceiling-vs-floor report
+consistency           the ceiling-vs-floor report
 compare:baselines     reproduce the baseline comparison table
 profile               benchmark ranks and weakness map
 smoke                 boot the client headlessly and check it renders</pre>
@@ -1672,7 +1773,8 @@ smoke                 boot the client headlessly and check it renders</pre>
     </section>
 
     <footer>
-      Generated from the working tree at 76 files and 18,496 lines. Every figure in this
+      Written against the working tree at 170 files and 57,230 lines (.ts, .js, .mjs, .cjs and
+      .sql under <code>src</code>, <code>supabase</code> and <code>tools</code>). Every figure in this
       document is reproducible with the commands in
       <a href="#verify">Verify it yourself</a>. The design decisions and their reasoning
       live in <code>PLAN.md</code>; the operational detail lives in <code>README.md</code>

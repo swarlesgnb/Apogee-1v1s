@@ -1,10 +1,9 @@
 # Terms of use
 
 Apogee is a free ranked ladder for KovaaK's, run by one person. These terms say what you
-can expect from it and what it expects from you. They are written to be read, not to be
-skipped.
+can expect from it and what it expects from you.
 
-**This is a draft and has not been reviewed by a lawyer.** It describes honestly how the
+**This is a draft and has not been reviewed by a lawyer.** It describes how the
 service is intended to work. If you need it to carry legal weight in your jurisdiction,
 have it looked at first.
 
@@ -49,7 +48,7 @@ for review, and the reason is shown on screen rather than hidden.
 **Your data, described plainly.** `PRIVACY.md` lists every field that leaves your
 machine. If the code and that document ever disagree, the code is the bug.
 
-**A ladder that means something.** Seasons, ranks, and thresholds are published in
+**Rules in the open.** Seasons, ranks, and thresholds are published in
 `data/seasons/`, and a published season is frozen. Nothing about your standing is
 adjusted quietly.
 
