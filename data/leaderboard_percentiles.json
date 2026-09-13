@@ -1,6 +1,6 @@
 {
   "source": "kovaaks.com/webapp-backend/leaderboard/scores/global",
-  "sampledAt": "2026-09-04T01:18:48.027Z",
+  "sampledAt": "2026-09-13T03:09:23.048Z",
   "samplePoints": [
     0.001,
     0.005,
@@ -3191,11 +3191,11 @@
     {
       "scenario": "Aimerz+ hopClick Med S1",
       "leaderboardId": 69291,
-      "total": 4729,
+      "total": 5076,
       "points": [
         {
           "topFraction": 0.001,
-          "score": 1450
+          "score": 1430
         },
         {
           "topFraction": 0.005,
@@ -3219,15 +3219,15 @@
         },
         {
           "topFraction": 0.075,
-          "score": 1000
+          "score": 990
         },
         {
           "topFraction": 0.1,
-          "score": 960
+          "score": 950
         },
         {
           "topFraction": 0.15,
-          "score": 900
+          "score": 890
         },
         {
           "topFraction": 0.2,
@@ -3239,7 +3239,7 @@
         },
         {
           "topFraction": 0.4,
-          "score": 720
+          "score": 710
         },
         {
           "topFraction": 0.5,
@@ -3251,14 +3251,14 @@
         },
         {
           "topFraction": 0.8,
-          "score": 430
+          "score": 420
         },
         {
           "topFraction": 0.95,
           "score": 270
         }
       ],
-      "sampledAt": "2026-08-19T00:35:12.113Z"
+      "sampledAt": "2026-09-12T16:33:01.060Z"
     },
     {
       "scenario": "Aimerz+ hopTS Easy S1",
@@ -3403,6 +3403,78 @@
         }
       ],
       "sampledAt": "2026-08-18T23:44:31.403Z"
+    },
+    {
+      "scenario": "Aimerz+ hopTS Med S1",
+      "leaderboardId": 69310,
+      "total": 1712,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 107.2
+        },
+        {
+          "topFraction": 0.005,
+          "score": 100.9
+        },
+        {
+          "topFraction": 0.01,
+          "score": 94
+        },
+        {
+          "topFraction": 0.02,
+          "score": 89
+        },
+        {
+          "topFraction": 0.035,
+          "score": 84.5
+        },
+        {
+          "topFraction": 0.05,
+          "score": 82.3
+        },
+        {
+          "topFraction": 0.075,
+          "score": 80
+        },
+        {
+          "topFraction": 0.1,
+          "score": 78
+        },
+        {
+          "topFraction": 0.15,
+          "score": 73.8
+        },
+        {
+          "topFraction": 0.2,
+          "score": 70
+        },
+        {
+          "topFraction": 0.3,
+          "score": 64.5
+        },
+        {
+          "topFraction": 0.4,
+          "score": 60
+        },
+        {
+          "topFraction": 0.5,
+          "score": 55.4
+        },
+        {
+          "topFraction": 0.65,
+          "score": 49
+        },
+        {
+          "topFraction": 0.8,
+          "score": 42
+        },
+        {
+          "topFraction": 0.95,
+          "score": 31
+        }
+      ],
+      "sampledAt": "2026-09-10T23:41:04.698Z"
     },
     {
       "scenario": "Aimerz+ nuTS Easy S1",
@@ -4053,6 +4125,78 @@
       "sampledAt": "2026-08-18T23:40:45.418Z"
     },
     {
+      "scenario": "aimerz+ pivoTS Hard",
+      "leaderboardId": 44373,
+      "total": 4959,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 160
+        },
+        {
+          "topFraction": 0.005,
+          "score": 145
+        },
+        {
+          "topFraction": 0.01,
+          "score": 142
+        },
+        {
+          "topFraction": 0.02,
+          "score": 136
+        },
+        {
+          "topFraction": 0.035,
+          "score": 132
+        },
+        {
+          "topFraction": 0.05,
+          "score": 129
+        },
+        {
+          "topFraction": 0.075,
+          "score": 125
+        },
+        {
+          "topFraction": 0.1,
+          "score": 123
+        },
+        {
+          "topFraction": 0.15,
+          "score": 117
+        },
+        {
+          "topFraction": 0.2,
+          "score": 112
+        },
+        {
+          "topFraction": 0.3,
+          "score": 104
+        },
+        {
+          "topFraction": 0.4,
+          "score": 97
+        },
+        {
+          "topFraction": 0.5,
+          "score": 90
+        },
+        {
+          "topFraction": 0.65,
+          "score": 81
+        },
+        {
+          "topFraction": 0.8,
+          "score": 73
+        },
+        {
+          "topFraction": 0.95,
+          "score": 59
+        }
+      ],
+      "sampledAt": "2026-09-10T23:40:50.129Z"
+    },
+    {
       "scenario": "Aimerz+ pivoTS Hard S1",
       "leaderboardId": 68313,
       "total": 5800,
@@ -4123,6 +4267,78 @@
         }
       ],
       "sampledAt": "2026-08-18T23:43:53.331Z"
+    },
+    {
+      "scenario": "aimerz+ pivoTS Normal",
+      "leaderboardId": 44376,
+      "total": 8284,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 152
+        },
+        {
+          "topFraction": 0.005,
+          "score": 141
+        },
+        {
+          "topFraction": 0.01,
+          "score": 137
+        },
+        {
+          "topFraction": 0.02,
+          "score": 131
+        },
+        {
+          "topFraction": 0.035,
+          "score": 128
+        },
+        {
+          "topFraction": 0.05,
+          "score": 125
+        },
+        {
+          "topFraction": 0.075,
+          "score": 122
+        },
+        {
+          "topFraction": 0.1,
+          "score": 121
+        },
+        {
+          "topFraction": 0.15,
+          "score": 117
+        },
+        {
+          "topFraction": 0.2,
+          "score": 114
+        },
+        {
+          "topFraction": 0.3,
+          "score": 106
+        },
+        {
+          "topFraction": 0.4,
+          "score": 100
+        },
+        {
+          "topFraction": 0.5,
+          "score": 94
+        },
+        {
+          "topFraction": 0.65,
+          "score": 86
+        },
+        {
+          "topFraction": 0.8,
+          "score": 77
+        },
+        {
+          "topFraction": 0.95,
+          "score": 64
+        }
+      ],
+      "sampledAt": "2026-09-10T23:40:42.827Z"
     },
     {
       "scenario": "Aimerz+ PreciseTrack Easy S1",
@@ -5421,6 +5637,78 @@
       "sampledAt": "2026-08-18T23:43:34.416Z"
     },
     {
+      "scenario": "Aimerz+ VGS Med S1",
+      "leaderboardId": 69298,
+      "total": 2661,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 3937
+        },
+        {
+          "topFraction": 0.005,
+          "score": 3737
+        },
+        {
+          "topFraction": 0.01,
+          "score": 3682
+        },
+        {
+          "topFraction": 0.02,
+          "score": 3584
+        },
+        {
+          "topFraction": 0.035,
+          "score": 3503
+        },
+        {
+          "topFraction": 0.05,
+          "score": 3450
+        },
+        {
+          "topFraction": 0.075,
+          "score": 3363
+        },
+        {
+          "topFraction": 0.1,
+          "score": 3281
+        },
+        {
+          "topFraction": 0.15,
+          "score": 3109
+        },
+        {
+          "topFraction": 0.2,
+          "score": 2991
+        },
+        {
+          "topFraction": 0.3,
+          "score": 2726
+        },
+        {
+          "topFraction": 0.4,
+          "score": 2515
+        },
+        {
+          "topFraction": 0.5,
+          "score": 2328
+        },
+        {
+          "topFraction": 0.65,
+          "score": 2015
+        },
+        {
+          "topFraction": 0.8,
+          "score": 1714
+        },
+        {
+          "topFraction": 0.95,
+          "score": 1246
+        }
+      ],
+      "sampledAt": "2026-09-10T23:40:13.617Z"
+    },
+    {
       "scenario": "Aimerz+ Week #5 - Static Switching",
       "leaderboardId": 38996,
       "total": 49839,
@@ -6213,6 +6501,78 @@
       "sampledAt": "2026-08-19T01:06:43.594Z"
     },
     {
+      "scenario": "Air Angelic Easier",
+      "leaderboardId": 189778,
+      "total": 1637,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 944.48
+        },
+        {
+          "topFraction": 0.005,
+          "score": 942.12
+        },
+        {
+          "topFraction": 0.01,
+          "score": 940.46
+        },
+        {
+          "topFraction": 0.02,
+          "score": 939.75
+        },
+        {
+          "topFraction": 0.035,
+          "score": 938.93
+        },
+        {
+          "topFraction": 0.05,
+          "score": 937.44
+        },
+        {
+          "topFraction": 0.075,
+          "score": 936.39
+        },
+        {
+          "topFraction": 0.1,
+          "score": 935.01
+        },
+        {
+          "topFraction": 0.15,
+          "score": 933.43
+        },
+        {
+          "topFraction": 0.2,
+          "score": 932.12
+        },
+        {
+          "topFraction": 0.3,
+          "score": 928.64
+        },
+        {
+          "topFraction": 0.4,
+          "score": 925.6
+        },
+        {
+          "topFraction": 0.5,
+          "score": 923.2
+        },
+        {
+          "topFraction": 0.65,
+          "score": 917.9
+        },
+        {
+          "topFraction": 0.8,
+          "score": 909.57
+        },
+        {
+          "topFraction": 0.95,
+          "score": 888.07
+        }
+      ],
+      "sampledAt": "2026-09-13T03:05:23.741Z"
+    },
+    {
       "scenario": "Air Angelic Invincible 2 80%",
       "leaderboardId": 73836,
       "total": 2900,
@@ -6285,6 +6645,150 @@
       "sampledAt": "2026-08-29T17:30:47.735Z"
     },
     {
+      "scenario": "Air Angelic rAim Biggest",
+      "leaderboardId": 12233,
+      "total": 798,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 941.38
+        },
+        {
+          "topFraction": 0.005,
+          "score": 940.62
+        },
+        {
+          "topFraction": 0.01,
+          "score": 940.4
+        },
+        {
+          "topFraction": 0.02,
+          "score": 938.72
+        },
+        {
+          "topFraction": 0.035,
+          "score": 937.2
+        },
+        {
+          "topFraction": 0.05,
+          "score": 936.36
+        },
+        {
+          "topFraction": 0.075,
+          "score": 935.22
+        },
+        {
+          "topFraction": 0.1,
+          "score": 933.97
+        },
+        {
+          "topFraction": 0.15,
+          "score": 932.74
+        },
+        {
+          "topFraction": 0.2,
+          "score": 931.16
+        },
+        {
+          "topFraction": 0.3,
+          "score": 928.53
+        },
+        {
+          "topFraction": 0.4,
+          "score": 926.04
+        },
+        {
+          "topFraction": 0.5,
+          "score": 923.6
+        },
+        {
+          "topFraction": 0.65,
+          "score": 918.77
+        },
+        {
+          "topFraction": 0.8,
+          "score": 910.33
+        },
+        {
+          "topFraction": 0.95,
+          "score": 874.78
+        }
+      ],
+      "sampledAt": "2026-09-13T03:05:16.482Z"
+    },
+    {
+      "scenario": "Air Angelic rAim Easy",
+      "leaderboardId": 572,
+      "total": 9913,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 936.29
+        },
+        {
+          "topFraction": 0.005,
+          "score": 933.52
+        },
+        {
+          "topFraction": 0.01,
+          "score": 931.05
+        },
+        {
+          "topFraction": 0.02,
+          "score": 928.69
+        },
+        {
+          "topFraction": 0.035,
+          "score": 926.09
+        },
+        {
+          "topFraction": 0.05,
+          "score": 924.31
+        },
+        {
+          "topFraction": 0.075,
+          "score": 921.87
+        },
+        {
+          "topFraction": 0.1,
+          "score": 919.78
+        },
+        {
+          "topFraction": 0.15,
+          "score": 916.82
+        },
+        {
+          "topFraction": 0.2,
+          "score": 914.42
+        },
+        {
+          "topFraction": 0.3,
+          "score": 908.86
+        },
+        {
+          "topFraction": 0.4,
+          "score": 903.81
+        },
+        {
+          "topFraction": 0.5,
+          "score": 898.19
+        },
+        {
+          "topFraction": 0.65,
+          "score": 888.81
+        },
+        {
+          "topFraction": 0.8,
+          "score": 873.93
+        },
+        {
+          "topFraction": 0.95,
+          "score": 832.05
+        }
+      ],
+      "sampledAt": "2026-09-13T03:05:31.004Z"
+    },
+    {
       "scenario": "Air CELESTIAL",
       "leaderboardId": 1241,
       "total": 12040,
@@ -6355,6 +6859,78 @@
         }
       ],
       "sampledAt": "2026-08-29T18:34:19.531Z"
+    },
+    {
+      "scenario": "Air CELESTIAL No UFO",
+      "leaderboardId": 70970,
+      "total": 2846,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 916.44
+        },
+        {
+          "topFraction": 0.005,
+          "score": 910.02
+        },
+        {
+          "topFraction": 0.01,
+          "score": 906.8
+        },
+        {
+          "topFraction": 0.02,
+          "score": 903.47
+        },
+        {
+          "topFraction": 0.035,
+          "score": 899.71
+        },
+        {
+          "topFraction": 0.05,
+          "score": 896.26
+        },
+        {
+          "topFraction": 0.075,
+          "score": 891.29
+        },
+        {
+          "topFraction": 0.1,
+          "score": 887.42
+        },
+        {
+          "topFraction": 0.15,
+          "score": 880.38
+        },
+        {
+          "topFraction": 0.2,
+          "score": 875.23
+        },
+        {
+          "topFraction": 0.3,
+          "score": 864.98
+        },
+        {
+          "topFraction": 0.4,
+          "score": 855.8
+        },
+        {
+          "topFraction": 0.5,
+          "score": 846.53
+        },
+        {
+          "topFraction": 0.65,
+          "score": 829.55
+        },
+        {
+          "topFraction": 0.8,
+          "score": 803.61
+        },
+        {
+          "topFraction": 0.95,
+          "score": 735.07
+        }
+      ],
+      "sampledAt": "2026-09-13T03:06:14.819Z"
     },
     {
       "scenario": "Air CELESTIAL No UFO Easy",
@@ -6499,6 +7075,78 @@
         }
       ],
       "sampledAt": "2026-08-29T18:34:03.930Z"
+    },
+    {
+      "scenario": "Air CELESTIAL No UFO Medium",
+      "leaderboardId": 184763,
+      "total": 15076,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 917.27
+        },
+        {
+          "topFraction": 0.005,
+          "score": 913.99
+        },
+        {
+          "topFraction": 0.01,
+          "score": 912.74
+        },
+        {
+          "topFraction": 0.02,
+          "score": 911.4
+        },
+        {
+          "topFraction": 0.035,
+          "score": 908.39
+        },
+        {
+          "topFraction": 0.05,
+          "score": 906.54
+        },
+        {
+          "topFraction": 0.075,
+          "score": 903.49
+        },
+        {
+          "topFraction": 0.1,
+          "score": 901.69
+        },
+        {
+          "topFraction": 0.15,
+          "score": 898.63
+        },
+        {
+          "topFraction": 0.2,
+          "score": 895.13
+        },
+        {
+          "topFraction": 0.3,
+          "score": 889.72
+        },
+        {
+          "topFraction": 0.4,
+          "score": 885.53
+        },
+        {
+          "topFraction": 0.5,
+          "score": 880.26
+        },
+        {
+          "topFraction": 0.65,
+          "score": 870.83
+        },
+        {
+          "topFraction": 0.8,
+          "score": 856
+        },
+        {
+          "topFraction": 0.95,
+          "score": 820.12
+        }
+      ],
+      "sampledAt": "2026-09-13T03:06:07.459Z"
     },
     {
       "scenario": "Air Divine",
@@ -8803,6 +9451,150 @@
         }
       ],
       "sampledAt": "2026-08-25T20:10:16.162Z"
+    },
+    {
+      "scenario": "BounceClick SuperbAim",
+      "leaderboardId": 35900,
+      "total": 7458,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 97
+        },
+        {
+          "topFraction": 0.005,
+          "score": 84
+        },
+        {
+          "topFraction": 0.01,
+          "score": 77
+        },
+        {
+          "topFraction": 0.02,
+          "score": 69
+        },
+        {
+          "topFraction": 0.035,
+          "score": 62
+        },
+        {
+          "topFraction": 0.05,
+          "score": 56
+        },
+        {
+          "topFraction": 0.075,
+          "score": 51
+        },
+        {
+          "topFraction": 0.1,
+          "score": 46
+        },
+        {
+          "topFraction": 0.15,
+          "score": 41
+        },
+        {
+          "topFraction": 0.2,
+          "score": 37
+        },
+        {
+          "topFraction": 0.3,
+          "score": 32
+        },
+        {
+          "topFraction": 0.4,
+          "score": 28
+        },
+        {
+          "topFraction": 0.5,
+          "score": 24
+        },
+        {
+          "topFraction": 0.65,
+          "score": 20
+        },
+        {
+          "topFraction": 0.8,
+          "score": 15
+        },
+        {
+          "topFraction": 0.95,
+          "score": 8
+        }
+      ],
+      "sampledAt": "2026-09-13T03:04:10.871Z"
+    },
+    {
+      "scenario": "BounceClick SuperbAim Easy",
+      "leaderboardId": 35901,
+      "total": 5826,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 112
+        },
+        {
+          "topFraction": 0.005,
+          "score": 99
+        },
+        {
+          "topFraction": 0.01,
+          "score": 94
+        },
+        {
+          "topFraction": 0.02,
+          "score": 90
+        },
+        {
+          "topFraction": 0.035,
+          "score": 87
+        },
+        {
+          "topFraction": 0.05,
+          "score": 83
+        },
+        {
+          "topFraction": 0.075,
+          "score": 78
+        },
+        {
+          "topFraction": 0.1,
+          "score": 75
+        },
+        {
+          "topFraction": 0.15,
+          "score": 69
+        },
+        {
+          "topFraction": 0.2,
+          "score": 65
+        },
+        {
+          "topFraction": 0.3,
+          "score": 58
+        },
+        {
+          "topFraction": 0.4,
+          "score": 52
+        },
+        {
+          "topFraction": 0.5,
+          "score": 47
+        },
+        {
+          "topFraction": 0.65,
+          "score": 39
+        },
+        {
+          "topFraction": 0.8,
+          "score": 31
+        },
+        {
+          "topFraction": 0.95,
+          "score": 19
+        }
+      ],
+      "sampledAt": "2026-09-13T03:04:03.594Z"
     },
     {
       "scenario": "cA 1ts ruohong",
@@ -14205,6 +14997,150 @@
       "sampledAt": "2026-08-25T20:09:29.625Z"
     },
     {
+      "scenario": "Controlsphere rAim Easy",
+      "leaderboardId": 5137,
+      "total": 61402,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 15624
+        },
+        {
+          "topFraction": 0.005,
+          "score": 15129
+        },
+        {
+          "topFraction": 0.01,
+          "score": 14664
+        },
+        {
+          "topFraction": 0.02,
+          "score": 14292
+        },
+        {
+          "topFraction": 0.035,
+          "score": 13749
+        },
+        {
+          "topFraction": 0.05,
+          "score": 13437
+        },
+        {
+          "topFraction": 0.075,
+          "score": 13110
+        },
+        {
+          "topFraction": 0.1,
+          "score": 12684
+        },
+        {
+          "topFraction": 0.15,
+          "score": 12141
+        },
+        {
+          "topFraction": 0.2,
+          "score": 11700
+        },
+        {
+          "topFraction": 0.3,
+          "score": 10866
+        },
+        {
+          "topFraction": 0.4,
+          "score": 10116
+        },
+        {
+          "topFraction": 0.5,
+          "score": 9357
+        },
+        {
+          "topFraction": 0.65,
+          "score": 8115
+        },
+        {
+          "topFraction": 0.8,
+          "score": 6582
+        },
+        {
+          "topFraction": 0.95,
+          "score": 4308
+        }
+      ],
+      "sampledAt": "2026-09-13T03:05:09.221Z"
+    },
+    {
+      "scenario": "Controlsphere rAim Easy 90%",
+      "leaderboardId": 83485,
+      "total": 84138,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 15360
+        },
+        {
+          "topFraction": 0.005,
+          "score": 14469
+        },
+        {
+          "topFraction": 0.01,
+          "score": 13914
+        },
+        {
+          "topFraction": 0.02,
+          "score": 13260
+        },
+        {
+          "topFraction": 0.035,
+          "score": 12711
+        },
+        {
+          "topFraction": 0.05,
+          "score": 12387
+        },
+        {
+          "topFraction": 0.075,
+          "score": 12069
+        },
+        {
+          "topFraction": 0.1,
+          "score": 11868
+        },
+        {
+          "topFraction": 0.15,
+          "score": 11580
+        },
+        {
+          "topFraction": 0.2,
+          "score": 11133
+        },
+        {
+          "topFraction": 0.3,
+          "score": 10317
+        },
+        {
+          "topFraction": 0.4,
+          "score": 9642
+        },
+        {
+          "topFraction": 0.5,
+          "score": 8940
+        },
+        {
+          "topFraction": 0.65,
+          "score": 7812
+        },
+        {
+          "topFraction": 0.8,
+          "score": 6513
+        },
+        {
+          "topFraction": 0.95,
+          "score": 4419
+        }
+      ],
+      "sampledAt": "2026-09-13T03:05:01.999Z"
+    },
+    {
       "scenario": "Controlsphere Viscose Entry",
       "leaderboardId": 190002,
       "total": 3559,
@@ -15501,6 +16437,78 @@
       "sampledAt": "2026-08-18T23:52:32.010Z"
     },
     {
+      "scenario": "DotTS",
+      "leaderboardId": 75317,
+      "total": 4988,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 3047
+        },
+        {
+          "topFraction": 0.005,
+          "score": 2950
+        },
+        {
+          "topFraction": 0.01,
+          "score": 2850
+        },
+        {
+          "topFraction": 0.02,
+          "score": 2766
+        },
+        {
+          "topFraction": 0.035,
+          "score": 2700
+        },
+        {
+          "topFraction": 0.05,
+          "score": 2650
+        },
+        {
+          "topFraction": 0.075,
+          "score": 2600
+        },
+        {
+          "topFraction": 0.1,
+          "score": 2560
+        },
+        {
+          "topFraction": 0.15,
+          "score": 2500
+        },
+        {
+          "topFraction": 0.2,
+          "score": 2450
+        },
+        {
+          "topFraction": 0.3,
+          "score": 2350
+        },
+        {
+          "topFraction": 0.4,
+          "score": 2255
+        },
+        {
+          "topFraction": 0.5,
+          "score": 2174
+        },
+        {
+          "topFraction": 0.65,
+          "score": 2025
+        },
+        {
+          "topFraction": 0.8,
+          "score": 1849
+        },
+        {
+          "topFraction": 0.95,
+          "score": 1550
+        }
+      ],
+      "sampledAt": "2026-09-13T03:06:41.816Z"
+    },
+    {
       "scenario": "DotTS 30% Larger",
       "leaderboardId": 75698,
       "total": 17483,
@@ -15571,6 +16579,78 @@
         }
       ],
       "sampledAt": "2026-09-03T01:13:23.738Z"
+    },
+    {
+      "scenario": "DotTS Entry",
+      "leaderboardId": 111232,
+      "total": 4301,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 3343
+        },
+        {
+          "topFraction": 0.005,
+          "score": 3202
+        },
+        {
+          "topFraction": 0.01,
+          "score": 3066
+        },
+        {
+          "topFraction": 0.02,
+          "score": 2950
+        },
+        {
+          "topFraction": 0.035,
+          "score": 2874
+        },
+        {
+          "topFraction": 0.05,
+          "score": 2775
+        },
+        {
+          "topFraction": 0.075,
+          "score": 2650
+        },
+        {
+          "topFraction": 0.1,
+          "score": 2536
+        },
+        {
+          "topFraction": 0.15,
+          "score": 2352
+        },
+        {
+          "topFraction": 0.2,
+          "score": 2275
+        },
+        {
+          "topFraction": 0.3,
+          "score": 2175
+        },
+        {
+          "topFraction": 0.4,
+          "score": 2100
+        },
+        {
+          "topFraction": 0.5,
+          "score": 2045
+        },
+        {
+          "topFraction": 0.65,
+          "score": 1938
+        },
+        {
+          "topFraction": 0.8,
+          "score": 1825
+        },
+        {
+          "topFraction": 0.95,
+          "score": 1597
+        }
+      ],
+      "sampledAt": "2026-09-13T03:06:34.513Z"
     },
     {
       "scenario": "eth Pasu Micro Easier",
@@ -17949,6 +19029,366 @@
       "sampledAt": "2026-08-19T00:36:44.594Z"
     },
     {
+      "scenario": "Leapstrafes Control Medium",
+      "leaderboardId": 63065,
+      "total": 3912,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 19116
+        },
+        {
+          "topFraction": 0.005,
+          "score": 18162
+        },
+        {
+          "topFraction": 0.01,
+          "score": 17694
+        },
+        {
+          "topFraction": 0.02,
+          "score": 16668
+        },
+        {
+          "topFraction": 0.035,
+          "score": 15984
+        },
+        {
+          "topFraction": 0.05,
+          "score": 15552
+        },
+        {
+          "topFraction": 0.075,
+          "score": 15066
+        },
+        {
+          "topFraction": 0.1,
+          "score": 14832
+        },
+        {
+          "topFraction": 0.15,
+          "score": 14508
+        },
+        {
+          "topFraction": 0.2,
+          "score": 13626
+        },
+        {
+          "topFraction": 0.3,
+          "score": 12546
+        },
+        {
+          "topFraction": 0.4,
+          "score": 11772
+        },
+        {
+          "topFraction": 0.5,
+          "score": 11016
+        },
+        {
+          "topFraction": 0.65,
+          "score": 9774
+        },
+        {
+          "topFraction": 0.8,
+          "score": 8406
+        },
+        {
+          "topFraction": 0.95,
+          "score": 5454
+        }
+      ],
+      "sampledAt": "2026-09-13T03:09:23.048Z"
+    },
+    {
+      "scenario": "Leapstrafes Control wobin",
+      "leaderboardId": 184561,
+      "total": 19712,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 4659
+        },
+        {
+          "topFraction": 0.005,
+          "score": 4443
+        },
+        {
+          "topFraction": 0.01,
+          "score": 4371
+        },
+        {
+          "topFraction": 0.02,
+          "score": 4312
+        },
+        {
+          "topFraction": 0.035,
+          "score": 4110
+        },
+        {
+          "topFraction": 0.05,
+          "score": 4026
+        },
+        {
+          "topFraction": 0.075,
+          "score": 3859
+        },
+        {
+          "topFraction": 0.1,
+          "score": 3773
+        },
+        {
+          "topFraction": 0.15,
+          "score": 3636
+        },
+        {
+          "topFraction": 0.2,
+          "score": 3498
+        },
+        {
+          "topFraction": 0.3,
+          "score": 3294
+        },
+        {
+          "topFraction": 0.4,
+          "score": 3108
+        },
+        {
+          "topFraction": 0.5,
+          "score": 2920
+        },
+        {
+          "topFraction": 0.65,
+          "score": 2612
+        },
+        {
+          "topFraction": 0.8,
+          "score": 2238
+        },
+        {
+          "topFraction": 0.95,
+          "score": 1524
+        }
+      ],
+      "sampledAt": "2026-09-13T03:05:45.616Z"
+    },
+    {
+      "scenario": "Leapstrafes Control wobin Easier",
+      "leaderboardId": 185344,
+      "total": 30868,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 5038
+        },
+        {
+          "topFraction": 0.005,
+          "score": 4726
+        },
+        {
+          "topFraction": 0.01,
+          "score": 4553
+        },
+        {
+          "topFraction": 0.02,
+          "score": 4348
+        },
+        {
+          "topFraction": 0.035,
+          "score": 4148
+        },
+        {
+          "topFraction": 0.05,
+          "score": 4010
+        },
+        {
+          "topFraction": 0.075,
+          "score": 3849
+        },
+        {
+          "topFraction": 0.1,
+          "score": 3751
+        },
+        {
+          "topFraction": 0.15,
+          "score": 3634
+        },
+        {
+          "topFraction": 0.2,
+          "score": 3559
+        },
+        {
+          "topFraction": 0.3,
+          "score": 3460
+        },
+        {
+          "topFraction": 0.4,
+          "score": 3201
+        },
+        {
+          "topFraction": 0.5,
+          "score": 2997
+        },
+        {
+          "topFraction": 0.65,
+          "score": 2657
+        },
+        {
+          "topFraction": 0.8,
+          "score": 2284
+        },
+        {
+          "topFraction": 0.95,
+          "score": 1636
+        }
+      ],
+      "sampledAt": "2026-09-13T03:05:38.316Z"
+    },
+    {
+      "scenario": "Leapstrafes Control wobin Expert",
+      "leaderboardId": 185014,
+      "total": 983,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 4537
+        },
+        {
+          "topFraction": 0.005,
+          "score": 4099
+        },
+        {
+          "topFraction": 0.01,
+          "score": 3884
+        },
+        {
+          "topFraction": 0.02,
+          "score": 3748
+        },
+        {
+          "topFraction": 0.035,
+          "score": 3609
+        },
+        {
+          "topFraction": 0.05,
+          "score": 3482
+        },
+        {
+          "topFraction": 0.075,
+          "score": 3345
+        },
+        {
+          "topFraction": 0.1,
+          "score": 3244
+        },
+        {
+          "topFraction": 0.15,
+          "score": 3060
+        },
+        {
+          "topFraction": 0.2,
+          "score": 2940
+        },
+        {
+          "topFraction": 0.3,
+          "score": 2624
+        },
+        {
+          "topFraction": 0.4,
+          "score": 2268
+        },
+        {
+          "topFraction": 0.5,
+          "score": 1954
+        },
+        {
+          "topFraction": 0.65,
+          "score": 1547
+        },
+        {
+          "topFraction": 0.8,
+          "score": 1223
+        },
+        {
+          "topFraction": 0.95,
+          "score": 771
+        }
+      ],
+      "sampledAt": "2026-09-13T03:06:00.186Z"
+    },
+    {
+      "scenario": "Leapstrafes Control wobin Hard",
+      "leaderboardId": 184845,
+      "total": 2893,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 4681
+        },
+        {
+          "topFraction": 0.005,
+          "score": 4278
+        },
+        {
+          "topFraction": 0.01,
+          "score": 4225
+        },
+        {
+          "topFraction": 0.02,
+          "score": 4064
+        },
+        {
+          "topFraction": 0.035,
+          "score": 3900
+        },
+        {
+          "topFraction": 0.05,
+          "score": 3814
+        },
+        {
+          "topFraction": 0.075,
+          "score": 3705
+        },
+        {
+          "topFraction": 0.1,
+          "score": 3590
+        },
+        {
+          "topFraction": 0.15,
+          "score": 3430
+        },
+        {
+          "topFraction": 0.2,
+          "score": 3308
+        },
+        {
+          "topFraction": 0.3,
+          "score": 3103
+        },
+        {
+          "topFraction": 0.4,
+          "score": 2943
+        },
+        {
+          "topFraction": 0.5,
+          "score": 2776
+        },
+        {
+          "topFraction": 0.65,
+          "score": 2409
+        },
+        {
+          "topFraction": 0.8,
+          "score": 1958
+        },
+        {
+          "topFraction": 0.95,
+          "score": 1230
+        }
+      ],
+      "sampledAt": "2026-09-13T03:05:52.900Z"
+    },
+    {
       "scenario": "Leapstrafes Revosect",
       "leaderboardId": 142725,
       "total": 193,
@@ -19533,6 +20973,366 @@
       "sampledAt": "2026-09-03T01:07:09.623Z"
     },
     {
+      "scenario": "Pasu SuperbAim",
+      "leaderboardId": 35929,
+      "total": 3218,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 114
+        },
+        {
+          "topFraction": 0.005,
+          "score": 105
+        },
+        {
+          "topFraction": 0.01,
+          "score": 99
+        },
+        {
+          "topFraction": 0.02,
+          "score": 92
+        },
+        {
+          "topFraction": 0.035,
+          "score": 86
+        },
+        {
+          "topFraction": 0.05,
+          "score": 83
+        },
+        {
+          "topFraction": 0.075,
+          "score": 78
+        },
+        {
+          "topFraction": 0.1,
+          "score": 74
+        },
+        {
+          "topFraction": 0.15,
+          "score": 67
+        },
+        {
+          "topFraction": 0.2,
+          "score": 62
+        },
+        {
+          "topFraction": 0.3,
+          "score": 54
+        },
+        {
+          "topFraction": 0.4,
+          "score": 47
+        },
+        {
+          "topFraction": 0.5,
+          "score": 41
+        },
+        {
+          "topFraction": 0.65,
+          "score": 33
+        },
+        {
+          "topFraction": 0.8,
+          "score": 25
+        },
+        {
+          "topFraction": 0.95,
+          "score": 14
+        }
+      ],
+      "sampledAt": "2026-09-13T03:03:56.342Z"
+    },
+    {
+      "scenario": "Pasu SuperbAim Easy",
+      "leaderboardId": 35298,
+      "total": 6553,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 124
+        },
+        {
+          "topFraction": 0.005,
+          "score": 110
+        },
+        {
+          "topFraction": 0.01,
+          "score": 103
+        },
+        {
+          "topFraction": 0.02,
+          "score": 99
+        },
+        {
+          "topFraction": 0.035,
+          "score": 95
+        },
+        {
+          "topFraction": 0.05,
+          "score": 92
+        },
+        {
+          "topFraction": 0.075,
+          "score": 88
+        },
+        {
+          "topFraction": 0.1,
+          "score": 85
+        },
+        {
+          "topFraction": 0.15,
+          "score": 80
+        },
+        {
+          "topFraction": 0.2,
+          "score": 76
+        },
+        {
+          "topFraction": 0.3,
+          "score": 69
+        },
+        {
+          "topFraction": 0.4,
+          "score": 63
+        },
+        {
+          "topFraction": 0.5,
+          "score": 58
+        },
+        {
+          "topFraction": 0.65,
+          "score": 49
+        },
+        {
+          "topFraction": 0.8,
+          "score": 40
+        },
+        {
+          "topFraction": 0.95,
+          "score": 25
+        }
+      ],
+      "sampledAt": "2026-09-13T03:03:49.090Z"
+    },
+    {
+      "scenario": "Pasu Switch Pure",
+      "leaderboardId": 13227,
+      "total": 2963,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 93.8
+        },
+        {
+          "topFraction": 0.005,
+          "score": 86
+        },
+        {
+          "topFraction": 0.01,
+          "score": 82
+        },
+        {
+          "topFraction": 0.02,
+          "score": 77.1
+        },
+        {
+          "topFraction": 0.035,
+          "score": 73.4
+        },
+        {
+          "topFraction": 0.05,
+          "score": 71.8
+        },
+        {
+          "topFraction": 0.075,
+          "score": 69
+        },
+        {
+          "topFraction": 0.1,
+          "score": 67
+        },
+        {
+          "topFraction": 0.15,
+          "score": 63.1
+        },
+        {
+          "topFraction": 0.2,
+          "score": 61
+        },
+        {
+          "topFraction": 0.3,
+          "score": 57.1
+        },
+        {
+          "topFraction": 0.4,
+          "score": 54
+        },
+        {
+          "topFraction": 0.5,
+          "score": 51
+        },
+        {
+          "topFraction": 0.65,
+          "score": 46.2
+        },
+        {
+          "topFraction": 0.8,
+          "score": 41
+        },
+        {
+          "topFraction": 0.95,
+          "score": 31.7
+        }
+      ],
+      "sampledAt": "2026-09-13T03:06:54.221Z"
+    },
+    {
+      "scenario": "Pasu Switch Wide",
+      "leaderboardId": 48886,
+      "total": 5859,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 690
+        },
+        {
+          "topFraction": 0.005,
+          "score": 630
+        },
+        {
+          "topFraction": 0.01,
+          "score": 590
+        },
+        {
+          "topFraction": 0.02,
+          "score": 560
+        },
+        {
+          "topFraction": 0.035,
+          "score": 540
+        },
+        {
+          "topFraction": 0.05,
+          "score": 520
+        },
+        {
+          "topFraction": 0.075,
+          "score": 500
+        },
+        {
+          "topFraction": 0.1,
+          "score": 480
+        },
+        {
+          "topFraction": 0.15,
+          "score": 450
+        },
+        {
+          "topFraction": 0.2,
+          "score": 430
+        },
+        {
+          "topFraction": 0.3,
+          "score": 390
+        },
+        {
+          "topFraction": 0.4,
+          "score": 350
+        },
+        {
+          "topFraction": 0.5,
+          "score": 330
+        },
+        {
+          "topFraction": 0.65,
+          "score": 280
+        },
+        {
+          "topFraction": 0.8,
+          "score": 240
+        },
+        {
+          "topFraction": 0.95,
+          "score": 160
+        }
+      ],
+      "sampledAt": "2026-09-13T03:07:08.834Z"
+    },
+    {
+      "scenario": "Pasu Switch Wide Regen",
+      "leaderboardId": 48884,
+      "total": 1585,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 900
+        },
+        {
+          "topFraction": 0.005,
+          "score": 830
+        },
+        {
+          "topFraction": 0.01,
+          "score": 780
+        },
+        {
+          "topFraction": 0.02,
+          "score": 740
+        },
+        {
+          "topFraction": 0.035,
+          "score": 710
+        },
+        {
+          "topFraction": 0.05,
+          "score": 690
+        },
+        {
+          "topFraction": 0.075,
+          "score": 660
+        },
+        {
+          "topFraction": 0.1,
+          "score": 640
+        },
+        {
+          "topFraction": 0.15,
+          "score": 610
+        },
+        {
+          "topFraction": 0.2,
+          "score": 580
+        },
+        {
+          "topFraction": 0.3,
+          "score": 530
+        },
+        {
+          "topFraction": 0.4,
+          "score": 500
+        },
+        {
+          "topFraction": 0.5,
+          "score": 460
+        },
+        {
+          "topFraction": 0.65,
+          "score": 410
+        },
+        {
+          "topFraction": 0.8,
+          "score": 340
+        },
+        {
+          "topFraction": 0.95,
+          "score": 220
+        }
+      ],
+      "sampledAt": "2026-09-13T03:07:16.121Z"
+    },
+    {
       "scenario": "Pasu Track Invincible v2",
       "leaderboardId": 548,
       "total": 63737,
@@ -19675,6 +21475,78 @@
         }
       ],
       "sampledAt": "2026-08-25T20:27:49.837Z"
+    },
+    {
+      "scenario": "Pasu Viscose Entry",
+      "leaderboardId": 192535,
+      "total": 3130,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 2152.54
+        },
+        {
+          "topFraction": 0.005,
+          "score": 1864.88
+        },
+        {
+          "topFraction": 0.01,
+          "score": 1750.49
+        },
+        {
+          "topFraction": 0.02,
+          "score": 1627.19
+        },
+        {
+          "topFraction": 0.035,
+          "score": 1529.84
+        },
+        {
+          "topFraction": 0.05,
+          "score": 1451.81
+        },
+        {
+          "topFraction": 0.075,
+          "score": 1380.25
+        },
+        {
+          "topFraction": 0.1,
+          "score": 1322
+        },
+        {
+          "topFraction": 0.15,
+          "score": 1218.7
+        },
+        {
+          "topFraction": 0.2,
+          "score": 1156.61
+        },
+        {
+          "topFraction": 0.3,
+          "score": 1060.83
+        },
+        {
+          "topFraction": 0.4,
+          "score": 991.92
+        },
+        {
+          "topFraction": 0.5,
+          "score": 939.33
+        },
+        {
+          "topFraction": 0.65,
+          "score": 847.87
+        },
+        {
+          "topFraction": 0.8,
+          "score": 717.25
+        },
+        {
+          "topFraction": 0.95,
+          "score": 518.88
+        }
+      ],
+      "sampledAt": "2026-09-13T03:03:41.729Z"
     },
     {
       "scenario": "Pasu Voltaic",
@@ -21765,6 +23637,78 @@
       "sampledAt": "2026-08-25T20:26:54.155Z"
     },
     {
+      "scenario": "Popcorn Goated rAim easy",
+      "leaderboardId": 63202,
+      "total": 2454,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 760
+        },
+        {
+          "topFraction": 0.005,
+          "score": 720
+        },
+        {
+          "topFraction": 0.01,
+          "score": 680
+        },
+        {
+          "topFraction": 0.02,
+          "score": 640
+        },
+        {
+          "topFraction": 0.035,
+          "score": 610
+        },
+        {
+          "topFraction": 0.05,
+          "score": 600
+        },
+        {
+          "topFraction": 0.075,
+          "score": 580
+        },
+        {
+          "topFraction": 0.1,
+          "score": 560
+        },
+        {
+          "topFraction": 0.15,
+          "score": 530
+        },
+        {
+          "topFraction": 0.2,
+          "score": 500
+        },
+        {
+          "topFraction": 0.3,
+          "score": 460
+        },
+        {
+          "topFraction": 0.4,
+          "score": 420
+        },
+        {
+          "topFraction": 0.5,
+          "score": 380
+        },
+        {
+          "topFraction": 0.65,
+          "score": 330
+        },
+        {
+          "topFraction": 0.8,
+          "score": 270
+        },
+        {
+          "topFraction": 0.95,
+          "score": 180
+        }
+      ],
+      "sampledAt": "2026-09-13T03:04:18.140Z"
+    },
+    {
       "scenario": "Popcorn Goated Tracking Invincible",
       "leaderboardId": 380,
       "total": 12903,
@@ -22125,6 +24069,78 @@
       "sampledAt": "2026-09-03T01:08:04.070Z"
     },
     {
+      "scenario": "Popcorn rAim Easy",
+      "leaderboardId": 607,
+      "total": 13449,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 570
+        },
+        {
+          "topFraction": 0.005,
+          "score": 490
+        },
+        {
+          "topFraction": 0.01,
+          "score": 460
+        },
+        {
+          "topFraction": 0.02,
+          "score": 420
+        },
+        {
+          "topFraction": 0.035,
+          "score": 390
+        },
+        {
+          "topFraction": 0.05,
+          "score": 380
+        },
+        {
+          "topFraction": 0.075,
+          "score": 350
+        },
+        {
+          "topFraction": 0.1,
+          "score": 330
+        },
+        {
+          "topFraction": 0.15,
+          "score": 310
+        },
+        {
+          "topFraction": 0.2,
+          "score": 290
+        },
+        {
+          "topFraction": 0.3,
+          "score": 260
+        },
+        {
+          "topFraction": 0.4,
+          "score": 230
+        },
+        {
+          "topFraction": 0.5,
+          "score": 200
+        },
+        {
+          "topFraction": 0.65,
+          "score": 160
+        },
+        {
+          "topFraction": 0.8,
+          "score": 120
+        },
+        {
+          "topFraction": 0.95,
+          "score": 60
+        }
+      ],
+      "sampledAt": "2026-09-13T03:04:25.470Z"
+    },
+    {
       "scenario": "Popcorn Sparky",
       "leaderboardId": 502,
       "total": 22336,
@@ -22267,6 +24283,78 @@
         }
       ],
       "sampledAt": "2026-08-19T01:01:25.178Z"
+    },
+    {
+      "scenario": "PreciseTrack Avasive Easier",
+      "leaderboardId": 203404,
+      "total": 293,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 5908
+        },
+        {
+          "topFraction": 0.005,
+          "score": 5908
+        },
+        {
+          "topFraction": 0.01,
+          "score": 5874
+        },
+        {
+          "topFraction": 0.02,
+          "score": 5775
+        },
+        {
+          "topFraction": 0.035,
+          "score": 5696
+        },
+        {
+          "topFraction": 0.05,
+          "score": 5596
+        },
+        {
+          "topFraction": 0.075,
+          "score": 5514
+        },
+        {
+          "topFraction": 0.1,
+          "score": 5475
+        },
+        {
+          "topFraction": 0.15,
+          "score": 5329
+        },
+        {
+          "topFraction": 0.2,
+          "score": 5111
+        },
+        {
+          "topFraction": 0.3,
+          "score": 4868
+        },
+        {
+          "topFraction": 0.4,
+          "score": 4591
+        },
+        {
+          "topFraction": 0.5,
+          "score": 4416
+        },
+        {
+          "topFraction": 0.65,
+          "score": 4140
+        },
+        {
+          "topFraction": 0.8,
+          "score": 3653
+        },
+        {
+          "topFraction": 0.95,
+          "score": 2867
+        }
+      ],
+      "sampledAt": "2026-09-13T03:09:15.815Z"
     },
     {
       "scenario": "psalmTS angelic click",
@@ -22483,6 +24571,78 @@
         }
       ],
       "sampledAt": "2026-08-25T20:33:53.257Z"
+    },
+    {
+      "scenario": "PureG Pasu Switch",
+      "leaderboardId": 28397,
+      "total": 5256,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 95.23
+        },
+        {
+          "topFraction": 0.005,
+          "score": 86.32
+        },
+        {
+          "topFraction": 0.01,
+          "score": 82.61
+        },
+        {
+          "topFraction": 0.02,
+          "score": 78.53
+        },
+        {
+          "topFraction": 0.035,
+          "score": 75.44
+        },
+        {
+          "topFraction": 0.05,
+          "score": 73.09
+        },
+        {
+          "topFraction": 0.075,
+          "score": 70.37
+        },
+        {
+          "topFraction": 0.1,
+          "score": 67.42
+        },
+        {
+          "topFraction": 0.15,
+          "score": 64.15
+        },
+        {
+          "topFraction": 0.2,
+          "score": 61.4
+        },
+        {
+          "topFraction": 0.3,
+          "score": 57.11
+        },
+        {
+          "topFraction": 0.4,
+          "score": 53.03
+        },
+        {
+          "topFraction": 0.5,
+          "score": 49.97
+        },
+        {
+          "topFraction": 0.65,
+          "score": 43.85
+        },
+        {
+          "topFraction": 0.8,
+          "score": 37.84
+        },
+        {
+          "topFraction": 0.95,
+          "score": 28.55
+        }
+      ],
+      "sampledAt": "2026-09-13T03:07:01.556Z"
     },
     {
       "scenario": "rA S4 AIRTRACK EASY",
@@ -24429,6 +26589,294 @@
       "sampledAt": "2026-08-29T18:34:42.717Z"
     },
     {
+      "scenario": "SmoothBot Invincible Goated",
+      "leaderboardId": 348,
+      "total": 78762,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 5274
+        },
+        {
+          "topFraction": 0.005,
+          "score": 4962
+        },
+        {
+          "topFraction": 0.01,
+          "score": 4716
+        },
+        {
+          "topFraction": 0.02,
+          "score": 4476
+        },
+        {
+          "topFraction": 0.035,
+          "score": 4308
+        },
+        {
+          "topFraction": 0.05,
+          "score": 4110
+        },
+        {
+          "topFraction": 0.075,
+          "score": 3912
+        },
+        {
+          "topFraction": 0.1,
+          "score": 3786
+        },
+        {
+          "topFraction": 0.15,
+          "score": 3504
+        },
+        {
+          "topFraction": 0.2,
+          "score": 3318
+        },
+        {
+          "topFraction": 0.3,
+          "score": 2982
+        },
+        {
+          "topFraction": 0.4,
+          "score": 2712
+        },
+        {
+          "topFraction": 0.5,
+          "score": 2454
+        },
+        {
+          "topFraction": 0.65,
+          "score": 2088
+        },
+        {
+          "topFraction": 0.8,
+          "score": 1704
+        },
+        {
+          "topFraction": 0.95,
+          "score": 1146
+        }
+      ],
+      "sampledAt": "2026-09-13T03:04:47.443Z"
+    },
+    {
+      "scenario": "SmoothBot Invincible Goated 75%",
+      "leaderboardId": 75962,
+      "total": 79190,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 4770
+        },
+        {
+          "topFraction": 0.005,
+          "score": 4464
+        },
+        {
+          "topFraction": 0.01,
+          "score": 4326
+        },
+        {
+          "topFraction": 0.02,
+          "score": 4194
+        },
+        {
+          "topFraction": 0.035,
+          "score": 4116
+        },
+        {
+          "topFraction": 0.05,
+          "score": 4074
+        },
+        {
+          "topFraction": 0.075,
+          "score": 4020
+        },
+        {
+          "topFraction": 0.1,
+          "score": 3924
+        },
+        {
+          "topFraction": 0.15,
+          "score": 3708
+        },
+        {
+          "topFraction": 0.2,
+          "score": 3558
+        },
+        {
+          "topFraction": 0.3,
+          "score": 3312
+        },
+        {
+          "topFraction": 0.4,
+          "score": 3084
+        },
+        {
+          "topFraction": 0.5,
+          "score": 2862
+        },
+        {
+          "topFraction": 0.65,
+          "score": 2514
+        },
+        {
+          "topFraction": 0.8,
+          "score": 2136
+        },
+        {
+          "topFraction": 0.95,
+          "score": 1548
+        }
+      ],
+      "sampledAt": "2026-09-13T03:04:32.752Z"
+    },
+    {
+      "scenario": "Smoothbot Invincible Goated Easy",
+      "leaderboardId": 955,
+      "total": 38360,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 5760
+        },
+        {
+          "topFraction": 0.005,
+          "score": 5262
+        },
+        {
+          "topFraction": 0.01,
+          "score": 5028
+        },
+        {
+          "topFraction": 0.02,
+          "score": 4788
+        },
+        {
+          "topFraction": 0.035,
+          "score": 4506
+        },
+        {
+          "topFraction": 0.05,
+          "score": 4308
+        },
+        {
+          "topFraction": 0.075,
+          "score": 4056
+        },
+        {
+          "topFraction": 0.1,
+          "score": 3852
+        },
+        {
+          "topFraction": 0.15,
+          "score": 3570
+        },
+        {
+          "topFraction": 0.2,
+          "score": 3348
+        },
+        {
+          "topFraction": 0.3,
+          "score": 3018
+        },
+        {
+          "topFraction": 0.4,
+          "score": 2754
+        },
+        {
+          "topFraction": 0.5,
+          "score": 2544
+        },
+        {
+          "topFraction": 0.65,
+          "score": 2220
+        },
+        {
+          "topFraction": 0.8,
+          "score": 1884
+        },
+        {
+          "topFraction": 0.95,
+          "score": 1320
+        }
+      ],
+      "sampledAt": "2026-09-13T03:04:40.124Z"
+    },
+    {
+      "scenario": "SmoothBot Invincible Goated Smaller",
+      "leaderboardId": 815,
+      "total": 9690,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 4578
+        },
+        {
+          "topFraction": 0.005,
+          "score": 4266
+        },
+        {
+          "topFraction": 0.01,
+          "score": 4032
+        },
+        {
+          "topFraction": 0.02,
+          "score": 3804
+        },
+        {
+          "topFraction": 0.035,
+          "score": 3600
+        },
+        {
+          "topFraction": 0.05,
+          "score": 3462
+        },
+        {
+          "topFraction": 0.075,
+          "score": 3294
+        },
+        {
+          "topFraction": 0.1,
+          "score": 3150
+        },
+        {
+          "topFraction": 0.15,
+          "score": 2910
+        },
+        {
+          "topFraction": 0.2,
+          "score": 2748
+        },
+        {
+          "topFraction": 0.3,
+          "score": 2370
+        },
+        {
+          "topFraction": 0.4,
+          "score": 2088
+        },
+        {
+          "topFraction": 0.5,
+          "score": 1824
+        },
+        {
+          "topFraction": 0.65,
+          "score": 1488
+        },
+        {
+          "topFraction": 0.8,
+          "score": 1146
+        },
+        {
+          "topFraction": 0.95,
+          "score": 726
+        }
+      ],
+      "sampledAt": "2026-09-13T03:04:54.663Z"
+    },
+    {
       "scenario": "Smoothbot Pauer",
       "leaderboardId": 724,
       "total": 22983,
@@ -25003,6 +27451,78 @@
         }
       ],
       "sampledAt": "2026-08-25T20:34:27.094Z"
+    },
+    {
+      "scenario": "Smoothbot TS Voltaic Easy",
+      "leaderboardId": 868,
+      "total": 49410,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 65.69
+        },
+        {
+          "topFraction": 0.005,
+          "score": 60.05
+        },
+        {
+          "topFraction": 0.01,
+          "score": 58.05
+        },
+        {
+          "topFraction": 0.02,
+          "score": 56.31
+        },
+        {
+          "topFraction": 0.035,
+          "score": 55.16
+        },
+        {
+          "topFraction": 0.05,
+          "score": 54.73
+        },
+        {
+          "topFraction": 0.075,
+          "score": 54.05
+        },
+        {
+          "topFraction": 0.1,
+          "score": 52.36
+        },
+        {
+          "topFraction": 0.15,
+          "score": 50.3
+        },
+        {
+          "topFraction": 0.2,
+          "score": 48.7
+        },
+        {
+          "topFraction": 0.3,
+          "score": 46.04
+        },
+        {
+          "topFraction": 0.4,
+          "score": 43.75
+        },
+        {
+          "topFraction": 0.5,
+          "score": 41.92
+        },
+        {
+          "topFraction": 0.65,
+          "score": 38.58
+        },
+        {
+          "topFraction": 0.8,
+          "score": 35.14
+        },
+        {
+          "topFraction": 0.95,
+          "score": 29.14
+        }
+      ],
+      "sampledAt": "2026-09-10T23:40:57.427Z"
     },
     {
       "scenario": "Smoothbot TS Voltaic Regen Hasin",
@@ -26877,78 +29397,6 @@
       "sampledAt": "2026-08-18T23:49:46.582Z"
     },
     {
-      "scenario": "tamTargetSwitch Control Hard",
-      "leaderboardId": 757,
-      "total": 60383,
-      "points": [
-        {
-          "topFraction": 0.001,
-          "score": 46
-        },
-        {
-          "topFraction": 0.005,
-          "score": 41
-        },
-        {
-          "topFraction": 0.01,
-          "score": 39
-        },
-        {
-          "topFraction": 0.02,
-          "score": 37
-        },
-        {
-          "topFraction": 0.035,
-          "score": 35
-        },
-        {
-          "topFraction": 0.05,
-          "score": 34
-        },
-        {
-          "topFraction": 0.075,
-          "score": 32
-        },
-        {
-          "topFraction": 0.1,
-          "score": 30
-        },
-        {
-          "topFraction": 0.15,
-          "score": 28
-        },
-        {
-          "topFraction": 0.2,
-          "score": 27
-        },
-        {
-          "topFraction": 0.3,
-          "score": 23
-        },
-        {
-          "topFraction": 0.4,
-          "score": 21
-        },
-        {
-          "topFraction": 0.5,
-          "score": 18
-        },
-        {
-          "topFraction": 0.65,
-          "score": 13
-        },
-        {
-          "topFraction": 0.8,
-          "score": 8
-        },
-        {
-          "topFraction": 0.95,
-          "score": 2
-        }
-      ],
-      "sampledAt": "2026-08-30T15:59:54.201Z"
-    },
-    {
       "scenario": "tamTargetSwitch Smooth",
       "leaderboardId": 56,
       "total": 51563,
@@ -27813,6 +30261,222 @@
       "sampledAt": "2026-08-25T20:09:45.193Z"
     },
     {
+      "scenario": "voxTargetSwitch 2",
+      "leaderboardId": 551,
+      "total": 86564,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 141
+        },
+        {
+          "topFraction": 0.005,
+          "score": 135
+        },
+        {
+          "topFraction": 0.01,
+          "score": 130.05
+        },
+        {
+          "topFraction": 0.02,
+          "score": 125.25
+        },
+        {
+          "topFraction": 0.035,
+          "score": 122.14
+        },
+        {
+          "topFraction": 0.05,
+          "score": 119
+        },
+        {
+          "topFraction": 0.075,
+          "score": 116
+        },
+        {
+          "topFraction": 0.1,
+          "score": 113.14
+        },
+        {
+          "topFraction": 0.15,
+          "score": 108.6
+        },
+        {
+          "topFraction": 0.2,
+          "score": 105
+        },
+        {
+          "topFraction": 0.3,
+          "score": 98
+        },
+        {
+          "topFraction": 0.4,
+          "score": 91.2
+        },
+        {
+          "topFraction": 0.5,
+          "score": 86
+        },
+        {
+          "topFraction": 0.65,
+          "score": 78
+        },
+        {
+          "topFraction": 0.8,
+          "score": 71
+        },
+        {
+          "topFraction": 0.95,
+          "score": 59
+        }
+      ],
+      "sampledAt": "2026-09-10T23:40:20.922Z"
+    },
+    {
+      "scenario": "voxTargetSwitch 2 10% Smaller",
+      "leaderboardId": 185192,
+      "total": 2114,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 151.09
+        },
+        {
+          "topFraction": 0.005,
+          "score": 141
+        },
+        {
+          "topFraction": 0.01,
+          "score": 139
+        },
+        {
+          "topFraction": 0.02,
+          "score": 134
+        },
+        {
+          "topFraction": 0.035,
+          "score": 131
+        },
+        {
+          "topFraction": 0.05,
+          "score": 128.89
+        },
+        {
+          "topFraction": 0.075,
+          "score": 126.95
+        },
+        {
+          "topFraction": 0.1,
+          "score": 125
+        },
+        {
+          "topFraction": 0.15,
+          "score": 122
+        },
+        {
+          "topFraction": 0.2,
+          "score": 119.6
+        },
+        {
+          "topFraction": 0.3,
+          "score": 115
+        },
+        {
+          "topFraction": 0.4,
+          "score": 111.64
+        },
+        {
+          "topFraction": 0.5,
+          "score": 108.95
+        },
+        {
+          "topFraction": 0.65,
+          "score": 102
+        },
+        {
+          "topFraction": 0.8,
+          "score": 93.65
+        },
+        {
+          "topFraction": 0.95,
+          "score": 79
+        }
+      ],
+      "sampledAt": "2026-09-10T23:40:28.195Z"
+    },
+    {
+      "scenario": "voxTargetSwitch 2 20% Smaller",
+      "leaderboardId": 89093,
+      "total": 6210,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 140.34
+        },
+        {
+          "topFraction": 0.005,
+          "score": 133
+        },
+        {
+          "topFraction": 0.01,
+          "score": 128.3
+        },
+        {
+          "topFraction": 0.02,
+          "score": 123.95
+        },
+        {
+          "topFraction": 0.035,
+          "score": 121
+        },
+        {
+          "topFraction": 0.05,
+          "score": 118
+        },
+        {
+          "topFraction": 0.075,
+          "score": 116
+        },
+        {
+          "topFraction": 0.1,
+          "score": 113.64
+        },
+        {
+          "topFraction": 0.15,
+          "score": 110
+        },
+        {
+          "topFraction": 0.2,
+          "score": 106.95
+        },
+        {
+          "topFraction": 0.3,
+          "score": 102.3
+        },
+        {
+          "topFraction": 0.4,
+          "score": 96.8
+        },
+        {
+          "topFraction": 0.5,
+          "score": 92
+        },
+        {
+          "topFraction": 0.65,
+          "score": 84.5
+        },
+        {
+          "topFraction": 0.8,
+          "score": 76
+        },
+        {
+          "topFraction": 0.95,
+          "score": 62.4
+        }
+      ],
+      "sampledAt": "2026-09-10T23:40:35.501Z"
+    },
+    {
       "scenario": "voxTargetSwitch 2 Large",
       "leaderboardId": 84880,
       "total": 73058,
@@ -28245,78 +30909,6 @@
       "sampledAt": "2026-09-03T01:13:47.489Z"
     },
     {
-      "scenario": "voxTS rAim",
-      "leaderboardId": 528,
-      "total": 16795,
-      "points": [
-        {
-          "topFraction": 0.001,
-          "score": 124.95
-        },
-        {
-          "topFraction": 0.005,
-          "score": 117
-        },
-        {
-          "topFraction": 0.01,
-          "score": 112
-        },
-        {
-          "topFraction": 0.02,
-          "score": 107.5
-        },
-        {
-          "topFraction": 0.035,
-          "score": 104
-        },
-        {
-          "topFraction": 0.05,
-          "score": 101.3
-        },
-        {
-          "topFraction": 0.075,
-          "score": 98.2
-        },
-        {
-          "topFraction": 0.1,
-          "score": 96
-        },
-        {
-          "topFraction": 0.15,
-          "score": 92
-        },
-        {
-          "topFraction": 0.2,
-          "score": 89
-        },
-        {
-          "topFraction": 0.3,
-          "score": 84.45
-        },
-        {
-          "topFraction": 0.4,
-          "score": 80.54
-        },
-        {
-          "topFraction": 0.5,
-          "score": 77
-        },
-        {
-          "topFraction": 0.65,
-          "score": 71.9
-        },
-        {
-          "topFraction": 0.8,
-          "score": 66
-        },
-        {
-          "topFraction": 0.95,
-          "score": 55.69
-        }
-      ],
-      "sampledAt": "2026-08-25T20:09:52.892Z"
-    },
-    {
       "scenario": "voxTS Static Click rAim",
       "leaderboardId": 573,
       "total": 205343,
@@ -28387,78 +30979,6 @@
         }
       ],
       "sampledAt": "2026-08-25T20:26:30.464Z"
-    },
-    {
-      "scenario": "voxTS Viscose Varied",
-      "leaderboardId": 417,
-      "total": 268948,
-      "points": [
-        {
-          "topFraction": 0.001,
-          "score": 129.34
-        },
-        {
-          "topFraction": 0.005,
-          "score": 121
-        },
-        {
-          "topFraction": 0.01,
-          "score": 116.35
-        },
-        {
-          "topFraction": 0.02,
-          "score": 112
-        },
-        {
-          "topFraction": 0.035,
-          "score": 108
-        },
-        {
-          "topFraction": 0.05,
-          "score": 105
-        },
-        {
-          "topFraction": 0.075,
-          "score": 101.05
-        },
-        {
-          "topFraction": 0.1,
-          "score": 98.1
-        },
-        {
-          "topFraction": 0.15,
-          "score": 93.65
-        },
-        {
-          "topFraction": 0.2,
-          "score": 90
-        },
-        {
-          "topFraction": 0.3,
-          "score": 84
-        },
-        {
-          "topFraction": 0.4,
-          "score": 79.6
-        },
-        {
-          "topFraction": 0.5,
-          "score": 76
-        },
-        {
-          "topFraction": 0.65,
-          "score": 70.1
-        },
-        {
-          "topFraction": 0.8,
-          "score": 64
-        },
-        {
-          "topFraction": 0.95,
-          "score": 53
-        }
-      ],
-      "sampledAt": "2026-08-29T17:31:18.992Z"
     },
     {
       "scenario": "voxTS Voltaic",
@@ -40773,6 +43293,294 @@
       "sampledAt": "2026-08-29T17:30:24.300Z"
     },
     {
+      "scenario": "Whisphere Extra Small & Slow",
+      "leaderboardId": 34968,
+      "total": 5735,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 15710
+        },
+        {
+          "topFraction": 0.005,
+          "score": 14280
+        },
+        {
+          "topFraction": 0.01,
+          "score": 13220
+        },
+        {
+          "topFraction": 0.02,
+          "score": 12330
+        },
+        {
+          "topFraction": 0.035,
+          "score": 11240
+        },
+        {
+          "topFraction": 0.05,
+          "score": 10750
+        },
+        {
+          "topFraction": 0.075,
+          "score": 10150
+        },
+        {
+          "topFraction": 0.1,
+          "score": 9560
+        },
+        {
+          "topFraction": 0.15,
+          "score": 8830
+        },
+        {
+          "topFraction": 0.2,
+          "score": 8190
+        },
+        {
+          "topFraction": 0.3,
+          "score": 6870
+        },
+        {
+          "topFraction": 0.4,
+          "score": 5920
+        },
+        {
+          "topFraction": 0.5,
+          "score": 5140
+        },
+        {
+          "topFraction": 0.65,
+          "score": 4010
+        },
+        {
+          "topFraction": 0.8,
+          "score": 3030
+        },
+        {
+          "topFraction": 0.95,
+          "score": 1830
+        }
+      ],
+      "sampledAt": "2026-09-10T23:40:06.291Z"
+    },
+    {
+      "scenario": "Whisphere Small & Slow",
+      "leaderboardId": 34966,
+      "total": 19666,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 20840
+        },
+        {
+          "topFraction": 0.005,
+          "score": 18780
+        },
+        {
+          "topFraction": 0.01,
+          "score": 17880
+        },
+        {
+          "topFraction": 0.02,
+          "score": 16670
+        },
+        {
+          "topFraction": 0.035,
+          "score": 15690
+        },
+        {
+          "topFraction": 0.05,
+          "score": 15050
+        },
+        {
+          "topFraction": 0.075,
+          "score": 14200
+        },
+        {
+          "topFraction": 0.1,
+          "score": 13490
+        },
+        {
+          "topFraction": 0.15,
+          "score": 12230
+        },
+        {
+          "topFraction": 0.2,
+          "score": 11240
+        },
+        {
+          "topFraction": 0.3,
+          "score": 9580
+        },
+        {
+          "topFraction": 0.4,
+          "score": 8310
+        },
+        {
+          "topFraction": 0.5,
+          "score": 7220
+        },
+        {
+          "topFraction": 0.65,
+          "score": 5830
+        },
+        {
+          "topFraction": 0.8,
+          "score": 4520
+        },
+        {
+          "topFraction": 0.95,
+          "score": 2860
+        }
+      ],
+      "sampledAt": "2026-09-10T23:39:59.020Z"
+    },
+    {
+      "scenario": "Whisphere Small & Slow 55%",
+      "leaderboardId": 128693,
+      "total": 69678,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 15790
+        },
+        {
+          "topFraction": 0.005,
+          "score": 15320
+        },
+        {
+          "topFraction": 0.01,
+          "score": 15020
+        },
+        {
+          "topFraction": 0.02,
+          "score": 14670
+        },
+        {
+          "topFraction": 0.035,
+          "score": 14380
+        },
+        {
+          "topFraction": 0.05,
+          "score": 14200
+        },
+        {
+          "topFraction": 0.075,
+          "score": 13990
+        },
+        {
+          "topFraction": 0.1,
+          "score": 13840
+        },
+        {
+          "topFraction": 0.15,
+          "score": 13620
+        },
+        {
+          "topFraction": 0.2,
+          "score": 13370
+        },
+        {
+          "topFraction": 0.3,
+          "score": 12680
+        },
+        {
+          "topFraction": 0.4,
+          "score": 12130
+        },
+        {
+          "topFraction": 0.5,
+          "score": 11610
+        },
+        {
+          "topFraction": 0.65,
+          "score": 10710
+        },
+        {
+          "topFraction": 0.8,
+          "score": 9550
+        },
+        {
+          "topFraction": 0.95,
+          "score": 7420
+        }
+      ],
+      "sampledAt": "2026-09-10T23:39:44.366Z"
+    },
+    {
+      "scenario": "Whisphere Small & Slow 75%",
+      "leaderboardId": 77068,
+      "total": 30851,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 19890
+        },
+        {
+          "topFraction": 0.005,
+          "score": 19110
+        },
+        {
+          "topFraction": 0.01,
+          "score": 18410
+        },
+        {
+          "topFraction": 0.02,
+          "score": 17670
+        },
+        {
+          "topFraction": 0.035,
+          "score": 16850
+        },
+        {
+          "topFraction": 0.05,
+          "score": 16340
+        },
+        {
+          "topFraction": 0.075,
+          "score": 15830
+        },
+        {
+          "topFraction": 0.1,
+          "score": 15510
+        },
+        {
+          "topFraction": 0.15,
+          "score": 14560
+        },
+        {
+          "topFraction": 0.2,
+          "score": 13970
+        },
+        {
+          "topFraction": 0.3,
+          "score": 13030
+        },
+        {
+          "topFraction": 0.4,
+          "score": 12150
+        },
+        {
+          "topFraction": 0.5,
+          "score": 11440
+        },
+        {
+          "topFraction": 0.65,
+          "score": 10130
+        },
+        {
+          "topFraction": 0.8,
+          "score": 8630
+        },
+        {
+          "topFraction": 0.95,
+          "score": 6000
+        }
+      ],
+      "sampledAt": "2026-09-10T23:39:51.708Z"
+    },
+    {
       "scenario": "WhisphereTS Revosect",
       "leaderboardId": 141052,
       "total": 137,
@@ -41277,6 +44085,78 @@
       "sampledAt": "2026-09-02T19:47:17.942Z"
     },
     {
+      "scenario": "wobin DotTS Easy",
+      "leaderboardId": 125689,
+      "total": 441,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 1684
+        },
+        {
+          "topFraction": 0.005,
+          "score": 1651
+        },
+        {
+          "topFraction": 0.01,
+          "score": 1636.5
+        },
+        {
+          "topFraction": 0.02,
+          "score": 1585.5
+        },
+        {
+          "topFraction": 0.035,
+          "score": 1547.5
+        },
+        {
+          "topFraction": 0.05,
+          "score": 1523.5
+        },
+        {
+          "topFraction": 0.075,
+          "score": 1475
+        },
+        {
+          "topFraction": 0.1,
+          "score": 1442.5
+        },
+        {
+          "topFraction": 0.15,
+          "score": 1400.5
+        },
+        {
+          "topFraction": 0.2,
+          "score": 1380
+        },
+        {
+          "topFraction": 0.3,
+          "score": 1346.5
+        },
+        {
+          "topFraction": 0.4,
+          "score": 1320
+        },
+        {
+          "topFraction": 0.5,
+          "score": 1270
+        },
+        {
+          "topFraction": 0.65,
+          "score": 1210
+        },
+        {
+          "topFraction": 0.8,
+          "score": 1133.5
+        },
+        {
+          "topFraction": 0.95,
+          "score": 931
+        }
+      ],
+      "sampledAt": "2026-09-13T03:06:22.128Z"
+    },
+    {
       "scenario": "ww2ts",
       "leaderboardId": 12193,
       "total": 297,
@@ -41779,6 +44659,1878 @@
         }
       ],
       "sampledAt": "2026-08-25T20:30:35.519Z"
+    },
+    {
+      "scenario": "Pasu 3-Click Wide Easy",
+      "leaderboardId": 54718,
+      "total": 11096,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 196.03
+        },
+        {
+          "topFraction": 0.005,
+          "score": 123.11
+        },
+        {
+          "topFraction": 0.01,
+          "score": 52.46
+        },
+        {
+          "topFraction": 0.02,
+          "score": 43.95
+        },
+        {
+          "topFraction": 0.035,
+          "score": 39.75
+        },
+        {
+          "topFraction": 0.05,
+          "score": 37.16
+        },
+        {
+          "topFraction": 0.075,
+          "score": 34.15
+        },
+        {
+          "topFraction": 0.1,
+          "score": 32.16
+        },
+        {
+          "topFraction": 0.15,
+          "score": 29.08
+        },
+        {
+          "topFraction": 0.2,
+          "score": 27.03
+        },
+        {
+          "topFraction": 0.3,
+          "score": 23.89
+        },
+        {
+          "topFraction": 0.4,
+          "score": 21.31
+        },
+        {
+          "topFraction": 0.5,
+          "score": 19.09
+        },
+        {
+          "topFraction": 0.65,
+          "score": 16.04
+        },
+        {
+          "topFraction": 0.8,
+          "score": 12.78
+        },
+        {
+          "topFraction": 0.95,
+          "score": 8.04
+        }
+      ],
+      "sampledAt": "2026-09-13T19:19:52.735Z"
+    },
+    {
+      "scenario": "Pasu 3-Click v2 Less Easy",
+      "leaderboardId": 3876,
+      "total": 4328,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 40.66
+        },
+        {
+          "topFraction": 0.005,
+          "score": 37.33
+        },
+        {
+          "topFraction": 0.01,
+          "score": 35.99
+        },
+        {
+          "topFraction": 0.02,
+          "score": 34.66
+        },
+        {
+          "topFraction": 0.035,
+          "score": 33.33
+        },
+        {
+          "topFraction": 0.05,
+          "score": 32.33
+        },
+        {
+          "topFraction": 0.075,
+          "score": 31.33
+        },
+        {
+          "topFraction": 0.1,
+          "score": 30.33
+        },
+        {
+          "topFraction": 0.15,
+          "score": 29.33
+        },
+        {
+          "topFraction": 0.2,
+          "score": 27.99
+        },
+        {
+          "topFraction": 0.3,
+          "score": 25.99
+        },
+        {
+          "topFraction": 0.4,
+          "score": 24.33
+        },
+        {
+          "topFraction": 0.5,
+          "score": 22.66
+        },
+        {
+          "topFraction": 0.65,
+          "score": 19.99
+        },
+        {
+          "topFraction": 0.8,
+          "score": 16.66
+        },
+        {
+          "topFraction": 0.95,
+          "score": 11.33
+        }
+      ],
+      "sampledAt": "2026-09-13T19:20:06.744Z"
+    },
+    {
+      "scenario": "Pasu 3-click v2",
+      "leaderboardId": 1094,
+      "total": 23073,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 36.99
+        },
+        {
+          "topFraction": 0.005,
+          "score": 33.33
+        },
+        {
+          "topFraction": 0.01,
+          "score": 31.66
+        },
+        {
+          "topFraction": 0.02,
+          "score": 29.66
+        },
+        {
+          "topFraction": 0.035,
+          "score": 27.99
+        },
+        {
+          "topFraction": 0.05,
+          "score": 26.66
+        },
+        {
+          "topFraction": 0.075,
+          "score": 24.99
+        },
+        {
+          "topFraction": 0.1,
+          "score": 23.99
+        },
+        {
+          "topFraction": 0.15,
+          "score": 21.99
+        },
+        {
+          "topFraction": 0.2,
+          "score": 20.66
+        },
+        {
+          "topFraction": 0.3,
+          "score": 18.33
+        },
+        {
+          "topFraction": 0.4,
+          "score": 16.66
+        },
+        {
+          "topFraction": 0.5,
+          "score": 14.99
+        },
+        {
+          "topFraction": 0.65,
+          "score": 12.66
+        },
+        {
+          "topFraction": 0.8,
+          "score": 9.99
+        },
+        {
+          "topFraction": 0.95,
+          "score": 5.99
+        }
+      ],
+      "sampledAt": "2026-09-13T19:20:20.757Z"
+    },
+    {
+      "scenario": "Pasu 3-Click Wide",
+      "leaderboardId": 54719,
+      "total": 3082,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 160.33
+        },
+        {
+          "topFraction": 0.005,
+          "score": 47.97
+        },
+        {
+          "topFraction": 0.01,
+          "score": 29.43
+        },
+        {
+          "topFraction": 0.02,
+          "score": 25.52
+        },
+        {
+          "topFraction": 0.035,
+          "score": 23.2
+        },
+        {
+          "topFraction": 0.05,
+          "score": 21.72
+        },
+        {
+          "topFraction": 0.075,
+          "score": 20.03
+        },
+        {
+          "topFraction": 0.1,
+          "score": 18.67
+        },
+        {
+          "topFraction": 0.15,
+          "score": 16.65
+        },
+        {
+          "topFraction": 0.2,
+          "score": 15.13
+        },
+        {
+          "topFraction": 0.3,
+          "score": 12.49
+        },
+        {
+          "topFraction": 0.4,
+          "score": 10.55
+        },
+        {
+          "topFraction": 0.5,
+          "score": 8.93
+        },
+        {
+          "topFraction": 0.65,
+          "score": 6.78
+        },
+        {
+          "topFraction": 0.8,
+          "score": 4.87
+        },
+        {
+          "topFraction": 0.95,
+          "score": 2.47
+        }
+      ],
+      "sampledAt": "2026-09-13T19:20:34.799Z"
+    },
+    {
+      "scenario": "Centering II 180 Entry",
+      "leaderboardId": 111447,
+      "total": 7837,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 21744
+        },
+        {
+          "topFraction": 0.005,
+          "score": 19908
+        },
+        {
+          "topFraction": 0.01,
+          "score": 18810
+        },
+        {
+          "topFraction": 0.02,
+          "score": 17586
+        },
+        {
+          "topFraction": 0.035,
+          "score": 16578
+        },
+        {
+          "topFraction": 0.05,
+          "score": 15858
+        },
+        {
+          "topFraction": 0.075,
+          "score": 15120
+        },
+        {
+          "topFraction": 0.1,
+          "score": 14598
+        },
+        {
+          "topFraction": 0.15,
+          "score": 13734
+        },
+        {
+          "topFraction": 0.2,
+          "score": 13104
+        },
+        {
+          "topFraction": 0.3,
+          "score": 12186
+        },
+        {
+          "topFraction": 0.4,
+          "score": 11448
+        },
+        {
+          "topFraction": 0.5,
+          "score": 10800
+        },
+        {
+          "topFraction": 0.65,
+          "score": 9864
+        },
+        {
+          "topFraction": 0.8,
+          "score": 8784
+        },
+        {
+          "topFraction": 0.95,
+          "score": 7056
+        }
+      ],
+      "sampledAt": "2026-09-13T19:20:48.763Z"
+    },
+    {
+      "scenario": "Centering II 180 Novice",
+      "leaderboardId": 111445,
+      "total": 10003,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 20682
+        },
+        {
+          "topFraction": 0.005,
+          "score": 17694
+        },
+        {
+          "topFraction": 0.01,
+          "score": 15948
+        },
+        {
+          "topFraction": 0.02,
+          "score": 14634
+        },
+        {
+          "topFraction": 0.035,
+          "score": 13644
+        },
+        {
+          "topFraction": 0.05,
+          "score": 13050
+        },
+        {
+          "topFraction": 0.075,
+          "score": 12438
+        },
+        {
+          "topFraction": 0.1,
+          "score": 12006
+        },
+        {
+          "topFraction": 0.15,
+          "score": 11394
+        },
+        {
+          "topFraction": 0.2,
+          "score": 10944
+        },
+        {
+          "topFraction": 0.3,
+          "score": 10260
+        },
+        {
+          "topFraction": 0.4,
+          "score": 9720
+        },
+        {
+          "topFraction": 0.5,
+          "score": 9216
+        },
+        {
+          "topFraction": 0.65,
+          "score": 8478
+        },
+        {
+          "topFraction": 0.8,
+          "score": 7614
+        },
+        {
+          "topFraction": 0.95,
+          "score": 6120
+        }
+      ],
+      "sampledAt": "2026-09-13T19:21:02.844Z"
+    },
+    {
+      "scenario": "Centering II 180 Intermediate",
+      "leaderboardId": 111448,
+      "total": 15507,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 19062
+        },
+        {
+          "topFraction": 0.005,
+          "score": 15498
+        },
+        {
+          "topFraction": 0.01,
+          "score": 14598
+        },
+        {
+          "topFraction": 0.02,
+          "score": 13788
+        },
+        {
+          "topFraction": 0.035,
+          "score": 13140
+        },
+        {
+          "topFraction": 0.05,
+          "score": 12690
+        },
+        {
+          "topFraction": 0.075,
+          "score": 12204
+        },
+        {
+          "topFraction": 0.1,
+          "score": 11862
+        },
+        {
+          "topFraction": 0.15,
+          "score": 11286
+        },
+        {
+          "topFraction": 0.2,
+          "score": 10872
+        },
+        {
+          "topFraction": 0.3,
+          "score": 10188
+        },
+        {
+          "topFraction": 0.4,
+          "score": 9612
+        },
+        {
+          "topFraction": 0.5,
+          "score": 9072
+        },
+        {
+          "topFraction": 0.65,
+          "score": 8298
+        },
+        {
+          "topFraction": 0.8,
+          "score": 7398
+        },
+        {
+          "topFraction": 0.95,
+          "score": 5796
+        }
+      ],
+      "sampledAt": "2026-09-13T19:21:16.910Z"
+    },
+    {
+      "scenario": "Centering II 180 no strafes",
+      "leaderboardId": 423,
+      "total": 52100,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 15156
+        },
+        {
+          "topFraction": 0.005,
+          "score": 12762
+        },
+        {
+          "topFraction": 0.01,
+          "score": 12006
+        },
+        {
+          "topFraction": 0.02,
+          "score": 11196
+        },
+        {
+          "topFraction": 0.035,
+          "score": 10584
+        },
+        {
+          "topFraction": 0.05,
+          "score": 10152
+        },
+        {
+          "topFraction": 0.075,
+          "score": 9630
+        },
+        {
+          "topFraction": 0.1,
+          "score": 9270
+        },
+        {
+          "topFraction": 0.15,
+          "score": 8676
+        },
+        {
+          "topFraction": 0.2,
+          "score": 8244
+        },
+        {
+          "topFraction": 0.3,
+          "score": 7542
+        },
+        {
+          "topFraction": 0.4,
+          "score": 6912
+        },
+        {
+          "topFraction": 0.5,
+          "score": 6372
+        },
+        {
+          "topFraction": 0.65,
+          "score": 5526
+        },
+        {
+          "topFraction": 0.8,
+          "score": 4590
+        },
+        {
+          "topFraction": 0.95,
+          "score": 3222
+        }
+      ],
+      "sampledAt": "2026-09-13T19:21:31.117Z"
+    },
+    {
+      "scenario": "Smooth Your Vertical Altered POV Entry",
+      "leaderboardId": 112748,
+      "total": 4830,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 7434
+        },
+        {
+          "topFraction": 0.005,
+          "score": 6486
+        },
+        {
+          "topFraction": 0.01,
+          "score": 6048
+        },
+        {
+          "topFraction": 0.02,
+          "score": 5646
+        },
+        {
+          "topFraction": 0.035,
+          "score": 5220
+        },
+        {
+          "topFraction": 0.05,
+          "score": 4998
+        },
+        {
+          "topFraction": 0.075,
+          "score": 4710
+        },
+        {
+          "topFraction": 0.1,
+          "score": 4470
+        },
+        {
+          "topFraction": 0.15,
+          "score": 4158
+        },
+        {
+          "topFraction": 0.2,
+          "score": 3948
+        },
+        {
+          "topFraction": 0.3,
+          "score": 3660
+        },
+        {
+          "topFraction": 0.4,
+          "score": 3396
+        },
+        {
+          "topFraction": 0.5,
+          "score": 3168
+        },
+        {
+          "topFraction": 0.65,
+          "score": 2826
+        },
+        {
+          "topFraction": 0.8,
+          "score": 2448
+        },
+        {
+          "topFraction": 0.95,
+          "score": 1728
+        }
+      ],
+      "sampledAt": "2026-09-13T19:21:45.072Z"
+    },
+    {
+      "scenario": "Smooth Your Vertical Altered POV Easy v2",
+      "leaderboardId": 48398,
+      "total": 9672,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 7074
+        },
+        {
+          "topFraction": 0.005,
+          "score": 6600
+        },
+        {
+          "topFraction": 0.01,
+          "score": 6264
+        },
+        {
+          "topFraction": 0.02,
+          "score": 6024
+        },
+        {
+          "topFraction": 0.035,
+          "score": 5700
+        },
+        {
+          "topFraction": 0.05,
+          "score": 5448
+        },
+        {
+          "topFraction": 0.075,
+          "score": 5178
+        },
+        {
+          "topFraction": 0.1,
+          "score": 4908
+        },
+        {
+          "topFraction": 0.15,
+          "score": 4494
+        },
+        {
+          "topFraction": 0.2,
+          "score": 4110
+        },
+        {
+          "topFraction": 0.3,
+          "score": 3474
+        },
+        {
+          "topFraction": 0.4,
+          "score": 3006
+        },
+        {
+          "topFraction": 0.5,
+          "score": 2652
+        },
+        {
+          "topFraction": 0.65,
+          "score": 2262
+        },
+        {
+          "topFraction": 0.8,
+          "score": 1878
+        },
+        {
+          "topFraction": 0.95,
+          "score": 1296
+        }
+      ],
+      "sampledAt": "2026-09-13T19:21:59.057Z"
+    },
+    {
+      "scenario": "Smooth Your Vertical Altered POV Intermediate",
+      "leaderboardId": 107995,
+      "total": 10476,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 5076
+        },
+        {
+          "topFraction": 0.005,
+          "score": 4332
+        },
+        {
+          "topFraction": 0.01,
+          "score": 4092
+        },
+        {
+          "topFraction": 0.02,
+          "score": 3786
+        },
+        {
+          "topFraction": 0.035,
+          "score": 3570
+        },
+        {
+          "topFraction": 0.05,
+          "score": 3414
+        },
+        {
+          "topFraction": 0.075,
+          "score": 3240
+        },
+        {
+          "topFraction": 0.1,
+          "score": 3096
+        },
+        {
+          "topFraction": 0.15,
+          "score": 2892
+        },
+        {
+          "topFraction": 0.2,
+          "score": 2724
+        },
+        {
+          "topFraction": 0.3,
+          "score": 2460
+        },
+        {
+          "topFraction": 0.4,
+          "score": 2256
+        },
+        {
+          "topFraction": 0.5,
+          "score": 2070
+        },
+        {
+          "topFraction": 0.65,
+          "score": 1806
+        },
+        {
+          "topFraction": 0.8,
+          "score": 1512
+        },
+        {
+          "topFraction": 0.95,
+          "score": 1056
+        }
+      ],
+      "sampledAt": "2026-09-13T19:22:12.994Z"
+    },
+    {
+      "scenario": "Smooth Your Vertical Altered POV v2",
+      "leaderboardId": 48393,
+      "total": 4725,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 5208
+        },
+        {
+          "topFraction": 0.005,
+          "score": 4524
+        },
+        {
+          "topFraction": 0.01,
+          "score": 4032
+        },
+        {
+          "topFraction": 0.02,
+          "score": 3600
+        },
+        {
+          "topFraction": 0.035,
+          "score": 3330
+        },
+        {
+          "topFraction": 0.05,
+          "score": 3168
+        },
+        {
+          "topFraction": 0.075,
+          "score": 2958
+        },
+        {
+          "topFraction": 0.1,
+          "score": 2772
+        },
+        {
+          "topFraction": 0.15,
+          "score": 2544
+        },
+        {
+          "topFraction": 0.2,
+          "score": 2358
+        },
+        {
+          "topFraction": 0.3,
+          "score": 2076
+        },
+        {
+          "topFraction": 0.4,
+          "score": 1854
+        },
+        {
+          "topFraction": 0.5,
+          "score": 1638
+        },
+        {
+          "topFraction": 0.65,
+          "score": 1344
+        },
+        {
+          "topFraction": 0.8,
+          "score": 1020
+        },
+        {
+          "topFraction": 0.95,
+          "score": 546
+        }
+      ],
+      "sampledAt": "2026-09-13T19:22:30.528Z"
+    },
+    {
+      "scenario": "Kindaclose long stop strafes",
+      "leaderboardId": 15877,
+      "total": 7117,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 2486
+        },
+        {
+          "topFraction": 0.005,
+          "score": 2430
+        },
+        {
+          "topFraction": 0.01,
+          "score": 2407
+        },
+        {
+          "topFraction": 0.02,
+          "score": 2376
+        },
+        {
+          "topFraction": 0.035,
+          "score": 2355
+        },
+        {
+          "topFraction": 0.05,
+          "score": 2341
+        },
+        {
+          "topFraction": 0.075,
+          "score": 2322
+        },
+        {
+          "topFraction": 0.1,
+          "score": 2308
+        },
+        {
+          "topFraction": 0.15,
+          "score": 2275
+        },
+        {
+          "topFraction": 0.2,
+          "score": 2242
+        },
+        {
+          "topFraction": 0.3,
+          "score": 2186
+        },
+        {
+          "topFraction": 0.4,
+          "score": 2124
+        },
+        {
+          "topFraction": 0.5,
+          "score": 2066
+        },
+        {
+          "topFraction": 0.65,
+          "score": 1977
+        },
+        {
+          "topFraction": 0.8,
+          "score": 1859
+        },
+        {
+          "topFraction": 0.95,
+          "score": 1562
+        }
+      ],
+      "sampledAt": "2026-09-13T19:22:44.564Z"
+    },
+    {
+      "scenario": "Flicker Plaza rAim Easy Less Blinks",
+      "leaderboardId": 128774,
+      "total": 57182,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 931.29
+        },
+        {
+          "topFraction": 0.005,
+          "score": 927.57
+        },
+        {
+          "topFraction": 0.01,
+          "score": 925.75
+        },
+        {
+          "topFraction": 0.02,
+          "score": 923.77
+        },
+        {
+          "topFraction": 0.035,
+          "score": 921.9
+        },
+        {
+          "topFraction": 0.05,
+          "score": 920.68
+        },
+        {
+          "topFraction": 0.075,
+          "score": 919.12
+        },
+        {
+          "topFraction": 0.1,
+          "score": 917.93
+        },
+        {
+          "topFraction": 0.15,
+          "score": 916.1
+        },
+        {
+          "topFraction": 0.2,
+          "score": 914.61
+        },
+        {
+          "topFraction": 0.3,
+          "score": 912.12
+        },
+        {
+          "topFraction": 0.4,
+          "score": 909.92
+        },
+        {
+          "topFraction": 0.5,
+          "score": 907.17
+        },
+        {
+          "topFraction": 0.65,
+          "score": 902.01
+        },
+        {
+          "topFraction": 0.8,
+          "score": 894.56
+        },
+        {
+          "topFraction": 0.95,
+          "score": 875.91
+        }
+      ],
+      "sampledAt": "2026-09-13T19:22:58.615Z"
+    },
+    {
+      "scenario": "Flicker Plaza rAim Easy",
+      "leaderboardId": 606,
+      "total": 29403,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 922.77
+        },
+        {
+          "topFraction": 0.005,
+          "score": 919.34
+        },
+        {
+          "topFraction": 0.01,
+          "score": 918.07
+        },
+        {
+          "topFraction": 0.02,
+          "score": 916.12
+        },
+        {
+          "topFraction": 0.035,
+          "score": 913.74
+        },
+        {
+          "topFraction": 0.05,
+          "score": 912.18
+        },
+        {
+          "topFraction": 0.075,
+          "score": 910.14
+        },
+        {
+          "topFraction": 0.1,
+          "score": 908.74
+        },
+        {
+          "topFraction": 0.15,
+          "score": 905.7
+        },
+        {
+          "topFraction": 0.2,
+          "score": 903.28
+        },
+        {
+          "topFraction": 0.3,
+          "score": 899.8
+        },
+        {
+          "topFraction": 0.4,
+          "score": 895.84
+        },
+        {
+          "topFraction": 0.5,
+          "score": 892.24
+        },
+        {
+          "topFraction": 0.65,
+          "score": 885.5
+        },
+        {
+          "topFraction": 0.8,
+          "score": 876.31
+        },
+        {
+          "topFraction": 0.95,
+          "score": 853.64
+        }
+      ],
+      "sampledAt": "2026-09-13T19:23:12.673Z"
+    },
+    {
+      "scenario": "Flicker Plaza",
+      "leaderboardId": 677,
+      "total": 18186,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 916.98
+        },
+        {
+          "topFraction": 0.005,
+          "score": 910.74
+        },
+        {
+          "topFraction": 0.01,
+          "score": 906.83
+        },
+        {
+          "topFraction": 0.02,
+          "score": 903.05
+        },
+        {
+          "topFraction": 0.035,
+          "score": 899.29
+        },
+        {
+          "topFraction": 0.05,
+          "score": 896.71
+        },
+        {
+          "topFraction": 0.075,
+          "score": 893.57
+        },
+        {
+          "topFraction": 0.1,
+          "score": 891.08
+        },
+        {
+          "topFraction": 0.15,
+          "score": 886.24
+        },
+        {
+          "topFraction": 0.2,
+          "score": 882.43
+        },
+        {
+          "topFraction": 0.3,
+          "score": 875.13
+        },
+        {
+          "topFraction": 0.4,
+          "score": 868.25
+        },
+        {
+          "topFraction": 0.5,
+          "score": 861.35
+        },
+        {
+          "topFraction": 0.65,
+          "score": 849.32
+        },
+        {
+          "topFraction": 0.8,
+          "score": 833.12
+        },
+        {
+          "topFraction": 0.95,
+          "score": 794.87
+        }
+      ],
+      "sampledAt": "2026-09-13T19:23:26.694Z"
+    },
+    {
+      "scenario": "voxTS Viscose Varied",
+      "leaderboardId": 417,
+      "total": 272197,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 129.09
+        },
+        {
+          "topFraction": 0.005,
+          "score": 121
+        },
+        {
+          "topFraction": 0.01,
+          "score": 116.35
+        },
+        {
+          "topFraction": 0.02,
+          "score": 112
+        },
+        {
+          "topFraction": 0.035,
+          "score": 108
+        },
+        {
+          "topFraction": 0.05,
+          "score": 105
+        },
+        {
+          "topFraction": 0.075,
+          "score": 101
+        },
+        {
+          "topFraction": 0.1,
+          "score": 98.05
+        },
+        {
+          "topFraction": 0.15,
+          "score": 93.55
+        },
+        {
+          "topFraction": 0.2,
+          "score": 89.95
+        },
+        {
+          "topFraction": 0.3,
+          "score": 84
+        },
+        {
+          "topFraction": 0.4,
+          "score": 79.6
+        },
+        {
+          "topFraction": 0.5,
+          "score": 76
+        },
+        {
+          "topFraction": 0.65,
+          "score": 70.15
+        },
+        {
+          "topFraction": 0.8,
+          "score": 64
+        },
+        {
+          "topFraction": 0.95,
+          "score": 53
+        }
+      ],
+      "sampledAt": "2026-09-13T19:23:40.972Z"
+    },
+    {
+      "scenario": "voxTS rAim",
+      "leaderboardId": 528,
+      "total": 16963,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 124.95
+        },
+        {
+          "topFraction": 0.005,
+          "score": 117
+        },
+        {
+          "topFraction": 0.01,
+          "score": 112
+        },
+        {
+          "topFraction": 0.02,
+          "score": 107.45
+        },
+        {
+          "topFraction": 0.035,
+          "score": 104
+        },
+        {
+          "topFraction": 0.05,
+          "score": 101.25
+        },
+        {
+          "topFraction": 0.075,
+          "score": 98.15
+        },
+        {
+          "topFraction": 0.1,
+          "score": 96
+        },
+        {
+          "topFraction": 0.15,
+          "score": 92
+        },
+        {
+          "topFraction": 0.2,
+          "score": 89
+        },
+        {
+          "topFraction": 0.3,
+          "score": 84.45
+        },
+        {
+          "topFraction": 0.4,
+          "score": 80.6
+        },
+        {
+          "topFraction": 0.5,
+          "score": 77
+        },
+        {
+          "topFraction": 0.65,
+          "score": 71.9
+        },
+        {
+          "topFraction": 0.8,
+          "score": 65.94
+        },
+        {
+          "topFraction": 0.95,
+          "score": 55.69
+        }
+      ],
+      "sampledAt": "2026-09-13T19:23:55.138Z"
+    },
+    {
+      "scenario": "tamTargetSwitch Control Intermediate",
+      "leaderboardId": 110123,
+      "total": 9783,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 65
+        },
+        {
+          "topFraction": 0.005,
+          "score": 60
+        },
+        {
+          "topFraction": 0.01,
+          "score": 59
+        },
+        {
+          "topFraction": 0.02,
+          "score": 57
+        },
+        {
+          "topFraction": 0.035,
+          "score": 56
+        },
+        {
+          "topFraction": 0.05,
+          "score": 55
+        },
+        {
+          "topFraction": 0.075,
+          "score": 54
+        },
+        {
+          "topFraction": 0.1,
+          "score": 53
+        },
+        {
+          "topFraction": 0.15,
+          "score": 51
+        },
+        {
+          "topFraction": 0.2,
+          "score": 50
+        },
+        {
+          "topFraction": 0.3,
+          "score": 48
+        },
+        {
+          "topFraction": 0.4,
+          "score": 46
+        },
+        {
+          "topFraction": 0.5,
+          "score": 44
+        },
+        {
+          "topFraction": 0.65,
+          "score": 42
+        },
+        {
+          "topFraction": 0.8,
+          "score": 39
+        },
+        {
+          "topFraction": 0.95,
+          "score": 32
+        }
+      ],
+      "sampledAt": "2026-09-13T19:24:23.336Z"
+    },
+    {
+      "scenario": "tamTargetSwitch Control",
+      "leaderboardId": 57,
+      "total": 30985,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 46
+        },
+        {
+          "topFraction": 0.005,
+          "score": 43
+        },
+        {
+          "topFraction": 0.01,
+          "score": 41
+        },
+        {
+          "topFraction": 0.02,
+          "score": 39
+        },
+        {
+          "topFraction": 0.035,
+          "score": 37
+        },
+        {
+          "topFraction": 0.05,
+          "score": 36
+        },
+        {
+          "topFraction": 0.075,
+          "score": 35
+        },
+        {
+          "topFraction": 0.1,
+          "score": 33
+        },
+        {
+          "topFraction": 0.15,
+          "score": 31
+        },
+        {
+          "topFraction": 0.2,
+          "score": 30
+        },
+        {
+          "topFraction": 0.3,
+          "score": 27
+        },
+        {
+          "topFraction": 0.4,
+          "score": 25
+        },
+        {
+          "topFraction": 0.5,
+          "score": 23
+        },
+        {
+          "topFraction": 0.65,
+          "score": 20
+        },
+        {
+          "topFraction": 0.8,
+          "score": 16
+        },
+        {
+          "topFraction": 0.95,
+          "score": 9
+        }
+      ],
+      "sampledAt": "2026-09-13T19:24:37.497Z"
+    },
+    {
+      "scenario": "tamTargetSwitch Control Hard",
+      "leaderboardId": 757,
+      "total": 61447,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 46
+        },
+        {
+          "topFraction": 0.005,
+          "score": 41
+        },
+        {
+          "topFraction": 0.01,
+          "score": 39
+        },
+        {
+          "topFraction": 0.02,
+          "score": 37
+        },
+        {
+          "topFraction": 0.035,
+          "score": 35
+        },
+        {
+          "topFraction": 0.05,
+          "score": 34
+        },
+        {
+          "topFraction": 0.075,
+          "score": 32
+        },
+        {
+          "topFraction": 0.1,
+          "score": 30
+        },
+        {
+          "topFraction": 0.15,
+          "score": 28
+        },
+        {
+          "topFraction": 0.2,
+          "score": 26
+        },
+        {
+          "topFraction": 0.3,
+          "score": 23
+        },
+        {
+          "topFraction": 0.4,
+          "score": 20
+        },
+        {
+          "topFraction": 0.5,
+          "score": 17
+        },
+        {
+          "topFraction": 0.65,
+          "score": 13
+        },
+        {
+          "topFraction": 0.8,
+          "score": 8
+        },
+        {
+          "topFraction": 0.95,
+          "score": 2
+        }
+      ],
+      "sampledAt": "2026-09-13T19:24:51.555Z"
+    },
+    {
+      "scenario": "B180T rAim Easy",
+      "leaderboardId": 740,
+      "total": 4306,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 106
+        },
+        {
+          "topFraction": 0.005,
+          "score": 94
+        },
+        {
+          "topFraction": 0.01,
+          "score": 88
+        },
+        {
+          "topFraction": 0.02,
+          "score": 83
+        },
+        {
+          "topFraction": 0.035,
+          "score": 78
+        },
+        {
+          "topFraction": 0.05,
+          "score": 76
+        },
+        {
+          "topFraction": 0.075,
+          "score": 74
+        },
+        {
+          "topFraction": 0.1,
+          "score": 73
+        },
+        {
+          "topFraction": 0.15,
+          "score": 70
+        },
+        {
+          "topFraction": 0.2,
+          "score": 68
+        },
+        {
+          "topFraction": 0.3,
+          "score": 63
+        },
+        {
+          "topFraction": 0.4,
+          "score": 58
+        },
+        {
+          "topFraction": 0.5,
+          "score": 53
+        },
+        {
+          "topFraction": 0.65,
+          "score": 47
+        },
+        {
+          "topFraction": 0.8,
+          "score": 40
+        },
+        {
+          "topFraction": 0.95,
+          "score": 29
+        }
+      ],
+      "sampledAt": "2026-09-13T19:25:05.559Z"
+    },
+    {
+      "scenario": "aimerz+ B180TC Normal",
+      "leaderboardId": 44380,
+      "total": 6560,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 88
+        },
+        {
+          "topFraction": 0.005,
+          "score": 80
+        },
+        {
+          "topFraction": 0.01,
+          "score": 76
+        },
+        {
+          "topFraction": 0.02,
+          "score": 71
+        },
+        {
+          "topFraction": 0.035,
+          "score": 68
+        },
+        {
+          "topFraction": 0.05,
+          "score": 66
+        },
+        {
+          "topFraction": 0.075,
+          "score": 64
+        },
+        {
+          "topFraction": 0.1,
+          "score": 62
+        },
+        {
+          "topFraction": 0.15,
+          "score": 60
+        },
+        {
+          "topFraction": 0.2,
+          "score": 58
+        },
+        {
+          "topFraction": 0.3,
+          "score": 53
+        },
+        {
+          "topFraction": 0.4,
+          "score": 48
+        },
+        {
+          "topFraction": 0.5,
+          "score": 45
+        },
+        {
+          "topFraction": 0.65,
+          "score": 40
+        },
+        {
+          "topFraction": 0.8,
+          "score": 35
+        },
+        {
+          "topFraction": 0.95,
+          "score": 26
+        }
+      ],
+      "sampledAt": "2026-09-13T19:25:19.621Z"
+    },
+    {
+      "scenario": "B180T Voltaic Easy Regen",
+      "leaderboardId": 2837,
+      "total": 12190,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 72
+        },
+        {
+          "topFraction": 0.005,
+          "score": 62
+        },
+        {
+          "topFraction": 0.01,
+          "score": 58
+        },
+        {
+          "topFraction": 0.02,
+          "score": 55
+        },
+        {
+          "topFraction": 0.035,
+          "score": 52
+        },
+        {
+          "topFraction": 0.05,
+          "score": 49
+        },
+        {
+          "topFraction": 0.075,
+          "score": 47
+        },
+        {
+          "topFraction": 0.1,
+          "score": 45
+        },
+        {
+          "topFraction": 0.15,
+          "score": 42
+        },
+        {
+          "topFraction": 0.2,
+          "score": 40
+        },
+        {
+          "topFraction": 0.3,
+          "score": 37
+        },
+        {
+          "topFraction": 0.4,
+          "score": 33
+        },
+        {
+          "topFraction": 0.5,
+          "score": 30
+        },
+        {
+          "topFraction": 0.65,
+          "score": 25
+        },
+        {
+          "topFraction": 0.8,
+          "score": 19
+        },
+        {
+          "topFraction": 0.95,
+          "score": 9
+        }
+      ],
+      "sampledAt": "2026-09-13T19:25:33.681Z"
+    },
+    {
+      "scenario": "B180T Voltaic Regen",
+      "leaderboardId": 2153,
+      "total": 8679,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 39
+        },
+        {
+          "topFraction": 0.005,
+          "score": 33
+        },
+        {
+          "topFraction": 0.01,
+          "score": 30
+        },
+        {
+          "topFraction": 0.02,
+          "score": 28
+        },
+        {
+          "topFraction": 0.035,
+          "score": 25
+        },
+        {
+          "topFraction": 0.05,
+          "score": 24
+        },
+        {
+          "topFraction": 0.075,
+          "score": 21
+        },
+        {
+          "topFraction": 0.1,
+          "score": 20
+        },
+        {
+          "topFraction": 0.15,
+          "score": 17
+        },
+        {
+          "topFraction": 0.2,
+          "score": 15
+        },
+        {
+          "topFraction": 0.3,
+          "score": 12
+        },
+        {
+          "topFraction": 0.4,
+          "score": 9
+        },
+        {
+          "topFraction": 0.5,
+          "score": 7
+        },
+        {
+          "topFraction": 0.65,
+          "score": 4
+        },
+        {
+          "topFraction": 0.8,
+          "score": 2
+        },
+        {
+          "topFraction": 0.95,
+          "score": 0
+        }
+      ],
+      "sampledAt": "2026-09-13T19:25:47.664Z"
+    },
+    {
+      "scenario": "tamTargetSwitch Control Entry",
+      "leaderboardId": 110651,
+      "total": 4724,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 81
+        },
+        {
+          "topFraction": 0.005,
+          "score": 71
+        },
+        {
+          "topFraction": 0.01,
+          "score": 68
+        },
+        {
+          "topFraction": 0.02,
+          "score": 64
+        },
+        {
+          "topFraction": 0.035,
+          "score": 61
+        },
+        {
+          "topFraction": 0.05,
+          "score": 59
+        },
+        {
+          "topFraction": 0.075,
+          "score": 57
+        },
+        {
+          "topFraction": 0.1,
+          "score": 56
+        },
+        {
+          "topFraction": 0.15,
+          "score": 54
+        },
+        {
+          "topFraction": 0.2,
+          "score": 53
+        },
+        {
+          "topFraction": 0.3,
+          "score": 50
+        },
+        {
+          "topFraction": 0.4,
+          "score": 49
+        },
+        {
+          "topFraction": 0.5,
+          "score": 47
+        },
+        {
+          "topFraction": 0.65,
+          "score": 44
+        },
+        {
+          "topFraction": 0.8,
+          "score": 41
+        },
+        {
+          "topFraction": 0.95,
+          "score": 34
+        }
+      ],
+      "sampledAt": "2026-09-13T19:26:27.335Z"
     }
   ]
 }

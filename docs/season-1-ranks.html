@@ -28,20 +28,20 @@
        core/report/contrast.ts rather than copied: --ground is the surface
        every measurement on this page was taken against, so a sheet built on
        a different one would be quoting numbers it did not measure. */
-    --ground:  #1e1b18;
-    --panel:   #272320;
-    --well:    #171513;
+    --ground:  #10121b;
+    --panel:   #191d2b;
+    --well:    #111522;
 
     /* Rules are drawn, not lit. Opaque greys, so an edge on --well and an
        edge on --panel are the same line rather than two different alphas
        of white, which is the whole difference between a panel and a card. */
-    --rule:    #38332f;
+    --rule:    #30394c;
     --rule-2:  #4a443f;
     --rule-3:  #5f5851;
 
-    --ink:     #f6f3ee;
-    --ink-mid: #ccc7c0;
-    --ink-dim: #a8a19a;
+    --ink:     #f2f4fc;
+    --ink-mid: #c1c9df;
+    --ink-dim: #a1acc5;
     --warn:    #e8b34a;
 
     /* The light patch every name is tested against, and LIGHT_GROUND in
@@ -467,10 +467,10 @@
        light: without this, both columns run the same test, and every name the
        findings above call unreadable on paper gets printed twice, unreadably,
        as evidence that it is fine. */
-    .o-name, .r-name { background: #1e1b18; }
+    .o-name, .r-name { background: #10121b; }
     .o-name { padding: 17px 14px; }
     .r-name { padding: 2px 8px; justify-self: start; max-width: 100%; }
-    .o-name.is-unnamed, .r-name.is-unnamed { color: #a8a19a; }
+    .o-name.is-unnamed, .r-name.is-unnamed { color: #a1acc5; }
   }
 </style>
 </head>
@@ -498,8 +498,8 @@
       <div><dt>Named</dt><dd>146</dd></div>
       <div><dt>Categories</dt><dd>6</dd></div>
       <div><dt>Bands each</dt><dd>4</dd></div>
-      <div><dt>Scenarios</dt><dd>208</dd></div>
-      <div><dt>Built</dt><dd>4 Sep 2026</dd></div>
+      <div><dt>Scenarios</dt><dd>156</dd></div>
+      <div><dt>Built</dt><dd>13 Sep 2026</dd></div>
     </dl>
 
     <div class="masthead-cols">
@@ -531,8 +531,8 @@
 
           <dt><span class="key-note">both names</span></dt>
           <dd>Moved towards the opposite ground where the colour alone would be
-            unreadable, by exactly as much as it takes and no more &mdash; which is what
-            the client does, and what any surface showing a rank ought to. So a name that
+            unreadable, by exactly as much as it takes and no more. That is what the
+            client does, and what any surface showing a rank ought to. So a name that
             looks fine here can still be one the findings below name: the chip beside it
             is the honest one, and the ratios on the right are measured before the move,
             not after.</dd>
@@ -547,79 +547,79 @@
   <section class="plate">
     <div class="plate-head">
       <h2>Overall</h2>
-      <p class="plate-note">an ascent, rock to snow · derived from the three categories</p>
+      <p class="plate-note">an ascent, rock to snow · derived from the category ladders</p>
     </div>
     <ol class="overall">
-        <li class="o-rung"><span class="o-idx">08</span><span class="o-chip" style="background:#ff0000"></span><span class="o-name" style="color:#ff0000">Supernova</span><span class="o-paper" style="color:#ff0000">Supernova</span><span class="o-read"><span class="pair"><span class="fig">4.29</span><span class="lab">on ground</span></span><span class="pair"><span class="fig">3.53</span><span class="lab">on paper</span></span></span></li>
-        <li class="o-rung"><span class="o-idx">07</span><span class="o-chip" style="background:#00FFFF"></span><span class="o-name" style="color:#00FFFF">Quasar</span><span class="o-paper" style="color:#09bbba">Quasar</span><span class="o-read"><span class="pair"><span class="fig">13.67</span><span class="lab">on ground</span></span><span class="pair"><span class="fig is-low">1.11</span><span class="lab">on paper</span></span></span></li>
-        <li class="o-rung"><span class="o-idx">06</span><span class="o-chip" style="background:#00FF00"></span><span class="o-name" style="color:#00FF00">Arecibo</span><span class="o-paper" style="color:#08c606">Arecibo</span><span class="o-read"><span class="pair"><span class="fig">12.49</span><span class="lab">on ground</span></span><span class="pair"><span class="fig is-low">1.21</span><span class="lab">on paper</span></span></span></li>
-        <li class="o-rung"><span class="o-idx">05</span><span class="o-chip" style="background:#FF46FF"></span><span class="o-name" style="color:#FF46FF">Odyssey</span><span class="o-paper" style="color:#FF46FF">Odyssey</span><span class="o-read"><span class="pair"><span class="fig">6.18</span><span class="lab">on ground</span></span><span class="pair"><span class="fig">2.45</span><span class="lab">on paper</span></span></span></li>
-        <li class="o-rung"><span class="o-idx">04</span><span class="o-chip" style="background:#29008a"></span><span class="o-name" style="color:#5a3ca5">Lunar</span><span class="o-paper" style="color:#29008a">Lunar</span><span class="o-read"><span class="pair"><span class="fig is-low">1.19</span><span class="lab">on ground</span></span><span class="pair"><span class="fig">12.69</span><span class="lab">on paper</span></span></span></li>
-        <li class="o-rung"><span class="o-idx">03</span><span class="o-chip" style="background:#fff700"></span><span class="o-name" style="color:#fff700">Cosmonaut</span><span class="o-paper" style="color:#b0aa08">Cosmonaut</span><span class="o-read"><span class="pair"><span class="fig">15.15</span><span class="lab">on ground</span></span><span class="pair"><span class="fig is-low">1.00</span><span class="lab">on paper</span></span></span></li>
-        <li class="o-rung"><span class="o-idx">02</span><span class="o-chip" style="background:#ff7300"></span><span class="o-name" style="color:#ff7300">Astrologist</span><span class="o-paper" style="color:#ff7300">Astrologist</span><span class="o-read"><span class="pair"><span class="fig">6.29</span><span class="lab">on ground</span></span><span class="pair"><span class="fig">2.41</span><span class="lab">on paper</span></span></span></li>
-        <li class="o-rung"><span class="o-idx">01</span><span class="o-chip" style="background:#00EAEA"></span><span class="o-name" style="color:#00EAEA">Stargazer</span><span class="o-paper" style="color:#08b6b6">Stargazer</span><span class="o-read"><span class="pair"><span class="fig">11.39</span><span class="lab">on ground</span></span><span class="pair"><span class="fig is-low">1.33</span><span class="lab">on paper</span></span></span></li>
+        <li class="o-rung"><span class="o-idx">08</span><span class="o-chip" style="background:#ff0000"></span><span class="o-name" style="color:#ff0000">Supernova</span><span class="o-paper" style="color:#ff0000">Supernova</span><span class="o-read"><span class="pair"><span class="fig">4.67</span><span class="lab">on ground</span></span><span class="pair"><span class="fig">3.53</span><span class="lab">on paper</span></span></span></li>
+        <li class="o-rung"><span class="o-idx">07</span><span class="o-chip" style="background:#00FFFF"></span><span class="o-name" style="color:#00FFFF">Quasar</span><span class="o-paper" style="color:#05b8bb">Quasar</span><span class="o-read"><span class="pair"><span class="fig">14.90</span><span class="lab">on ground</span></span><span class="pair"><span class="fig is-low">1.11</span><span class="lab">on paper</span></span></span></li>
+        <li class="o-rung"><span class="o-idx">06</span><span class="o-chip" style="background:#00FF00"></span><span class="o-name" style="color:#00FF00">Arecibo</span><span class="o-paper" style="color:#04c407">Arecibo</span><span class="o-read"><span class="pair"><span class="fig">13.61</span><span class="lab">on ground</span></span><span class="pair"><span class="fig is-low">1.21</span><span class="lab">on paper</span></span></span></li>
+        <li class="o-rung"><span class="o-idx">05</span><span class="o-chip" style="background:#FF46FF"></span><span class="o-name" style="color:#FF46FF">Odyssey</span><span class="o-paper" style="color:#FF46FF">Odyssey</span><span class="o-read"><span class="pair"><span class="fig">6.73</span><span class="lab">on ground</span></span><span class="pair"><span class="fig">2.45</span><span class="lab">on paper</span></span></span></li>
+        <li class="o-rung"><span class="o-idx">04</span><span class="o-chip" style="background:#29008a"></span><span class="o-name" style="color:#5030a0">Lunar</span><span class="o-paper" style="color:#29008a">Lunar</span><span class="o-read"><span class="pair"><span class="fig is-low">1.30</span><span class="lab">on ground</span></span><span class="pair"><span class="fig">12.69</span><span class="lab">on paper</span></span></span></li>
+        <li class="o-rung"><span class="o-idx">03</span><span class="o-chip" style="background:#fff700"></span><span class="o-name" style="color:#fff700">Cosmonaut</span><span class="o-paper" style="color:#aba709">Cosmonaut</span><span class="o-read"><span class="pair"><span class="fig">16.50</span><span class="lab">on ground</span></span><span class="pair"><span class="fig is-low">1.00</span><span class="lab">on paper</span></span></span></li>
+        <li class="o-rung"><span class="o-idx">02</span><span class="o-chip" style="background:#ff7300"></span><span class="o-name" style="color:#ff7300">Astrologist</span><span class="o-paper" style="color:#ff7300">Astrologist</span><span class="o-read"><span class="pair"><span class="fig">6.85</span><span class="lab">on ground</span></span><span class="pair"><span class="fig">2.41</span><span class="lab">on paper</span></span></span></li>
+        <li class="o-rung"><span class="o-idx">01</span><span class="o-chip" style="background:#00EAEA"></span><span class="o-name" style="color:#00EAEA">Stargazer</span><span class="o-paper" style="color:#03bfc1">Stargazer</span><span class="o-read"><span class="pair"><span class="fig">12.41</span><span class="lab">on ground</span></span><span class="pair"><span class="fig is-low">1.33</span><span class="lab">on paper</span></span></span></li>
     </ol>
   </section>
 
   <section class="plate">
     <div class="plate-head">
       <h2>Dynamic Clicking</h2>
-      <p class="plate-note">thrown, then aimed, then guided · twenty-three ranks in four bands · forty scenarios</p>
+      <p class="plate-note">thrown, then aimed, then guided · twenty-three ranks in four bands · twenty-four scenarios</p>
     </div>
     <div class="bands">
         <section class="band">
           <div class="band-head">
             <h3>Novice</h3>
-            <p class="band-meta">ten scenarios · 150,000 at full marks</p>
+            <p class="band-meta">six scenarios · 90,000 at full marks</p>
           </div>
           <ol class="rungs">
-          <li class="rung"><span class="r-idx">6</span><span class="r-chip" style="background:#ff0000"></span><span class="r-name" style="color:#ff0000">Falcon</span><span class="r-cost">150,000</span><span class="r-paper" style="color:#ff0000">Falcon</span></li>
-          <li class="rung"><span class="r-idx">5</span><span class="r-chip" style="background:#008a87"></span><span class="r-name" style="color:#008a87">Hummingbird</span><span class="r-cost">125,000</span><span class="r-paper" style="color:#008a87">Hummingbird</span></li>
-          <li class="rung"><span class="r-idx">4</span><span class="r-chip" style="background:#ff7300"></span><span class="r-name" style="color:#ff7300">Hornet</span><span class="r-cost">100,000</span><span class="r-paper" style="color:#ff7300">Hornet</span></li>
-          <li class="rung"><span class="r-idx">3</span><span class="r-chip" style="background:#ffea00"></span><span class="r-name" style="color:#ffea00">Bee</span><span class="r-cost">75,000</span><span class="r-paper" style="color:#bcac07">Bee</span></li>
-          <li class="rung"><span class="r-idx">2</span><span class="r-chip" style="background:#4d2400"></span><span class="r-name" style="color:#6d4d31">Mosquito</span><span class="r-cost">50,000</span><span class="r-paper" style="color:#4d2400">Mosquito</span></li>
-          <li class="rung"><span class="r-idx">1</span><span class="r-chip" style="background:#94abf0"></span><span class="r-name" style="color:#94abf0">Tardigrade</span><span class="r-cost">25,000</span><span class="r-paper" style="color:#8ea4e5">Tardigrade</span></li>
+          <li class="rung"><span class="r-idx">6</span><span class="r-chip" style="background:#ff0000"></span><span class="r-name" style="color:#ff0000">Falcon</span><span class="r-cost">90,000</span><span class="r-paper" style="color:#ff0000">Falcon</span></li>
+          <li class="rung"><span class="r-idx">5</span><span class="r-chip" style="background:#008a87"></span><span class="r-name" style="color:#008a87">Hummingbird</span><span class="r-cost">75,000</span><span class="r-paper" style="color:#008a87">Hummingbird</span></li>
+          <li class="rung"><span class="r-idx">4</span><span class="r-chip" style="background:#ff7300"></span><span class="r-name" style="color:#ff7300">Hornet</span><span class="r-cost">60,000</span><span class="r-paper" style="color:#ff7300">Hornet</span></li>
+          <li class="rung"><span class="r-idx">3</span><span class="r-chip" style="background:#ffea00"></span><span class="r-name" style="color:#ffea00">Bee</span><span class="r-cost">45,000</span><span class="r-paper" style="color:#b7a908">Bee</span></li>
+          <li class="rung"><span class="r-idx">2</span><span class="r-chip" style="background:#4d2400"></span><span class="r-name" style="color:#654325">Mosquito</span><span class="r-cost">30,000</span><span class="r-paper" style="color:#4d2400">Mosquito</span></li>
+          <li class="rung"><span class="r-idx">1</span><span class="r-chip" style="background:#94abf0"></span><span class="r-name" style="color:#94abf0">Tardigrade</span><span class="r-cost">15,000</span><span class="r-paper" style="color:#8da3e5">Tardigrade</span></li>
           </ol>
         </section>
         <section class="band">
           <div class="band-head">
             <h3>Intermediate</h3>
-            <p class="band-meta">ten scenarios · 150,000 at full marks</p>
+            <p class="band-meta">six scenarios · 90,000 at full marks</p>
           </div>
           <ol class="rungs">
-          <li class="rung"><span class="r-idx">6</span><span class="r-chip" style="background:#6e6b5e"></span><span class="r-name" style="color:#6e6b5e">Grizzly Bear</span><span class="r-cost">150,000</span><span class="r-paper" style="color:#6e6b5e">Grizzly Bear</span></li>
-          <li class="rung"><span class="r-idx">5</span><span class="r-chip" style="background:#c28400"></span><span class="r-name" style="color:#c28400">Lionesse</span><span class="r-cost">125,000</span><span class="r-paper" style="color:#c28400">Lionesse</span></li>
-          <li class="rung"><span class="r-idx">4</span><span class="r-chip" style="background:#0e5700"></span><span class="r-name" style="color:#195f0c">Wolverine</span><span class="r-cost">100,000</span><span class="r-paper" style="color:#0e5700">Wolverine</span></li>
-          <li class="rung"><span class="r-idx">3</span><span class="r-chip" style="background:#fb00ff"></span><span class="r-name" style="color:#fb00ff">Lynx</span><span class="r-cost">75,000</span><span class="r-paper" style="color:#fb00ff">Lynx</span></li>
-          <li class="rung"><span class="r-idx">2</span><span class="r-chip" style="background:#ff0000"></span><span class="r-name" style="color:#ff0000">Falcon</span><span class="r-cost">50,000</span><span class="r-paper" style="color:#ff0000">Falcon</span></li>
-          <li class="rung"><span class="r-idx">1</span><span class="r-chip" style="background:#008a87"></span><span class="r-name" style="color:#008a87">Hummingbird</span><span class="r-cost">25,000</span><span class="r-paper" style="color:#008a87">Hummingbird</span></li>
+          <li class="rung"><span class="r-idx">6</span><span class="r-chip" style="background:#6e6b5e"></span><span class="r-name" style="color:#6e6b5e">Grizzly Bear</span><span class="r-cost">90,000</span><span class="r-paper" style="color:#6e6b5e">Grizzly Bear</span></li>
+          <li class="rung"><span class="r-idx">5</span><span class="r-chip" style="background:#c28400"></span><span class="r-name" style="color:#c28400">Lionesse</span><span class="r-cost">75,000</span><span class="r-paper" style="color:#c28400">Lionesse</span></li>
+          <li class="rung"><span class="r-idx">4</span><span class="r-chip" style="background:#0e5700"></span><span class="r-name" style="color:#0e5700">Wolverine</span><span class="r-cost">60,000</span><span class="r-paper" style="color:#0e5700">Wolverine</span></li>
+          <li class="rung"><span class="r-idx">3</span><span class="r-chip" style="background:#fb00ff"></span><span class="r-name" style="color:#fb00ff">Lynx</span><span class="r-cost">45,000</span><span class="r-paper" style="color:#fb00ff">Lynx</span></li>
+          <li class="rung"><span class="r-idx">2</span><span class="r-chip" style="background:#ff0000"></span><span class="r-name" style="color:#ff0000">Falcon</span><span class="r-cost">30,000</span><span class="r-paper" style="color:#ff0000">Falcon</span></li>
+          <li class="rung"><span class="r-idx">1</span><span class="r-chip" style="background:#008a87"></span><span class="r-name" style="color:#008a87">Hummingbird</span><span class="r-cost">15,000</span><span class="r-paper" style="color:#008a87">Hummingbird</span></li>
           </ol>
         </section>
         <section class="band">
           <div class="band-head">
             <h3>Advanced</h3>
-            <p class="band-meta">ten scenarios · 150,000 at full marks</p>
+            <p class="band-meta">six scenarios · 90,000 at full marks</p>
           </div>
           <ol class="rungs">
-          <li class="rung"><span class="r-idx">6</span><span class="r-chip" style="background:#0040ff"></span><span class="r-name" style="color:#0040ff">Giant Squid</span><span class="r-cost">150,000</span><span class="r-paper" style="color:#0040ff">Giant Squid</span></li>
-          <li class="rung"><span class="r-idx">5</span><span class="r-chip" style="background:#e4ed89"></span><span class="r-name" style="color:#e4ed89">Mammoth</span><span class="r-cost">125,000</span><span class="r-paper" style="color:#a9ae67">Mammoth</span></li>
-          <li class="rung"><span class="r-idx">4</span><span class="r-chip" style="background:#00ffe1"></span><span class="r-name" style="color:#00ffe1">White Rhino</span><span class="r-cost">100,000</span><span class="r-paper" style="color:#09bba5">White Rhino</span></li>
-          <li class="rung"><span class="r-idx">3</span><span class="r-chip" style="background:#ff8080"></span><span class="r-name" style="color:#ff8080">Sabretooth</span><span class="r-cost">75,000</span><span class="r-paper" style="color:#ff8080">Sabretooth</span></li>
-          <li class="rung"><span class="r-idx">2</span><span class="r-chip" style="background:#6e6b5e"></span><span class="r-name" style="color:#6e6b5e">Grizzly Bear</span><span class="r-cost">50,000</span><span class="r-paper" style="color:#6e6b5e">Grizzly Bear</span></li>
-          <li class="rung"><span class="r-idx">1</span><span class="r-chip" style="background:#c28400"></span><span class="r-name" style="color:#c28400">Lionesse</span><span class="r-cost">25,000</span><span class="r-paper" style="color:#c28400">Lionesse</span></li>
+          <li class="rung"><span class="r-idx">6</span><span class="r-chip" style="background:#0040ff"></span><span class="r-name" style="color:#0040ff">Giant Squid</span><span class="r-cost">90,000</span><span class="r-paper" style="color:#0040ff">Giant Squid</span></li>
+          <li class="rung"><span class="r-idx">5</span><span class="r-chip" style="background:#e4ed89"></span><span class="r-name" style="color:#e4ed89">Mammoth</span><span class="r-cost">75,000</span><span class="r-paper" style="color:#a4ab68">Mammoth</span></li>
+          <li class="rung"><span class="r-idx">4</span><span class="r-chip" style="background:#00ffe1"></span><span class="r-name" style="color:#00ffe1">White Rhino</span><span class="r-cost">60,000</span><span class="r-paper" style="color:#05b8a6">White Rhino</span></li>
+          <li class="rung"><span class="r-idx">3</span><span class="r-chip" style="background:#ff8080"></span><span class="r-name" style="color:#ff8080">Sabretooth</span><span class="r-cost">45,000</span><span class="r-paper" style="color:#ff8080">Sabretooth</span></li>
+          <li class="rung"><span class="r-idx">2</span><span class="r-chip" style="background:#6e6b5e"></span><span class="r-name" style="color:#6e6b5e">Grizzly Bear</span><span class="r-cost">30,000</span><span class="r-paper" style="color:#6e6b5e">Grizzly Bear</span></li>
+          <li class="rung"><span class="r-idx">1</span><span class="r-chip" style="background:#c28400"></span><span class="r-name" style="color:#c28400">Lionesse</span><span class="r-cost">15,000</span><span class="r-paper" style="color:#c28400">Lionesse</span></li>
           </ol>
         </section>
         <section class="band">
           <div class="band-head">
             <h3>Expert</h3>
-            <p class="band-meta">ten scenarios · 100,000 at full marks</p>
+            <p class="band-meta">six scenarios · 60,000 at full marks</p>
           </div>
           <ol class="rungs">
           <li class="rung"><span class="r-idx">5</span><span class="r-chip" style="background:#2fa8b8"></span><span class="r-name" style="color:#2fa8b8">Leviathan</span><span class="r-cost">top 3</span><span class="r-note">a place on the board, not a score</span></li>
-          <li class="rung"><span class="r-idx">4</span><span class="r-chip" style="background:#04ff00"></span><span class="r-name" style="color:#04ff00">Megalodon</span><span class="r-cost">100,000</span><span class="r-paper" style="color:#0bc606">Megalodon</span></li>
-          <li class="rung"><span class="r-idx">3</span><span class="r-chip" style="background:#ffffff"></span><span class="r-name" style="color:#ffffff">Sperm Whale</span><span class="r-cost">75,000</span><span class="r-paper" style="color:#a5a4a3">Sperm Whale</span></li>
-          <li class="rung"><span class="r-idx">2</span><span class="r-chip" style="background:#0040ff"></span><span class="r-name" style="color:#0040ff">Giant Squid</span><span class="r-cost">50,000</span><span class="r-paper" style="color:#0040ff">Giant Squid</span></li>
-          <li class="rung"><span class="r-idx">1</span><span class="r-chip" style="background:#e4ed89"></span><span class="r-name" style="color:#e4ed89">Mammoth</span><span class="r-cost">25,000</span><span class="r-paper" style="color:#a9ae67">Mammoth</span></li>
+          <li class="rung"><span class="r-idx">4</span><span class="r-chip" style="background:#04ff00"></span><span class="r-name" style="color:#04ff00">Megalodon</span><span class="r-cost">60,000</span><span class="r-paper" style="color:#07c407">Megalodon</span></li>
+          <li class="rung"><span class="r-idx">3</span><span class="r-chip" style="background:#ffffff"></span><span class="r-name" style="color:#ffffff">Sperm Whale</span><span class="r-cost">45,000</span><span class="r-paper" style="color:#abacaf">Sperm Whale</span></li>
+          <li class="rung"><span class="r-idx">2</span><span class="r-chip" style="background:#0040ff"></span><span class="r-name" style="color:#0040ff">Giant Squid</span><span class="r-cost">30,000</span><span class="r-paper" style="color:#0040ff">Giant Squid</span></li>
+          <li class="rung"><span class="r-idx">1</span><span class="r-chip" style="background:#e4ed89"></span><span class="r-name" style="color:#e4ed89">Mammoth</span><span class="r-cost">15,000</span><span class="r-paper" style="color:#a4ab68">Mammoth</span></li>
           </ol>
         </section>
     </div>
@@ -637,11 +637,11 @@
             <p class="band-meta">six scenarios · 90,000 at full marks</p>
           </div>
           <ol class="rungs">
-          <li class="rung"><span class="r-idx">6</span><span class="r-chip" style="background:#fbff00"></span><span class="r-name" style="color:#fbff00">Viper</span><span class="r-cost">90,000</span><span class="r-paper" style="color:#aeaf08">Viper</span></li>
-          <li class="rung"><span class="r-idx">5</span><span class="r-chip" style="background:#00e604"></span><span class="r-name" style="color:#00e604">Toad</span><span class="r-cost">75,000</span><span class="r-paper" style="color:#05c807">Toad</span></li>
+          <li class="rung"><span class="r-idx">6</span><span class="r-chip" style="background:#fbff00"></span><span class="r-name" style="color:#fbff00">Viper</span><span class="r-cost">90,000</span><span class="r-paper" style="color:#a9ac09">Viper</span></li>
+          <li class="rung"><span class="r-idx">5</span><span class="r-chip" style="background:#00e604"></span><span class="r-name" style="color:#00e604">Toad</span><span class="r-cost">75,000</span><span class="r-paper" style="color:#02c607">Toad</span></li>
           <li class="rung"><span class="r-idx">4</span><span class="r-chip" style="background:#6b5400"></span><span class="r-name" style="color:#6b5400">Prarie Dog</span><span class="r-cost">60,000</span><span class="r-paper" style="color:#6b5400">Prarie Dog</span></li>
           <li class="rung"><span class="r-idx">3</span><span class="r-chip" style="background:#707aff"></span><span class="r-name" style="color:#707aff">Minnow</span><span class="r-cost">45,000</span><span class="r-paper" style="color:#707aff">Minnow</span></li>
-          <li class="rung"><span class="r-idx">2</span><span class="r-chip" style="background:#7affb4"></span><span class="r-name" style="color:#7affb4">Tadpole</span><span class="r-cost">30,000</span><span class="r-paper" style="color:#5ebb85">Tadpole</span></li>
+          <li class="rung"><span class="r-idx">2</span><span class="r-chip" style="background:#7affb4"></span><span class="r-name" style="color:#7affb4">Tadpole</span><span class="r-cost">30,000</span><span class="r-paper" style="color:#5ab886">Tadpole</span></li>
           <li class="rung"><span class="r-idx">1</span><span class="r-chip" style="background:#857829"></span><span class="r-name" style="color:#857829">Plankton</span><span class="r-cost">15,000</span><span class="r-paper" style="color:#857829">Plankton</span></li>
           </ol>
         </section>
@@ -651,12 +651,12 @@
             <p class="band-meta">six scenarios · 90,000 at full marks</p>
           </div>
           <ol class="rungs">
-          <li class="rung"><span class="r-idx">6</span><span class="r-chip" style="background:#ffbb00"></span><span class="r-name" style="color:#ffbb00">Jaguar</span><span class="r-cost">90,000</span><span class="r-paper" style="color:#d29b05">Jaguar</span></li>
+          <li class="rung"><span class="r-idx">6</span><span class="r-chip" style="background:#ffbb00"></span><span class="r-name" style="color:#ffbb00">Jaguar</span><span class="r-cost">90,000</span><span class="r-paper" style="color:#dba204">Jaguar</span></li>
           <li class="rung"><span class="r-idx">5</span><span class="r-chip" style="background:#a600ff"></span><span class="r-name" style="color:#a600ff">Hyena</span><span class="r-cost">75,000</span><span class="r-paper" style="color:#a600ff">Hyena</span></li>
           <li class="rung"><span class="r-idx">4</span><span class="r-chip" style="background:#787878"></span><span class="r-name" style="color:#787878">Honey Badger</span><span class="r-cost">60,000</span><span class="r-paper" style="color:#787878">Honey Badger</span></li>
           <li class="rung"><span class="r-idx">3</span><span class="r-chip" style="background:#ff0000"></span><span class="r-name" style="color:#ff0000">Hawk</span><span class="r-cost">45,000</span><span class="r-paper" style="color:#ff0000">Hawk</span></li>
-          <li class="rung"><span class="r-idx">2</span><span class="r-chip" style="background:#fbff00"></span><span class="r-name" style="color:#fbff00">Viper</span><span class="r-cost">30,000</span><span class="r-paper" style="color:#aeaf08">Viper</span></li>
-          <li class="rung"><span class="r-idx">1</span><span class="r-chip" style="background:#00e604"></span><span class="r-name" style="color:#00e604">Toad</span><span class="r-cost">15,000</span><span class="r-paper" style="color:#05c807">Toad</span></li>
+          <li class="rung"><span class="r-idx">2</span><span class="r-chip" style="background:#fbff00"></span><span class="r-name" style="color:#fbff00">Viper</span><span class="r-cost">30,000</span><span class="r-paper" style="color:#a9ac09">Viper</span></li>
+          <li class="rung"><span class="r-idx">1</span><span class="r-chip" style="background:#00e604"></span><span class="r-name" style="color:#00e604">Toad</span><span class="r-cost">15,000</span><span class="r-paper" style="color:#02c607">Toad</span></li>
           </ol>
         </section>
         <section class="band">
@@ -665,11 +665,11 @@
             <p class="band-meta">six scenarios · 90,000 at full marks</p>
           </div>
           <ol class="rungs">
-          <li class="rung"><span class="r-idx">6</span><span class="r-chip" style="background:#ffffff"></span><span class="r-name" style="color:#ffffff">Polar Bear</span><span class="r-cost">90,000</span><span class="r-paper" style="color:#a5a4a3">Polar Bear</span></li>
+          <li class="rung"><span class="r-idx">6</span><span class="r-chip" style="background:#ffffff"></span><span class="r-name" style="color:#ffffff">Polar Bear</span><span class="r-cost">90,000</span><span class="r-paper" style="color:#abacaf">Polar Bear</span></li>
           <li class="rung"><span class="r-idx">5</span><span class="r-chip" style="background:#575757"></span><span class="r-name" style="color:#575757">African Elephant</span><span class="r-cost">75,000</span><span class="r-paper" style="color:#575757">African Elephant</span></li>
           <li class="rung"><span class="r-idx">4</span><span class="r-chip" style="background:#005c2c"></span><span class="r-name" style="color:#005c2c">Crocodile</span><span class="r-cost">60,000</span><span class="r-paper" style="color:#005c2c">Crocodile</span></li>
           <li class="rung"><span class="r-idx">3</span><span class="r-chip" style="background:#b86200"></span><span class="r-name" style="color:#b86200">Siberian Tiger</span><span class="r-cost">45,000</span><span class="r-paper" style="color:#b86200">Siberian Tiger</span></li>
-          <li class="rung"><span class="r-idx">2</span><span class="r-chip" style="background:#ffbb00"></span><span class="r-name" style="color:#ffbb00">Jaguar</span><span class="r-cost">30,000</span><span class="r-paper" style="color:#d29b05">Jaguar</span></li>
+          <li class="rung"><span class="r-idx">2</span><span class="r-chip" style="background:#ffbb00"></span><span class="r-name" style="color:#ffbb00">Jaguar</span><span class="r-cost">30,000</span><span class="r-paper" style="color:#dba204">Jaguar</span></li>
           <li class="rung"><span class="r-idx">1</span><span class="r-chip" style="background:#a600ff"></span><span class="r-name" style="color:#a600ff">Hyena</span><span class="r-cost">15,000</span><span class="r-paper" style="color:#a600ff">Hyena</span></li>
           </ol>
         </section>
@@ -680,9 +680,9 @@
           </div>
           <ol class="rungs">
           <li class="rung"><span class="r-idx">5</span><span class="r-chip" style="background:#d43b52"></span><span class="r-name" style="color:#d43b52">Extinction</span><span class="r-cost">top 3</span><span class="r-note">a place on the board, not a score</span></li>
-          <li class="rung"><span class="r-idx">4</span><span class="r-chip" style="background:#ffb3fc"></span><span class="r-name" style="color:#ffb3fc">Apex</span><span class="r-cost">60,000</span><span class="r-paper" style="color:#d295ce">Apex</span></li>
-          <li class="rung"><span class="r-idx">3</span><span class="r-chip" style="background:#000000"></span><span class="r-name" style="color:#535456">Orca</span><span class="r-cost">45,000</span><span class="r-paper" style="color:#000000">Orca</span></li>
-          <li class="rung"><span class="r-idx">2</span><span class="r-chip" style="background:#ffffff"></span><span class="r-name" style="color:#ffffff">Polar Bear</span><span class="r-cost">30,000</span><span class="r-paper" style="color:#a5a4a3">Polar Bear</span></li>
+          <li class="rung"><span class="r-idx">4</span><span class="r-chip" style="background:#ffb3fc"></span><span class="r-name" style="color:#ffb3fc">Apex</span><span class="r-cost">60,000</span><span class="r-paper" style="color:#cf93cf">Apex</span></li>
+          <li class="rung"><span class="r-idx">3</span><span class="r-chip" style="background:#000000"></span><span class="r-name" style="color:#47484a">Orca</span><span class="r-cost">45,000</span><span class="r-paper" style="color:#000000">Orca</span></li>
+          <li class="rung"><span class="r-idx">2</span><span class="r-chip" style="background:#ffffff"></span><span class="r-name" style="color:#ffffff">Polar Bear</span><span class="r-cost">30,000</span><span class="r-paper" style="color:#abacaf">Polar Bear</span></li>
           <li class="rung"><span class="r-idx">1</span><span class="r-chip" style="background:#575757"></span><span class="r-name" style="color:#575757">African Elephant</span><span class="r-cost">15,000</span><span class="r-paper" style="color:#575757">African Elephant</span></li>
           </ol>
         </section>
@@ -692,62 +692,62 @@
   <section class="plate">
     <div class="plate-head">
       <h2>Precise Tracking</h2>
-      <p class="plate-note">evolution · twenty-three ranks in four bands · forty-four scenarios</p>
+      <p class="plate-note">evolution · twenty-three ranks in four bands · twenty-four scenarios</p>
     </div>
     <div class="bands">
         <section class="band">
           <div class="band-head">
             <h3>Novice</h3>
-            <p class="band-meta">eleven scenarios · 165,000 at full marks</p>
+            <p class="band-meta">six scenarios · 90,000 at full marks</p>
           </div>
           <ol class="rungs">
-          <li class="rung"><span class="r-idx">6</span><span class="r-chip" style="background:#610000"></span><span class="r-name" style="color:#843c3e">Mammal</span><span class="r-cost">165,000</span><span class="r-paper" style="color:#610000">Mammal</span></li>
-          <li class="rung"><span class="r-idx">5</span><span class="r-chip" style="background:#2bff00"></span><span class="r-name" style="color:#2bff00">Reptile</span><span class="r-cost">137,500</span><span class="r-paper" style="color:#28c606">Reptile</span></li>
-          <li class="rung"><span class="r-idx">4</span><span class="r-chip" style="background:#006eff"></span><span class="r-name" style="color:#006eff">Amphibian</span><span class="r-cost">110,000</span><span class="r-paper" style="color:#006eff">Amphibian</span></li>
-          <li class="rung"><span class="r-idx">3</span><span class="r-chip" style="background:#eeff00"></span><span class="r-name" style="color:#eeff00">Trilobite</span><span class="r-cost">82,500</span><span class="r-paper" style="color:#a5af08">Trilobite</span></li>
-          <li class="rung"><span class="r-idx">2</span><span class="r-chip" style="background:#550160"></span><span class="r-name" style="color:#74317e">Multicellular</span><span class="r-cost">55,000</span><span class="r-paper" style="color:#550160">Multicellular</span></li>
-          <li class="rung"><span class="r-idx">1</span><span class="r-chip" style="background:#ffd1ea"></span><span class="r-name" style="color:#ffd1ea">Amoeba</span><span class="r-cost">27,500</span><span class="r-paper" style="color:#bc9aab">Amoeba</span></li>
+          <li class="rung"><span class="r-idx">6</span><span class="r-chip" style="background:#610000"></span><span class="r-name" style="color:#7d3031">Mammal</span><span class="r-cost">90,000</span><span class="r-paper" style="color:#610000">Mammal</span></li>
+          <li class="rung"><span class="r-idx">5</span><span class="r-chip" style="background:#2bff00"></span><span class="r-name" style="color:#2bff00">Reptile</span><span class="r-cost">75,000</span><span class="r-paper" style="color:#24c407">Reptile</span></li>
+          <li class="rung"><span class="r-idx">4</span><span class="r-chip" style="background:#006eff"></span><span class="r-name" style="color:#006eff">Amphibian</span><span class="r-cost">60,000</span><span class="r-paper" style="color:#006eff">Amphibian</span></li>
+          <li class="rung"><span class="r-idx">3</span><span class="r-chip" style="background:#eeff00"></span><span class="r-name" style="color:#eeff00">Trilobite</span><span class="r-cost">45,000</span><span class="r-paper" style="color:#a0ac09">Trilobite</span></li>
+          <li class="rung"><span class="r-idx">2</span><span class="r-chip" style="background:#550160"></span><span class="r-name" style="color:#74317e">Multicellular</span><span class="r-cost">30,000</span><span class="r-paper" style="color:#550160">Multicellular</span></li>
+          <li class="rung"><span class="r-idx">1</span><span class="r-chip" style="background:#ffd1ea"></span><span class="r-name" style="color:#ffd1ea">Amoeba</span><span class="r-cost">15,000</span><span class="r-paper" style="color:#c3a1b6">Amoeba</span></li>
           </ol>
         </section>
         <section class="band">
           <div class="band-head">
             <h3>Intermediate</h3>
-            <p class="band-meta">eleven scenarios · 165,000 at full marks</p>
+            <p class="band-meta">six scenarios · 90,000 at full marks</p>
           </div>
           <ol class="rungs">
-          <li class="rung"><span class="r-idx">6</span><span class="r-chip" style="background:#95b300"></span><span class="r-name" style="color:#95b300">Homoerectus</span><span class="r-cost">165,000</span><span class="r-paper" style="color:#95b300">Homoerectus</span></li>
-          <li class="rung"><span class="r-idx">5</span><span class="r-chip" style="background:#7866ff"></span><span class="r-name" style="color:#7866ff">Hominid</span><span class="r-cost">137,500</span><span class="r-paper" style="color:#7866ff">Hominid</span></li>
-          <li class="rung"><span class="r-idx">4</span><span class="r-chip" style="background:#9a783c"></span><span class="r-name" style="color:#9a783c">Chimp</span><span class="r-cost">110,000</span><span class="r-paper" style="color:#9a783c">Chimp</span></li>
-          <li class="rung"><span class="r-idx">3</span><span class="r-chip" style="background:#331400"></span><span class="r-name" style="color:#624b3e">Primate</span><span class="r-cost">82,500</span><span class="r-paper" style="color:#331400">Primate</span></li>
-          <li class="rung"><span class="r-idx">2</span><span class="r-chip" style="background:#610000"></span><span class="r-name" style="color:#843c3e">Mammal</span><span class="r-cost">55,000</span><span class="r-paper" style="color:#610000">Mammal</span></li>
-          <li class="rung"><span class="r-idx">1</span><span class="r-chip" style="background:#2bff00"></span><span class="r-name" style="color:#2bff00">Reptile</span><span class="r-cost">27,500</span><span class="r-paper" style="color:#28c606">Reptile</span></li>
+          <li class="rung"><span class="r-idx">6</span><span class="r-chip" style="background:#95b300"></span><span class="r-name" style="color:#95b300">Homoerectus</span><span class="r-cost">90,000</span><span class="r-paper" style="color:#95b300">Homoerectus</span></li>
+          <li class="rung"><span class="r-idx">5</span><span class="r-chip" style="background:#7866ff"></span><span class="r-name" style="color:#7866ff">Hominid</span><span class="r-cost">75,000</span><span class="r-paper" style="color:#7866ff">Hominid</span></li>
+          <li class="rung"><span class="r-idx">4</span><span class="r-chip" style="background:#9a783c"></span><span class="r-name" style="color:#9a783c">Chimp</span><span class="r-cost">60,000</span><span class="r-paper" style="color:#9a783c">Chimp</span></li>
+          <li class="rung"><span class="r-idx">3</span><span class="r-chip" style="background:#331400"></span><span class="r-name" style="color:#624b3e">Primate</span><span class="r-cost">45,000</span><span class="r-paper" style="color:#331400">Primate</span></li>
+          <li class="rung"><span class="r-idx">2</span><span class="r-chip" style="background:#610000"></span><span class="r-name" style="color:#7d3031">Mammal</span><span class="r-cost">30,000</span><span class="r-paper" style="color:#610000">Mammal</span></li>
+          <li class="rung"><span class="r-idx">1</span><span class="r-chip" style="background:#2bff00"></span><span class="r-name" style="color:#2bff00">Reptile</span><span class="r-cost">15,000</span><span class="r-paper" style="color:#24c407">Reptile</span></li>
           </ol>
         </section>
         <section class="band">
           <div class="band-head">
             <h3>Advanced</h3>
-            <p class="band-meta">eleven scenarios · 165,000 at full marks</p>
+            <p class="band-meta">six scenarios · 90,000 at full marks</p>
           </div>
           <ol class="rungs">
-          <li class="rung"><span class="r-idx">6</span><span class="r-chip" style="background:#00fbff"></span><span class="r-name" style="color:#00fbff">Robosapien</span><span class="r-cost">165,000</span><span class="r-paper" style="color:#09b8ba">Robosapien</span></li>
-          <li class="rung"><span class="r-idx">5</span><span class="r-chip" style="background:#ff6600"></span><span class="r-name" style="color:#ff6600">Neolithic</span><span class="r-cost">137,500</span><span class="r-paper" style="color:#ff6600">Neolithic</span></li>
-          <li class="rung"><span class="r-idx">4</span><span class="r-chip" style="background:#ff0000"></span><span class="r-name" style="color:#ff0000">Homosapien</span><span class="r-cost">110,000</span><span class="r-paper" style="color:#ff0000">Homosapien</span></li>
-          <li class="rung"><span class="r-idx">3</span><span class="r-chip" style="background:#e100ff"></span><span class="r-name" style="color:#e100ff">Neanderthal</span><span class="r-cost">82,500</span><span class="r-paper" style="color:#e100ff">Neanderthal</span></li>
-          <li class="rung"><span class="r-idx">2</span><span class="r-chip" style="background:#95b300"></span><span class="r-name" style="color:#95b300">Homoerectus</span><span class="r-cost">55,000</span><span class="r-paper" style="color:#95b300">Homoerectus</span></li>
-          <li class="rung"><span class="r-idx">1</span><span class="r-chip" style="background:#7866ff"></span><span class="r-name" style="color:#7866ff">Hominid</span><span class="r-cost">27,500</span><span class="r-paper" style="color:#7866ff">Hominid</span></li>
+          <li class="rung"><span class="r-idx">6</span><span class="r-chip" style="background:#00fbff"></span><span class="r-name" style="color:#00fbff">Robosapien</span><span class="r-cost">90,000</span><span class="r-paper" style="color:#05b5bb">Robosapien</span></li>
+          <li class="rung"><span class="r-idx">5</span><span class="r-chip" style="background:#ff6600"></span><span class="r-name" style="color:#ff6600">Neolithic</span><span class="r-cost">75,000</span><span class="r-paper" style="color:#ff6600">Neolithic</span></li>
+          <li class="rung"><span class="r-idx">4</span><span class="r-chip" style="background:#ff0000"></span><span class="r-name" style="color:#ff0000">Homosapien</span><span class="r-cost">60,000</span><span class="r-paper" style="color:#ff0000">Homosapien</span></li>
+          <li class="rung"><span class="r-idx">3</span><span class="r-chip" style="background:#e100ff"></span><span class="r-name" style="color:#e100ff">Neanderthal</span><span class="r-cost">45,000</span><span class="r-paper" style="color:#e100ff">Neanderthal</span></li>
+          <li class="rung"><span class="r-idx">2</span><span class="r-chip" style="background:#95b300"></span><span class="r-name" style="color:#95b300">Homoerectus</span><span class="r-cost">30,000</span><span class="r-paper" style="color:#95b300">Homoerectus</span></li>
+          <li class="rung"><span class="r-idx">1</span><span class="r-chip" style="background:#7866ff"></span><span class="r-name" style="color:#7866ff">Hominid</span><span class="r-cost">15,000</span><span class="r-paper" style="color:#7866ff">Hominid</span></li>
           </ol>
         </section>
         <section class="band">
           <div class="band-head">
             <h3>Expert</h3>
-            <p class="band-meta">eleven scenarios · 110,000 at full marks</p>
+            <p class="band-meta">six scenarios · 60,000 at full marks</p>
           </div>
           <ol class="rungs">
           <li class="rung"><span class="r-idx">5</span><span class="r-chip" style="background:#b48cff"></span><span class="r-name" style="color:#b48cff">Omega</span><span class="r-cost">top 3</span><span class="r-note">a place on the board, not a score</span></li>
-          <li class="rung"><span class="r-idx">4</span><span class="r-chip" style="background:#000000"></span><span class="r-name" style="color:#535456">Singularity</span><span class="r-cost">110,000</span><span class="r-paper" style="color:#000000">Singularity</span></li>
-          <li class="rung"><span class="r-idx">3</span><span class="r-chip" style="background:#ffffff"></span><span class="r-name" style="color:#ffffff">HAL 9000</span><span class="r-cost">82,500</span><span class="r-paper" style="color:#a5a4a3">HAL 9000</span></li>
-          <li class="rung"><span class="r-idx">2</span><span class="r-chip" style="background:#00fbff"></span><span class="r-name" style="color:#00fbff">Robosapien</span><span class="r-cost">55,000</span><span class="r-paper" style="color:#09b8ba">Robosapien</span></li>
-          <li class="rung"><span class="r-idx">1</span><span class="r-chip" style="background:#ff6600"></span><span class="r-name" style="color:#ff6600">Neolithic</span><span class="r-cost">27,500</span><span class="r-paper" style="color:#ff6600">Neolithic</span></li>
+          <li class="rung"><span class="r-idx">4</span><span class="r-chip" style="background:#000000"></span><span class="r-name" style="color:#47484a">Singularity</span><span class="r-cost">60,000</span><span class="r-paper" style="color:#000000">Singularity</span></li>
+          <li class="rung"><span class="r-idx">3</span><span class="r-chip" style="background:#ffffff"></span><span class="r-name" style="color:#ffffff">HAL 9000</span><span class="r-cost">45,000</span><span class="r-paper" style="color:#abacaf">HAL 9000</span></li>
+          <li class="rung"><span class="r-idx">2</span><span class="r-chip" style="background:#00fbff"></span><span class="r-name" style="color:#00fbff">Robosapien</span><span class="r-cost">30,000</span><span class="r-paper" style="color:#05b5bb">Robosapien</span></li>
+          <li class="rung"><span class="r-idx">1</span><span class="r-chip" style="background:#ff6600"></span><span class="r-name" style="color:#ff6600">Neolithic</span><span class="r-cost">15,000</span><span class="r-paper" style="color:#ff6600">Neolithic</span></li>
           </ol>
         </section>
     </div>
@@ -756,62 +756,62 @@
   <section class="plate">
     <div class="plate-head">
       <h2>Reactive Tracking</h2>
-      <p class="plate-note">weather you have to stand in · twenty-three ranks in four bands · twenty-eight scenarios</p>
+      <p class="plate-note">weather you have to stand in · twenty-three ranks in four bands · twenty-four scenarios</p>
     </div>
     <div class="bands">
         <section class="band">
           <div class="band-head">
             <h3>Novice</h3>
-            <p class="band-meta">seven scenarios · 105,000 at full marks</p>
+            <p class="band-meta">six scenarios · 90,000 at full marks</p>
           </div>
           <ol class="rungs">
-          <li class="rung"><span class="r-idx">6</span><span class="r-chip" style="background:#00ff04"></span><span class="r-name" style="color:#00ff04">Sweaty</span><span class="r-cost">105,000</span><span class="r-paper" style="color:#08c609">Sweaty</span></li>
-          <li class="rung"><span class="r-idx">5</span><span class="r-chip" style="background:#ffbb00"></span><span class="r-name" style="color:#ffbb00">Lukewarm</span><span class="r-cost">87,500</span><span class="r-paper" style="color:#d29b05">Lukewarm</span></li>
-          <li class="rung"><span class="r-idx">4</span><span class="r-chip" style="background:#ff00a2"></span><span class="r-name" style="color:#ff00a2">Permafrost</span><span class="r-cost">70,000</span><span class="r-paper" style="color:#ff00a2">Permafrost</span></li>
-          <li class="rung"><span class="r-idx">3</span><span class="r-chip" style="background:#00fffb"></span><span class="r-name" style="color:#00fffb">Dry Ice</span><span class="r-cost">52,500</span><span class="r-paper" style="color:#09bbb7">Dry Ice</span></li>
-          <li class="rung"><span class="r-idx">2</span><span class="r-chip" style="background:#4f008f"></span><span class="r-name" style="color:#6f30a4">Nitrogen</span><span class="r-cost">35,000</span><span class="r-paper" style="color:#4f008f">Nitrogen</span></li>
-          <li class="rung"><span class="r-idx">1</span><span class="r-chip" style="background:#005248"></span><span class="r-name" style="color:#0c5a51">Absolute Zero</span><span class="r-cost">17,500</span><span class="r-paper" style="color:#005248">Absolute Zero</span></li>
+          <li class="rung"><span class="r-idx">6</span><span class="r-chip" style="background:#00ff04"></span><span class="r-name" style="color:#00ff04">Sweaty</span><span class="r-cost">90,000</span><span class="r-paper" style="color:#04c40a">Sweaty</span></li>
+          <li class="rung"><span class="r-idx">5</span><span class="r-chip" style="background:#ffbb00"></span><span class="r-name" style="color:#ffbb00">Lukewarm</span><span class="r-cost">75,000</span><span class="r-paper" style="color:#dba204">Lukewarm</span></li>
+          <li class="rung"><span class="r-idx">4</span><span class="r-chip" style="background:#ff00a2"></span><span class="r-name" style="color:#ff00a2">Permafrost</span><span class="r-cost">60,000</span><span class="r-paper" style="color:#ff00a2">Permafrost</span></li>
+          <li class="rung"><span class="r-idx">3</span><span class="r-chip" style="background:#00fffb"></span><span class="r-name" style="color:#00fffb">Dry Ice</span><span class="r-cost">45,000</span><span class="r-paper" style="color:#05b8b8">Dry Ice</span></li>
+          <li class="rung"><span class="r-idx">2</span><span class="r-chip" style="background:#4f008f"></span><span class="r-name" style="color:#67249e">Nitrogen</span><span class="r-cost">30,000</span><span class="r-paper" style="color:#4f008f">Nitrogen</span></li>
+          <li class="rung"><span class="r-idx">1</span><span class="r-chip" style="background:#005248"></span><span class="r-name" style="color:#005248">Absolute Zero</span><span class="r-cost">15,000</span><span class="r-paper" style="color:#005248">Absolute Zero</span></li>
           </ol>
         </section>
         <section class="band">
           <div class="band-head">
             <h3>Intermediate</h3>
-            <p class="band-meta">seven scenarios · 105,000 at full marks</p>
+            <p class="band-meta">six scenarios · 90,000 at full marks</p>
           </div>
           <ol class="rungs">
-          <li class="rung"><span class="r-idx">6</span><span class="r-chip" style="background:#c27070"></span><span class="r-name" style="color:#c27070">Magma</span><span class="r-cost">105,000</span><span class="r-paper" style="color:#c27070">Magma</span></li>
-          <li class="rung"><span class="r-idx">5</span><span class="r-chip" style="background:#9c9afe"></span><span class="r-name" style="color:#9c9afe">Blowtorch</span><span class="r-cost">87,500</span><span class="r-paper" style="color:#9c9afe">Blowtorch</span></li>
-          <li class="rung"><span class="r-idx">4</span><span class="r-chip" style="background:#ff7b00"></span><span class="r-name" style="color:#ff7b00">Bonfire</span><span class="r-cost">70,000</span><span class="r-paper" style="color:#ff7b00">Bonfire</span></li>
-          <li class="rung"><span class="r-idx">3</span><span class="r-chip" style="background:#883f3f"></span><span class="r-name" style="color:#883f3f">Scalding</span><span class="r-cost">52,500</span><span class="r-paper" style="color:#883f3f">Scalding</span></li>
-          <li class="rung"><span class="r-idx">2</span><span class="r-chip" style="background:#00ff04"></span><span class="r-name" style="color:#00ff04">Sweaty</span><span class="r-cost">35,000</span><span class="r-paper" style="color:#08c609">Sweaty</span></li>
-          <li class="rung"><span class="r-idx">1</span><span class="r-chip" style="background:#ffbb00"></span><span class="r-name" style="color:#ffbb00">Lukewarm</span><span class="r-cost">17,500</span><span class="r-paper" style="color:#d29b05">Lukewarm</span></li>
+          <li class="rung"><span class="r-idx">6</span><span class="r-chip" style="background:#c27070"></span><span class="r-name" style="color:#c27070">Magma</span><span class="r-cost">90,000</span><span class="r-paper" style="color:#c27070">Magma</span></li>
+          <li class="rung"><span class="r-idx">5</span><span class="r-chip" style="background:#9c9afe"></span><span class="r-name" style="color:#9c9afe">Blowtorch</span><span class="r-cost">75,000</span><span class="r-paper" style="color:#9c9afe">Blowtorch</span></li>
+          <li class="rung"><span class="r-idx">4</span><span class="r-chip" style="background:#ff7b00"></span><span class="r-name" style="color:#ff7b00">Bonfire</span><span class="r-cost">60,000</span><span class="r-paper" style="color:#ff7b00">Bonfire</span></li>
+          <li class="rung"><span class="r-idx">3</span><span class="r-chip" style="background:#883f3f"></span><span class="r-name" style="color:#883f3f">Scalding</span><span class="r-cost">45,000</span><span class="r-paper" style="color:#883f3f">Scalding</span></li>
+          <li class="rung"><span class="r-idx">2</span><span class="r-chip" style="background:#00ff04"></span><span class="r-name" style="color:#00ff04">Sweaty</span><span class="r-cost">30,000</span><span class="r-paper" style="color:#04c40a">Sweaty</span></li>
+          <li class="rung"><span class="r-idx">1</span><span class="r-chip" style="background:#ffbb00"></span><span class="r-name" style="color:#ffbb00">Lukewarm</span><span class="r-cost">15,000</span><span class="r-paper" style="color:#dba204">Lukewarm</span></li>
           </ol>
         </section>
         <section class="band">
           <div class="band-head">
             <h3>Advanced</h3>
-            <p class="band-meta">seven scenarios · 105,000 at full marks</p>
+            <p class="band-meta">six scenarios · 90,000 at full marks</p>
           </div>
           <ol class="rungs">
-          <li class="rung"><span class="r-idx">6</span><span class="r-chip" style="background:#ae00ff"></span><span class="r-name" style="color:#ae00ff">Subnitride</span><span class="r-cost">105,000</span><span class="r-paper" style="color:#ae00ff">Subnitride</span></li>
-          <li class="rung"><span class="r-idx">5</span><span class="r-chip" style="background:#007d80"></span><span class="r-name" style="color:#007d80">Cyanogen</span><span class="r-cost">87,500</span><span class="r-paper" style="color:#007d80">Cyanogen</span></li>
-          <li class="rung"><span class="r-idx">4</span><span class="r-chip" style="background:#404040"></span><span class="r-name" style="color:#515252">Thermite</span><span class="r-cost">70,000</span><span class="r-paper" style="color:#404040">Thermite</span></li>
-          <li class="rung"><span class="r-idx">3</span><span class="r-chip" style="background:#ff4d00"></span><span class="r-name" style="color:#ff4d00">Acetylene</span><span class="r-cost">52,500</span><span class="r-paper" style="color:#ff4d00">Acetylene</span></li>
-          <li class="rung"><span class="r-idx">2</span><span class="r-chip" style="background:#c27070"></span><span class="r-name" style="color:#c27070">Magma</span><span class="r-cost">35,000</span><span class="r-paper" style="color:#c27070">Magma</span></li>
-          <li class="rung"><span class="r-idx">1</span><span class="r-chip" style="background:#9c9afe"></span><span class="r-name" style="color:#9c9afe">Blowtorch</span><span class="r-cost">17,500</span><span class="r-paper" style="color:#9c9afe">Blowtorch</span></li>
+          <li class="rung"><span class="r-idx">6</span><span class="r-chip" style="background:#ae00ff"></span><span class="r-name" style="color:#ae00ff">Subnitride</span><span class="r-cost">90,000</span><span class="r-paper" style="color:#ae00ff">Subnitride</span></li>
+          <li class="rung"><span class="r-idx">5</span><span class="r-chip" style="background:#007d80"></span><span class="r-name" style="color:#007d80">Cyanogen</span><span class="r-cost">75,000</span><span class="r-paper" style="color:#007d80">Cyanogen</span></li>
+          <li class="rung"><span class="r-idx">4</span><span class="r-chip" style="background:#404040"></span><span class="r-name" style="color:#494949">Thermite</span><span class="r-cost">60,000</span><span class="r-paper" style="color:#404040">Thermite</span></li>
+          <li class="rung"><span class="r-idx">3</span><span class="r-chip" style="background:#ff4d00"></span><span class="r-name" style="color:#ff4d00">Acetylene</span><span class="r-cost">45,000</span><span class="r-paper" style="color:#ff4d00">Acetylene</span></li>
+          <li class="rung"><span class="r-idx">2</span><span class="r-chip" style="background:#c27070"></span><span class="r-name" style="color:#c27070">Magma</span><span class="r-cost">30,000</span><span class="r-paper" style="color:#c27070">Magma</span></li>
+          <li class="rung"><span class="r-idx">1</span><span class="r-chip" style="background:#9c9afe"></span><span class="r-name" style="color:#9c9afe">Blowtorch</span><span class="r-cost">15,000</span><span class="r-paper" style="color:#9c9afe">Blowtorch</span></li>
           </ol>
         </section>
         <section class="band">
           <div class="band-head">
             <h3>Expert</h3>
-            <p class="band-meta">seven scenarios · 70,000 at full marks</p>
+            <p class="band-meta">six scenarios · 60,000 at full marks</p>
           </div>
           <ol class="rungs">
           <li class="rung"><span class="r-idx">5</span><span class="r-chip" style="background:#ff7a33"></span><span class="r-name" style="color:#ff7a33">Big Bang</span><span class="r-cost">top 3</span><span class="r-note">a place on the board, not a score</span></li>
-          <li class="rung"><span class="r-idx">4</span><span class="r-chip" style="background:#ffffff"></span><span class="r-name" style="color:#ffffff">Planck</span><span class="r-cost">70,000</span><span class="r-paper" style="color:#a5a4a3">Planck</span></li>
-          <li class="rung"><span class="r-idx">3</span><span class="r-chip" style="background:#fbff00"></span><span class="r-name" style="color:#fbff00">Sol</span><span class="r-cost">52,500</span><span class="r-paper" style="color:#aeaf08">Sol</span></li>
-          <li class="rung"><span class="r-idx">2</span><span class="r-chip" style="background:#ae00ff"></span><span class="r-name" style="color:#ae00ff">Subnitride</span><span class="r-cost">35,000</span><span class="r-paper" style="color:#ae00ff">Subnitride</span></li>
-          <li class="rung"><span class="r-idx">1</span><span class="r-chip" style="background:#007d80"></span><span class="r-name" style="color:#007d80">Cyanogen</span><span class="r-cost">17,500</span><span class="r-paper" style="color:#007d80">Cyanogen</span></li>
+          <li class="rung"><span class="r-idx">4</span><span class="r-chip" style="background:#ffffff"></span><span class="r-name" style="color:#ffffff">Planck</span><span class="r-cost">60,000</span><span class="r-paper" style="color:#abacaf">Planck</span></li>
+          <li class="rung"><span class="r-idx">3</span><span class="r-chip" style="background:#fbff00"></span><span class="r-name" style="color:#fbff00">Sol</span><span class="r-cost">45,000</span><span class="r-paper" style="color:#a9ac09">Sol</span></li>
+          <li class="rung"><span class="r-idx">2</span><span class="r-chip" style="background:#ae00ff"></span><span class="r-name" style="color:#ae00ff">Subnitride</span><span class="r-cost">30,000</span><span class="r-paper" style="color:#ae00ff">Subnitride</span></li>
+          <li class="rung"><span class="r-idx">1</span><span class="r-chip" style="background:#007d80"></span><span class="r-name" style="color:#007d80">Cyanogen</span><span class="r-cost">15,000</span><span class="r-paper" style="color:#007d80">Cyanogen</span></li>
           </ol>
         </section>
     </div>
@@ -820,62 +820,62 @@
   <section class="plate">
     <div class="plate-head">
       <h2>Speed Switching</h2>
-      <p class="plate-note">animals, slowest to fastest · twenty-three ranks in four bands · thirty-six scenarios</p>
+      <p class="plate-note">animals, slowest to fastest · twenty-three ranks in four bands · twenty-four scenarios</p>
     </div>
     <div class="bands">
         <section class="band">
           <div class="band-head">
             <h3>Novice</h3>
-            <p class="band-meta">nine scenarios · 135,000 at full marks</p>
+            <p class="band-meta">six scenarios · 90,000 at full marks</p>
           </div>
           <ol class="rungs">
-          <li class="rung"><span class="r-idx">6</span><span class="r-chip" style="background:#ff9d2e"></span><span class="r-name" style="color:#ff9d2e">Slow Loris</span><span class="r-cost">135,000</span><span class="r-paper" style="color:#e9902c">Slow Loris</span></li>
-          <li class="rung"><span class="r-idx">5</span><span class="r-chip" style="background:#e6baf3"></span><span class="r-name" style="color:#e6baf3">Koala</span><span class="r-cost">112,500</span><span class="r-paper" style="color:#be9ac7">Koala</span></li>
-          <li class="rung"><span class="r-idx">4</span><span class="r-chip" style="background:#3328cc"></span><span class="r-name" style="color:#3c32ce">Manatee</span><span class="r-cost">90,000</span><span class="r-paper" style="color:#3328cc">Manatee</span></li>
-          <li class="rung"><span class="r-idx">3</span><span class="r-chip" style="background:#005c02"></span><span class="r-name" style="color:#005c02">Galapagos Turtle</span><span class="r-cost">67,500</span><span class="r-paper" style="color:#005c02">Galapagos Turtle</span></li>
-          <li class="rung"><span class="r-idx">2</span><span class="r-chip" style="background:#4f4f4f"></span><span class="r-name" style="color:#4f4f4f">Sloth</span><span class="r-cost">45,000</span><span class="r-paper" style="color:#4f4f4f">Sloth</span></li>
-          <li class="rung"><span class="r-idx">1</span><span class="r-chip" style="background:#fbff00"></span><span class="r-name" style="color:#fbff00">Banana Slug</span><span class="r-cost">22,500</span><span class="r-paper" style="color:#aeaf08">Banana Slug</span></li>
+          <li class="rung"><span class="r-idx">6</span><span class="r-chip" style="background:#ff9d2e"></span><span class="r-name" style="color:#ff9d2e">Slow Loris</span><span class="r-cost">90,000</span><span class="r-paper" style="color:#f3962d">Slow Loris</span></li>
+          <li class="rung"><span class="r-idx">5</span><span class="r-chip" style="background:#e6baf3"></span><span class="r-name" style="color:#e6baf3">Koala</span><span class="r-cost">75,000</span><span class="r-paper" style="color:#bb98c8">Koala</span></li>
+          <li class="rung"><span class="r-idx">4</span><span class="r-chip" style="background:#3328cc"></span><span class="r-name" style="color:#3328cc">Manatee</span><span class="r-cost">60,000</span><span class="r-paper" style="color:#3328cc">Manatee</span></li>
+          <li class="rung"><span class="r-idx">3</span><span class="r-chip" style="background:#005c02"></span><span class="r-name" style="color:#005c02">Galapagos Turtle</span><span class="r-cost">45,000</span><span class="r-paper" style="color:#005c02">Galapagos Turtle</span></li>
+          <li class="rung"><span class="r-idx">2</span><span class="r-chip" style="background:#4f4f4f"></span><span class="r-name" style="color:#4f4f4f">Sloth</span><span class="r-cost">30,000</span><span class="r-paper" style="color:#4f4f4f">Sloth</span></li>
+          <li class="rung"><span class="r-idx">1</span><span class="r-chip" style="background:#fbff00"></span><span class="r-name" style="color:#fbff00">Banana Slug</span><span class="r-cost">15,000</span><span class="r-paper" style="color:#a9ac09">Banana Slug</span></li>
           </ol>
         </section>
         <section class="band">
           <div class="band-head">
             <h3>Intermediate</h3>
-            <p class="band-meta">nine scenarios · 135,000 at full marks</p>
+            <p class="band-meta">six scenarios · 90,000 at full marks</p>
           </div>
           <ol class="rungs">
-          <li class="rung"><span class="r-idx">6</span><span class="r-chip" style="background:#00fbff"></span><span class="r-name" style="color:#00fbff">Roadrunner</span><span class="r-cost">135,000</span><span class="r-paper" style="color:#09b8ba">Roadrunner</span></li>
-          <li class="rung"><span class="r-idx">5</span><span class="r-chip" style="background:#800000"></span><span class="r-name" style="color:#912425">Greyhound</span><span class="r-cost">112,500</span><span class="r-paper" style="color:#800000">Greyhound</span></li>
-          <li class="rung"><span class="r-idx">4</span><span class="r-chip" style="background:#ff0000"></span><span class="r-name" style="color:#ff0000">Ferret</span><span class="r-cost">90,000</span><span class="r-paper" style="color:#ff0000">Ferret</span></li>
-          <li class="rung"><span class="r-idx">3</span><span class="r-chip" style="background:#d900ff"></span><span class="r-name" style="color:#d900ff">Housecat</span><span class="r-cost">67,500</span><span class="r-paper" style="color:#d900ff">Housecat</span></li>
-          <li class="rung"><span class="r-idx">2</span><span class="r-chip" style="background:#ff9d2e"></span><span class="r-name" style="color:#ff9d2e">Slow Loris</span><span class="r-cost">45,000</span><span class="r-paper" style="color:#e9902c">Slow Loris</span></li>
-          <li class="rung"><span class="r-idx">1</span><span class="r-chip" style="background:#e6baf3"></span><span class="r-name" style="color:#e6baf3">Koala</span><span class="r-cost">22,500</span><span class="r-paper" style="color:#be9ac7">Koala</span></li>
+          <li class="rung"><span class="r-idx">6</span><span class="r-chip" style="background:#00fbff"></span><span class="r-name" style="color:#00fbff">Roadrunner</span><span class="r-cost">90,000</span><span class="r-paper" style="color:#05b5bb">Roadrunner</span></li>
+          <li class="rung"><span class="r-idx">5</span><span class="r-chip" style="background:#800000"></span><span class="r-name" style="color:#912425">Greyhound</span><span class="r-cost">75,000</span><span class="r-paper" style="color:#800000">Greyhound</span></li>
+          <li class="rung"><span class="r-idx">4</span><span class="r-chip" style="background:#ff0000"></span><span class="r-name" style="color:#ff0000">Ferret</span><span class="r-cost">60,000</span><span class="r-paper" style="color:#ff0000">Ferret</span></li>
+          <li class="rung"><span class="r-idx">3</span><span class="r-chip" style="background:#d900ff"></span><span class="r-name" style="color:#d900ff">Housecat</span><span class="r-cost">45,000</span><span class="r-paper" style="color:#d900ff">Housecat</span></li>
+          <li class="rung"><span class="r-idx">2</span><span class="r-chip" style="background:#ff9d2e"></span><span class="r-name" style="color:#ff9d2e">Slow Loris</span><span class="r-cost">30,000</span><span class="r-paper" style="color:#f3962d">Slow Loris</span></li>
+          <li class="rung"><span class="r-idx">1</span><span class="r-chip" style="background:#e6baf3"></span><span class="r-name" style="color:#e6baf3">Koala</span><span class="r-cost">15,000</span><span class="r-paper" style="color:#bb98c8">Koala</span></li>
           </ol>
         </section>
         <section class="band">
           <div class="band-head">
             <h3>Advanced</h3>
-            <p class="band-meta">nine scenarios · 135,000 at full marks</p>
+            <p class="band-meta">six scenarios · 90,000 at full marks</p>
           </div>
           <ol class="rungs">
-          <li class="rung"><span class="r-idx">6</span><span class="r-chip" style="background:#ff7300"></span><span class="r-name" style="color:#ff7300">Cheetah</span><span class="r-cost">135,000</span><span class="r-paper" style="color:#ff7300">Cheetah</span></li>
-          <li class="rung"><span class="r-idx">5</span><span class="r-chip" style="background:#421e00"></span><span class="r-name" style="color:#644831">Pronghorn</span><span class="r-cost">112,500</span><span class="r-paper" style="color:#421e00">Pronghorn</span></li>
-          <li class="rung"><span class="r-idx">4</span><span class="r-chip" style="background:#ffffff"></span><span class="r-name" style="color:#ffffff">Hare</span><span class="r-cost">90,000</span><span class="r-paper" style="color:#a5a4a3">Hare</span></li>
-          <li class="rung"><span class="r-idx">3</span><span class="r-chip" style="background:#00ffbf"></span><span class="r-name" style="color:#00ffbf">Jackrabbit</span><span class="r-cost">67,500</span><span class="r-paper" style="color:#09bb8d">Jackrabbit</span></li>
-          <li class="rung"><span class="r-idx">2</span><span class="r-chip" style="background:#00fbff"></span><span class="r-name" style="color:#00fbff">Roadrunner</span><span class="r-cost">45,000</span><span class="r-paper" style="color:#09b8ba">Roadrunner</span></li>
-          <li class="rung"><span class="r-idx">1</span><span class="r-chip" style="background:#800000"></span><span class="r-name" style="color:#912425">Greyhound</span><span class="r-cost">22,500</span><span class="r-paper" style="color:#800000">Greyhound</span></li>
+          <li class="rung"><span class="r-idx">6</span><span class="r-chip" style="background:#ff7300"></span><span class="r-name" style="color:#ff7300">Cheetah</span><span class="r-cost">90,000</span><span class="r-paper" style="color:#ff7300">Cheetah</span></li>
+          <li class="rung"><span class="r-idx">5</span><span class="r-chip" style="background:#421e00"></span><span class="r-name" style="color:#644831">Pronghorn</span><span class="r-cost">75,000</span><span class="r-paper" style="color:#421e00">Pronghorn</span></li>
+          <li class="rung"><span class="r-idx">4</span><span class="r-chip" style="background:#ffffff"></span><span class="r-name" style="color:#ffffff">Hare</span><span class="r-cost">60,000</span><span class="r-paper" style="color:#abacaf">Hare</span></li>
+          <li class="rung"><span class="r-idx">3</span><span class="r-chip" style="background:#00ffbf"></span><span class="r-name" style="color:#00ffbf">Jackrabbit</span><span class="r-cost">45,000</span><span class="r-paper" style="color:#05b88e">Jackrabbit</span></li>
+          <li class="rung"><span class="r-idx">2</span><span class="r-chip" style="background:#00fbff"></span><span class="r-name" style="color:#00fbff">Roadrunner</span><span class="r-cost">30,000</span><span class="r-paper" style="color:#05b5bb">Roadrunner</span></li>
+          <li class="rung"><span class="r-idx">1</span><span class="r-chip" style="background:#800000"></span><span class="r-name" style="color:#912425">Greyhound</span><span class="r-cost">15,000</span><span class="r-paper" style="color:#800000">Greyhound</span></li>
           </ol>
         </section>
         <section class="band">
           <div class="band-head">
             <h3>Expert</h3>
-            <p class="band-meta">nine scenarios · 90,000 at full marks</p>
+            <p class="band-meta">six scenarios · 60,000 at full marks</p>
           </div>
           <ol class="rungs">
           <li class="rung"><span class="r-idx">5</span><span class="r-chip" style="background:#5ce1ff"></span><span class="r-name" style="color:#5ce1ff">Terminal Velocity</span><span class="r-cost">top 3</span><span class="r-note">a place on the board, not a score</span></li>
-          <li class="rung"><span class="r-idx">4</span><span class="r-chip" style="background:#8000ff"></span><span class="r-name" style="color:#8000ff">Peregrine</span><span class="r-cost">90,000</span><span class="r-paper" style="color:#8000ff">Peregrine</span></li>
-          <li class="rung"><span class="r-idx">3</span><span class="r-chip" style="background:#9e7c00"></span><span class="r-name" style="color:#9e7c00">Golden Eagle</span><span class="r-cost">67,500</span><span class="r-paper" style="color:#9e7c00">Golden Eagle</span></li>
-          <li class="rung"><span class="r-idx">2</span><span class="r-chip" style="background:#ff7300"></span><span class="r-name" style="color:#ff7300">Cheetah</span><span class="r-cost">45,000</span><span class="r-paper" style="color:#ff7300">Cheetah</span></li>
-          <li class="rung"><span class="r-idx">1</span><span class="r-chip" style="background:#421e00"></span><span class="r-name" style="color:#644831">Pronghorn</span><span class="r-cost">22,500</span><span class="r-paper" style="color:#421e00">Pronghorn</span></li>
+          <li class="rung"><span class="r-idx">4</span><span class="r-chip" style="background:#8000ff"></span><span class="r-name" style="color:#8000ff">Peregrine</span><span class="r-cost">60,000</span><span class="r-paper" style="color:#8000ff">Peregrine</span></li>
+          <li class="rung"><span class="r-idx">3</span><span class="r-chip" style="background:#9e7c00"></span><span class="r-name" style="color:#9e7c00">Golden Eagle</span><span class="r-cost">45,000</span><span class="r-paper" style="color:#9e7c00">Golden Eagle</span></li>
+          <li class="rung"><span class="r-idx">2</span><span class="r-chip" style="background:#ff7300"></span><span class="r-name" style="color:#ff7300">Cheetah</span><span class="r-cost">30,000</span><span class="r-paper" style="color:#ff7300">Cheetah</span></li>
+          <li class="rung"><span class="r-idx">1</span><span class="r-chip" style="background:#421e00"></span><span class="r-name" style="color:#644831">Pronghorn</span><span class="r-cost">15,000</span><span class="r-paper" style="color:#421e00">Pronghorn</span></li>
           </ol>
         </section>
     </div>
@@ -894,10 +894,10 @@
           </div>
           <ol class="rungs">
           <li class="rung"><span class="r-idx">6</span><span class="r-chip" style="background:#a8a8a8"></span><span class="r-name" style="color:#a8a8a8">Musket</span><span class="r-cost">135,000</span><span class="r-paper" style="color:#a8a8a8">Musket</span></li>
-          <li class="rung"><span class="r-idx">5</span><span class="r-chip" style="background:#04ff00"></span><span class="r-name" style="color:#04ff00">Crossbow</span><span class="r-cost">112,500</span><span class="r-paper" style="color:#0bc606">Crossbow</span></li>
+          <li class="rung"><span class="r-idx">5</span><span class="r-chip" style="background:#04ff00"></span><span class="r-name" style="color:#04ff00">Crossbow</span><span class="r-cost">112,500</span><span class="r-paper" style="color:#07c407">Crossbow</span></li>
           <li class="rung"><span class="r-idx">4</span><span class="r-chip" style="background:#005751"></span><span class="r-name" style="color:#005751">Longbow</span><span class="r-cost">90,000</span><span class="r-paper" style="color:#005751">Longbow</span></li>
-          <li class="rung"><span class="r-idx">3</span><span class="r-chip" style="background:#fff700"></span><span class="r-name" style="color:#fff700">Dart</span><span class="r-cost">67,500</span><span class="r-paper" style="color:#b0aa08">Dart</span></li>
-          <li class="rung"><span class="r-idx">2</span><span class="r-chip" style="background:#ffe8b8"></span><span class="r-name" style="color:#ffe8b8">Slingshot</span><span class="r-cost">45,000</span><span class="r-paper" style="color:#bcaa88">Slingshot</span></li>
+          <li class="rung"><span class="r-idx">3</span><span class="r-chip" style="background:#fff700"></span><span class="r-name" style="color:#fff700">Dart</span><span class="r-cost">67,500</span><span class="r-paper" style="color:#aba709">Dart</span></li>
+          <li class="rung"><span class="r-idx">2</span><span class="r-chip" style="background:#ffe8b8"></span><span class="r-name" style="color:#ffe8b8">Slingshot</span><span class="r-cost">45,000</span><span class="r-paper" style="color:#b7a889">Slingshot</span></li>
           <li class="rung"><span class="r-idx">1</span><span class="r-chip" style="background:#916822"></span><span class="r-name" style="color:#916822">Blunderbuss</span><span class="r-cost">22,500</span><span class="r-paper" style="color:#916822">Blunderbuss</span></li>
           </ol>
         </section>
@@ -907,12 +907,12 @@
             <p class="band-meta">nine scenarios · 135,000 at full marks</p>
           </div>
           <ol class="rungs">
-          <li class="rung"><span class="r-idx">6</span><span class="r-chip" style="background:#4d1f00"></span><span class="r-name" style="color:#6d4931">Rifle</span><span class="r-cost">135,000</span><span class="r-paper" style="color:#4d1f00">Rifle</span></li>
+          <li class="rung"><span class="r-idx">6</span><span class="r-chip" style="background:#4d1f00"></span><span class="r-name" style="color:#653f25">Rifle</span><span class="r-cost">135,000</span><span class="r-paper" style="color:#4d1f00">Rifle</span></li>
           <li class="rung"><span class="r-idx">5</span><span class="r-chip" style="background:#588ffd"></span><span class="r-name" style="color:#588ffd">Carbine</span><span class="r-cost">112,500</span><span class="r-paper" style="color:#588ffd">Carbine</span></li>
-          <li class="rung"><span class="r-idx">4</span><span class="r-chip" style="background:#0400ff"></span><span class="r-name" style="color:#100cff">Revolver</span><span class="r-cost">90,000</span><span class="r-paper" style="color:#0400ff">Revolver</span></li>
+          <li class="rung"><span class="r-idx">4</span><span class="r-chip" style="background:#0400ff"></span><span class="r-name" style="color:#0400ff">Revolver</span><span class="r-cost">90,000</span><span class="r-paper" style="color:#0400ff">Revolver</span></li>
           <li class="rung"><span class="r-idx">3</span><span class="r-chip" style="background:#ff6600"></span><span class="r-name" style="color:#ff6600">Flintlock</span><span class="r-cost">67,500</span><span class="r-paper" style="color:#ff6600">Flintlock</span></li>
           <li class="rung"><span class="r-idx">2</span><span class="r-chip" style="background:#a8a8a8"></span><span class="r-name" style="color:#a8a8a8">Musket</span><span class="r-cost">45,000</span><span class="r-paper" style="color:#a8a8a8">Musket</span></li>
-          <li class="rung"><span class="r-idx">1</span><span class="r-chip" style="background:#04ff00"></span><span class="r-name" style="color:#04ff00">Crossbow</span><span class="r-cost">22,500</span><span class="r-paper" style="color:#0bc606">Crossbow</span></li>
+          <li class="rung"><span class="r-idx">1</span><span class="r-chip" style="background:#04ff00"></span><span class="r-name" style="color:#04ff00">Crossbow</span><span class="r-cost">22,500</span><span class="r-paper" style="color:#07c407">Crossbow</span></li>
           </ol>
         </section>
         <section class="band">
@@ -924,8 +924,8 @@
           <li class="rung"><span class="r-idx">6</span><span class="r-chip" style="background:#ee00ff"></span><span class="r-name" style="color:#ee00ff">Railgun</span><span class="r-cost">135,000</span><span class="r-paper" style="color:#ee00ff">Railgun</span></li>
           <li class="rung"><span class="r-idx">5</span><span class="r-chip" style="background:#ff0000"></span><span class="r-name" style="color:#ff0000">Sniper</span><span class="r-cost">112,500</span><span class="r-paper" style="color:#ff0000">Sniper</span></li>
           <li class="rung"><span class="r-idx">4</span><span class="r-chip" style="background:#757575"></span><span class="r-name" style="color:#757575">Match Rifle</span><span class="r-cost">90,000</span><span class="r-paper" style="color:#757575">Match Rifle</span></li>
-          <li class="rung"><span class="r-idx">3</span><span class="r-chip" style="background:#ffffff"></span><span class="r-name" style="color:#ffffff">Marksman</span><span class="r-cost">67,500</span><span class="r-paper" style="color:#a5a4a3">Marksman</span></li>
-          <li class="rung"><span class="r-idx">2</span><span class="r-chip" style="background:#4d1f00"></span><span class="r-name" style="color:#6d4931">Rifle</span><span class="r-cost">45,000</span><span class="r-paper" style="color:#4d1f00">Rifle</span></li>
+          <li class="rung"><span class="r-idx">3</span><span class="r-chip" style="background:#ffffff"></span><span class="r-name" style="color:#ffffff">Marksman</span><span class="r-cost">67,500</span><span class="r-paper" style="color:#abacaf">Marksman</span></li>
+          <li class="rung"><span class="r-idx">2</span><span class="r-chip" style="background:#4d1f00"></span><span class="r-name" style="color:#653f25">Rifle</span><span class="r-cost">45,000</span><span class="r-paper" style="color:#4d1f00">Rifle</span></li>
           <li class="rung"><span class="r-idx">1</span><span class="r-chip" style="background:#588ffd"></span><span class="r-name" style="color:#588ffd">Carbine</span><span class="r-cost">22,500</span><span class="r-paper" style="color:#588ffd">Carbine</span></li>
           </ol>
         </section>
@@ -937,7 +937,7 @@
           <ol class="rungs">
           <li class="rung"><span class="r-idx">5</span><span class="r-chip" style="background:#e8b13a"></span><span class="r-name" style="color:#e8b13a">Deadeye</span><span class="r-cost">top 3</span><span class="r-note">a place on the board, not a score</span></li>
           <li class="rung"><span class="r-idx">4</span><span class="r-chip" style="background:#1100ff"></span><span class="r-name" style="color:#1100ff">Photon Lance</span><span class="r-cost">90,000</span><span class="r-paper" style="color:#1100ff">Photon Lance</span></li>
-          <li class="rung"><span class="r-idx">3</span><span class="r-chip" style="background:#000000"></span><span class="r-name" style="color:#535456">Gauss Cannon</span><span class="r-cost">67,500</span><span class="r-paper" style="color:#000000">Gauss Cannon</span></li>
+          <li class="rung"><span class="r-idx">3</span><span class="r-chip" style="background:#000000"></span><span class="r-name" style="color:#47484a">Gauss Cannon</span><span class="r-cost">67,500</span><span class="r-paper" style="color:#000000">Gauss Cannon</span></li>
           <li class="rung"><span class="r-idx">2</span><span class="r-chip" style="background:#ee00ff"></span><span class="r-name" style="color:#ee00ff">Railgun</span><span class="r-cost">45,000</span><span class="r-paper" style="color:#ee00ff">Railgun</span></li>
           <li class="rung"><span class="r-idx">1</span><span class="r-chip" style="background:#ff0000"></span><span class="r-name" style="color:#ff0000">Sniper</span><span class="r-cost">22,500</span><span class="r-paper" style="color:#ff0000">Sniper</span></li>
           </ol>
@@ -952,8 +952,8 @@
     </div>
     <ul class="flags">
       <li class="flag">
-        <span class="flag-chips"><span class="flag-chip" style="background:#29008a"></span><span class="flag-chip" style="background:#4d2400"></span><span class="flag-chip" style="background:#0e5700"></span><span class="flag-chip" style="background:#000000"></span><span class="flag-chip" style="background:#550160"></span><span class="flag-chip" style="background:#610000"></span><span class="flag-chip" style="background:#331400"></span><span class="flag-chip" style="background:#005248"></span><span class="flag-chip" style="background:#4f008f"></span><span class="flag-chip" style="background:#404040"></span><span class="flag-chip" style="background:#3328cc"></span><span class="flag-chip" style="background:#800000"></span><span class="flag-chip" style="background:#421e00"></span><span class="flag-chip" style="background:#0400ff"></span><span class="flag-chip" style="background:#4d1f00"></span></span>
-        <span class="flag-text"><b>Seventeen names disappear on the client's own ground</b><span><b>Lunar</b> (Overall, 1.19:1), <b>Mosquito</b> (Dynamic Clicking · Novice, 1.28:1), <b>Wolverine</b> (Dynamic Clicking · Intermediate, 1.94:1), <b>Orca</b> (Evasive Switching · Expert, 1.23:1), <b>Multicellular</b> (Precise Tracking · Novice, 1.27:1), <b>Mammal</b> (Precise Tracking · Novice, 1.23:1), <b>Primate</b> (Precise Tracking · Intermediate, 1.01:1), <b>Singularity</b> (Precise Tracking · Expert, 1.23:1), <b>Absolute Zero</b> (Reactive Tracking · Novice, 1.88:1), <b>Nitrogen</b> (Reactive Tracking · Novice, 1.41:1), <b>Thermite</b> (Reactive Tracking · Advanced, 1.65:1), <b>Manatee</b> (Speed Switching · Novice, 1.89:1), <b>Greyhound</b> (Speed Switching · Intermediate, 1.57:1), <b>Pronghorn</b> (Speed Switching · Advanced, 1.16:1), <b>Revolver</b> (Static Clicking · Intermediate, 2.00:1), <b>Rifle</b> (Static Clicking · Intermediate, 1.23:1), <b>Gauss Cannon</b> (Static Clicking · Expert, 1.23:1). The client is dark, so these are the ranks nobody will be able to read on the screen they actually live on.</span></span>
+        <span class="flag-chips"><span class="flag-chip" style="background:#29008a"></span><span class="flag-chip" style="background:#4d2400"></span><span class="flag-chip" style="background:#000000"></span><span class="flag-chip" style="background:#550160"></span><span class="flag-chip" style="background:#610000"></span><span class="flag-chip" style="background:#331400"></span><span class="flag-chip" style="background:#4f008f"></span><span class="flag-chip" style="background:#404040"></span><span class="flag-chip" style="background:#800000"></span><span class="flag-chip" style="background:#421e00"></span><span class="flag-chip" style="background:#4d1f00"></span></span>
+        <span class="flag-text"><b>Thirteen names disappear on the client's own ground</b><span><b>Lunar</b> (Overall, 1.30:1), <b>Mosquito</b> (Dynamic Clicking · Novice, 1.39:1), <b>Orca</b> (Evasive Switching · Expert, 1.12:1), <b>Multicellular</b> (Precise Tracking · Novice, 1.39:1), <b>Mammal</b> (Precise Tracking · Novice, 1.34:1), <b>Primate</b> (Precise Tracking · Intermediate, 1.10:1), <b>Singularity</b> (Precise Tracking · Expert, 1.12:1), <b>Nitrogen</b> (Reactive Tracking · Novice, 1.54:1), <b>Thermite</b> (Reactive Tracking · Advanced, 1.80:1), <b>Greyhound</b> (Speed Switching · Intermediate, 1.71:1), <b>Pronghorn</b> (Speed Switching · Advanced, 1.26:1), <b>Rifle</b> (Static Clicking · Intermediate, 1.34:1), <b>Gauss Cannon</b> (Static Clicking · Expert, 1.12:1). The client is dark, so these are the ranks nobody will be able to read on the screen they actually live on.</span></span>
       </li>
       <li class="flag">
         <span class="flag-chips"><span class="flag-chip" style="background:#00eaea"></span><span class="flag-chip" style="background:#fff700"></span><span class="flag-chip" style="background:#00ff00"></span><span class="flag-chip" style="background:#00ffff"></span><span class="flag-chip" style="background:#94abf0"></span><span class="flag-chip" style="background:#ffea00"></span><span class="flag-chip" style="background:#00ffe1"></span><span class="flag-chip" style="background:#e4ed89"></span><span class="flag-chip" style="background:#ffffff"></span><span class="flag-chip" style="background:#04ff00"></span><span class="flag-chip" style="background:#7affb4"></span><span class="flag-chip" style="background:#00e604"></span><span class="flag-chip" style="background:#fbff00"></span><span class="flag-chip" style="background:#ffbb00"></span><span class="flag-chip" style="background:#ffb3fc"></span><span class="flag-chip" style="background:#ffd1ea"></span><span class="flag-chip" style="background:#eeff00"></span><span class="flag-chip" style="background:#2bff00"></span><span class="flag-chip" style="background:#00fbff"></span><span class="flag-chip" style="background:#00fffb"></span><span class="flag-chip" style="background:#00ff04"></span><span class="flag-chip" style="background:#e6baf3"></span><span class="flag-chip" style="background:#ff9d2e"></span><span class="flag-chip" style="background:#00ffbf"></span><span class="flag-chip" style="background:#5ce1ff"></span></span>
@@ -965,7 +965,7 @@
       </li>
       <li class="flag">
         <span class="flag-chips"><span class="flag-chip" style="background:#ff7300"></span><span class="flag-chip" style="background:#fff700"></span><span class="flag-chip" style="background:#ff46ff"></span><span class="flag-chip" style="background:#00ff00"></span><span class="flag-chip" style="background:#00ffff"></span><span class="flag-chip" style="background:#ff0000"></span><span class="flag-chip" style="background:#ffea00"></span><span class="flag-chip" style="background:#fb00ff"></span><span class="flag-chip" style="background:#00ffe1"></span><span class="flag-chip" style="background:#0040ff"></span><span class="flag-chip" style="background:#ffffff"></span><span class="flag-chip" style="background:#04ff00"></span><span class="flag-chip" style="background:#fbff00"></span><span class="flag-chip" style="background:#a600ff"></span><span class="flag-chip" style="background:#ffbb00"></span><span class="flag-chip" style="background:#000000"></span><span class="flag-chip" style="background:#eeff00"></span><span class="flag-chip" style="background:#006eff"></span><span class="flag-chip" style="background:#2bff00"></span><span class="flag-chip" style="background:#610000"></span><span class="flag-chip" style="background:#e100ff"></span><span class="flag-chip" style="background:#ff6600"></span><span class="flag-chip" style="background:#00fbff"></span><span class="flag-chip" style="background:#00fffb"></span><span class="flag-chip" style="background:#ff00a2"></span></span>
-        <span class="flag-text"><b>Fifty-seven colours sit on an edge of the RGB cube</b><span>Fifty-seven of the 110 named colours have two channels pinned at 00 or ff. That is where a colour has no room left to be moved for either ground: as bright as it can get on paper, as dark as it can get on the client, and nowhere to go when one of the two needs it to give. Thirty-two of them already fail one of the two contrast checks above, which is what this is really a count of.</span></span>
+        <span class="flag-text"><b>Fifty-seven colours sit on an edge of the RGB cube</b><span>Fifty-seven of the 110 named colours have two channels pinned at 00 or ff. That is where a colour has no room left to be moved for either ground: as bright as it can get on paper, as dark as it can get on the client, and nowhere to go when one of the two needs it to give. Thirty-one of them already fail one of the two contrast checks above, which is what this is really a count of.</span></span>
       </li>
     </ul>
   </section>

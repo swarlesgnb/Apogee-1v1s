@@ -262,7 +262,7 @@ export interface PracticeRow extends VariantProgress {
    * The published benchmarks that also name this scenario, and what `best` is worth in
    * each of them.
    *
-   * 197 of the 208 in the pool carry at least one. Empty for the rest, which are the
+   * 146 of the 156 in the pool carry at least one. Empty for the rest, which are the
    * hand-picked easier rungs no author has graded - and an empty list renders as nothing
    * rather than as "no benchmarks", because a scenario the community has not graded is
    * not a scenario that failed to be graded.

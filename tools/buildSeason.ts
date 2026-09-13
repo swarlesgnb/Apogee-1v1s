@@ -89,10 +89,12 @@ interface Pool {
   overrides?: Record<string, number[]>;
   matchWindow: number;
   categories: string[];
+  categoryGuides?: Record<string, { headline: string; description: string }>;
   families: {
     family: string;
     category: string;
     subCategory?: string;
+    focus?: string;
     /** Viscose's Arm/Wrist/Fingertip/Blending, where a benchmark publishes one. */
     mechanic?: string;
     variants: {
@@ -103,11 +105,17 @@ interface Pool {
       /** One score per rank the variant's window grades. The pool owns these. */
       rankMaxes?: number[];
       source?: ThresholdSource;
+      /** The part of the arm this variant loads most, and whose word that is. */
+      arm?: "Arm" | "Wrist" | "Fingertip" | "Blending";
+      armFrom?: "Viscose" | "Apogee";
     }[];
   }[];
 }
 
 interface SeasonScenarioOut {
+  focus?: string;
+  arm?: "Arm" | "Wrist" | "Fingertip" | "Blending";
+  armFrom?: "Viscose" | "Apogee";
   scenario: string;
   category: string;
   family: string;
@@ -450,6 +458,10 @@ function main(): void {
         scenario: v.scenario,
         category: family.category,
         family: family.family,
+        ...(family.focus ? { focus: family.focus } : {}),
+        // Per variant, not per family: Viscose files Whisphere's rungs under two different
+        // parts of the arm, so a family-level value would be wrong about some of them.
+        ...(v.arm ? { arm: v.arm, armFrom: v.armFrom } : {}),
         ...(family.subCategory ? { subCategory: family.subCategory } : {}),
         // Carried only where an author published it. Absent is the answer for most of the
         // pool rather than a field waiting to be filled.
@@ -638,6 +650,7 @@ function main(): void {
 
     return {
       name,
+      ...(pool.categoryGuides?.[name] ?? {}),
       bands,
       // The chained ladder stays for now so nothing that still reads it breaks in the
       // same commit that introduces the bands. It is the thing the split replaces, and it

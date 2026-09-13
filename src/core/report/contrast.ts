@@ -13,7 +13,7 @@
  */
 
 /** The two grounds every rank name has to survive. Must match the client and the sheet. */
-export const DARK_GROUND = "#1e1b18";
+export const DARK_GROUND = "#10121b";
 export const LIGHT_GROUND = "#eef1f6";
 
 /**
@@ -27,16 +27,16 @@ export const LIGHT_GROUND = "#eef1f6";
  */
 export const DARK_CHROME = {
   ground: DARK_GROUND,
-  panel: "#272320",
-  well: "#171513",
-  rule: "#38332f",
-  ink: "#f6f3ee",
+  panel: "#191d2b",
+  well: "#111522",
+  rule: "#30394c",
+  ink: "#f2f4fc",
   // Lifted together with the client's :root when the orb field went in: the field
   // lifts the ground these are painted on, so a ramp measured against the bare
   // ground is no longer the ramp that ships. See the note at --ink in index.html,
   // and npm run validate:orb, which re-derives both steps.
-  inkMid: "#ccc7c0",
-  inkDim: "#a8a19a",
+  inkMid: "#c1c9df",
+  inkDim: "#a1acc5",
 } as const;
 
 /**
@@ -49,22 +49,14 @@ export const DARK_CHROME = {
 export const MIN_CONTRAST = 2;
 
 /**
- * The floor for a rank name set as body text, which is a different thing again.
+ * The floor for a rank name set as body text: 12px in a column forty rows deep, where
+ * MIN_CONTRAST's large-name allowance does not apply. WCAG's 4.5:1.
  *
- * MIN_CONTRAST is for a name set large beside a specimen of its own colour. In the client
- * the same names are 12px in a column forty rows deep, and at that size the seventeen
- * placements under 2:1 still came out as smudges. 3.5 is WCAG's large-text floor of 3 with
- * a little over, which is the honest description of this text: small, but bold and in a
- * column of its own.
- *
- * The renderer holds its own copy - it runs as plain script in two hosts and cannot import
- * this - and the two have to be moved together. A colour solved against one floor and
- * painted against another does not simply come out dim: the generated palette this repo
- * used to carry was solved to 2:1, the client lifted its bottom seven rungs to 3.5, and
- * the lift's five percent steps reordered them. The palette is hand-picked now, which
- * removes the generator from that list and leaves these two copies on it.
+ * The renderer runs as plain script and cannot import this, so it holds its own copy.
+ * Move the two together: a colour checked against one floor and painted against another
+ * is not the colour that was checked.
  */
-export const RANK_TEXT_CONTRAST = 3.5;
+export const RANK_TEXT_CONTRAST = 4.5;
 
 /** sRGB relative luminance, per WCAG. */
 export function luminance(hex: string): number {

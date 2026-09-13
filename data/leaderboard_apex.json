@@ -1,6 +1,6 @@
 {
   "source": "kovaaks.com/webapp-backend/leaderboard/scores/global",
-  "sampledAt": "2026-09-05T01:18:26.509Z",
+  "sampledAt": "2026-09-13T03:12:52.422Z",
   "sampleRanks": [
     1,
     2,
@@ -976,6 +976,294 @@
       "sampledAt": "2026-09-02T21:03:21.374Z"
     },
     {
+      "scenario": "Aimerz+ hopClick Easy S1",
+      "leaderboardId": 68428,
+      "total": 17217,
+      "points": [
+        {
+          "rank": 1,
+          "score": 1740
+        },
+        {
+          "rank": 2,
+          "score": 1660
+        },
+        {
+          "rank": 3,
+          "score": 1610
+        },
+        {
+          "rank": 5,
+          "score": 1600
+        },
+        {
+          "rank": 10,
+          "score": 1500
+        },
+        {
+          "rank": 25,
+          "score": 1410
+        },
+        {
+          "rank": 50,
+          "score": 1370
+        },
+        {
+          "rank": 100,
+          "score": 1270
+        },
+        {
+          "rank": 250,
+          "score": 1160
+        },
+        {
+          "rank": 500,
+          "score": 1070
+        }
+      ],
+      "sampledAt": "2026-09-12T16:28:21.147Z"
+    },
+    {
+      "scenario": "Aimerz+ hopClick Hard S1",
+      "leaderboardId": 68378,
+      "total": 3837,
+      "points": [
+        {
+          "rank": 1,
+          "score": 1490
+        },
+        {
+          "rank": 2,
+          "score": 1310
+        },
+        {
+          "rank": 3,
+          "score": 1290
+        },
+        {
+          "rank": 5,
+          "score": 1270
+        },
+        {
+          "rank": 10,
+          "score": 1200
+        },
+        {
+          "rank": 25,
+          "score": 1110
+        },
+        {
+          "rank": 50,
+          "score": 1050
+        },
+        {
+          "rank": 100,
+          "score": 990
+        },
+        {
+          "rank": 250,
+          "score": 890
+        },
+        {
+          "rank": 500,
+          "score": 810
+        }
+      ],
+      "sampledAt": "2026-09-12T16:28:30.796Z"
+    },
+    {
+      "scenario": "Aimerz+ hopClick Med S1",
+      "leaderboardId": 69291,
+      "total": 5076,
+      "points": [
+        {
+          "rank": 1,
+          "score": 1670
+        },
+        {
+          "rank": 2,
+          "score": 1500
+        },
+        {
+          "rank": 3,
+          "score": 1490
+        },
+        {
+          "rank": 5,
+          "score": 1430
+        },
+        {
+          "rank": 10,
+          "score": 1360
+        },
+        {
+          "rank": 25,
+          "score": 1260
+        },
+        {
+          "rank": 50,
+          "score": 1200
+        },
+        {
+          "rank": 100,
+          "score": 1140
+        },
+        {
+          "rank": 250,
+          "score": 1030
+        },
+        {
+          "rank": 500,
+          "score": 950
+        }
+      ],
+      "sampledAt": "2026-09-12T16:28:25.982Z"
+    },
+    {
+      "scenario": "Aimerz+ hopTS Easy S1",
+      "leaderboardId": 68429,
+      "total": 6672,
+      "points": [
+        {
+          "rank": 1,
+          "score": 120.4
+        },
+        {
+          "rank": 2,
+          "score": 115
+        },
+        {
+          "rank": 3,
+          "score": 113.5
+        },
+        {
+          "rank": 5,
+          "score": 110
+        },
+        {
+          "rank": 10,
+          "score": 104.6
+        },
+        {
+          "rank": 25,
+          "score": 98.1
+        },
+        {
+          "rank": 50,
+          "score": 95
+        },
+        {
+          "rank": 100,
+          "score": 90.3
+        },
+        {
+          "rank": 250,
+          "score": 84
+        },
+        {
+          "rank": 500,
+          "score": 79.7
+        }
+      ],
+      "sampledAt": "2026-09-12T16:30:07.533Z"
+    },
+    {
+      "scenario": "Aimerz+ hopTS Hard S1",
+      "leaderboardId": 68311,
+      "total": 1863,
+      "points": [
+        {
+          "rank": 1,
+          "score": 97.3
+        },
+        {
+          "rank": 2,
+          "score": 96
+        },
+        {
+          "rank": 3,
+          "score": 93.5
+        },
+        {
+          "rank": 5,
+          "score": 86.7
+        },
+        {
+          "rank": 10,
+          "score": 82.3
+        },
+        {
+          "rank": 25,
+          "score": 74.8
+        },
+        {
+          "rank": 50,
+          "score": 71.1
+        },
+        {
+          "rank": 100,
+          "score": 66.6
+        },
+        {
+          "rank": 250,
+          "score": 60
+        },
+        {
+          "rank": 500,
+          "score": 55.2
+        }
+      ],
+      "sampledAt": "2026-09-12T16:30:17.150Z"
+    },
+    {
+      "scenario": "Aimerz+ hopTS Med S1",
+      "leaderboardId": 69310,
+      "total": 1727,
+      "points": [
+        {
+          "rank": 1,
+          "score": 107.2
+        },
+        {
+          "rank": 2,
+          "score": 102.9
+        },
+        {
+          "rank": 3,
+          "score": 102.8
+        },
+        {
+          "rank": 5,
+          "score": 102.2
+        },
+        {
+          "rank": 10,
+          "score": 98.7
+        },
+        {
+          "rank": 25,
+          "score": 92
+        },
+        {
+          "rank": 50,
+          "score": 86
+        },
+        {
+          "rank": 100,
+          "score": 82
+        },
+        {
+          "rank": 250,
+          "score": 74
+        },
+        {
+          "rank": 500,
+          "score": 65.2
+        }
+      ],
+      "sampledAt": "2026-09-12T16:30:12.320Z"
+    },
+    {
       "scenario": "Aimerz+ pipeClick Easy S1",
       "leaderboardId": 68431,
       "total": 34752,
@@ -1168,6 +1456,102 @@
       "sampledAt": "2026-09-03T01:19:07.363Z"
     },
     {
+      "scenario": "Aimerz+ pivoTS Easy S1",
+      "leaderboardId": 68432,
+      "total": 15116,
+      "points": [
+        {
+          "rank": 1,
+          "score": 175
+        },
+        {
+          "rank": 2,
+          "score": 171
+        },
+        {
+          "rank": 3,
+          "score": 159
+        },
+        {
+          "rank": 5,
+          "score": 157.25
+        },
+        {
+          "rank": 10,
+          "score": 152
+        },
+        {
+          "rank": 25,
+          "score": 146
+        },
+        {
+          "rank": 50,
+          "score": 140
+        },
+        {
+          "rank": 100,
+          "score": 135
+        },
+        {
+          "rank": 250,
+          "score": 128
+        },
+        {
+          "rank": 500,
+          "score": 123
+        }
+      ],
+      "sampledAt": "2026-09-12T16:29:29.040Z"
+    },
+    {
+      "scenario": "aimerz+ pivoTS Hard",
+      "leaderboardId": 44373,
+      "total": 4959,
+      "points": [
+        {
+          "rank": 1,
+          "score": 167
+        },
+        {
+          "rank": 2,
+          "score": 163
+        },
+        {
+          "rank": 3,
+          "score": 161
+        },
+        {
+          "rank": 5,
+          "score": 157
+        },
+        {
+          "rank": 10,
+          "score": 151
+        },
+        {
+          "rank": 25,
+          "score": 145
+        },
+        {
+          "rank": 50,
+          "score": 142
+        },
+        {
+          "rank": 100,
+          "score": 136
+        },
+        {
+          "rank": 250,
+          "score": 129
+        },
+        {
+          "rank": 500,
+          "score": 122
+        }
+      ],
+      "sampledAt": "2026-09-12T16:29:38.715Z"
+    },
+    {
       "scenario": "Aimerz+ pivoTS Hard S1",
       "leaderboardId": 68313,
       "total": 5874,
@@ -1214,6 +1598,54 @@
         }
       ],
       "sampledAt": "2026-09-02T21:05:57.267Z"
+    },
+    {
+      "scenario": "aimerz+ pivoTS Normal",
+      "leaderboardId": 44376,
+      "total": 8287,
+      "points": [
+        {
+          "rank": 1,
+          "score": 167
+        },
+        {
+          "rank": 2,
+          "score": 158
+        },
+        {
+          "rank": 3,
+          "score": 155
+        },
+        {
+          "rank": 5,
+          "score": 154
+        },
+        {
+          "rank": 10,
+          "score": 152
+        },
+        {
+          "rank": 25,
+          "score": 147
+        },
+        {
+          "rank": 50,
+          "score": 140
+        },
+        {
+          "rank": 100,
+          "score": 135
+        },
+        {
+          "rank": 250,
+          "score": 129
+        },
+        {
+          "rank": 500,
+          "score": 124
+        }
+      ],
+      "sampledAt": "2026-09-12T16:29:33.900Z"
     },
     {
       "scenario": "Aimerz+ PreciseTrack Easy S1",
@@ -1600,6 +2032,150 @@
       "sampledAt": "2026-09-03T01:25:11.796Z"
     },
     {
+      "scenario": "Aimerz+ VGS Easy S1",
+      "leaderboardId": 68358,
+      "total": 10957,
+      "points": [
+        {
+          "rank": 1,
+          "score": 4341
+        },
+        {
+          "rank": 2,
+          "score": 4276
+        },
+        {
+          "rank": 3,
+          "score": 4166
+        },
+        {
+          "rank": 5,
+          "score": 4143
+        },
+        {
+          "rank": 10,
+          "score": 4108
+        },
+        {
+          "rank": 25,
+          "score": 4031
+        },
+        {
+          "rank": 50,
+          "score": 3957
+        },
+        {
+          "rank": 100,
+          "score": 3863
+        },
+        {
+          "rank": 250,
+          "score": 3720
+        },
+        {
+          "rank": 500,
+          "score": 3557
+        }
+      ],
+      "sampledAt": "2026-09-12T16:28:59.823Z"
+    },
+    {
+      "scenario": "Aimerz+ VGS Hard S1",
+      "leaderboardId": 68332,
+      "total": 9063,
+      "points": [
+        {
+          "rank": 1,
+          "score": 4036.49
+        },
+        {
+          "rank": 2,
+          "score": 3898.32
+        },
+        {
+          "rank": 3,
+          "score": 3863.4
+        },
+        {
+          "rank": 5,
+          "score": 3809.29
+        },
+        {
+          "rank": 10,
+          "score": 3740.29
+        },
+        {
+          "rank": 25,
+          "score": 3616.29
+        },
+        {
+          "rank": 50,
+          "score": 3532.3
+        },
+        {
+          "rank": 100,
+          "score": 3410.3
+        },
+        {
+          "rank": 250,
+          "score": 3241.29
+        },
+        {
+          "rank": 500,
+          "score": 3069.3
+        }
+      ],
+      "sampledAt": "2026-09-12T16:29:09.524Z"
+    },
+    {
+      "scenario": "Aimerz+ VGS Med S1",
+      "leaderboardId": 69298,
+      "total": 2669,
+      "points": [
+        {
+          "rank": 1,
+          "score": 4031
+        },
+        {
+          "rank": 2,
+          "score": 3937
+        },
+        {
+          "rank": 3,
+          "score": 3924
+        },
+        {
+          "rank": 5,
+          "score": 3856
+        },
+        {
+          "rank": 10,
+          "score": 3771
+        },
+        {
+          "rank": 25,
+          "score": 3683
+        },
+        {
+          "rank": 50,
+          "score": 3598
+        },
+        {
+          "rank": 100,
+          "score": 3491
+        },
+        {
+          "rank": 250,
+          "score": 3297
+        },
+        {
+          "rank": 500,
+          "score": 3019
+        }
+      ],
+      "sampledAt": "2026-09-12T16:29:04.653Z"
+    },
+    {
       "scenario": "Aimerz+ Week #5 - Static Switching",
       "leaderboardId": 38996,
       "total": 49841,
@@ -1840,6 +2416,150 @@
       "sampledAt": "2026-08-30T06:22:49.380Z"
     },
     {
+      "scenario": "Air Angelic Easier",
+      "leaderboardId": 189778,
+      "total": 1638,
+      "points": [
+        {
+          "rank": 1,
+          "score": 944.48
+        },
+        {
+          "rank": 2,
+          "score": 943.02
+        },
+        {
+          "rank": 3,
+          "score": 942.85
+        },
+        {
+          "rank": 5,
+          "score": 942.69
+        },
+        {
+          "rank": 10,
+          "score": 941.44
+        },
+        {
+          "rank": 25,
+          "score": 939.84
+        },
+        {
+          "rank": 50,
+          "score": 939.16
+        },
+        {
+          "rank": 100,
+          "score": 936.93
+        },
+        {
+          "rank": 250,
+          "score": 933.39
+        },
+        {
+          "rank": 500,
+          "score": 928.38
+        }
+      ],
+      "sampledAt": "2026-09-13T03:11:48.804Z"
+    },
+    {
+      "scenario": "Air Angelic rAim Biggest",
+      "leaderboardId": 12233,
+      "total": 798,
+      "points": [
+        {
+          "rank": 1,
+          "score": 941.38
+        },
+        {
+          "rank": 2,
+          "score": 940.72
+        },
+        {
+          "rank": 3,
+          "score": 940.62
+        },
+        {
+          "rank": 5,
+          "score": 940.43
+        },
+        {
+          "rank": 10,
+          "score": 940
+        },
+        {
+          "rank": 25,
+          "score": 937.57
+        },
+        {
+          "rank": 50,
+          "score": 935.69
+        },
+        {
+          "rank": 100,
+          "score": 933.19
+        },
+        {
+          "rank": 250,
+          "score": 928.1
+        },
+        {
+          "rank": 500,
+          "score": 919.42
+        }
+      ],
+      "sampledAt": "2026-09-13T03:11:44.236Z"
+    },
+    {
+      "scenario": "Air Angelic rAim Easy",
+      "leaderboardId": 572,
+      "total": 9913,
+      "points": [
+        {
+          "rank": 1,
+          "score": 938.33
+        },
+        {
+          "rank": 2,
+          "score": 937.36
+        },
+        {
+          "rank": 3,
+          "score": 936.89
+        },
+        {
+          "rank": 5,
+          "score": 936.81
+        },
+        {
+          "rank": 10,
+          "score": 936.26
+        },
+        {
+          "rank": 25,
+          "score": 935
+        },
+        {
+          "rank": 50,
+          "score": 933.51
+        },
+        {
+          "rank": 100,
+          "score": 931.02
+        },
+        {
+          "rank": 250,
+          "score": 927.76
+        },
+        {
+          "rank": 500,
+          "score": 924.3
+        }
+      ],
+      "sampledAt": "2026-09-13T03:11:53.335Z"
+    },
+    {
       "scenario": "Air CELESTIAL",
       "leaderboardId": 1241,
       "total": 12048,
@@ -1886,6 +2606,54 @@
         }
       ],
       "sampledAt": "2026-08-30T06:21:37.500Z"
+    },
+    {
+      "scenario": "Air CELESTIAL No UFO",
+      "leaderboardId": 70970,
+      "total": 2846,
+      "points": [
+        {
+          "rank": 1,
+          "score": 916.92
+        },
+        {
+          "rank": 2,
+          "score": 916.44
+        },
+        {
+          "rank": 3,
+          "score": 912.79
+        },
+        {
+          "rank": 5,
+          "score": 912.4
+        },
+        {
+          "rank": 10,
+          "score": 910.62
+        },
+        {
+          "rank": 25,
+          "score": 907.54
+        },
+        {
+          "rank": 50,
+          "score": 903.65
+        },
+        {
+          "rank": 100,
+          "score": 899.62
+        },
+        {
+          "rank": 250,
+          "score": 889.31
+        },
+        {
+          "rank": 500,
+          "score": 877.36
+        }
+      ],
+      "sampledAt": "2026-09-13T03:12:20.669Z"
     },
     {
       "scenario": "Air CELESTIAL No UFO Easy",
@@ -1982,6 +2750,54 @@
         }
       ],
       "sampledAt": "2026-08-30T06:21:27.904Z"
+    },
+    {
+      "scenario": "Air CELESTIAL No UFO Medium",
+      "leaderboardId": 184763,
+      "total": 15076,
+      "points": [
+        {
+          "rank": 1,
+          "score": 920.35
+        },
+        {
+          "rank": 2,
+          "score": 919.77
+        },
+        {
+          "rank": 3,
+          "score": 919.19
+        },
+        {
+          "rank": 5,
+          "score": 919
+        },
+        {
+          "rank": 10,
+          "score": 918.1
+        },
+        {
+          "rank": 25,
+          "score": 915.8
+        },
+        {
+          "rank": 50,
+          "score": 914.64
+        },
+        {
+          "rank": 100,
+          "score": 913.64
+        },
+        {
+          "rank": 250,
+          "score": 911.72
+        },
+        {
+          "rank": 500,
+          "score": 908.71
+        }
+      ],
+      "sampledAt": "2026-09-13T03:12:16.125Z"
     },
     {
       "scenario": "Air Divine",
@@ -2704,6 +3520,54 @@
       "sampledAt": "2026-09-03T01:18:57.551Z"
     },
     {
+      "scenario": "Bounce 180 Sparky",
+      "leaderboardId": 762,
+      "total": 37947,
+      "points": [
+        {
+          "rank": 1,
+          "score": 154
+        },
+        {
+          "rank": 2,
+          "score": 141
+        },
+        {
+          "rank": 3,
+          "score": 140
+        },
+        {
+          "rank": 5,
+          "score": 138
+        },
+        {
+          "rank": 10,
+          "score": 132
+        },
+        {
+          "rank": 25,
+          "score": 124
+        },
+        {
+          "rank": 50,
+          "score": 120
+        },
+        {
+          "rank": 100,
+          "score": 114
+        },
+        {
+          "rank": 250,
+          "score": 105
+        },
+        {
+          "rank": 500,
+          "score": 98
+        }
+      ],
+      "sampledAt": "2026-09-13T03:10:54.765Z"
+    },
+    {
       "scenario": "Bounce 180 Tracking",
       "leaderboardId": 122,
       "total": 128448,
@@ -2798,6 +3662,102 @@
         }
       ],
       "sampledAt": "2026-09-02T21:06:07.026Z"
+    },
+    {
+      "scenario": "BounceClick SuperbAim",
+      "leaderboardId": 35900,
+      "total": 7458,
+      "points": [
+        {
+          "rank": 1,
+          "score": 107
+        },
+        {
+          "rank": 2,
+          "score": 103
+        },
+        {
+          "rank": 3,
+          "score": 99
+        },
+        {
+          "rank": 5,
+          "score": 99
+        },
+        {
+          "rank": 10,
+          "score": 96
+        },
+        {
+          "rank": 25,
+          "score": 88
+        },
+        {
+          "rank": 50,
+          "score": 81
+        },
+        {
+          "rank": 100,
+          "score": 73
+        },
+        {
+          "rank": 250,
+          "score": 63
+        },
+        {
+          "rank": 500,
+          "score": 52
+        }
+      ],
+      "sampledAt": "2026-09-13T03:10:50.205Z"
+    },
+    {
+      "scenario": "BounceClick SuperbAim Easy",
+      "leaderboardId": 35901,
+      "total": 5826,
+      "points": [
+        {
+          "rank": 1,
+          "score": 122
+        },
+        {
+          "rank": 2,
+          "score": 121
+        },
+        {
+          "rank": 3,
+          "score": 118
+        },
+        {
+          "rank": 5,
+          "score": 112
+        },
+        {
+          "rank": 10,
+          "score": 109
+        },
+        {
+          "rank": 25,
+          "score": 100
+        },
+        {
+          "rank": 50,
+          "score": 95
+        },
+        {
+          "rank": 100,
+          "score": 91
+        },
+        {
+          "rank": 250,
+          "score": 85
+        },
+        {
+          "rank": 500,
+          "score": 76
+        }
+      ],
+      "sampledAt": "2026-09-13T03:10:45.685Z"
     },
     {
       "scenario": "cA 7ts pressure",
@@ -3134,6 +4094,198 @@
         }
       ],
       "sampledAt": "2026-09-03T01:19:26.817Z"
+    },
+    {
+      "scenario": "CB AerialClick Easy",
+      "leaderboardId": 93221,
+      "total": 7402,
+      "points": [
+        {
+          "rank": 1,
+          "score": 1275
+        },
+        {
+          "rank": 2,
+          "score": 1162.5
+        },
+        {
+          "rank": 3,
+          "score": 1145
+        },
+        {
+          "rank": 5,
+          "score": 1085
+        },
+        {
+          "rank": 10,
+          "score": 1032.5
+        },
+        {
+          "rank": 25,
+          "score": 987.5
+        },
+        {
+          "rank": 50,
+          "score": 930
+        },
+        {
+          "rank": 100,
+          "score": 872.5
+        },
+        {
+          "rank": 250,
+          "score": 800
+        },
+        {
+          "rank": 500,
+          "score": 740
+        }
+      ],
+      "sampledAt": "2026-09-12T16:28:16.309Z"
+    },
+    {
+      "scenario": "CB JumpSwitch Easy",
+      "leaderboardId": 93212,
+      "total": 3509,
+      "points": [
+        {
+          "rank": 1,
+          "score": 804.68
+        },
+        {
+          "rank": 2,
+          "score": 800.01
+        },
+        {
+          "rank": 3,
+          "score": 786.01
+        },
+        {
+          "rank": 5,
+          "score": 747.68
+        },
+        {
+          "rank": 10,
+          "score": 710
+        },
+        {
+          "rank": 25,
+          "score": 678
+        },
+        {
+          "rank": 50,
+          "score": 630.01
+        },
+        {
+          "rank": 100,
+          "score": 603.67
+        },
+        {
+          "rank": 250,
+          "score": 574.67
+        },
+        {
+          "rank": 500,
+          "score": 519.67
+        }
+      ],
+      "sampledAt": "2026-09-12T16:30:02.752Z"
+    },
+    {
+      "scenario": "CB SmoothSwitch Easy",
+      "leaderboardId": 93247,
+      "total": 5797,
+      "points": [
+        {
+          "rank": 1,
+          "score": 712.75
+        },
+        {
+          "rank": 2,
+          "score": 680.25
+        },
+        {
+          "rank": 3,
+          "score": 679.5
+        },
+        {
+          "rank": 5,
+          "score": 669.5
+        },
+        {
+          "rank": 10,
+          "score": 650
+        },
+        {
+          "rank": 25,
+          "score": 624
+        },
+        {
+          "rank": 50,
+          "score": 600.75
+        },
+        {
+          "rank": 100,
+          "score": 571.75
+        },
+        {
+          "rank": 250,
+          "score": 543.25
+        },
+        {
+          "rank": 500,
+          "score": 525.5
+        }
+      ],
+      "sampledAt": "2026-09-12T16:29:43.487Z"
+    },
+    {
+      "scenario": "CB StrafeTrack Easy",
+      "leaderboardId": 93207,
+      "total": 6100,
+      "points": [
+        {
+          "rank": 1,
+          "score": 4309
+        },
+        {
+          "rank": 2,
+          "score": 4057
+        },
+        {
+          "rank": 3,
+          "score": 3992
+        },
+        {
+          "rank": 5,
+          "score": 3898
+        },
+        {
+          "rank": 10,
+          "score": 3833
+        },
+        {
+          "rank": 25,
+          "score": 3577
+        },
+        {
+          "rank": 50,
+          "score": 3411
+        },
+        {
+          "rank": 100,
+          "score": 3212
+        },
+        {
+          "rank": 250,
+          "score": 3005
+        },
+        {
+          "rank": 500,
+          "score": 2836
+        }
+      ],
+      "sampledAt": "2026-09-12T16:28:54.981Z"
     },
     {
       "scenario": "ClickTrack 3t",
@@ -4768,6 +5920,102 @@
       "sampledAt": "2026-08-30T06:21:56.733Z"
     },
     {
+      "scenario": "Controlsphere rAim Easy",
+      "leaderboardId": 5137,
+      "total": 61403,
+      "points": [
+        {
+          "rank": 1,
+          "score": 16719
+        },
+        {
+          "rank": 2,
+          "score": 16695
+        },
+        {
+          "rank": 3,
+          "score": 16653
+        },
+        {
+          "rank": 5,
+          "score": 16446
+        },
+        {
+          "rank": 10,
+          "score": 16134
+        },
+        {
+          "rank": 25,
+          "score": 15888
+        },
+        {
+          "rank": 50,
+          "score": 15678
+        },
+        {
+          "rank": 100,
+          "score": 15450
+        },
+        {
+          "rank": 250,
+          "score": 15180
+        },
+        {
+          "rank": 500,
+          "score": 14802
+        }
+      ],
+      "sampledAt": "2026-09-13T03:11:39.691Z"
+    },
+    {
+      "scenario": "Controlsphere rAim Easy 90%",
+      "leaderboardId": 83485,
+      "total": 84139,
+      "points": [
+        {
+          "rank": 1,
+          "score": 16956
+        },
+        {
+          "rank": 2,
+          "score": 16884
+        },
+        {
+          "rank": 3,
+          "score": 16860
+        },
+        {
+          "rank": 5,
+          "score": 16587
+        },
+        {
+          "rank": 10,
+          "score": 16281
+        },
+        {
+          "rank": 25,
+          "score": 15879
+        },
+        {
+          "rank": 50,
+          "score": 15609
+        },
+        {
+          "rank": 100,
+          "score": 15306
+        },
+        {
+          "rank": 250,
+          "score": 14817
+        },
+        {
+          "rank": 500,
+          "score": 14343
+        }
+      ],
+      "sampledAt": "2026-09-13T03:11:35.151Z"
+    },
+    {
       "scenario": "Controlsphere Viscose Entry",
       "leaderboardId": 190002,
       "total": 3621,
@@ -5376,6 +6624,54 @@
       "sampledAt": "2026-09-03T01:26:44.518Z"
     },
     {
+      "scenario": "DotTS",
+      "leaderboardId": 75317,
+      "total": 4988,
+      "points": [
+        {
+          "rank": 1,
+          "score": 3200
+        },
+        {
+          "rank": 2,
+          "score": 3150
+        },
+        {
+          "rank": 3,
+          "score": 3050
+        },
+        {
+          "rank": 5,
+          "score": 3041
+        },
+        {
+          "rank": 10,
+          "score": 3020
+        },
+        {
+          "rank": 25,
+          "score": 2950
+        },
+        {
+          "rank": 50,
+          "score": 2850
+        },
+        {
+          "rank": 100,
+          "score": 2761
+        },
+        {
+          "rank": 250,
+          "score": 2650
+        },
+        {
+          "rank": 500,
+          "score": 2560
+        }
+      ],
+      "sampledAt": "2026-09-13T03:12:33.818Z"
+    },
+    {
       "scenario": "DotTS 30% Larger",
       "leaderboardId": 75698,
       "total": 17483,
@@ -5422,6 +6718,54 @@
         }
       ],
       "sampledAt": "2026-09-03T01:23:42.936Z"
+    },
+    {
+      "scenario": "DotTS Entry",
+      "leaderboardId": 111232,
+      "total": 4301,
+      "points": [
+        {
+          "rank": 1,
+          "score": 3498
+        },
+        {
+          "rank": 2,
+          "score": 3475
+        },
+        {
+          "rank": 3,
+          "score": 3401
+        },
+        {
+          "rank": 5,
+          "score": 3300
+        },
+        {
+          "rank": 10,
+          "score": 3275
+        },
+        {
+          "rank": 25,
+          "score": 3200
+        },
+        {
+          "rank": 50,
+          "score": 3050
+        },
+        {
+          "rank": 100,
+          "score": 2925
+        },
+        {
+          "rank": 250,
+          "score": 2725
+        },
+        {
+          "rank": 500,
+          "score": 2475
+        }
+      ],
+      "sampledAt": "2026-09-13T03:12:29.283Z"
     },
     {
       "scenario": "eth Pasu Micro Easier",
@@ -6144,6 +7488,198 @@
       "sampledAt": "2026-08-30T06:24:30.800Z"
     },
     {
+      "scenario": "Leapstrafes Control Medium",
+      "leaderboardId": 63065,
+      "total": 3912,
+      "points": [
+        {
+          "rank": 1,
+          "score": 20052
+        },
+        {
+          "rank": 2,
+          "score": 19206
+        },
+        {
+          "rank": 3,
+          "score": 19116
+        },
+        {
+          "rank": 5,
+          "score": 18954
+        },
+        {
+          "rank": 10,
+          "score": 18414
+        },
+        {
+          "rank": 25,
+          "score": 18054
+        },
+        {
+          "rank": 50,
+          "score": 17424
+        },
+        {
+          "rank": 100,
+          "score": 16344
+        },
+        {
+          "rank": 250,
+          "score": 15228
+        },
+        {
+          "rank": 500,
+          "score": 14634
+        }
+      ],
+      "sampledAt": "2026-09-13T03:12:02.439Z"
+    },
+    {
+      "scenario": "Leapstrafes Control wobin",
+      "leaderboardId": 184561,
+      "total": 19712,
+      "points": [
+        {
+          "rank": 1,
+          "score": 5181
+        },
+        {
+          "rank": 2,
+          "score": 5038
+        },
+        {
+          "rank": 3,
+          "score": 5030
+        },
+        {
+          "rank": 5,
+          "score": 4923
+        },
+        {
+          "rank": 10,
+          "score": 4838
+        },
+        {
+          "rank": 25,
+          "score": 4620
+        },
+        {
+          "rank": 50,
+          "score": 4514
+        },
+        {
+          "rank": 100,
+          "score": 4441
+        },
+        {
+          "rank": 250,
+          "score": 4351
+        },
+        {
+          "rank": 500,
+          "score": 4235
+        }
+      ],
+      "sampledAt": "2026-09-13T03:12:06.985Z"
+    },
+    {
+      "scenario": "Leapstrafes Control wobin Easier",
+      "leaderboardId": 185344,
+      "total": 30868,
+      "points": [
+        {
+          "rank": 1,
+          "score": 5554
+        },
+        {
+          "rank": 2,
+          "score": 5543
+        },
+        {
+          "rank": 3,
+          "score": 5529
+        },
+        {
+          "rank": 5,
+          "score": 5331
+        },
+        {
+          "rank": 10,
+          "score": 5240
+        },
+        {
+          "rank": 25,
+          "score": 5068
+        },
+        {
+          "rank": 50,
+          "score": 4944
+        },
+        {
+          "rank": 100,
+          "score": 4818
+        },
+        {
+          "rank": 250,
+          "score": 4621
+        },
+        {
+          "rank": 500,
+          "score": 4418
+        }
+      ],
+      "sampledAt": "2026-09-13T03:11:57.903Z"
+    },
+    {
+      "scenario": "Leapstrafes Control wobin Hard",
+      "leaderboardId": 184845,
+      "total": 2893,
+      "points": [
+        {
+          "rank": 1,
+          "score": 4802
+        },
+        {
+          "rank": 2,
+          "score": 4681
+        },
+        {
+          "rank": 3,
+          "score": 4362
+        },
+        {
+          "rank": 5,
+          "score": 4328
+        },
+        {
+          "rank": 10,
+          "score": 4286
+        },
+        {
+          "rank": 25,
+          "score": 4234
+        },
+        {
+          "rank": 50,
+          "score": 4092
+        },
+        {
+          "rank": 100,
+          "score": 3906
+        },
+        {
+          "rank": 250,
+          "score": 3650
+        },
+        {
+          "rank": 500,
+          "score": 3357
+        }
+      ],
+      "sampledAt": "2026-09-13T03:12:11.593Z"
+    },
+    {
       "scenario": "MFSI rAim",
       "leaderboardId": 5075,
       "total": 21435,
@@ -6526,6 +8062,294 @@
         }
       ],
       "sampledAt": "2026-09-03T01:17:53.665Z"
+    },
+    {
+      "scenario": "Pasu SuperbAim",
+      "leaderboardId": 35929,
+      "total": 3218,
+      "points": [
+        {
+          "rank": 1,
+          "score": 134
+        },
+        {
+          "rank": 2,
+          "score": 114
+        },
+        {
+          "rank": 3,
+          "score": 114
+        },
+        {
+          "rank": 5,
+          "score": 111
+        },
+        {
+          "rank": 10,
+          "score": 107
+        },
+        {
+          "rank": 25,
+          "score": 100
+        },
+        {
+          "rank": 50,
+          "score": 95
+        },
+        {
+          "rank": 100,
+          "score": 87
+        },
+        {
+          "rank": 250,
+          "score": 78
+        },
+        {
+          "rank": 500,
+          "score": 67
+        }
+      ],
+      "sampledAt": "2026-09-13T03:10:41.154Z"
+    },
+    {
+      "scenario": "Pasu SuperbAim Easy",
+      "leaderboardId": 35298,
+      "total": 6553,
+      "points": [
+        {
+          "rank": 1,
+          "score": 163
+        },
+        {
+          "rank": 2,
+          "score": 129
+        },
+        {
+          "rank": 3,
+          "score": 127
+        },
+        {
+          "rank": 5,
+          "score": 125
+        },
+        {
+          "rank": 10,
+          "score": 119
+        },
+        {
+          "rank": 25,
+          "score": 113
+        },
+        {
+          "rank": 50,
+          "score": 106
+        },
+        {
+          "rank": 100,
+          "score": 100
+        },
+        {
+          "rank": 250,
+          "score": 95
+        },
+        {
+          "rank": 500,
+          "score": 87
+        }
+      ],
+      "sampledAt": "2026-09-13T03:10:36.628Z"
+    },
+    {
+      "scenario": "Pasu Switch Pure",
+      "leaderboardId": 13227,
+      "total": 2963,
+      "points": [
+        {
+          "rank": 1,
+          "score": 95.7
+        },
+        {
+          "rank": 2,
+          "score": 93.8
+        },
+        {
+          "rank": 3,
+          "score": 93
+        },
+        {
+          "rank": 5,
+          "score": 91
+        },
+        {
+          "rank": 10,
+          "score": 87
+        },
+        {
+          "rank": 25,
+          "score": 83
+        },
+        {
+          "rank": 50,
+          "score": 78.4
+        },
+        {
+          "rank": 100,
+          "score": 73.7
+        },
+        {
+          "rank": 250,
+          "score": 68
+        },
+        {
+          "rank": 500,
+          "score": 62.2
+        }
+      ],
+      "sampledAt": "2026-09-13T03:12:38.357Z"
+    },
+    {
+      "scenario": "Pasu Switch Wide",
+      "leaderboardId": 48886,
+      "total": 5859,
+      "points": [
+        {
+          "rank": 1,
+          "score": 830
+        },
+        {
+          "rank": 2,
+          "score": 710
+        },
+        {
+          "rank": 3,
+          "score": 700
+        },
+        {
+          "rank": 5,
+          "score": 690
+        },
+        {
+          "rank": 10,
+          "score": 670
+        },
+        {
+          "rank": 25,
+          "score": 630
+        },
+        {
+          "rank": 50,
+          "score": 590
+        },
+        {
+          "rank": 100,
+          "score": 560
+        },
+        {
+          "rank": 250,
+          "score": 540
+        },
+        {
+          "rank": 500,
+          "score": 490
+        }
+      ],
+      "sampledAt": "2026-09-13T03:12:47.473Z"
+    },
+    {
+      "scenario": "Pasu Switch Wide Regen",
+      "leaderboardId": 48884,
+      "total": 1585,
+      "points": [
+        {
+          "rank": 1,
+          "score": 900
+        },
+        {
+          "rank": 2,
+          "score": 870
+        },
+        {
+          "rank": 3,
+          "score": 870
+        },
+        {
+          "rank": 5,
+          "score": 850
+        },
+        {
+          "rank": 10,
+          "score": 800
+        },
+        {
+          "rank": 25,
+          "score": 760
+        },
+        {
+          "rank": 50,
+          "score": 710
+        },
+        {
+          "rank": 100,
+          "score": 670
+        },
+        {
+          "rank": 250,
+          "score": 600
+        },
+        {
+          "rank": 500,
+          "score": 530
+        }
+      ],
+      "sampledAt": "2026-09-13T03:12:52.021Z"
+    },
+    {
+      "scenario": "Pasu Viscose Entry",
+      "leaderboardId": 192535,
+      "total": 3130,
+      "points": [
+        {
+          "rank": 1,
+          "score": 2301.34
+        },
+        {
+          "rank": 2,
+          "score": 2216.34
+        },
+        {
+          "rank": 3,
+          "score": 2152.54
+        },
+        {
+          "rank": 5,
+          "score": 2078.7
+        },
+        {
+          "rank": 10,
+          "score": 1953.79
+        },
+        {
+          "rank": 25,
+          "score": 1780.33
+        },
+        {
+          "rank": 50,
+          "score": 1670.62
+        },
+        {
+          "rank": 100,
+          "score": 1552.92
+        },
+        {
+          "rank": 250,
+          "score": 1366.74
+        },
+        {
+          "rank": 500,
+          "score": 1201.38
+        }
+      ],
+      "sampledAt": "2026-09-13T03:10:32.097Z"
     },
     {
       "scenario": "Pasu Voltaic",
@@ -7248,6 +9072,54 @@
       "sampledAt": "2026-09-03T01:18:28.075Z"
     },
     {
+      "scenario": "Popcorn Goated rAim easy",
+      "leaderboardId": 63202,
+      "total": 2454,
+      "points": [
+        {
+          "rank": 1,
+          "score": 770
+        },
+        {
+          "rank": 2,
+          "score": 760
+        },
+        {
+          "rank": 3,
+          "score": 760
+        },
+        {
+          "rank": 5,
+          "score": 740
+        },
+        {
+          "rank": 10,
+          "score": 730
+        },
+        {
+          "rank": 25,
+          "score": 680
+        },
+        {
+          "rank": 50,
+          "score": 640
+        },
+        {
+          "rank": 100,
+          "score": 610
+        },
+        {
+          "rank": 250,
+          "score": 560
+        },
+        {
+          "rank": 500,
+          "score": 500
+        }
+      ],
+      "sampledAt": "2026-09-13T03:10:59.291Z"
+    },
+    {
       "scenario": "Popcorn MV Advanced",
       "leaderboardId": 76966,
       "total": 4511,
@@ -7440,6 +9312,146 @@
       "sampledAt": "2026-09-03T01:18:38.187Z"
     },
     {
+      "scenario": "Popcorn rAim Easy",
+      "leaderboardId": 607,
+      "total": 13449,
+      "points": [
+        {
+          "rank": 1,
+          "score": 820
+        },
+        {
+          "rank": 2,
+          "score": 650
+        },
+        {
+          "rank": 3,
+          "score": 650
+        },
+        {
+          "rank": 5,
+          "score": 630
+        },
+        {
+          "rank": 10,
+          "score": 580
+        },
+        {
+          "rank": 25,
+          "score": 540
+        },
+        {
+          "rank": 50,
+          "score": 510
+        },
+        {
+          "rank": 100,
+          "score": 480
+        },
+        {
+          "rank": 250,
+          "score": 430
+        },
+        {
+          "rank": 500,
+          "score": 390
+        }
+      ],
+      "sampledAt": "2026-09-13T03:11:03.830Z"
+    },
+    {
+      "scenario": "Popcorn Sparky",
+      "leaderboardId": 502,
+      "total": 22483,
+      "points": [
+        {
+          "rank": 1,
+          "score": 600
+        },
+        {
+          "rank": 2,
+          "score": 560
+        },
+        {
+          "rank": 3,
+          "score": 470
+        },
+        {
+          "rank": 5,
+          "score": 450
+        },
+        {
+          "rank": 10,
+          "score": 420
+        },
+        {
+          "rank": 25,
+          "score": 400
+        },
+        {
+          "rank": 50,
+          "score": 370
+        },
+        {
+          "rank": 100,
+          "score": 340
+        },
+        {
+          "rank": 250,
+          "score": 310
+        },
+        {
+          "rank": 500,
+          "score": 280
+        }
+      ],
+      "sampledAt": "2026-09-13T03:11:08.368Z"
+    },
+    {
+      "scenario": "PreciseTrack Avasive Easier",
+      "leaderboardId": 203404,
+      "total": 293,
+      "points": [
+        {
+          "rank": 1,
+          "score": 5908
+        },
+        {
+          "rank": 2,
+          "score": 5874
+        },
+        {
+          "rank": 3,
+          "score": 5784
+        },
+        {
+          "rank": 5,
+          "score": 5775
+        },
+        {
+          "rank": 10,
+          "score": 5696
+        },
+        {
+          "rank": 25,
+          "score": 5503
+        },
+        {
+          "rank": 50,
+          "score": 5267
+        },
+        {
+          "rank": 100,
+          "score": 4739
+        },
+        {
+          "rank": 250,
+          "score": 3519
+        }
+      ],
+      "sampledAt": "2026-09-13T03:11:30.655Z"
+    },
+    {
       "scenario": "psalmTS angelic click",
       "leaderboardId": 578,
       "total": 22207,
@@ -7582,6 +9594,54 @@
         }
       ],
       "sampledAt": "2026-09-03T01:23:57.766Z"
+    },
+    {
+      "scenario": "PureG Pasu Switch",
+      "leaderboardId": 28397,
+      "total": 5256,
+      "points": [
+        {
+          "rank": 1,
+          "score": 97.71
+        },
+        {
+          "rank": 2,
+          "score": 97.24
+        },
+        {
+          "rank": 3,
+          "score": 96.08
+        },
+        {
+          "rank": 5,
+          "score": 95.23
+        },
+        {
+          "rank": 10,
+          "score": 90.43
+        },
+        {
+          "rank": 25,
+          "score": 86.42
+        },
+        {
+          "rank": 50,
+          "score": 82.78
+        },
+        {
+          "rank": 100,
+          "score": 78.84
+        },
+        {
+          "rank": 250,
+          "score": 73.43
+        },
+        {
+          "rank": 500,
+          "score": 68.13
+        }
+      ],
+      "sampledAt": "2026-09-13T03:12:42.936Z"
     },
     {
       "scenario": "RawControlSphere",
@@ -7960,6 +10020,198 @@
       "sampledAt": "2026-08-30T06:22:44.638Z"
     },
     {
+      "scenario": "SmoothBot Invincible Goated",
+      "leaderboardId": 348,
+      "total": 78763,
+      "points": [
+        {
+          "rank": 1,
+          "score": 6288
+        },
+        {
+          "rank": 2,
+          "score": 6162
+        },
+        {
+          "rank": 3,
+          "score": 6024
+        },
+        {
+          "rank": 5,
+          "score": 5790
+        },
+        {
+          "rank": 10,
+          "score": 5712
+        },
+        {
+          "rank": 25,
+          "score": 5514
+        },
+        {
+          "rank": 50,
+          "score": 5340
+        },
+        {
+          "rank": 100,
+          "score": 5226
+        },
+        {
+          "rank": 250,
+          "score": 5064
+        },
+        {
+          "rank": 500,
+          "score": 4866
+        }
+      ],
+      "sampledAt": "2026-09-13T03:11:22.041Z"
+    },
+    {
+      "scenario": "SmoothBot Invincible Goated 75%",
+      "leaderboardId": 75962,
+      "total": 79191,
+      "points": [
+        {
+          "rank": 1,
+          "score": 5256
+        },
+        {
+          "rank": 2,
+          "score": 5220
+        },
+        {
+          "rank": 3,
+          "score": 5214
+        },
+        {
+          "rank": 5,
+          "score": 5196
+        },
+        {
+          "rank": 10,
+          "score": 5064
+        },
+        {
+          "rank": 25,
+          "score": 4932
+        },
+        {
+          "rank": 50,
+          "score": 4824
+        },
+        {
+          "rank": 100,
+          "score": 4728
+        },
+        {
+          "rank": 250,
+          "score": 4554
+        },
+        {
+          "rank": 500,
+          "score": 4416
+        }
+      ],
+      "sampledAt": "2026-09-13T03:11:12.952Z"
+    },
+    {
+      "scenario": "Smoothbot Invincible Goated Easy",
+      "leaderboardId": 955,
+      "total": 38360,
+      "points": [
+        {
+          "rank": 1,
+          "score": 6894
+        },
+        {
+          "rank": 2,
+          "score": 6534
+        },
+        {
+          "rank": 3,
+          "score": 6384
+        },
+        {
+          "rank": 5,
+          "score": 6306
+        },
+        {
+          "rank": 10,
+          "score": 6210
+        },
+        {
+          "rank": 25,
+          "score": 5958
+        },
+        {
+          "rank": 50,
+          "score": 5706
+        },
+        {
+          "rank": 100,
+          "score": 5496
+        },
+        {
+          "rank": 250,
+          "score": 5178
+        },
+        {
+          "rank": 500,
+          "score": 4950
+        }
+      ],
+      "sampledAt": "2026-09-13T03:11:17.492Z"
+    },
+    {
+      "scenario": "SmoothBot Invincible Goated Smaller",
+      "leaderboardId": 815,
+      "total": 9690,
+      "points": [
+        {
+          "rank": 1,
+          "score": 5058
+        },
+        {
+          "rank": 2,
+          "score": 4752
+        },
+        {
+          "rank": 3,
+          "score": 4728
+        },
+        {
+          "rank": 5,
+          "score": 4710
+        },
+        {
+          "rank": 10,
+          "score": 4566
+        },
+        {
+          "rank": 25,
+          "score": 4470
+        },
+        {
+          "rank": 50,
+          "score": 4248
+        },
+        {
+          "rank": 100,
+          "score": 4026
+        },
+        {
+          "rank": 250,
+          "score": 3696
+        },
+        {
+          "rank": 500,
+          "score": 3456
+        }
+      ],
+      "sampledAt": "2026-09-13T03:11:26.588Z"
+    },
+    {
       "scenario": "Smoothbot Pauer",
       "leaderboardId": 724,
       "total": 22985,
@@ -8294,6 +10546,150 @@
         }
       ],
       "sampledAt": "2026-09-02T21:07:29.314Z"
+    },
+    {
+      "scenario": "Smoothbot TS Voltaic",
+      "leaderboardId": 596,
+      "total": 19423,
+      "points": [
+        {
+          "rank": 1,
+          "score": 76.04
+        },
+        {
+          "rank": 2,
+          "score": 75.9
+        },
+        {
+          "rank": 3,
+          "score": 74.44
+        },
+        {
+          "rank": 5,
+          "score": 73.38
+        },
+        {
+          "rank": 10,
+          "score": 72.21
+        },
+        {
+          "rank": 25,
+          "score": 71.72
+        },
+        {
+          "rank": 50,
+          "score": 70.98
+        },
+        {
+          "rank": 100,
+          "score": 68.15
+        },
+        {
+          "rank": 250,
+          "score": 64.77
+        },
+        {
+          "rank": 500,
+          "score": 61.17
+        }
+      ],
+      "sampledAt": "2026-09-12T16:29:53.064Z"
+    },
+    {
+      "scenario": "Smoothbot TS Voltaic Easy",
+      "leaderboardId": 868,
+      "total": 49445,
+      "points": [
+        {
+          "rank": 1,
+          "score": 77.07
+        },
+        {
+          "rank": 2,
+          "score": 75.1
+        },
+        {
+          "rank": 3,
+          "score": 72.9
+        },
+        {
+          "rank": 5,
+          "score": 70.95
+        },
+        {
+          "rank": 10,
+          "score": 69.89
+        },
+        {
+          "rank": 25,
+          "score": 67.63
+        },
+        {
+          "rank": 50,
+          "score": 65.49
+        },
+        {
+          "rank": 100,
+          "score": 63.11
+        },
+        {
+          "rank": 250,
+          "score": 60.05
+        },
+        {
+          "rank": 500,
+          "score": 58.05
+        }
+      ],
+      "sampledAt": "2026-09-12T16:29:48.269Z"
+    },
+    {
+      "scenario": "Smoothbot TS Voltaic Regen Hasin",
+      "leaderboardId": 15084,
+      "total": 7120,
+      "points": [
+        {
+          "rank": 1,
+          "score": 60
+        },
+        {
+          "rank": 2,
+          "score": 58
+        },
+        {
+          "rank": 3,
+          "score": 56
+        },
+        {
+          "rank": 5,
+          "score": 55
+        },
+        {
+          "rank": 10,
+          "score": 53
+        },
+        {
+          "rank": 25,
+          "score": 50
+        },
+        {
+          "rank": 50,
+          "score": 48
+        },
+        {
+          "rank": 100,
+          "score": 45
+        },
+        {
+          "rank": 250,
+          "score": 41
+        },
+        {
+          "rank": 500,
+          "score": 38
+        }
+      ],
+      "sampledAt": "2026-09-12T16:29:57.917Z"
     },
     {
       "scenario": "Smoothsphere",
@@ -8728,54 +11124,6 @@
       "sampledAt": "2026-09-03T01:24:47.180Z"
     },
     {
-      "scenario": "tamTargetSwitch Control Hard",
-      "leaderboardId": 757,
-      "total": 60383,
-      "points": [
-        {
-          "rank": 1,
-          "score": 53
-        },
-        {
-          "rank": 2,
-          "score": 53
-        },
-        {
-          "rank": 3,
-          "score": 52
-        },
-        {
-          "rank": 5,
-          "score": 52
-        },
-        {
-          "rank": 10,
-          "score": 50
-        },
-        {
-          "rank": 25,
-          "score": 48
-        },
-        {
-          "rank": 50,
-          "score": 46
-        },
-        {
-          "rank": 100,
-          "score": 44
-        },
-        {
-          "rank": 250,
-          "score": 42
-        },
-        {
-          "rank": 500,
-          "score": 40
-        }
-      ],
-      "sampledAt": "2026-08-30T16:00:09.082Z"
-    },
-    {
       "scenario": "tamTargetSwitch Smooth",
       "leaderboardId": 56,
       "total": 51563,
@@ -9112,6 +11460,150 @@
       "sampledAt": "2026-08-30T06:23:08.557Z"
     },
     {
+      "scenario": "voxTargetSwitch 2",
+      "leaderboardId": 551,
+      "total": 86820,
+      "points": [
+        {
+          "rank": 1,
+          "score": 161.3
+        },
+        {
+          "rank": 2,
+          "score": 160.09
+        },
+        {
+          "rank": 3,
+          "score": 159
+        },
+        {
+          "rank": 5,
+          "score": 157.7
+        },
+        {
+          "rank": 10,
+          "score": 154.09
+        },
+        {
+          "rank": 25,
+          "score": 148
+        },
+        {
+          "rank": 50,
+          "score": 144
+        },
+        {
+          "rank": 100,
+          "score": 139.89
+        },
+        {
+          "rank": 250,
+          "score": 136.84
+        },
+        {
+          "rank": 500,
+          "score": 133.39
+        }
+      ],
+      "sampledAt": "2026-09-12T16:29:14.408Z"
+    },
+    {
+      "scenario": "voxTargetSwitch 2 10% Smaller",
+      "leaderboardId": 185192,
+      "total": 2142,
+      "points": [
+        {
+          "rank": 1,
+          "score": 155.14
+        },
+        {
+          "rank": 2,
+          "score": 151.09
+        },
+        {
+          "rank": 3,
+          "score": 151
+        },
+        {
+          "rank": 5,
+          "score": 148.39
+        },
+        {
+          "rank": 10,
+          "score": 141
+        },
+        {
+          "rank": 25,
+          "score": 138.55
+        },
+        {
+          "rank": 50,
+          "score": 133
+        },
+        {
+          "rank": 100,
+          "score": 129
+        },
+        {
+          "rank": 250,
+          "score": 124
+        },
+        {
+          "rank": 500,
+          "score": 118
+        }
+      ],
+      "sampledAt": "2026-09-12T16:29:19.313Z"
+    },
+    {
+      "scenario": "voxTargetSwitch 2 20% Smaller",
+      "leaderboardId": 89093,
+      "total": 6221,
+      "points": [
+        {
+          "rank": 1,
+          "score": 145.05
+        },
+        {
+          "rank": 2,
+          "score": 142.5
+        },
+        {
+          "rank": 3,
+          "score": 141.8
+        },
+        {
+          "rank": 5,
+          "score": 141
+        },
+        {
+          "rank": 10,
+          "score": 137
+        },
+        {
+          "rank": 25,
+          "score": 133.8
+        },
+        {
+          "rank": 50,
+          "score": 129.34
+        },
+        {
+          "rank": 100,
+          "score": 125.5
+        },
+        {
+          "rank": 250,
+          "score": 119.85
+        },
+        {
+          "rank": 500,
+          "score": 115.5
+        }
+      ],
+      "sampledAt": "2026-09-12T16:29:24.231Z"
+    },
+    {
       "scenario": "voxTargetSwitch 2 Large",
       "leaderboardId": 84880,
       "total": 73169,
@@ -9398,102 +11890,6 @@
         }
       ],
       "sampledAt": "2026-09-03T01:24:27.215Z"
-    },
-    {
-      "scenario": "voxTS rAim",
-      "leaderboardId": 528,
-      "total": 16872,
-      "points": [
-        {
-          "rank": 1,
-          "score": 137
-        },
-        {
-          "rank": 2,
-          "score": 136.14
-        },
-        {
-          "rank": 3,
-          "score": 136
-        },
-        {
-          "rank": 5,
-          "score": 132.09
-        },
-        {
-          "rank": 10,
-          "score": 129.14
-        },
-        {
-          "rank": 25,
-          "score": 123
-        },
-        {
-          "rank": 50,
-          "score": 119.14
-        },
-        {
-          "rank": 100,
-          "score": 115.75
-        },
-        {
-          "rank": 250,
-          "score": 109.25
-        },
-        {
-          "rank": 500,
-          "score": 105
-        }
-      ],
-      "sampledAt": "2026-09-02T21:06:36.145Z"
-    },
-    {
-      "scenario": "voxTS Viscose Varied",
-      "leaderboardId": 417,
-      "total": 269052,
-      "points": [
-        {
-          "rank": 1,
-          "score": 157.7
-        },
-        {
-          "rank": 2,
-          "score": 153.5
-        },
-        {
-          "rank": 3,
-          "score": 153
-        },
-        {
-          "rank": 5,
-          "score": 152
-        },
-        {
-          "rank": 10,
-          "score": 146.75
-        },
-        {
-          "rank": 25,
-          "score": 142.84
-        },
-        {
-          "rank": 50,
-          "score": 138
-        },
-        {
-          "rank": 100,
-          "score": 134.45
-        },
-        {
-          "rank": 250,
-          "score": 129.89
-        },
-        {
-          "rank": 500,
-          "score": 126
-        }
-      ],
-      "sampledAt": "2026-08-30T06:23:13.325Z"
     },
     {
       "scenario": "VT 1w5ts Rasp Intermediate",
@@ -14328,6 +16724,198 @@
       "sampledAt": "2026-08-30T06:22:06.294Z"
     },
     {
+      "scenario": "Whisphere Extra Small & Slow",
+      "leaderboardId": 34968,
+      "total": 5749,
+      "points": [
+        {
+          "rank": 1,
+          "score": 17370
+        },
+        {
+          "rank": 2,
+          "score": 17260
+        },
+        {
+          "rank": 3,
+          "score": 16570
+        },
+        {
+          "rank": 5,
+          "score": 16080
+        },
+        {
+          "rank": 10,
+          "score": 15210
+        },
+        {
+          "rank": 25,
+          "score": 14510
+        },
+        {
+          "rank": 50,
+          "score": 13490
+        },
+        {
+          "rank": 100,
+          "score": 12600
+        },
+        {
+          "rank": 250,
+          "score": 10970
+        },
+        {
+          "rank": 500,
+          "score": 9850
+        }
+      ],
+      "sampledAt": "2026-09-12T16:28:50.181Z"
+    },
+    {
+      "scenario": "Whisphere Small & Slow",
+      "leaderboardId": 34966,
+      "total": 19694,
+      "points": [
+        {
+          "rank": 1,
+          "score": 23180
+        },
+        {
+          "rank": 2,
+          "score": 22780
+        },
+        {
+          "rank": 3,
+          "score": 22540
+        },
+        {
+          "rank": 5,
+          "score": 21600
+        },
+        {
+          "rank": 10,
+          "score": 21430
+        },
+        {
+          "rank": 25,
+          "score": 20640
+        },
+        {
+          "rank": 50,
+          "score": 19730
+        },
+        {
+          "rank": 100,
+          "score": 18780
+        },
+        {
+          "rank": 250,
+          "score": 17360
+        },
+        {
+          "rank": 500,
+          "score": 16310
+        }
+      ],
+      "sampledAt": "2026-09-12T16:28:45.326Z"
+    },
+    {
+      "scenario": "Whisphere Small & Slow 55%",
+      "leaderboardId": 128693,
+      "total": 69958,
+      "points": [
+        {
+          "rank": 1,
+          "score": 16310
+        },
+        {
+          "rank": 2,
+          "score": 16300
+        },
+        {
+          "rank": 3,
+          "score": 16240
+        },
+        {
+          "rank": 5,
+          "score": 16180
+        },
+        {
+          "rank": 10,
+          "score": 16110
+        },
+        {
+          "rank": 25,
+          "score": 15990
+        },
+        {
+          "rank": 50,
+          "score": 15850
+        },
+        {
+          "rank": 100,
+          "score": 15720
+        },
+        {
+          "rank": 250,
+          "score": 15430
+        },
+        {
+          "rank": 500,
+          "score": 15160
+        }
+      ],
+      "sampledAt": "2026-09-12T16:28:35.643Z"
+    },
+    {
+      "scenario": "Whisphere Small & Slow 75%",
+      "leaderboardId": 77068,
+      "total": 30916,
+      "points": [
+        {
+          "rank": 1,
+          "score": 21980
+        },
+        {
+          "rank": 2,
+          "score": 21600
+        },
+        {
+          "rank": 3,
+          "score": 21600
+        },
+        {
+          "rank": 5,
+          "score": 21170
+        },
+        {
+          "rank": 10,
+          "score": 20770
+        },
+        {
+          "rank": 25,
+          "score": 20010
+        },
+        {
+          "rank": 50,
+          "score": 19590
+        },
+        {
+          "rank": 100,
+          "score": 19250
+        },
+        {
+          "rank": 250,
+          "score": 18800
+        },
+        {
+          "rank": 500,
+          "score": 17850
+        }
+      ],
+      "sampledAt": "2026-09-12T16:28:40.527Z"
+    },
+    {
       "scenario": "Wide Wall 3 Targets",
       "leaderboardId": 337,
       "total": 383766,
@@ -14520,6 +17108,50 @@
       "sampledAt": "2026-09-02T21:05:47.509Z"
     },
     {
+      "scenario": "wobin DotTS Easy",
+      "leaderboardId": 125689,
+      "total": 441,
+      "points": [
+        {
+          "rank": 1,
+          "score": 1684
+        },
+        {
+          "rank": 2,
+          "score": 1651
+        },
+        {
+          "rank": 3,
+          "score": 1636.5
+        },
+        {
+          "rank": 5,
+          "score": 1620
+        },
+        {
+          "rank": 10,
+          "score": 1569
+        },
+        {
+          "rank": 25,
+          "score": 1518
+        },
+        {
+          "rank": 50,
+          "score": 1430
+        },
+        {
+          "rank": 100,
+          "score": 1370
+        },
+        {
+          "rank": 250,
+          "score": 1239.5
+        }
+      ],
+      "sampledAt": "2026-09-13T03:12:24.761Z"
+    },
+    {
       "scenario": "ww4t Avasive Medium",
       "leaderboardId": 203368,
       "total": 153,
@@ -14646,6 +17278,1254 @@
         }
       ],
       "sampledAt": "2026-09-02T21:05:38.964Z"
+    },
+    {
+      "scenario": "Pasu 3-Click Wide Easy",
+      "leaderboardId": 54718,
+      "total": 11096,
+      "points": [
+        {
+          "rank": 1,
+          "score": 341.78
+        },
+        {
+          "rank": 2,
+          "score": 313.21
+        },
+        {
+          "rank": 3,
+          "score": 253.46
+        },
+        {
+          "rank": 5,
+          "score": 239.08
+        },
+        {
+          "rank": 10,
+          "score": 198.05
+        },
+        {
+          "rank": 25,
+          "score": 162.47
+        },
+        {
+          "rank": 50,
+          "score": 125.64
+        },
+        {
+          "rank": 100,
+          "score": 56.85
+        },
+        {
+          "rank": 250,
+          "score": 42.82
+        },
+        {
+          "rank": 500,
+          "score": 38.06
+        }
+      ],
+      "sampledAt": "2026-09-13T19:19:57.950Z"
+    },
+    {
+      "scenario": "Pasu 3-Click v2 Less Easy",
+      "leaderboardId": 3876,
+      "total": 4328,
+      "points": [
+        {
+          "rank": 1,
+          "score": 42.66
+        },
+        {
+          "rank": 2,
+          "score": 41.66
+        },
+        {
+          "rank": 3,
+          "score": 40.99
+        },
+        {
+          "rank": 5,
+          "score": 40.33
+        },
+        {
+          "rank": 10,
+          "score": 39.33
+        },
+        {
+          "rank": 25,
+          "score": 36.66
+        },
+        {
+          "rank": 50,
+          "score": 35.66
+        },
+        {
+          "rank": 100,
+          "score": 34.33
+        },
+        {
+          "rank": 250,
+          "score": 31.99
+        },
+        {
+          "rank": 500,
+          "score": 29.99
+        }
+      ],
+      "sampledAt": "2026-09-13T19:20:11.962Z"
+    },
+    {
+      "scenario": "Pasu 3-click v2",
+      "leaderboardId": 1094,
+      "total": 23073,
+      "points": [
+        {
+          "rank": 1,
+          "score": 43.66
+        },
+        {
+          "rank": 2,
+          "score": 41.99
+        },
+        {
+          "rank": 3,
+          "score": 41.99
+        },
+        {
+          "rank": 5,
+          "score": 39.99
+        },
+        {
+          "rank": 10,
+          "score": 38.99
+        },
+        {
+          "rank": 25,
+          "score": 36.99
+        },
+        {
+          "rank": 50,
+          "score": 35.33
+        },
+        {
+          "rank": 100,
+          "score": 33.66
+        },
+        {
+          "rank": 250,
+          "score": 31.33
+        },
+        {
+          "rank": 500,
+          "score": 29.33
+        }
+      ],
+      "sampledAt": "2026-09-13T19:20:26.010Z"
+    },
+    {
+      "scenario": "Pasu 3-Click Wide",
+      "leaderboardId": 54719,
+      "total": 3082,
+      "points": [
+        {
+          "rank": 1,
+          "score": 244.81
+        },
+        {
+          "rank": 2,
+          "score": 192.35
+        },
+        {
+          "rank": 3,
+          "score": 160.33
+        },
+        {
+          "rank": 5,
+          "score": 102.54
+        },
+        {
+          "rank": 10,
+          "score": 75.96
+        },
+        {
+          "rank": 25,
+          "score": 30.12
+        },
+        {
+          "rank": 50,
+          "score": 26.98
+        },
+        {
+          "rank": 100,
+          "score": 23.4
+        },
+        {
+          "rank": 250,
+          "score": 19.6
+        },
+        {
+          "rank": 500,
+          "score": 16.26
+        }
+      ],
+      "sampledAt": "2026-09-13T19:20:40.038Z"
+    },
+    {
+      "scenario": "Centering II 180 Entry",
+      "leaderboardId": 111447,
+      "total": 7837,
+      "points": [
+        {
+          "rank": 1,
+          "score": 23292
+        },
+        {
+          "rank": 2,
+          "score": 22626
+        },
+        {
+          "rank": 3,
+          "score": 22446
+        },
+        {
+          "rank": 5,
+          "score": 21870
+        },
+        {
+          "rank": 10,
+          "score": 21402
+        },
+        {
+          "rank": 25,
+          "score": 20412
+        },
+        {
+          "rank": 50,
+          "score": 19584
+        },
+        {
+          "rank": 100,
+          "score": 18450
+        },
+        {
+          "rank": 250,
+          "score": 16704
+        },
+        {
+          "rank": 500,
+          "score": 15390
+        }
+      ],
+      "sampledAt": "2026-09-13T19:20:54.032Z"
+    },
+    {
+      "scenario": "Centering II 180 Novice",
+      "leaderboardId": 111445,
+      "total": 10003,
+      "points": [
+        {
+          "rank": 1,
+          "score": 22986
+        },
+        {
+          "rank": 2,
+          "score": 22716
+        },
+        {
+          "rank": 3,
+          "score": 22680
+        },
+        {
+          "rank": 5,
+          "score": 21960
+        },
+        {
+          "rank": 10,
+          "score": 20682
+        },
+        {
+          "rank": 25,
+          "score": 19458
+        },
+        {
+          "rank": 50,
+          "score": 17694
+        },
+        {
+          "rank": 100,
+          "score": 15948
+        },
+        {
+          "rank": 250,
+          "score": 14202
+        },
+        {
+          "rank": 500,
+          "score": 13050
+        }
+      ],
+      "sampledAt": "2026-09-13T19:21:08.101Z"
+    },
+    {
+      "scenario": "Centering II 180 Intermediate",
+      "leaderboardId": 111448,
+      "total": 15507,
+      "points": [
+        {
+          "rank": 1,
+          "score": 22068
+        },
+        {
+          "rank": 2,
+          "score": 21960
+        },
+        {
+          "rank": 3,
+          "score": 21114
+        },
+        {
+          "rank": 5,
+          "score": 20466
+        },
+        {
+          "rank": 10,
+          "score": 19836
+        },
+        {
+          "rank": 25,
+          "score": 18000
+        },
+        {
+          "rank": 50,
+          "score": 16362
+        },
+        {
+          "rank": 100,
+          "score": 15174
+        },
+        {
+          "rank": 250,
+          "score": 14022
+        },
+        {
+          "rank": 500,
+          "score": 13212
+        }
+      ],
+      "sampledAt": "2026-09-13T19:21:22.134Z"
+    },
+    {
+      "scenario": "Centering II 180 no strafes",
+      "leaderboardId": 423,
+      "total": 52100,
+      "points": [
+        {
+          "rank": 1,
+          "score": 19548
+        },
+        {
+          "rank": 2,
+          "score": 19080
+        },
+        {
+          "rank": 3,
+          "score": 18666
+        },
+        {
+          "rank": 5,
+          "score": 18342
+        },
+        {
+          "rank": 10,
+          "score": 17280
+        },
+        {
+          "rank": 25,
+          "score": 16146
+        },
+        {
+          "rank": 50,
+          "score": 15192
+        },
+        {
+          "rank": 100,
+          "score": 14202
+        },
+        {
+          "rank": 250,
+          "score": 12798
+        },
+        {
+          "rank": 500,
+          "score": 12042
+        }
+      ],
+      "sampledAt": "2026-09-13T19:21:36.361Z"
+    },
+    {
+      "scenario": "Smooth Your Vertical Altered POV Entry",
+      "leaderboardId": 112748,
+      "total": 4830,
+      "points": [
+        {
+          "rank": 1,
+          "score": 7566
+        },
+        {
+          "rank": 2,
+          "score": 7554
+        },
+        {
+          "rank": 3,
+          "score": 7542
+        },
+        {
+          "rank": 5,
+          "score": 7302
+        },
+        {
+          "rank": 10,
+          "score": 6972
+        },
+        {
+          "rank": 25,
+          "score": 6456
+        },
+        {
+          "rank": 50,
+          "score": 6018
+        },
+        {
+          "rank": 100,
+          "score": 5628
+        },
+        {
+          "rank": 250,
+          "score": 4968
+        },
+        {
+          "rank": 500,
+          "score": 4428
+        }
+      ],
+      "sampledAt": "2026-09-13T19:21:50.323Z"
+    },
+    {
+      "scenario": "Smooth Your Vertical Altered POV Easy v2",
+      "leaderboardId": 48398,
+      "total": 9672,
+      "points": [
+        {
+          "rank": 1,
+          "score": 7320
+        },
+        {
+          "rank": 2,
+          "score": 7278
+        },
+        {
+          "rank": 3,
+          "score": 7230
+        },
+        {
+          "rank": 5,
+          "score": 7170
+        },
+        {
+          "rank": 10,
+          "score": 7068
+        },
+        {
+          "rank": 25,
+          "score": 6828
+        },
+        {
+          "rank": 50,
+          "score": 6570
+        },
+        {
+          "rank": 100,
+          "score": 6246
+        },
+        {
+          "rank": 250,
+          "score": 5892
+        },
+        {
+          "rank": 500,
+          "score": 5424
+        }
+      ],
+      "sampledAt": "2026-09-13T19:22:04.290Z"
+    },
+    {
+      "scenario": "Smooth Your Vertical Altered POV Intermediate",
+      "leaderboardId": 107995,
+      "total": 10476,
+      "points": [
+        {
+          "rank": 1,
+          "score": 6480
+        },
+        {
+          "rank": 2,
+          "score": 6300
+        },
+        {
+          "rank": 3,
+          "score": 6156
+        },
+        {
+          "rank": 5,
+          "score": 5706
+        },
+        {
+          "rank": 10,
+          "score": 5076
+        },
+        {
+          "rank": 25,
+          "score": 4578
+        },
+        {
+          "rank": 50,
+          "score": 4350
+        },
+        {
+          "rank": 100,
+          "score": 4104
+        },
+        {
+          "rank": 250,
+          "score": 3702
+        },
+        {
+          "rank": 500,
+          "score": 3432
+        }
+      ],
+      "sampledAt": "2026-09-13T19:22:18.204Z"
+    },
+    {
+      "scenario": "Smooth Your Vertical Altered POV v2",
+      "leaderboardId": 48393,
+      "total": 4725,
+      "points": [
+        {
+          "rank": 1,
+          "score": 5568
+        },
+        {
+          "rank": 2,
+          "score": 5286
+        },
+        {
+          "rank": 3,
+          "score": 5250
+        },
+        {
+          "rank": 5,
+          "score": 5124
+        },
+        {
+          "rank": 10,
+          "score": 4980
+        },
+        {
+          "rank": 25,
+          "score": 4518
+        },
+        {
+          "rank": 50,
+          "score": 4014
+        },
+        {
+          "rank": 100,
+          "score": 3588
+        },
+        {
+          "rank": 250,
+          "score": 3144
+        },
+        {
+          "rank": 500,
+          "score": 2736
+        }
+      ],
+      "sampledAt": "2026-09-13T19:22:35.775Z"
+    },
+    {
+      "scenario": "Kindaclose long stop strafes",
+      "leaderboardId": 15877,
+      "total": 7117,
+      "points": [
+        {
+          "rank": 1,
+          "score": 2521
+        },
+        {
+          "rank": 2,
+          "score": 2518
+        },
+        {
+          "rank": 3,
+          "score": 2509
+        },
+        {
+          "rank": 5,
+          "score": 2503
+        },
+        {
+          "rank": 10,
+          "score": 2480
+        },
+        {
+          "rank": 25,
+          "score": 2437
+        },
+        {
+          "rank": 50,
+          "score": 2418
+        },
+        {
+          "rank": 100,
+          "score": 2389
+        },
+        {
+          "rank": 250,
+          "score": 2355
+        },
+        {
+          "rank": 500,
+          "score": 2325
+        }
+      ],
+      "sampledAt": "2026-09-13T19:22:49.824Z"
+    },
+    {
+      "scenario": "Flicker Plaza rAim Easy Less Blinks",
+      "leaderboardId": 128774,
+      "total": 57182,
+      "points": [
+        {
+          "rank": 1,
+          "score": 936.28
+        },
+        {
+          "rank": 2,
+          "score": 936.24
+        },
+        {
+          "rank": 3,
+          "score": 936.07
+        },
+        {
+          "rank": 5,
+          "score": 935.13
+        },
+        {
+          "rank": 10,
+          "score": 934.51
+        },
+        {
+          "rank": 25,
+          "score": 932.78
+        },
+        {
+          "rank": 50,
+          "score": 931.45
+        },
+        {
+          "rank": 100,
+          "score": 930.27
+        },
+        {
+          "rank": 250,
+          "score": 927.87
+        },
+        {
+          "rank": 500,
+          "score": 926.14
+        }
+      ],
+      "sampledAt": "2026-09-13T19:23:03.858Z"
+    },
+    {
+      "scenario": "Flicker Plaza rAim Easy",
+      "leaderboardId": 606,
+      "total": 29403,
+      "points": [
+        {
+          "rank": 1,
+          "score": 929.35
+        },
+        {
+          "rank": 2,
+          "score": 928.67
+        },
+        {
+          "rank": 3,
+          "score": 928.05
+        },
+        {
+          "rank": 5,
+          "score": 927.13
+        },
+        {
+          "rank": 10,
+          "score": 925.59
+        },
+        {
+          "rank": 25,
+          "score": 923.04
+        },
+        {
+          "rank": 50,
+          "score": 921.6
+        },
+        {
+          "rank": 100,
+          "score": 920.16
+        },
+        {
+          "rank": 250,
+          "score": 918.35
+        },
+        {
+          "rank": 500,
+          "score": 917.02
+        }
+      ],
+      "sampledAt": "2026-09-13T19:23:17.891Z"
+    },
+    {
+      "scenario": "Flicker Plaza",
+      "leaderboardId": 677,
+      "total": 18186,
+      "points": [
+        {
+          "rank": 1,
+          "score": 923.92
+        },
+        {
+          "rank": 2,
+          "score": 921.68
+        },
+        {
+          "rank": 3,
+          "score": 920.94
+        },
+        {
+          "rank": 5,
+          "score": 919.3
+        },
+        {
+          "rank": 10,
+          "score": 918.12
+        },
+        {
+          "rank": 25,
+          "score": 916.1
+        },
+        {
+          "rank": 50,
+          "score": 914.31
+        },
+        {
+          "rank": 100,
+          "score": 910.48
+        },
+        {
+          "rank": 250,
+          "score": 905.35
+        },
+        {
+          "rank": 500,
+          "score": 901.14
+        }
+      ],
+      "sampledAt": "2026-09-13T19:23:31.920Z"
+    },
+    {
+      "scenario": "voxTS Viscose Varied",
+      "leaderboardId": 417,
+      "total": 272197,
+      "points": [
+        {
+          "rank": 1,
+          "score": 157.7
+        },
+        {
+          "rank": 2,
+          "score": 153.5
+        },
+        {
+          "rank": 3,
+          "score": 153
+        },
+        {
+          "rank": 5,
+          "score": 152
+        },
+        {
+          "rank": 10,
+          "score": 146.75
+        },
+        {
+          "rank": 25,
+          "score": 142.84
+        },
+        {
+          "rank": 50,
+          "score": 138.2
+        },
+        {
+          "rank": 100,
+          "score": 134.75
+        },
+        {
+          "rank": 250,
+          "score": 130
+        },
+        {
+          "rank": 500,
+          "score": 126.05
+        }
+      ],
+      "sampledAt": "2026-09-13T19:23:46.208Z"
+    },
+    {
+      "scenario": "voxTS rAim",
+      "leaderboardId": 528,
+      "total": 16963,
+      "points": [
+        {
+          "rank": 1,
+          "score": 137
+        },
+        {
+          "rank": 2,
+          "score": 136.14
+        },
+        {
+          "rank": 3,
+          "score": 136
+        },
+        {
+          "rank": 5,
+          "score": 132.09
+        },
+        {
+          "rank": 10,
+          "score": 129.14
+        },
+        {
+          "rank": 25,
+          "score": 123
+        },
+        {
+          "rank": 50,
+          "score": 119.14
+        },
+        {
+          "rank": 100,
+          "score": 115.75
+        },
+        {
+          "rank": 250,
+          "score": 109.5
+        },
+        {
+          "rank": 500,
+          "score": 105
+        }
+      ],
+      "sampledAt": "2026-09-13T19:24:00.390Z"
+    },
+    {
+      "scenario": "tamTargetSwitch Control Intermediate",
+      "leaderboardId": 110123,
+      "total": 9783,
+      "points": [
+        {
+          "rank": 1,
+          "score": 71
+        },
+        {
+          "rank": 2,
+          "score": 69
+        },
+        {
+          "rank": 3,
+          "score": 68
+        },
+        {
+          "rank": 5,
+          "score": 66
+        },
+        {
+          "rank": 10,
+          "score": 65
+        },
+        {
+          "rank": 25,
+          "score": 62
+        },
+        {
+          "rank": 50,
+          "score": 60
+        },
+        {
+          "rank": 100,
+          "score": 59
+        },
+        {
+          "rank": 250,
+          "score": 57
+        },
+        {
+          "rank": 500,
+          "score": 55
+        }
+      ],
+      "sampledAt": "2026-09-13T19:24:28.598Z"
+    },
+    {
+      "scenario": "tamTargetSwitch Control",
+      "leaderboardId": 57,
+      "total": 30985,
+      "points": [
+        {
+          "rank": 1,
+          "score": 58
+        },
+        {
+          "rank": 2,
+          "score": 55
+        },
+        {
+          "rank": 3,
+          "score": 52
+        },
+        {
+          "rank": 5,
+          "score": 51
+        },
+        {
+          "rank": 10,
+          "score": 49
+        },
+        {
+          "rank": 25,
+          "score": 47
+        },
+        {
+          "rank": 50,
+          "score": 45
+        },
+        {
+          "rank": 100,
+          "score": 44
+        },
+        {
+          "rank": 250,
+          "score": 42
+        },
+        {
+          "rank": 500,
+          "score": 40
+        }
+      ],
+      "sampledAt": "2026-09-13T19:24:42.742Z"
+    },
+    {
+      "scenario": "tamTargetSwitch Control Hard",
+      "leaderboardId": 757,
+      "total": 61447,
+      "points": [
+        {
+          "rank": 1,
+          "score": 53
+        },
+        {
+          "rank": 2,
+          "score": 53
+        },
+        {
+          "rank": 3,
+          "score": 52
+        },
+        {
+          "rank": 5,
+          "score": 52
+        },
+        {
+          "rank": 10,
+          "score": 50
+        },
+        {
+          "rank": 25,
+          "score": 48
+        },
+        {
+          "rank": 50,
+          "score": 46
+        },
+        {
+          "rank": 100,
+          "score": 44
+        },
+        {
+          "rank": 250,
+          "score": 42
+        },
+        {
+          "rank": 500,
+          "score": 40
+        }
+      ],
+      "sampledAt": "2026-09-13T19:24:56.817Z"
+    },
+    {
+      "scenario": "B180T rAim Easy",
+      "leaderboardId": 740,
+      "total": 4306,
+      "points": [
+        {
+          "rank": 1,
+          "score": 122
+        },
+        {
+          "rank": 2,
+          "score": 113
+        },
+        {
+          "rank": 3,
+          "score": 107
+        },
+        {
+          "rank": 5,
+          "score": 103
+        },
+        {
+          "rank": 10,
+          "score": 98
+        },
+        {
+          "rank": 25,
+          "score": 91
+        },
+        {
+          "rank": 50,
+          "score": 87
+        },
+        {
+          "rank": 100,
+          "score": 82
+        },
+        {
+          "rank": 250,
+          "score": 75
+        },
+        {
+          "rank": 500,
+          "score": 72
+        }
+      ],
+      "sampledAt": "2026-09-13T19:25:10.855Z"
+    },
+    {
+      "scenario": "aimerz+ B180TC Normal",
+      "leaderboardId": 44380,
+      "total": 6560,
+      "points": [
+        {
+          "rank": 1,
+          "score": 100
+        },
+        {
+          "rank": 2,
+          "score": 95
+        },
+        {
+          "rank": 3,
+          "score": 93
+        },
+        {
+          "rank": 5,
+          "score": 89
+        },
+        {
+          "rank": 10,
+          "score": 87
+        },
+        {
+          "rank": 25,
+          "score": 81
+        },
+        {
+          "rank": 50,
+          "score": 77
+        },
+        {
+          "rank": 100,
+          "score": 73
+        },
+        {
+          "rank": 250,
+          "score": 68
+        },
+        {
+          "rank": 500,
+          "score": 64
+        }
+      ],
+      "sampledAt": "2026-09-13T19:25:24.868Z"
+    },
+    {
+      "scenario": "B180T Voltaic Easy Regen",
+      "leaderboardId": 2837,
+      "total": 12190,
+      "points": [
+        {
+          "rank": 1,
+          "score": 81
+        },
+        {
+          "rank": 2,
+          "score": 81
+        },
+        {
+          "rank": 3,
+          "score": 78
+        },
+        {
+          "rank": 5,
+          "score": 76
+        },
+        {
+          "rank": 10,
+          "score": 72
+        },
+        {
+          "rank": 25,
+          "score": 67
+        },
+        {
+          "rank": 50,
+          "score": 63
+        },
+        {
+          "rank": 100,
+          "score": 59
+        },
+        {
+          "rank": 250,
+          "score": 55
+        },
+        {
+          "rank": 500,
+          "score": 51
+        }
+      ],
+      "sampledAt": "2026-09-13T19:25:38.900Z"
+    },
+    {
+      "scenario": "B180T Voltaic Regen",
+      "leaderboardId": 2153,
+      "total": 8679,
+      "points": [
+        {
+          "rank": 1,
+          "score": 48
+        },
+        {
+          "rank": 2,
+          "score": 45
+        },
+        {
+          "rank": 3,
+          "score": 43
+        },
+        {
+          "rank": 5,
+          "score": 40
+        },
+        {
+          "rank": 10,
+          "score": 38
+        },
+        {
+          "rank": 25,
+          "score": 35
+        },
+        {
+          "rank": 50,
+          "score": 32
+        },
+        {
+          "rank": 100,
+          "score": 30
+        },
+        {
+          "rank": 250,
+          "score": 26
+        },
+        {
+          "rank": 500,
+          "score": 23
+        }
+      ],
+      "sampledAt": "2026-09-13T19:25:52.959Z"
+    },
+    {
+      "scenario": "tamTargetSwitch Control Entry",
+      "leaderboardId": 110651,
+      "total": 4724,
+      "points": [
+        {
+          "rank": 1,
+          "score": 88
+        },
+        {
+          "rank": 2,
+          "score": 85
+        },
+        {
+          "rank": 3,
+          "score": 83
+        },
+        {
+          "rank": 5,
+          "score": 78
+        },
+        {
+          "rank": 10,
+          "score": 75
+        },
+        {
+          "rank": 25,
+          "score": 71
+        },
+        {
+          "rank": 50,
+          "score": 67
+        },
+        {
+          "rank": 100,
+          "score": 63
+        },
+        {
+          "rank": 250,
+          "score": 59
+        },
+        {
+          "rank": 500,
+          "score": 56
+        }
+      ],
+      "sampledAt": "2026-09-13T19:26:32.568Z"
     }
   ]
 }

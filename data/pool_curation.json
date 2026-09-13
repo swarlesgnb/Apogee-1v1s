@@ -1,92 +1,25 @@
 {
-  "$comment": "The families this season grades, chosen by hand. data/pool.json is built from this by npm run apply:curation, which resolves each scenario's leaderboard id against the taxonomy and refuses a name KovaaK's does not publish. It exists because the pool file carries thresholds, sources and sanity readouts alongside the choices, and editing 264 scenario names inside that is not a thing anybody does accurately. This file is only the choices. Static Clicking is absent on purpose: those eleven families were built by hand in the season editor and are carried through untouched.",
-  "$rungs": "Four per family, easiest first, one per window. A family is one test at four difficulties - not necessarily one author's lineage. Where no single lineage spans the bands the rungs come from whoever cut that difficulty, which is what data/pool.json's $families note already permits and what the Static Clicking families already do: its Micro family runs SCS, Cartoon, Anima and Aimerz+ in four rungs. What each family must hold is the sub-skill and an honest ascent.",
-  "rename": {
-    "Clicking": "Static Clicking"
-  },
-  "$rename": "Categories whose families are kept exactly as they are and only the name changes. Clicking becomes Static Clicking because it is now one of two clicking categories. Its families are not curated from this file and are edited in pool.json directly; two have left since the rename, both on measurements rather than taste. Pokeball moved to Speed Switching because its four rungs fire a drill at 22 to 54 shots per kill and cannot be clicking. Vertical was retired because the ClickTrack lineage holds only three cuts above the Expert board floor and four axis families wanted them - Vertical's best was 1,174 entries, nine players deciding rank 16. Nine families now.",
-  "retire": [
-    "Tracking",
-    "Switching"
-  ],
-  "$retire": "Categories whose families are replaced wholesale, so the old ones are dropped rather than carried. Tracking and Switching are retired because the sub-skill split cuts across them: Smoothbot and PGT are Precise, Ground Plaza is Reactive, and Controlsphere and Raw Control are Control Tracking, which this season does not grade. Leaving them would also put the same scenario in two families.",
+  "$comment": "Five non-static circuits informed by the weakness-specific Aimlabs document, translated to verified KovaaK's variants. Static Clicking is deliberately excluded. Four Apogee bands remain; exact names and frozen score targets live in pool.json. Training theory is not evidence that an individual edit has been playtested.",
   "categories": {
     "Dynamic Clicking": {
-      "$why": "Clicking a target that is moving, where the shot has to lead rather than land. Pasu is the canonical bot for it and Voltaic grades three separate Pasu scenarios in one benchmark, so three Pasu-derived families here is that benchmark's own reading of the sub-skill rather than one test counted three times. Ten families rather than eleven: Popcorn MV was the eleventh and came out, because KovaaK's types four of its six cuts as Tracking. A family whose own game calls it a different aim type is one the queue would partition wrongly, whatever the benchmark sheets say.",
+      "title": "Read. Confirm. Commit.",
+      "description": "Follow the movement into each shot. Read arcs beyond the apex and stay with multi-hit targets until the final click. Smooth transitions make the next target easier to read.",
       "families": [
         {
           "family": "Pasu",
-          "why": "Voltaic's own dynamic clicking ladder, on the largest boards in the sub-skill - 230,670 entries at Novice. If one family has to be right, it is this one.",
+          "focus": "Read the drift. Click on confirmation.",
+          "why": "Pasu without Voltaic's cuts. Viscose's entry version with limited strafing for Novice, SuperbAim's Easy and standard cuts in the middle, and Pasu Reload Goated for Expert, which is smaller and uses a reload instead of accuracy scoring.",
           "rungs": [
-            "VT Pasu Novice S5",
-            "VT Pasu Intermediate S5",
-            "VT Pasu Advanced S5",
-            "Pasu Voltaic"
-          ]
-        },
-        {
-          "family": "Pasu Rasp",
-          "why": "The raspberry-target cut of the same bot: smaller targets, same movement, so it separates target size from the leading. Expert takes 1w4t Pasu Raspberry Grandmaster over VT Pasu Rasp Elite, whose board carries 829.",
-          "rungs": [
-            "VT Pasu Rasp Novice",
-            "VT Pasu Rasp Intermediate",
-            "VT Pasu Rasp Advanced",
-            "1w4t Pasu Raspberry Grandmaster"
-          ]
-        },
-        {
-          "family": "Pasu Classic",
-          "why": "The original 1wall5targets lineage, which is where dynamic clicking was measured before any benchmark existed and still the most-played of it - 389,281 entries on the reload cut. Slowed, standard, shrunk, then the no-quick-swap variant. pasu nqs reload sat at Expert on a board of 9,541 and is the one cut of this lineage Aimerz+ grades Easy - the Expert rung was the easiest scenario in the family. The four are reordered onto what the sheets grade: the slow and no-quickswap cuts at the bottom, then the canonical 1wall5targets_pasu Reload, then the small-target cut that Aimerz+ and Jade Palace both grade Hard.",
-          "rungs": [
-            "1wall5targets_pasu slow",
-            "pasu nqs reload",
-            "1wall5targets_pasu Reload",
-            "pasu small reload"
-          ]
-        },
-        {
-          "family": "Pasu Reload",
-          "why": "Voltaic's reload cuts, which ask the same shot under magazine pressure. A different test from Pasu Classic despite the shared word: these are Voltaic's own four difficulties, authored as a ladder.",
-          "rungs": [
-            "Pasu Voltaic Reload Easier",
-            "Pasu Voltaic Reload Easy",
-            "Pasu Voltaic Reload",
+            "Pasu Viscose Entry",
+            "Pasu SuperbAim Easy",
+            "Pasu SuperbAim",
             "Pasu Reload Goated"
           ]
         },
         {
-          "family": "Bounceshot",
-          "why": "Targets that change direction on contact, so the lead has to be re-taken mid-shot. Voltaic and Viscose both grade it and their tiers interleave, which is what fills all four windows here.",
-          "rungs": [
-            "VT Bounceshot Novice",
-            "VT Bounceshot Viscose Easier",
-            "VT Bounceshot Intermediate",
-            "VT Bounceshot Advanced"
-          ]
-        },
-        {
-          "family": "Popcorn",
-          "why": "Many small targets moving at once, which tests target selection as much as the click. Voltaic's three tiers then rAim's Goated cut, the thinnest of them carrying 7,917 entries.",
-          "rungs": [
-            "VT Popcorn Novice S5",
-            "VT Popcorn Intermediate S5",
-            "VT Popcorn Advanced S5",
-            "Popcorn Goated rAim"
-          ]
-        },
-        {
-          "family": "B180",
-          "why": "A target that reverses through 180 degrees, which is the sharpest lead-change in the sub-skill. Voltaic's two cuts then Revosect's two, ascending across the pair. B180 rAim Easy is Revosect's Easy cut and sat at Advanced, above B180 Voltaic, which Voltaic grades Advanced and Jade Palace grades Easy. Two sheets put the standard cut above the easy one and the ladder had them the other way round, so the two are swapped.",
-          "rungs": [
-            "B180 Voltaic Easy 92%",
-            "B180 rAim Easy",
-            "B180 Voltaic",
-            "Bounce 180 rAim"
-          ]
-        },
-        {
           "family": "PipeClick",
-          "why": "Aimerz+'s pipe lineage: targets travelling a fixed path, so the shot is a timing problem rather than a reading one. Four tiers by one author across two seasons of their sheet.",
+          "focus": "Meet the path. Confirm the shot.",
+          "why": "Targets on a fixed path, so it's more about timing than reading. Easy and Hard S1 are from Aimerz+ S1; Normal and Hard are the older S0 cuts.",
           "rungs": [
             "Aimerz+ pipeClick Easy S1",
             "aimerz+ PipeClick Normal",
@@ -95,263 +28,225 @@
           ]
         },
         {
-          "family": "CatClick",
-          "why": "Erratic direction changes with no fixed path, which is the reading end of dynamic clicking rather than the timing end. One author, four cuts.",
+          "family": "Bounce",
+          "focus": "Read the full bounce, not just the apex.",
+          "why": "Bouncing-target clicking from two authors. SuperbAim's BounceClick for the first two rungs, then Sparky's and rAim's Bounce 180, where the balls really bounce and a reload replaces the accuracy penalty. The order between the two authors hasn't been playtested.",
           "rungs": [
-            "CatClick Easier",
-            "CatClick Medium",
-            "CatClick",
-            "CatClick Harder"
+            "BounceClick SuperbAim Easy",
+            "BounceClick SuperbAim",
+            "Bounce 180 Sparky",
+            "Bounce 180 rAim"
           ]
         },
         {
           "family": "Angelic",
-          "why": "The angelic bot, which drifts rather than strafes, so the lead is continuous instead of stepped. No single author cut it at four difficulties; psalmTS and Pasu each cut it at two, and the four ascend across them.",
+          "focus": "Read horizontal movement through the shot.",
+          "why": "Targets strafe around you and move up and down, so it's wider than Pasu. psalmTS angelic click and Pasu Angelic, each with a larger-target cut below it.",
           "rungs": [
             "psalmTS angelic click 30% Larger",
             "Pasu Angelic 20% Larger",
             "psalmTS angelic click",
             "Pasu Angelic"
           ]
+        },
+        {
+          "family": "Pasu Sequence",
+          "rungs": [
+            "Pasu 3-Click Wide Easy",
+            "Pasu 3-Click v2 Less Easy",
+            "Pasu 3-click v2",
+            "Pasu 3-Click Wide"
+          ],
+          "focus": "Stay with each target for all three clicks.",
+          "why": "Repeated hits add the sustained target reading missing from one-shot clicking. Wide Easy introduces the task; Less Easy uses a faster timescale than the easy v2 cut; standard v2 removes timescaling; Wide opens the field. These are related community edits, not a measured equal-step progression. Expert width and mixed v2/v4 behaviour need playtesting."
+        },
+        {
+          "family": "Popcorn",
+          "focus": "Follow the arc into a clean click.",
+          "why": "Popcorn with a reload instead of accuracy scoring. rAim's Goated easy cut with double-size targets, then rAim Easy, Sparky's version where the bots bounce, and Goated rAim with 10% smaller bots for Expert.",
+          "rungs": [
+            "Popcorn Goated rAim easy",
+            "Popcorn rAim Easy",
+            "Popcorn Sparky",
+            "Popcorn Goated rAim"
+          ]
         }
       ]
     },
     "Precise Tracking": {
-      "$why": "Holding the crosshair on a target that moves predictably - smoothness rather than reaction. The deepest sub-skill in the corpus: 22 lineages carry two solid rungs and eleven reach four, so this is the one rebuilt category where eleven families was not a compromise.",
+      "title": "Stay connected.",
+      "description": "Match the target through horizontal strafes, vertical travel and changing paths. Make clean corrections when contact breaks. Use an easier cut when you lose the movement; difficulty should leave room to learn.",
       "families": [
         {
           "family": "Smoothbot",
-          "why": "Voltaic's smoothness ladder, on the largest board in tracking at 326,600 entries. Expert is Pauer's cut rather than VT Smoothbot Elite, whose board carries 691.",
+          "focus": "Match the long arc with steady contact.",
+          "why": "SmoothBot Invincible Goated at every rung instead of Voltaic's Smoothbot: 75% speed, Easy, the standard version, then the smaller cut for Expert. The bot can't die, so the whole run is time on target.",
           "rungs": [
-            "VT Smoothbot Novice",
-            "VT Smoothbot Intermediate",
-            "VT Smoothbot Advanced",
-            "Smoothbot Pauer"
+            "SmoothBot Invincible Goated 75%",
+            "Smoothbot Invincible Goated Easy",
+            "SmoothBot Invincible Goated",
+            "SmoothBot Invincible Goated Smaller"
           ]
         },
         {
-          "family": "Snake Track",
-          "why": "A target on a winding path, so the hand keeps turning instead of settling. Four Voltaic tiers, including the Novice Hard cut that fills the gap to Intermediate.",
+          "family": "Centering",
           "rungs": [
-            "VT Snake Track Novice S5",
-            "VT Snake Track Novice S5 Hard",
-            "VT Snake Track Intermediate S5",
-            "VT Snake Track Advanced S5"
-          ]
-        },
-        {
-          "family": "PGT",
-          "why": "Precise ground tracking, Voltaic's own four tiers end to end. The Elite board is 3,674 - thin for this sub-skill, but a ladder one author wrote rather than one assembled here.",
-          "rungs": [
-            "VT PGT Novice S5",
-            "VT PGT Intermediate S5",
-            "VT PGT Advanced S5",
-            "VT PGT Elite S5"
-          ]
-        },
-        {
-          "family": "PGTI",
-          "why": "The invincible cut of the same test: no kill, so the run never resets and the score is time on target alone. Revosect and Voltaic each cut it twice and the four ascend across them. Its Novice rung was swapped down to an entry cut the sheets band Novice: the bottom of the ladder is meant to be a scenario a beginner can load without being beaten by it, and the difficulty there now comes from the threshold rather than from the test.",
-          "rungs": [
-            "PGTI Vertical Iron",
-            "PGTI Voltaic Easy",
-            "PGTI Voltaic",
-            "PGTI rAim"
-          ]
-        },
-        {
-          "family": "PreciseOrb",
-          "why": "A small orb on a smooth path. The 15% Slower cut sits between Novice and Intermediate, which is what lets this family avoid VT PreciseOrb Elite and its board of 273.",
-          "rungs": [
-            "VT PreciseOrb Novice",
-            "VT PreciseOrb Intermediate 15% Slower",
-            "VT PreciseOrb Intermediate",
-            "VT PreciseOrb Advanced"
-          ]
-        },
-        {
-          "family": "cloverRawControl",
-          "why": "Raw control with no strafe pattern to read, which isolates the hand from the head. Viscose's entry cut, then Aimerz+ and Astro's three.",
-          "rungs": [
-            "cloverRawControl Viscose Entry",
-            "cloverRawControl Big",
-            "cloverRawControl Easy",
-            "cloverRawControl"
-          ]
-        },
-        {
-          "family": "Controlsphere",
-          "why": "A sphere held at distance, graded by size and range rather than speed - so the four rungs are one test at four target sizes and nothing else moving. The cleanest difficulty axis in the pool. Its Novice rung was swapped down to an entry cut the sheets band Novice: the bottom of the ladder is meant to be a scenario a beginner can load without being beaten by it, and the difficulty there now comes from the threshold rather than from the test.",
-          "rungs": [
-            "Controlsphere Viscose Entry",
-            "Controlsphere Far Larger",
-            "Controlsphere Far",
-            "Extra Controlsphere"
-          ]
-        },
-        {
-          "family": "waldoTS",
-          "why": "Viscose's precise lineage: four tiers by one author, on boards from 7,830 to 240,024.",
-          "rungs": [
-            "waldoTS Entry",
-            "waldoTS Novice",
-            "waldoTS Intermediate",
-            "waldoTS"
-          ]
-        },
-        {
-          "family": "Smoothsphere",
-          "why": "Smoothness on a sphere rather than a bot, which removes the strafe pattern entirely. Viscose's easier cut, the base scenario, then Astro's two. Smoothsphere Diamond sat at Advanced above the standard Smoothsphere. Astro is the only author who grades both and grades Diamond Easy against Smoothsphere Normal, so the two are swapped to the order its own author published. Its Novice rung was swapped down to an entry cut the sheets band Novice: the bottom of the ladder is meant to be a scenario a beginner can load without being beaten by it, and the difficulty there now comes from the threshold rather than from the test.",
-          "rungs": [
-            "Smoothsphere Viscose Horizontal Entry",
-            "Smoothsphere Diamond",
-            "Smoothsphere",
-            "Smoothsphere Master"
-          ]
-        },
-        {
-          "family": "Pauer Glider",
-          "why": "A glider path - long, shallow direction changes that punish over-correction rather than slow reaction. Opens on Level 1 rather than the 60% Larger cut, which KovaaK's types as Switching.",
-          "rungs": [
-            "Smoothbot Pauer Glider Level 1",
-            "Smoothbot Pauer Glider Novice",
-            "Smoothbot Pauer Glider Intermediate",
-            "Smoothbot Pauer Glider"
-          ]
+            "Centering II 180 Entry",
+            "Centering II 180 Novice",
+            "Centering II 180 Intermediate",
+            "Centering II 180 no strafes"
+          ],
+          "focus": "Settle into the strafe. Match its speed.",
+          "why": "A dedicated horizontal centering test separates velocity matching from multidirectional control. Entry, Novice and Intermediate community cuts lead into the established no-strafes version. Apogee band names describe our progression, not the names of the source cuts. Exact target-size differences are not claimed; band handovers need playtesting."
         },
         {
           "family": "PreciseTrack",
-          "why": "Aimerz+'s precise lineage, all four rungs from their S1 sheet. Their earlier Normal and Hard cuts are typed Clicking by KovaaK's and are left out for it.",
+          "focus": "Recover cleanly. Settle back on target.",
+          "why": "Aimerz+ PreciseTrack in place of PGT as the fine-correction test. Avasive's Easier cut for Novice, then Easy, Med and Hard from the Aimerz+ S1 set.",
           "rungs": [
+            "PreciseTrack Avasive Easier",
             "Aimerz+ PreciseTrack Easy S1",
             "Aimerz+ PreciseTrack Med S1",
-            "Aimerz+ PreciseTrack S1 Modified",
             "Aimerz+ PreciseTrack Hard S1"
+          ]
+        },
+        {
+          "family": "Whisphere",
+          "focus": "Match the curve and its changing speed.",
+          "why": "Smooth with no blinks, going by the scenario description. 55% speed, 75%, full speed, then Extra Small for Expert.",
+          "rungs": [
+            "Whisphere Small & Slow 55%",
+            "Whisphere Small & Slow 75%",
+            "Whisphere Small & Slow",
+            "Whisphere Extra Small & Slow"
+          ]
+        },
+        {
+          "family": "Vertical Control",
+          "rungs": [
+            "Smooth Your Vertical Altered POV Entry",
+            "Smooth Your Vertical Altered POV Easy v2",
+            "Smooth Your Vertical Altered POV Intermediate",
+            "Smooth Your Vertical Altered POV v2"
+          ],
+          "focus": "Stay connected through the rise and fall.",
+          "why": "These four Altered POV cuts explicitly isolate vertical smoothness. They replace a second broad sphere-control test with an axis players can identify and practise directly. Entry, Easy, Intermediate and standard v2 are curated into four Apogee bands; difficulty spacing remains a playtest judgement."
+        },
+        {
+          "family": "Controlsphere",
+          "focus": "Keep contact through changing directions.",
+          "why": "A small dot that jumps gently and flies around you at changing distance and speed. Viscose's entry cut, then rAim's Easy at 90%, rAim Easy and rAim. The sheets file the top rung under Control Tracking, which this season grades as Precise.",
+          "rungs": [
+            "Controlsphere Viscose Entry",
+            "Controlsphere rAim Easy 90%",
+            "Controlsphere rAim Easy",
+            "Controlsphere rAim"
           ]
         }
       ]
     },
     "Reactive Tracking": {
-      "$why": "Tracking a target that changes direction unpredictably, so the cost is reaction rather than smoothness. Seven families, not eleven. The corpus holds 19 lineages with two solid rungs and only seven that reach four without borrowing a scenario some sheet files under a different sub-skill; padding it would mean grading reaction on boards of a few hundred people.",
+      "title": "React, recover, settle.",
+      "description": "Watch the target, react to the change, then match its new movement. Stops and teleports join ground and air reads. If you start guessing turns or forcing the mouse, step down and rebuild clean contact.",
       "families": [
         {
-          "family": "Air",
-          "why": "Voltaic's air ladder - a target free in three dimensions, which is the hardest reading in the game. Expert is Air Angelic, the drifting cut.",
+          "family": "Ground Plaza",
+          "focus": "Read each strafe. React after the turn.",
+          "why": "Sparky's Ground Plaza v3: six bots strafing on the ground at mixed lengths and distances. Easy, the standard version, OW with instant ground acceleration, then Thin for Expert.",
           "rungs": [
-            "VT Air Novice",
-            "VT Air Intermediate",
-            "VT Air Advanced",
-            "Air Angelic"
-          ]
-        },
-        {
-          "family": "Ground",
-          "why": "The same reading held to the floor plane. Four Voltaic tiers, including the Novice Hard cut.",
-          "rungs": [
-            "VT Ground Novice S5",
-            "VT Ground Novice S5 Hard",
-            "VT Ground Intermediate S5",
-            "VT Ground Advanced S5"
-          ]
-        },
-        {
-          "family": "Plaza",
-          "why": "Reactive tracking with cover and depth, so the target leaves the plane. Voltaic's three tiers, then Viscose's thin cut.",
-          "rungs": [
-            "VT Plaza Novice",
-            "VT Plaza Intermediate",
-            "VT Plaza Advanced",
-            "VT Plaza Viscose Thin"
-          ]
-        },
-        {
-          "family": "Aether",
-          "why": "Voltaic S5's air scenario, opened on its own Entry cut so the family has a real beginner rung instead of starting at Novice.",
-          "rungs": [
-            "VT Aether Entry S5 Precision Focus",
-            "VT Aether Novice S5",
-            "VT Aether Intermediate S5",
-            "VT Aether Advanced S5"
-          ]
-        },
-        {
-          "family": "Air CELESTIAL",
-          "why": "The celestial air lineage at four speeds, from the slowed no-UFO cut up to Divine. One test, four difficulties, boards from 17,531 to 117,829.",
-          "rungs": [
-            "Air CELESTIAL No UFO Easy Slowed",
-            "Air CELESTIAL No UFO Easy",
-            "Air CELESTIAL",
-            "Air Divine"
-          ]
-        },
-        {
-          "family": "Sparky",
-          "why": "Sparky's ground plaza, the most-played reactive scenario outside Voltaic. Easy, the one-way cut, the base scenario, then thin. Ground Plaza Sparky v3 OW sat at Intermediate below the standard V3. Aimerz+ grades OW Hard and Astro grades it Advanced, against Normal and Easy for the plain V3, so the Overwatch cut moves up one and the standard cut down one. Its Novice rung was swapped down to an entry cut the sheets band Novice: the bottom of the ladder is meant to be a scenario a beginner can load without being beaten by it, and the difficulty there now comes from the threshold rather than from the test.",
-          "rungs": [
-            "Ground Plaza Sparky v3 Invincible 5",
+            "Ground Plaza Sparky v3 Easy",
             "Ground Plaza Sparky V3",
             "Ground Plaza Sparky v3 OW",
             "Ground Plaza Sparky V3 Thin"
           ]
         },
         {
-          "family": "Invincible Strafes",
-          "why": "The invincible strafe lineage: no kill, so the target never stops changing direction. Long, fast, thin, then raspberry, which is the order those cuts get harder.",
+          "family": "Air Reading",
+          "focus": "Follow the aerial change without guessing.",
+          "why": "Air Voltaic Invincible 4: one invincible bot changing direction in the air, nothing to kill. Viscose grades Entry, Easier and Medium; the full version is Expert.",
           "rungs": [
-            "Close Long Strafes Invincible",
-            "Close Fast Strafes Invincible",
-            "Close Fast Strafes Invincible - Thin",
-            "Midrange Short Strafes Invincible Raspberry"
+            "Air Voltaic Invincible 4 Entry",
+            "Air Voltaic Invincible 4 Easier",
+            "Air Voltaic Invincible 4 Medium",
+            "Air Voltaic Invincible 4"
           ]
+        },
+        {
+          "family": "Air Angelic",
+          "focus": "Recover from the turn, then match speed.",
+          "why": "Air Angelic from Astro's and Jade Palace's sheets. rAim's Biggest cut, Easier, rAim Easy, then the standard version, which both of them grade at their top tier.",
+          "rungs": [
+            "Air Angelic rAim Biggest",
+            "Air Angelic Easier",
+            "Air Angelic rAim Easy",
+            "Air Angelic"
+          ]
+        },
+        {
+          "family": "Strafe Gallery",
+          "focus": "Read the next strafe. Keep corrections clean.",
+          "why": "Targets that only dodge horizontally. CB StrafeTrack Easy is the entry, then Aimerz+ VGS Easy, Med and Hard. Mixes two authors: the CB entry isn't part of the VGS set.",
+          "rungs": [
+            "CB StrafeTrack Easy",
+            "Aimerz+ VGS Easy S1",
+            "Aimerz+ VGS Med S1",
+            "Aimerz+ VGS Hard S1"
+          ]
+        },
+        {
+          "family": "Leapstrafes",
+          "focus": "Stay with the leap and read its direction.",
+          "why": "A target that leaps and strafes with mixed dodge profiles. wobin's Easier cut, then Aimerz+'s mid-range Leapstrafes Control Medium, then wobin's standard and Hard cuts. No sheet names a sub-skill for wobin's version, so putting it in Reactive is a judgement call.",
+          "rungs": [
+            "Leapstrafes Control wobin Easier",
+            "Leapstrafes Control Medium",
+            "Leapstrafes Control wobin",
+            "Leapstrafes Control wobin Hard"
+          ]
+        },
+        {
+          "family": "Recovery",
+          "rungs": [
+            "Kindaclose long stop strafes",
+            "Flicker Plaza rAim Easy Less Blinks",
+            "Flicker Plaza rAim Easy",
+            "Flicker Plaza"
+          ],
+          "focus": "Read the change. Reacquire, then settle.",
+          "why": "Recovery replaces a third mixed-air test. Kindaclose introduces random acceleration, slowing and stops; the three Flicker Plaza cuts then challenge reacquisition after teleports. This is a deliberate change of mechanic between Novice and Intermediate, not a shared-bot speed ladder. Less Blinks provides the transition."
         }
       ]
     },
     "Speed Switching": {
-      "$why": "Moving between static targets as fast as they can be hit. Eight families. This sub-skill has the most candidates of any - 26 lineages with two solid rungs - and the fewest that turn into a ladder: most of the rest are one author's easy-and-hard pair, which is two rungs and cannot be stretched to four honestly.",
+      "title": "Find pace. Keep precision.",
+      "description": "Hold fire, land close and finish each target before transferring. Mix compact flicks, wide routes and shrinking targets. In practice, try a short speed burst on an easier cut; use complete runs for benchmark scores.",
       "families": [
         {
-          "family": "Pokeball",
-          "why": "Hand-built into Static Clicking over two hours and moved here on a measurement, not a preference. All four rungs fire a Poke-Drill at 22.1, 27.7, 31.8 and 54.4 shots per kill across 119 runs of the corpus; the 191 correctly-labelled clicking scenarios sit between 1.0 and 1.3, so a single click kills nothing here and the family cannot be clicking of any kind. KovaaK's types all sixteen Pokeball scenarios in the corpus as Switching, and the benchmark labels land eight of them on Speed Switching - AimSpeed, Viscose, Avasive and Revosect - against two Lemon calls Stability. The rungs are unchanged from the Static Clicking build.",
-          "rungs": [
-            "Pokeball 1w4ts 30% Easy",
-            "Pokeball 1w4ts 30%",
-            "Pokeball Wide rAim",
-            "Pokeball Frenzy Auto Small Wide"
-          ]
-        },
-        {
-          "family": "skyTS",
-          "why": "Voltaic's speed ladder, four tiers, opening on the largest switching board in the game at 348,412 entries. Its Elite board is 933, the thinnest rung in this category.",
-          "rungs": [
-            "VT skyTS Novice",
-            "VT skyTS Intermediate",
-            "VT skyTS Advanced",
-            "VT skyTS Elite"
-          ]
-        },
-        {
           "family": "DotTS",
-          "why": "Small dots at speed, which puts the cost on the stop rather than the travel. Opened on the 30% larger community cut so the beginner rung is easier than Voltaic's Novice.",
+          "focus": "Land close. Confirm. Chain the next flick.",
+          "why": "Static dot switching without Voltaic's cuts. wobin's Easy, which leans on horizontal spawns, for Novice, AimSpeed's Entry, the 30% larger cut, then plain DotTS, which Aimerz+ SpeedTS and AimSpeed both grade at Hard.",
           "rungs": [
+            "wobin DotTS Easy",
+            "DotTS Entry",
             "DotTS 30% Larger",
-            "VT DotTS Novice S5",
-            "VT DotTS Intermediate S5",
-            "VT DotTS Advanced S5"
+            "DotTS"
           ]
         },
         {
-          "family": "psalmTS",
-          "why": "Voltaic's three tiers, then the community scenario they were cut from - harder than Advanced, on a 42,007-entry board. psalmTS Voltaic is Voltaic S3's cut and sat at Expert above VT psalmTS Advanced, which S4 grades Advanced and snakbox additionally grades Hard. The S4 cut is the harder of the two on the only evidence there is, so it takes the Expert rung.",
+          "family": "Vox Pace",
           "rungs": [
-            "VT psalmTS Novice",
-            "VT psalmTS Intermediate",
-            "psalmTS Voltaic",
-            "VT psalmTS Advanced"
-          ]
+            "voxTargetSwitch 2 Large",
+            "voxTargetSwitch 2",
+            "voxTS Viscose Varied",
+            "voxTS rAim"
+          ],
+          "focus": "Land, finish, transfer. Hold your pace.",
+          "why": "Large and standard range targets establish routing and clean transfers. Viscose Varied introduces progressively shrinking targets; rAim finishes with a smaller fixed-target challenge. Only the Advanced rung is an evolving task. This adapts the source routine's speed-to-precision idea across related variants without changing their native scoring or duration."
         },
         {
           "family": "EddieTS",
-          "why": "Voltaic S5's speed scenario, four tiers end to end.",
+          "focus": "Keep transfers fast and finishes clean.",
+          "why": "Four flying targets, about a quarter second each. Here so the category isn't just size variants of one range. Elite S5 is the Expert rung.",
           "rungs": [
             "VT EddieTS Novice S5",
             "VT EddieTS Intermediate S5",
@@ -360,93 +255,92 @@
           ]
         },
         {
-          "family": "voxTargetSwitch",
-          "why": "The oldest switching lineage in the game, graded by target size across four cuts - jumbo, large, standard, small. One test at four difficulties with nothing else changing.",
+          "family": "PivoTS",
+          "focus": "Find the next target before the pivot.",
+          "why": "Aimerz+ pivoTS, a different switching pattern. The two Hard cuts are from different Aimerz+ releases (S0 and S1), and their order hasn't been playtested yet.",
           "rungs": [
-            "voxTargetSwitch Jumbo",
-            "voxTargetSwitch Large",
-            "voxTargetSwitch",
-            "voxTargetSwitch Small"
+            "Aimerz+ pivoTS Easy S1",
+            "aimerz+ pivoTS Normal",
+            "aimerz+ pivoTS Hard",
+            "Aimerz+ pivoTS Hard S1"
           ]
         },
         {
-          "family": "StaticSwitchingVox",
-          "why": "The same author's static cut, again sized rather than re-authored: jumbo, standard, small, extra small.",
+          "family": "Pokeball",
+          "focus": "Hold fire. Finish before transferring.",
+          "why": "You hold fire on each target instead of tapping, and some cuts regen if you flick off early. The slow-kill option next to DotTS and EddieTS.",
           "rungs": [
-            "StaticSwitchingVox Jumbo",
-            "StaticSwitchingVox",
-            "StaticSwitchingVox Small",
-            "StaticSwitchingVox xxSmall"
+            "Pokeball 1w4ts 30% Easy",
+            "Pokeball 1w4ts 30%",
+            "Pokeball Wide rAim",
+            "Pokeball Frenzy Auto Small Wide"
           ]
         },
         {
-          "family": "devTS",
-          "why": "The goated dev lineage - easy, no-reload, no-reload static, then static small, which is the order its author cut them in.",
+          "family": "psalmTS",
+          "focus": "Choose a route and finish each target.",
+          "why": "Spherical bots moving slowly side to side, tracked briefly to kill. psalmTS Voltaic is the Advanced rung and VT psalmTS Advanced is Expert.",
           "rungs": [
-            "devTS Goated Easy",
-            "devTS Goated NR",
-            "devTS Goated NR Static",
-            "devTS Goated NR Static Small"
-          ]
-        },
-        {
-          "family": "Aimerz+ Static Switching",
-          "why": "Aimerz+'s static switching set, ordered by bot count and then by size: six bots slightly larger, five bots slightly larger, the standard week five cut, and that cut shrunk 30%. Its Novice rung was swapped down to an entry cut the sheets band Novice: the bottom of the ladder is meant to be a scenario a beginner can load without being beaten by it, and the difficulty there now comes from the threshold rather than from the test.",
-          "rungs": [
-            "aimerz+ Static Switching 6 Bot Larger",
-            "aimerz+ Static Switching 5 Bot Slightly Larger",
-            "Aimerz+ Week #5 - Static Switching",
-            "Aimerz+ Week #5 - Static Switching 30% smaller"
+            "VT psalmTS Novice",
+            "VT psalmTS Intermediate",
+            "psalmTS Voltaic",
+            "VT psalmTS Advanced"
           ]
         }
       ]
     },
     "Evasive Switching": {
-      "$why": "Switching between targets that are themselves moving and dodging. The thinnest of the five rebuilt categories at six families: 16 lineages carry two solid rungs and only six reach four. Four of the six close on a Voltaic Elite board under 1,500 entries, which is the honest ceiling of what anybody has measured this sub-skill on.",
+      "title": "Earn every transfer.",
+      "description": "Flick in, match the movement and confirm the kill. Read the next target without abandoning this one. Regeneration tests clean finishes; varied arcs and strafes keep the task about reading, not memorising turns.",
       "families": [
         {
-          "family": "FlyTS",
-          "why": "Voltaic's evasive ladder, four tiers, opening at 177,146 entries.",
+          "family": "Pasu Switch",
+          "focus": "Land on the moving target, then finish.",
+          "why": "Target switching on Pasu-style floating bots. PureG's flick-focused version, then PureG's higher time-to-kill version, then Aimerz+'s wide-wall Pasu Switch and its regen cut for Expert. Two authors, and the order between them hasn't been playtested.",
           "rungs": [
-            "VT FlyTS Novice S5",
-            "VT FlyTS Intermediate S5",
-            "VT FlyTS Advanced S5",
-            "VT FlyTS Elite S5"
+            "Pasu Switch Pure",
+            "PureG Pasu Switch",
+            "Pasu Switch Wide",
+            "Pasu Switch Wide Regen"
           ]
         },
         {
-          "family": "DriftTS",
-          "why": "Targets that drift rather than strafe, so the switch lands on something still moving. Four Voltaic tiers.",
+          "family": "Regen Control",
           "rungs": [
-            "VT DriftTS Novice S5",
-            "VT DriftTS Intermediate S5",
-            "VT DriftTS Advanced S5",
-            "VT DriftTS Elite S5"
-          ]
+            "tamTargetSwitch Control Entry",
+            "tamTargetSwitch Control Intermediate",
+            "tamTargetSwitch Control",
+            "tamTargetSwitch Control Hard"
+          ],
+          "focus": "Finish the moving target before you leave.",
+          "why": "Regenerating targets reward committed tracking after the flick. Entry and Intermediate use shorter time to kill; Control asks for longer contact; Hard adds bouncing. These are different training demands, not just faster versions. Unlike the retained Smooth family, the Control bots wiggle rather than circle."
         },
         {
-          "family": "bounceTS",
-          "why": "Targets that reverse on contact, the sharpest direction change in the sub-skill. Four Voltaic tiers; the Elite board carries 645.",
+          "family": "Arc Transfer",
           "rungs": [
-            "VT bounceTS Novice",
-            "VT bounceTS Intermediate",
-            "VT bounceTS Advanced",
-            "VT bounceTS Elite"
-          ]
+            "B180T rAim Easy",
+            "aimerz+ B180TC Normal",
+            "B180T Voltaic Easy Regen",
+            "B180T Voltaic Regen"
+          ],
+          "focus": "Track the whole arc. Confirm the finish.",
+          "why": "An accessible rAim entry leads to Aimerz+'s depth-changing mid-high arcs, then two regenerative bounce edits. The final two variants make incomplete contact costly instead of relying only on smaller Elite bots. They deliberately retain two useful Voltaic variants rather than an entire stock four-rung family. Cross-author handovers and regeneration difficulty need playtesting."
         },
         {
-          "family": "evaTS",
-          "why": "Evasive movement on no fixed pattern, so the switch cannot be pre-aimed. Four Voltaic tiers; the Elite board carries 367 and is the thinnest rung in the whole pool.",
+          "family": "Hop Transfer",
+          "focus": "Follow the jump through the final hit.",
+          "why": "Jumping targets. CB JumpSwitch Easy (four jumping targets) first, then Aimerz+ hopTS Easy, Med and Hard. Mixes two authors.",
           "rungs": [
-            "VT evaTS Novice",
-            "VT evaTS Intermediate",
-            "VT evaTS Advanced",
-            "VT evaTS Elite"
+            "CB JumpSwitch Easy",
+            "Aimerz+ hopTS Easy S1",
+            "Aimerz+ hopTS Med S1",
+            "Aimerz+ hopTS Hard S1"
           ]
         },
         {
           "family": "tamTargetSwitch Smooth",
-          "why": "The smooth cut of tam's switching lineage, which asks for a controlled switch rather than a flicked one. Four cuts by one author, on boards from 4,255 to 138,805.",
+          "focus": "Stay on the circle until the target falls.",
+          "why": "Small dots circling you, 0.5s to kill, and they regen fast if you come off them. Starts on the 30% Larger cut of the Hard version.",
           "rungs": [
             "tamTargetSwitch Smooth Hard 30% Larger",
             "tamTargetSwitch Smooth Easy",
@@ -455,13 +349,14 @@
           ]
         },
         {
-          "family": "domiSwitch",
-          "why": "Four cuts of one scenario, sized and sped: easier, easy, standard, hard.",
+          "family": "FlyTS",
+          "focus": "Read the flight. Finish, then transfer.",
+          "why": "Four flying targets, 50 hits each. The S5 FlyTS cuts, with Elite as the Expert rung.",
           "rungs": [
-            "domiSwitch Easier",
-            "domiSwitch Easy",
-            "domiSwitch Avasive",
-            "domiSwitch"
+            "VT FlyTS Novice S5",
+            "VT FlyTS Intermediate S5",
+            "VT FlyTS Advanced S5",
+            "VT FlyTS Elite S5"
           ]
         }
       ]

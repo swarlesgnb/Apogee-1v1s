@@ -555,7 +555,7 @@
     "Aimerz+ Week #5 - Static Switching 30% smaller": {
       "leaderboardId": 64673,
       "aimType": "Switching",
-      "subCategory": "Speed Switching"
+      "subCategory": "Stability Switching"
     },
     "Aimerz+ Week #7 - Suavetrack": {
       "leaderboardId": 40784,
@@ -615,7 +615,7 @@
     "Aimerz+ hopTS Easy S1": {
       "leaderboardId": 68429,
       "aimType": "Switching",
-      "subCategory": null
+      "subCategory": "Evasive Switching"
     },
     "Aimerz+ hopTS Hard S1": {
       "leaderboardId": 68311,
@@ -655,7 +655,7 @@
     "Aimerz+ pivoTS Easy S1": {
       "leaderboardId": 68432,
       "aimType": "Switching",
-      "subCategory": null
+      "subCategory": "Speed Switching"
     },
     "Aimerz+ pivoTS Hard S1": {
       "leaderboardId": 68313,
@@ -740,7 +740,7 @@
     "Air Angelic Easier": {
       "leaderboardId": 189778,
       "aimType": "Tracking",
-      "subCategory": "Reading Tracking"
+      "subCategory": "Reactive Tracking"
     },
     "Air Angelic Invincible 2": {
       "leaderboardId": 31,
@@ -765,11 +765,11 @@
     "Air Angelic rAim Easy": {
       "leaderboardId": 572,
       "aimType": null,
-      "subCategory": null
+      "subCategory": "Reactive Tracking"
     },
     "Air CELESTIAL": {
       "leaderboardId": 1241,
-      "aimType": null,
+      "aimType": "Tracking",
       "subCategory": "Reactive Tracking"
     },
     "Air CELESTIAL Expert": {
@@ -955,22 +955,22 @@
     "Air Voltaic Invincible 4": {
       "leaderboardId": 1092,
       "aimType": null,
-      "subCategory": null
+      "subCategory": "Reactive Tracking"
     },
     "Air Voltaic Invincible 4 Easier": {
       "leaderboardId": 185406,
       "aimType": "Tracking",
-      "subCategory": "Reading Tracking"
+      "subCategory": "Reactive Tracking"
     },
     "Air Voltaic Invincible 4 Entry": {
       "leaderboardId": 143160,
       "aimType": "Tracking",
-      "subCategory": null
+      "subCategory": "Reactive Tracking"
     },
     "Air Voltaic Invincible 4 Medium": {
       "leaderboardId": 184775,
       "aimType": "Tracking",
-      "subCategory": "Reading Tracking"
+      "subCategory": "Reactive Tracking"
     },
     "Air Voltaic Invincible 4 Slightly Slower": {
       "leaderboardId": 185402,
@@ -1329,7 +1329,7 @@
     },
     "B180 rAim Easy": {
       "leaderboardId": 781,
-      "aimType": null,
+      "aimType": "Clicking",
       "subCategory": "Dynamic Clicking"
     },
     "B180T Voltaic": {
@@ -1347,15 +1347,25 @@
       "aimType": "Switching",
       "subCategory": "Stability Switching"
     },
+    "B180T Voltaic Easy Regen": {
+      "leaderboardId": 2837,
+      "aimType": null,
+      "subCategory": "Evasive Switching"
+    },
     "B180T Voltaic Easy Slower": {
       "leaderboardId": 185571,
       "aimType": "Switching",
       "subCategory": null
     },
+    "B180T Voltaic Regen": {
+      "leaderboardId": 2153,
+      "aimType": null,
+      "subCategory": "Evasive Switching"
+    },
     "B180T rAim Easy": {
       "leaderboardId": 740,
-      "aimType": "Switching",
-      "subCategory": "Stability Switching"
+      "aimType": null,
+      "subCategory": "Evasive Switching"
     },
     "B180TI Voltaic Iron": {
       "leaderboardId": 11839,
@@ -1375,7 +1385,7 @@
     "Bounce 180 Sparky": {
       "leaderboardId": 762,
       "aimType": "Clicking",
-      "subCategory": null
+      "subCategory": "Dynamic Clicking"
     },
     "Bounce 180 Tracking": {
       "leaderboardId": 122,
@@ -1767,8 +1777,18 @@
       "aimType": null,
       "subCategory": null
     },
+    "Centering II 180 Entry": {
+      "leaderboardId": 111447,
+      "aimType": "Tracking",
+      "subCategory": "Precise Tracking"
+    },
     "Centering II 180 Fixed Larger": {
       "leaderboardId": 84930,
+      "aimType": "Tracking",
+      "subCategory": "Precise Tracking"
+    },
+    "Centering II 180 Intermediate": {
+      "leaderboardId": 111448,
       "aimType": "Tracking",
       "subCategory": "Precise Tracking"
     },
@@ -1776,6 +1796,16 @@
       "leaderboardId": 33902,
       "aimType": "Tracking",
       "subCategory": null
+    },
+    "Centering II 180 Novice": {
+      "leaderboardId": 111445,
+      "aimType": "Tracking",
+      "subCategory": "Precise Tracking"
+    },
+    "Centering II 180 no strafes": {
+      "leaderboardId": 423,
+      "aimType": "Tracking",
+      "subCategory": "Precise Tracking"
     },
     "Centering II 90 No Strafes Fixed": {
       "leaderboardId": 33903,
@@ -1955,7 +1985,7 @@
     "Close Fast Strafes Invincible - Thin": {
       "leaderboardId": 814,
       "aimType": null,
-      "subCategory": "Reactive Tracking"
+      "subCategory": null
     },
     "Close Fast Strafes Invincible Precise+": {
       "leaderboardId": 1343,
@@ -1970,7 +2000,7 @@
     "Close Long Strafes Invincible": {
       "leaderboardId": 117,
       "aimType": null,
-      "subCategory": "Reactive Tracking"
+      "subCategory": null
     },
     "Close Needle Thin Easy": {
       "leaderboardId": 141929,
@@ -2120,7 +2150,7 @@
     "Controlsphere rAim": {
       "leaderboardId": 5102,
       "aimType": "Tracking",
-      "subCategory": "Control Tracking"
+      "subCategory": "Precise Tracking"
     },
     "Controlsphere rAim Easy": {
       "leaderboardId": 5137,
@@ -2130,7 +2160,7 @@
     "Controlsphere rAim Easy 90%": {
       "leaderboardId": 83485,
       "aimType": "Tracking",
-      "subCategory": null
+      "subCategory": "Precise Tracking"
     },
     "Controlswitch Click": {
       "leaderboardId": 200238,
@@ -2200,7 +2230,7 @@
     "DotTS Entry": {
       "leaderboardId": 111232,
       "aimType": "Switching",
-      "subCategory": null
+      "subCategory": "Speed Switching"
     },
     "EvoClick Revosect": {
       "leaderboardId": 141058,
@@ -2250,17 +2280,17 @@
     "Flicker Plaza": {
       "leaderboardId": 677,
       "aimType": "Tracking",
-      "subCategory": null
+      "subCategory": "Reactive Tracking"
     },
     "Flicker Plaza rAim Easy": {
       "leaderboardId": 606,
-      "aimType": "Switching",
-      "subCategory": "Speed Switching"
+      "aimType": null,
+      "subCategory": "Reactive Tracking"
     },
     "Flicker Plaza rAim Easy Less Blinks": {
       "leaderboardId": 128774,
       "aimType": "Tracking",
-      "subCategory": null
+      "subCategory": "Reactive Tracking"
     },
     "FloatTS Angelic": {
       "leaderboardId": 38548,
@@ -2475,7 +2505,7 @@
     "Ground Plaza Sparky v3 Invincible 5": {
       "leaderboardId": 1090,
       "aimType": null,
-      "subCategory": "Reactive Tracking"
+      "subCategory": null
     },
     "Ground Plaza Sparky v3 OW": {
       "leaderboardId": 871,
@@ -2570,7 +2600,7 @@
     "Kindaclose long stop strafes": {
       "leaderboardId": 15877,
       "aimType": "Tracking",
-      "subCategory": null
+      "subCategory": "Reactive Tracking"
     },
     "Kindafar Long Strafes": {
       "leaderboardId": 2152,
@@ -2640,7 +2670,7 @@
     "Leapstrafes Control Medium": {
       "leaderboardId": 63065,
       "aimType": "Tracking",
-      "subCategory": "Precise Tracking"
+      "subCategory": "Reactive Tracking"
     },
     "Leapstrafes Control Phantasy 30% Smaller": {
       "leaderboardId": 55631,
@@ -2650,12 +2680,12 @@
     "Leapstrafes Control wobin": {
       "leaderboardId": 184561,
       "aimType": "Tracking",
-      "subCategory": null
+      "subCategory": "Reactive Tracking"
     },
     "Leapstrafes Control wobin Easier": {
       "leaderboardId": 185344,
       "aimType": "Tracking",
-      "subCategory": null
+      "subCategory": "Reactive Tracking"
     },
     "Leapstrafes Control wobin Expert": {
       "leaderboardId": 185014,
@@ -2665,7 +2695,7 @@
     "Leapstrafes Control wobin Hard": {
       "leaderboardId": 184845,
       "aimType": "Tracking",
-      "subCategory": null
+      "subCategory": "Reactive Tracking"
     },
     "Leapstrafes Revosect": {
       "leaderboardId": 142725,
@@ -2790,7 +2820,7 @@
     "Midrange Short Strafes Invincible Raspberry": {
       "leaderboardId": 1484,
       "aimType": null,
-      "subCategory": "Reactive Tracking"
+      "subCategory": null
     },
     "Multiclick Easy MIRA": {
       "leaderboardId": 63891,
@@ -2850,7 +2880,7 @@
     "PGTI Vertical Iron": {
       "leaderboardId": 29252,
       "aimType": "Tracking",
-      "subCategory": "Precise Tracking"
+      "subCategory": null
     },
     "PGTI Voltaic": {
       "leaderboardId": 99,
@@ -2931,6 +2961,26 @@
       "leaderboardId": 45478,
       "aimType": "Tracking",
       "subCategory": null
+    },
+    "Pasu 3-Click Wide": {
+      "leaderboardId": 54719,
+      "aimType": "Clicking",
+      "subCategory": "Dynamic Clicking"
+    },
+    "Pasu 3-Click Wide Easy": {
+      "leaderboardId": 54718,
+      "aimType": "Clicking",
+      "subCategory": "Dynamic Clicking"
+    },
+    "Pasu 3-Click v2 Less Easy": {
+      "leaderboardId": 3876,
+      "aimType": null,
+      "subCategory": "Dynamic Clicking"
+    },
+    "Pasu 3-click v2": {
+      "leaderboardId": 1094,
+      "aimType": null,
+      "subCategory": "Dynamic Clicking"
     },
     "Pasu Angelic": {
       "leaderboardId": 38540,
@@ -3460,7 +3510,7 @@
     "Popcorn Sparky": {
       "leaderboardId": 502,
       "aimType": "Clicking",
-      "subCategory": null
+      "subCategory": "Dynamic Clicking"
     },
     "Popcorn Voltaic": {
       "leaderboardId": 8,
@@ -3474,7 +3524,7 @@
     },
     "Popcorn rAim Easy": {
       "leaderboardId": 607,
-      "aimType": "Clicking",
+      "aimType": null,
       "subCategory": "Dynamic Clicking"
     },
     "PreciseTrack Avasive": {
@@ -3785,12 +3835,22 @@
     "Smooth Your Vertical Altered POV Easy v2": {
       "leaderboardId": 48398,
       "aimType": "Tracking",
-      "subCategory": null
+      "subCategory": "Precise Tracking"
+    },
+    "Smooth Your Vertical Altered POV Entry": {
+      "leaderboardId": 112748,
+      "aimType": "Tracking",
+      "subCategory": "Precise Tracking"
+    },
+    "Smooth Your Vertical Altered POV Intermediate": {
+      "leaderboardId": 107995,
+      "aimType": "Tracking",
+      "subCategory": "Precise Tracking"
     },
     "Smooth Your Vertical Altered POV v2": {
       "leaderboardId": 48393,
       "aimType": "Tracking",
-      "subCategory": null
+      "subCategory": "Precise Tracking"
     },
     "Smooth Your Vertical Close": {
       "leaderboardId": 45483,
@@ -3814,18 +3874,18 @@
     },
     "SmoothBot Invincible Goated": {
       "leaderboardId": 348,
-      "aimType": "Tracking",
+      "aimType": null,
       "subCategory": "Precise Tracking"
     },
     "SmoothBot Invincible Goated 75%": {
       "leaderboardId": 75962,
       "aimType": "Tracking",
-      "subCategory": null
+      "subCategory": "Precise Tracking"
     },
     "SmoothBot Invincible Goated Smaller": {
       "leaderboardId": 815,
       "aimType": null,
-      "subCategory": null
+      "subCategory": "Precise Tracking"
     },
     "SmoothBot Perfected": {
       "leaderboardId": 184298,
@@ -4060,7 +4120,7 @@
     "Smoothsphere Viscose Horizontal Entry": {
       "leaderboardId": 189903,
       "aimType": "Tracking",
-      "subCategory": "Precise Tracking"
+      "subCategory": null
     },
     "Smoothsphere weaker UFO": {
       "leaderboardId": 1392,
@@ -4180,7 +4240,7 @@
     "StaticSwitchingVox": {
       "leaderboardId": 15659,
       "aimType": "Switching",
-      "subCategory": "Speed Switching"
+      "subCategory": "Stability Switching"
     },
     "StaticSwitchingVox Entry": {
       "leaderboardId": 190275,
@@ -4699,11 +4759,6 @@
     },
     "VT Aether Elite S5": {
       "leaderboardId": 104623,
-      "aimType": "Tracking",
-      "subCategory": "Reactive Tracking"
-    },
-    "VT Aether Entry S5 Precision Focus": {
-      "leaderboardId": 104846,
       "aimType": "Tracking",
       "subCategory": "Reactive Tracking"
     },
@@ -5375,7 +5430,7 @@
     "VT PreciseOrb Intermediate 15% Slower": {
       "leaderboardId": 41595,
       "aimType": "Tracking",
-      "subCategory": "Precise Tracking"
+      "subCategory": null
     },
     "VT PreciseOrb Novice": {
       "leaderboardId": 24968,
@@ -5700,7 +5755,7 @@
     "Whisphere Extra Small & Slow": {
       "leaderboardId": 34968,
       "aimType": "Tracking",
-      "subCategory": null
+      "subCategory": "Precise Tracking"
     },
     "Whisphere Med 60s": {
       "leaderboardId": 84929,
@@ -5715,12 +5770,12 @@
     "Whisphere Small & Slow 55%": {
       "leaderboardId": 128693,
       "aimType": "Tracking",
-      "subCategory": null
+      "subCategory": "Precise Tracking"
     },
     "Whisphere Small & Slow 75%": {
       "leaderboardId": 77068,
       "aimType": "Tracking",
-      "subCategory": null
+      "subCategory": "Precise Tracking"
     },
     "Whisphere Small & Slow Easy": {
       "leaderboardId": 77069,
@@ -5845,7 +5900,7 @@
     "aimerz+ B180TC Normal": {
       "leaderboardId": 44380,
       "aimType": "Switching",
-      "subCategory": null
+      "subCategory": "Evasive Switching"
     },
     "aimerz+ PTI Hard": {
       "leaderboardId": 44351,
@@ -5965,12 +6020,12 @@
     "aimerz+ pivoTS Hard": {
       "leaderboardId": 44373,
       "aimType": "Switching",
-      "subCategory": null
+      "subCategory": "Speed Switching"
     },
     "aimerz+ pivoTS Normal": {
       "leaderboardId": 44376,
       "aimType": "Switching",
-      "subCategory": null
+      "subCategory": "Speed Switching"
     },
     "aimerz+ swingTS Hard": {
       "leaderboardId": 53596,
@@ -6265,7 +6320,7 @@
     "cloverRawControl Viscose Entry": {
       "leaderboardId": 190024,
       "aimType": "Tracking",
-      "subCategory": "Precise Tracking"
+      "subCategory": null
     },
     "cloverRawControl Viscose Expert 50cm": {
       "leaderboardId": 184840,
@@ -6339,7 +6394,7 @@
     },
     "devTS Goated NR Static": {
       "leaderboardId": 2109,
-      "aimType": null,
+      "aimType": "Switching",
       "subCategory": "Speed Switching"
     },
     "devTS Goated NR Static 5Bot": {
@@ -6354,7 +6409,7 @@
     },
     "devTS Goated NR Static Small": {
       "leaderboardId": 1633,
-      "aimType": null,
+      "aimType": "Switching",
       "subCategory": "Speed Switching"
     },
     "devTS Goated NR Static Small 5Bot": {
@@ -6405,12 +6460,12 @@
     "domiSwitch Avasive": {
       "leaderboardId": 129746,
       "aimType": "Switching",
-      "subCategory": "Evasive Switching"
+      "subCategory": "Stability Switching"
     },
     "domiSwitch Easier": {
       "leaderboardId": 185428,
       "aimType": "Switching",
-      "subCategory": "Evasive Switching"
+      "subCategory": null
     },
     "domiSwitch Easy": {
       "leaderboardId": 83043,
@@ -7017,13 +7072,28 @@
       "aimType": "Tracking",
       "subCategory": "Precise Tracking"
     },
+    "tamTargetSwitch Control": {
+      "leaderboardId": 57,
+      "aimType": null,
+      "subCategory": "Evasive Switching"
+    },
+    "tamTargetSwitch Control Entry": {
+      "leaderboardId": 110651,
+      "aimType": "Switching",
+      "subCategory": "Evasive Switching"
+    },
     "tamTargetSwitch Control Hard": {
       "leaderboardId": 757,
-      "aimType": "Switching",
+      "aimType": null,
       "subCategory": "Evasive Switching"
     },
     "tamTargetSwitch Control Hard 30% Larger": {
       "leaderboardId": 92614,
+      "aimType": "Switching",
+      "subCategory": "Evasive Switching"
+    },
+    "tamTargetSwitch Control Intermediate": {
+      "leaderboardId": 110123,
       "aimType": "Switching",
       "subCategory": "Evasive Switching"
     },
@@ -7194,7 +7264,7 @@
     },
     "voxTargetSwitch Jumbo": {
       "leaderboardId": 413,
-      "aimType": null,
+      "aimType": "Switching",
       "subCategory": "Speed Switching"
     },
     "voxTargetSwitch Jumbo [Low TTK]": {
@@ -7204,12 +7274,12 @@
     },
     "voxTargetSwitch Large": {
       "leaderboardId": 731,
-      "aimType": null,
+      "aimType": "Switching",
       "subCategory": "Speed Switching"
     },
     "voxTargetSwitch Small": {
       "leaderboardId": 1106,
-      "aimType": null,
+      "aimType": "Switching",
       "subCategory": "Speed Switching"
     },
     "waldoTS": {
@@ -7225,7 +7295,7 @@
     "waldoTS Entry": {
       "leaderboardId": 111840,
       "aimType": "Tracking",
-      "subCategory": "Precise Tracking"
+      "subCategory": null
     },
     "waldoTS Intermediate": {
       "leaderboardId": 111273,

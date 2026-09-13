@@ -2664,13 +2664,14 @@
     },
     {
       "name": "B180T rAim Easy",
-      "difficulty": "Easy",
+      "difficulty": "Apogee curated",
       "leaderboardId": 740,
       "aimType": "",
       "description": "To help vertical tracking on bouncing balls.",
-      "plays": 36285,
-      "entries": 4548,
-      "topScore": 122
+      "plays": 36406,
+      "entries": 4591,
+      "topScore": 122,
+      "fetchedAt": "2026-09-13T19:25:05.559Z"
     },
     {
       "name": "B180TI Voltaic Iron",
@@ -4444,33 +4445,36 @@
     },
     {
       "name": "Flicker Plaza",
-      "difficulty": "Hard",
+      "difficulty": "Apogee curated",
       "leaderboardId": 677,
       "aimType": "Tracking",
       "description": "Ground Plaza but with bots that get most of their difficulty from teleporting instead of dodging",
-      "plays": 268515,
-      "entries": 28040,
-      "topScore": 923
+      "plays": 270666,
+      "entries": 28412,
+      "topScore": 923,
+      "fetchedAt": "2026-09-13T19:23:26.694Z"
     },
     {
       "name": "Flicker Plaza rAim Easy",
-      "difficulty": "Medium",
+      "difficulty": "Apogee curated",
       "leaderboardId": 606,
       "aimType": "",
       "description": "Ground Plaza but with bots, that get most of their difficulty from teleporting instead of dodging.",
-      "plays": 359909,
-      "entries": 55806,
-      "topScore": 929
+      "plays": 366276,
+      "entries": 56852,
+      "topScore": 929,
+      "fetchedAt": "2026-09-13T19:23:12.673Z"
     },
     {
       "name": "Flicker Plaza rAim Easy Less Blinks",
-      "difficulty": "Easier",
+      "difficulty": "Apogee curated",
       "leaderboardId": 128774,
       "aimType": "Tracking",
       "description": "Ground Plaza but with bots, that get most of their difficulty from teleporting instead of dodging.",
-      "plays": 455735,
-      "entries": 112168,
-      "topScore": 936
+      "plays": 468398,
+      "entries": 115077,
+      "topScore": 936,
+      "fetchedAt": "2026-09-13T19:22:58.615Z"
     },
     {
       "name": "FloatTS Angelic",
@@ -5074,13 +5078,14 @@
     },
     {
       "name": "Kindaclose long stop strafes",
-      "difficulty": "Beginner+",
+      "difficulty": "Apogee curated",
       "leaderboardId": 15877,
       "aimType": "Tracking",
       "description": "This target randomly repeats acceleration, deceleration, and stopping. It is designed to develop a basic sense of speed control in tracking aim. slow - fast - slow - stop - slow",
-      "plays": 118743,
-      "entries": 12011,
-      "topScore": 2521
+      "plays": 120217,
+      "entries": 12168,
+      "topScore": 2521,
+      "fetchedAt": "2026-09-13T19:22:44.564Z"
     },
     {
       "name": "Kindafar Long Strafes",
@@ -7484,23 +7489,25 @@
     },
     {
       "name": "Smooth Your Vertical Altered POV Easy v2",
-      "difficulty": "Extra Classic",
+      "difficulty": "Apogee curated",
       "leaderboardId": 48398,
       "aimType": "Tracking",
       "description": "A pure test of vertical smoothness.\r\nBased on \"Smooth Your Vertical\"\r\nAltered point of view.",
-      "plays": 116927,
-      "entries": 18893,
-      "topScore": 7320
+      "plays": 119446,
+      "entries": 19248,
+      "topScore": 7320,
+      "fetchedAt": "2026-09-13T19:21:59.057Z"
     },
     {
       "name": "Smooth Your Vertical Altered POV v2",
-      "difficulty": "Extra Classic",
+      "difficulty": "Apogee curated",
       "leaderboardId": 48393,
       "aimType": "Tracking",
       "description": "A pure test of vertical smoothness.\r\nBased on \"Smooth Your Vertical\"\r\nAltered point of view.",
-      "plays": 86811,
-      "entries": 9310,
-      "topScore": 5568
+      "plays": 88085,
+      "entries": 9424,
+      "topScore": 5568,
+      "fetchedAt": "2026-09-13T19:22:30.528Z"
     },
     {
       "name": "Smooth Your Vertical Close",
@@ -11604,13 +11611,14 @@
     },
     {
       "name": "aimerz+ B180TC Normal",
-      "difficulty": "Medium",
+      "difficulty": "Apogee curated",
       "leaderboardId": 44380,
       "aimType": "Target Switching",
       "description": "Bots leap in mid-high arcs on top of a flat surface, changing depths as they traverse. Each bot needs to be tracked for a short period to be eliminated.",
-      "plays": 27931,
-      "entries": 7412,
-      "topScore": 100
+      "plays": 28208,
+      "entries": 7490,
+      "topScore": 100,
+      "fetchedAt": "2026-09-13T19:25:19.621Z"
     },
     {
       "name": "aimerz+ PTI Hard",
@@ -13954,13 +13962,14 @@
     },
     {
       "name": "tamTargetSwitch Control Hard",
-      "difficulty": "Hard",
+      "difficulty": "Apogee curated",
       "leaderboardId": 757,
       "aimType": null,
       "description": "Small regenerating dots wiggle back and forth around you while also bouncing slowly, 0.5s ttk, up to 1s to regen to full, starts regening 0.3s after going off target",
-      "plays": 1538806,
-      "entries": 110714,
-      "topScore": 53
+      "plays": 1557288,
+      "entries": 112991,
+      "topScore": 53,
+      "fetchedAt": "2026-09-13T19:24:51.555Z"
     },
     {
       "name": "tamTargetSwitch Control Hard 30% Larger",
@@ -14164,13 +14173,14 @@
     },
     {
       "name": "voxTS Viscose Varied",
-      "difficulty": "Easy",
+      "difficulty": "Apogee curated",
       "leaderboardId": 417,
       "aimType": "Target Switching",
       "description": "voxTS, but removed the awkward spawns + made the map shorter. Bots slowly decrease in size as the round progresses. Kill as many as you can in 1 min.",
-      "plays": 4585828,
-      "entries": 429489,
-      "topScore": 157
+      "plays": 4644638,
+      "entries": 435981,
+      "topScore": 157,
+      "fetchedAt": "2026-09-13T19:23:40.972Z"
     },
     {
       "name": "voxTS Voltaic",
@@ -14194,13 +14204,14 @@
     },
     {
       "name": "voxTS rAim",
-      "difficulty": "Expert",
+      "difficulty": "Apogee curated",
       "leaderboardId": 528,
       "aimType": "Target Switching",
-      "description": "Half the size of the regular. Inspiration from BF4 test range, go as fast as you can. Two more bots added.",
-      "plays": 315188,
-      "entries": 24846,
-      "topScore": 137
+      "description": "Half the size of the regular. Inspiration from BF4 test range, go as fast as you can. Two more bots added. ",
+      "plays": 319127,
+      "entries": 25193,
+      "topScore": 137,
+      "fetchedAt": "2026-09-13T19:23:55.138Z"
     },
     {
       "name": "voxTS rAim Easy",
@@ -14871,6 +14882,171 @@
       "plays": 214529,
       "entries": 28411,
       "topScore": 142
+    },
+    {
+      "name": "Pasu 3-Click Wide Easy",
+      "difficulty": "Apogee curated",
+      "leaderboardId": 54718,
+      "aimType": "Clicking",
+      "description": "Pasu 3-Click v4 on wider map",
+      "plays": 311840,
+      "entries": 22227,
+      "topScore": 341,
+      "fetchedAt": "2026-09-13T19:19:52.735Z"
+    },
+    {
+      "name": "Pasu 3-Click v2 Less Easy",
+      "difficulty": "Apogee curated",
+      "leaderboardId": 3876,
+      "aimType": null,
+      "description": "timescaled faster (.85) than ez (.70), 3 clicks to kill targets.",
+      "plays": 68229,
+      "entries": 4357,
+      "topScore": 42,
+      "fetchedAt": "2026-09-13T19:20:06.744Z"
+    },
+    {
+      "name": "Pasu 3-click v2",
+      "difficulty": "Apogee curated",
+      "leaderboardId": 1094,
+      "aimType": "Other",
+      "description": "No timescaling 3 clicks to kill targets.",
+      "plays": 380058,
+      "entries": 38023,
+      "topScore": 43,
+      "fetchedAt": "2026-09-13T19:20:20.757Z"
+    },
+    {
+      "name": "Pasu 3-Click Wide",
+      "difficulty": "Apogee curated",
+      "leaderboardId": 54719,
+      "aimType": "Clicking",
+      "description": "Pasu 3-Click v4 on wider map",
+      "plays": 101020,
+      "entries": 6171,
+      "topScore": 244,
+      "fetchedAt": "2026-09-13T19:20:34.799Z"
+    },
+    {
+      "name": "Centering II 180 Entry",
+      "difficulty": "Apogee curated",
+      "leaderboardId": 111447,
+      "aimType": "Tracking",
+      "description": "Centering with a 180 map and minimum 103 FOV ",
+      "plays": 95720,
+      "entries": 15780,
+      "topScore": 23292,
+      "fetchedAt": "2026-09-13T19:20:48.763Z"
+    },
+    {
+      "name": "Centering II 180 Novice",
+      "difficulty": "Apogee curated",
+      "leaderboardId": 111445,
+      "aimType": "Tracking",
+      "description": "Centering with a 180 map and minimum 103 FOV ",
+      "plays": 118512,
+      "entries": 20107,
+      "topScore": 22986,
+      "fetchedAt": "2026-09-13T19:21:02.844Z"
+    },
+    {
+      "name": "Centering II 180 Intermediate",
+      "difficulty": "Apogee curated",
+      "leaderboardId": 111448,
+      "aimType": "Tracking",
+      "description": "Centering with a 180 map and minimum 103 FOV ",
+      "plays": 359354,
+      "entries": 31155,
+      "topScore": 22068,
+      "fetchedAt": "2026-09-13T19:21:16.910Z"
+    },
+    {
+      "name": "Centering II 180 no strafes",
+      "difficulty": "Apogee curated",
+      "leaderboardId": 423,
+      "aimType": "Tracking",
+      "description": "Centering with a 180 map and minimum 103 FOV",
+      "plays": 1915237,
+      "entries": 80907,
+      "topScore": 19548,
+      "fetchedAt": "2026-09-13T19:21:31.117Z"
+    },
+    {
+      "name": "Smooth Your Vertical Altered POV Entry",
+      "difficulty": "Apogee curated",
+      "leaderboardId": 112748,
+      "aimType": "Tracking",
+      "description": "A pure test of vertical smoothness.\r\nBased on \"Smooth Your Vertical\"\r\nAltered point of view.\r\n ",
+      "plays": 36978,
+      "entries": 9707,
+      "topScore": 7566,
+      "fetchedAt": "2026-09-13T19:21:45.072Z"
+    },
+    {
+      "name": "Smooth Your Vertical Altered POV Intermediate",
+      "difficulty": "Apogee curated",
+      "leaderboardId": 107995,
+      "aimType": "Tracking",
+      "description": "A pure test of vertical smoothness.\r\nBased on \"Smooth Your Vertical\"\r\nAltered point of view.",
+      "plays": 140020,
+      "entries": 21048,
+      "topScore": 6480,
+      "fetchedAt": "2026-09-13T19:22:12.994Z"
+    },
+    {
+      "name": "tamTargetSwitch Control Intermediate",
+      "difficulty": "Apogee curated",
+      "leaderboardId": 110123,
+      "aimType": "Target Switching",
+      "description": "Slightly modified version of the scenario with larger, faster bots that have a significantly lower ttk\r\n\r\nSmall regenerating dots wiggle back and forth around you while also bouncing slowly, 0.25s ttk, up to 0.5s to regen to full, starts regening 0.3s after going off target ",
+      "plays": 197801,
+      "entries": 19630,
+      "topScore": 71,
+      "fetchedAt": "2026-09-13T19:24:23.336Z"
+    },
+    {
+      "name": "tamTargetSwitch Control",
+      "difficulty": "Apogee curated",
+      "leaderboardId": 57,
+      "aimType": null,
+      "description": "Small regenerating dots wiggle back and forth around you, 0.5s ttk, up to 1s to regen to full, starts regening 0.3s after going off target",
+      "plays": 715342,
+      "entries": 48494,
+      "topScore": 58,
+      "fetchedAt": "2026-09-13T19:24:37.497Z"
+    },
+    {
+      "name": "B180T Voltaic Easy Regen",
+      "difficulty": "Apogee curated",
+      "leaderboardId": 2837,
+      "aimType": null,
+      "description": "Bounce 180 Tracking. Bots immediately regen on miss.",
+      "plays": 286740,
+      "entries": 17355,
+      "topScore": 81,
+      "fetchedAt": "2026-09-13T19:25:33.681Z"
+    },
+    {
+      "name": "B180T Voltaic Regen",
+      "difficulty": "Apogee curated",
+      "leaderboardId": 2153,
+      "aimType": null,
+      "description": "Bounce 180 Tracking, with smaller bots and a curved map.",
+      "plays": 204722,
+      "entries": 12956,
+      "topScore": 48,
+      "fetchedAt": "2026-09-13T19:25:47.664Z"
+    },
+    {
+      "name": "tamTargetSwitch Control Entry",
+      "difficulty": "Apogee curated",
+      "leaderboardId": 110651,
+      "aimType": "Target Switching",
+      "description": "Slightly modified version of the scenario with larger, faster bots that have a significantly lower ttk\r\n\r\nSmall regenerating dots wiggle back and forth around you while also bouncing slowly, 0.25s ttk, up to 0.5s to regen to full, starts regening 0.3s after going off target ",
+      "plays": 43079,
+      "entries": 9485,
+      "topScore": 88,
+      "fetchedAt": "2026-09-13T19:26:27.335Z"
     }
   ]
 }

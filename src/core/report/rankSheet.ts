@@ -368,7 +368,7 @@ function renderOverall(l: Ladder, theme: string | null): string {
     `      <h2>Overall</h2>\n` +
     `      <p class="plate-note">${
       theme ? `${esc(theme)} · ` : ""
-    }derived from the three categories</p>\n` +
+    }derived from the category ladders</p>\n` +
     `    </div>\n` +
     `    <ol class="overall">\n${rungs}\n    </ol>\n` +
     `  </section>`
@@ -1274,8 +1274,8 @@ ${colophon.map(([k, v]) => `      <div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div
 
           <dt><span class="key-note">both names</span></dt>
           <dd>Moved towards the opposite ground where the colour alone would be
-            unreadable, by exactly as much as it takes and no more &mdash; which is what
-            the client does, and what any surface showing a rank ought to. So a name that
+            unreadable, by exactly as much as it takes and no more. That is what the
+            client does, and what any surface showing a rank ought to. So a name that
             looks fine here can still be one the findings below name: the chip beside it
             is the honest one, and the ratios on the right are measured before the move,
             not after.</dd>

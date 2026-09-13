@@ -351,9 +351,9 @@ check(
     if (differences.length >= 6) return;
     if (JSON.stringify(a) === JSON.stringify(b)) return;
     if (a && b && typeof a === "object" && typeof b === "object") {
-      // Arrays by index, which is sound here because the rebuild sorts families and
-      // variants the same way the pool is written - and a change in that order is itself
-      // worth reporting rather than hiding behind a set comparison.
+      // Arrays by index: the rebuild preserves the family circuit and orders each
+      // family by window, so a change in that order is itself worth reporting rather
+      // than hiding behind a set comparison.
       for (const k of new Set([...Object.keys(a), ...Object.keys(b)])) {
         walk((a as Record<string, unknown>)[k], (b as Record<string, unknown>)[k], `${path}.${k}`);
       }

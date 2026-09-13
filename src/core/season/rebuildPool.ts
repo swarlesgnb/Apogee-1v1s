@@ -181,9 +181,19 @@ export function rebuildPool(poolIn: Record<string, unknown>, season: RebuildSeas
   pool.windows = season.windows ?? pool.windows;
   pool.matchWindow = season.matchPool?.window ?? pool.matchWindow;
   pool.categories = season.categories.map((c: { name: string }) => c.name);
-  pool.families = Object.values(families).sort(
-    (a, b) => a.category.localeCompare(b.category) || a.family.localeCompare(b.family),
+  // Category playlists follow the authored circuit. Saving an unrelated threshold
+  // must not silently alphabetize that circuit; newly added families go after it.
+  const priorOrder = new Map<string, number>(
+    (pool.families ?? []).map((f: { category: string; family: string }, i: number) => [
+      `${f.category}/${f.family}`, i,
+    ]),
   );
+  pool.families = Object.values(families).sort((a, b) => {
+    const ai = priorOrder.get(`${a.category}/${a.family}`) ?? Infinity;
+    const bi = priorOrder.get(`${b.category}/${b.family}`) ?? Infinity;
+    return (ai === bi ? 0 : ai < bi ? -1 : 1)
+      || a.category.localeCompare(b.category) || a.family.localeCompare(b.family);
+  });
   delete pool.overrides;
 
   return pool;

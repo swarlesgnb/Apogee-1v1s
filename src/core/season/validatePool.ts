@@ -1352,6 +1352,28 @@ ${BOLD}mechanic${RESET}`);
   for (const [m, fams] of [...byMech].sort()) {
     console.log(`  ${DIM}${m.padEnd(10)} ${fams.join(", ")}${RESET}`);
   }
+
+  // The tile tag. Unlike the mechanic it is on every scenario, so the claim that keeps it
+  // honest is about provenance: a value labelled Viscose's must be Viscose's, and a
+  // scenario Viscose does tag must never be shown as the season's own guess.
+  const PARTS = new Set(["Arm", "Wrist", "Fingertip", "Blending"]);
+  type ArmVariant = { scenario: string; arm?: string; armFrom?: string };
+  const variants = pool.families.flatMap((f) => f.variants as ArmVariant[]);
+  const untagged = variants.filter((v) => !PARTS.has(v.arm ?? "") || !["Viscose", "Apogee"].includes(v.armFrom ?? ""));
+  const miscited = variants.filter((v) => v.armFrom === "Viscose" && published.get(v.scenario) !== v.arm);
+  const uncited = variants.filter((v) => published.has(v.scenario) && v.armFrom !== "Viscose");
+  check(
+    "every scenario names one part of the arm and whose word it is",
+    untagged.length === 0,
+    untagged.map((v) => v.scenario).join(", "),
+  );
+  check(
+    "every arm labelled Viscose's is the one Viscose publishes, and every published one is labelled so",
+    miscited.length === 0 && uncited.length === 0,
+    [...miscited, ...uncited].map((v) => `${v.scenario}: ${v.arm} (${v.armFrom}), published ${published.get(v.scenario) ?? "none"}`).join("; "),
+  );
+  const cited = variants.filter((v) => v.armFrom === "Viscose").length;
+  console.log(`  ${DIM}arm on the tiles: ${cited} of ${variants.length} from Viscose, ${variants.length - cited} the season's own call${RESET}`);
 }
 
 // ---- verdict ------------------------------------------------------------------------

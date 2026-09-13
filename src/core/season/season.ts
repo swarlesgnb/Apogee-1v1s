@@ -78,6 +78,8 @@ export interface SeasonBand {
 
 export interface SeasonCategory {
   name: string;
+  headline?: string;
+  description?: string;
   /**
    * This category's bands, each graded independently.
    *
@@ -102,6 +104,8 @@ export interface SeasonCategory {
 }
 
 export interface SeasonScenario {
+  /** Short practice focus, authored for the season rather than inferred from a name. */
+  focus?: string;
   scenario: string;
   category: string;
   leaderboardId: number | null;
@@ -126,6 +130,17 @@ export interface SeasonScenario {
    * Absent means unpublished, never unknown-and-guessable.
    */
   mechanic?: string;
+  /**
+   * The part of the arm the scenario loads most, in Viscose's four words, on every
+   * scenario rather than only where one is published.
+   *
+   * `armFrom` says whose word it is. "Viscose" is copied from Viscose's own tag for this
+   * exact scenario and `validate:pool` holds it to that; "Apogee" is the season's own call,
+   * made from the family's motion, and the tile says so rather than passing it off as
+   * published. `mechanic` above stays the published-only, family-level fact it was.
+   */
+  arm?: "Arm" | "Wrist" | "Fingertip" | "Blending";
+  armFrom?: "Viscose" | "Apogee";
   /**
    * The sub-skill the family trains, in the pool's two-word form: "Static Clicking",
    * "Reading Tracking". Carried into the season rather than looked up because the season

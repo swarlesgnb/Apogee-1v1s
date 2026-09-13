@@ -338,6 +338,22 @@ check("advisory", "secrets are not committed", () => {
   return [/^\.env$/m.test(ignore), ignore.includes(".env") ? ".env is ignored" : ".env is NOT gitignored"];
 });
 
+// A public repository with no LICENSE is all rights reserved, which is the opposite of
+// what publishing one is for: readable, but nobody may fork it, package it or run their
+// own. This was on the manual list until the choice was made; it is checkable, so it is
+// checked. The README has to name the same licence the file grants, because that section
+// is what anyone actually reads before the 661 lines.
+check("advisory", "a licence is chosen and stated", () => {
+  if (!existsSync(file("LICENSE"))) return [false, "no LICENSE: all rights reserved"];
+  const text = readFileSync(file("LICENSE"), "utf8");
+  if (!text.includes("GNU AFFERO GENERAL PUBLIC LICENSE")) {
+    return [false, "LICENSE is not the AGPL text package.json declares"];
+  }
+  const readme = readFileSync(file("README.md"), "utf8");
+  if (!readme.includes("AGPL")) return [false, "LICENSE grants the AGPL, README does not say so"];
+  return [true, "AGPL-3.0-or-later, stated in the README"];
+});
+
 // ---------------------------------------------------------------------------
 // client
 // ---------------------------------------------------------------------------
@@ -428,7 +444,6 @@ for (const item of [
   "Decide what happens to ratings when the beta ends: reset, or carry over",
   "Talk to KovaaK's about the API usage before, not after, traffic appears",
   "Confirm the benchmark authors are comfortable with their work being used",
-  "Choose a licence; with no LICENSE file the repository is all rights reserved",
 ]) {
   console.log(`  [ ] ${item}`);
 }
