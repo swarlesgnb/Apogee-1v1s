@@ -98,8 +98,8 @@ function report(kind: string, err: unknown): void {
       message: "Something went wrong inside Apogee.",
       detail:
         `${detail.split("\n").slice(0, 6).join("\n")}\n\n` +
-        "The app may keep working. If it does not, quit and reopen it - and the log " +
-        "below is worth attaching to a bug report.",
+        "The app may keep working. If it doesn't, restart it. Attach the log to any " +
+        "bug report.",
       buttons: ["Open log", "Continue"],
       defaultId: 1,
       cancelId: 1,

@@ -51,7 +51,8 @@ const MAX_STEP_SPREAD = 0.25;
  * the window is allowed to be, and a large monitor.
  */
 const WINDOWS: [number, number][] = [[1280, 880], [940, 640], [2560, 1440]];
-const RAIL = 208;
+const RAIL = Number(/--rail-w:\s*(\d+)px/.exec(html)?.[1]);
+if (!Number.isFinite(RAIL)) throw new Error("missing rail width");
 const BAR = 46;
 
 const parse = (h: string) => parseInt(h.replace("#", ""), 16);
@@ -179,7 +180,7 @@ const lift = maxLift();
 function peakAlpha(win: [number, number], scale = 1, step = 5): { peak: number; mean: number } {
   const [winW, winH] = win;
   const vmax = Math.max(winW, winH) / 100;
-  const W = winW - RAIL;
+  const W = winW - (winW <= 960 ? 72 : RAIL);
   const H = winH - BAR;
   let peak = 0;
   let sum = 0;

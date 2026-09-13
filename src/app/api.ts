@@ -165,6 +165,21 @@ export interface FoundMatch {
    * other end of it. find-match never sets it, so every existing caller sees undefined.
    */
   duel?: { id: string; to?: string; from?: string } | null;
+  /**
+   * Set when this match is one leg of a tournament fixture. Unrated. `leg` 1 is played
+   * first against nobody, and `opponentName` answers it with the same three afterwards.
+   */
+  tournament?: TournamentLeg | null;
+}
+
+export interface TournamentLeg {
+  id: string;
+  name: string;
+  fixtureId: string;
+  attempt: number;
+  label: string;
+  leg: 1 | 2;
+  opponentName: string;
 }
 
 /**
@@ -274,6 +289,58 @@ export function answerDuel(
   action: "accept" | "decline" | "cancel",
 ): Promise<FoundMatch & DuelAnswer> {
   return callFunction<FoundMatch & DuelAnswer>("answer-duel", { duelId, action });
+}
+
+/* ------------------------------------------------------------------ tournaments ---- */
+
+// Declared once, in the core, and read by both ends - see the header of view.ts.
+export type { TournamentSummary, TournamentView } from "../core/tournament/view.ts";
+import type { TournamentSummary, TournamentView } from "../core/tournament/view.ts";
+
+export interface TournamentList {
+  tournaments: TournamentSummary[];
+  /** The one asked for, in full, or null when none was. */
+  view: TournamentView | null;
+}
+
+/** Every tournament worth listing, and one in full if an id is given. */
+export function fetchTournaments(tournamentId?: string): Promise<TournamentList> {
+  return callFunction<TournamentList>("list-tournaments", tournamentId ? { tournamentId } : {});
+}
+
+/**
+ * Everything short of playing: create, enter, leave, check in, and the host's three.
+ *
+ * A union rather than a loose object so the shape each action takes is written down here
+ * as well as refused server-side. There is no member of it that carries a result.
+ */
+export type TournamentAction =
+  | {
+      action: "create";
+      name: string;
+      category: string;
+      window: number;
+      groupCount: 2 | 4 | 8;
+      groupSize: number;
+      qualifiers: 1 | 2;
+      seeding: "seeded" | "shuffle";
+    }
+  | { action: "join" | "leave"; tournamentId: string }
+  | { action: "check-in"; tournamentId: string; checkedIn: boolean }
+  | { action: "remove"; tournamentId: string; playerId: string }
+  | { action: "start"; tournamentId: string; revision: number }
+  | { action: "cancel"; tournamentId: string; reason: string };
+
+export function tournamentAction(request: TournamentAction): Promise<{ ok: boolean; view: TournamentView }> {
+  return callFunction("tournament-action", request);
+}
+
+/**
+ * Open your leg of a fixture. Comes back shaped like `findMatch`, so it is adopted through
+ * the same path, with `tournament` saying which fixture it is.
+ */
+export function playFixture(tournamentId: string, fixtureId: string, attempt: number): Promise<FoundMatch> {
+  return callFunction<FoundMatch>("play-fixture", { tournamentId, fixtureId, attempt });
 }
 
 /**
@@ -410,6 +477,8 @@ export interface AbandonResult {
   ratingAfter?: number;
   ratingChange?: number;
   message?: string;
+  /** The fixture this was a leg of, when it was one. */
+  tournament?: { id: string; name: string; label: string; leg: 1 | 2 } | null;
 }
 
 /**
@@ -476,6 +545,12 @@ export async function submitRun(
 export interface SettledMatch {
   matchId: string;
   verdict: "win" | "loss" | "draw" | "void";
+  /** A match with nobody on the other side yet: a seeding match, or a first leg. */
+  seeding?: boolean;
+  /** False for a tournament leg: decided the ordinary way, and moving no rating. */
+  rated?: boolean;
+  /** The fixture this was a leg of, when it was one. */
+  tournament?: { id: string; name: string; label: string; leg: 1 | 2 } | null;
   /**
    * Who it was against, so the result can offer a rematch.
    *

@@ -14,6 +14,7 @@ import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { scanStatsFolder } from "../src/core/history/history.ts";
 import { loadSeason } from "../src/core/season/season.ts";
 import { practicePlaylists, practiceRows } from "../src/core/season/practice.ts";
+import { sampleTournamentView } from "../src/core/tournament/sample.ts";
 
 const RENDERER_DIR = new URL("../src/app/renderer/", import.meta.url);
 const OUT = new URL("./apogee-ui-preview.html", import.meta.url);
@@ -30,6 +31,7 @@ const snapshot = readFileSync(new URL("../data/snapshot.json", import.meta.url),
  * No stats folder is a fair state rather than a failure - the preview still builds, and
  * the panel says so itself.
  */
+const previewSeason = loadSeason();
 const practice = (() => {
   const statsDir = [
     process.env.APOGEE_STATS_DIR,
@@ -40,7 +42,7 @@ const practice = (() => {
   if (!statsDir) return null;
 
   try {
-    const season = loadSeason();
+    const season = previewSeason;
     const { rows, families } = practiceRows(season, scanStatsFolder(statsDir));
     return {
       families,
@@ -74,37 +76,60 @@ const practice = (() => {
 const indexHtml = readFileSync(new URL("index.html", RENDERER_DIR), "utf8");
 const rendererJs = readFileSync(new URL("renderer.js", RENDERER_DIR), "utf8");
 
-// The artifact host wraps page content in its own document skeleton, so strip the
-// standalone document furniture and keep the body content plus the style block.
+// Only the style block and the body content are taken from index.html. The document
+// around them is rebuilt below, because the preview swaps the Electron bridge for inline
+// data scripts and the renderer's own <head> would load files that are not beside it.
 const styleMatch = /<style>[\s\S]*?<\/style>/.exec(indexHtml);
-const bodyMatch = /<body>([\s\S]*?)<\/body>/.exec(indexHtml);
+const bodyMatch = /^<body\b[^>]*>([\s\S]*?)<\/body>/m.exec(indexHtml);
 
 if (!styleMatch || !bodyMatch) {
   throw new Error("could not extract <style> and <body> from the renderer HTML");
 }
 
-const style = styleMatch[0];
+const arenaCss = readFileSync(new URL("arena.css", RENDERER_DIR), "utf8");
+const tournamentCss = readFileSync(new URL("tournament.css", RENDERER_DIR), "utf8");
+const style = styleMatch[0] + "\n<style>" + arenaCss + "</style>\n<style>" + tournamentCss + "</style>";
+
+// An example tournament, built by the real engine and view with invented players, so the
+// screen has something honest to draw with no server behind it. Labelled on the page.
+const tournamentSample = {
+  registration: sampleTournamentView({ stage: "registration", viewerHosts: true }),
+  groups: sampleTournamentView({ stage: "groups" }),
+  playoffs: sampleTournamentView({ stage: "playoffs" }),
+  completed: sampleTournamentView({ stage: "completed" }),
+};
 const body = bodyMatch[1]
   // The preview supplies its own inline script instead of loading the file.
   .replace(/<script src="renderer\.js"><\/script>/, "");
 
-const html = `<title>Apogee Client Preview</title>
+const html = `<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Apogee Client Preview</title>
 ${style}
+</head><body data-screen="queue">
 ${body}
 <script id="apogee-snapshot" type="application/json">${snapshot}</script>
+<script id="apogee-season" type="application/json">${JSON.stringify(previewSeason)}</script>
 <script id="apogee-practice" type="application/json">${JSON.stringify(practice)}</script>
+<script id="apogee-tournament" type="application/json">${JSON.stringify(tournamentSample).replace(/</g, "\\u003c")}</script>
 <script>
   // Static host: hand the renderer its data instead of an Electron bridge.
   window.__APOGEE_SNAPSHOT__ = JSON.parse(
     document.getElementById("apogee-snapshot").textContent
   );
+  window.__APOGEE_SEASON__ = JSON.parse(
+    document.getElementById("apogee-season").textContent
+  );
   window.__APOGEE_PRACTICE__ = JSON.parse(
     document.getElementById("apogee-practice").textContent
+  );
+  window.__APOGEE_TOURNAMENT__ = JSON.parse(
+    document.getElementById("apogee-tournament").textContent
   );
 </script>
 <script>
 ${rendererJs}
 </script>
+</body></html>
 `;
 
 writeFileSync(OUT, html, "utf8");

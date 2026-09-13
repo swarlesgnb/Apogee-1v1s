@@ -1,0 +1,301 @@
+/* Tournaments. Scoped to the screen so nothing here restyles the rest of the client.
+   Same grounds, rules and brand as arena.css; rank colours stay out of it, because a
+   bracket is about who beat whom and the ladder is somewhere else. */
+
+#screen-tournaments.active { gap: 22px; }
+/* One tournament open: its own hero says what it is, so the screen's intro steps aside. */
+#screen-tournaments.detail .tn-head { display: none; }
+
+.tn-head { display: flex; justify-content: space-between; align-items: center; gap: 28px; }
+.tn-head h1 { font-size: clamp(34px, 3.8vw, 52px); }
+.tn-mark { width: clamp(88px, 9vw, 132px); height: auto; color: var(--brand-dim); flex: none; }
+
+/* Buttons: one primary per view, everything else quiet. */
+.tn-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 9px 16px; font-size: 12px; font-weight: 600; white-space: nowrap;
+  color: var(--ink); background: var(--control); border: 1px solid var(--rule-2);
+  border-radius: 9px; cursor: pointer;
+}
+.tn-btn:disabled { color: var(--ink-dim); cursor: not-allowed; opacity: .7; }
+.tn-btn.primary { background: var(--brand); border-color: var(--brand); color: var(--brand-ink); }
+.tn-btn.quiet { background: transparent; }
+.tn-btn.warn { color: var(--down); border-color: color-mix(in srgb, var(--down) 45%, var(--rule-2)); background: transparent; }
+.tn-btn svg { width: 15px; height: 15px; }
+
+.tn-pill {
+  display: inline-flex; align-items: center; gap: 6px; padding: 3px 8px;
+  font-size: 11px; font-weight: 600; color: var(--ink-mid);
+  border: 1px solid var(--rule-2); border-radius: 6px; white-space: nowrap;
+}
+.tn-pill .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--ink-dim); }
+.tn-pill.live { color: var(--brand); border-color: var(--brand-line); }
+.tn-pill.live .dot { background: var(--brand); }
+.tn-pill.open .dot { background: var(--up); }
+.tn-pill.done .dot { background: var(--ink-mid); }
+.tn-pill.off { color: var(--ink-dim); }
+.tn-pill.turn { color: var(--brand-ink); background: var(--brand); border-color: var(--brand); }
+.tn-pill.turn .dot { background: var(--brand-ink); }
+
+.tn-muted { color: var(--ink-dim); }
+.tn-empty { padding: 40px 24px; text-align: center; color: var(--ink-dim); font-size: 13px; line-height: 1.7; }
+.tn-empty strong { display: block; font-family: var(--display); font-size: 22px; font-weight: 600; color: var(--ink); margin-bottom: 6px; letter-spacing: -.02em; }
+
+/* ------------------------------------------------------------------ the list */
+
+.tn-index { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 22px; align-items: start; }
+.tn-section-k { font-size: 12px; color: var(--ink-mid); margin: 4px 0 12px; font-weight: 600; }
+.tn-cards { display: grid; gap: 10px; }
+.tn-card {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px 16px; align-items: center;
+  width: 100%; text-align: left; padding: 18px 20px; cursor: pointer; color: var(--ink);
+  background: var(--panel); border: 1px solid var(--rule); border-radius: 14px;
+}
+.tn-card.turn { border-color: var(--brand); }
+.tn-card-name { font-family: var(--display); font-size: 19px; font-weight: 600; letter-spacing: -.02em; min-width: 0; overflow-wrap: anywhere; }
+.tn-card-meta { grid-column: 1; font-size: 12px; color: var(--ink-dim); display: flex; flex-wrap: wrap; gap: 4px 14px; }
+.tn-card-side { grid-column: 2; grid-row: 1 / span 2; display: grid; justify-items: end; gap: 8px; }
+.tn-fill { width: 120px; height: 4px; border-radius: 4px; background: var(--rule); overflow: hidden; }
+.tn-fill i { display: block; height: 100%; background: var(--brand); border-radius: inherit; }
+.tn-count { font-family: var(--mono); font-size: 11px; color: var(--ink-mid); font-variant-numeric: tabular-nums; }
+
+/* The host form. In place, like the duel picker: the client has no modals. */
+.tn-host .pbody { display: grid; gap: 16px; }
+.tn-field { display: grid; gap: 7px; font-size: 12px; color: var(--ink-mid); font-weight: 600; }
+.tn-input {
+  font: inherit; font-size: 13px; color: var(--ink); background: var(--well);
+  border: 1px solid var(--rule-2); border-radius: 8px; padding: 10px 12px; width: 100%; min-width: 0;
+}
+.tn-input:focus-visible { border-color: var(--brand); outline-offset: 2px; }
+.tn-seg { display: flex; flex-wrap: wrap; gap: 6px; }
+.tn-seg button {
+  min-height: 34px; padding: 6px 12px; font-size: 12px; font-weight: 600; color: var(--ink-mid);
+  background: var(--well); border: 1px solid var(--rule); border-radius: 7px; cursor: pointer;
+}
+.tn-seg button[aria-pressed="true"] { color: var(--ink); background: var(--brand-well); border-color: var(--brand); }
+.tn-sum { font-size: 12px; line-height: 1.7; color: var(--ink-dim); border-top: 1px solid var(--rule); padding-top: 14px; }
+.tn-sum b { color: var(--ink); font-weight: 600; }
+
+/* ------------------------------------------------------------------ one tournament */
+
+.tn-back {
+  justify-self: start; min-height: 32px; padding: 6px 12px 6px 8px; font-size: 12px; font-weight: 600;
+  color: var(--brand); background: transparent; border: 1px solid transparent; border-radius: 7px; cursor: pointer;
+}
+.tn-back::before { content: "\2190"; margin-right: 8px; }
+
+.tn-hero { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 24px; align-items: center; padding: 28px 30px; }
+.tn-eyebrow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; font-size: 12px; color: var(--ink-mid); }
+.tn-name { font-family: var(--display); font-size: clamp(30px, 3.4vw, 46px); font-weight: 650; letter-spacing: -.045em; line-height: 1.1; margin: 14px 0 12px; overflow-wrap: anywhere; }
+.tn-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tn-tags span { font-size: 11px; color: var(--ink-mid); padding: 5px 10px; border: 1px solid var(--rule); border-radius: 14px; }
+.tn-crest {
+  width: 150px; height: 150px; border-radius: 50%; display: grid; place-items: center; text-align: center;
+  background: var(--well); border: 1px solid var(--rule); padding: 18px;
+}
+.tn-crest svg { width: 46px; height: 46px; color: var(--brand); }
+.tn-crest small { display: block; font-size: 10px; color: var(--ink-dim); margin-top: 6px; }
+.tn-crest b { display: block; font-family: var(--display); font-size: 16px; font-weight: 600; color: var(--ink); overflow-wrap: anywhere; line-height: 1.2; }
+.tn-crest.won { border-color: var(--brand); background: var(--brand-well); }
+
+.tn-steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--rule); }
+.tn-step { display: flex; gap: 12px; align-items: center; padding: 16px 20px; border-right: 1px solid var(--rule); color: var(--ink-dim); min-width: 0; }
+.tn-step:last-child { border-right: 0; }
+.tn-step .n {
+  width: 28px; height: 28px; flex: none; display: grid; place-items: center; border-radius: 8px;
+  font-family: var(--mono); font-size: 11px; border: 1px solid var(--rule-2);
+}
+.tn-step b { display: block; font-size: 12px; font-weight: 600; color: inherit; }
+.tn-step small { display: block; font-size: 11px; margin-top: 3px; color: var(--ink-dim); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tn-step.done { color: var(--ink-mid); }
+.tn-step.done .n { border-color: var(--rule-3); color: var(--ink-mid); }
+.tn-step.now { color: var(--ink); border-bottom: 2px solid var(--brand); padding-bottom: 14px; }
+.tn-step.now .n { color: var(--brand); border-color: var(--brand); background: var(--brand-well); }
+
+.tn-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.tn-stat { padding: 18px 22px; border-right: 1px solid var(--rule); }
+.tn-stat:last-child { border-right: 0; }
+.tn-stat span { display: block; font-size: 11px; color: var(--ink-dim); }
+.tn-stat b { display: block; font-family: var(--display); font-size: 26px; font-weight: 550; letter-spacing: -.025em; margin-top: 6px; font-variant-numeric: tabular-nums; }
+.tn-stat b small { font-family: var(--font); font-size: 12px; font-weight: 400; color: var(--ink-dim); margin-left: 6px; letter-spacing: 0; }
+
+/* Your fixture. The one thing on the page you can act on, so it is the one lit panel. */
+.tn-next { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 18px 24px; align-items: center; padding: 22px 26px; border-color: var(--brand-line); }
+.tn-next.go { border-color: var(--brand); background: color-mix(in srgb, var(--brand) 7%, var(--panel)); }
+.tn-next-k { font-size: 12px; color: var(--brand); font-weight: 600; }
+.tn-vs { display: flex; align-items: center; flex-wrap: wrap; gap: 10px 14px; margin-top: 8px; font-family: var(--display); font-size: 24px; font-weight: 600; letter-spacing: -.025em; }
+.tn-vs .v { font-family: var(--mono); font-size: 12px; color: var(--ink-dim); letter-spacing: .1em; }
+.tn-next p { grid-column: 1; margin: 4px 0 0; font-size: 13px; line-height: 1.65; color: var(--ink-mid); max-width: 62ch; }
+.tn-next .tn-btn.primary { padding: 14px 22px; font-size: 14px; }
+
+.tn-tabs { display: flex; flex-wrap: wrap; gap: 6px; }
+.tn-tabs button {
+  min-height: 36px; padding: 7px 14px; font-size: 12px; font-weight: 600; color: var(--ink-dim);
+  background: transparent; border: 1px solid var(--rule); border-radius: 8px; cursor: pointer;
+}
+.tn-tabs button[aria-selected="true"] { color: var(--ink); background: var(--control); border-color: var(--rule-3); }
+.tn-tabs button b { font-family: var(--mono); font-weight: 500; color: var(--ink-dim); margin-left: 6px; }
+
+/* Group cards */
+.tn-groups { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.tn-group .phead { align-items: center; }
+.tn-letter {
+  width: 30px; height: 30px; display: grid; place-items: center; border-radius: 8px; flex: none;
+  font-family: var(--display); font-size: 15px; font-weight: 650; color: var(--brand);
+  background: var(--brand-well); border: 1px solid var(--brand-line);
+}
+.tn-group-title { display: flex; align-items: center; gap: 12px; }
+.tn-table { width: 100%; table-layout: fixed; }
+.tn-table th, .tn-table td { padding: 11px 12px; }
+.tn-table th:first-child, .tn-table td:first-child { width: 42px; text-align: center; font-family: var(--mono); font-size: 11px; font-weight: 500; color: var(--ink-dim); }
+.tn-table th:nth-child(2), .tn-table td:nth-child(2) { text-align: left; }
+.tn-table th:nth-child(3) { width: 84px; }
+.tn-table th:last-child { width: 58px; padding-right: 18px; }
+.tn-table td:last-child { padding-right: 18px; font-weight: 600; color: var(--ink); }
+.tn-table td:nth-child(3) { color: var(--ink-mid); }
+.tn-table tr.q td:first-child { color: var(--brand); }
+.tn-table tr.q td:last-child { color: var(--brand); }
+.tn-table tr.you td:nth-child(2) .tn-who b { color: var(--brand); }
+.tn-who { display: flex; align-items: center; gap: 10px; min-width: 0; font-family: var(--font); font-size: 13px; }
+.tn-who b { font-weight: 560; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tn-who sup { font-size: 10px; color: var(--ink-dim); margin-left: 2px; }
+.tn-mono {
+  width: 26px; height: 26px; flex: none; display: grid; place-items: center; border-radius: 7px;
+  font-size: 10px; font-weight: 700; letter-spacing: .02em; color: var(--ink-mid);
+  background: var(--well); border: 1px solid var(--rule-2);
+}
+.tn-mono.you { color: var(--brand-ink); background: var(--brand); border-color: var(--brand); }
+.tn-foot { display: flex; justify-content: space-between; gap: 10px; padding: 12px 18px; border-top: 1px solid var(--rule); font-size: 11px; color: var(--ink-dim); }
+
+/* Fixtures, as rows grouped by round */
+.tn-rounds { display: grid; gap: 18px; }
+.tn-round-k { font-size: 12px; color: var(--ink-mid); font-weight: 600; margin-bottom: 8px; display: flex; gap: 10px; align-items: baseline; }
+.tn-round-k span { font-weight: 400; color: var(--ink-dim); font-size: 11px; }
+.tn-fixtures { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 8px; }
+.tn-fx { padding: 12px 14px; background: var(--well); border: 1px solid var(--rule); border-radius: 10px; display: grid; gap: 7px; min-width: 0; }
+.tn-fx.ready { border-color: var(--rule-3); }
+.tn-fx.mine { border-color: var(--brand); }
+.tn-fx-top { display: flex; justify-content: space-between; gap: 8px; font-size: 11px; color: var(--ink-dim); }
+.tn-fx-top .st { font-weight: 600; }
+.tn-fx-top .st.play { color: var(--brand); }
+.tn-fx-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 10px; font-size: 13px; }
+.tn-fx-row .tn-who b { font-weight: 500; }
+.tn-fx-row .r { font-family: var(--mono); font-size: 11px; color: var(--ink-dim); width: 16px; text-align: center; }
+.tn-fx-row.won .tn-who b, .tn-fx-row.won .r { color: var(--up); }
+.tn-fx-row.lost .tn-who b { color: var(--ink-dim); }
+
+/* Bracket */
+.tn-bracket-wrap { overflow-x: auto; padding-bottom: 6px; }
+.tn-bracket { display: flex; gap: 34px; min-width: max-content; padding: 4px 2px 8px; }
+.tn-col { width: 230px; display: flex; flex-direction: column; }
+.tn-col-k { font-size: 12px; font-weight: 600; color: var(--ink-mid); padding-bottom: 12px; margin-bottom: 16px; border-bottom: 1px solid var(--rule); display: flex; justify-content: space-between; }
+.tn-col-k span { font-family: var(--mono); font-weight: 400; color: var(--ink-dim); font-size: 11px; }
+.tn-col-body { display: flex; flex-direction: column; justify-content: space-around; gap: 18px; flex: 1; }
+.tn-slot { position: relative; background: var(--well); border: 1px solid var(--rule); border-radius: 10px; }
+.tn-slot::after { content: ""; position: absolute; left: 100%; top: 50%; width: 34px; border-top: 1px solid var(--rule-2); }
+.tn-col:last-of-type .tn-slot::after { display: none; }
+.tn-slot.tbd { border-style: dashed; }
+.tn-slot.mine { border-color: var(--brand); }
+/* Every row the same height, filled or waiting, so the connectors between rounds line up. */
+.tn-slot-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 8px; min-height: 45px; padding: 9px 12px; font-size: 12px; }
+.tn-slot-row + .tn-slot-row { border-top: 1px solid var(--rule); }
+.tn-slot-row .from { color: var(--ink-dim); font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tn-slot-row.won .tn-who b { color: var(--up); }
+.tn-slot-row.lost .tn-who b { color: var(--ink-dim); }
+.tn-crown { width: 180px; display: grid; place-items: center; align-content: center; text-align: center; gap: 10px; }
+.tn-crown .tn-crest { width: 128px; height: 128px; }
+
+/* Players */
+.tn-roster { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.tn-entrant { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 12px; padding: 12px 14px; background: var(--well); border: 1px solid var(--rule); border-radius: 10px; }
+.tn-entrant.you { border-color: var(--brand-line); }
+.tn-seed { font-family: var(--mono); font-size: 11px; color: var(--ink-dim); width: 22px; text-align: right; }
+.tn-entrant-name { font-size: 13px; font-weight: 560; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tn-entrant-sub { font-size: 11px; color: var(--ink-dim); margin-top: 2px; }
+.tn-entrant-side { display: flex; gap: 8px; align-items: center; }
+.tn-entrant .tn-btn, .tn-host-panel .tn-row .tn-btn:not(.primary) { min-height: 32px; padding: 6px 12px; }
+
+/* Host controls, and the warning that comes before a start */
+.tn-host-panel .pbody { display: grid; gap: 14px; }
+.tn-warn { font-size: 12px; line-height: 1.65; padding: 12px 14px; border-radius: 8px; color: var(--ink); background: color-mix(in srgb, var(--warn) 10%, var(--panel)); border: 1px solid color-mix(in srgb, var(--warn) 35%, transparent); }
+.tn-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.tn-note { font-size: 12px; line-height: 1.7; color: var(--ink-dim); max-width: 80ch; }
+
+/* Rules */
+.tn-rules { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.tn-rule { padding: 20px 22px; background: var(--panel); border: 1px solid var(--rule); border-radius: 12px; }
+.tn-rule span { font-family: var(--mono); font-size: 11px; color: var(--brand); }
+.tn-rule h3 { font-family: var(--display); font-size: 17px; font-weight: 600; letter-spacing: -.015em; margin: 10px 0 8px; }
+.tn-rule p { margin: 0; font-size: 13px; line-height: 1.7; color: var(--ink-mid); }
+
+.tn-banner { padding: 18px 22px; display: flex; gap: 16px; align-items: center; }
+.tn-banner.won { border-color: var(--brand); background: var(--brand-well); }
+.tn-banner.off { border-color: var(--rule-2); }
+.tn-banner b { font-family: var(--display); font-size: 20px; font-weight: 600; letter-spacing: -.02em; }
+.tn-banner p { margin: 4px 0 0; font-size: 12px; color: var(--ink-mid); }
+
+@media (hover: hover) {
+  .tn-card:hover { border-color: var(--rule-3); background: var(--control); }
+  .tn-card.turn:hover { border-color: var(--brand); }
+  .tn-btn:hover:not(:disabled) { border-color: var(--rule-3); }
+  .tn-btn.primary:hover:not(:disabled) { border-color: var(--ink); }
+  .tn-tabs button:hover { color: var(--ink); }
+  .tn-back:hover { border-color: var(--brand-line); }
+}
+
+@media (max-width: 1180px) {
+  .tn-index { grid-template-columns: minmax(0, 1fr) 320px; }
+  .tn-groups { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 960px) {
+  .tn-index { grid-template-columns: minmax(0, 1fr); }
+  .tn-steps, .tn-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tn-step:nth-child(2), .tn-stat:nth-child(2) { border-right: 0; }
+  .tn-step:nth-child(-n+2), .tn-stat:nth-child(-n+2) { border-bottom: 1px solid var(--rule); }
+}
+@media (max-width: 760px) {
+  .tn-mark, .tn-crest:not(.inline) { display: none; }
+  .tn-hero { grid-template-columns: minmax(0, 1fr); padding: 22px; }
+  .tn-next { grid-template-columns: minmax(0, 1fr); }
+  .tn-roster, .tn-rules { grid-template-columns: minmax(0, 1fr); }
+  .tn-card { grid-template-columns: minmax(0, 1fr); }
+  .tn-card-side { grid-column: 1; grid-row: auto; justify-items: start; }
+}
+
+/* Event surfaces share the command deck's materials. The fixture carries the accent. */
+.tn-card, .tn-event-hero, .tn-rule { border-radius: 12px; background: var(--card); }
+.tn-card { padding: 22px; border-left: 3px solid var(--rule-2); }
+.tn-card.turn { border-left-color: var(--brand); }
+.tn-card-name { font-size: 22px; }
+.tn-card-meta { margin-top: 6px; line-height: 1.6; }
+.tn-card-side { gap: 12px; }
+.tn-event-hero { border-top: 2px solid var(--rule-3); }
+.tn-event-hero[data-phase="playoffs"] { border-top-color: var(--brand); }
+.tn-event-hero[data-phase="completed"] { border-top-color: #c5b18b; }
+.tn-hero { padding: 32px; gap: 32px; }
+.tn-name { font-size: clamp(32px, 4vw, 54px); max-width: 25ch; margin-bottom: 20px; }
+.tn-tags { gap: 8px 16px; }
+.tn-tags span { border: 0; border-left: 1px solid var(--rule-3); border-radius: 0; padding: 2px 0 2px 10px; }
+.tn-crest { border-radius: 12px; border: 1px solid var(--rule-2); background: var(--sunk); }
+.tn-crest.won { border-style: double; border-width: 3px; color: #d6c7a6; background: #20232b; }
+.tn-crest.won svg { color: #d6c7a6; }
+.tn-steps { background: var(--sunk); }
+.tn-next.go { border-left: 4px solid var(--brand); background: var(--raised); }
+.tn-next .tn-btn.primary { min-height: 48px; }
+.tn-tabs { gap: 0; border-bottom: 1px solid var(--rule); }
+.tn-tabs button { padding: 12px 18px; border: 0; border-radius: 0; border-bottom: 2px solid transparent; }
+.tn-tabs button[aria-selected="true"] { border-bottom-color: var(--brand); background: transparent; }
+.tn-bracket-wrap { padding: 22px 18px; border: 1px solid var(--rule); border-radius: 12px; background: var(--sunk); }
+.tn-slot { background: var(--slot); border-radius: 7px; }
+.tn-slot.mine { border-left: 3px solid var(--brand); }
+.tn-col-k { font: 11px var(--mono); text-transform: uppercase; letter-spacing: .08em; }
+.tn-col:last-of-type .tn-col-k { color: #d6c7a6; }
+.tn-slot-row.won { background: #202b2b; }
+.tn-slot-row.won .tn-who b::after { content: ' ✓'; }
+.tn-empty { padding: 52px 28px; text-align: left; border-left: 2px solid var(--rule-3); background: var(--well); }
+.tn-empty strong { font-size: 26px; }
+@media (max-width: 760px) {
+  .tn-hero { padding: 22px; }
+  .tn-tabs button { padding-inline: 11px; }
+  .tn-bracket-wrap { padding-inline: 12px; }
+}

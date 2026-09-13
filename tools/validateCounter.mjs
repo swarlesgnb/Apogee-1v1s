@@ -22,7 +22,7 @@
 
 import { readFileSync } from "node:fs";
 
-const src = readFileSync("src/app/renderer/renderer.js", "utf8");
+const src = readFileSync("src/app/renderer/renderer.js", "utf8").replace(/\r\n/g, "\n");
 
 /** Lift one declaration out of the client, or fail loudly rather than test nothing. */
 function lift(marker, kind = "fn") {

@@ -4,107 +4,27 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy"
       content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:;">
-<title>Apogee</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Apogee 1v1s</title>
 <style>
-  /* ==================================================================
-     Apogee - one committed theme.
-
-     This is a game client, not a document: it lives in a single visual
-     world rather than adapting to a reader's light/dark preference, and
-     every colour is painted explicitly, including the body ground.
-
-     The model is an instrument panel rather than an application. Regions
-     are separated by drawn rules, not by cards floating on a ground:
-     nothing is elevated and the only round corner in the file is the
-     status lamp. Hairlines are opaque greys rather than white-alpha,
-     because alpha over near-black reads as a lit edge and a grey reads as
-     a ruled one - which is the whole difference between a panel and a
-     card.
-
-     One thing glows, and only one: the orb field, painted into .main
-     behind the whole content column. The rule the rest of this file keeps
-     is that no *control* is lit - no chip, button, tag, panel or rule -
-     and that is what stops the app reading as glass. The ground underneath
-     them is a separate question, and letting it move slowly in the
-     player's own rank colour buys the warmth those flat controls give up
-     without putting a highlight on a single thing you can click. See the
-     orb field section further down for what it costs and why it is capped
-     where it is.
-
-     The chrome is achromatic on purpose. The only chroma is --accent,
-     which the renderer sets to the player's own rank colour on every
-     snapshot, so rank reads as the signal it is and the app takes on the
-     player's colour rather than a brand one. Colour marks things here;
-     it never washes them.
-
-     Layout is a fixed rail and one scrolling column. The rail is the
-     whole navigation: it never scrolls away, it holds who you are at the
-     bottom, and it carries the keyboard number for every screen so the
-     shortcuts are discoverable rather than documented.
-     ================================================================== */
-
+  /* Ink-blue chrome; rank colors come from the active player. */
   :root {
-    /* Grounds. Three, not six. A panel that needs to separate from the
-       ground gets a rule; only a genuinely different surface gets a
-       different value. All three sit warm of neutral, and well up from
-       black: this is a window that stays open for an evening, not a
-       backdrop for a screenshot. The first cut of these was a few points
-       off black, which photographs beautifully and reads as a machine
-       that is switched off - the lift is about eight percent of relative
-       luminance, which is the difference between charcoal and a hole. */
-    --ground: #1e1b18;
-    --panel:  #272320;
-    --well:   #171513;
-
-    /* A control is a painted part sitting on one of those grounds, not a pane of
-       translucent white over it. Every chip, button and tag in the file was a
-       white-alpha wash before this, which is what made them all read as glass. */
-    --control:    #2e2a26;
-    --control-hi: #3a3531;
-
-    /* Rules are drawn, not lit: opaque greys, so an edge on --well and an
-       edge on --panel are the same line rather than two different alphas. */
-    --rule:   #38332f;
-    --rule-2: #4a443f;
-    --rule-3: #5f5851;
-
-    /* Warm and neutral. The blue-grey-on-near-black this replaces is the one
-       thing every dark web app has in common, and it made a client somebody
-       has open all evening feel colder than it needed to.
-
-       The two lower tones sit higher than they read on paper, and the reason
-       is the orb field: it lifts the ground behind them, and a ramp measured
-       against #1e1b18 stops being true the moment something is painted over
-       it. The brightest ground the field can produce is #3a371c, and these
-       three clear 4.5:1 on that rather than on the bare ground.
-
-       They were lifted together rather than one at a time. Moving --ink-dim
-       alone - which is all the contrast floor strictly demands - closes the
-       step between it and --ink-mid from 1.75:1 to 1.24:1, and three tones
-       that read as two is a worse outcome than the dim text being dim. Both
-       steps are now 1.52:1: tighter than before, and even, so the hierarchy
-       still has three rungs. `npm run validate:orb` re-derives all of it. */
-    --ink:     #f6f3ee;
-    --ink-mid: #ccc7c0;
-    --ink-dim: #a8a19a;
-
-    /* Indicator lamps rather than confectionery: a green that is green,
-       a red that is red, an amber that is amber. Lifted with the grounds
-       so they keep the same weight against a lighter panel rather than
-       quietly losing a point of contrast. */
+    --ground: #10121b;
+    --panel:  #191d2b;
+    --well:   #111522;
+    --control:    #242b3e;
+    --control-hi: #30394c;
+    --rule:   #30394c;
+    --rule-2: #414b63;
+    --rule-3: #596680;
+    --ink:     #f2f4fc;
+    --ink-mid: #c1c9df;
+    --ink-dim: #a1acc5;
     --up:   #6fce8b;
     --down: #ef6f68;
     --warn: #e8b34a;
-
-    /* Overwritten per snapshot with the player's rank colour. */
     --accent: #8a9196;
-
-    /* One radius, for controls only. Regions, panels and tables are
-       square. The status lamp is the sole exception and says 50% itself. */
-    --r: 2px;
-
-    /* Spacing. There was no scale before this and every padding was a
-       hand-picked number, which is why the rhythm read as arbitrary. */
+    --r: 8px;
     --s1: 4px;
     --s2: 8px;
     --s3: 12px;
@@ -112,10 +32,6 @@
     --s5: 24px;
     --s6: 32px;
     --s7: 48px;
-
-    /* Integers. The half-pixel sizes this replaces (14.5, 13.5, 12.5,
-       11.5, 10.5) were nudged by hand and blur at non-integer DPI, which
-       is most Windows machines. */
     --t-2xs: 10px;
     --t-xs:  11px;
     --t-sm:  12px;
@@ -124,31 +40,12 @@
     --t-lg:  19px;
     --t-xl:  26px;
     --t-2xl: 34px;
-
-    --rail-w: 208px;
-    /* Must equal titleBarOverlay.height in main.ts: the operating system
-       draws the window buttons on this strip. */
+    --rail-w: 232px;
     --bar-h: 46px;
-
     --font: "Segoe UI Variable Text", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
     --mono: "Cascadia Mono", ui-monospace, Consolas, "SF Mono", monospace;
-
     --ease: cubic-bezier(.2, .6, .35, 1);
     --fast: 90ms;
-
-    /* Stronger curves than the built-ins, which are too weak to read as
-       deliberate. Both are standard published curves rather than hand-rolled
-       ones: an eased line nobody can name is a line nobody can check.
-
-       Never ease-in on a control. It withholds movement for the first frames,
-       which are the ones the player is watching, so the same duration reads as
-       slower than an ease-out of identical length. Entering and exiting take
-       --ease-out; something travelling across the screen takes --ease-in-out.
-
-       Durations are budgets. A control that answers a press in 140ms feels
-       attached to the finger; the same control at 400ms feels like it is
-       deciding whether to. Nothing on a screen the player opens daily goes
-       over --enter. */
     --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
     --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
     --press: 140ms;
@@ -412,9 +309,7 @@
   .tab:hover { color: var(--ink); background: var(--control); }
   .tab:hover .tab-key { color: var(--ink-mid); }
 
-  /* Selection is a block of ground and full-strength ink. The coloured bar down the
-     leading edge that used to mark it was the same device as a callout stripe, and it
-     put the rank colour on screen twice over. */
+
   .tab[aria-selected="true"] {
     color: var(--ink); font-weight: 600;
     background: var(--panel);
@@ -720,76 +615,7 @@
   }
   .content { max-width: 1180px; margin: 0 auto; padding: var(--s5) var(--s6) var(--s7); }
 
-  /* ==================================================================
-     Orb field
 
-     The one lit thing in the client. Everything else here is a painted
-     part on a ground - see the note at the top of this file - and the
-     rule that nothing glows still holds for every control, panel and
-     rule in the app. This is the exception: the ground itself is alive,
-     so the chrome does not have to be.
-
-     Three blurred blobs drifting behind the content column, tinted from
-     --accent, which the renderer sets to the player's tier colour on
-     every snapshot. So the field is the player's colour, and changing
-     tier changes the weather rather than just a badge.
-
-     How bright it is, and what that cost
-     ------------------------------------
-     This layer lifts the ground it sits behind, and the ground is what
-     every contrast figure in this file was measured against. The field
-     and the ink ramp at --ink are therefore one decision, not two.
-
-     --accent is a tier colour, and the top of the ladder is saturated:
-     Arecibo is pure green, Quasar pure cyan, Cosmonaut near-pure yellow.
-     A blob tinted with one of those is the worst case, not a
-     hypothetical - a player at that tier sees it on every screen. The
-     colours are named here rather than written as hex because the tell
-     audit counts neon hex across this whole file, comments included.
-
-     `npm run validate:orb` re-derives all of it, by rasterising the three
-     blobs where the rules below put them. At the smallest window the app
-     allows - which is the worst case, because the blobs are sized in vmax
-     and a small column has proportionally more blob over it - they peak
-     at 0.125 alpha and put the ground at #3a371c, where the lifted ramp
-     leaves --ink-dim at 4.72:1. There is no headroom left at this ratio.
-
-     Two earlier cuts were wrong, in opposite directions, and both are
-     worth knowing about:
-
-     The first ran six times fainter than this on the unlifted ramp and
-     was invisible - which was correct for that ramp: at these opacities
-     the old --ink-dim would sit at 4.12:1, under the floor. A brighter
-     field genuinely does cost the ramp.
-
-     The second was invisible for a worse reason. That check summed the
-     three opacities as though all three gradient centres landed on one
-     pixel, which the rules below make impossible - they pin the blobs to
-     three different corners. It read the field as 2.09x brighter than
-     anything that reaches the screen, and the opacities were pushed down
-     to satisfy a number no pixel ever takes. A safety check that is
-     wrong in the safe direction still ships the wrong thing.
-
-     Going brighter was not free. The ramp's two steps were 1.86:1 and
-     1.75:1 against the bare ground and are now 1.52:1 each: secondary
-     text across the whole app is lighter than it was, on every screen,
-     including the ones where the field is turned most of the way down.
-     That is the trade - see the note at --ink for why both tones moved
-     rather than just the one the floor demanded.
-
-     What it costs to run
-     --------------------
-     Only transform and opacity are animated - both compositor
-     properties, so the blobs never touch layout or paint after the
-     first frame. The blur is baked into each blob with `filter`, which
-     keeps it on the blob's own layer rather than resampling the column
-     underneath it every frame. This runs beside KovaaK's and must not
-     take a frame off the game.
-
-     The blobs are sized in vmax and positioned off-edge, so no blob
-     edge is ever visible - only the falloff. A visible circle reads as
-     a bubble sitting on the app; only the falloff reads as depth.
-     ================================================================== */
 
   .orbfield {
     position: absolute; inset: 0;
@@ -817,15 +643,7 @@
     will-change: transform;
   }
 
-  /* Three, at different sizes and speeds. Two read as a pair and four
-     read as noise; three never resolves into a pattern the eye can
-     finish. The periods are the primes 47, 61 and 73, so the loop only
-     comes back into phase every 47x61x73 seconds - about 58 hours, which
-     is longer than any session.
 
-     The opacities are 0.105 / 0.084 / 0.068, a 1 / 0.8 / 0.65 ratio.
-     validate:orb reports the headroom left at that ratio and it is now
-     1.00x, so these are not eyeballed and there is no room above them. */
   .orb-a {
     width: 62vmax; height: 62vmax; top: -22vmax; left: -14vmax;
     filter: blur(72px); opacity: .105;
@@ -872,6 +690,7 @@
   body[data-screen="band"]       .orbfield { --orb-lift: .45; }
   body[data-screen="quests"]     .orbfield { --orb-lift: .45; }
   body[data-screen="seasonview"] .orbfield { --orb-lift: .4; }
+  body[data-screen="scenarios"]  .orbfield { --orb-lift: .4; }
   /* The working screens. The season editor and the admin tables are the
      two places in the app where somebody is reading numbers they will act
      on, and the consistency report is a chart that owns its own ground. */
@@ -1491,8 +1310,7 @@
   table { width: 100%; border-collapse: collapse; }
   table.rounds { min-width: 560px; }
   table.scen { min-width: 620px; }
-  /* Column headings are set in the same face as the figures under them, so a column
-     reads as one object from its name to its last row. */
+
   th {
     text-align: right; padding: var(--s2) var(--s4) var(--s2);
     font-family: var(--mono); font-size: var(--t-2xs); font-weight: 600; text-transform: uppercase;
@@ -2306,66 +2124,6 @@
   }
   .pending tbody tr:hover { background: transparent; }
 
-  /* ==================================================================
-     Press
-
-     A client somebody opens every evening to click things should be
-     worth clicking. Two rules do most of that work, and both are cheap.
-
-     Down is fast and up is springy. A control that scales down in 90ms
-     and comes back through a slight overshoot reads as a physical button
-     with give in it; the same travel eased symmetrically reads as a web
-     page. The overshoot is 2.2% - enough to feel, small enough that a
-     rail of tabs does not appear to wobble.
-
-     It is an animation rather than a transition on purpose. Most of the
-     controls here already declare a `transition` for colour or filter,
-     and adding transform to each one meant editing thirty rules and
-     missing some of them; a keyframe answers to nothing but itself. It
-     also survives `:active` ending the moment the mouse comes up, which
-     is what truncates the spring and makes a press feel cheap - the
-     classes below are removed on pointerup and when the bounce ends,
-     not when the button is released.
-     ================================================================== */
-
-  @keyframes press-down { to { transform: scale(.955); } }
-  @keyframes press-up {
-    0%   { transform: scale(.955); }
-    55%  { transform: scale(1.022); }
-    100% { transform: none; }
-  }
-
-  @media (prefers-reduced-motion: no-preference) {
-    .pressing { animation: press-down .09s cubic-bezier(.3, 0, .2, 1) forwards; }
-    .released { animation: press-up .34s cubic-bezier(.2, .9, .3, 1); }
-  }
-
-  /* The mark a press leaves behind.
-
-     Drawn in a fixed overlay at the pointer rather than inside the
-     control: a ripple parented to a button needs that button to be
-     `position: relative; overflow: hidden`, and several of these
-     controls are neither. It takes the player's rank colour, like
-     everything else that carries chroma here.
-
-     Square and hairline. As a soft expanding circle it was the one
-     thing left in the client that looked like a material ripple. */
-  .fx-layer {
-    position: fixed; inset: 0; z-index: 90;
-    pointer-events: none; overflow: hidden;
-  }
-  .fx-ring {
-    position: absolute; width: 16px; height: 16px; margin: -8px 0 0 -8px;
-    border: 1px solid var(--accent);
-  }
-  @keyframes fx-ring {
-    from { transform: scale(.4); opacity: .55; }
-    to   { transform: scale(3.4); opacity: 0; }
-  }
-  @media (prefers-reduced-motion: no-preference) {
-    .fx-ring { animation: fx-ring .42s cubic-bezier(.2, .7, .3, 1) forwards; }
-  }
-
   /* ---------------------------------------------------------- sound */
 
   .sound-toggle {
@@ -2390,16 +2148,65 @@
   .sound-toggle .slash { display: none; }
   .sound-toggle[aria-pressed="false"] .slash { display: block; }
 
+  /* ---------------------------------------------------------- theme */
+
+  /* The popover borrows .status-menu's box and its motion, so the two menus on this bar
+     are one kind of thing; this only anchors it right and lays out what is in it. */
+  .theme { position: relative; -webkit-app-region: no-drag; }
+  .theme > summary { list-style: none; }
+  .theme > summary::-webkit-details-marker { display: none; }
+  .theme[open] > summary { color: var(--ink); border-color: var(--rule-2); }
+  .theme-menu {
+    left: auto; right: 0; width: min(312px, 80vw); gap: var(--s3);
+    font-family: var(--font); font-size: var(--t-sm); color: var(--ink-mid);
+  }
+  .theme-k {
+    font-family: var(--mono); font-size: var(--t-2xs); font-weight: 600;
+    letter-spacing: .14em; text-transform: uppercase; color: var(--ink-dim);
+  }
+  .theme-bases {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); gap: 6px;
+  }
+  .theme-menu .theme-base {
+    display: grid; gap: 6px; min-height: 0; padding: 6px 6px 5px;
+    font-size: var(--t-xs); text-align: left; color: var(--ink-mid);
+    background: var(--well); border: 1px solid var(--rule);
+  }
+  .theme-menu .theme-base[aria-pressed="true"] { color: var(--ink); border-color: var(--brand); }
+  /* Ground, panel and accent, the three a player is choosing between, at the proportions
+     they have on screen: the accent is the least of it. */
+  .theme-chip {
+    display: flex; height: 20px; overflow: hidden;
+    border: 1px solid var(--rule-2); border-radius: 4px;
+  }
+  .theme-chip i { flex: 1; background: var(--c); }
+  .theme-chip i:last-child { flex: .5; }
+  .theme-accents { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+  .theme-menu .theme-accent {
+    position: relative; width: 28px; height: 28px; min-height: 0; padding: 3px;
+    border: 1px solid var(--rule-2); border-radius: 50%;
+    background: var(--c); background-clip: content-box; cursor: pointer;
+  }
+  .theme-menu .theme-accent[aria-pressed="true"],
+  .theme-menu .theme-custom.on { border: 2px solid var(--ink); padding: 2px; }
+  /* The native picker, stretched invisibly over the swatch, so the swatch is what is seen
+     and the picker is what is clicked. */
+  .theme-custom { display: grid; place-items: center; overflow: hidden; color: var(--ink-dim); }
+  .theme-custom.on span { visibility: hidden; }
+  .theme-custom input {
+    position: absolute; inset: 0; width: 100%; height: 100%; min-height: 0;
+    padding: 0; border: 0; opacity: 0; cursor: pointer;
+  }
+  .theme-custom:focus-within { outline: 2px solid var(--brand); outline-offset: 2px; }
+  .theme-note { margin: 0; font-size: var(--t-xs); line-height: 1.5; color: var(--ink-dim); }
+  .theme-foot { display: flex; justify-content: flex-end; }
+  .theme-foot button:disabled { opacity: .4; cursor: default; }
+
   /* ==================================================================
      Motion and small windows
      ================================================================== */
 
-  /* Reduced motion means fewer and gentler, not none.
-     `* { transition: none }` was the whole rule here, and it took the colour and
-     opacity transitions with it - so a player who asks for less motion got a client
-     where every state change snapped, which is harder to follow rather than calmer.
-     What has to go is travel: things sliding in from somewhere, and anything that
-     moves a surface the eye is tracking. Colour, opacity and border stay. */
+
   @media (prefers-reduced-motion: reduce) {
     * { animation: none !important; }
     *, *::before, *::after { transition-property: opacity, color, background-color,
@@ -2610,6 +2417,41 @@
 
   .pool-grid { display: grid; gap: 30px; }
 
+  /* Scenario ranks. The filters reuse the pool's band picker at half the height, because
+     two rows of full-size difficulty buttons pushed the table itself below the fold. */
+  .pool-bands.sc-filter { margin-bottom: var(--s3); }
+  .pool-bands.sc-filter .pool-band { padding: var(--s2) var(--s1); flex-direction: row; }
+  .sc-sort {
+    font: inherit; letter-spacing: inherit; text-transform: inherit; color: inherit;
+    background: none; border: 0; padding: 0; cursor: pointer;
+  }
+  .sc-sort:hover { color: var(--ink-mid); }
+  .sc-sort[aria-pressed="true"] { color: var(--ink); }
+  .sc-sort[aria-pressed="true"]::after { content: " ↓"; }
+  .sc-table th:nth-child(3), .sc-table th:nth-child(5) { text-align: left; }
+  .sc-table td:nth-child(2) { white-space: nowrap; }
+  .sc-table td.sc-rank {
+    text-align: left; font-family: var(--font); font-weight: 560; color: var(--ink-dim);
+    white-space: nowrap;
+  }
+  .sc-table tr.maxed td.sc-rank:nth-child(5) { color: var(--up); }
+  .sc-table tr.untouched td:first-child { color: var(--ink-dim); }
+  .sc-table td.sc-prog { width: 96px; }
+  .sc-bar { display: block; height: 3px; background: var(--rule-2); overflow: hidden; }
+  .sc-bar i { display: block; height: 100%; background: var(--ink-mid); }
+  .sc-table tr.maxed .sc-bar i { background: var(--up); }
+  .sc-table td.sc-act { width: 1%; padding-left: 0; }
+  .sc-table .scen-play {
+    font: inherit; font-size: var(--t-xs); font-weight: 560; color: var(--ink-mid);
+    background: transparent; border: 1px solid var(--rule);
+    border-radius: var(--r); padding: 4px 12px; cursor: pointer;
+    transition: color .13s var(--ease), border-color .13s var(--ease), background .13s var(--ease);
+  }
+  .sc-table .scen-play:hover:not(:disabled) {
+    color: var(--ink); border-color: var(--rule-3); background: var(--control-hi);
+  }
+  .sc-table .scen-play:disabled { opacity: .4; cursor: default; }
+
   .pool-cat { display: grid; gap: 16px; }
   .pool-cat-head { display: flex; align-items: center; gap: 14px; }
   .pool-cat-head h3 {
@@ -2652,6 +2494,9 @@
     text-transform: uppercase; color: var(--ink-dim); vertical-align: 1px;
     border: 1px solid var(--rule-2); border-radius: var(--r); padding: 1px 5px;
   }
+  /* The season's own call rather than a published one: same size, dashed, so the two can
+     be told apart at a glance without a legend. */
+  .pool-mech.called { border-style: dashed; }
   /* Where the scenario came from. One mark per benchmark that names it, in that
      benchmark's own brand colour, sitting under the name rather than beside it: a
      scenario in five of them would otherwise push its own name out of the tile.
@@ -2740,6 +2585,12 @@
   .pool-row .nm > .nm-text {
     overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0;
   }
+  /* A scenario name copies on click. The cursor says so before the click, and the name
+     itself turns and says "copied" after it, so the confirmation is where the eye is. */
+  .copy-name { cursor: copy; border-radius: 3px; }
+  .copy-name:hover { text-decoration: underline; text-decoration-color: var(--rule-3); text-underline-offset: 3px; }
+  .copy-name.copied { color: var(--up); text-decoration: none; }
+  .copy-name.copied::after { content: " · copied"; font-family: var(--mono); font-size: var(--t-2xs); }
 
   .pool-num {
     display: flex; align-items: baseline; gap: 6px;
@@ -2809,42 +2660,56 @@
   .pool-chip.all { border-color: var(--rule-2); color: var(--ink); }
 
 </style>
+<link rel="stylesheet" href="arena.css">
+<link rel="stylesheet" href="tournament.css">
 </head>
 <body data-screen="queue">
+<a class="skip-link" href="#mainContent">Skip to content</a>
 <div class="frame">
 
   <!-- ============================================================ rail -->
   <aside class="rail">
     <div class="rail-top">
-      <div class="wordmark"><span>Apogee</span></div>
+      <div class="wordmark"><svg class="brand-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 20 9-17 9 17M8.5 11.5h7M5 20l7-5.5 7 5.5"/></svg><span>apogee</span></div><span class="brand-caption">1v1s</span>
     </div>
 
-    <nav class="nav" role="tablist" aria-label="Screens">
+    <nav class="nav" role="tablist" aria-label="Screens" aria-orientation="vertical">
       <div class="nav-label" data-copy="nav.group.play">Play</div>
 
       <button class="tab" role="tab" aria-selected="true" data-screen="queue">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 3 6 6-2 2-6-6V3h2Zm14 0-6 6 2 2 6-6V3h-2ZM3 21l6-6m6 0 6 6M2 16l6 6m8-20-5 5m5 15 6-6M9 11l4 4m2-6-4 4"/></svg>
         <span class="tab-key"></span>
         <span class="tab-label" data-copy="nav.tab.queue">Find a match</span>
       </button>
 
       <button class="tab" role="tab" aria-selected="false" data-screen="result">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3h8v7a4 4 0 0 1-8 0V3Zm4 11v6m-4 1h8M8 5H4v3a4 4 0 0 0 4 4m8-7h4v3a4 4 0 0 1-4 4"/></svg>
         <span class="tab-key"></span>
         <span class="tab-label" data-copy="nav.tab.result">Last match</span>
       </button>
 
-      <div class="nav-label" data-copy="nav.group.standing">Where you stand</div>
+      <button class="tab" role="tab" aria-selected="false" data-screen="tournaments">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5h5v4H3zm0 10h5v4H3zm5-8h4v10H8m4-5h4m0-3h5v6h-5z"/></svg>
+        <span class="tab-key"></span>
+        <span class="tab-label" data-copy="nav.tab.tournaments">Tournaments</span>
+      </button>
+
+      <div class="nav-label" data-copy="nav.group.standing">Standing</div>
 
       <button class="tab" role="tab" aria-selected="false" data-screen="ranks">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 10 8-6 8 6M4 15l8-6 8 6M4 20l8-6 8 6"/></svg>
         <span class="tab-key"></span>
         <span class="tab-label" data-copy="nav.tab.ranks">Ranks</span>
       </button>
 
       <button class="tab" role="tab" aria-selected="false" data-screen="profile">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2"/><path d="M12 1v4m0 14v4M1 12h4m14 0h4"/></svg>
         <span class="tab-key"></span>
         <span class="tab-label" data-copy="nav.tab.profile">Your aim</span>
       </button>
 
       <button class="tab" role="tab" aria-selected="false" data-screen="consistency">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17h18M3 12l4-5 4 7 5-10 5 6M3 21h18"/></svg>
         <span class="tab-key"></span>
         <span class="tab-label" data-copy="nav.tab.consistency">Consistency</span>
       </button>
@@ -2853,16 +2718,25 @@
       <div class="nav-label" data-copy="nav.group.practice">Practice</div>
 
       <button class="tab" role="tab" aria-selected="false" data-screen="quests">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3h6v6M20 3 9 14M10 4H4v16h16v-6"/></svg>
         <span class="tab-key"></span>
         <span class="tab-label" data-copy="nav.tab.quests">Quests</span>
       </button>
 
+      <button class="tab" role="tab" aria-selected="false" data-screen="scenarios">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h9M4 18h9"/><path d="m16 16 2.5 2.5L22 14"/></svg>
+        <span class="tab-key"></span>
+        <span class="tab-label" data-copy="nav.tab.scenarios">Scenarios</span>
+      </button>
+
       <button class="tab" role="tab" aria-selected="false" data-screen="seasonview">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M8 3v4m8-4v4M4 11h16m-11 4h2m3 0h2"/></svg>
         <span class="tab-key"></span>
         <span class="tab-label" data-copy="nav.tab.seasonview">Season</span>
       </button>
 
       <button class="tab" role="tab" aria-selected="false" data-screen="admin" id="tabAdmin" hidden>
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 17h16"/><circle cx="8" cy="7" r="3"/><circle cx="16" cy="17" r="3"/></svg>
         <span class="tab-key"></span>
         <span class="tab-label" data-copy="nav.tab.admin">Admin</span>
       </button>
@@ -2872,6 +2746,7 @@
            tab means it uses the one switcher instead of a parallel one, and `hidden` is
            what makes `restoreScreen` skip it when the app reopens. -->
       <button class="tab" role="tab" aria-selected="false" data-screen="band" id="tabBand" hidden>
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 7-7 7 7-7 7-7-7Z"/></svg>
         <span class="tab-key"></span>
         <span class="tab-label">Band</span>
       </button>
@@ -2880,14 +2755,17 @@
            from the Season tab above it: that one is the player's read-only view, this one
            writes the season file. Both are wanted. -->
       <button class="tab" role="tab" aria-selected="false" data-screen="season" id="tabSeason" hidden>
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 4 5 5M4 20l5-1L21 7l-4-4L5 15l-1 5Z"/></svg>
         <span class="tab-key"></span>
         <span class="tab-label" data-copy="nav.tab.season">Season editor</span>
       </button>
 
+    </nav>
+
     <div class="rail-foot">
       <div class="whoami" id="whoami" hidden>
         <button type="button" class="rank-link" id="myRankLink"
-                title="See the full ladder and what closes the gap">
+                title="Full ladder and next rank">
           <span class="badge" id="myBadge"></span>
           <span>
             <span class="tier" id="myTier"></span>
@@ -2931,7 +2809,7 @@
   </aside>
 
   <!-- ============================================================ main -->
-  <div class="main">
+  <main class="main" id="mainContent" tabindex="-1">
 
     <!-- Behind everything in this column. Decorative: no text, no controls,
          and aria-hidden so it is not a thing to land on. -->
@@ -2942,6 +2820,7 @@
     </div>
 
     <header class="topbar">
+      <div class="app-context"><b>KovaaK’s</b><span>/</span>Ranked 1v1</div>
       <div class="status" id="status">
         <details>
           <summary class="status-pill">
@@ -2957,8 +2836,8 @@
               <button type="button" id="btnOpen">Open in Explorer</button>
             </div>
             <p class="hint">
-              Apogee reads the stat files KovaaK's writes after every run. It never
-              changes them, and nothing is typed in by hand.
+              Apogee reads the stat files KovaaK's writes after each run and never
+              modifies them.
             </p>
           </div>
         </details>
@@ -2982,9 +2861,44 @@
         <span id="duelLiveText"></span>
       </button>
 
+      <!-- A fixture that is yours to play, from any screen. Same reasoning as the duel chip:
+           somebody is waiting on you, and that is not a fact about the page you are on. -->
+      <button type="button" class="queue-live duels" id="tnLive" hidden>
+        <span class="queue-live-dot"></span>
+        <span id="tnLiveText"></span>
+      </button>
+
       <div class="topbar-right">
+        <!-- The player's own chrome. Beside the sound because it is the same kind of
+             thing: a preference about this machine, which nobody should have to leave the
+             screen they are on to change. Filled in by buildThemeMenu. -->
+        <details class="theme" id="theme">
+          <summary class="sound-toggle" aria-label="Theme" title="Theme">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 3a9 9 0 1 0 0 18c1 0 1.6-.7 1.6-1.6 0-.4-.2-.8-.4-1.1-.3-.3-.4-.7-.4-1.1 0-.9.7-1.6 1.6-1.6H16a5 5 0 0 0 5-5c0-4.1-4-7.6-9-7.6Z"/>
+              <circle cx="7.5" cy="11.5" r="1.2"/>
+              <circle cx="10.5" cy="7.2" r="1.2"/>
+              <circle cx="15.2" cy="7.6" r="1.2"/>
+            </svg>
+          </summary>
+          <div class="status-menu theme-menu" role="group" aria-label="Theme">
+            <div class="theme-k">Base</div>
+            <div class="theme-bases" id="themeBases"></div>
+            <div class="theme-k">Accent</div>
+            <div class="theme-accents" id="themeAccents">
+              <label class="theme-accent theme-custom" id="themeCustomWrap" title="Any colour">
+                <span aria-hidden="true">+</span>
+                <input type="color" id="themeCustom" aria-label="Custom accent">
+              </label>
+            </div>
+            <p class="theme-note" id="themeNote"></p>
+            <div class="theme-foot">
+              <button type="button" id="themeReset">Reset</button>
+            </div>
+          </div>
+        </details>
         <button type="button" class="sound-toggle" id="soundToggle"
-                aria-pressed="true" title="Sound on. Press M to mute">
+                aria-pressed="true" aria-label="Toggle sound" title="Sound on. Press M to mute">
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5H4z"/>
             <path class="wave" d="M15.4 9.3a4 4 0 0 1 0 5.4"/>
@@ -3000,14 +2914,10 @@
       <div class="content">
 
         <div class="preview-note" id="previewNote" hidden>
-          <strong>Static preview.</strong>
-          This is a snapshot of the interface for looking at the design. Signing in,
-          watching your stats folder and playing matches all need the desktop app, which
-          has a filesystem and a local server behind it. Run <code>npm start</code> for
-          the real thing.
+          <strong>Design preview.</strong> Real training data; example opponent and match. Live play and Steam sign-in need the desktop app.
         </div>
 
-        <div class="banner" id="banner"></div>
+        <div class="banner" id="banner" role="status"></div>
 
         <div class="signin-help" id="signinHelp" hidden>
           <p>
@@ -3024,27 +2934,27 @@
 
           <!-- ------------------------------------------------ play -->
           <section class="screen active" id="screen-queue">
-            <div class="screen-head">
-              <h1 data-copy="queue.title">Find a match</h1>
-              <p data-copy="queue.lede">
-                Pick a category, play three scenarios in KovaaK's, and the ladder
-                settles itself. Rounds are scored on how far above your own past
-                scores you played.
-              </p>
+            <div class="screen-head queue-heading">
+              <div>
+                <div class="mode-tag"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 3 6 6-2 2-6-6V3h2Zm14 0-6 6 2 2 6-6V3h-2ZM3 21l6-6m6 0 6 6M2 16l6 6m8-20-5 5m5 15 6-6M9 11l4 4m2-6-4 4"/></svg>Ranked 1v1</div>
+                <h1 data-copy="queue.title">Make your next set count.</h1>
+                <p data-copy="queue.lede">3 scenarios, one opponent. Each round goes to whoever beats their own baseline by more.</p>
+              </div>
+              <div class="versus-mark" id="disciplineMark" aria-hidden="true"></div>
             </div>
 
-            <div class="panel">
+            <div class="panel rank-showcase">
               <div class="hero">
                 <button type="button" class="rank-link" id="heroRankLink"
-                        title="See the full ladder and what closes the gap">
+                        title="Full ladder and next rank">
                   <span class="badge" id="heroBadge"></span>
                 </button>
                 <div class="hero-id">
-                  <div class="hero-kicker">Your rank</div>
+                  <div class="hero-kicker">Current rank</div>
                   <div class="name" id="heroName"></div>
                   <div class="climb" id="heroClimb" hidden>
                     <div class="climb-head">
-                      <span class="climb-k">Climbing to</span>
+                      <span class="climb-k">Next benchmark rank</span>
                       <span class="climb-to" id="heroClimbTo"></span>
                       <span class="climb-pct" id="heroClimbPct"></span>
                     </div>
@@ -3059,9 +2969,9 @@
                     <div class="stat-s" id="heroRd"></div>
                   </div>
                   <div class="stat">
-                    <div class="stat-k">Population</div>
+                    <div class="stat-k">Standing</div>
                     <div class="stat-v" id="heroPercentile"></div>
-                    <div class="stat-s">of everyone playing</div>
+                    <div class="stat-s">provisional estimate</div>
                   </div>
                   <div class="stat">
                     <div class="stat-k">Runs read</div>
@@ -3072,19 +2982,25 @@
               </div>
             </div>
 
-            <div class="panel">
+            <div class="command-focus" id="commandFocus" hidden>
+              <div><span class="command-kicker">Practice direction</span><strong id="commandFocusName"></strong><p id="commandFocusDetail"></p></div>
+              <button type="button" id="commandFocusOpen">View your aim</button>
+            </div>
+
+            <div class="panel queue-stage">
               <div class="phead">
                 <h2 data-copy="queue.p1.head">Queue</h2>
-                <span class="note" data-copy="queue.p1.note" id="queueNote">three scenarios, best two of three</span>
+                <span class="note" data-copy="queue.p1.note" id="queueNote">Best of three</span>
               </div>
               <div class="pbody queue-body">
+                <ol class="queue-journey" aria-label="Match stages"><li class="current" aria-current="step"><span>01</span>Discipline</li><li><span>02</span>Lock</li><li><span>03</span>Play</li><li><span>04</span>Debrief</li></ol>
+                <div class="queue-signal"><span id="queueSignal" role="status">Choose your discipline</span><span id="disciplineCue"></span></div>
 
                 <div class="queue-pick">
                   <div>
-                    <div class="field-k">Category <span class="field-hint">weakest is marked</span></div>
+                    <div class="field-k">Category <span class="field-hint">weakest marked</span></div>
                     <div class="cats" id="cats"></div>
                   </div>
-                  <div class="pool-note" id="poolNote"></div>
                 </div>
 
                 <!-- Only while the server is looking; see the searching orb notes in
@@ -3092,7 +3008,7 @@
                      and the clock on the button is what actually reports progress. -->
                 <div class="orb-search" id="orbSearch" hidden aria-hidden="true"></div>
 
-                <button type="button" class="commit" id="queueBtn">
+                <button type="button" class="commit" id="queueBtn" aria-describedby="poolNote queueGateText">
                   <span>
                     <span class="commit-verb" id="queueVerb">Find opponent</span>
                     <span class="commit-sub" id="queueSub"></span>
@@ -3101,10 +3017,12 @@
                   <span class="commit-sweep" aria-hidden="true"></span>
                 </button>
 
-                <div class="queue-gate" id="queueGate">
+                <div class="queue-gate" id="queueGate" role="status">
                   <span id="queueGateText"></span>
                   <div class="gate-track"><div class="gate-fill" id="queueGateFill"></div></div>
                 </div>
+                <div class="pool-note" id="poolNote"></div>
+                <div class="queue-format"><span><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5h14v14H5zM9 5v14m6-14v14"/></svg>3 scenarios</span><span><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2"/><path d="M12 1v4m0 14v4M1 12h4m14 0h4"/></svg>Scored vs. your baseline</span><span><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg>Read from stats files</span></div>
 
               </div>
             </div>
@@ -3123,10 +3041,10 @@
 
                 <div class="duel-foot">
                   <p class="duel-lede" data-copy="duels.lede">
-                    Send one and you play your three first. It waits a week for an answer,
-                    and whatever happens your run set joins the pool.
+                    You play your 3 first. They have a week to answer. Your runs join the
+                    pool either way.
                   </p>
-                  <button type="button" id="duelPickBtn" data-copy="duels.send">Duel someone…</button>
+                  <button type="button" id="duelPickBtn" data-copy="duels.send">Send a duel…</button>
                 </div>
 
                 <!-- In place rather than in a modal, because the app has no modals and a
@@ -3151,7 +3069,7 @@
             <div class="panel opponent" id="opponent">
               <div class="phead">
                 <h2 data-copy="queue.p3.head">Your match</h2>
-                <span class="note" data-copy="queue.p3.note">only your first run on each scenario counts</span>
+                <span class="note" data-copy="queue.p3.note">first run per scenario counts</span>
               </div>
               <div class="pbody">
                 <div class="opp-row">
@@ -3172,11 +3090,11 @@
 
                 <div class="todo">
                   <h3 data-copy="queue.todo.head">Play these in KovaaK's</h3>
-                  <ol id="todoList"></ol>
+                  <div class="match-readiness" id="matchReadiness" role="status"></div>
+                <ol id="todoList"></ol>
                   <div class="match-actions" id="matchActions" hidden>
                     <span class="match-hint" id="matchHint">
-                      Only your first run on each scenario counts. Apogee picks them up
-                      automatically.
+                      First run on each scenario counts. Scores are read automatically.
                     </span>
                     <span class="match-buttons">
                       <span class="match-clock" id="matchClock" hidden>--:--</span>
@@ -3191,15 +3109,14 @@
             <div class="panel" id="uploadRow" hidden>
               <div class="phead">
                 <h2 data-copy="queue.p4.head">Your history</h2>
-                <span class="note" data-copy="queue.p4.note">safe to run more than once</span>
+                <span class="note" data-copy="queue.p4.note">safe to re-run</span>
               </div>
               <div class="pbody">
                 <div class="upload-row">
                   <div>
-                    <div class="upload-title" id="uploadTitle">Upload your history</div>
+                    <div class="upload-title" id="uploadTitle">Upload history</div>
                     <div class="upload-sub" id="uploadSub">
-                      Builds your baselines server-side, which is what every match is
-                      scored against.
+                      Builds the baselines every match is scored against.
                     </div>
                     <div class="upload-track" id="uploadTrack" hidden>
                       <div class="upload-fill" id="uploadFill"></div>
@@ -3222,19 +3139,42 @@
 
           </section>
 
+          <!-- ----------------------------------------- tournaments -->
+          <!-- Two views in one screen: the list, and one tournament. Drawn by
+               renderTournaments / renderTournamentView from what list-tournaments
+               serves, which carries no scores. -->
+          <section class="screen" id="screen-tournaments">
+            <div class="screen-head tn-head">
+              <div>
+                <div class="mode-tag"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5h5v4H3zm0 10h5v4H3zm5-8h4v10H8m4-5h4m0-3h5v6h-5z"/></svg>Tournament · Unrated</div>
+                <h1 data-copy="tournaments.title">Tournaments</h1>
+                <p data-copy="tournaments.lede">Round robin in groups, then a single-elimination bracket. Each fixture is a standard 3-scenario match scored against your own baselines. Unrated.</p>
+              </div>
+              <svg class="tn-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 20 9-17 9 17M8.5 11.5h7M5 20l7-5.5 7 5.5"/></svg>
+            </div>
+
+            <div class="preview-note" id="tnPreviewNote" hidden>
+              <strong>Example tournament.</strong> Real bracket logic; invented players and results.
+            </div>
+
+            <div id="tnIndex"></div>
+            <div id="tnDetail" hidden></div>
+          </section>
+
           <!-- ---------------------------------------------- result -->
           <section class="screen" id="screen-result">
             <div class="screen-head">
               <h1 data-copy="result.title">Last match</h1>
               <p data-copy="result.lede">
-                Each round is won by the bigger improvement over your own baseline, not by
-                the bigger score. Two out of three takes the match.
+                Rounds go to the bigger improvement over baseline, regardless of raw
+                score. Best of 3.
               </p>
             </div>
 
             <div class="panel">
               <div class="verdict">
                 <div>
+                  <div class="debrief-kicker" id="debriefProvenance"></div>
                   <div class="big" id="verdictBig"></div>
                   <div class="scores" id="verdictScores"></div>
                 </div>
@@ -3245,6 +3185,7 @@
                 <div class="delta-move" id="ratingMove"></div>
               </div>
               <p class="explain" id="explain"></p>
+              <div class="debrief-rounds" id="debriefRounds" aria-label="Round breakdown" hidden></div>
 
               <!-- The one thing anybody wants immediately after a result, and it was two
                    screens away: back to Play, open the picker, find the name, send. Hidden
@@ -3279,7 +3220,7 @@
 
             <div class="panel">
               <div class="phead">
-                <h2>The ranks in this band</h2>
+                <h2>Ranks</h2>
                 <span class="note" id="bandNote"></span>
               </div>
               <div class="pbody">
@@ -3289,7 +3230,7 @@
 
             <div class="panel">
               <div class="phead">
-                <h2>What each rank asks of each scenario</h2>
+                <h2>Thresholds by scenario</h2>
                 <span class="note" id="bandGridNote"></span>
               </div>
               <div class="pbody">
@@ -3306,9 +3247,9 @@
             <div class="screen-head">
               <h1 data-copy="ranks.title">Ranks</h1>
               <p data-copy="ranks.lede">
-                Four bands per category, each a benchmark in its own right, and
-                an overall tier derived from them. Every threshold traces to a
-                benchmark that published it.
+                4 bands per category, each ranked as its own benchmark. The overall
+                tier is derived from them. Thresholds come from a published benchmark
+                where one exists, and from the scenario's KovaaK's leaderboard otherwise.
               </p>
             </div>
 
@@ -3336,7 +3277,7 @@
 
             <div class="panel">
               <div class="phead">
-                <h2 data-copy="ranks.p3.head">What it takes</h2>
+                <h2 data-copy="ranks.p3.head">Next ranks</h2>
                 <span class="note" data-copy="ranks.p3.note">closest first</span>
               </div>
               <div class="scen-wrap">
@@ -3356,8 +3297,7 @@
             <div class="screen-head">
               <h1 data-copy="profile.title">Your aim</h1>
               <p data-copy="profile.lede">
-                Where your energy is, where it is missing, and which difficulties
-                have enough history to grade.
+                Energy by category, and which difficulties have enough runs to grade.
               </p>
             </div>
 
@@ -3368,14 +3308,13 @@
 
             <div class="panel">
               <div class="phead">
-                <h2 data-copy="profile.p2.head">What you are measured on</h2>
+                <h2 data-copy="profile.p2.head">Baselines</h2>
                 <span class="note" data-copy="profile.p2.note">a baseline needs 5 runs</span>
               </div>
               <div class="pbody">
                 <p class="rank-lede">
-                  A match compares you against your own past scores, so a
-                  difficulty you have barely played cannot be graded yet. These
-                  are the ones with enough history.
+                  Matches score you against your own past runs. A difficulty needs
+                  enough runs before it can be graded.
                 </p>
                 <div class="cover" id="coverage"></div>
               </div>
@@ -3416,7 +3355,7 @@
                     <div class="cf-label">Ceiling</div>
                     <div class="cf-rank" id="ceilRank"></div>
                     <div class="cf-energy" id="ceilEnergy"></div>
-                    <div class="cf-note">what your best run earns</div>
+                    <div class="cf-note">your best run</div>
                   </div>
                   <div class="cf-gap">
                     <div class="cf-gap-val" id="gapVal"></div>
@@ -3426,13 +3365,12 @@
                     <div class="cf-label">Floor</div>
                     <div class="cf-rank" id="floorRank"></div>
                     <div class="cf-energy" id="floorEnergy"></div>
-                    <div class="cf-note">what you can do reliably</div>
+                    <div class="cf-note">worst of your last 5 runs</div>
                   </div>
                 </div>
                 <p class="cf-explain">
-                  A benchmark scores your best run. A match has no retry, so your
-                  worst recent run is the better guide to what you will bring to
-                  one.
+                  Matches have no retry, so the floor is the better guide to match
+                  performance.
                 </p>
               </div>
             </div>
@@ -3476,14 +3414,51 @@
 
           <!-- ---------------------------------------------- season -->
           <!-- ------------------------------------------ season (player) -->
+          <section class="screen" id="screen-scenarios">
+            <div class="screen-head">
+              <h1 data-copy="scenarios.title">Scenario ranks</h1>
+              <p data-copy="scenarios.lede">
+                Your rank on every scenario in the season, from your best run on it.
+                Each difficulty only awards its own part of the ladder, so a maxed
+                scenario means moving up a difficulty.
+              </p>
+            </div>
+
+            <div class="panel">
+              <div class="phead">
+                <h2 data-copy="scenarios.p1.head">Every scenario</h2>
+                <span class="note" id="scNote"></span>
+              </div>
+              <div class="pbody">
+                <div class="pool-bands sc-filter" id="scCats"></div>
+                <div class="pool-bands sc-filter" id="scBands"></div>
+              </div>
+              <div class="scen-wrap">
+                <table class="scen sc-table">
+                  <thead><tr>
+                    <th><button type="button" class="sc-sort" data-sort="category">Scenario</button></th>
+                    <th>Category</th>
+                    <th><button type="button" class="sc-sort" data-sort="rank">Rank</button></th>
+                    <th>Best</th>
+                    <th>Next rank</th>
+                    <th>Target</th>
+                    <th><button type="button" class="sc-sort" data-sort="closest">Gap</button></th>
+                    <th>Progress</th>
+                    <th aria-label="Play"></th>
+                  </tr></thead>
+                  <tbody id="scRanksBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
           <section class="screen" id="screen-seasonview">
             <div class="screen-head">
               <h1 data-copy="seasonview.title">Season</h1>
               <p data-copy="seasonview.lede">
-                What a rank means right now, and everything in the pool you can
-                climb it on. The pool is drawn from the benchmarks people already
-                play, so a session here is a session on those too. Ranks move while
-                the season is a draft.
+                Current rank thresholds and the full scenario pool. Every scenario
+                comes from an existing community benchmark, so practice here counts
+                there too. Thresholds can change while the season is a draft.
               </p>
             </div>
 
@@ -3502,8 +3477,8 @@
               </div>
               <div class="pbody">
                 <p class="rank-lede">
-                  Your standing across all six categories. Tiers are shares of the
-                  population, so one keeps its meaning as the ladder grows.
+                  Standing across all 6 categories. Tiers are population percentiles,
+                  so they stay stable as the player base grows.
                 </p>
                 <div class="sv-tiers" id="svTiers"></div>
               </div>
@@ -3512,13 +3487,13 @@
             <div class="panel">
               <div class="phead">
                 <h2 data-copy="seasonview.p3.head">Category ladders</h2>
-                <span class="note" data-copy="seasonview.p3.note">four bands each, six ranks a band</span>
+                <span class="note" data-copy="seasonview.p3.note">four overlapping difficulty bands</span>
               </div>
               <div class="pbody">
                 <p class="rank-lede">
-                  Four bands per category, each a whole benchmark with its own ranks. They
-                  overlap by two, so the next band's first ranks are reachable from
-                  this one. The overall tier is derived from all six categories.
+                  4 bands per category, each with its own ranks. Bands overlap by 2
+                  ranks, so the next band's first ranks can be reached from this one.
+                  The overall tier is derived from all 6 categories.
                 </p>
                 <div id="svCats"></div>
               </div>
@@ -3531,14 +3506,13 @@
               </div>
               <div class="pbody">
                 <p class="rank-lede">
-                  One difficulty at a time. Your best on each scenario, and what the next rank
-                  asks for. A highlighted row is one your next rank is scored on.
+                  One difficulty at a time: your best on each scenario and the score for
+                  your next rank. Highlighted rows count toward your next rank.
                 </p>
                 <p class="rank-lede">
-                  Nothing here was invented. Every scenario is drawn from a benchmark the
-                  community already grades itself against, so the marks under a name are the
-                  other ladders that run is worth something on &mdash; filled in once your
-                  score holds a rank there. Hover one for the rank and what the next asks.
+                  Every scenario comes from an existing community benchmark. The marks
+                  under a name are the other benchmarks that scenario counts on, filled
+                  once your score holds a rank there. Hover for the rank and next threshold.
                 </p>
                 <div class="pool-bands" id="svDiffs"></div>
                 <div class="pool-grid" id="svPool"></div>
@@ -3553,11 +3527,10 @@
             </div>
 
             <div class="sv-section">
-              <h2 class="sv-section-title">Past the top</h2>
+              <h2 class="sv-section-title">Beyond the top rank</h2>
               <p class="sv-section-lede">
-                The ladder stops at its top rank, because a rank is a band and a band has
-                a top. This does not. It is where you sit on each scenario's KovaaK's
-                leaderboard, and a whole point is ten times fewer players above you.
+                Your position on each scenario's KovaaK's leaderboard, with no ceiling.
+                Each full point means 10x fewer players above you.
               </p>
             </div>
             <div class="panel">
@@ -3571,7 +3544,7 @@
             <div class="panel">
               <div class="phead">
                 <h2 data-copy="seasonview.p6.head">Leaderboard</h2>
-                <span class="note" id="apexBoardNote">sign in to see where you stand</span>
+                <span class="note" id="apexBoardNote">sign in to see your position</span>
               </div>
               <div class="pbody">
                 <div class="apex-tabs" id="apexTabs"></div>
@@ -3622,8 +3595,7 @@
               </div>
               <div class="pbody">
                 <p class="adm-lede">
-                  The app's own words. Anything derived from your runs is computed rather than
-                  written, so it is not here.
+                  Static app text. Values computed from runs are not listed.
                 </p>
                 <input class="adm-search" id="adminCopySearch" type="search"
                        placeholder="Filter by key or text" autocomplete="off">
@@ -3771,29 +3743,29 @@
         <div class="panel empty" id="empty">
           <h2>Waiting for your KovaaK's stats</h2>
           <p id="emptyText">
-            Apogee reads the stat files KovaaK's already writes after every run. Nothing
-            to install in the game, and no scores to type in.
+            Apogee reads the stat files KovaaK's writes after each run. No game mods,
+            no manual score entry.
           </p>
           <div class="empty-steps">
             <div class="empty-step">
               <div class="n">01</div>
               <div>
-                <h3>Point it at your stats</h3>
-                <p>Usually found on its own. If not, choose the folder yourself below.</p>
+                <h3>Find your stats folder</h3>
+                <p>Detected automatically on most installs. If not, choose it below.</p>
               </div>
             </div>
             <div class="empty-step">
               <div class="n">02</div>
               <div>
-                <h3>Play as you normally would</h3>
-                <p>Every run is read as it lands. Nothing in the game changes.</p>
+                <h3>Play normally</h3>
+                <p>Each run is read as soon as KovaaK's saves it.</p>
               </div>
             </div>
             <div class="empty-step">
               <div class="n">03</div>
               <div>
                 <h3>Queue a category</h3>
-                <p>Three scenarios against a real opponent, scored against your own past.</p>
+                <p>3 scenarios vs. a real opponent, scored against your own baseline.</p>
               </div>
             </div>
           </div>
@@ -3802,11 +3774,12 @@
 
       </div>
     </div>
-  </div>
+  </main>
 </div>
 
-<div class="celebrate" id="celebrate" hidden>
+<div class="celebrate" id="celebrate" role="dialog" aria-modal="true" aria-labelledby="celebrateTitle" aria-describedby="celebrateDetail" hidden>
   <div class="celebrate-card">
+    <div class="promotion-emblem" id="celebrateEmblem" aria-hidden="true" hidden><svg viewBox="0 0 80 86" fill="none" stroke="currentColor"><path d="m40 5 27 16v32L40 77 13 53V21Z"/><path d="m40 15 19 12v21L40 64 21 48V27Z"/><path d="m27 46 13-23 13 23-13-7Z" fill="currentColor"/><path d="m31 54 9 7 9-7"/></svg></div>
     <div class="celebrate-kicker" id="celebrateKicker">Quest complete</div>
     <div class="celebrate-title" id="celebrateTitle"></div>
     <div class="celebrate-detail" id="celebrateDetail"></div>
@@ -3818,11 +3791,11 @@
       </div>
       <div class="celebrate-track"><div class="celebrate-fill" id="celebrateFill"></div></div>
     </div>
-    <button type="button" id="celebrateClose">Nice</button>
+    <button type="button" id="celebrateClose">Continue</button>
   </div>
 </div>
 
-<div class="toast" id="toast">
+<div class="toast" id="toast" role="status">
   <div>
     <div class="t-scen" id="toastScen"></div>
     <div class="sub" id="toastNote">run detected</div>

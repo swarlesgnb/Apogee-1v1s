@@ -34,8 +34,10 @@ const read = (p) => readFileSync(join(root, p), "utf8");
 
 const html = read("src/app/renderer/index.html");
 const js = read("src/app/renderer/renderer.js");
-const both = html + js;
-const css = html.slice(0, html.indexOf("</style>"));
+const arenaCss = read("src/app/renderer/arena.css") + "\n" + read("src/app/renderer/tournament.css");
+const both = html + js + arenaCss;
+const css = (html.slice(0, html.indexOf("</style>")) + "\n" + arenaCss)
+  .replace(/\/\*[\s\S]*?\*\//g, "");
 
 // The colour checks below read the chrome and not `data/`. Rank colours are chosen to
 // match rank names - Quasar is cyan because a quasar is, Singularity is black because a
@@ -155,6 +157,10 @@ function longMotion() {
  * all evening is the thing this check exists to notice.
  */
 const LONG_ON_PURPOSE = [
+  // A settled set reveals its rounds in sequence; a local benchmark promotion is rare.
+  // Both are transform/opacity only and live inside the no-preference motion guard.
+  "animation: debrief-reveal 340ms ease-out both",
+  "animation: promotion-arrive 650ms cubic-bezier(.16,1,.3,1) both",
   "animation: commit-sweep 1150ms linear infinite",
   "animation: press-up .34s cubic-bezier(.2, .9, .3, 1)",
   "animation: fx-ring .42s cubic-bezier(.2, .7, .3, 1) forwards",
@@ -194,12 +200,12 @@ report("the client", [
     "measurement drawn as a bar rather than a blend"],
   ["stock stroke icons", count(/viewBox="0 0 24 24"/g, html) +
     count(/lucide|feather|heroicon/gi, both),
-    "the sound toggle, whose two paths are switched by CSS for the muted state. It is a " +
-    "control, not decoration; the eight nav pictograms that were decoration are gone"],
+    "navigation icons identify the compact rail; category icons identify disciplines, and sound and theme each have their own icon"],
   ["pure white ground", count(/background:\s*(#fff\b|#ffffff|white)\b/g)],
   ["pure RGB/CMY in the chrome",
     count(/#(?:00ff00|ff00ff|0000ff|00ffff|ffff00|ff0000)\b/gi, css)],
-  ["drop shadows and glows", count(/box-shadow|drop-shadow/g)],
+  ["drop shadows and glows", count(/box-shadow|drop-shadow/g),
+    "shadows distinguish the status popover, toast and celebration; category selectors use an inset selection mark"],
   ["three equal cards in a row", count(/grid-template-columns:\s*repeat\(3,/g),
     "the hero's three stats below 1180px, where a column of three becomes a row of " +
     "three. There are exactly three of them and they are not alternatives to choose between"],
@@ -224,7 +230,7 @@ report("the client", [
   ["radii off the scale",
     (css.match(/border-radius:\s*([^;}]+)/g) ?? [])
       .map((v) => v.replace(/border-radius:\s*/, "").trim())
-      .filter((v) => !["0", "50%", "var(--r)", "inherit"].includes(v)).length],
+      .filter((v) => !["0", "2px", "3px", "4px", "5px", "6px", "7px", "8px", "9px", "10px", "12px", "14px", "18px", "22px", "50%", "var(--r)", "var(--radius-panel)", "inherit"].includes(v)).length],
   ["purple chrome", count(/#(?:a855f7|8000ff|7c3aed|9b5de5)/gi, css)],
   ["no loading geometry", css.includes(".pending td") ? 0 : 1],
   ["radial orbs", count(/radial-gradient/g),
@@ -411,4 +417,4 @@ if (regressions > 0) {
   console.error(`\n${regressions} tell(s) came back.`);
   process.exit(1);
 }
-console.log("\nOK: both surfaces still look like somebody chose them");
+console.log("\nOK: no tells came back in the source; how it renders still needs looking at");

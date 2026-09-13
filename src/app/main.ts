@@ -57,9 +57,15 @@ import {
   fetchDuels,
   sendDuel,
   setFriend,
+  fetchTournaments,
+  playFixture,
+  tournamentAction,
   type DuelBoard,
   type FoundMatch,
+  type TournamentAction,
+  type TournamentSummary,
 } from "./api.ts";
+import { sampleTournamentView } from "../core/tournament/sample.ts";
 import {
   isConfigured,
   restoreSession,
@@ -125,6 +131,8 @@ interface State {
   quests: QuestProgressState | null;
   /** The inbox, what was sent, who else plays. Null until signed in and read once. */
   duels: DuelBoard | null;
+  /** The tournament list as last read. Null until signed in and read once. */
+  tournaments: TournamentSummary[] | null;
 }
 
 const state: State = {
@@ -139,17 +147,38 @@ const state: State = {
   uploading: false,
   quests: null,
   duels: null,
+  tournaments: null,
 };
 
 /** What the renderer was last told, so an unchanged board is not broadcast again. */
 let duelBoardKey = "";
+let tournamentsKey = "";
 
 let window: BrowserWindow | null = null;
 let watcher: StatsWatcher | null = null;
+const observedBests = new Map<string, number>();
 let rebuildTimer: NodeJS.Timeout | null = null;
 
 function broadcast(channel: string, payload: unknown): void {
   if (window && !window.isDestroyed()) window.webContents.send(channel, payload);
+}
+
+/**
+ * Ask for attention when something happens behind the game.
+ *
+ * The player is in KovaaK's when the queue finds somebody and when a result comes back -
+ * that is the point of the app running beside it - so the window that would announce it
+ * is the one window they are not looking at. Flashing the taskbar button is the operating
+ * system's own way to say "over here" without taking focus from a game mid-run. Only while
+ * the window is unfocused, and it stops as soon as the window is.
+ */
+function nudge(): void {
+  const win = window;
+  if (!win || win.isDestroyed() || win.isFocused()) return;
+  win.flashFrame(true);
+  win.once("focus", () => {
+    if (!win.isDestroyed()) win.flashFrame(false);
+  });
 }
 
 function rebuild(reason: string): void {
@@ -161,9 +190,19 @@ function rebuild(reason: string): void {
   try {
     const snapshot = buildSnapshot({ statsDir: state.statsDir });
     if (snapshot) {
+      const previous = state.snapshot;
       state.snapshot = snapshot;
       state.lastError = null;
       broadcast("apogee:snapshot", snapshot);
+      if (reason.startsWith("new run:") && previous &&
+          previous.benchmark.name === snapshot.benchmark.name &&
+          snapshot.player.benchmarkRank && previous.player.benchmarkRank &&
+          JSON.stringify(previous.benchmark.rankNames) === JSON.stringify(snapshot.benchmark.rankNames) &&
+          snapshot.benchmark.rankNames.indexOf(snapshot.player.benchmarkRank) >
+            previous.benchmark.rankNames.indexOf(previous.player.benchmarkRank) &&
+          snapshot.player.benchmarkEnergy > previous.player.benchmarkEnergy) {
+        broadcast("apogee:benchmarkPromotion", { from: previous.player.benchmarkRank, to: snapshot.player.benchmarkRank });
+      }
       checkQuestCompletions(snapshot);
     } else {
       state.lastError = "No runs found in the stats folder yet.";
@@ -186,15 +225,27 @@ function scheduleRebuild(reason: string): void {
 function startWatching(dir: string): void {
   watcher?.close();
   state.statsDir = dir;
+  observedBests.clear();
 
   watcher = watchStatsFolder(dir, {
     onRun: (run, file) => {
       // Surface the run immediately. The snapshot rebuild follows, but the player
       // should see their run acknowledged the moment it lands, not a second later.
+      const known = state.snapshot?.categories.flatMap(category => {
+        if (!category || typeof category !== "object" || !("scenarios" in category) || !Array.isArray(category.scenarios)) return [];
+        return category.scenarios.filter((scenario): scenario is { name: string; runs: number; score: number } =>
+          scenario && typeof scenario === "object" && typeof scenario.name === "string" &&
+          typeof scenario.runs === "number" && Number.isFinite(scenario.score));
+      }).find(scenario => scenario.name === run.scenario);
+      // A burst can arrive before the next snapshot. Compare with the preceding run too.
+      const previousBest = known && known.runs > 0
+        ? Math.max(known.score, observedBests.get(run.scenario) ?? -Infinity) : null;
+      if (previousBest !== null) observedBests.set(run.scenario, Math.max(previousBest, run.score));
       broadcast("apogee:run", {
         scenario: run.scenario,
         score: run.score,
         playedAt: run.playedAt?.toISOString() ?? null,
+        localPersonalBest: previousBest !== null && run.score > previousBest ? { previous: previousBest } : null,
         file,
       });
 
@@ -337,7 +388,7 @@ async function maybeSubmitForMatch(scenarioName: string, file: string): Promise<
       matchId: match.matchId,
       scenarioId: wanted.id,
       status: "already-submitted",
-      message: `${scenarioName} already counted; only the first run per scenario does`,
+      message: `${scenarioName} already counted · first run per scenario only`,
     });
     return;
   }
@@ -390,6 +441,9 @@ async function settleActiveMatch(): Promise<void> {
     state.match = null;
     state.submitted.clear();
     broadcast("apogee:matchSettled", settled);
+    nudge();
+    // A settled leg can decide a fixture, open the next round or crown somebody.
+    if (settled.tournament) void refreshTournaments("a fixture leg settled");
   } catch (err) {
     broadcast("apogee:error", err instanceof Error ? err.message : String(err));
   }
@@ -460,7 +514,7 @@ function createWindow(): void {
     ...openingBounds(settings.window),
     minWidth: DEFAULT_MIN_WIDTH,
     minHeight: DEFAULT_MIN_HEIGHT,
-    backgroundColor: "#1e1b18",
+    backgroundColor: DARK_CHROME.ground,
     show: false,
     title: "Apogee",
     // The app draws its own top bar. `hidden` with an overlay rather than a fully
@@ -847,6 +901,50 @@ function runSmokeTest(): void {
                 `chips, Play ${practice.play ? "wired" : "MISSING"}`
               : ", screen not painted (no snapshot in this window)")
       }`,
+    );
+
+    // The Scenarios screen paints the same practice list, so it is held to that list: one
+    // row per scenario with the filters at All, and a rank name on exactly the rows the
+    // core says hold one. Both are counted against the IPC result rather than a fixed
+    // number, so the check can fail on any machine's history, including an empty one.
+    const scenarioRanks = await probe.webContents.executeJavaScript(`(async () => {
+      const tab = document.querySelector('.tab[data-screen="scenarios"]');
+      if (tab) tab.click();
+      const data = await window.apogee.practice().catch(() => null);
+      const want = data && Array.isArray(data.scenarios) ? data.scenarios : [];
+      const deadline = Date.now() + 2500;
+      while (
+        Date.now() < deadline &&
+        document.querySelectorAll("#scRanksBody tr.sc-row").length < want.length
+      ) {
+        await new Promise((r) => setTimeout(r, 100));
+      }
+      const rows = [...document.querySelectorAll("#scRanksBody tr.sc-row")];
+      return {
+        tab: Boolean(tab),
+        want: want.length,
+        wantRanked: want.filter((s) => s.rankIndex !== null).length,
+        rows: rows.length,
+        ranked: rows.filter((r) => r.dataset.rank !== "").length,
+      };
+    })()`);
+
+    if (!scenarioRanks.tab) problems.push("the Scenarios tab is not in the DOM");
+    else if (scenarioRanks.want > 0) {
+      if (scenarioRanks.rows !== scenarioRanks.want) {
+        problems.push(
+          `the Scenarios screen lists ${scenarioRanks.rows} of ${scenarioRanks.want} scenarios`,
+        );
+      } else if (scenarioRanks.ranked !== scenarioRanks.wantRanked) {
+        problems.push(
+          `the Scenarios screen names a rank on ${scenarioRanks.ranked} scenarios ` +
+            `where the core holds ${scenarioRanks.wantRanked}`,
+        );
+      }
+    }
+    console.log(
+      `scenario ranks: ${scenarioRanks.rows} rows, ${scenarioRanks.ranked} ranked ` +
+        `(core: ${scenarioRanks.want}, ${scenarioRanks.wantRanked})`,
     );
 
     // The apex board renders from committed data rather than the snapshot, so it is
@@ -1297,6 +1395,87 @@ function runSmokeTest(): void {
       }`,
     );
 
+    // Tournaments: the bridge, then the screen driven with a view rather than a session,
+    // for the reason the duel panel is - signed out, list-tournaments refuses, and a check
+    // that waits on it can only pass. The views come from the real engine (sample.ts), one
+    // of them carrying a name that is markup, because every name on a bracket is somebody
+    // else's Steam text.
+    const tnBridgeGaps = await probe.webContents.executeJavaScript(
+      `["tournaments", "createTournament", "joinTournament", "leaveTournament", "checkIn",
+        "removeEntrant", "startTournament", "cancelTournament", "playFixture", "onTournaments"]
+         .filter((k) => typeof window.apogee[k] !== "function")`,
+    );
+    if (tnBridgeGaps.length > 0) problems.push(`the tournament bridge is missing: ${tnBridgeGaps.join(", ")}`);
+
+    const tnPlaying = sampleTournamentView({ stage: "groups", hostileName: '<img src=x onerror="window.__tnPwned=1">' });
+    const tnEntry = sampleTournamentView({ stage: "registration", viewerHosts: true });
+    const cup = await probe.webContents.executeJavaScript(`(async () => {
+      if (typeof renderTournamentView !== "function") return null;
+      document.querySelector('.tab[data-screen="tournaments"]')?.click();
+      const detail = document.getElementById("tnDetail");
+
+      tnTab = "groups";
+      renderTournamentView(${JSON.stringify(tnPlaying)});
+      await new Promise((r) => setTimeout(r, 80));
+      const shown = {
+        visible: !detail.hidden,
+        groups: detail.querySelectorAll(".tn-group").length,
+        rows: detail.querySelectorAll(".tn-table tbody tr").length,
+        play: [...detail.querySelectorAll(".tn-next button")].map((b) => b.textContent),
+        hostPanel: !!detail.querySelector(".tn-host-panel"),
+        injected: detail.querySelectorAll("img").length > 0 || window.__tnPwned === 1,
+        nameShown: detail.textContent.includes("<img src=x"),
+        // Nothing on a tournament screen is a score. The view carries none, and this is the
+        // one place that can check it end to end. A number with decimals or a signed
+        // percentage is what a score or a delta looks like on this client; the word
+        // "baseline" is not, because the screen explains how fixtures are won.
+        leaks: /match_score|\\bdeltas?\\b|\\d+\\.\\d{2}|[+\\u2212-]\\d+(\\.\\d+)?%/i.test(detail.textContent),
+      };
+      tnTab = "bracket";
+      renderTournamentView(tnView);
+      shown.slots = detail.querySelectorAll(".tn-slot").length;
+
+      tnTab = "players";
+      renderTournamentView(${JSON.stringify(tnEntry)});
+      shown.start = [...detail.querySelectorAll(".tn-host-panel .tn-btn.primary")].map((b) => b.disabled);
+      shown.warned = !!detail.querySelector(".tn-warn");
+      shown.removable = detail.querySelectorAll(".tn-entrant button").length;
+
+      tnClose();
+      document.querySelector('.tab[data-screen="ranks"]')?.click();
+      return shown;
+    })()`).catch((err) => ({ failed: String(err && err.message ? err.message : err) }));
+
+    if (cup === null) {
+      problems.push("nothing renders a tournament");
+    } else if (cup.failed) {
+      problems.push(`the tournament screen threw: ${cup.failed}`);
+    } else if (!cup.visible || cup.groups !== 4 || cup.rows !== 16) {
+      problems.push(`a four-group tournament drew ${cup.groups} groups and ${cup.rows} rows`);
+    } else if (cup.play.join() !== "Play fixture") {
+      problems.push(`the viewer's ready fixture offers "${cup.play.join()}"`);
+    } else if (cup.hostPanel) {
+      problems.push("host controls show to somebody who is not the host");
+    } else if (cup.injected || !cup.nameShown) {
+      problems.push("a player name was treated as markup rather than text");
+    } else if (cup.leaks) {
+      problems.push("the tournament screen shows something shaped like a score");
+    } else if (cup.slots !== 7) {
+      problems.push(`an eight-player bracket drew ${cup.slots} slots`);
+    } else if (cup.start.join() !== "true" || !cup.warned) {
+      problems.push("the host can start short-handed, or is not warned who is left out");
+    } else if (cup.removable !== 10) {
+      problems.push(`the host can remove ${cup.removable} of 10 other entrants`);
+    }
+
+    console.log(
+      `tournaments  : ${
+        cup && !cup.failed
+          ? `${cup.groups} groups, ${cup.slots}-slot bracket, names as text, no scores shown`
+          : "MISSING"
+      }`,
+    );
+
     // Whether you are in a queue has to be legible without scrolling, and the Play screen
     // cannot promise that: the button saying "Searching" sits under a tall rank panel and
     // above a list of every scenario in the window. The bar can, so the state is mirrored
@@ -1618,6 +1797,8 @@ app.whenReady().then(() => {
       // action - so a duel that arrives mid-session appears when the player next does
       // something, which is the honest limit of it until there is a reason to poll.
       void refreshDuels("session restored");
+      // Same reasoning: a fixture that became yours to play while the app was shut.
+      void refreshTournaments("session restored");
     })
     .catch(() => undefined);
 
@@ -1703,6 +1884,7 @@ ipcMain.handle("apogee:signIn", async () => {
     state.lastError = null;
     broadcast("apogee:session", session);
     void refreshDuels("signed in");
+    void refreshTournaments("signed in");
     return { session };
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
@@ -1724,6 +1906,9 @@ ipcMain.handle("apogee:signOut", async () => {
   state.duels = null;
   duelBoardKey = "";
   broadcast("apogee:duels", null);
+  state.tournaments = null;
+  tournamentsKey = "";
+  broadcast("apogee:tournaments", null);
   broadcast("apogee:session", null);
   return { ok: true };
 });
@@ -1808,6 +1993,7 @@ function adoptMatch(match: FoundMatch): void {
   }
 
   broadcast("apogee:match", match);
+  nudge();
 }
 
 ipcMain.handle("apogee:findMatch", async (_e, { category, pool }) => {
@@ -1909,6 +2095,146 @@ ipcMain.handle("apogee:setFriend", async (_e, { playerId, friend }) => {
   }
 });
 
+/* ------------------------------------------------------------------ tournaments ---- */
+
+/**
+ * Tell the renderer about the list only when something on it moved.
+ *
+ * The same reasoning as the duel board: a repaint on an unchanged list throws away where
+ * the player was on the page. The key covers everything a row shows that can change.
+ */
+function publishTournaments(list: TournamentSummary[]): void {
+  const key = JSON.stringify(
+    list.map((t) => [t.id, t.phase, t.entrants, t.checkedIn, t.entered, t.yourTurn, t.championName]),
+  );
+  const changed = key !== tournamentsKey;
+  tournamentsKey = key;
+  state.tournaments = list;
+  if (changed) broadcast("apogee:tournaments", list);
+}
+
+async function refreshTournaments(reason: string): Promise<void> {
+  if (!state.session) {
+    state.tournaments = null;
+    return;
+  }
+  try {
+    publishTournaments((await fetchTournaments()).tournaments);
+  } catch (err) {
+    // Best effort and quiet, like the duel board: a list that could not be read this
+    // moment is not worth a banner over whatever the player is doing.
+    console.warn(`could not read tournaments (${reason}):`, err instanceof Error ? err.message : err);
+  }
+}
+
+const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+/**
+ * Rebuild a tournament action from what came over the bridge, known fields only.
+ *
+ * The preload already names each field it sends, and the server refuses anything else,
+ * but main is where the bridge ends: checking here means a renderer talked into sending
+ * something odd gets a plain answer instead of a round trip, and nothing it adds travels
+ * further. A string back is the refusal.
+ */
+function tournamentRequest(raw: Record<string, unknown> | null | undefined): TournamentAction | string {
+  const id = raw?.tournamentId;
+  const hasId = typeof id === "string" && UUID.test(id);
+  switch (raw?.action) {
+    case "create": {
+      const { name, category, window: poolWindow, groupCount, groupSize, qualifiers, seeding } = raw;
+      if (typeof name !== "string" || !name.trim() || name.length > 200) return "Give it a name.";
+      if (typeof category !== "string" || !category || category.length > 40) return "Pick a category.";
+      if (typeof poolWindow !== "number" || !Number.isInteger(poolWindow) || poolWindow < 0) {
+        return "The season pool has not loaded yet.";
+      }
+      if (groupCount !== 2 && groupCount !== 4 && groupCount !== 8) return "Pick 2, 4 or 8 groups.";
+      if (typeof groupSize !== "number" || !Number.isInteger(groupSize) || groupSize < 3 || groupSize > 8) {
+        return "Groups hold 3 to 8 players.";
+      }
+      if (qualifiers !== 1 && qualifiers !== 2) return "One or two go through from each group.";
+      if (seeding !== "seeded" && seeding !== "shuffle") return "Pick how the groups are drawn.";
+      return { action: "create", name, category, window: poolWindow, groupCount, groupSize, qualifiers, seeding };
+    }
+    case "join":
+    case "leave":
+      return hasId ? { action: raw.action, tournamentId: id as string } : "No such tournament.";
+    case "check-in":
+      return hasId && typeof raw.checkedIn === "boolean"
+        ? { action: "check-in", tournamentId: id as string, checkedIn: raw.checkedIn }
+        : "No such tournament.";
+    case "remove":
+      return hasId && typeof raw.playerId === "string" && UUID.test(raw.playerId)
+        ? { action: "remove", tournamentId: id as string, playerId: raw.playerId }
+        : "No such player.";
+    case "start":
+      return hasId && typeof raw.revision === "number" && Number.isSafeInteger(raw.revision)
+        ? { action: "start", tournamentId: id as string, revision: raw.revision }
+        : "No such tournament.";
+    case "cancel":
+      return hasId && typeof raw.reason === "string" && raw.reason.trim() && raw.reason.length <= 400
+        ? { action: "cancel", tournamentId: id as string, reason: raw.reason }
+        : "Say why it is being cancelled.";
+    default:
+      return "Unknown action.";
+  }
+}
+
+ipcMain.handle("apogee:tournaments", async (_e, args) => {
+  if (!state.session) return { error: "sign in first" };
+  const tournamentId = args?.tournamentId;
+  if (tournamentId != null && (typeof tournamentId !== "string" || !UUID.test(tournamentId))) {
+    return { error: "No such tournament." };
+  }
+  try {
+    const result = await fetchTournaments(tournamentId ?? undefined);
+    publishTournaments(result.tournaments);
+    return result;
+  } catch (err) {
+    return { error: err instanceof Error ? err.message : String(err) };
+  }
+});
+
+ipcMain.handle("apogee:tournamentAction", async (_e, raw) => {
+  if (!state.session) return { error: "sign in first" };
+  const request = tournamentRequest(raw);
+  if (typeof request === "string") return { error: request };
+  try {
+    const result = await tournamentAction(request);
+    void refreshTournaments(`tournament ${request.action}`);
+    return { view: result.view };
+  } catch (err) {
+    return { error: err instanceof Error ? err.message : String(err) };
+  }
+});
+
+ipcMain.handle("apogee:playFixture", async (_e, args) => {
+  if (!state.session) return { error: "sign in first" };
+  const { tournamentId, fixtureId, attempt } = args ?? {};
+  if (
+    typeof tournamentId !== "string" || !UUID.test(tournamentId) ||
+    typeof fixtureId !== "string" || fixtureId.length === 0 || fixtureId.length > 128 ||
+    typeof attempt !== "number" || !Number.isSafeInteger(attempt) || attempt < 1
+  ) {
+    return { error: "That fixture cannot be played." };
+  }
+  try {
+    const match = await playFixture(tournamentId, fixtureId, attempt);
+    // Resuming the leg already held keeps what was submitted against it. Adopting it fresh
+    // would forget the runs already in and offer to send them again.
+    if (state.match?.matchId === match.matchId) {
+      state.match = match;
+      broadcast("apogee:match", match);
+    } else {
+      adoptMatch(match);
+    }
+    void refreshTournaments("opened a fixture leg");
+    return { match };
+  } catch (err) {
+    return { error: err instanceof Error ? err.message : String(err) };
+  }
+});
+
 /**
  * Abandon the current match, on the server as well as here.
  *
@@ -1931,6 +2257,7 @@ ipcMain.handle("apogee:cancelMatch", async () => {
   try {
     const result = await abandonMatch();
     clearLocal();
+    if (result.tournament) void refreshTournaments("abandoned a fixture leg");
     return result;
   } catch (err) {
     // Clear locally anyway. A player who cannot reach the server is better off with a

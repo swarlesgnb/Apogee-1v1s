@@ -1,157 +1,204 @@
 /**
- * Draw the application icon, and write it as build/icon.png.
+ * Draw the application icon: build/icon.png for the installer, and every size a store
+ * page, a Discord server or a sign-up form asks for in build/icons/, with an SVG beside
+ * them.
  *
- * A packaged app with no icon ships Electron's default, which is the single loudest
- * signal that a build is a hobby project rather than a product. This draws one instead
- * of adding an image dependency: PNG is a container around a zlib stream, and Node
- * already has zlib, so the whole encoder is about forty lines.
+ * The mark is the one the app already wears in the corner of its rail - the peak, with
+ * the crossbar of an A through it - so the icon on somebody else's page is the thing the
+ * player sees every time they open the client. The previous icon was a separate drawing,
+ * an orbit with a point at apogee in pure cyan and pure red taken from the rank ladder,
+ * and it matched nothing on screen.
  *
- * electron-builder converts this to the .ico Windows wants, so 512x512 with an alpha
- * channel is the only thing that has to be true of the output.
+ * Nothing about it is chosen here. The path is read out of index.html, and this refuses
+ * to draw if the rail's mark and the one below ever differ. The colours are --brand from
+ * arena.css on --ground from index.html, read the way validate:theme reads them. Rank
+ * colours are left out on purpose: they are the player's, and the icon is the app's.
  *
- * The mark is the name: an orbit, and the bright point at the top of it is apogee, the
- * furthest a body gets. Colours are the ladder's own, taken from data/apogee_ranks.json
- * rather than picked again here - Stargazer's cyan for the orbit, Supernova's orange for
- * the point - so the icon cannot drift away from the palette the app renders.
+ * Drawn rather than exported from an editor so it is reproducible from the repository,
+ * and the SVG is the same geometry as the PNGs rather than a trace of them. PNG is a
+ * container around a zlib stream and Node already has zlib, so there is no image
+ * dependency; electron-builder converts build/icon.png to the .ico Windows wants.
  *
  *   node tools/buildIcon.mjs
  */
 
 import { deflateSync } from "node:zlib";
-import { readFileSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
+const read = (p) => readFileSync(join(root, p), "utf8");
 
-const ranks = JSON.parse(readFileSync(join(root, "data", "apogee_ranks.json"), "utf8"));
-const tier = (name) => ranks.tiers.find((t) => t.name === name);
+// --- what it draws, read from the app -------------------------------------------
 
-// The ends of the ladder and a point in its middle. The flare used to come from
-// Supernova's gradient; there is no gradient in the rank data any more, so it is a
-// lifted Supernova instead - the same colour the top rank actually wears.
-const ORBIT = hex(tier("Stargazer").color);
-const POINT = hex(tier("Supernova").color);
-const FLARE = lift(hex(tier("Supernova").color), 0.45);
-const BODY = hex(tier("Lunar").color);
-const BACKDROP = [11, 13, 15];
+const html = read("src/app/renderer/index.html");
+const css = html.slice(0, html.indexOf("</style>")) + "\n" + read("src/app/renderer/arena.css");
 
-function hex(s) {
-  const n = parseInt(s.slice(1), 16);
-  return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+function token(name) {
+  const m = new RegExp("--" + name + ":\\s*(#[0-9a-fA-F]{6})").exec(css);
+  if (!m) throw new Error(`--${name} has no hex value in the stylesheets`);
+  return m[1].toLowerCase();
 }
 
-/** The same colour, pulled `t` of the way to white. */
-function lift(rgb, t) {
-  return rgb.map((v) => Math.round(v + (255 - v) * t));
+const GROUND = token("ground");
+const MARK = token("brand");
+const EDGE = token("rule-2");
+
+/**
+ * The rail's mark, in its own 24-unit box.
+ *
+ * The crossbar sits at half height and the inner peak three units below it. They used to
+ * sit one unit apart, crossbar at 14 and peak at 13, and with a stroke 1.65 wide that is
+ * an overlap: a bump in the middle of the A, too small to see in the rail and the first
+ * thing anybody saw at 512px. Three units clears it at both weights drawn below.
+ */
+const PATH = "m3 20 9-17 9 17M8.5 11.5h7M5 20l7-5.5 7 5.5";
+if (!/<svg class="brand-mark"/.test(html)) throw new Error("the rail's brand mark is missing from index.html");
+// The app draws the mark in more than one place - the rail, the tournaments header, and
+// one the renderer builds - and every copy has to be this one. Checking only the rail let
+// the other two keep the old crossbar when the rail's was moved.
+const js = read("src/app/renderer/renderer.js");
+const copies = [...(html + js).matchAll(/d="(m3 20 9-17 9 17[^"]*)"/g)].map((m) => m[1]);
+const stale = [...new Set(copies.filter((d) => d !== PATH))];
+if (stale.length) {
+  throw new Error(`copies of the mark in the app differ from "${PATH}": ${stale.join(", ")}; update them together`);
 }
 
-const SIZE = 512;
-const SS = 4;                 // supersample factor; the edges are all curves
-const N = SIZE * SS;
+/** Line segments from the subset of SVG path syntax the mark uses: m, M, l, L and h. */
+function segments(d) {
+  const tokens = d.match(/[a-zA-Z]|-?\d*\.?\d+/g);
+  const out = [];
+  let x = 0;
+  let y = 0;
+  let cmd = null;
+  let first = true;
+  for (let i = 0; i < tokens.length;) {
+    if (/[a-zA-Z]/.test(tokens[i])) cmd = tokens[i++];
+    const num = () => Number(tokens[i++]);
+    if (cmd === "m" || cmd === "M") {
+      const dx = num();
+      const dy = num();
+      // A path's first moveto is absolute even when written lowercase.
+      [x, y] = cmd === "M" || first ? [dx, dy] : [x + dx, y + dy];
+      first = false;
+      cmd = cmd === "m" ? "l" : "L";   // pairs after a moveto are linetos
+    } else if (cmd === "l" || cmd === "L") {
+      const nx = cmd === "l" ? x + num() : num();
+      const ny = cmd === "l" ? y + num() : num();
+      out.push([x, y, nx, ny]);
+      [x, y] = [nx, ny];
+    } else if (cmd === "h") {
+      const nx = x + num();
+      out.push([x, y, nx, y]);
+      x = nx;
+    } else {
+      throw new Error(`path command ${cmd} is not one this draws`);
+    }
+  }
+  return out;
+}
 
-/** Signed distance to a rounded square, in supersampled pixels. */
+const SEGMENTS = segments(PATH);
+
+// --- geometry, as fractions of the icon's side ------------------------------------
+
+const TILE_HALF = 0.46;
+const TILE_RADIUS = 0.115;
+/** How much of the icon's width the mark spans. */
+const GLYPH = 0.6;
+/**
+ * Stroke weight by size, the way type is drawn heavier small than large.
+ *
+ * The rail draws the mark at 1.65 in its 24-unit box, and at 16px that is under a pixel
+ * wide and breaks up, so the small sizes are drawn at 2.1. That weight is wrong large:
+ * at 512px the two feet on each side merge into one lump, so from 128px up the icon
+ * uses the rail's own 1.65, and between the two it blends on a log scale. The SVG is for
+ * large use and takes the large weight.
+ */
+const STROKE_SMALL = 2.1;
+const STROKE_LARGE = 1.65;
+function strokeAt(size) {
+  const t = Math.min(1, Math.max(0, Math.log2(size / 32) / 2));
+  return STROKE_SMALL + (STROKE_LARGE - STROKE_SMALL) * t;
+}
+/**
+ * The mark's weight sits in its base and its bounding box centre looks low, so it is
+ * raised by two percent of the tile to sit optically centred.
+ */
+const LIFT = 0.02;
+/** A faint edge in the chrome's own rule colour, so a dark icon survives a dark page. */
+const EDGE_WIDTH = 0.006;
+const EDGE_ALPHA = 0.55;
+
+const xs = SEGMENTS.flatMap(([x0, , x1]) => [x0, x1]);
+const ys = SEGMENTS.flatMap(([, y0, , y1]) => [y0, y1]);
+const CX = (Math.min(...xs) + Math.max(...xs)) / 2;
+const CY = (Math.min(...ys) + Math.max(...ys)) / 2;
+/** Mark units to tile fraction. */
+const S = GLYPH / (Math.max(...xs) - Math.min(...xs));
+const OX = 0.5 - CX * S;
+const OY = 0.5 - LIFT - CY * S;
+
 function roundedRect(x, y, half, radius) {
   const dx = Math.abs(x) - (half - radius);
   const dy = Math.abs(y) - (half - radius);
-  const ox = Math.max(dx, 0);
-  const oy = Math.max(dy, 0);
-  return Math.hypot(ox, oy) + Math.min(Math.max(dx, dy), 0) - radius;
+  return Math.hypot(Math.max(dx, 0), Math.max(dy, 0)) + Math.min(Math.max(dx, dy), 0) - radius;
 }
 
-/**
- * First-order signed distance to the ellipse (x/a)^2 + (y/b)^2 = 1.
- *
- * The exact distance needs Newton iteration per pixel; dividing the implicit function
- * by its gradient is the standard approximation and is indistinguishable here, where
- * the only consumer is a 2px antialiasing ramp.
- */
-function ellipse(x, y, a, b) {
-  const f = (x * x) / (a * a) + (y * y) / (b * b) - 1;
-  const gx = (2 * x) / (a * a);
-  const gy = (2 * y) / (b * b);
-  const g = Math.hypot(gx, gy);
-  return g === 0 ? -Math.min(a, b) : f / g;
-}
-
-/** Coverage in [0,1] for a signed distance, with a one-pixel ramp across the edge. */
-const cover = (d) => Math.min(1, Math.max(0, 0.5 - d / SS));
-
-function over(dst, i, rgb, alpha) {
-  if (alpha <= 0) return;
-  const a = Math.min(1, alpha);
-  dst[i] = dst[i] * (1 - a) + rgb[0] * a;
-  dst[i + 1] = dst[i + 1] * (1 - a) + rgb[1] * a;
-  dst[i + 2] = dst[i + 2] * (1 - a) + rgb[2] * a;
-  dst[i + 3] = dst[i + 3] * (1 - a) + 255 * a;
-}
-
-// --- geometry, in output pixels then scaled -------------------------------------
-const C = N / 2;
-const half = N * 0.46;
-const radius = N * 0.115;
-const ORBIT_A = N * 0.335;
-const ORBIT_B = N * 0.208;
-const ORBIT_W = N * 0.032;
-const ORBIT_TILT = -0.32;            // radians; a flat ellipse reads as a plate, not an orbit
-const BODY_R = N * 0.088;
-const POINT_R = N * 0.062;
-const FLARE_R = N * 0.155;
-
-// Apogee sits at the far end of the major axis, rotated with the orbit.
-const APX = C + Math.cos(ORBIT_TILT) * ORBIT_A;
-const APY = C + Math.sin(ORBIT_TILT) * ORBIT_A;
-
-const buf = new Float32Array(N * N * 4);
-
-for (let py = 0; py < N; py++) {
-  for (let px = 0; px < N; px++) {
-    const i = (py * N + px) * 4;
-    const x = px + 0.5 - C;
-    const y = py + 0.5 - C;
-
-    // Backdrop, with a gentle vertical lift so the square is not a flat block.
-    const bg = cover(roundedRect(x, y, half, radius));
-    if (bg <= 0) continue;
-    const lift = 1 + 0.35 * (1 - (py / N));
-    over(buf, i, BACKDROP.map((c) => Math.min(255, c * lift)), bg);
-
-    // Orbit ring, in the tilted frame.
-    const rx = x * Math.cos(-ORBIT_TILT) - y * Math.sin(-ORBIT_TILT);
-    const ry = x * Math.sin(-ORBIT_TILT) + y * Math.cos(-ORBIT_TILT);
-    const ring = Math.abs(ellipse(rx, ry, ORBIT_A, ORBIT_B)) - ORBIT_W / 2;
-    // Fade the near side so the ring reads as depth rather than a closed loop.
-    const depth = 0.45 + 0.55 * ((ORBIT_A - rx) / (2 * ORBIT_A));
-    over(buf, i, ORBIT, cover(ring) * bg * depth);
-
-    // The orbited body.
-    over(buf, i, BODY, cover(Math.hypot(x, y) - BODY_R) * bg);
-
-    // Apogee: a soft flare under a hard point, so it glows without blooming.
-    const fd = Math.hypot(x - (APX - C), y - (APY - C));
-    over(buf, i, FLARE, Math.max(0, 1 - fd / FLARE_R) ** 3 * 0.75 * bg);
-    over(buf, i, POINT, cover(fd - POINT_R) * bg);
+/** Distance from a point to the stroked mark, in tile fraction. Round caps and joins. */
+function mark(x, y, stroke) {
+  const u = (x - OX) / S;
+  const v = (y - OY) / S;
+  let best = Infinity;
+  for (const [x0, y0, x1, y1] of SEGMENTS) {
+    const ex = x1 - x0;
+    const ey = y1 - y0;
+    const t = Math.max(0, Math.min(1, ((u - x0) * ex + (v - y0) * ey) / (ex * ex + ey * ey)));
+    best = Math.min(best, Math.hypot(u - (x0 + t * ex), v - (y0 + t * ey)));
   }
+  return (best - stroke / 2) * S;
 }
 
-// --- downsample, encode ---------------------------------------------------------
-const out = Buffer.alloc(SIZE * SIZE * 4);
-for (let y = 0; y < SIZE; y++) {
-  for (let x = 0; x < SIZE; x++) {
-    let r = 0, g = 0, b = 0, a = 0;
-    for (let sy = 0; sy < SS; sy++) {
-      for (let sx = 0; sx < SS; sx++) {
-        const i = ((y * SS + sy) * N + (x * SS + sx)) * 4;
-        r += buf[i]; g += buf[i + 1]; b += buf[i + 2]; a += buf[i + 3];
+// --- raster ------------------------------------------------------------------------
+
+const hex = (s) => [1, 3, 5].map((i) => parseInt(s.slice(i, i + 2), 16));
+const [G, M, E] = [hex(GROUND), hex(MARK), hex(EDGE)];
+const SS = 4;
+
+function render(size) {
+  const out = Buffer.alloc(size * size * 4);
+  const stroke = strokeAt(size);
+  // One output pixel's width in tile fraction: coverage ramps across exactly that.
+  const px = 1 / size;
+  const cover = (d) => Math.min(1, Math.max(0, 0.5 - d / px));
+  for (let py = 0; py < size; py++) {
+    for (let qx = 0; qx < size; qx++) {
+      let r = 0, g = 0, b = 0, a = 0;
+      for (let sy = 0; sy < SS; sy++) {
+        for (let sx = 0; sx < SS; sx++) {
+          const x = (qx + (sx + 0.5) / SS) / size;
+          const y = (py + (sy + 0.5) / SS) / size;
+          const tile = roundedRect(x - 0.5, y - 0.5, TILE_HALF, TILE_RADIUS);
+          const bg = cover(tile);
+          if (bg <= 0) continue;
+          let c = G.slice();
+          const blend = (rgb, alpha) => { c = c.map((v, k) => v * (1 - alpha) + rgb[k] * alpha); };
+          blend(E, cover(Math.abs(tile + EDGE_WIDTH / 2) - EDGE_WIDTH / 2) * EDGE_ALPHA);
+          blend(M, cover(mark(x, y, stroke)));
+          r += c[0] * bg; g += c[1] * bg; b += c[2] * bg; a += bg;
+        }
       }
+      const n = SS * SS;
+      const o = (py * size + qx) * 4;
+      // Colour is stored unpremultiplied, so divide the coverage back out of it.
+      out[o] = a ? Math.round(r / a) : 0;
+      out[o + 1] = a ? Math.round(g / a) : 0;
+      out[o + 2] = a ? Math.round(b / a) : 0;
+      out[o + 3] = Math.round((a / n) * 255);
     }
-    const n = SS * SS;
-    const o = (y * SIZE + x) * 4;
-    out[o] = Math.round(r / n);
-    out[o + 1] = Math.round(g / n);
-    out[o + 2] = Math.round(b / n);
-    out[o + 3] = Math.round(a / n);
   }
+  return out;
 }
 
 // --- a minimal PNG encoder ------------------------------------------------------
@@ -201,5 +248,29 @@ function png(rgba, w, h) {
   ]);
 }
 
-writeFileSync(join(root, "build", "icon.png"), png(out, SIZE, SIZE));
-console.log("wrote build/icon.png");
+// --- the same drawing as vector ---------------------------------------------------
+
+function svg() {
+  const V = 512;
+  const f = (n) => Number((n * V).toFixed(3));
+  const inset = TILE_HALF - EDGE_WIDTH / 2;
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${V} ${V}" width="${V}" height="${V}">
+  <rect x="${f(0.5 - TILE_HALF)}" y="${f(0.5 - TILE_HALF)}" width="${f(TILE_HALF * 2)}" height="${f(TILE_HALF * 2)}" rx="${f(TILE_RADIUS)}" fill="${GROUND}"/>
+  <rect x="${f(0.5 - inset)}" y="${f(0.5 - inset)}" width="${f(inset * 2)}" height="${f(inset * 2)}" rx="${f(TILE_RADIUS - EDGE_WIDTH / 2)}" fill="none" stroke="${EDGE}" stroke-opacity="${EDGE_ALPHA}" stroke-width="${f(EDGE_WIDTH)}"/>
+  <path d="${PATH}" transform="matrix(${f(S)} 0 0 ${f(S)} ${f(OX)} ${f(OY)})" fill="none" stroke="${MARK}" stroke-width="${STROKE_LARGE}" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+`;
+}
+
+// --- write ------------------------------------------------------------------------
+
+const SIZES = [16, 32, 48, 64, 128, 256, 512, 1024];
+mkdirSync(join(root, "build", "icons"), { recursive: true });
+for (const size of SIZES) {
+  const file = png(render(size), size, size);
+  writeFileSync(join(root, "build", "icons", `icon-${size}.png`), file);
+  if (size === 512) writeFileSync(join(root, "build", "icon.png"), file);
+}
+writeFileSync(join(root, "build", "icons", "icon.svg"), svg());
+console.log(`wrote build/icon.png and build/icons/: ${SIZES.map((s) => `${s}px`).join(", ")} and icon.svg`);
+console.log(`  mark ${MARK} on ${GROUND}, edge ${EDGE}, stroke ${STROKE_SMALL} at 32px and under to ${STROKE_LARGE} at 128px and over`);

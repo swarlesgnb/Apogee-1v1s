@@ -159,17 +159,41 @@ function countTo(el, value, format = (v) => String(Math.round(v)), key) {
 /**
  * Every sound the app makes, synthesized here rather than shipped as audio files.
  *
- * Three reasons it is an oscillator and not a folder of samples. The client already owes
+ * Two reasons it is an oscillator and not a folder of samples. The client already owes
  * nothing to any service being reachable at runtime, and keeping that true should not
- * start costing a megabyte of .wav on every build. The preview is one HTML file that has
- * to open anywhere, and tools/buildUiPreview.ts inlines exactly one script, so a sample
- * would have to be base64 encoded into it and would double the file. And a synthesized
- * press can be *tuned* per press: the pitch walks up while you keep clicking, which is
- * the whole point of `streakStep` below and is not a thing a fixed recording can do.
+ * start costing a megabyte of .wav on every build. And the preview is one HTML file that
+ * has to open anywhere: tools/buildUiPreview.ts inlines exactly one script, so a sample
+ * would have to be base64 encoded into it and would double the file.
  *
  * Nothing is created until the first real gesture. An AudioContext constructed before
  * one starts suspended and stays suspended, and Chromium logs a warning about it on
  * every launch.
+ *
+ * The rules the palette below holds to, and where each came from:
+ *
+ *   One voice. Every pitched sound is the same struck glass (FM at an inharmonic ratio)
+ *   in one key, D major, so the app sounds like one object rather than a preset pack.
+ *   The first palette mixed triangle arpeggios, sawtooth buzzes and sine chirps, and a
+ *   triangle major arpeggio is the most recognisable chiptune cliché there is.
+ *
+ *   Frequency buys restraint. The more often a sound plays, the shorter, quieter, drier
+ *   and less pitched it is: a press is mostly a contact, a result is a phrase with a room
+ *   around it. SOUND_TIERS below is that order; `validate:sound` holds its lengths and
+ *   which tiers reach the room, and `measure:sound` renders every sound and holds its
+ *   loudness.
+ *
+ *   Direction means something. Up is on and good, down is off and bad, and a draw takes
+ *   a step that does not resolve. A toggle is one tick, brighter for on than for off.
+ *
+ *   Near and far. Frequent sounds are dry, close to the ear; only the rare moments are
+ *   sent into the room, so the room itself is a signal that something mattered.
+ *
+ *   Variation, not a gimmick. A sound that repeats sample-identically becomes a texture
+ *   within a minute. The press used to walk up a scale while you kept clicking, which
+ *   was a novelty rather than feedback; now each press lands a few cents off the last.
+ *
+ *   Silence. The pointer crossing a control made a sound too. It fired dozens of times a
+ *   minute, answered nothing, and was the first thing anybody would mute.
  */
 
 const SOUND_KEY = "apogee.sound";
@@ -181,10 +205,13 @@ const SOUND_KEY = "apogee.sound";
  * hear, so the ceiling is "noticed" rather than "loud" - every individual sound below is
  * mixed against this, not against full scale.
  */
-const SOUND_GAIN = 0.42;
+const SOUND_GAIN = 0.5;
 
 let ac = null;
-let masterGain = null;
+/** Where every voice lands, dry: a high-pass, a shelf off the top, then the compressor. */
+let soundBus = null;
+/** The room. Only the rare sounds send to it. */
+let soundRoom = null;
 let noiseBuf = null;
 
 let soundOn = true;
@@ -202,13 +229,73 @@ function audio() {
   const Ctx = window.AudioContext || window.webkitAudioContext;
   if (!Ctx) return null;
   ac = new Ctx();
-  masterGain = ac.createGain();
-  masterGain.gain.value = SOUND_GAIN;
-  masterGain.connect(ac.destination);
+
+  // A soft compressor at the end, so a chord with the room behind it never clips and a
+  // press under it is never lost. Gentle ratio and a wide knee: it is there to hold the
+  // peaks, not to be heard pumping.
+  const comp = ac.createDynamicsCompressor();
+  comp.threshold.value = -22;
+  comp.knee.value = 18;
+  comp.ratio.value = 3;
+  comp.attack.value = 0.004;
+  comp.release.value = 0.2;
+  const master = ac.createGain();
+  master.gain.value = SOUND_GAIN;
+  comp.connect(master);
+  master.connect(ac.destination);
+
+  // Below about 90 Hz a UI sound is felt through the desk rather than heard, and on laptop
+  // speakers it is only distortion. Above 7 kHz is where synthesis sounds cheap: the
+  // shelf takes the edge off without dulling the contact at the front of a press.
+  const low = ac.createBiquadFilter();
+  low.type = "highpass";
+  low.frequency.value = 90;
+  low.Q.value = 0.5;
+  const top = ac.createBiquadFilter();
+  top.type = "highshelf";
+  top.frequency.value = 7000;
+  top.gain.value = -6;
+  low.connect(top);
+  top.connect(comp);
+  soundBus = low;
+
+  const room = ac.createConvolver();
+  room.buffer = roomImpulse(ac);
+  const wet = ac.createGain();
+  wet.gain.value = 0.6;
+  room.connect(wet);
+  wet.connect(low);
+  soundRoom = room;
+
   return ac;
 }
 
-/** A quarter-second of white noise, made once and re-read by every transient. */
+/**
+ * A small room, made rather than sampled.
+ *
+ * Decaying noise, separate per channel so the tail is wide, darkened as it ages because
+ * a real room absorbs the highs first: a tail that stays bright reads as a plate effect,
+ * not a space. Twelve milliseconds of silence up front keep the dry strike distinct from
+ * its reflection.
+ */
+function roomImpulse(ctx) {
+  const n = Math.floor(ctx.sampleRate * 1.4);
+  const gap = Math.floor(ctx.sampleRate * 0.012);
+  const buf = ctx.createBuffer(2, n, ctx.sampleRate);
+  for (let ch = 0; ch < 2; ch++) {
+    const d = buf.getChannelData(ch);
+    let lp = 0;
+    for (let i = 0; i < n; i++) {
+      const t = i / n;
+      const a = 0.2 + 0.72 * t;
+      lp = lp * a + (Math.random() * 2 - 1) * (1 - a);
+      d[i] = i < gap ? 0 : lp * Math.pow(1 - t, 3);
+    }
+  }
+  return buf;
+}
+
+/** A quarter-second of white noise, made once and re-read by every contact. */
 function noiseBuffer(ctx) {
   if (noiseBuf) return noiseBuf;
   const n = Math.floor(ctx.sampleRate * 0.25);
@@ -219,219 +306,290 @@ function noiseBuffer(ctx) {
 }
 
 /**
- * One oscillator, shaped.
+ * Up, then away.
  *
- * The envelope ramps to 0.0001 rather than to 0 because `exponentialRampToValueAtTime`
- * cannot reach zero: given it, the ramp is ignored and the gain stays where it was,
- * which is audible as a click on the tail of every note.
- *
- * `sweepTo` is most of what separates a sound that reads as a gesture from one that
- * reads as a beep: a fixed pitch is a menu, a pitch that moves is a thing happening.
+ * Ramps to 0.0001 rather than to 0 because `exponentialRampToValueAtTime` cannot reach
+ * zero: given it, the ramp is ignored and the gain stays where it was, which is audible
+ * as a click on the tail of every note.
  */
-function voice(o) {
+function envelope(param, t0, peak, attack, dur) {
+  param.setValueAtTime(0.0001, t0);
+  param.exponentialRampToValueAtTime(peak, t0 + attack);
+  param.exponentialRampToValueAtTime(0.0001, t0 + dur);
+}
+
+/** Dry to the bus, and to the room by `send`, panned by `pan`. */
+function route(ctx, node, o) {
+  let n = node;
+  if (o.pan && ctx.createStereoPanner) {
+    const p = ctx.createStereoPanner();
+    p.pan.value = o.pan;
+    n.connect(p);
+    n = p;
+  }
+  n.connect(soundBus);
+  if (o.send) {
+    const s = ctx.createGain();
+    s.gain.value = o.send;
+    n.connect(s);
+    s.connect(soundRoom);
+  }
+}
+
+/**
+ * One pitched voice.
+ *
+ * `from` glides onto the note, and only ever slowly: a sine that falls fast is how a
+ * water drop is synthesised, which is what the first press sounded like on every click,
+ * and `validate:sound` now fails anything that does it. `fm` makes it glass - a modulator at a fixed
+ * ratio whose depth collapses after the strike, so the attack is bright and inharmonic
+ * and the tail is nearly a pure tone, which is how a struck bar behaves.
+ */
+function tone(o) {
   const ctx = audio();
   if (!ctx) return;
-
   const t0 = ctx.currentTime + (o.delay || 0);
-  const dur = o.dur || 0.12;
-  const peak = o.gain == null ? 0.2 : o.gain;
+  const dur = o.dur;
+  const f = o.freq * Math.pow(2, (o.cents || 0) / 1200);
 
   const osc = ctx.createOscillator();
-  osc.type = o.type || "sine";
-  osc.frequency.setValueAtTime(o.freq, t0);
-  if (o.sweepTo) osc.frequency.exponentialRampToValueAtTime(o.sweepTo, t0 + dur);
+  osc.type = "sine";
+  if (o.from) {
+    osc.frequency.setValueAtTime(o.from * Math.pow(2, (o.cents || 0) / 1200), t0);
+    osc.frequency.exponentialRampToValueAtTime(f, t0 + (o.glide || 0.03));
+  } else {
+    osc.frequency.setValueAtTime(f, t0);
+  }
+  const sources = [osc];
 
-  const gain = ctx.createGain();
-  gain.gain.setValueAtTime(0.0001, t0);
-  gain.gain.exponentialRampToValueAtTime(peak, t0 + (o.attack == null ? 0.004 : o.attack));
-  gain.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
-
-  let node = osc;
-  if (o.filterHz) {
-    const filter = ctx.createBiquadFilter();
-    filter.type = o.filterType || "lowpass";
-    filter.frequency.value = o.filterHz;
-    if (o.q) filter.Q.value = o.q;
-    node.connect(filter);
-    node = filter;
+  if (o.fm) {
+    const mod = ctx.createOscillator();
+    mod.frequency.setValueAtTime(f * o.fm.ratio, t0);
+    const depth = ctx.createGain();
+    depth.gain.setValueAtTime(f * o.fm.index, t0);
+    depth.gain.exponentialRampToValueAtTime(f * o.fm.index * 0.02, t0 + o.fm.decay);
+    mod.connect(depth);
+    depth.connect(osc.frequency);
+    sources.push(mod);
   }
 
-  node.connect(gain);
-  gain.connect(masterGain);
-  osc.start(t0);
-  osc.stop(t0 + dur + 0.02);
+  let node = osc;
+  if (o.lowpass) {
+    const lp = ctx.createBiquadFilter();
+    lp.type = "lowpass";
+    lp.frequency.value = o.lowpass;
+    lp.Q.value = 0.7;
+    node.connect(lp);
+    node = lp;
+  }
+  const amp = ctx.createGain();
+  envelope(amp.gain, t0, o.gain, o.attack || 0.003, dur);
+  node.connect(amp);
+  route(ctx, amp, o);
+  for (const s of sources) {
+    s.start(t0);
+    s.stop(t0 + dur + 0.05);
+  }
 }
 
 /**
- * A burst of filtered noise - the transient half of a press.
+ * Filtered noise: the contact at the front of a press, or air when it is long.
  *
- * A tone on its own sounds like a notification. What makes a press sound like a switch
- * closing is the short broadband tick in front of the tone: bandpassed up high and given
- * about twenty milliseconds, it reads as the plastic rather than as static. Removing
- * this line is the single biggest downgrade available to the click below.
+ * Bandpass by default, and bandpass rings: a narrow band of noise short enough has a
+ * pitch of its own, and two of them a step apart is a drip. The interface tier uses
+ * highpass, which has no centre to hear as a note, and `validate:sound` holds it to that.
+ *
+ * Read from a random point in the buffer each time, so two presses are never the same
+ * few hundred samples of noise.
  */
-function noise(o) {
+function tick(o) {
   const ctx = audio();
   if (!ctx) return;
-
   const t0 = ctx.currentTime + (o.delay || 0);
-  const dur = o.dur || 0.03;
-
   const src = ctx.createBufferSource();
   src.buffer = noiseBuffer(ctx);
-
   const filter = ctx.createBiquadFilter();
-  filter.type = o.filterType || "bandpass";
-  filter.frequency.setValueAtTime(o.filterHz || 1800, t0);
-  if (o.sweepTo) filter.frequency.exponentialRampToValueAtTime(o.sweepTo, t0 + dur);
-  filter.Q.value = o.q == null ? 1 : o.q;
-
-  const gain = ctx.createGain();
-  gain.gain.setValueAtTime(0.0001, t0);
-  gain.gain.exponentialRampToValueAtTime(o.gain == null ? 0.12 : o.gain, t0 + 0.002);
-  gain.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
-
+  filter.type = o.type || "bandpass";
+  filter.frequency.setValueAtTime(o.hz, t0);
+  if (o.to) filter.frequency.exponentialRampToValueAtTime(o.to, t0 + o.dur);
+  filter.Q.value = o.q == null ? 0.8 : o.q;
+  const amp = ctx.createGain();
+  envelope(amp.gain, t0, o.gain, o.attack || 0.0015, o.dur);
   src.connect(filter);
-  filter.connect(gain);
-  gain.connect(masterGain);
-  src.start(t0);
-  src.stop(t0 + dur + 0.02);
+  filter.connect(amp);
+  route(ctx, amp, o);
+  src.start(t0, Math.random() * 0.2);
+  src.stop(t0 + o.dur + 0.03);
 }
 
-const semitone = (base, n) => base * Math.pow(2, n / 12);
+/** The key, D major. Nothing below plays a pitch that is not in it. */
+const NOTE = {
+  D3: 146.83, A3: 220.0, B3: 246.94, D4: 293.66, E4: 329.63, Fs4: 369.99, A4: 440.0,
+  D5: 587.33, E5: 659.25, Fs5: 739.99, A5: 880.0, D6: 1174.66, Fs6: 1479.98, A6: 1760.0,
+};
+
+/** The app's one timbre. 3.5 is inharmonic, which is what makes it glass and not organ. */
+const GLASS = { ratio: 3.5, index: 1.1, decay: 0.12 };
 
 /**
- * The click climbs while you keep clicking.
+ * How far one press lands from the last, in cents.
  *
- * This is the one thing here that is not decoration. A control that answers with the
- * same sound every time is furniture within a minute; one that walks up a scale while
- * you keep pressing, and quietly resets once you stop, is the thing that makes a person
- * press it again to hear where it goes.
- *
- * The walk is a major pentatonic, so no two steps can sound sour against each other - a
- * chromatic climb hits intervals that read as a mistake, which is the opposite of
- * rewarding. It caps at the top of the array rather than climbing forever, because past
- * about two octaves a click stops being a click and becomes a whistle.
+ * Small enough to be the same sound, large enough that thirty in a row are not one sound
+ * thirty times. Never within a third of the range of the previous one, because a random
+ * draw that happens to repeat is still a repeat.
  */
-const PENTATONIC = [0, 2, 4, 7, 9, 12, 14, 16, 19, 21, 24];
-const STREAK_MS = 450;
-let streak = 0;
-// Not 0. `performance.now()` counts from when the page loaded, so a zero here reads as
-// "pressed at load" and the first click of the session - any click inside the first
-// 450ms - comes back already one step up the scale instead of at the root.
-let lastPress = Number.NEGATIVE_INFINITY;
+const PRESS_CENTS = 35;
+let lastPressCents = 0;
 
-function streakStep() {
-  const now = performance.now();
-  streak = now - lastPress < STREAK_MS ? Math.min(streak + 1, PENTATONIC.length - 1) : 0;
-  lastPress = now;
-  return PENTATONIC[streak];
+function pressVariation() {
+  let c;
+  do c = (Math.random() * 2 - 1) * PRESS_CENTS;
+  while (Math.abs(c - lastPressCents) < PRESS_CENTS / 3);
+  lastPressCents = c;
+  return c;
 }
 
 /**
- * The palette.
+ * The palette, ordered from most frequent to rarest, which is also quietest to loudest.
  *
- * Each entry is a whole sound rather than a note, because the interesting ones are two
- * or three voices a few milliseconds apart - that offset is what gives a fanfare its
- * shape and a press its body.
+ * Each entry is a whole sound rather than a note, because the ones that matter are two
+ * or three voices a few milliseconds apart - that offset is what gives an arrival its
+ * weight and a press its body.
  */
 const SOUNDS = {
-  /** The everyday press. Transient, then a short body that falls slightly. */
-  tap() {
-    const n = streakStep();
-    noise({ dur: 0.021, gain: 0.13, filterHz: semitone(2200, n), q: 1.2 });
-    voice({
-      freq: semitone(440, n), sweepTo: semitone(360, n),
-      type: "triangle", dur: 0.07, gain: 0.13, filterHz: 2600,
-    });
-  },
-
-  /** The big commitment - Find opponent. The same shape an octave down, and heavier. */
-  press() {
-    noise({ dur: 0.03, gain: 0.16, filterHz: 1500, q: 0.9 });
-    voice({ freq: 220, sweepTo: 150, type: "triangle", dur: 0.16, gain: 0.2, filterHz: 1800 });
-    voice({ freq: 660, sweepTo: 560, type: "sine", dur: 0.1, gain: 0.07, delay: 0.012 });
-  },
-
-  /** Under the pointer. Nearly subliminal on purpose - it is felt, not heard. */
-  hover() {
-    voice({ freq: 2600, type: "sine", dur: 0.022, gain: 0.022 });
-  },
-
-  /** Moving between screens. A short filtered sweep, not a note. */
+  /** Moving between screens. A breath of air, no pitch and no sweep: the most frequent sound gets the least. */
   nav() {
-    noise({ dur: 0.16, gain: 0.05, filterHz: 500, sweepTo: 2600, q: 0.7 });
-    voice({ freq: 520, sweepTo: 780, type: "sine", dur: 0.11, gain: 0.05 });
+    tick({ type: "highpass", hz: 2400, q: 0.5, dur: 0.07, attack: 0.02, gain: 0.035 });
   },
 
+  /**
+   * The everyday press. One dry tick of noise above 2.6 kHz, and nothing else.
+   *
+   * Two earlier versions both sounded like water. The first dropped a sine an octave in
+   * 14ms under the contact, which is how a drop is synthesised. The second swapped it for
+   * two bandpassed bursts a step apart, and a band of noise that short and narrow has a
+   * pitch, so the pair was a drip again. Highpassed noise has no centre to hear as a
+   * pitch, and one burst cannot step anywhere. The variation moves the cutoff.
+   */
+  tap() {
+    const shift = Math.pow(2, pressVariation() / 1200);
+    tick({ type: "highpass", hz: 2600 * shift, q: 0.5, dur: 0.006, gain: 0.14 });
+  },
+
+  /** One tick, brighter than a press. One burst and no pitch, for the press's reasons. */
   toggleOn() {
-    voice({ freq: 620, type: "triangle", dur: 0.06, gain: 0.11 });
-    voice({ freq: 930, type: "triangle", dur: 0.09, gain: 0.1, delay: 0.05 });
+    tick({ type: "highpass", hz: 3600, q: 0.5, dur: 0.007, gain: 0.12 });
   },
 
+  /** The same tick, darker and a little quieter: off is less news than on. */
   toggleOff() {
-    voice({ freq: 930, type: "triangle", dur: 0.06, gain: 0.1 });
-    voice({ freq: 620, type: "triangle", dur: 0.09, gain: 0.09, delay: 0.05 });
+    tick({ type: "highpass", hz: 1800, q: 0.5, dur: 0.007, gain: 0.1 });
   },
 
-  /** Something worked. Three notes of a major triad, fast enough to read as one event. */
+  /** A run landed in the stats folder. One struck glass: good news, but news every minute. */
+  run() {
+    tone({ freq: NOTE.D6, fm: GLASS, dur: 0.5, gain: 0.05, send: 0.2 });
+  },
+
+  /** Something worked. Up a fourth, glass. */
   ok() {
-    voice({ freq: 660, type: "sine", dur: 0.09, gain: 0.11 });
-    voice({ freq: 880, type: "sine", dur: 0.09, gain: 0.11, delay: 0.055 });
-    voice({ freq: 1320, type: "sine", dur: 0.14, gain: 0.09, delay: 0.11 });
+    tone({ freq: NOTE.A5, fm: GLASS, dur: 0.2, gain: 0.045, send: 0.12 });
+    tone({ freq: NOTE.D6, fm: GLASS, dur: 0.32, gain: 0.04, delay: 0.07, send: 0.18 });
   },
 
   /**
    * Something failed.
    *
-   * Low, lowpassed and slightly detuned against itself. Deliberately not a buzzer: this
-   * fires on a failed upload while somebody is mid-session, and a harsh sound there
-   * punishes the player for the network's problem.
+   * The mirror of `ok`: down a fourth, low, no glass, and the last note doubled twenty
+   * cents sharp so it beats slowly against itself - wrong, not alarming. Deliberately not
+   * a buzzer: this fires on a failed upload while somebody is mid-session, and a harsh
+   * sound there punishes the player for the network's problem.
    */
   error() {
-    voice({ freq: 170, sweepTo: 120, type: "sawtooth", dur: 0.22, gain: 0.1, filterHz: 700 });
-    voice({ freq: 174, sweepTo: 123, type: "sawtooth", dur: 0.22, gain: 0.08, filterHz: 700 });
+    tone({ freq: NOTE.E4, dur: 0.14, gain: 0.055, lowpass: 1400 });
+    tone({ freq: NOTE.B3, dur: 0.28, gain: 0.055, delay: 0.1, lowpass: 1100 });
+    tone({ freq: NOTE.B3 * 1.0116, dur: 0.28, gain: 0.028, delay: 0.1, lowpass: 1100 });
   },
 
-  /** A run landed in the stats folder. Bell-like, because it is good news arriving. */
-  run() {
-    voice({ freq: 1180, type: "sine", dur: 0.16, gain: 0.1 });
-    voice({ freq: 1770, type: "sine", dur: 0.22, gain: 0.05, delay: 0.02 });
-    voice({ freq: 2360, type: "sine", dur: 0.3, gain: 0.025, delay: 0.04 });
+  /** The big commitment - Find opponent. Weight first, then a ring, so the commitment has a pitch. */
+  press() {
+    tick({ hz: 2400, q: 0.7, dur: 0.018, gain: 0.12 });
+    tone({ freq: NOTE.D3, dur: 0.18, gain: 0.2, lowpass: 900 });
+    tone({ freq: NOTE.A4, fm: { ratio: 2, index: 1.2, decay: 0.12 }, dur: 0.24, gain: 0.07, delay: 0.01, send: 0.15 });
   },
 
-  /** A quest completed or a floor raised. The one place a real fanfare is earned. */
-  celebrate() {
-    [523, 659, 784, 1047].forEach((f, i) => {
-      voice({ freq: f, type: "triangle", dur: 0.34, gain: 0.11, delay: i * 0.075 });
-      voice({ freq: f * 2, type: "sine", dur: 0.28, gain: 0.035, delay: i * 0.075 + 0.01 });
-    });
-    voice({ freq: 1568, type: "sine", dur: 0.7, gain: 0.05, delay: 0.31 });
-    noise({ dur: 0.5, gain: 0.03, filterHz: 3000, sweepTo: 8000, q: 0.5, delay: 0.3 });
+  /**
+   * A draw. A step up that never arrives anywhere: the ear waits for the resolution a
+   * win would have given it, which is what a draw is.
+   */
+  draw() {
+    tone({ freq: NOTE.D5, fm: GLASS, dur: 0.4, gain: 0.04, send: 0.15 });
+    tone({ freq: NOTE.E5, fm: GLASS, dur: 0.55, gain: 0.036, delay: 0.12, send: 0.2 });
   },
 
-  /** An opponent was found. A riser, because something is about to start. */
-  matchFound() {
-    noise({ dur: 0.34, gain: 0.06, filterHz: 400, sweepTo: 4200, q: 0.6 });
-    voice({ freq: 300, sweepTo: 900, type: "triangle", dur: 0.34, gain: 0.1 });
-    voice({ freq: 900, type: "sine", dur: 0.18, gain: 0.11, delay: 0.34 });
-    voice({ freq: 1200, type: "sine", dur: 0.24, gain: 0.09, delay: 0.42 });
-  },
-
-  victory() {
-    [523, 659, 784, 1047, 1319].forEach((f, i) => {
-      voice({ freq: f, type: "triangle", dur: 0.4, gain: 0.12, delay: i * 0.09 });
-    });
-    voice({ freq: 2093, type: "sine", dur: 0.9, gain: 0.05, delay: 0.42 });
-    noise({ dur: 0.6, gain: 0.035, filterHz: 2500, sweepTo: 9000, q: 0.5, delay: 0.4 });
-  },
-
-  /** Soft on purpose. Losing already feels bad; the app does not need to press on it. */
+  /**
+   * Soft on purpose. Losing already feels bad; the app does not need to press on it.
+   * Down a major triad rather than a minor one, and close rather than roomy: that is it,
+   * not a tragedy.
+   */
   defeat() {
-    [440, 370, 294].forEach((f, i) => {
-      voice({ freq: f, type: "sine", dur: 0.36, gain: 0.09, delay: i * 0.13 });
+    tone({ freq: NOTE.A4, dur: 0.3, gain: 0.045, lowpass: 1600, send: 0.06 });
+    tone({ freq: NOTE.Fs4, dur: 0.34, gain: 0.045, delay: 0.16, lowpass: 1300, send: 0.06 });
+    tone({ freq: NOTE.D4, dur: 0.6, gain: 0.052, delay: 0.32, lowpass: 1000, send: 0.08 });
+  },
+
+  /**
+   * An opponent was found. An approach, then an arrival.
+   *
+   * Air opening up and a tone rising with it lead the ear to a beat it can predict, and
+   * the arrival lands on it: a low body and an open fifth spread across the stereo field,
+   * in the room. The approach cuts rather than fades, so the arrival is the only thing
+   * left when it hits.
+   */
+  matchFound() {
+    tick({ hz: 300, to: 3800, q: 1.2, dur: 0.36, attack: 0.3, gain: 0.045 });
+    tone({ freq: NOTE.D5, from: NOTE.D4, glide: 0.34, dur: 0.36, attack: 0.3, gain: 0.03, lowpass: 2500 });
+    const at = 0.36;
+    tick({ hz: 2200, dur: 0.02, gain: 0.09, delay: at });
+    tone({ freq: NOTE.D3, dur: 0.35, gain: 0.18, delay: at, lowpass: 700 });
+    tone({ freq: NOTE.D5, fm: GLASS, dur: 0.7, gain: 0.055, delay: at, pan: -0.3, send: 0.3 });
+    tone({ freq: NOTE.A5, fm: GLASS, dur: 0.8, gain: 0.05, delay: at + 0.02, pan: 0.3, send: 0.3 });
+  },
+
+  /** A quest completed or a benchmark promotion. The chord, climbing left to right. */
+  celebrate() {
+    [NOTE.D5, NOTE.Fs5, NOTE.A5, NOTE.D6].forEach((f, i) => {
+      tone({ freq: f, fm: GLASS, dur: 0.9 - i * 0.1, gain: 0.055, delay: i * 0.07, pan: -0.45 + i * 0.3, send: 0.35 });
+    });
+    tone({ freq: NOTE.D4, dur: 0.6, gain: 0.07, delay: 0.21, lowpass: 800, send: 0.2 });
+    tone({ freq: NOTE.A6, fm: GLASS, dur: 1.2, gain: 0.025, delay: 0.28, send: 0.5 });
+  },
+
+  /**
+   * A win. The rarest sound in the app and the only one that gets everything: a rising
+   * pickup, then the whole chord at once over a low floor, wide, with the most room.
+   */
+  victory() {
+    [NOTE.A4, NOTE.D5, NOTE.Fs5].forEach((f, i) => {
+      tone({ freq: f, fm: GLASS, dur: 0.3, gain: 0.055, delay: i * 0.09, send: 0.2 });
+    });
+    const at = 0.27;
+    tick({ hz: 2600, dur: 0.02, gain: 0.08, delay: at });
+    tone({ freq: NOTE.D3, dur: 0.7, gain: 0.15, delay: at, lowpass: 600, send: 0.15 });
+    [NOTE.A5, NOTE.D6, NOTE.Fs6].forEach((f, i) => {
+      tone({ freq: f, fm: GLASS, dur: 1.3, gain: 0.05, delay: at + i * 0.012, pan: [-0.4, 0, 0.4][i], send: 0.45 });
     });
   },
+};
+
+/**
+ * The order the palette claims, most frequent first. Every sound in a tier is shorter and
+ * quieter than every sound in the next, and only the interface tier stays out of the room.
+ */
+const SOUND_TIERS = {
+  interface: ["nav", "tap", "toggleOn", "toggleOff"],
+  news: ["run", "ok", "error", "press", "draw", "defeat"],
+  moments: ["matchFound", "celebrate", "victory"],
 };
 
 /**
@@ -546,41 +704,124 @@ function targetName(s) {
     : s.nextRankLabel;
 }
 
-/**
- * A plate, stamped with the tier's rung.
- *
- * It was a faceted hexagon filled with a two-stop gradient and thrown behind a
- * coloured drop-shadow, on the argument that a silhouette carries identity before a
- * colour does. It does - but eight identical hexagons in eight colours is one
- * silhouette, so the argument bought nothing and the glow made the badge the brightest
- * thing on a screen it is not the subject of. This is flat, square, and carries the
- * rung number, which is the fact the badge is standing in for.
- *
- * The rung is punched out of the plate in whichever of the ground or the ink reads
- * better on that tier's colour. It cannot be a fixed dark: the tier colours are chosen
- * to match the tier names, so the ladder runs from Cosmonaut's #008080 to Quasar's
- * #00FFFF, and a single stamp colour is unreadable on one end or the other.
- *
- * `uid` is no longer needed - nothing here is referenced by id - but the call sites
- * pass it and it costs nothing to keep the signature.
- */
+/** Rank insignia: the outer wings and earned pips advance with the ladder rung. */
 function badge(tier, uid) {
-  // Tier ids are "tier-1" through "tier-8"; the number in one is the rung.
-  const rung = /^tier-(\d+)$/.exec(String(tier.id ?? ""))?.[1] ?? "";
-  const stamp =
-    contrastRatio(tier.color, DARK_GROUND) >= contrastRatio(tier.color, LIGHT_GROUND)
-      ? DARK_GROUND
-      : LIGHT_GROUND;
-  return (
-    '<svg viewBox="0 0 60 68" role="img" aria-label="' + esc(tier.name) + '">' +
-    '<rect x="3" y="4" width="54" height="60" fill="' + esc(tier.color) + '"/>' +
-    (rung
-      ? '<text x="30" y="43" text-anchor="middle" fill="' + esc(stamp) + '" ' +
-        'font-family="Cascadia Mono, ui-monospace, Consolas, monospace" ' +
-        'font-size="30" font-weight="600">' + esc(rung) + "</text>"
-      : "") +
-    "</svg>"
-  );
+  const rung = Math.max(1, Math.min(8, Number(/^tier-(\d+)$/.exec(String(tier.id ?? ""))?.[1] || 1)));
+  const color = legibleOnDark(tier.color, RANK_TEXT_CONTRAST);
+  const faces = [
+    'M40 12 62 34 40 67 18 34Z',
+    'M40 9 64 24 60 52 40 69 20 52 16 24Z',
+    'M27 12h26l13 21-10 27-16 10-16-10-10-27Z',
+    'M40 8 65 22 65 51 40 71 15 51V22Z',
+    'M40 7 61 17 69 39 59 60 40 72 21 60 11 39 19 17Z',
+    'M24 12 40 5 56 12 69 29 64 53 40 73 16 53 11 29Z',
+    'M40 4 57 14 69 14 67 40 58 62 40 75 22 62 13 40 11 14 23 14Z',
+    'M40 3 51 12 65 9 65 25 74 37 62 59 40 77 18 59 6 37 15 25 15 9 29 12Z'
+  ];
+  const ribs = rung >= 3 ? '<path d="M20 29 9 24l4 26 12 10M60 29l11-5-4 26-12 10" fill="none" stroke="currentColor" stroke-width="1.4"/>' : '';
+  const crown = rung >= 6 ? '<path d="m25 15 2-10 13 6L53 5l2 10" fill="none" stroke="currentColor" stroke-width="1.5"/>' : '';
+  const pips = Array.from({length:rung}, (_, i) => '<path d="m' + (40 + (i - (rung - 1) / 2) * 5) + ' 78 1.5 2-1.5 2-1.5-2Z" fill="currentColor"/>').join('');
+  return '<svg class="rank-insignia material-' + rung + '" viewBox="0 0 80 86" role="img" aria-label="' + esc(tier.name) + '" style="color:' + esc(color) + '">' +
+    '<path d="' + faces[rung-1] + '" fill="currentColor" fill-opacity=".17" stroke="currentColor" stroke-width="1.4"/>' +
+    '<path d="M40 16 58 27 40 38 22 27Z" fill="currentColor" fill-opacity=".48"/>' +
+    '<path d="M22 27v23l18 14V38Z" fill="currentColor" fill-opacity=".1"/>' +
+    '<path d="M58 27v23L40 64V38Z" fill="currentColor" fill-opacity=".28"/>' +
+    '<path d="m22 27 18 11 18-11M40 38v26" fill="none" stroke="currentColor" stroke-opacity=".5"/>' + ribs + crown +
+    '<path d="m29 46 11-21 11 21-11-6Zm3 5 8 7 8-7-8 2Z" fill="currentColor"/>' + pips + '</svg>';
+}
+
+/* Discipline marks describe movement; they never decide the scenario pool. */
+const DISCIPLINES = {
+  "Any": { key: "all", ink: "#b6c7dd", cue: "A complete test of your aim", path: '<path d="M4 7h5l6 10h5M4 17h5l6-10h5"/><path d="m17 4 3 3-3 3m0 4 3 3-3 3"/>' },
+  "Static Clicking": { key: "static", ink: "#d4b38c", cue: "Big flick → micro → click. Straight line.", path: '<path d="M4 9V4h5m6 0h5v5m0 6v5h-5M9 20H4v-5"/><path d="M9 12h6m-3-3v6"/>' },
+  "Dynamic Clicking": { key: "dynamic", ink: "#d69ea8", cue: "Read path → match → confirm → click.", path: '<path d="M3 18Q9 1 20 6"/><circle cx="14" cy="7" r="3"/><path d="m18 3 3 3-3 3M4 21h6"/>' },
+  "Precise Tracking": { key: "precise", ink: "#8dc9bf", cue: "Match speed. Centred. Micro small.", path: '<ellipse cx="12" cy="12" rx="9" ry="5" transform="rotate(-30 12 12)"/><circle cx="12" cy="12" r="2"/><path d="M12 2v3m0 14v3"/>' },
+  "Reactive Tracking": { key: "reactive", ink: "#a9bafa", cue: "React, never predict. Underaim.", path: '<path d="m3 16 5-9 5 10 5-10 3 4"/><circle cx="8" cy="7" r="2"/><path d="M3 21h18"/>' },
+  "Speed Switching": { key: "speed", ink: "#c8c991", cue: "One flick, no micro. Next chosen.", path: '<path d="M3 5h6v6H3zm12 8h6v6h-6zM8 16l8-8m-5 0h5v5"/>' },
+  "Evasive Switching": { key: "evasive", ink: "#bda5d6", cue: "Track to kill. Then switch. Read next.", path: '<circle cx="5" cy="6" r="3"/><circle cx="19" cy="18" r="3"/><path d="M5 11c0 10 14-10 14 2m-7-8 3 3-3 3"/>' },
+};
+
+function disciplineOf(name) { return DISCIPLINES[name] || DISCIPLINES.Any; }
+
+function paintDiscipline(name) {
+  const d = disciplineOf(name);
+  const stage = document.querySelector('.queue-stage');
+  if (!stage) return;
+  stage.dataset.discipline = d.key;
+  stage.style.setProperty('--discipline', d.ink);
+  const mark = $('disciplineMark');
+  if (mark) mark.style.setProperty('--discipline', d.ink);
+  if (mark) mark.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d.path + '</svg>';
+  if ($('disciplineCue')) $('disciplineCue').textContent = d.cue;
+}
+
+function paintQueueJourney(state) {
+  const index = state === 'working' ? 1 : state === 'held' ? 2 : 0;
+  document.querySelectorAll('.queue-journey li').forEach((el, i) => {
+    el.classList.toggle('current', i === index);
+    el.classList.toggle('complete', i < index);
+    if (i === index) el.setAttribute('aria-current', 'step');
+    else el.removeAttribute('aria-current');
+  });
+  if ($('queueSignal')) $('queueSignal').textContent = state === 'working'
+    ? 'Searching for a compatible set' : state === 'held' ? 'Set locked · play in KovaaK’s' : 'Choose your discipline';
+}
+
+function renderCommandFocus(data) {
+  const host = $('commandFocus');
+  if (!host) return;
+  const category = data.categories.find(c => c.name === data.weakest);
+  host.hidden = !category;
+  if (!category) return;
+  $('commandFocusName').textContent = category.name;
+  $('commandFocusDetail').textContent = category.rankName
+    ? category.rankName + ' · your lowest category standing' : 'Unranked · build your first baseline';
+  $('commandFocusOpen').onclick = () => openScreen('profile');
+}
+
+/** Presentation of stored deltas only. Missing and excluded rounds never imply a loss. */
+function roundPresentation(round) {
+  if (!round.counted) return { label: 'Excluded', tone: 'neutral' };
+  if (!Number.isFinite(round.delta)) return { label: 'Unavailable', tone: 'neutral' };
+  if (!Number.isFinite(round.opponentDelta)) return { label: 'Recorded', tone: 'neutral' };
+  if (round.delta === round.opponentDelta) return { label: 'Draw', tone: 'neutral' };
+  return round.delta > round.opponentDelta ? { label: 'Won', tone: 'win' } : { label: 'Lost', tone: 'loss' };
+}
+
+function renderDebrief(rounds, provenance) {
+  const host = $('debriefRounds');
+  if (!host) return;
+  host.replaceChildren();
+  host.hidden = !rounds.length;
+  $('debriefProvenance').textContent = provenance;
+  rounds.forEach((r, i) => {
+    const outcome = roundPresentation(r);
+    const card = document.createElement('article');
+    card.className = 'debrief-round ' + outcome.tone;
+    card.style.setProperty('--round-index', String(i));
+    const own = r.counted && Number.isFinite(r.delta) ? pct(r.delta) : "—";
+    const other = r.counted && Number.isFinite(r.opponentDelta) ? pct(r.opponentDelta) : "—";
+    card.innerHTML = '<div class="debrief-round-head"><span>ROUND ' + String(i + 1).padStart(2, '0') + '</span><b>' + outcome.label + '</b></div>' +
+      '<h3>' + esc(r.scenario) + '</h3><div class="debrief-comparison"><span><small>You</small><strong>' + own + '</strong></span><span><small>Opponent</small><strong>' + other + '</strong></span></div>' +
+      '<p>' + esc(!r.counted ? r.excludedReason || 'Not included in settlement' : 'Improvement over baseline') + '</p>';
+    host.append(card);
+  });
+}
+
+function renderMatchReadiness() {
+  const host = $('matchReadiness');
+  if (!host) return;
+  const received = pendingScenarios.filter(s => s.done).length;
+  host.textContent = received + ' / ' + pendingScenarios.length + ' runs received' + (HOST === 'preview' ? ' · example set' : '');
+}
+
+/** Scroll regions need a keyboard landing point when the window is narrower than a table. */
+function prepareScrollRegions() {
+  document.querySelectorAll('.rounds-wrap, .scen-wrap, .band-grid-wrap, .tn-bracket-wrap').forEach(el => {
+    el.tabIndex = 0;
+    el.setAttribute('role', 'region');
+    el.setAttribute('aria-label', el.classList.contains('tn-bracket-wrap') ? 'Tournament bracket, scroll horizontally for later rounds' : 'Results table, scroll horizontally for more columns');
+  });
 }
 
 /* ------------------------------------------------------------------ status */
@@ -629,6 +870,39 @@ function showError(message) {
   banner.textContent = message;
   banner.classList.add("on");
   playSound("error");
+}
+
+/**
+ * Put a scenario's exact name on the clipboard, and say so on the name that was clicked.
+ *
+ * KovaaK's registers no URL scheme and its search wants the name as written, so this is
+ * the shortest honest route from a tile to the scenario: nobody should have to retype
+ * "Air CELESTIAL No UFO Easy Slowed" by hand. The confirmation sits on the name itself
+ * for a moment rather than in the banner, because the banner is for news and a copy the
+ * player just asked for is not news.
+ */
+function makeCopyable(el, name) {
+  el.classList.add("copy-name");
+  el.setAttribute("role", "button");
+  el.tabIndex = 0;
+  el.title = name + " · click to copy";
+  const copy = async (e) => {
+    e.stopPropagation();
+    try {
+      await navigator.clipboard.writeText(name);
+    } catch {
+      return;
+    }
+    el.classList.add("copied");
+    clearTimeout(el._copiedTimer);
+    el._copiedTimer = setTimeout(() => el.classList.remove("copied"), 1400);
+  };
+  el.addEventListener("click", copy);
+  el.addEventListener("keydown", (e) => {
+    if (e.key !== "Enter" && e.key !== " ") return;
+    e.preventDefault();
+    void copy(e);
+  });
 }
 
 /** The same banner, for something that worked. */
@@ -698,6 +972,7 @@ function render(data) {
   $("myStreak").textContent = data.player.streak + "-day streak";
 
   $("heroBadge").innerHTML = badge(me.tier, "hero");
+  document.querySelector(".rank-showcase").dataset.material = String(me.tier.id || "tier-1");
   $("heroName").textContent = me.tier.name;
   $("heroName").style.color = legibleOnDark(me.tier.color, RANK_TEXT_CONTRAST);
 
@@ -716,11 +991,13 @@ function render(data) {
     (v) => "across " + Math.round(v) + " scenarios",
   );
   $("heroPlacement").textContent =
-    "Placement is provisional: with no live population yet, your tier is estimated " +
-    "from your " + data.benchmark.name + " " + data.benchmark.difficulty + " standing (" +
-    data.player.benchmarkRank + ", " + num(data.player.benchmarkEnergy) + " energy).";
+    "Provisional. Estimated from your " + data.benchmark.name + " " +
+    data.benchmark.difficulty + " standing (" + data.player.benchmarkRank + ", " +
+    num(data.player.benchmarkEnergy) + " energy) until there is a live population.";
 
   renderClimb(data);
+  renderCommandFocus(data);
+  prepareScrollRegions();
   renderCategories(data);
   renderPool(data);
 
@@ -732,6 +1009,7 @@ function render(data) {
 
   renderRanks(data);
   renderSeasonView(data);
+  renderScenarioRanks();
   renderProfile(data);
   renderCoverage(data);
   renderConsistency(data);
@@ -739,11 +1017,10 @@ function render(data) {
 
   $("footnote").textContent =
     (HOST === "electron"
-      ? "Live from your KovaaK's stats folder. "
-      : "Static preview. ") +
-    "Every number here is computed from " + num(data.player.totalRuns) +
-    " real runs; the opponent is synthetic. Snapshot " +
-    new Date(data.generatedAt).toLocaleString() + ".";
+      ? "Read from your KovaaK's stats folder"
+      : "Static preview · example opponent") +
+    " · " + num(data.player.totalRuns) + " runs · snapshot " +
+    new Date(data.generatedAt).toLocaleString();
 
   // Every bar queued by the screens above, moved together. One forced layout for the
   // whole pass rather than one per bar, which on the ranks screen would be two dozen.
@@ -829,7 +1106,7 @@ function renderDraw(data) {
   const count = $("drawCount");
   if (count) {
     count.textContent =
-      "three of " + rows.length + ", " + measured + " with a baseline";
+      "3 of " + rows.length + " drawn · " + measured + " with a baseline";
   }
 
   host.textContent = "";
@@ -876,9 +1153,9 @@ function renderDraw(data) {
       setFill(bar, at);
       base.textContent = r.best === null ? "unplayed" : num(r.best);
       base.title =
-        num(r.runs) + " runs, enough to score a match against" +
+        num(r.runs) + " runs · baseline set" +
         (r.nextRankScore !== null && r.gap !== null
-          ? ". " + num(r.gap) + " more points reaches the next rank on it"
+          ? " · " + num(r.gap) + " points to next rank"
           : "");
       el.className = "draw-row";
     } else {
@@ -892,9 +1169,9 @@ function renderDraw(data) {
         left === null ? "no baseline" : left + (left === 1 ? " run to go" : " runs to go");
       base.title =
         (r.runs === 0
-          ? "nothing of yours on this scenario yet"
+          ? "no runs yet"
           : (r.runs === 1 ? "1 run" : num(r.runs) + " runs") + ", best " + num(r.best)) +
-        ". A scenario with no baseline is scored against a guess.";
+        " · no baseline, scored against an estimate";
       el.className = "draw-row short" + (r.runs === 0 ? " none" : "");
     }
 
@@ -909,9 +1186,8 @@ function renderDraw(data) {
   const legend = $("drawLegend");
   if (legend) {
     legend.innerHTML =
-      "A match is three of these, drawn at random. The bar on a scenario you have a " +
-      "baseline for is <b>how far into its next rank</b> your best sits; on one you do " +
-      "not, it is <b>how close it is to counting</b>.";
+      "Each match draws 3 at random. Bar shows <b>progress to next rank</b> where you " +
+      "have a baseline, and <b>runs toward a baseline</b> where you don't.";
   }
 }
 
@@ -966,19 +1242,18 @@ function renderPool(data) {
   if (short.length === 0) {
     note.className = "pool-note";
     note.innerHTML =
-      `Matches draw from <b>${esc(name)}</b>. You have baselines on ` +
-      `${measured} of ${total} of its scenarios, so your scores are what you will be ` +
-      `measured against.`;
+      `Matches draw from <b>${esc(name)}</b>. Baselines on ${measured} of ${total} ` +
+      `scenarios.`;
     return;
   }
 
   note.className = "pool-note warn";
   note.innerHTML =
-    `Matches draw from <b>${esc(name)}</b>, and you have baselines on only ` +
-    `${measured} of ${total} of its scenarios` +
+    `Matches draw from <b>${esc(name)}</b>. Baselines on only ` +
+    `${measured} of ${total} scenarios` +
     `${short.length < relevant.length ? ` (short in ${esc(short.map((c) => c.category).join(", "))})` : ""}. ` +
-    `A scenario with no baseline is scored against a guess, which halves what the match ` +
-    `is worth and can void it. Play a few runs of them first.`;
+    `A scenario without a baseline is scored against an estimate, which halves the ` +
+    `match's weight and can void it. Play a few runs on those first.`;
 }
 
 /**
@@ -997,6 +1272,7 @@ function setCommit(state, verb, sub, meta) {
   btn.classList.toggle("held", state === "held");
   // Searching is the one state the orb field reacts to; see the orb notes in index.html.
   document.body.dataset.queue = state;
+  paintQueueJourney(state);
   // And the one state that owns a WebGL context. Driven from here rather than from the
   // six call sites that reach it, so the context cannot outlive the search that made it.
   if (state === "working") mountSearchOrb();
@@ -1026,7 +1302,7 @@ function setQueueLive(state, verb, meta) {
   $("queueLiveText").textContent = verb;
   $("queueLiveMeta").textContent = meta ?? "";
   chip.title =
-    state === "working" ? "Searching for an opponent - click to watch" : "Open your match";
+    state === "working" ? "Searching · click to view" : "Open your match";
 }
 
 /** What a press would queue, in the button. */
@@ -1035,7 +1311,7 @@ function commitSub(data) {
     ? "Any category"
     : selectedCategory;
   const pool = data.benchmark.matchPoolName;
-  return where + (pool ? " · " + pool : "") + " · three scenarios";
+  return where + (pool ? " · " + pool : "") + " · 3 scenarios";
 }
 
 /** Back to offering a match, whatever it was last saying. */
@@ -1348,19 +1624,53 @@ function stopSearchClock() {
   searchTimer = null;
 }
 
+/**
+ * The queue category, remembered.
+ *
+ * Somebody who queues Reactive Tracking every evening should not be handed their weakest
+ * category on every launch instead. Per machine, like the last screen: a view preference
+ * main has no business knowing. A category the season no longer has falls back to the
+ * weakest rather than to a queue for nothing.
+ */
+const QUEUE_CATEGORY_KEY = "apogee.queueCategory";
+
+function rememberedCategory(data) {
+  let name = null;
+  try {
+    name = localStorage.getItem(QUEUE_CATEGORY_KEY);
+  } catch {
+    return null;
+  }
+  return name === "Any" || data.categories.some((c) => c.name === name) ? name : null;
+}
+
 function renderCategories(data) {
   const host = $("cats");
   host.textContent = "";
-  if (selectedCategory === null) selectedCategory = data.weakest;
+  if (selectedCategory === null) selectedCategory = rememberedCategory(data) ?? data.weakest;
+  paintDiscipline(selectedCategory);
 
   ["Any"].concat(data.categories.map((c) => c.name)).forEach((name) => {
     const b = document.createElement("button");
     b.className = "cat";
     b.type = "button";
-    b.textContent = name === data.weakest ? name + " · weakest" : name;
+    const d = disciplineOf(name);
+    b.dataset.discipline = d.key;
+    b.style.setProperty('--discipline', d.ink);
+    b.innerHTML = '<svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d.path + '</svg>' +
+      '<span><span class="cat-name">' + esc(name === "Any" ? "All categories" : name) +
+      (name === data.weakest ? '<span class="cat-weak">Focus</span>' : '') +
+      '</span><span class="cat-description">' + d.cue + '</span></span><span class="cat-check" aria-hidden="true"></span>';
+    b.setAttribute("aria-label", name === data.weakest ? name + ", your weakest category" : name === "Any" ? "All categories" : name);
     b.setAttribute("aria-pressed", String(name === selectedCategory));
     b.addEventListener("click", () => {
       selectedCategory = name;
+      try {
+        localStorage.setItem(QUEUE_CATEGORY_KEY, name);
+      } catch {
+        /* A choice that cannot be stored still applies to this session. */
+      }
+      paintDiscipline(name);
       renderPool(data);
       Array.prototype.forEach.call(host.children, (c) =>
         c.setAttribute("aria-pressed", "false"));
@@ -1384,7 +1694,7 @@ function renderCategories(data) {
 function drawOdds(p, color) {
   const yours = Math.max(0, Math.min(1, p));
   $("oddsBar").innerHTML =
-    '<div style="flex:' + yours + ';background:' + esc(color) + '"></div>' +
+    '<div style="flex:' + yours + ';background:' + esc(legibleOnDark(color, RANK_TEXT_CONTRAST)) + '"></div>' +
     '<div style="flex:' + (1 - yours) + ';background:var(--rule-3);' +
     'border-left:1px solid var(--well)"></div>';
 }
@@ -1397,7 +1707,7 @@ function showOpponent(data) {
   $("oppName").textContent = m.opponent.name;
   $("oppTier").textContent = m.opponent.tier.name + " · " + m.opponent.rating;
   $("oppTier").style.color = legibleOnDark(m.opponent.tier.color, RANK_TEXT_CONTRAST);
-  $("oppAge").textContent = "stored run · 3 days ago";
+  $("oppAge").textContent = "Example opponent · synthetic runs";
 
   const p = m.winProbability;
   drawOdds(p, me.tier.color);
@@ -1521,7 +1831,7 @@ function seasonLadder(window) {
  * choosing it, because the editor's own background is neither of the grounds it has to
  * survive, and finding out from a generated sheet after the fact is finding out too late.
  */
-const DARK_GROUND = "#1e1b18";
+const DARK_GROUND = "#10121b";
 const LIGHT_GROUND = "#eef1f6";
 const MIN_CONTRAST = 2;
 
@@ -1591,30 +1901,11 @@ function legibleOn(color, ground, min) {
   return out;
 }
 
-const legibleOnDark = (color, min) => legibleOn(color, DARK_GROUND, min);
+const legibleOnDark = (color, min) => legibleOn(color, "#242b3e", min);
 const legibleOnLight = (color, min) => legibleOn(color, LIGHT_GROUND, min);
 
-/**
- * The floor for a rank name set as text.
- *
- * MIN_CONTRAST is 2, which the rank sheet uses because the names there are set at 29px
- * beside a printed specimen of the same colour, and large text carries a low ratio. In
- * the client the same names are 12px in a column forty rows deep.
- *
- * Measured against the season rather than picked: of its 153 named colours, 17 sit below
- * 2:1 on this ground and 42 below 3.5:1, with Gauss Cannon and Primate at 1.01, Pronghorn
- * at 1.16 and Orca at 1.23. At the sheet's threshold those seventeen still came out as
- * smudges at table size. 3.5 is WCAG's large-text floor of 3 with a little over, which is
- * the honest description of this text: small, but bold and in a column of its own.
- *
- * The counts rose when the grounds were lifted out of near-black: 13 were under 2:1 and 32
- * under 3.5:1 on the old ground. A lighter ground costs a dark rank colour contrast, and
- * absorbing exactly that is what this function is for, so nothing else had to move - but
- * the numbers are restated rather than left describing a ground the app no longer paints.
- *
- * `npm run audit:look` re-derives the three counts above.
- */
-const RANK_TEXT_CONTRAST = 3.5;
+/** Body-size rank labels meet 4.5:1 against the brightest standard control surface. */
+const RANK_TEXT_CONTRAST = 4.5;
 
 /** What is wrong with a rank colour, or null when nothing is. */
 function colourNote(color) {
@@ -3611,7 +3902,7 @@ function renderSeasonCategories() {
  * names, colours and thresholds; only the scenario pool needs the season file, so the
  * screen renders without it and fills the pool in when it arrives.
  */
-let seasonPool = null;
+let seasonPool = window.__APOGEE_SEASON__ ?? null;
 
 /**
  * The pool measured against local history: one row per scenario, not per family.
@@ -3647,6 +3938,186 @@ function tierBand(percentile) {
   if (lo <= 0) return "bottom " + hi + "%";
   return "top " + (100 - hi) + "\u2013" + (100 - lo) + "%";
 }
+
+/**
+ * A button that opens one scenario in KovaaK's, or null outside the desktop app.
+ *
+ * Shared by the Season pool and the Scenarios table so the two cannot drift apart on what
+ * a failed launch looks like.
+ */
+function playButton(scenario) {
+  if (HOST !== "electron" || !api || !api.launchScenario) return null;
+  const play = document.createElement("button");
+  play.type = "button";
+  play.className = "scen-play";
+  play.textContent = "Play";
+  play.title = "Open " + scenario + " in KovaaK's";
+  play.addEventListener("click", async () => {
+    play.disabled = true;
+    const prev = play.textContent;
+    play.textContent = "…";
+    try {
+      const r = await api.launchScenario(scenario);
+      if (r && r.error) {
+        showError(r.error);
+        play.textContent = prev;
+      } else {
+        play.textContent = "Opened";
+      }
+    } finally {
+      play.disabled = false;
+    }
+  });
+  return play;
+}
+
+/* ---------------------------------------------------------- scenario ranks */
+
+/**
+ * What the Scenarios table is filtered and sorted by. Held across repaints for the same
+ * reason as `seasonBand`: a run landing mid-grind repaints the table, and a filter that
+ * reset itself would lose the scenario the player was watching.
+ */
+const scenarioView = { category: null, window: null, sort: "closest" };
+
+/**
+ * Every scenario in the season with the rank its best run earns on it.
+ *
+ * The Ranks table lists only the variant carrying each family, and only where a next rank
+ * is left, so a player grinding one scenario had nowhere to see what that scenario is worth
+ * on its own. The rank index is the core's (`practiceRows`), already offset onto the
+ * sixteen-rank ladder; this only looks the name up in the category's ladder, which is the
+ * same name every other screen prints for that index.
+ */
+function renderScenarioRanks() {
+  const body = $("scRanksBody");
+  if (!body) return;
+
+  const all = practice && Array.isArray(practice.scenarios) ? practice.scenarios : [];
+  const cats = (practice && practice.season && practice.season.categories) || [];
+  const windows = (practice && practice.season && practice.season.windows) || [];
+  const ladderOf = new Map(cats.map((c) => [c.name, c]));
+
+  const filterRow = (host, options, key) => {
+    if (!host) return;
+    host.textContent = "";
+    [{ value: null, label: "All" }, ...options].forEach((o) => {
+      const on = scenarioView[key] === o.value;
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "pool-band" + (on ? " on" : "");
+      btn.setAttribute("aria-pressed", String(on));
+      btn.textContent = o.label;
+      btn.addEventListener("click", () => {
+        scenarioView[key] = o.value;
+        renderScenarioRanks();
+      });
+      host.append(btn);
+    });
+  };
+  filterRow($("scCats"), cats.map((c) => ({ value: c.name, label: c.name })), "category");
+  filterRow($("scBands"), windows.map((name, w) => ({ value: w, label: name })), "window");
+
+  document.querySelectorAll(".sc-sort").forEach((b) => {
+    b.setAttribute("aria-pressed", String(b.dataset.sort === scenarioView.sort));
+  });
+
+  const nameAt = (row, index) => {
+    const ladder = ladderOf.get(row.category);
+    return ladder && index !== null && index !== undefined ? ladder.rankNames[index] ?? null : null;
+  };
+  const inkFor = (row, name) => {
+    const colour = name ? ladderOf.get(row.category)?.rankColors?.[name] : null;
+    return colour ? legibleOnDark(colour, RANK_TEXT_CONTRAST) : null;
+  };
+
+  const shown = all
+    .map((r, order) => ({ r, order }))
+    .filter(
+      ({ r }) =>
+        (scenarioView.category === null || r.category === scenarioView.category) &&
+        (scenarioView.window === null || r.window === scenarioView.window),
+    );
+
+  // Closest is in proportion to the target, as on the Ranks screen: 300 points is nothing
+  // on a 90,000 scenario and most of a rank on a 1,200 one. Maxed rows go last because
+  // nothing on them can move, unplayed ones just above because their gap is the whole
+  // threshold.
+  const closeness = (r) =>
+    r.nextRankScore === null ? 3 : r.best === null ? 2 : r.gap / Math.max(1, r.nextRankScore);
+  const sorters = {
+    closest: (a, b) => closeness(a.r) - closeness(b.r) || a.order - b.order,
+    rank: (a, b) =>
+      (b.r.rankIndex ?? -1) - (a.r.rankIndex ?? -1) ||
+      (b.r.progress ?? 0) - (a.r.progress ?? 0) ||
+      a.order - b.order,
+    category: (a, b) => a.order - b.order,
+  };
+  shown.sort(sorters[scenarioView.sort] || sorters.closest);
+
+  const ranked = shown.filter(({ r }) => r.rankIndex !== null).length;
+  const maxed = shown.filter(({ r }) => r.nextRankScore === null).length;
+  if ($("scNote")) {
+    $("scNote").textContent =
+      shown.length === 0
+        ? ""
+        : num(ranked) + " of " + num(shown.length) + " ranked" +
+          (maxed > 0 ? " · " + num(maxed) + " maxed" : "");
+  }
+
+  body.textContent = "";
+  if (shown.length === 0) {
+    body.innerHTML =
+      '<tr><td colspan="9" class="empty">' +
+      (all.length === 0 ? "Season not loaded yet." : "No scenarios match these filters.") +
+      "</td></tr>";
+    return;
+  }
+
+  for (const { r } of shown) {
+    const held = nameAt(r, r.rankIndex);
+    const maxedHere = r.nextRankScore === null;
+    const next = maxedHere ? null : nameAt(r, r.nextRankIndex);
+
+    const tr = document.createElement("tr");
+    tr.className = "sc-row" + (maxedHere ? " maxed" : "") + (r.runs === 0 ? " untouched" : "");
+    // Read by the smoke test, which holds the painted names to the core's rank indices.
+    tr.dataset.rank = held ?? "";
+    tr.innerHTML =
+      "<td>" + esc(r.label) + ' <span class="win">' + esc(r.windowName) + "</span></td>" +
+      "<td>" + esc(r.category) + "</td>" +
+      '<td class="sc-rank">' + esc(held ?? "unranked") + "</td>" +
+      "<td>" + (r.best === null ? '<span class="base">unplayed</span>' : num(r.best)) + "</td>" +
+      '<td class="sc-rank">' + (maxedHere ? "maxed" : esc(next ?? "")) + "</td>" +
+      "<td>" + (maxedHere ? "" : num(r.nextRankScore)) + "</td>" +
+      '<td class="sc-gap">' + (maxedHere || r.gap === null ? "" : "+" + num(r.gap)) + "</td>" +
+      '<td class="sc-prog"><span class="sc-bar"><i></i></span></td>' +
+      '<td class="sc-act"></td>';
+
+    const heldInk = inkFor(r, held);
+    if (heldInk) tr.children[2].style.color = heldInk;
+    const nextInk = inkFor(r, next);
+    if (nextInk) tr.children[4].style.color = nextInk;
+    const bar = tr.querySelector(".sc-bar i");
+    bar.style.width = (maxedHere ? 1 : r.progress ?? 0) * 100 + "%";
+    if (heldInk) bar.style.background = heldInk;
+
+    tr.title =
+      r.scenario + " · " + (r.runs === 1 ? "1 run" : num(r.runs) + " runs") +
+      (maxedHere ? " · all ranks held" : " · " + Math.round((r.progress ?? 0) * 100) + "% to next rank");
+
+    const play = playButton(r.scenario);
+    if (play) tr.querySelector(".sc-act").append(play);
+    body.append(tr);
+  }
+}
+
+document.querySelectorAll(".sc-sort").forEach((b) => {
+  b.addEventListener("click", () => {
+    scenarioView.sort = b.dataset.sort;
+    renderScenarioRanks();
+  });
+});
 
 function renderSeasonView(data) {
   const me = data.player.apogee;
@@ -3907,6 +4378,22 @@ function renderSeasonView(data) {
       "</span>";
     block.append(head);
 
+    const guide = (seasonPool?.categories || []).find((c) => c.name === category.name);
+    const scenarioNotes = new Map((seasonPool?.scenarios || []).map((s) => [s.scenario, s]));
+    if (guide?.description) {
+      const intro = document.createElement("div");
+      intro.className = "pool-circuit-intro";
+      const title = document.createElement("strong");
+      title.textContent = guide.headline || category.name;
+      const copy = document.createElement("p");
+      copy.textContent = guide.description;
+      const route = document.createElement("span");
+      route.className = "pool-circuit-route";
+      route.textContent = inCategory.length + " scenarios · play in order";
+      intro.append(title, copy, route);
+      block.append(intro);
+    }
+
     const subs = [];
     for (const r of inCategory) {
       const key = r.subCategory || "—";
@@ -3946,7 +4433,7 @@ function renderSeasonView(data) {
       tiles.className = "pool-tiles";
       group.append(tiles);
 
-      inSub.forEach((v) => {
+      inSub.forEach((v, circuitIndex) => {
         const maxedHere = v.nextRankScore === null;
 
         // Progress through the current rank step is the row's own ground rather than a
@@ -3969,24 +4456,36 @@ function renderSeasonView(data) {
         const nmText = document.createElement("span");
         nmText.className = "nm-text";
         nmText.textContent = v.label;
+        makeCopyable(nmText, v.scenario);
         nm.append(nmText);
-        // Only Viscose publishes a mechanic, and only for tracking, so this shows on
-        // twenty-four of the hundred and eight and nowhere else. It sits on the tile
-        // rather than the sub-skill heading because it belongs to the family: Control
-        // Tracking holds a Wrist family, an Arm one and a Blending one, and a single tag
-        // over the group would have mislabelled two of the three.
-        if (v.mechanic) {
+        const focus = scenarioNotes.get(v.scenario)?.focus;
+        if (focus) {
+          const cue = document.createElement("span");
+          cue.className = "pool-focus";
+          cue.textContent = String(circuitIndex + 1).padStart(2, "0") + " / " + focus;
+          nm.append(cue);
+        }
+        // The part of the arm the scenario loads most. On the tile rather than the
+        // sub-skill heading because it is per scenario: Whisphere's own rungs are filed
+        // under two different parts. Viscose's word where Viscose tags this exact
+        // scenario, the season's own call otherwise, and the two are drawn differently
+        // so a guess never passes for a citation.
+        const arm = scenarioNotes.get(v.scenario)?.arm;
+        if (arm) {
+          const cited = scenarioNotes.get(v.scenario)?.armFrom === "Viscose";
           const mech = document.createElement("span");
-          mech.className = "pool-mech";
-          mech.textContent = v.mechanic;
-          mech.title = "Viscose files this family under " + v.mechanic;
+          mech.className = "pool-mech" + (cited ? "" : " called");
+          mech.textContent = arm;
+          mech.title = cited
+            ? "Viscose files this scenario under " + arm
+            : arm + ": the season's own call. No benchmark publishes one for this scenario";
           nm.append(mech);
         }
         // Where the scenario came from, and what this score is worth there.
         //
         // This is the argument for the whole pool on one line: nothing here was invented,
         // and a session on this ladder is a session on the ladders people already grind.
-        // 197 of the 208 carry at least one mark, a third of them two or more.
+        // 146 of the 156 carry at least one mark, 51 of them two or more.
         //
         // The mark is the benchmark's own abbreviation in the benchmark's own brand
         // colour, and it fills in solid once the score holds a rank there - so an unplayed
@@ -4027,8 +4526,8 @@ function renderSeasonView(data) {
           (v.runs === 1 ? "1 run" : num(v.runs) + " runs") +
           " · " +
           (maxedHere
-            ? "every rank this scenario can prove"
-            : Math.round((v.progress ?? 0) * 100) + "% of the way to the next rank");
+            ? "all ranks held"
+            : Math.round((v.progress ?? 0) * 100) + "% to next rank");
 
         // Best and target read as one line - what you have, what the rank wants.
         const nums = document.createElement("span");
@@ -4050,30 +4549,8 @@ function renderSeasonView(data) {
         nums.append(pb, to, tgt);
         row.append(nm, nums);
 
-        if (HOST === "electron" && api && api.launchScenario) {
-          const play = document.createElement("button");
-          play.type = "button";
-          play.className = "scen-play";
-          play.textContent = "Play";
-          play.title = "Open " + v.scenario + " in KovaaK's";
-          play.addEventListener("click", async () => {
-            play.disabled = true;
-            const prev = play.textContent;
-            play.textContent = "…";
-            try {
-              const r = await api.launchScenario(v.scenario);
-              if (r && r.error) {
-                showError(r.error);
-                play.textContent = prev;
-              } else {
-                play.textContent = "Opened";
-              }
-            } finally {
-              play.disabled = false;
-            }
-          });
-          row.append(play);
-        }
+        const play = playButton(v.scenario);
+        if (play) row.append(play);
 
         tiles.append(row);
       });
@@ -4120,7 +4597,7 @@ function renderPlaylists() {
   const note = $("svInstallNote");
   if (note && !note.dataset.done) {
     note.textContent =
-      "Written into KovaaK's own Playlists folder. Restart the game to see them.";
+      "Written to KovaaK's Playlists folder. Restart the game to load them.";
   }
 
   const chips = $("svChips");
@@ -4161,7 +4638,7 @@ function renderPlaylists() {
     chip.innerHTML =
       esc(list.category || "Everything") +
       '<span class="n">' + list.scenarios + "</span>";
-    chip.title = "Write “" + list.name + "” into KovaaK's";
+    chip.title = "Install “" + list.name + "” in KovaaK's";
     chip.addEventListener("click", () => install(chip, [list.name]));
     chips.append(chip);
   }
@@ -4171,7 +4648,7 @@ function renderPlaylists() {
   all.className = "pool-chip all";
   all.innerHTML =
     "All bands" + '<span class="n">' + (practice.playlists || []).length + "</span>";
-  all.title = "Write every playlist this season implies";
+  all.title = "Install every playlist for this season";
   all.addEventListener("click", () => install(all, null));
   chips.append(all);
 }
@@ -4212,9 +4689,8 @@ function renderBand() {
   const bandName = band.windowName || "Band " + (band.window + 1);
   $("bandTitle").textContent = cat.name + " · " + bandName;
   $("bandLede").textContent =
-    "Every rank this band can award, and the score each one wants on each of its " +
-    band.total + " scenarios. A band is a whole benchmark: these ranks are its own, and " +
-    "holding one says nothing about the band above it.";
+    "Every rank in this band and its threshold on each of the " + band.total +
+    " scenarios. Ranks here apply to this band only.";
 
   $("bandNote").textContent =
     band.played === 0
@@ -4265,10 +4741,9 @@ function renderBand() {
 
   countTo($("bandGridNote"), rows.length, (v) => Math.round(v) + " scenarios", "band:scenarios");
   $("bandGridLede").textContent = rows.length === 0
-    ? "The practice list has not loaded, so the per-scenario scores are not available yet."
-    : "A filled cell is a score you have already beaten. The outlined one in each row is " +
-      "the next score that moves you, and every scenario counts the same, so the cheapest " +
-      "outlined cell is the cheapest rank.";
+    ? "Practice list not loaded yet."
+    : "Filled: score beaten. Outlined: your next target on that scenario. Every scenario " +
+      "counts the same, so the easiest outlined cell is the quickest next rank.";
 
   const table = $("bandMatrix");
   table.textContent = "";
@@ -4341,8 +4816,8 @@ function renderRanks(data) {
   // ---- Apogee ladder ----
   $("ladderNote").textContent = `${tiers.length} tiers · by population percentile`;
   $("ladderLede").textContent =
-    "Where you sit against everyone else playing. Tiers are population percentiles, " +
-    "so they keep their meaning as the ladder grows.";
+    "Your position against all players. Tiers are population percentiles, so they " +
+    "stay stable as the player base grows.";
 
   const ladder = $("ladder");
   ladder.textContent = "";
@@ -4354,8 +4829,9 @@ function renderRanks(data) {
     const li = document.createElement("li");
     li.className = here ? "here" : "";
     li.style.setProperty("--tier", tier.color);
+    li.style.setProperty("--tier-ink", legibleOnDark(tier.color, RANK_TEXT_CONTRAST));
     li.innerHTML =
-      '<span class="rung">' + (tiers.indexOf(tier) + 1) + "</span>" +
+      '<span class="rung" aria-hidden="true">' + badge(tier, "ladder-" + tier.id) + "</span>" +
       '<span class="tier-name">' + esc(tier.name) + "</span>" +
       (here
         ? '<span class="you">you · top <span class="you-pc"></span>%</span>'
@@ -4373,9 +4849,9 @@ function renderRanks(data) {
   const bench = data.benchmark;
   $("benchNote").textContent = `${bench.name} ${bench.difficulty}`;
   $("benchLede").textContent =
-    `Your ${bench.name} standing: what your scores are worth, not who you beat. Each ` +
-    "band is its own benchmark, so you hold a rank in every band you have played. " +
-    `Overall you are ${data.player.benchmarkRank} at ${num(data.player.benchmarkEnergy)} energy.`;
+    `Your ${bench.name} standing, from scores alone. Each band is ranked separately, ` +
+    "so you hold a rank in every band you've played. " +
+    `Overall: ${data.player.benchmarkRank}, ${num(data.player.benchmarkEnergy)} energy.`;
 
   const host = $("catRanks");
   host.textContent = "";
@@ -4531,7 +5007,7 @@ function renderRanks(data) {
         esc(climbing.nextRankIsNewScenario ? targetName(climbing) : climbing.label) +
         "</b> for " + esc(climbing.nextRankName) +
         (climbing.nextRankIsNewScenario
-          ? ' <span class="onscen">a harder scenario than the one ranking you now</span>'
+          ? ' <span class="onscen">harder scenario than your current one</span>'
           : "")
       : "Every scenario here is at its top rank.";
     el.append(note);
@@ -4669,6 +5145,7 @@ function bestOn(label) {
 }
 
 function renderTodo(arriving) {
+  renderMatchReadiness();
   const list = $("todoList");
   list.textContent = "";
 
@@ -4684,9 +5161,9 @@ function renderTodo(arriving) {
     li.style.setProperty("--i", String(i));
     const mine = bestOn(s.label);
     li.innerHTML =
-      '<span class="n">' + (s.done ? "✓" : i + 1) + "</span>" +
+      '<span class="n">' + (s.tier === "rejected" ? "!" : s.done ? "✓" : i + 1) + "</span>" +
       "<span>" + esc(s.label) + "</span>" +
-      (s.tier ? '<span class="tier-tag">' + esc(s.tier) + "</span>" : "") +
+      (s.tier ? '<span class="tier-tag">received · ' + esc(s.tier) + "</span>" : s.uploading ? '<span class="tier-tag">Submitting…</span>' : s.failed ? '<span class="tier-tag">Upload failed · retry</span>' : '<span class="tier-tag">Awaiting run</span>') +
       (mine
         ? '<span class="scen-best" title="' +
           esc(num(mine.runs) + " runs on this scenario") +
@@ -4727,6 +5204,7 @@ function renderTodo(arriving) {
 
 function renderResult(data) {
   const m = data.match;
+  renderDebrief(m.rounds.map(r => ({ scenario: r.label, counted: true, delta: r.you.delta, opponentDelta: r.them.delta })), 'Example match · synthetic opponent and rating movement');
   const won = m.verdict === "win";
 
   $("verdictBig").textContent =
@@ -4758,7 +5236,7 @@ function renderResult(data) {
       '<td class="' + (r.you.delta >= 0 ? "up" : "down") + '">' + pct(r.you.delta) + "</td>" +
       "<td>" + num(r.them.score) + '<div class="base">base ' + num(r.them.baseline) + "</div></td>" +
       '<td class="' + (r.them.delta >= 0 ? "up" : "down") + '">' + pct(r.them.delta) + "</td>" +
-      '<td class="' + (youWon ? "won-round" : "") + '">' + (youWon ? "won" : "lost") + "</td>";
+      '<td class="' + (youWon ? "won-round" : "") + '">' + (r.you.delta === r.them.delta ? "draw" : youWon ? "won" : "lost") + "</td>";
     body.append(tr);
   });
 }
@@ -4768,16 +5246,17 @@ let hasRealResult = false;
 
 /** Empty state for the result tab before any real match has been played. */
 function renderNoResultYet() {
+  renderDebrief([], "Your debrief appears after a completed set");
   $("verdictBig").textContent = "No matches yet";
   $("verdictBig").style.color = "var(--ink-mid)";
   $("verdictScores").textContent =
-    "Queue for a category, play the three scenarios, and the result lands here.";
+    "Queue a category and play the 3 scenarios. Results show here.";
   $("ratingMove").textContent = "";
   // Nothing has been played, so there are no rounds to score.
   if ($("scoreline")) $("scoreline").hidden = true;
   $("explain").textContent =
-    "Matches are decided on how far above your own baseline you played, not on raw " +
-    "score, so both players get a real contest whatever their rank.";
+    "Each round goes to the bigger improvement over baseline, so players of any rank " +
+    "can be matched.";
   settled($("roundsBody"));
   $("roundsBody").textContent = "";
 }
@@ -4812,20 +5291,16 @@ function renderScoreline(rounds) {
   marks.textContent = "";
   let mine = 0;
   let theirs = 0;
+  let draws = 0;
   for (const r of list) {
-    const hasOpponent = r.opponentDelta != null;
-    const contested = r.counted && hasOpponent;
-    const youWon = contested && (r.delta ?? 0) > (r.opponentDelta ?? 0);
-    if (contested) {
-      if (youWon) mine++;
-      else theirs++;
-    }
+    const outcome = roundPresentation(r);
+    if (outcome.label === 'Won') mine++;
+    if (outcome.label === 'Lost') theirs++;
+    if (outcome.label === 'Draw') draws++;
     const m = document.createElement("span");
-    m.className = "score-mark" + (contested ? (youWon ? " won" : " lost") : "");
-    m.title = !r.counted
-      ? r.excludedReason || "excluded"
-      : !hasOpponent ? "recorded, nobody on the other side"
-      : youWon ? "won" : "lost";
+    m.className = "score-mark" + (outcome.label === 'Won' ? ' won' : outcome.label === 'Lost' ? ' lost' : outcome.label === 'Draw' ? ' draw' : '');
+    m.title = outcome.label === 'Excluded' ? r.excludedReason || 'Excluded' : outcome.label;
+    m.setAttribute('aria-label', 'Round ' + (marks.children.length + 1) + ': ' + m.title);
     marks.append(m);
   }
 
@@ -4833,9 +5308,9 @@ function renderScoreline(rounds) {
   if (tally) {
     // Nothing was contested, so there is no score to print - and "0-0" would read as a
     // draw rather than as a set of runs with nobody on the other side.
-    tally.textContent = mine + theirs === 0
+    tally.textContent = mine + theirs + draws === 0
       ? list.length + (list.length === 1 ? " round recorded" : " rounds recorded")
-      : mine + "–" + theirs + " on rounds";
+      : mine + "–" + theirs + " on rounds" + (draws ? " · " + draws + " drawn" : "");
   }
 }
 
@@ -4861,6 +5336,22 @@ function renderRematch(settled) {
   // come back. Redrawing from the stored result is cheaper than tracking both.
   if (settled) lastSettled = settled;
 
+  // A tournament result offers the way back to the tournament rather than a duel: the
+  // rematch there is the next fixture, and a duel would be a rated match nobody asked for.
+  const leg = settled && settled.tournament;
+  if (leg) {
+    box.hidden = false;
+    const back = $("rematchBtn");
+    back.textContent = "Back to " + leg.name;
+    back.disabled = false;
+    $("rematchNote").textContent = leg.label + " · unrated";
+    back.onclick = () => {
+      openScreen("tournaments");
+      tnOpen(leg.id);
+    };
+    return;
+  }
+
   const opponent = settled && settled.opponent;
   const category = settled && settled.category;
   // Void is refused here as well as server-side, where the opponent already comes back
@@ -4881,7 +5372,7 @@ function renderRematch(settled) {
   button.disabled = Boolean(activeMatch);
   $("rematchNote").textContent = activeMatch
     ? "Finish or abandon your current match first."
-    : "You play your three first, then it is theirs to answer.";
+    : "You play your 3 first, then they answer.";
 
   // Replaced rather than added to. This runs on every result, and a listener per match
   // would send one duel for every match played this session.
@@ -4893,7 +5384,7 @@ function renderRematch(settled) {
     const result = await onRowAction(button, "Sending\u2026", () =>
       api.sendDuel(opponent.playerId, category, current.benchmark.matchPool));
     if (result && result.match) {
-      showNotice("Duel sent to " + opponent.displayName + ". Play your three and it is theirs.");
+      showNotice("Duel sent to " + opponent.displayName + ". Play your 3 and it goes to them.");
       activeMatch = result.match;
       paintActiveMatch();
       document.querySelector('.tab[data-screen="queue"]').click();
@@ -4903,6 +5394,7 @@ function renderRematch(settled) {
 
 function renderSettled(s) {
   hasRealResult = true;
+  renderDebrief(s.rounds || [], s.tournament ? 'Tournament set · ranked rating unchanged' : s.verdict === 'void' ? 'Voided set · no rating change' : s.seeding || s.verdict == null ? 'Recorded set · no opponent result' : 'Settled match · server result');
   renderRematch(s);
 
   // A seeding match has no opponent and therefore no verdict. Without this it fell
@@ -4914,7 +5406,7 @@ function renderSettled(s) {
   const isVoid = s.verdict === "void";
 
   $("verdictBig").textContent = isSeeding
-    ? "Run set recorded"
+    ? s.tournament ? "First leg in" : "Run set recorded"
     : isVoid ? "Void"
     : won ? "Victory" : s.verdict === "draw" ? "Draw" : "Defeat";
   $("verdictBig").style.color = isSeeding
@@ -4923,10 +5415,11 @@ function renderSettled(s) {
     : won ? "var(--up)" : s.verdict === "draw" ? "var(--ink)" : "var(--down)";
 
   $("verdictScores").textContent = isSeeding
-    ? pct(s.yourMatchScore ?? 0) + " against your own baselines · no opponent yet"
+    ? (Number.isFinite(s.yourMatchScore) ? pct(s.yourMatchScore) : "unavailable") + " against your own baselines · " +
+      (s.tournament ? s.tournament.label + ", they answer next" : "no opponent yet")
     : isVoid
       ? (s.voidReason || "match could not be settled")
-      : pct(s.yourMatchScore ?? 0) + " vs " + pct(s.theirMatchScore ?? 0) +
+      : (Number.isFinite(s.yourMatchScore) ? pct(s.yourMatchScore) : "unavailable") + " vs " + (Number.isFinite(s.theirMatchScore) ? pct(s.theirMatchScore) : "unavailable") +
         " against baseline" +
         (s.ratingWeight < 1 ? `   ·   ${Math.round(s.ratingWeight * 100)}% weight (provisional)` : "");
 
@@ -4935,12 +5428,15 @@ function renderSettled(s) {
   const change = s.ratingChange;
   // The change is the news and the new rating is the context, so they stop being one
   // run-on mono string with a middot in it.
-  $("ratingMove").innerHTML = isSeeding
+  $("ratingMove").innerHTML = s.tournament
+    ? 'unrated<span class="after">tournament</span>'
+    : isSeeding
     ? 'not rated<span class="after">seeding</span>'
     : isVoid ? 'no change<span class="after">void</span>'
+    : !Number.isFinite(change) ? 'unavailable<span class="after">rating change</span>'
     : `${change >= 0 ? "+" : "−"}${Math.abs(change)}` +
-      `<span class="after">rating ${esc(String(s.ratingAfter))}</span>`;
-  $("ratingMove").style.color = isSeeding || isVoid
+      `<span class="after">rating ${esc(Number.isFinite(s.ratingAfter) ? String(s.ratingAfter) : "unavailable")}</span>`;
+  $("ratingMove").style.color = isSeeding || isVoid || s.tournament
     ? "var(--ink-dim)"
     : change > 0 ? "var(--up)" : change < 0 ? "var(--down)" : "var(--ink-mid)";
 
@@ -4949,30 +5445,27 @@ function renderSettled(s) {
   const body = $("roundsBody");
   settled(body);
   body.textContent = "";
-  s.rounds.forEach((r) => {
-    const yours = r.delta ?? 0;
+  (s.rounds || []).forEach((r) => {
+    const yours = r.delta;
     // Null means there is nobody on the other side, which is not the same as an
     // opponent who scored their baseline exactly. Treating it as zero is what turned
     // three unopposed rounds into three "won" rows under a DEFEAT banner.
-    const hasOpponent = r.opponentDelta != null;
-    const theirs = r.opponentDelta ?? 0;
-    const youWon = r.counted && hasOpponent && yours > theirs;
+    const hasOpponent = r.counted && Number.isFinite(r.opponentDelta);
+    const theirs = r.opponentDelta;
+    const youWon = roundPresentation(r).label === "Won";
 
-    const outcome = !r.counted
-      ? esc(r.excludedReason || "excluded")
-      : !hasOpponent ? "recorded"
-      : youWon ? "won" : "lost";
+    const outcome = !r.counted ? esc(r.excludedReason || "excluded") : roundPresentation(r).label.toLowerCase();
 
     const tr = document.createElement("tr");
     tr.innerHTML =
       "<td>" + esc(r.scenario) + "</td>" +
-      "<td>" + num(r.score) + '<div class="base">base ' + num(r.baseline) +
+      "<td>" + (Number.isFinite(r.score) ? num(r.score) : "—") + '<div class="base">base ' + (Number.isFinite(r.baseline) ? num(r.baseline) : "—") +
         (r.verificationTier && r.verificationTier !== "verified"
           ? " · " + esc(r.verificationTier)
           : "") +
         "</div></td>" +
-      '<td class="' + (yours >= 0 ? "up" : "down") + '">' +
-        (r.counted ? pct(yours) : "—") + "</td>" +
+      '<td class="' + (Number.isFinite(yours) ? yours >= 0 ? "up" : "down" : "") + '">' +
+        (r.counted && Number.isFinite(yours) ? pct(yours) : "—") + "</td>" +
       "<td>—</td>" +
       (hasOpponent
         ? '<td class="' + (theirs >= 0 ? "up" : "down") + '">' + pct(theirs) + "</td>"
@@ -4998,7 +5491,7 @@ function renderCoverage(data) {
   host.textContent = "";
 
   if (coverage.length === 0) {
-    host.innerHTML = '<p class="rank-lede">No season loaded, so nothing to measure against.</p>';
+    host.innerHTML = '<p class="rank-lede">No season loaded.</p>';
     return;
   }
 
@@ -5057,7 +5550,7 @@ function renderCoverage(data) {
         const next = document.createElement("div");
         next.className = "cover-next";
         next.textContent =
-          `${cheapest.cost} more runs unlocks ${cheapest.row.windowName}: ` +
+          `${cheapest.row.windowName} needs ${cheapest.cost} more runs: ` +
           cheapest.need.map((x) => `${x.label} +${x.needs}`).join(", ");
         block.append(next);
       }
@@ -5086,11 +5579,11 @@ function renderProfile(data) {
     const row = document.createElement("div");
     row.className = "wrow";
     row.innerHTML =
-      '<div class="lbl">' + esc(cat.name) + "</div>" +
+      '<div class="lbl"><svg class="discipline-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">' + disciplineOf(cat.name).path + '</svg><span>' + esc(cat.name) + "</span></div>" +
       '<div class="wtrack"><div class="wfill" style="width:' +
         ((cat.energy / maxEnergy) * 100).toFixed(1) +
         "%;background:" + esc(ink) + '"></div></div>' +
-      '<div class="wval">' + num(cat.energy) + " · " +
+      '<div class="wval"><span class="wenergy">' + num(cat.energy) + '</span>' +
         '<span style="color:' + esc(ink) + '">' + esc(cat.rankName || "—") + "</span></div>";
     wmap.append(row);
   });
@@ -5198,7 +5691,8 @@ function renderQuests(data) {
     // "4 of 5 runs" says what is left far better than "80%" on a quest whose whole
     // point is that every run in the window has to clear the bar.
     const counter = q.steps
-      ? '<span class="qsteps">' + q.steps.done + " of " + q.steps.total + " runs</span>"
+      ? '<span class="qsteps">' + num(q.steps.done) + " of " + num(q.steps.total) +
+        (q.isFloor ? " runs" : q.kind === "close_the_gap" ? " points" : "") + "</span>"
       : "";
 
     el.innerHTML =
@@ -5223,6 +5717,7 @@ function renderQuests(data) {
  */
 const celebrationQueue = [];
 let celebrating = false;
+let celebrationReturnFocus = null;
 
 function showCelebration(payload) {
   celebrationQueue.push(payload);
@@ -5234,10 +5729,29 @@ function nextCelebration() {
   if (!payload) {
     celebrating = false;
     $("celebrate").hidden = true;
+    document.querySelectorAll(".rail, .main").forEach(el => { el.inert = false; });
+    if (celebrationReturnFocus?.isConnected) celebrationReturnFocus.focus();
+    celebrationReturnFocus = null;
     return;
   }
 
+  if (!celebrating) celebrationReturnFocus = document.activeElement;
   celebrating = true;
+  document.querySelectorAll(".rail, .main").forEach(el => { el.inert = true; });
+  $('celebrate').dataset.kind = payload.promotion ? 'promotion' : 'quest';
+  $('celebrateEmblem').hidden = !payload.promotion;
+  $('celebrateXp').hidden = Boolean(payload.promotion);
+  document.querySelector('.celebrate-level').hidden = Boolean(payload.promotion);
+  if (payload.promotion) {
+    $('celebrateKicker').textContent = 'Benchmark promotion';
+    $('celebrateTitle').textContent = payload.promotion.to;
+    $('celebrateDetail').textContent = payload.promotion.from + ' → ' + payload.promotion.to + ' · measured from local training scores. Ranked rating is separate.';
+    $('celebrate').hidden = false;
+    $('celebrateClose').textContent = 'Continue';
+    $('celebrateClose').focus();
+    playSound('celebrate');
+    return;
+  }
   const { quest, level } = payload;
 
   const isFloor =
@@ -5255,6 +5769,7 @@ function nextCelebration() {
     level.xpIntoLevel.toLocaleString() + " / " + level.xpForNextLevel.toLocaleString();
 
   $("celebrate").hidden = false;
+  $("celebrateClose").focus();
   playSound("celebrate");
   // Fill from zero so the bar visibly moves rather than appearing already full.
   setFill($("celebrateFill"), 0);
@@ -5309,8 +5824,8 @@ function renderEligibility() {
 
   const { uploaded, required, missing } = eligibility;
   $("queueGateText").innerHTML =
-    'Ranked opens at <span class="gate-count">' + num(required) + "</span> uploaded runs. " +
-    'You have <span class="gate-count">' + num(uploaded) + "</span> \u2014 " +
+    'Ranked needs <span class="gate-count">' + num(required) + "</span> uploaded runs. " +
+    'You have <span class="gate-count">' + num(uploaded) + "</span> \u00b7 " +
     num(missing) + " to go.";
   setFill($("queueGateFill"), uploaded / required);
   gate.classList.add("on");
@@ -5347,16 +5862,18 @@ function showRunToast(run) {
   if (toastTimer) clearTimeout(toastTimer);
   toastTimer = setTimeout(() => $("toast").classList.remove("on"), 4200);
 
-  // Tick the scenario off the match to-do list if it was one we asked for.
+  // Detection is local evidence only. Completion waits for main's submission receipt.
   let changed = false;
   pendingScenarios.forEach((s) => {
-    if (!s.done && run.scenario.indexOf(s.label) !== -1) {
-      s.done = true;
-      s.justDone = true;
+    if (!s.done && run.scenario === s.label) {
+      s.uploading = true;
+      s.failed = false;
       changed = true;
     }
   });
   if (changed) renderTodo();
+  $('toastNote').textContent = run.localPersonalBest ? 'Local personal best · previous ' + num(run.localPersonalBest.previous) : 'Run detected locally';
+  $('toast').classList.toggle('personal-best', Boolean(run.localPersonalBest));
 }
 
 /* ------------------------------------------------------------------ wiring */
@@ -5489,7 +6006,7 @@ function positionalNote() {
 
   const rank = apexBoard?.you?.rank ?? null;
   if (rank === null) {
-    return " \u00b7 eligible for " + p.rankName + ", once you are on the board";
+    return " \u00b7 eligible for " + p.rankName + " once on the board";
   }
   return rank <= p.topN
     ? " \u00b7 you hold " + p.rankName
@@ -5504,7 +6021,7 @@ function renderApexBoard() {
   body.textContent = "";
 
   if (!apexBoard) {
-    if (note) note.textContent = "sign in to see where you stand";
+    if (note) note.textContent = "sign in to see your position";
     return;
   }
   if (apexBoard.error) {
@@ -5527,7 +6044,7 @@ function renderApexBoard() {
 
   if (apexBoard.entries.length === 0) {
     const tr = document.createElement("tr");
-    tr.innerHTML = '<td colspan="4">Nobody has refreshed onto this board yet.</td>';
+    tr.innerHTML = '<td colspan="4">Nobody on this board yet.</td>';
     body.append(tr);
     return;
   }
@@ -5690,6 +6207,9 @@ function refreshPractice() {
   void api.practice().then((r) => {
     if (!r || r.error) return;
     practice = r;
+    // Not behind `current`: the table needs only the practice list, and a machine with no
+    // runs yet never gets a snapshot but still has a season to show.
+    renderScenarioRanks();
     if (current) {
       renderSeasonView(current);
       // The queue screen lists what a match can draw, which is the same pool. Without
@@ -5847,6 +6367,375 @@ if (hasSeasonEditor) {
   });
 }
 
+/* ======================================================================= theme */
+/*
+ * The player's own chrome: a base and an accent, on this machine.
+ *
+ * Rank colours are not part of it. They belong to the season and every player sees the
+ * same ones, so --accent, which the chrome takes from the player's rank, stays exactly
+ * where render() puts it, and so do the plates, the ladders and the orb. What a player
+ * picks is everything around their rank, never the rank.
+ *
+ * A base changes hue and never luminance. Each of its tokens is solved to the stock
+ * token's relative luminance, rounded so a surface never comes out lighter than stock and
+ * an ink never darker, and contrast is a function of luminance alone. So every ratio
+ * measured on the stock palette holds on every base without being measured again: the
+ * admin editor's pairs, the ramp validate:orb signs off, and the rank-name lift, which
+ * `legibleOnDark` computes against the stock control and would otherwise have to be
+ * re-derived per base. `npm run validate:theme` checks all of that rather than trusting
+ * this paragraph.
+ *
+ * That is also why there is no light base. The rank colours are lifted against a dark
+ * control; a light ground would need a second lift for every rank on every screen, and
+ * the season's colours were chosen against the dark one.
+ *
+ * The accent is free, and lifted until it reads: it is text on the selected tab, on the
+ * brand well and on a raised control, so it is moved toward the light ground until it
+ * clears BRAND_CONTRAST on the brightest of the three. A player who picks near-black
+ * gets a colour that is still theirs in hue and is still legible, and the menu says so.
+ *
+ * Everything above the "on screen" banner below is pure and is evaluated by
+ * tools/validateTheme.mjs, which is why it touches neither the document nor storage.
+ */
+
+const THEME_KEY = "apogee.theme";
+
+/** Text on the selected tab and the brand well is body text, so it gets the body floor. */
+const BRAND_CONTRAST = 4.5;
+
+/**
+ * The tokens a base rewrites, and which way each may round.
+ *
+ * A surface rounds darker and an ink rounds lighter, so every ink-on-surface pair is at
+ * least as far apart as it is on stock. Rules are borders nobody reads text against, so
+ * they take whichever side is nearer.
+ */
+const THEME_RAMP = [
+  ["--ground", "surface"],
+  ["--panel", "surface"],
+  ["--well", "surface"],
+  ["--control", "surface"],
+  ["--control-hi", "surface"],
+  ["--chrome", "surface"],
+  ["--card", "surface"],
+  ["--sunk", "surface"],
+  ["--raised", "surface"],
+  ["--slot", "surface"],
+  ["--tab-on", "surface"],
+  ["--rule", "rule"],
+  ["--rule-2", "rule"],
+  ["--rule-3", "rule"],
+  ["--tab-on-line", "rule"],
+  ["--ink", "ink"],
+  ["--ink-mid", "ink"],
+  ["--ink-dim", "ink"],
+  ["--tab-on-ink", "ink"],
+  ["--tab-on-key", "ink"],
+];
+
+const THEME_BRAND = ["--brand", "--brand-ink", "--brand-well", "--brand-line", "--brand-dim"];
+
+/** Every token the theme reads as stock, from the stylesheet with no theme applied. */
+const THEME_TOKENS = [...THEME_RAMP.map(([name]) => name), ...THEME_BRAND];
+
+/*
+ * `sat` is the ground's saturation; every other token keeps its stock saturation in the
+ * same proportion, which is what keeps the rules greyer than the grounds and the inks
+ * nearly neutral, the way the stock ramp has them. Ink is the stylesheet as shipped and
+ * is never solved: it is the reference the others are solved against.
+ */
+const THEME_BASES = [
+  { id: "ink", name: "Ink", hue: null, sat: 0 },
+  { id: "graphite", name: "Graphite", hue: 220, sat: 0.05 },
+  { id: "navy", name: "Navy", hue: 214, sat: 0.5 },
+  { id: "pine", name: "Pine", hue: 160, sat: 0.24 },
+  { id: "plum", name: "Plum", hue: 285, sat: 0.26 },
+  { id: "ember", name: "Ember", hue: 18, sat: 0.28 },
+];
+
+/** Null is the stylesheet's own brand colour; the custom picker covers everything else. */
+const THEME_ACCENTS = [
+  { hex: null, name: "Default" },
+  { hex: "#6cb4ff", name: "Sky" },
+  { hex: "#4fd1a5", name: "Mint" },
+  { hex: "#f2b35b", name: "Amber" },
+  { hex: "#ff7d8c", name: "Coral" },
+  { hex: "#d9dde6", name: "Silver" },
+];
+
+const THEME_STOCK = { base: "ink", accent: null };
+
+/** The shape stored under THEME_KEY, or stock for anything that is not one. */
+function themeFrom(raw) {
+  const base = THEME_BASES.some((b) => b.id === raw?.base) ? raw.base : THEME_STOCK.base;
+  const accent = /^#[0-9a-f]{6}$/i.test(String(raw?.accent)) ? raw.accent.toLowerCase() : null;
+  return { base, accent };
+}
+
+function isStockTheme(theme) {
+  return theme.base === THEME_STOCK.base && theme.accent === null;
+}
+
+function hexHsl(hex) {
+  const n = parseInt(hex.slice(1), 16);
+  const r = ((n >> 16) & 255) / 255;
+  const g = ((n >> 8) & 255) / 255;
+  const b = (n & 255) / 255;
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  const l = (max + min) / 2;
+  if (max === min) return [0, 0, l];
+  const d = max - min;
+  const s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+  const h = max === r ? (g - b) / d + (g < b ? 6 : 0) : max === g ? (b - r) / d + 2 : (r - g) / d + 4;
+  return [h * 60, s, l];
+}
+
+function hslHex(h, s, l) {
+  const a = s * Math.min(l, 1 - l);
+  const f = (n) => {
+    const k = (n + h / 30) % 12;
+    return l - a * Math.max(-1, Math.min(k - 3, 9 - k, 1));
+  };
+  return "#" + [f(0), f(8), f(4)]
+    .map((v) => Math.round(v * 255).toString(16).padStart(2, "0"))
+    .join("");
+}
+
+/**
+ * The colour of this hue and saturation whose luminance is `target`, rounded by `kind`.
+ *
+ * Lightness is searched on the rounded hex itself, so the two ends the search leaves are
+ * the adjacent 8-bit colours either side of the target and the rounding direction is a
+ * choice between them rather than an accident of Math.round.
+ */
+function atLuminance(h, s, target, kind) {
+  let lo = 0;
+  let hi = 1;
+  for (let i = 0; i < 24; i++) {
+    const mid = (lo + hi) / 2;
+    if (luminance(hslHex(h, s, mid)) < target) lo = mid;
+    else hi = mid;
+  }
+  const under = hslHex(h, s, lo);
+  const over = hslHex(h, s, hi);
+  if (kind === "surface") return under;
+  if (kind === "ink") return over;
+  return target - luminance(under) <= luminance(over) - target ? under : over;
+}
+
+/**
+ * What the theme paints over the stylesheet: only the tokens it changes.
+ *
+ * Stock returns nothing, so the stock theme is the stylesheet itself and not a copy of
+ * it that could drift.
+ */
+function themeTokens(stock, theme) {
+  const base = THEME_BASES.find((b) => b.id === theme.base) || THEME_BASES[0];
+  const out = {};
+
+  if (base.hue !== null) {
+    const ref = hexHsl(stock["--ground"])[1];
+    for (const [name, kind] of THEME_RAMP) {
+      if (!stock[name]) continue;
+      const sat = Math.min(1, ref > 0 ? (hexHsl(stock[name])[1] * base.sat) / ref : base.sat);
+      out[name] = atLuminance(base.hue, sat, luminance(stock[name]), kind);
+    }
+  }
+
+  const t = Object.assign({}, stock, out);
+
+  if (theme.accent) {
+    Object.assign(out, accentTokens(t, theme.accent));
+  } else if (base.hue !== null) {
+    // The stock brand on a new ground: the colour stays, the tints it casts are re-cast
+    // onto this ground rather than left tinted toward the stock one.
+    Object.assign(out, brandTints(t["--ground"], stock["--brand"]));
+  }
+  return out;
+}
+
+/** The well, the line and the ghost figure: the brand at three strengths over a ground. */
+function brandTints(ground, brand) {
+  return {
+    "--brand-well": mixHex(ground, brand, 17),
+    "--brand-line": mixHex(ground, brand, 34),
+    "--brand-dim": mixHex(ground, brand, 35),
+  };
+}
+
+/**
+ * The accent, lifted, and what it tints.
+ *
+ * Lifting brightens the tints it casts, which can put the brightest surface back over the
+ * line, so the lift is repeated against the new surfaces until it stops moving. Each pass
+ * only ever lifts further and each tint takes a fixed share of it, so it settles in two
+ * passes on every colour validate:theme sweeps; six is the ceiling, not the expectation.
+ */
+function accentTokens(t, raw) {
+  let brand = raw;
+  let tints = null;
+  let tabOn = null;
+  for (let pass = 0; pass < 6; pass++) {
+    tints = brandTints(t["--ground"], brand);
+    tabOn = mixHex(t["--tab-on"], brand, 12);
+    const brightest = [tints["--brand-well"], tabOn, t["--control-hi"]]
+      .reduce((a, b) => (luminance(b) > luminance(a) ? b : a));
+    const next = legibleOn(raw, brightest, BRAND_CONTRAST);
+    if (next === brand) break;
+    brand = next;
+  }
+  return Object.assign(tints, {
+    "--brand": brand,
+    "--brand-ink": mixHex(t["--ground"], brand, 8),
+    "--tab-on": tabOn,
+    "--tab-on-line": mixHex(t["--tab-on-line"], brand, 30),
+    "--tab-on-key": brand,
+  });
+}
+
+/* ------------------------------------------------------------ theme: on screen */
+
+/*
+ * Read once, at boot, before anything is painted inline on :root. The admin editor paints
+ * its overrides inline and render() paints --accent there, and a stock read after either
+ * would take an override for the stylesheet.
+ */
+const themeStock = readThemeStock();
+let theme = loadTheme();
+paintTheme();
+
+function readThemeStock() {
+  const sheet = $("playerTheme");
+  if (sheet) sheet.disabled = true;
+  const css = getComputedStyle(document.documentElement);
+  const out = {};
+  for (const name of THEME_TOKENS) {
+    const value = css.getPropertyValue(name).trim().toLowerCase();
+    if (/^#[0-9a-f]{6}$/.test(value)) out[name] = value;
+  }
+  if (sheet) sheet.disabled = false;
+  return out;
+}
+
+function loadTheme() {
+  try {
+    return themeFrom(JSON.parse(localStorage.getItem(THEME_KEY) || "null"));
+  } catch {
+    return { ...THEME_STOCK };
+  }
+}
+
+/*
+ * Its own <style>, appended after the stylesheets so it wins over their :root, and not
+ * inline on :root, so an admin override still wins over it and the admin editor can
+ * switch it off to read the stylesheet's own values as its defaults.
+ */
+function paintTheme() {
+  const tokens = themeTokens(themeStock, theme);
+  const lines = Object.entries(tokens).map(([name, value]) => "  " + name + ": " + value + ";");
+  let sheet = $("playerTheme");
+  if (lines.length === 0) {
+    if (sheet) sheet.remove();
+    return;
+  }
+  if (!sheet) {
+    sheet = document.createElement("style");
+    sheet.id = "playerTheme";
+    document.head.appendChild(sheet);
+  }
+  sheet.textContent = ":root {\n" + lines.join("\n") + "\n}";
+}
+
+function setTheme(next) {
+  theme = themeFrom(next);
+  paintTheme();
+  try {
+    if (isStockTheme(theme)) localStorage.removeItem(THEME_KEY);
+    else localStorage.setItem(THEME_KEY, JSON.stringify(theme));
+  } catch {
+    /* A theme that cannot be stored still applies to this session. */
+  }
+  syncThemeMenu();
+}
+
+/*
+ * Built once and then only synced. Rebuilding on every change would replace the colour
+ * input while it is being dragged, and the native picker closes when its input leaves the
+ * document.
+ */
+function buildThemeMenu() {
+  const bases = $("themeBases");
+  const accents = $("themeAccents");
+  if (!bases || !accents) return;
+
+  for (const base of THEME_BASES) {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "theme-base";
+    button.dataset.base = base.id;
+    const chip = document.createElement("span");
+    chip.className = "theme-chip";
+    chip.append(document.createElement("i"), document.createElement("i"), document.createElement("i"));
+    const label = document.createElement("span");
+    label.textContent = base.name;
+    button.append(chip, label);
+    button.addEventListener("click", () => setTheme({ base: base.id, accent: theme.accent }));
+    bases.appendChild(button);
+  }
+
+  for (const accent of THEME_ACCENTS) {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "theme-accent";
+    button.dataset.accent = accent.hex || "";
+    button.title = accent.name;
+    button.setAttribute("aria-label", accent.name + " accent");
+    button.style.setProperty("--c", accent.hex || themeStock["--brand"] || "#b8a5ff");
+    button.addEventListener("click", () => setTheme({ base: theme.base, accent: accent.hex }));
+    accents.insertBefore(button, $("themeCustomWrap"));
+  }
+
+  $("themeCustom").addEventListener("input", (e) =>
+    setTheme({ base: theme.base, accent: e.target.value }));
+  $("themeReset").addEventListener("click", () => setTheme(THEME_STOCK));
+  syncThemeMenu();
+}
+
+function syncThemeMenu() {
+  const bases = $("themeBases");
+  if (!bases) return;
+
+  for (const button of bases.querySelectorAll(".theme-base")) {
+    const id = button.dataset.base;
+    button.setAttribute("aria-pressed", String(id === theme.base));
+    // Each base previewed with the accent that is chosen now, since that is what picking
+    // it will look like.
+    const t = Object.assign({}, themeStock, themeTokens(themeStock, { base: id, accent: theme.accent }));
+    const [ground, panel, brand] = button.querySelectorAll(".theme-chip i");
+    ground.style.setProperty("--c", t["--ground"]);
+    panel.style.setProperty("--c", t["--panel"]);
+    brand.style.setProperty("--c", t["--brand"]);
+  }
+
+  const preset = THEME_ACCENTS.some((a) => a.hex === theme.accent);
+  for (const button of $("themeAccents").querySelectorAll(".theme-accent[data-accent]")) {
+    button.setAttribute("aria-pressed", String((button.dataset.accent || null) === theme.accent));
+  }
+  const wrap = $("themeCustomWrap");
+  wrap.classList.toggle("on", !preset);
+  wrap.style.setProperty("--c", preset ? "transparent" : theme.accent);
+  if (!preset) $("themeCustom").value = theme.accent;
+
+  const painted = themeTokens(themeStock, theme)["--brand"];
+  $("themeNote").textContent = theme.accent && painted && painted !== theme.accent
+    ? "Lifted from " + theme.accent + " to " + painted + " so it stays readable on this ground."
+    : "Rank colours belong to the season and look the same to everyone.";
+  $("themeReset").disabled = isStockTheme(theme);
+}
+
+buildThemeMenu();
+
 /**
  * The screen the player was last on.
  *
@@ -5880,18 +6769,40 @@ function restoreScreen() {
 }
 
 document.querySelectorAll(".tab").forEach((tab) => {
+  tab.id ||= "nav-" + tab.dataset.screen;
+  tab.setAttribute("aria-controls", "screen-" + tab.dataset.screen);
+  tab.setAttribute("tabindex", tab.getAttribute("aria-selected") === "true" ? "0" : "-1");
+  const panel = $("screen-" + tab.dataset.screen);
+  if (panel) {
+    panel.setAttribute("role", "tabpanel");
+    panel.setAttribute("aria-labelledby", tab.id);
+    panel.setAttribute("tabindex", "0");
+  }
   tab.addEventListener("click", () => {
     // Only when the screen actually changes. Every route into a tab goes through
     // `.click()`, including the one that re-selects the tab already showing, and a
     // navigation sound for going nowhere is just a noise.
     if (tab.getAttribute("aria-selected") !== "true") playSound("nav");
-    document.querySelectorAll(".tab").forEach((t) => t.setAttribute("aria-selected", "false"));
+    document.querySelectorAll(".tab").forEach((t) => {
+      t.setAttribute("aria-selected", "false");
+      t.setAttribute("tabindex", "-1");
+      t.classList.remove("active-parent");
+    });
+    tab.setAttribute("tabindex", "0");
     tab.setAttribute("aria-selected", "true");
+    if (tab.dataset.screen === "band") {
+      const parentTab = document.querySelector('.tab[data-screen="ranks"]');
+      parentTab.classList.add("active-parent");
+      parentTab.setAttribute("tabindex", "0");
+      tab.setAttribute("tabindex", "-1");
+      $("screen-band").setAttribute("aria-labelledby", "bandTitle");
+    }
     document.querySelectorAll(".screen").forEach((s) => s.classList.remove("active"));
     $("screen-" + tab.dataset.screen).classList.add("active");
     // The orb field reads this to decide how far to lift on this screen. Set here
     // rather than in each caller because every route into a tab goes through .click().
     document.body.dataset.screen = tab.dataset.screen;
+    document.querySelector(".scroll").scrollTop = 0;
     rememberScreen(tab.dataset.screen);
     // Drawn on the way in rather than at boot: the editors are cheap to build and stale
     // the moment the season or a save lands, so the screen is always redrawn from the
@@ -5925,6 +6836,7 @@ function numberTabs() {
   tabs.forEach((tab, i) => {
     const label = tab.querySelector(".tab-label");
     const name = label ? label.textContent : "";
+    tab.setAttribute("aria-label", name);
     const key = i < 9 ? String(i + 1) : "";
 
     const cap = tab.querySelector(".tab-key");
@@ -5991,9 +6903,9 @@ document.addEventListener("keydown", (e) => {
 
   // The rail runs down the side, so up and down are what the shape suggests. Left and
   // right stay wired for anyone who learned them when the tabs were a strip.
-  if (e.key === "ArrowLeft" || e.key === "ArrowRight" ||
-      e.key === "ArrowUp" || e.key === "ArrowDown") {
-    const here = tabs.findIndex((tab) => tab.getAttribute("aria-selected") === "true");
+  if (target?.closest(".nav") && (e.key === "ArrowLeft" || e.key === "ArrowRight" ||
+      e.key === "ArrowUp" || e.key === "ArrowDown")) {
+    const here = tabs.indexOf(target.closest(".tab"));
     const step = e.key === "ArrowRight" || e.key === "ArrowDown" ? 1 : -1;
     const next = tabs[(Math.max(0, here) + step + tabs.length) % tabs.length];
     next.click();
@@ -6028,7 +6940,9 @@ function paintActiveMatch() {
 
   setCommit(
     "held",
-    activeMatch.duel?.to
+    activeMatch.tournament
+      ? "Tournament fixture"
+      : activeMatch.duel?.to
       ? "Duel sent"
       : activeMatch.duel?.from
         ? "Duel accepted"
@@ -6037,7 +6951,7 @@ function paintActiveMatch() {
           : activeMatch.seeding
             ? "Seeding the pool"
             : "Match in progress",
-    "Play the three below in KovaaK's. Abandon it to queue again.",
+    "Play the 3 below in KovaaK's · abandon to queue again",
     "",
   );
   $("queueBtn").disabled = true;
@@ -6060,11 +6974,11 @@ function showRealMatch(match, data) {
     // is what it is - but it is not waiting on a pool, it is waiting on a person, and
     // saying "no opponent yet" about somebody you just named would be nonsense.
     const sentTo = match.duel?.to ?? null;
-    $("oppName").textContent = sentTo ? esc(sentTo) : "No opponent yet";
+    $("oppName").textContent = sentTo || "No opponent yet";
     $("oppTier").textContent = sentTo ? "duel sent" : "seeding the pool";
     $("oppTier").style.color = legibleOnDark(me.tier.color, RANK_TEXT_CONTRAST);
     $("oppAge").textContent = sentTo
-      ? "play your three, then it is theirs to answer"
+      ? "play your 3, then they answer"
       : match.poolSize == null
         ? "match already in progress"
         : match.poolSize === 0
@@ -6075,11 +6989,12 @@ function showRealMatch(match, data) {
     $("oddsBar").innerHTML =
       '<div style="flex:1;background:' + esc(me.tier.color) + ';opacity:.25"></div>';
     $("oddsYou").textContent = "unrated";
-    $("oddsThem").textContent = "nothing at stake";
+    $("oddsThem").textContent = "no rating change";
   } else {
-    const oppTier = data.match.opponent.tier;
+    // A rating does not identify a tier without the live population distribution.
+    const oppTier = { color: "#b6c7dd" };
 
-    $("oppBadge").innerHTML = badge(oppTier, "opp");
+    $("oppBadge").innerHTML = '<span class="opponent-monogram" aria-hidden="true">' + esc(tnInitials(match.opponent.displayName)) + "</span>";
     $("oppName").textContent = match.opponent.displayName;
     $("oppTier").textContent = `rating ${match.opponent.rating}` +
       (match.opponent.provisional ? " · provisional" : "");
@@ -6091,10 +7006,16 @@ function showRealMatch(match, data) {
       `stored run · ${days === 0 ? "today" : days === 1 ? "yesterday" : days + " days ago"}` +
       ` · pool of ${match.poolSize}`;
 
-    const p = match.winProbability ?? 0.5;
-    drawOdds(p, me.tier.color);
-    $("oddsYou").textContent = "you " + (p * 100).toFixed(0) + "%";
-    $("oddsThem").textContent = (100 - p * 100).toFixed(0) + "% " + match.opponent.displayName;
+    const p = match.winProbability;
+    if (Number.isFinite(p)) {
+      drawOdds(p, me.tier.color);
+      $("oddsYou").textContent = "you " + (p * 100).toFixed(0) + "%";
+      $("oddsThem").textContent = (100 - p * 100).toFixed(0) + "% " + match.opponent.displayName;
+    } else {
+      $("oddsBar").replaceChildren();
+      $("oddsYou").textContent = "Match estimate unavailable";
+      $("oddsThem").textContent = "";
+    }
   }
 
   pendingScenarios = match.scenarios.map((s) => ({
@@ -6109,11 +7030,30 @@ function showRealMatch(match, data) {
   $("playMatchBtn").textContent = "Play in KovaaK's";
   $("playMatchBtn").disabled = false;
   $("matchHint").textContent = match.resumed
-    ? "You already had this match open. Finish it, or abandon it to queue again."
+    ? "Match already open. Finish or abandon it to queue again."
     : match.seeding || !match.opponent
-      ? "Nothing is rated yet. Play these three and your run set becomes the first " +
-        "entry in the pool. Only your first run on each counts."
-      : "Only your first run on each scenario counts. Apogee picks them up automatically.";
+      ? "Unrated. Your runs become the first entry in this pool. First run on each " +
+        "scenario counts."
+      : "First run on each scenario counts. Scores are read automatically.";
+
+  // A tournament leg looks like a seeding match or a pool match to everything above, and
+  // is neither: the opponent is named, nothing is rated, and the pool never sees it.
+  const leg = match.tournament;
+  if (leg) {
+    $("oppName").textContent = leg.opponentName;
+    $("oppTier").textContent = leg.label + " · unrated";
+    $("oppTier").style.color = "var(--ink-mid)";
+    $("oppAge").textContent = leg.leg === 1
+      ? "you play first · they answer with the same three"
+      : "answering their three · " + leg.name;
+    $("oddsBar").innerHTML = '<div style="flex:1;background:var(--brand);opacity:.25"></div>';
+    $("oddsYou").textContent = "unrated";
+    $("oddsThem").textContent = leg.name;
+    $("matchHint").textContent = leg.leg === 1
+      ? "Only your first run on each counts. " + leg.opponentName +
+        " plays the same three after you, and the fixture goes to whoever improves more."
+      : leg.opponentName + " has played these three. Only your first run on each counts.";
+  }
 
   startMatchClock(match.expiresAt);
 
@@ -6148,11 +7088,12 @@ $("queueBtn").addEventListener("click", async () => {
   if (HOST !== "electron") {
     // No server in the preview; show the illustrative match instead.
     showOpponent(current);
+    setCommit("held", "Example set", "Illustrative opponent and runs", "Preview only");
     return;
   }
 
   btn.disabled = true;
-  setCommit("working", "Searching", "matching you on rating in " +
+  setCommit("working", "Searching", "matching on rating · " +
     (!selectedCategory || selectedCategory === "Any" ? "any category" : selectedCategory), "0:00");
   startSearchClock();
   $("opponent").classList.remove("on");
@@ -6209,7 +7150,7 @@ function renderSession(session, configured) {
   btn.disabled = !configured;
   btn.textContent = configured ? "Sign in with Steam" : "Sign-in unavailable";
   btn.title = configured
-    ? "Opens your browser to authenticate with Steam"
+    ? "Opens Steam sign-in in your browser"
     : "This build has no Supabase settings. Fill in .env and rebuild.";
 }
 
@@ -6301,11 +7242,16 @@ function captureCopyDefaults() {
 }
 
 function readTokenDefaults() {
+  // With the player's theme switched off. A default read through it would be whichever
+  // base this machine happens to have picked, and Reset would reset to that.
+  const sheet = $("playerTheme");
+  if (sheet) sheet.disabled = true;
   const root = getComputedStyle(document.documentElement);
   for (const spec of adminSpec.tokens) {
     const raw = root.getPropertyValue(spec.name).trim().toLowerCase();
     if (/^#[0-9a-f]{6}$/.test(raw)) tokenDefaults[spec.name] = raw;
   }
+  if (sheet) sheet.disabled = false;
 }
 
 /** What is painted right now: the stylesheet, with the draft over the top. */
@@ -6855,7 +7801,7 @@ function incomingRow(duel) {
   sub.textContent = duel.ready
     ? "rating " + duel.from.rating + (duel.from.provisional ? " \u00b7 provisional" : "") +
       " \u00b7 " + untilExpiry(duel.expiresAt)
-    : "playing their three now";
+    : "playing their 3 now";
   who.append(name, sub);
 
   const answers = document.createElement("div");
@@ -6881,7 +7827,7 @@ function incomingRow(duel) {
     // than anything else on this panel. Declining costs nothing and does not ask.
     const ok = window.confirm(
       "Accept " + duel.from.displayName + "'s duel?\n\n" +
-        "You play the same three scenarios they did, and it counts towards your rating.",
+        "You play the same 3 scenarios they did. The result is rated.",
     );
     if (!ok) return;
 
@@ -6890,7 +7836,7 @@ function incomingRow(duel) {
     if (result && result.match) {
       activeMatch = result.match;
       paintActiveMatch();
-      showNotice("Duel accepted. Play the three below in KovaaK's.");
+      showNotice("Duel accepted. Play the 3 below in KovaaK's.");
     }
   });
 
@@ -6920,7 +7866,7 @@ function outgoingRow(duel) {
     duel.status !== "open"
       ? "you sent this \u00b7 " + duel.status
       : !duel.played
-        ? "you sent this \u00b7 play your three so they can answer"
+        ? "you sent this \u00b7 play your 3 so they can answer"
         : "you sent this \u00b7 waiting on them \u00b7 " + untilExpiry(duel.expiresAt);
   who.append(name, sub);
 
@@ -6965,7 +7911,7 @@ function renderRoster() {
     empty.className = "roster-empty";
     empty.textContent = filter
       ? "Nobody by that name has played yet."
-      : "Nobody else has finished a match yet. You are early.";
+      : "No other players have finished a match yet.";
     host.append(empty);
     return;
   }
@@ -7012,7 +7958,7 @@ function rosterRow(person, isFriend) {
     const result = await onRowAction(send, "\u2026", () =>
       api.sendDuel(person.playerId, duelCategory, current.benchmark.matchPool));
     if (result && result.match) {
-      showNotice("Duel sent to " + person.displayName + ". Play your three and it is theirs.");
+      showNotice("Duel sent to " + person.displayName + ". Play your 3 and it goes to them.");
       $("duelRoster").hidden = true;
       activeMatch = result.match;
       paintActiveMatch();
@@ -7023,7 +7969,7 @@ function rosterRow(person, isFriend) {
   star.type = "button";
   star.className = "roster-star" + (isFriend ? " on" : "");
   star.textContent = isFriend ? "\u2605" : "\u2606";
-  star.title = isFriend ? "Remove from your shortlist" : "Keep them at the top of this list";
+  star.title = isFriend ? "Remove from your shortlist" : "Pin to the top of this list";
   star.addEventListener("click", async () => {
     star.disabled = true;
     try {
@@ -7084,6 +8030,927 @@ function setDuelCount(ready) {
   chip.hidden = ready === 0;
   if (ready > 0) $("duelLiveText").textContent = ready === 1 ? "1 duel" : ready + " duels";
 }
+
+/* ================================================================ tournaments */
+
+/**
+ * Tournaments: the list, the host form, and one tournament in full.
+ *
+ * A pure view like the rest of this file. The server decides who is entered, who plays
+ * whom and who won; this draws what list-tournaments sends, which has no score in it
+ * anywhere. Every name goes in through textContent and never through markup: these are
+ * Steam names shown to everybody on a bracket, and sooner or later one of them will be
+ * an `<img onerror>`.
+ */
+
+let tnList = null;
+let tnView = null;
+let tnOpenId = null;
+let tnTab = null;
+let tnPoll = null;
+/** In the preview: the example tournaments, one per stage, drawn by the real engine. */
+let tnSamples = null;
+const tnForm = { name: "", category: null, groupCount: 4, groupSize: 4, qualifiers: 2, seeding: "seeded" };
+
+const TN_PHASE = {
+  registration: "Open for entry",
+  groups: "Group stage",
+  playoffs: "Playoffs",
+  completed: "Finished",
+  cancelled: "Cancelled",
+};
+
+/** How often an open tournament is re-read while its screen is showing. See the list-tournaments limit. */
+const TN_POLL_MS = 30000;
+
+const TN_MARK =
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" ' +
+  'stroke-linejoin="round" aria-hidden="true"><path d="m3 20 9-17 9 17M8.5 11.5h7M5 20l7-5.5 7 5.5"/></svg>';
+
+function tnEl(tag, className, text) {
+  const node = document.createElement(tag);
+  if (className) node.className = className;
+  if (text != null) node.textContent = String(text);
+  return node;
+}
+
+function tnButton(label, kind, onClick) {
+  const b = tnEl("button", "tn-btn" + (kind ? " " + kind : ""), label);
+  b.type = "button";
+  if (onClick) b.addEventListener("click", onClick);
+  return b;
+}
+
+function tnPill(phase, turn) {
+  const kind = turn ? "turn"
+    : phase === "registration" ? "open"
+    : phase === "groups" || phase === "playoffs" ? "live"
+    : phase === "completed" ? "done" : "off";
+  const pill = tnEl("span", "tn-pill " + kind);
+  pill.append(tnEl("span", "dot"), document.createTextNode(turn ? "Your fixture" : TN_PHASE[phase] || phase));
+  return pill;
+}
+
+/** Two letters for the monogram, from whatever in the name is a letter or a digit. */
+function tnInitials(name) {
+  const letters = [...String(name).replace(/[^\p{L}\p{N}]/gu, "")];
+  return (letters.slice(0, 2).join("") || "?").toUpperCase();
+}
+
+function tnWho(name, you, mark) {
+  const who = tnEl("span", "tn-who");
+  who.append(tnEl("span", "tn-mono" + (you ? " you" : ""), tnInitials(name)));
+  const b = tnEl("b", null, name);
+  if (mark) b.append(tnEl("sup", null, mark));
+  who.append(b);
+  return who;
+}
+
+function tnEmpty(title, body) {
+  const box = tnEl("div", "tn-empty");
+  box.append(tnEl("strong", null, title), document.createTextNode(body));
+  return box;
+}
+
+/** "A1" is how the view names a group place. On screen it reads as one. */
+function tnPlace(label) {
+  const m = /^([A-H])([12])$/.exec(label);
+  return m ? "Group " + m[1] + " · " + (m[2] === "1" ? "1st" : "2nd") : label;
+}
+
+/* ------------------------------------------------------------------ the list */
+
+function renderTournaments(list) {
+  tnList = list;
+  setTournamentCount(list);
+  const host = $("tnIndex");
+  if (!host) return;
+  host.textContent = "";
+
+  const wrap = tnEl("div", "tn-index");
+  const main = tnEl("div");
+  const side = tnEl("div");
+
+  if (!list) {
+    main.append(tnEmpty(
+      HOST === "electron" ? "Sign in to play" : "Loading",
+      "Sign in to see and join tournaments.",
+    ));
+  } else {
+    const live = (t) => t.phase === "groups" || t.phase === "playoffs";
+    const mine = (t) => t.entered || t.hostedByYou;
+    const sections = [
+      ["Yours", list.filter((t) => mine(t) && (live(t) || t.phase === "registration"))],
+      ["Open for entry", list.filter((t) => !mine(t) && t.phase === "registration")],
+      ["Being played", list.filter((t) => !mine(t) && live(t))],
+      ["Finished", list.filter((t) => t.phase === "completed" || t.phase === "cancelled")],
+    ];
+    const any = sections.some(([, rows]) => rows.length > 0);
+    if (!any) {
+      main.append(tnEmpty(
+        "Nothing running yet",
+        "Host one. Entry opens immediately; start it once enough players check in.",
+      ));
+    }
+    for (const [title, rows] of sections) {
+      if (rows.length === 0) continue;
+      main.append(tnEl("div", "tn-section-k", title));
+      const cards = tnEl("div", "tn-cards");
+      rows.forEach((t) => cards.append(tnCard(t)));
+      main.append(cards);
+    }
+  }
+
+  side.append(tnHostPanel());
+  wrap.append(main, side);
+  host.append(wrap);
+}
+
+function tnCard(t) {
+  const card = tnEl("button", "tn-card" + (t.yourTurn ? " turn" : ""));
+  card.type = "button";
+
+  card.append(tnEl("span", "tn-card-name", t.name));
+
+  const meta = tnEl("span", "tn-card-meta");
+  meta.append(
+    tnEl("span", null, t.category + " · " + t.windowName),
+    tnEl("span", null, t.groupCount + " groups of " + t.groupSize),
+    tnEl("span", null, t.hostedByYou ? "You are hosting" : "Hosted by " + t.hostName),
+  );
+  if (t.championName) meta.append(tnEl("span", null, "Won by " + t.championName));
+  card.append(meta);
+
+  const sideCol = tnEl("span", "tn-card-side");
+  sideCol.append(tnPill(t.phase, t.yourTurn));
+  if (t.phase === "registration") {
+    const fill = tnEl("span", "tn-fill");
+    const bar = tnEl("i");
+    bar.style.width = Math.round((t.entrants / Math.max(1, t.capacity)) * 100) + "%";
+    fill.append(bar);
+    sideCol.append(fill, tnEl("span", "tn-count", t.entrants + "/" + t.capacity + " · " + t.checkedIn + " checked in"));
+  } else {
+    sideCol.append(tnEl("span", "tn-count", t.entrants + " players"));
+  }
+  card.append(sideCol);
+
+  card.addEventListener("click", () => tnOpen(t.id));
+  return card;
+}
+
+/* ------------------------------------------------------------------ hosting */
+
+function tnSeg(options, value, onPick) {
+  const seg = tnEl("div", "tn-seg");
+  for (const [v, label] of options) {
+    const b = tnEl("button", null, label);
+    b.type = "button";
+    b.setAttribute("aria-pressed", String(v === value));
+    b.addEventListener("click", () => onPick(v));
+    seg.append(b);
+  }
+  return seg;
+}
+
+function tnField(label, control) {
+  const field = tnEl("div", "tn-field");
+  field.append(tnEl("span", null, label), control);
+  return field;
+}
+
+function tnHostPanel() {
+  const panel = tnEl("div", "panel tn-host");
+  const head = tnEl("div", "phead");
+  head.append(tnEl("h2", null, "Host a tournament"), tnEl("span", "note", "Unrated"));
+  const body = tnEl("div", "pbody");
+  panel.append(head, body);
+
+  const redraw = () => {
+    const fresh = tnHostPanel();
+    panel.replaceWith(fresh);
+  };
+
+  const name = tnEl("input", "tn-input");
+  name.type = "text";
+  name.maxLength = 48;
+  name.placeholder = "Friday Night Tracking";
+  name.value = tnForm.name;
+  name.addEventListener("input", () => { tnForm.name = name.value; });
+  body.append(tnField("Name", name));
+
+  const categories = ["Any", ...((current && current.categories) || []).map((c) => c.name).filter(Boolean)];
+  if (!tnForm.category || !categories.includes(tnForm.category)) tnForm.category = categories[1] || "Any";
+  body.append(tnField("Every fixture is drawn from", tnSeg(
+    categories.map((c) => [c, c === "Any" ? "Any category" : c]),
+    tnForm.category,
+    (v) => { tnForm.category = v; redraw(); },
+  )));
+
+  body.append(tnField("Groups", tnSeg([[2, "2"], [4, "4"], [8, "8"]], tnForm.groupCount,
+    (v) => { tnForm.groupCount = v; redraw(); })));
+  body.append(tnField("Players per group", tnSeg([3, 4, 5, 6, 7, 8].map((n) => [n, String(n)]), tnForm.groupSize,
+    (v) => { tnForm.groupSize = v; redraw(); })));
+  body.append(tnField("Through from each group", tnSeg([[1, "Top 1"], [2, "Top 2"]], tnForm.qualifiers,
+    (v) => { tnForm.qualifiers = v; redraw(); })));
+  body.append(tnField("Draw", tnSeg([["seeded", "Seeded by rating"], ["shuffle", "Random"]], tnForm.seeding,
+    (v) => { tnForm.seeding = v; redraw(); })));
+
+  const g = tnForm.groupCount;
+  const s = tnForm.groupSize;
+  const q = tnForm.qualifiers;
+  const capacity = g * s;
+  const groupFixtures = g * s * (s - 1) / 2;
+  const spots = g * q;
+  const minimum = g * Math.max(3, q + 1);
+  const sum = tnEl("p", "tn-sum");
+  sum.append(
+    tnEl("b", null, "Up to " + capacity + " players. "),
+    document.createTextNode(
+      groupFixtures + " group fixtures when full, then a " + spots + "-player bracket. " +
+      "It needs " + minimum + " checked in to start. The window is " +
+      ((current && current.benchmark && current.benchmark.difficulty) || "the season's") + ".",
+    ),
+  );
+  body.append(sum);
+
+  const create = tnButton("Open it for entry", "primary", async () => {
+    if (HOST !== "electron") {
+      showNotice("Tournaments are hosted from the desktop app.");
+      return;
+    }
+    const pool = current && current.benchmark && current.benchmark.matchPool;
+    if (!pool) {
+      showError("The season pool has not loaded yet.");
+      return;
+    }
+    if (!tnForm.name.trim()) {
+      showError("Give it a name.");
+      name.focus();
+      return;
+    }
+    const result = await onRowAction(create, "Opening…", () => api.createTournament({
+      name: tnForm.name.trim(),
+      category: tnForm.category,
+      window: pool.window,
+      groupCount: g,
+      groupSize: s,
+      qualifiers: q,
+      seeding: tnForm.seeding,
+    }));
+    if (result && result.view) {
+      tnForm.name = "";
+      showNotice(result.view.name + " is open for entry.");
+      renderTournamentView(result.view);
+    }
+  });
+  body.append(create);
+  return panel;
+}
+
+/* ------------------------------------------------------------ fetching, acting */
+
+/** The bar chip: a fixture of yours can be played right now, somewhere. */
+function setTournamentCount(list) {
+  const chip = $("tnLive");
+  if (!chip) return;
+  const ready = (list || []).filter((t) => t.yourTurn).length;
+  chip.hidden = ready === 0;
+  if (ready > 0) $("tnLiveText").textContent = ready === 1 ? "Your fixture" : ready + " fixtures";
+}
+
+async function tnRefresh() {
+  if (HOST !== "electron") return;
+  const r = await api.tournaments(tnOpenId || undefined).catch(() => null);
+  if (!r || r.error) {
+    if (r && r.error && tnOpenId) showError(r.error);
+    return;
+  }
+  if (r.tournaments) renderTournaments(r.tournaments);
+  if (tnOpenId && r.view) renderTournamentView(r.view);
+}
+
+function tnOpen(id) {
+  if (HOST !== "electron") {
+    if (tnSamples && tnSamples[id]) renderTournamentView(tnSamples[id], id);
+    return;
+  }
+  tnOpenId = id;
+  tnTab = null;
+  void tnRefresh();
+}
+
+function tnClose() {
+  tnOpenId = null;
+  tnView = null;
+  tnTab = null;
+  $("tnDetail").hidden = true;
+  $("tnIndex").hidden = false;
+  $("screen-tournaments").classList.remove("detail");
+  renderTournaments(tnList);
+  document.querySelector(".scroll").scrollTop = 0;
+}
+
+/** Run an action whose answer is the tournament as it now stands, and draw that. */
+async function tnAct(button, working, run) {
+  if (HOST !== "electron") {
+    showNotice("Tournaments are played from the desktop app.");
+    return null;
+  }
+  const result = await onRowAction(button, working, run);
+  if (result && result.view) renderTournamentView(result.view);
+  return result;
+}
+
+async function tnPlayFixture(button, view, next) {
+  if (HOST !== "electron") {
+    showNotice("Fixtures are played from the desktop app.");
+    return;
+  }
+  const result = await onRowAction(button, "Opening…", () =>
+    api.playFixture(view.id, next.fixtureId, next.attempt));
+  if (result && result.match) {
+    activeMatch = result.match;
+    paintActiveMatch();
+    openScreen("queue");
+    showNotice(next.label + " is open. Play the three below in KovaaK's.");
+  } else {
+    void tnRefresh();
+  }
+}
+
+/* ------------------------------------------------------------ one tournament */
+
+function renderTournamentView(view, sampleKey) {
+  tnView = view;
+  const index = $("tnIndex");
+  const detail = $("tnDetail");
+  if (!index || !detail) return;
+  if (!view) {
+    detail.hidden = true;
+    index.hidden = false;
+    return;
+  }
+  tnOpenId = sampleKey || view.id;
+  index.hidden = true;
+  detail.hidden = false;
+  $("screen-tournaments").classList.add("detail");
+  detail.textContent = "";
+
+  const names = new Map(view.entrants.map((e) => [e.playerId, e.name]));
+  const nameOf = (id) => names.get(id) || "player";
+  const me = view.you.playerId;
+  if (!tnTab) tnTab = view.phase === "registration" ? "players" : view.phase === "playoffs" || view.phase === "completed" ? "bracket" : "groups";
+
+  const back = tnEl("button", "tn-back", "All tournaments");
+  back.type = "button";
+  back.addEventListener("click", tnClose);
+
+  const wrap = tnEl("div");
+  wrap.style.display = "grid";
+  wrap.style.gap = "18px";
+  wrap.append(back, tnHero(view, nameOf));
+
+  if (view.phase === "completed" && view.champion) {
+    const banner = tnEl("div", "panel tn-banner won");
+    const text = tnEl("div");
+    text.append(
+      tnEl("b", null, view.champion.playerId === me ? "You won it." : view.champion.name + " won it."),
+      tnEl("p", null, "Full results in the bracket below."),
+    );
+    banner.append(text);
+    wrap.append(banner);
+  } else if (view.phase === "cancelled") {
+    const banner = tnEl("div", "panel tn-banner off");
+    const text = tnEl("div");
+    text.append(
+      tnEl("b", null, "Cancelled by the host."),
+      tnEl("p", null, view.cancellationReason || "No reason given."),
+    );
+    banner.append(text);
+    wrap.append(banner);
+  }
+
+  const nextPanel = tnNextPanel(view, nameOf);
+  if (nextPanel) wrap.append(nextPanel);
+  wrap.append(tnStats(view));
+  const hostPanel = tnHostControls(view);
+  if (hostPanel) wrap.append(hostPanel);
+
+  const tabs = tnEl("div", "tn-tabs");
+  tabs.setAttribute("role", "tablist");
+  const played = view.fixtures.filter((f) => f.stage === "playoff").length;
+  for (const [key, label, count] of [
+    ["groups", "Groups", view.groups.length || null],
+    ["bracket", "Bracket", played || null],
+    ["players", "Players", view.entrants.length],
+    ["rules", "Rules", null],
+  ]) {
+    const b = tnEl("button", null, label);
+    b.type = "button";
+    b.setAttribute("role", "tab");
+    b.setAttribute("aria-selected", String(tnTab === key));
+    if (count) b.append(tnEl("b", null, count));
+    b.addEventListener("click", () => {
+      tnTab = key;
+      renderTournamentView(tnView, sampleKey);
+    });
+    tabs.append(b);
+  }
+  wrap.append(tabs);
+
+  const body = tnTab === "bracket" ? tnBracket(view, nameOf)
+    : tnTab === "players" ? tnPlayers(view)
+    : tnTab === "rules" ? tnRules(view)
+    : tnGroups(view, nameOf);
+  wrap.append(body);
+  detail.append(wrap);
+}
+
+function tnHero(view, nameOf) {
+  const panel = tnEl("div", "panel");
+  const hero = tnEl("div", "tn-hero");
+  const left = tnEl("div");
+
+  const eyebrow = tnEl("div", "tn-eyebrow");
+  eyebrow.append(tnPill(view.phase, false));
+  if (view.phase === "groups") {
+    const ready = view.fixtures.filter((f) => f.stage === "group" && f.status === "ready");
+    const rounds = Math.max(0, ...view.fixtures.filter((f) => f.stage === "group").map((f) => f.round));
+    if (ready.length) eyebrow.append(tnEl("span", null, "Round " + Math.min(...ready.map((f) => f.round)) + " of " + rounds));
+  } else if (view.phase === "playoffs") {
+    const round = view.bracket.find((r) => r.slots.some((s) => s.fixtureId && !s.winnerId));
+    if (round) eyebrow.append(tnEl("span", null, round.title));
+  }
+  eyebrow.append(tnEl("span", "tn-muted", "Unrated"));
+  left.append(eyebrow, tnEl("h2", "tn-name", view.name));
+
+  const tags = tnEl("div", "tn-tags");
+  [
+    view.category + " · " + view.windowName,
+    view.config.groupCount + " groups of up to " + view.config.groupSize,
+    "Top " + view.config.qualifiers + " go through",
+    view.playoffSpots + "-player bracket",
+    view.config.seeding === "seeded" ? "Seeded by rating" : "Random draw",
+    view.host.you ? "You are hosting" : "Hosted by " + view.host.name,
+  ].forEach((t) => tags.append(tnEl("span", null, t)));
+  left.append(tags);
+
+  const crest = tnEl("div", "tn-crest" + (view.champion ? " won" : ""));
+  const inner = tnEl("div");
+  inner.innerHTML = TN_MARK;
+  inner.append(tnEl("small", null, "Champion"), tnEl("b", null, view.champion ? view.champion.name : "Undecided"));
+  crest.append(inner);
+  hero.append(left, crest);
+  panel.append(hero);
+
+  // Where it is. Registration, groups, bracket, champion.
+  const order = ["registration", "groups", "playoffs", "completed"];
+  const reached = view.phase === "cancelled"
+    ? (view.fixtures.some((f) => f.stage === "playoff") ? 2 : view.groups.length ? 1 : 0)
+    : order.indexOf(view.phase);
+  const checked = view.entrants.filter((e) => e.checkedIn).length;
+  const steps = tnEl("div", "tn-steps");
+  [
+    ["Entry", view.entrants.length + " entered · " + checked + " checked in"],
+    ["Groups", view.config.groupCount + " groups, everyone plays everyone"],
+    ["Bracket", view.playoffSpots + " players, single elimination"],
+    ["Champion", view.champion ? view.champion.name : "Undecided"],
+  ].forEach(([title, sub], i) => {
+    const done = view.phase === "cancelled" ? i <= reached : i < reached || (i === 3 && view.phase === "completed");
+    const now = view.phase !== "cancelled" && i === reached && view.phase !== "completed";
+    const step = tnEl("div", "tn-step" + (now ? " now" : done ? " done" : ""));
+    step.append(tnEl("span", "n", i === 3 ? "▲" : "0" + (i + 1)));
+    const text = tnEl("div");
+    text.style.minWidth = "0";
+    text.append(tnEl("b", null, title), tnEl("small", null, sub));
+    step.append(text);
+    steps.append(step);
+  });
+  panel.dataset.phase = view.phase;
+  panel.classList.add("tn-event-hero");
+  panel.append(steps);
+  return panel;
+}
+
+function tnStats(view) {
+  const panel = tnEl("div", "panel tn-stats");
+  const stat = (label, value, small) => {
+    const box = tnEl("div", "tn-stat");
+    const b = tnEl("b", null, value);
+    if (small) b.append(tnEl("small", null, small));
+    box.append(tnEl("span", null, label), b);
+    panel.append(box);
+  };
+  stat("Players", view.entrants.length, "of " + view.capacity);
+  stat("Groups", view.config.groupCount, "top " + view.config.qualifiers + " through");
+  stat("Bracket", view.playoffSpots, "players");
+  stat("Fixtures decided", view.fixturesSettled, view.fixturesTotal ? "of " + view.fixturesTotal : "none drawn yet");
+  return panel;
+}
+
+/** The one panel on the page you can act on: your fixture, or your entry. */
+function tnNextPanel(view, nameOf) {
+  const me = view.you.playerId;
+  const panel = tnEl("div", "panel tn-next");
+  const left = tnEl("div");
+  const right = tnEl("div", "tn-row");
+
+  if (view.phase === "registration") {
+    const taken = view.entrants.length + " of " + view.capacity + " places taken.";
+    panel.classList.toggle("go", !view.you.entered || !view.you.checkedIn);
+    left.append(tnEl("div", "tn-next-k", "Entry"));
+    if (!view.you.entered) {
+      left.append(tnEl("div", "tn-vs", "Entries are open."));
+      left.append(tnEl("p", null, taken + " Enter, then check in before the host starts it."));
+      right.append(tnButton("Enter", "primary", (e) =>
+        tnAct(e.currentTarget, "Entering…", () => api.joinTournament(view.id))));
+    } else if (!view.you.checkedIn) {
+      left.append(tnEl("div", "tn-vs", "You are entered."));
+      left.append(tnEl("p", null,
+        "Check in to confirm. Players not checked in at the start are left out of the draw."));
+      right.append(
+        tnButton("Check in", "primary", (e) =>
+          tnAct(e.currentTarget, "Checking in…", () => api.checkIn(view.id, true))),
+        tnButton("Withdraw", "quiet", (e) =>
+          tnAct(e.currentTarget, "…", () => api.leaveTournament(view.id))),
+      );
+    } else {
+      left.append(tnEl("div", "tn-vs", "You are checked in."));
+      left.append(tnEl("p", null, taken + " The groups are drawn when the host starts it."));
+      right.append(
+        tnButton("Check out", "quiet", (e) =>
+          tnAct(e.currentTarget, "…", () => api.checkIn(view.id, false))),
+        tnButton("Withdraw", "quiet", (e) =>
+          tnAct(e.currentTarget, "…", () => api.leaveTournament(view.id))),
+      );
+    }
+    panel.append(left, right);
+    return panel;
+  }
+
+  if (view.phase !== "groups" && view.phase !== "playoffs") return null;
+  if (!view.you.entered) return null;
+
+  const next = view.next;
+  if (!next) {
+    left.append(tnEl("div", "tn-next-k", view.you.out ? "Out" : "Between rounds"));
+    left.append(tnEl("div", "tn-vs", view.you.out ? "Eliminated." : "Nothing to play right now."));
+    left.append(tnEl("p", null, view.you.out
+      ? "Follow the rest of it on the bracket below."
+      : "Your next fixture opens when the rest of your round is done."));
+    panel.append(left);
+    return panel;
+  }
+
+  const opp = next.opponentName;
+  panel.classList.toggle("go", next.action !== "wait");
+  left.append(tnEl("div", "tn-next-k", next.label + (next.replay ? " · replay" : "")));
+  const vs = tnEl("div", "tn-vs");
+  vs.append(tnWho(nameOf(me), true), tnEl("span", "v", "VS"), tnWho(opp, false));
+  left.append(vs);
+
+  const copy = next.action === "resume"
+    ? "Your leg is open. Play your 3 in KovaaK's; scores are read automatically."
+    : next.action === "wait" && next.leg === 1
+      ? "Your 3 are in. Waiting on " + opp + " to play the same 3."
+      : next.action === "wait"
+        ? opp + " is playing their 3 now. You play the same 3 next."
+        : next.leg === 1
+          ? "You play first: 3 scenarios, first run on each counts. " + opp +
+            " then plays the same 3. Bigger improvement over baseline wins."
+          : opp + " has played their 3. Same 3 for you. Bigger improvement over baseline wins.";
+  left.append(tnEl("p", null, copy));
+
+  if (next.action !== "wait") {
+    const holding = activeMatch && !(activeMatch.tournament && activeMatch.tournament.fixtureId === next.fixtureId);
+    const play = tnButton(next.action === "resume" ? "Resume" : "Play fixture", "primary", (e) =>
+      tnPlayFixture(e.currentTarget, view, next));
+    if (holding) {
+      play.disabled = true;
+      play.title = "Finish or abandon your current match first";
+    }
+    right.append(play);
+  }
+  panel.append(left, right);
+  return panel;
+}
+
+function tnHostControls(view) {
+  if (!view.host.you || view.phase === "completed" || view.phase === "cancelled") return null;
+  const panel = tnEl("div", "panel tn-host-panel");
+  const head = tnEl("div", "phead");
+  head.append(tnEl("h2", null, "Hosting"), tnEl("span", "note", "Only you see this"));
+  const body = tnEl("div", "pbody");
+  panel.append(head, body);
+
+  if (view.phase === "registration") {
+    const checked = view.entrants.filter((e) => e.checkedIn);
+    const unchecked = view.entrants.filter((e) => !e.checkedIn);
+    const enough = checked.length >= view.minimumToStart;
+    body.append(tnEl("p", "tn-note",
+      checked.length + " checked in, " + view.minimumToStart + " needed. Starting fixes the roster and the seeds, " +
+      "draws the groups and opens round one."));
+    if (unchecked.length) {
+      body.append(tnEl("div", "tn-warn",
+        unchecked.length + (unchecked.length === 1 ? " player has" : " players have") +
+        " not checked in and will be left out: " + unchecked.map((e) => e.name).join(", ") + "."));
+    }
+    const start = tnButton("Start the tournament", "primary", async (e) => {
+      const ok = window.confirm(
+        "Start " + view.name + "?\n\n" + checked.length + " players are drawn into " +
+        view.config.groupCount + " groups" + (unchecked.length ? ", and " + unchecked.length + " left out" : "") +
+        ". Nobody can enter after this.",
+      );
+      if (!ok) return;
+      await tnAct(e.currentTarget, "Drawing…", () => api.startTournament(view.id, view.revision));
+    });
+    start.disabled = !enough;
+    if (!enough) start.title = "Needs " + view.minimumToStart + " checked in";
+    const row = tnEl("div", "tn-row");
+    row.append(start);
+    body.append(row);
+  } else {
+    body.append(tnEl("p", "tn-note",
+      "Results update automatically as fixtures are played."));
+  }
+
+  const cancelRow = tnEl("div", "tn-row");
+  const cancel = tnButton("Cancel tournament", "warn", () => {
+    cancel.hidden = true;
+    const reason = tnEl("input", "tn-input");
+    reason.type = "text";
+    reason.maxLength = 160;
+    reason.placeholder = "Why, for everybody entered";
+    reason.style.maxWidth = "360px";
+    const confirmBtn = tnButton("Confirm cancel", "warn", (e) => {
+      if (!reason.value.trim()) {
+        reason.focus();
+        return;
+      }
+      return tnAct(e.currentTarget, "Cancelling…", () => api.cancelTournament(view.id, reason.value.trim()));
+    });
+    const keep = tnButton("Keep it", "quiet", () => renderTournamentView(tnView));
+    cancelRow.append(reason, confirmBtn, keep);
+    reason.focus();
+  });
+  cancelRow.append(cancel);
+  body.append(cancelRow);
+  return panel;
+}
+
+/* ------------------------------------------------------------ the four tabs */
+
+function tnFixtureStatus(f, nameOf) {
+  if (f.status === "completed") {
+    return f.outcome && f.outcome.kind === "forfeit" ? ["Forfeit", ""]
+      : f.outcome && f.outcome.kind === "draw" ? ["Draw", ""] : ["Decided", ""];
+  }
+  if (f.status === "waiting") return ["Later round", ""];
+  const replay = f.attempt > 1 ? " · replay" : "";
+  switch (f.progress) {
+    case "first-playing": return [nameOf(f.firstBy) + " playing" + replay, "play"];
+    case "first-played": return ["Waiting on the answer" + replay, "play"];
+    case "second-playing": return ["Answer in play" + replay, "play"];
+    case "settling": return ["Settling" + replay, "play"];
+    default: return [(f.yours ? "Your fixture" : "Ready") + replay, "play"];
+  }
+}
+
+function tnFixtureCard(f, nameOf, me, groupName) {
+  const card = tnEl("div", "tn-fx" + (f.status === "ready" ? " ready" : "") + (f.yours && f.status !== "completed" ? " mine" : ""));
+  const top = tnEl("div", "tn-fx-top");
+  const [status, kind] = tnFixtureStatus(f, nameOf);
+  top.append(tnEl("span", null, groupName || f.label), tnEl("span", "st " + kind, status));
+  card.append(top);
+  for (const id of [f.a, f.b]) {
+    const won = f.outcome && f.outcome.winnerId === id;
+    const lost = f.outcome && f.outcome.winnerId && f.outcome.winnerId !== id;
+    const row = tnEl("div", "tn-fx-row" + (won ? " won" : lost ? " lost" : ""));
+    row.append(
+      tnWho(nameOf(id), id === me),
+      tnEl("span", "r", !f.outcome ? "" : f.outcome.kind === "draw" ? "D" : won ? "W" : "L"),
+    );
+    card.append(row);
+  }
+  return card;
+}
+
+function tnGroups(view, nameOf) {
+  const out = tnEl("div");
+  out.style.display = "grid";
+  out.style.gap = "22px";
+  if (view.groups.length === 0) {
+    out.append(tnEmpty("Groups are drawn at the start",
+      "When the host starts it, the checked-in players are seeded and dealt into " + view.config.groupCount +
+      " groups. Until then, see the Players tab."));
+    return out;
+  }
+
+  const me = view.you.playerId;
+  const grid = tnEl("div", "tn-groups");
+  for (const group of view.groups) {
+    const card = tnEl("div", "panel tn-group");
+    const head = tnEl("div", "phead");
+    const title = tnEl("div", "tn-group-title");
+    title.append(tnEl("span", "tn-letter", group.letter), tnEl("h2", null, group.name));
+    head.append(title, tnEl("span", "note", group.played + " of " + group.total + " played"));
+
+    const table = tnEl("table", "tn-table");
+    const thead = tnEl("thead");
+    const hr = tnEl("tr");
+    ["#", "Player", "W-D-L", "Pts"].forEach((h) => hr.append(tnEl("th", null, h)));
+    thead.append(hr);
+    const tbody = tnEl("tbody");
+    for (const s of group.standings) {
+      const tr = tnEl("tr", (s.qualifies ? "q" : "") + (s.playerId === me ? " you" : ""));
+      const who = tnEl("td");
+      who.append(tnWho(nameOf(s.playerId), s.playerId === me, s.seedFallback ? "*" : null));
+      tr.append(tnEl("td", null, s.rank), who,
+        tnEl("td", null, s.won + "-" + s.drawn + "-" + s.lost), tnEl("td", null, s.points));
+      tbody.append(tr);
+    }
+    table.append(thead, tbody);
+    const foot = tnEl("div", "tn-foot");
+    foot.append(
+      tnEl("span", null, group.played === group.total ? "Final table" : "Provisional"),
+      tnEl("span", null, "Top " + view.config.qualifiers + " go through"),
+    );
+    card.append(head, table, foot);
+    grid.append(card);
+  }
+  out.append(grid);
+  if (view.groups.some((g) => g.standings.some((s) => s.seedFallback))) {
+    out.append(tnEl("p", "tn-note",
+      "* Tied on points, head-to-head and wins, so seed decided it. Raw scores are never used."));
+  }
+
+  const groupFixtures = view.fixtures.filter((f) => f.stage === "group");
+  const groupNameOf = new Map(view.groups.map((g) => [g.id, g.name]));
+  const rounds = [...new Set(groupFixtures.map((f) => f.round))].sort((a, b) => a - b);
+  const list = tnEl("div", "tn-rounds");
+  for (const round of rounds) {
+    const fixtures = groupFixtures.filter((f) => f.round === round)
+      .sort((a, b) => Number(b.yours) - Number(a.yours) || a.id.localeCompare(b.id));
+    const decided = fixtures.filter((f) => f.status === "completed").length;
+    const k = tnEl("div", "tn-round-k", "Round " + round);
+    k.append(tnEl("span", null, decided + " of " + fixtures.length + " decided"));
+    const cards = tnEl("div", "tn-fixtures");
+    fixtures.forEach((f) => cards.append(tnFixtureCard(f, nameOf, me, groupNameOf.get(f.groupId))));
+    const block = tnEl("div");
+    block.append(k, cards);
+    list.append(block);
+  }
+  out.append(list);
+  return out;
+}
+
+function tnBracket(view, nameOf) {
+  const me = view.you.playerId;
+  const wrap = tnEl("div", "tn-bracket-wrap");
+  wrap.tabIndex = 0;
+  wrap.setAttribute("role", "region");
+  wrap.setAttribute("aria-label", "Tournament bracket, scroll horizontally for later rounds");
+  const bracket = tnEl("div", "tn-bracket");
+  const byId = new Map(view.fixtures.map((f) => [f.id, f]));
+  for (const round of view.bracket) {
+    const col = tnEl("div", "tn-col");
+    const k = tnEl("div", "tn-col-k", round.title);
+    k.append(tnEl("span", null, round.slots.length === 1 ? "1 match" : round.slots.length + " matches"));
+    const body = tnEl("div", "tn-col-body");
+    for (const slot of round.slots) {
+      const fixture = slot.fixtureId ? byId.get(slot.fixtureId) : null;
+      const mine = fixture && fixture.yours && fixture.status !== "completed";
+      const box = tnEl("div", "tn-slot" + (fixture ? "" : " tbd") + (mine ? " mine" : ""));
+      for (const [id, from] of [[slot.a, slot.aFrom], [slot.b, slot.bFrom]]) {
+        const won = slot.winnerId && slot.winnerId === id;
+        const lost = slot.winnerId && id && slot.winnerId !== id;
+        const row = tnEl("div", "tn-slot-row" + (won ? " won" : lost ? " lost" : ""));
+        if (id) row.append(tnWho(nameOf(id), id === me), tnEl("span", "tn-count", won ? "W" : lost ? "L" : ""));
+        else row.append(tnEl("span", "from", tnPlace(from)), tnEl("span"));
+        box.append(row);
+      }
+      if (fixture && fixture.status !== "completed") box.title = tnFixtureStatus(fixture, nameOf)[0];
+      body.append(box);
+    }
+    col.append(k, body);
+    bracket.append(col);
+  }
+  const crown = tnEl("div", "tn-crown");
+  const crest = tnEl("div", "tn-crest inline" + (view.champion ? " won" : ""));
+  const inner = tnEl("div");
+  inner.innerHTML = TN_MARK;
+  inner.append(tnEl("small", null, "Champion"), tnEl("b", null, view.champion ? view.champion.name : "Undecided"));
+  crest.append(inner);
+  crown.append(crest);
+  bracket.append(crown);
+  wrap.append(bracket);
+
+  const out = tnEl("div");
+  out.style.display = "grid";
+  out.style.gap = "12px";
+  if (!view.fixtures.some((f) => f.stage === "playoff")) {
+    out.append(tnEl("p", "tn-note",
+      "Filled in once every group fixture is decided. Players from the same group cannot meet again before the final."));
+  }
+  out.append(wrap);
+  return out;
+}
+
+function tnPlayers(view) {
+  const grid = tnEl("div", "tn-roster");
+  if (view.entrants.length === 0) {
+    return tnEmpty("Nobody has entered yet", "Entries are open.");
+  }
+  const groupName = new Map(view.groups.map((g) => [g.id, g.name]));
+  const drawn = view.groups.length > 0;
+  for (const e of view.entrants) {
+    const row = tnEl("div", "tn-entrant" + (e.you ? " you" : ""));
+    const text = tnEl("div");
+    text.style.minWidth = "0";
+    text.append(
+      tnEl("div", "tn-entrant-name", e.name + (e.you ? " (you)" : "")),
+      tnEl("div", "tn-entrant-sub", drawn
+        ? (e.groupId ? groupName.get(e.groupId) : "Not checked in at the draw")
+        : e.checkedIn ? "Checked in" : "Entered, not checked in"),
+    );
+    const sideBox = tnEl("div", "tn-entrant-side");
+    if (!drawn) {
+      const pill = tnEl("span", "tn-pill " + (e.checkedIn ? "open" : "off"));
+      pill.append(tnEl("span", "dot"), document.createTextNode(e.checkedIn ? "In" : "Waiting"));
+      sideBox.append(pill);
+      if (view.host.you && view.phase === "registration" && !e.you) {
+        sideBox.append(tnButton("Remove", "quiet", (ev) => {
+          if (!window.confirm("Remove " + e.name + " from " + view.name + "?")) return;
+          return tnAct(ev.currentTarget, "…", () => api.removeEntrant(view.id, e.playerId));
+        }));
+      }
+    }
+    // The seed once there is one; before the draw there is not, and an empty column reads
+    // as something missing, so the monogram stands in.
+    row.append(
+      drawn ? tnEl("span", "tn-seed", e.seed) : tnEl("span", "tn-mono" + (e.you ? " you" : ""), tnInitials(e.name)),
+      text,
+      sideBox,
+    );
+    grid.append(row);
+  }
+  const out = tnEl("div");
+  out.style.display = "grid";
+  out.style.gap = "12px";
+  out.append(tnEl("p", "tn-note", drawn
+    ? "Seeds were fixed at the draw, " + (view.config.seeding === "seeded" ? "strongest first by ladder rating." : "then the groups were drawn at random.")
+    : "Seeds are set at the draw, from ladder rating. Until then the list is in the order people entered."), grid);
+  return out;
+}
+
+function tnRules(view) {
+  const g = view.config.groupCount;
+  const q = view.config.qualifiers;
+  const rules = [
+    ["Groups, then the bracket",
+      g + " groups, snake-seeded. Everyone in a group plays everyone else once, and the top " +
+      q + " of each go through to a " + view.playoffSpots + "-player knockout."],
+    ["One fixture, one match",
+      "Each fixture is a standard Apogee match: 3 scenarios, scored against your own baselines, won by the bigger improvement. One player goes first; the other plays the same 3 after."],
+    ["Points",
+      "Win 3, draw 1, loss 0. Level on points goes to the results between the players who are level, then wins, then seed, and the table marks it when the seed decided. Raw scores never decide anything."],
+    ["Replays",
+      "A void match is played again at either stage. In the bracket a draw is played again too; in a group it stands. Abandoning your answer forfeits the fixture, and abandoning a first leg means it is played again."],
+    ["Fair play",
+      "Runs are verified the same way as ranked runs. A rejected run voids the match, and the fixture is replayed."],
+    ["Unrated",
+      "Tournament matches are unrated and stay out of the matchmaking pool. The runs still count toward your history and baselines."],
+  ];
+  const grid = tnEl("div", "tn-rules");
+  rules.forEach(([title, copy], i) => {
+    const card = tnEl("div", "tn-rule");
+    card.append(tnEl("span", null, "0" + (i + 1)), tnEl("h3", null, title), tnEl("p", null, copy));
+    grid.append(card);
+  });
+  return grid;
+}
+
+/* ------------------------------------------------------------ the screen */
+
+function tnScreenShown(shown) {
+  if (tnPoll) {
+    clearInterval(tnPoll);
+    tnPoll = null;
+  }
+  if (!shown) return;
+  if (HOST !== "electron") return;
+  void tnRefresh();
+  // Somebody else's leg finishing is not something this client hears about, so while the
+  // screen is up it asks. Hidden windows do not ask: nobody is reading them.
+  tnPoll = setInterval(() => {
+    if (document.visibilityState === "visible") void tnRefresh();
+  }, TN_POLL_MS);
+}
+
+// Every route onto a screen goes through a tab's click, so this is the one place that
+// knows the tournament screen came up or went away.
+document.querySelectorAll(".tab").forEach((tab) =>
+  tab.addEventListener("click", () => tnScreenShown(tab.dataset.screen === "tournaments")));
 
 // Before anything can paint over them. Everything below reads these as the value to
 // go back to, so they have to be taken while they are still the only value there is.
@@ -7207,11 +9074,15 @@ if (HOST === "electron") {
   });
 
   api.onMatchProgress((p) => {
+    if (p.matchId && activeMatch && p.matchId !== activeMatch.matchId) return;
     if (p.status === "submitted") {
       const s = pendingScenarios.find((x) => x.id === p.scenarioId);
       if (s) {
         s.done = true;
         s.tier = p.verificationTier;
+        s.uploading = false;
+        s.failed = false;
+        s.justDone = true;
         renderTodo();
       }
       // The clock only runs while nobody is playing, so a landed run restarts it.
@@ -7226,6 +9097,8 @@ if (HOST === "electron") {
         ? `${p.remaining.length} scenario(s) left`
         : "All runs in. Settling…";
     } else if (p.status === "failed") {
+      const s = pendingScenarios.find(x => x.id === p.scenarioId);
+      if (s) { s.uploading = false; s.failed = true; s.done = false; renderTodo(); }
       showError(`Could not submit that run: ${p.message}`);
     } else if (p.status === "already-submitted") {
       $("matchHint").textContent = p.message;
@@ -7239,8 +9112,9 @@ if (HOST === "electron") {
     resetCommit(current);
     renderEligibility();
     renderSettled(settled);
+    if (settled && settled.tournament) void tnRefresh();
     playSound(settled && settled.verdict === "win" ? "victory"
-      : settled && settled.verdict === "draw" ? "ok" : "defeat");
+      : settled && settled.verdict === "draw" ? "draw" : "defeat");
 
     // Jump to the result, because that is the payoff and nobody should have to hunt
     // for it after finishing three scenarios.
@@ -7254,9 +9128,11 @@ if (HOST === "electron") {
 
     if (contested) {
       const name = activeMatch.opponent.displayName;
-      const ok = window.confirm(
-        `Forfeit this match against ${name}?\n\n` +
-          "It counts as a loss and your rating drops. You can queue again straight away.",
+      const leg = activeMatch.tournament;
+      const ok = window.confirm(leg
+        ? `Forfeit ${leg.label} against ${name}?\n\nThe fixture goes to them. Nothing is rated.`
+        : `Forfeit this match against ${name}?\n\n` +
+          "Counts as a loss and lowers your rating. You can queue again right away.",
       );
       if (!ok) return;
     }
@@ -7349,6 +9225,9 @@ if (HOST === "electron") {
   api.onQuestComplete(showCelebration);
 
   $("celebrateClose").addEventListener("click", nextCelebration);
+  $('celebrate').addEventListener('keydown', e => {
+    if (e.key === 'Tab') { e.preventDefault(); $('celebrateClose').focus(); }
+  });
 
   // Escape dismisses, because a modal that traps you is worse than no modal.
   document.addEventListener("keydown", (e) => {
@@ -7385,6 +9264,34 @@ if (HOST === "electron") {
   // The chip is a way back to the thing it is reporting on, from wherever you drifted to
   // while the queue ran.
   api.onDuels((board) => renderDuels(board));
+
+  // Pushed by main after sign-in, after every action and after a leg settles. Null is a
+  // sign-out, and somebody else's tournaments must not stay on screen for the next account.
+  api.onTournaments((list) => {
+    if (!list && tnOpenId) {
+      tnOpenId = null;
+      tnView = null;
+      $("tnDetail").hidden = true;
+      $("tnIndex").hidden = false;
+    }
+    if ($("tnIndex").hidden) {
+      tnList = list;
+      setTournamentCount(list);
+    } else {
+      renderTournaments(list);
+    }
+  });
+
+  void api.tournaments().then((r) => renderTournaments(r && r.tournaments ? r.tournaments : null))
+    .catch(() => renderTournaments(null));
+  // The remembered screen may already be this one, restored before the listener above existed.
+  if (document.body.dataset.screen === "tournaments") tnScreenShown(true);
+
+  $("tnLive").addEventListener("click", () => {
+    openScreen("tournaments");
+    const mine = (tnList || []).find((t) => t.yourTurn);
+    if (mine) tnOpen(mine.id);
+  });
 
   // Opened in place. The picker is built on the way in rather than kept current, because
   // it is a list of everybody and most sessions never look at it.
@@ -7488,6 +9395,7 @@ if (HOST === "electron") {
   });
 
   api.onRun((run) => showRunToast(run));
+  if (api.onBenchmarkPromotion) api.onBenchmarkPromotion(promotion => showCelebration({ promotion }));
 
   // The band page is drawn from the snapshot, so a run landing while it is open has to
   // redraw it. `render` does not, because the page is not part of the snapshot's own tree.
@@ -7534,43 +9442,37 @@ if (HOST === "electron") {
   if (note) note.hidden = false;
 
   render(window.__APOGEE_SNAPSHOT__);
+
+  // The example tournaments, one per stage, built by the real engine with invented players.
+  tnSamples = window.__APOGEE_TOURNAMENT__ || null;
+  if (tnSamples) {
+    $("tnPreviewNote").hidden = false;
+    renderTournaments(Object.entries(tnSamples).map(([key, v]) => ({
+      id: key,
+      name: v.name,
+      phase: v.phase,
+      hostName: v.host.name,
+      hostedByYou: v.host.you,
+      entered: v.you.entered,
+      entrants: v.entrants.length,
+      checkedIn: v.entrants.filter((e) => e.checkedIn).length,
+      capacity: v.capacity,
+      category: v.category,
+      windowName: v.windowName,
+      groupCount: v.config.groupCount,
+      groupSize: v.config.groupSize,
+      qualifiers: v.config.qualifiers,
+      championName: v.champion ? v.champion.name : null,
+      yourTurn: Boolean(v.next && v.next.action !== "wait"),
+      updatedAt: v.updatedAt,
+    })));
+  }
 }
 
-/* ==================================================================== press */
-
-/**
- * What a press looks and sounds like, wired once for the whole app.
- *
- * There are thirty-odd click handlers in this file and more added by the season editor
- * at runtime. Giving each one a sound and a bounce by hand would mean editing all of
- * them, missing several, and missing every control that does not exist yet - so this
- * listens on the document in the capture phase instead. Capture rather than bubble
- * because a handler that calls `stopPropagation` is making a decision about its own
- * behaviour, not about whether the button it is on gets to feel pressed.
- *
- * The visual is deliberately not `:active`. That pseudo-class ends the instant the
- * button is released, which cuts the spring back off halfway and is what makes a press
- * feel cheap; a class removed on `pointerup` can outlive the release by the 340ms the
- * bounce actually needs.
- */
+/* Pointer sounds are delegated once; arena.css owns interruptible press feedback. */
 
 /** Everything that takes a press. `summary` is here because the status pill is one. */
 const PRESSABLE = 'button, summary, [role="button"], .cat, .rank-link';
-
-/** The ring is drawn here rather than inside the control - see the CSS for why. */
-const fxLayer = document.createElement("div");
-fxLayer.className = "fx-layer";
-document.body.appendChild(fxLayer);
-
-function ring(x, y) {
-  if (reduceMotion.matches) return;
-  const el = document.createElement("span");
-  el.className = "fx-ring";
-  el.style.left = x + "px";
-  el.style.top = y + "px";
-  fxLayer.appendChild(el);
-  el.addEventListener("animationend", () => el.remove());
-}
 
 /**
  * Which sound a control makes.
@@ -7589,8 +9491,6 @@ function pressSound(el) {
   return "tap";
 }
 
-let pressed = null;
-
 document.addEventListener(
   "pointerdown",
   (e) => {
@@ -7598,61 +9498,11 @@ document.addEventListener(
     const el = e.target.closest && e.target.closest(PRESSABLE);
     if (!el || el.disabled || el.getAttribute("aria-disabled") === "true") return;
 
-    pressed = el;
-    el.classList.remove("released");
-    el.classList.add("pressing");
-    ring(e.clientX, e.clientY);
-
     const sound = pressSound(el);
     if (sound) playSound(sound);
   },
   true,
 );
-
-/**
- * Release on the window, not on the control.
- *
- * A press that starts on a button and ends anywhere else still ends, and a button left
- * holding `pressing` stays visibly squashed until the next time it is touched.
- */
-window.addEventListener("pointerup", () => {
-  if (!pressed) return;
-  const el = pressed;
-  pressed = null;
-  el.classList.remove("pressing");
-  if (reduceMotion.matches) return;
-  el.classList.add("released");
-  el.addEventListener("animationend", () => el.classList.remove("released"), { once: true });
-});
-
-window.addEventListener("pointercancel", () => {
-  if (pressed) pressed.classList.remove("pressing");
-  pressed = null;
-});
-
-/**
- * The pointer crossing a control.
- *
- * Throttled and very quiet. Untreated this fires on every pixel of movement across a
- * grid of tabs and turns into a rattle, which is the fastest way to make somebody reach
- * for the mute button the app just grew.
- */
-let lastHover = null;
-let lastHoverAt = 0;
-
-document.addEventListener("pointerover", (e) => {
-  const el = e.target.closest && e.target.closest(PRESSABLE);
-  if (!el || el === lastHover || el.disabled) {
-    if (!el) lastHover = null;
-    return;
-  }
-  lastHover = el;
-
-  const now = performance.now();
-  if (now - lastHoverAt < 70) return;
-  lastHoverAt = now;
-  playSound("hover");
-});
 
 /** Mute from the keyboard, because that is what somebody reaches for mid-match. */
 document.addEventListener("keydown", (e) => {

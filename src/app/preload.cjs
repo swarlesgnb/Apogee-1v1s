@@ -175,6 +175,50 @@ contextBridge.exposeInMainWorld("apogee", {
   /** Fires when the duel board changes, and with null on sign-out. */
   onDuels: (handler) => subscribe("apogee:duels", handler),
 
+  // ---- tournaments -------------------------------------------------------
+  //
+  // One method per action rather than a general "tournament action" call. Each one names
+  // exactly the fields it sends, so nothing the page puts in an object reaches the server
+  // unless this file already decided it should - and there is no method here that sends a
+  // result, because results come from settled matches and nowhere else.
+
+  /** The list, and one in full if an id is given. Returns { tournaments, view } or { error }. */
+  tournaments: (tournamentId) => ipcRenderer.invoke("apogee:tournaments", { tournamentId }),
+
+  createTournament: (s) =>
+    ipcRenderer.invoke("apogee:tournamentAction", {
+      action: "create",
+      name: s.name,
+      category: s.category,
+      window: s.window,
+      groupCount: s.groupCount,
+      groupSize: s.groupSize,
+      qualifiers: s.qualifiers,
+      seeding: s.seeding,
+    }),
+  joinTournament: (tournamentId) =>
+    ipcRenderer.invoke("apogee:tournamentAction", { action: "join", tournamentId }),
+  leaveTournament: (tournamentId) =>
+    ipcRenderer.invoke("apogee:tournamentAction", { action: "leave", tournamentId }),
+  checkIn: (tournamentId, checkedIn) =>
+    ipcRenderer.invoke("apogee:tournamentAction", { action: "check-in", tournamentId, checkedIn }),
+  /** Host only; refused server-side for anybody else. */
+  removeEntrant: (tournamentId, playerId) =>
+    ipcRenderer.invoke("apogee:tournamentAction", { action: "remove", tournamentId, playerId }),
+  /** Host only. `revision` is the one the host was shown, so a changed roster is refused. */
+  startTournament: (tournamentId, revision) =>
+    ipcRenderer.invoke("apogee:tournamentAction", { action: "start", tournamentId, revision }),
+  /** Host only. Terminal. */
+  cancelTournament: (tournamentId, reason) =>
+    ipcRenderer.invoke("apogee:tournamentAction", { action: "cancel", tournamentId, reason }),
+
+  /** Open your leg of a fixture. Hands back a match exactly as findMatch does. */
+  playFixture: (tournamentId, fixtureId, attempt) =>
+    ipcRenderer.invoke("apogee:playFixture", { tournamentId, fixtureId, attempt }),
+
+  /** Fires when the tournament list changes, and with null on sign-out. */
+  onTournaments: (handler) => subscribe("apogee:tournaments", handler),
+
   /** Whether the signed-in player holds the admin role. Gates the editors, nothing else. */
   isAdmin: () => ipcRenderer.invoke("apogee:isAdmin"),
 
@@ -230,6 +274,7 @@ contextBridge.exposeInMainWorld("apogee", {
 
   /** Fires the moment a new run is parsed, before the snapshot rebuild lands. */
   onRun: (handler) => subscribe("apogee:run", handler),
+  onBenchmarkPromotion: (handler) => subscribe("apogee:benchmarkPromotion", handler),
 
   /** Scanning started or finished. */
   onScanning: (handler) => subscribe("apogee:scanning", handler),
