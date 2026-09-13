@@ -283,10 +283,6 @@
       "subCategory": "Reactive Tracking",
       "why": "A target that leaps and strafes with mixed dodge profiles. wobin's Easier cut, then Aimerz+'s mid-range Leapstrafes Control Medium, then wobin's standard and Hard cuts. No sheet names a sub-skill for wobin's version, so putting it in Reactive is a judgement call."
     },
-    "Flicker Plaza rAim Easy": {
-      "subCategory": "Reactive Tracking",
-      "why": "Recovery replaces a third mixed-air test. Kindaclose introduces random acceleration, slowing and stops; the three Flicker Plaza cuts then challenge reacquisition after teleports. This is a deliberate change of mechanic between Novice and Intermediate, not a shared-bot speed ladder. Less Blinks provides the transition."
-    },
     "B180T rAim Easy": {
       "subCategory": "Evasive Switching",
       "why": "An accessible rAim entry leads to Aimerz+'s depth-changing mid-high arcs, then two regenerative bounce edits. The final two variants make incomplete contact costly instead of relying only on smaller Elite bots. They deliberately retain two useful Voltaic variants rather than an entire stock four-rung family. Cross-author handovers and regeneration difficulty need playtesting."
@@ -5280,6 +5276,9 @@
       "subCategory": "Speed Switching",
       "focus": "Land, finish, transfer. Hold your pace.",
       "why": "Large and standard range targets establish routing and clean transfers. Viscose Varied introduces progressively shrinking targets; rAim finishes with a smaller fixed-target challenge. Only the Advanced rung is an evolving task. This adapts the source routine's speed-to-precision idea across related variants without changing their native scoring or duration.",
+      "$order": {
+        "why": "The two middle rungs are never placed apart by a sheet that grades both. voxTargetSwitch 2 takes band 2 from Viscose's Medium tier, in both editions, and from AimSpeed 2.0's Normal. voxTS Viscose Varied is banded by Aimerz+ SpeedTS alone, which lists it beside voxTargetSwitch 2 in both its Easy and its Hard tier: the one sheet that grades the pair calls them the same step, and it speaks with its Easy listing, band 1. What orders them here is the mechanic. Varied's targets shrink as the run goes on, the only rung in the family that does, and carrying pace into smaller targets is what Vox Pace exists to test (docs/benchmark-theory-rebuild.md). Each rung's targets are cut from its own leaderboard at its own window's percentiles."
+      },
       "variants": [
         {
           "scenario": "voxTargetSwitch 2 Large",

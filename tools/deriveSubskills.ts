@@ -199,6 +199,11 @@ const LABELS: Record<string, Record<string, string>> = {
     react: "Reactive Tracking",
     ground: "Reactive Tracking",
     air: "Reactive Tracking",
+    // Viscose's "Speed Track" is one of its tracking slots, beside "Reading Track", and
+    // every difficulty files a Flicker Plaza there, which KovaaK's types Tracking. It sat in
+    // the switching table, which read the one Flicker Plaza with no KovaaK's aim type as
+    // Speed Switching and put a tracking scenario in the wrong category.
+    speedtrack: "Reactive Tracking",
 
     control: "Control Tracking",
     controltracking: "Control Tracking",
@@ -225,7 +230,6 @@ const LABELS: Record<string, Record<string, string>> = {
     speedswitching: "Speed Switching",
     speedts: "Speed Switching",
     switchingspeed: "Speed Switching",
-    speedtrack: "Speed Switching",
     flickts: "Speed Switching",
     flick: "Speed Switching",
     voxts: "Speed Switching",

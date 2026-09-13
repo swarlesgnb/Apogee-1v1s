@@ -53,6 +53,7 @@
     "validate:sound": "node tools/validateSound.mjs",
     "measure:sound": "electron tools/measureSound.cjs",
     "validate:orb": "tsx tools/validateOrb.ts",
+    "validate:theme": "node tools/validateTheme.mjs",
     "validate:presentation": "node tools/validatePresentation.mjs",
     "validate:counter": "node tools/validateCounter.mjs",
     "audit:look": "node tools/auditLook.mjs",

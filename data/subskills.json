@@ -14,7 +14,7 @@
     "normalisation as everybody else's, and Voltaic published where they belong."
   ],
   "source": "data/benchmarks/*.json category names + data/scenario_taxonomy.json aim types",
-  "derivedAt": "2026-09-01T01:11:46.685Z",
+  "derivedAt": "2026-09-13T20:11:18.376Z",
   "benchmarks": 43,
   "categories": {
     "Clicking": [
@@ -43,8 +43,8 @@
   },
   "counts": {
     "scenarios": 1481,
-    "classified": 1073,
-    "fromLabels": 1054,
+    "classified": 1075,
+    "fromLabels": 1056,
     "fromVoltaicSheet": 19,
     "withMechanic": 91,
     "mechanicConflicts": 0,
@@ -664,8 +664,8 @@
     {
       "category": "Tracking",
       "subSkill": "Reactive Tracking",
-      "namedBy": 20,
-      "scenarios": 110,
+      "namedBy": 21,
+      "scenarios": 113,
       "benchmarks": [
         {
           "benchmark": "Aimerz+ Reactive Tracking",
@@ -785,6 +785,13 @@
           "benchmark": "Aimerz+ S1",
           "labels": [
             "Reactive"
+          ],
+          "scenarios": 3
+        },
+        {
+          "benchmark": "Viscose Benchmarks",
+          "labels": [
+            "Speed Track"
           ],
           "scenarios": 3
         },
@@ -1003,7 +1010,7 @@
       "category": "Switching",
       "subSkill": "Speed Switching",
       "namedBy": 22,
-      "scenarios": 152,
+      "scenarios": 151,
       "benchmarks": [
         {
           "benchmark": "AimSpeed Benchmarks 2.0",
@@ -1073,10 +1080,9 @@
         {
           "benchmark": "Viscose Benchmarks",
           "labels": [
-            "Speed",
-            "Speed Track"
+            "Speed"
           ],
-          "scenarios": 7
+          "scenarios": 6
         },
         {
           "benchmark": "Avasive S1",
@@ -1788,13 +1794,6 @@
       "scenarios": 2,
       "benchmarks": [
         "Revosect S1"
-      ]
-    },
-    {
-      "label": "Tracking :: Speed Track",
-      "scenarios": 2,
-      "benchmarks": [
-        "Viscose Benchmarks"
       ]
     },
     {
@@ -7435,8 +7434,8 @@
       "subSkill": "Stability Switching",
       "via": "label",
       "mechanic": null,
-      "entries": 4548,
-      "plays": 36285,
+      "entries": 4591,
+      "plays": 36406,
       "from": [
         {
           "benchmark": "Revosect S1",
@@ -10761,11 +10760,11 @@
       "leaderboardId": 677,
       "category": "Tracking",
       "categoryFrom": "kovaaks",
-      "subSkill": null,
-      "via": null,
+      "subSkill": "Reactive Tracking",
+      "via": "label",
       "mechanic": null,
-      "entries": 28040,
-      "plays": 268515,
+      "entries": 28412,
+      "plays": 270666,
       "from": [
         {
           "benchmark": "Viscose Benchmarks",
@@ -10777,13 +10776,13 @@
     {
       "scenario": "Flicker Plaza rAim Easy",
       "leaderboardId": 606,
-      "category": "Switching",
+      "category": "Tracking",
       "categoryFrom": "benchmark",
-      "subSkill": "Speed Switching",
+      "subSkill": "Reactive Tracking",
       "via": "label",
       "mechanic": null,
-      "entries": 55806,
-      "plays": 359909,
+      "entries": 56852,
+      "plays": 366276,
       "from": [
         {
           "benchmark": "Viscose Benchmarks",
@@ -10797,11 +10796,11 @@
       "leaderboardId": 128774,
       "category": "Tracking",
       "categoryFrom": "kovaaks",
-      "subSkill": null,
-      "via": null,
+      "subSkill": "Reactive Tracking",
+      "via": "label",
       "mechanic": null,
-      "entries": 112168,
-      "plays": 455735,
+      "entries": 115077,
+      "plays": 468398,
       "from": [
         {
           "benchmark": "Viscose Benchmarks",
@@ -11968,8 +11967,8 @@
       "subSkill": null,
       "via": null,
       "mechanic": null,
-      "entries": 12011,
-      "plays": 118743,
+      "entries": 12168,
+      "plays": 120217,
       "from": [
         {
           "benchmark": "e1se Tracking Routine",
@@ -16496,8 +16495,8 @@
       "subSkill": null,
       "via": null,
       "mechanic": null,
-      "entries": 18893,
-      "plays": 116927,
+      "entries": 19248,
+      "plays": 119446,
       "from": [
         {
           "benchmark": "TSK Mixed Benchmarks",
@@ -16514,8 +16513,8 @@
       "subSkill": null,
       "via": null,
       "mechanic": null,
-      "entries": 9310,
-      "plays": 86811,
+      "entries": 9424,
+      "plays": 88085,
       "from": [
         {
           "benchmark": "TSK Mixed Benchmarks",
@@ -24441,8 +24440,8 @@
       "subSkill": null,
       "via": null,
       "mechanic": null,
-      "entries": 7412,
-      "plays": 27931,
+      "entries": 7490,
+      "plays": 28208,
       "from": [
         {
           "benchmark": "Aimerz+ S0",
@@ -28848,8 +28847,8 @@
       "subSkill": "Evasive Switching",
       "via": "label",
       "mechanic": null,
-      "entries": 110714,
-      "plays": 1538806,
+      "entries": 112991,
+      "plays": 1557288,
       "from": [
         {
           "benchmark": "Aimerz+ Evasive Switching",
@@ -29236,8 +29235,8 @@
       "subSkill": "Speed Switching",
       "via": "label",
       "mechanic": null,
-      "entries": 429489,
-      "plays": 4585828,
+      "entries": 435981,
+      "plays": 4644638,
       "from": [
         {
           "benchmark": "Aimerz+ SpeedTS",
@@ -29295,8 +29294,8 @@
       "subSkill": "Speed Switching",
       "via": "label",
       "mechanic": null,
-      "entries": 24846,
-      "plays": 315188,
+      "entries": 25193,
+      "plays": 319127,
       "from": [
         {
           "benchmark": "Revosect S1",
