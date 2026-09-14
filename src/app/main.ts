@@ -49,6 +49,7 @@ import {
   settleMatch,
   submitRun,
   uploadBackfill,
+  uploadRecentRuns,
   answerDuel,
   fetchDuels,
   sendDuel,
@@ -253,7 +254,12 @@ function startWatching(dir: string): void {
       // If this scenario belongs to the active match, send it for verification without
       // being asked. Making the player click "submit" after every run would undo the
       // entire point of watching the folder.
-      void maybeSubmitForMatch(run.scenario, file);
+      //
+      // Every other run is history, and goes up now rather than whenever Upload history
+      // is next pressed, so the next match is measured against what was actually played.
+      void maybeSubmitForMatch(run.scenario, file).then((forMatch) => {
+        if (!forMatch) void keepHistoryCurrent("new run", [file]);
+      });
 
       scheduleRebuild(`new run: ${run.scenario}`);
     },
@@ -344,13 +350,16 @@ function applyQuestSync(sync: QuestSync): void {
  * Only the first run per scenario counts. Without that, a player could keep replaying a
  * scenario until it went well and settle on the best attempt, which would make the
  * ladder measure patience rather than performance.
+ *
+ * Resolves true when the run was taken for the match, so the caller knows not to send
+ * it again as history. A repeat of a scenario already counted is history.
  */
-async function maybeSubmitForMatch(scenarioName: string, file: string): Promise<void> {
+async function maybeSubmitForMatch(scenarioName: string, file: string): Promise<boolean> {
   const match = state.match;
-  if (!match || !state.session || !state.statsDir) return;
+  if (!match || !state.session || !state.statsDir) return false;
 
   const wanted = match.scenarios.find((s) => s.name === scenarioName);
-  if (!wanted) return;
+  if (!wanted) return false;
 
   if (state.submitted.has(wanted.id)) {
     broadcast("apogee:matchProgress", {
@@ -359,7 +368,7 @@ async function maybeSubmitForMatch(scenarioName: string, file: string): Promise<
       status: "already-submitted",
       message: `${scenarioName} already counted · first run per scenario only`,
     });
-    return;
+    return false;
   }
 
   // Marked before the request so two runs landing together cannot both submit.
@@ -398,6 +407,27 @@ async function maybeSubmitForMatch(scenarioName: string, file: string): Promise<
       status: "failed",
       message,
     });
+  }
+
+  return true;
+}
+
+/**
+ * Send ordinary runs up as history: one as it lands, or on the way in, whatever was
+ * played while the app was shut.
+ *
+ * Best effort. Upload history still exists, and a failure here costs a baseline a few
+ * runs stale, not a run.
+ */
+async function keepHistoryCurrent(reason: string, only?: string[]): Promise<void> {
+  // A backfill in progress is already sending all of it.
+  if (!state.session || !state.statsDir || state.uploading) return;
+
+  try {
+    const result = await uploadRecentRuns(state.statsDir, state.session.playerId, only);
+    if (result.errors.length) console.warn(`history upload (${reason}): ${result.errors.join("; ")}`);
+  } catch (err) {
+    console.warn(`history upload (${reason}): ${err instanceof Error ? err.message : String(err)}`);
   }
 }
 
@@ -1772,6 +1802,9 @@ app.whenReady().then(() => {
         // costs a convenience rather than the match.
       }
 
+      // Whatever was played while the app was shut.
+      void keepHistoryCurrent("session restored");
+
       // And the duel board, for the same reason: somebody who was challenged while the
       // app was shut should be told on the way in rather than the next time they think
       // to look. Nothing here is on a timer - this fires on the way in and after every
@@ -1866,6 +1899,7 @@ ipcMain.handle("apogee:signIn", async () => {
     broadcast("apogee:session", session);
     void refreshDuels("signed in");
     void refreshTournaments("signed in");
+    void keepHistoryCurrent("signed in");
     return { session };
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);

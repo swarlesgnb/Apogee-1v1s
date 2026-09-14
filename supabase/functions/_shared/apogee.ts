@@ -156,39 +156,73 @@ export async function scenarioByName(
  * the client supplied. This is called after every accepted run so the number a match is
  * scored against is current.
  */
+type BaselineRule = (s: string, scores: number[], pb?: number | null) => {
+  value: number;
+  runCount: number;
+  provisional: boolean;
+  flooredByPb: boolean;
+};
+
+/** Runs read per baseline: the same 200 refresh-baselines keeps, of which the rule uses the last 50. */
+const BASELINE_HISTORY = 200;
+
+/**
+ * One player's baseline on one scenario, from their stored runs.
+ *
+ * The newest runs, not the oldest. This query used to ask for 200 in ascending order,
+ * which on a scenario with more than 200 uploaded runs measured the player against the
+ * tail of their first 200, however long ago those were played.
+ *
+ * `before` restricts it to what the player had played when a match began, less that
+ * match's own runs; settle-match says why that matters.
+ */
+export async function baselineFor(
+  admin: SupabaseClient,
+  playerId: string,
+  scenarioId: number,
+  scenarioName: string,
+  baselineFromScores: BaselineRule,
+  before?: { at: string; matchId: string },
+): Promise<ReturnType<BaselineRule>> {
+  let query = admin
+    .from("runs")
+    .select("score")
+    .eq("player_id", playerId)
+    .eq("scenario_id", scenarioId)
+    .neq("verification_tier", "rejected");
+
+  if (before) {
+    // `match_id=neq.x` on its own also drops every row whose match_id is null, which is
+    // all of uploaded history, so the null case is asked for by name.
+    query = query
+      .lt("played_at", before.at)
+      .or(`match_id.is.null,match_id.neq.${before.matchId}`);
+  }
+
+  const [{ data: runs }, { data: pb }] = await Promise.all([
+    query.order("played_at", { ascending: false }).limit(BASELINE_HISTORY),
+    admin
+      .from("verified_pbs")
+      .select("score")
+      .eq("player_id", playerId)
+      .eq("scenario_id", scenarioId)
+      .maybeSingle(),
+  ]);
+
+  // Newest first from the query; the rule wants oldest first and reads the tail.
+  const scores = (runs ?? []).map((r: { score: number }) => Number(r.score)).reverse();
+  return baselineFromScores(scenarioName, scores, pb ? Number(pb.score) : null);
+}
+
 export async function refreshBaseline(
   admin: SupabaseClient,
   playerId: string,
   scenarioId: number,
   scenarioName: string,
-  baselineFromScores: (s: string, scores: number[], pb?: number | null) => {
-    value: number;
-    runCount: number;
-    provisional: boolean;
-    flooredByPb: boolean;
-  },
+  baselineFromScores: BaselineRule,
 ): Promise<void> {
-  const { data: runs } = await admin
-    .from("runs")
-    .select("score, played_at")
-    .eq("player_id", playerId)
-    .eq("scenario_id", scenarioId)
-    .neq("verification_tier", "rejected")
-    .order("played_at", { ascending: true })
-    .limit(200);
-
-  const scores = (runs ?? []).map((r: { score: number }) => Number(r.score));
-  if (scores.length === 0) return;
-
-  const { data: pb } = await admin
-    .from("verified_pbs")
-    .select("score")
-    .eq("player_id", playerId)
-    .eq("scenario_id", scenarioId)
-    .maybeSingle();
-
-  const baseline = baselineFromScores(scenarioName, scores, pb ? Number(pb.score) : null);
-  if (!(baseline.value > 0)) return;
+  const baseline = await baselineFor(admin, playerId, scenarioId, scenarioName, baselineFromScores);
+  if (baseline.runCount === 0 || !(baseline.value > 0)) return;
 
   await admin.from("baselines").upsert(
     {

@@ -12,6 +12,7 @@
  */
 
 import {
+  baselineFor,
   handler,
   json,
   rateChallenger,
@@ -182,48 +183,47 @@ Deno.serve(handler(async (req, admin) => {
     );
   }
 
-  // ---- baselines, recomputed rather than trusted ---------------------------------
-  const { data: baselineRows } = await admin
-    .from("baselines")
-    .select("scenario_id, value, provisional")
-    .eq("player_id", caller.playerId)
-    .in("scenario_id", scenarioIds);
-
-  const baselineById = new Map(
-    (baselineRows ?? []).map((b: any) => [b.scenario_id, b]),
+  // ---- baselines, as they stood when the match began ------------------------------
+  //
+  // Recomputed from the runs played before the match, never read from the stored row.
+  // submit-run refreshes that row as each match run lands, so by the time this ran it
+  // already held the very runs it was about to measure. On a scenario with no earlier
+  // history uploaded the baseline was the run itself, and every such round read exactly
+  // 0%; with some history it was still pulled toward the score. The rule was measured
+  // (compareBaselines, coldStart) against the runs strictly before each one, and that is
+  // what this restores.
+  const baselines = await Promise.all(
+    scenarioIds.map((scenarioId) =>
+      baselineFor(
+        admin,
+        caller.playerId,
+        scenarioId,
+        firstByScenario.get(scenarioId)!.scenario_name,
+        baselineFromScores,
+        { at: match.created_at, matchId },
+      ),
+    ),
   );
 
   const playerRounds: RoundSubmission[] = [];
 
-  for (const scenarioId of scenarioIds) {
+  for (const [i, scenarioId] of scenarioIds.entries()) {
     const run = firstByScenario.get(scenarioId)!;
-    let baseline = baselineById.get(scenarioId);
+    const baseline = baselines[i];
 
-    // No stored baseline yet: derive one from history now, and mark it provisional so
-    // the match carries reduced weight.
-    if (!baseline) {
-      const { data: history } = await admin
-        .from("runs")
-        .select("score")
-        .eq("player_id", caller.playerId)
-        .eq("scenario_id", scenarioId)
-        .neq("verification_tier", "rejected")
-        .order("played_at", { ascending: true })
-        .limit(200);
-
-      const derived = baselineFromScores(
-        run.scenario_name,
-        (history ?? []).map((h: any) => Number(h.score)),
-      );
-      baseline = { scenario_id: scenarioId, value: derived.value, provisional: true };
-    }
+    // Nothing played before the match to measure against. This keeps what settlement
+    // has always done in that case, the run standing as its own baseline for a
+    // provisional 0%, but states it rather than arriving there by accident. PLAN.md §3's
+    // fallback chain (a sibling scenario, the sub-category, the rank cohort) is the better
+    // answer and is not built yet.
+    const value = baseline.runCount > 0 ? baseline.value : Number(run.score);
 
     playerRounds.push({
       scenarioId,
       scenarioName: run.scenario_name,
       score: Number(run.score),
-      baseline: Number(baseline.value),
-      provisional: !!baseline.provisional,
+      baseline: value,
+      provisional: baseline.provisional,
       verificationTier: run.verification_tier as VerificationTier,
       // Left before the scenario finished. Not a bad score, an absent one: settleMatch
       // drops the round rather than scoring it, which leaves the sides uneven and voids

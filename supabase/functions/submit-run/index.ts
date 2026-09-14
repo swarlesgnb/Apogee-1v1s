@@ -203,41 +203,63 @@ Deno.serve(handler(async (req, admin) => {
     },
   });
 
-  const { data: inserted, error } = await admin
-    .from("runs")
-    .insert({
-      player_id: caller.playerId,
-      scenario_name: run.scenario,
-      score: run.score,
-      accuracy: run.accuracy,
-      avg_ttk: run.avgTtk,
-      kills: run.kills,
-      hit_count: run.hitCount,
-      miss_count: run.missCount,
-      played_at: (run.playedAt ?? new Date()).toISOString(),
-      challenge_start: run.challengeStart,
-      duration_seconds: durationSeconds,
-      hash: run.hash,
-      game_version: run.gameVersion,
-      avg_fps: run.avgFps,
-      resolution: run.resolution,
-      cm360: run.cm360,
-      dpi: run.dpi,
-      fov: run.fov,
-      csv_sha256: digest,
-      match_id: body.matchId ?? null,
-      verification_tier: outcome.tier,
-      verification_notes: {
-        reasons: outcome.reasons,
-        advisories: outcome.advisories,
-        hardFailures: outcome.report.hardFailures,
-      },
-      // Per-kill detail is kept only for match runs, where anti-cheat may need to
-      // re-derive the score. Keeping it for every backfilled run would be enormous.
-      kill_rows: body.matchId ? run.killRows : null,
-    })
-    .select("id")
-    .maybeSingle();
+  const row = {
+    player_id: caller.playerId,
+    scenario_name: run.scenario,
+    score: run.score,
+    accuracy: run.accuracy,
+    avg_ttk: run.avgTtk,
+    kills: run.kills,
+    hit_count: run.hitCount,
+    miss_count: run.missCount,
+    played_at: (run.playedAt ?? new Date()).toISOString(),
+    challenge_start: run.challengeStart,
+    duration_seconds: durationSeconds,
+    hash: run.hash,
+    game_version: run.gameVersion,
+    avg_fps: run.avgFps,
+    resolution: run.resolution,
+    cm360: run.cm360,
+    dpi: run.dpi,
+    fov: run.fov,
+    csv_sha256: digest,
+    match_id: body.matchId ?? null,
+    verification_tier: outcome.tier,
+    verification_notes: {
+      reasons: outcome.reasons,
+      advisories: outcome.advisories,
+      hardFailures: outcome.report.hardFailures,
+    },
+    // Per-kill detail is kept only for match runs, where anti-cheat may need to
+    // re-derive the score. Keeping it for every backfilled run would be enormous.
+    kill_rows: body.matchId ? run.killRows : null,
+  };
+
+  let { data: inserted, error } = await admin.from("runs").insert(row).select("id").maybeSingle();
+
+  // The same file already uploaded as plain history, attached to no match: claim it.
+  //
+  // The client uploads every run as history the moment it lands, and on launch it uploads
+  // whatever was played while it was shut. A match run can reach the table that way
+  // first - played with the app closed, or while Upload history was running - and then
+  // the replay check below refused its own submission and the match could never settle.
+  // Replay protection is about one run deciding two matches, and a row with no match has
+  // decided none, so it is taken over. Every column is rewritten from this parse, so
+  // nothing the client inserted survives into the match.
+  if (error?.code === "23505" && body.matchId) {
+    const claimed = await admin
+      .from("runs")
+      .update(row)
+      .eq("player_id", caller.playerId)
+      .eq("csv_sha256", digest)
+      .is("match_id", null)
+      .select("id")
+      .maybeSingle();
+    if (claimed.data) {
+      inserted = claimed.data;
+      error = null;
+    }
+  }
 
   if (error) {
     // The unique constraint on (player_id, csv_sha256) is replay protection, so a

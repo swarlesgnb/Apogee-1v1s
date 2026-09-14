@@ -20,6 +20,7 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
+import { parseFilename } from "../core/stats/parseStatsFile.ts";
 import { collectRuns, type RunPayload } from "../core/sync/uploadRuns.ts";
 import { accessToken, supabase, SUPABASE_URL } from "./session.ts";
 
@@ -126,6 +127,70 @@ export async function uploadBackfill(
   }
 
   return { scanned, prepared: payloads.length, uploaded, skipped, errors };
+}
+
+/** Reach back past the newest uploaded run, so one that failed just before it is retried. */
+const HISTORY_SLACK_MS = 24 * 60 * 60 * 1000;
+
+/**
+ * Upload what has been played since the server last heard, without being asked.
+ *
+ * Backfill was the only way an ordinary run reached the server, and it runs when the
+ * player presses Upload history. Everything played after that was missing, so a match was
+ * measured against however stale that upload was, and a scenario first played since
+ * against nothing at all.
+ *
+ * `only` names the files to send, which is how the watcher sends a run as it lands.
+ * Without it, every file named after the newest history run the server holds is sent.
+ * Match runs are kept out of that anchor: they arrive through submit-run on their own
+ * schedule, and anchoring on one would skip everything played between the last upload and
+ * the match. A player with nothing uploaded yet is left to Upload history, which shows its
+ * progress; thirteen thousand rows is not something to send unannounced.
+ *
+ * The same upsert as backfill, so a file sent twice is ignored.
+ */
+export async function uploadRecentRuns(
+  statsDir: string,
+  playerId: string,
+  only?: string[],
+): Promise<{ uploaded: number; errors: string[] }> {
+  const client = supabase();
+  let include: (file: string) => boolean;
+
+  if (only) {
+    const wanted = new Set(only);
+    include = (file) => wanted.has(file);
+  } else {
+    const { data, error } = await client
+      .from("runs")
+      .select("played_at")
+      .eq("player_id", playerId)
+      .is("match_id", null)
+      .order("played_at", { ascending: false })
+      .limit(1);
+    if (error) throw new ApiError(error.message);
+
+    const newest = data?.[0]?.played_at;
+    if (!newest) return { uploaded: 0, errors: [] };
+
+    const since = new Date(newest).getTime() - HISTORY_SLACK_MS;
+    include = (file) => (parseFilename(file)?.playedAt.getTime() ?? -Infinity) >= since;
+  }
+
+  const { payloads } = collectRuns(statsDir, include);
+  const errors: string[] = [];
+  let uploaded = 0;
+
+  for (let i = 0; i < payloads.length; i += BATCH_SIZE) {
+    const rows = payloads.slice(i, i + BATCH_SIZE).map((p) => ({ ...p, player_id: playerId }));
+    const { error } = await client
+      .from("runs")
+      .upsert(rows, { onConflict: "player_id,csv_sha256", ignoreDuplicates: true });
+    if (error) errors.push(error.message);
+    else uploaded += rows.length;
+  }
+
+  return { uploaded, errors };
 }
 
 // ---------------------------------------------------------------------------

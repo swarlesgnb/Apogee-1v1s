@@ -94,11 +94,15 @@ export interface CollectResult {
   skipped: number;
 }
 
-/** Parse and hash every stats file in a folder, ready for upload. */
-export function collectRuns(dir: string): CollectResult {
+/**
+ * Parse and hash every stats file in a folder, ready for upload.
+ *
+ * @param include Read only the files it accepts, by name, before anything is opened.
+ */
+export function collectRuns(dir: string, include?: (file: string) => boolean): CollectResult {
   let files: string[];
   try {
-    files = readdirSync(dir).filter((f) => f.endsWith("Stats.csv"));
+    files = readdirSync(dir).filter((f) => f.endsWith("Stats.csv") && (!include || include(f)));
   } catch {
     return { payloads: [], scanned: 0, skipped: 0 };
   }
