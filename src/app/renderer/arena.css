@@ -237,7 +237,7 @@ html.preview .topbar-right { margin-left: auto; }
 .sv-tier { padding: 16px; }
 .sv-section-title { font-family: var(--display); font-size: 29px; }
 .pool-bands { border-radius: 10px; }
-.pool-band, .pool-chip { border-radius: 7px; }
+.pool-band, .pool-chip, .pool-nav-item { border-radius: 7px; }
 .pool-group { border-radius: 10px; overflow: hidden; }
 .empty { padding: 48px; max-width: 880px; margin: 24px auto; }
 .empty h2 { font-family: var(--display); font-size: 38px; letter-spacing: -.04em; }

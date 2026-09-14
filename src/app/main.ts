@@ -855,6 +855,7 @@ function runSmokeTest(): void {
         named: Array.isArray(data.families) ? data.families.filter((f) => f.next).length : -1,
         painted: document.querySelectorAll("#svCats .sv-cat").length > 0,
         bands: document.querySelectorAll("#svDiffs .pool-band").length,
+        cats: document.querySelectorAll("#svCatNav .pool-nav-item").length,
         rows: document.querySelectorAll("#svPool .pool-row").length,
         subs: document.querySelectorAll("#svPool .pool-sub").length,
         next: document.querySelectorAll("#svPool .pool-row.next").length,
@@ -882,6 +883,8 @@ function runSmokeTest(): void {
     // Only once something snapshot-driven is on screen is the panel's absence meaningful.
     if (practice.painted) {
       if (practice.bands === 0) problems.push("the Season screen offers no difficulty to pick");
+      // "All categories" plus at least one: a rail with only the first is no choice.
+      else if (practice.cats < 2) problems.push("the Season screen offers no category to pick");
       else if (practice.rows === 0) problems.push("the Season screen lists no scenarios to play");
       else if (practice.subs === 0) problems.push("the Season screen groups nothing by sub-skill");
       else if (!practice.play) problems.push("the Season screen has no Play button");

@@ -2440,6 +2440,64 @@
 
   .pool-grid { display: grid; gap: 30px; }
 
+  /* Categories beside the pool, one shown at a time. Six categories of up to ten families
+     in a band made a column long enough that the one being practised was always a scroll
+     away; the rail keeps all six in reach. Counts and dots are for the band on screen, the
+     same cut the band buttons count for the category on screen. Below 960px it becomes a
+     select over the list rather than a third of a narrow window. */
+  .pool-layout {
+    display: grid; grid-template-columns: 210px minmax(0, 1fr);
+    gap: var(--s5); align-items: start;
+  }
+  .pool-nav { position: sticky; top: var(--s4); display: grid; gap: 2px; }
+  .pool-nav-list { display: grid; gap: 2px; }
+  /* Dressed like the season editor's selects, not left to the platform's grey box. */
+  .pool-nav-pick {
+    display: none;
+    font: inherit; font-family: var(--mono); font-size: var(--t-xs); font-weight: 600;
+    letter-spacing: .1em; text-transform: uppercase; color: var(--ink);
+    background: var(--well); border: 1px solid var(--rule-2); border-radius: var(--r);
+    padding: var(--s2) var(--s3); cursor: pointer;
+  }
+  .pool-nav-pick:hover { border-color: var(--rule-3); }
+  .pool-nav-pick:focus { outline: none; border-color: var(--accent); }
+  .pool-nav-item {
+    display: grid; grid-template-columns: 1fr auto; align-items: center;
+    column-gap: var(--s2); row-gap: 3px;
+    text-align: left; font: inherit; color: var(--ink-dim);
+    background: transparent; border: 0;
+    padding: var(--s2) var(--s3); cursor: pointer;
+    transition: color var(--fast) var(--ease), background var(--fast) var(--ease);
+  }
+  .pool-nav-item:hover { color: var(--ink-mid); background: var(--well); }
+  .pool-nav-item.on {
+    color: var(--ink); background: var(--panel); box-shadow: inset 2px 0 0 var(--accent);
+  }
+  .pool-nav-item .nm {
+    display: flex; align-items: center; gap: var(--s2);
+    font-family: var(--mono); font-size: var(--t-xs); font-weight: 600;
+    letter-spacing: .1em; text-transform: uppercase;
+  }
+  .pool-nav-item .due { width: 5px; height: 5px; flex: none; background: var(--accent); }
+  .pool-nav-item .due.off { visibility: hidden; }
+  .pool-nav-item .n {
+    font-family: var(--mono); font-size: var(--t-2xs); line-height: 1; padding: 3px 5px;
+    background: var(--control); opacity: .75;
+  }
+  .pool-nav-item.on .n { background: var(--control-hi); opacity: 1; }
+  .pool-nav-item .rk {
+    grid-column: 1 / -1; padding-left: calc(5px + var(--s2));
+    font-family: var(--mono); font-size: var(--t-2xs);
+    letter-spacing: .08em; text-transform: uppercase;
+    color: var(--rank-ink, var(--ink-dim));
+  }
+  @media (max-width: 960px) {
+    .pool-layout { grid-template-columns: minmax(0, 1fr); gap: var(--s4); }
+    .pool-nav { position: static; }
+    .pool-nav-list { display: none; }
+    .pool-nav-pick { display: block; width: 100%; }
+  }
+
   /* Scenario ranks. The filters reuse the pool's band picker at half the height, because
      two rows of full-size difficulty buttons pushed the table itself below the fold. */
   .pool-bands.sc-filter { margin-bottom: var(--s3); }
@@ -3563,7 +3621,10 @@
                   once your score holds a rank there. Hover for the rank and next threshold.
                 </p>
                 <div class="pool-bands" id="svDiffs"></div>
-                <div class="pool-grid" id="svPool"></div>
+                <div class="pool-layout">
+                  <nav class="pool-nav" id="svCatNav" aria-label="Categories"></nav>
+                  <div class="pool-grid" id="svPool"></div>
+                </div>
                 <div class="pool-lists" id="svPlaylists" hidden>
                   <div class="pool-lists-head">
                     <h4 id="svListsTitle">Playlists</h4>

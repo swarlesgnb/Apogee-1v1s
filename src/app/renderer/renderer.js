@@ -3925,6 +3925,21 @@ let practice =
 let seasonBand = null;
 
 /**
+ * Which category the pool is showing, or null for all six.
+ *
+ * Remembered per machine for the reason the queue category is: somebody working through
+ * Reactive Tracking this week should come back to it, not to the top of a list of six. A
+ * category the season no longer has falls back to all of them when the pool renders.
+ */
+const SEASON_CATEGORY_KEY = "apogee.seasonCategory";
+let seasonCategory = null;
+try {
+  seasonCategory = localStorage.getItem(SEASON_CATEGORY_KEY);
+} catch {
+  /* storage unavailable: start on all six */
+}
+
+/**
  * A tier's percentile band, phrased the way the rest of the app phrases standing.
  *
  * The stored band is the share of the population the player is above, so Supernova is
@@ -4131,6 +4146,80 @@ document.querySelectorAll(".sc-sort").forEach((b) => {
   });
 });
 
+/**
+ * The category rail beside the pool, and the select that stands in for it in a narrow
+ * window. Both are drawn from the same entries, so they cannot disagree about a count.
+ *
+ * @param inBand the pool rows in the band on screen, every category.
+ */
+function renderPoolNav(inBand, data) {
+  const nav = $("svCatNav");
+  if (!nav) return;
+  nav.textContent = "";
+
+  const choose = (name) => {
+    seasonCategory = name;
+    try {
+      if (name === null) localStorage.removeItem(SEASON_CATEGORY_KEY);
+      else localStorage.setItem(SEASON_CATEGORY_KEY, name);
+    } catch {
+      /* remembered until the app closes */
+    }
+    if (current) renderSeasonView(current);
+  };
+
+  const entries = [{ name: null, label: "All categories", rows: inBand }].concat(
+    practice.season.categories.map((c) => ({
+      name: c.name,
+      label: c.name,
+      rows: inBand.filter((r) => r.category === c.name),
+    })),
+  );
+
+  const list = document.createElement("div");
+  list.className = "pool-nav-list";
+  const select = document.createElement("select");
+  select.className = "pool-nav-pick";
+  select.setAttribute("aria-label", "Category");
+
+  for (const entry of entries) {
+    const on = entry.name === seasonCategory;
+    const due = entry.rows.filter((r) => r.isNext).length;
+    const standing = entry.name && (data.categories || []).find((c) => c.name === entry.name);
+    const colour =
+      standing && standing.rankColors ? standing.rankColors[standing.rankName] : null;
+
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "pool-nav-item" + (on ? " on" : "");
+    btn.setAttribute("aria-pressed", String(on));
+    btn.innerHTML =
+      // The dot's slot is always drawn, so every name and the rank line under it start
+      // at the same indent whether or not a next rank is scored in that category.
+      '<span class="nm"><span class="due' + (due > 0 ? "" : " off") + '"></span>' + esc(entry.label) + "</span>" +
+      '<span class="n">' + entry.rows.length + "</span>" +
+      (entry.name
+        ? '<span class="rk"' +
+          (colour ? ' style="--rank-ink:' + esc(legibleOnDark(colour, RANK_TEXT_CONTRAST)) + '"' : "") +
+          ">" + esc((standing && standing.rankName) || "unranked") + "</span>"
+        : "");
+    btn.title =
+      entry.label + " · " + entry.rows.length + " scenarios" +
+      (due > 0 ? " · " + due + " next ranks scored here" : "");
+    btn.addEventListener("click", () => choose(entry.name));
+    list.append(btn);
+
+    const option = document.createElement("option");
+    option.value = entry.name ?? "";
+    option.textContent = entry.label + " (" + entry.rows.length + ")";
+    option.selected = on;
+    select.append(option);
+  }
+
+  select.addEventListener("change", () => choose(select.value || null));
+  nav.append(select, list);
+}
+
 function renderSeasonView(data) {
   const me = data.player.apogee;
   const tiers = Array.isArray(data.theme) ? data.theme : [];
@@ -4298,6 +4387,7 @@ function renderSeasonView(data) {
   if (!rows) {
     poolHost.textContent = "";
     if ($("svDiffs")) $("svDiffs").textContent = "";
+    if ($("svCatNav")) $("svCatNav").textContent = "";
     if ($("svPoolNote")) {
       $("svPoolNote").textContent = seasonPool ? num(seasonPool.scenarios.length) + " scenarios" : "";
     }
@@ -4310,7 +4400,11 @@ function renderSeasonView(data) {
   }
 
   const bands = practice.season.windows || [];
-  const dueIn = bands.map((_, w) => rows.filter((r) => r.window === w && r.isNext).length);
+  if (seasonCategory !== null && !practice.season.categories.some((c) => c.name === seasonCategory)) {
+    seasonCategory = null;
+  }
+  const inView = (r) => seasonCategory === null || r.category === seasonCategory;
+  const dueIn = bands.map((_, w) => rows.filter((r) => r.window === w && r.isNext && inView(r)).length);
 
   // Which band to open on: the one holding the most of the player's next ranks. That is
   // the question the screen exists to answer, and defaulting to the easiest band would
@@ -4330,7 +4424,7 @@ function renderSeasonView(data) {
   if (diffs) {
     diffs.textContent = "";
     bands.forEach((name, w) => {
-      const inBand = rows.filter((r) => r.window === w);
+      const inBand = rows.filter((r) => r.window === w && inView(r));
       const btn = document.createElement("button");
       btn.type = "button";
       btn.className = "pool-band" + (w === seasonBand ? " on" : "");
@@ -4349,7 +4443,9 @@ function renderSeasonView(data) {
     });
   }
 
-  const shown = rows.filter((r) => r.window === seasonBand);
+  renderPoolNav(rows.filter((r) => r.window === seasonBand), data);
+
+  const shown = rows.filter((r) => r.window === seasonBand && inView(r));
   if ($("svPoolNote")) {
     const played = shown.filter((r) => r.runs > 0).length;
     // Counted from the rows on screen rather than stated, so the claim is about the band
@@ -4359,10 +4455,15 @@ function renderSeasonView(data) {
     $("svPoolNote").innerHTML =
       num(shown.length) + ' scenarios · <span class="sv-played"></span> played' +
       (from.size > 0 ? " · from " + num(from.size) + " benchmarks" : "");
-    // Keyed to the band, because that is what the sentence is about. Switching bands
-    // changes this number for a different reason than playing does, and counting between
-    // two bands' totals would animate a comparison nobody asked for.
-    countTo($("svPoolNote").querySelector(".sv-played"), played, num, "svplayed:" + seasonBand);
+    // Keyed to the band and the category, because that is what the sentence is about.
+    // Switching either changes this number for a different reason than playing does, and
+    // counting between two cuts' totals would animate a comparison nobody asked for.
+    countTo(
+      $("svPoolNote").querySelector(".sv-played"),
+      played,
+      num,
+      "svplayed:" + seasonBand + ":" + (seasonCategory ?? "all"),
+    );
   }
 
   poolHost.textContent = "";
