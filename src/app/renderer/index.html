@@ -1733,15 +1733,38 @@
   }
   .qfill { background: var(--accent); }
 
-  /* A floor quest asks for a window of clean runs rather than one good one, so it
-     is marked rather than left to look like every other row. */
+  /* Every quest says which slot it fills. Only the floor's is coloured: it asks for a
+     window of clean runs rather than one good one, which is a different kind of effort. */
   .quest-floor { border-color: color-mix(in srgb, var(--warn) 28%, transparent); }
-  .floor-tag {
+  .slot-tag {
     font-family: var(--mono); font-size: 9px; text-transform: uppercase;
-    letter-spacing: .12em; color: var(--warn);
-    border: 1px solid color-mix(in srgb, var(--warn) 45%, transparent);
+    letter-spacing: .12em; color: var(--ink-dim);
+    border: 1px solid var(--rule-3);
     padding: 2px 6px; margin-left: var(--s2); vertical-align: 2px;
   }
+  .quest-floor .slot-tag {
+    color: var(--warn); border-color: color-mix(in srgb, var(--warn) 45%, transparent);
+  }
+  /* Done stays on the board rather than disappearing: the list is a record of the day as
+     much as a to-do, and a finished quest vanishing is what the old board did by mistake. */
+  .quest.done { border-color: color-mix(in srgb, var(--up) 30%, transparent); }
+  .quest.done h3 { color: var(--ink-mid); }
+  .quest.done .qsteps { color: var(--up); }
+  .qactions { grid-column: 1 / -1; display: flex; gap: var(--s2); }
+  .qactions .scen-play, .qreroll {
+    font: inherit; font-size: var(--t-xs); font-weight: 560; color: var(--ink-mid);
+    background: transparent; border: 1px solid var(--rule);
+    border-radius: var(--r); padding: 4px 12px; cursor: pointer;
+  }
+  .qactions .scen-play:hover:not(:disabled), .qreroll:hover:not(:disabled) {
+    color: var(--ink); border-color: var(--rule-3); background: var(--control-hi);
+  }
+  .qactions button:disabled { opacity: .4; cursor: default; }
+  .quest-bonus {
+    margin-top: var(--s3); font-size: var(--t-sm); color: var(--ink-mid);
+  }
+  .quest-bonus b { color: var(--ink); font-weight: 600; }
+  .quest-bonus.earned, .quest-bonus.earned b { color: var(--up); }
   .qsteps {
     display: block; font-family: var(--mono); font-size: var(--t-xs);
     color: var(--ink-mid); margin-bottom: var(--s1); white-space: nowrap;
@@ -2603,6 +2626,18 @@
   .pool-num .tgt.max {
     color: var(--up); font-size: var(--t-2xs); letter-spacing: .1em; text-transform: uppercase;
   }
+  /* The ranks the numbers above stand for. Names in the sans, because they are words; the
+     last run sits at the far end in the mono, because it is a number first. */
+  .pool-rk {
+    display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 6px; min-width: 0;
+    font-size: var(--t-xs); font-weight: 600; color: var(--ink-mid);
+  }
+  .pool-rk .held.none { color: var(--ink-dim); font-weight: 500; }
+  .pool-rk .to { color: var(--ink-dim); font-weight: 400; }
+  .pool-rk .last {
+    margin-left: auto; font-family: var(--mono); font-weight: 400; color: var(--ink-dim);
+    font-variant-numeric: tabular-nums;
+  }
 
   /* Quiet until the tile is under the cursor - twenty-seven live buttons at full contrast
      is a wall, and the tile is the thing being scanned. The row is held open either way so
@@ -3396,17 +3431,29 @@
             <div class="screen-head">
               <h1 data-copy="quests.title">Quests</h1>
               <p data-copy="quests.lede">
-                Today's practice, generated from the benchmark you track and your
-                recent runs.
+                Three for today and one for the week, drawn from where you stood when
+                each began. Only runs played since count, so a quest stays yours until
+                it is done.
               </p>
             </div>
 
             <div class="panel">
               <div class="phead">
                 <h2 data-copy="quests.p1.head">Today</h2>
-                <span class="note" data-copy="quests.p1.note">generated from the benchmark you track</span>
+                <span class="note" id="questNote"></span>
               </div>
-              <div class="pbody"><div class="quests" id="questList"></div></div>
+              <div class="pbody">
+                <div class="quests" id="questList"></div>
+                <div class="quest-bonus" id="questBonus"></div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="phead">
+                <h2 data-copy="quests.p2.head">This week</h2>
+                <span class="note" id="questWeekNote"></span>
+              </div>
+              <div class="pbody"><div class="quests" id="questWeekly"></div></div>
             </div>
           </section>
 
@@ -3506,8 +3553,9 @@
               </div>
               <div class="pbody">
                 <p class="rank-lede">
-                  One difficulty at a time: your best on each scenario and the score for
-                  your next rank. Highlighted rows count toward your next rank.
+                  One difficulty at a time: the rank you hold on each scenario, the score
+                  for the next one, and what your last run reached. Highlighted rows count
+                  toward your next rank.
                 </p>
                 <p class="rank-lede">
                   Every scenario comes from an existing community benchmark. The marks

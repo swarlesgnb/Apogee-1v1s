@@ -17,12 +17,8 @@ import { join } from "node:path";
 import { createHash } from "node:crypto";
 
 import { dataFile, setDataDir, sourceDataDir } from "../core/dataDir.ts";
-import {
-  levelFor,
-  reconcile,
-  type QuestProgressState,
-  type QuestSnapshot,
-} from "../core/quests/progression.ts";
+import { levelFor } from "../core/quests/progression.ts";
+import { recordMatch, rerollQuest, type QuestState, type QuestSync } from "../core/quests/board.ts";
 import {
   installCrashHandlers,
   attachRendererLogging,
@@ -127,8 +123,8 @@ interface State {
   /** Scenario ids of the active match already submitted, so runs are not sent twice. */
   submitted: Set<number>;
   uploading: boolean;
-  /** Quest completions and lifetime XP, persisted between launches. */
-  quests: QuestProgressState | null;
+  /** The quest board and lifetime XP, persisted between launches. */
+  quests: QuestState | null;
   /** The inbox, what was sent, who else plays. Null until signed in and read once. */
   duels: DuelBoard | null;
   /** The tournament list as last read. Null until signed in and read once. */
@@ -188,7 +184,12 @@ function rebuild(reason: string): void {
   broadcast("apogee:scanning", { scanning: true, reason });
 
   try {
-    const snapshot = buildSnapshot({ statsDir: state.statsDir });
+    if (!state.quests) state.quests = loadQuestState();
+    const syncs: QuestSync[] = [];
+    const snapshot = buildSnapshot({
+      statsDir: state.statsDir,
+      quests: { state: state.quests, ranked: state.session !== null, onSync: (sync) => syncs.push(sync) },
+    });
     if (snapshot) {
       const previous = state.snapshot;
       state.snapshot = snapshot;
@@ -203,7 +204,7 @@ function rebuild(reason: string): void {
           snapshot.player.benchmarkEnergy > previous.player.benchmarkEnergy) {
         broadcast("apogee:benchmarkPromotion", { from: previous.player.benchmarkRank, to: snapshot.player.benchmarkRank });
       }
-      checkQuestCompletions(snapshot);
+      if (syncs[0]) applyQuestSync(syncs[0]);
     } else {
       state.lastError = "No runs found in the stats folder yet.";
       broadcast("apogee:error", state.lastError);
@@ -314,58 +315,26 @@ function diagnostics(): string {
 }
 
 /**
- * Detect quests that have just been completed, and award their XP.
+ * Keep what the rebuild made of the quest board, and announce what it paid.
  *
- * Runs on every snapshot rebuild, which means on every run that lands. Progress is
- * recomputed from history rather than tracked incrementally, so a completion cannot be
- * missed by the app being closed at the wrong moment: it simply fires on next launch.
- *
- * Awards are idempotent. A quest already recorded as complete today is never paid
- * twice, however many rebuilds happen.
+ * The board is measured inside the snapshot rebuild, which runs on every run that lands.
+ * Progress is read from the stats folder rather than counted as events arrive, so a quest
+ * finished with the app closed is paid the next time it opens, and payment is idempotent:
+ * a quest with a completion stamp is never paid again, however many rebuilds happen.
  */
-function checkQuestCompletions(snapshot: Snapshot): void {
-  const now = new Date();
-  if (!state.quests) state.quests = loadQuestState(now);
-
-  const quests = (snapshot.quests ?? []) as {
-    id?: string;
-    title: string;
-    detail: string;
-    kind: string;
-    xp: number;
-    steps: { done: number; total: number } | null;
-    progress: number;
-  }[];
-
-  const asSnapshots: QuestSnapshot[] = quests.map((q) => ({
-    // The snapshot does not carry ids, so one is derived from the stable parts of the
-    // quest. Title alone would collide across days; kind plus title does not.
-    id: q.id ?? `${q.kind}:${q.title}`,
-    kind: q.kind,
-    title: q.title,
-    detail: q.detail,
-    xp: q.xp,
-    // `steps` is the authoritative count for window quests; `progress` is a fraction.
-    progress: q.steps ? q.steps.done : q.progress,
-    target: q.steps ? q.steps.total : 1,
-  }));
-
-  const result = reconcile(asSnapshots, state.quests, now);
-  const changed =
-    result.newlyCompleted.length > 0 || result.dayRolled || result.state.totalXp !== state.quests.totalXp;
-
-  state.quests = result.state;
-  if (changed) saveQuestState(state.quests);
+function applyQuestSync(sync: QuestSync): void {
+  state.quests = sync.state;
+  if (sync.changed) saveQuestState(state.quests);
 
   const level = levelFor(state.quests.totalXp);
   broadcast("apogee:progression", {
     totalXp: state.quests.totalXp,
     level,
-    completedToday: Object.keys(state.quests.completed).length,
+    completedToday: state.quests.daily.filter((q) => q.completedAt).length,
   });
 
-  for (const quest of result.newlyCompleted) {
-    broadcast("apogee:questComplete", { quest, level, xpAwarded: result.xpAwarded });
+  for (const quest of sync.newlyCompleted) {
+    broadcast("apogee:questComplete", { quest, level, xpAwarded: sync.xpAwarded });
   }
 }
 
@@ -442,6 +411,17 @@ async function settleActiveMatch(): Promise<void> {
     state.submitted.clear();
     broadcast("apogee:matchSettled", settled);
     nudge();
+    // Ranked quests are measured from results the server settled, never from anything
+    // the client worked out. Kept locally because nothing re-sends a settled match.
+    state.quests = recordMatch(state.quests ?? loadQuestState(), {
+      id: settled.matchId,
+      at: new Date().toISOString(),
+      verdict: settled.verdict,
+      seeding: settled.seeding === true,
+      category: settled.category ?? null,
+    });
+    saveQuestState(state.quests);
+    scheduleRebuild("match settled");
     // A settled leg can decide a fixture, open the next round or crown somebody.
     if (settled.tournament) void refreshTournaments("a fixture leg settled");
   } catch (err) {
@@ -653,7 +633,8 @@ function runSmokeTest(): void {
           ` (${snapshot.player.benchmarkRank})`);
         console.log(`apogee tier  : ${snapshot.player.apogee.tier.name}`);
         console.log(`weakest      : ${snapshot.weakest}`);
-        console.log(`quests       : ${snapshot.quests.length}`);
+        console.log(`quests       : ${snapshot.quests.daily.length} daily, ` +
+          `${snapshot.quests.weekly ? 1 : 0} weekly`);
       }
     } catch (err) {
       problems.push(`snapshot threw: ${err instanceof Error ? err.message : String(err)}`);
@@ -3209,6 +3190,27 @@ ipcMain.handle("apogee:openStatsFolder", () => {
 // hidden under the custom title bar, so until this existed the one thing worth
 // attaching to a bug report was reachable only by somebody who knew to press Alt.
 ipcMain.handle("apogee:diagnostics", () => diagnostics());
+
+/**
+ * Swap one of today's quests for the spare drawn with the board.
+ *
+ * The spare was chosen when the board was issued, so this needs no history and cannot be
+ * used to fish: the one alternative is fixed for the day, and the reroll is spent either way.
+ */
+ipcMain.handle("apogee:rerollQuest", (_event, args: { id?: unknown } | undefined) => {
+  const id = typeof args?.id === "string" ? args.id : null;
+  if (!id) return { error: "No quest named." };
+
+  const result = rerollQuest(state.quests ?? loadQuestState(), id);
+  if ("error" in result) return result;
+
+  state.quests = result.state;
+  saveQuestState(state.quests);
+  // Rebuilt now rather than debounced: the button is waiting on this, and the new
+  // quest may already be half done from this morning's runs.
+  rebuild("quest rerolled");
+  return { ok: true };
+});
 
 /**
  * Write the current match as a KovaaK's playlist and start the game.

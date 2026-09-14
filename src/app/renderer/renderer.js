@@ -3989,6 +3989,18 @@ const scenarioView = { category: null, window: null, sort: "closest" };
  * sixteen-rank ladder; this only looks the name up in the category's ladder, which is the
  * same name every other screen prints for that index.
  */
+/**
+ * A practice row's ladder rank by index: its name, the season's colour for it, and that
+ * colour lifted to read as text on the ground. Null name below the first threshold.
+ */
+function practiceRank(row, index) {
+  const cats = (practice && practice.season && practice.season.categories) || [];
+  const ladder = cats.find((c) => c.name === row.category);
+  const name = ladder && index !== null && index !== undefined ? ladder.rankNames?.[index] ?? null : null;
+  const colour = name ? ladder.rankColors?.[name] ?? null : null;
+  return { name, colour, ink: colour ? legibleOnDark(colour, RANK_TEXT_CONTRAST) : null };
+}
+
 function renderScenarioRanks() {
   const body = $("scRanksBody");
   if (!body) return;
@@ -4435,19 +4447,23 @@ function renderSeasonView(data) {
 
       inSub.forEach((v, circuitIndex) => {
         const maxedHere = v.nextRankScore === null;
+        const held = practiceRank(v, v.rankIndex);
+        const nextRank = maxedHere ? null : practiceRank(v, v.nextRankIndex);
 
         // Progress through the current rank step is the row's own ground rather than a
-        // bar in a column of its own, coloured with the rank being climbed toward so the
-        // fill and the ladder read as the same thing.
+        // bar in a column of its own. Tinted with the rank this scenario holds, which the
+        // tile now names, rather than the category's: a fill coloured for a rank the tile
+        // never showed was a colour with nothing to read it against.
         const row = document.createElement("div");
         row.className =
           "pool-row" +
           (v.isNext ? " next" : "") +
           (maxedHere ? " done" : "") +
           (v.runs === 0 ? " untouched" : "");
-        if (colour) {
-          row.style.setProperty("--rank", colour);
-          row.style.setProperty("--rank-ink", legibleOnDark(colour, RANK_TEXT_CONTRAST));
+        const tint = held.colour || colour;
+        if (tint) {
+          row.style.setProperty("--rank", tint);
+          row.style.setProperty("--rank-ink", legibleOnDark(tint, RANK_TEXT_CONTRAST));
         }
         row.style.setProperty("--fill", (maxedHere ? 1 : (v.progress ?? 0)) * 100 + "%");
 
@@ -4485,7 +4501,7 @@ function renderSeasonView(data) {
         //
         // This is the argument for the whole pool on one line: nothing here was invented,
         // and a session on this ladder is a session on the ladders people already grind.
-        // 146 of the 156 carry at least one mark, 51 of them two or more.
+        // 227 of the 252 carry at least one mark, 73 of them two or more.
         //
         // The mark is the benchmark's own abbreviation in the benchmark's own brand
         // colour, and it fills in solid once the score holds a rank there - so an unplayed
@@ -4547,7 +4563,47 @@ function renderSeasonView(data) {
         if (!maxedHere && v.best !== null) tgt.title = num(v.gap || 0) + " to go";
 
         nums.append(pb, to, tgt);
-        row.append(nm, nums);
+
+        // The ranks those two numbers stand for, under them: the one the best holds and
+        // the one the target buys. A tile that said "842 → 900" left the player working
+        // out from the ladder above what either was worth, which is the whole question
+        // when working through the pool one scenario at a time.
+        //
+        // And the last run, when it was not the best: what that score alone reaches here,
+        // so an attempt can be read the moment it lands without comparing it to anything.
+        const rk = document.createElement("span");
+        rk.className = "pool-rk";
+        const heldEl = document.createElement("span");
+        heldEl.className = "held" + (held.name ? "" : " none");
+        heldEl.textContent = held.name ?? "unranked";
+        if (held.ink) heldEl.style.color = held.ink;
+        rk.append(heldEl);
+        if (nextRank && nextRank.name) {
+          const arrow = document.createElement("span");
+          arrow.className = "to";
+          arrow.textContent = "→";
+          const nx = document.createElement("span");
+          nx.className = "next";
+          nx.textContent = nextRank.name;
+          if (nextRank.ink) nx.style.color = nextRank.ink;
+          rk.append(arrow, nx);
+        }
+        if (v.last !== null && v.last !== v.best) {
+          const lastRank = practiceRank(v, v.lastRankIndex);
+          // Below this difficulty's first threshold a run proves nothing here, but
+          // "unranked" beside a tile that holds a rank reads as the run having lost it.
+          // Naming the rank it fell short of says what actually happened.
+          const floorRank = practiceRank(v, v.window * ((practice.season && practice.season.windowSize) || 4));
+          const lastEl = document.createElement("span");
+          lastEl.className = "last";
+          lastEl.textContent =
+            "last " + num(v.last) + " · " +
+            (lastRank.name ?? (floorRank.name ? "below " + floorRank.name : "unranked"));
+          lastEl.title = "Your most recent run here, and the rank that score alone reaches";
+          rk.append(lastEl);
+        }
+
+        row.append(nm, nums, rk);
 
         const play = playButton(v.scenario);
         if (play) row.append(play);
@@ -5669,42 +5725,122 @@ function renderConsistency(data) {
   });
 }
 
+const QUEST_UNITS = {
+  runs: ["run", "runs"],
+  scenarios: ["scenario", "scenarios"],
+  matches: ["match", "matches"],
+  wins: ["win", "wins"],
+  days: ["day", "days"],
+  sets: ["set", "sets"],
+  ranks: ["rank-up", "rank-ups"],
+};
+
+/**
+ * What is left, in the quest's own unit.
+ *
+ * "3 of 5 runs" says it far better than "60%", and a score quest reads as the best run
+ * since the board was issued against the number it has to reach - not the all-time best,
+ * which is what the quest was issued from and cannot move it.
+ */
+function questCounter(q) {
+  if (q.complete) return "done";
+  if (q.unit === "score") {
+    return q.progress > 0 ? "best " + num(q.progress) + " / " + num(q.target) : "target " + num(q.target);
+  }
+  const unit = QUEST_UNITS[q.unit] || [q.unit, q.unit];
+  return num(q.progress) + " of " + num(q.target) + " " + unit[q.target === 1 ? 0 : 1];
+}
+
+function questCard(q, board) {
+  // Two colours, and both of them mean something, plus the one that says it is over.
+  //
+  // Every quest used to take `theme[3 + i]` - the i-th tier's colour, by row position.
+  // It said nothing: the fourth quest was blue because it was fourth. Five saturated
+  // ramp colours down one column is the rainbow this client is otherwise careful not
+  // to be, and it made five bars compete when the list has no ranking in it.
+  //
+  // A floor quest is warn because it is a different ask: every run in the window has
+  // to clear the bar, not one of them. Everything else takes the accent.
+  const colour = q.complete ? "var(--up)" : q.slot === "floor" ? "var(--warn)" : "var(--accent)";
+
+  const el = document.createElement("div");
+  el.className = "quest quest-" + q.slot + (q.complete ? " done" : "");
+  el.innerHTML =
+    "<div><h3>" + esc(q.title) + '<span class="slot-tag">' + esc(q.slot) + "</span></h3>" +
+      "<p>" + esc(q.detail) + "</p></div>" +
+    '<div class="xp"><span class="qsteps">' + esc(questCounter(q)) + "</span>" + num(q.xp) + " XP</div>" +
+    '<div class="qtrack"><div class="qfill"></div></div>';
+  const fill = el.querySelector(".qfill");
+  fill.style.transform = "scaleX(" + q.fraction.toFixed(4) + ")";
+  fill.style.background = colour;
+
+  if (!q.complete) {
+    const actions = document.createElement("div");
+    actions.className = "qactions";
+    // A quest that names a scenario can open it, so the one step between reading the
+    // quest and doing it is a click rather than a search in KovaaK's.
+    if (q.scenario) {
+      const play = playButton(q.scenario);
+      if (play) actions.append(play);
+    }
+    if (HOST === "electron" && api && api.rerollQuest && board.canReroll && q.slot !== "weekly") {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "qreroll";
+      btn.textContent = "Reroll";
+      btn.title = "Swap this for another quest. One reroll a day.";
+      btn.addEventListener("click", async () => {
+        btn.disabled = true;
+        const r = await api.rerollQuest(q.id);
+        // Success needs nothing here: main rebuilds and the new board arrives as a snapshot.
+        if (r && r.error) {
+          showError(r.error);
+          btn.disabled = false;
+        }
+      });
+      actions.append(btn);
+    }
+    if (actions.childElementCount > 0) el.append(actions);
+  }
+  return el;
+}
+
 function renderQuests(data) {
+  const board = data.quests;
   const host = $("questList");
+  const week = $("questWeekly");
   host.textContent = "";
-  data.quests.forEach((q) => {
-    // Two colours, and both of them mean something.
-    //
-    // Every quest used to take `theme[3 + i]` - the i-th tier's colour, by row position.
-    // It said nothing: the fourth quest was blue because it was fourth. Five saturated
-    // ramp colours down one column is the rainbow this client is otherwise careful not
-    // to be, and it made five bars compete when the list has no ranking in it.
-    //
-    // A floor quest is warn because it is a different ask: every run in the window has
-    // to clear the bar, not one of them. Everything else takes the player's own rank
-    // colour, which is what carries chroma everywhere else here.
-    const colour = q.isFloor ? "var(--warn)" : "var(--accent)";
+  if (week) week.textContent = "";
+  // A snapshot written before the board existed carries a bare list. Nothing is better
+  // than throwing halfway through `render`, which would leave every screen after it stale.
+  if (!board || !Array.isArray(board.daily)) return;
 
-    const el = document.createElement("div");
-    el.className = "quest" + (q.isFloor ? " quest-floor" : "");
+  board.daily.forEach((q) => host.append(questCard(q, board)));
 
-    // "4 of 5 runs" says what is left far better than "80%" on a quest whose whole
-    // point is that every run in the window has to clear the bar.
-    const counter = q.steps
-      ? '<span class="qsteps">' + num(q.steps.done) + " of " + num(q.steps.total) +
-        (q.isFloor ? " runs" : q.kind === "close_the_gap" ? " points" : "") + "</span>"
+  if ($("questNote")) {
+    $("questNote").textContent = board.canReroll ? "one reroll left today" : "new board at midnight";
+  }
+
+  const bonus = $("questBonus");
+  if (bonus) {
+    const done = board.daily.filter((q) => q.complete).length;
+    bonus.classList.toggle("earned", board.bonus.earned);
+    bonus.innerHTML = board.bonus.earned
+      ? "Board cleared · <b>+" + num(board.bonus.xp) + " XP</b> on a " + num(board.bonus.streak) + "-day streak"
+      : "Clear all three for <b>+" + num(board.bonus.xp) + " XP</b>" +
+        (board.bonus.streak > 1 ? " on a " + num(board.bonus.streak) + "-day streak" : "") +
+        " · " + done + " of " + board.daily.length + " done";
+  }
+
+  if (week) {
+    if (board.weekly) week.append(questCard(board.weekly, board));
+    else week.innerHTML = '<p class="rank-lede">No weekly quest yet. It is issued with your first run of the week.</p>';
+  }
+  if ($("questWeekNote")) {
+    $("questWeekNote").textContent = board.weekEnds
+      ? "closes end of " + new Date(board.weekEnds + "T12:00:00").toLocaleDateString(undefined, { weekday: "long" })
       : "";
-
-    el.innerHTML =
-      "<div><h3>" + esc(q.title) +
-        (q.isFloor ? '<span class="floor-tag">floor</span>' : "") +
-        "</h3><p>" + esc(q.detail) + "</p></div>" +
-      '<div class="xp">' + counter + q.xp + " XP</div>" +
-      '<div class="qtrack"><div class="qfill" style="transform:scaleX(' +
-        Math.max(0, Math.min(1, q.progress)).toFixed(4) +
-        ");background:" + esc(colour) + '"></div></div>';
-    host.append(el);
-  });
+  }
 }
 
 /* ------------------------------------------------- quest completion */
@@ -5754,12 +5890,11 @@ function nextCelebration() {
   }
   const { quest, level } = payload;
 
-  const isFloor =
-    quest.kind === "floor_rank_up" ||
-    quest.kind === "close_the_spread" ||
-    quest.kind === "no_disasters";
-
-  $("celebrateKicker").textContent = isFloor ? "Floor raised" : "Quest complete";
+  $("celebrateKicker").textContent =
+    quest.kind === "board_clear" ? "Board cleared"
+    : quest.slot === "weekly" ? "Weekly quest complete"
+    : quest.kind === "clean_set" ? "Floor raised"
+    : "Quest complete";
   $("celebrateTitle").textContent = quest.title;
   $("celebrateDetail").textContent = quest.detail;
   $("celebrateXp").textContent = "+" + quest.xp + " XP";

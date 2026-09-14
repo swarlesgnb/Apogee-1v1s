@@ -217,7 +217,7 @@ html.preview .topbar-right { margin-left: auto; }
 .quest h3 { font-family: var(--display); font-size: 20px; letter-spacing: -.02em; }
 .quest p { font-size: 13px; max-width: 70ch; line-height: 1.7; }
 .xp { padding: 6px 10px; border: 1px solid var(--rule); border-radius: 6px; color: var(--brand); }
-.floor-tag { font-family: var(--font); font-size: 10px; letter-spacing: 0; text-transform: none; border-radius: 4px; }
+.slot-tag { font-family: var(--font); font-size: 10px; letter-spacing: 0; text-transform: none; border-radius: 4px; }
 .qtrack { height: 5px; margin-top: 8px; }
 .verdict { padding: 32px; }
 .verdict .big { font-family: var(--display); font-size: clamp(38px, 5vw, 66px); letter-spacing: -.05em; }

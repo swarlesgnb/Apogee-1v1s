@@ -40,7 +40,10 @@ function main(): void {
   );
   console.log(`  weakest: ${snapshot.weakest}`);
   console.log(`  match: ${match.verdict}, ${match.explanation}`);
-  console.log(`  quests: ${snapshot.quests.length}, streak: ${snapshot.player.streak} days`);
+  const board = snapshot.quests;
+  console.log(
+    `  quests: ${board.daily.length} daily + ${board.weekly ? 1 : 0} weekly, streak: ${snapshot.player.streak} days`,
+  );
 }
 
 main();

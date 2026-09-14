@@ -1,31 +1,54 @@
 /**
- * Validate evxl link resolution and quest generation.
+ * Validate evxl link resolution and the quest board, against real history.
  *
  * Link parsing is tested against the shapes players actually paste, including the ones
  * that must FAIL: an ambiguous name silently resolving to the wrong benchmark would
  * have someone grinding quests for a season they are not playing.
  *
- *   npx tsx src/core/quests/validateQuests.ts
+ * The board is tested three ways, each answering a failure the first version had:
+ *
+ *   - doing exactly what each quest asks completes it. The first board lost every quest
+ *     that could complete, because completing it changed the standing it was built from;
+ *   - past days are replayed through the issuer and the boards compared, because the
+ *     first board issued the same five quests seven days running;
+ *   - past days are replayed through the *measure* with the runs actually played that
+ *     day, and the completion rate printed per kind. A quest that always completes is
+ *     busywork and one that never does is a lie, and this is where either shows.
+ *
+ *   npx tsx src/core/quests/validateQuests.ts [statsFolder]
  */
 
 import { readFileSync } from "node:fs";
 
-import type { BenchmarkDef } from "../benchmarks/types.ts";
-import { scanStatsFolder } from "../history/history.ts";
+import { scanStatsFolder, type ScenarioHistory } from "../history/history.ts";
+import { loadSeason, seasonAsDifficulty, seasonLabels } from "../season/season.ts";
 import {
   parseEvxlLink,
   resolveBenchmark,
   toTrackRequest,
   type BenchmarkRegistryEntry,
 } from "./evxlLink.ts";
-import { generateQuests, isComplete, playStreak, questProgress } from "./generate.ts";
+import {
+  issueDaily,
+  issueWeekly,
+  measure,
+  playStreak,
+  recordMatch,
+  startOfDay,
+  startOfWeek,
+  syncBoard,
+  type BoardContext,
+  type IssuedQuest,
+  type Quest,
+} from "./board.ts";
+import { dayKey } from "./progression.ts";
 
 const DEFAULT_STATS_DIR =
   "E:\\Steam\\steamapps\\common\\FPSAimTrainer\\FPSAimTrainer\\stats";
 
 let failures = 0;
 function check(label: string, ok: boolean, detail = ""): void {
-  if (ok) console.log(`  ok   ${label}`);
+  if (ok) console.log(`  ok   ${label}${detail ? `: ${detail}` : ""}`);
   else {
     failures++;
     console.log(`  FAIL ${label}${detail ? `: ${detail}` : ""}`);
@@ -155,94 +178,272 @@ const linked = registry.filter((entry) =>
 check("every benchmark with a KovaaK's id is trackable", trackable === linked.length,
   `${trackable}/${linked.length}, refused: ${untrackable.join(", ") || "none"}`);
 
-console.log("\n── quest generation from real history ───────────");
+// ---------------------------------------------------------------------------
+// the board, against the real history
+// ---------------------------------------------------------------------------
 
-const benchmark = JSON.parse(
-  readFileSync(new URL("../../../data/benchmarks/voltaic-s5.json", import.meta.url), "utf8"),
-) as BenchmarkDef;
-const difficulty = benchmark.difficulties.find((d) => d.name === "Intermediate")!;
-
+const season = loadSeason();
+const difficulty = seasonAsDifficulty(season);
+const labels = seasonLabels(season);
+const poolNames = new Set(season.scenarios.map((s) => s.scenario));
 const history = scanStatsFolder(process.argv[2] ?? DEFAULT_STATS_DIR);
 const now = new Date();
+const DAY_MS = 86_400_000;
+
+const ctxAt = (h: Map<string, ScenarioHistory>, when: Date, ranked = true): BoardContext => ({
+  difficulty,
+  history: h,
+  now: when,
+  labelFor: (s) => labels.get(s) ?? s,
+  ranked,
+});
+
+console.log("\n── today's board from real history ──────────────");
 
 if (history.size === 0) {
   check("real history was readable", false);
 } else {
-  const quests = generateQuests({ difficulty, history, now, count: 5 });
+  const sync = syncBoard(null, ctxAt(history, now));
+  const board = sync.state;
+  const all = [...board.daily, ...(board.weekly ? [board.weekly] : [])];
 
   console.log();
-  for (const q of quests) {
-    const pct = (questProgress(q) * 100).toFixed(0);
-    console.log(`  [${q.xp.toString().padStart(3)} xp] ${q.title}`);
-    console.log(`             ${q.detail}`);
-    console.log(`             progress ${pct}%${isComplete(q) ? "  COMPLETE" : ""}`);
+  for (const q of all) {
+    console.log(`  [${q.slot.padEnd(7)} ${String(q.xp).padStart(4)} xp] ${q.title}`);
+    console.log(`                      ${q.detail}`);
+    console.log(`                      ${q.progress} / ${q.target} ${q.unit}${q.completedAt ? "  COMPLETE" : ""}`);
   }
   console.log();
 
-  check("quests are generated", quests.length > 0);
-  check("every quest has player-facing text",
-    quests.every((q) => q.title.length > 0 && q.detail.length > 0));
-  check("every quest has a positive target", quests.every((q) => q.target > 0));
-  check("every quest awards xp", quests.every((q) => q.xp > 0));
-  check("quest ids are unique", new Set(quests.map((q) => q.id)).size === quests.length);
-  check("all quests expire today",
-    quests.every((q) => q.expiresAt.toDateString() === now.toDateString()));
+  check("three dailies are issued", board.daily.length === 3, `${board.daily.length}`);
+  check("one per daily slot", new Set(board.daily.map((q) => q.slot)).size === 3,
+    board.daily.map((q) => q.slot).join(","));
+  check("a weekly is issued", board.weekly !== null);
+  check("every quest has player-facing text", all.every((q) => q.title.length > 0 && q.detail.length > 0));
+  check("every quest has a positive target and XP", all.every((q) => q.target > 0 && q.xp > 0));
+  check("quest ids are unique", new Set(all.map((q) => q.id)).size === all.length);
+  check("every named scenario is in the season pool",
+    all.every((q) => !q.params.scenario || poolNames.has(q.params.scenario)),
+    all.map((q) => q.params.scenario).filter(Boolean).join(", "));
+  check("no text prints a raw fraction",
+    all.every((q) => !/\d\.\d{3,}/.test(q.title + q.detail)),
+    all.map((q) => q.detail).find((d) => /\d\.\d{3,}/.test(d)) ?? "");
+  check("the dailies run from local midnight",
+    board.daily.every((q) => new Date(q.since).getTime() === startOfDay(now).getTime()));
+  check("the weekly runs from Monday",
+    board.weekly !== null && new Date(board.weekly.since).getTime() === startOfWeek(now).getTime());
 
-  const gap = quests.find((q) => q.kind === "close_the_gap");
-  check("a close-the-gap quest names a real number",
-    gap !== undefined && /\d/.test(gap.detail), gap?.detail);
-  check("close-the-gap targets a real scenario",
-    gap?.subject !== undefined && difficulty.categories
-      .flatMap((c) => c.scenarios)
-      .some((s) => s.name === gap.subject),
-    gap?.subject);
+  const again = syncBoard(null, ctxAt(history, now)).state;
+  check("issuing twice yields the same board",
+    JSON.stringify(board.daily.map((q) => q.id)) === JSON.stringify(again.daily.map((q) => q.id)));
 
-  check("progress is always within 0..1",
-    quests.every((q) => questProgress(q) >= 0 && questProgress(q) <= 1));
+  console.log(`       current play streak: ${playStreak(history, now)} days`);
 
-  // Regenerating the same day must not reroll the quests.
-  const again = generateQuests({ difficulty, history, now, count: 5 });
-  check("generation is stable within a day",
-    JSON.stringify(quests.map((q) => q.id)) === JSON.stringify(again.map((q) => q.id)));
+  // -------------------------------------------------------------------------
+  console.log("\n── doing what a quest asks completes it ─────────");
 
-  // ---- floor quests ------------------------------------------------------------
-  // These are the reason consistency mode exists, so they must actually appear in the
-  // daily list rather than being crowded out by ceiling quests.
-  const floorKinds = new Set(["floor_rank_up", "close_the_spread", "no_disasters"]);
-  const floorQuests = quests.filter((q) => floorKinds.has(q.kind));
+  // Runs that satisfy exactly what the quest names, played inside its window. Returned
+  // as a new history plus any matches, so the real one is never touched.
+  function satisfy(q: IssuedQuest): { h: Map<string, ScenarioHistory>; matches: typeof board.matches } | null {
+    const h = new Map(history);
+    const start = new Date(q.since).getTime() + 60_000;
+    let minute = 0;
+    const play = (scenario: string, score: number) => {
+      const prior = h.get(scenario) ?? { scenario, runs: [], best: 0, lastPlayed: null };
+      const run = { score, playedAt: new Date(start + minute++ * 60_000) };
+      h.set(scenario, { ...prior, runs: [...prior.runs, run], best: Math.max(prior.best, score), lastPlayed: run.playedAt });
+    };
+    const firstIn = (category: string) => difficulty.categories.find((c) => c.name === category)?.scenarios[0]?.name;
+    const pool = [...poolNames];
+    let matches = [] as typeof board.matches;
 
-  check("floor quests appear in the daily list", floorQuests.length > 0,
-    `${floorQuests.length} of ${quests.length}`);
+    switch (q.kind) {
+      case "reach_rank":
+      case "revisit":
+        play(q.params.scenario!, Math.ceil(q.params.bar!));
+        break;
+      case "beat_median":
+        for (let i = 0; i < 3; i++) play(q.params.scenario!, q.params.bar! + 1);
+        break;
+      case "clean_set":
+        for (let i = 0; i < 5; i++) play(q.params.scenario!, q.params.bar!);
+        break;
+      case "no_disasters": {
+        const [scenario, bar] = Object.entries(q.params.bars!)[0];
+        for (let i = 0; i < 5; i++) play(scenario, bar);
+        break;
+      }
+      case "category_volume":
+        for (let i = 0; i < 8; i++) play(firstIn(q.params.category!)!, 1);
+        break;
+      case "variety":
+        for (const s of pool.slice(0, 4)) play(s, 1);
+        break;
+      case "weekly_days":
+        for (let d = 0; d < 5; d++) { minute = d * 24 * 60; play(pool[0], 1); }
+        break;
+      case "weekly_floors":
+        for (const [scenario, bar] of Object.entries(q.params.bars!).slice(0, 3)) {
+          for (let i = 0; i < 5; i++) play(scenario, bar);
+        }
+        break;
+      case "weekly_rank_ups":
+        // A score past every threshold on three families' top variants.
+        for (const cat of difficulty.categories.slice(0, 3)) {
+          const top = [...cat.scenarios].sort((a, b) => (b.window ?? 0) - (a.window ?? 0))[0];
+          play(top.name, top.rankMaxes[top.rankMaxes.length - 1] * 10);
+        }
+        break;
+      case "ranked_play":
+      case "weekly_wins": {
+        let s = { ...board, matches: [] as typeof board.matches };
+        for (let i = 0; i < 3; i++) {
+          s = recordMatch(s, { id: `m${i}`, at: new Date(start + i * 60_000).toISOString(), verdict: "win", seeding: false, category: null });
+        }
+        matches = s.matches;
+        break;
+      }
+      default:
+        return null;
+    }
+    return { h, matches };
+  }
 
-  check("a floor quest leads the list", floorKinds.has(quests[0]?.kind ?? ""),
-    quests[0]?.kind);
+  // Every kind on today's board and the reserve, plus the boards of the last four weeks,
+  // so every kind the issuer can produce is exercised against a real standing.
+  const seen = new Map<string, IssuedQuest>();
+  const consider = (q: IssuedQuest) => { if (!seen.has(q.kind)) seen.set(q.kind, q); };
+  all.forEach(consider);
+  for (let d = 0; d < 28; d++) {
+    const day = new Date(startOfDay(now).getTime() - d * DAY_MS);
+    const { daily, reserve } = issueDaily(ctxAt(history, day), day, []);
+    daily.forEach(consider);
+    const since = startOfDay(day);
+    reserve.forEach((q: Quest) => consider({ ...q, since: since.toISOString(), until: new Date(since.getTime() + DAY_MS).toISOString(), progress: 0, completedAt: null }));
+    const weekly = issueWeekly(ctxAt(history, day), day, null);
+    if (weekly) consider(weekly);
+  }
 
-  const rankUp = quests.find((q) => q.kind === "floor_rank_up");
-  if (rankUp) {
-    check("a floor quest names both the current floor and the target",
-      /worst of the last \d+ is [\d.]+/.test(rankUp.detail) && /clear [\d.]+/.test(rankUp.detail),
-      rankUp.detail);
+  for (const q of seen.values()) {
+    const done = satisfy(q);
+    if (!done) { check(`${q.kind} has a way to be satisfied`, false); continue; }
+    const progress = measure(q, ctxAt(done.h, now), done.matches);
+    check(`${q.kind.padEnd(16)} completes when done`, progress >= q.target, `${progress}/${q.target}  ${q.title}`);
+  }
+  console.log(`       ${seen.size} of 12 kinds exercised`);
+  check("most kinds were issued at least once", seen.size >= 9, [...seen.keys()].join(", "));
 
-    check("floor progress counts runs already clearing, not a guess",
-      rankUp.progress >= 0 && rankUp.progress <= rankUp.target,
-      `${rankUp.progress}/${rankUp.target}`);
+  // The whole loop, on today's board: finish one quest, and the board keeps it and pays it.
+  const target = board.daily.find((q) => q.kind !== "ranked_play") ?? board.daily[0];
+  const played = satisfy(target)!;
+  const paid = syncBoard(board, ctxAt(played.h, now));
+  const kept = paid.state.daily.find((q) => q.id === target.id);
+  check("the finished quest is still on the board", kept !== undefined, target.title);
+  check("and was paid", kept?.completedAt !== null && paid.xpAwarded >= target.xp, `+${paid.xpAwarded} XP`);
+  check("and is not paid twice", syncBoard(paid.state, ctxAt(played.h, now)).xpAwarded === 0);
 
-    check("a floor quest targets a real scenario",
-      rankUp.subject !== undefined &&
-        difficulty.categories.flatMap((c) => c.scenarios).some((s) => s.name === rankUp.subject),
-      rankUp.subject);
+  // -------------------------------------------------------------------------
+  console.log("\n── the board varies from day to day ─────────────");
+
+  const DAYS = 28;
+  let recent: string[] = [];
+  const appearances = new Map<string, number>();
+  const kinds = new Set<string>();
+  let repeats = 0;
+  for (let d = DAYS - 1; d >= 0; d--) {
+    const day = new Date(startOfDay(now).getTime() - d * DAY_MS);
+    const { daily } = issueDaily(ctxAt(history, day), day, recent);
+    const subjects = daily.map((q) => q.params.scenario ?? q.params.category ?? q.kind);
+    repeats += subjects.filter((s) => recent.includes(s)).length;
+    recent = subjects;
+    for (const q of daily) {
+      kinds.add(q.kind);
+      appearances.set(q.title, (appearances.get(q.title) ?? 0) + 1);
+    }
+  }
+  const mostSeen = Math.max(...appearances.values());
+  console.log(`       ${appearances.size} distinct quests and ${kinds.size} kinds over ${DAYS} days;` +
+    ` the most frequent appeared on ${mostSeen}`);
+  check("the same subject is never on two boards in a row", repeats === 0, `${repeats} repeats`);
+  check("no single quest dominates", mostSeen <= DAYS / 3, `${mostSeen} of ${DAYS} days`);
+  check("every daily kind that needs no server shows up", kinds.size >= 6, [...kinds].join(", "));
+
+  // -------------------------------------------------------------------------
+  console.log("\n── replaying real days: how often each kind completes ──");
+
+  // Days with enough play to judge a board by: the board is what would have been issued
+  // that morning, measured against what was actually played. Ranked kinds are left out;
+  // the stats folder does not know about matches.
+  //
+  // Nobody saw these boards, so "completed out of issued" mostly measures whether the
+  // player happened to launch the scenario a quest names. The number that says how hard
+  // a quest is counts only the days its subject was actually played - enough runs of it
+  // that finishing was possible - and that is the one held to a range.
+  const runsOnDay = new Map<string, number>();
+  for (const h of history.values()) {
+    for (const r of h.runs) if (r.playedAt) runsOnDay.set(dayKey(r.playedAt), (runsOnDay.get(dayKey(r.playedAt)) ?? 0) + 1);
+  }
+  const tally = new Map<string, { issued: number; attempted: number; done: number }>();
+  const note = (kind: string, attempted: boolean, done: boolean) => {
+    const t = tally.get(kind) ?? { issued: 0, attempted: 0, done: 0 };
+    t.issued++;
+    if (attempted) t.attempted++;
+    if (done) t.done++;
+    tally.set(kind, t);
+  };
+
+  /** Played the quest's subject enough that day for finishing to have been possible. */
+  const attempted = (q: IssuedQuest): boolean => {
+    const since = new Date(q.since);
+    const until = new Date(q.until);
+    const count = (scenario: string) =>
+      (history.get(scenario)?.runs ?? []).filter((r) => r.playedAt && r.playedAt >= since && r.playedAt < until).length;
+    if (q.params.scenario) {
+      const needed = q.kind === "clean_set" || q.kind === "beat_median" ? q.target : 1;
+      return count(q.params.scenario) >= needed;
+    }
+    if (q.params.category) {
+      const cat = difficulty.categories.find((c) => c.name === q.params.category);
+      return (cat?.scenarios ?? []).some((s) => count(s.name) > 0);
+    }
+    return true;
+  };
+
+  let judged = 0;
+  for (let d = 1; d <= 120; d++) {
+    const day = new Date(startOfDay(now).getTime() - d * DAY_MS);
+    if ((runsOnDay.get(dayKey(day)) ?? 0) < 10) continue;
+    judged++;
+    const ctx = ctxAt(history, day, false);
+    const { daily, reserve } = issueDaily(ctx, day, []);
+    const since = startOfDay(day);
+    const asIssued = (q: Quest): IssuedQuest =>
+      ({ ...q, since: since.toISOString(), until: new Date(since.getTime() + DAY_MS).toISOString(), progress: 0, completedAt: null });
+    for (const q of [...daily, ...reserve.map(asIssued)]) note(q.kind, attempted(q), measure(q, ctx, []) >= q.target);
+  }
+  for (let w = 1; w <= 12; w++) {
+    const day = new Date(startOfWeek(now).getTime() - w * 7 * DAY_MS + DAY_MS);
+    const weekly = issueWeekly(ctxAt(history, day, false), day, null);
+    if (weekly) note(weekly.kind, true, measure(weekly, ctxAt(history, day, false), []) >= weekly.target);
+  }
+
+  console.log(`       ${judged} days with 10+ runs in the last 120\n`);
+  console.log(`       ${"kind".padEnd(16)} issued  played  done  done when played`);
+  const pct = (a: number, b: number) => (b > 0 ? `${((a / b) * 100).toFixed(0)}%` : "-");
+  for (const [kind, t] of [...tally].sort()) {
+    console.log(`       ${kind.padEnd(16)} ${String(t.issued).padStart(6)}  ${String(t.attempted).padStart(6)}  ${String(t.done).padStart(4)}  ${pct(t.done, t.attempted).padStart(6)}`);
+  }
+
+  if (judged === 0) {
+    check("there were days to replay", false);
   } else {
-    check("a floor rank-up quest was generated", false);
+    // Only kinds with enough played days to say anything; a rate over three days is noise.
+    const judgedKinds = [...tally].filter(([, t]) => t.attempted >= 5);
+    const trivial = judgedKinds.filter(([, t]) => t.done / t.attempted > 0.95).map(([k]) => k);
+    const impossible = judgedKinds.filter(([, t]) => t.done === 0).map(([k]) => k);
+    check("no kind completes on nearly every day it is played", trivial.length === 0, trivial.join(", "));
+    check("no kind never completes on days it is played", impossible.length === 0, impossible.join(", "));
   }
-
-  // A floor quest asks for a whole window of clean runs, never a single one, which is
-  // the difference between it and every ceiling quest.
-  check("floor quests ask for a window of runs, not one",
-    floorQuests.every((q) => q.target >= 5), floorQuests.map((q) => q.target).join(","));
-
-  const streak = playStreak(history, now);
-  console.log(`       current play streak: ${streak} days`);
-  check("streak is a sane number", streak >= 0 && streak < 10000, String(streak));
 }
 
 console.log();

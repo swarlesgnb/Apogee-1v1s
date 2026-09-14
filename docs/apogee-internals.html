@@ -537,10 +537,12 @@
             <div class="step">
               <div class="step-num">9</div>
               <div class="step-body">
-                <div class="step-title">Quests reconcile, XP lands</div>
-                <div class="step-where">src/core/quests/progression.ts</div>
+                <div class="step-title">Quests measured, XP lands</div>
+                <div class="step-where">src/core/quests/board.ts</div>
                 <p class="step-note">
-                  Progress is recomputed from history rather than counted as events, so a
+                  The day's board is issued once, from the history before midnight, and
+                  measures only runs played since, so a finished quest stays on it. Progress
+                  is read from the stats folder rather than counted as events, so a
                   completion cannot be lost by the app being closed at the wrong moment.
                 </p>
               </div>
@@ -1309,7 +1311,7 @@ leg 2 void                 replay (a playoff draw replays too)</pre>
   match/          scenario selection, settlement, matchmaking, live queue
   verify/         integrity checks, KovaaK's cross-check, score models
   consistency/    floor scoring, ceiling-vs-floor report
-  quests/         evxl links, quest generation, floor quests, XP
+  quests/         evxl links, the daily and weekly board, XP
   ranks/          Apogee's own ladder (the competitive one, not the season's)
   sync/           Steam sign-in, run upload
   report/         profile, weakness map, UI snapshot

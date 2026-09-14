@@ -129,8 +129,11 @@ contextBridge.exposeInMainWorld("apogee", {
   /** Lifetime XP and account level, sent after every snapshot rebuild. */
   onProgression: (handler) => subscribe("apogee:progression", handler),
 
-  /** Fires once per quest the moment it completes. */
+  /** Fires once per quest the moment it completes, and once for clearing the board. */
   onQuestComplete: (handler) => subscribe("apogee:questComplete", handler),
+
+  /** Swap one of today's quests for its slot's spare. Once a day. Returns { ok } or { error }. */
+  rerollQuest: (id) => ipcRenderer.invoke("apogee:rerollQuest", { id }),
 
   /**
    * Whether this account has uploaded enough runs to queue, and how many more it needs.

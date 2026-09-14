@@ -26,7 +26,7 @@ import { computeBaseline, scanStatsFolder, type ScenarioHistory } from "../histo
 import { windowCoverage, type WindowCoverage } from "../history/coverage.ts";
 import { selectScenarios, type SelectableScenario } from "../match/scenarioSelection.ts";
 import { explainVerdict, settleMatch, type RoundSubmission } from "../match/settle.ts";
-import { generateQuests, playStreak, questProgress } from "../quests/generate.ts";
+import { boardView, playStreak, syncBoard, type BoardView, type QuestState, type QuestSync } from "../quests/board.ts";
 import { defaultRating, updateRating, winProbability } from "../rating/glicko2.ts";
 import { loadRankTheme, tierForPercentile, type RankTier } from "../ranks/apogeeRanks.ts";
 import { floorsFor, overallGap } from "../consistency/floor.ts";
@@ -68,6 +68,19 @@ export interface SnapshotOptions {
   /** Defaults to the committed Voltaic S5 definition. */
   benchmarkPath?: string | URL;
   now?: Date;
+  /**
+   * The stored quest board, folded into this rebuild's history.
+   *
+   * The board needs the same history and season this function already reads, and
+   * scanning an 11k-run folder twice per landed run to get them is the cost of keeping
+   * it out. The result goes back through `onSync` rather than on the snapshot, so the
+   * renderer is sent the view and never the state it is computed from.
+   */
+  quests?: {
+    state: QuestState | null;
+    ranked: boolean;
+    onSync?: (sync: QuestSync) => void;
+  };
 }
 
 export interface Snapshot {
@@ -137,7 +150,7 @@ export interface Snapshot {
     }[];
   };
   match: unknown;
-  quests: unknown[];
+  quests: BoardView;
 }
 
 export function shortName(scenario: string, difficulty: string): string {
@@ -440,27 +453,19 @@ export function buildSnapshot(options: SnapshotOptions): Snapshot | null {
   const settlement = settleMatch({ playerRounds, opponentRounds });
   const opponentRating = { rating: rating.rating - 40, rd: 85, volatility: 0.06 };
 
-  const quests = generateQuests({
+  // With no stored board (the CLI exporter, the preview) this issues today's afresh, which
+  // is exactly what a first launch would show.
+  const questSync = syncBoard(options.quests?.state ?? null, {
     difficulty,
     history,
     now,
-    count: 5,
     // A quest names a scenario the player has to go and launch, so it has to be the name
-    // KovaaK's shows and it has to say which of a family's three variants it means.
+    // KovaaK's shows and it has to say which of a family's variants it means.
     labelFor: variantLabel,
-  }).map((q) => ({
-    title: q.title,
-    detail: q.detail,
-    xp: q.xp,
-    kind: q.kind,
-    progress: questProgress(q),
-    // Floor quests read differently and are worth marking, so the UI can say what kind
-    // of effort is being asked for rather than showing an undifferentiated list.
-    isFloor: q.kind === "floor_rank_up" || q.kind === "close_the_spread" ||
-      q.kind === "no_disasters",
-    // "4 of 5" is more legible on a floor quest than a percentage.
-    steps: q.target >= 5 ? { done: Math.round(q.progress), total: q.target } : null,
-  }));
+    ranked: options.quests?.ranked ?? false,
+  });
+  options.quests?.onSync?.(questSync);
+  const quests = boardView(questSync.state, history, now);
 
   const totalRuns = [...history.values()].reduce((n, h) => n + h.runs.length, 0);
 

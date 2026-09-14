@@ -262,7 +262,7 @@ export interface PracticeRow extends VariantProgress {
    * The published benchmarks that also name this scenario, and what `best` is worth in
    * each of them.
    *
-   * 146 of the 156 in the pool carry at least one. Empty for the rest, which are the
+   * 227 of the 252 in the pool carry at least one. Empty for the rest, which are the
    * hand-picked easier rungs no author has graded - and an empty list renders as nothing
    * rather than as "no benchmarks", because a scenario the community has not graded is
    * not a scenario that failed to be graded.
@@ -297,6 +297,15 @@ export interface PracticeRow extends VariantProgress {
   progress: number | null;
   /** The one variant of this family worth playing next. See `nextVariant`. */
   isNext: boolean;
+  /**
+   * The most recent run, rounded, and the ladder rank that score alone earns here.
+   *
+   * The best says what is held; this says what the run just played was worth, which is
+   * the question a player working through the pool is asking after every attempt. Null
+   * rank below this variant's first threshold, for the same reason `rankIndex` is.
+   */
+  last: number | null;
+  lastRankIndex: number | null;
 }
 
 export interface FamilyStanding {
@@ -360,10 +369,15 @@ export function practiceRows(
     const best = scores.length > 0 ? Math.max(...scores) : null;
 
     const base = window * windowSize;
-    let rankIndex: number | null = null;
-    s.rankMaxes.forEach((threshold, i) => {
-      if (best !== null && best >= threshold) rankIndex = base + i;
-    });
+    const rankOf = (score: number | null): number | null => {
+      let index: number | null = null;
+      s.rankMaxes.forEach((threshold, i) => {
+        if (score !== null && score >= threshold) index = base + i;
+      });
+      return index;
+    };
+    const rankIndex = rankOf(best);
+    const last = scores.length > 0 ? scores[scores.length - 1] : null;
 
     const within = rankIndex === null ? 0 : rankIndex - base + 1;
     const nextRankScore = within < s.rankMaxes.length ? s.rankMaxes[within] : null;
@@ -398,6 +412,8 @@ export function practiceRows(
       heldRankScore,
       progress,
       isNext: false,
+      last: last === null ? null : Math.round(last),
+      lastRankIndex: rankOf(last),
     };
   });
 

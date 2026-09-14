@@ -799,23 +799,34 @@ evxl URL ──▶ benchmarkName ──▶ evxl registry ──▶ kovaaksBenchm
                               cached definition ──▶ quest generation
 ```
 
-Quest kinds, generated against whatever benchmark is tracked:
+The board is three dailies and a weekly, one daily per slot:
 
-- *Rank up one scenario in {tracked benchmark}*, the original idea, now generalised
-- *Beat your baseline in any {weakest category} scenario*
-- *Play 3 {category} scenarios today*
-- *Win a match in your weakest sub-category*
-- *Play 3 days in a row*
-- *Close the gap: you are 40 points from {rank} in {scenario}*, computed from real
-  thresholds, so it can name an exact, achievable target
+- **Ceiling**, one good run: *Reach {rank} on {scenario}: your best is 892, 894 takes you
+  there*, or *Beat your {scenario} median three times*
+- **Floor**, no bad run: *Five clean runs on {scenario}*, five in a row at the threshold
+  that lifts the floor a rank, or *No disasters*, five in a row on anything without one
+  under 90% of its median
+- **Variety**: eight runs in one of the three weakest categories, four different scenarios,
+  a revisit of a scenario untouched for three weeks, or a ranked match
+- **Weekly**: rank up three families, three clean sets, three ranked wins, or five days
+  played
 
-That last kind is only possible because the thresholds are real, and it is the most
-motivating quest in the list: a specific number, on a specific scenario, that moves a
-rank the player already cares about.
+A board is issued once and frozen (`src/core/quests/board.ts`). It is drawn from the
+history *before* the day (or week) began and measures only runs played since, so reaching
+a rank cannot un-issue the quest that asked for it. The first version regenerated its
+quests from the whole history on every rebuild, and every quest that could complete
+vanished the moment it did. The draw is seeded by the date, and steers around yesterday's
+subjects. There is one reroll per day, into a spare drawn with the board, and clearing all
+three dailies pays a bonus that rises with the play streak.
 
-Auto-completed from parsed runs. Quest XP feeds an account level and cosmetic titles,
-somewhere for the points to go that doesn't touch competitive integrity. **Quest XP must
-never influence Apogee rating**, or the ladder becomes a grind.
+The reach-a-rank quest is only possible because the thresholds are real, and it is the
+most motivating one: a specific number, on a specific scenario, that moves a rank the
+player already cares about.
+
+Auto-completed from parsed runs; ranked quests from results the server settled. Quest XP
+feeds an account level and cosmetic titles, somewhere for the points to go that doesn't
+touch competitive integrity. **Quest XP must never influence Apogee rating**, or the
+ladder becomes a grind.
 
 ---
 
