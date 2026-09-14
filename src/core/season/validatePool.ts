@@ -435,8 +435,8 @@ const miscategorised: string[] = [];
  * Scenarios whose KovaaK's aim type has been measured to be wrong.
  *
  * KovaaK's is authoritative here and stays authoritative: this is the only mechanism that
- * can overrule it, it carries a measurement rather than an opinion, and validate:aimtypes
- * re-derives that measurement from the corpus. Read as data rather than reimplemented so
+ * can overrule it, it carries a measurement or exact authored firing-task evidence,
+ * and validate:aimtypes checks that evidence. Read as data rather than reimplemented so
  * the pool, the seed and the sub-skill derivation cannot come to disagree about which
  * scenarios are corrected.
  */
@@ -457,7 +457,7 @@ for (const v of variants) {
   const fromKovaaks = normaliseSkill(taxonomy.get(v.scenario)?.aimType);
   const derived = derivedFor.get(v.scenario);
   const source = correction
-    ? { category: correction, who: "a measured correction" }
+    ? { category: correction, who: "an evidence-backed correction" }
     : fromKovaaks
       ? { category: fromKovaaks, who: "KovaaK's" }
       : derived?.category
@@ -465,7 +465,7 @@ for (const v of variants) {
         : null;
 
   if (correction && fromKovaaks && correction !== fromKovaaks) {
-    corrected.push(`${v.scenario}: ${fromKovaaks} to KovaaK's, ${correction} measured`);
+    corrected.push(`${v.scenario}: ${fromKovaaks} to KovaaK's, ${correction} by recorded evidence`);
   }
 
   if (!source) {

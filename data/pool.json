@@ -283,10 +283,6 @@
       "subCategory": "Reactive Tracking",
       "why": "A target that leaps and strafes with mixed dodge profiles. wobin's Easier cut, then Aimerz+'s mid-range Leapstrafes Control Medium, then wobin's standard and Hard cuts. No sheet names a sub-skill for wobin's version, so putting it in Reactive is a judgement call."
     },
-    "B180T rAim Easy": {
-      "subCategory": "Evasive Switching",
-      "why": "An accessible rAim entry leads to Aimerz+'s depth-changing mid-high arcs, then two regenerative bounce edits. The final two variants make incomplete contact costly instead of relying only on smaller Elite bots. They deliberately retain two useful Voltaic variants rather than an entire stock four-rung family. Cross-author handovers and regeneration difficulty need playtesting."
-    },
     "VoxTS Click Easier": {
       "subCategory": "Static Clicking",
       "why": "Vox's shooting-gallery layout offers route choice and quick successive kills. These Viscose click variants remove awkward spawns; Entry, Easier, Medium and Hard give the gallery a four-band progression. This season classifies the complete circuit by its dominant firing and movement task."
@@ -441,43 +437,115 @@
     },
     "domiSwitch Easier": {
       "subCategory": "Evasive Switching",
-      "why": "domiSwitch targets carry 55 health and regenerate 0.3 seconds after damage stops, so leaving early costs the whole kill; Aimerz+, snakbox and Viscose file it under evasive switching. Viscose's Easier cut and the Easy and standard cuts lead into Avasive's edit for the top band, whose top score is the lowest of the four. That edition handover needs playtesting. This season classifies the complete circuit by its dominant firing and movement task."
-    },
-    "domiSwitch Avasive": {
-      "subCategory": "Evasive Switching",
-      "why": "domiSwitch targets carry 55 health and regenerate 0.3 seconds after damage stops, so leaving early costs the whole kill; Aimerz+, snakbox and Viscose file it under evasive switching. Viscose's Easier cut and the Easy and standard cuts lead into Avasive's edit for the top band, whose top score is the lowest of the four. That edition handover needs playtesting. This season classifies the complete circuit by its dominant firing and movement task."
-    },
-    "VT Penta Bounce Novice S5": {
-      "subCategory": "Evasive Switching",
-      "why": "Five targets bounce across a pentagonal wall and each needs a short sustained burst to clear. This adds an arena-like switching loop with plenty of target choice. The four published Season 5 cuts provide exact variants for every band. This season classifies the complete circuit by its dominant firing and movement task."
+      "why": "Easier explicitly makes bots bigger and slower with less punishing regeneration; Easy, standard and Hard continue the same named lineage. Replace the Avasive Expert edit: a lower record across different edits was not evidence of greater physical difficulty. The season groups this sustained-fire moving-target clear with evasive switching."
     },
     "VT Penta Bounce Intermediate S5": {
       "subCategory": "Evasive Switching",
-      "why": "Five targets bounce across a pentagonal wall and each needs a short sustained burst to clear. This adds an arena-like switching loop with plenty of target choice. The four published Season 5 cuts provide exact variants for every band. This season classifies the complete circuit by its dominant firing and movement task."
+      "why": "Keep five bouncing targets and the pentagonal arena. Entry Speed adds bigger targets and 25% shorter time to kill to the slower Entry movement. Intermediate, Advanced and Elite keep their existing bands, so the easier start does not lower the upper-band challenge. The season groups this sustained-fire moving-target clear with evasive switching."
     },
     "VT Penta Bounce Advanced S5": {
       "subCategory": "Evasive Switching",
-      "why": "Five targets bounce across a pentagonal wall and each needs a short sustained burst to clear. This adds an arena-like switching loop with plenty of target choice. The four published Season 5 cuts provide exact variants for every band. This season classifies the complete circuit by its dominant firing and movement task."
+      "why": "Keep five bouncing targets and the pentagonal arena. Entry Speed adds bigger targets and 25% shorter time to kill to the slower Entry movement. Intermediate, Advanced and Elite keep their existing bands, so the easier start does not lower the upper-band challenge. The season groups this sustained-fire moving-target clear with evasive switching."
     },
     "VT Penta Bounce Elite S5": {
       "subCategory": "Evasive Switching",
-      "why": "Five targets bounce across a pentagonal wall and each needs a short sustained burst to clear. This adds an arena-like switching loop with plenty of target choice. The four published Season 5 cuts provide exact variants for every band. This season classifies the complete circuit by its dominant firing and movement task."
-    },
-    "VT ControlTS Novice S5": {
-      "subCategory": "Evasive Switching",
-      "why": "Four gently jumping and floating targets share a narrow chamber, producing a compact clear-the-room loop. The four published ControlTS bands keep the same arena and short sustained bursts throughout the progression. This season classifies the complete circuit by its dominant firing and movement task."
+      "why": "Keep five bouncing targets and the pentagonal arena. Entry Speed adds bigger targets and 25% shorter time to kill to the slower Entry movement. Intermediate, Advanced and Elite keep their existing bands, so the easier start does not lower the upper-band challenge. The season groups this sustained-fire moving-target clear with evasive switching."
     },
     "VT ControlTS Intermediate S5": {
       "subCategory": "Evasive Switching",
-      "why": "Four gently jumping and floating targets share a narrow chamber, producing a compact clear-the-room loop. The four published ControlTS bands keep the same arena and short sustained bursts throughout the progression. This season classifies the complete circuit by its dominant firing and movement task."
+      "why": "Keep the narrow room and floating, gently jumping targets. Entry Speed combines larger, slower entry bots with a 25% shorter clear. Intermediate, Advanced and Elite keep their existing bands, so the easier start does not lower the upper-band challenge. The season groups this sustained-fire moving-target clear with evasive switching."
     },
     "VT ControlTS Advanced S5": {
       "subCategory": "Evasive Switching",
-      "why": "Four gently jumping and floating targets share a narrow chamber, producing a compact clear-the-room loop. The four published ControlTS bands keep the same arena and short sustained bursts throughout the progression. This season classifies the complete circuit by its dominant firing and movement task."
+      "why": "Keep the narrow room and floating, gently jumping targets. Entry Speed combines larger, slower entry bots with a 25% shorter clear. Intermediate, Advanced and Elite keep their existing bands, so the easier start does not lower the upper-band challenge. The season groups this sustained-fire moving-target clear with evasive switching."
     },
     "VT ControlTS Elite S5": {
       "subCategory": "Evasive Switching",
-      "why": "Four gently jumping and floating targets share a narrow chamber, producing a compact clear-the-room loop. The four published ControlTS bands keep the same arena and short sustained bursts throughout the progression. This season classifies the complete circuit by its dominant firing and movement task."
+      "why": "Keep the narrow room and floating, gently jumping targets. Entry Speed combines larger, slower entry bots with a 25% shorter clear. Intermediate, Advanced and Elite keep their existing bands, so the easier start does not lower the upper-band challenge. The season groups this sustained-fire moving-target clear with evasive switching."
+    },
+    "VT PasuTS Entry S5": {
+      "subCategory": "Evasive Switching",
+      "why": "Replace the mixed PureG/Aimerz progression with one published PasuTS lineage. Entry is explicitly 15% larger and 15% slower, with a short 20-hit clear; Intermediate, Advanced and Elite retain the task. The season groups this sustained-fire moving-target clear with evasive switching."
+    },
+    "VT PasuTS Intermediate S5": {
+      "subCategory": "Evasive Switching",
+      "why": "Replace the mixed PureG/Aimerz progression with one published PasuTS lineage. Entry is explicitly 15% larger and 15% slower, with a short 20-hit clear; Intermediate, Advanced and Elite retain the task. The season groups this sustained-fire moving-target clear with evasive switching."
+    },
+    "VT PasuTS Advanced S5": {
+      "subCategory": "Evasive Switching",
+      "why": "Replace the mixed PureG/Aimerz progression with one published PasuTS lineage. Entry is explicitly 15% larger and 15% slower, with a short 20-hit clear; Intermediate, Advanced and Elite retain the task. The season groups this sustained-fire moving-target clear with evasive switching."
+    },
+    "VT PasuTS Elite S5": {
+      "subCategory": "Evasive Switching",
+      "why": "Replace the mixed PureG/Aimerz progression with one published PasuTS lineage. Entry is explicitly 15% larger and 15% slower, with a short 20-hit clear; Intermediate, Advanced and Elite retain the task. The season groups this sustained-fire moving-target clear with evasive switching."
+    },
+    "Floatswitch Entry": {
+      "subCategory": "Evasive Switching",
+      "why": "A new floating-head gallery adds short 0.2-second, 20-hit clears and fast target choice. Use the same authored Entry, Intermediate, Advanced and Elite editions; these are sustained full-auto clears despite the broad catalogue Clicking tag. The season groups this sustained-fire moving-target clear with evasive switching."
+    },
+    "Floatswitch Intermediate": {
+      "subCategory": "Evasive Switching",
+      "why": "A new floating-head gallery adds short 0.2-second, 20-hit clears and fast target choice. Use the same authored Entry, Intermediate, Advanced and Elite editions; these are sustained full-auto clears despite the broad catalogue Clicking tag. The season groups this sustained-fire moving-target clear with evasive switching."
+    },
+    "Floatswitch Advanced": {
+      "subCategory": "Evasive Switching",
+      "why": "A new floating-head gallery adds short 0.2-second, 20-hit clears and fast target choice. Use the same authored Entry, Intermediate, Advanced and Elite editions; these are sustained full-auto clears despite the broad catalogue Clicking tag. The season groups this sustained-fire moving-target clear with evasive switching."
+    },
+    "Floatswitch Elite": {
+      "subCategory": "Evasive Switching",
+      "why": "A new floating-head gallery adds short 0.2-second, 20-hit clears and fast target choice. Use the same authored Entry, Intermediate, Advanced and Elite editions; these are sustained full-auto clears despite the broad catalogue Clicking tag. The season groups this sustained-fire moving-target clear with evasive switching."
+    },
+    "VT ControlTS Entry S5 Speed": {
+      "subCategory": "Evasive Switching",
+      "why": "Keep the narrow room and floating, gently jumping targets. Entry Speed combines larger, slower entry bots with a 25% shorter clear. Intermediate, Advanced and Elite keep their existing bands, so the easier start does not lower the upper-band challenge. The season groups this sustained-fire moving-target clear with evasive switching."
+    },
+    "VT Penta Bounce Entry S5 Speed": {
+      "subCategory": "Evasive Switching",
+      "why": "Keep five bouncing targets and the pentagonal arena. Entry Speed adds bigger targets and 25% shorter time to kill to the slower Entry movement. Intermediate, Advanced and Elite keep their existing bands, so the easier start does not lower the upper-band challenge. The season groups this sustained-fire moving-target clear with evasive switching."
+    },
+    "B180T Voltaic Easy Slower": {
+      "subCategory": "Evasive Switching",
+      "why": "Keep the curved B180T arena throughout. Begin with Easy Slower, then Easy, standard and finally Regen. Remove the Aimerz depth-pattern detour and postpone the regeneration penalty until Expert. The season groups this sustained-fire moving-target clear with evasive switching."
+    },
+    "B180T Voltaic Easy": {
+      "subCategory": "Evasive Switching",
+      "why": "Keep the curved B180T arena throughout. Begin with Easy Slower, then Easy, standard and finally Regen. Remove the Aimerz depth-pattern detour and postpone the regeneration penalty until Expert. The season groups this sustained-fire moving-target clear with evasive switching."
+    },
+    "B180T Voltaic": {
+      "subCategory": "Evasive Switching",
+      "why": "Keep the curved B180T arena throughout. Begin with Easy Slower, then Easy, standard and finally Regen. Remove the Aimerz depth-pattern detour and postpone the regeneration penalty until Expert. The season groups this sustained-fire moving-target clear with evasive switching."
+    },
+    "B180T Voltaic Regen": {
+      "subCategory": "Evasive Switching",
+      "why": "Keep the curved B180T arena throughout. Begin with Easy Slower, then Easy, standard and finally Regen. Remove the Aimerz depth-pattern detour and postpone the regeneration penalty until Expert. The season groups this sustained-fire moving-target clear with evasive switching."
+    },
+    "VT FlyTS Entry S5 Speed": {
+      "subCategory": "Evasive Switching",
+      "why": "Entry Speed combines the published larger/slower Entry edit with larger targets and 25% shorter time to kill. Intermediate, Advanced and Elite keep their existing bands, so the easier start does not lower the upper-band challenge. The season groups this sustained-fire moving-target clear with evasive switching."
+    },
+    "VT DriftTS Entry S5 Speed": {
+      "subCategory": "Evasive Switching",
+      "why": "Two stacked chambers add vertical route choices among four floating and jumping targets. The larger, slower Entry Speed variant shortens clears by 25%; Intermediate, Advanced and Elite retain one authored lineage. This replaces the mixed CB/Revosect Smooth Relay whose Expert board had only 145 sampled players and nearly tied top targets. The season groups this sustained-fire moving-target clear with evasive switching."
+    },
+    "domiSwitch Hard": {
+      "subCategory": "Evasive Switching",
+      "why": "Easier explicitly makes bots bigger and slower with less punishing regeneration; Easy, standard and Hard continue the same named lineage. Replace the Avasive Expert edit: a lower record across different edits was not evidence of greater physical difficulty. The season groups this sustained-fire moving-target clear with evasive switching."
+    },
+    "tamTargetSwitch Smooth Entry": {
+      "subCategory": "Evasive Switching",
+      "why": "Use the authored Entry, Novice, Intermediate and Elite editions in ascending order. Remove Hard 30% Larger from Novice and the subsequent switch to non-bouncing Easy. Instant regeneration remains a commitment drill, so it comes late in the circuit; named editions are not measured difficulty equivalence. The season groups this sustained-fire moving-target clear with evasive switching."
+    },
+    "tamTargetSwitch Smooth Novice": {
+      "subCategory": "Evasive Switching",
+      "why": "Use the authored Entry, Novice, Intermediate and Elite editions in ascending order. Remove Hard 30% Larger from Novice and the subsequent switch to non-bouncing Easy. Instant regeneration remains a commitment drill, so it comes late in the circuit; named editions are not measured difficulty equivalence. The season groups this sustained-fire moving-target clear with evasive switching."
+    },
+    "tamTargetSwitch Smooth Intermediate": {
+      "subCategory": "Evasive Switching",
+      "why": "Use the authored Entry, Novice, Intermediate and Elite editions in ascending order. Remove Hard 30% Larger from Novice and the subsequent switch to non-bouncing Easy. Instant regeneration remains a commitment drill, so it comes late in the circuit; named editions are not measured difficulty equivalence. The season groups this sustained-fire moving-target clear with evasive switching."
+    },
+    "tamTargetSwitch Smooth Elite": {
+      "subCategory": "Evasive Switching",
+      "why": "Use the authored Entry, Novice, Intermediate and Elite editions in ascending order. Remove Hard 30% Larger from Novice and the subsequent switch to non-bouncing Easy. Instant regeneration remains a commitment drill, so it comes late in the circuit; named editions are not measured difficulty equivalence. The season groups this sustained-fire moving-target clear with evasive switching."
     }
   },
   "$subCategoryOverrides": "Scenarios where the pool's sub-skill deliberately disagrees with the one derived from the benchmark sheets, and why. WHY THERE ARE ANY. The corpus names eleven sub-skills and this season grades six, so five have no category to sit in: Micro Clicking, Linear Clicking, Control Tracking, Reading Tracking and Stability Switching. A scenario the sheets file under one of those is not miscategorised - it is being graded at the resolution this season cut, and it has to land in the nearest sub-skill that exists. Every entry below says which unrepresented sub-skill it came from and why its home is the right one, because 'the season has no category for it' explains that an override is needed and not that this override is correct. Season 2 can cut finer and these go away; validate:pool fails an override that has come to agree with the derivation, so they cannot outlive their reason.",
@@ -487,7 +555,6 @@
       "family": "2Guys",
       "category": "Static Clicking",
       "subCategory": "Static Clicking",
-      "focus": "Two targets. Flick → micro → click.",
       "variants": [
         {
           "window": 0,
@@ -595,7 +662,6 @@
       "family": "Diagonal",
       "category": "Static Clicking",
       "subCategory": "Static Clicking",
-      "focus": "Diagonal path. Straight line, no curve.",
       "variants": [
         {
           "window": 0,
@@ -701,7 +767,6 @@
       "family": "Horizontal",
       "category": "Static Clicking",
       "subCategory": "Static Clicking",
-      "focus": "Horizontal only. Flat line, time switch.",
       "variants": [
         {
           "window": 0,
@@ -804,7 +869,6 @@
       "family": "Micro",
       "category": "Static Clicking",
       "subCategory": "Static Clicking",
-      "focus": "Tiny targets. Micro-correct, no overflick.",
       "variants": [
         {
           "window": 0,
@@ -916,7 +980,6 @@
       "family": "Micro Pressure",
       "category": "Static Clicking",
       "subCategory": "Static Clicking",
-      "focus": "Small, rushed. Micro held under pace.",
       "variants": [
         {
           "window": 0,
@@ -1027,7 +1090,6 @@
       "family": "Speed",
       "category": "Static Clicking",
       "subCategory": "Static Clicking",
-      "focus": "Big, close. Flick lands direct. Pace.",
       "variants": [
         {
           "window": 0,
@@ -1142,7 +1204,6 @@
       "family": "Triangle",
       "category": "Static Clicking",
       "subCategory": "Static Clicking",
-      "focus": "Fixed triangle. Chain, rhythm, straight.",
       "variants": [
         {
           "window": 0,
@@ -1245,7 +1306,6 @@
       "family": "Wide Pressure",
       "category": "Static Clicking",
       "subCategory": "Static Clicking",
-      "focus": "Wide wall, rushed. Big flick, no pause.",
       "variants": [
         {
           "window": 0,
@@ -1350,7 +1410,6 @@
       "family": "Wide wall",
       "category": "Static Clicking",
       "subCategory": "Static Clicking",
-      "focus": "Wide angles. Big flick, next in peripheral.",
       "variants": [
         {
           "window": 0,
@@ -1459,7 +1518,6 @@
       "family": "Evo Gallery",
       "category": "Static Clicking",
       "subCategory": "Static Clicking",
-      "focus": "Hold the pace as the targets multiply.",
       "$why": "EvoClick adds a target every twenty seconds, so a run opens as a calm static read and ends as a crowded wall: a pacing arc no other static circuit here has. Community Benchmarks' easy cut leads into Revosect's three EvoClick tiers. The first cross-author handover needs playtesting.",
       "$order": {
         "why": "EvoClick adds a target every twenty seconds, so a run opens as a calm static read and ends as a crowded wall: a pacing arc no other static circuit here has. Community Benchmarks' easy cut leads into Revosect's three EvoClick tiers. The first cross-author handover needs playtesting. Difficulty order is a curation judgement; board populations cannot prove equivalence between edits."
@@ -1587,7 +1645,6 @@
       "family": "Vox Gallery",
       "category": "Static Clicking",
       "subCategory": "Static Clicking",
-      "focus": "Pick your route through the gallery.",
       "$why": "Vox's shooting-gallery layout offers route choice and quick successive kills. These Viscose click variants remove awkward spawns; Entry, Easier, Medium and Hard give the gallery a four-band progression.",
       "$order": {
         "why": "Vox's shooting-gallery layout offers route choice and quick successive kills. These Viscose click variants remove awkward spawns; Entry, Easier, Medium and Hard give the gallery a four-band progression. Difficulty order is a curation judgement; board populations cannot prove equivalence between edits."
@@ -1712,7 +1769,6 @@
       "family": "Reload Rush",
       "category": "Static Clicking",
       "subCategory": "Static Clicking",
-      "focus": "Chain the clears. Keep the rhythm alive.",
       "$why": "Six-target reload clicking emphasizes a continuous clear-and-respawn rhythm. The first three cuts reduce target size; the Expert trustechain edit adds a different routing challenge. That final handover is a design choice requiring playtesting.",
       "$order": {
         "why": "Six-target reload clicking emphasizes a continuous clear-and-respawn rhythm. The first three cuts reduce target size; the Expert trustechain edit adds a different routing challenge. That final handover is a design choice requiring playtesting. Difficulty order is a curation judgement; board populations cannot prove equivalence between edits."
@@ -1834,7 +1890,6 @@
       "family": "Micro Chain",
       "category": "Static Clicking",
       "subCategory": "Static Clicking",
-      "focus": "Find a three-target beat and build speed.",
       "$why": "Three close static targets create short, repeatable chains with little travel time. Larger 80%, Larger, standard and 10% small provide a size progression for a compact score-chasing circuit.",
       "$order": {
         "why": "Three close static targets create short, repeatable chains with little travel time. Larger 80%, Larger, standard and 10% small provide a size progression for a compact score-chasing circuit. Difficulty order is a curation judgement; board populations cannot prove equivalence between edits."
@@ -1956,7 +2011,6 @@
       "family": "Pasu",
       "category": "Dynamic Clicking",
       "subCategory": "Dynamic Clicking",
-      "focus": "Read the drift. Click on confirmation.",
       "why": "Pasu without Voltaic's cuts. Viscose's entry version with limited strafing for Novice, SuperbAim's Easy and standard cuts in the middle, and Pasu Reload Goated for Expert, which is smaller and uses a reload instead of accuracy scoring.",
       "variants": [
         {
@@ -2072,7 +2126,6 @@
       "family": "PipeClick",
       "category": "Dynamic Clicking",
       "subCategory": "Dynamic Clicking",
-      "focus": "Meet the path. Confirm the shot.",
       "why": "Targets on a fixed path, so it's more about timing than reading. Easy and Hard S1 are from Aimerz+ S1; Normal and Hard are the older S0 cuts.",
       "variants": [
         {
@@ -2188,7 +2241,6 @@
       "family": "Bounce",
       "category": "Dynamic Clicking",
       "subCategory": "Dynamic Clicking",
-      "focus": "Read the full bounce, not just the apex.",
       "why": "Bouncing-target clicking from two authors. SuperbAim's BounceClick for the first two rungs, then Sparky's and rAim's Bounce 180, where the balls really bounce and a reload replaces the accuracy penalty. The order between the two authors hasn't been playtested.",
       "variants": [
         {
@@ -2304,7 +2356,6 @@
       "family": "Angelic",
       "category": "Dynamic Clicking",
       "subCategory": "Dynamic Clicking",
-      "focus": "Read horizontal movement through the shot.",
       "why": "Targets strafe around you and move up and down, so it's wider than Pasu. psalmTS angelic click and Pasu Angelic, each with a larger-target cut below it.",
       "variants": [
         {
@@ -2420,7 +2471,6 @@
       "family": "Pasu Sequence",
       "category": "Dynamic Clicking",
       "subCategory": "Dynamic Clicking",
-      "focus": "Stay with each target for all three clicks.",
       "why": "Repeated hits add the sustained target reading missing from one-shot clicking. Wide Easy introduces the task; Less Easy uses a faster timescale than the easy v2 cut; standard v2 removes timescaling; Wide opens the field. These are related community edits, not a measured equal-step progression. Expert width and mixed v2/v4 behaviour need playtesting.",
       "variants": [
         {
@@ -2539,7 +2589,6 @@
       "family": "Popcorn",
       "category": "Dynamic Clicking",
       "subCategory": "Dynamic Clicking",
-      "focus": "Follow the arc into a clean click.",
       "why": "Popcorn with a reload instead of accuracy scoring. rAim's Goated easy cut with double-size targets, then rAim Easy, Sparky's version where the bots bounce, and Goated rAim with 10% smaller bots for Expert.",
       "variants": [
         {
@@ -2655,7 +2704,6 @@
       "family": "Floating Gallery",
       "category": "Dynamic Clicking",
       "subCategory": "Dynamic Clicking",
-      "focus": "Catch the next head as it drifts into view.",
       "$why": "Floating heads in a layered arena offer a shooting-gallery rhythm with depth changes. Viscose's Entry through Hard edits supply a coherent four-band progression without replacing the core Pasu and Popcorn tests.",
       "$order": {
         "why": "Floating heads in a layered arena offer a shooting-gallery rhythm with depth changes. Viscose's Entry through Hard edits supply a coherent four-band progression without replacing the core Pasu and Popcorn tests. Difficulty order is a curation judgement; board populations cannot prove equivalence between edits."
@@ -2780,7 +2828,6 @@
       "family": "Sky Gallery",
       "category": "Dynamic Clicking",
       "subCategory": "Dynamic Clicking",
-      "focus": "Hop between layers. Catch each passing dot.",
       "$why": "Far moving dots at several vertical layers turn the run into a layered gallery. The Goated Easier, Medium, Hard and Expert edits retain the same scene while changing the challenge.",
       "$order": {
         "why": "Far moving dots at several vertical layers turn the run into a layered gallery. The Goated Easier, Medium, Hard and Expert edits retain the same scene while changing the challenge. Difficulty order is a curation judgement; board populations cannot prove equivalence between edits."
@@ -2905,7 +2952,6 @@
       "family": "Wave Click",
       "category": "Dynamic Clicking",
       "subCategory": "Dynamic Clicking",
-      "focus": "Ride the wave from shot to shot.",
       "$why": "SunClick and WaveClick add a timing-focused wave circuit with a repeatable rhythm. This is a mixed-release progression using Aimerz's Easy S1, Normal, Hard and Hard S1 cuts; its handovers need playtesting.",
       "$order": {
         "why": "SunClick and WaveClick add a timing-focused wave circuit with a repeatable rhythm. This is a mixed-release progression using Aimerz's Easy S1, Normal, Hard and Hard S1 cuts; its handovers need playtesting. Difficulty order is a curation judgement; board populations cannot prove equivalence between edits."
@@ -3030,7 +3076,6 @@
       "family": "Cat Click",
       "category": "Dynamic Clicking",
       "subCategory": "Dynamic Clicking",
-      "focus": "One clean click per mover.",
       "$why": "CatClick is graded by Viscose in all four of its tiers, Easier, Medium, Hard and Expert, so the family is one scenario's own four cuts with no handover between authors, and its two easier cuts carry some of the busiest boards in the pool. Its author description says nothing about the mechanic; the season files it where Viscose does, under dynamic clicking.",
       "$order": {
         "why": "CatClick is graded by Viscose in all four of its tiers, Easier, Medium, Hard and Expert, so the family is one scenario's own four cuts with no handover between authors, and its two easier cuts carry some of the busiest boards in the pool. Its author description says nothing about the mechanic; the season files it where Viscose does, under dynamic clicking. Difficulty order is a curation judgement; board populations cannot prove equivalence between edits."
@@ -3155,7 +3200,6 @@
       "family": "Smoothbot",
       "category": "Precise Tracking",
       "subCategory": "Precise Tracking",
-      "focus": "Match the long arc with steady contact.",
       "why": "SmoothBot Invincible Goated at every rung instead of Voltaic's Smoothbot: 75% speed, Easy, the standard version, then the smaller cut for Expert. The bot can't die, so the whole run is time on target.",
       "variants": [
         {
@@ -3271,7 +3315,6 @@
       "family": "Centering",
       "category": "Precise Tracking",
       "subCategory": "Precise Tracking",
-      "focus": "Settle into the strafe. Match its speed.",
       "why": "A dedicated horizontal centering test separates velocity matching from multidirectional control. Entry, Novice and Intermediate community cuts lead into the established no-strafes version. Apogee band names describe our progression, not the names of the source cuts. Exact target-size differences are not claimed; band handovers need playtesting.",
       "variants": [
         {
@@ -3387,7 +3430,6 @@
       "family": "PreciseTrack",
       "category": "Precise Tracking",
       "subCategory": "Precise Tracking",
-      "focus": "Recover cleanly. Settle back on target.",
       "why": "Aimerz+ PreciseTrack in place of PGT as the fine-correction test. Avasive's Easier cut for Novice, then Easy, Med and Hard from the Aimerz+ S1 set.",
       "variants": [
         {
@@ -3503,7 +3545,6 @@
       "family": "Whisphere",
       "category": "Precise Tracking",
       "subCategory": "Precise Tracking",
-      "focus": "Match the curve and its changing speed.",
       "why": "Smooth with no blinks, going by the scenario description. 55% speed, 75%, full speed, then Extra Small for Expert.",
       "variants": [
         {
@@ -3619,7 +3660,6 @@
       "family": "Vertical Control",
       "category": "Precise Tracking",
       "subCategory": "Precise Tracking",
-      "focus": "Stay connected through the rise and fall.",
       "why": "These four Altered POV cuts explicitly isolate vertical smoothness. They replace a second broad sphere-control test with an axis players can identify and practise directly. Entry, Easy, Intermediate and standard v2 are curated into four Apogee bands; difficulty spacing remains a playtest judgement.",
       "variants": [
         {
@@ -3738,7 +3778,6 @@
       "family": "Controlsphere",
       "category": "Precise Tracking",
       "subCategory": "Precise Tracking",
-      "focus": "Keep contact through changing directions.",
       "why": "A small dot that jumps gently and flies around you at changing distance and speed. Viscose's entry cut, then rAim's Easy at 90%, rAim Easy and rAim. The sheets file the top rung under Control Tracking, which this season grades as Precise.",
       "variants": [
         {
@@ -3854,7 +3893,6 @@
       "family": "DVD Chase",
       "category": "Precise Tracking",
       "subCategory": "Precise Tracking",
-      "focus": "Follow the bounce all the way to the corner.",
       "$why": "The DVD-inspired moving target gives continuous tracking a recognizable screen-bounce motif. MASSIVE, Big, standard and Small keep the motion theme while reducing the target size.",
       "$order": {
         "why": "The DVD-inspired moving target gives continuous tracking a recognizable screen-bounce motif. MASSIVE, Big, standard and Small keep the motion theme while reducing the target size. Difficulty order is a curation judgement; board populations cannot prove equivalence between edits."
@@ -3985,7 +4023,6 @@
       "family": "Flower Chase",
       "category": "Precise Tracking",
       "subCategory": "Precise Tracking",
-      "focus": "Trace the flower. Stay with each little turn.",
       "$why": "The author's bee-collecting-pollen theme gives compact tracking a playful identity. Entry, Easier, standard and Hard keep the Flower motion across the four bands. The scenario name is not a requirement to change sensitivity.",
       "$order": {
         "why": "The author's bee-collecting-pollen theme gives compact tracking a playful identity. Entry, Easier, standard and Hard keep the Flower motion across the four bands. The scenario name is not a requirement to change sensitivity. Difficulty order is a curation judgement; board populations cannot prove equivalence between edits."
@@ -4110,7 +4147,6 @@
       "family": "Sphere Cruise",
       "category": "Precise Tracking",
       "subCategory": "Precise Tracking",
-      "focus": "Cruise with the dot as it circles you.",
       "$why": "A gently jumping dot flying around the player adds a flowing orbital chase. Viscose's Horizontal Entry, Easier, standard and Hard cuts expand the motion challenge while keeping the same visual theme.",
       "$order": {
         "why": "A gently jumping dot flying around the player adds a flowing orbital chase. Viscose's Horizontal Entry, Easier, standard and Hard cuts expand the motion challenge while keeping the same visual theme. Difficulty order is a curation judgement; board populations cannot prove equivalence between edits."
@@ -4235,7 +4271,6 @@
       "family": "Waldo Track",
       "category": "Precise Tracking",
       "subCategory": "Precise Tracking",
-      "focus": "Stay on it, not near it.",
       "$why": "waldoTS is one of the most-played tracking scenarios in the catalogue, with 3.7 million plays on its standard cut. Viscose grades its Novice, Intermediate, standard and Elite cuts as Easier, Medium, Hard and Expert, and AimSpeed grades the standard and Elite cuts too, so the progression is one scenario's own cuts.",
       "$order": {
         "why": "waldoTS is one of the most-played tracking scenarios in the catalogue, with 3.7 million plays on its standard cut. Viscose grades its Novice, Intermediate, standard and Elite cuts as Easier, Medium, Hard and Expert, and AimSpeed grades the standard and Elite cuts too, so the progression is one scenario's own cuts. Difficulty order is a curation judgement; board populations cannot prove equivalence between edits."
@@ -4357,7 +4392,6 @@
       "family": "Ground Plaza",
       "category": "Reactive Tracking",
       "subCategory": "Reactive Tracking",
-      "focus": "Read each strafe. React after the turn.",
       "why": "Sparky's Ground Plaza v3: six bots strafing on the ground at mixed lengths and distances. Easy, the standard version, OW with instant ground acceleration, then Thin for Expert.",
       "variants": [
         {
@@ -4473,7 +4507,6 @@
       "family": "Air Reading",
       "category": "Reactive Tracking",
       "subCategory": "Reactive Tracking",
-      "focus": "Follow the aerial change without guessing.",
       "why": "Air Voltaic Invincible 4: one invincible bot changing direction in the air, nothing to kill. Viscose grades Entry, Easier and Medium; the full version is Expert.",
       "variants": [
         {
@@ -4589,7 +4622,6 @@
       "family": "Air Angelic",
       "category": "Reactive Tracking",
       "subCategory": "Reactive Tracking",
-      "focus": "Recover from the turn, then match speed.",
       "why": "Air Angelic from Astro's and Jade Palace's sheets. rAim's Biggest cut, Easier, rAim Easy, then the standard version, which both of them grade at their top tier.",
       "variants": [
         {
@@ -4705,7 +4737,6 @@
       "family": "Strafe Gallery",
       "category": "Reactive Tracking",
       "subCategory": "Reactive Tracking",
-      "focus": "Read the next strafe. Keep corrections clean.",
       "why": "Targets that only dodge horizontally. CB StrafeTrack Easy is the entry, then Aimerz+ VGS Easy, Med and Hard. Mixes two authors: the CB entry isn't part of the VGS set.",
       "variants": [
         {
@@ -4821,7 +4852,6 @@
       "family": "Leapstrafes",
       "category": "Reactive Tracking",
       "subCategory": "Reactive Tracking",
-      "focus": "Stay with the leap and read its direction.",
       "why": "A target that leaps and strafes with mixed dodge profiles. wobin's Easier cut, then Aimerz+'s mid-range Leapstrafes Control Medium, then wobin's standard and Hard cuts. No sheet names a sub-skill for wobin's version, so putting it in Reactive is a judgement call.",
       "variants": [
         {
@@ -4937,7 +4967,6 @@
       "family": "Recovery",
       "category": "Reactive Tracking",
       "subCategory": "Reactive Tracking",
-      "focus": "Read the change. Reacquire, then settle.",
       "why": "Recovery replaces a third mixed-air test. Kindaclose introduces random acceleration, slowing and stops; the three Flicker Plaza cuts then challenge reacquisition after teleports. This is a deliberate change of mechanic between Novice and Intermediate, not a shared-bot speed ladder. Less Blinks provides the transition.",
       "variants": [
         {
@@ -5053,7 +5082,6 @@
       "family": "Spectral Chase",
       "category": "Reactive Tracking",
       "subCategory": "Reactive Tracking",
-      "focus": "Stay ready for the next strange turn.",
       "$why": "Air Spectral's deliberately unusual Air movement adds a surprise-driven chase. Easy 85%, Easy, standard and Harder retain that theme. Its terse author description supports the unusual-motion intent, not a claim of measured enjoyment.",
       "$order": {
         "why": "Air Spectral's deliberately unusual Air movement adds a surprise-driven chase. Easy 85%, Easy, standard and Harder retain that theme. Its terse author description supports the unusual-motion intent, not a claim of measured enjoyment. Difficulty order is a curation judgement; board populations cannot prove equivalence between edits."
@@ -5178,7 +5206,6 @@
       "family": "Celestial Chase",
       "category": "Reactive Tracking",
       "subCategory": "Reactive Tracking",
-      "focus": "Follow the aerial course through every phase.",
       "$why": "Air Divine-style movement brings a longer aerial course into the season. Easy Slowed, Easy, No UFO and Harder progress from a slowed course to the full challenge; the final UFO handover needs playtesting.",
       "$order": {
         "why": "Air Divine-style movement brings a longer aerial course into the season. Easy Slowed, Easy, No UFO and Harder progress from a slowed course to the full challenge; the final UFO handover needs playtesting. Difficulty order is a curation judgement; board populations cannot prove equivalence between edits."
@@ -5303,7 +5330,6 @@
       "family": "Pure Chase",
       "category": "Reactive Tracking",
       "subCategory": "Reactive Tracking",
-      "focus": "Read each dodge before it happens.",
       "$why": "Air Pure mixes bots with different dodge profiles in one air arena, so every target asks for a different read. Revosect's time-scored entry cut, six bots circling the player, leads into the Intermediate, standard and Hard cuts that Viscose and snakbox grade. The handover between the two editions needs playtesting.",
       "$order": {
         "why": "Air Pure mixes bots with different dodge profiles in one air arena, so every target asks for a different read. Revosect's time-scored entry cut, six bots circling the player, leads into the Intermediate, standard and Hard cuts that Viscose and snakbox grade. The handover between the two editions needs playtesting. Difficulty order is a curation judgement; board populations cannot prove equivalence between edits."
@@ -5431,7 +5457,6 @@
       "family": "Close Strafe Chase",
       "category": "Reactive Tracking",
       "subCategory": "Reactive Tracking",
-      "focus": "Stay close. Catch the reversal.",
       "$why": "A close strafing opponent adds a grounded duel-like chase beside the aerial courses. Easy Thin, standard, Thin and Precise+ are a proposed progression; speed and size both change, so the first handover needs playtesting.",
       "$order": {
         "why": "A close strafing opponent adds a grounded duel-like chase beside the aerial courses. Easy Thin, standard, Thin and Precise+ are a proposed progression; speed and size both change, so the first handover needs playtesting. Difficulty order is a curation judgement; board populations cannot prove equivalence between edits."
@@ -5556,7 +5581,6 @@
       "family": "DotTS",
       "category": "Speed Switching",
       "subCategory": "Speed Switching",
-      "focus": "Land close. Confirm. Chain the next flick.",
       "why": "Static dot switching without Voltaic's cuts. wobin's Easy, which leans on horizontal spawns, for Novice, AimSpeed's Entry, the 30% larger cut, then plain DotTS, which Aimerz+ SpeedTS and AimSpeed both grade at Hard.",
       "variants": [
         {
@@ -5672,7 +5696,6 @@
       "family": "Vox Pace",
       "category": "Speed Switching",
       "subCategory": "Speed Switching",
-      "focus": "Land, finish, transfer. Hold your pace.",
       "why": "Large and standard range targets establish routing and clean transfers. Viscose Varied introduces progressively shrinking targets; rAim finishes with a smaller fixed-target challenge. Only the Advanced rung is an evolving task. This adapts the source routine's speed-to-precision idea across related variants without changing their native scoring or duration.",
       "$order": {
         "why": "The two middle rungs are never placed apart by a sheet that grades both. voxTargetSwitch 2 takes band 2 from Viscose's Medium tier, in both editions, and from AimSpeed 2.0's Normal. voxTS Viscose Varied is banded by Aimerz+ SpeedTS alone, which lists it beside voxTargetSwitch 2 in both its Easy and its Hard tier: the one sheet that grades the pair calls them the same step, and it speaks with its Easy listing, band 1. What orders them here is the mechanic. Varied's targets shrink as the run goes on, the only rung in the family that does, and carrying pace into smaller targets is what Vox Pace exists to test (docs/benchmark-theory-rebuild.md). Each rung's targets are cut from its own leaderboard at its own window's percentiles."
@@ -5791,7 +5814,6 @@
       "family": "EddieTS",
       "category": "Speed Switching",
       "subCategory": "Speed Switching",
-      "focus": "Keep transfers fast and finishes clean.",
       "why": "Four flying targets, about a quarter second each. Here so the category isn't just size variants of one range. Elite S5 is the Expert rung.",
       "variants": [
         {
@@ -5890,7 +5912,6 @@
       "family": "PivoTS",
       "category": "Speed Switching",
       "subCategory": "Speed Switching",
-      "focus": "Find the next target before the pivot.",
       "why": "Aimerz+ pivoTS, a different switching pattern. The two Hard cuts are from different Aimerz+ releases (S0 and S1), and their order hasn't been playtested yet.",
       "variants": [
         {
@@ -6006,7 +6027,6 @@
       "family": "Pokeball",
       "category": "Speed Switching",
       "subCategory": "Speed Switching",
-      "focus": "Hold fire. Finish before transferring.",
       "why": "You hold fire on each target instead of tapping, and some cuts regen if you flick off early. The slow-kill option next to DotTS and EddieTS.",
       "variants": [
         {
@@ -6122,7 +6142,6 @@
       "family": "psalmTS",
       "category": "Speed Switching",
       "subCategory": "Speed Switching",
-      "focus": "Choose a route and finish each target.",
       "why": "Spherical bots moving slowly side to side, tracked briefly to kill. psalmTS Voltaic is the Advanced rung and VT psalmTS Advanced is Expert.",
       "variants": [
         {
@@ -6238,7 +6257,6 @@
       "family": "Vox Blitz",
       "category": "Speed Switching",
       "subCategory": "Speed Switching",
-      "focus": "Clear the room in fast bursts.",
       "$why": "Stationary Vox targets reward route choice and rapid full-auto clears without movement reading. Jumbo, standard, Small and xxSmall turn the room into a four-band switching sprint.",
       "$order": {
         "why": "Stationary Vox targets reward route choice and rapid full-auto clears without movement reading. Jumbo, standard, Small and xxSmall turn the room into a four-band switching sprint. Difficulty order is a curation judgement; board populations cannot prove equivalence between edits."
@@ -6360,7 +6378,6 @@
       "family": "Wave Relay",
       "category": "Speed Switching",
       "subCategory": "Speed Switching",
-      "focus": "Pass from wave to wave without losing pace.",
       "$why": "Smoothly drifting targets give switching a visible wave rhythm. Community Benchmarks' easy cut leads into Revosect Entry, Intermediate and standard. The cross-author first handover is provisional.",
       "$order": {
         "why": "Smoothly drifting targets give switching a visible wave rhythm. Community Benchmarks' easy cut leads into Revosect Entry, Intermediate and standard. The cross-author first handover is provisional. Difficulty order is a curation judgement; board populations cannot prove equivalence between edits."
@@ -6491,7 +6508,6 @@
       "family": "Sky Relay",
       "category": "Speed Switching",
       "subCategory": "Speed Switching",
-      "focus": "Sweep the sky one target at a time.",
       "$why": "Slow horizontal targets at several depths make a readable aerial switching gallery. Four published skyTS bands keep the movement predictable while increasing the target challenge.",
       "$order": {
         "why": "Slow horizontal targets at several depths make a readable aerial switching gallery. Four published skyTS bands keep the movement predictable while increasing the target challenge. Difficulty order is a curation judgement; board populations cannot prove equivalence between edits."
@@ -6613,7 +6629,6 @@
       "family": "Dev Blitz",
       "category": "Speed Switching",
       "subCategory": "Speed Switching",
-      "focus": "Burst through the pack. Find the next clear.",
       "$why": "Low-FOV target switching concentrates the action into short, fast clears. Easy, NR, rAim and NR Small are a proposed cross-edit progression; the two middle releases need an in-game difficulty comparison.",
       "$order": {
         "why": "Low-FOV target switching concentrates the action into short, fast clears. Easy, NR, rAim and NR Small are a proposed cross-edit progression; the two middle releases need an in-game difficulty comparison. Difficulty order is a curation judgement; board populations cannot prove equivalence between edits."
@@ -6741,352 +6756,345 @@
       "family": "Pasu Switch",
       "category": "Evasive Switching",
       "subCategory": "Evasive Switching",
-      "focus": "Land on the moving target, then finish.",
-      "why": "Target switching on Pasu-style floating bots. PureG's flick-focused version, then PureG's higher time-to-kill version, then Aimerz+'s wide-wall Pasu Switch and its regen cut for Expert. Two authors, and the order between them hasn't been playtested.",
+      "focus": "Keep the crosshair on the bot through its direction changes. Switch after the kill.",
+      "why": "Replace the mixed PureG/Aimerz progression with one published PasuTS lineage. Entry is explicitly 15% larger and 15% slower, with a short 20-hit clear; Intermediate, Advanced and Elite retain the task.",
+      "$order": {
+        "why": "Replace the mixed PureG/Aimerz progression with one published PasuTS lineage. Entry is explicitly 15% larger and 15% slower, with a short 20-hit clear; Intermediate, Advanced and Elite retain the task. The ordering follows the named edit lineage; cross-band physical difficulty is provisional until playtested."
+      },
       "variants": [
         {
           "window": 0,
-          "scenario": "Pasu Switch Pure",
-          "label": "Pasu Switch Pure",
-          "leaderboardId": 13227,
+          "scenario": "VT PasuTS Entry S5",
+          "label": "VT PasuTS Entry S5",
+          "leaderboardId": 106755,
           "admitted": {
-            "why": "Target switching on Pasu-style floating bots. PureG's flick-focused version, then PureG's higher time-to-kill version, then Aimerz+'s wide-wall Pasu Switch and its regen cut for Expert. Two authors, and the order between them hasn't been playtested."
+            "why": "Replace the mixed PureG/Aimerz progression with one published PasuTS lineage. Entry is explicitly 15% larger and 15% slower, with a short 20-hit clear; Intermediate, Advanced and Elite retain the task."
           },
           "rankMaxes": [
-            37,
-            46,
-            51,
-            55,
-            65,
-            69
-          ],
-          "source": {
-            "kind": "authored",
-            "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
-          },
-          "arm": "Wrist",
-          "armFrom": "Apogee"
-        },
-        {
-          "window": 1,
-          "scenario": "PureG Pasu Switch",
-          "label": "PureG Pasu Switch",
-          "leaderboardId": 28397,
-          "admitted": {
-            "why": "Target switching on Pasu-style floating bots. PureG's flick-focused version, then PureG's higher time-to-kill version, then Aimerz+'s wide-wall Pasu Switch and its regen cut for Expert. Two authors, and the order between them hasn't been playtested."
-          },
-          "rankMaxes": [
-            59,
-            63,
-            64,
-            67,
-            75,
-            78
-          ],
-          "source": {
-            "kind": "authored",
-            "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
-          },
-          "arm": "Wrist",
-          "armFrom": "Apogee"
-        },
-        {
-          "window": 2,
-          "scenario": "Pasu Switch Wide",
-          "label": "Pasu Switch Wide",
-          "leaderboardId": 48886,
-          "admitted": {
-            "why": "Target switching on Pasu-style floating bots. PureG's flick-focused version, then PureG's higher time-to-kill version, then Aimerz+'s wide-wall Pasu Switch and its regen cut for Expert. Two authors, and the order between them hasn't been playtested."
-          },
-          "rankMaxes": [
-            500,
-            516,
-            533,
-            547,
-            587,
-            622
-          ],
-          "source": {
-            "kind": "authored",
-            "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
-          },
-          "arm": "Wrist",
-          "armFrom": "Apogee"
-        },
-        {
-          "window": 3,
-          "scenario": "Pasu Switch Wide Regen",
-          "label": "Pasu Switch Wide Regen",
-          "leaderboardId": 48884,
-          "admitted": {
-            "why": "Target switching on Pasu-style floating bots. PureG's flick-focused version, then PureG's higher time-to-kill version, then Aimerz+'s wide-wall Pasu Switch and its regen cut for Expert. Two authors, and the order between them hasn't been playtested."
-          },
-          "thinBoard": {
-            "why": "1,585 entries against the 1,667 the Expert window needs: 95% of the floor. Kept because it is the only Pasu Switch cut harder than Pasu Switch Wide, which already holds Advanced, and the alternative is a Voltaic cut. Re-check when the boards are next sampled; 82 more entries clears it."
-          },
-          "rankMaxes": [
+            603,
+            696,
             736,
-            760,
-            776,
-            800
-          ],
-          "source": {
-            "kind": "percentile",
-            "cut": {
-              "ranks": [
-                12,
-                13,
-                14,
-                15
-              ],
-              "topFractions": [
-                0.022,
-                0.015,
-                0.011,
-                0.008
-              ],
-              "leaderboardId": 48884,
-              "total": 1585,
-              "sampledAt": "2026-09-13T03:07:16.121Z"
-            },
-            "why": "Cut from this scenario's own KovaaK's board at the pool ladder's ranks 13, 14, 15, 16 - the top 2.2%, 1.5%, 1.1%, 0.8% of 1,585 entries. No benchmark publishes a tier for this scenario at this window, so there is nothing to adopt. Re-cut with npm run cut:thresholds."
-          },
-          "arm": "Wrist",
-          "armFrom": "Apogee"
-        }
-      ]
-    },
-    {
-      "family": "Regen Control",
-      "category": "Evasive Switching",
-      "subCategory": "Evasive Switching",
-      "focus": "Finish the moving target before you leave.",
-      "why": "Regenerating targets reward committed tracking after the flick. Entry and Intermediate use shorter time to kill; Control asks for longer contact; Hard adds bouncing. These are different training demands, not just faster versions. Unlike the retained Smooth family, the Control bots wiggle rather than circle.",
-      "variants": [
-        {
-          "window": 0,
-          "scenario": "tamTargetSwitch Control Entry",
-          "label": "tamTargetSwitch Control Entry",
-          "leaderboardId": 110651,
-          "rankMaxes": [
-            38,
-            44,
-            47,
-            49,
-            55,
-            57
+            769,
+            842,
+            884
           ],
           "source": {
             "kind": "authored",
-            "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
-          },
-          "admitted": {
-            "why": "Regenerating targets reward committed tracking after the flick. Entry and Intermediate use shorter time to kill; Control asks for longer contact; Hard adds bouncing. These are different training demands, not just faster versions. Unlike the retained Smooth family, the Control bots wiggle rather than circle."
-          },
-          "arm": "Wrist",
-          "armFrom": "Apogee"
-        },
-        {
-          "window": 1,
-          "scenario": "tamTargetSwitch Control Intermediate",
-          "label": "tamTargetSwitch Control Intermediate",
-          "leaderboardId": 110123,
-          "rankMaxes": [
-            49,
-            50,
-            51,
-            53,
-            56,
-            57
-          ],
-          "source": {
-            "kind": "authored",
-            "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
-          },
-          "admitted": {
-            "why": "Regenerating targets reward committed tracking after the flick. Entry and Intermediate use shorter time to kill; Control asks for longer contact; Hard adds bouncing. These are different training demands, not just faster versions. Unlike the retained Smooth family, the Control bots wiggle rather than circle."
-          },
-          "arm": "Wrist",
-          "armFrom": "Apogee"
-        },
-        {
-          "window": 2,
-          "scenario": "tamTargetSwitch Control",
-          "label": "tamTargetSwitch Control",
-          "leaderboardId": 57,
-          "rankMaxes": [
-            35,
-            36,
-            37,
-            38,
-            41,
-            43
-          ],
-          "source": {
-            "kind": "authored",
-            "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
-          },
-          "admitted": {
-            "why": "Regenerating targets reward committed tracking after the flick. Entry and Intermediate use shorter time to kill; Control asks for longer contact; Hard adds bouncing. These are different training demands, not just faster versions. Unlike the retained Smooth family, the Control bots wiggle rather than circle."
-          },
-          "arm": "Wrist",
-          "armFrom": "Apogee"
-        },
-        {
-          "window": 3,
-          "scenario": "tamTargetSwitch Control Hard",
-          "label": "tamTargetSwitch Control Hard",
-          "leaderboardId": 757,
-          "rankMaxes": [
-            37,
-            38,
-            39,
-            40
-          ],
-          "source": {
-            "kind": "percentile",
-            "cut": {
-              "ranks": [
-                12,
-                13,
-                14,
-                15
-              ],
-              "topFractions": [
-                0.022,
-                0.015,
-                0.011,
-                0.008
-              ],
-              "leaderboardId": 757,
-              "total": 61447,
-              "sampledAt": "2026-09-13T19:24:51.555Z"
-            },
-            "why": "Frozen once for the theory-led draft rebuild from this exact scenario's own dated leaderboard. Existing Apogee percentile positions are retained. The target is a fixed score, not a live percentile or proof of equal difficulty across variants."
-          },
-          "admitted": {
-            "why": "Regenerating targets reward committed tracking after the flick. Entry and Intermediate use shorter time to kill; Control asks for longer contact; Hard adds bouncing. These are different training demands, not just faster versions. Unlike the retained Smooth family, the Control bots wiggle rather than circle."
-          },
-          "arm": "Wrist",
-          "armFrom": "Apogee"
-        }
-      ]
-    },
-    {
-      "family": "Arc Transfer",
-      "category": "Evasive Switching",
-      "subCategory": "Evasive Switching",
-      "focus": "Track the whole arc. Confirm the finish.",
-      "why": "An accessible rAim entry leads to Aimerz+'s depth-changing mid-high arcs, then two regenerative bounce edits. The final two variants make incomplete contact costly instead of relying only on smaller Elite bots. They deliberately retain two useful Voltaic variants rather than an entire stock four-rung family. Cross-author handovers and regeneration difficulty need playtesting.",
-      "variants": [
-        {
-          "window": 0,
-          "scenario": "B180T rAim Easy",
-          "label": "B180T rAim Easy",
-          "leaderboardId": 740,
-          "rankMaxes": [
-            36,
-            47,
-            54,
-            60,
-            71,
-            74
-          ],
-          "source": {
-            "kind": "authored",
-            "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
-          },
-          "admitted": {
-            "why": "An accessible rAim entry leads to Aimerz+'s depth-changing mid-high arcs, then two regenerative bounce edits. The final two variants make incomplete contact costly instead of relying only on smaller Elite bots. They deliberately retain two useful Voltaic variants rather than an entire stock four-rung family. Cross-author handovers and regeneration difficulty need playtesting."
-          },
-          "arm": "Arm",
-          "armFrom": "Apogee"
-        },
-        {
-          "window": 1,
-          "scenario": "aimerz+ B180TC Normal",
-          "label": "aimerz+ B180TC Normal",
-          "leaderboardId": 44380,
-          "rankMaxes": [
-            55,
-            59,
-            60,
-            62,
-            68,
-            71
-          ],
-          "source": {
-            "kind": "authored",
-            "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
-          },
-          "admitted": {
-            "why": "An accessible rAim entry leads to Aimerz+'s depth-changing mid-high arcs, then two regenerative bounce edits. The final two variants make incomplete contact costly instead of relying only on smaller Elite bots. They deliberately retain two useful Voltaic variants rather than an entire stock four-rung family. Cross-author handovers and regeneration difficulty need playtesting."
-          },
-          "arm": "Arm",
-          "armFrom": "Apogee"
-        },
-        {
-          "window": 2,
-          "scenario": "B180T Voltaic Easy Regen",
-          "label": "B180T Voltaic Easy Regen",
-          "leaderboardId": 2837,
-          "rankMaxes": [
-            47,
-            49,
-            51,
-            53,
-            58,
-            61
-          ],
-          "source": {
-            "kind": "authored",
-            "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
-          },
-          "admitted": {
-            "why": "An accessible rAim entry leads to Aimerz+'s depth-changing mid-high arcs, then two regenerative bounce edits. The final two variants make incomplete contact costly instead of relying only on smaller Elite bots. They deliberately retain two useful Voltaic variants rather than an entire stock four-rung family. Cross-author handovers and regeneration difficulty need playtesting."
-          },
-          "arm": "Arm",
-          "armFrom": "Apogee"
-        },
-        {
-          "window": 3,
-          "scenario": "B180T Voltaic Regen",
-          "label": "B180T Voltaic Regen",
-          "leaderboardId": 2153,
-          "rankMaxes": [
-            28,
-            29,
-            30,
-            31
-          ],
-          "source": {
-            "kind": "percentile",
-            "cut": {
-              "ranks": [
-                12,
-                13,
-                14,
-                15
-              ],
-              "topFractions": [
-                0.022,
-                0.015,
-                0.011,
-                0.008
-              ],
-              "leaderboardId": 2153,
-              "total": 8679,
-              "sampledAt": "2026-09-13T19:25:47.664Z"
-            },
-            "why": "Frozen once for the theory-led draft rebuild from this exact scenario's own dated leaderboard. Existing Apogee percentile positions are retained. The target is a fixed score, not a live percentile or proof of equal difficulty across variants. Provisional calibration: 8679 players; this board is below the population floor for this band. Validate the difficulty step through group playtesting before publishing the season."
-          },
-          "admitted": {
-            "why": "An accessible rAim entry leads to Aimerz+'s depth-changing mid-high arcs, then two regenerative bounce edits. The final two variants make incomplete contact costly instead of relying only on smaller Elite bots. They deliberately retain two useful Voltaic variants rather than an entire stock four-rung family. Cross-author handovers and regeneration difficulty need playtesting."
+            "why": "Frozen from this scenario's own dated leaderboard. The first four ranks use the season curve; lower bands keep stricter two-rank crossover cuts (0.5 and 0.4 factors). Ties are capped backward from the demonstrated record. Reproduce using data/evasive_rework_calibration.json. Physical difficulty and equal effort between scenarios require playtesting."
           },
           "thinBoard": {
-            "why": "This exact variant covers Arc Transfer at Expert. Its 8679-player board is below the 8750-player calibration floor. Kept as an explicitly provisional draft choice to retain this distinct skill without substituting another stock Voltaic ladder. Frozen percentile targets have fewer than 70 players above the hardest cut and require group playtesting before season publication."
+            "why": "Draft selection with 5246 sampled players. The named variant and movement task justify inclusion, not leaderboard population. Sparse high-rank cuts need human calibration; no difficulty equivalence is claimed."
           },
-          "arm": "Arm",
+          "arm": "Blending",
+          "armFrom": "Apogee"
+        },
+        {
+          "window": 1,
+          "scenario": "VT PasuTS Intermediate S5",
+          "label": "VT PasuTS Intermediate S5",
+          "leaderboardId": 106756,
+          "admitted": {
+            "why": "Replace the mixed PureG/Aimerz progression with one published PasuTS lineage. Entry is explicitly 15% larger and 15% slower, with a short 20-hit clear; Intermediate, Advanced and Elite retain the task."
+          },
+          "rankMaxes": [
+            752,
+            776,
+            786,
+            802,
+            840,
+            858
+          ],
+          "source": {
+            "kind": "authored",
+            "why": "Frozen from this scenario's own dated leaderboard. The first four ranks use the season curve; lower bands keep stricter two-rank crossover cuts (0.5 and 0.4 factors). Ties are capped backward from the demonstrated record. Reproduce using data/evasive_rework_calibration.json. Physical difficulty and equal effort between scenarios require playtesting."
+          },
+          "arm": "Blending",
+          "armFrom": "Apogee"
+        },
+        {
+          "window": 2,
+          "scenario": "VT PasuTS Advanced S5",
+          "label": "VT PasuTS Advanced S5",
+          "leaderboardId": 106331,
+          "admitted": {
+            "why": "Replace the mixed PureG/Aimerz progression with one published PasuTS lineage. Entry is explicitly 15% larger and 15% slower, with a short 20-hit clear; Intermediate, Advanced and Elite retain the task."
+          },
+          "rankMaxes": [
+            780,
+            788,
+            800,
+            810,
+            840,
+            860
+          ],
+          "source": {
+            "kind": "authored",
+            "why": "Frozen from this scenario's own dated leaderboard. The first four ranks use the season curve; lower bands keep stricter two-rank crossover cuts (0.5 and 0.4 factors). Ties are capped backward from the demonstrated record. Reproduce using data/evasive_rework_calibration.json. Physical difficulty and equal effort between scenarios require playtesting."
+          },
+          "thinBoard": {
+            "why": "Draft selection with 1837 sampled players. The named variant and movement task justify inclusion, not leaderboard population. Sparse high-rank cuts need human calibration; no difficulty equivalence is claimed."
+          },
+          "arm": "Blending",
+          "armFrom": "Apogee"
+        },
+        {
+          "window": 3,
+          "scenario": "VT PasuTS Elite S5",
+          "label": "VT PasuTS Elite S5",
+          "leaderboardId": 106754,
+          "admitted": {
+            "why": "Replace the mixed PureG/Aimerz progression with one published PasuTS lineage. Entry is explicitly 15% larger and 15% slower, with a short 20-hit clear; Intermediate, Advanced and Elite retain the task."
+          },
+          "rankMaxes": [
+            646,
+            683,
+            711,
+            726
+          ],
+          "source": {
+            "kind": "authored",
+            "why": "Frozen from this scenario's own dated leaderboard. The first four ranks use the season curve; lower bands keep stricter two-rank crossover cuts (0.5 and 0.4 factors). Ties are capped backward from the demonstrated record. Reproduce using data/evasive_rework_calibration.json. Physical difficulty and equal effort between scenarios require playtesting."
+          },
+          "thinBoard": {
+            "why": "Draft selection with 223 sampled players. The named variant and movement task justify inclusion, not leaderboard population. Sparse high-rank cuts need human calibration; no difficulty equivalence is claimed."
+          },
+          "arm": "Blending",
+          "armFrom": "Apogee"
+        }
+      ]
+    },
+    {
+      "family": "Floating Heads",
+      "category": "Evasive Switching",
+      "subCategory": "Evasive Switching",
+      "focus": "Build a target order and keep each burst on the head until it drops.",
+      "why": "A new floating-head gallery adds short 0.2-second, 20-hit clears and fast target choice. Use the same authored Entry, Intermediate, Advanced and Elite editions; these are sustained full-auto clears despite the broad catalogue Clicking tag.",
+      "$order": {
+        "why": "A new floating-head gallery adds short 0.2-second, 20-hit clears and fast target choice. Use the same authored Entry, Intermediate, Advanced and Elite editions; these are sustained full-auto clears despite the broad catalogue Clicking tag. The ordering follows the named edit lineage; cross-band physical difficulty is provisional until playtested."
+      },
+      "variants": [
+        {
+          "window": 0,
+          "scenario": "Floatswitch Entry",
+          "label": "Floatswitch Entry",
+          "leaderboardId": 112237,
+          "admitted": {
+            "why": "A new floating-head gallery adds short 0.2-second, 20-hit clears and fast target choice. Use the same authored Entry, Intermediate, Advanced and Elite editions; these are sustained full-auto clears despite the broad catalogue Clicking tag."
+          },
+          "rankMaxes": [
+            505,
+            577,
+            612,
+            638,
+            708,
+            742
+          ],
+          "source": {
+            "kind": "authored",
+            "why": "Frozen from this scenario's own dated leaderboard. The first four ranks use the season curve; lower bands keep stricter two-rank crossover cuts (0.5 and 0.4 factors). Ties are capped backward from the demonstrated record. Reproduce using data/evasive_rework_calibration.json. Physical difficulty and equal effort between scenarios require playtesting."
+          },
+          "thinBoard": {
+            "why": "Draft selection with 4300 sampled players. The named variant and movement task justify inclusion, not leaderboard population. Sparse high-rank cuts need human calibration; no difficulty equivalence is claimed."
+          },
+          "arm": "Blending",
+          "armFrom": "Apogee"
+        },
+        {
+          "window": 1,
+          "scenario": "Floatswitch Intermediate",
+          "label": "Floatswitch Intermediate",
+          "leaderboardId": 111979,
+          "admitted": {
+            "why": "A new floating-head gallery adds short 0.2-second, 20-hit clears and fast target choice. Use the same authored Entry, Intermediate, Advanced and Elite editions; these are sustained full-auto clears despite the broad catalogue Clicking tag."
+          },
+          "rankMaxes": [
+            685,
+            708,
+            719,
+            735,
+            773,
+            796
+          ],
+          "source": {
+            "kind": "authored",
+            "why": "Frozen from this scenario's own dated leaderboard. The first four ranks use the season curve; lower bands keep stricter two-rank crossover cuts (0.5 and 0.4 factors). Ties are capped backward from the demonstrated record. Reproduce using data/evasive_rework_calibration.json. Physical difficulty and equal effort between scenarios require playtesting."
+          },
+          "arm": "Blending",
+          "armFrom": "Apogee"
+        },
+        {
+          "window": 2,
+          "scenario": "Floatswitch Advanced",
+          "label": "Floatswitch Advanced",
+          "leaderboardId": 112006,
+          "admitted": {
+            "why": "A new floating-head gallery adds short 0.2-second, 20-hit clears and fast target choice. Use the same authored Entry, Intermediate, Advanced and Elite editions; these are sustained full-auto clears despite the broad catalogue Clicking tag."
+          },
+          "rankMaxes": [
+            748,
+            764,
+            776,
+            787,
+            824,
+            839
+          ],
+          "source": {
+            "kind": "authored",
+            "why": "Frozen from this scenario's own dated leaderboard. The first four ranks use the season curve; lower bands keep stricter two-rank crossover cuts (0.5 and 0.4 factors). Ties are capped backward from the demonstrated record. Reproduce using data/evasive_rework_calibration.json. Physical difficulty and equal effort between scenarios require playtesting."
+          },
+          "thinBoard": {
+            "why": "Draft selection with 1509 sampled players. The named variant and movement task justify inclusion, not leaderboard population. Sparse high-rank cuts need human calibration; no difficulty equivalence is claimed."
+          },
+          "arm": "Blending",
+          "armFrom": "Apogee"
+        },
+        {
+          "window": 3,
+          "scenario": "Floatswitch Elite",
+          "label": "Floatswitch Elite",
+          "leaderboardId": 112062,
+          "admitted": {
+            "why": "A new floating-head gallery adds short 0.2-second, 20-hit clears and fast target choice. Use the same authored Entry, Intermediate, Advanced and Elite editions; these are sustained full-auto clears despite the broad catalogue Clicking tag."
+          },
+          "rankMaxes": [
+            705,
+            730,
+            746,
+            754
+          ],
+          "source": {
+            "kind": "authored",
+            "why": "Frozen from this scenario's own dated leaderboard. The first four ranks use the season curve; lower bands keep stricter two-rank crossover cuts (0.5 and 0.4 factors). Ties are capped backward from the demonstrated record. Reproduce using data/evasive_rework_calibration.json. Physical difficulty and equal effort between scenarios require playtesting."
+          },
+          "thinBoard": {
+            "why": "Draft selection with 359 sampled players. The named variant and movement task justify inclusion, not leaderboard population. Sparse high-rank cuts need human calibration; no difficulty equivalence is claimed."
+          },
+          "arm": "Blending",
+          "armFrom": "Apogee"
+        }
+      ]
+    },
+    {
+      "family": "Chamber Relay",
+      "category": "Evasive Switching",
+      "subCategory": "Evasive Switching",
+      "focus": "Track the jump through the narrow space. Recenter before moving on.",
+      "why": "Keep the narrow room and floating, gently jumping targets. Entry Speed combines larger, slower entry bots with a 25% shorter clear. Intermediate, Advanced and Elite keep their existing bands, so the easier start does not lower the upper-band challenge.",
+      "$order": {
+        "why": "Keep the narrow room and floating, gently jumping targets. Entry Speed combines larger, slower entry bots with a 25% shorter clear. Intermediate, Advanced and Elite keep their existing bands, so the easier start does not lower the upper-band challenge. The ordering follows the named edit lineage; cross-band physical difficulty is provisional until playtested."
+      },
+      "variants": [
+        {
+          "window": 0,
+          "scenario": "VT ControlTS Entry S5 Speed",
+          "label": "VT ControlTS Entry S5 Speed",
+          "leaderboardId": 106720,
+          "admitted": {
+            "why": "Keep the narrow room and floating, gently jumping targets. Entry Speed combines larger, slower entry bots with a 25% shorter clear. Intermediate, Advanced and Elite keep their existing bands, so the easier start does not lower the upper-band challenge."
+          },
+          "rankMaxes": [
+            552,
+            616,
+            648,
+            670,
+            725,
+            753
+          ],
+          "source": {
+            "kind": "authored",
+            "why": "Frozen from this scenario's own dated leaderboard. The first four ranks use the season curve; lower bands keep stricter two-rank crossover cuts (0.5 and 0.4 factors). Ties are capped backward from the demonstrated record. Reproduce using data/evasive_rework_calibration.json. Physical difficulty and equal effort between scenarios require playtesting."
+          },
+          "thinBoard": {
+            "why": "Draft selection with 2195 sampled players. The named variant and movement task justify inclusion, not leaderboard population. Sparse high-rank cuts need human calibration; no difficulty equivalence is claimed."
+          },
+          "arm": "Blending",
+          "armFrom": "Apogee"
+        },
+        {
+          "window": 1,
+          "scenario": "VT ControlTS Intermediate S5",
+          "label": "VT ControlTS Intermediate S5",
+          "leaderboardId": 104890,
+          "admitted": {
+            "why": "Keep the narrow room and floating, gently jumping targets. Entry Speed combines larger, slower entry bots with a 25% shorter clear. Intermediate, Advanced and Elite keep their existing bands, so the easier start does not lower the upper-band challenge."
+          },
+          "rankMaxes": [
+            456,
+            477,
+            487,
+            503,
+            529,
+            536
+          ],
+          "source": {
+            "kind": "authored",
+            "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+          },
+          "arm": "Blending",
+          "armFrom": "Apogee"
+        },
+        {
+          "window": 2,
+          "scenario": "VT ControlTS Advanced S5",
+          "label": "VT ControlTS Advanced S5",
+          "leaderboardId": 104833,
+          "admitted": {
+            "why": "Keep the narrow room and floating, gently jumping targets. Entry Speed combines larger, slower entry bots with a 25% shorter clear. Intermediate, Advanced and Elite keep their existing bands, so the easier start does not lower the upper-band challenge."
+          },
+          "rankMaxes": [
+            456,
+            461,
+            473,
+            483,
+            512,
+            525
+          ],
+          "source": {
+            "kind": "authored",
+            "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+          },
+          "arm": "Blending",
+          "armFrom": "Apogee"
+        },
+        {
+          "window": 3,
+          "scenario": "VT ControlTS Elite S5",
+          "label": "VT ControlTS Elite S5",
+          "leaderboardId": 106693,
+          "admitted": {
+            "why": "Keep the narrow room and floating, gently jumping targets. Entry Speed combines larger, slower entry bots with a 25% shorter clear. Intermediate, Advanced and Elite keep their existing bands, so the easier start does not lower the upper-band challenge."
+          },
+          "rankMaxes": [
+            394,
+            402,
+            406,
+            416
+          ],
+          "source": {
+            "kind": "percentile",
+            "cut": {
+              "ranks": [
+                12,
+                13,
+                14,
+                15
+              ],
+              "topFractions": [
+                0.022,
+                0.015,
+                0.011,
+                0.008
+              ],
+              "leaderboardId": 106693,
+              "total": 582,
+              "sampledAt": "2026-08-19T00:13:36.798Z"
+            },
+            "why": "Frozen from this scenario's own board for the season variety expansion. This is a season target, not a copied benchmark tier."
+          },
+          "thinBoard": {
+            "why": "Draft selection with 582 sampled players. The named variant and movement task justify inclusion, not leaderboard population. Sparse high-rank cuts need human calibration; no difficulty equivalence is claimed."
+          },
+          "arm": "Blending",
           "armFrom": "Apogee"
         }
       ]
@@ -7095,7 +7103,7 @@
       "family": "Hop Transfer",
       "category": "Evasive Switching",
       "subCategory": "Evasive Switching",
-      "focus": "Follow the jump through the final hit.",
+      "focus": "Read the jump arc and keep firing through the landing. Do not switch early.",
       "why": "Jumping targets. CB JumpSwitch Easy (four jumping targets) first, then Aimerz+ hopTS Easy, Med and Hard. Mixes two authors.",
       "variants": [
         {
@@ -7208,371 +7216,37 @@
       ]
     },
     {
-      "family": "tamTargetSwitch Smooth",
-      "category": "Evasive Switching",
-      "subCategory": "Evasive Switching",
-      "focus": "Stay on the circle until the target falls.",
-      "why": "Small dots circling you, 0.5s to kill, and they regen fast if you come off them. Starts on the 30% Larger cut of the Hard version.",
-      "variants": [
-        {
-          "window": 0,
-          "scenario": "tamTargetSwitch Smooth Hard 30% Larger",
-          "label": "tamTargetSwitch Smooth Hard 30% Larger",
-          "leaderboardId": 96201,
-          "rankMaxes": [
-            16,
-            24,
-            28,
-            31,
-            37,
-            39
-          ],
-          "source": {
-            "kind": "authored",
-            "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
-          },
-          "admitted": {
-            "why": "Small dots circling you, 0.5s to kill, and they regen fast if you come off them. Starts on the 30% Larger cut of the Hard version."
-          },
-          "arm": "Wrist",
-          "armFrom": "Apogee"
-        },
-        {
-          "window": 1,
-          "scenario": "tamTargetSwitch Smooth Easy",
-          "label": "tamTargetSwitch Smooth Easy",
-          "leaderboardId": 42505,
-          "rankMaxes": [
-            30,
-            31,
-            32,
-            34,
-            37,
-            38
-          ],
-          "source": {
-            "kind": "authored",
-            "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
-          },
-          "admitted": {
-            "why": "Small dots circling you, 0.5s to kill, and they regen fast if you come off them. Starts on the 30% Larger cut of the Hard version."
-          },
-          "arm": "Wrist",
-          "armFrom": "Apogee"
-        },
-        {
-          "window": 2,
-          "scenario": "tamTargetSwitch Smooth",
-          "label": "tamTargetSwitch Smooth",
-          "leaderboardId": 56,
-          "rankMaxes": [
-            32,
-            34,
-            35,
-            36,
-            39,
-            41
-          ],
-          "source": {
-            "kind": "authored",
-            "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
-          },
-          "admitted": {
-            "why": "Small dots circling you, 0.5s to kill, and they regen fast if you come off them. Starts on the 30% Larger cut of the Hard version."
-          },
-          "arm": "Wrist",
-          "armFrom": "Apogee"
-        },
-        {
-          "window": 3,
-          "scenario": "tamTargetSwitch Smooth Hard",
-          "label": "tamTargetSwitch Smooth Hard",
-          "leaderboardId": 727,
-          "rankMaxes": [
-            31,
-            33,
-            34,
-            35
-          ],
-          "source": {
-            "kind": "percentile",
-            "cut": {
-              "ranks": [
-                12,
-                13,
-                14,
-                15
-              ],
-              "topFractions": [
-                0.022,
-                0.015,
-                0.011,
-                0.008
-              ],
-              "leaderboardId": 727,
-              "total": 46012,
-              "sampledAt": "2026-08-29T19:22:54.010Z"
-            },
-            "why": "Score targets cut once from this scenario's own KovaaK's leaderboard, at the pool ladder's percentiles for this window (see cut). They're fixed and don't move while the app runs. Each category ladder weights its six families equally. Whether the targets are equally hard across scenarios hasn't been playtested."
-          },
-          "admitted": {
-            "why": "Small dots circling you, 0.5s to kill, and they regen fast if you come off them. Starts on the 30% Larger cut of the Hard version."
-          },
-          "arm": "Wrist",
-          "armFrom": "Apogee"
-        }
-      ]
-    },
-    {
-      "family": "FlyTS",
-      "category": "Evasive Switching",
-      "subCategory": "Evasive Switching",
-      "focus": "Read the flight. Finish, then transfer.",
-      "why": "Four flying targets, 50 hits each. The S5 FlyTS cuts, with Elite as the Expert rung.",
-      "variants": [
-        {
-          "window": 0,
-          "scenario": "VT FlyTS Novice S5",
-          "label": "VT FlyTS Novice S5",
-          "leaderboardId": 104830,
-          "rankMaxes": [
-            434,
-            497,
-            537,
-            547,
-            582,
-            602
-          ],
-          "source": {
-            "kind": "authored",
-            "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
-          },
-          "admitted": {
-            "why": "Four flying targets, 50 hits each. The S5 FlyTS cuts, with Elite as the Expert rung."
-          },
-          "arm": "Blending",
-          "armFrom": "Apogee"
-        },
-        {
-          "window": 1,
-          "scenario": "VT FlyTS Intermediate S5",
-          "label": "VT FlyTS Intermediate S5",
-          "leaderboardId": 105142,
-          "rankMaxes": [
-            571,
-            597,
-            610,
-            632,
-            662,
-            669
-          ],
-          "source": {
-            "kind": "authored",
-            "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
-          },
-          "admitted": {
-            "why": "Four flying targets, 50 hits each. The S5 FlyTS cuts, with Elite as the Expert rung."
-          },
-          "arm": "Blending",
-          "armFrom": "Apogee"
-        },
-        {
-          "window": 2,
-          "scenario": "VT FlyTS Advanced S5",
-          "label": "VT FlyTS Advanced S5",
-          "leaderboardId": 105143,
-          "rankMaxes": [
-            551,
-            561,
-            574,
-            588,
-            621,
-            652
-          ],
-          "source": {
-            "kind": "authored",
-            "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
-          },
-          "admitted": {
-            "why": "Four flying targets, 50 hits each. The S5 FlyTS cuts, with Elite as the Expert rung."
-          },
-          "arm": "Blending",
-          "armFrom": "Apogee"
-        },
-        {
-          "window": 3,
-          "scenario": "VT FlyTS Elite S5",
-          "label": "VT FlyTS Elite S5",
-          "leaderboardId": 106747,
-          "rankMaxes": [
-            450,
-            472,
-            495,
-            520
-          ],
-          "source": {
-            "kind": "authored",
-            "why": "The published Elite ladder goes above the sampled world record. Kept its first target (450) and spaced four targets geometrically up to 520, the rounded-down score at board rank 5 (520.2) in the 2026-09-03T01:25:31.253Z apex sample, so the top target is a score at least five players have hit. Set by hand: these aren't the benchmark author's numbers, and the board is too thin for a percentile cut."
-          },
-          "admitted": {
-            "why": "Four flying targets, 50 hits each. The S5 FlyTS cuts, with Elite as the Expert rung."
-          },
-          "arm": "Blending",
-          "armFrom": "Apogee"
-        }
-      ]
-    },
-    {
-      "family": "Domi Relay",
-      "category": "Evasive Switching",
-      "subCategory": "Evasive Switching",
-      "focus": "Stay on target until it drops.",
-      "$why": "domiSwitch targets carry 55 health and regenerate 0.3 seconds after damage stops, so leaving early costs the whole kill; Aimerz+, snakbox and Viscose file it under evasive switching. Viscose's Easier cut and the Easy and standard cuts lead into Avasive's edit for the top band, whose top score is the lowest of the four. That edition handover needs playtesting.",
-      "$order": {
-        "why": "domiSwitch targets carry 55 health and regenerate 0.3 seconds after damage stops, so leaving early costs the whole kill; Aimerz+, snakbox and Viscose file it under evasive switching. Viscose's Easier cut and the Easy and standard cuts lead into Avasive's edit for the top band, whose top score is the lowest of the four. That edition handover needs playtesting. Difficulty order is a curation judgement; board populations cannot prove equivalence between edits."
-      },
-      "variants": [
-        {
-          "window": 0,
-          "scenario": "domiSwitch Easier",
-          "label": "domiSwitch Easier",
-          "leaderboardId": 185428,
-          "admitted": {
-            "why": "domiSwitch targets carry 55 health and regenerate 0.3 seconds after damage stops, so leaving early costs the whole kill; Aimerz+, snakbox and Viscose file it under evasive switching. Viscose's Easier cut and the Easy and standard cuts lead into Avasive's edit for the top band, whose top score is the lowest of the four. That edition handover needs playtesting."
-          },
-          "rankMaxes": [
-            5437,
-            6260,
-            6737,
-            7159,
-            7757,
-            7985
-          ],
-          "source": {
-            "kind": "authored",
-            "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
-          },
-          "arm": "Wrist",
-          "armFrom": "Apogee"
-        },
-        {
-          "window": 1,
-          "scenario": "domiSwitch Easy",
-          "label": "domiSwitch Easy",
-          "leaderboardId": 83043,
-          "admitted": {
-            "why": "domiSwitch targets carry 55 health and regenerate 0.3 seconds after damage stops, so leaving early costs the whole kill; Aimerz+, snakbox and Viscose file it under evasive switching. Viscose's Easier cut and the Easy and standard cuts lead into Avasive's edit for the top band, whose top score is the lowest of the four. That edition handover needs playtesting."
-          },
-          "rankMaxes": [
-            6061,
-            6331,
-            6439,
-            6682,
-            7201,
-            7461
-          ],
-          "source": {
-            "kind": "authored",
-            "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
-          },
-          "arm": "Wrist",
-          "armFrom": "Apogee"
-        },
-        {
-          "window": 2,
-          "scenario": "domiSwitch",
-          "label": "domiSwitch",
-          "leaderboardId": 83035,
-          "admitted": {
-            "why": "domiSwitch targets carry 55 health and regenerate 0.3 seconds after damage stops, so leaving early costs the whole kill; Aimerz+, snakbox and Viscose file it under evasive switching. Viscose's Easier cut and the Easy and standard cuts lead into Avasive's edit for the top band, whose top score is the lowest of the four. That edition handover needs playtesting."
-          },
-          "rankMaxes": [
-            5803,
-            6009,
-            6200,
-            6356,
-            6830,
-            7087
-          ],
-          "source": {
-            "kind": "authored",
-            "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
-          },
-          "arm": "Wrist",
-          "armFrom": "Apogee"
-        },
-        {
-          "window": 3,
-          "scenario": "domiSwitch Avasive",
-          "label": "domiSwitch Avasive",
-          "leaderboardId": 129746,
-          "admitted": {
-            "why": "domiSwitch targets carry 55 health and regenerate 0.3 seconds after damage stops, so leaving early costs the whole kill; Aimerz+, snakbox and Viscose file it under evasive switching. Viscose's Easier cut and the Easy and standard cuts lead into Avasive's edit for the top band, whose top score is the lowest of the four. That edition handover needs playtesting."
-          },
-          "rankMaxes": [
-            5864,
-            6042,
-            6162,
-            6259
-          ],
-          "thinBoard": {
-            "why": "Retained for this variety circuit with 8397 sampled leaderboard entries. These frozen draft targets are based on a small population, especially at Expert; difficulty equivalence requires playtesting. domiSwitch targets carry 55 health and regenerate 0.3 seconds after damage stops, so leaving early costs the whole kill; Aimerz+, snakbox and Viscose file it under evasive switching. Viscose's Easier cut and the Easy and standard cuts lead into Avasive's edit for the top band, whose top score is the lowest of the four. That edition handover needs playtesting."
-          },
-          "source": {
-            "kind": "percentile",
-            "cut": {
-              "ranks": [
-                12,
-                13,
-                14,
-                15
-              ],
-              "topFractions": [
-                0.022,
-                0.015,
-                0.011,
-                0.008
-              ],
-              "leaderboardId": 129746,
-              "total": 8397,
-              "sampledAt": "2026-09-04T00:05:00.449Z"
-            },
-            "why": "Frozen from this scenario's own board for the season variety expansion. This is a season target, not a copied benchmark tier."
-          },
-          "arm": "Wrist",
-          "armFrom": "Apogee"
-        }
-      ]
-    },
-    {
       "family": "Penta Bounce",
       "category": "Evasive Switching",
       "subCategory": "Evasive Switching",
-      "focus": "Chase the bouncing crowd around the pentagon.",
-      "$why": "Five targets bounce across a pentagonal wall and each needs a short sustained burst to clear. This adds an arena-like switching loop with plenty of target choice. The four published Season 5 cuts provide exact variants for every band.",
+      "focus": "Track the bounce across the pentagon and choose the next target before the current one dies.",
+      "why": "Keep five bouncing targets and the pentagonal arena. Entry Speed adds bigger targets and 25% shorter time to kill to the slower Entry movement. Intermediate, Advanced and Elite keep their existing bands, so the easier start does not lower the upper-band challenge.",
       "$order": {
-        "why": "Five targets bounce across a pentagonal wall and each needs a short sustained burst to clear. This adds an arena-like switching loop with plenty of target choice. The four published Season 5 cuts provide exact variants for every band. Difficulty order is a curation judgement; board populations cannot prove equivalence between edits."
+        "why": "Keep five bouncing targets and the pentagonal arena. Entry Speed adds bigger targets and 25% shorter time to kill to the slower Entry movement. Intermediate, Advanced and Elite keep their existing bands, so the easier start does not lower the upper-band challenge. The ordering follows the named edit lineage; cross-band physical difficulty is provisional until playtested."
       },
       "variants": [
         {
           "window": 0,
-          "scenario": "VT Penta Bounce Novice S5",
-          "label": "VT Penta Bounce Novice S5",
-          "leaderboardId": 103262,
+          "scenario": "VT Penta Bounce Entry S5 Speed",
+          "label": "VT Penta Bounce Entry S5 Speed",
+          "leaderboardId": 107639,
           "admitted": {
-            "why": "Five targets bounce across a pentagonal wall and each needs a short sustained burst to clear. This adds an arena-like switching loop with plenty of target choice. The four published Season 5 cuts provide exact variants for every band."
+            "why": "Keep five bouncing targets and the pentagonal arena. Entry Speed adds bigger targets and 25% shorter time to kill to the slower Entry movement. Intermediate, Advanced and Elite keep their existing bands, so the easier start does not lower the upper-band challenge."
           },
           "rankMaxes": [
-            306,
-            386,
-            433,
-            454,
             489,
-            511
+            559,
+            593,
+            620,
+            690,
+            727
           ],
           "source": {
             "kind": "authored",
-            "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+            "why": "Frozen from this scenario's own dated leaderboard. The first four ranks use the season curve; lower bands keep stricter two-rank crossover cuts (0.5 and 0.4 factors). Ties are capped backward from the demonstrated record. Reproduce using data/evasive_rework_calibration.json. Physical difficulty and equal effort between scenarios require playtesting."
+          },
+          "thinBoard": {
+            "why": "Draft selection with 2475 sampled players. The named variant and movement task justify inclusion, not leaderboard population. Sparse high-rank cuts need human calibration; no difficulty equivalence is claimed."
           },
           "arm": "Blending",
           "armFrom": "Apogee"
@@ -7583,7 +7257,7 @@
           "label": "VT Penta Bounce Intermediate S5",
           "leaderboardId": 103261,
           "admitted": {
-            "why": "Five targets bounce across a pentagonal wall and each needs a short sustained burst to clear. This adds an arena-like switching loop with plenty of target choice. The four published Season 5 cuts provide exact variants for every band."
+            "why": "Keep five bouncing targets and the pentagonal arena. Entry Speed adds bigger targets and 25% shorter time to kill to the slower Entry movement. Intermediate, Advanced and Elite keep their existing bands, so the easier start does not lower the upper-band challenge."
           },
           "rankMaxes": [
             492,
@@ -7606,7 +7280,7 @@
           "label": "VT Penta Bounce Advanced S5",
           "leaderboardId": 98619,
           "admitted": {
-            "why": "Five targets bounce across a pentagonal wall and each needs a short sustained burst to clear. This adds an arena-like switching loop with plenty of target choice. The four published Season 5 cuts provide exact variants for every band."
+            "why": "Keep five bouncing targets and the pentagonal arena. Entry Speed adds bigger targets and 25% shorter time to kill to the slower Entry movement. Intermediate, Advanced and Elite keep their existing bands, so the easier start does not lower the upper-band challenge."
           },
           "rankMaxes": [
             538,
@@ -7616,9 +7290,6 @@
             598,
             624
           ],
-          "thinBoard": {
-            "why": "Retained for this variety circuit with 9437 sampled leaderboard entries. These frozen draft targets are based on a small population, especially at Expert; difficulty equivalence requires playtesting. Five targets bounce across a pentagonal wall and each needs a short sustained burst to clear. This adds an arena-like switching loop with plenty of target choice. The four published Season 5 cuts provide exact variants for every band."
-          },
           "source": {
             "kind": "authored",
             "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
@@ -7632,7 +7303,7 @@
           "label": "VT Penta Bounce Elite S5",
           "leaderboardId": 104669,
           "admitted": {
-            "why": "Five targets bounce across a pentagonal wall and each needs a short sustained burst to clear. This adds an arena-like switching loop with plenty of target choice. The four published Season 5 cuts provide exact variants for every band."
+            "why": "Keep five bouncing targets and the pentagonal arena. Entry Speed adds bigger targets and 25% shorter time to kill to the slower Entry movement. Intermediate, Advanced and Elite keep their existing bands, so the easier start does not lower the upper-band challenge."
           },
           "rankMaxes": [
             476,
@@ -7640,9 +7311,6 @@
             496,
             511
           ],
-          "thinBoard": {
-            "why": "Retained for this variety circuit with 564 sampled leaderboard entries. These frozen draft targets are based on a small population, especially at Expert; difficulty equivalence requires playtesting. Five targets bounce across a pentagonal wall and each needs a short sustained burst to clear. This adds an arena-like switching loop with plenty of target choice. The four published Season 5 cuts provide exact variants for every band."
-          },
           "source": {
             "kind": "percentile",
             "cut": {
@@ -7664,110 +7332,107 @@
             },
             "why": "Frozen from this scenario's own board for the season variety expansion. This is a season target, not a copied benchmark tier."
           },
+          "thinBoard": {
+            "why": "Draft selection with 564 sampled players. The named variant and movement task justify inclusion, not leaderboard population. Sparse high-rank cuts need human calibration; no difficulty equivalence is claimed."
+          },
           "arm": "Blending",
           "armFrom": "Apogee"
         }
       ]
     },
     {
-      "family": "Chamber Relay",
+      "family": "Arc Transfer",
       "category": "Evasive Switching",
       "subCategory": "Evasive Switching",
-      "focus": "Clear the floating pack, one target at a time.",
-      "$why": "Four gently jumping and floating targets share a narrow chamber, producing a compact clear-the-room loop. The four published ControlTS bands keep the same arena and short sustained bursts throughout the progression.",
+      "focus": "Follow the full arc and hold the target through the finish as its depth changes.",
+      "why": "Keep the curved B180T arena throughout. Begin with Easy Slower, then Easy, standard and finally Regen. Remove the Aimerz depth-pattern detour and postpone the regeneration penalty until Expert.",
       "$order": {
-        "why": "Four gently jumping and floating targets share a narrow chamber, producing a compact clear-the-room loop. The four published ControlTS bands keep the same arena and short sustained bursts throughout the progression. Difficulty order is a curation judgement; board populations cannot prove equivalence between edits."
+        "why": "Keep the curved B180T arena throughout. Begin with Easy Slower, then Easy, standard and finally Regen. Remove the Aimerz depth-pattern detour and postpone the regeneration penalty until Expert. The ordering follows the named edit lineage; cross-band physical difficulty is provisional until playtested."
       },
       "variants": [
         {
           "window": 0,
-          "scenario": "VT ControlTS Novice S5",
-          "label": "VT ControlTS Novice S5",
-          "leaderboardId": 105132,
+          "scenario": "B180T Voltaic Easy Slower",
+          "label": "B180T Voltaic Easy Slower",
+          "leaderboardId": 185571,
           "admitted": {
-            "why": "Four gently jumping and floating targets share a narrow chamber, producing a compact clear-the-room loop. The four published ControlTS bands keep the same arena and short sustained bursts throughout the progression."
+            "why": "Keep the curved B180T arena throughout. Begin with Easy Slower, then Easy, standard and finally Regen. Remove the Aimerz depth-pattern detour and postpone the regeneration penalty until Expert."
           },
           "rankMaxes": [
-            354,
-            413,
-            451,
-            459,
-            489,
-            506
+            43,
+            53,
+            59,
+            65,
+            74,
+            76
           ],
           "source": {
             "kind": "authored",
-            "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+            "why": "Frozen from this scenario's own dated leaderboard. The first four ranks use the season curve; lower bands keep stricter two-rank crossover cuts (0.5 and 0.4 factors). Ties are capped backward from the demonstrated record. Reproduce using data/evasive_rework_calibration.json. Physical difficulty and equal effort between scenarios require playtesting."
           },
-          "arm": "Wrist",
+          "arm": "Blending",
           "armFrom": "Apogee"
         },
         {
           "window": 1,
-          "scenario": "VT ControlTS Intermediate S5",
-          "label": "VT ControlTS Intermediate S5",
-          "leaderboardId": 104890,
+          "scenario": "B180T Voltaic Easy",
+          "label": "B180T Voltaic Easy",
+          "leaderboardId": 543,
           "admitted": {
-            "why": "Four gently jumping and floating targets share a narrow chamber, producing a compact clear-the-room loop. The four published ControlTS bands keep the same arena and short sustained bursts throughout the progression."
+            "why": "Keep the curved B180T arena throughout. Begin with Easy Slower, then Easy, standard and finally Regen. Remove the Aimerz depth-pattern detour and postpone the regeneration penalty until Expert."
           },
           "rankMaxes": [
-            456,
-            477,
-            487,
-            503,
-            529,
-            536
+            62,
+            66,
+            68,
+            72,
+            79,
+            82
           ],
           "source": {
             "kind": "authored",
-            "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+            "why": "Frozen from this scenario's own dated leaderboard. The first four ranks use the season curve; lower bands keep stricter two-rank crossover cuts (0.5 and 0.4 factors). Ties are capped backward from the demonstrated record. Reproduce using data/evasive_rework_calibration.json. Physical difficulty and equal effort between scenarios require playtesting."
           },
-          "arm": "Wrist",
+          "arm": "Blending",
           "armFrom": "Apogee"
         },
         {
           "window": 2,
-          "scenario": "VT ControlTS Advanced S5",
-          "label": "VT ControlTS Advanced S5",
-          "leaderboardId": 104833,
+          "scenario": "B180T Voltaic",
+          "label": "B180T Voltaic",
+          "leaderboardId": 947,
           "admitted": {
-            "why": "Four gently jumping and floating targets share a narrow chamber, producing a compact clear-the-room loop. The four published ControlTS bands keep the same arena and short sustained bursts throughout the progression."
+            "why": "Keep the curved B180T arena throughout. Begin with Easy Slower, then Easy, standard and finally Regen. Remove the Aimerz depth-pattern detour and postpone the regeneration penalty until Expert."
           },
           "rankMaxes": [
-            456,
-            461,
-            473,
-            483,
-            512,
-            525
+            71,
+            74,
+            77,
+            79,
+            86,
+            90
           ],
-          "thinBoard": {
-            "why": "Retained for this variety circuit with 9724 sampled leaderboard entries. These frozen draft targets are based on a small population, especially at Expert; difficulty equivalence requires playtesting. Four gently jumping and floating targets share a narrow chamber, producing a compact clear-the-room loop. The four published ControlTS bands keep the same arena and short sustained bursts throughout the progression."
-          },
           "source": {
             "kind": "authored",
-            "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+            "why": "Frozen from this scenario's own dated leaderboard. The first four ranks use the season curve; lower bands keep stricter two-rank crossover cuts (0.5 and 0.4 factors). Ties are capped backward from the demonstrated record. Reproduce using data/evasive_rework_calibration.json. Physical difficulty and equal effort between scenarios require playtesting."
           },
-          "arm": "Wrist",
+          "arm": "Blending",
           "armFrom": "Apogee"
         },
         {
           "window": 3,
-          "scenario": "VT ControlTS Elite S5",
-          "label": "VT ControlTS Elite S5",
-          "leaderboardId": 106693,
+          "scenario": "B180T Voltaic Regen",
+          "label": "B180T Voltaic Regen",
+          "leaderboardId": 2153,
           "admitted": {
-            "why": "Four gently jumping and floating targets share a narrow chamber, producing a compact clear-the-room loop. The four published ControlTS bands keep the same arena and short sustained bursts throughout the progression."
+            "why": "Keep the curved B180T arena throughout. Begin with Easy Slower, then Easy, standard and finally Regen. Remove the Aimerz depth-pattern detour and postpone the regeneration penalty until Expert."
           },
           "rankMaxes": [
-            394,
-            402,
-            406,
-            416
+            28,
+            29,
+            30,
+            31
           ],
-          "thinBoard": {
-            "why": "Retained for this variety circuit with 582 sampled leaderboard entries. These frozen draft targets are based on a small population, especially at Expert; difficulty equivalence requires playtesting. Four gently jumping and floating targets share a narrow chamber, producing a compact clear-the-room loop. The four published ControlTS bands keep the same arena and short sustained bursts throughout the progression."
-          },
           "source": {
             "kind": "percentile",
             "cut": {
@@ -7783,11 +7448,346 @@
                 0.011,
                 0.008
               ],
-              "leaderboardId": 106693,
-              "total": 582,
-              "sampledAt": "2026-08-19T00:13:36.798Z"
+              "leaderboardId": 2153,
+              "total": 8679,
+              "sampledAt": "2026-09-13T19:25:47.664Z"
             },
-            "why": "Frozen from this scenario's own board for the season variety expansion. This is a season target, not a copied benchmark tier."
+            "why": "Frozen once for the theory-led draft rebuild from this exact scenario's own dated leaderboard. Existing Apogee percentile positions are retained. The target is a fixed score, not a live percentile or proof of equal difficulty across variants. Provisional calibration: 8679 players; this board is below the population floor for this band. Validate the difficulty step through group playtesting before publishing the season."
+          },
+          "thinBoard": {
+            "why": "Draft selection with 8679 sampled players. The named variant and movement task justify inclusion, not leaderboard population. Sparse high-rank cuts need human calibration; no difficulty equivalence is claimed."
+          },
+          "arm": "Blending",
+          "armFrom": "Apogee"
+        }
+      ]
+    },
+    {
+      "family": "FlyTS",
+      "category": "Evasive Switching",
+      "subCategory": "Evasive Switching",
+      "focus": "Read the flight direction and make smooth transfers after each kill.",
+      "why": "Entry Speed combines the published larger/slower Entry edit with larger targets and 25% shorter time to kill. Intermediate, Advanced and Elite keep their existing bands, so the easier start does not lower the upper-band challenge.",
+      "$order": {
+        "why": "Entry Speed combines the published larger/slower Entry edit with larger targets and 25% shorter time to kill. Intermediate, Advanced and Elite keep their existing bands, so the easier start does not lower the upper-band challenge. The ordering follows the named edit lineage; cross-band physical difficulty is provisional until playtested."
+      },
+      "variants": [
+        {
+          "window": 0,
+          "scenario": "VT FlyTS Entry S5 Speed",
+          "label": "VT FlyTS Entry S5 Speed",
+          "leaderboardId": 106708,
+          "admitted": {
+            "why": "Entry Speed combines the published larger/slower Entry edit with larger targets and 25% shorter time to kill. Intermediate, Advanced and Elite keep their existing bands, so the easier start does not lower the upper-band challenge."
+          },
+          "rankMaxes": [
+            621,
+            697,
+            742,
+            774,
+            847,
+            886
+          ],
+          "source": {
+            "kind": "authored",
+            "why": "Frozen from this scenario's own dated leaderboard. The first four ranks use the season curve; lower bands keep stricter two-rank crossover cuts (0.5 and 0.4 factors). Ties are capped backward from the demonstrated record. Reproduce using data/evasive_rework_calibration.json. Physical difficulty and equal effort between scenarios require playtesting."
+          },
+          "thinBoard": {
+            "why": "Draft selection with 3065 sampled players. The named variant and movement task justify inclusion, not leaderboard population. Sparse high-rank cuts need human calibration; no difficulty equivalence is claimed."
+          },
+          "arm": "Blending",
+          "armFrom": "Apogee"
+        },
+        {
+          "window": 1,
+          "scenario": "VT FlyTS Intermediate S5",
+          "label": "VT FlyTS Intermediate S5",
+          "leaderboardId": 105142,
+          "admitted": {
+            "why": "Entry Speed combines the published larger/slower Entry edit with larger targets and 25% shorter time to kill. Intermediate, Advanced and Elite keep their existing bands, so the easier start does not lower the upper-band challenge."
+          },
+          "rankMaxes": [
+            571,
+            597,
+            610,
+            632,
+            662,
+            669
+          ],
+          "source": {
+            "kind": "authored",
+            "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+          },
+          "arm": "Blending",
+          "armFrom": "Apogee"
+        },
+        {
+          "window": 2,
+          "scenario": "VT FlyTS Advanced S5",
+          "label": "VT FlyTS Advanced S5",
+          "leaderboardId": 105143,
+          "admitted": {
+            "why": "Entry Speed combines the published larger/slower Entry edit with larger targets and 25% shorter time to kill. Intermediate, Advanced and Elite keep their existing bands, so the easier start does not lower the upper-band challenge."
+          },
+          "rankMaxes": [
+            551,
+            561,
+            574,
+            588,
+            621,
+            652
+          ],
+          "source": {
+            "kind": "authored",
+            "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+          },
+          "arm": "Blending",
+          "armFrom": "Apogee"
+        },
+        {
+          "window": 3,
+          "scenario": "VT FlyTS Elite S5",
+          "label": "VT FlyTS Elite S5",
+          "leaderboardId": 106747,
+          "admitted": {
+            "why": "Entry Speed combines the published larger/slower Entry edit with larger targets and 25% shorter time to kill. Intermediate, Advanced and Elite keep their existing bands, so the easier start does not lower the upper-band challenge."
+          },
+          "rankMaxes": [
+            450,
+            472,
+            495,
+            520
+          ],
+          "source": {
+            "kind": "authored",
+            "why": "The published Elite ladder goes above the sampled world record. Kept its first target (450) and spaced four targets geometrically up to 520, the rounded-down score at board rank 5 (520.2) in the 2026-09-03T01:25:31.253Z apex sample, so the top target is a score at least five players have hit. Set by hand: these aren't the benchmark author's numbers, and the board is too thin for a percentile cut."
+          },
+          "thinBoard": {
+            "why": "Draft selection with 615 sampled players. The named variant and movement task justify inclusion, not leaderboard population. Sparse high-rank cuts need human calibration; no difficulty equivalence is claimed."
+          },
+          "arm": "Blending",
+          "armFrom": "Apogee"
+        }
+      ]
+    },
+    {
+      "family": "Layered Chase",
+      "category": "Evasive Switching",
+      "subCategory": "Evasive Switching",
+      "focus": "Keep track of both chambers and move to the next target without dropping contact early.",
+      "why": "Two stacked chambers add vertical route choices among four floating and jumping targets. The larger, slower Entry Speed variant shortens clears by 25%; Intermediate, Advanced and Elite retain one authored lineage. This replaces the mixed CB/Revosect Smooth Relay whose Expert board had only 145 sampled players and nearly tied top targets.",
+      "$order": {
+        "why": "Two stacked chambers add vertical route choices among four floating and jumping targets. The larger, slower Entry Speed variant shortens clears by 25%; Intermediate, Advanced and Elite retain one authored lineage. This replaces the mixed CB/Revosect Smooth Relay whose Expert board had only 145 sampled players and nearly tied top targets. The ordering follows the named edit lineage; cross-band physical difficulty is provisional until playtested."
+      },
+      "variants": [
+        {
+          "window": 0,
+          "scenario": "VT DriftTS Entry S5 Speed",
+          "label": "VT DriftTS Entry S5 Speed",
+          "leaderboardId": 104861,
+          "admitted": {
+            "why": "Two stacked chambers add vertical route choices among four floating and jumping targets. The larger, slower Entry Speed variant shortens clears by 25%; Intermediate, Advanced and Elite retain one authored lineage. This replaces the mixed CB/Revosect Smooth Relay whose Expert board had only 145 sampled players and nearly tied top targets."
+          },
+          "rankMaxes": [
+            534,
+            598,
+            631,
+            657,
+            717,
+            746
+          ],
+          "source": {
+            "kind": "authored",
+            "why": "Frozen from this scenario's own dated leaderboard. The first four ranks use the season curve; lower bands keep stricter two-rank crossover cuts (0.5 and 0.4 factors). Ties are capped backward from the demonstrated record. Reproduce using data/evasive_rework_calibration.json. Physical difficulty and equal effort between scenarios require playtesting."
+          },
+          "thinBoard": {
+            "why": "Draft selection with 2461 sampled players. The named variant and movement task justify inclusion, not leaderboard population. Sparse high-rank cuts need human calibration; no difficulty equivalence is claimed."
+          },
+          "arm": "Blending",
+          "armFrom": "Apogee"
+        },
+        {
+          "window": 1,
+          "scenario": "VT DriftTS Intermediate S5",
+          "label": "VT DriftTS Intermediate S5",
+          "leaderboardId": 104863,
+          "admitted": {
+            "why": "Two stacked chambers add vertical route choices among four floating and jumping targets. The larger, slower Entry Speed variant shortens clears by 25%; Intermediate, Advanced and Elite retain one authored lineage. This replaces the mixed CB/Revosect Smooth Relay whose Expert board had only 145 sampled players and nearly tied top targets."
+          },
+          "rankMaxes": [
+            428,
+            449,
+            460,
+            478,
+            500,
+            509
+          ],
+          "source": {
+            "kind": "authored",
+            "why": "Frozen from this scenario's own dated leaderboard. The first four ranks use the season curve; lower bands keep stricter two-rank crossover cuts (0.5 and 0.4 factors). Ties are capped backward from the demonstrated record. Reproduce using data/evasive_rework_calibration.json. Physical difficulty and equal effort between scenarios require playtesting."
+          },
+          "arm": "Blending",
+          "armFrom": "Apogee"
+        },
+        {
+          "window": 2,
+          "scenario": "VT DriftTS Advanced S5",
+          "label": "VT DriftTS Advanced S5",
+          "leaderboardId": 104866,
+          "admitted": {
+            "why": "Two stacked chambers add vertical route choices among four floating and jumping targets. The larger, slower Entry Speed variant shortens clears by 25%; Intermediate, Advanced and Elite retain one authored lineage. This replaces the mixed CB/Revosect Smooth Relay whose Expert board had only 145 sampled players and nearly tied top targets."
+          },
+          "rankMaxes": [
+            439,
+            445,
+            457,
+            468,
+            507,
+            519
+          ],
+          "source": {
+            "kind": "authored",
+            "why": "Frozen from this scenario's own dated leaderboard. The first four ranks use the season curve; lower bands keep stricter two-rank crossover cuts (0.5 and 0.4 factors). Ties are capped backward from the demonstrated record. Reproduce using data/evasive_rework_calibration.json. Physical difficulty and equal effort between scenarios require playtesting."
+          },
+          "arm": "Blending",
+          "armFrom": "Apogee"
+        },
+        {
+          "window": 3,
+          "scenario": "VT DriftTS Elite S5",
+          "label": "VT DriftTS Elite S5",
+          "leaderboardId": 104867,
+          "admitted": {
+            "why": "Two stacked chambers add vertical route choices among four floating and jumping targets. The larger, slower Entry Speed variant shortens clears by 25%; Intermediate, Advanced and Elite retain one authored lineage. This replaces the mixed CB/Revosect Smooth Relay whose Expert board had only 145 sampled players and nearly tied top targets."
+          },
+          "rankMaxes": [
+            387,
+            396,
+            401,
+            409
+          ],
+          "source": {
+            "kind": "authored",
+            "why": "Frozen from this scenario's own dated leaderboard. The first four ranks use the season curve; lower bands keep stricter two-rank crossover cuts (0.5 and 0.4 factors). Ties are capped backward from the demonstrated record. Reproduce using data/evasive_rework_calibration.json. Physical difficulty and equal effort between scenarios require playtesting."
+          },
+          "thinBoard": {
+            "why": "Draft selection with 619 sampled players. The named variant and movement task justify inclusion, not leaderboard population. Sparse high-rank cuts need human calibration; no difficulty equivalence is claimed."
+          },
+          "arm": "Blending",
+          "armFrom": "Apogee"
+        }
+      ]
+    },
+    {
+      "family": "Regen Control",
+      "category": "Evasive Switching",
+      "subCategory": "Evasive Switching",
+      "focus": "Stay on the target until it dies. Any gap in damage gives health back.",
+      "why": "Regenerating targets reward committed tracking after the flick. Entry and Intermediate use shorter time to kill; Control asks for longer contact; Hard adds bouncing. These are different training demands, not just faster versions. Unlike the retained Smooth family, the Control bots wiggle rather than circle.",
+      "variants": [
+        {
+          "window": 0,
+          "scenario": "tamTargetSwitch Control Entry",
+          "label": "tamTargetSwitch Control Entry",
+          "leaderboardId": 110651,
+          "rankMaxes": [
+            38,
+            44,
+            47,
+            49,
+            55,
+            57
+          ],
+          "source": {
+            "kind": "authored",
+            "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+          },
+          "admitted": {
+            "why": "Regenerating targets reward committed tracking after the flick. Entry and Intermediate use shorter time to kill; Control asks for longer contact; Hard adds bouncing. These are different training demands, not just faster versions. Unlike the retained Smooth family, the Control bots wiggle rather than circle."
+          },
+          "arm": "Wrist",
+          "armFrom": "Apogee"
+        },
+        {
+          "window": 1,
+          "scenario": "tamTargetSwitch Control Intermediate",
+          "label": "tamTargetSwitch Control Intermediate",
+          "leaderboardId": 110123,
+          "rankMaxes": [
+            49,
+            50,
+            51,
+            53,
+            56,
+            57
+          ],
+          "source": {
+            "kind": "authored",
+            "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+          },
+          "admitted": {
+            "why": "Regenerating targets reward committed tracking after the flick. Entry and Intermediate use shorter time to kill; Control asks for longer contact; Hard adds bouncing. These are different training demands, not just faster versions. Unlike the retained Smooth family, the Control bots wiggle rather than circle."
+          },
+          "arm": "Wrist",
+          "armFrom": "Apogee"
+        },
+        {
+          "window": 2,
+          "scenario": "tamTargetSwitch Control",
+          "label": "tamTargetSwitch Control",
+          "leaderboardId": 57,
+          "rankMaxes": [
+            35,
+            36,
+            37,
+            38,
+            41,
+            43
+          ],
+          "source": {
+            "kind": "authored",
+            "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+          },
+          "admitted": {
+            "why": "Regenerating targets reward committed tracking after the flick. Entry and Intermediate use shorter time to kill; Control asks for longer contact; Hard adds bouncing. These are different training demands, not just faster versions. Unlike the retained Smooth family, the Control bots wiggle rather than circle."
+          },
+          "arm": "Wrist",
+          "armFrom": "Apogee"
+        },
+        {
+          "window": 3,
+          "scenario": "tamTargetSwitch Control Hard",
+          "label": "tamTargetSwitch Control Hard",
+          "leaderboardId": 757,
+          "rankMaxes": [
+            37,
+            38,
+            39,
+            40
+          ],
+          "source": {
+            "kind": "percentile",
+            "cut": {
+              "ranks": [
+                12,
+                13,
+                14,
+                15
+              ],
+              "topFractions": [
+                0.022,
+                0.015,
+                0.011,
+                0.008
+              ],
+              "leaderboardId": 757,
+              "total": 61447,
+              "sampledAt": "2026-09-13T19:24:51.555Z"
+            },
+            "why": "Frozen once for the theory-led draft rebuild from this exact scenario's own dated leaderboard. Existing Apogee percentile positions are retained. The target is a fixed score, not a live percentile or proof of equal difficulty across variants."
+          },
+          "admitted": {
+            "why": "Regenerating targets reward committed tracking after the flick. Entry and Intermediate use shorter time to kill; Control asks for longer contact; Hard adds bouncing. These are different training demands, not just faster versions. Unlike the retained Smooth family, the Control bots wiggle rather than circle."
           },
           "arm": "Wrist",
           "armFrom": "Apogee"
@@ -7795,115 +7795,214 @@
       ]
     },
     {
-      "family": "Smooth Relay",
+      "family": "Domi Relay",
       "category": "Evasive Switching",
       "subCategory": "Evasive Switching",
-      "focus": "Flow into the next moving target.",
-      "$why": "Smooth transfer adds longer flowing target-to-target routes beside the sharper evasive circuits. Community Benchmarks' easy cut leads into Revosect's three SmoothTS tiers. The first cross-author handover needs playtesting.",
+      "focus": "Control the strafe and keep contact through the kill. Switch after the target drops.",
+      "why": "Easier explicitly makes bots bigger and slower with less punishing regeneration; Easy, standard and Hard continue the same named lineage. Replace the Avasive Expert edit: a lower record across different edits was not evidence of greater physical difficulty.",
       "$order": {
-        "why": "Smooth transfer adds longer flowing target-to-target routes beside the sharper evasive circuits. Community Benchmarks' easy cut leads into Revosect's three SmoothTS tiers. The first cross-author handover needs playtesting. Difficulty order is a curation judgement; board populations cannot prove equivalence between edits."
+        "why": "Easier explicitly makes bots bigger and slower with less punishing regeneration; Easy, standard and Hard continue the same named lineage. Replace the Avasive Expert edit: a lower record across different edits was not evidence of greater physical difficulty. The ordering follows the named edit lineage; cross-band physical difficulty is provisional until playtested."
       },
       "variants": [
         {
           "window": 0,
-          "scenario": "CB SmoothSwitch Easy",
-          "label": "CB SmoothSwitch Easy",
-          "leaderboardId": 93247,
+          "scenario": "domiSwitch Easier",
+          "label": "domiSwitch Easier",
+          "leaderboardId": 185428,
           "admitted": {
-            "why": "Smooth transfer adds longer flowing target-to-target routes beside the sharper evasive circuits. Community Benchmarks' easy cut leads into Revosect's three SmoothTS tiers. The first cross-author handover needs playtesting."
+            "why": "Easier explicitly makes bots bigger and slower with less punishing regeneration; Easy, standard and Hard continue the same named lineage. Replace the Avasive Expert edit: a lower record across different edits was not evidence of greater physical difficulty."
           },
           "rankMaxes": [
-            275,
-            342,
-            382,
-            416,
-            502,
-            531
+            5437,
+            6260,
+            6737,
+            7159,
+            7757,
+            7985
           ],
-          "thinBoard": {
-            "why": "Retained for this variety circuit with 5617 sampled leaderboard entries. These frozen draft targets are based on a small population, especially at Expert; difficulty equivalence requires playtesting. Smooth transfer adds longer flowing target-to-target routes beside the sharper evasive circuits. Community Benchmarks' easy cut leads into Revosect's three SmoothTS tiers. The first cross-author handover needs playtesting."
-          },
           "source": {
             "kind": "authored",
             "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
           },
-          "arm": "Arm",
+          "arm": "Blending",
           "armFrom": "Apogee"
         },
         {
           "window": 1,
-          "scenario": "SmoothTS Revosect Entry",
-          "label": "SmoothTS Revosect Entry",
-          "leaderboardId": 142911,
+          "scenario": "domiSwitch Easy",
+          "label": "domiSwitch Easy",
+          "leaderboardId": 83043,
           "admitted": {
-            "why": "Smooth transfer adds longer flowing target-to-target routes beside the sharper evasive circuits. Community Benchmarks' easy cut leads into Revosect's three SmoothTS tiers. The first cross-author handover needs playtesting."
+            "why": "Easier explicitly makes bots bigger and slower with less punishing regeneration; Easy, standard and Hard continue the same named lineage. Replace the Avasive Expert edit: a lower record across different edits was not evidence of greater physical difficulty."
           },
           "rankMaxes": [
-            515,
-            535,
-            542,
-            560,
-            609,
-            626
+            6061,
+            6331,
+            6439,
+            6682,
+            7201,
+            7461
           ],
-          "thinBoard": {
-            "why": "Retained for this variety circuit with 1069 sampled leaderboard entries. These frozen draft targets are based on a small population, especially at Expert; difficulty equivalence requires playtesting. Smooth transfer adds longer flowing target-to-target routes beside the sharper evasive circuits. Community Benchmarks' easy cut leads into Revosect's three SmoothTS tiers. The first cross-author handover needs playtesting."
-          },
           "source": {
             "kind": "authored",
             "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
           },
-          "arm": "Arm",
+          "arm": "Blending",
           "armFrom": "Apogee"
         },
         {
           "window": 2,
-          "scenario": "SmoothTS Revosect Int",
-          "label": "SmoothTS Revosect Int",
-          "leaderboardId": 142909,
+          "scenario": "domiSwitch",
+          "label": "domiSwitch",
+          "leaderboardId": 83035,
           "admitted": {
-            "why": "Smooth transfer adds longer flowing target-to-target routes beside the sharper evasive circuits. Community Benchmarks' easy cut leads into Revosect's three SmoothTS tiers. The first cross-author handover needs playtesting."
+            "why": "Easier explicitly makes bots bigger and slower with less punishing regeneration; Easy, standard and Hard continue the same named lineage. Replace the Avasive Expert edit: a lower record across different edits was not evidence of greater physical difficulty."
           },
           "rankMaxes": [
-            539,
-            548,
-            554,
-            557,
-            569,
-            581
+            5803,
+            6009,
+            6200,
+            6356,
+            6830,
+            7087
           ],
-          "thinBoard": {
-            "why": "Retained for this variety circuit with 769 sampled leaderboard entries. These frozen draft targets are based on a small population, especially at Expert; difficulty equivalence requires playtesting. Smooth transfer adds longer flowing target-to-target routes beside the sharper evasive circuits. Community Benchmarks' easy cut leads into Revosect's three SmoothTS tiers. The first cross-author handover needs playtesting."
-          },
           "source": {
             "kind": "authored",
             "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
           },
-          "arm": "Arm",
+          "arm": "Blending",
           "armFrom": "Apogee"
         },
         {
           "window": 3,
-          "scenario": "SmoothTS Revosect",
-          "label": "SmoothTS Revosect",
-          "leaderboardId": 141143,
+          "scenario": "domiSwitch Hard",
+          "label": "domiSwitch Hard",
+          "leaderboardId": 83042,
           "admitted": {
-            "why": "Smooth transfer adds longer flowing target-to-target routes beside the sharper evasive circuits. Community Benchmarks' easy cut leads into Revosect's three SmoothTS tiers. The first cross-author handover needs playtesting."
+            "why": "Easier explicitly makes bots bigger and slower with less punishing regeneration; Easy, standard and Hard continue the same named lineage. Replace the Avasive Expert edit: a lower record across different edits was not evidence of greater physical difficulty."
           },
           "rankMaxes": [
-            558,
-            567,
-            570,
-            571
+            5291,
+            5461,
+            5559,
+            5732
           ],
-          "thinBoard": {
-            "why": "Retained for this variety circuit with 145 sampled leaderboard entries. These frozen draft targets are based on a small population, especially at Expert; difficulty equivalence requires playtesting. Smooth transfer adds longer flowing target-to-target routes beside the sharper evasive circuits. Community Benchmarks' easy cut leads into Revosect's three SmoothTS tiers. The first cross-author handover needs playtesting."
-          },
           "source": {
             "kind": "authored",
-            "why": "Frozen percentile targets capped backward from the floored demonstrated record, preserving at least one point between ranks. This sparse board has tied top percentiles; exact original cuts and the repair are recorded in data/season_expansion_calibration.json."
+            "why": "Frozen from this scenario's own dated leaderboard. The first four ranks use the season curve; lower bands keep stricter two-rank crossover cuts (0.5 and 0.4 factors). Ties are capped backward from the demonstrated record. Reproduce using data/evasive_rework_calibration.json. Physical difficulty and equal effort between scenarios require playtesting."
           },
-          "arm": "Arm",
+          "thinBoard": {
+            "why": "Draft selection with 804 sampled players. The named variant and movement task justify inclusion, not leaderboard population. Sparse high-rank cuts need human calibration; no difficulty equivalence is claimed."
+          },
+          "arm": "Blending",
+          "armFrom": "Apogee"
+        }
+      ]
+    },
+    {
+      "family": "tamTargetSwitch Smooth",
+      "category": "Evasive Switching",
+      "subCategory": "Evasive Switching",
+      "focus": "Match the target's movement and keep contact through the regeneration window.",
+      "why": "Use the authored Entry, Novice, Intermediate and Elite editions in ascending order. Remove Hard 30% Larger from Novice and the subsequent switch to non-bouncing Easy. Instant regeneration remains a commitment drill, so it comes late in the circuit; named editions are not measured difficulty equivalence.",
+      "$order": {
+        "why": "Use the authored Entry, Novice, Intermediate and Elite editions in ascending order. Remove Hard 30% Larger from Novice and the subsequent switch to non-bouncing Easy. Instant regeneration remains a commitment drill, so it comes late in the circuit; named editions are not measured difficulty equivalence. The ordering follows the named edit lineage; cross-band physical difficulty is provisional until playtested."
+      },
+      "variants": [
+        {
+          "window": 0,
+          "scenario": "tamTargetSwitch Smooth Entry",
+          "label": "tamTargetSwitch Smooth Entry",
+          "leaderboardId": 111266,
+          "admitted": {
+            "why": "Use the authored Entry, Novice, Intermediate and Elite editions in ascending order. Remove Hard 30% Larger from Novice and the subsequent switch to non-bouncing Easy. Instant regeneration remains a commitment drill, so it comes late in the circuit; named editions are not measured difficulty equivalence."
+          },
+          "rankMaxes": [
+            23,
+            30,
+            33,
+            35,
+            40,
+            43
+          ],
+          "source": {
+            "kind": "authored",
+            "why": "Frozen from this scenario's own dated leaderboard. The first four ranks use the season curve; lower bands keep stricter two-rank crossover cuts (0.5 and 0.4 factors). Ties are capped backward from the demonstrated record. Reproduce using data/evasive_rework_calibration.json. Physical difficulty and equal effort between scenarios require playtesting."
+          },
+          "thinBoard": {
+            "why": "Draft selection with 7533 sampled players. The named variant and movement task justify inclusion, not leaderboard population. Sparse high-rank cuts need human calibration; no difficulty equivalence is claimed."
+          },
+          "arm": "Blending",
+          "armFrom": "Apogee"
+        },
+        {
+          "window": 1,
+          "scenario": "tamTargetSwitch Smooth Novice",
+          "label": "tamTargetSwitch Smooth Novice",
+          "leaderboardId": 111343,
+          "admitted": {
+            "why": "Use the authored Entry, Novice, Intermediate and Elite editions in ascending order. Remove Hard 30% Larger from Novice and the subsequent switch to non-bouncing Easy. Instant regeneration remains a commitment drill, so it comes late in the circuit; named editions are not measured difficulty equivalence."
+          },
+          "rankMaxes": [
+            34,
+            35,
+            36,
+            37,
+            41,
+            42
+          ],
+          "source": {
+            "kind": "authored",
+            "why": "Frozen from this scenario's own dated leaderboard. The first four ranks use the season curve; lower bands keep stricter two-rank crossover cuts (0.5 and 0.4 factors). Ties are capped backward from the demonstrated record. Reproduce using data/evasive_rework_calibration.json. Physical difficulty and equal effort between scenarios require playtesting."
+          },
+          "arm": "Blending",
+          "armFrom": "Apogee"
+        },
+        {
+          "window": 2,
+          "scenario": "tamTargetSwitch Smooth Intermediate",
+          "label": "tamTargetSwitch Smooth Intermediate",
+          "leaderboardId": 113137,
+          "admitted": {
+            "why": "Use the authored Entry, Novice, Intermediate and Elite editions in ascending order. Remove Hard 30% Larger from Novice and the subsequent switch to non-bouncing Easy. Instant regeneration remains a commitment drill, so it comes late in the circuit; named editions are not measured difficulty equivalence."
+          },
+          "rankMaxes": [
+            36,
+            38,
+            39,
+            40,
+            41,
+            42
+          ],
+          "source": {
+            "kind": "authored",
+            "why": "Frozen from this scenario's own dated leaderboard. The first four ranks use the season curve; lower bands keep stricter two-rank crossover cuts (0.5 and 0.4 factors). Ties are capped backward from the demonstrated record. Reproduce using data/evasive_rework_calibration.json. Physical difficulty and equal effort between scenarios require playtesting."
+          },
+          "arm": "Blending",
+          "armFrom": "Apogee"
+        },
+        {
+          "window": 3,
+          "scenario": "tamTargetSwitch Smooth Elite",
+          "label": "tamTargetSwitch Smooth Elite",
+          "leaderboardId": 111685,
+          "admitted": {
+            "why": "Use the authored Entry, Novice, Intermediate and Elite editions in ascending order. Remove Hard 30% Larger from Novice and the subsequent switch to non-bouncing Easy. Instant regeneration remains a commitment drill, so it comes late in the circuit; named editions are not measured difficulty equivalence."
+          },
+          "rankMaxes": [
+            25,
+            27,
+            28,
+            29
+          ],
+          "source": {
+            "kind": "authored",
+            "why": "Frozen from this scenario's own dated leaderboard. The first four ranks use the season curve; lower bands keep stricter two-rank crossover cuts (0.5 and 0.4 factors). Ties are capped backward from the demonstrated record. Reproduce using data/evasive_rework_calibration.json. Physical difficulty and equal effort between scenarios require playtesting."
+          },
+          "thinBoard": {
+            "why": "Draft selection with 476 sampled players. The named variant and movement task justify inclusion, not leaderboard population. Sparse high-rank cuts need human calibration; no difficulty equivalence is claimed."
+          },
+          "arm": "Blending",
           "armFrom": "Apogee"
         }
       ]
@@ -7912,28 +8011,22 @@
   "$familyNotes": "Why a family's scenarios are what they are, where the choice needed defending. Written on the family rather than on a variant's `source` because the two are different claims: `source` says where a NUMBER came from and is rewritten whenever the thresholds are re-cut, so a reason parked there does not survive npm run cut:thresholds. The fuller case for each family - who published it, how many people play it - lives in data/scenario_rationale.json, which validate:rationale joins back to this file.",
   "categoryGuides": {
     "Static Clicking": {
-      "headline": "Still targets. Time between kills.",
-      "description": "Targets stationary. Score = gap between kills. One large initial flick → one small micro-correction → click. Straight line target to target, no overflick. During micro, next target already located in peripheral."
+      "description": "Your score is how little time passes between kills, so flick straight at each target, fix it with one small correction if you need to, and be looking at the next target before you click."
     },
     "Dynamic Clicking": {
-      "headline": "Read. Confirm. Commit.",
-      "description": "Follow the movement into each shot. Read arcs beyond the apex and stay with multi-hit targets until the final click. Smooth transitions make the next target easier to read."
+      "description": "The targets are moving, so stay on each one for a split second until you're sure you're on it before you click, and don't let a sudden change of direction drag your crosshair with it. On targets that take several hits, move with them until the last click."
     },
     "Precise Tracking": {
-      "headline": "Stay connected.",
-      "description": "Match the target through horizontal strafes, vertical travel and changing paths. Make clean corrections when contact breaks. Use an easier cut when you lose the movement; difficulty should leave room to learn."
+      "description": "Stay smooth and keep your crosshair in the middle of the target the whole time, moving with it in one steady motion and using your arm on long strafes. If your aim gets shaky or you keep losing the target, drop to an easier version."
     },
     "Reactive Tracking": {
-      "headline": "React, recover, settle.",
-      "description": "Watch the target, react to the change, then match its new movement. Stops and teleports join ground and air reads. If you start guessing turns or forcing the mouse, step down and rebuild clean contact."
+      "description": "React to where the target goes instead of guessing, and sit slightly on the side it's moving away from so you have room when it turns. Stay relaxed, because jittery aim usually means you're tensing up, and if you catch yourself predicting, play an easier version for a while."
     },
     "Speed Switching": {
-      "headline": "Find pace. Keep precision.",
-      "description": "Hold fire, land close and finish each target before transferring. Mix compact flicks, wide routes and shrinking targets. In practice, try a short speed burst on an easier cut; use complete runs for benchmark scores."
+      "description": "Hold fire and get to the next target as fast as you can in a straight line, without flicking past it. Kill each target fully before you move, and start finding the next one while you finish the current one."
     },
     "Evasive Switching": {
-      "headline": "Earn every transfer.",
-      "description": "Flick in, match the movement and confirm the kill. Read the next target without abandoning this one. Regeneration tests clean finishes; varied arcs and strafes keep the task about reading, not memorising turns."
+      "description": "Focus on movement reading, sustained contact and clean transfers. Start with larger and slower targets, then add tighter movement, more distance and regeneration."
     }
   }
 }

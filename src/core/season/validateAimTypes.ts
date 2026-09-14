@@ -47,7 +47,8 @@ interface Example {
 interface Correction {
   aimType: string;
   kovaaksSays: string;
-  measured: { runs: number; kills: number; shotsPerKill: number; weapon: string; bot?: string };
+  measured?: { runs: number; kills: number; shotsPerKill: number; weapon: string; bot?: string };
+  catalogue?: { file: string; scenario: string; sibling?: string };
   namedBy: { benchmark: string; label: string }[];
   why: string;
 }
@@ -65,7 +66,7 @@ const file = JSON.parse(
 
 const taxonomy = JSON.parse(
   readFileSync(dataFile("scenario_taxonomy.json"), "utf8"),
-) as { scenarios: { name: string; aimType: string | null }[] };
+) as { scenarios: { name: string; aimType: string | null; leaderboardId?: number; description?: string }[] };
 
 const tax = new Map(taxonomy.scenarios.map((s) => [s.name, s]));
 
@@ -147,6 +148,25 @@ const unreasoned = corrections.filter(([, c]) => !c.why || c.why.trim().length <
 // support it does not have is the one failure mode this file cannot afford.
 const unsupported: string[] = [];
 for (const [name, c] of corrections) {
+  if (c.catalogue) {
+    // Catalogue evidence is an authored firing-task description, not a local run.
+    // Do not manufacture measured shots/kill when no such run exists.
+    const evidence = JSON.parse(readFileSync(dataFile(c.catalogue.file), "utf8")).identities?.[name];
+    const description = evidence?.description ?? "";
+    const explicitSwitching = /20 hits/i.test(description) && /switching|switch between/i.test(description);
+    const sibling = c.catalogue.sibling ? file.corrections[c.catalogue.sibling] : undefined;
+    const normalise = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, "");
+    const sameMeasuredTask = sibling?.aimType === c.aimType && (sibling.measured?.shotsPerKill ?? 0) >= 10
+      && normalise(description) === normalise(tax.get(c.catalogue.sibling!)?.description ?? "") && description.length > 30;
+    if (c.catalogue.scenario !== name || evidence?.leaderboardId !== tax.get(name)?.leaderboardId
+      || evidence?.aimType !== c.kovaaksSays || !evidence?.verifiedAt
+      || !evidence?.url?.startsWith("https://kovaaks.com/webapp-backend/scenario/")
+      || c.aimType !== "Switching" || c.kovaaksSays !== "Clicking"
+      || !(explicitSwitching || sameMeasuredTask) || c.measured) {
+      unsupported.push(`${name}: catalogue correction lacks exact identity and explicit sustained-switching evidence`);
+    }
+    continue;
+  }
   const naming = namesFor.get(name) ?? new Set<string>();
   if (!c.namedBy || c.namedBy.length === 0) {
     unsupported.push(`${name} names no benchmark`);
@@ -164,7 +184,7 @@ check(
   unreasoned.map(([n]) => n).join(", "),
 );
 check(
-  "every benchmark and label a correction cites is in the committed definitions",
+  "every correction has verified benchmark citations or exact catalogue firing-task evidence",
   unsupported.length === 0,
   unsupported.join("; "),
 );
@@ -263,6 +283,8 @@ if (!existsSync(statsDir)) {
   let notSeparated: string[] = [];
 
   for (const [name, c] of corrections) {
+    if (c.catalogue) continue;
+    if (!c.measured) { wrongFigure.push(`${name}: missing measurement`); continue; }
     const got = measure(name);
     if (!got) {
       unmeasured.push(name);

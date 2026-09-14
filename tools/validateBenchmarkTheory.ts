@@ -5,11 +5,13 @@ import { readFileSync } from "node:fs";
 import { dataFile } from "../src/core/dataDir.ts";
 import { loadSeason } from "../src/core/season/season.ts";
 import { matchesCategory } from "../src/core/match/scenarioSelection.ts";
+import { beforeEvasivePool, beforeEvasiveSeason } from "./evasiveReworkHistory.ts";
 
 const read = (name: string): any => JSON.parse(readFileSync(dataFile(name), "utf8"));
-const pool = read("pool.json");
+// Audit the frozen theory migration before the later evasive rework.
+const pool = beforeEvasivePool(read("pool.json"));
 const theory = read("benchmark_theory.json");
-const season = loadSeason();
+const season = beforeEvasiveSeason(loadSeason());
 const taxonomy = new Map<string, any>(read("scenario_taxonomy.json").scenarios.map((s: any) => [s.name, s]));
 const identity = read("scenario_identity.json").scenarios;
 const expansion = read("season_expansion.json");

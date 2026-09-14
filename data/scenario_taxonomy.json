@@ -15143,6 +15143,160 @@
       "entries": 9485,
       "topScore": 88,
       "fetchedAt": "2026-09-13T19:26:27.335Z"
+    },
+    {
+      "name": "VT PasuTS Entry S5",
+      "leaderboardId": 106755,
+      "aimType": "Clicking",
+      "description": "Full auto switching variant with four targets jumping and floating around on a wall infront of the player, while being repelled away from the edges. Each target takes 20 hits to eliminate with a TTK of ~0.26 seconds, and is worth a total of 10 points.\r\n\r\nEntry: 15% larger, 15% slower ",
+      "plays": 49520,
+      "entries": 10566,
+      "topScore": 1212,
+      "verifiedAt": "2026-09-14T19:14:16.342Z",
+      "url": "https://kovaaks.com/webapp-backend/scenario/popular?page=0&max=50&scenarioNameSearch=VT%20PasuTS%20Entry%20S5"
+    },
+    {
+      "name": "VT PasuTS Intermediate S5",
+      "leaderboardId": 106756,
+      "aimType": "Clicking",
+      "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto switching variant with four targets jumping and floating around on a wall infront of the player, while being repelled away from the edges. Each target takes 20 hits to eliminate with a TTK of ~0.26 seconds, and is worth a total of 10 points. ",
+      "plays": 246487,
+      "entries": 25202,
+      "topScore": 1052,
+      "verifiedAt": "2026-09-14T19:14:26.468Z",
+      "url": "https://kovaaks.com/webapp-backend/scenario/popular?page=0&max=50&scenarioNameSearch=VT%20PasuTS%20Intermediate%20S5"
+    },
+    {
+      "name": "VT PasuTS Advanced S5",
+      "leaderboardId": 106331,
+      "aimType": "Clicking",
+      "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto switching variant with four targets jumping and floating around on a wall infront of the player, while being repelled away from the edges. Each target takes 20 hits to eliminate with a TTK of ~0.26 seconds, and is worth a total of 10 points. ",
+      "plays": 36338,
+      "entries": 3708,
+      "topScore": 947,
+      "verifiedAt": "2026-09-14T19:14:36.402Z",
+      "url": "https://kovaaks.com/webapp-backend/scenario/popular?page=0&max=50&scenarioNameSearch=VT%20PasuTS%20Advanced%20S5"
+    },
+    {
+      "name": "VT PasuTS Elite S5",
+      "leaderboardId": 106754,
+      "aimType": "Clicking",
+      "description": "Full auto switching variant with four targets jumping and floating around on a wall infront of the player, while being repelled away from the edges. Each target takes 20 hits to eliminate with a TTK of ~0.26 seconds, and is worth a total of 10 points.",
+      "plays": 7624,
+      "entries": 1026,
+      "topScore": 739,
+      "verifiedAt": "2026-09-14T19:14:46.306Z",
+      "url": "https://kovaaks.com/webapp-backend/scenario/popular?page=0&max=50&scenarioNameSearch=VT%20PasuTS%20Elite%20S5"
+    },
+    {
+      "name": "Floatswitch Entry",
+      "leaderboardId": 112237,
+      "aimType": "Clicking",
+      "description": "Switch between the floating heads! \r\n\r\nEach bot is worth 10 points and requires 20 hits to kill with a TTK of 0.2s ",
+      "plays": 27278,
+      "entries": 8651,
+      "topScore": 1139,
+      "verifiedAt": "2026-09-14T19:14:55.267Z",
+      "url": "https://kovaaks.com/webapp-backend/scenario/popular?page=0&max=50&scenarioNameSearch=Floatswitch%20Entry"
+    },
+    {
+      "name": "Floatswitch Elite",
+      "leaderboardId": 112062,
+      "aimType": "Clicking",
+      "description": "Switch between the floating heads! \r\n\r\nEach bot is worth 10 points and requires 20 hits to kill with a TTK of 0.2s ",
+      "plays": 4001,
+      "entries": 721,
+      "topScore": 760,
+      "verifiedAt": "2026-09-14T19:15:24.870Z",
+      "url": "https://kovaaks.com/webapp-backend/scenario/popular?page=0&max=50&scenarioNameSearch=Floatswitch%20Elite"
+    },
+    {
+      "name": "VT ControlTS Entry S5 Speed",
+      "leaderboardId": 106720,
+      "aimType": "Target Switching",
+      "description": "This variant is intended to challenge the players ability to move at a faster pace and seamlessly transitioning between each target\r\n\r\nSpeed: 25% larger, -25% TTK\r\nEntry: 15% larger, 15% slower ",
+      "plays": 18017,
+      "entries": 4428,
+      "topScore": 982,
+      "verifiedAt": "2026-09-14T19:15:34.211Z",
+      "url": "https://kovaaks.com/webapp-backend/scenario/popular?page=0&max=50&scenarioNameSearch=VT%20ControlTS%20Entry%20S5%20Speed"
+    },
+    {
+      "name": "VT Penta Bounce Entry S5 Speed",
+      "leaderboardId": 107639,
+      "aimType": "Target Switching",
+      "description": "This variant is intended to challenge the players ability to move at a faster pace and seamlessly transitioning between each target\r\n\r\nSpeed: 25% larger, -25% TTK\r\nEntry: 15% larger, 15% slower ",
+      "plays": 20675,
+      "entries": 4972,
+      "topScore": 1054,
+      "verifiedAt": "2026-09-14T19:15:45.859Z",
+      "url": "https://kovaaks.com/webapp-backend/scenario/popular?page=0&max=50&scenarioNameSearch=VT%20Penta%20Bounce%20Entry%20S5%20Speed"
+    },
+    {
+      "name": "VT FlyTS Entry S5 Speed",
+      "leaderboardId": 106708,
+      "aimType": "Target Switching",
+      "description": "This variant is intended to challenge the players ability to move at a faster pace and seamlessly transitioning between each target\r\n\r\nSpeed: 20% larger, -25% TTK\r\nEntry: 15% larger, 15% slower",
+      "plays": 27974,
+      "entries": 6335,
+      "topScore": 1234,
+      "verifiedAt": "2026-09-14T19:16:10.812Z",
+      "url": "https://kovaaks.com/webapp-backend/scenario/popular?page=0&max=50&scenarioNameSearch=VT%20FlyTS%20Entry%20S5%20Speed"
+    },
+    {
+      "name": "tamTargetSwitch Smooth Entry",
+      "leaderboardId": 111266,
+      "aimType": "Target Switching",
+      "description": "Small regenerating dots circle around you while bouncing slowly, 0.5s ttk, 0.5s max to regen to full, starts regening Immediatey if you go off target ",
+      "plays": 86292,
+      "entries": 15131,
+      "topScore": 64,
+      "verifiedAt": "2026-09-14T19:16:27.142Z",
+      "url": "https://kovaaks.com/webapp-backend/scenario/popular?page=0&max=50&scenarioNameSearch=tamTargetSwitch%20Smooth%20Entry"
+    },
+    {
+      "name": "tamTargetSwitch Smooth Novice",
+      "leaderboardId": 111343,
+      "aimType": "Target Switching",
+      "description": "Small regenerating dots circle around you while bouncing slowly, 0.5s ttk, 0.5s max to regen to full, starts regening Immediatey if you go off target ",
+      "plays": 120917,
+      "entries": 20082,
+      "topScore": 60,
+      "verifiedAt": "2026-09-14T19:16:41.068Z",
+      "url": "https://kovaaks.com/webapp-backend/scenario/popular?page=0&max=50&scenarioNameSearch=tamTargetSwitch%20Smooth%20Novice"
+    },
+    {
+      "name": "tamTargetSwitch Smooth Intermediate",
+      "leaderboardId": 113137,
+      "aimType": "Target Switching",
+      "description": "Small regenerating dots circle around you while bouncing slowly, 0.5s ttk, 0.5s max to regen to full, starts regening Immediatey if you go off target",
+      "plays": 374183,
+      "entries": 32000,
+      "topScore": 52,
+      "verifiedAt": "2026-09-14T19:16:51.131Z",
+      "url": "https://kovaaks.com/webapp-backend/scenario/popular?page=0&max=50&scenarioNameSearch=tamTargetSwitch%20Smooth%20Intermediate"
+    },
+    {
+      "name": "tamTargetSwitch Smooth Elite",
+      "leaderboardId": 111685,
+      "aimType": "Target Switching",
+      "description": "Small regenerating dots circle around you while bouncing slowly, 0.5s ttk, 0.5s max to regen to full, starts regening Immediatey if you go off target",
+      "plays": 9452,
+      "entries": 978,
+      "topScore": 33,
+      "verifiedAt": "2026-09-14T19:17:00.909Z",
+      "url": "https://kovaaks.com/webapp-backend/scenario/popular?page=0&max=50&scenarioNameSearch=tamTargetSwitch%20Smooth%20Elite"
+    },
+    {
+      "name": "VT DriftTS Entry S5 Speed",
+      "leaderboardId": 104861,
+      "aimType": "Target Switching",
+      "description": "This variant is intended to challenge the players ability to move at a faster pace and seamlessly transitioning between each target\r\n\r\nSpeed: 25% larger, -25% TTK\r\nEntry: 15% larger, 15% slower ",
+      "plays": 20318,
+      "entries": 4952,
+      "topScore": 1053,
+      "verifiedAt": "2026-09-14T19:17:18.421Z",
+      "url": "https://kovaaks.com/webapp-backend/scenario/popular?page=0&max=50&scenarioNameSearch=VT%20DriftTS%20Entry%20S5%20Speed"
     }
   ]
 }

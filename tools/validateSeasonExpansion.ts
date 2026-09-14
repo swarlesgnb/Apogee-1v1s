@@ -7,12 +7,16 @@ import { loadSeason, seasonAsDifficulties } from "../src/core/season/season.ts";
 import { thresholdsFrom } from "../src/core/season/percentiles.ts";
 import { scenarioEnergy, rankIndex } from "../src/core/benchmarks/energy.ts";
 import { matchesCategory } from "../src/core/match/scenarioSelection.ts";
+import { beforeEvasivePool, beforeEvasiveSeason } from "./evasiveReworkHistory.ts";
 
 const read = (name: string): any => JSON.parse(readFileSync(dataFile(name), "utf8"));
-const pool = read("pool.json");
+// This audit reproduces the prior expansion. The subsequent evasive migration has
+// its own live-state validator; preserve and verify the historical evidence here.
+const pool = beforeEvasivePool(read("pool.json"));
 const spec = read("season_expansion.json");
 const calibration = read("season_expansion_calibration.json");
-const season = loadSeason();
+const liveSeason = loadSeason();
+const season = beforeEvasiveSeason(liveSeason);
 const identity = read("scenario_identity.json").scenarios;
 const taxonomy = new Map<string, any>(read("scenario_taxonomy.json").scenarios.map((s: any) => [s.name, s]));
 const distributions = new Map<string, any>(read("leaderboard_percentiles.json").distributions.map((d: any) => [d.scenario, d]));
@@ -83,9 +87,9 @@ for (const a of calibration.ceilingAdjustments) {
 
 // Play only the easier band's scenarios. The real energy path must award both
 // names from the next band, and it must cap there even at arbitrarily high scores.
-const difficulties = seasonAsDifficulties(season);
-for (const category of season.categories) {
-  const count = category.name === "Static Clicking" ? 13 : 10;
+const difficulties = seasonAsDifficulties(liveSeason);
+for (const category of liveSeason.categories) {
+  const count = category.name === "Static Clicking" ? 13 : category.name === "Evasive Switching" ? 11 : 10;
   for (let band = 0; band < 3; band++) {
     const definition = difficulties[band].categories.find(c => c.name === category.name)!;
     const ladder = category.bands![band];

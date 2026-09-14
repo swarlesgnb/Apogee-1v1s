@@ -235,6 +235,97 @@
           "label": "Precision"
         }
       ]
+    },
+    "VT PasuTS Entry S5": {
+      "aimType": "Switching",
+      "kovaaksSays": "Clicking",
+      "catalogue": {
+        "file": "evasive_rework_evidence.json",
+        "scenario": "VT PasuTS Entry S5"
+      },
+      "namedBy": [],
+      "why": "The exact catalogue identity describes a sustained-fire target-switching task. PasuTS and Floatswitch explicitly require 20 hits per clear; domiSwitch Hard describes the same 55-health regeneration task as the measured domiSwitch sibling. This is authored task evidence, not a claimed local shots-per-kill measurement."
+    },
+    "VT PasuTS Intermediate S5": {
+      "aimType": "Switching",
+      "kovaaksSays": "Clicking",
+      "catalogue": {
+        "file": "evasive_rework_evidence.json",
+        "scenario": "VT PasuTS Intermediate S5"
+      },
+      "namedBy": [],
+      "why": "The exact catalogue identity describes a sustained-fire target-switching task. PasuTS and Floatswitch explicitly require 20 hits per clear; domiSwitch Hard describes the same 55-health regeneration task as the measured domiSwitch sibling. This is authored task evidence, not a claimed local shots-per-kill measurement."
+    },
+    "VT PasuTS Advanced S5": {
+      "aimType": "Switching",
+      "kovaaksSays": "Clicking",
+      "catalogue": {
+        "file": "evasive_rework_evidence.json",
+        "scenario": "VT PasuTS Advanced S5"
+      },
+      "namedBy": [],
+      "why": "The exact catalogue identity describes a sustained-fire target-switching task. PasuTS and Floatswitch explicitly require 20 hits per clear; domiSwitch Hard describes the same 55-health regeneration task as the measured domiSwitch sibling. This is authored task evidence, not a claimed local shots-per-kill measurement."
+    },
+    "VT PasuTS Elite S5": {
+      "aimType": "Switching",
+      "kovaaksSays": "Clicking",
+      "catalogue": {
+        "file": "evasive_rework_evidence.json",
+        "scenario": "VT PasuTS Elite S5"
+      },
+      "namedBy": [],
+      "why": "The exact catalogue identity describes a sustained-fire target-switching task. PasuTS and Floatswitch explicitly require 20 hits per clear; domiSwitch Hard describes the same 55-health regeneration task as the measured domiSwitch sibling. This is authored task evidence, not a claimed local shots-per-kill measurement."
+    },
+    "Floatswitch Entry": {
+      "aimType": "Switching",
+      "kovaaksSays": "Clicking",
+      "catalogue": {
+        "file": "evasive_rework_evidence.json",
+        "scenario": "Floatswitch Entry"
+      },
+      "namedBy": [],
+      "why": "The exact catalogue identity describes a sustained-fire target-switching task. PasuTS and Floatswitch explicitly require 20 hits per clear; domiSwitch Hard describes the same 55-health regeneration task as the measured domiSwitch sibling. This is authored task evidence, not a claimed local shots-per-kill measurement."
+    },
+    "Floatswitch Intermediate": {
+      "aimType": "Switching",
+      "kovaaksSays": "Clicking",
+      "catalogue": {
+        "file": "evasive_rework_evidence.json",
+        "scenario": "Floatswitch Intermediate"
+      },
+      "namedBy": [],
+      "why": "The exact catalogue identity describes a sustained-fire target-switching task. PasuTS and Floatswitch explicitly require 20 hits per clear; domiSwitch Hard describes the same 55-health regeneration task as the measured domiSwitch sibling. This is authored task evidence, not a claimed local shots-per-kill measurement."
+    },
+    "Floatswitch Advanced": {
+      "aimType": "Switching",
+      "kovaaksSays": "Clicking",
+      "catalogue": {
+        "file": "evasive_rework_evidence.json",
+        "scenario": "Floatswitch Advanced"
+      },
+      "namedBy": [],
+      "why": "The exact catalogue identity describes a sustained-fire target-switching task. PasuTS and Floatswitch explicitly require 20 hits per clear; domiSwitch Hard describes the same 55-health regeneration task as the measured domiSwitch sibling. This is authored task evidence, not a claimed local shots-per-kill measurement."
+    },
+    "Floatswitch Elite": {
+      "aimType": "Switching",
+      "kovaaksSays": "Clicking",
+      "catalogue": {
+        "file": "evasive_rework_evidence.json",
+        "scenario": "Floatswitch Elite"
+      },
+      "namedBy": [],
+      "why": "The exact catalogue identity describes a sustained-fire target-switching task. PasuTS and Floatswitch explicitly require 20 hits per clear; domiSwitch Hard describes the same 55-health regeneration task as the measured domiSwitch sibling. This is authored task evidence, not a claimed local shots-per-kill measurement."
+    },
+    "domiSwitch Hard": {
+      "aimType": "Switching",
+      "kovaaksSays": "Clicking",
+      "catalogue": {
+        "file": "evasive_rework_evidence.json",
+        "scenario": "domiSwitch Hard",
+        "sibling": "domiSwitch"
+      },
+      "namedBy": [],
+      "why": "The exact catalogue identity describes a sustained-fire target-switching task. PasuTS and Floatswitch explicitly require 20 hits per clear; domiSwitch Hard describes the same 55-health regeneration task as the measured domiSwitch sibling. This is authored task evidence, not a claimed local shots-per-kill measurement."
     }
   },
   "pending": {
@@ -260,5 +351,6 @@
       "measured": null,
       "why": "Its three siblings measure 93.3, 136.6 and 177.4 shots per kill on the same Poke-Drill against the same regen_dot bot, and the base scenario is corrected to Switching on that evidence - but no benchmark names this cut and nobody here has played it, so there is nothing to measure and this file does not correct on inference. It is no longer in the pool: it was the domiSwitch family's Expert rung until the board floor took it out, on 804 entries against the 1,667 an Expert window needs. Kept here because the mislabel is real whether or not this season grades it, and one run settles it."
     }
-  }
+  },
+  "$catalogueEvidence": "Corrections may also cite an exact dated catalogue identity whose authored description explicitly specifies multi-hit switching, or the identical firing-task description of a measured sibling. validate:aimtypes verifies that path separately; it never invents a local run or shots-per-kill figure."
 }

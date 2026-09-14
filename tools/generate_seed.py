@@ -73,7 +73,7 @@ def normalise_skill(value: str | None) -> str | None:
 
 
 def load_aim_type_corrections(taxonomy: dict) -> dict[str, dict]:
-    """Scenarios where KovaaK's aim type is wrong, and has been measured to be wrong.
+    """Scenarios with recorded evidence correcting KovaaK's broad aim type.
 
     KovaaK's per-scenario aimType is preferred over everything else below, and that
     preference is right: a benchmark author's category name is a sub-category as often as
@@ -81,9 +81,9 @@ def load_aim_type_corrections(taxonomy: dict) -> dict[str, dict]:
     column find-match partitions the queue on, so a scenario mislabelled here is graded by
     the season as one skill and matched as another.
 
-    Corrections are therefore allowed, and fenced. Each one carries a measurement rather
-    than an opinion (shots per kill, which separates the corpus by two orders of magnitude),
-    and `npm run validate:aimtypes` re-derives every figure from the stats folder.
+    Corrections carry either a local shots-per-kill measurement or exact catalogue
+    firing-task evidence. `npm run validate:aimtypes` verifies both paths separately;
+    authored scenario descriptions are never presented as measured local runs.
 
     Refused here: a correction that agrees with KovaaK's, which has stopped doing anything,
     and one naming a scenario the taxonomy has never heard of, which would silently never

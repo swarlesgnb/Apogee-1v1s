@@ -21286,6 +21286,854 @@
         }
       ],
       "sampledAt": "2026-09-14T02:35:34.667Z"
+    },
+    {
+      "scenario": "VT PasuTS Entry S5",
+      "leaderboardId": 106755,
+      "total": 5246,
+      "points": [
+        {
+          "rank": 1,
+          "score": 1212
+        },
+        {
+          "rank": 2,
+          "score": 1192
+        },
+        {
+          "rank": 3,
+          "score": 1190.5
+        },
+        {
+          "rank": 5,
+          "score": 1148.5
+        },
+        {
+          "rank": 10,
+          "score": 1134
+        },
+        {
+          "rank": 25,
+          "score": 1078
+        },
+        {
+          "rank": 50,
+          "score": 1036
+        },
+        {
+          "rank": 100,
+          "score": 990
+        },
+        {
+          "rank": 250,
+          "score": 912
+        },
+        {
+          "rank": 500,
+          "score": 860.5
+        }
+      ],
+      "sampledAt": "2026-09-14T19:14:25.548Z"
+    },
+    {
+      "scenario": "VT PasuTS Intermediate S5",
+      "leaderboardId": 106756,
+      "total": 12521,
+      "points": [
+        {
+          "rank": 1,
+          "score": 1052.5
+        },
+        {
+          "rank": 2,
+          "score": 1026
+        },
+        {
+          "rank": 3,
+          "score": 1010.5
+        },
+        {
+          "rank": 5,
+          "score": 994.5
+        },
+        {
+          "rank": 10,
+          "score": 971
+        },
+        {
+          "rank": 25,
+          "score": 940
+        },
+        {
+          "rank": 50,
+          "score": 909
+        },
+        {
+          "rank": 100,
+          "score": 889
+        },
+        {
+          "rank": 250,
+          "score": 860
+        },
+        {
+          "rank": 500,
+          "score": 839.5
+        }
+      ],
+      "sampledAt": "2026-09-14T19:14:35.681Z"
+    },
+    {
+      "scenario": "VT PasuTS Advanced S5",
+      "leaderboardId": 106331,
+      "total": 1837,
+      "points": [
+        {
+          "rank": 1,
+          "score": 947.5
+        },
+        {
+          "rank": 2,
+          "score": 905
+        },
+        {
+          "rank": 3,
+          "score": 904.5
+        },
+        {
+          "rank": 5,
+          "score": 890
+        },
+        {
+          "rank": 10,
+          "score": 861
+        },
+        {
+          "rank": 25,
+          "score": 835
+        },
+        {
+          "rank": 50,
+          "score": 810.5
+        },
+        {
+          "rank": 100,
+          "score": 790
+        },
+        {
+          "rank": 250,
+          "score": 750
+        },
+        {
+          "rank": 500,
+          "score": 712.5
+        }
+      ],
+      "sampledAt": "2026-09-14T19:14:45.723Z"
+    },
+    {
+      "scenario": "VT PasuTS Elite S5",
+      "leaderboardId": 106754,
+      "total": 223,
+      "points": [
+        {
+          "rank": 1,
+          "score": 739
+        },
+        {
+          "rank": 2,
+          "score": 717.5
+        },
+        {
+          "rank": 3,
+          "score": 650
+        },
+        {
+          "rank": 5,
+          "score": 638
+        },
+        {
+          "rank": 10,
+          "score": 613
+        },
+        {
+          "rank": 25,
+          "score": 560
+        },
+        {
+          "rank": 50,
+          "score": 520
+        },
+        {
+          "rank": 100,
+          "score": 430
+        }
+      ],
+      "sampledAt": "2026-09-14T19:14:54.700Z"
+    },
+    {
+      "scenario": "Floatswitch Entry",
+      "leaderboardId": 112237,
+      "total": 4300,
+      "points": [
+        {
+          "rank": 1,
+          "score": 1139.5
+        },
+        {
+          "rank": 2,
+          "score": 1112.5
+        },
+        {
+          "rank": 3,
+          "score": 1096
+        },
+        {
+          "rank": 5,
+          "score": 1040
+        },
+        {
+          "rank": 10,
+          "score": 970
+        },
+        {
+          "rank": 25,
+          "score": 919.5
+        },
+        {
+          "rank": 50,
+          "score": 869.5
+        },
+        {
+          "rank": 100,
+          "score": 810
+        },
+        {
+          "rank": 250,
+          "score": 751
+        },
+        {
+          "rank": 500,
+          "score": 710
+        }
+      ],
+      "sampledAt": "2026-09-14T19:15:04.430Z"
+    },
+    {
+      "scenario": "Floatswitch Intermediate",
+      "leaderboardId": 111979,
+      "total": 9749,
+      "points": [
+        {
+          "rank": 1,
+          "score": 1008
+        },
+        {
+          "rank": 2,
+          "score": 980
+        },
+        {
+          "rank": 3,
+          "score": 979
+        },
+        {
+          "rank": 5,
+          "score": 960
+        },
+        {
+          "rank": 10,
+          "score": 929.5
+        },
+        {
+          "rank": 25,
+          "score": 879
+        },
+        {
+          "rank": 50,
+          "score": 840.5
+        },
+        {
+          "rank": 100,
+          "score": 823
+        },
+        {
+          "rank": 250,
+          "score": 790
+        },
+        {
+          "rank": 500,
+          "score": 760
+        }
+      ],
+      "sampledAt": "2026-09-14T19:15:14.421Z"
+    },
+    {
+      "scenario": "Floatswitch Advanced",
+      "leaderboardId": 112006,
+      "total": 1509,
+      "points": [
+        {
+          "rank": 1,
+          "score": 909
+        },
+        {
+          "rank": 2,
+          "score": 887.5
+        },
+        {
+          "rank": 3,
+          "score": 873
+        },
+        {
+          "rank": 5,
+          "score": 860
+        },
+        {
+          "rank": 10,
+          "score": 838.5
+        },
+        {
+          "rank": 25,
+          "score": 810
+        },
+        {
+          "rank": 50,
+          "score": 780
+        },
+        {
+          "rank": 100,
+          "score": 752.5
+        },
+        {
+          "rank": 250,
+          "score": 718.5
+        },
+        {
+          "rank": 500,
+          "score": 676.5
+        }
+      ],
+      "sampledAt": "2026-09-14T19:15:24.255Z"
+    },
+    {
+      "scenario": "Floatswitch Elite",
+      "leaderboardId": 112062,
+      "total": 359,
+      "points": [
+        {
+          "rank": 1,
+          "score": 760.5
+        },
+        {
+          "rank": 2,
+          "score": 760
+        },
+        {
+          "rank": 3,
+          "score": 750
+        },
+        {
+          "rank": 5,
+          "score": 720
+        },
+        {
+          "rank": 10,
+          "score": 690
+        },
+        {
+          "rank": 25,
+          "score": 642.5
+        },
+        {
+          "rank": 50,
+          "score": 610
+        },
+        {
+          "rank": 100,
+          "score": 560
+        },
+        {
+          "rank": 250,
+          "score": 440
+        }
+      ],
+      "sampledAt": "2026-09-14T19:15:33.646Z"
+    },
+    {
+      "scenario": "VT ControlTS Entry S5 Speed",
+      "leaderboardId": 106720,
+      "total": 2195,
+      "points": [
+        {
+          "rank": 1,
+          "score": 982.94
+        },
+        {
+          "rank": 2,
+          "score": 960.54
+        },
+        {
+          "rank": 3,
+          "score": 912.27
+        },
+        {
+          "rank": 5,
+          "score": 907.74
+        },
+        {
+          "rank": 10,
+          "score": 893.87
+        },
+        {
+          "rank": 25,
+          "score": 862.41
+        },
+        {
+          "rank": 50,
+          "score": 830.14
+        },
+        {
+          "rank": 100,
+          "score": 777.6
+        },
+        {
+          "rank": 250,
+          "score": 729.6
+        },
+        {
+          "rank": 500,
+          "score": 699.2
+        }
+      ],
+      "sampledAt": "2026-09-14T19:15:43.386Z"
+    },
+    {
+      "scenario": "VT Penta Bounce Entry S5 Speed",
+      "leaderboardId": 107639,
+      "total": 2475,
+      "points": [
+        {
+          "rank": 1,
+          "score": 1054.41
+        },
+        {
+          "rank": 2,
+          "score": 1043.74
+        },
+        {
+          "rank": 3,
+          "score": 1040.81
+        },
+        {
+          "rank": 5,
+          "score": 1022.14
+        },
+        {
+          "rank": 10,
+          "score": 968.27
+        },
+        {
+          "rank": 25,
+          "score": 901.87
+        },
+        {
+          "rank": 50,
+          "score": 841.07
+        },
+        {
+          "rank": 100,
+          "score": 778.67
+        },
+        {
+          "rank": 250,
+          "score": 705.34
+        },
+        {
+          "rank": 500,
+          "score": 658.67
+        }
+      ],
+      "sampledAt": "2026-09-14T19:15:55.038Z"
+    },
+    {
+      "scenario": "B180T Voltaic Easy Slower",
+      "leaderboardId": 185571,
+      "total": 21959,
+      "points": [
+        {
+          "rank": 1,
+          "score": 116.8
+        },
+        {
+          "rank": 2,
+          "score": 113.6
+        },
+        {
+          "rank": 3,
+          "score": 110.8
+        },
+        {
+          "rank": 5,
+          "score": 108.8
+        },
+        {
+          "rank": 10,
+          "score": 106.4
+        },
+        {
+          "rank": 25,
+          "score": 99
+        },
+        {
+          "rank": 50,
+          "score": 95.4
+        },
+        {
+          "rank": 100,
+          "score": 92
+        },
+        {
+          "rank": 250,
+          "score": 86.2
+        },
+        {
+          "rank": 500,
+          "score": 82
+        }
+      ],
+      "sampledAt": "2026-09-14T19:16:06.886Z"
+    },
+    {
+      "scenario": "B180T Voltaic Easy",
+      "leaderboardId": 543,
+      "total": 74857,
+      "points": [
+        {
+          "rank": 1,
+          "score": 115
+        },
+        {
+          "rank": 2,
+          "score": 114.6
+        },
+        {
+          "rank": 3,
+          "score": 112.6
+        },
+        {
+          "rank": 5,
+          "score": 112
+        },
+        {
+          "rank": 10,
+          "score": 108.2
+        },
+        {
+          "rank": 25,
+          "score": 104
+        },
+        {
+          "rank": 50,
+          "score": 100.2
+        },
+        {
+          "rank": 100,
+          "score": 97
+        },
+        {
+          "rank": 250,
+          "score": 93.4
+        },
+        {
+          "rank": 500,
+          "score": 89.2
+        }
+      ],
+      "sampledAt": "2026-09-14T19:16:09.116Z"
+    },
+    {
+      "scenario": "VT FlyTS Entry S5 Speed",
+      "leaderboardId": 106708,
+      "total": 3065,
+      "points": [
+        {
+          "rank": 1,
+          "score": 1234.94
+        },
+        {
+          "rank": 2,
+          "score": 1205.88
+        },
+        {
+          "rank": 3,
+          "score": 1198.94
+        },
+        {
+          "rank": 5,
+          "score": 1146.94
+        },
+        {
+          "rank": 10,
+          "score": 1117.61
+        },
+        {
+          "rank": 25,
+          "score": 1074.41
+        },
+        {
+          "rank": 50,
+          "score": 1016.27
+        },
+        {
+          "rank": 100,
+          "score": 949.61
+        },
+        {
+          "rank": 250,
+          "score": 874.14
+        },
+        {
+          "rank": 500,
+          "score": 830.94
+        }
+      ],
+      "sampledAt": "2026-09-14T19:16:20.093Z"
+    },
+    {
+      "scenario": "tamTargetSwitch Smooth Entry",
+      "leaderboardId": 111266,
+      "total": 7533,
+      "points": [
+        {
+          "rank": 1,
+          "score": 64
+        },
+        {
+          "rank": 2,
+          "score": 62
+        },
+        {
+          "rank": 3,
+          "score": 62
+        },
+        {
+          "rank": 5,
+          "score": 59
+        },
+        {
+          "rank": 10,
+          "score": 56
+        },
+        {
+          "rank": 25,
+          "score": 54
+        },
+        {
+          "rank": 50,
+          "score": 52
+        },
+        {
+          "rank": 100,
+          "score": 49
+        },
+        {
+          "rank": 250,
+          "score": 46
+        },
+        {
+          "rank": 500,
+          "score": 43
+        }
+      ],
+      "sampledAt": "2026-09-14T19:16:36.363Z"
+    },
+    {
+      "scenario": "tamTargetSwitch Smooth Novice",
+      "leaderboardId": 111343,
+      "total": 9986,
+      "points": [
+        {
+          "rank": 1,
+          "score": 60
+        },
+        {
+          "rank": 2,
+          "score": 55
+        },
+        {
+          "rank": 3,
+          "score": 54
+        },
+        {
+          "rank": 5,
+          "score": 54
+        },
+        {
+          "rank": 10,
+          "score": 52
+        },
+        {
+          "rank": 25,
+          "score": 49
+        },
+        {
+          "rank": 50,
+          "score": 46
+        },
+        {
+          "rank": 100,
+          "score": 44
+        },
+        {
+          "rank": 250,
+          "score": 42
+        },
+        {
+          "rank": 500,
+          "score": 39
+        }
+      ],
+      "sampledAt": "2026-09-14T19:16:50.559Z"
+    },
+    {
+      "scenario": "tamTargetSwitch Smooth Intermediate",
+      "leaderboardId": 113137,
+      "total": 15930,
+      "points": [
+        {
+          "rank": 1,
+          "score": 52
+        },
+        {
+          "rank": 2,
+          "score": 52
+        },
+        {
+          "rank": 3,
+          "score": 52
+        },
+        {
+          "rank": 5,
+          "score": 50
+        },
+        {
+          "rank": 10,
+          "score": 46
+        },
+        {
+          "rank": 25,
+          "score": 45
+        },
+        {
+          "rank": 50,
+          "score": 43
+        },
+        {
+          "rank": 100,
+          "score": 42
+        },
+        {
+          "rank": 250,
+          "score": 40
+        },
+        {
+          "rank": 500,
+          "score": 39
+        }
+      ],
+      "sampledAt": "2026-09-14T19:17:00.328Z"
+    },
+    {
+      "scenario": "tamTargetSwitch Smooth Elite",
+      "leaderboardId": 111685,
+      "total": 476,
+      "points": [
+        {
+          "rank": 1,
+          "score": 33
+        },
+        {
+          "rank": 2,
+          "score": 31
+        },
+        {
+          "rank": 3,
+          "score": 31
+        },
+        {
+          "rank": 5,
+          "score": 27
+        },
+        {
+          "rank": 10,
+          "score": 25
+        },
+        {
+          "rank": 25,
+          "score": 22
+        },
+        {
+          "rank": 50,
+          "score": 20
+        },
+        {
+          "rank": 100,
+          "score": 16
+        },
+        {
+          "rank": 250,
+          "score": 8
+        }
+      ],
+      "sampledAt": "2026-09-14T19:17:09.592Z"
+    },
+    {
+      "scenario": "VT DriftTS Entry S5 Speed",
+      "leaderboardId": 104861,
+      "total": 2461,
+      "points": [
+        {
+          "rank": 1,
+          "score": 1053.87
+        },
+        {
+          "rank": 2,
+          "score": 1016.01
+        },
+        {
+          "rank": 3,
+          "score": 1005.07
+        },
+        {
+          "rank": 5,
+          "score": 992.01
+        },
+        {
+          "rank": 10,
+          "score": 955.21
+        },
+        {
+          "rank": 25,
+          "score": 887.47
+        },
+        {
+          "rank": 50,
+          "score": 833.61
+        },
+        {
+          "rank": 100,
+          "score": 780.27
+        },
+        {
+          "rank": 250,
+          "score": 728
+        },
+        {
+          "rank": 500,
+          "score": 690.4
+        }
+      ],
+      "sampledAt": "2026-09-14T19:17:27.623Z"
     }
   ]
 }

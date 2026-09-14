@@ -189,16 +189,6 @@
       "url": "https://evxl.app/benchmarks/wobin%20S1",
       "kind": "benchmark definition"
     },
-    "rebuild-pureg-s1": {
-      "title": "PureG S1",
-      "url": "https://evxl.app/benchmarks/PureG%20S1",
-      "kind": "benchmark definition"
-    },
-    "rebuild-pureg-s2": {
-      "title": "PureG S2",
-      "url": "https://evxl.app/benchmarks/PureG%20S2",
-      "kind": "benchmark definition"
-    },
     "rebuild-avasive-s2": {
       "title": "Avasive S2",
       "url": "https://docs.google.com/spreadsheets/d/1yF2M1j_FSN5MXz-TdxEnvsdNZ_nFZhGDSBrygWFJdDE",
@@ -216,6 +206,11 @@
     },
     "expansion-catalogue": {
       "title": "KovaaK's scenario catalogue: season expansion identity checks",
+      "url": "https://kovaaks.com/kovaaks/scenarios",
+      "kind": "first-party"
+    },
+    "evasive-rework-catalogue": {
+      "title": "KovaaK's exact scenario catalogue checks for the evasive rework",
       "url": "https://kovaaks.com/kovaaks/scenarios",
       "kind": "first-party"
     }
@@ -431,7 +426,7 @@
     {
       "family": "Pasu",
       "subCategory": "Dynamic Clicking",
-      "isolates": "Read the drift. Click on confirmation.",
+      "isolates": "Clicking slow, floating targets whose drift you have to read before you shoot.",
       "why": "Pasu without Voltaic's cuts. Viscose's entry version with limited strafing for Novice, SuperbAim's Easy and standard cuts in the middle, and Pasu Reload Goated for Expert, which is smaller and uses a reload instead of accuracy scoring.",
       "evidence": [
         {
@@ -468,7 +463,7 @@
     {
       "family": "PipeClick",
       "subCategory": "Dynamic Clicking",
-      "isolates": "Meet the path. Confirm the shot.",
+      "isolates": "Clicking targets that travel along set paths, meeting them where they're going.",
       "why": "Targets on a fixed path, so it's more about timing than reading. Easy and Hard S1 are from Aimerz+ S1; Normal and Hard are the older S0 cuts.",
       "evidence": [
         {
@@ -505,7 +500,7 @@
     {
       "family": "Bounce",
       "subCategory": "Dynamic Clicking",
-      "isolates": "Read the full bounce, not just the apex.",
+      "isolates": "Clicking bouncing targets anywhere in their arc, not only at the top.",
       "why": "Bouncing-target clicking from two authors. SuperbAim's BounceClick for the first two rungs, then Sparky's and rAim's Bounce 180, where the balls really bounce and a reload replaces the accuracy penalty. The order between the two authors hasn't been playtested.",
       "evidence": [
         {
@@ -542,7 +537,7 @@
     {
       "family": "Angelic",
       "subCategory": "Dynamic Clicking",
-      "isolates": "Read horizontal movement through the shot.",
+      "isolates": "Clicking targets that strafe side to side, following them into the shot.",
       "why": "Targets strafe around you and move up and down, so it's wider than Pasu. psalmTS angelic click and Pasu Angelic, each with a larger-target cut below it.",
       "evidence": [
         {
@@ -579,7 +574,7 @@
     {
       "family": "Pasu Sequence",
       "subCategory": "Dynamic Clicking",
-      "isolates": "Stay with each target for all three clicks.",
+      "isolates": "Pasu-style targets that take three hits, so you have to stay with each one.",
       "why": "Repeated hits add the sustained target reading missing from one-shot clicking. Wide Easy introduces the task; Less Easy uses a faster timescale than the easy v2 cut; standard v2 removes timescaling; Wide opens the field. These are related community edits, not a measured equal-step progression. Expert width and mixed v2/v4 behaviour need playtesting.",
       "evidence": [
         {
@@ -616,7 +611,7 @@
     {
       "family": "Popcorn",
       "subCategory": "Dynamic Clicking",
-      "isolates": "Follow the arc into a clean click.",
+      "isolates": "Clicking targets that pop up and fall in arcs.",
       "why": "Popcorn with a reload instead of accuracy scoring. rAim's Goated easy cut with double-size targets, then rAim Easy, Sparky's version where the bots bounce, and Goated rAim with 10% smaller bots for Expert.",
       "evidence": [
         {
@@ -653,7 +648,7 @@
     {
       "family": "Smoothbot",
       "subCategory": "Precise Tracking",
-      "isolates": "Match the long arc with steady contact.",
+      "isolates": "Tracking a bot on long, smooth arcs, where steady contact is the whole score.",
       "why": "SmoothBot Invincible Goated at every rung instead of Voltaic's Smoothbot: 75% speed, Easy, the standard version, then the smaller cut for Expert. The bot can't die, so the whole run is time on target.",
       "evidence": [
         {
@@ -690,7 +685,7 @@
     {
       "family": "Centering",
       "subCategory": "Precise Tracking",
-      "isolates": "Settle into the strafe. Match its speed.",
+      "isolates": "Tracking a horizontal strafe and matching its speed.",
       "why": "A dedicated horizontal centering test separates velocity matching from multidirectional control. Entry, Novice and Intermediate community cuts lead into the established no-strafes version. Apogee band names describe our progression, not the names of the source cuts. Exact target-size differences are not claimed; band handovers need playtesting.",
       "evidence": [
         {
@@ -727,7 +722,7 @@
     {
       "family": "PreciseTrack",
       "subCategory": "Precise Tracking",
-      "isolates": "Recover cleanly. Settle back on target.",
+      "isolates": "Tracking with frequent small corrections to get back on target.",
       "why": "Aimerz+ PreciseTrack in place of PGT as the fine-correction test. Avasive's Easier cut for Novice, then Easy, Med and Hard from the Aimerz+ S1 set.",
       "evidence": [
         {
@@ -764,7 +759,7 @@
     {
       "family": "Whisphere",
       "subCategory": "Precise Tracking",
-      "isolates": "Match the curve and its changing speed.",
+      "isolates": "Tracking a target on curved paths whose speed keeps changing.",
       "why": "Smooth with no blinks, going by the scenario description. 55% speed, 75%, full speed, then Extra Small for Expert.",
       "evidence": [
         {
@@ -801,7 +796,7 @@
     {
       "family": "Vertical Control",
       "subCategory": "Precise Tracking",
-      "isolates": "Stay connected through the rise and fall.",
+      "isolates": "Tracking up-and-down movement on its own.",
       "why": "These four Altered POV cuts explicitly isolate vertical smoothness. They replace a second broad sphere-control test with an axis players can identify and practise directly. Entry, Easy, Intermediate and standard v2 are curated into four Apogee bands; difficulty spacing remains a playtest judgement.",
       "evidence": [
         {
@@ -838,7 +833,7 @@
     {
       "family": "Controlsphere",
       "subCategory": "Precise Tracking",
-      "isolates": "Keep contact through changing directions.",
+      "isolates": "Tracking a target that changes direction often.",
       "why": "A small dot that jumps gently and flies around you at changing distance and speed. Viscose's entry cut, then rAim's Easy at 90%, rAim Easy and rAim. The sheets file the top rung under Control Tracking, which this season grades as Precise.",
       "evidence": [
         {
@@ -875,7 +870,7 @@
     {
       "family": "Ground Plaza",
       "subCategory": "Reactive Tracking",
-      "isolates": "Read each strafe. React after the turn.",
+      "isolates": "Tracking a ground target that strafes and turns, reacting to each turn.",
       "why": "Sparky's Ground Plaza v3: six bots strafing on the ground at mixed lengths and distances. Easy, the standard version, OW with instant ground acceleration, then Thin for Expert.",
       "evidence": [
         {
@@ -912,7 +907,7 @@
     {
       "family": "Air Reading",
       "subCategory": "Reactive Tracking",
-      "isolates": "Follow the aerial change without guessing.",
+      "isolates": "Tracking a target in the air that changes direction without warning.",
       "why": "Air Voltaic Invincible 4: one invincible bot changing direction in the air, nothing to kill. Viscose grades Entry, Easier and Medium; the full version is Expert.",
       "evidence": [
         {
@@ -949,7 +944,7 @@
     {
       "family": "Air Angelic",
       "subCategory": "Reactive Tracking",
-      "isolates": "Recover from the turn, then match speed.",
+      "isolates": "Tracking an air target through sharp turns and changes of speed.",
       "why": "Air Angelic from Astro's and Jade Palace's sheets. rAim's Biggest cut, Easier, rAim Easy, then the standard version, which both of them grade at their top tier.",
       "evidence": [
         {
@@ -986,7 +981,7 @@
     {
       "family": "Strafe Gallery",
       "subCategory": "Reactive Tracking",
-      "isolates": "Read the next strafe. Keep corrections clean.",
+      "isolates": "Tracking strafing targets while keeping corrections small.",
       "why": "Targets that only dodge horizontally. CB StrafeTrack Easy is the entry, then Aimerz+ VGS Easy, Med and Hard. Mixes two authors: the CB entry isn't part of the VGS set.",
       "evidence": [
         {
@@ -1023,7 +1018,7 @@
     {
       "family": "Leapstrafes",
       "subCategory": "Reactive Tracking",
-      "isolates": "Stay with the leap and read its direction.",
+      "isolates": "Tracking a target that jumps and strafes at the same time.",
       "why": "A target that leaps and strafes with mixed dodge profiles. wobin's Easier cut, then Aimerz+'s mid-range Leapstrafes Control Medium, then wobin's standard and Hard cuts. No sheet names a sub-skill for wobin's version, so putting it in Reactive is a judgement call.",
       "evidence": [
         {
@@ -1060,7 +1055,7 @@
     {
       "family": "Recovery",
       "subCategory": "Reactive Tracking",
-      "isolates": "Read the change. Reacquire, then settle.",
+      "isolates": "Tracking a target that stops, blinks or teleports, so you have to find it again.",
       "why": "Recovery replaces a third mixed-air test. Kindaclose introduces random acceleration, slowing and stops; the three Flicker Plaza cuts then challenge reacquisition after teleports. This is a deliberate change of mechanic between Novice and Intermediate, not a shared-bot speed ladder. Less Blinks provides the transition.",
       "evidence": [
         {
@@ -1097,7 +1092,7 @@
     {
       "family": "DotTS",
       "subCategory": "Speed Switching",
-      "isolates": "Land close. Confirm. Chain the next flick.",
+      "isolates": "Switching between small dots as fast as you can.",
       "why": "Static dot switching without Voltaic's cuts. wobin's Easy, which leans on horizontal spawns, for Novice, AimSpeed's Entry, the 30% larger cut, then plain DotTS, which Aimerz+ SpeedTS and AimSpeed both grade at Hard.",
       "evidence": [
         {
@@ -1134,7 +1129,7 @@
     {
       "family": "Vox Pace",
       "subCategory": "Speed Switching",
-      "isolates": "Land, finish, transfer. Hold your pace.",
+      "isolates": "Switching at a steady pace, killing each target before moving on.",
       "why": "Large and standard range targets establish routing and clean transfers. Viscose Varied introduces progressively shrinking targets; rAim finishes with a smaller fixed-target challenge. Only the Advanced rung is an evolving task. This adapts the source routine's speed-to-precision idea across related variants without changing their native scoring or duration.",
       "evidence": [
         {
@@ -1171,7 +1166,7 @@
     {
       "family": "EddieTS",
       "subCategory": "Speed Switching",
-      "isolates": "Keep transfers fast and finishes clean.",
+      "isolates": "Fast target switching where each kill still has to be clean.",
       "why": "Four flying targets, about a quarter second each. Here so the category isn't just size variants of one range. Elite S5 is the Expert rung.",
       "evidence": [
         {
@@ -1208,7 +1203,7 @@
     {
       "family": "PivoTS",
       "subCategory": "Speed Switching",
-      "isolates": "Find the next target before the pivot.",
+      "isolates": "Switching where spotting the next target early is most of the speed.",
       "why": "Aimerz+ pivoTS, a different switching pattern. The two Hard cuts are from different Aimerz+ releases (S0 and S1), and their order hasn't been playtested yet.",
       "evidence": [
         {
@@ -1245,7 +1240,7 @@
     {
       "family": "Pokeball",
       "subCategory": "Speed Switching",
-      "isolates": "Hold fire. Finish before transferring.",
+      "isolates": "Holding fire while switching, finishing each target before the next.",
       "why": "You hold fire on each target instead of tapping, and some cuts regen if you flick off early. The slow-kill option next to DotTS and EddieTS.",
       "evidence": [
         {
@@ -1282,7 +1277,7 @@
     {
       "family": "psalmTS",
       "subCategory": "Speed Switching",
-      "isolates": "Choose a route and finish each target.",
+      "isolates": "Switching across a spread of targets where you choose the order.",
       "why": "Spherical bots moving slowly side to side, tracked briefly to kill. psalmTS Voltaic is the Advanced rung and VT psalmTS Advanced is Expert.",
       "evidence": [
         {
@@ -1317,46 +1312,9 @@
       }
     },
     {
-      "family": "Pasu Switch",
-      "subCategory": "Evasive Switching",
-      "isolates": "Land on the moving target, then finish.",
-      "why": "Target switching on Pasu-style floating bots. PureG's flick-focused version, then PureG's higher time-to-kill version, then Aimerz+'s wide-wall Pasu Switch and its regen cut for Expert. Two authors, and the order between them hasn't been playtested.",
-      "evidence": [
-        {
-          "source": "rebuild-pureg-s1",
-          "scenario": "Pasu Switch Pure",
-          "says": "The cached KovaaK's definition linked through evxl lists this scenario by name. Where it sits in the circuit was picked by hand."
-        },
-        {
-          "source": "rebuild-pureg-s2",
-          "scenario": "PureG Pasu Switch",
-          "says": "The cached KovaaK's definition linked through evxl lists this scenario by name. Where it sits in the circuit was picked by hand."
-        },
-        {
-          "source": "rebuild-aimerz-evasive-switching",
-          "scenario": "Pasu Switch Wide",
-          "says": "The cached KovaaK's definition linked through evxl lists this scenario by name. Where it sits in the circuit was picked by hand."
-        },
-        {
-          "source": "rebuild-aimerz-evasive-switching",
-          "scenario": "Pasu Switch Wide Regen",
-          "says": "The cached KovaaK's definition linked through evxl lists this scenario by name. Where it sits in the circuit was picked by hand."
-        },
-        {
-          "source": "weakness-specific-theory",
-          "says": "The Evasive Switching routine informs the training role: Land on the moving target, then finish. KovaaK's selection and four-band placement are Apogee curation decisions, not recommendations by the document's authors."
-        }
-      ],
-      "audience": {
-        "scenario": "Pasu Switch Wide",
-        "plays": 88683,
-        "entries": 11356
-      }
-    },
-    {
       "family": "Regen Control",
       "subCategory": "Evasive Switching",
-      "isolates": "Finish the moving target before you leave.",
+      "isolates": "Stay on the target until it dies. Any gap in damage gives health back.",
       "why": "Regenerating targets reward committed tracking after the flick. Entry and Intermediate use shorter time to kill; Control asks for longer contact; Hard adds bouncing. These are different training demands, not just faster versions. Unlike the retained Smooth family, the Control bots wiggle rather than circle.",
       "evidence": [
         {
@@ -1391,46 +1349,9 @@
       }
     },
     {
-      "family": "Arc Transfer",
-      "subCategory": "Evasive Switching",
-      "isolates": "Track the whole arc. Confirm the finish.",
-      "why": "An accessible rAim entry leads to Aimerz+'s depth-changing mid-high arcs, then two regenerative bounce edits. The final two variants make incomplete contact costly instead of relying only on smaller Elite bots. They deliberately retain two useful Voltaic variants rather than an entire stock four-rung family. Cross-author handovers and regeneration difficulty need playtesting.",
-      "evidence": [
-        {
-          "source": "theory-kovaaks-catalogue",
-          "scenario": "B180T rAim Easy",
-          "says": "The catalogue identifies this exact scenario and leaderboard. Description: To help vertical tracking on bouncing balls."
-        },
-        {
-          "source": "theory-kovaaks-catalogue",
-          "scenario": "aimerz+ B180TC Normal",
-          "says": "The catalogue identifies this exact scenario and leaderboard. Description: Bots leap in mid-high arcs on top of a flat surface, changing depths as they traverse. Each bot needs to be tracked for a short period to be eliminated."
-        },
-        {
-          "source": "theory-kovaaks-catalogue",
-          "scenario": "B180T Voltaic Easy Regen",
-          "says": "The catalogue identifies this exact scenario and leaderboard. Description: Bounce 180 Tracking. Bots immediately regen on miss."
-        },
-        {
-          "source": "theory-kovaaks-catalogue",
-          "scenario": "B180T Voltaic Regen",
-          "says": "The catalogue identifies this exact scenario and leaderboard. Description: Bounce 180 Tracking, with smaller bots and a curved map."
-        },
-        {
-          "source": "weakness-specific-theory",
-          "says": "The Evasive Switching routine informs the training role: Track the whole arc. Confirm the finish. KovaaK's selection and four-band placement are Apogee curation decisions, not recommendations by the document's authors."
-        }
-      ],
-      "audience": {
-        "scenario": "B180T Voltaic Easy Regen",
-        "plays": 286740,
-        "entries": 17355
-      }
-    },
-    {
       "family": "Hop Transfer",
       "subCategory": "Evasive Switching",
-      "isolates": "Follow the jump through the final hit.",
+      "isolates": "Read the jump arc and keep firing through the landing. Do not switch early.",
       "why": "Jumping targets. CB JumpSwitch Easy (four jumping targets) first, then Aimerz+ hopTS Easy, Med and Hard. Mixes two authors.",
       "evidence": [
         {
@@ -1455,7 +1376,7 @@
         },
         {
           "source": "weakness-specific-theory",
-          "says": "The Evasive Switching routine informs the training role: Follow the jump through the final hit. KovaaK's selection and four-band placement are Apogee curation decisions, not recommendations by the document's authors."
+          "says": "The Evasive Switching routine informs the training role: Read the jump arc and keep firing through the landing. KovaaK's selection and four-band placement are Apogee curation decisions, not recommendations by the document's authors."
         }
       ],
       "audience": {
@@ -1465,83 +1386,9 @@
       }
     },
     {
-      "family": "tamTargetSwitch Smooth",
-      "subCategory": "Evasive Switching",
-      "isolates": "Stay on the circle until the target falls.",
-      "why": "Small dots circling you, 0.5s to kill, and they regen fast if you come off them. Starts on the 30% Larger cut of the Hard version.",
-      "evidence": [
-        {
-          "source": "rebuild-aimerz-evasive-switching",
-          "scenario": "tamTargetSwitch Smooth Hard 30% Larger",
-          "says": "The cached KovaaK's definition linked through evxl lists this scenario by name. Where it sits in the circuit was picked by hand."
-        },
-        {
-          "source": "rebuild-viscose-benchmarks",
-          "scenario": "tamTargetSwitch Smooth Easy",
-          "says": "The cached KovaaK's definition linked through evxl lists this scenario by name. Where it sits in the circuit was picked by hand."
-        },
-        {
-          "source": "rebuild-viscose-benchmarks",
-          "scenario": "tamTargetSwitch Smooth",
-          "says": "The cached KovaaK's definition linked through evxl lists this scenario by name. Where it sits in the circuit was picked by hand."
-        },
-        {
-          "source": "rebuild-aimerz-evasive-switching",
-          "scenario": "tamTargetSwitch Smooth Hard",
-          "says": "The cached KovaaK's definition linked through evxl lists this scenario by name. Where it sits in the circuit was picked by hand."
-        },
-        {
-          "source": "weakness-specific-theory",
-          "says": "The Evasive Switching routine informs the training role: Stay on the circle until the target falls. KovaaK's selection and four-band placement are Apogee curation decisions, not recommendations by the document's authors."
-        }
-      ],
-      "audience": {
-        "scenario": "tamTargetSwitch Smooth Hard",
-        "plays": 1372622,
-        "entries": 78907
-      }
-    },
-    {
-      "family": "FlyTS",
-      "subCategory": "Evasive Switching",
-      "isolates": "Read the flight. Finish, then transfer.",
-      "why": "Four flying targets, 50 hits each. The S5 FlyTS cuts, with Elite as the Expert rung.",
-      "evidence": [
-        {
-          "source": "rebuild-voltaic-s5-5",
-          "scenario": "VT FlyTS Novice S5",
-          "says": "The cached KovaaK's definition linked through evxl lists this scenario by name. Where it sits in the circuit was picked by hand."
-        },
-        {
-          "source": "rebuild-voltaic-s5-5",
-          "scenario": "VT FlyTS Intermediate S5",
-          "says": "The cached KovaaK's definition linked through evxl lists this scenario by name. Where it sits in the circuit was picked by hand."
-        },
-        {
-          "source": "rebuild-voltaic-s5-5",
-          "scenario": "VT FlyTS Advanced S5",
-          "says": "The cached KovaaK's definition linked through evxl lists this scenario by name. Where it sits in the circuit was picked by hand."
-        },
-        {
-          "source": "rebuild-voltaic-s5",
-          "scenario": "VT FlyTS Elite S5",
-          "says": "The cached KovaaK's definition linked through evxl lists this scenario by name. Where it sits in the circuit was picked by hand."
-        },
-        {
-          "source": "weakness-specific-theory",
-          "says": "The Evasive Switching routine informs the training role: Read the flight. Finish, then transfer. KovaaK's selection and four-band placement are Apogee curation decisions, not recommendations by the document's authors."
-        }
-      ],
-      "audience": {
-        "scenario": "VT FlyTS Intermediate S5",
-        "plays": 1301048,
-        "entries": 111165
-      }
-    },
-    {
       "family": "Evo Gallery",
       "subCategory": "Static Clicking",
-      "isolates": "Hold the pace as the targets multiply.",
+      "isolates": "Static clicking where more targets appear as you go.",
       "why": "EvoClick adds a target every twenty seconds, so a run opens as a calm static read and ends as a crowded wall: a pacing arc no other static circuit here has. Community Benchmarks' easy cut leads into Revosect's three EvoClick tiers. The first cross-author handover needs playtesting.",
       "evidence": [
         {
@@ -1575,7 +1422,7 @@
     {
       "family": "Vox Gallery",
       "subCategory": "Static Clicking",
-      "isolates": "Pick your route through the gallery.",
+      "isolates": "Static clicking on a spread of targets where you pick the route.",
       "why": "Vox's shooting-gallery layout offers route choice and quick successive kills. These Viscose click variants remove awkward spawns; Entry, Easier, Medium and Hard give the gallery a four-band progression.",
       "evidence": [
         {
@@ -1609,7 +1456,7 @@
     {
       "family": "Reload Rush",
       "subCategory": "Static Clicking",
-      "isolates": "Chain the clears. Keep the rhythm alive.",
+      "isolates": "Static clicking in quick clears, where the rhythm between them matters.",
       "why": "Six-target reload clicking emphasizes a continuous clear-and-respawn rhythm. The first three cuts reduce target size; the Expert trustechain edit adds a different routing challenge. That final handover is a design choice requiring playtesting.",
       "evidence": [
         {
@@ -1643,7 +1490,7 @@
     {
       "family": "Micro Chain",
       "subCategory": "Static Clicking",
-      "isolates": "Find a three-target beat and build speed.",
+      "isolates": "Small static targets in groups of three, played for speed.",
       "why": "Three close static targets create short, repeatable chains with little travel time. Larger 80%, Larger, standard and 10% small provide a size progression for a compact score-chasing circuit.",
       "evidence": [
         {
@@ -1677,7 +1524,7 @@
     {
       "family": "Floating Gallery",
       "subCategory": "Dynamic Clicking",
-      "isolates": "Catch the next head as it drifts into view.",
+      "isolates": "Clicking heads that drift slowly into view.",
       "why": "Floating heads in a layered arena offer a shooting-gallery rhythm with depth changes. Viscose's Entry through Hard edits supply a coherent four-band progression without replacing the core Pasu and Popcorn tests.",
       "evidence": [
         {
@@ -1711,7 +1558,7 @@
     {
       "family": "Sky Gallery",
       "subCategory": "Dynamic Clicking",
-      "isolates": "Hop between layers. Catch each passing dot.",
+      "isolates": "Clicking dots that pass through the sky at different heights.",
       "why": "Far moving dots at several vertical layers turn the run into a layered gallery. The Goated Easier, Medium, Hard and Expert edits retain the same scene while changing the challenge.",
       "evidence": [
         {
@@ -1745,7 +1592,7 @@
     {
       "family": "Wave Click",
       "subCategory": "Dynamic Clicking",
-      "isolates": "Ride the wave from shot to shot.",
+      "isolates": "Clicking targets that move in waves.",
       "why": "SunClick and WaveClick add a timing-focused wave circuit with a repeatable rhythm. This is a mixed-release progression using Aimerz's Easy S1, Normal, Hard and Hard S1 cuts; its handovers need playtesting.",
       "evidence": [
         {
@@ -1779,7 +1626,7 @@
     {
       "family": "Cat Click",
       "subCategory": "Dynamic Clicking",
-      "isolates": "One clean click per mover.",
+      "isolates": "Clicking single moving targets, one shot each.",
       "why": "CatClick is graded by Viscose in all four of its tiers, Easier, Medium, Hard and Expert, so the family is one scenario's own four cuts with no handover between authors, and its two easier cuts carry some of the busiest boards in the pool. Its author description says nothing about the mechanic; the season files it where Viscose does, under dynamic clicking.",
       "evidence": [
         {
@@ -1813,7 +1660,7 @@
     {
       "family": "DVD Chase",
       "subCategory": "Precise Tracking",
-      "isolates": "Follow the bounce all the way to the corner.",
+      "isolates": "Tracking a target that bounces off the walls.",
       "why": "The DVD-inspired moving target gives continuous tracking a recognizable screen-bounce motif. MASSIVE, Big, standard and Small keep the motion theme while reducing the target size.",
       "evidence": [
         {
@@ -1847,7 +1694,7 @@
     {
       "family": "Flower Chase",
       "subCategory": "Precise Tracking",
-      "isolates": "Trace the flower. Stay with each little turn.",
+      "isolates": "Tracking a target along a looping, flower-shaped path.",
       "why": "The author's bee-collecting-pollen theme gives compact tracking a playful identity. Entry, Easier, standard and Hard keep the Flower motion across the four bands. The scenario name is not a requirement to change sensitivity.",
       "evidence": [
         {
@@ -1881,7 +1728,7 @@
     {
       "family": "Sphere Cruise",
       "subCategory": "Precise Tracking",
-      "isolates": "Cruise with the dot as it circles you.",
+      "isolates": "Tracking a dot that circles around you.",
       "why": "A gently jumping dot flying around the player adds a flowing orbital chase. Viscose's Horizontal Entry, Easier, standard and Hard cuts expand the motion challenge while keeping the same visual theme.",
       "evidence": [
         {
@@ -1915,7 +1762,7 @@
     {
       "family": "Waldo Track",
       "subCategory": "Precise Tracking",
-      "isolates": "Stay on it, not near it.",
+      "isolates": "Tracking a small target where only exact contact scores.",
       "why": "waldoTS is one of the most-played tracking scenarios in the catalogue, with 3.7 million plays on its standard cut. Viscose grades its Novice, Intermediate, standard and Elite cuts as Easier, Medium, Hard and Expert, and AimSpeed grades the standard and Elite cuts too, so the progression is one scenario's own cuts.",
       "evidence": [
         {
@@ -1949,7 +1796,7 @@
     {
       "family": "Spectral Chase",
       "subCategory": "Reactive Tracking",
-      "isolates": "Stay ready for the next strange turn.",
+      "isolates": "Tracking a target with odd, unpredictable turns.",
       "why": "Air Spectral's deliberately unusual Air movement adds a surprise-driven chase. Easy 85%, Easy, standard and Harder retain that theme. Its terse author description supports the unusual-motion intent, not a claim of measured enjoyment.",
       "evidence": [
         {
@@ -1983,7 +1830,7 @@
     {
       "family": "Celestial Chase",
       "subCategory": "Reactive Tracking",
-      "isolates": "Follow the aerial course through every phase.",
+      "isolates": "Tracking an air target through a course with several phases.",
       "why": "Air Divine-style movement brings a longer aerial course into the season. Easy Slowed, Easy, No UFO and Harder progress from a slowed course to the full challenge; the final UFO handover needs playtesting.",
       "evidence": [
         {
@@ -2017,7 +1864,7 @@
     {
       "family": "Pure Chase",
       "subCategory": "Reactive Tracking",
-      "isolates": "Read each dodge before it happens.",
+      "isolates": "Tracking a target that dodges often.",
       "why": "Air Pure mixes bots with different dodge profiles in one air arena, so every target asks for a different read. Revosect's time-scored entry cut, six bots circling the player, leads into the Intermediate, standard and Hard cuts that Viscose and snakbox grade. The handover between the two editions needs playtesting.",
       "evidence": [
         {
@@ -2051,7 +1898,7 @@
     {
       "family": "Close Strafe Chase",
       "subCategory": "Reactive Tracking",
-      "isolates": "Stay close. Catch the reversal.",
+      "isolates": "Tracking a close target that reverses direction quickly.",
       "why": "A close strafing opponent adds a grounded duel-like chase beside the aerial courses. Easy Thin, standard, Thin and Precise+ are a proposed progression; speed and size both change, so the first handover needs playtesting.",
       "evidence": [
         {
@@ -2085,7 +1932,7 @@
     {
       "family": "Vox Blitz",
       "subCategory": "Speed Switching",
-      "isolates": "Clear the room in fast bursts.",
+      "isolates": "Clearing a room of targets in quick bursts.",
       "why": "Stationary Vox targets reward route choice and rapid full-auto clears without movement reading. Jumbo, standard, Small and xxSmall turn the room into a four-band switching sprint.",
       "evidence": [
         {
@@ -2119,7 +1966,7 @@
     {
       "family": "Wave Relay",
       "subCategory": "Speed Switching",
-      "isolates": "Pass from wave to wave without losing pace.",
+      "isolates": "Switching between targets that come in waves.",
       "why": "Smoothly drifting targets give switching a visible wave rhythm. Community Benchmarks' easy cut leads into Revosect Entry, Intermediate and standard. The cross-author first handover is provisional.",
       "evidence": [
         {
@@ -2153,7 +2000,7 @@
     {
       "family": "Sky Relay",
       "subCategory": "Speed Switching",
-      "isolates": "Sweep the sky one target at a time.",
+      "isolates": "Switching between targets spread across the sky.",
       "why": "Slow horizontal targets at several depths make a readable aerial switching gallery. Four published skyTS bands keep the movement predictable while increasing the target challenge.",
       "evidence": [
         {
@@ -2187,7 +2034,7 @@
     {
       "family": "Dev Blitz",
       "subCategory": "Speed Switching",
-      "isolates": "Burst through the pack. Find the next clear.",
+      "isolates": "Switching through a tight group of targets as fast as you can.",
       "why": "Low-FOV target switching concentrates the action into short, fast clears. Easy, NR, rAim and NR Small are a proposed cross-edit progression; the two middle releases need an in-game difficulty comparison.",
       "evidence": [
         {
@@ -2219,30 +2066,268 @@
       "thin": "Selection is based on catalogue mechanics and published variants. No measured enjoyment or cross-band difficulty equivalence is claimed."
     },
     {
-      "family": "Domi Relay",
+      "family": "Pasu Switch",
       "subCategory": "Evasive Switching",
-      "isolates": "Stay on target until it drops.",
-      "why": "domiSwitch targets carry 55 health and regenerate 0.3 seconds after damage stops, so leaving early costs the whole kill; Aimerz+, snakbox and Viscose file it under evasive switching. Viscose's Easier cut and the Easy and standard cuts lead into Avasive's edit for the top band, whose top score is the lowest of the four. That edition handover needs playtesting.",
+      "isolates": "Keep the crosshair on the bot through its direction changes. Switch after the kill.",
+      "why": "Replace the mixed PureG/Aimerz progression with one published PasuTS lineage. Entry is explicitly 15% larger and 15% slower, with a short 20-hit clear; Intermediate, Advanced and Elite retain the task.",
       "evidence": [
         {
-          "source": "expansion-catalogue",
+          "source": "evasive-rework-catalogue",
+          "scenario": "VT PasuTS Entry S5",
+          "says": "Exact identity checked 2026-09-14T19:14:16.342Z. Full auto switching variant with four targets jumping and floating around on a wall infront of the player, while being repelled away from the edges. Each target takes 20 hits to eliminate with a TTK of ~0.26 seconds, and is worth a total of 10 points.\r\n\r\nEntry: 15% larger, 15% slower "
+        },
+        {
+          "source": "evasive-rework-catalogue",
+          "scenario": "VT PasuTS Intermediate S5",
+          "says": "Exact identity checked 2026-09-14T19:14:26.468Z. To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto switching variant with four targets jumping and floating around on a wall infront of the player, while being repelled away from the edges. Each target takes 20 hits to eliminate with a TTK of ~0.26 seconds, and is worth a total of 10 points. "
+        },
+        {
+          "source": "evasive-rework-catalogue",
+          "scenario": "VT PasuTS Advanced S5",
+          "says": "Exact identity checked 2026-09-14T19:14:36.402Z. To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto switching variant with four targets jumping and floating around on a wall infront of the player, while being repelled away from the edges. Each target takes 20 hits to eliminate with a TTK of ~0.26 seconds, and is worth a total of 10 points. "
+        },
+        {
+          "source": "evasive-rework-catalogue",
+          "scenario": "VT PasuTS Elite S5",
+          "says": "Exact identity checked 2026-09-14T19:14:46.306Z. Full auto switching variant with four targets jumping and floating around on a wall infront of the player, while being repelled away from the edges. Each target takes 20 hits to eliminate with a TTK of ~0.26 seconds, and is worth a total of 10 points."
+        }
+      ],
+      "audience": {
+        "scenario": "VT PasuTS Intermediate S5",
+        "plays": 246487,
+        "entries": 25202
+      },
+      "thin": "Draft: catalogue-verified selections and frozen score targets; human difficulty and enjoyment playtesting pending."
+    },
+    {
+      "family": "Floating Heads",
+      "subCategory": "Evasive Switching",
+      "isolates": "Build a target order and keep each burst on the head until it drops.",
+      "why": "A new floating-head gallery adds short 0.2-second, 20-hit clears and fast target choice. Use the same authored Entry, Intermediate, Advanced and Elite editions; these are sustained full-auto clears despite the broad catalogue Clicking tag.",
+      "evidence": [
+        {
+          "source": "evasive-rework-catalogue",
+          "scenario": "Floatswitch Entry",
+          "says": "Exact identity checked 2026-09-14T19:14:55.267Z. Switch between the floating heads! \r\n\r\nEach bot is worth 10 points and requires 20 hits to kill with a TTK of 0.2s "
+        },
+        {
+          "source": "evasive-rework-catalogue",
+          "scenario": "Floatswitch Intermediate",
+          "says": "Exact identity checked 2026-09-14T19:15:05.042Z. Switch between the floating heads! \r\n\r\nEach bot is worth 10 points and requires 20 hits to kill with a TTK of 0.2s "
+        },
+        {
+          "source": "evasive-rework-catalogue",
+          "scenario": "Floatswitch Advanced",
+          "says": "Exact identity checked 2026-09-14T19:15:14.987Z. Switch between the floating heads! \r\n\r\nEach bot is worth 10 points and requires 20 hits to kill with a TTK of 0.2s "
+        },
+        {
+          "source": "evasive-rework-catalogue",
+          "scenario": "Floatswitch Elite",
+          "says": "Exact identity checked 2026-09-14T19:15:24.870Z. Switch between the floating heads! \r\n\r\nEach bot is worth 10 points and requires 20 hits to kill with a TTK of 0.2s "
+        }
+      ],
+      "audience": {
+        "scenario": "Floatswitch Intermediate",
+        "plays": 106336,
+        "entries": 19308
+      },
+      "thin": "Draft: catalogue-verified selections and frozen score targets; human difficulty and enjoyment playtesting pending."
+    },
+    {
+      "family": "Chamber Relay",
+      "subCategory": "Evasive Switching",
+      "isolates": "Track the jump through the narrow space. Recenter before moving on.",
+      "why": "Keep the narrow room and floating, gently jumping targets. Entry Speed combines larger, slower entry bots with a 25% shorter clear. Intermediate, Advanced and Elite keep their existing bands, so the easier start does not lower the upper-band challenge.",
+      "evidence": [
+        {
+          "source": "evasive-rework-catalogue",
+          "scenario": "VT ControlTS Entry S5 Speed",
+          "says": "Exact identity checked 2026-09-14T19:15:34.211Z. This variant is intended to challenge the players ability to move at a faster pace and seamlessly transitioning between each target\r\n\r\nSpeed: 25% larger, -25% TTK\r\nEntry: 15% larger, 15% slower "
+        },
+        {
+          "source": "evasive-rework-catalogue",
+          "scenario": "VT ControlTS Intermediate S5",
+          "says": "Exact identity checked 2026-09-14T19:15:44.683Z. To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto target switching with four targets gently jumping and floating inside a narrow chamber. Each target takes 50 hits to eliminate with a TTK of ~0.6 seconds, and is worth a total of 10 points."
+        },
+        {
+          "source": "evasive-rework-catalogue",
+          "scenario": "VT ControlTS Advanced S5",
+          "says": "Exact identity checked 2026-09-14T19:17:16.601Z. To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto target switching with four targets gently jumping and floating inside a narrow chamber. Each target takes 50 hits to eliminate with a TTK of ~0.6 seconds, and is worth a total of 10 points."
+        },
+        {
+          "source": "evasive-rework-catalogue",
+          "scenario": "VT ControlTS Elite S5",
+          "says": "Exact identity checked 2026-09-14T19:15:45.262Z. For those looking for a real challenge, intended for those who are Astra and above"
+        }
+      ],
+      "audience": {
+        "scenario": "VT ControlTS Intermediate S5",
+        "plays": 1453010,
+        "entries": 97776
+      },
+      "thin": "Draft: catalogue-verified selections and frozen score targets; human difficulty and enjoyment playtesting pending."
+    },
+    {
+      "family": "Penta Bounce",
+      "subCategory": "Evasive Switching",
+      "isolates": "Track the bounce across the pentagon and choose the next target before the current one dies.",
+      "why": "Keep five bouncing targets and the pentagonal arena. Entry Speed adds bigger targets and 25% shorter time to kill to the slower Entry movement. Intermediate, Advanced and Elite keep their existing bands, so the easier start does not lower the upper-band challenge.",
+      "evidence": [
+        {
+          "source": "evasive-rework-catalogue",
+          "scenario": "VT Penta Bounce Entry S5 Speed",
+          "says": "Exact identity checked 2026-09-14T19:15:45.859Z. This variant is intended to challenge the players ability to move at a faster pace and seamlessly transitioning between each target\r\n\r\nSpeed: 25% larger, -25% TTK\r\nEntry: 15% larger, 15% slower "
+        },
+        {
+          "source": "evasive-rework-catalogue",
+          "scenario": "VT Penta Bounce Intermediate S5",
+          "says": "Exact identity checked 2026-09-14T19:15:56.337Z. To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto target switching with five targets bouncing around on a pentagonal wall at varying distances. Each target takes 50 hits to eliminate with a TTK of ~0.5 seconds, and is worth a total of 10 points."
+        },
+        {
+          "source": "evasive-rework-catalogue",
+          "scenario": "VT Penta Bounce Advanced S5",
+          "says": "Exact identity checked 2026-09-14T19:17:17.183Z. To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto target switching with five targets bouncing around on a pentagonal wall at varying distances. Each target takes 50 hits to eliminate with a TTK of ~0.5 seconds, and is worth a total of 10 points."
+        },
+        {
+          "source": "evasive-rework-catalogue",
+          "scenario": "VT Penta Bounce Elite S5",
+          "says": "Exact identity checked 2026-09-14T19:15:56.906Z. For those looking for a real challenge, intended for those who are Astra and above"
+        }
+      ],
+      "audience": {
+        "scenario": "VT Penta Bounce Intermediate S5",
+        "plays": 1212977,
+        "entries": 94991
+      },
+      "thin": "Draft: catalogue-verified selections and frozen score targets; human difficulty and enjoyment playtesting pending."
+    },
+    {
+      "family": "Arc Transfer",
+      "subCategory": "Evasive Switching",
+      "isolates": "Follow the full arc and hold the target through the finish as its depth changes.",
+      "why": "Keep the curved B180T arena throughout. Begin with Easy Slower, then Easy, standard and finally Regen. Remove the Aimerz depth-pattern detour and postpone the regeneration penalty until Expert.",
+      "evidence": [
+        {
+          "source": "evasive-rework-catalogue",
+          "scenario": "B180T Voltaic Easy Slower",
+          "says": "Exact identity checked 2026-09-14T19:15:57.487Z. Bounce 180 Tracking, with smaller bots and a curved map"
+        },
+        {
+          "source": "evasive-rework-catalogue",
+          "scenario": "B180T Voltaic Easy",
+          "says": "Exact identity checked 2026-09-14T19:16:07.527Z. Bounce 180 Tracking, with smaller bots and a curved map"
+        },
+        {
+          "source": "evasive-rework-catalogue",
+          "scenario": "B180T Voltaic",
+          "says": "Exact identity checked 2026-09-14T19:16:09.681Z. Bounce 180 Tracking, with smaller bots and a curved map"
+        },
+        {
+          "source": "evasive-rework-catalogue",
+          "scenario": "B180T Voltaic Regen",
+          "says": "Exact identity checked 2026-09-14T19:16:10.243Z. Bounce 180 Tracking, with smaller bots and a curved map."
+        }
+      ],
+      "audience": {
+        "scenario": "B180T Voltaic Easy",
+        "plays": 1518188,
+        "entries": 97334
+      },
+      "thin": "Draft: catalogue-verified selections and frozen score targets; human difficulty and enjoyment playtesting pending."
+    },
+    {
+      "family": "FlyTS",
+      "subCategory": "Evasive Switching",
+      "isolates": "Read the flight direction and make smooth transfers after each kill.",
+      "why": "Entry Speed combines the published larger/slower Entry edit with larger targets and 25% shorter time to kill. Intermediate, Advanced and Elite keep their existing bands, so the easier start does not lower the upper-band challenge.",
+      "evidence": [
+        {
+          "source": "evasive-rework-catalogue",
+          "scenario": "VT FlyTS Entry S5 Speed",
+          "says": "Exact identity checked 2026-09-14T19:16:10.812Z. This variant is intended to challenge the players ability to move at a faster pace and seamlessly transitioning between each target\r\n\r\nSpeed: 20% larger, -25% TTK\r\nEntry: 15% larger, 15% slower"
+        },
+        {
+          "source": "evasive-rework-catalogue",
+          "scenario": "VT FlyTS Intermediate S5",
+          "says": "Exact identity checked 2026-09-14T19:16:21.683Z. To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto target switching with four targets flying around infront of the player. Each target takes 50 hits to eliminate with a TTK of ~0.5 seconds, and is worth a total of 10 points."
+        },
+        {
+          "source": "evasive-rework-catalogue",
+          "scenario": "VT FlyTS Advanced S5",
+          "says": "Exact identity checked 2026-09-14T19:17:17.801Z. To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto target switching with four targets flying around infront of the player. Each target takes 50 hits to eliminate with a TTK of ~0.5 seconds, and is worth a total of 10 points."
+        },
+        {
+          "source": "evasive-rework-catalogue",
+          "scenario": "VT FlyTS Elite S5",
+          "says": "Exact identity checked 2026-09-14T19:16:22.601Z. For those looking for a real challenge, intended for those who are Astra and above"
+        }
+      ],
+      "audience": {
+        "scenario": "VT FlyTS Intermediate S5",
+        "plays": 1301048,
+        "entries": 111165
+      },
+      "thin": "Draft: catalogue-verified selections and frozen score targets; human difficulty and enjoyment playtesting pending."
+    },
+    {
+      "family": "Layered Chase",
+      "subCategory": "Evasive Switching",
+      "isolates": "Keep track of both chambers and move to the next target without dropping contact early.",
+      "why": "Two stacked chambers add vertical route choices among four floating and jumping targets. The larger, slower Entry Speed variant shortens clears by 25%; Intermediate, Advanced and Elite retain one authored lineage. This replaces the mixed CB/Revosect Smooth Relay whose Expert board had only 145 sampled players and nearly tied top targets.",
+      "evidence": [
+        {
+          "source": "evasive-rework-catalogue",
+          "scenario": "VT DriftTS Entry S5 Speed",
+          "says": "Exact identity checked 2026-09-14T19:17:18.421Z. This variant is intended to challenge the players ability to move at a faster pace and seamlessly transitioning between each target\r\n\r\nSpeed: 25% larger, -25% TTK\r\nEntry: 15% larger, 15% slower "
+        },
+        {
+          "source": "evasive-rework-catalogue",
+          "scenario": "VT DriftTS Intermediate S5",
+          "says": "Exact identity checked 2026-09-14T19:17:28.262Z. To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto target switching with four targets jumping and floating around in two layered chambers infront of the player. Each target takes 50 hits to eliminate with a TTK of ~0.5 seconds, and is worth a total of 10 points."
+        },
+        {
+          "source": "evasive-rework-catalogue",
+          "scenario": "VT DriftTS Advanced S5",
+          "says": "Exact identity checked 2026-09-14T19:17:29.007Z. To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto target switching with four targets jumping and floating around in two layered chambers infront of the player. Each target takes 50 hits to eliminate with a TTK of ~0.5 seconds, and is worth a total of 10 points."
+        },
+        {
+          "source": "evasive-rework-catalogue",
+          "scenario": "VT DriftTS Elite S5",
+          "says": "Exact identity checked 2026-09-14T19:17:29.678Z. For those looking for a real challenge, intended for those who are Astra and above"
+        }
+      ],
+      "audience": {
+        "scenario": "VT DriftTS Intermediate S5",
+        "plays": 1145463,
+        "entries": 95674
+      },
+      "thin": "Draft: catalogue-verified selections and frozen score targets; human difficulty and enjoyment playtesting pending."
+    },
+    {
+      "family": "Domi Relay",
+      "subCategory": "Evasive Switching",
+      "isolates": "Control the strafe and keep contact through the kill. Switch after the target drops.",
+      "why": "Easier explicitly makes bots bigger and slower with less punishing regeneration; Easy, standard and Hard continue the same named lineage. Replace the Avasive Expert edit: a lower record across different edits was not evidence of greater physical difficulty.",
+      "evidence": [
+        {
+          "source": "evasive-rework-catalogue",
           "scenario": "domiSwitch Easier",
-          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T02:35:35.307Z. Author description: domiswitch easy, bigger + slower with less punishing regeneration "
+          "says": "Exact identity checked 2026-09-14T19:16:23.476Z. domiswitch easy, bigger + slower with less punishing regeneration "
         },
         {
-          "source": "expansion-catalogue",
+          "source": "evasive-rework-catalogue",
           "scenario": "domiSwitch Easy",
-          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T02:35:35.901Z. Author description: 55 hp, regen after 0.3 seconds without damage. "
+          "says": "Exact identity checked 2026-09-14T19:16:24.290Z. 55 hp, regen after 0.3 seconds without damage. "
         },
         {
-          "source": "expansion-catalogue",
+          "source": "evasive-rework-catalogue",
           "scenario": "domiSwitch",
-          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T02:35:36.473Z. Author description: 55 hp, regen after 0.3 seconds without damage. "
+          "says": "Exact identity checked 2026-09-14T19:16:25.274Z. 55 hp, regen after 0.3 seconds without damage. "
         },
         {
-          "source": "expansion-catalogue",
-          "scenario": "domiSwitch Avasive",
-          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T02:35:37.264Z. Author description: 55 hp, regen after 0.3 seconds without damage. "
+          "source": "evasive-rework-catalogue",
+          "scenario": "domiSwitch Hard",
+          "says": "Exact identity checked 2026-09-14T19:16:26.159Z. 55 hp, regen after 0.3 seconds without damage. "
         }
       ],
       "audience": {
@@ -2250,109 +2335,41 @@
         "plays": 713438,
         "entries": 77522
       },
-      "thin": "Selection is based on catalogue mechanics and published variants. No measured enjoyment or cross-band difficulty equivalence is claimed."
+      "thin": "Draft: catalogue-verified selections and frozen score targets; human difficulty and enjoyment playtesting pending."
     },
     {
-      "family": "Penta Bounce",
+      "family": "tamTargetSwitch Smooth",
       "subCategory": "Evasive Switching",
-      "isolates": "Chase the bouncing crowd around the pentagon.",
-      "why": "Five targets bounce across a pentagonal wall and each needs a short sustained burst to clear. This adds an arena-like switching loop with plenty of target choice. The four published Season 5 cuts provide exact variants for every band.",
+      "isolates": "Match the target's movement and keep contact through the regeneration window.",
+      "why": "Use the authored Entry, Novice, Intermediate and Elite editions in ascending order. Remove Hard 30% Larger from Novice and the subsequent switch to non-bouncing Easy. Instant regeneration remains a commitment drill, so it comes late in the circuit; named editions are not measured difficulty equivalence.",
       "evidence": [
         {
-          "source": "expansion-catalogue",
-          "scenario": "VT Penta Bounce Novice S5",
-          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:58:49.752Z. Author description: To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto target switching with five targets bouncing around on a pentagonal wall at varying distances. Each target takes 50 hits to eliminate with a TTK of ~0.5 seconds, and is worth a total of 10 points."
+          "source": "evasive-rework-catalogue",
+          "scenario": "tamTargetSwitch Smooth Entry",
+          "says": "Exact identity checked 2026-09-14T19:16:27.142Z. Small regenerating dots circle around you while bouncing slowly, 0.5s ttk, 0.5s max to regen to full, starts regening Immediatey if you go off target "
         },
         {
-          "source": "expansion-catalogue",
-          "scenario": "VT Penta Bounce Intermediate S5",
-          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:58:50.338Z. Author description: To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto target switching with five targets bouncing around on a pentagonal wall at varying distances. Each target takes 50 hits to eliminate with a TTK of ~0.5 seconds, and is worth a total of 10 points."
+          "source": "evasive-rework-catalogue",
+          "scenario": "tamTargetSwitch Smooth Novice",
+          "says": "Exact identity checked 2026-09-14T19:16:41.068Z. Small regenerating dots circle around you while bouncing slowly, 0.5s ttk, 0.5s max to regen to full, starts regening Immediatey if you go off target "
         },
         {
-          "source": "expansion-catalogue",
-          "scenario": "VT Penta Bounce Advanced S5",
-          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:58:50.907Z. Author description: To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto target switching with five targets bouncing around on a pentagonal wall at varying distances. Each target takes 50 hits to eliminate with a TTK of ~0.5 seconds, and is worth a total of 10 points."
+          "source": "evasive-rework-catalogue",
+          "scenario": "tamTargetSwitch Smooth Intermediate",
+          "says": "Exact identity checked 2026-09-14T19:16:51.131Z. Small regenerating dots circle around you while bouncing slowly, 0.5s ttk, 0.5s max to regen to full, starts regening Immediatey if you go off target"
         },
         {
-          "source": "expansion-catalogue",
-          "scenario": "VT Penta Bounce Elite S5",
-          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:58:51.486Z. Author description: For those looking for a real challenge, intended for those who are Astra and above"
+          "source": "evasive-rework-catalogue",
+          "scenario": "tamTargetSwitch Smooth Elite",
+          "says": "Exact identity checked 2026-09-14T19:17:00.909Z. Small regenerating dots circle around you while bouncing slowly, 0.5s ttk, 0.5s max to regen to full, starts regening Immediatey if you go off target"
         }
       ],
       "audience": {
-        "scenario": "VT Penta Bounce Novice S5",
-        "plays": 839609,
-        "entries": 166189
+        "scenario": "tamTargetSwitch Smooth Intermediate",
+        "plays": 374183,
+        "entries": 32000
       },
-      "thin": "Selection is based on catalogue mechanics and published variants. No measured enjoyment or cross-band difficulty equivalence is claimed."
-    },
-    {
-      "family": "Chamber Relay",
-      "subCategory": "Evasive Switching",
-      "isolates": "Clear the floating pack, one target at a time.",
-      "why": "Four gently jumping and floating targets share a narrow chamber, producing a compact clear-the-room loop. The four published ControlTS bands keep the same arena and short sustained bursts throughout the progression.",
-      "evidence": [
-        {
-          "source": "expansion-catalogue",
-          "scenario": "VT ControlTS Novice S5",
-          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:58:53.642Z. Author description: To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto target switching with four targets gently jumping and floating inside a narrow chamber. Each target takes 50 hits to eliminate with a TTK of ~0.6 seconds, and is worth a total of 10 points."
-        },
-        {
-          "source": "expansion-catalogue",
-          "scenario": "VT ControlTS Intermediate S5",
-          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:58:54.256Z. Author description: To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto target switching with four targets gently jumping and floating inside a narrow chamber. Each target takes 50 hits to eliminate with a TTK of ~0.6 seconds, and is worth a total of 10 points."
-        },
-        {
-          "source": "expansion-catalogue",
-          "scenario": "VT ControlTS Advanced S5",
-          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:58:54.969Z. Author description: To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto target switching with four targets gently jumping and floating inside a narrow chamber. Each target takes 50 hits to eliminate with a TTK of ~0.6 seconds, and is worth a total of 10 points."
-        },
-        {
-          "source": "expansion-catalogue",
-          "scenario": "VT ControlTS Elite S5",
-          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:58:56.076Z. Author description: For those looking for a real challenge, intended for those who are Astra and above"
-        }
-      ],
-      "audience": {
-        "scenario": "VT ControlTS Novice S5",
-        "plays": 817039,
-        "entries": 168062
-      },
-      "thin": "Selection is based on catalogue mechanics and published variants. No measured enjoyment or cross-band difficulty equivalence is claimed."
-    },
-    {
-      "family": "Smooth Relay",
-      "subCategory": "Evasive Switching",
-      "isolates": "Flow into the next moving target.",
-      "why": "Smooth transfer adds longer flowing target-to-target routes beside the sharper evasive circuits. Community Benchmarks' easy cut leads into Revosect's three SmoothTS tiers. The first cross-author handover needs playtesting.",
-      "evidence": [
-        {
-          "source": "expansion-catalogue",
-          "scenario": "CB SmoothSwitch Easy",
-          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:58:58.137Z. Author description: 5 targets that move smoothly in all directions, but mostly horizontally.\r\n(EVASIVE SWITCHING)"
-        },
-        {
-          "source": "expansion-catalogue",
-          "scenario": "SmoothTS Revosect Entry",
-          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:58:58.768Z. Author description: Stability/Smooth evasive switching scenario where needle bots long strafes across the map, playing with faster cm is reccomended.\r\n\r\nThis scenario uses hit based scoring, where each bot takes 45 hits to kill and grants 10 points total for a full kill. \r\n\r\nTo change the walls, enable \"Override Scenario Visuals\" in the main settings tab."
-        },
-        {
-          "source": "expansion-catalogue",
-          "scenario": "SmoothTS Revosect Int",
-          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:59:00.857Z. Author description: Stability/Smooth evasive switching scenario where needle bots long strafes across the map, playing with faster cm is reccomended.\r\n\r\nThis scenario uses hit based scoring, where each bot takes 45 hits to kill and grants 10 points total for a full kill. \r\n\r\nTo change the walls, enable \"Override Scenario Visuals\" in the main settings tab."
-        },
-        {
-          "source": "expansion-catalogue",
-          "scenario": "SmoothTS Revosect",
-          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:59:02.912Z. Author description: Stability/Smooth evasive switching scenario where needle bots long strafes across the map, playing with faster cm is reccomended.\r\n\r\nThis scenario uses hit based scoring, where each bot takes 45 hits to kill and grants 10 points total for a full kill. \r\n\r\nTo change the walls, enable \"Override Scenario Visuals\" in the main settings tab."
-        }
-      ],
-      "audience": {
-        "scenario": "CB SmoothSwitch Easy",
-        "plays": 34700,
-        "entries": 11319
-      },
-      "thin": "Selection is based on catalogue mechanics and published variants. No measured enjoyment or cross-band difficulty equivalence is claimed."
+      "thin": "Draft: catalogue-verified selections and frozen score targets; human difficulty and enjoyment playtesting pending."
     }
   ]
 }

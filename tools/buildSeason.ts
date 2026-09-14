@@ -89,7 +89,7 @@ interface Pool {
   overrides?: Record<string, number[]>;
   matchWindow: number;
   categories: string[];
-  categoryGuides?: Record<string, { headline: string; description: string }>;
+  categoryGuides?: Record<string, { headline?: string; description: string }>;
   families: {
     family: string;
     category: string;

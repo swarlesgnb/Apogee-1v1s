@@ -35,8 +35,7 @@
   "categories": [
     {
       "name": "Static Clicking",
-      "headline": "Still targets. Time between kills.",
-      "description": "Targets stationary. Score = gap between kills. One large initial flick → one small micro-correction → click. Straight line target to target, no overflick. During micro, next target already located in peripheral.",
+      "description": "Your score is how little time passes between kills, so flick straight at each target, fix it with one small correction if you need to, and be looking at the next target before you click.",
       "bands": [
         {
           "window": 0,
@@ -204,8 +203,7 @@
     },
     {
       "name": "Dynamic Clicking",
-      "headline": "Read. Confirm. Commit.",
-      "description": "Follow the movement into each shot. Read arcs beyond the apex and stay with multi-hit targets until the final click. Smooth transitions make the next target easier to read.",
+      "description": "The targets are moving, so stay on each one for a split second until you're sure you're on it before you click, and don't let a sudden change of direction drag your crosshair with it. On targets that take several hits, move with them until the last click.",
       "bands": [
         {
           "window": 0,
@@ -373,8 +371,7 @@
     },
     {
       "name": "Precise Tracking",
-      "headline": "Stay connected.",
-      "description": "Match the target through horizontal strafes, vertical travel and changing paths. Make clean corrections when contact breaks. Use an easier cut when you lose the movement; difficulty should leave room to learn.",
+      "description": "Stay smooth and keep your crosshair in the middle of the target the whole time, moving with it in one steady motion and using your arm on long strafes. If your aim gets shaky or you keep losing the target, drop to an easier version.",
       "bands": [
         {
           "window": 0,
@@ -542,8 +539,7 @@
     },
     {
       "name": "Reactive Tracking",
-      "headline": "React, recover, settle.",
-      "description": "Watch the target, react to the change, then match its new movement. Stops and teleports join ground and air reads. If you start guessing turns or forcing the mouse, step down and rebuild clean contact.",
+      "description": "React to where the target goes instead of guessing, and sit slightly on the side it's moving away from so you have room when it turns. Stay relaxed, because jittery aim usually means you're tensing up, and if you catch yourself predicting, play an easier version for a while.",
       "bands": [
         {
           "window": 0,
@@ -711,8 +707,7 @@
     },
     {
       "name": "Speed Switching",
-      "headline": "Find pace. Keep precision.",
-      "description": "Hold fire, land close and finish each target before transferring. Mix compact flicks, wide routes and shrinking targets. In practice, try a short speed burst on an easier cut; use complete runs for benchmark scores.",
+      "description": "Hold fire and get to the next target as fast as you can in a straight line, without flicking past it. Kill each target fully before you move, and start finding the next one while you finish the current one.",
       "bands": [
         {
           "window": 0,
@@ -880,18 +875,17 @@
     },
     {
       "name": "Evasive Switching",
-      "headline": "Earn every transfer.",
-      "description": "Flick in, match the movement and confirm the kill. Read the next target without abandoning this one. Regeneration tests clean finishes; varied arcs and strafes keep the task about reading, not memorising turns.",
+      "description": "Focus on movement reading, sustained contact and clean transfers. Start with larger and slower targets, then add tighter movement, more distance and regeneration.",
       "bands": [
         {
           "window": 0,
           "rankMaxes": [
-            25000,
-            50000,
-            75000,
-            100000,
-            125000,
-            150000
+            27500,
+            55000,
+            82500,
+            110000,
+            137500,
+            165000
           ],
           "rankNames": [
             "Plankton",
@@ -913,12 +907,12 @@
         {
           "window": 1,
           "rankMaxes": [
-            25000,
-            50000,
-            75000,
-            100000,
-            125000,
-            150000
+            27500,
+            55000,
+            82500,
+            110000,
+            137500,
+            165000
           ],
           "rankNames": [
             "Toad",
@@ -940,12 +934,12 @@
         {
           "window": 2,
           "rankMaxes": [
-            25000,
-            50000,
-            75000,
-            100000,
-            125000,
-            150000
+            27500,
+            55000,
+            82500,
+            110000,
+            137500,
+            165000
           ],
           "rankNames": [
             "Hyena",
@@ -967,10 +961,10 @@
         {
           "window": 3,
           "rankMaxes": [
-            25000,
-            50000,
-            75000,
-            100000
+            27500,
+            55000,
+            82500,
+            110000
           ],
           "rankNames": [
             "African Elephant",
@@ -992,22 +986,22 @@
         }
       ],
       "rankMaxes": [
-        25000,
-        50000,
-        75000,
-        100000,
-        125000,
-        150000,
-        175000,
-        200000,
-        225000,
-        250000,
+        27500,
+        55000,
+        82500,
+        110000,
+        137500,
+        165000,
+        192500,
+        220000,
+        247500,
         275000,
-        300000,
-        325000,
-        350000,
-        375000,
-        400000
+        302500,
+        330000,
+        357500,
+        385000,
+        412500,
+        440000
       ],
       "rankNames": [
         "Plankton",
@@ -1051,25 +1045,24 @@
   "thresholds": {
     "owner": "data/pool.json",
     "sourced": {
-      "authored": 192,
+      "authored": 199,
       "adopted": 4,
-      "percentile": 56
+      "percentile": 53
     },
     "note": "Every threshold in this file is an authored score read from data/pool.json, not a percentile of anybody's population. A percentile moves when the population moves, so the target slides while somebody is chasing it, and a benchmark for improvement wants a number that sits still. Each one carries a `source` saying whether it was adopted verbatim from a published benchmark, reconciled between several, authored outright with a reason, or is still seeded - inherited from the percentile era and not yet given a source. npm run validate:thresholds re-derives the first two and counts the last."
   },
   "boards": {
     "source": "kovaaks.com/webapp-backend/leaderboard/scores/global",
     "sampledAt": "2026-09-13T03:09:23.048Z",
-    "leaderboardEntries": 5904982,
+    "leaderboardEntries": 5689676,
     "note": "The boards no longer set the thresholds; they audit them. Each scenario carries `sanity.clears` - what share of that leaderboard meets each rank - which is how a threshold nobody can reach, or one everybody clears, gets caught now that no percentile guarantees it by construction."
   },
-  "builtAt": "2026-09-14T02:37:45.633Z",
+  "builtAt": "2026-09-14T19:37:41.373Z",
   "scenarios": [
     {
       "scenario": "2 Tile Jumbo Tile Frenzy",
       "category": "Static Clicking",
       "family": "2Guys",
-      "focus": "Two targets. Flick → micro → click.",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
@@ -1111,7 +1104,6 @@
       "scenario": "1w2ts Perfected Easier",
       "category": "Static Clicking",
       "family": "2Guys",
-      "focus": "Two targets. Flick → micro → click.",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
@@ -1153,7 +1145,6 @@
       "scenario": "1w2ts Perfected",
       "category": "Static Clicking",
       "family": "2Guys",
-      "focus": "Two targets. Flick → micro → click.",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
@@ -1195,7 +1186,6 @@
       "scenario": "1w2ts Pasu Perfected 30% Smaller",
       "category": "Static Clicking",
       "family": "2Guys",
-      "focus": "Two targets. Flick → micro → click.",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
@@ -1252,7 +1242,6 @@
       "scenario": "ClickTrack Diagonal 3t Short",
       "category": "Static Clicking",
       "family": "Diagonal",
-      "focus": "Diagonal path. Straight line, no curve.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
@@ -1294,7 +1283,6 @@
       "scenario": "ClickTrack Diagonal 3t",
       "category": "Static Clicking",
       "family": "Diagonal",
-      "focus": "Diagonal path. Straight line, no curve.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
@@ -1336,7 +1324,6 @@
       "scenario": "ClickTrack Diagonal 2t Short",
       "category": "Static Clicking",
       "family": "Diagonal",
-      "focus": "Diagonal path. Straight line, no curve.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
@@ -1378,7 +1365,6 @@
       "scenario": "ClickTrack Diagonal 2t",
       "category": "Static Clicking",
       "family": "Diagonal",
-      "focus": "Diagonal path. Straight line, no curve.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
@@ -1433,7 +1419,6 @@
       "scenario": "ClickTrack Horizontal 3t Short",
       "category": "Static Clicking",
       "family": "Horizontal",
-      "focus": "Horizontal only. Flat line, time switch.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
@@ -1475,7 +1460,6 @@
       "scenario": "ClickTrack Horizontal 3t",
       "category": "Static Clicking",
       "family": "Horizontal",
-      "focus": "Horizontal only. Flat line, time switch.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
@@ -1517,7 +1501,6 @@
       "scenario": "ClickTrack Horizontal 2t Short",
       "category": "Static Clicking",
       "family": "Horizontal",
-      "focus": "Horizontal only. Flat line, time switch.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
@@ -1559,7 +1542,6 @@
       "scenario": "ClickTrack Horizontal 2t",
       "category": "Static Clicking",
       "family": "Horizontal",
-      "focus": "Horizontal only. Flat line, time switch.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
@@ -1614,7 +1596,6 @@
       "scenario": "SCS 8xs Uniform",
       "category": "Static Clicking",
       "family": "Micro",
-      "focus": "Tiny targets. Micro-correct, no overflick.",
       "arm": "Fingertip",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
@@ -1656,7 +1637,6 @@
       "scenario": "Cartoon's Micro RawMouseControlReact 30s",
       "category": "Static Clicking",
       "family": "Micro",
-      "focus": "Tiny targets. Micro-correct, no overflick.",
       "arm": "Fingertip",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
@@ -1698,7 +1678,6 @@
       "scenario": "1w2ts Pasu Perfected",
       "category": "Static Clicking",
       "family": "Micro",
-      "focus": "Tiny targets. Micro-correct, no overflick.",
       "arm": "Fingertip",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
@@ -1740,7 +1719,6 @@
       "scenario": "Aimerz+ 1w4ts HF Hard S1",
       "category": "Static Clicking",
       "family": "Micro",
-      "focus": "Tiny targets. Micro-correct, no overflick.",
       "arm": "Fingertip",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
@@ -1798,7 +1776,6 @@
       "scenario": "No23 ca micropressure supereasy",
       "category": "Static Clicking",
       "family": "Micro Pressure",
-      "focus": "Small, rushed. Micro held under pace.",
       "arm": "Fingertip",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
@@ -1834,7 +1811,6 @@
       "scenario": "shimPressure Micro",
       "category": "Static Clicking",
       "family": "Micro Pressure",
-      "focus": "Small, rushed. Micro held under pace.",
       "arm": "Fingertip",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
@@ -1876,7 +1852,6 @@
       "scenario": "cA fuglaapressure",
       "category": "Static Clicking",
       "family": "Micro Pressure",
-      "focus": "Small, rushed. Micro held under pace.",
       "arm": "Fingertip",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
@@ -1918,7 +1893,6 @@
       "scenario": "fuglaaPressure 6 Sphere Hipfire no reload",
       "category": "Static Clicking",
       "family": "Micro Pressure",
-      "focus": "Small, rushed. Micro held under pace.",
       "arm": "Fingertip",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
@@ -1975,7 +1949,6 @@
       "scenario": "Jumbo1wall9000targets",
       "category": "Static Clicking",
       "family": "Speed",
-      "focus": "Big, close. Flick lands direct. Pace.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
@@ -2017,7 +1990,6 @@
       "scenario": "1wall9000targets",
       "category": "Static Clicking",
       "family": "Speed",
-      "focus": "Big, close. Flick lands direct. Pace.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
@@ -2059,7 +2031,6 @@
       "scenario": "1wall6targets TE Horizontalish",
       "category": "Static Clicking",
       "family": "Speed",
-      "focus": "Big, close. Flick lands direct. Pace.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
@@ -2101,7 +2072,6 @@
       "scenario": "6 Sphere Hipfire 200% Size",
       "category": "Static Clicking",
       "family": "Speed",
-      "focus": "Big, close. Flick lands direct. Pace.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
@@ -2156,7 +2126,6 @@
       "scenario": "ClickTrack 3t Short",
       "category": "Static Clicking",
       "family": "Triangle",
-      "focus": "Fixed triangle. Chain, rhythm, straight.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
@@ -2198,7 +2167,6 @@
       "scenario": "ClickTrack 3t",
       "category": "Static Clicking",
       "family": "Triangle",
-      "focus": "Fixed triangle. Chain, rhythm, straight.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
@@ -2240,7 +2208,6 @@
       "scenario": "ClickTrack 3t Long",
       "category": "Static Clicking",
       "family": "Triangle",
-      "focus": "Fixed triangle. Chain, rhythm, straight.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
@@ -2282,7 +2249,6 @@
       "scenario": "ClickTrack 5t",
       "category": "Static Clicking",
       "family": "Triangle",
-      "focus": "Fixed triangle. Chain, rhythm, straight.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
@@ -2337,7 +2303,6 @@
       "scenario": "1w4t Pressure Revosect Entry",
       "category": "Static Clicking",
       "family": "Wide Pressure",
-      "focus": "Wide wall, rushed. Big flick, no pause.",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
@@ -2373,7 +2338,6 @@
       "scenario": "1w4t Pressure Revosect Int",
       "category": "Static Clicking",
       "family": "Wide Pressure",
-      "focus": "Wide wall, rushed. Big flick, no pause.",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
@@ -2415,7 +2379,6 @@
       "scenario": "cA 7ts pressure",
       "category": "Static Clicking",
       "family": "Wide Pressure",
-      "focus": "Wide wall, rushed. Big flick, no pause.",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
@@ -2457,7 +2420,6 @@
       "scenario": "darkPressure",
       "category": "Static Clicking",
       "family": "Wide Pressure",
-      "focus": "Wide wall, rushed. Big flick, no pause.",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
@@ -2514,7 +2476,6 @@
       "scenario": "ww6t Avasive Easier",
       "category": "Static Clicking",
       "family": "Wide wall",
-      "focus": "Wide angles. Big flick, next in peripheral.",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
@@ -2556,7 +2517,6 @@
       "scenario": "ww4t Voltaic",
       "category": "Static Clicking",
       "family": "Wide wall",
-      "focus": "Wide angles. Big flick, next in peripheral.",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
@@ -2598,7 +2558,6 @@
       "scenario": "Wide Wall 3 Targets",
       "category": "Static Clicking",
       "family": "Wide wall",
-      "focus": "Wide angles. Big flick, next in peripheral.",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
@@ -2640,7 +2599,6 @@
       "scenario": "Wide Wall 4 Targets Small",
       "category": "Static Clicking",
       "family": "Wide wall",
-      "focus": "Wide angles. Big flick, next in peripheral.",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
@@ -2695,7 +2653,6 @@
       "scenario": "CB EvoClick Easy",
       "category": "Static Clicking",
       "family": "Evo Gallery",
-      "focus": "Hold the pace as the targets multiply.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
@@ -2731,7 +2688,6 @@
       "scenario": "EvoClick Revosect Entry",
       "category": "Static Clicking",
       "family": "Evo Gallery",
-      "focus": "Hold the pace as the targets multiply.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
@@ -2767,7 +2723,6 @@
       "scenario": "EvoClick Revosect Int",
       "category": "Static Clicking",
       "family": "Evo Gallery",
-      "focus": "Hold the pace as the targets multiply.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
@@ -2809,7 +2764,6 @@
       "scenario": "EvoClick Revosect",
       "category": "Static Clicking",
       "family": "Evo Gallery",
-      "focus": "Hold the pace as the targets multiply.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
@@ -2858,7 +2812,6 @@
       "scenario": "VoxTS Click Entry",
       "category": "Static Clicking",
       "family": "Vox Gallery",
-      "focus": "Pick your route through the gallery.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
@@ -2894,7 +2847,6 @@
       "scenario": "VoxTS Click Easier",
       "category": "Static Clicking",
       "family": "Vox Gallery",
-      "focus": "Pick your route through the gallery.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
@@ -2936,7 +2888,6 @@
       "scenario": "VoxTS Click Medium",
       "category": "Static Clicking",
       "family": "Vox Gallery",
-      "focus": "Pick your route through the gallery.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
@@ -2978,7 +2929,6 @@
       "scenario": "VoxTS Click Hard",
       "category": "Static Clicking",
       "family": "Vox Gallery",
-      "focus": "Pick your route through the gallery.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
@@ -3027,7 +2977,6 @@
       "scenario": "1w6ts reload Easier",
       "category": "Static Clicking",
       "family": "Reload Rush",
-      "focus": "Chain the clears. Keep the rhythm alive.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
@@ -3069,7 +3018,6 @@
       "scenario": "1w6ts reload v2 20% bigger",
       "category": "Static Clicking",
       "family": "Reload Rush",
-      "focus": "Chain the clears. Keep the rhythm alive.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
@@ -3111,7 +3059,6 @@
       "scenario": "1w6ts reload v2",
       "category": "Static Clicking",
       "family": "Reload Rush",
-      "focus": "Chain the clears. Keep the rhythm alive.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
@@ -3153,7 +3100,6 @@
       "scenario": "1w6ts_trustechain Raspberry",
       "category": "Static Clicking",
       "family": "Reload Rush",
-      "focus": "Chain the clears. Keep the rhythm alive.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
@@ -3202,7 +3148,6 @@
       "scenario": "1w3ts Pasu Perfected Micro Goated Larger 80%",
       "category": "Static Clicking",
       "family": "Micro Chain",
-      "focus": "Find a three-target beat and build speed.",
       "arm": "Fingertip",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
@@ -3244,7 +3189,6 @@
       "scenario": "1w3ts Pasu Perfected Micro Goated Larger",
       "category": "Static Clicking",
       "family": "Micro Chain",
-      "focus": "Find a three-target beat and build speed.",
       "arm": "Fingertip",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
@@ -3286,7 +3230,6 @@
       "scenario": "1w3ts Pasu Perfected Micro Goated",
       "category": "Static Clicking",
       "family": "Micro Chain",
-      "focus": "Find a three-target beat and build speed.",
       "arm": "Fingertip",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
@@ -3328,7 +3271,6 @@
       "scenario": "1w3ts Pasu Perfected Micro Goated 10% small",
       "category": "Static Clicking",
       "family": "Micro Chain",
-      "focus": "Find a three-target beat and build speed.",
       "arm": "Fingertip",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
@@ -3377,7 +3319,6 @@
       "scenario": "Pasu Viscose Entry",
       "category": "Dynamic Clicking",
       "family": "Pasu",
-      "focus": "Read the drift. Click on confirmation.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
@@ -3413,7 +3354,6 @@
       "scenario": "Pasu SuperbAim Easy",
       "category": "Dynamic Clicking",
       "family": "Pasu",
-      "focus": "Read the drift. Click on confirmation.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
@@ -3449,7 +3389,6 @@
       "scenario": "Pasu SuperbAim",
       "category": "Dynamic Clicking",
       "family": "Pasu",
-      "focus": "Read the drift. Click on confirmation.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
@@ -3485,7 +3424,6 @@
       "scenario": "Pasu Reload Goated",
       "category": "Dynamic Clicking",
       "family": "Pasu",
-      "focus": "Read the drift. Click on confirmation.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
@@ -3540,7 +3478,6 @@
       "scenario": "Aimerz+ pipeClick Easy S1",
       "category": "Dynamic Clicking",
       "family": "PipeClick",
-      "focus": "Meet the path. Confirm the shot.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
@@ -3582,7 +3519,6 @@
       "scenario": "aimerz+ PipeClick Normal",
       "category": "Dynamic Clicking",
       "family": "PipeClick",
-      "focus": "Meet the path. Confirm the shot.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
@@ -3618,7 +3554,6 @@
       "scenario": "aimerz+ PipeClick Hard",
       "category": "Dynamic Clicking",
       "family": "PipeClick",
-      "focus": "Meet the path. Confirm the shot.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
@@ -3654,7 +3589,6 @@
       "scenario": "Aimerz+ pipeClick Hard S1",
       "category": "Dynamic Clicking",
       "family": "PipeClick",
-      "focus": "Meet the path. Confirm the shot.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
@@ -3703,7 +3637,6 @@
       "scenario": "BounceClick SuperbAim Easy",
       "category": "Dynamic Clicking",
       "family": "Bounce",
-      "focus": "Read the full bounce, not just the apex.",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
@@ -3739,7 +3672,6 @@
       "scenario": "BounceClick SuperbAim",
       "category": "Dynamic Clicking",
       "family": "Bounce",
-      "focus": "Read the full bounce, not just the apex.",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
@@ -3775,7 +3707,6 @@
       "scenario": "Bounce 180 Sparky",
       "category": "Dynamic Clicking",
       "family": "Bounce",
-      "focus": "Read the full bounce, not just the apex.",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
@@ -3817,7 +3748,6 @@
       "scenario": "Bounce 180 rAim",
       "category": "Dynamic Clicking",
       "family": "Bounce",
-      "focus": "Read the full bounce, not just the apex.",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
@@ -3872,7 +3802,6 @@
       "scenario": "psalmTS angelic click 30% Larger",
       "category": "Dynamic Clicking",
       "family": "Angelic",
-      "focus": "Read horizontal movement through the shot.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
@@ -3914,7 +3843,6 @@
       "scenario": "Pasu Angelic 20% Larger",
       "category": "Dynamic Clicking",
       "family": "Angelic",
-      "focus": "Read horizontal movement through the shot.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
@@ -3956,7 +3884,6 @@
       "scenario": "psalmTS angelic click",
       "category": "Dynamic Clicking",
       "family": "Angelic",
-      "focus": "Read horizontal movement through the shot.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
@@ -3998,7 +3925,6 @@
       "scenario": "Pasu Angelic",
       "category": "Dynamic Clicking",
       "family": "Angelic",
-      "focus": "Read horizontal movement through the shot.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
@@ -4053,7 +3979,6 @@
       "scenario": "Pasu 3-Click Wide Easy",
       "category": "Dynamic Clicking",
       "family": "Pasu Sequence",
-      "focus": "Stay with each target for all three clicks.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
@@ -4089,7 +4014,6 @@
       "scenario": "Pasu 3-Click v2 Less Easy",
       "category": "Dynamic Clicking",
       "family": "Pasu Sequence",
-      "focus": "Stay with each target for all three clicks.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
@@ -4125,7 +4049,6 @@
       "scenario": "Pasu 3-click v2",
       "category": "Dynamic Clicking",
       "family": "Pasu Sequence",
-      "focus": "Stay with each target for all three clicks.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
@@ -4161,7 +4084,6 @@
       "scenario": "Pasu 3-Click Wide",
       "category": "Dynamic Clicking",
       "family": "Pasu Sequence",
-      "focus": "Stay with each target for all three clicks.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
@@ -4210,7 +4132,6 @@
       "scenario": "Popcorn Goated rAim easy",
       "category": "Dynamic Clicking",
       "family": "Popcorn",
-      "focus": "Follow the arc into a clean click.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
@@ -4252,7 +4173,6 @@
       "scenario": "Popcorn rAim Easy",
       "category": "Dynamic Clicking",
       "family": "Popcorn",
-      "focus": "Follow the arc into a clean click.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
@@ -4288,7 +4208,6 @@
       "scenario": "Popcorn Sparky",
       "category": "Dynamic Clicking",
       "family": "Popcorn",
-      "focus": "Follow the arc into a clean click.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
@@ -4330,7 +4249,6 @@
       "scenario": "Popcorn Goated rAim",
       "category": "Dynamic Clicking",
       "family": "Popcorn",
-      "focus": "Follow the arc into a clean click.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
@@ -4385,7 +4303,6 @@
       "scenario": "VT Floating Heads Viscose Entry",
       "category": "Dynamic Clicking",
       "family": "Floating Gallery",
-      "focus": "Catch the next head as it drifts into view.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
@@ -4421,7 +4338,6 @@
       "scenario": "VT Floating Heads Viscose Easier",
       "category": "Dynamic Clicking",
       "family": "Floating Gallery",
-      "focus": "Catch the next head as it drifts into view.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
@@ -4463,7 +4379,6 @@
       "scenario": "VT Floating Heads Viscose Medium",
       "category": "Dynamic Clicking",
       "family": "Floating Gallery",
-      "focus": "Catch the next head as it drifts into view.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
@@ -4505,7 +4420,6 @@
       "scenario": "VT Floating Heads Viscose Hard",
       "category": "Dynamic Clicking",
       "family": "Floating Gallery",
-      "focus": "Catch the next head as it drifts into view.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
@@ -4560,7 +4474,6 @@
       "scenario": "skyClick Goated Easier",
       "category": "Dynamic Clicking",
       "family": "Sky Gallery",
-      "focus": "Hop between layers. Catch each passing dot.",
       "arm": "Fingertip",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
@@ -4602,7 +4515,6 @@
       "scenario": "skyClick Goated Medium",
       "category": "Dynamic Clicking",
       "family": "Sky Gallery",
-      "focus": "Hop between layers. Catch each passing dot.",
       "arm": "Fingertip",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
@@ -4644,7 +4556,6 @@
       "scenario": "skyClick Goated Hard",
       "category": "Dynamic Clicking",
       "family": "Sky Gallery",
-      "focus": "Hop between layers. Catch each passing dot.",
       "arm": "Fingertip",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
@@ -4686,7 +4597,6 @@
       "scenario": "skyClick Goated Expert",
       "category": "Dynamic Clicking",
       "family": "Sky Gallery",
-      "focus": "Hop between layers. Catch each passing dot.",
       "arm": "Fingertip",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
@@ -4735,7 +4645,6 @@
       "scenario": "Aimerz+ sunClick Easy S1",
       "category": "Dynamic Clicking",
       "family": "Wave Click",
-      "focus": "Ride the wave from shot to shot.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
@@ -4771,7 +4680,6 @@
       "scenario": "aimerz+ WaveClick Normal",
       "category": "Dynamic Clicking",
       "family": "Wave Click",
-      "focus": "Ride the wave from shot to shot.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
@@ -4807,7 +4715,6 @@
       "scenario": "aimerz+ WaveClick Hard",
       "category": "Dynamic Clicking",
       "family": "Wave Click",
-      "focus": "Ride the wave from shot to shot.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
@@ -4843,7 +4750,6 @@
       "scenario": "Aimerz+ sunClick Hard S1",
       "category": "Dynamic Clicking",
       "family": "Wave Click",
-      "focus": "Ride the wave from shot to shot.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
@@ -4892,7 +4798,6 @@
       "scenario": "CatClick Easier",
       "category": "Dynamic Clicking",
       "family": "Cat Click",
-      "focus": "One clean click per mover.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
@@ -4934,7 +4839,6 @@
       "scenario": "CatClick Medium",
       "category": "Dynamic Clicking",
       "family": "Cat Click",
-      "focus": "One clean click per mover.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
@@ -4976,7 +4880,6 @@
       "scenario": "CatClick",
       "category": "Dynamic Clicking",
       "family": "Cat Click",
-      "focus": "One clean click per mover.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
@@ -5018,7 +4921,6 @@
       "scenario": "CatClick Harder",
       "category": "Dynamic Clicking",
       "family": "Cat Click",
-      "focus": "One clean click per mover.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
@@ -5067,7 +4969,6 @@
       "scenario": "SmoothBot Invincible Goated 75%",
       "category": "Precise Tracking",
       "family": "Smoothbot",
-      "focus": "Match the long arc with steady contact.",
       "arm": "Arm",
       "armFrom": "Viscose",
       "subCategory": "Precise Tracking",
@@ -5109,7 +5010,6 @@
       "scenario": "Smoothbot Invincible Goated Easy",
       "category": "Precise Tracking",
       "family": "Smoothbot",
-      "focus": "Match the long arc with steady contact.",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Precise Tracking",
@@ -5141,9 +5041,9 @@
         "sampledAt": "2026-09-13T03:04:40.124Z"
       },
       "corpus": {
-        "runs": 2,
+        "runs": 3,
         "best": 4332,
-        "median": 4263,
+        "median": 4194,
         "reaches": "rank 8"
       }
     },
@@ -5151,7 +5051,6 @@
       "scenario": "SmoothBot Invincible Goated",
       "category": "Precise Tracking",
       "family": "Smoothbot",
-      "focus": "Match the long arc with steady contact.",
       "arm": "Arm",
       "armFrom": "Viscose",
       "subCategory": "Precise Tracking",
@@ -5193,7 +5092,6 @@
       "scenario": "SmoothBot Invincible Goated Smaller",
       "category": "Precise Tracking",
       "family": "Smoothbot",
-      "focus": "Match the long arc with steady contact.",
       "arm": "Arm",
       "armFrom": "Viscose",
       "subCategory": "Precise Tracking",
@@ -5248,7 +5146,6 @@
       "scenario": "Centering II 180 Entry",
       "category": "Precise Tracking",
       "family": "Centering",
-      "focus": "Settle into the strafe. Match its speed.",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Precise Tracking",
@@ -5290,7 +5187,6 @@
       "scenario": "Centering II 180 Novice",
       "category": "Precise Tracking",
       "family": "Centering",
-      "focus": "Settle into the strafe. Match its speed.",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Precise Tracking",
@@ -5322,9 +5218,9 @@
         "sampledAt": "2026-09-13T19:21:02.844Z"
       },
       "corpus": {
-        "runs": 1,
+        "runs": 3,
         "best": 14274,
-        "median": 14274,
+        "median": 12402,
         "reaches": "rank 9"
       }
     },
@@ -5332,7 +5228,6 @@
       "scenario": "Centering II 180 Intermediate",
       "category": "Precise Tracking",
       "family": "Centering",
-      "focus": "Settle into the strafe. Match its speed.",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Precise Tracking",
@@ -5374,7 +5269,6 @@
       "scenario": "Centering II 180 no strafes",
       "category": "Precise Tracking",
       "family": "Centering",
-      "focus": "Settle into the strafe. Match its speed.",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Precise Tracking",
@@ -5423,7 +5317,6 @@
       "scenario": "PreciseTrack Avasive Easier",
       "category": "Precise Tracking",
       "family": "PreciseTrack",
-      "focus": "Recover cleanly. Settle back on target.",
       "arm": "Fingertip",
       "armFrom": "Apogee",
       "subCategory": "Precise Tracking",
@@ -5465,7 +5358,6 @@
       "scenario": "Aimerz+ PreciseTrack Easy S1",
       "category": "Precise Tracking",
       "family": "PreciseTrack",
-      "focus": "Recover cleanly. Settle back on target.",
       "arm": "Fingertip",
       "armFrom": "Apogee",
       "subCategory": "Precise Tracking",
@@ -5497,9 +5389,9 @@
         "sampledAt": "2026-08-18T23:40:08.582Z"
       },
       "corpus": {
-        "runs": 2,
+        "runs": 3,
         "best": 3046,
-        "median": 2855,
+        "median": 2950,
         "reaches": "rank 8"
       }
     },
@@ -5507,7 +5399,6 @@
       "scenario": "Aimerz+ PreciseTrack Med S1",
       "category": "Precise Tracking",
       "family": "PreciseTrack",
-      "focus": "Recover cleanly. Settle back on target.",
       "arm": "Fingertip",
       "armFrom": "Apogee",
       "subCategory": "Precise Tracking",
@@ -5539,9 +5430,9 @@
         "sampledAt": "2026-09-03T01:12:43.220Z"
       },
       "corpus": {
-        "runs": 29,
+        "runs": 31,
         "best": 2489,
-        "median": 2184,
+        "median": 2196,
         "reaches": null
       }
     },
@@ -5549,7 +5440,6 @@
       "scenario": "Aimerz+ PreciseTrack Hard S1",
       "category": "Precise Tracking",
       "family": "PreciseTrack",
-      "focus": "Recover cleanly. Settle back on target.",
       "arm": "Fingertip",
       "armFrom": "Apogee",
       "subCategory": "Precise Tracking",
@@ -5598,7 +5488,6 @@
       "scenario": "Whisphere Small & Slow 55%",
       "category": "Precise Tracking",
       "family": "Whisphere",
-      "focus": "Match the curve and its changing speed.",
       "arm": "Blending",
       "armFrom": "Viscose",
       "subCategory": "Precise Tracking",
@@ -5640,7 +5529,6 @@
       "scenario": "Whisphere Small & Slow 75%",
       "category": "Precise Tracking",
       "family": "Whisphere",
-      "focus": "Match the curve and its changing speed.",
       "arm": "Blending",
       "armFrom": "Viscose",
       "subCategory": "Precise Tracking",
@@ -5672,17 +5560,16 @@
         "sampledAt": "2026-09-10T23:39:51.708Z"
       },
       "corpus": {
-        "runs": 24,
-        "best": 13920,
-        "median": 11715,
-        "reaches": "rank 5"
+        "runs": 25,
+        "best": 15910,
+        "median": 11770,
+        "reaches": "rank 8"
       }
     },
     {
       "scenario": "Whisphere Small & Slow",
       "category": "Precise Tracking",
       "family": "Whisphere",
-      "focus": "Match the curve and its changing speed.",
       "arm": "Arm",
       "armFrom": "Viscose",
       "subCategory": "Precise Tracking",
@@ -5724,7 +5611,6 @@
       "scenario": "Whisphere Extra Small & Slow",
       "category": "Precise Tracking",
       "family": "Whisphere",
-      "focus": "Match the curve and its changing speed.",
       "arm": "Blending",
       "armFrom": "Viscose",
       "subCategory": "Precise Tracking",
@@ -5779,7 +5665,6 @@
       "scenario": "Smooth Your Vertical Altered POV Entry",
       "category": "Precise Tracking",
       "family": "Vertical Control",
-      "focus": "Stay connected through the rise and fall.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Precise Tracking",
@@ -5821,7 +5706,6 @@
       "scenario": "Smooth Your Vertical Altered POV Easy v2",
       "category": "Precise Tracking",
       "family": "Vertical Control",
-      "focus": "Stay connected through the rise and fall.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Precise Tracking",
@@ -5863,7 +5747,6 @@
       "scenario": "Smooth Your Vertical Altered POV Intermediate",
       "category": "Precise Tracking",
       "family": "Vertical Control",
-      "focus": "Stay connected through the rise and fall.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Precise Tracking",
@@ -5905,7 +5788,6 @@
       "scenario": "Smooth Your Vertical Altered POV v2",
       "category": "Precise Tracking",
       "family": "Vertical Control",
-      "focus": "Stay connected through the rise and fall.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Precise Tracking",
@@ -5954,7 +5836,6 @@
       "scenario": "Controlsphere Viscose Entry",
       "category": "Precise Tracking",
       "family": "Controlsphere",
-      "focus": "Keep contact through changing directions.",
       "arm": "Wrist",
       "armFrom": "Viscose",
       "subCategory": "Precise Tracking",
@@ -5996,7 +5877,6 @@
       "scenario": "Controlsphere rAim Easy 90%",
       "category": "Precise Tracking",
       "family": "Controlsphere",
-      "focus": "Keep contact through changing directions.",
       "arm": "Wrist",
       "armFrom": "Viscose",
       "subCategory": "Precise Tracking",
@@ -6038,7 +5918,6 @@
       "scenario": "Controlsphere rAim Easy",
       "category": "Precise Tracking",
       "family": "Controlsphere",
-      "focus": "Keep contact through changing directions.",
       "arm": "Wrist",
       "armFrom": "Viscose",
       "subCategory": "Precise Tracking",
@@ -6080,7 +5959,6 @@
       "scenario": "Controlsphere rAim",
       "category": "Precise Tracking",
       "family": "Controlsphere",
-      "focus": "Keep contact through changing directions.",
       "arm": "Wrist",
       "armFrom": "Viscose",
       "subCategory": "Precise Tracking",
@@ -6135,7 +6013,6 @@
       "scenario": "TSK - DVD Tracking MASSIVE",
       "category": "Precise Tracking",
       "family": "DVD Chase",
-      "focus": "Follow the bounce all the way to the corner.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Precise Tracking",
@@ -6177,7 +6054,6 @@
       "scenario": "TSK - DVD Tracking Big",
       "category": "Precise Tracking",
       "family": "DVD Chase",
-      "focus": "Follow the bounce all the way to the corner.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Precise Tracking",
@@ -6219,7 +6095,6 @@
       "scenario": "TSK - DVD Tracking",
       "category": "Precise Tracking",
       "family": "DVD Chase",
-      "focus": "Follow the bounce all the way to the corner.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Precise Tracking",
@@ -6261,7 +6136,6 @@
       "scenario": "TSK - DVD Tracking Small",
       "category": "Precise Tracking",
       "family": "DVD Chase",
-      "focus": "Follow the bounce all the way to the corner.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Precise Tracking",
@@ -6316,7 +6190,6 @@
       "scenario": "Flower Entry",
       "category": "Precise Tracking",
       "family": "Flower Chase",
-      "focus": "Trace the flower. Stay with each little turn.",
       "arm": "Fingertip",
       "armFrom": "Viscose",
       "subCategory": "Precise Tracking",
@@ -6358,7 +6231,6 @@
       "scenario": "Flower Easier 50cm",
       "category": "Precise Tracking",
       "family": "Flower Chase",
-      "focus": "Trace the flower. Stay with each little turn.",
       "arm": "Fingertip",
       "armFrom": "Viscose",
       "subCategory": "Precise Tracking",
@@ -6400,7 +6272,6 @@
       "scenario": "Flower 50cm",
       "category": "Precise Tracking",
       "family": "Flower Chase",
-      "focus": "Trace the flower. Stay with each little turn.",
       "arm": "Fingertip",
       "armFrom": "Viscose",
       "subCategory": "Precise Tracking",
@@ -6442,7 +6313,6 @@
       "scenario": "Flower Hard 50cm",
       "category": "Precise Tracking",
       "family": "Flower Chase",
-      "focus": "Trace the flower. Stay with each little turn.",
       "arm": "Fingertip",
       "armFrom": "Viscose",
       "subCategory": "Precise Tracking",
@@ -6497,7 +6367,6 @@
       "scenario": "Smoothsphere Viscose Horizontal Entry",
       "category": "Precise Tracking",
       "family": "Sphere Cruise",
-      "focus": "Cruise with the dot as it circles you.",
       "arm": "Arm",
       "armFrom": "Viscose",
       "subCategory": "Precise Tracking",
@@ -6539,7 +6408,6 @@
       "scenario": "Smoothsphere Viscose Easier",
       "category": "Precise Tracking",
       "family": "Sphere Cruise",
-      "focus": "Cruise with the dot as it circles you.",
       "arm": "Arm",
       "armFrom": "Viscose",
       "subCategory": "Precise Tracking",
@@ -6581,7 +6449,6 @@
       "scenario": "Smoothsphere Viscose",
       "category": "Precise Tracking",
       "family": "Sphere Cruise",
-      "focus": "Cruise with the dot as it circles you.",
       "arm": "Arm",
       "armFrom": "Viscose",
       "subCategory": "Precise Tracking",
@@ -6623,7 +6490,6 @@
       "scenario": "Smoothsphere Viscose Hard",
       "category": "Precise Tracking",
       "family": "Sphere Cruise",
-      "focus": "Cruise with the dot as it circles you.",
       "arm": "Arm",
       "armFrom": "Viscose",
       "subCategory": "Precise Tracking",
@@ -6668,9 +6534,9 @@
         "sampledAt": "2026-09-14T00:56:56.386Z"
       },
       "corpus": {
-        "runs": 11,
+        "runs": 12,
         "best": 9129,
-        "median": 8565,
+        "median": 8435,
         "reaches": null
       }
     },
@@ -6678,7 +6544,6 @@
       "scenario": "waldoTS Novice",
       "category": "Precise Tracking",
       "family": "Waldo Track",
-      "focus": "Stay on it, not near it.",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Precise Tracking",
@@ -6720,7 +6585,6 @@
       "scenario": "waldoTS Intermediate",
       "category": "Precise Tracking",
       "family": "Waldo Track",
-      "focus": "Stay on it, not near it.",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Precise Tracking",
@@ -6752,7 +6616,7 @@
         "sampledAt": "2026-08-29T17:29:45.876Z"
       },
       "corpus": {
-        "runs": 62,
+        "runs": 63,
         "best": 151,
         "median": 133,
         "reaches": "rank 7"
@@ -6762,7 +6626,6 @@
       "scenario": "waldoTS",
       "category": "Precise Tracking",
       "family": "Waldo Track",
-      "focus": "Stay on it, not near it.",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Precise Tracking",
@@ -6804,7 +6667,6 @@
       "scenario": "waldoTS Elite",
       "category": "Precise Tracking",
       "family": "Waldo Track",
-      "focus": "Stay on it, not near it.",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Precise Tracking",
@@ -6853,7 +6715,6 @@
       "scenario": "Ground Plaza Sparky v3 Easy",
       "category": "Reactive Tracking",
       "family": "Ground Plaza",
-      "focus": "Read each strafe. React after the turn.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Reactive Tracking",
@@ -6895,7 +6756,6 @@
       "scenario": "Ground Plaza Sparky V3",
       "category": "Reactive Tracking",
       "family": "Ground Plaza",
-      "focus": "Read each strafe. React after the turn.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Reactive Tracking",
@@ -6927,7 +6787,7 @@
         "sampledAt": "2026-08-25T20:09:14.121Z"
       },
       "corpus": {
-        "runs": 36,
+        "runs": 37,
         "best": 892,
         "median": 884,
         "reaches": "rank 5"
@@ -6937,7 +6797,6 @@
       "scenario": "Ground Plaza Sparky v3 OW",
       "category": "Reactive Tracking",
       "family": "Ground Plaza",
-      "focus": "Read each strafe. React after the turn.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Reactive Tracking",
@@ -6979,7 +6838,6 @@
       "scenario": "Ground Plaza Sparky V3 Thin",
       "category": "Reactive Tracking",
       "family": "Ground Plaza",
-      "focus": "Read each strafe. React after the turn.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Reactive Tracking",
@@ -7034,7 +6892,6 @@
       "scenario": "Air Voltaic Invincible 4 Entry",
       "category": "Reactive Tracking",
       "family": "Air Reading",
-      "focus": "Follow the aerial change without guessing.",
       "arm": "Arm",
       "armFrom": "Viscose",
       "subCategory": "Reactive Tracking",
@@ -7076,7 +6933,6 @@
       "scenario": "Air Voltaic Invincible 4 Easier",
       "category": "Reactive Tracking",
       "family": "Air Reading",
-      "focus": "Follow the aerial change without guessing.",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Reactive Tracking",
@@ -7118,7 +6974,6 @@
       "scenario": "Air Voltaic Invincible 4 Medium",
       "category": "Reactive Tracking",
       "family": "Air Reading",
-      "focus": "Follow the aerial change without guessing.",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Reactive Tracking",
@@ -7160,7 +7015,6 @@
       "scenario": "Air Voltaic Invincible 4",
       "category": "Reactive Tracking",
       "family": "Air Reading",
-      "focus": "Follow the aerial change without guessing.",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Reactive Tracking",
@@ -7209,7 +7063,6 @@
       "scenario": "Air Angelic rAim Biggest",
       "category": "Reactive Tracking",
       "family": "Air Angelic",
-      "focus": "Recover from the turn, then match speed.",
       "arm": "Fingertip",
       "armFrom": "Apogee",
       "subCategory": "Reactive Tracking",
@@ -7251,7 +7104,6 @@
       "scenario": "Air Angelic Easier",
       "category": "Reactive Tracking",
       "family": "Air Angelic",
-      "focus": "Recover from the turn, then match speed.",
       "arm": "Fingertip",
       "armFrom": "Apogee",
       "subCategory": "Reactive Tracking",
@@ -7293,7 +7145,6 @@
       "scenario": "Air Angelic rAim Easy",
       "category": "Reactive Tracking",
       "family": "Air Angelic",
-      "focus": "Recover from the turn, then match speed.",
       "arm": "Fingertip",
       "armFrom": "Apogee",
       "subCategory": "Reactive Tracking",
@@ -7335,7 +7186,6 @@
       "scenario": "Air Angelic",
       "category": "Reactive Tracking",
       "family": "Air Angelic",
-      "focus": "Recover from the turn, then match speed.",
       "arm": "Fingertip",
       "armFrom": "Apogee",
       "subCategory": "Reactive Tracking",
@@ -7390,7 +7240,6 @@
       "scenario": "CB StrafeTrack Easy",
       "category": "Reactive Tracking",
       "family": "Strafe Gallery",
-      "focus": "Read the next strafe. Keep corrections clean.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Reactive Tracking",
@@ -7432,7 +7281,6 @@
       "scenario": "Aimerz+ VGS Easy S1",
       "category": "Reactive Tracking",
       "family": "Strafe Gallery",
-      "focus": "Read the next strafe. Keep corrections clean.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Reactive Tracking",
@@ -7474,7 +7322,6 @@
       "scenario": "Aimerz+ VGS Med S1",
       "category": "Reactive Tracking",
       "family": "Strafe Gallery",
-      "focus": "Read the next strafe. Keep corrections clean.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Reactive Tracking",
@@ -7510,7 +7357,6 @@
       "scenario": "Aimerz+ VGS Hard S1",
       "category": "Reactive Tracking",
       "family": "Strafe Gallery",
-      "focus": "Read the next strafe. Keep corrections clean.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Reactive Tracking",
@@ -7559,7 +7405,6 @@
       "scenario": "Leapstrafes Control wobin Easier",
       "category": "Reactive Tracking",
       "family": "Leapstrafes",
-      "focus": "Stay with the leap and read its direction.",
       "arm": "Wrist",
       "armFrom": "Viscose",
       "subCategory": "Reactive Tracking",
@@ -7601,7 +7446,6 @@
       "scenario": "Leapstrafes Control Medium",
       "category": "Reactive Tracking",
       "family": "Leapstrafes",
-      "focus": "Stay with the leap and read its direction.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Reactive Tracking",
@@ -7633,17 +7477,16 @@
         "sampledAt": "2026-09-13T03:09:23.048Z"
       },
       "corpus": {
-        "runs": 28,
-        "best": 13392,
-        "median": 12204,
-        "reaches": "rank 5"
+        "runs": 30,
+        "best": 14076,
+        "median": 12249,
+        "reaches": "rank 6"
       }
     },
     {
       "scenario": "Leapstrafes Control wobin",
       "category": "Reactive Tracking",
       "family": "Leapstrafes",
-      "focus": "Stay with the leap and read its direction.",
       "arm": "Wrist",
       "armFrom": "Viscose",
       "subCategory": "Reactive Tracking",
@@ -7685,7 +7528,6 @@
       "scenario": "Leapstrafes Control wobin Hard",
       "category": "Reactive Tracking",
       "family": "Leapstrafes",
-      "focus": "Stay with the leap and read its direction.",
       "arm": "Wrist",
       "armFrom": "Viscose",
       "subCategory": "Reactive Tracking",
@@ -7740,7 +7582,6 @@
       "scenario": "Kindaclose long stop strafes",
       "category": "Reactive Tracking",
       "family": "Recovery",
-      "focus": "Read the change. Reacquire, then settle.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Reactive Tracking",
@@ -7782,7 +7623,6 @@
       "scenario": "Flicker Plaza rAim Easy Less Blinks",
       "category": "Reactive Tracking",
       "family": "Recovery",
-      "focus": "Read the change. Reacquire, then settle.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Reactive Tracking",
@@ -7812,13 +7652,18 @@
           0.01883838383838376
         ],
         "sampledAt": "2026-09-13T19:22:58.615Z"
+      },
+      "corpus": {
+        "runs": 1,
+        "best": 918,
+        "median": 918,
+        "reaches": "rank 8"
       }
     },
     {
       "scenario": "Flicker Plaza rAim Easy",
       "category": "Reactive Tracking",
       "family": "Recovery",
-      "focus": "Read the change. Reacquire, then settle.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Reactive Tracking",
@@ -7860,7 +7705,6 @@
       "scenario": "Flicker Plaza",
       "category": "Reactive Tracking",
       "family": "Recovery",
-      "focus": "Read the change. Reacquire, then settle.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Reactive Tracking",
@@ -7909,7 +7753,6 @@
       "scenario": "Air Spectral Easy 85%",
       "category": "Reactive Tracking",
       "family": "Spectral Chase",
-      "focus": "Stay ready for the next strange turn.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Reactive Tracking",
@@ -7951,7 +7794,6 @@
       "scenario": "Air Spectral Easy",
       "category": "Reactive Tracking",
       "family": "Spectral Chase",
-      "focus": "Stay ready for the next strange turn.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Reactive Tracking",
@@ -7993,7 +7835,6 @@
       "scenario": "Air Spectral",
       "category": "Reactive Tracking",
       "family": "Spectral Chase",
-      "focus": "Stay ready for the next strange turn.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Reactive Tracking",
@@ -8029,7 +7870,6 @@
       "scenario": "Air Spectral Harder",
       "category": "Reactive Tracking",
       "family": "Spectral Chase",
-      "focus": "Stay ready for the next strange turn.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Reactive Tracking",
@@ -8078,7 +7918,6 @@
       "scenario": "Air CELESTIAL No UFO Easy Slowed",
       "category": "Reactive Tracking",
       "family": "Celestial Chase",
-      "focus": "Follow the aerial course through every phase.",
       "arm": "Blending",
       "armFrom": "Viscose",
       "subCategory": "Reactive Tracking",
@@ -8120,7 +7959,6 @@
       "scenario": "Air CELESTIAL No UFO Easy",
       "category": "Reactive Tracking",
       "family": "Celestial Chase",
-      "focus": "Follow the aerial course through every phase.",
       "arm": "Blending",
       "armFrom": "Viscose",
       "subCategory": "Reactive Tracking",
@@ -8162,7 +8000,6 @@
       "scenario": "Air CELESTIAL No UFO",
       "category": "Reactive Tracking",
       "family": "Celestial Chase",
-      "focus": "Follow the aerial course through every phase.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Reactive Tracking",
@@ -8198,7 +8035,6 @@
       "scenario": "Air CELESTIAL Harder",
       "category": "Reactive Tracking",
       "family": "Celestial Chase",
-      "focus": "Follow the aerial course through every phase.",
       "arm": "Blending",
       "armFrom": "Viscose",
       "subCategory": "Reactive Tracking",
@@ -8253,7 +8089,6 @@
       "scenario": "Air Pure Revosect Entry",
       "category": "Reactive Tracking",
       "family": "Pure Chase",
-      "focus": "Read each dodge before it happens.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Reactive Tracking",
@@ -8289,7 +8124,6 @@
       "scenario": "Air Pure Intermediate",
       "category": "Reactive Tracking",
       "family": "Pure Chase",
-      "focus": "Read each dodge before it happens.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Reactive Tracking",
@@ -8321,7 +8155,7 @@
         "sampledAt": "2026-09-14T02:35:13.401Z"
       },
       "corpus": {
-        "runs": 13,
+        "runs": 14,
         "best": 885,
         "median": 872,
         "reaches": null
@@ -8331,7 +8165,6 @@
       "scenario": "Air Pure",
       "category": "Reactive Tracking",
       "family": "Pure Chase",
-      "focus": "Read each dodge before it happens.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Reactive Tracking",
@@ -8367,7 +8200,6 @@
       "scenario": "Air Pure Hard",
       "category": "Reactive Tracking",
       "family": "Pure Chase",
-      "focus": "Read each dodge before it happens.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Reactive Tracking",
@@ -8416,7 +8248,6 @@
       "scenario": "Close Fast Strafes Easy Invincible - Thin",
       "category": "Reactive Tracking",
       "family": "Close Strafe Chase",
-      "focus": "Stay close. Catch the reversal.",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Reactive Tracking",
@@ -8458,7 +8289,6 @@
       "scenario": "Close Fast Strafes Invincible",
       "category": "Reactive Tracking",
       "family": "Close Strafe Chase",
-      "focus": "Stay close. Catch the reversal.",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Reactive Tracking",
@@ -8500,7 +8330,6 @@
       "scenario": "Close Fast Strafes Invincible - Thin",
       "category": "Reactive Tracking",
       "family": "Close Strafe Chase",
-      "focus": "Stay close. Catch the reversal.",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Reactive Tracking",
@@ -8542,7 +8371,6 @@
       "scenario": "Close Fast Strafes Invincible Precise+",
       "category": "Reactive Tracking",
       "family": "Close Strafe Chase",
-      "focus": "Stay close. Catch the reversal.",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Reactive Tracking",
@@ -8591,7 +8419,6 @@
       "scenario": "wobin DotTS Easy",
       "category": "Speed Switching",
       "family": "DotTS",
-      "focus": "Land close. Confirm. Chain the next flick.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
@@ -8627,7 +8454,6 @@
       "scenario": "DotTS Entry",
       "category": "Speed Switching",
       "family": "DotTS",
-      "focus": "Land close. Confirm. Chain the next flick.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
@@ -8663,7 +8489,6 @@
       "scenario": "DotTS 30% Larger",
       "category": "Speed Switching",
       "family": "DotTS",
-      "focus": "Land close. Confirm. Chain the next flick.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
@@ -8705,7 +8530,6 @@
       "scenario": "DotTS",
       "category": "Speed Switching",
       "family": "DotTS",
-      "focus": "Land close. Confirm. Chain the next flick.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
@@ -8754,7 +8578,6 @@
       "scenario": "voxTargetSwitch 2 Large",
       "category": "Speed Switching",
       "family": "Vox Pace",
-      "focus": "Land, finish, transfer. Hold your pace.",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
@@ -8786,7 +8609,7 @@
         "sampledAt": "2026-08-29T17:31:11.272Z"
       },
       "corpus": {
-        "runs": 183,
+        "runs": 184,
         "best": 129,
         "median": 117,
         "reaches": "rank 6"
@@ -8796,7 +8619,6 @@
       "scenario": "voxTargetSwitch 2",
       "category": "Speed Switching",
       "family": "Vox Pace",
-      "focus": "Land, finish, transfer. Hold your pace.",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
@@ -8838,7 +8660,6 @@
       "scenario": "voxTS Viscose Varied",
       "category": "Speed Switching",
       "family": "Vox Pace",
-      "focus": "Land, finish, transfer. Hold your pace.",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
@@ -8880,7 +8701,6 @@
       "scenario": "voxTS rAim",
       "category": "Speed Switching",
       "family": "Vox Pace",
-      "focus": "Land, finish, transfer. Hold your pace.",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
@@ -8929,7 +8749,6 @@
       "scenario": "VT EddieTS Novice S5",
       "category": "Speed Switching",
       "family": "EddieTS",
-      "focus": "Keep transfers fast and finishes clean.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
@@ -8971,7 +8790,6 @@
       "scenario": "VT EddieTS Intermediate S5",
       "category": "Speed Switching",
       "family": "EddieTS",
-      "focus": "Keep transfers fast and finishes clean.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
@@ -9013,7 +8831,6 @@
       "scenario": "VT EddieTS Advanced S5",
       "category": "Speed Switching",
       "family": "EddieTS",
-      "focus": "Keep transfers fast and finishes clean.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
@@ -9055,7 +8872,6 @@
       "scenario": "VT EddieTS Elite S5",
       "category": "Speed Switching",
       "family": "EddieTS",
-      "focus": "Keep transfers fast and finishes clean.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
@@ -9087,7 +8903,6 @@
       "scenario": "Aimerz+ pivoTS Easy S1",
       "category": "Speed Switching",
       "family": "PivoTS",
-      "focus": "Find the next target before the pivot.",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
@@ -9129,7 +8944,6 @@
       "scenario": "aimerz+ pivoTS Normal",
       "category": "Speed Switching",
       "family": "PivoTS",
-      "focus": "Find the next target before the pivot.",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
@@ -9165,7 +8979,6 @@
       "scenario": "aimerz+ pivoTS Hard",
       "category": "Speed Switching",
       "family": "PivoTS",
-      "focus": "Find the next target before the pivot.",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
@@ -9201,7 +9014,6 @@
       "scenario": "Aimerz+ pivoTS Hard S1",
       "category": "Speed Switching",
       "family": "PivoTS",
-      "focus": "Find the next target before the pivot.",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
@@ -9250,7 +9062,6 @@
       "scenario": "Pokeball 1w4ts 30% Easy",
       "category": "Speed Switching",
       "family": "Pokeball",
-      "focus": "Hold fire. Finish before transferring.",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
@@ -9292,7 +9103,6 @@
       "scenario": "Pokeball 1w4ts 30%",
       "category": "Speed Switching",
       "family": "Pokeball",
-      "focus": "Hold fire. Finish before transferring.",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
@@ -9334,7 +9144,6 @@
       "scenario": "Pokeball Wide rAim",
       "category": "Speed Switching",
       "family": "Pokeball",
-      "focus": "Hold fire. Finish before transferring.",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
@@ -9370,7 +9179,6 @@
       "scenario": "Pokeball Frenzy Auto Small Wide",
       "category": "Speed Switching",
       "family": "Pokeball",
-      "focus": "Hold fire. Finish before transferring.",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
@@ -9425,7 +9233,6 @@
       "scenario": "VT psalmTS Novice",
       "category": "Speed Switching",
       "family": "psalmTS",
-      "focus": "Choose a route and finish each target.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
@@ -9467,7 +9274,6 @@
       "scenario": "VT psalmTS Intermediate",
       "category": "Speed Switching",
       "family": "psalmTS",
-      "focus": "Choose a route and finish each target.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
@@ -9509,7 +9315,6 @@
       "scenario": "psalmTS Voltaic",
       "category": "Speed Switching",
       "family": "psalmTS",
-      "focus": "Choose a route and finish each target.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
@@ -9545,7 +9350,6 @@
       "scenario": "VT psalmTS Advanced",
       "category": "Speed Switching",
       "family": "psalmTS",
-      "focus": "Choose a route and finish each target.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
@@ -9594,7 +9398,6 @@
       "scenario": "StaticSwitchingVox Jumbo",
       "category": "Speed Switching",
       "family": "Vox Blitz",
-      "focus": "Clear the room in fast bursts.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
@@ -9636,7 +9439,6 @@
       "scenario": "StaticSwitchingVox",
       "category": "Speed Switching",
       "family": "Vox Blitz",
-      "focus": "Clear the room in fast bursts.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
@@ -9678,7 +9480,6 @@
       "scenario": "StaticSwitchingVox Small",
       "category": "Speed Switching",
       "family": "Vox Blitz",
-      "focus": "Clear the room in fast bursts.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
@@ -9720,7 +9521,6 @@
       "scenario": "StaticSwitchingVox xxSmall",
       "category": "Speed Switching",
       "family": "Vox Blitz",
-      "focus": "Clear the room in fast bursts.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
@@ -9775,7 +9575,6 @@
       "scenario": "CB WaveSwitch Easy",
       "category": "Speed Switching",
       "family": "Wave Relay",
-      "focus": "Pass from wave to wave without losing pace.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
@@ -9811,7 +9610,6 @@
       "scenario": "WaveSwitch Revosect Entry",
       "category": "Speed Switching",
       "family": "Wave Relay",
-      "focus": "Pass from wave to wave without losing pace.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
@@ -9847,7 +9645,6 @@
       "scenario": "WaveSwitch Revosect Int",
       "category": "Speed Switching",
       "family": "Wave Relay",
-      "focus": "Pass from wave to wave without losing pace.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
@@ -9889,7 +9686,6 @@
       "scenario": "WaveSwitch Revosect",
       "category": "Speed Switching",
       "family": "Wave Relay",
-      "focus": "Pass from wave to wave without losing pace.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
@@ -9938,7 +9734,6 @@
       "scenario": "VT skyTS Novice",
       "category": "Speed Switching",
       "family": "Sky Relay",
-      "focus": "Sweep the sky one target at a time.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
@@ -9980,7 +9775,6 @@
       "scenario": "VT skyTS Intermediate",
       "category": "Speed Switching",
       "family": "Sky Relay",
-      "focus": "Sweep the sky one target at a time.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
@@ -10022,7 +9816,6 @@
       "scenario": "VT skyTS Advanced",
       "category": "Speed Switching",
       "family": "Sky Relay",
-      "focus": "Sweep the sky one target at a time.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
@@ -10058,7 +9851,6 @@
       "scenario": "VT skyTS Elite",
       "category": "Speed Switching",
       "family": "Sky Relay",
-      "focus": "Sweep the sky one target at a time.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
@@ -10107,7 +9899,6 @@
       "scenario": "devTS Goated Easy",
       "category": "Speed Switching",
       "family": "Dev Blitz",
-      "focus": "Burst through the pack. Find the next clear.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
@@ -10149,7 +9940,6 @@
       "scenario": "devTS Goated NR",
       "category": "Speed Switching",
       "family": "Dev Blitz",
-      "focus": "Burst through the pack. Find the next clear.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
@@ -10191,7 +9981,6 @@
       "scenario": "devTS Goated rAim",
       "category": "Speed Switching",
       "family": "Dev Blitz",
-      "focus": "Burst through the pack. Find the next clear.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
@@ -10227,7 +10016,6 @@
       "scenario": "devTS Goated NR Small",
       "category": "Speed Switching",
       "family": "Dev Blitz",
-      "focus": "Burst through the pack. Find the next clear.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
@@ -10273,298 +10061,421 @@
       }
     },
     {
-      "scenario": "Pasu Switch Pure",
+      "scenario": "VT PasuTS Entry S5",
       "category": "Evasive Switching",
       "family": "Pasu Switch",
-      "focus": "Land on the moving target, then finish.",
-      "arm": "Wrist",
+      "focus": "Keep the crosshair on the bot through its direction changes. Switch after the kill.",
+      "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Evasive Switching",
       "window": 0,
-      "label": "Pasu Switch Pure",
-      "leaderboardId": 13227,
+      "label": "VT PasuTS Entry S5",
+      "leaderboardId": 106755,
       "rankMaxes": [
-        37,
-        46,
-        51,
-        55,
-        65,
-        69
-      ],
-      "source": {
-        "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
-      },
-      "sanity": {
-        "leaderboardEntries": 2963,
-        "clears": [
-          0.864516129032258,
-          0.6557692307692309,
-          0.5,
-          0.367741935483871,
-          0.12075733705038073,
-          0.07184463133635532
-        ],
-        "sampledAt": "2026-09-13T03:06:54.221Z"
-      },
-      "corpus": {
-        "runs": 1,
-        "best": 52,
-        "median": 52,
-        "reaches": "rank 3"
-      }
-    },
-    {
-      "scenario": "PureG Pasu Switch",
-      "category": "Evasive Switching",
-      "family": "Pasu Switch",
-      "focus": "Land on the moving target, then finish.",
-      "arm": "Wrist",
-      "armFrom": "Apogee",
-      "subCategory": "Evasive Switching",
-      "window": 1,
-      "label": "PureG Pasu Switch",
-      "leaderboardId": 28397,
-      "rankMaxes": [
-        59,
-        63,
-        64,
-        67,
-        75,
-        78
-      ],
-      "source": {
-        "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
-      },
-      "sanity": {
-        "leaderboardEntries": 5256,
-        "clears": [
-          0.25594405594405595,
-          0.17090909090909095,
-          0.15272727272727282,
-          0.10642201834862389,
-          0.03645869651933642,
-          0.02193471528266603
-        ],
-        "sampledAt": "2026-09-13T03:07:01.556Z"
-      }
-    },
-    {
-      "scenario": "Pasu Switch Wide",
-      "category": "Evasive Switching",
-      "family": "Pasu Switch",
-      "focus": "Land on the moving target, then finish.",
-      "arm": "Wrist",
-      "armFrom": "Apogee",
-      "subCategory": "Evasive Switching",
-      "window": 2,
-      "label": "Pasu Switch Wide",
-      "leaderboardId": 48886,
-      "rankMaxes": [
-        500,
-        516,
-        533,
-        547,
-        587,
-        622
-      ],
-      "source": {
-        "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
-      },
-      "sanity": {
-        "leaderboardEntries": 5859,
-        "clears": [
-          0.07429173607237786,
-          0.05951287192142027,
-          0.047017627405556,
-          0.03096260608786749,
-          0.009146385582320303,
-          0.00490142667262773
-        ],
-        "sampledAt": "2026-09-13T03:07:08.834Z"
-      }
-    },
-    {
-      "scenario": "Pasu Switch Wide Regen",
-      "category": "Evasive Switching",
-      "family": "Pasu Switch",
-      "focus": "Land on the moving target, then finish.",
-      "arm": "Wrist",
-      "armFrom": "Apogee",
-      "subCategory": "Evasive Switching",
-      "window": 3,
-      "label": "Pasu Switch Wide Regen",
-      "leaderboardId": 48884,
-      "rankMaxes": [
+        603,
+        696,
         736,
-        760,
-        776,
-        800
+        769,
+        842,
+        884
       ],
       "source": {
-        "kind": "percentile",
-        "cut": {
-          "ranks": [
-            12,
-            13,
-            14,
-            15
-          ],
-          "topFractions": [
-            0.022,
-            0.015,
-            0.011,
-            0.008
-          ],
-          "leaderboardId": 48884,
-          "total": 1585,
-          "sampledAt": "2026-09-13T03:07:16.121Z"
-        },
-        "why": "Cut from this scenario's own KovaaK's board at the pool ladder's ranks 13, 14, 15, 16 - the top 2.2%, 1.5%, 1.1%, 0.8% of 1,585 entries. No benchmark publishes a tier for this scenario at this window, so there is nothing to adopt. Re-cut with npm run cut:thresholds."
+        "kind": "authored",
+        "why": "Frozen from this scenario's own dated leaderboard. The first four ranks use the season curve; lower bands keep stricter two-rank crossover cuts (0.5 and 0.4 factors). Ties are capped backward from the demonstrated record. Reproduce using data/evasive_rework_calibration.json. Physical difficulty and equal effort between scenarios require playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 1585,
+        "leaderboardEntries": 5246,
         "clears": [
-          0.02199911145663099,
-          0.015772870662460567,
-          0.010932883961437637,
-          0.006309148264984227
+          0.8595693779904306,
+          0.6595454545454545,
+          0.49056603773584906,
+          0.3617021276595745,
+          0.13,
+          0.06946699557364767
         ],
-        "sampledAt": "2026-09-13T03:07:16.121Z"
+        "sampledAt": "2026-09-14T19:14:24.079Z"
       }
     },
     {
-      "scenario": "tamTargetSwitch Control Entry",
+      "scenario": "VT PasuTS Intermediate S5",
       "category": "Evasive Switching",
-      "family": "Regen Control",
-      "focus": "Finish the moving target before you leave.",
-      "arm": "Wrist",
+      "family": "Pasu Switch",
+      "focus": "Keep the crosshair on the bot through its direction changes. Switch after the kill.",
+      "arm": "Blending",
+      "armFrom": "Apogee",
+      "subCategory": "Evasive Switching",
+      "window": 1,
+      "label": "VT PasuTS Intermediate S5",
+      "leaderboardId": 106756,
+      "rankMaxes": [
+        752,
+        776,
+        786,
+        802,
+        840,
+        858
+      ],
+      "source": {
+        "kind": "authored",
+        "why": "Frozen from this scenario's own dated leaderboard. The first four ranks use the season curve; lower bands keep stricter two-rank crossover cuts (0.5 and 0.4 factors). Ties are capped backward from the demonstrated record. Reproduce using data/evasive_rework_calibration.json. Physical difficulty and equal effort between scenarios require playtesting."
+      },
+      "sanity": {
+        "leaderboardEntries": 12521,
+        "clears": [
+          0.25862068965517243,
+          0.1787878787878788,
+          0.14864864864864863,
+          0.10540540540540541,
+          0.0392634803998677,
+          0.021363370537695957
+        ],
+        "sampledAt": "2026-09-14T19:14:34.233Z"
+      }
+    },
+    {
+      "scenario": "VT PasuTS Advanced S5",
+      "category": "Evasive Switching",
+      "family": "Pasu Switch",
+      "focus": "Keep the crosshair on the bot through its direction changes. Switch after the kill.",
+      "arm": "Blending",
+      "armFrom": "Apogee",
+      "subCategory": "Evasive Switching",
+      "window": 2,
+      "label": "VT PasuTS Advanced S5",
+      "leaderboardId": 106331,
+      "rankMaxes": [
+        780,
+        788,
+        800,
+        810,
+        840,
+        860
+      ],
+      "source": {
+        "kind": "authored",
+        "why": "Frozen from this scenario's own dated leaderboard. The first four ranks use the season curve; lower bands keep stricter two-rank crossover cuts (0.5 and 0.4 factors). Ties are capped backward from the demonstrated record. Reproduce using data/evasive_rework_calibration.json. Physical difficulty and equal effort between scenarios require playtesting."
+      },
+      "sanity": {
+        "leaderboardEntries": 1837,
+        "clears": [
+          0.0684503772282491,
+          0.05698858110924695,
+          0.038819232386007936,
+          0.02768235559182435,
+          0.01141048035549744,
+          0.00563892383545456
+        ],
+        "sampledAt": "2026-09-14T19:14:44.277Z"
+      }
+    },
+    {
+      "scenario": "VT PasuTS Elite S5",
+      "category": "Evasive Switching",
+      "family": "Pasu Switch",
+      "focus": "Keep the crosshair on the bot through its direction changes. Switch after the kill.",
+      "arm": "Blending",
+      "armFrom": "Apogee",
+      "subCategory": "Evasive Switching",
+      "window": 3,
+      "label": "VT PasuTS Elite S5",
+      "leaderboardId": 106754,
+      "rankMaxes": [
+        646,
+        683,
+        711,
+        726
+      ],
+      "source": {
+        "kind": "authored",
+        "why": "Frozen from this scenario's own dated leaderboard. The first four ranks use the season curve; lower bands keep stricter two-rank crossover cuts (0.5 and 0.4 factors). Ties are capped backward from the demonstrated record. Reproduce using data/evasive_rework_calibration.json. Physical difficulty and equal effort between scenarios require playtesting."
+      },
+      "sanity": {
+        "leaderboardEntries": 223,
+        "clears": [
+          0.015950194190538395,
+          0.011033856505458716,
+          0.009325713489947566,
+          0.006818883550845847
+        ],
+        "sampledAt": "2026-09-14T19:14:54.218Z"
+      }
+    },
+    {
+      "scenario": "Floatswitch Entry",
+      "category": "Evasive Switching",
+      "family": "Floating Heads",
+      "focus": "Build a target order and keep each burst on the head until it drops.",
+      "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Evasive Switching",
       "window": 0,
-      "label": "tamTargetSwitch Control Entry",
-      "leaderboardId": 110651,
+      "label": "Floatswitch Entry",
+      "leaderboardId": 112237,
       "rankMaxes": [
-        38,
-        44,
-        47,
-        49,
-        55,
-        57
+        505,
+        577,
+        612,
+        638,
+        708,
+        742
+      ],
+      "source": {
+        "kind": "authored",
+        "why": "Frozen from this scenario's own dated leaderboard. The first four ranks use the season curve; lower bands keep stricter two-rank crossover cuts (0.5 and 0.4 factors). Ties are capped backward from the demonstrated record. Reproduce using data/evasive_rework_calibration.json. Physical difficulty and equal effort between scenarios require playtesting."
+      },
+      "sanity": {
+        "leaderboardEntries": 4300,
+        "clears": [
+          0.8601851851851852,
+          0.6605882352941177,
+          0.49,
+          0.36,
+          0.12926829268292683,
+          0.06769417631682172
+        ],
+        "sampledAt": "2026-09-14T19:15:03.017Z"
+      }
+    },
+    {
+      "scenario": "Floatswitch Intermediate",
+      "category": "Evasive Switching",
+      "family": "Floating Heads",
+      "focus": "Build a target order and keep each burst on the head until it drops.",
+      "arm": "Blending",
+      "armFrom": "Apogee",
+      "subCategory": "Evasive Switching",
+      "window": 1,
+      "label": "Floatswitch Intermediate",
+      "leaderboardId": 111979,
+      "rankMaxes": [
+        685,
+        708,
+        719,
+        735,
+        773,
+        796
+      ],
+      "source": {
+        "kind": "authored",
+        "why": "Frozen from this scenario's own dated leaderboard. The first four ranks use the season curve; lower bands keep stricter two-rank crossover cuts (0.5 and 0.4 factors). Ties are capped backward from the demonstrated record. Reproduce using data/evasive_rework_calibration.json. Physical difficulty and equal effort between scenarios require playtesting."
+      },
+      "sanity": {
+        "leaderboardEntries": 9749,
+        "clears": [
+          0.2612244897959184,
+          0.17894736842105263,
+          0.15,
+          0.10555555555555556,
+          0.0379807557771711,
+          0.02170836971486937
+        ],
+        "sampledAt": "2026-09-14T19:15:12.937Z"
+      }
+    },
+    {
+      "scenario": "Floatswitch Advanced",
+      "category": "Evasive Switching",
+      "family": "Floating Heads",
+      "focus": "Build a target order and keep each burst on the head until it drops.",
+      "arm": "Blending",
+      "armFrom": "Apogee",
+      "subCategory": "Evasive Switching",
+      "window": 2,
+      "label": "Floatswitch Advanced",
+      "leaderboardId": 112006,
+      "rankMaxes": [
+        748,
+        764,
+        776,
+        787,
+        824,
+        839
+      ],
+      "source": {
+        "kind": "authored",
+        "why": "Frozen from this scenario's own dated leaderboard. The first four ranks use the season curve; lower bands keep stricter two-rank crossover cuts (0.5 and 0.4 factors). Ties are capped backward from the demonstrated record. Reproduce using data/evasive_rework_calibration.json. Physical difficulty and equal effort between scenarios require playtesting."
+      },
+      "sanity": {
+        "leaderboardEntries": 1509,
+        "clears": [
+          0.07481338250994929,
+          0.04959358337725867,
+          0.036649406472394196,
+          0.02818645331182424,
+          0.010562615390249759,
+          0.00652093787423192
+        ],
+        "sampledAt": "2026-09-14T19:15:22.816Z"
+      }
+    },
+    {
+      "scenario": "Floatswitch Elite",
+      "category": "Evasive Switching",
+      "family": "Floating Heads",
+      "focus": "Build a target order and keep each burst on the head until it drops.",
+      "arm": "Blending",
+      "armFrom": "Apogee",
+      "subCategory": "Evasive Switching",
+      "window": 3,
+      "label": "Floatswitch Elite",
+      "leaderboardId": 112062,
+      "rankMaxes": [
+        705,
+        730,
+        746,
+        754
+      ],
+      "source": {
+        "kind": "authored",
+        "why": "Frozen from this scenario's own dated leaderboard. The first four ranks use the season curve; lower bands keep stricter two-rank crossover cuts (0.5 and 0.4 factors). Ties are capped backward from the demonstrated record. Reproduce using data/evasive_rework_calibration.json. Physical difficulty and equal effort between scenarios require playtesting."
+      },
+      "sanity": {
+        "leaderboardEntries": 359,
+        "clears": [
+          0.01969656772107375,
+          0.01174697305434191,
+          0.008945541594730764,
+          0.007105428972845631
+        ],
+        "sampledAt": "2026-09-14T19:15:32.670Z"
+      }
+    },
+    {
+      "scenario": "VT ControlTS Entry S5 Speed",
+      "category": "Evasive Switching",
+      "family": "Chamber Relay",
+      "focus": "Track the jump through the narrow space. Recenter before moving on.",
+      "arm": "Blending",
+      "armFrom": "Apogee",
+      "subCategory": "Evasive Switching",
+      "window": 0,
+      "label": "VT ControlTS Entry S5 Speed",
+      "leaderboardId": 106720,
+      "rankMaxes": [
+        552,
+        616,
+        648,
+        670,
+        725,
+        753
+      ],
+      "source": {
+        "kind": "authored",
+        "why": "Frozen from this scenario's own dated leaderboard. The first four ranks use the season curve; lower bands keep stricter two-rank crossover cuts (0.5 and 0.4 factors). Ties are capped backward from the demonstrated record. Reproduce using data/evasive_rework_calibration.json. Physical difficulty and equal effort between scenarios require playtesting."
+      },
+      "sanity": {
+        "leaderboardEntries": 2195,
+        "clears": [
+          0.8609375,
+          0.6591871780194619,
+          0.4890973036342321,
+          0.3595238095238097,
+          0.12648996591392814,
+          0.07286344985447711
+        ],
+        "sampledAt": "2026-09-14T19:15:41.955Z"
+      }
+    },
+    {
+      "scenario": "VT ControlTS Intermediate S5",
+      "category": "Evasive Switching",
+      "family": "Chamber Relay",
+      "focus": "Track the jump through the narrow space. Recenter before moving on.",
+      "arm": "Blending",
+      "armFrom": "Apogee",
+      "subCategory": "Evasive Switching",
+      "window": 1,
+      "label": "VT ControlTS Intermediate S5",
+      "leaderboardId": 104890,
+      "rankMaxes": [
+        456,
+        477,
+        487,
+        503,
+        529,
+        536
       ],
       "source": {
         "kind": "authored",
         "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
       },
       "sanity": {
-        "leaderboardEntries": 4724,
+        "leaderboardEntries": 48842,
         "clears": [
-          0.8642857142857143,
-          0.65,
-          0.5,
-          0.4,
-          0.125,
-          0.08400725296190725
+          0.2614035087719298,
+          0.17965116279069765,
+          0.15058139534883716,
+          0.1051136363636364,
+          0.037884615384615364,
+          0.02250000000000008
         ],
-        "sampledAt": "2026-09-13T19:26:27.335Z"
+        "sampledAt": "2026-08-18T17:44:56.408Z"
+      },
+      "corpus": {
+        "runs": 19,
+        "best": 490,
+        "median": 449,
+        "reaches": "rank 7"
+      }
+    },
+    {
+      "scenario": "VT ControlTS Advanced S5",
+      "category": "Evasive Switching",
+      "family": "Chamber Relay",
+      "focus": "Track the jump through the narrow space. Recenter before moving on.",
+      "arm": "Blending",
+      "armFrom": "Apogee",
+      "subCategory": "Evasive Switching",
+      "window": 2,
+      "label": "VT ControlTS Advanced S5",
+      "leaderboardId": 104833,
+      "rankMaxes": [
+        456,
+        461,
+        473,
+        483,
+        512,
+        525
+      ],
+      "source": {
+        "kind": "authored",
+        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+      },
+      "sanity": {
+        "leaderboardEntries": 9724,
+        "clears": [
+          0.07338709677419364,
+          0.053225806451612956,
+          0.037689023282362316,
+          0.029424166543020613,
+          0.010756798339692064,
+          0.00556442386427696
+        ],
+        "sampledAt": "2026-08-18T17:45:04.286Z"
       },
       "corpus": {
         "runs": 1,
-        "best": 57,
-        "median": 57,
-        "reaches": "rank 6"
+        "best": 344,
+        "median": 344,
+        "reaches": null
       }
     },
     {
-      "scenario": "tamTargetSwitch Control Intermediate",
+      "scenario": "VT ControlTS Elite S5",
       "category": "Evasive Switching",
-      "family": "Regen Control",
-      "focus": "Finish the moving target before you leave.",
-      "arm": "Wrist",
-      "armFrom": "Apogee",
-      "subCategory": "Evasive Switching",
-      "window": 1,
-      "label": "tamTargetSwitch Control Intermediate",
-      "leaderboardId": 110123,
-      "rankMaxes": [
-        49,
-        50,
-        51,
-        53,
-        56,
-        57
-      ],
-      "source": {
-        "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
-      },
-      "sanity": {
-        "leaderboardEntries": 9783,
-        "clears": [
-          0.25,
-          0.2,
-          0.15,
-          0.1,
-          0.03613956767793863,
-          0.025554533374220586
-        ],
-        "sampledAt": "2026-09-13T19:24:23.336Z"
-      }
-    },
-    {
-      "scenario": "tamTargetSwitch Control",
-      "category": "Evasive Switching",
-      "family": "Regen Control",
-      "focus": "Finish the moving target before you leave.",
-      "arm": "Wrist",
-      "armFrom": "Apogee",
-      "subCategory": "Evasive Switching",
-      "window": 2,
-      "label": "tamTargetSwitch Control",
-      "leaderboardId": 57,
-      "rankMaxes": [
-        35,
-        36,
-        37,
-        38,
-        41,
-        43
-      ],
-      "source": {
-        "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
-      },
-      "sanity": {
-        "leaderboardEntries": 30985,
-        "clears": [
-          0.075,
-          0.05,
-          0.035,
-          0.027500000000000004,
-          0.01141046927846615,
-          0.00510291699236466
-        ],
-        "sampledAt": "2026-09-13T19:24:37.497Z"
-      }
-    },
-    {
-      "scenario": "tamTargetSwitch Control Hard",
-      "category": "Evasive Switching",
-      "family": "Regen Control",
-      "focus": "Finish the moving target before you leave.",
-      "arm": "Wrist",
+      "family": "Chamber Relay",
+      "focus": "Track the jump through the narrow space. Recenter before moving on.",
+      "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Evasive Switching",
       "window": 3,
-      "label": "tamTargetSwitch Control Hard",
-      "leaderboardId": 757,
+      "label": "VT ControlTS Elite S5",
+      "leaderboardId": 106693,
       "rankMaxes": [
-        37,
-        38,
-        39,
-        40
+        394,
+        402,
+        406,
+        416
       ],
       "source": {
         "kind": "percentile",
@@ -10581,185 +10492,28 @@
             0.011,
             0.008
           ],
-          "leaderboardId": 757,
-          "total": 61447,
-          "sampledAt": "2026-09-13T19:24:51.555Z"
+          "leaderboardId": 106693,
+          "total": 582,
+          "sampledAt": "2026-08-19T00:13:36.798Z"
         },
-        "why": "Frozen once for the theory-led draft rebuild from this exact scenario's own dated leaderboard. Existing Apogee percentile positions are retained. The target is a fixed score, not a live percentile or proof of equal difficulty across variants."
+        "why": "Frozen from this scenario's own board for the season variety expansion. This is a season target, not a copied benchmark tier."
       },
       "sanity": {
-        "leaderboardEntries": 61447,
+        "leaderboardEntries": 582,
         "clears": [
-          0.02,
-          0.015,
-          0.01,
-          0.008137093755594252
+          0.01948148914298852,
+          0.011744446225041895,
+          0.008949145415291336,
+          0.005805042822299757
         ],
-        "sampledAt": "2026-09-13T19:24:51.555Z"
-      }
-    },
-    {
-      "scenario": "B180T rAim Easy",
-      "category": "Evasive Switching",
-      "family": "Arc Transfer",
-      "focus": "Track the whole arc. Confirm the finish.",
-      "arm": "Arm",
-      "armFrom": "Apogee",
-      "subCategory": "Evasive Switching",
-      "window": 0,
-      "label": "B180T rAim Easy",
-      "leaderboardId": 740,
-      "rankMaxes": [
-        36,
-        47,
-        54,
-        60,
-        71,
-        74
-      ],
-      "source": {
-        "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
-      },
-      "sanity": {
-        "leaderboardEntries": 4306,
-        "clears": [
-          0.8545454545454546,
-          0.65,
-          0.48,
-          0.36,
-          0.13333333333333333,
-          0.07314915524238692
-        ],
-        "sampledAt": "2026-09-13T19:25:05.559Z"
-      }
-    },
-    {
-      "scenario": "aimerz+ B180TC Normal",
-      "category": "Evasive Switching",
-      "family": "Arc Transfer",
-      "focus": "Track the whole arc. Confirm the finish.",
-      "arm": "Arm",
-      "armFrom": "Apogee",
-      "subCategory": "Evasive Switching",
-      "window": 1,
-      "label": "aimerz+ B180TC Normal",
-      "leaderboardId": 44380,
-      "rankMaxes": [
-        55,
-        59,
-        60,
-        62,
-        68,
-        71
-      ],
-      "source": {
-        "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
-      },
-      "sanity": {
-        "leaderboardEntries": 6560,
-        "clears": [
-          0.26,
-          0.175,
-          0.15,
-          0.1,
-          0.038109756097560975,
-          0.021992376614439233
-        ],
-        "sampledAt": "2026-09-13T19:25:19.621Z"
-      }
-    },
-    {
-      "scenario": "B180T Voltaic Easy Regen",
-      "category": "Evasive Switching",
-      "family": "Arc Transfer",
-      "focus": "Track the whole arc. Confirm the finish.",
-      "arm": "Arm",
-      "armFrom": "Apogee",
-      "subCategory": "Evasive Switching",
-      "window": 2,
-      "label": "B180T Voltaic Easy Regen",
-      "leaderboardId": 2837,
-      "rankMaxes": [
-        47,
-        49,
-        51,
-        53,
-        58,
-        61
-      ],
-      "source": {
-        "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
-      },
-      "sanity": {
-        "leaderboardEntries": 12190,
-        "clears": [
-          0.075,
-          0.05,
-          0.04101722723543889,
-          0.029003559523648373,
-          0.01031528654374845,
-          0.005800711904729678
-        ],
-        "sampledAt": "2026-09-13T19:25:33.681Z"
-      }
-    },
-    {
-      "scenario": "B180T Voltaic Regen",
-      "category": "Evasive Switching",
-      "family": "Arc Transfer",
-      "focus": "Track the whole arc. Confirm the finish.",
-      "arm": "Arm",
-      "armFrom": "Apogee",
-      "subCategory": "Evasive Switching",
-      "window": 3,
-      "label": "B180T Voltaic Regen",
-      "leaderboardId": 2153,
-      "rankMaxes": [
-        28,
-        29,
-        30,
-        31
-      ],
-      "source": {
-        "kind": "percentile",
-        "cut": {
-          "ranks": [
-            12,
-            13,
-            14,
-            15
-          ],
-          "topFractions": [
-            0.022,
-            0.015,
-            0.011,
-            0.008
-          ],
-          "leaderboardId": 2153,
-          "total": 8679,
-          "sampledAt": "2026-09-13T19:25:47.664Z"
-        },
-        "why": "Frozen once for the theory-led draft rebuild from this exact scenario's own dated leaderboard. Existing Apogee percentile positions are retained. The target is a fixed score, not a live percentile or proof of equal difficulty across variants. Provisional calibration: 8679 players; this board is below the population floor for this band. Validate the difficulty step through group playtesting before publishing the season."
-      },
-      "sanity": {
-        "leaderboardEntries": 8679,
-        "clears": [
-          0.018217983985300033,
-          0.014488229400656022,
-          0.011522064754003917,
-          0.008147330120826683
-        ],
-        "sampledAt": "2026-09-13T19:25:47.664Z"
+        "sampledAt": "2026-08-19T00:13:36.798Z"
       }
     },
     {
       "scenario": "CB JumpSwitch Easy",
       "category": "Evasive Switching",
       "family": "Hop Transfer",
-      "focus": "Follow the jump through the final hit.",
+      "focus": "Read the jump arc and keep firing through the landing. Do not switch early.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Evasive Switching",
@@ -10795,7 +10549,7 @@
       "scenario": "Aimerz+ hopTS Easy S1",
       "category": "Evasive Switching",
       "family": "Hop Transfer",
-      "focus": "Follow the jump through the final hit.",
+      "focus": "Read the jump arc and keep firing through the landing. Do not switch early.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Evasive Switching",
@@ -10831,7 +10585,7 @@
       "scenario": "Aimerz+ hopTS Med S1",
       "category": "Evasive Switching",
       "family": "Hop Transfer",
-      "focus": "Follow the jump through the final hit.",
+      "focus": "Read the jump arc and keep firing through the landing. Do not switch early.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Evasive Switching",
@@ -10867,7 +10621,7 @@
       "scenario": "Aimerz+ hopTS Hard S1",
       "category": "Evasive Switching",
       "family": "Hop Transfer",
-      "focus": "Follow the jump through the final hit.",
+      "focus": "Read the jump arc and keep firing through the landing. Do not switch early.",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Evasive Switching",
@@ -10913,560 +10667,46 @@
       }
     },
     {
-      "scenario": "tamTargetSwitch Smooth Hard 30% Larger",
-      "category": "Evasive Switching",
-      "family": "tamTargetSwitch Smooth",
-      "focus": "Stay on the circle until the target falls.",
-      "arm": "Wrist",
-      "armFrom": "Apogee",
-      "subCategory": "Evasive Switching",
-      "window": 0,
-      "label": "tamTargetSwitch Smooth Hard 30% Larger",
-      "leaderboardId": 96201,
-      "rankMaxes": [
-        16,
-        24,
-        28,
-        31,
-        37,
-        39
-      ],
-      "source": {
-        "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
-      },
-      "sanity": {
-        "leaderboardEntries": 2143,
-        "clears": [
-          0.85625,
-          0.65,
-          0.5,
-          0.3666666666666667,
-          0.14698099042170698,
-          0.07378155996659776
-        ],
-        "sampledAt": "2026-09-03T01:15:26.497Z"
-      },
-      "corpus": {
-        "runs": 1,
-        "best": 32,
-        "median": 32,
-        "reaches": "rank 4"
-      }
-    },
-    {
-      "scenario": "tamTargetSwitch Smooth Easy",
-      "category": "Evasive Switching",
-      "family": "tamTargetSwitch Smooth",
-      "focus": "Stay on the circle until the target falls.",
-      "arm": "Wrist",
-      "armFrom": "Apogee",
-      "subCategory": "Evasive Switching",
-      "window": 1,
-      "label": "tamTargetSwitch Smooth Easy",
-      "leaderboardId": 42505,
-      "rankMaxes": [
-        30,
-        31,
-        32,
-        34,
-        37,
-        38
-      ],
-      "source": {
-        "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
-      },
-      "sanity": {
-        "leaderboardEntries": 69242,
-        "clears": [
-          0.25,
-          0.2,
-          0.15,
-          0.1,
-          0.035,
-          0.02
-        ],
-        "sampledAt": "2026-08-29T17:31:26.770Z"
-      },
-      "corpus": {
-        "runs": 26,
-        "best": 35,
-        "median": 30,
-        "reaches": "rank 8"
-      }
-    },
-    {
-      "scenario": "tamTargetSwitch Smooth",
-      "category": "Evasive Switching",
-      "family": "tamTargetSwitch Smooth",
-      "focus": "Stay on the circle until the target falls.",
-      "arm": "Wrist",
-      "armFrom": "Apogee",
-      "subCategory": "Evasive Switching",
-      "window": 2,
-      "label": "tamTargetSwitch Smooth",
-      "leaderboardId": 56,
-      "rankMaxes": [
-        32,
-        34,
-        35,
-        36,
-        39,
-        41
-      ],
-      "source": {
-        "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
-      },
-      "sanity": {
-        "leaderboardEntries": 51563,
-        "clears": [
-          0.075,
-          0.05,
-          0.035,
-          0.027500000000000004,
-          0.009696875666660202,
-          0.004848437833330101
-        ],
-        "sampledAt": "2026-09-03T01:15:34.246Z"
-      }
-    },
-    {
-      "scenario": "tamTargetSwitch Smooth Hard",
-      "category": "Evasive Switching",
-      "family": "tamTargetSwitch Smooth",
-      "focus": "Stay on the circle until the target falls.",
-      "arm": "Wrist",
-      "armFrom": "Apogee",
-      "subCategory": "Evasive Switching",
-      "window": 3,
-      "label": "tamTargetSwitch Smooth Hard",
-      "leaderboardId": 727,
-      "rankMaxes": [
-        31,
-        33,
-        34,
-        35
-      ],
-      "source": {
-        "kind": "percentile",
-        "cut": {
-          "ranks": [
-            12,
-            13,
-            14,
-            15
-          ],
-          "topFractions": [
-            0.022,
-            0.015,
-            0.011,
-            0.008
-          ],
-          "leaderboardId": 727,
-          "total": 46012,
-          "sampledAt": "2026-08-29T19:22:54.010Z"
-        },
-        "why": "Score targets cut once from this scenario's own KovaaK's leaderboard, at the pool ladder's percentiles for this window (see cut). They're fixed and don't move while the app runs. Each category ladder weights its six families equally. Whether the targets are equally hard across scenarios hasn't been playtested."
-      },
-      "sanity": {
-        "leaderboardEntries": 46012,
-        "clears": [
-          0.02,
-          0.010864133150815896,
-          0.007682102222655491,
-          0.005432066575407948
-        ],
-        "sampledAt": "2026-08-29T19:22:54.010Z"
-      }
-    },
-    {
-      "scenario": "VT FlyTS Novice S5",
-      "category": "Evasive Switching",
-      "family": "FlyTS",
-      "focus": "Read the flight. Finish, then transfer.",
-      "arm": "Blending",
-      "armFrom": "Apogee",
-      "subCategory": "Evasive Switching",
-      "window": 0,
-      "label": "VT FlyTS Novice S5",
-      "leaderboardId": 104830,
-      "rankMaxes": [
-        434,
-        497,
-        537,
-        547,
-        582,
-        602
-      ],
-      "source": {
-        "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
-      },
-      "sanity": {
-        "leaderboardEntries": 79460,
-        "clears": [
-          0.8593314763231198,
-          0.6619680851063829,
-          0.48823529411764766,
-          0.35833333333333345,
-          0.13076923076923078,
-          0.07121212121212123
-        ],
-        "sampledAt": "2026-08-18T17:44:25.484Z"
-      },
-      "corpus": {
-        "runs": 2,
-        "best": 630,
-        "median": 614,
-        "reaches": "rank 6"
-      }
-    },
-    {
-      "scenario": "VT FlyTS Intermediate S5",
-      "category": "Evasive Switching",
-      "family": "FlyTS",
-      "focus": "Read the flight. Finish, then transfer.",
-      "arm": "Blending",
-      "armFrom": "Apogee",
-      "subCategory": "Evasive Switching",
-      "window": 1,
-      "label": "VT FlyTS Intermediate S5",
-      "leaderboardId": 105142,
-      "rankMaxes": [
-        571,
-        597,
-        610,
-        632,
-        662,
-        669
-      ],
-      "source": {
-        "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
-      },
-      "sanity": {
-        "leaderboardEntries": 48140,
-        "clears": [
-          0.26153846153846155,
-          0.18037383177570096,
-          0.15,
-          0.1049180327868852,
-          0.03676470588235286,
-          0.022624999999999958
-        ],
-        "sampledAt": "2026-08-18T17:44:33.188Z"
-      },
-      "corpus": {
-        "runs": 18,
-        "best": 612,
-        "median": 562,
-        "reaches": "rank 7"
-      }
-    },
-    {
-      "scenario": "VT FlyTS Advanced S5",
-      "category": "Evasive Switching",
-      "family": "FlyTS",
-      "focus": "Read the flight. Finish, then transfer.",
-      "arm": "Blending",
-      "armFrom": "Apogee",
-      "subCategory": "Evasive Switching",
-      "window": 2,
-      "label": "VT FlyTS Advanced S5",
-      "leaderboardId": 105143,
-      "rankMaxes": [
-        551,
-        561,
-        574,
-        588,
-        621,
-        652
-      ],
-      "source": {
-        "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
-      },
-      "sanity": {
-        "leaderboardEntries": 9501,
-        "clears": [
-          0.07419354838709682,
-          0.05403225806451614,
-          0.041165383828882,
-          0.031887933912251636,
-          0.010900945959001556,
-          0.005921085708212873
-        ],
-        "sampledAt": "2026-08-18T17:44:41.155Z"
-      },
-      "corpus": {
-        "runs": 1,
-        "best": 422,
-        "median": 422,
-        "reaches": null
-      }
-    },
-    {
-      "scenario": "VT FlyTS Elite S5",
-      "category": "Evasive Switching",
-      "family": "FlyTS",
-      "focus": "Read the flight. Finish, then transfer.",
-      "arm": "Blending",
-      "armFrom": "Apogee",
-      "subCategory": "Evasive Switching",
-      "window": 3,
-      "label": "VT FlyTS Elite S5",
-      "leaderboardId": 106747,
-      "rankMaxes": [
-        450,
-        472,
-        495,
-        520
-      ],
-      "source": {
-        "kind": "authored",
-        "why": "The published Elite ladder goes above the sampled world record. Kept its first target (450) and spaced four targets geometrically up to 520, the rounded-down score at board rank 5 (520.2) in the 2026-09-03T01:25:31.253Z apex sample, so the top target is a score at least five players have hit. Set by hand: these aren't the benchmark author's numbers, and the board is too thin for a percentile cut."
-      },
-      "sanity": {
-        "leaderboardEntries": 615,
-        "clears": [
-          0.07958958489711834,
-          0.040724542108852534,
-          0.02095230899018038,
-          0.00797032030404522
-        ],
-        "sampledAt": "2026-08-19T00:13:26.867Z"
-      }
-    },
-    {
-      "scenario": "domiSwitch Easier",
-      "category": "Evasive Switching",
-      "family": "Domi Relay",
-      "focus": "Stay on target until it drops.",
-      "arm": "Wrist",
-      "armFrom": "Apogee",
-      "subCategory": "Evasive Switching",
-      "window": 0,
-      "label": "domiSwitch Easier",
-      "leaderboardId": 185428,
-      "rankMaxes": [
-        5437,
-        6260,
-        6737,
-        7159,
-        7757,
-        7985
-      ],
-      "source": {
-        "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
-      },
-      "sanity": {
-        "leaderboardEntries": 20300,
-        "clears": [
-          0.859938524590164,
-          0.6599683544303798,
-          0.48990765171503947,
-          0.3600107066381157,
-          0.13009259259259262,
-          0.0719436813186813
-        ],
-        "sampledAt": "2026-09-03T01:29:00.957Z"
-      },
-      "corpus": {
-        "runs": 5,
-        "best": 7806,
-        "median": 7514,
-        "reaches": "rank 5"
-      }
-    },
-    {
-      "scenario": "domiSwitch Easy",
-      "category": "Evasive Switching",
-      "family": "Domi Relay",
-      "focus": "Stay on target until it drops.",
-      "arm": "Wrist",
-      "armFrom": "Apogee",
-      "subCategory": "Evasive Switching",
-      "window": 1,
-      "label": "domiSwitch Easy",
-      "leaderboardId": 83043,
-      "rankMaxes": [
-        6061,
-        6331,
-        6439,
-        6682,
-        7201,
-        7461
-      ],
-      "source": {
-        "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
-      },
-      "sanity": {
-        "leaderboardEntries": 37779,
-        "clears": [
-          0.2598907766990291,
-          0.17992256637168133,
-          0.15005530973451323,
-          0.10497032640949558,
-          0.03745872641509435,
-          0.022003731343283595
-        ],
-        "sampledAt": "2026-08-19T01:20:58.171Z"
-      },
-      "corpus": {
-        "runs": 53,
-        "best": 6621,
-        "median": 5822,
-        "reaches": "rank 7"
-      }
-    },
-    {
-      "scenario": "domiSwitch",
-      "category": "Evasive Switching",
-      "family": "Domi Relay",
-      "focus": "Stay on target until it drops.",
-      "arm": "Wrist",
-      "armFrom": "Apogee",
-      "subCategory": "Evasive Switching",
-      "window": 2,
-      "label": "domiSwitch",
-      "leaderboardId": 83035,
-      "rankMaxes": [
-        5803,
-        6009,
-        6200,
-        6356,
-        6830,
-        7087
-      ],
-      "source": {
-        "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
-      },
-      "sanity": {
-        "leaderboardEntries": 18273,
-        "clears": [
-          0.07502717391304345,
-          0.05496495327102804,
-          0.03998091603053437,
-          0.03000000000000002,
-          0.010645606037407317,
-          0.005629428006682372
-        ],
-        "sampledAt": "2026-08-30T15:56:35.975Z"
-      },
-      "corpus": {
-        "runs": 7,
-        "best": 5193,
-        "median": 5015,
-        "reaches": null
-      }
-    },
-    {
-      "scenario": "domiSwitch Avasive",
-      "category": "Evasive Switching",
-      "family": "Domi Relay",
-      "focus": "Stay on target until it drops.",
-      "arm": "Wrist",
-      "armFrom": "Apogee",
-      "subCategory": "Evasive Switching",
-      "window": 3,
-      "label": "domiSwitch Avasive",
-      "leaderboardId": 129746,
-      "rankMaxes": [
-        5864,
-        6042,
-        6162,
-        6259
-      ],
-      "source": {
-        "kind": "percentile",
-        "cut": {
-          "ranks": [
-            12,
-            13,
-            14,
-            15
-          ],
-          "topFractions": [
-            0.022,
-            0.015,
-            0.011,
-            0.008
-          ],
-          "leaderboardId": 129746,
-          "total": 8397,
-          "sampledAt": "2026-09-04T00:05:00.449Z"
-        },
-        "why": "Frozen from this scenario's own board for the season variety expansion. This is a season target, not a copied benchmark tier."
-      },
-      "sanity": {
-        "leaderboardEntries": 8397,
-        "clears": [
-          0.02180219596272825,
-          0.014465985375010405,
-          0.010383381316667809,
-          0.0071468897622083225
-        ],
-        "sampledAt": "2026-09-04T00:05:00.449Z"
-      },
-      "corpus": {
-        "runs": 1,
-        "best": 4210,
-        "median": 4210,
-        "reaches": null
-      }
-    },
-    {
-      "scenario": "VT Penta Bounce Novice S5",
+      "scenario": "VT Penta Bounce Entry S5 Speed",
       "category": "Evasive Switching",
       "family": "Penta Bounce",
-      "focus": "Chase the bouncing crowd around the pentagon.",
+      "focus": "Track the bounce across the pentagon and choose the next target before the current one dies.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Evasive Switching",
       "window": 0,
-      "label": "VT Penta Bounce Novice S5",
-      "leaderboardId": 103262,
+      "label": "VT Penta Bounce Entry S5 Speed",
+      "leaderboardId": 107639,
       "rankMaxes": [
-        306,
-        386,
-        433,
-        454,
         489,
-        511
+        559,
+        593,
+        620,
+        690,
+        727
       ],
       "source": {
         "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+        "why": "Frozen from this scenario's own dated leaderboard. The first four ranks use the season curve; lower bands keep stricter two-rank crossover cuts (0.5 and 0.4 factors). Ties are capped backward from the demonstrated record. Reproduce using data/evasive_rework_calibration.json. Physical difficulty and equal effort between scenarios require playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 83184,
+        "leaderboardEntries": 2475,
         "clears": [
-          0.8598591549295774,
-          0.6591836734693878,
-          0.48947368421052634,
-          0.36,
-          0.12941176470588237,
-          0.07269736842105265
+          0.8600195312500001,
+          0.6602159468438539,
+          0.48977272727272747,
+          0.3607568325157673,
+          0.12685587868214454,
+          0.0770588377729462
         ],
-        "sampledAt": "2026-08-18T17:45:12.263Z"
-      },
-      "corpus": {
-        "runs": 1,
-        "best": 519,
-        "median": 519,
-        "reaches": "rank 6"
+        "sampledAt": "2026-09-14T19:15:53.601Z"
       }
     },
     {
       "scenario": "VT Penta Bounce Intermediate S5",
       "category": "Evasive Switching",
       "family": "Penta Bounce",
-      "focus": "Chase the bouncing crowd around the pentagon.",
+      "focus": "Track the bounce across the pentagon and choose the next target before the current one dies.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Evasive Switching",
@@ -11508,7 +10748,7 @@
       "scenario": "VT Penta Bounce Advanced S5",
       "category": "Evasive Switching",
       "family": "Penta Bounce",
-      "focus": "Chase the bouncing crowd around the pentagon.",
+      "focus": "Track the bounce across the pentagon and choose the next target before the current one dies.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Evasive Switching",
@@ -11550,7 +10790,7 @@
       "scenario": "VT Penta Bounce Elite S5",
       "category": "Evasive Switching",
       "family": "Penta Bounce",
-      "focus": "Chase the bouncing crowd around the pentagon.",
+      "focus": "Track the bounce across the pentagon and choose the next target before the current one dies.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Evasive Switching",
@@ -11596,147 +10836,147 @@
       }
     },
     {
-      "scenario": "VT ControlTS Novice S5",
+      "scenario": "B180T Voltaic Easy Slower",
       "category": "Evasive Switching",
-      "family": "Chamber Relay",
-      "focus": "Clear the floating pack, one target at a time.",
-      "arm": "Wrist",
+      "family": "Arc Transfer",
+      "focus": "Follow the full arc and hold the target through the finish as its depth changes.",
+      "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Evasive Switching",
       "window": 0,
-      "label": "VT ControlTS Novice S5",
-      "leaderboardId": 105132,
+      "label": "B180T Voltaic Easy Slower",
+      "leaderboardId": 185571,
       "rankMaxes": [
-        354,
-        413,
-        451,
-        459,
-        489,
-        506
+        43,
+        53,
+        59,
+        65,
+        74,
+        76
       ],
       "source": {
         "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+        "why": "Frozen from this scenario's own dated leaderboard. The first four ranks use the season curve; lower bands keep stricter two-rank crossover cuts (0.5 and 0.4 factors). Ties are capped backward from the demonstrated record. Reproduce using data/evasive_rework_calibration.json. Physical difficulty and equal effort between scenarios require playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 84100,
+        "leaderboardEntries": 21959,
         "clears": [
-          0.8603715170278637,
-          0.6601694915254237,
-          0.48333333333333334,
-          0.3605263157894738,
-          0.12923076923076932,
-          0.07285714285714287
+          0.8625,
+          0.65,
+          0.5,
+          0.3545454545454546,
+          0.12777777777777782,
+          0.075
         ],
-        "sampledAt": "2026-08-18T17:44:48.814Z"
+        "sampledAt": "2026-09-14T19:16:05.275Z"
       },
       "corpus": {
-        "runs": 1,
-        "best": 543,
-        "median": 543,
-        "reaches": "rank 6"
+        "runs": 2,
+        "best": 72,
+        "median": 72,
+        "reaches": "rank 4"
       }
     },
     {
-      "scenario": "VT ControlTS Intermediate S5",
+      "scenario": "B180T Voltaic Easy",
       "category": "Evasive Switching",
-      "family": "Chamber Relay",
-      "focus": "Clear the floating pack, one target at a time.",
-      "arm": "Wrist",
+      "family": "Arc Transfer",
+      "focus": "Follow the full arc and hold the target through the finish as its depth changes.",
+      "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Evasive Switching",
       "window": 1,
-      "label": "VT ControlTS Intermediate S5",
-      "leaderboardId": 104890,
+      "label": "B180T Voltaic Easy",
+      "leaderboardId": 543,
       "rankMaxes": [
-        456,
-        477,
-        487,
-        503,
-        529,
-        536
+        62,
+        66,
+        68,
+        72,
+        79,
+        82
       ],
       "source": {
         "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+        "why": "Frozen from this scenario's own dated leaderboard. The first four ranks use the season curve; lower bands keep stricter two-rank crossover cuts (0.5 and 0.4 factors). Ties are capped backward from the demonstrated record. Reproduce using data/evasive_rework_calibration.json. Physical difficulty and equal effort between scenarios require playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 48842,
+        "leaderboardEntries": 71786,
         "clears": [
-          0.2614035087719298,
-          0.17965116279069765,
-          0.15058139534883716,
-          0.1051136363636364,
-          0.037884615384615364,
-          0.02250000000000008
+          0.26,
+          0.18529411764705886,
+          0.15588235294117653,
+          0.1,
+          0.03687500000000002,
+          0.023333333333333327
         ],
-        "sampledAt": "2026-08-18T17:44:56.408Z"
+        "sampledAt": "2026-08-29T17:31:57.709Z"
       },
       "corpus": {
-        "runs": 19,
-        "best": 490,
-        "median": 449,
-        "reaches": "rank 7"
+        "runs": 17,
+        "best": 75,
+        "median": 69,
+        "reaches": "rank 8"
       }
     },
     {
-      "scenario": "VT ControlTS Advanced S5",
+      "scenario": "B180T Voltaic",
       "category": "Evasive Switching",
-      "family": "Chamber Relay",
-      "focus": "Clear the floating pack, one target at a time.",
-      "arm": "Wrist",
+      "family": "Arc Transfer",
+      "focus": "Follow the full arc and hold the target through the finish as its depth changes.",
+      "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Evasive Switching",
       "window": 2,
-      "label": "VT ControlTS Advanced S5",
-      "leaderboardId": 104833,
+      "label": "B180T Voltaic",
+      "leaderboardId": 947,
       "rankMaxes": [
-        456,
-        461,
-        473,
-        483,
-        512,
-        525
+        71,
+        74,
+        77,
+        79,
+        86,
+        90
       ],
       "source": {
         "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+        "why": "Frozen from this scenario's own dated leaderboard. The first four ranks use the season curve; lower bands keep stricter two-rank crossover cuts (0.5 and 0.4 factors). Ties are capped backward from the demonstrated record. Reproduce using data/evasive_rework_calibration.json. Physical difficulty and equal effort between scenarios require playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 9724,
+        "leaderboardEntries": 23380,
         "clears": [
-          0.07338709677419364,
-          0.053225806451612956,
-          0.037689023282362316,
-          0.029424166543020613,
-          0.010756798339692064,
-          0.00556442386427696
+          0.07750000000000003,
+          0.055555555555555546,
+          0.0396875,
+          0.030000000000000002,
+          0.010654619843163996,
+          0.005899326992281955
         ],
-        "sampledAt": "2026-08-18T17:45:04.286Z"
+        "sampledAt": "2026-08-25T20:34:17.372Z"
       },
       "corpus": {
-        "runs": 1,
-        "best": 344,
-        "median": 344,
+        "runs": 5,
+        "best": 57,
+        "median": 54,
         "reaches": null
       }
     },
     {
-      "scenario": "VT ControlTS Elite S5",
+      "scenario": "B180T Voltaic Regen",
       "category": "Evasive Switching",
-      "family": "Chamber Relay",
-      "focus": "Clear the floating pack, one target at a time.",
-      "arm": "Wrist",
+      "family": "Arc Transfer",
+      "focus": "Follow the full arc and hold the target through the finish as its depth changes.",
+      "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Evasive Switching",
       "window": 3,
-      "label": "VT ControlTS Elite S5",
-      "leaderboardId": 106693,
+      "label": "B180T Voltaic Regen",
+      "leaderboardId": 2153,
       "rankMaxes": [
-        394,
-        402,
-        406,
-        416
+        28,
+        29,
+        30,
+        31
       ],
       "source": {
         "kind": "percentile",
@@ -11753,173 +10993,786 @@
             0.011,
             0.008
           ],
-          "leaderboardId": 106693,
-          "total": 582,
-          "sampledAt": "2026-08-19T00:13:36.798Z"
+          "leaderboardId": 2153,
+          "total": 8679,
+          "sampledAt": "2026-09-13T19:25:47.664Z"
         },
-        "why": "Frozen from this scenario's own board for the season variety expansion. This is a season target, not a copied benchmark tier."
+        "why": "Frozen once for the theory-led draft rebuild from this exact scenario's own dated leaderboard. Existing Apogee percentile positions are retained. The target is a fixed score, not a live percentile or proof of equal difficulty across variants. Provisional calibration: 8679 players; this board is below the population floor for this band. Validate the difficulty step through group playtesting before publishing the season."
       },
       "sanity": {
-        "leaderboardEntries": 582,
+        "leaderboardEntries": 8679,
         "clears": [
-          0.01948148914298852,
-          0.011744446225041895,
-          0.008949145415291336,
-          0.005805042822299757
+          0.018217983985300033,
+          0.014488229400656022,
+          0.011522064754003917,
+          0.008147330120826683
         ],
-        "sampledAt": "2026-08-19T00:13:36.798Z"
+        "sampledAt": "2026-09-13T19:25:47.664Z"
       }
     },
     {
-      "scenario": "CB SmoothSwitch Easy",
+      "scenario": "VT FlyTS Entry S5 Speed",
       "category": "Evasive Switching",
-      "family": "Smooth Relay",
-      "focus": "Flow into the next moving target.",
-      "arm": "Arm",
+      "family": "FlyTS",
+      "focus": "Read the flight direction and make smooth transfers after each kill.",
+      "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Evasive Switching",
       "window": 0,
-      "label": "CB SmoothSwitch Easy",
-      "leaderboardId": 93247,
+      "label": "VT FlyTS Entry S5 Speed",
+      "leaderboardId": 106708,
       "rankMaxes": [
-        275,
-        342,
-        382,
-        416,
-        502,
-        531
+        621,
+        697,
+        742,
+        774,
+        847,
+        886
       ],
       "source": {
         "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+        "why": "Frozen from this scenario's own dated leaderboard. The first four ranks use the season curve; lower bands keep stricter two-rank crossover cuts (0.5 and 0.4 factors). Ties are capped backward from the demonstrated record. Reproduce using data/evasive_rework_calibration.json. Physical difficulty and equal effort between scenarios require playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 5617,
+        "leaderboardEntries": 3065,
         "clears": [
-          0.8593959731543624,
-          0.6584905660377359,
-          0.49183673469387756,
-          0.36,
-          0.13067226890756303,
-          0.06958086187405828
+          0.8604525862068966,
+          0.6599419448476053,
+          0.4901439162668993,
+          0.35914172376487546,
+          0.12607495948815262,
+          0.07062750102298355
         ],
-        "sampledAt": "2026-08-25T20:10:00.624Z"
-      },
-      "corpus": {
-        "runs": 2,
-        "best": 451,
-        "median": 440,
-        "reaches": "rank 4"
+        "sampledAt": "2026-09-14T19:16:18.565Z"
       }
     },
     {
-      "scenario": "SmoothTS Revosect Entry",
+      "scenario": "VT FlyTS Intermediate S5",
       "category": "Evasive Switching",
-      "family": "Smooth Relay",
-      "focus": "Flow into the next moving target.",
-      "arm": "Arm",
+      "family": "FlyTS",
+      "focus": "Read the flight direction and make smooth transfers after each kill.",
+      "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Evasive Switching",
       "window": 1,
-      "label": "SmoothTS Revosect Entry",
-      "leaderboardId": 142911,
+      "label": "VT FlyTS Intermediate S5",
+      "leaderboardId": 105142,
       "rankMaxes": [
-        515,
-        535,
-        542,
-        560,
-        609,
-        626
+        571,
+        597,
+        610,
+        632,
+        662,
+        669
       ],
       "source": {
         "kind": "authored",
         "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
       },
       "sanity": {
-        "leaderboardEntries": 1069,
+        "leaderboardEntries": 48140,
         "clears": [
-          0.2522422895404973,
-          0.17550278291781032,
-          0.15316330679232543,
-          0.10792151458581065,
-          0.0368792444394562,
-          0.023215409892992152
+          0.26153846153846155,
+          0.18037383177570096,
+          0.15,
+          0.1049180327868852,
+          0.03676470588235286,
+          0.022624999999999958
         ],
-        "sampledAt": "2026-09-14T02:37:25.884Z"
+        "sampledAt": "2026-08-18T17:44:33.188Z"
+      },
+      "corpus": {
+        "runs": 18,
+        "best": 612,
+        "median": 562,
+        "reaches": "rank 7"
       }
     },
     {
-      "scenario": "SmoothTS Revosect Int",
+      "scenario": "VT FlyTS Advanced S5",
       "category": "Evasive Switching",
-      "family": "Smooth Relay",
-      "focus": "Flow into the next moving target.",
-      "arm": "Arm",
+      "family": "FlyTS",
+      "focus": "Read the flight direction and make smooth transfers after each kill.",
+      "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Evasive Switching",
       "window": 2,
-      "label": "SmoothTS Revosect Int",
-      "leaderboardId": 142909,
+      "label": "VT FlyTS Advanced S5",
+      "leaderboardId": 105143,
       "rankMaxes": [
-        539,
-        548,
-        554,
-        557,
-        569,
-        581
+        551,
+        561,
+        574,
+        588,
+        621,
+        652
       ],
       "source": {
         "kind": "authored",
         "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
       },
       "sanity": {
-        "leaderboardEntries": 769,
+        "leaderboardEntries": 9501,
         "clears": [
-          0.06793460678416992,
-          0.04874477528134839,
-          0.03758736006048645,
-          0.033006441154479205,
-          0.01017294267312386,
-          0.005167529741088876
+          0.07419354838709682,
+          0.05403225806451614,
+          0.041165383828882,
+          0.031887933912251636,
+          0.010900945959001556,
+          0.005921085708212873
         ],
-        "sampledAt": "2026-09-14T02:37:33.629Z"
+        "sampledAt": "2026-08-18T17:44:41.155Z"
       },
       "corpus": {
         "runs": 1,
-        "best": 402,
-        "median": 402,
+        "best": 422,
+        "median": 422,
         "reaches": null
       }
     },
     {
-      "scenario": "SmoothTS Revosect",
+      "scenario": "VT FlyTS Elite S5",
       "category": "Evasive Switching",
-      "family": "Smooth Relay",
-      "focus": "Flow into the next moving target.",
-      "arm": "Arm",
+      "family": "FlyTS",
+      "focus": "Read the flight direction and make smooth transfers after each kill.",
+      "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Evasive Switching",
       "window": 3,
-      "label": "SmoothTS Revosect",
-      "leaderboardId": 141143,
+      "label": "VT FlyTS Elite S5",
+      "leaderboardId": 106747,
       "rankMaxes": [
-        558,
-        567,
-        570,
-        571
+        450,
+        472,
+        495,
+        520
       ],
       "source": {
         "kind": "authored",
-        "why": "Frozen percentile targets capped backward from the floored demonstrated record, preserving at least one point between ranks. This sparse board has tied top percentiles; exact original cuts and the repair are recorded in data/season_expansion_calibration.json."
+        "why": "The published Elite ladder goes above the sampled world record. Kept its first target (450) and spaced four targets geometrically up to 520, the rounded-down score at board rank 5 (520.2) in the 2026-09-03T01:25:31.253Z apex sample, so the top target is a score at least five players have hit. Set by hand: these aren't the benchmark author's numbers, and the board is too thin for a percentile cut."
       },
       "sanity": {
-        "leaderboardEntries": 145,
+        "leaderboardEntries": 615,
         "clears": [
-          0.01490213352446605,
-          0.009763821195066167,
-          0.007853358462201716,
-          0.007303549137889148
+          0.07958958489711834,
+          0.040724542108852534,
+          0.02095230899018038,
+          0.00797032030404522
         ],
-        "sampledAt": "2026-09-14T01:00:29.485Z"
+        "sampledAt": "2026-08-19T00:13:26.867Z"
+      }
+    },
+    {
+      "scenario": "VT DriftTS Entry S5 Speed",
+      "category": "Evasive Switching",
+      "family": "Layered Chase",
+      "focus": "Keep track of both chambers and move to the next target without dropping contact early.",
+      "arm": "Blending",
+      "armFrom": "Apogee",
+      "subCategory": "Evasive Switching",
+      "window": 0,
+      "label": "VT DriftTS Entry S5 Speed",
+      "leaderboardId": 104861,
+      "rankMaxes": [
+        534,
+        598,
+        631,
+        657,
+        717,
+        746
+      ],
+      "source": {
+        "kind": "authored",
+        "why": "Frozen from this scenario's own dated leaderboard. The first four ranks use the season curve; lower bands keep stricter two-rank crossover cuts (0.5 and 0.4 factors). Ties are capped backward from the demonstrated record. Reproduce using data/evasive_rework_calibration.json. Physical difficulty and equal effort between scenarios require playtesting."
+      },
+      "sanity": {
+        "leaderboardEntries": 2461,
+        "clears": [
+          0.8607499999999999,
+          0.66115992970123,
+          0.49260823653643093,
+          0.35824284304047366,
+          0.12442157108752655,
+          0.07409543777772423
+        ],
+        "sampledAt": "2026-09-14T19:17:26.182Z"
+      }
+    },
+    {
+      "scenario": "VT DriftTS Intermediate S5",
+      "category": "Evasive Switching",
+      "family": "Layered Chase",
+      "focus": "Keep track of both chambers and move to the next target without dropping contact early.",
+      "arm": "Blending",
+      "armFrom": "Apogee",
+      "subCategory": "Evasive Switching",
+      "window": 1,
+      "label": "VT DriftTS Intermediate S5",
+      "leaderboardId": 104863,
+      "rankMaxes": [
+        428,
+        449,
+        460,
+        478,
+        500,
+        509
+      ],
+      "source": {
+        "kind": "authored",
+        "why": "Frozen from this scenario's own dated leaderboard. The first four ranks use the season curve; lower bands keep stricter two-rank crossover cuts (0.5 and 0.4 factors). Ties are capped backward from the demonstrated record. Reproduce using data/evasive_rework_calibration.json. Physical difficulty and equal effort between scenarios require playtesting."
+      },
+      "sanity": {
+        "leaderboardEntries": 47760,
+        "clears": [
+          0.26074766355140194,
+          0.17894736842105263,
+          0.15,
+          0.10500000000000001,
+          0.03781250000000007,
+          0.02159574468085107
+        ],
+        "sampledAt": "2026-08-18T17:44:09.879Z"
+      },
+      "corpus": {
+        "runs": 12,
+        "best": 460,
+        "median": 414,
+        "reaches": "rank 7"
+      }
+    },
+    {
+      "scenario": "VT DriftTS Advanced S5",
+      "category": "Evasive Switching",
+      "family": "Layered Chase",
+      "focus": "Keep track of both chambers and move to the next target without dropping contact early.",
+      "arm": "Blending",
+      "armFrom": "Apogee",
+      "subCategory": "Evasive Switching",
+      "window": 2,
+      "label": "VT DriftTS Advanced S5",
+      "leaderboardId": 104866,
+      "rankMaxes": [
+        439,
+        445,
+        457,
+        468,
+        507,
+        519
+      ],
+      "source": {
+        "kind": "authored",
+        "why": "Frozen from this scenario's own dated leaderboard. The first four ranks use the season curve; lower bands keep stricter two-rank crossover cuts (0.5 and 0.4 factors). Ties are capped backward from the demonstrated record. Reproduce using data/evasive_rework_calibration.json. Physical difficulty and equal effort between scenarios require playtesting."
+      },
+      "sanity": {
+        "leaderboardEntries": 8941,
+        "clears": [
+          0.07380952380952388,
+          0.05120570817414717,
+          0.03820521112639916,
+          0.029209658458747585,
+          0.008558614952007914,
+          0.005622909148463592
+        ],
+        "sampledAt": "2026-08-18T17:44:17.778Z"
+      },
+      "corpus": {
+        "runs": 1,
+        "best": 319,
+        "median": 319,
+        "reaches": null
+      }
+    },
+    {
+      "scenario": "VT DriftTS Elite S5",
+      "category": "Evasive Switching",
+      "family": "Layered Chase",
+      "focus": "Keep track of both chambers and move to the next target without dropping contact early.",
+      "arm": "Blending",
+      "armFrom": "Apogee",
+      "subCategory": "Evasive Switching",
+      "window": 3,
+      "label": "VT DriftTS Elite S5",
+      "leaderboardId": 104867,
+      "rankMaxes": [
+        387,
+        396,
+        401,
+        409
+      ],
+      "source": {
+        "kind": "authored",
+        "why": "Frozen from this scenario's own dated leaderboard. The first four ranks use the season curve; lower bands keep stricter two-rank crossover cuts (0.5 and 0.4 factors). Ties are capped backward from the demonstrated record. Reproduce using data/evasive_rework_calibration.json. Physical difficulty and equal effort between scenarios require playtesting."
+      },
+      "sanity": {
+        "leaderboardEntries": 619,
+        "clears": [
+          0.01909563905963741,
+          0.012578105506889824,
+          0.008831378549938321,
+          0.006563188895582576
+        ],
+        "sampledAt": "2026-08-19T00:13:12.342Z"
+      }
+    },
+    {
+      "scenario": "tamTargetSwitch Control Entry",
+      "category": "Evasive Switching",
+      "family": "Regen Control",
+      "focus": "Stay on the target until it dies. Any gap in damage gives health back.",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Evasive Switching",
+      "window": 0,
+      "label": "tamTargetSwitch Control Entry",
+      "leaderboardId": 110651,
+      "rankMaxes": [
+        38,
+        44,
+        47,
+        49,
+        55,
+        57
+      ],
+      "source": {
+        "kind": "authored",
+        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+      },
+      "sanity": {
+        "leaderboardEntries": 4724,
+        "clears": [
+          0.8642857142857143,
+          0.65,
+          0.5,
+          0.4,
+          0.125,
+          0.08400725296190725
+        ],
+        "sampledAt": "2026-09-13T19:26:27.335Z"
+      },
+      "corpus": {
+        "runs": 2,
+        "best": 62,
+        "median": 60,
+        "reaches": "rank 6"
+      }
+    },
+    {
+      "scenario": "tamTargetSwitch Control Intermediate",
+      "category": "Evasive Switching",
+      "family": "Regen Control",
+      "focus": "Stay on the target until it dies. Any gap in damage gives health back.",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Evasive Switching",
+      "window": 1,
+      "label": "tamTargetSwitch Control Intermediate",
+      "leaderboardId": 110123,
+      "rankMaxes": [
+        49,
+        50,
+        51,
+        53,
+        56,
+        57
+      ],
+      "source": {
+        "kind": "authored",
+        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+      },
+      "sanity": {
+        "leaderboardEntries": 9783,
+        "clears": [
+          0.25,
+          0.2,
+          0.15,
+          0.1,
+          0.03613956767793863,
+          0.025554533374220586
+        ],
+        "sampledAt": "2026-09-13T19:24:23.336Z"
+      }
+    },
+    {
+      "scenario": "tamTargetSwitch Control",
+      "category": "Evasive Switching",
+      "family": "Regen Control",
+      "focus": "Stay on the target until it dies. Any gap in damage gives health back.",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Evasive Switching",
+      "window": 2,
+      "label": "tamTargetSwitch Control",
+      "leaderboardId": 57,
+      "rankMaxes": [
+        35,
+        36,
+        37,
+        38,
+        41,
+        43
+      ],
+      "source": {
+        "kind": "authored",
+        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+      },
+      "sanity": {
+        "leaderboardEntries": 30985,
+        "clears": [
+          0.075,
+          0.05,
+          0.035,
+          0.027500000000000004,
+          0.01141046927846615,
+          0.00510291699236466
+        ],
+        "sampledAt": "2026-09-13T19:24:37.497Z"
+      }
+    },
+    {
+      "scenario": "tamTargetSwitch Control Hard",
+      "category": "Evasive Switching",
+      "family": "Regen Control",
+      "focus": "Stay on the target until it dies. Any gap in damage gives health back.",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Evasive Switching",
+      "window": 3,
+      "label": "tamTargetSwitch Control Hard",
+      "leaderboardId": 757,
+      "rankMaxes": [
+        37,
+        38,
+        39,
+        40
+      ],
+      "source": {
+        "kind": "percentile",
+        "cut": {
+          "ranks": [
+            12,
+            13,
+            14,
+            15
+          ],
+          "topFractions": [
+            0.022,
+            0.015,
+            0.011,
+            0.008
+          ],
+          "leaderboardId": 757,
+          "total": 61447,
+          "sampledAt": "2026-09-13T19:24:51.555Z"
+        },
+        "why": "Frozen once for the theory-led draft rebuild from this exact scenario's own dated leaderboard. Existing Apogee percentile positions are retained. The target is a fixed score, not a live percentile or proof of equal difficulty across variants."
+      },
+      "sanity": {
+        "leaderboardEntries": 61447,
+        "clears": [
+          0.02,
+          0.015,
+          0.01,
+          0.008137093755594252
+        ],
+        "sampledAt": "2026-09-13T19:24:51.555Z"
+      }
+    },
+    {
+      "scenario": "domiSwitch Easier",
+      "category": "Evasive Switching",
+      "family": "Domi Relay",
+      "focus": "Control the strafe and keep contact through the kill. Switch after the target drops.",
+      "arm": "Blending",
+      "armFrom": "Apogee",
+      "subCategory": "Evasive Switching",
+      "window": 0,
+      "label": "domiSwitch Easier",
+      "leaderboardId": 185428,
+      "rankMaxes": [
+        5437,
+        6260,
+        6737,
+        7159,
+        7757,
+        7985
+      ],
+      "source": {
+        "kind": "authored",
+        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+      },
+      "sanity": {
+        "leaderboardEntries": 20300,
+        "clears": [
+          0.859938524590164,
+          0.6599683544303798,
+          0.48990765171503947,
+          0.3600107066381157,
+          0.13009259259259262,
+          0.0719436813186813
+        ],
+        "sampledAt": "2026-09-03T01:29:00.957Z"
+      },
+      "corpus": {
+        "runs": 5,
+        "best": 7806,
+        "median": 7514,
+        "reaches": "rank 5"
+      }
+    },
+    {
+      "scenario": "domiSwitch Easy",
+      "category": "Evasive Switching",
+      "family": "Domi Relay",
+      "focus": "Control the strafe and keep contact through the kill. Switch after the target drops.",
+      "arm": "Blending",
+      "armFrom": "Apogee",
+      "subCategory": "Evasive Switching",
+      "window": 1,
+      "label": "domiSwitch Easy",
+      "leaderboardId": 83043,
+      "rankMaxes": [
+        6061,
+        6331,
+        6439,
+        6682,
+        7201,
+        7461
+      ],
+      "source": {
+        "kind": "authored",
+        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+      },
+      "sanity": {
+        "leaderboardEntries": 37779,
+        "clears": [
+          0.2598907766990291,
+          0.17992256637168133,
+          0.15005530973451323,
+          0.10497032640949558,
+          0.03745872641509435,
+          0.022003731343283595
+        ],
+        "sampledAt": "2026-08-19T01:20:58.171Z"
+      },
+      "corpus": {
+        "runs": 53,
+        "best": 6621,
+        "median": 5822,
+        "reaches": "rank 7"
+      }
+    },
+    {
+      "scenario": "domiSwitch",
+      "category": "Evasive Switching",
+      "family": "Domi Relay",
+      "focus": "Control the strafe and keep contact through the kill. Switch after the target drops.",
+      "arm": "Blending",
+      "armFrom": "Apogee",
+      "subCategory": "Evasive Switching",
+      "window": 2,
+      "label": "domiSwitch",
+      "leaderboardId": 83035,
+      "rankMaxes": [
+        5803,
+        6009,
+        6200,
+        6356,
+        6830,
+        7087
+      ],
+      "source": {
+        "kind": "authored",
+        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+      },
+      "sanity": {
+        "leaderboardEntries": 18273,
+        "clears": [
+          0.07502717391304345,
+          0.05496495327102804,
+          0.03998091603053437,
+          0.03000000000000002,
+          0.010645606037407317,
+          0.005629428006682372
+        ],
+        "sampledAt": "2026-08-30T15:56:35.975Z"
+      },
+      "corpus": {
+        "runs": 7,
+        "best": 5193,
+        "median": 5015,
+        "reaches": null
+      }
+    },
+    {
+      "scenario": "domiSwitch Hard",
+      "category": "Evasive Switching",
+      "family": "Domi Relay",
+      "focus": "Control the strafe and keep contact through the kill. Switch after the target drops.",
+      "arm": "Blending",
+      "armFrom": "Apogee",
+      "subCategory": "Evasive Switching",
+      "window": 3,
+      "label": "domiSwitch Hard",
+      "leaderboardId": 83042,
+      "rankMaxes": [
+        5291,
+        5461,
+        5559,
+        5732
+      ],
+      "source": {
+        "kind": "authored",
+        "why": "Frozen from this scenario's own dated leaderboard. The first four ranks use the season curve; lower bands keep stricter two-rank crossover cuts (0.5 and 0.4 factors). Ties are capped backward from the demonstrated record. Reproduce using data/evasive_rework_calibration.json. Physical difficulty and equal effort between scenarios require playtesting."
+      },
+      "sanity": {
+        "leaderboardEntries": 804,
+        "clears": [
+          0.01855490733886732,
+          0.013391105840053411,
+          0.010893029849681586,
+          0.007319402877598808
+        ],
+        "sampledAt": "2026-08-19T01:18:11.392Z"
+      }
+    },
+    {
+      "scenario": "tamTargetSwitch Smooth Entry",
+      "category": "Evasive Switching",
+      "family": "tamTargetSwitch Smooth",
+      "focus": "Match the target's movement and keep contact through the regeneration window.",
+      "arm": "Blending",
+      "armFrom": "Apogee",
+      "subCategory": "Evasive Switching",
+      "window": 0,
+      "label": "tamTargetSwitch Smooth Entry",
+      "leaderboardId": 111266,
+      "rankMaxes": [
+        23,
+        30,
+        33,
+        35,
+        40,
+        43
+      ],
+      "source": {
+        "kind": "authored",
+        "why": "Frozen from this scenario's own dated leaderboard. The first four ranks use the season curve; lower bands keep stricter two-rank crossover cuts (0.5 and 0.4 factors). Ties are capped backward from the demonstrated record. Reproduce using data/evasive_rework_calibration.json. Physical difficulty and equal effort between scenarios require playtesting."
+      },
+      "sanity": {
+        "leaderboardEntries": 7533,
+        "clears": [
+          0.8642857142857143,
+          0.65,
+          0.5,
+          0.35,
+          0.15,
+          0.0663746183459445
+        ],
+        "sampledAt": "2026-09-14T19:16:34.874Z"
+      }
+    },
+    {
+      "scenario": "tamTargetSwitch Smooth Novice",
+      "category": "Evasive Switching",
+      "family": "tamTargetSwitch Smooth",
+      "focus": "Match the target's movement and keep contact through the regeneration window.",
+      "arm": "Blending",
+      "armFrom": "Apogee",
+      "subCategory": "Evasive Switching",
+      "window": 1,
+      "label": "tamTargetSwitch Smooth Novice",
+      "leaderboardId": 111343,
+      "rankMaxes": [
+        34,
+        35,
+        36,
+        37,
+        41,
+        42
+      ],
+      "source": {
+        "kind": "authored",
+        "why": "Frozen from this scenario's own dated leaderboard. The first four ranks use the season curve; lower bands keep stricter two-rank crossover cuts (0.5 and 0.4 factors). Ties are capped backward from the demonstrated record. Reproduce using data/evasive_rework_calibration.json. Physical difficulty and equal effort between scenarios require playtesting."
+      },
+      "sanity": {
+        "leaderboardEntries": 9986,
+        "clears": [
+          0.25,
+          0.2,
+          0.15,
+          0.1,
+          0.03154218530680133,
+          0.025035049068696174
+        ],
+        "sampledAt": "2026-09-14T19:16:49.070Z"
+      }
+    },
+    {
+      "scenario": "tamTargetSwitch Smooth Intermediate",
+      "category": "Evasive Switching",
+      "family": "tamTargetSwitch Smooth",
+      "focus": "Match the target's movement and keep contact through the regeneration window.",
+      "arm": "Blending",
+      "armFrom": "Apogee",
+      "subCategory": "Evasive Switching",
+      "window": 2,
+      "label": "tamTargetSwitch Smooth Intermediate",
+      "leaderboardId": 113137,
+      "rankMaxes": [
+        36,
+        38,
+        39,
+        40,
+        41,
+        42
+      ],
+      "source": {
+        "kind": "authored",
+        "why": "Frozen from this scenario's own dated leaderboard. The first four ranks use the season curve; lower bands keep stricter two-rank crossover cuts (0.5 and 0.4 factors). Ties are capped backward from the demonstrated record. Reproduce using data/evasive_rework_calibration.json. Physical difficulty and equal effort between scenarios require playtesting."
+      },
+      "sanity": {
+        "leaderboardEntries": 15930,
+        "clears": [
+          0.075,
+          0.035,
+          0.031387319522912745,
+          0.015693659761456372,
+          0.009925541933987382,
+          0.006277463904582548
+        ],
+        "sampledAt": "2026-09-14T19:16:58.857Z"
+      }
+    },
+    {
+      "scenario": "tamTargetSwitch Smooth Elite",
+      "category": "Evasive Switching",
+      "family": "tamTargetSwitch Smooth",
+      "focus": "Match the target's movement and keep contact through the regeneration window.",
+      "arm": "Blending",
+      "armFrom": "Apogee",
+      "subCategory": "Evasive Switching",
+      "window": 3,
+      "label": "tamTargetSwitch Smooth Elite",
+      "leaderboardId": 111685,
+      "rankMaxes": [
+        25,
+        27,
+        28,
+        29
+      ],
+      "source": {
+        "kind": "authored",
+        "why": "Frozen from this scenario's own dated leaderboard. The first four ranks use the season curve; lower bands keep stricter two-rank crossover cuts (0.5 and 0.4 factors). Ties are capped backward from the demonstrated record. Reproduce using data/evasive_rework_calibration.json. Physical difficulty and equal effort between scenarios require playtesting."
+      },
+      "sanity": {
+        "leaderboardEntries": 476,
+        "clears": [
+          0.02100840336134454,
+          0.01050420168067227,
+          0.009244871184804552,
+          0.00813651963488953
+        ],
+        "sampledAt": "2026-09-14T19:17:08.621Z"
       }
     }
   ]

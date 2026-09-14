@@ -1335,7 +1335,7 @@
     "B180T Voltaic": {
       "leaderboardId": 947,
       "aimType": "Switching",
-      "subCategory": "Stability Switching"
+      "subCategory": "Evasive Switching"
     },
     "B180T Voltaic 15% Smaller": {
       "leaderboardId": 16045,
@@ -1345,7 +1345,7 @@
     "B180T Voltaic Easy": {
       "leaderboardId": 543,
       "aimType": "Switching",
-      "subCategory": "Stability Switching"
+      "subCategory": "Evasive Switching"
     },
     "B180T Voltaic Easy Regen": {
       "leaderboardId": 2837,
@@ -1355,7 +1355,7 @@
     "B180T Voltaic Easy Slower": {
       "leaderboardId": 185571,
       "aimType": "Switching",
-      "subCategory": null
+      "subCategory": "Evasive Switching"
     },
     "B180T Voltaic Regen": {
       "leaderboardId": 2153,
@@ -2344,13 +2344,13 @@
     },
     "Floatswitch Advanced": {
       "leaderboardId": 112006,
-      "aimType": "Clicking",
-      "subCategory": null
+      "aimType": "Switching",
+      "subCategory": "Evasive Switching"
     },
     "Floatswitch Intermediate": {
       "leaderboardId": 111979,
-      "aimType": "Clicking",
-      "subCategory": null
+      "aimType": "Switching",
+      "subCategory": "Evasive Switching"
     },
     "Floatswitch Novice": {
       "leaderboardId": 111964,
@@ -7536,6 +7536,81 @@
       "leaderboardId": 1074,
       "aimType": "Switching",
       "subCategory": "Speed Switching"
+    },
+    "VT PasuTS Entry S5": {
+      "leaderboardId": 106755,
+      "aimType": "Switching",
+      "subCategory": "Evasive Switching"
+    },
+    "VT PasuTS Intermediate S5": {
+      "leaderboardId": 106756,
+      "aimType": "Switching",
+      "subCategory": "Evasive Switching"
+    },
+    "VT PasuTS Advanced S5": {
+      "leaderboardId": 106331,
+      "aimType": "Switching",
+      "subCategory": "Evasive Switching"
+    },
+    "VT PasuTS Elite S5": {
+      "leaderboardId": 106754,
+      "aimType": "Switching",
+      "subCategory": "Evasive Switching"
+    },
+    "Floatswitch Entry": {
+      "leaderboardId": 112237,
+      "aimType": "Switching",
+      "subCategory": "Evasive Switching"
+    },
+    "Floatswitch Elite": {
+      "leaderboardId": 112062,
+      "aimType": "Switching",
+      "subCategory": "Evasive Switching"
+    },
+    "VT ControlTS Entry S5 Speed": {
+      "leaderboardId": 106720,
+      "aimType": "Switching",
+      "subCategory": "Evasive Switching"
+    },
+    "VT Penta Bounce Entry S5 Speed": {
+      "leaderboardId": 107639,
+      "aimType": "Switching",
+      "subCategory": "Evasive Switching"
+    },
+    "VT FlyTS Entry S5 Speed": {
+      "leaderboardId": 106708,
+      "aimType": "Switching",
+      "subCategory": "Evasive Switching"
+    },
+    "VT DriftTS Entry S5 Speed": {
+      "leaderboardId": 104861,
+      "aimType": "Switching",
+      "subCategory": "Evasive Switching"
+    },
+    "domiSwitch Hard": {
+      "leaderboardId": 83042,
+      "aimType": "Switching",
+      "subCategory": "Evasive Switching"
+    },
+    "tamTargetSwitch Smooth Entry": {
+      "leaderboardId": 111266,
+      "aimType": "Switching",
+      "subCategory": "Evasive Switching"
+    },
+    "tamTargetSwitch Smooth Novice": {
+      "leaderboardId": 111343,
+      "aimType": "Switching",
+      "subCategory": "Evasive Switching"
+    },
+    "tamTargetSwitch Smooth Intermediate": {
+      "leaderboardId": 113137,
+      "aimType": "Switching",
+      "subCategory": "Evasive Switching"
+    },
+    "tamTargetSwitch Smooth Elite": {
+      "leaderboardId": 111685,
+      "aimType": "Switching",
+      "subCategory": "Evasive Switching"
     }
   }
 }

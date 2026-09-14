@@ -19,6 +19,7 @@ import { dataFile } from "../src/core/dataDir.ts";
 import { loadSeason } from "../src/core/season/season.ts";
 import { practicePlaylists } from "../src/core/season/practice.ts";
 import { rebuildPool, type RebuildSeason } from "../src/core/season/rebuildPool.ts";
+import { beforeEvasivePool } from "./evasiveReworkHistory.ts";
 
 const read = (name: string): any => JSON.parse(readFileSync(dataFile(name), "utf8"));
 const pool = read("pool.json");
@@ -36,7 +37,7 @@ assert.deepEqual(season.windows, ["Novice", "Intermediate", "Advanced", "Expert"
 for (const name of curatedCategories) {
   const guide = curation.categories[name];
   const families = pool.families.filter((f: any) => f.category === name);
-  assert.equal(families.length, name === "Static Clicking" ? 13 : 10, `${name}: core plus four variety families`);
+  assert.equal(families.length, name === "Static Clicking" ? 13 : name === "Evasive Switching" ? 11 : 10, `${name}: curated circuit size`);
   assert.deepEqual(families.map((f: any) => f.family), guide.families.map((f: any) => f.family));
   const category = season.categories.find(c => c.name === name)!;
   assert.equal(category.headline, guide.title);
@@ -65,8 +66,9 @@ for (const name of curatedCategories) {
   console.log(`ok ${name}: four ordered ${families.length}-test circuits, guide coverage, demonstrated targets`);
 }
 
+const priorRebuildPool = beforeEvasivePool(pool);
 for (const item of calibration.adjustments) {
-  const variant = pool.families.flatMap((f: any) => f.variants).find((v: any) => v.scenario === item.scenario);
+  const variant = priorRebuildPool.families.flatMap((f: any) => f.variants).find((v: any) => v.scenario === item.scenario);
   assert.equal(variant.source.kind, "authored");
   const start = item.published.from[0].used[0];
   const end = Math.floor(item.anchor.score);

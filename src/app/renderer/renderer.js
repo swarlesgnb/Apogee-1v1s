@@ -4496,14 +4496,19 @@ function renderSeasonView(data) {
     if (guide?.description) {
       const intro = document.createElement("div");
       intro.className = "pool-circuit-intro";
-      const title = document.createElement("strong");
-      title.textContent = guide.headline || category.name;
+      // The category's name is already the heading above, so without a headline of its
+      // own the explanation stands alone rather than repeating it.
+      if (guide.headline) {
+        const title = document.createElement("strong");
+        title.textContent = guide.headline;
+        intro.append(title);
+      }
       const copy = document.createElement("p");
       copy.textContent = guide.description;
       const route = document.createElement("span");
       route.className = "pool-circuit-route";
       route.textContent = inCategory.length + " scenarios · play in order";
-      intro.append(title, copy, route);
+      intro.append(copy, route);
       block.append(intro);
     }
 
@@ -4575,13 +4580,13 @@ function renderSeasonView(data) {
         nmText.textContent = v.label;
         makeCopyable(nmText, v.scenario);
         nm.append(nmText);
+        // The position in the circuit, since the category says to play it in order. A
+        // per-family focus line follows it only where the season still carries one.
         const focus = scenarioNotes.get(v.scenario)?.focus;
-        if (focus) {
-          const cue = document.createElement("span");
-          cue.className = "pool-focus";
-          cue.textContent = String(circuitIndex + 1).padStart(2, "0") + " / " + focus;
-          nm.append(cue);
-        }
+        const cue = document.createElement("span");
+        cue.className = "pool-focus";
+        cue.textContent = String(circuitIndex + 1).padStart(2, "0") + (focus ? " / " + focus : "");
+        nm.append(cue);
         // The part of the arm the scenario loads most. On the tile rather than the
         // sub-skill heading because it is per scenario: Whisphere's own rungs are filed
         // under two different parts. Viscose's word where Viscose tags this exact

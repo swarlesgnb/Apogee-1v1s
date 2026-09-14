@@ -1,13 +1,11 @@
 {
-  "$comment": "Six category circuits: the original core followed by four variety families per band. Exact scenario identities and score targets are frozen in pool.json; enjoyment and mixed-author handovers require playtesting.",
+  "$comment": "Six category circuits, including the revised evasive progression in data/evasive_rework.json. Catalogue evidence is not a substitute for human difficulty and enjoyment playtesting.",
   "categories": {
     "Dynamic Clicking": {
-      "title": "Read. Confirm. Commit.",
-      "description": "Follow the movement into each shot. Read arcs beyond the apex and stay with multi-hit targets until the final click. Smooth transitions make the next target easier to read.",
+      "description": "The targets are moving, so stay on each one for a split second until you're sure you're on it before you click, and don't let a sudden change of direction drag your crosshair with it. On targets that take several hits, move with them until the last click.",
       "families": [
         {
           "family": "Pasu",
-          "focus": "Read the drift. Click on confirmation.",
           "why": "Pasu without Voltaic's cuts. Viscose's entry version with limited strafing for Novice, SuperbAim's Easy and standard cuts in the middle, and Pasu Reload Goated for Expert, which is smaller and uses a reload instead of accuracy scoring.",
           "rungs": [
             "Pasu Viscose Entry",
@@ -18,7 +16,6 @@
         },
         {
           "family": "PipeClick",
-          "focus": "Meet the path. Confirm the shot.",
           "why": "Targets on a fixed path, so it's more about timing than reading. Easy and Hard S1 are from Aimerz+ S1; Normal and Hard are the older S0 cuts.",
           "rungs": [
             "Aimerz+ pipeClick Easy S1",
@@ -29,7 +26,6 @@
         },
         {
           "family": "Bounce",
-          "focus": "Read the full bounce, not just the apex.",
           "why": "Bouncing-target clicking from two authors. SuperbAim's BounceClick for the first two rungs, then Sparky's and rAim's Bounce 180, where the balls really bounce and a reload replaces the accuracy penalty. The order between the two authors hasn't been playtested.",
           "rungs": [
             "BounceClick SuperbAim Easy",
@@ -40,7 +36,6 @@
         },
         {
           "family": "Angelic",
-          "focus": "Read horizontal movement through the shot.",
           "why": "Targets strafe around you and move up and down, so it's wider than Pasu. psalmTS angelic click and Pasu Angelic, each with a larger-target cut below it.",
           "rungs": [
             "psalmTS angelic click 30% Larger",
@@ -57,12 +52,10 @@
             "Pasu 3-click v2",
             "Pasu 3-Click Wide"
           ],
-          "focus": "Stay with each target for all three clicks.",
           "why": "Repeated hits add the sustained target reading missing from one-shot clicking. Wide Easy introduces the task; Less Easy uses a faster timescale than the easy v2 cut; standard v2 removes timescaling; Wide opens the field. These are related community edits, not a measured equal-step progression. Expert width and mixed v2/v4 behaviour need playtesting."
         },
         {
           "family": "Popcorn",
-          "focus": "Follow the arc into a clean click.",
           "why": "Popcorn with a reload instead of accuracy scoring. rAim's Goated easy cut with double-size targets, then rAim Easy, Sparky's version where the bots bounce, and Goated rAim with 10% smaller bots for Expert.",
           "rungs": [
             "Popcorn Goated rAim easy",
@@ -74,7 +67,6 @@
         {
           "category": "Dynamic Clicking",
           "family": "Floating Gallery",
-          "focus": "Catch the next head as it drifts into view.",
           "why": "Floating heads in a layered arena offer a shooting-gallery rhythm with depth changes. Viscose's Entry through Hard edits supply a coherent four-band progression without replacing the core Pasu and Popcorn tests.",
           "rungs": [
             "VT Floating Heads Viscose Entry",
@@ -86,7 +78,6 @@
         {
           "category": "Dynamic Clicking",
           "family": "Sky Gallery",
-          "focus": "Hop between layers. Catch each passing dot.",
           "why": "Far moving dots at several vertical layers turn the run into a layered gallery. The Goated Easier, Medium, Hard and Expert edits retain the same scene while changing the challenge.",
           "rungs": [
             "skyClick Goated Easier",
@@ -98,7 +89,6 @@
         {
           "category": "Dynamic Clicking",
           "family": "Wave Click",
-          "focus": "Ride the wave from shot to shot.",
           "why": "SunClick and WaveClick add a timing-focused wave circuit with a repeatable rhythm. This is a mixed-release progression using Aimerz's Easy S1, Normal, Hard and Hard S1 cuts; its handovers need playtesting.",
           "rungs": [
             "Aimerz+ sunClick Easy S1",
@@ -110,7 +100,6 @@
         {
           "category": "Dynamic Clicking",
           "family": "Cat Click",
-          "focus": "One clean click per mover.",
           "why": "CatClick is graded by Viscose in all four of its tiers, Easier, Medium, Hard and Expert, so the family is one scenario's own four cuts with no handover between authors, and its two easier cuts carry some of the busiest boards in the pool. Its author description says nothing about the mechanic; the season files it where Viscose does, under dynamic clicking.",
           "rungs": [
             "CatClick Easier",
@@ -122,12 +111,10 @@
       ]
     },
     "Precise Tracking": {
-      "title": "Stay connected.",
-      "description": "Match the target through horizontal strafes, vertical travel and changing paths. Make clean corrections when contact breaks. Use an easier cut when you lose the movement; difficulty should leave room to learn.",
+      "description": "Stay smooth and keep your crosshair in the middle of the target the whole time, moving with it in one steady motion and using your arm on long strafes. If your aim gets shaky or you keep losing the target, drop to an easier version.",
       "families": [
         {
           "family": "Smoothbot",
-          "focus": "Match the long arc with steady contact.",
           "why": "SmoothBot Invincible Goated at every rung instead of Voltaic's Smoothbot: 75% speed, Easy, the standard version, then the smaller cut for Expert. The bot can't die, so the whole run is time on target.",
           "rungs": [
             "SmoothBot Invincible Goated 75%",
@@ -144,12 +131,10 @@
             "Centering II 180 Intermediate",
             "Centering II 180 no strafes"
           ],
-          "focus": "Settle into the strafe. Match its speed.",
           "why": "A dedicated horizontal centering test separates velocity matching from multidirectional control. Entry, Novice and Intermediate community cuts lead into the established no-strafes version. Apogee band names describe our progression, not the names of the source cuts. Exact target-size differences are not claimed; band handovers need playtesting."
         },
         {
           "family": "PreciseTrack",
-          "focus": "Recover cleanly. Settle back on target.",
           "why": "Aimerz+ PreciseTrack in place of PGT as the fine-correction test. Avasive's Easier cut for Novice, then Easy, Med and Hard from the Aimerz+ S1 set.",
           "rungs": [
             "PreciseTrack Avasive Easier",
@@ -160,7 +145,6 @@
         },
         {
           "family": "Whisphere",
-          "focus": "Match the curve and its changing speed.",
           "why": "Smooth with no blinks, going by the scenario description. 55% speed, 75%, full speed, then Extra Small for Expert.",
           "rungs": [
             "Whisphere Small & Slow 55%",
@@ -177,12 +161,10 @@
             "Smooth Your Vertical Altered POV Intermediate",
             "Smooth Your Vertical Altered POV v2"
           ],
-          "focus": "Stay connected through the rise and fall.",
           "why": "These four Altered POV cuts explicitly isolate vertical smoothness. They replace a second broad sphere-control test with an axis players can identify and practise directly. Entry, Easy, Intermediate and standard v2 are curated into four Apogee bands; difficulty spacing remains a playtest judgement."
         },
         {
           "family": "Controlsphere",
-          "focus": "Keep contact through changing directions.",
           "why": "A small dot that jumps gently and flies around you at changing distance and speed. Viscose's entry cut, then rAim's Easy at 90%, rAim Easy and rAim. The sheets file the top rung under Control Tracking, which this season grades as Precise.",
           "rungs": [
             "Controlsphere Viscose Entry",
@@ -194,7 +176,6 @@
         {
           "category": "Precise Tracking",
           "family": "DVD Chase",
-          "focus": "Follow the bounce all the way to the corner.",
           "why": "The DVD-inspired moving target gives continuous tracking a recognizable screen-bounce motif. MASSIVE, Big, standard and Small keep the motion theme while reducing the target size.",
           "rungs": [
             "TSK - DVD Tracking MASSIVE",
@@ -206,7 +187,6 @@
         {
           "category": "Precise Tracking",
           "family": "Flower Chase",
-          "focus": "Trace the flower. Stay with each little turn.",
           "why": "The author's bee-collecting-pollen theme gives compact tracking a playful identity. Entry, Easier, standard and Hard keep the Flower motion across the four bands. The scenario name is not a requirement to change sensitivity.",
           "rungs": [
             "Flower Entry",
@@ -218,7 +198,6 @@
         {
           "category": "Precise Tracking",
           "family": "Sphere Cruise",
-          "focus": "Cruise with the dot as it circles you.",
           "why": "A gently jumping dot flying around the player adds a flowing orbital chase. Viscose's Horizontal Entry, Easier, standard and Hard cuts expand the motion challenge while keeping the same visual theme.",
           "rungs": [
             "Smoothsphere Viscose Horizontal Entry",
@@ -230,7 +209,6 @@
         {
           "category": "Precise Tracking",
           "family": "Waldo Track",
-          "focus": "Stay on it, not near it.",
           "why": "waldoTS is one of the most-played tracking scenarios in the catalogue, with 3.7 million plays on its standard cut. Viscose grades its Novice, Intermediate, standard and Elite cuts as Easier, Medium, Hard and Expert, and AimSpeed grades the standard and Elite cuts too, so the progression is one scenario's own cuts.",
           "rungs": [
             "waldoTS Novice",
@@ -242,12 +220,10 @@
       ]
     },
     "Reactive Tracking": {
-      "title": "React, recover, settle.",
-      "description": "Watch the target, react to the change, then match its new movement. Stops and teleports join ground and air reads. If you start guessing turns or forcing the mouse, step down and rebuild clean contact.",
+      "description": "React to where the target goes instead of guessing, and sit slightly on the side it's moving away from so you have room when it turns. Stay relaxed, because jittery aim usually means you're tensing up, and if you catch yourself predicting, play an easier version for a while.",
       "families": [
         {
           "family": "Ground Plaza",
-          "focus": "Read each strafe. React after the turn.",
           "why": "Sparky's Ground Plaza v3: six bots strafing on the ground at mixed lengths and distances. Easy, the standard version, OW with instant ground acceleration, then Thin for Expert.",
           "rungs": [
             "Ground Plaza Sparky v3 Easy",
@@ -258,7 +234,6 @@
         },
         {
           "family": "Air Reading",
-          "focus": "Follow the aerial change without guessing.",
           "why": "Air Voltaic Invincible 4: one invincible bot changing direction in the air, nothing to kill. Viscose grades Entry, Easier and Medium; the full version is Expert.",
           "rungs": [
             "Air Voltaic Invincible 4 Entry",
@@ -269,7 +244,6 @@
         },
         {
           "family": "Air Angelic",
-          "focus": "Recover from the turn, then match speed.",
           "why": "Air Angelic from Astro's and Jade Palace's sheets. rAim's Biggest cut, Easier, rAim Easy, then the standard version, which both of them grade at their top tier.",
           "rungs": [
             "Air Angelic rAim Biggest",
@@ -280,7 +254,6 @@
         },
         {
           "family": "Strafe Gallery",
-          "focus": "Read the next strafe. Keep corrections clean.",
           "why": "Targets that only dodge horizontally. CB StrafeTrack Easy is the entry, then Aimerz+ VGS Easy, Med and Hard. Mixes two authors: the CB entry isn't part of the VGS set.",
           "rungs": [
             "CB StrafeTrack Easy",
@@ -291,7 +264,6 @@
         },
         {
           "family": "Leapstrafes",
-          "focus": "Stay with the leap and read its direction.",
           "why": "A target that leaps and strafes with mixed dodge profiles. wobin's Easier cut, then Aimerz+'s mid-range Leapstrafes Control Medium, then wobin's standard and Hard cuts. No sheet names a sub-skill for wobin's version, so putting it in Reactive is a judgement call.",
           "rungs": [
             "Leapstrafes Control wobin Easier",
@@ -308,13 +280,11 @@
             "Flicker Plaza rAim Easy",
             "Flicker Plaza"
           ],
-          "focus": "Read the change. Reacquire, then settle.",
           "why": "Recovery replaces a third mixed-air test. Kindaclose introduces random acceleration, slowing and stops; the three Flicker Plaza cuts then challenge reacquisition after teleports. This is a deliberate change of mechanic between Novice and Intermediate, not a shared-bot speed ladder. Less Blinks provides the transition."
         },
         {
           "category": "Reactive Tracking",
           "family": "Spectral Chase",
-          "focus": "Stay ready for the next strange turn.",
           "why": "Air Spectral's deliberately unusual Air movement adds a surprise-driven chase. Easy 85%, Easy, standard and Harder retain that theme. Its terse author description supports the unusual-motion intent, not a claim of measured enjoyment.",
           "rungs": [
             "Air Spectral Easy 85%",
@@ -326,7 +296,6 @@
         {
           "category": "Reactive Tracking",
           "family": "Celestial Chase",
-          "focus": "Follow the aerial course through every phase.",
           "why": "Air Divine-style movement brings a longer aerial course into the season. Easy Slowed, Easy, No UFO and Harder progress from a slowed course to the full challenge; the final UFO handover needs playtesting.",
           "rungs": [
             "Air CELESTIAL No UFO Easy Slowed",
@@ -338,7 +307,6 @@
         {
           "category": "Reactive Tracking",
           "family": "Pure Chase",
-          "focus": "Read each dodge before it happens.",
           "why": "Air Pure mixes bots with different dodge profiles in one air arena, so every target asks for a different read. Revosect's time-scored entry cut, six bots circling the player, leads into the Intermediate, standard and Hard cuts that Viscose and snakbox grade. The handover between the two editions needs playtesting.",
           "rungs": [
             "Air Pure Revosect Entry",
@@ -350,7 +318,6 @@
         {
           "category": "Reactive Tracking",
           "family": "Close Strafe Chase",
-          "focus": "Stay close. Catch the reversal.",
           "why": "A close strafing opponent adds a grounded duel-like chase beside the aerial courses. Easy Thin, standard, Thin and Precise+ are a proposed progression; speed and size both change, so the first handover needs playtesting.",
           "rungs": [
             "Close Fast Strafes Easy Invincible - Thin",
@@ -362,12 +329,10 @@
       ]
     },
     "Speed Switching": {
-      "title": "Find pace. Keep precision.",
-      "description": "Hold fire, land close and finish each target before transferring. Mix compact flicks, wide routes and shrinking targets. In practice, try a short speed burst on an easier cut; use complete runs for benchmark scores.",
+      "description": "Hold fire and get to the next target as fast as you can in a straight line, without flicking past it. Kill each target fully before you move, and start finding the next one while you finish the current one.",
       "families": [
         {
           "family": "DotTS",
-          "focus": "Land close. Confirm. Chain the next flick.",
           "why": "Static dot switching without Voltaic's cuts. wobin's Easy, which leans on horizontal spawns, for Novice, AimSpeed's Entry, the 30% larger cut, then plain DotTS, which Aimerz+ SpeedTS and AimSpeed both grade at Hard.",
           "rungs": [
             "wobin DotTS Easy",
@@ -384,12 +349,10 @@
             "voxTS Viscose Varied",
             "voxTS rAim"
           ],
-          "focus": "Land, finish, transfer. Hold your pace.",
           "why": "Large and standard range targets establish routing and clean transfers. Viscose Varied introduces progressively shrinking targets; rAim finishes with a smaller fixed-target challenge. Only the Advanced rung is an evolving task. This adapts the source routine's speed-to-precision idea across related variants without changing their native scoring or duration."
         },
         {
           "family": "EddieTS",
-          "focus": "Keep transfers fast and finishes clean.",
           "why": "Four flying targets, about a quarter second each. Here so the category isn't just size variants of one range. Elite S5 is the Expert rung.",
           "rungs": [
             "VT EddieTS Novice S5",
@@ -400,7 +363,6 @@
         },
         {
           "family": "PivoTS",
-          "focus": "Find the next target before the pivot.",
           "why": "Aimerz+ pivoTS, a different switching pattern. The two Hard cuts are from different Aimerz+ releases (S0 and S1), and their order hasn't been playtested yet.",
           "rungs": [
             "Aimerz+ pivoTS Easy S1",
@@ -411,7 +373,6 @@
         },
         {
           "family": "Pokeball",
-          "focus": "Hold fire. Finish before transferring.",
           "why": "You hold fire on each target instead of tapping, and some cuts regen if you flick off early. The slow-kill option next to DotTS and EddieTS.",
           "rungs": [
             "Pokeball 1w4ts 30% Easy",
@@ -422,7 +383,6 @@
         },
         {
           "family": "psalmTS",
-          "focus": "Choose a route and finish each target.",
           "why": "Spherical bots moving slowly side to side, tracked briefly to kill. psalmTS Voltaic is the Advanced rung and VT psalmTS Advanced is Expert.",
           "rungs": [
             "VT psalmTS Novice",
@@ -434,7 +394,6 @@
         {
           "category": "Speed Switching",
           "family": "Vox Blitz",
-          "focus": "Clear the room in fast bursts.",
           "why": "Stationary Vox targets reward route choice and rapid full-auto clears without movement reading. Jumbo, standard, Small and xxSmall turn the room into a four-band switching sprint.",
           "rungs": [
             "StaticSwitchingVox Jumbo",
@@ -446,7 +405,6 @@
         {
           "category": "Speed Switching",
           "family": "Wave Relay",
-          "focus": "Pass from wave to wave without losing pace.",
           "why": "Smoothly drifting targets give switching a visible wave rhythm. Community Benchmarks' easy cut leads into Revosect Entry, Intermediate and standard. The cross-author first handover is provisional.",
           "rungs": [
             "CB WaveSwitch Easy",
@@ -458,7 +416,6 @@
         {
           "category": "Speed Switching",
           "family": "Sky Relay",
-          "focus": "Sweep the sky one target at a time.",
           "why": "Slow horizontal targets at several depths make a readable aerial switching gallery. Four published skyTS bands keep the movement predictable while increasing the target challenge.",
           "rungs": [
             "VT skyTS Novice",
@@ -470,7 +427,6 @@
         {
           "category": "Speed Switching",
           "family": "Dev Blitz",
-          "focus": "Burst through the pack. Find the next clear.",
           "why": "Low-FOV target switching concentrates the action into short, fast clears. Easy, NR, rAim and NR Small are a proposed cross-edit progression; the two middle releases need an in-game difficulty comparison.",
           "rungs": [
             "devTS Goated Easy",
@@ -482,132 +438,147 @@
       ]
     },
     "Evasive Switching": {
-      "title": "Earn every transfer.",
-      "description": "Flick in, match the movement and confirm the kill. Read the next target without abandoning this one. Regeneration tests clean finishes; varied arcs and strafes keep the task about reading, not memorising turns.",
+      "description": "Focus on movement reading, sustained contact and clean transfers. Start with larger and slower targets, then add tighter movement, more distance and regeneration.",
       "families": [
         {
           "family": "Pasu Switch",
-          "focus": "Land on the moving target, then finish.",
-          "why": "Target switching on Pasu-style floating bots. PureG's flick-focused version, then PureG's higher time-to-kill version, then Aimerz+'s wide-wall Pasu Switch and its regen cut for Expert. Two authors, and the order between them hasn't been playtested.",
+          "focus": "Keep the crosshair on the bot through its direction changes. Switch after the kill.",
+          "category": "Evasive Switching",
           "rungs": [
-            "Pasu Switch Pure",
-            "PureG Pasu Switch",
-            "Pasu Switch Wide",
-            "Pasu Switch Wide Regen"
-          ]
+            "VT PasuTS Entry S5",
+            "VT PasuTS Intermediate S5",
+            "VT PasuTS Advanced S5",
+            "VT PasuTS Elite S5"
+          ],
+          "why": "Replace the mixed PureG/Aimerz progression with one published PasuTS lineage. Entry is explicitly 15% larger and 15% slower, with a short 20-hit clear; Intermediate, Advanced and Elite retain the task."
+        },
+        {
+          "family": "Floating Heads",
+          "focus": "Build a target order and keep each burst on the head until it drops.",
+          "category": "Evasive Switching",
+          "rungs": [
+            "Floatswitch Entry",
+            "Floatswitch Intermediate",
+            "Floatswitch Advanced",
+            "Floatswitch Elite"
+          ],
+          "why": "A new floating-head gallery adds short 0.2-second, 20-hit clears and fast target choice. Use the same authored Entry, Intermediate, Advanced and Elite editions; these are sustained full-auto clears despite the broad catalogue Clicking tag."
+        },
+        {
+          "family": "Chamber Relay",
+          "focus": "Track the jump through the narrow space. Recenter before moving on.",
+          "category": "Evasive Switching",
+          "rungs": [
+            "VT ControlTS Entry S5 Speed",
+            "VT ControlTS Intermediate S5",
+            "VT ControlTS Advanced S5",
+            "VT ControlTS Elite S5"
+          ],
+          "why": "Keep the narrow room and floating, gently jumping targets. Entry Speed combines larger, slower entry bots with a 25% shorter clear. Intermediate, Advanced and Elite keep their existing bands, so the easier start does not lower the upper-band challenge."
+        },
+        {
+          "family": "Hop Transfer",
+          "focus": "Read the jump arc and keep firing through the landing. Do not switch early.",
+          "category": "Evasive Switching",
+          "rungs": [
+            "CB JumpSwitch Easy",
+            "Aimerz+ hopTS Easy S1",
+            "Aimerz+ hopTS Med S1",
+            "Aimerz+ hopTS Hard S1"
+          ],
+          "why": "Jumping targets. CB JumpSwitch Easy (four jumping targets) first, then Aimerz+ hopTS Easy, Med and Hard. Mixes two authors."
+        },
+        {
+          "family": "Penta Bounce",
+          "focus": "Track the bounce across the pentagon and choose the next target before the current one dies.",
+          "category": "Evasive Switching",
+          "rungs": [
+            "VT Penta Bounce Entry S5 Speed",
+            "VT Penta Bounce Intermediate S5",
+            "VT Penta Bounce Advanced S5",
+            "VT Penta Bounce Elite S5"
+          ],
+          "why": "Keep five bouncing targets and the pentagonal arena. Entry Speed adds bigger targets and 25% shorter time to kill to the slower Entry movement. Intermediate, Advanced and Elite keep their existing bands, so the easier start does not lower the upper-band challenge."
+        },
+        {
+          "family": "Arc Transfer",
+          "focus": "Follow the full arc and hold the target through the finish as its depth changes.",
+          "category": "Evasive Switching",
+          "rungs": [
+            "B180T Voltaic Easy Slower",
+            "B180T Voltaic Easy",
+            "B180T Voltaic",
+            "B180T Voltaic Regen"
+          ],
+          "why": "Keep the curved B180T arena throughout. Begin with Easy Slower, then Easy, standard and finally Regen. Remove the Aimerz depth-pattern detour and postpone the regeneration penalty until Expert."
+        },
+        {
+          "family": "FlyTS",
+          "focus": "Read the flight direction and make smooth transfers after each kill.",
+          "category": "Evasive Switching",
+          "rungs": [
+            "VT FlyTS Entry S5 Speed",
+            "VT FlyTS Intermediate S5",
+            "VT FlyTS Advanced S5",
+            "VT FlyTS Elite S5"
+          ],
+          "why": "Entry Speed combines the published larger/slower Entry edit with larger targets and 25% shorter time to kill. Intermediate, Advanced and Elite keep their existing bands, so the easier start does not lower the upper-band challenge."
+        },
+        {
+          "family": "Layered Chase",
+          "focus": "Keep track of both chambers and move to the next target without dropping contact early.",
+          "category": "Evasive Switching",
+          "rungs": [
+            "VT DriftTS Entry S5 Speed",
+            "VT DriftTS Intermediate S5",
+            "VT DriftTS Advanced S5",
+            "VT DriftTS Elite S5"
+          ],
+          "why": "Two stacked chambers add vertical route choices among four floating and jumping targets. The larger, slower Entry Speed variant shortens clears by 25%; Intermediate, Advanced and Elite retain one authored lineage. This replaces the mixed CB/Revosect Smooth Relay whose Expert board had only 145 sampled players and nearly tied top targets."
         },
         {
           "family": "Regen Control",
+          "focus": "Stay on the target until it dies. Any gap in damage gives health back.",
+          "category": "Evasive Switching",
           "rungs": [
             "tamTargetSwitch Control Entry",
             "tamTargetSwitch Control Intermediate",
             "tamTargetSwitch Control",
             "tamTargetSwitch Control Hard"
           ],
-          "focus": "Finish the moving target before you leave.",
           "why": "Regenerating targets reward committed tracking after the flick. Entry and Intermediate use shorter time to kill; Control asks for longer contact; Hard adds bouncing. These are different training demands, not just faster versions. Unlike the retained Smooth family, the Control bots wiggle rather than circle."
         },
         {
-          "family": "Arc Transfer",
-          "rungs": [
-            "B180T rAim Easy",
-            "aimerz+ B180TC Normal",
-            "B180T Voltaic Easy Regen",
-            "B180T Voltaic Regen"
-          ],
-          "focus": "Track the whole arc. Confirm the finish.",
-          "why": "An accessible rAim entry leads to Aimerz+'s depth-changing mid-high arcs, then two regenerative bounce edits. The final two variants make incomplete contact costly instead of relying only on smaller Elite bots. They deliberately retain two useful Voltaic variants rather than an entire stock four-rung family. Cross-author handovers and regeneration difficulty need playtesting."
-        },
-        {
-          "family": "Hop Transfer",
-          "focus": "Follow the jump through the final hit.",
-          "why": "Jumping targets. CB JumpSwitch Easy (four jumping targets) first, then Aimerz+ hopTS Easy, Med and Hard. Mixes two authors.",
-          "rungs": [
-            "CB JumpSwitch Easy",
-            "Aimerz+ hopTS Easy S1",
-            "Aimerz+ hopTS Med S1",
-            "Aimerz+ hopTS Hard S1"
-          ]
-        },
-        {
-          "family": "tamTargetSwitch Smooth",
-          "focus": "Stay on the circle until the target falls.",
-          "why": "Small dots circling you, 0.5s to kill, and they regen fast if you come off them. Starts on the 30% Larger cut of the Hard version.",
-          "rungs": [
-            "tamTargetSwitch Smooth Hard 30% Larger",
-            "tamTargetSwitch Smooth Easy",
-            "tamTargetSwitch Smooth",
-            "tamTargetSwitch Smooth Hard"
-          ]
-        },
-        {
-          "family": "FlyTS",
-          "focus": "Read the flight. Finish, then transfer.",
-          "why": "Four flying targets, 50 hits each. The S5 FlyTS cuts, with Elite as the Expert rung.",
-          "rungs": [
-            "VT FlyTS Novice S5",
-            "VT FlyTS Intermediate S5",
-            "VT FlyTS Advanced S5",
-            "VT FlyTS Elite S5"
-          ]
-        },
-        {
-          "category": "Evasive Switching",
           "family": "Domi Relay",
-          "focus": "Stay on target until it drops.",
-          "why": "domiSwitch targets carry 55 health and regenerate 0.3 seconds after damage stops, so leaving early costs the whole kill; Aimerz+, snakbox and Viscose file it under evasive switching. Viscose's Easier cut and the Easy and standard cuts lead into Avasive's edit for the top band, whose top score is the lowest of the four. That edition handover needs playtesting.",
+          "focus": "Control the strafe and keep contact through the kill. Switch after the target drops.",
+          "category": "Evasive Switching",
           "rungs": [
             "domiSwitch Easier",
             "domiSwitch Easy",
             "domiSwitch",
-            "domiSwitch Avasive"
-          ]
+            "domiSwitch Hard"
+          ],
+          "why": "Easier explicitly makes bots bigger and slower with less punishing regeneration; Easy, standard and Hard continue the same named lineage. Replace the Avasive Expert edit: a lower record across different edits was not evidence of greater physical difficulty."
         },
         {
+          "family": "tamTargetSwitch Smooth",
+          "focus": "Match the target's movement and keep contact through the regeneration window.",
           "category": "Evasive Switching",
-          "family": "Penta Bounce",
-          "focus": "Chase the bouncing crowd around the pentagon.",
-          "why": "Five targets bounce across a pentagonal wall and each needs a short sustained burst to clear. This adds an arena-like switching loop with plenty of target choice. The four published Season 5 cuts provide exact variants for every band.",
           "rungs": [
-            "VT Penta Bounce Novice S5",
-            "VT Penta Bounce Intermediate S5",
-            "VT Penta Bounce Advanced S5",
-            "VT Penta Bounce Elite S5"
-          ]
-        },
-        {
-          "category": "Evasive Switching",
-          "family": "Chamber Relay",
-          "focus": "Clear the floating pack, one target at a time.",
-          "why": "Four gently jumping and floating targets share a narrow chamber, producing a compact clear-the-room loop. The four published ControlTS bands keep the same arena and short sustained bursts throughout the progression.",
-          "rungs": [
-            "VT ControlTS Novice S5",
-            "VT ControlTS Intermediate S5",
-            "VT ControlTS Advanced S5",
-            "VT ControlTS Elite S5"
-          ]
-        },
-        {
-          "category": "Evasive Switching",
-          "family": "Smooth Relay",
-          "focus": "Flow into the next moving target.",
-          "why": "Smooth transfer adds longer flowing target-to-target routes beside the sharper evasive circuits. Community Benchmarks' easy cut leads into Revosect's three SmoothTS tiers. The first cross-author handover needs playtesting.",
-          "rungs": [
-            "CB SmoothSwitch Easy",
-            "SmoothTS Revosect Entry",
-            "SmoothTS Revosect Int",
-            "SmoothTS Revosect"
-          ]
+            "tamTargetSwitch Smooth Entry",
+            "tamTargetSwitch Smooth Novice",
+            "tamTargetSwitch Smooth Intermediate",
+            "tamTargetSwitch Smooth Elite"
+          ],
+          "why": "Use the authored Entry, Novice, Intermediate and Elite editions in ascending order. Remove Hard 30% Larger from Novice and the subsequent switch to non-bouncing Easy. Instant regeneration remains a commitment drill, so it comes late in the circuit; named editions are not measured difficulty equivalence."
         }
       ]
     },
     "Static Clicking": {
-      "title": "Still targets. Time between kills.",
-      "description": "Targets stationary. Score = gap between kills. One large initial flick → one small micro-correction → click. Straight line target to target, no overflick. During micro, next target already located in peripheral.",
+      "description": "Your score is how little time passes between kills, so flick straight at each target, fix it with one small correction if you need to, and be looking at the next target before you click.",
       "families": [
         {
           "family": "2Guys",
-          "focus": "Two targets. Flick → micro → click.",
           "why": "Original authored static circuit.",
           "rungs": [
             "2 Tile Jumbo Tile Frenzy",
@@ -618,7 +589,6 @@
         },
         {
           "family": "Diagonal",
-          "focus": "Diagonal path. Straight line, no curve.",
           "why": "Original authored static circuit.",
           "rungs": [
             "ClickTrack Diagonal 3t Short",
@@ -629,7 +599,6 @@
         },
         {
           "family": "Horizontal",
-          "focus": "Horizontal only. Flat line, time switch.",
           "why": "Original authored static circuit.",
           "rungs": [
             "ClickTrack Horizontal 3t Short",
@@ -640,7 +609,6 @@
         },
         {
           "family": "Micro",
-          "focus": "Tiny targets. Micro-correct, no overflick.",
           "why": "Original authored static circuit.",
           "rungs": [
             "SCS 8xs Uniform",
@@ -651,7 +619,6 @@
         },
         {
           "family": "Micro Pressure",
-          "focus": "Small, rushed. Micro held under pace.",
           "why": "Original authored static circuit.",
           "rungs": [
             "No23 ca micropressure supereasy",
@@ -662,7 +629,6 @@
         },
         {
           "family": "Speed",
-          "focus": "Big, close. Flick lands direct. Pace.",
           "why": "Original authored static circuit.",
           "rungs": [
             "Jumbo1wall9000targets",
@@ -673,7 +639,6 @@
         },
         {
           "family": "Triangle",
-          "focus": "Fixed triangle. Chain, rhythm, straight.",
           "why": "Original authored static circuit.",
           "rungs": [
             "ClickTrack 3t Short",
@@ -684,7 +649,6 @@
         },
         {
           "family": "Wide Pressure",
-          "focus": "Wide wall, rushed. Big flick, no pause.",
           "why": "Original authored static circuit.",
           "rungs": [
             "1w4t Pressure Revosect Entry",
@@ -695,7 +659,6 @@
         },
         {
           "family": "Wide wall",
-          "focus": "Wide angles. Big flick, next in peripheral.",
           "why": "Original authored static circuit.",
           "rungs": [
             "ww6t Avasive Easier",
@@ -707,7 +670,6 @@
         {
           "category": "Static Clicking",
           "family": "Evo Gallery",
-          "focus": "Hold the pace as the targets multiply.",
           "why": "EvoClick adds a target every twenty seconds, so a run opens as a calm static read and ends as a crowded wall: a pacing arc no other static circuit here has. Community Benchmarks' easy cut leads into Revosect's three EvoClick tiers. The first cross-author handover needs playtesting.",
           "rungs": [
             "CB EvoClick Easy",
@@ -719,7 +681,6 @@
         {
           "category": "Static Clicking",
           "family": "Vox Gallery",
-          "focus": "Pick your route through the gallery.",
           "why": "Vox's shooting-gallery layout offers route choice and quick successive kills. These Viscose click variants remove awkward spawns; Entry, Easier, Medium and Hard give the gallery a four-band progression.",
           "rungs": [
             "VoxTS Click Entry",
@@ -731,7 +692,6 @@
         {
           "category": "Static Clicking",
           "family": "Reload Rush",
-          "focus": "Chain the clears. Keep the rhythm alive.",
           "why": "Six-target reload clicking emphasizes a continuous clear-and-respawn rhythm. The first three cuts reduce target size; the Expert trustechain edit adds a different routing challenge. That final handover is a design choice requiring playtesting.",
           "rungs": [
             "1w6ts reload Easier",
@@ -743,7 +703,6 @@
         {
           "category": "Static Clicking",
           "family": "Micro Chain",
-          "focus": "Find a three-target beat and build speed.",
           "why": "Three close static targets create short, repeatable chains with little travel time. Larger 80%, Larger, standard and 10% small provide a size progression for a compact score-chasing circuit.",
           "rungs": [
             "1w3ts Pasu Perfected Micro Goated Larger 80%",

@@ -115,7 +115,7 @@ if (process.argv.includes("--sample")) {
   pool.ladder.overlap = spec.overlap;
   const ceilingAdjustments: any[] = [];
   const additions = spec.families.map((f: any) => ({
-    family: f.family, category: f.category, subCategory: f.category, focus: f.focus, $why: f.why,
+    family: f.family, category: f.category, subCategory: f.category, $why: f.why,
     $order: { why: f.why + " Difficulty order is a curation judgement; board populations cannot prove equivalence between edits." },
     variants: f.rungs.map((name: string, window: number) => {
       const d = dist.get(name);
@@ -148,14 +148,14 @@ if (process.argv.includes("--sample")) {
   for (const f of spec.families) {
     if (!curation.categories[f.category]) {
       const guide = pool.categoryGuides[f.category];
-      curation.categories[f.category] = { title: guide.headline, description: guide.description,
+      curation.categories[f.category] = { description: guide.description,
         families: baseline.filter((b: any) => b.category === f.category).map((b: any) => ({
-          family: b.family, focus: b.focus, why: b.$why ?? "Original authored static circuit.", rungs: b.variants.map((v: any) => v.scenario),
+          family: b.family, why: b.$why ?? "Original authored static circuit.", rungs: b.variants.map((v: any) => v.scenario),
         })) };
     }
     curation.categories[f.category].families.push(f);
     const audience = f.rungs.map((n: string) => tax.get(n)).sort((a: any, b: any) => b.entries - a.entries)[0];
-    rationale.families.push({ family: f.family, subCategory: f.category, isolates: f.focus, why: f.why,
+    rationale.families.push({ family: f.family, subCategory: f.category, isolates: f.isolates, why: f.why,
       evidence: f.rungs.map((name: string) => ({ source: "expansion-catalogue", scenario: name,
         says: `Exact scenario and leaderboard identity verified on ${tax.get(name).expansionVerifiedAt}. Author description: ${tax.get(name).description}` })),
       audience: { scenario: audience.name, plays: audience.plays, entries: audience.entries },

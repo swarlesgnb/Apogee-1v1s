@@ -49339,6 +49339,1230 @@
         }
       ],
       "sampledAt": "2026-09-14T02:37:33.629Z"
+    },
+    {
+      "scenario": "VT PasuTS Entry S5",
+      "leaderboardId": 106755,
+      "total": 5246,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 1148.5
+        },
+        {
+          "topFraction": 0.005,
+          "score": 1076.5
+        },
+        {
+          "topFraction": 0.01,
+          "score": 1032.5
+        },
+        {
+          "topFraction": 0.02,
+          "score": 990
+        },
+        {
+          "topFraction": 0.035,
+          "score": 940
+        },
+        {
+          "topFraction": 0.05,
+          "score": 910
+        },
+        {
+          "topFraction": 0.075,
+          "score": 880
+        },
+        {
+          "topFraction": 0.1,
+          "score": 860
+        },
+        {
+          "topFraction": 0.15,
+          "score": 830
+        },
+        {
+          "topFraction": 0.2,
+          "score": 811
+        },
+        {
+          "topFraction": 0.3,
+          "score": 783.5
+        },
+        {
+          "topFraction": 0.4,
+          "score": 760
+        },
+        {
+          "topFraction": 0.5,
+          "score": 733.5
+        },
+        {
+          "topFraction": 0.65,
+          "score": 699.5
+        },
+        {
+          "topFraction": 0.8,
+          "score": 644.5
+        },
+        {
+          "topFraction": 0.95,
+          "score": 540
+        }
+      ],
+      "sampledAt": "2026-09-14T19:14:24.079Z"
+    },
+    {
+      "scenario": "VT PasuTS Intermediate S5",
+      "leaderboardId": 106756,
+      "total": 12521,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 970
+        },
+        {
+          "topFraction": 0.005,
+          "score": 900
+        },
+        {
+          "topFraction": 0.01,
+          "score": 880
+        },
+        {
+          "topFraction": 0.02,
+          "score": 860
+        },
+        {
+          "topFraction": 0.035,
+          "score": 841.5
+        },
+        {
+          "topFraction": 0.05,
+          "score": 830
+        },
+        {
+          "topFraction": 0.075,
+          "score": 816
+        },
+        {
+          "topFraction": 0.1,
+          "score": 804
+        },
+        {
+          "topFraction": 0.15,
+          "score": 785.5
+        },
+        {
+          "topFraction": 0.2,
+          "score": 769
+        },
+        {
+          "topFraction": 0.3,
+          "score": 740
+        },
+        {
+          "topFraction": 0.4,
+          "score": 716
+        },
+        {
+          "topFraction": 0.5,
+          "score": 690
+        },
+        {
+          "topFraction": 0.65,
+          "score": 655.5
+        },
+        {
+          "topFraction": 0.8,
+          "score": 610
+        },
+        {
+          "topFraction": 0.95,
+          "score": 510.5
+        }
+      ],
+      "sampledAt": "2026-09-14T19:14:34.233Z"
+    },
+    {
+      "scenario": "VT PasuTS Advanced S5",
+      "leaderboardId": 106331,
+      "total": 1837,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 947.5
+        },
+        {
+          "topFraction": 0.005,
+          "score": 864.5
+        },
+        {
+          "topFraction": 0.01,
+          "score": 842
+        },
+        {
+          "topFraction": 0.02,
+          "score": 820
+        },
+        {
+          "topFraction": 0.035,
+          "score": 804.5
+        },
+        {
+          "topFraction": 0.05,
+          "score": 790.5
+        },
+        {
+          "topFraction": 0.075,
+          "score": 780
+        },
+        {
+          "topFraction": 0.1,
+          "score": 763.5
+        },
+        {
+          "topFraction": 0.15,
+          "score": 742
+        },
+        {
+          "topFraction": 0.2,
+          "score": 730
+        },
+        {
+          "topFraction": 0.3,
+          "score": 709
+        },
+        {
+          "topFraction": 0.4,
+          "score": 680
+        },
+        {
+          "topFraction": 0.5,
+          "score": 655.5
+        },
+        {
+          "topFraction": 0.65,
+          "score": 600
+        },
+        {
+          "topFraction": 0.8,
+          "score": 530
+        },
+        {
+          "topFraction": 0.95,
+          "score": 425.5
+        }
+      ],
+      "sampledAt": "2026-09-14T19:14:44.277Z"
+    },
+    {
+      "scenario": "VT PasuTS Elite S5",
+      "leaderboardId": 106754,
+      "total": 223,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 739
+        },
+        {
+          "topFraction": 0.005,
+          "score": 739
+        },
+        {
+          "topFraction": 0.01,
+          "score": 717.5
+        },
+        {
+          "topFraction": 0.02,
+          "score": 648
+        },
+        {
+          "topFraction": 0.035,
+          "score": 630
+        },
+        {
+          "topFraction": 0.05,
+          "score": 611.5
+        },
+        {
+          "topFraction": 0.075,
+          "score": 596.5
+        },
+        {
+          "topFraction": 0.1,
+          "score": 580
+        },
+        {
+          "topFraction": 0.15,
+          "score": 550
+        },
+        {
+          "topFraction": 0.2,
+          "score": 526
+        },
+        {
+          "topFraction": 0.3,
+          "score": 490
+        },
+        {
+          "topFraction": 0.4,
+          "score": 449.5
+        },
+        {
+          "topFraction": 0.5,
+          "score": 413
+        },
+        {
+          "topFraction": 0.65,
+          "score": 380
+        },
+        {
+          "topFraction": 0.8,
+          "score": 322
+        },
+        {
+          "topFraction": 0.95,
+          "score": 230
+        }
+      ],
+      "sampledAt": "2026-09-14T19:14:54.218Z"
+    },
+    {
+      "scenario": "Floatswitch Entry",
+      "leaderboardId": 112237,
+      "total": 4300,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 1050
+        },
+        {
+          "topFraction": 0.005,
+          "score": 924.5
+        },
+        {
+          "topFraction": 0.01,
+          "score": 870.5
+        },
+        {
+          "topFraction": 0.02,
+          "score": 820
+        },
+        {
+          "topFraction": 0.035,
+          "score": 782
+        },
+        {
+          "topFraction": 0.05,
+          "score": 760
+        },
+        {
+          "topFraction": 0.075,
+          "score": 740
+        },
+        {
+          "topFraction": 0.1,
+          "score": 720
+        },
+        {
+          "topFraction": 0.15,
+          "score": 699.5
+        },
+        {
+          "topFraction": 0.2,
+          "score": 680
+        },
+        {
+          "topFraction": 0.3,
+          "score": 650
+        },
+        {
+          "topFraction": 0.4,
+          "score": 630
+        },
+        {
+          "topFraction": 0.5,
+          "score": 610
+        },
+        {
+          "topFraction": 0.65,
+          "score": 580
+        },
+        {
+          "topFraction": 0.8,
+          "score": 537.5
+        },
+        {
+          "topFraction": 0.95,
+          "score": 456.5
+        }
+      ],
+      "sampledAt": "2026-09-14T19:15:03.017Z"
+    },
+    {
+      "scenario": "Floatswitch Intermediate",
+      "leaderboardId": 111979,
+      "total": 9749,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 930
+        },
+        {
+          "topFraction": 0.005,
+          "score": 850
+        },
+        {
+          "topFraction": 0.01,
+          "score": 825
+        },
+        {
+          "topFraction": 0.02,
+          "score": 798.5
+        },
+        {
+          "topFraction": 0.035,
+          "score": 776
+        },
+        {
+          "topFraction": 0.05,
+          "score": 760
+        },
+        {
+          "topFraction": 0.075,
+          "score": 749.5
+        },
+        {
+          "topFraction": 0.1,
+          "score": 737
+        },
+        {
+          "topFraction": 0.15,
+          "score": 719
+        },
+        {
+          "topFraction": 0.2,
+          "score": 700
+        },
+        {
+          "topFraction": 0.3,
+          "score": 675.5
+        },
+        {
+          "topFraction": 0.4,
+          "score": 650.5
+        },
+        {
+          "topFraction": 0.5,
+          "score": 631.5
+        },
+        {
+          "topFraction": 0.65,
+          "score": 603.5
+        },
+        {
+          "topFraction": 0.8,
+          "score": 570
+        },
+        {
+          "topFraction": 0.95,
+          "score": 490
+        }
+      ],
+      "sampledAt": "2026-09-14T19:15:12.937Z"
+    },
+    {
+      "scenario": "Floatswitch Advanced",
+      "leaderboardId": 112006,
+      "total": 1509,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 909
+        },
+        {
+          "topFraction": 0.005,
+          "score": 842
+        },
+        {
+          "topFraction": 0.01,
+          "score": 826
+        },
+        {
+          "topFraction": 0.02,
+          "score": 801.5
+        },
+        {
+          "topFraction": 0.035,
+          "score": 780
+        },
+        {
+          "topFraction": 0.05,
+          "score": 768
+        },
+        {
+          "topFraction": 0.075,
+          "score": 747.5
+        },
+        {
+          "topFraction": 0.1,
+          "score": 739
+        },
+        {
+          "topFraction": 0.15,
+          "score": 720
+        },
+        {
+          "topFraction": 0.2,
+          "score": 707.5
+        },
+        {
+          "topFraction": 0.3,
+          "score": 681.5
+        },
+        {
+          "topFraction": 0.4,
+          "score": 660
+        },
+        {
+          "topFraction": 0.5,
+          "score": 627.5
+        },
+        {
+          "topFraction": 0.65,
+          "score": 570
+        },
+        {
+          "topFraction": 0.8,
+          "score": 516
+        },
+        {
+          "topFraction": 0.95,
+          "score": 420
+        }
+      ],
+      "sampledAt": "2026-09-14T19:15:22.816Z"
+    },
+    {
+      "scenario": "Floatswitch Elite",
+      "leaderboardId": 112062,
+      "total": 359,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 760.5
+        },
+        {
+          "topFraction": 0.005,
+          "score": 760.5
+        },
+        {
+          "topFraction": 0.01,
+          "score": 750
+        },
+        {
+          "topFraction": 0.02,
+          "score": 710
+        },
+        {
+          "topFraction": 0.035,
+          "score": 670
+        },
+        {
+          "topFraction": 0.05,
+          "score": 660
+        },
+        {
+          "topFraction": 0.075,
+          "score": 640
+        },
+        {
+          "topFraction": 0.1,
+          "score": 630
+        },
+        {
+          "topFraction": 0.15,
+          "score": 610
+        },
+        {
+          "topFraction": 0.2,
+          "score": 590
+        },
+        {
+          "topFraction": 0.3,
+          "score": 550
+        },
+        {
+          "topFraction": 0.4,
+          "score": 520
+        },
+        {
+          "topFraction": 0.5,
+          "score": 490
+        },
+        {
+          "topFraction": 0.65,
+          "score": 454.5
+        },
+        {
+          "topFraction": 0.8,
+          "score": 409
+        },
+        {
+          "topFraction": 0.95,
+          "score": 332
+        }
+      ],
+      "sampledAt": "2026-09-14T19:15:32.670Z"
+    },
+    {
+      "scenario": "VT ControlTS Entry S5 Speed",
+      "leaderboardId": 106720,
+      "total": 2195,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 960.54
+        },
+        {
+          "topFraction": 0.005,
+          "score": 893.87
+        },
+        {
+          "topFraction": 0.01,
+          "score": 875.21
+        },
+        {
+          "topFraction": 0.02,
+          "score": 838.14
+        },
+        {
+          "topFraction": 0.035,
+          "score": 800.54
+        },
+        {
+          "topFraction": 0.05,
+          "score": 772.8
+        },
+        {
+          "topFraction": 0.075,
+          "score": 749.87
+        },
+        {
+          "topFraction": 0.1,
+          "score": 733.34
+        },
+        {
+          "topFraction": 0.15,
+          "score": 718.94
+        },
+        {
+          "topFraction": 0.2,
+          "score": 706.14
+        },
+        {
+          "topFraction": 0.3,
+          "score": 680
+        },
+        {
+          "topFraction": 0.4,
+          "score": 663.2
+        },
+        {
+          "topFraction": 0.5,
+          "score": 646.14
+        },
+        {
+          "topFraction": 0.65,
+          "score": 618.14
+        },
+        {
+          "topFraction": 0.8,
+          "score": 583.2
+        },
+        {
+          "topFraction": 0.95,
+          "score": 506.4
+        }
+      ],
+      "sampledAt": "2026-09-14T19:15:41.955Z"
+    },
+    {
+      "scenario": "VT Penta Bounce Entry S5 Speed",
+      "leaderboardId": 107639,
+      "total": 2475,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 1043.74
+        },
+        {
+          "topFraction": 0.005,
+          "score": 952.54
+        },
+        {
+          "topFraction": 0.01,
+          "score": 912.01
+        },
+        {
+          "topFraction": 0.02,
+          "score": 842.67
+        },
+        {
+          "topFraction": 0.035,
+          "score": 797.07
+        },
+        {
+          "topFraction": 0.05,
+          "score": 753.34
+        },
+        {
+          "topFraction": 0.075,
+          "score": 723.47
+        },
+        {
+          "topFraction": 0.1,
+          "score": 705.6
+        },
+        {
+          "topFraction": 0.15,
+          "score": 678.94
+        },
+        {
+          "topFraction": 0.2,
+          "score": 658.67
+        },
+        {
+          "topFraction": 0.3,
+          "score": 637.34
+        },
+        {
+          "topFraction": 0.4,
+          "score": 608.8
+        },
+        {
+          "topFraction": 0.5,
+          "score": 591.2
+        },
+        {
+          "topFraction": 0.65,
+          "score": 561.87
+        },
+        {
+          "topFraction": 0.8,
+          "score": 519.73
+        },
+        {
+          "topFraction": 0.95,
+          "score": 442.93
+        }
+      ],
+      "sampledAt": "2026-09-14T19:15:53.601Z"
+    },
+    {
+      "scenario": "B180T Voltaic Easy Slower",
+      "leaderboardId": 185571,
+      "total": 21959,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 100.4
+        },
+        {
+          "topFraction": 0.005,
+          "score": 91
+        },
+        {
+          "topFraction": 0.01,
+          "score": 87
+        },
+        {
+          "topFraction": 0.02,
+          "score": 83
+        },
+        {
+          "topFraction": 0.035,
+          "score": 79.4
+        },
+        {
+          "topFraction": 0.05,
+          "score": 78
+        },
+        {
+          "topFraction": 0.075,
+          "score": 76
+        },
+        {
+          "topFraction": 0.1,
+          "score": 75
+        },
+        {
+          "topFraction": 0.15,
+          "score": 73.2
+        },
+        {
+          "topFraction": 0.2,
+          "score": 72.2
+        },
+        {
+          "topFraction": 0.3,
+          "score": 67.4
+        },
+        {
+          "topFraction": 0.4,
+          "score": 63
+        },
+        {
+          "topFraction": 0.5,
+          "score": 59
+        },
+        {
+          "topFraction": 0.65,
+          "score": 53
+        },
+        {
+          "topFraction": 0.8,
+          "score": 47
+        },
+        {
+          "topFraction": 0.95,
+          "score": 37.4
+        }
+      ],
+      "sampledAt": "2026-09-14T19:16:05.275Z"
+    },
+    {
+      "scenario": "VT FlyTS Entry S5 Speed",
+      "leaderboardId": 106708,
+      "total": 3065,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 1198.94
+        },
+        {
+          "topFraction": 0.005,
+          "score": 1113.88
+        },
+        {
+          "topFraction": 0.01,
+          "score": 1058.67
+        },
+        {
+          "topFraction": 0.02,
+          "score": 997.07
+        },
+        {
+          "topFraction": 0.035,
+          "score": 943.74
+        },
+        {
+          "topFraction": 0.05,
+          "score": 916.81
+        },
+        {
+          "topFraction": 0.075,
+          "score": 881.61
+        },
+        {
+          "topFraction": 0.1,
+          "score": 861.34
+        },
+        {
+          "topFraction": 0.15,
+          "score": 836.81
+        },
+        {
+          "topFraction": 0.2,
+          "score": 818.14
+        },
+        {
+          "topFraction": 0.3,
+          "score": 790.4
+        },
+        {
+          "topFraction": 0.4,
+          "score": 762.67
+        },
+        {
+          "topFraction": 0.5,
+          "score": 739.74
+        },
+        {
+          "topFraction": 0.65,
+          "score": 699.74
+        },
+        {
+          "topFraction": 0.8,
+          "score": 658.4
+        },
+        {
+          "topFraction": 0.95,
+          "score": 565.6
+        }
+      ],
+      "sampledAt": "2026-09-14T19:16:18.565Z"
+    },
+    {
+      "scenario": "tamTargetSwitch Smooth Entry",
+      "leaderboardId": 111266,
+      "total": 7533,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 58
+        },
+        {
+          "topFraction": 0.005,
+          "score": 53
+        },
+        {
+          "topFraction": 0.01,
+          "score": 50
+        },
+        {
+          "topFraction": 0.02,
+          "score": 48
+        },
+        {
+          "topFraction": 0.035,
+          "score": 45
+        },
+        {
+          "topFraction": 0.05,
+          "score": 44
+        },
+        {
+          "topFraction": 0.075,
+          "score": 43
+        },
+        {
+          "topFraction": 0.1,
+          "score": 41
+        },
+        {
+          "topFraction": 0.15,
+          "score": 40
+        },
+        {
+          "topFraction": 0.2,
+          "score": 38
+        },
+        {
+          "topFraction": 0.3,
+          "score": 36
+        },
+        {
+          "topFraction": 0.4,
+          "score": 34
+        },
+        {
+          "topFraction": 0.5,
+          "score": 33
+        },
+        {
+          "topFraction": 0.65,
+          "score": 30
+        },
+        {
+          "topFraction": 0.8,
+          "score": 26
+        },
+        {
+          "topFraction": 0.95,
+          "score": 19
+        }
+      ],
+      "sampledAt": "2026-09-14T19:16:34.874Z"
+    },
+    {
+      "scenario": "tamTargetSwitch Smooth Novice",
+      "leaderboardId": 111343,
+      "total": 9986,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 52
+        },
+        {
+          "topFraction": 0.005,
+          "score": 46
+        },
+        {
+          "topFraction": 0.01,
+          "score": 44
+        },
+        {
+          "topFraction": 0.02,
+          "score": 42
+        },
+        {
+          "topFraction": 0.035,
+          "score": 41
+        },
+        {
+          "topFraction": 0.05,
+          "score": 39
+        },
+        {
+          "topFraction": 0.075,
+          "score": 38
+        },
+        {
+          "topFraction": 0.1,
+          "score": 37
+        },
+        {
+          "topFraction": 0.15,
+          "score": 36
+        },
+        {
+          "topFraction": 0.2,
+          "score": 35
+        },
+        {
+          "topFraction": 0.3,
+          "score": 33
+        },
+        {
+          "topFraction": 0.4,
+          "score": 32
+        },
+        {
+          "topFraction": 0.5,
+          "score": 30
+        },
+        {
+          "topFraction": 0.65,
+          "score": 28
+        },
+        {
+          "topFraction": 0.8,
+          "score": 25
+        },
+        {
+          "topFraction": 0.95,
+          "score": 18
+        }
+      ],
+      "sampledAt": "2026-09-14T19:16:49.070Z"
+    },
+    {
+      "scenario": "tamTargetSwitch Smooth Intermediate",
+      "leaderboardId": 113137,
+      "total": 15930,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 45
+        },
+        {
+          "topFraction": 0.005,
+          "score": 42
+        },
+        {
+          "topFraction": 0.01,
+          "score": 41
+        },
+        {
+          "topFraction": 0.02,
+          "score": 40
+        },
+        {
+          "topFraction": 0.035,
+          "score": 38
+        },
+        {
+          "topFraction": 0.05,
+          "score": 38
+        },
+        {
+          "topFraction": 0.075,
+          "score": 36
+        },
+        {
+          "topFraction": 0.1,
+          "score": 36
+        },
+        {
+          "topFraction": 0.15,
+          "score": 34
+        },
+        {
+          "topFraction": 0.2,
+          "score": 33
+        },
+        {
+          "topFraction": 0.3,
+          "score": 31
+        },
+        {
+          "topFraction": 0.4,
+          "score": 29
+        },
+        {
+          "topFraction": 0.5,
+          "score": 28
+        },
+        {
+          "topFraction": 0.65,
+          "score": 25
+        },
+        {
+          "topFraction": 0.8,
+          "score": 21
+        },
+        {
+          "topFraction": 0.95,
+          "score": 14
+        }
+      ],
+      "sampledAt": "2026-09-14T19:16:58.857Z"
+    },
+    {
+      "scenario": "tamTargetSwitch Smooth Elite",
+      "leaderboardId": 111685,
+      "total": 476,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 33
+        },
+        {
+          "topFraction": 0.005,
+          "score": 31
+        },
+        {
+          "topFraction": 0.01,
+          "score": 28
+        },
+        {
+          "topFraction": 0.02,
+          "score": 25
+        },
+        {
+          "topFraction": 0.035,
+          "score": 24
+        },
+        {
+          "topFraction": 0.05,
+          "score": 23
+        },
+        {
+          "topFraction": 0.075,
+          "score": 21
+        },
+        {
+          "topFraction": 0.1,
+          "score": 20
+        },
+        {
+          "topFraction": 0.15,
+          "score": 19
+        },
+        {
+          "topFraction": 0.2,
+          "score": 16
+        },
+        {
+          "topFraction": 0.3,
+          "score": 14
+        },
+        {
+          "topFraction": 0.4,
+          "score": 11
+        },
+        {
+          "topFraction": 0.5,
+          "score": 9
+        },
+        {
+          "topFraction": 0.65,
+          "score": 5
+        },
+        {
+          "topFraction": 0.8,
+          "score": 3
+        },
+        {
+          "topFraction": 0.95,
+          "score": 0
+        }
+      ],
+      "sampledAt": "2026-09-14T19:17:08.621Z"
+    },
+    {
+      "scenario": "VT DriftTS Entry S5 Speed",
+      "leaderboardId": 104861,
+      "total": 2461,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 1016.01
+        },
+        {
+          "topFraction": 0.005,
+          "score": 946.94
+        },
+        {
+          "topFraction": 0.01,
+          "score": 889.07
+        },
+        {
+          "topFraction": 0.02,
+          "score": 834.41
+        },
+        {
+          "topFraction": 0.035,
+          "score": 794.14
+        },
+        {
+          "topFraction": 0.05,
+          "score": 769.07
+        },
+        {
+          "topFraction": 0.075,
+          "score": 742.4
+        },
+        {
+          "topFraction": 0.1,
+          "score": 728.8
+        },
+        {
+          "topFraction": 0.15,
+          "score": 708.8
+        },
+        {
+          "topFraction": 0.2,
+          "score": 691.2
+        },
+        {
+          "topFraction": 0.3,
+          "score": 668.8
+        },
+        {
+          "topFraction": 0.4,
+          "score": 648.54
+        },
+        {
+          "topFraction": 0.5,
+          "score": 629.6
+        },
+        {
+          "topFraction": 0.65,
+          "score": 600.54
+        },
+        {
+          "topFraction": 0.8,
+          "score": 566.4
+        },
+        {
+          "topFraction": 0.95,
+          "score": 486.4
+        }
+      ],
+      "sampledAt": "2026-09-14T19:17:26.182Z"
     }
   ]
 }
