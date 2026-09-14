@@ -59,6 +59,23 @@ export interface ScenarioHistory {
   lastPlayed: Date | null;
 }
 
+type CachedRun = Pick<ParsedRun, "scenario" | "score" | "playedAt">;
+
+/**
+ * What each file parsed to, so a rescan reads only the files it has not seen.
+ *
+ * KovaaK's writes a stats file once, when the run ends, and never touches it again, so a
+ * file that parsed once cannot parse differently later. Reparsing all 13,138 files of a
+ * real folder took about 3 seconds, and the client did it on Electron's main process
+ * after every run, every settlement and before any quest could be announced, with every
+ * button waiting behind it. Only the three fields history needs are kept: a parsed run
+ * carries its kill table, and 13k of those is memory spent on nothing.
+ *
+ * Failures are not cached. A file caught mid-write fails now and parses on the next scan.
+ */
+const parsedFiles = new Map<string, CachedRun>();
+let parsedDir: string | null = null;
+
 /**
  * Build per-scenario history from a KovaaK's stats folder.
  *
@@ -75,14 +92,22 @@ export function scanStatsFolder(dir: string): Map<string, ScenarioHistory> {
     return history;
   }
 
+  if (dir !== parsedDir) {
+    parsedFiles.clear();
+    parsedDir = dir;
+  }
+
   for (const file of files) {
-    let run: ParsedRun;
-    try {
-      const result = parseStatsFile(file, readFileSync(join(dir, file), "utf8"));
-      if (!result.ok) continue;
-      run = result.run;
-    } catch {
-      continue;
+    let run = parsedFiles.get(file);
+    if (!run) {
+      try {
+        const result = parseStatsFile(file, readFileSync(join(dir, file), "utf8"));
+        if (!result.ok) continue;
+        run = { scenario: result.run.scenario, score: result.run.score, playedAt: result.run.playedAt };
+        parsedFiles.set(file, run);
+      } catch {
+        continue;
+      }
     }
 
     let entry = history.get(run.scenario);
