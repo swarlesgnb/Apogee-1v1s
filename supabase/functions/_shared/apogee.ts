@@ -486,17 +486,23 @@ export async function loadSeasonPool(
 
   const { data: pool, error: poolError } = await admin
     .from("season_scenarios")
-    .select("scenario_id, window_index, scenarios!inner(id, name, aim_type, sub_category)")
+    .select("scenario_id, window_index, category, scenarios!inner(id, name, aim_type, sub_category)")
     .eq("season_id", season.id)
     .eq("window_index", windowIndex);
 
   if (poolError) throw new HttpError(500, poolError.message);
 
+  // Filed by the category the season gives the scenario, not the catalogue-wide
+  // sub_category. The season decides which ladder a scenario belongs to (PLAN.md §14),
+  // and reading the other column let the two disagree, so a queue could draw a scenario
+  // the season files under a different category whenever the catalogue lagged a season
+  // edit. The catalogue value stays as the fallback for a row pushed before seasons
+  // recorded a category.
   const selectable: SelectableScenario[] = (pool ?? []).map((row: any) => ({
     id: row.scenarios.id,
     name: row.scenarios.name,
     aimType: row.scenarios.aim_type,
-    subCategory: row.scenarios.sub_category,
+    subCategory: row.category ?? row.scenarios.sub_category,
   }));
 
   if (selectable.length === 0) {

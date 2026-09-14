@@ -161,6 +161,45 @@ async function main(): Promise<void> {
       orphaned === 0,
       `${orphaned} without one`,
     );
+
+    // The pool find-match draws from, against the season this checkout would push.
+    //
+    // Everything above passes for a season that is loaded but stale: one pushed before
+    // the last edit, or an old published season that find-match keeps choosing over a
+    // newer draft. Either plays matches from a pool nobody is looking at, which is how a
+    // scenario ends up in a category the season file no longer puts it in.
+    const local = JSON.parse(
+      readFileSync(join(root, "data", "seasons", "season-1.json"), "utf8"),
+    ) as { name: string; scenarios: { scenario: string; window: number; category: string }[] };
+
+    const liveRes = await rest(
+      `season_scenarios?select=category,window_index,scenarios!inner(name)` +
+        `&season_id=eq.${season.id}&limit=5000`,
+      SECRET!,
+    );
+    const live = JSON.parse(liveRes.body || "[]") as {
+      category: string;
+      window_index: number;
+      scenarios: { name: string };
+    }[];
+
+    const key = (name: string, window: number, category: string) =>
+      `${category} / ${window} / ${name}`;
+    const liveKeys = new Set(live.map((r) => key(r.scenarios.name, r.window_index, r.category)));
+    const localKeys = new Set(local.scenarios.map((s) => key(s.scenario, s.window, s.category)));
+    const missing = [...localKeys].filter((k) => !liveKeys.has(k));
+    const extra = [...liveKeys].filter((k) => !localKeys.has(k));
+
+    check(
+      "the live pool is the season in this checkout",
+      season.name === local.name && missing.length === 0 && extra.length === 0,
+      season.name !== local.name
+        ? `live is "${season.name}", checkout is "${local.name}"`
+        : missing.length || extra.length
+          ? `${missing.length} missing, ${extra.length} not in the checkout - run npm run push:season` +
+            `; e.g. ${[...missing.slice(0, 2).map((k) => "missing " + k), ...extra.slice(0, 2).map((k) => "extra " + k)].join("; ")}`
+          : `${live.length} scenarios, same categories and windows`,
+    );
   }
 
   // The sub-category vocabulary moved from Voltaic's one-word names to the pool's
