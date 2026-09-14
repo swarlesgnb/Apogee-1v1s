@@ -57,6 +57,12 @@ SKILLS = {
     "tracking": "Tracking",
     "switching": "Switching",
     "target switching": "Switching",
+    "static clicking": "Clicking",
+    "dynamic clicking": "Clicking",
+    "precise tracking": "Tracking",
+    "reactive tracking": "Tracking",
+    "speed switching": "Switching",
+    "evasive switching": "Switching",
 }
 
 
@@ -263,7 +269,8 @@ def main() -> int:
         identities[name] = {
             "leaderboardId": variant["leaderboardId"],
             "aimType": (normalise_skill(corrected["aimType"]) if corrected else None)
-            or normalise_skill(taxonomy.get(name, {}).get("aimType")),
+            or normalise_skill(taxonomy.get(name, {}).get("aimType"))
+            or normalise_skill(pool_of[name].get("skill")),
             "subCategory": variant["subCategory"],
         }
         pool_only += 1

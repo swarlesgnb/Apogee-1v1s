@@ -441,7 +441,9 @@ function main(): void {
       const clears = rankMaxes.map((score) => {
         if (score < floorScore || score > recordScore) return null;
         const f = apexTopFraction(board, dist, score);
-        return f === null ? null : Number(f.toFixed(6));
+        // Keep measurement precision until display: rounding here can merge
+        // distinct top ranks on large boards and falsely reject the season.
+        return f;
       });
 
       // Which of the ladder's ranks this variant can actually award: the ones its window
@@ -474,7 +476,7 @@ function main(): void {
         sanity: {
           leaderboardEntries: dist.total,
           clears,
-          sampledAt: cache.sampledAt,
+          sampledAt: dist.sampledAt,
         },
       };
 

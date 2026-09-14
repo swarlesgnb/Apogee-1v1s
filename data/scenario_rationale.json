@@ -213,6 +213,11 @@
       "title": "KovaaK's scenario catalogue",
       "url": "https://kovaaks.com/kovaaks/scenarios",
       "kind": "first-party scenario descriptions and identities"
+    },
+    "expansion-catalogue": {
+      "title": "KovaaK's scenario catalogue: season expansion identity checks",
+      "url": "https://kovaaks.com/kovaaks/scenarios",
+      "kind": "first-party"
     }
   },
   "families": [
@@ -1532,6 +1537,822 @@
         "plays": 1301048,
         "entries": 111165
       }
+    },
+    {
+      "family": "Multiclick Gallery",
+      "subCategory": "Static Clicking",
+      "isolates": "Sweep the room. Keep the magazine rolling.",
+      "why": "Single-hit targets spread across three walls turn clicking into a room-clearing score chase. Reload-on-kill rewards a sustained rhythm. The four published Multiclick cuts widen the arena as difficulty rises.",
+      "evidence": [
+        {
+          "source": "expansion-catalogue",
+          "scenario": "VT Multiclick 120 Novice",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:50:31.273Z. Author description: Medium sized bots spawn on the inner three walls within a rectangular prism, with every single click elimination reloading the player's three round magazine."
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "VT Multiclick 120 Intermediate",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:50:33.794Z. Author description: Medium sized bots spawn on the inner three walls within a rectangular prism, with every single click elimination reloading the player's three round magazine."
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "VT Multiclick 180 Advanced",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:50:36.272Z. Author description: Medium sized bots spawn on the inner three walls within a rectangular prism, with every single click elimination reloading the player's three round magazine."
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "VT Multiclick 180 Elite",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:50:38.534Z. Author description: Medium sized bots spawn on the inner three walls within a rectangular prism, with every single click elimination reloading the player's three round magazine.\r\n\r\nElite scenarios are meant to serve as a challenge for advanced players"
+        }
+      ],
+      "audience": {
+        "scenario": "VT Multiclick 120 Novice",
+        "plays": 2494518,
+        "entries": 214434
+      },
+      "thin": "Selection is based on catalogue mechanics and published variants. No measured enjoyment or cross-band difficulty equivalence is claimed."
+    },
+    {
+      "family": "Vox Gallery",
+      "subCategory": "Static Clicking",
+      "isolates": "Pick your route through the gallery.",
+      "why": "Vox's shooting-gallery layout offers route choice and quick successive kills. These Viscose click variants remove awkward spawns; Entry, Easier, Medium and Hard give the gallery a four-band progression.",
+      "evidence": [
+        {
+          "source": "expansion-catalogue",
+          "scenario": "VoxTS Click Entry",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:50:40.167Z. Author description: voxtargetswitch click small with all the bad spawns removed\r\n\r\n#RawInput"
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "VoxTS Click Easier",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:50:50.019Z. Author description: voxtargetswitch click small with all the bad spawns removed\r\n\r\n#RawInput"
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "VoxTS Click Medium",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:51:00.014Z. Author description: voxtargetswitch click small with all the bad spawns removed\r\n\r\n#RawInput"
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "VoxTS Click Hard",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:51:09.915Z. Author description: voxtargetswitch click small with all the bad spawns removed\r\n\r\n#RawInput"
+        }
+      ],
+      "audience": {
+        "scenario": "VoxTS Click Medium",
+        "plays": 290979,
+        "entries": 40044
+      },
+      "thin": "Selection is based on catalogue mechanics and published variants. No measured enjoyment or cross-band difficulty equivalence is claimed."
+    },
+    {
+      "family": "Reload Rush",
+      "subCategory": "Static Clicking",
+      "isolates": "Chain the clears. Keep the rhythm alive.",
+      "why": "Six-target reload clicking emphasizes a continuous clear-and-respawn rhythm. The first three cuts reduce target size; the Expert trustechain edit adds a different routing challenge. That final handover is a design choice requiring playtesting.",
+      "evidence": [
+        {
+          "source": "expansion-catalogue",
+          "scenario": "1w6ts reload Easier",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:51:19.803Z. Author description: 1wall 6targets small, except accuracy isn't factored into score; instead, you have ammo that reloads on kill."
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "1w6ts reload v2 20% bigger",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:51:29.639Z. Author description: FOV lock, 1wall 6targets small, except accuracy isn't factored into score; instead, you have ammo that reloads on kill."
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "1w6ts reload v2",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:51:30.356Z. Author description: FOV lock, 1wall 6targets small, except accuracy isn't factored into score; instead, you have ammo that reloads on kill."
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "1w6ts_trustechain Raspberry",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:51:30.997Z. Author description: Trustemix asked me to make this.  Practice chaining targets together up and down the map!"
+        }
+      ],
+      "audience": {
+        "scenario": "1w6ts reload v2",
+        "plays": 1518127,
+        "entries": 89714
+      },
+      "thin": "Selection is based on catalogue mechanics and published variants. No measured enjoyment or cross-band difficulty equivalence is claimed."
+    },
+    {
+      "family": "Micro Chain",
+      "subCategory": "Static Clicking",
+      "isolates": "Find a three-target beat and build speed.",
+      "why": "Three close static targets create short, repeatable chains with little travel time. Larger 80%, Larger, standard and 10% small provide a size progression for a compact score-chasing circuit.",
+      "evidence": [
+        {
+          "source": "expansion-catalogue",
+          "scenario": "1w3ts Pasu Perfected Micro Goated Larger 80%",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:51:40.941Z. Author description: Pasu Perfected 3 Targets Micro\r\n\r\n1800 is goated status."
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "1w3ts Pasu Perfected Micro Goated Larger",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:52:19.683Z. Author description: Pasu Perfected 3 Targets Micro\r\n\r\n1800 is goated status."
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "1w3ts Pasu Perfected Micro Goated",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:52:29.492Z. Author description: Pasu Perfected 3 Targets Micro\r\n\r\n1800 is goated status."
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "1w3ts Pasu Perfected Micro Goated 10% small",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:52:30.138Z. Author description: Pasu Perfected 3 Targets Micro\r\n\r\n1800 is goated status."
+        }
+      ],
+      "audience": {
+        "scenario": "1w3ts Pasu Perfected Micro Goated Larger 80%",
+        "plays": 1028206,
+        "entries": 131237
+      },
+      "thin": "Selection is based on catalogue mechanics and published variants. No measured enjoyment or cross-band difficulty equivalence is claimed."
+    },
+    {
+      "family": "Floating Gallery",
+      "subCategory": "Dynamic Clicking",
+      "isolates": "Catch the next head as it drifts into view.",
+      "why": "Floating heads in a layered arena offer a shooting-gallery rhythm with depth changes. Viscose's Entry through Hard edits supply a coherent four-band progression without replacing the core Pasu and Popcorn tests.",
+      "evidence": [
+        {
+          "source": "expansion-catalogue",
+          "scenario": "VT Floating Heads Viscose Entry",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:52:39.904Z. Author description: To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nSemi auto click timing with five targets floating around in a layered arena infront of the player. Each target takes 1 hit to eliminate and is worth 10 points. Sqrt acc scoring applies."
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "VT Floating Heads Viscose Easier",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:52:49.807Z. Author description: To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nSemi auto click timing with five targets floating around in a layered arena infront of the player. Each target takes 1 hit to eliminate and is worth 10 points. Sqrt acc scoring applies."
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "VT Floating Heads Viscose Medium",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:52:51.814Z. Author description: To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nSemi auto click timing with five targets floating around in a layered arena infront of the player. Each target takes 1 hit to eliminate and is worth 10 points. Sqrt acc scoring applies."
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "VT Floating Heads Viscose Hard",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:52:53.860Z. Author description: To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nSemi auto click timing with five targets floating around in a layered arena infront of the player. Each target takes 1 hit to eliminate and is worth 10 points. Sqrt acc scoring applies."
+        }
+      ],
+      "audience": {
+        "scenario": "VT Floating Heads Viscose Easier",
+        "plays": 263661,
+        "entries": 43533
+      },
+      "thin": "Selection is based on catalogue mechanics and published variants. No measured enjoyment or cross-band difficulty equivalence is claimed."
+    },
+    {
+      "family": "Sky Gallery",
+      "subCategory": "Dynamic Clicking",
+      "isolates": "Hop between layers. Catch each passing dot.",
+      "why": "Far moving dots at several vertical layers turn the run into a layered gallery. The Goated Easier, Medium, Hard and Expert edits retain the same scene while changing the challenge.",
+      "evidence": [
+        {
+          "source": "expansion-catalogue",
+          "scenario": "skyClick Goated Easier",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:53:03.734Z. Author description: Far moving dots on multiple vertical layers."
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "skyClick Goated Medium",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:53:13.570Z. Author description: Far moving dots on multiple vertical layers."
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "skyClick Goated Hard",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:53:23.461Z. Author description: Far moving dots on multiple vertical layers."
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "skyClick Goated Expert",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:53:33.309Z. Author description: Far moving dots on multiple vertical layers."
+        }
+      ],
+      "audience": {
+        "scenario": "skyClick Goated Medium",
+        "plays": 309789,
+        "entries": 38545
+      },
+      "thin": "Selection is based on catalogue mechanics and published variants. No measured enjoyment or cross-band difficulty equivalence is claimed."
+    },
+    {
+      "family": "Wave Click",
+      "subCategory": "Dynamic Clicking",
+      "isolates": "Ride the wave from shot to shot.",
+      "why": "SunClick and WaveClick add a timing-focused wave circuit with a repeatable rhythm. This is a mixed-release progression using Aimerz's Easy S1, Normal, Hard and Hard S1 cuts; its handovers need playtesting.",
+      "evidence": [
+        {
+          "source": "expansion-catalogue",
+          "scenario": "Aimerz+ sunClick Easy S1",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:53:43.101Z. Author description: Aimerz+ Benchmarks\r\n-------------------------------------\r\ntwitter: @AimerzHQ"
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "aimerz+ WaveClick Normal",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:53:45.191Z. Author description: 1 kill = 1 points.\r\n1 miss = -0.25 points.\r\n5 misses in a row = 1 sec reload. \r\n1 kill = +1 ammo. \r\n---------------------------------\r\nWithout accuracy scoring."
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "aimerz+ WaveClick Hard",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:53:55.171Z. Author description: 1 kill = 1 points.\r\n1 miss = -0.25 points.\r\n5 misses in a row = 1 sec reload. \r\n1 kill = +1 ammo. \r\n---------------------------------\r\nWithout accuracy scoring."
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "Aimerz+ sunClick Hard S1",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:54:05.373Z. Author description: Aimerz+ Benchmarks\r\n-------------------------------------\r\ntwitter: @AimerzHQ"
+        }
+      ],
+      "audience": {
+        "scenario": "Aimerz+ sunClick Easy S1",
+        "plays": 121663,
+        "entries": 24203
+      },
+      "thin": "Selection is based on catalogue mechanics and published variants. No measured enjoyment or cross-band difficulty equivalence is claimed."
+    },
+    {
+      "family": "Bounce Gallery",
+      "subCategory": "Dynamic Clicking",
+      "isolates": "Catch the leap. Reload on every clear.",
+      "why": "Four single-click bots leap across a flat surface at different depths. A three-shot magazine refills on each kill, creating an arcade-like clear-and-reload loop. The four published Bounceshot cuts keep that loop across the bands.",
+      "evidence": [
+        {
+          "source": "expansion-catalogue",
+          "scenario": "VT Bounceshot Novice",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:54:07.803Z. Author description: Four single-click bots leap in mid-high arcs on top of a flat surface, changing depths as they traverse. The player's weapon has three shots and empty magazines recover in their entirety upon each elimination."
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "VT Bounceshot Intermediate",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:54:08.638Z. Author description: Four single-click bots leap in mid-high arcs on top of a flat surface, changing depths as they traverse. The player's weapon has three shots and empty magazines recover in their entirety upon each elimination."
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "VT Bounceshot Advanced",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:54:09.565Z. Author description: Four single-click bots leap in mid-high arcs on top of a flat surface, changing depths as they traverse. The player's weapon has three shots and empty magazines recover in their entirety upon each elimination."
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "VT Bounceshot Elite",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:55:17.341Z. Author description: Four single-click bots leap in mid-high arcs on top of a flat surface, changing depths as they traverse. The player's weapon has three shots and empty magazines recover in their entirety upon each elimination.\r\n\r\nElite scenarios are meant to serve as a challenge for advanced players "
+        }
+      ],
+      "audience": {
+        "scenario": "VT Bounceshot Novice",
+        "plays": 1967572,
+        "entries": 213995
+      },
+      "thin": "Selection is based on catalogue mechanics and published variants. No measured enjoyment or cross-band difficulty equivalence is claimed."
+    },
+    {
+      "family": "DVD Chase",
+      "subCategory": "Precise Tracking",
+      "isolates": "Follow the bounce all the way to the corner.",
+      "why": "The DVD-inspired moving target gives continuous tracking a recognizable screen-bounce motif. MASSIVE, Big, standard and Small keep the motion theme while reducing the target size.",
+      "evidence": [
+        {
+          "source": "expansion-catalogue",
+          "scenario": "TSK - DVD Tracking MASSIVE",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:55:18.920Z. Author description: Based on 'DVD Tracking' by 4rk\r\n\r\n@AimTSK on Twitter For Benchmarks.\r\nModified size and jump velocity range.\r\n\r\nFixed variant to be more similar to its original inspired scenario, pasu track + proper map scaling. - thundah"
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "TSK - DVD Tracking Big",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:55:28.728Z. Author description: Based on 'DVD Tracking' by 4rk\r\n\r\n@AimTSK on Twitter For Benchmarks.\r\nModified size and jump velocity range.\r\n\r\nFixed variant to be more similar to its original inspired scenario, pasu track + proper map scaling. - thundah"
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "TSK - DVD Tracking",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:55:38.532Z. Author description: Based on 'DVD Tracking' by 4rk\r\n\r\n@AimTSK on Twitter For Benchmarks.\r\nModified size and jump velocity range.\r\n\r\nFixed variant to be more similar to its original inspired scenario, pasu track + proper map scaling. - thundah"
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "TSK - DVD Tracking Small",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:55:48.319Z. Author description: Based on 'DVD Tracking' by 4rk\r\n\r\n@AimTSK on Twitter For Benchmarks.\r\nModified size and jump velocity range.\r\n\r\nFixed variant to be more similar to its original inspired scenario, pasu track + proper map scaling. - thundah"
+        }
+      ],
+      "audience": {
+        "scenario": "TSK - DVD Tracking Big",
+        "plays": 115592,
+        "entries": 8272
+      },
+      "thin": "Selection is based on catalogue mechanics and published variants. No measured enjoyment or cross-band difficulty equivalence is claimed."
+    },
+    {
+      "family": "Flower Chase",
+      "subCategory": "Precise Tracking",
+      "isolates": "Trace the flower. Stay with each little turn.",
+      "why": "The author's bee-collecting-pollen theme gives compact tracking a playful identity. Entry, Easier, standard and Hard keep the Flower motion across the four bands. The scenario name is not a requirement to change sensitivity.",
+      "evidence": [
+        {
+          "source": "expansion-catalogue",
+          "scenario": "Flower Entry",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:55:57.984Z. Author description: micro tracking scenario focused on making constant fingertip led adjustments, use a sensitivity faster than 50cm.\r\n\r\nimagine you are a buzzy little bee collecting pollen while playing this scenario\r\n\r\nmade by @robinwobin_"
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "Flower Easier 50cm",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:56:07.646Z. Author description: micro tracking scenario focused on making constant fingertip led adjustments, use a sensitivity faster than 50cm.\r\n\r\nimagine you are a buzzy little bee collecting pollen while playing this scenario\r\n\r\nmade by @robinwobin_"
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "Flower 50cm",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:56:17.360Z. Author description: micro tracking scenario focused on making constant fingertip led adjustments, use a sensitivity faster than 50cm.\r\n\r\nimagine you are a buzzy little bee collecting pollen while playing this scenario\r\n\r\nmade by @robinwobin_"
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "Flower Hard 50cm",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:56:27.592Z. Author description: micro tracking scenario focused on making constant fingertip led adjustments, use a sensitivity faster than 50cm.\r\n\r\nimagine you are a buzzy little bee collecting pollen while playing this scenario\r\n\r\nmade by @robinwobin_"
+        }
+      ],
+      "audience": {
+        "scenario": "Flower Easier 50cm",
+        "plays": 217226,
+        "entries": 49347
+      },
+      "thin": "Selection is based on catalogue mechanics and published variants. No measured enjoyment or cross-band difficulty equivalence is claimed."
+    },
+    {
+      "family": "Sphere Cruise",
+      "subCategory": "Precise Tracking",
+      "isolates": "Cruise with the dot as it circles you.",
+      "why": "A gently jumping dot flying around the player adds a flowing orbital chase. Viscose's Horizontal Entry, Easier, standard and Hard cuts expand the motion challenge while keeping the same visual theme.",
+      "evidence": [
+        {
+          "source": "expansion-catalogue",
+          "scenario": "Smoothsphere Viscose Horizontal Entry",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:56:37.380Z. Author description: Tracking a small gently jumping dot as it flies around you at varying distance and speed. Tweaked Version of Smoothsphere grandmaster. Slowed acceleration, lowered speed, decreased min and max strafe timing and min distance from player."
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "Smoothsphere Viscose Easier",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:56:37.974Z. Author description: Tracking a small gently jumping dot as it flies around you at varying distance and speed. Tweaked Version of Smoothsphere grandmaster. Slowed acceleration, lowered speed, decreased min and max strafe timing and min distance from player."
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "Smoothsphere Viscose",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:56:38.563Z. Author description: Tracking a small gently jumping dot as it flies around you at varying distance and speed. Tweaked Version of Smoothsphere grandmaster. Slowed acceleration, lowered speed, decreased min and max strafe timing and min distance from player."
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "Smoothsphere Viscose Hard",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:56:48.674Z. Author description: Tracking a small gently jumping dot as it flies around you at varying distance and speed. Tweaked Version of Smoothsphere grandmaster. Slowed acceleration, lowered speed, decreased min and max strafe timing and min distance from player."
+        }
+      ],
+      "audience": {
+        "scenario": "Smoothsphere Viscose Easier",
+        "plays": 752091,
+        "entries": 67260
+      },
+      "thin": "Selection is based on catalogue mechanics and published variants. No measured enjoyment or cross-band difficulty equivalence is claimed."
+    },
+    {
+      "family": "Snake Sweep",
+      "subCategory": "Precise Tracking",
+      "isolates": "Sweep around the dish in one flowing motion.",
+      "why": "Wide sweeping strafes in a circular dish give tracking a distinctive arena and long flowing paths. The four published Snake Track bands provide a consistent scene from Novice through Expert.",
+      "evidence": [
+        {
+          "source": "expansion-catalogue",
+          "scenario": "VT Snake Track Novice S5",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:56:58.427Z. Author description: To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto tracking with an invincible grounded target performing wide sweeping strafes in a circular dish surrounding the player. Score is earned at a rate of 1 point per hit with a firerate of 100 per second."
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "VT Snake Track Intermediate S5",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:56:59.221Z. Author description: To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto tracking with an invincible grounded target performing wide sweeping strafes in a circular dish surrounding the player. Score is earned at a rate of 1 point per hit with a firerate of 100 per second."
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "VT Snake Track Advanced S5",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:56:59.950Z. Author description: To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto tracking with an invincible grounded target performing wide sweeping strafes in a circular dish surrounding the player. Score is earned at a rate of 1 point per hit with a firerate of 100 per second."
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "VT Snake Track Elite S5",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:57:01.235Z. Author description: For those looking for a real challenge, intended for those who are Astra and above"
+        }
+      ],
+      "audience": {
+        "scenario": "VT Snake Track Novice S5",
+        "plays": 1363980,
+        "entries": 208726
+      },
+      "thin": "Selection is based on catalogue mechanics and published variants. No measured enjoyment or cross-band difficulty equivalence is claimed."
+    },
+    {
+      "family": "Spectral Chase",
+      "subCategory": "Reactive Tracking",
+      "isolates": "Stay ready for the next strange turn.",
+      "why": "Air Spectral's deliberately unusual Air movement adds a surprise-driven chase. Easy 85%, Easy, standard and Harder retain that theme. Its terse author description supports the unusual-motion intent, not a claim of measured enjoyment.",
+      "evidence": [
+        {
+          "source": "expansion-catalogue",
+          "scenario": "Air Spectral Easy 85%",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:57:03.638Z. Author description: Air but it's Weird"
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "Air Spectral Easy",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:57:13.458Z. Author description: Air but it's Weird"
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "Air Spectral",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:57:23.289Z. Author description: Air but it's Weird"
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "Air Spectral Harder",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:57:33.098Z. Author description: Air but it's Weird"
+        }
+      ],
+      "audience": {
+        "scenario": "Air Spectral Easy 85%",
+        "plays": 215405,
+        "entries": 41775
+      },
+      "thin": "Selection is based on catalogue mechanics and published variants. No measured enjoyment or cross-band difficulty equivalence is claimed."
+    },
+    {
+      "family": "Celestial Chase",
+      "subCategory": "Reactive Tracking",
+      "isolates": "Follow the aerial course through every phase.",
+      "why": "Air Divine-style movement brings a longer aerial course into the season. Easy Slowed, Easy, No UFO and Harder progress from a slowed course to the full challenge; the final UFO handover needs playtesting.",
+      "evidence": [
+        {
+          "source": "expansion-catalogue",
+          "scenario": "Air CELESTIAL No UFO Easy Slowed",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:57:46.694Z. Author description: Air Divine style scenario on the Air VL Sparky map"
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "Air CELESTIAL No UFO Easy",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:57:47.379Z. Author description: Air Divine style scenario on the Air VL Sparky map"
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "Air CELESTIAL No UFO",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:57:48.018Z. Author description: Air Divine style scenario based on Air VL Sparky"
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "Air CELESTIAL Harder",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:57:48.633Z. Author description: Air Divine style scenario based on Air VL Sparky\r\n\r\nufo changed from %chance on hit to per amount of time passed"
+        }
+      ],
+      "audience": {
+        "scenario": "Air CELESTIAL No UFO Easy Slowed",
+        "plays": 594418,
+        "entries": 117829
+      },
+      "thin": "Selection is based on catalogue mechanics and published variants. No measured enjoyment or cross-band difficulty equivalence is claimed."
+    },
+    {
+      "family": "Air Gauntlet",
+      "subCategory": "Reactive Tracking",
+      "isolates": "Clear the full aerial gauntlet.",
+      "why": "The full Air scenario changes phases within a run, unlike the existing single-bot Air Reading circuit. Published Novice through Elite variants make this a varied endurance chase with a clear finish.",
+      "evidence": [
+        {
+          "source": "expansion-catalogue",
+          "scenario": "VT Air Novice",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:57:58.439Z. Author description: Five bots will make uniquely characteristic horizontal and vertical strafes within a rectangular prism, with each one expiring after ten seconds elapse from its initial movements."
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "VT Air Intermediate",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:57:59.096Z. Author description: Five bots will make uniquely characteristic horizontal and vertical strafes within a rectangular prism, with each one expiring after ten seconds elapse from its initial movements."
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "VT Air Advanced",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:57:59.732Z. Author description: Five bots will make uniquely characteristic horizontal and vertical strafes within a rectangular prism, with each one expiring after ten seconds elapse from its initial movements."
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "VT Air Elite",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:58:00.332Z. Author description: Five bots will make uniquely characteristic horizontal and vertical strafes within a rectangular prism, with each one expiring after ten seconds elapse from its initial movements.\r\n\r\nElite scenarios are meant to serve as a challenge for advanced players"
+        }
+      ],
+      "audience": {
+        "scenario": "VT Air Novice",
+        "plays": 1068631,
+        "entries": 192246
+      },
+      "thin": "Selection is based on catalogue mechanics and published variants. No measured enjoyment or cross-band difficulty equivalence is claimed."
+    },
+    {
+      "family": "Close Strafe Chase",
+      "subCategory": "Reactive Tracking",
+      "isolates": "Stay close. Catch the reversal.",
+      "why": "A close strafing opponent adds a grounded duel-like chase beside the aerial courses. Easy Thin, standard, Thin and Precise+ are a proposed progression; speed and size both change, so the first handover needs playtesting.",
+      "evidence": [
+        {
+          "source": "expansion-catalogue",
+          "scenario": "Close Fast Strafes Easy Invincible - Thin",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:58:01.421Z. Author description: Close Fast Strafes, but the bots are thin and invincible"
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "Close Fast Strafes Invincible",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:58:11.225Z. Author description: Close Fast Strafes, but the bots are invincible"
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "Close Fast Strafes Invincible - Thin",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:58:11.784Z. Author description: Close Fast Strafes, but the bots are thin and invincible"
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "Close Fast Strafes Invincible Precise+",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:58:12.343Z. Author description: Low pressure hitscan tracking against a hard to hit target. Lower movement speed compared to the original. Target width even thinner compared to Precise."
+        }
+      ],
+      "audience": {
+        "scenario": "Close Fast Strafes Invincible",
+        "plays": 2596120,
+        "entries": 115292
+      },
+      "thin": "Selection is based on catalogue mechanics and published variants. No measured enjoyment or cross-band difficulty equivalence is claimed."
+    },
+    {
+      "family": "Vox Blitz",
+      "subCategory": "Speed Switching",
+      "isolates": "Clear the room in fast bursts.",
+      "why": "Stationary Vox targets reward route choice and rapid full-auto clears without movement reading. Jumbo, standard, Small and xxSmall turn the room into a four-band switching sprint.",
+      "evidence": [
+        {
+          "source": "expansion-catalogue",
+          "scenario": "StaticSwitchingVox Jumbo",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:58:22.189Z. Author description: A static target switching scenario based on voxtargetswitch"
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "StaticSwitchingVox",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:58:22.763Z. Author description: A static target switching scenario based on voxtargetswitch"
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "StaticSwitchingVox Small",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:58:23.336Z. Author description: A static target switching scenario based on voxtargetswitch"
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "StaticSwitchingVox xxSmall",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:58:23.891Z. Author description: A static target switching scenario based on voxtargetswitch"
+        }
+      ],
+      "audience": {
+        "scenario": "StaticSwitchingVox",
+        "plays": 185766,
+        "entries": 52184
+      },
+      "thin": "Selection is based on catalogue mechanics and published variants. No measured enjoyment or cross-band difficulty equivalence is claimed."
+    },
+    {
+      "family": "Wave Relay",
+      "subCategory": "Speed Switching",
+      "isolates": "Pass from wave to wave without losing pace.",
+      "why": "Smoothly drifting targets give switching a visible wave rhythm. Community Benchmarks' easy cut leads into Revosect Entry, Intermediate and standard. The cross-author first handover is provisional.",
+      "evidence": [
+        {
+          "source": "expansion-catalogue",
+          "scenario": "CB WaveSwitch Easy",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:58:24.479Z. Author description: 5 targets that move smoothly in wavy motions\r\n(SPEED SWITCHING)"
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "WaveSwitch Revosect Entry",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:58:26.722Z. Author description: Chaining speed switching scenario where the bots slowly drift up/down while quickly moving left and right.\r\n\r\nThis scenario uses hit based scoring, where each bot takes 23 hits to kill and grants 10 points total for a full kill. \r\n\r\nTo change the walls, enable \"Override Scenario Visuals\" in the main settings tab."
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "WaveSwitch Revosect Int",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:58:28.731Z. Author description: Chaining speed switching scenario where the bots slowly drift up/down while quickly moving left and right.\r\n\r\nThis scenario uses hit based scoring, where each bot takes 23 hits to kill and grants 10 points total for a full kill. \r\n\r\nTo change the walls, enable \"Override Scenario Visuals\" in the main settings tab."
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "WaveSwitch Revosect",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:58:30.788Z. Author description: Chaining speed switching scenario where the bots slowly drift up/down while quickly moving left and right.\r\n\r\nThis scenario uses hit based scoring, where each bot takes 23 hits to kill and grants 10 points total for a full kill. \r\n\r\nTo change the walls, enable \"Override Scenario Visuals\" in the main settings tab."
+        }
+      ],
+      "audience": {
+        "scenario": "CB WaveSwitch Easy",
+        "plays": 18099,
+        "entries": 8305
+      },
+      "thin": "Selection is based on catalogue mechanics and published variants. No measured enjoyment or cross-band difficulty equivalence is claimed."
+    },
+    {
+      "family": "Sky Relay",
+      "subCategory": "Speed Switching",
+      "isolates": "Sweep the sky one target at a time.",
+      "why": "Slow horizontal targets at several depths make a readable aerial switching gallery. Four published skyTS bands keep the movement predictable while increasing the target challenge.",
+      "evidence": [
+        {
+          "source": "expansion-catalogue",
+          "scenario": "VT skyTS Novice",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:58:31.848Z. Author description: Bots move in slow horizontal lines in a rectangular prism at various depths and need to be tracked for a short period to be eliminated. Horizontal direction changes are very slow and predictable."
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "VT skyTS Intermediate",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:58:32.406Z. Author description: Bots move in slow horizontal lines in a rectangular prism at various depths and need to be tracked for a short period to be eliminated. Horizontal direction changes are very slow and predictable."
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "VT skyTS Advanced",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:58:32.985Z. Author description: Bots move in slow horizontal lines in a rectangular prism at various depths and need to be tracked for a short period to be eliminated. Horizontal direction changes are very slow and predictable."
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "VT skyTS Elite",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:58:33.558Z. Author description: Bots move in slow horizontal lines in a rectangular prism at various depths and need to be tracked for a short period to be eliminated. Horizontal direction changes are very slow and predictable.\r\n\r\nElite scenarios are meant to serve as a challenge for advanced players "
+        }
+      ],
+      "audience": {
+        "scenario": "VT skyTS Novice",
+        "plays": 7735104,
+        "entries": 348412
+      },
+      "thin": "Selection is based on catalogue mechanics and published variants. No measured enjoyment or cross-band difficulty equivalence is claimed."
+    },
+    {
+      "family": "Dev Blitz",
+      "subCategory": "Speed Switching",
+      "isolates": "Burst through the pack. Find the next clear.",
+      "why": "Low-FOV target switching concentrates the action into short, fast clears. Easy, NR, rAim and NR Small are a proposed cross-edit progression; the two middle releases need an in-game difficulty comparison.",
+      "evidence": [
+        {
+          "source": "expansion-catalogue",
+          "scenario": "devTS Goated Easy",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:58:34.115Z. Author description: Targets are significantly slower"
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "devTS Goated NR",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:58:34.692Z. Author description: Low FoV target switch with decent range and smallish targets."
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "devTS Goated rAim",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:58:35.270Z. Author description: Low FoV target switch with decent range and smallish targets."
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "devTS Goated NR Small",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:58:37.265Z. Author description: Low FoV target switch with decent range and smallish targets."
+        }
+      ],
+      "audience": {
+        "scenario": "devTS Goated NR",
+        "plays": 204046,
+        "entries": 18696
+      },
+      "thin": "Selection is based on catalogue mechanics and published variants. No measured enjoyment or cross-band difficulty equivalence is claimed."
+    },
+    {
+      "family": "Drift Relay",
+      "subCategory": "Evasive Switching",
+      "isolates": "Chase the drift between the two chambers.",
+      "why": "Four jumping and floating targets in layered chambers give each run an arena-clearing loop. The published DriftTS Novice through Elite scenarios supply a consistent four-band progression.",
+      "evidence": [
+        {
+          "source": "expansion-catalogue",
+          "scenario": "VT DriftTS Novice S5",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:58:46.643Z. Author description: To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto target switching with four targets jumping and floating around in two layered chambers infront of the player. Each target takes 50 hits to eliminate with a TTK of ~0.5 seconds, and is worth a total of 10 points."
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "VT DriftTS Intermediate S5",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:58:47.277Z. Author description: To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto target switching with four targets jumping and floating around in two layered chambers infront of the player. Each target takes 50 hits to eliminate with a TTK of ~0.5 seconds, and is worth a total of 10 points."
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "VT DriftTS Advanced S5",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:58:48.111Z. Author description: To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto target switching with four targets jumping and floating around in two layered chambers infront of the player. Each target takes 50 hits to eliminate with a TTK of ~0.5 seconds, and is worth a total of 10 points."
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "VT DriftTS Elite S5",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:58:49.116Z. Author description: For those looking for a real challenge, intended for those who are Astra and above"
+        }
+      ],
+      "audience": {
+        "scenario": "VT DriftTS Novice S5",
+        "plays": 818208,
+        "entries": 168927
+      },
+      "thin": "Selection is based on catalogue mechanics and published variants. No measured enjoyment or cross-band difficulty equivalence is claimed."
+    },
+    {
+      "family": "Penta Bounce",
+      "subCategory": "Evasive Switching",
+      "isolates": "Chase the bouncing crowd around the pentagon.",
+      "why": "Five targets bounce across a pentagonal wall and each needs a short sustained burst to clear. This adds an arena-like switching loop with plenty of target choice. The four published Season 5 cuts provide exact variants for every band.",
+      "evidence": [
+        {
+          "source": "expansion-catalogue",
+          "scenario": "VT Penta Bounce Novice S5",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:58:49.752Z. Author description: To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto target switching with five targets bouncing around on a pentagonal wall at varying distances. Each target takes 50 hits to eliminate with a TTK of ~0.5 seconds, and is worth a total of 10 points."
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "VT Penta Bounce Intermediate S5",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:58:50.338Z. Author description: To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto target switching with five targets bouncing around on a pentagonal wall at varying distances. Each target takes 50 hits to eliminate with a TTK of ~0.5 seconds, and is worth a total of 10 points."
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "VT Penta Bounce Advanced S5",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:58:50.907Z. Author description: To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto target switching with five targets bouncing around on a pentagonal wall at varying distances. Each target takes 50 hits to eliminate with a TTK of ~0.5 seconds, and is worth a total of 10 points."
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "VT Penta Bounce Elite S5",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:58:51.486Z. Author description: For those looking for a real challenge, intended for those who are Astra and above"
+        }
+      ],
+      "audience": {
+        "scenario": "VT Penta Bounce Novice S5",
+        "plays": 839609,
+        "entries": 166189
+      },
+      "thin": "Selection is based on catalogue mechanics and published variants. No measured enjoyment or cross-band difficulty equivalence is claimed."
+    },
+    {
+      "family": "Chamber Relay",
+      "subCategory": "Evasive Switching",
+      "isolates": "Clear the floating pack, one target at a time.",
+      "why": "Four gently jumping and floating targets share a narrow chamber, producing a compact clear-the-room loop. The four published ControlTS bands keep the same arena and short sustained bursts throughout the progression.",
+      "evidence": [
+        {
+          "source": "expansion-catalogue",
+          "scenario": "VT ControlTS Novice S5",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:58:53.642Z. Author description: To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto target switching with four targets gently jumping and floating inside a narrow chamber. Each target takes 50 hits to eliminate with a TTK of ~0.6 seconds, and is worth a total of 10 points."
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "VT ControlTS Intermediate S5",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:58:54.256Z. Author description: To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto target switching with four targets gently jumping and floating inside a narrow chamber. Each target takes 50 hits to eliminate with a TTK of ~0.6 seconds, and is worth a total of 10 points."
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "VT ControlTS Advanced S5",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:58:54.969Z. Author description: To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto target switching with four targets gently jumping and floating inside a narrow chamber. Each target takes 50 hits to eliminate with a TTK of ~0.6 seconds, and is worth a total of 10 points."
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "VT ControlTS Elite S5",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:58:56.076Z. Author description: For those looking for a real challenge, intended for those who are Astra and above"
+        }
+      ],
+      "audience": {
+        "scenario": "VT ControlTS Novice S5",
+        "plays": 817039,
+        "entries": 168062
+      },
+      "thin": "Selection is based on catalogue mechanics and published variants. No measured enjoyment or cross-band difficulty equivalence is claimed."
+    },
+    {
+      "family": "Smooth Relay",
+      "subCategory": "Evasive Switching",
+      "isolates": "Flow into the next moving target.",
+      "why": "Smooth transfer adds longer flowing target-to-target routes beside the sharper evasive circuits. Community Benchmarks' easy cut leads into Revosect's three SmoothTS tiers. The first cross-author handover needs playtesting.",
+      "evidence": [
+        {
+          "source": "expansion-catalogue",
+          "scenario": "CB SmoothSwitch Easy",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:58:58.137Z. Author description: 5 targets that move smoothly in all directions, but mostly horizontally.\r\n(EVASIVE SWITCHING)"
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "SmoothTS Revosect Entry",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:58:58.768Z. Author description: Stability/Smooth evasive switching scenario where needle bots long strafes across the map, playing with faster cm is reccomended.\r\n\r\nThis scenario uses hit based scoring, where each bot takes 45 hits to kill and grants 10 points total for a full kill. \r\n\r\nTo change the walls, enable \"Override Scenario Visuals\" in the main settings tab."
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "SmoothTS Revosect Int",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:59:00.857Z. Author description: Stability/Smooth evasive switching scenario where needle bots long strafes across the map, playing with faster cm is reccomended.\r\n\r\nThis scenario uses hit based scoring, where each bot takes 45 hits to kill and grants 10 points total for a full kill. \r\n\r\nTo change the walls, enable \"Override Scenario Visuals\" in the main settings tab."
+        },
+        {
+          "source": "expansion-catalogue",
+          "scenario": "SmoothTS Revosect",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:59:02.912Z. Author description: Stability/Smooth evasive switching scenario where needle bots long strafes across the map, playing with faster cm is reccomended.\r\n\r\nThis scenario uses hit based scoring, where each bot takes 45 hits to kill and grants 10 points total for a full kill. \r\n\r\nTo change the walls, enable \"Override Scenario Visuals\" in the main settings tab."
+        }
+      ],
+      "audience": {
+        "scenario": "CB SmoothSwitch Easy",
+        "plays": 34700,
+        "entries": 11319
+      },
+      "thin": "Selection is based on catalogue mechanics and published variants. No measured enjoyment or cross-band difficulty equivalence is claimed."
     }
   ]
 }

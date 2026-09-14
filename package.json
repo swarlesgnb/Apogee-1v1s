@@ -77,7 +77,8 @@
     "distribution": "tsx src/core/season/validateDistribution.ts",
     "coverage": "tsx src/core/history/validateCoverage.ts",
     "practice": "tsx tools/checkPractice.ts",
-    "validate:curation": "tsx tools/validateSeasonCuration.ts",
+    "validate:curation": "tsx tools/validateSeasonCuration.ts && tsx tools/validateSeasonExpansion.ts",
+    "validate:expansion": "tsx tools/validateSeasonExpansion.ts",
     "validate:theory": "tsx tools/validateBenchmarkTheory.ts"
   },
   "devDependencies": {

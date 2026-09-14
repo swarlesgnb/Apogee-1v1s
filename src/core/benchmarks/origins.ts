@@ -3,9 +3,9 @@
  * in each of them.
  *
  * Apogee's pool is not invented. Every family in it was picked out of the corpus the
- * community already grades itself against, and 197 of the season's 208 scenarios appear
- * in at least one of the 43 benchmarks under `data/benchmarks/` - a third of them in two
- * or more. `1wall5targets_pasu Reload` is in Aimerz+ Easy, Aimerz+ Hard, snakbox Medium,
+ * community already grades itself against, and 227 of the season's 252 scenarios appear
+ * in at least one of the 43 benchmarks under `data/benchmarks/` - 68 of them in two or
+ * more. `1wall5targets_pasu Reload` is in Aimerz+ Easy, Aimerz+ Hard, snakbox Medium,
  * Voltaic All and Viscose Medium at once.
  *
  * That is worth saying out loud rather than leaving as a fact about the data. A session
@@ -17,7 +17,7 @@
  * The rank is per *scenario*, never per benchmark. Every benchmark file publishes score
  * thresholds for each scenario it names, so "your Pasu score is Gold in Voltaic S5" is a
  * fact read straight off the author's own table. "Your Voltaic S5 rank is Gold" is not,
- * and this deliberately will not say it: the pool takes 34 of Voltaic S5's scenarios and
+ * and this deliberately will not say it: the pool takes 24 of Voltaic S5's 72 scenarios and
  * not all of them, so any overall figure would be computed from a partial sheet and would
  * be wrong in the flattering direction. A benchmark's overall rank belongs to the
  * benchmark.

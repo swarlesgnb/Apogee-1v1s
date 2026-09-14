@@ -49,7 +49,7 @@
     },
     "1w2ts Perfected": {
       "leaderboardId": 565,
-      "aimType": null,
+      "aimType": "Clicking",
       "subCategory": "Static Clicking"
     },
     "1w2ts Perfected Easier": {
@@ -115,22 +115,22 @@
     "1w3ts Pasu Perfected Micro Goated": {
       "leaderboardId": 65396,
       "aimType": "Clicking",
-      "subCategory": "Micro Clicking"
+      "subCategory": "Static Clicking"
     },
     "1w3ts Pasu Perfected Micro Goated 10% small": {
       "leaderboardId": 172862,
       "aimType": "Clicking",
-      "subCategory": "Micro Clicking"
+      "subCategory": "Static Clicking"
     },
     "1w3ts Pasu Perfected Micro Goated Larger": {
       "leaderboardId": 125923,
       "aimType": "Clicking",
-      "subCategory": "Micro Clicking"
+      "subCategory": "Static Clicking"
     },
     "1w3ts Pasu Perfected Micro Goated Larger 80%": {
       "leaderboardId": 128920,
       "aimType": "Clicking",
-      "subCategory": "Micro Clicking"
+      "subCategory": "Static Clicking"
     },
     "1w3ts reload": {
       "leaderboardId": 215,
@@ -294,17 +294,17 @@
     },
     "1wall6targets TE Horizontalish": {
       "leaderboardId": 2561,
-      "aimType": null,
+      "aimType": "Clicking",
       "subCategory": "Static Clicking"
     },
     "1wall9000targets": {
       "leaderboardId": 470,
-      "aimType": null,
+      "aimType": "Clicking",
       "subCategory": "Static Clicking"
     },
     "2 Tile Jumbo Tile Frenzy": {
       "leaderboardId": 1469,
-      "aimType": null,
+      "aimType": "Clicking",
       "subCategory": "Static Clicking"
     },
     "3 Dots xyzAdjust SuperbAim": {
@@ -354,7 +354,7 @@
     },
     "6 Sphere Hipfire 200% Size": {
       "leaderboardId": 3982,
-      "aimType": null,
+      "aimType": "Clicking",
       "subCategory": "Static Clicking"
     },
     "6 Sphere Hipfire Small Easy": {
@@ -665,7 +665,7 @@
     "Aimerz+ sunClick Easy S1": {
       "leaderboardId": 68434,
       "aimType": "Clicking",
-      "subCategory": null
+      "subCategory": "Dynamic Clicking"
     },
     "Aimerz+ sunClick Hard S1": {
       "leaderboardId": 68298,
@@ -764,7 +764,7 @@
     },
     "Air Angelic rAim Easy": {
       "leaderboardId": 572,
-      "aimType": null,
+      "aimType": "Tracking",
       "subCategory": "Reactive Tracking"
     },
     "Air CELESTIAL": {
@@ -780,7 +780,7 @@
     "Air CELESTIAL Harder": {
       "leaderboardId": 185225,
       "aimType": "Tracking",
-      "subCategory": "Reading Tracking"
+      "subCategory": "Reactive Tracking"
     },
     "Air CELESTIAL No UFO": {
       "leaderboardId": 70970,
@@ -915,22 +915,22 @@
     "Air Spectral": {
       "leaderboardId": 142893,
       "aimType": "Tracking",
-      "subCategory": "Reading Tracking"
+      "subCategory": "Reactive Tracking"
     },
     "Air Spectral Easy": {
       "leaderboardId": 143228,
       "aimType": "Tracking",
-      "subCategory": "Reading Tracking"
+      "subCategory": "Reactive Tracking"
     },
     "Air Spectral Easy 85%": {
       "leaderboardId": 185693,
       "aimType": "Tracking",
-      "subCategory": "Control Tracking"
+      "subCategory": "Reactive Tracking"
     },
     "Air Spectral Harder": {
       "leaderboardId": 185018,
       "aimType": "Tracking",
-      "subCategory": "Control Tracking"
+      "subCategory": "Reactive Tracking"
     },
     "Air Voltaic": {
       "leaderboardId": 29,
@@ -954,7 +954,7 @@
     },
     "Air Voltaic Invincible 4": {
       "leaderboardId": 1092,
-      "aimType": null,
+      "aimType": "Tracking",
       "subCategory": "Reactive Tracking"
     },
     "Air Voltaic Invincible 4 Easier": {
@@ -1349,7 +1349,7 @@
     },
     "B180T Voltaic Easy Regen": {
       "leaderboardId": 2837,
-      "aimType": null,
+      "aimType": "Switching",
       "subCategory": "Evasive Switching"
     },
     "B180T Voltaic Easy Slower": {
@@ -1359,12 +1359,12 @@
     },
     "B180T Voltaic Regen": {
       "leaderboardId": 2153,
-      "aimType": null,
+      "aimType": "Switching",
       "subCategory": "Evasive Switching"
     },
     "B180T rAim Easy": {
       "leaderboardId": 740,
-      "aimType": null,
+      "aimType": "Switching",
       "subCategory": "Evasive Switching"
     },
     "B180TI Voltaic Iron": {
@@ -1404,7 +1404,7 @@
     },
     "Bounce 180 rAim": {
       "leaderboardId": 526,
-      "aimType": null,
+      "aimType": "Clicking",
       "subCategory": "Dynamic Clicking"
     },
     "Bounce House Precise Avasive": {
@@ -1724,7 +1724,7 @@
     },
     "Cartoon's Micro RawMouseControlReact 30s": {
       "leaderboardId": 80173,
-      "aimType": null,
+      "aimType": "Clicking",
       "subCategory": "Static Clicking"
     },
     "CastleTrack": {
@@ -1975,7 +1975,7 @@
     "Close Fast Strafes Easy Invincible - Thin": {
       "leaderboardId": 154186,
       "aimType": "Tracking",
-      "subCategory": "Reading Tracking"
+      "subCategory": "Reactive Tracking"
     },
     "Close Fast Strafes Invincible": {
       "leaderboardId": 494,
@@ -1984,13 +1984,13 @@
     },
     "Close Fast Strafes Invincible - Thin": {
       "leaderboardId": 814,
-      "aimType": null,
-      "subCategory": null
+      "aimType": "Tracking",
+      "subCategory": "Reactive Tracking"
     },
     "Close Fast Strafes Invincible Precise+": {
       "leaderboardId": 1343,
       "aimType": "Tracking",
-      "subCategory": "Reading Tracking"
+      "subCategory": "Reactive Tracking"
     },
     "Close Fast Strafes Invincible Precise+ Easy": {
       "leaderboardId": 154541,
@@ -2284,7 +2284,7 @@
     },
     "Flicker Plaza rAim Easy": {
       "leaderboardId": 606,
-      "aimType": null,
+      "aimType": "Tracking",
       "subCategory": "Reactive Tracking"
     },
     "Flicker Plaza rAim Easy Less Blinks": {
@@ -2385,17 +2385,17 @@
     "Flower 50cm": {
       "leaderboardId": 184580,
       "aimType": "Tracking",
-      "subCategory": null
+      "subCategory": "Precise Tracking"
     },
     "Flower Easier 50cm": {
       "leaderboardId": 185354,
       "aimType": "Tracking",
-      "subCategory": null
+      "subCategory": "Precise Tracking"
     },
     "Flower Entry": {
       "leaderboardId": 190139,
       "aimType": "Tracking",
-      "subCategory": null
+      "subCategory": "Precise Tracking"
     },
     "Flower Expert 50cm": {
       "leaderboardId": 184842,
@@ -2405,7 +2405,7 @@
     "Flower Hard 50cm": {
       "leaderboardId": 184591,
       "aimType": "Tracking",
-      "subCategory": null
+      "subCategory": "Precise Tracking"
     },
     "Fourshot Hard MIRA Fixed": {
       "leaderboardId": 63934,
@@ -2489,7 +2489,7 @@
     },
     "Ground Plaza Sparky V3 Thin": {
       "leaderboardId": 1408,
-      "aimType": null,
+      "aimType": "Tracking",
       "subCategory": "Reactive Tracking"
     },
     "Ground Plaza Sparky V3 Viscose Hard": {
@@ -2594,7 +2594,7 @@
     },
     "Jumbo1wall9000targets": {
       "leaderboardId": 1912,
-      "aimType": null,
+      "aimType": "Clicking",
       "subCategory": "Static Clicking"
     },
     "Kindaclose long stop strafes": {
@@ -2834,7 +2834,7 @@
     },
     "No23 ca micropressure supereasy": {
       "leaderboardId": 114049,
-      "aimType": null,
+      "aimType": "Clicking",
       "subCategory": "Static Clicking"
     },
     "NovaSwitch Revosect": {
@@ -2974,12 +2974,12 @@
     },
     "Pasu 3-Click v2 Less Easy": {
       "leaderboardId": 3876,
-      "aimType": null,
+      "aimType": "Clicking",
       "subCategory": "Dynamic Clicking"
     },
     "Pasu 3-click v2": {
       "leaderboardId": 1094,
-      "aimType": null,
+      "aimType": "Clicking",
       "subCategory": "Dynamic Clicking"
     },
     "Pasu Angelic": {
@@ -3454,7 +3454,7 @@
     },
     "Popcorn Goated rAim": {
       "leaderboardId": 777,
-      "aimType": null,
+      "aimType": "Clicking",
       "subCategory": "Dynamic Clicking"
     },
     "Popcorn Goated rAim easy": {
@@ -3524,7 +3524,7 @@
     },
     "Popcorn rAim Easy": {
       "leaderboardId": 607,
-      "aimType": null,
+      "aimType": "Clicking",
       "subCategory": "Dynamic Clicking"
     },
     "PreciseTrack Avasive": {
@@ -3734,7 +3734,7 @@
     },
     "SCS 8xs Uniform": {
       "leaderboardId": 188314,
-      "aimType": null,
+      "aimType": "Clicking",
       "subCategory": "Static Clicking"
     },
     "SYV Altered POV Easy Slow": {
@@ -3874,7 +3874,7 @@
     },
     "SmoothBot Invincible Goated": {
       "leaderboardId": 348,
-      "aimType": null,
+      "aimType": "Tracking",
       "subCategory": "Precise Tracking"
     },
     "SmoothBot Invincible Goated 75%": {
@@ -3884,7 +3884,7 @@
     },
     "SmoothBot Invincible Goated Smaller": {
       "leaderboardId": 815,
-      "aimType": null,
+      "aimType": "Tracking",
       "subCategory": "Precise Tracking"
     },
     "SmoothBot Perfected": {
@@ -4100,12 +4100,12 @@
     "Smoothsphere Viscose": {
       "leaderboardId": 184106,
       "aimType": "Tracking",
-      "subCategory": null
+      "subCategory": "Precise Tracking"
     },
     "Smoothsphere Viscose Easier": {
       "leaderboardId": 185342,
       "aimType": "Tracking",
-      "subCategory": null
+      "subCategory": "Precise Tracking"
     },
     "Smoothsphere Viscose Expert": {
       "leaderboardId": 184830,
@@ -4115,12 +4115,12 @@
     "Smoothsphere Viscose Hard": {
       "leaderboardId": 184518,
       "aimType": "Tracking",
-      "subCategory": null
+      "subCategory": "Precise Tracking"
     },
     "Smoothsphere Viscose Horizontal Entry": {
       "leaderboardId": 189903,
       "aimType": "Tracking",
-      "subCategory": null
+      "subCategory": "Precise Tracking"
     },
     "Smoothsphere weaker UFO": {
       "leaderboardId": 1392,
@@ -4240,7 +4240,7 @@
     "StaticSwitchingVox": {
       "leaderboardId": 15659,
       "aimType": "Switching",
-      "subCategory": "Stability Switching"
+      "subCategory": "Speed Switching"
     },
     "StaticSwitchingVox Entry": {
       "leaderboardId": 190275,
@@ -4350,12 +4350,12 @@
     "TSK - DVD Tracking": {
       "leaderboardId": 123669,
       "aimType": "Tracking",
-      "subCategory": null
+      "subCategory": "Precise Tracking"
     },
     "TSK - DVD Tracking Big": {
       "leaderboardId": 123665,
       "aimType": "Tracking",
-      "subCategory": null
+      "subCategory": "Precise Tracking"
     },
     "TSK - DVD Tracking Close": {
       "leaderboardId": 123715,
@@ -4365,12 +4365,12 @@
     "TSK - DVD Tracking MASSIVE": {
       "leaderboardId": 132420,
       "aimType": "Tracking",
-      "subCategory": null
+      "subCategory": "Precise Tracking"
     },
     "TSK - DVD Tracking Small": {
       "leaderboardId": 123668,
       "aimType": "Tracking",
-      "subCategory": null
+      "subCategory": "Precise Tracking"
     },
     "TSK - Hewchy's VAI 110": {
       "leaderboardId": 125974,
@@ -4940,17 +4940,17 @@
     "VT ControlTS Advanced S5": {
       "leaderboardId": 104833,
       "aimType": "Switching",
-      "subCategory": "Stability Switching"
+      "subCategory": "Evasive Switching"
     },
     "VT ControlTS Elite S5": {
       "leaderboardId": 106693,
       "aimType": "Switching",
-      "subCategory": "Stability Switching"
+      "subCategory": "Evasive Switching"
     },
     "VT ControlTS Intermediate S5": {
       "leaderboardId": 104890,
       "aimType": "Switching",
-      "subCategory": "Stability Switching"
+      "subCategory": "Evasive Switching"
     },
     "VT ControlTS Intermediate S5 30% Smaller": {
       "leaderboardId": 115804,
@@ -4960,7 +4960,7 @@
     "VT ControlTS Novice S5": {
       "leaderboardId": 105132,
       "aimType": "Switching",
-      "subCategory": "Stability Switching"
+      "subCategory": "Evasive Switching"
     },
     "VT ControlTS Novice S5 30% Smaller": {
       "leaderboardId": 193261,
@@ -5135,12 +5135,12 @@
     "VT Floating Heads Viscose Easier": {
       "leaderboardId": 185409,
       "aimType": "Clicking",
-      "subCategory": "Static Clicking"
+      "subCategory": "Dynamic Clicking"
     },
     "VT Floating Heads Viscose Entry": {
       "leaderboardId": 192531,
       "aimType": "Clicking",
-      "subCategory": "Static Clicking"
+      "subCategory": "Dynamic Clicking"
     },
     "VT Floating Heads Viscose Expert": {
       "leaderboardId": 185221,
@@ -5150,12 +5150,12 @@
     "VT Floating Heads Viscose Hard": {
       "leaderboardId": 184829,
       "aimType": "Clicking",
-      "subCategory": "Static Clicking"
+      "subCategory": "Dynamic Clicking"
     },
     "VT Floating Heads Viscose Medium": {
       "leaderboardId": 184827,
       "aimType": "Clicking",
-      "subCategory": "Static Clicking"
+      "subCategory": "Dynamic Clicking"
     },
     "VT FlyTS Advanced S5": {
       "leaderboardId": 105143,
@@ -5345,22 +5345,22 @@
     "VT Penta Bounce Advanced S5": {
       "leaderboardId": 98619,
       "aimType": "Switching",
-      "subCategory": "Stability Switching"
+      "subCategory": "Evasive Switching"
     },
     "VT Penta Bounce Elite S5": {
       "leaderboardId": 104669,
       "aimType": "Switching",
-      "subCategory": "Stability Switching"
+      "subCategory": "Evasive Switching"
     },
     "VT Penta Bounce Intermediate S5": {
       "leaderboardId": 103261,
       "aimType": "Switching",
-      "subCategory": "Stability Switching"
+      "subCategory": "Evasive Switching"
     },
     "VT Penta Bounce Novice S5": {
       "leaderboardId": 103262,
       "aimType": "Switching",
-      "subCategory": "Stability Switching"
+      "subCategory": "Evasive Switching"
     },
     "VT Plaza Advanced": {
       "leaderboardId": 43186,
@@ -5690,7 +5690,7 @@
     "VoxTS Click Easier": {
       "leaderboardId": 136076,
       "aimType": "Clicking",
-      "subCategory": "Dynamic Clicking"
+      "subCategory": "Static Clicking"
     },
     "VoxTS Click Entry": {
       "leaderboardId": 192530,
@@ -5849,7 +5849,7 @@
     },
     "Wide Wall 4 Targets Small": {
       "leaderboardId": 339,
-      "aimType": null,
+      "aimType": "Clicking",
       "subCategory": "Static Clicking"
     },
     "aimerz+ 1w3ts Hard": {
@@ -6000,12 +6000,12 @@
     "aimerz+ WaveClick Hard": {
       "leaderboardId": 44336,
       "aimType": "Clicking",
-      "subCategory": null
+      "subCategory": "Dynamic Clicking"
     },
     "aimerz+ WaveClick Normal": {
       "leaderboardId": 44337,
       "aimType": "Clicking",
-      "subCategory": null
+      "subCategory": "Dynamic Clicking"
     },
     "aimerz+ joeTS Hard": {
       "leaderboardId": 44378,
@@ -7019,7 +7019,7 @@
     },
     "shimPressure Micro": {
       "leaderboardId": 84026,
-      "aimType": null,
+      "aimType": "Clicking",
       "subCategory": "Static Clicking"
     },
     "shimmicro": {
@@ -7030,22 +7030,22 @@
     "skyClick Goated Easier": {
       "leaderboardId": 185490,
       "aimType": "Clicking",
-      "subCategory": "Micro Clicking"
+      "subCategory": "Dynamic Clicking"
     },
     "skyClick Goated Expert": {
       "leaderboardId": 185489,
       "aimType": "Clicking",
-      "subCategory": "Micro Clicking"
+      "subCategory": "Dynamic Clicking"
     },
     "skyClick Goated Hard": {
       "leaderboardId": 185492,
       "aimType": "Clicking",
-      "subCategory": "Micro Clicking"
+      "subCategory": "Dynamic Clicking"
     },
     "skyClick Goated Medium": {
       "leaderboardId": 185491,
       "aimType": "Clicking",
-      "subCategory": "Micro Clicking"
+      "subCategory": "Dynamic Clicking"
     },
     "snakSwitch": {
       "leaderboardId": 192578,
@@ -7074,7 +7074,7 @@
     },
     "tamTargetSwitch Control": {
       "leaderboardId": 57,
-      "aimType": null,
+      "aimType": "Switching",
       "subCategory": "Evasive Switching"
     },
     "tamTargetSwitch Control Entry": {
@@ -7084,7 +7084,7 @@
     },
     "tamTargetSwitch Control Hard": {
       "leaderboardId": 757,
-      "aimType": null,
+      "aimType": "Switching",
       "subCategory": "Evasive Switching"
     },
     "tamTargetSwitch Control Hard 30% Larger": {
@@ -7099,7 +7099,7 @@
     },
     "tamTargetSwitch Smooth": {
       "leaderboardId": 56,
-      "aimType": null,
+      "aimType": "Switching",
       "subCategory": "Evasive Switching"
     },
     "tamTargetSwitch Smooth Easy": {
@@ -7109,7 +7109,7 @@
     },
     "tamTargetSwitch Smooth Hard": {
       "leaderboardId": 727,
-      "aimType": null,
+      "aimType": "Switching",
       "subCategory": "Evasive Switching"
     },
     "tamTargetSwitch Smooth Hard 30% Larger": {

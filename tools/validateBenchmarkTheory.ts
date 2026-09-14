@@ -12,19 +12,26 @@ const theory = read("benchmark_theory.json");
 const season = loadSeason();
 const taxonomy = new Map<string, any>(read("scenario_taxonomy.json").scenarios.map((s: any) => [s.name, s]));
 const identity = read("scenario_identity.json").scenarios;
+const expansion = read("season_expansion.json");
+const calibration = read("season_expansion_calibration.json");
+const additions = new Set(expansion.families.map((f: any) => f.family));
+const before = new Map<string, any>(calibration.adjustments.map((a: any) => [a.scenario, a.before]));
 const canonical = (value: any): any => value && typeof value === "object"
   ? Array.isArray(value) ? value.map(canonical)
     : Object.fromEntries(Object.keys(value).sort().map(key => [key, canonical(value[key])]))
   : value;
 const hash = (value: any) => createHash("sha256").update(JSON.stringify(canonical(value))).digest("hex");
 
-assert.equal(hash(pool.families.filter((f: any) => f.category === "Static Clicking")), theory.staticPoolSha256,
-  "Static Clicking changed: this theory pass must preserve its authored data");
+const originalStatic = pool.families.filter((f: any) => f.category === "Static Clicking" && !additions.has(f.family))
+  .map((f: any) => ({ ...f, variants: f.variants.map((v: any) => ({ ...v, ...(before.get(v.scenario) ?? {}) })) }));
+assert.equal(hash(originalStatic), theory.staticPoolSha256,
+  "Original Static Clicking changed beyond the documented crossover recalibration");
 assert.deepEqual(pool.windows, ["Novice", "Intermediate", "Advanced", "Expert"]);
 const nonStatic = pool.families.filter((f: any) => f.category !== "Static Clicking");
 const variants = nonStatic.flatMap((f: any) => f.variants);
-assert.equal(variants.length, 120);
-assert(variants.filter((v: any) => /\bVT\b|voltaic/i.test(v.scenario)).length <= theory.maxDirectVoltaicScenarios,
+const originalVariants = nonStatic.filter((f: any) => !additions.has(f.family)).flatMap((f: any) => f.variants);
+assert.equal(originalVariants.length, 120);
+assert(originalVariants.filter((v: any) => /\bVT\b|voltaic/i.test(v.scenario)).length <= theory.maxDirectVoltaicScenarios,
   "Direct Voltaic selections grew beyond the reviewed mix");
 for (const replacement of theory.replacements) {
   assert(nonStatic.some((f: any) => f.family === replacement.family && f.category === replacement.category));
@@ -40,8 +47,9 @@ for (const item of theory.newScenarios) {
   assert.equal(shipped.leaderboardId, item.leaderboardId);
   assert.equal(identity[item.scenario]?.leaderboardId, item.leaderboardId);
   assert.equal(identity[item.scenario]?.subCategory, shipped.category);
-  assert.equal(v.source.kind, "percentile");
-  assert.equal(v.source.cut.sampledAt, item.sampledAt);
+  const source = before.get(v.scenario)?.source ?? v.source;
+  assert.equal(source.kind, "percentile");
+  assert.equal(source.cut.sampledAt, item.sampledAt);
   assert.equal(t.fetchedAt, item.sampledAt);
   assert(matchesCategory({ id: item.leaderboardId, name: item.scenario,
     aimType: identity[item.scenario].aimType, subCategory: identity[item.scenario].subCategory }, shipped.category),
