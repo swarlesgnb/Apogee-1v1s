@@ -109,14 +109,14 @@
         },
         {
           "category": "Dynamic Clicking",
-          "family": "Bounce Gallery",
-          "focus": "Catch the leap. Reload on every clear.",
-          "why": "Four single-click bots leap across a flat surface at different depths. A three-shot magazine refills on each kill, creating an arcade-like clear-and-reload loop. The four published Bounceshot cuts keep that loop across the bands.",
+          "family": "Cat Click",
+          "focus": "One clean click per mover.",
+          "why": "CatClick is graded by Viscose in all four of its tiers, Easier, Medium, Hard and Expert, so the family is one scenario's own four cuts with no handover between authors, and its two easier cuts carry some of the busiest boards in the pool. Its author description says nothing about the mechanic; the season files it where Viscose does, under dynamic clicking.",
           "rungs": [
-            "VT Bounceshot Novice",
-            "VT Bounceshot Intermediate",
-            "VT Bounceshot Advanced",
-            "VT Bounceshot Elite"
+            "CatClick Easier",
+            "CatClick Medium",
+            "CatClick",
+            "CatClick Harder"
           ]
         }
       ]
@@ -229,14 +229,14 @@
         },
         {
           "category": "Precise Tracking",
-          "family": "Snake Sweep",
-          "focus": "Sweep around the dish in one flowing motion.",
-          "why": "Wide sweeping strafes in a circular dish give tracking a distinctive arena and long flowing paths. The four published Snake Track bands provide a consistent scene from Novice through Expert.",
+          "family": "Waldo Track",
+          "focus": "Stay on it, not near it.",
+          "why": "waldoTS is one of the most-played tracking scenarios in the catalogue, with 3.7 million plays on its standard cut. Viscose grades its Novice, Intermediate, standard and Elite cuts as Easier, Medium, Hard and Expert, and AimSpeed grades the standard and Elite cuts too, so the progression is one scenario's own cuts.",
           "rungs": [
-            "VT Snake Track Novice S5",
-            "VT Snake Track Intermediate S5",
-            "VT Snake Track Advanced S5",
-            "VT Snake Track Elite S5"
+            "waldoTS Novice",
+            "waldoTS Intermediate",
+            "waldoTS",
+            "waldoTS Elite"
           ]
         }
       ]
@@ -337,14 +337,14 @@
         },
         {
           "category": "Reactive Tracking",
-          "family": "Air Gauntlet",
-          "focus": "Clear the full aerial gauntlet.",
-          "why": "The full Air scenario changes phases within a run, unlike the existing single-bot Air Reading circuit. Published Novice through Elite variants make this a varied endurance chase with a clear finish.",
+          "family": "Pure Chase",
+          "focus": "Read each dodge before it happens.",
+          "why": "Air Pure mixes bots with different dodge profiles in one air arena, so every target asks for a different read. Revosect's time-scored entry cut, six bots circling the player, leads into the Intermediate, standard and Hard cuts that Viscose and snakbox grade. The handover between the two editions needs playtesting.",
           "rungs": [
-            "VT Air Novice",
-            "VT Air Intermediate",
-            "VT Air Advanced",
-            "VT Air Elite"
+            "Air Pure Revosect Entry",
+            "Air Pure Intermediate",
+            "Air Pure",
+            "Air Pure Hard"
           ]
         },
         {
@@ -553,14 +553,14 @@
         },
         {
           "category": "Evasive Switching",
-          "family": "Drift Relay",
-          "focus": "Chase the drift between the two chambers.",
-          "why": "Four jumping and floating targets in layered chambers give each run an arena-clearing loop. The published DriftTS Novice through Elite scenarios supply a consistent four-band progression.",
+          "family": "Domi Relay",
+          "focus": "Stay on target until it drops.",
+          "why": "domiSwitch targets carry 55 health and regenerate 0.3 seconds after damage stops, so leaving early costs the whole kill; Aimerz+, snakbox and Viscose file it under evasive switching. Viscose's Easier cut and the Easy and standard cuts lead into Avasive's edit for the top band, whose top score is the lowest of the four. That edition handover needs playtesting.",
           "rungs": [
-            "VT DriftTS Novice S5",
-            "VT DriftTS Intermediate S5",
-            "VT DriftTS Advanced S5",
-            "VT DriftTS Elite S5"
+            "domiSwitch Easier",
+            "domiSwitch Easy",
+            "domiSwitch",
+            "domiSwitch Avasive"
           ]
         },
         {
@@ -706,14 +706,14 @@
         },
         {
           "category": "Static Clicking",
-          "family": "Multiclick Gallery",
-          "focus": "Sweep the room. Keep the magazine rolling.",
-          "why": "Single-hit targets spread across three walls turn clicking into a room-clearing score chase. Reload-on-kill rewards a sustained rhythm. The four published Multiclick cuts widen the arena as difficulty rises.",
+          "family": "Evo Gallery",
+          "focus": "Hold the pace as the targets multiply.",
+          "why": "EvoClick adds a target every twenty seconds, so a run opens as a calm static read and ends as a crowded wall: a pacing arc no other static circuit here has. Community Benchmarks' easy cut leads into Revosect's three EvoClick tiers. The first cross-author handover needs playtesting.",
           "rungs": [
-            "VT Multiclick 120 Novice",
-            "VT Multiclick 120 Intermediate",
-            "VT Multiclick 180 Advanced",
-            "VT Multiclick 180 Elite"
+            "CB EvoClick Easy",
+            "EvoClick Revosect Entry",
+            "EvoClick Revosect Int",
+            "EvoClick Revosect"
           ]
         },
         {

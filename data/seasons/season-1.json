@@ -1060,10 +1060,10 @@
   "boards": {
     "source": "kovaaks.com/webapp-backend/leaderboard/scores/global",
     "sampledAt": "2026-09-13T03:09:23.048Z",
-    "leaderboardEntries": 6481207,
+    "leaderboardEntries": 5904982,
     "note": "The boards no longer set the thresholds; they audit them. Each scenario carries `sanity.clears` - what share of that leaderboard meets each rank - which is how a threshold nobody can reach, or one everybody clears, gets caught now that no percentile guarantees it by construction."
   },
-  "builtAt": "2026-09-14T01:03:13.215Z",
+  "builtAt": "2026-09-14T02:37:45.633Z",
   "scenarios": [
     {
       "scenario": "2 Tile Jumbo Tile Frenzy",
@@ -2692,141 +2692,135 @@
       }
     },
     {
-      "scenario": "VT Multiclick 120 Novice",
+      "scenario": "CB EvoClick Easy",
       "category": "Static Clicking",
-      "family": "Multiclick Gallery",
-      "focus": "Sweep the room. Keep the magazine rolling.",
-      "arm": "Blending",
+      "family": "Evo Gallery",
+      "focus": "Hold the pace as the targets multiply.",
+      "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
       "window": 0,
-      "label": "VT Multiclick 120 Novice",
-      "leaderboardId": 24969,
+      "label": "CB EvoClick Easy",
+      "leaderboardId": 96088,
       "rankMaxes": [
-        1134,
-        1313,
-        1406,
-        1472,
-        1590,
-        1656
+        556,
+        684,
+        755,
+        812,
+        967,
+        1045
       ],
       "source": {
         "kind": "authored",
         "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
       },
       "sanity": {
-        "leaderboardEntries": 125280,
+        "leaderboardEntries": 22678,
         "clears": [
-          0.86,
-          0.6595454545454545,
-          0.49,
-          0.36,
-          0.13,
-          0.072
+          0.8604166666666667,
+          0.66,
+          0.4904761904761905,
+          0.36041666666666666,
+          0.12962962962962962,
+          0.071875
         ],
-        "sampledAt": "2026-08-18T23:58:53.221Z"
+        "sampledAt": "2026-08-25T20:24:08.200Z"
       }
     },
     {
-      "scenario": "VT Multiclick 120 Intermediate",
+      "scenario": "EvoClick Revosect Entry",
       "category": "Static Clicking",
-      "family": "Multiclick Gallery",
-      "focus": "Sweep the room. Keep the magazine rolling.",
-      "arm": "Blending",
+      "family": "Evo Gallery",
+      "focus": "Hold the pace as the targets multiply.",
+      "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
       "window": 1,
-      "label": "VT Multiclick 120 Intermediate",
-      "leaderboardId": 24957,
+      "label": "EvoClick Revosect Entry",
+      "leaderboardId": 142851,
       "rankMaxes": [
-        1418,
-        1472,
-        1490,
-        1544,
-        1655,
-        1686
+        1059,
+        1110,
+        1132,
+        1176,
+        1307,
+        1359
       ],
       "source": {
         "kind": "authored",
         "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
       },
       "sanity": {
-        "leaderboardEntries": 81932,
+        "leaderboardEntries": 2008,
         "clears": [
-          0.26,
-          0.18,
-          0.15,
-          0.10500000000000001,
-          0.037500000000000006,
-          0.022000000000000002
+          0.24860174187688214,
+          0.17370598695617875,
+          0.1488177254139701,
+          0.1060595759436671,
+          0.035415122852720894,
+          0.022846455840708445
         ],
-        "sampledAt": "2026-08-19T00:00:55.395Z"
-      },
-      "corpus": {
-        "runs": 3,
-        "best": 1540,
-        "median": 1500,
-        "reaches": "rank 7"
+        "sampledAt": "2026-09-14T02:36:24.019Z"
       }
     },
     {
-      "scenario": "VT Multiclick 180 Advanced",
+      "scenario": "EvoClick Revosect Int",
       "category": "Static Clicking",
-      "family": "Multiclick Gallery",
-      "focus": "Sweep the room. Keep the magazine rolling.",
-      "arm": "Blending",
+      "family": "Evo Gallery",
+      "focus": "Hold the pace as the targets multiply.",
+      "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
       "window": 2,
-      "label": "VT Multiclick 180 Advanced",
-      "leaderboardId": 23559,
+      "label": "EvoClick Revosect Int",
+      "leaderboardId": 142850,
       "rankMaxes": [
-        1420,
-        1476,
-        1517,
-        1553,
-        1663,
-        1718
+        1146,
+        1162,
+        1180,
+        1201,
+        1262,
+        1301
       ],
       "source": {
         "kind": "authored",
         "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
       },
       "sanity": {
-        "leaderboardEntries": 72125,
+        "leaderboardEntries": 1571,
         "clears": [
-          0.075,
-          0.055,
-          0.039875,
-          0.030071428571428575,
-          0.011,
-          0.005555400970620398
+          0.06972407029993079,
+          0.05631324846321969,
+          0.039546756159697403,
+          0.027683576490538927,
+          0.011131071006328572,
+          0.0055340948892761395
         ],
-        "sampledAt": "2026-08-19T00:03:47.895Z"
+        "sampledAt": "2026-09-14T02:36:31.714Z"
       },
       "corpus": {
-        "runs": 2,
-        "best": 1270,
-        "median": 1240,
+        "runs": 1,
+        "best": 1001,
+        "median": 1001,
         "reaches": null
       }
     },
     {
-      "scenario": "VT Multiclick 180 Elite",
+      "scenario": "EvoClick Revosect",
       "category": "Static Clicking",
-      "family": "Multiclick Gallery",
-      "focus": "Sweep the room. Keep the magazine rolling.",
-      "arm": "Blending",
+      "family": "Evo Gallery",
+      "focus": "Hold the pace as the targets multiply.",
+      "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
       "window": 3,
-      "label": "VT Multiclick 180 Elite",
-      "leaderboardId": 86801,
+      "label": "EvoClick Revosect",
+      "leaderboardId": 141058,
       "rankMaxes": [
-        1694,
-        1720,
-        1728,
-        1758
+        1222,
+        1278,
+        1320,
+        1345
       ],
       "source": {
         "kind": "percentile",
@@ -2843,21 +2837,21 @@
             0.011,
             0.008
           ],
-          "leaderboardId": 86801,
-          "total": 386,
-          "sampledAt": "2026-08-19T00:07:03.752Z"
+          "leaderboardId": 141058,
+          "total": 551,
+          "sampledAt": "2026-09-14T02:36:39.582Z"
         },
         "why": "Frozen from this scenario's own board for the season variety expansion. This is a season target, not a copied benchmark tier."
       },
       "sanity": {
-        "leaderboardEntries": 386,
+        "leaderboardEntries": 551,
         "clears": [
-          0.01489876838106899,
-          0.012195121951219513,
-          0.008104143974987486,
-          0.005509009441252954
+          0.027430189694520348,
+          0.014424494958713549,
+          0.009987190608356893,
+          0.007181614530461554
         ],
-        "sampledAt": "2026-08-19T00:07:03.752Z"
+        "sampledAt": "2026-09-14T02:36:39.582Z"
       }
     },
     {
@@ -4435,28 +4429,28 @@
       "label": "VT Floating Heads Viscose Easier",
       "leaderboardId": 185409,
       "rankMaxes": [
-        989,
-        1037,
-        1048,
-        1071,
-        1146,
-        1198
+        981,
+        1032,
+        1043,
+        1065,
+        1138,
+        1188
       ],
       "source": {
         "kind": "authored",
         "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
       },
       "sanity": {
-        "leaderboardEntries": 17660,
+        "leaderboardEntries": 22932,
         "clears": [
-          0.2605729474305965,
-          0.18104291146116244,
-          0.151167843563281,
-          0.10478766025641045,
-          0.03769611186903138,
-          0.019478644976145206
+          0.259734027968193,
+          0.18004833512352306,
+          0.1505102040816328,
+          0.1052156057494866,
+          0.03748657718120809,
+          0.021305747862521863
         ],
-        "sampledAt": "2026-08-19T00:38:39.469Z"
+        "sampledAt": "2026-09-14T02:36:47.246Z"
       },
       "corpus": {
         "runs": 7,
@@ -4477,28 +4471,28 @@
       "label": "VT Floating Heads Viscose Medium",
       "leaderboardId": 184827,
       "rankMaxes": [
-        1029,
-        1074,
-        1110,
-        1148,
-        1229,
-        1256
+        1018,
+        1057,
+        1094,
+        1132,
+        1221,
+        1247
       ],
       "source": {
         "kind": "authored",
         "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
       },
       "sanity": {
-        "leaderboardEntries": 12960,
+        "leaderboardEntries": 16754,
         "clears": [
-          0.07487300753196707,
-          0.05516727973375371,
-          0.039806234203875336,
-          0.024949509157260973,
-          0.009065343203046585,
-          0.00488101973116516
+          0.07492430359305613,
+          0.05524323778764639,
+          0.04008815495406013,
+          0.028512088399183625,
+          0.011133545327921119,
+          0.005778476107851428
         ],
-        "sampledAt": "2026-08-19T00:39:12.982Z"
+        "sampledAt": "2026-09-14T02:36:54.996Z"
       },
       "corpus": {
         "runs": 32,
@@ -4895,141 +4889,147 @@
       }
     },
     {
-      "scenario": "VT Bounceshot Novice",
+      "scenario": "CatClick Easier",
       "category": "Dynamic Clicking",
-      "family": "Bounce Gallery",
-      "focus": "Catch the leap. Reload on every clear.",
-      "arm": "Blending",
+      "family": "Cat Click",
+      "focus": "One clean click per mover.",
+      "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
       "window": 0,
-      "label": "VT Bounceshot Novice",
-      "leaderboardId": 24975,
+      "label": "CatClick Easier",
+      "leaderboardId": 184866,
       "rankMaxes": [
-        442,
-        613,
-        716,
-        790,
-        892,
-        945
+        45,
+        59,
+        69,
+        75,
+        86,
+        90
       ],
       "source": {
         "kind": "authored",
         "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
       },
       "sanity": {
-        "leaderboardEntries": 125087,
+        "leaderboardEntries": 19556,
         "clears": [
           0.86,
-          0.6595454545454545,
-          0.49,
-          0.36,
-          0.13,
-          0.071875
+          0.6666666666666667,
+          0.48,
+          0.3666666666666667,
+          0.13333333333333333,
+          0.075
         ],
-        "sampledAt": "2026-08-18T23:58:35.484Z"
+        "sampledAt": "2026-09-03T01:08:43.370Z"
+      },
+      "corpus": {
+        "runs": 5,
+        "best": 94,
+        "median": 92,
+        "reaches": "rank 6"
       }
     },
     {
-      "scenario": "VT Bounceshot Intermediate",
+      "scenario": "CatClick Medium",
       "category": "Dynamic Clicking",
-      "family": "Bounce Gallery",
-      "focus": "Catch the leap. Reload on every clear.",
-      "arm": "Blending",
+      "family": "Cat Click",
+      "focus": "One clean click per mover.",
+      "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
       "window": 1,
-      "label": "VT Bounceshot Intermediate",
-      "leaderboardId": 24955,
+      "label": "CatClick Medium",
+      "leaderboardId": 184780,
       "rankMaxes": [
-        684,
-        736,
-        760,
-        805,
-        908,
-        936
+        72,
+        77,
+        79,
+        84,
+        93,
+        98
       ],
       "source": {
         "kind": "authored",
         "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
       },
       "sanity": {
-        "leaderboardEntries": 86833,
+        "leaderboardEntries": 17403,
         "clears": [
-          0.26,
-          0.18,
+          0.26666666666666666,
+          0.18333333333333335,
           0.15,
-          0.10500000000000001,
-          0.038000000000000006,
-          0.022000000000000002
+          0.1,
+          0.03875000000000001,
+          0.023568791472954025
         ],
-        "sampledAt": "2026-08-19T00:00:36.692Z"
+        "sampledAt": "2026-09-03T01:08:51.141Z"
       },
       "corpus": {
-        "runs": 20,
-        "best": 800,
-        "median": 675,
-        "reaches": "rank 7"
+        "runs": 24,
+        "best": 77,
+        "median": 68,
+        "reaches": "rank 6"
       }
     },
     {
-      "scenario": "VT Bounceshot Advanced",
+      "scenario": "CatClick",
       "category": "Dynamic Clicking",
-      "family": "Bounce Gallery",
-      "focus": "Catch the leap. Reload on every clear.",
-      "arm": "Blending",
+      "family": "Cat Click",
+      "focus": "One clean click per mover.",
+      "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
       "window": 2,
-      "label": "VT Bounceshot Advanced",
-      "leaderboardId": 25154,
+      "label": "CatClick",
+      "leaderboardId": 179408,
       "rankMaxes": [
-        730,
-        770,
-        800,
-        823,
-        904,
-        942
+        91,
+        94,
+        96,
+        100,
+        109,
+        113
       ],
       "source": {
         "kind": "authored",
         "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
       },
       "sanity": {
-        "leaderboardEntries": 22127,
+        "leaderboardEntries": 1466,
         "clears": [
-          0.075,
-          0.055,
-          0.04,
-          0.030125000000000002,
-          0.010517667887797068,
-          0.005886955880033261
+          0.07649068158050064,
+          0.0541405542963233,
+          0.042971386422062524,
+          0.028679959592555065,
+          0.010785394475335533,
+          0.0054140554296323315
         ],
-        "sampledAt": "2026-08-19T00:03:27.884Z"
+        "sampledAt": "2026-09-03T01:08:58.856Z"
       },
       "corpus": {
-        "runs": 1,
-        "best": 450,
-        "median": 450,
+        "runs": 7,
+        "best": 61,
+        "median": 56,
         "reaches": null
       }
     },
     {
-      "scenario": "VT Bounceshot Elite",
+      "scenario": "CatClick Harder",
       "category": "Dynamic Clicking",
-      "family": "Bounce Gallery",
-      "focus": "Catch the leap. Reload on every clear.",
-      "arm": "Blending",
+      "family": "Cat Click",
+      "focus": "One clean click per mover.",
+      "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
       "window": 3,
-      "label": "VT Bounceshot Elite",
-      "leaderboardId": 86805,
+      "label": "CatClick Harder",
+      "leaderboardId": 184865,
       "rankMaxes": [
-        703,
-        745,
-        773,
-        836
+        86,
+        90,
+        92,
+        97
       ],
       "source": {
         "kind": "percentile",
@@ -5046,21 +5046,21 @@
             0.011,
             0.008
           ],
-          "leaderboardId": 86805,
-          "total": 435,
-          "sampledAt": "2026-08-19T00:06:34.787Z"
+          "leaderboardId": 184865,
+          "total": 666,
+          "sampledAt": "2026-09-03T01:09:06.598Z"
         },
         "why": "Frozen from this scenario's own board for the season variety expansion. This is a season target, not a copied benchmark tier."
       },
       "sanity": {
-        "leaderboardEntries": 435,
+        "leaderboardEntries": 666,
         "clears": [
-          0.018075496091523154,
-          0.01037147758254489,
-          0.00817167746004089,
-          0.005749788917503611
+          0.022562540400902095,
+          0.015015015015015015,
+          0.011917425315076573,
+          0.007043113408297937
         ],
-        "sampledAt": "2026-08-19T00:06:34.787Z"
+        "sampledAt": "2026-09-03T01:09:06.598Z"
       }
     },
     {
@@ -5141,9 +5141,9 @@
         "sampledAt": "2026-09-13T03:04:40.124Z"
       },
       "corpus": {
-        "runs": 1,
+        "runs": 2,
         "best": 4332,
-        "median": 4332,
+        "median": 4263,
         "reaches": "rank 8"
       }
     },
@@ -6167,10 +6167,10 @@
         "sampledAt": "2026-09-14T00:55:26.685Z"
       },
       "corpus": {
-        "runs": 13,
-        "best": 2374,
-        "median": 2251,
-        "reaches": "rank 4"
+        "runs": 14,
+        "best": 2482,
+        "median": 2267,
+        "reaches": "rank 5"
       }
     },
     {
@@ -6209,9 +6209,9 @@
         "sampledAt": "2026-09-14T00:55:36.487Z"
       },
       "corpus": {
-        "runs": 21,
+        "runs": 22,
         "best": 1919,
-        "median": 1689,
+        "median": 1674,
         "reaches": null
       }
     },
@@ -6346,6 +6346,12 @@
           0.07077538900569844
         ],
         "sampledAt": "2026-09-14T00:56:05.679Z"
+      },
+      "corpus": {
+        "runs": 1,
+        "best": 5391,
+        "median": 5391,
+        "reaches": "rank 6"
       }
     },
     {
@@ -6523,9 +6529,9 @@
         "sampledAt": "2026-09-04T01:18:31.798Z"
       },
       "corpus": {
-        "runs": 1,
-        "best": 14886,
-        "median": 14886,
+        "runs": 2,
+        "best": 15777,
+        "median": 15332,
         "reaches": "rank 4"
       }
     },
@@ -6669,147 +6675,147 @@
       }
     },
     {
-      "scenario": "VT Snake Track Novice S5",
+      "scenario": "waldoTS Novice",
       "category": "Precise Tracking",
-      "family": "Snake Sweep",
-      "focus": "Sweep around the dish in one flowing motion.",
+      "family": "Waldo Track",
+      "focus": "Stay on it, not near it.",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Precise Tracking",
       "window": 0,
-      "label": "VT Snake Track Novice S5",
-      "leaderboardId": 101560,
+      "label": "waldoTS Novice",
+      "leaderboardId": 113019,
       "rankMaxes": [
-        2439,
-        3022,
-        3401,
-        3524,
-        3851,
-        4073
+        98,
+        115,
+        124,
+        131,
+        144,
+        148
       ],
       "source": {
         "kind": "authored",
         "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
       },
       "sanity": {
-        "leaderboardEntries": 93836,
+        "leaderboardEntries": 71439,
         "clears": [
-          0.8600993377483444,
-          0.6598630136986302,
-          0.4897959183673469,
-          0.36022727272727273,
-          0.13006756756756757,
-          0.07195121951219512
+          0.8628491620111731,
+          0.6530927835051547,
+          0.4922330097087378,
+          0.3601063829787233,
+          0.13153846153846172,
+          0.075
         ],
-        "sampledAt": "2026-08-18T17:30:18.013Z"
+        "sampledAt": "2026-08-29T17:29:38.172Z"
       },
       "corpus": {
-        "runs": 4,
-        "best": 4275,
-        "median": 4050,
+        "runs": 3,
+        "best": 150,
+        "median": 144,
         "reaches": "rank 6"
       }
     },
     {
-      "scenario": "VT Snake Track Intermediate S5",
+      "scenario": "waldoTS Intermediate",
       "category": "Precise Tracking",
-      "family": "Snake Sweep",
-      "focus": "Sweep around the dish in one flowing motion.",
+      "family": "Waldo Track",
+      "focus": "Stay on it, not near it.",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Precise Tracking",
       "window": 1,
-      "label": "VT Snake Track Intermediate S5",
-      "leaderboardId": 98045,
+      "label": "waldoTS Intermediate",
+      "leaderboardId": 111273,
       "rankMaxes": [
-        3187,
-        3404,
-        3519,
-        3713,
-        3866,
-        3946
+        143,
+        147,
+        149,
+        154,
+        163,
+        168
       ],
       "source": {
         "kind": "authored",
         "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
       },
       "sanity": {
-        "leaderboardEntries": 59228,
+        "leaderboardEntries": 40339,
         "clears": [
-          0.26,
-          0.18010471204188483,
-          0.15,
-          0.1050925925925926,
-          0.03760869565217392,
-          0.021987951807228918
+          0.252212389380531,
+          0.1830645161290322,
+          0.1508064516129034,
+          0.10240384615384616,
+          0.037360139860139814,
+          0.021071428571428553
         ],
-        "sampledAt": "2026-08-18T17:30:21.008Z"
+        "sampledAt": "2026-08-29T17:29:45.876Z"
       },
       "corpus": {
-        "runs": 49,
-        "best": 3409,
-        "median": 3014,
-        "reaches": "rank 6"
+        "runs": 62,
+        "best": 151,
+        "median": 133,
+        "reaches": "rank 7"
       }
     },
     {
-      "scenario": "VT Snake Track Advanced S5",
+      "scenario": "waldoTS",
       "category": "Precise Tracking",
-      "family": "Snake Sweep",
-      "focus": "Sweep around the dish in one flowing motion.",
+      "family": "Waldo Track",
+      "focus": "Stay on it, not near it.",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Precise Tracking",
       "window": 2,
-      "label": "VT Snake Track Advanced S5",
-      "leaderboardId": 98297,
+      "label": "waldoTS",
+      "leaderboardId": 81042,
       "rankMaxes": [
-        3098,
-        3161,
-        3245,
-        3343,
-        3671,
-        3795
+        134,
+        138,
+        142,
+        145,
+        155,
+        160
       ],
       "source": {
         "kind": "authored",
         "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
       },
       "sanity": {
-        "leaderboardEntries": 19362,
+        "leaderboardEntries": 119350,
         "clears": [
-          0.075,
-          0.05506329113924051,
-          0.04,
-          0.030025906735751298,
-          0.008945379687253608,
-          0.005538521933110465
+          0.07382958801498127,
+          0.05510299625468166,
+          0.03950721153846155,
+          0.030345744680851057,
+          0.011093294460641397,
+          0.006361301369863016
         ],
-        "sampledAt": "2026-08-18T17:30:24.017Z"
+        "sampledAt": "2026-08-29T17:29:53.578Z"
       },
       "corpus": {
-        "runs": 1,
-        "best": 2223,
-        "median": 2223,
-        "reaches": null
+        "runs": 9,
+        "best": 137,
+        "median": 133,
+        "reaches": "rank 9"
       }
     },
     {
-      "scenario": "VT Snake Track Elite S5",
+      "scenario": "waldoTS Elite",
       "category": "Precise Tracking",
-      "family": "Snake Sweep",
-      "focus": "Sweep around the dish in one flowing motion.",
+      "family": "Waldo Track",
+      "focus": "Stay on it, not near it.",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Precise Tracking",
       "window": 3,
-      "label": "VT Snake Track Elite S5",
-      "leaderboardId": 104622,
+      "label": "waldoTS Elite",
+      "leaderboardId": 111257,
       "rankMaxes": [
-        2473,
-        2570,
-        2636,
-        2712
+        160,
+        164,
+        167,
+        170
       ],
       "source": {
         "kind": "percentile",
@@ -6826,21 +6832,21 @@
             0.011,
             0.008
           ],
-          "leaderboardId": 104622,
-          "total": 2100,
-          "sampledAt": "2026-08-19T00:11:52.956Z"
+          "leaderboardId": 111257,
+          "total": 1072,
+          "sampledAt": "2026-09-14T02:34:44.750Z"
         },
         "why": "Frozen from this scenario's own board for the season variety expansion. This is a season target, not a copied benchmark tier."
       },
       "sanity": {
-        "leaderboardEntries": 2100,
+        "leaderboardEntries": 1072,
         "clears": [
-          0.022482349278894656,
-          0.014655882839701017,
-          0.010898009137336136,
-          0.007235100624472763
+          0.019948697281159125,
+          0.013153239193578414,
+          0.009624348738832047,
+          0.0068637653770322405
         ],
-        "sampledAt": "2026-08-19T00:11:52.956Z"
+        "sampledAt": "2026-09-14T02:34:44.750Z"
       }
     },
     {
@@ -6879,9 +6885,9 @@
         "sampledAt": "2026-08-29T17:30:01.280Z"
       },
       "corpus": {
-        "runs": 1,
+        "runs": 2,
         "best": 897,
-        "median": 897,
+        "median": 894,
         "reaches": "rank 5"
       }
     },
@@ -7060,9 +7066,9 @@
         "sampledAt": "2026-08-31T22:11:26.851Z"
       },
       "corpus": {
-        "runs": 1,
-        "best": 4986,
-        "median": 4986,
+        "runs": 2,
+        "best": 4988,
+        "median": 4987,
         "reaches": "rank 4"
       }
     },
@@ -7233,6 +7239,12 @@
           0.07586673458336922
         ],
         "sampledAt": "2026-09-13T03:05:16.482Z"
+      },
+      "corpus": {
+        "runs": 1,
+        "best": 924,
+        "median": 924,
+        "reaches": "rank 3"
       }
     },
     {
@@ -7410,9 +7422,9 @@
         "sampledAt": "2026-08-25T20:25:10.745Z"
       },
       "corpus": {
-        "runs": 1,
-        "best": 2415,
-        "median": 2415,
+        "runs": 2,
+        "best": 2427,
+        "median": 2421,
         "reaches": "rank 4"
       }
     },
@@ -7579,9 +7591,9 @@
         "sampledAt": "2026-09-13T03:05:38.316Z"
       },
       "corpus": {
-        "runs": 4,
+        "runs": 5,
         "best": 4052,
-        "median": 3511,
+        "median": 3635,
         "reaches": "rank 6"
       }
     },
@@ -7758,6 +7770,12 @@
           0.07236842105263158
         ],
         "sampledAt": "2026-09-13T19:22:44.564Z"
+      },
+      "corpus": {
+        "runs": 1,
+        "best": 2160,
+        "median": 2160,
+        "reaches": "rank 4"
       }
     },
     {
@@ -7923,7 +7941,7 @@
         "sampledAt": "2026-09-14T00:57:11.349Z"
       },
       "corpus": {
-        "runs": 4,
+        "runs": 5,
         "best": 932,
         "median": 930,
         "reaches": "rank 4"
@@ -8232,141 +8250,135 @@
       }
     },
     {
-      "scenario": "VT Air Novice",
+      "scenario": "Air Pure Revosect Entry",
       "category": "Reactive Tracking",
-      "family": "Air Gauntlet",
-      "focus": "Clear the full aerial gauntlet.",
+      "family": "Pure Chase",
+      "focus": "Read each dodge before it happens.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Reactive Tracking",
       "window": 0,
-      "label": "VT Air Novice",
-      "leaderboardId": 43180,
+      "label": "Air Pure Revosect Entry",
+      "leaderboardId": 142837,
       "rankMaxes": [
-        2361,
-        2781,
-        2943,
-        3057,
-        3302,
-        3412
+        872,
+        890,
+        897,
+        902,
+        912,
+        915
       ],
       "source": {
         "kind": "authored",
         "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
       },
       "sanity": {
-        "leaderboardEntries": 106584,
+        "leaderboardEntries": 1410,
         "clears": [
-          0.8600106928575673,
-          0.6596884253894684,
-          0.48971264367816114,
-          0.3596112796315022,
-          0.13002625656414116,
-          0.0718815113210168
+          0.8609424638192728,
+          0.6518264840182658,
+          0.4866828087167081,
+          0.35392305147807873,
+          0.11463571129198981,
+          0.07266743422819008
         ],
-        "sampledAt": "2026-08-18T23:59:31.185Z"
-      },
-      "corpus": {
-        "runs": 1,
-        "best": 3179,
-        "median": 3179,
-        "reaches": "rank 4"
+        "sampledAt": "2026-09-14T02:37:02.612Z"
       }
     },
     {
-      "scenario": "VT Air Intermediate",
+      "scenario": "Air Pure Intermediate",
       "category": "Reactive Tracking",
-      "family": "Air Gauntlet",
-      "focus": "Clear the full aerial gauntlet.",
+      "family": "Pure Chase",
+      "focus": "Read each dodge before it happens.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Reactive Tracking",
       "window": 1,
-      "label": "VT Air Intermediate",
-      "leaderboardId": 43181,
+      "label": "Air Pure Intermediate",
+      "leaderboardId": 126338,
       "rankMaxes": [
-        2691,
-        2840,
-        2912,
-        3033,
-        3261,
-        3331
+        887,
+        892,
+        894,
+        897,
+        905,
+        907
       ],
       "source": {
         "kind": "authored",
         "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
       },
       "sanity": {
-        "leaderboardEntries": 53597,
+        "leaderboardEntries": 26044,
         "clears": [
-          0.2597928994082841,
-          0.1800208333333334,
-          0.1500208333333334,
-          0.10487277068875456,
-          0.037388157894736915,
-          0.02203541019056629
+          0.25555555555555537,
+          0.17837150127226442,
+          0.15292620865139966,
+          0.10777439024390237,
+          0.03483516483516499,
+          0.023846153846154072
         ],
-        "sampledAt": "2026-08-19T00:02:04.025Z"
+        "sampledAt": "2026-09-14T02:35:13.401Z"
       },
       "corpus": {
-        "runs": 3,
-        "best": 2765,
-        "median": 2742,
-        "reaches": "rank 5"
+        "runs": 13,
+        "best": 885,
+        "median": 872,
+        "reaches": null
       }
     },
     {
-      "scenario": "VT Air Advanced",
+      "scenario": "Air Pure",
       "category": "Reactive Tracking",
-      "family": "Air Gauntlet",
-      "focus": "Clear the full aerial gauntlet.",
+      "family": "Pure Chase",
+      "focus": "Read each dodge before it happens.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Reactive Tracking",
       "window": 2,
-      "label": "VT Air Advanced",
-      "leaderboardId": 43182,
+      "label": "Air Pure",
+      "leaderboardId": 13213,
       "rankMaxes": [
-        2918,
-        3011,
-        3077,
-        3151,
-        3369,
-        3501
+        889,
+        892,
+        895,
+        897,
+        904,
+        907
       ],
       "source": {
         "kind": "authored",
         "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
       },
       "sanity": {
-        "leaderboardEntries": 15164,
+        "leaderboardEntries": 8579,
         "clears": [
-          0.07501024590163938,
-          0.05496767241379315,
-          0.04008998615597601,
-          0.02791483706068274,
-          0.010744019036790465,
-          0.005427367387689604
+          0.074546632124352,
+          0.054870045932557204,
+          0.03899821107098541,
+          0.031058770524375397,
+          0.011015535692098923,
+          0.006373094559240381
         ],
-        "sampledAt": "2026-08-19T00:04:45.018Z"
+        "sampledAt": "2026-09-14T02:35:23.348Z"
       }
     },
     {
-      "scenario": "VT Air Elite",
+      "scenario": "Air Pure Hard",
       "category": "Reactive Tracking",
-      "family": "Air Gauntlet",
-      "focus": "Clear the full aerial gauntlet.",
+      "family": "Pure Chase",
+      "focus": "Read each dodge before it happens.",
       "arm": "Blending",
       "armFrom": "Apogee",
       "subCategory": "Reactive Tracking",
       "window": 3,
-      "label": "VT Air Elite",
-      "leaderboardId": 86816,
+      "label": "Air Pure Hard",
+      "leaderboardId": 185019,
       "rankMaxes": [
-        2900,
-        3054,
-        3175,
-        3205
+        914,
+        915,
+        916,
+        917
       ],
       "source": {
         "kind": "percentile",
@@ -8383,21 +8395,21 @@
             0.011,
             0.008
           ],
-          "leaderboardId": 86816,
-          "total": 196,
-          "sampledAt": "2026-08-19T00:08:02.553Z"
+          "leaderboardId": 185019,
+          "total": 1621,
+          "sampledAt": "2026-09-14T02:35:33.209Z"
         },
         "why": "Frozen from this scenario's own board for the season variety expansion. This is a season target, not a copied benchmark tier."
       },
       "sanity": {
-        "leaderboardEntries": 196,
+        "leaderboardEntries": 1621,
         "clears": [
-          0.016259494875019844,
-          0.008493023320786873,
-          0.005384100178278255,
-          0.004808779036126174
+          0.01953662321332297,
+          0.01549425047640658,
+          0.008575655278500134,
+          0.004197378162166448
         ],
-        "sampledAt": "2026-08-19T00:08:02.553Z"
+        "sampledAt": "2026-09-14T02:35:33.209Z"
       }
     },
     {
@@ -8434,6 +8446,12 @@
           0.07239354205909308
         ],
         "sampledAt": "2026-09-14T00:58:09.167Z"
+      },
+      "corpus": {
+        "runs": 1,
+        "best": 6894,
+        "median": 6894,
+        "reaches": "rank 1"
       }
     },
     {
@@ -9801,28 +9819,28 @@
       "label": "WaveSwitch Revosect Entry",
       "leaderboardId": 142903,
       "rankMaxes": [
-        942,
-        975,
+        943,
+        977,
         994,
-        1032,
-        1125,
-        1161
+        1034,
+        1126,
+        1158
       ],
       "source": {
         "kind": "authored",
         "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
       },
       "sanity": {
-        "leaderboardEntries": 1032,
+        "leaderboardEntries": 1114,
         "clears": [
-          0.2526212001756855,
-          0.183005181951639,
+          0.2500361544973228,
+          0.17956367664618275,
           0.15280475011848985,
-          0.10653291005381085,
-          0.03694547745072576,
-          0.022165852327522342
+          0.10452950462427077,
+          0.03642282409920409,
+          0.023087041042678055
         ],
-        "sampledAt": "2026-08-18T23:48:43.285Z"
+        "sampledAt": "2026-09-14T02:37:10.361Z"
       }
     },
     {
@@ -9837,28 +9855,28 @@
       "label": "WaveSwitch Revosect Int",
       "leaderboardId": 143210,
       "rankMaxes": [
-        1044,
-        1057,
-        1068,
-        1087,
-        1133,
-        1186
+        1040,
+        1056,
+        1067,
+        1078,
+        1124,
+        1178
       ],
       "source": {
         "kind": "authored",
         "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
       },
       "sanity": {
-        "leaderboardEntries": 585,
+        "leaderboardEntries": 643,
         "clears": [
-          0.06980548270142586,
-          0.050747128820530604,
-          0.038784781990998884,
-          0.027781889082100875,
-          0.00846891312201349,
-          0.004843297621681185
+          0.07700131962856241,
+          0.0520072193416357,
+          0.03970908610073255,
+          0.03253856657257029,
+          0.012916182426903098,
+          0.005215326534105628
         ],
-        "sampledAt": "2026-08-18T23:52:52.981Z"
+        "sampledAt": "2026-09-14T02:37:18.073Z"
       },
       "corpus": {
         "runs": 2,
@@ -10288,6 +10306,12 @@
           0.07184463133635532
         ],
         "sampledAt": "2026-09-13T03:06:54.221Z"
+      },
+      "corpus": {
+        "runs": 1,
+        "best": 52,
+        "median": 52,
+        "reaches": "rank 3"
       }
     },
     {
@@ -10445,6 +10469,12 @@
           0.08400725296190725
         ],
         "sampledAt": "2026-09-13T19:26:27.335Z"
+      },
+      "corpus": {
+        "runs": 1,
+        "best": 57,
+        "median": 57,
+        "reaches": "rank 6"
       }
     },
     {
@@ -11210,147 +11240,147 @@
       }
     },
     {
-      "scenario": "VT DriftTS Novice S5",
+      "scenario": "domiSwitch Easier",
       "category": "Evasive Switching",
-      "family": "Drift Relay",
-      "focus": "Chase the drift between the two chambers.",
-      "arm": "Blending",
+      "family": "Domi Relay",
+      "focus": "Stay on target until it drops.",
+      "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Evasive Switching",
       "window": 0,
-      "label": "VT DriftTS Novice S5",
-      "leaderboardId": 104862,
+      "label": "domiSwitch Easier",
+      "leaderboardId": 185428,
       "rankMaxes": [
-        328,
-        388,
-        424,
-        437,
-        467,
-        483
+        5437,
+        6260,
+        6737,
+        7159,
+        7757,
+        7985
       ],
       "source": {
         "kind": "authored",
         "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
       },
       "sanity": {
-        "leaderboardEntries": 84474,
+        "leaderboardEntries": 20300,
         "clears": [
-          0.8589456869009585,
-          0.6580213903743316,
-          0.4927272727272726,
-          0.3621621621621622,
-          0.12857142857142861,
-          0.07230769230769235
+          0.859938524590164,
+          0.6599683544303798,
+          0.48990765171503947,
+          0.3600107066381157,
+          0.13009259259259262,
+          0.0719436813186813
         ],
-        "sampledAt": "2026-08-18T17:44:02.304Z"
+        "sampledAt": "2026-09-03T01:29:00.957Z"
       },
       "corpus": {
-        "runs": 1,
-        "best": 519,
-        "median": 519,
-        "reaches": "rank 6"
+        "runs": 5,
+        "best": 7806,
+        "median": 7514,
+        "reaches": "rank 5"
       }
     },
     {
-      "scenario": "VT DriftTS Intermediate S5",
+      "scenario": "domiSwitch Easy",
       "category": "Evasive Switching",
-      "family": "Drift Relay",
-      "focus": "Chase the drift between the two chambers.",
-      "arm": "Blending",
+      "family": "Domi Relay",
+      "focus": "Stay on target until it drops.",
+      "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Evasive Switching",
       "window": 1,
-      "label": "VT DriftTS Intermediate S5",
-      "leaderboardId": 104863,
+      "label": "domiSwitch Easy",
+      "leaderboardId": 83043,
       "rankMaxes": [
-        428,
-        449,
-        460,
-        478,
-        500,
-        509
+        6061,
+        6331,
+        6439,
+        6682,
+        7201,
+        7461
       ],
       "source": {
         "kind": "authored",
         "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
       },
       "sanity": {
-        "leaderboardEntries": 47760,
+        "leaderboardEntries": 37779,
         "clears": [
-          0.26074766355140194,
-          0.17894736842105263,
-          0.15,
-          0.10500000000000001,
-          0.03781250000000007,
-          0.02159574468085107
+          0.2598907766990291,
+          0.17992256637168133,
+          0.15005530973451323,
+          0.10497032640949558,
+          0.03745872641509435,
+          0.022003731343283595
         ],
-        "sampledAt": "2026-08-18T17:44:09.879Z"
+        "sampledAt": "2026-08-19T01:20:58.171Z"
       },
       "corpus": {
-        "runs": 12,
-        "best": 460,
-        "median": 414,
+        "runs": 53,
+        "best": 6621,
+        "median": 5822,
         "reaches": "rank 7"
       }
     },
     {
-      "scenario": "VT DriftTS Advanced S5",
+      "scenario": "domiSwitch",
       "category": "Evasive Switching",
-      "family": "Drift Relay",
-      "focus": "Chase the drift between the two chambers.",
-      "arm": "Blending",
+      "family": "Domi Relay",
+      "focus": "Stay on target until it drops.",
+      "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Evasive Switching",
       "window": 2,
-      "label": "VT DriftTS Advanced S5",
-      "leaderboardId": 104866,
+      "label": "domiSwitch",
+      "leaderboardId": 83035,
       "rankMaxes": [
-        439,
-        445,
-        457,
-        468,
-        507,
-        519
+        5803,
+        6009,
+        6200,
+        6356,
+        6830,
+        7087
       ],
       "source": {
         "kind": "authored",
         "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
       },
       "sanity": {
-        "leaderboardEntries": 8941,
+        "leaderboardEntries": 18273,
         "clears": [
-          0.07380952380952388,
-          0.05120570817414717,
-          0.03820521112639916,
-          0.029209658458747585,
-          0.008558614952007914,
-          0.005622909148463592
+          0.07502717391304345,
+          0.05496495327102804,
+          0.03998091603053437,
+          0.03000000000000002,
+          0.010645606037407317,
+          0.005629428006682372
         ],
-        "sampledAt": "2026-08-18T17:44:17.778Z"
+        "sampledAt": "2026-08-30T15:56:35.975Z"
       },
       "corpus": {
-        "runs": 1,
-        "best": 319,
-        "median": 319,
+        "runs": 7,
+        "best": 5193,
+        "median": 5015,
         "reaches": null
       }
     },
     {
-      "scenario": "VT DriftTS Elite S5",
+      "scenario": "domiSwitch Avasive",
       "category": "Evasive Switching",
-      "family": "Drift Relay",
-      "focus": "Chase the drift between the two chambers.",
-      "arm": "Blending",
+      "family": "Domi Relay",
+      "focus": "Stay on target until it drops.",
+      "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Evasive Switching",
       "window": 3,
-      "label": "VT DriftTS Elite S5",
-      "leaderboardId": 104867,
+      "label": "domiSwitch Avasive",
+      "leaderboardId": 129746,
       "rankMaxes": [
-        387,
-        396,
-        401,
-        409
+        5864,
+        6042,
+        6162,
+        6259
       ],
       "source": {
         "kind": "percentile",
@@ -11367,21 +11397,27 @@
             0.011,
             0.008
           ],
-          "leaderboardId": 104867,
-          "total": 619,
-          "sampledAt": "2026-08-19T00:13:12.342Z"
+          "leaderboardId": 129746,
+          "total": 8397,
+          "sampledAt": "2026-09-04T00:05:00.449Z"
         },
         "why": "Frozen from this scenario's own board for the season variety expansion. This is a season target, not a copied benchmark tier."
       },
       "sanity": {
-        "leaderboardEntries": 619,
+        "leaderboardEntries": 8397,
         "clears": [
-          0.01909563905963741,
-          0.012578105506889824,
-          0.008831378549938321,
-          0.006563188895582576
+          0.02180219596272825,
+          0.014465985375010405,
+          0.010383381316667809,
+          0.0071468897622083225
         ],
-        "sampledAt": "2026-08-19T00:13:12.342Z"
+        "sampledAt": "2026-09-04T00:05:00.449Z"
+      },
+      "corpus": {
+        "runs": 1,
+        "best": 4210,
+        "median": 4210,
+        "reaches": null
       }
     },
     {
@@ -11790,26 +11826,26 @@
       "rankMaxes": [
         515,
         535,
-        541,
-        559,
+        542,
+        560,
         609,
-        628
+        626
       ],
       "source": {
         "kind": "authored",
         "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
       },
       "sanity": {
-        "leaderboardEntries": 1000,
+        "leaderboardEntries": 1069,
         "clears": [
           0.2522422895404973,
           0.17550278291781032,
-          0.15617149696981375,
-          0.11004113740485104,
+          0.15316330679232543,
+          0.10792151458581065,
           0.0368792444394562,
-          0.021648808523576993
+          0.023215409892992152
         ],
-        "sampledAt": "2026-08-18T23:49:26.955Z"
+        "sampledAt": "2026-09-14T02:37:25.884Z"
       }
     },
     {
@@ -11824,10 +11860,10 @@
       "label": "SmoothTS Revosect Int",
       "leaderboardId": 142909,
       "rankMaxes": [
-        540,
-        549,
-        556,
-        559,
+        539,
+        548,
+        554,
+        557,
         569,
         581
       ],
@@ -11836,16 +11872,16 @@
         "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
       },
       "sanity": {
-        "leaderboardEntries": 705,
+        "leaderboardEntries": 769,
         "clears": [
-          0.06667849499436508,
-          0.04667815672633397,
-          0.034467761148855844,
-          0.025494752769368884,
+          0.06793460678416992,
+          0.04874477528134839,
+          0.03758736006048645,
+          0.033006441154479205,
           0.01017294267312386,
           0.005167529741088876
         ],
-        "sampledAt": "2026-08-18T23:53:38.656Z"
+        "sampledAt": "2026-09-14T02:37:33.629Z"
       },
       "corpus": {
         "runs": 1,

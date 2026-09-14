@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "appliedAt": "2026-09-14T01:01:27.459Z",
+  "appliedAt": "2026-09-14T02:37:42.649Z",
   "rule": "Keep each variant's first four targets. Raise its two crossover targets toward stricter percentiles of its own board, with at least a one-point increase, capped to record minus one and record. Previously unreachable tails are repaired at that cap and explicitly identified. Expert has no outgoing overlap. Frozen before/after evidence lives in season_expansion_calibration.json.",
   "originalFamilies": [
     {
@@ -1800,18 +1800,18 @@
       ]
     },
     {
-      "scenario": "VT Multiclick 120 Novice",
+      "scenario": "CB EvoClick Easy",
       "category": "Static Clicking",
-      "family": "Multiclick Gallery",
+      "family": "Evo Gallery",
       "window": 0,
       "before": {
         "rankMaxes": [
-          1134,
-          1313,
-          1406,
-          1472,
-          1510,
-          1552
+          556,
+          684,
+          755,
+          812,
+          866,
+          920
         ],
         "source": {
           "kind": "percentile",
@@ -1832,9 +1832,9 @@
               0.26,
               0.18
             ],
-            "leaderboardId": 24969,
-            "total": 125280,
-            "sampledAt": "2026-08-18T23:58:53.221Z"
+            "leaderboardId": 96088,
+            "total": 22678,
+            "sampledAt": "2026-08-25T20:24:08.200Z"
           },
           "why": "Frozen from this scenario's own board for the season variety expansion. This is a season target, not a copied benchmark tier."
         }
@@ -1843,33 +1843,33 @@
         0.13,
         0.072
       ],
-      "sampledAt": "2026-08-18T23:58:53.221Z",
-      "total": 125280,
-      "record": 2730,
-      "recordSampledAt": "2026-09-14T00:50:32.691Z",
+      "sampledAt": "2026-08-25T20:24:08.200Z",
+      "total": 22678,
+      "record": 1689,
+      "recordSampledAt": "2026-09-14T02:34:09.842Z",
       "repairUnreachable": false,
       "rankMaxes": [
-        1134,
-        1313,
-        1406,
-        1472,
-        1590,
-        1656
+        556,
+        684,
+        755,
+        812,
+        967,
+        1045
       ]
     },
     {
-      "scenario": "VT Multiclick 120 Intermediate",
+      "scenario": "EvoClick Revosect Entry",
       "category": "Static Clicking",
-      "family": "Multiclick Gallery",
+      "family": "Evo Gallery",
       "window": 1,
       "before": {
         "rankMaxes": [
-          1418,
-          1472,
-          1490,
-          1544,
-          1580,
-          1620
+          1059,
+          1110,
+          1132,
+          1176,
+          1216,
+          1254
         ],
         "source": {
           "kind": "percentile",
@@ -1890,9 +1890,9 @@
               0.075,
               0.055
             ],
-            "leaderboardId": 24957,
-            "total": 81932,
-            "sampledAt": "2026-08-19T00:00:55.395Z"
+            "leaderboardId": 142851,
+            "total": 2008,
+            "sampledAt": "2026-09-14T02:36:24.019Z"
           },
           "why": "Frozen from this scenario's own board for the season variety expansion. This is a season target, not a copied benchmark tier."
         }
@@ -1901,33 +1901,33 @@
         0.0375,
         0.022000000000000002
       ],
-      "sampledAt": "2026-08-19T00:00:55.395Z",
-      "total": 81932,
-      "record": 2300,
-      "recordSampledAt": "2026-09-14T00:50:35.229Z",
+      "sampledAt": "2026-09-14T02:36:24.019Z",
+      "total": 2008,
+      "record": 1723,
+      "recordSampledAt": "2026-09-14T02:34:17.882Z",
       "repairUnreachable": false,
       "rankMaxes": [
-        1418,
-        1472,
-        1490,
-        1544,
-        1655,
-        1686
+        1059,
+        1110,
+        1132,
+        1176,
+        1307,
+        1359
       ]
     },
     {
-      "scenario": "VT Multiclick 180 Advanced",
+      "scenario": "EvoClick Revosect Int",
       "category": "Static Clicking",
-      "family": "Multiclick Gallery",
+      "family": "Evo Gallery",
       "window": 2,
       "before": {
         "rankMaxes": [
-          1420,
-          1476,
-          1517,
-          1553,
-          1591,
-          1635
+          1146,
+          1162,
+          1180,
+          1201,
+          1225,
+          1248
         ],
         "source": {
           "kind": "percentile",
@@ -1948,9 +1948,9 @@
               0.022,
               0.015
             ],
-            "leaderboardId": 23559,
-            "total": 72125,
-            "sampledAt": "2026-08-19T00:03:47.895Z"
+            "leaderboardId": 142850,
+            "total": 1571,
+            "sampledAt": "2026-09-14T02:36:31.714Z"
           },
           "why": "Frozen from this scenario's own board for the season variety expansion. This is a season target, not a copied benchmark tier."
         }
@@ -1959,18 +1959,18 @@
         0.011,
         0.006
       ],
-      "sampledAt": "2026-08-19T00:03:47.895Z",
-      "total": 72125,
-      "record": 2170,
-      "recordSampledAt": "2026-09-14T00:50:37.713Z",
+      "sampledAt": "2026-09-14T02:36:31.714Z",
+      "total": 1571,
+      "record": 1425,
+      "recordSampledAt": "2026-09-14T02:34:20.949Z",
       "repairUnreachable": false,
       "rankMaxes": [
-        1420,
-        1476,
-        1517,
-        1553,
-        1663,
-        1718
+        1146,
+        1162,
+        1180,
+        1201,
+        1262,
+        1301
       ]
     },
     {
@@ -3604,12 +3604,12 @@
       "window": 1,
       "before": {
         "rankMaxes": [
-          989,
-          1037,
-          1048,
-          1071,
-          1092,
-          1116
+          981,
+          1032,
+          1043,
+          1065,
+          1085,
+          1108
         ],
         "source": {
           "kind": "percentile",
@@ -3631,8 +3631,8 @@
               0.055
             ],
             "leaderboardId": 185409,
-            "total": 17660,
-            "sampledAt": "2026-08-19T00:38:39.469Z"
+            "total": 22932,
+            "sampledAt": "2026-09-14T02:36:47.246Z"
           },
           "why": "Frozen from this scenario's own board for the season variety expansion. This is a season target, not a copied benchmark tier."
         }
@@ -3641,18 +3641,18 @@
         0.0375,
         0.022000000000000002
       ],
-      "sampledAt": "2026-08-19T00:38:39.469Z",
-      "total": 17660,
+      "sampledAt": "2026-09-14T02:36:47.246Z",
+      "total": 22932,
       "record": 1728,
       "recordSampledAt": "2026-09-14T00:52:51.246Z",
       "repairUnreachable": false,
       "rankMaxes": [
-        989,
-        1037,
-        1048,
-        1071,
-        1146,
-        1198
+        981,
+        1032,
+        1043,
+        1065,
+        1138,
+        1188
       ]
     },
     {
@@ -3662,12 +3662,12 @@
       "window": 2,
       "before": {
         "rankMaxes": [
-          1029,
-          1074,
-          1110,
-          1148,
-          1190,
-          1217
+          1018,
+          1057,
+          1094,
+          1132,
+          1172,
+          1204
         ],
         "source": {
           "kind": "percentile",
@@ -3689,8 +3689,8 @@
               0.015
             ],
             "leaderboardId": 184827,
-            "total": 12960,
-            "sampledAt": "2026-08-19T00:39:12.982Z"
+            "total": 16754,
+            "sampledAt": "2026-09-14T02:36:54.996Z"
           },
           "why": "Frozen from this scenario's own board for the season variety expansion. This is a season target, not a copied benchmark tier."
         }
@@ -3699,18 +3699,18 @@
         0.011,
         0.006
       ],
-      "sampledAt": "2026-08-19T00:39:12.982Z",
-      "total": 12960,
+      "sampledAt": "2026-09-14T02:36:54.996Z",
+      "total": 16754,
       "record": 1687,
       "recordSampledAt": "2026-09-14T00:52:53.230Z",
       "repairUnreachable": false,
       "rankMaxes": [
-        1029,
-        1074,
-        1110,
-        1148,
-        1229,
-        1256
+        1018,
+        1057,
+        1094,
+        1132,
+        1221,
+        1247
       ]
     },
     {
@@ -4062,18 +4062,18 @@
       ]
     },
     {
-      "scenario": "VT Bounceshot Novice",
+      "scenario": "CatClick Easier",
       "category": "Dynamic Clicking",
-      "family": "Bounce Gallery",
+      "family": "Cat Click",
       "window": 0,
       "before": {
         "rankMaxes": [
-          442,
-          613,
-          716,
-          790,
-          832,
-          862
+          45,
+          59,
+          69,
+          75,
+          80,
+          83
         ],
         "source": {
           "kind": "percentile",
@@ -4094,9 +4094,9 @@
               0.26,
               0.18
             ],
-            "leaderboardId": 24975,
-            "total": 125087,
-            "sampledAt": "2026-08-18T23:58:35.484Z"
+            "leaderboardId": 184866,
+            "total": 19556,
+            "sampledAt": "2026-09-03T01:08:43.370Z"
           },
           "why": "Frozen from this scenario's own board for the season variety expansion. This is a season target, not a copied benchmark tier."
         }
@@ -4105,33 +4105,33 @@
         0.13,
         0.072
       ],
-      "sampledAt": "2026-08-18T23:58:35.484Z",
-      "total": 125087,
-      "record": 1880,
-      "recordSampledAt": "2026-08-30T06:18:49.364Z",
+      "sampledAt": "2026-09-03T01:08:43.370Z",
+      "total": 19556,
+      "record": 174,
+      "recordSampledAt": "2026-09-03T01:19:22.011Z",
       "repairUnreachable": false,
       "rankMaxes": [
-        442,
-        613,
-        716,
-        790,
-        892,
-        945
+        45,
+        59,
+        69,
+        75,
+        86,
+        90
       ]
     },
     {
-      "scenario": "VT Bounceshot Intermediate",
+      "scenario": "CatClick Medium",
       "category": "Dynamic Clicking",
-      "family": "Bounce Gallery",
+      "family": "Cat Click",
       "window": 1,
       "before": {
         "rankMaxes": [
-          684,
-          736,
-          760,
-          805,
-          850,
-          890
+          72,
+          77,
+          79,
+          84,
+          86,
+          89
         ],
         "source": {
           "kind": "percentile",
@@ -4152,9 +4152,9 @@
               0.075,
               0.055
             ],
-            "leaderboardId": 24955,
-            "total": 86833,
-            "sampledAt": "2026-08-19T00:00:36.692Z"
+            "leaderboardId": 184780,
+            "total": 17403,
+            "sampledAt": "2026-09-03T01:08:51.141Z"
           },
           "why": "Frozen from this scenario's own board for the season variety expansion. This is a season target, not a copied benchmark tier."
         }
@@ -4163,33 +4163,33 @@
         0.0375,
         0.022000000000000002
       ],
-      "sampledAt": "2026-08-19T00:00:36.692Z",
-      "total": 86833,
-      "record": 1450,
-      "recordSampledAt": "2026-09-03T01:18:23.243Z",
+      "sampledAt": "2026-09-03T01:08:51.141Z",
+      "total": 17403,
+      "record": 145,
+      "recordSampledAt": "2026-09-03T01:19:26.817Z",
       "repairUnreachable": false,
       "rankMaxes": [
-        684,
-        736,
-        760,
-        805,
-        908,
-        936
+        72,
+        77,
+        79,
+        84,
+        93,
+        98
       ]
     },
     {
-      "scenario": "VT Bounceshot Advanced",
+      "scenario": "CatClick",
       "category": "Dynamic Clicking",
-      "family": "Bounce Gallery",
+      "family": "Cat Click",
       "window": 2,
       "before": {
         "rankMaxes": [
-          730,
-          770,
-          800,
-          823,
-          845,
-          880
+          91,
+          94,
+          96,
+          100,
+          104,
+          107
         ],
         "source": {
           "kind": "percentile",
@@ -4210,9 +4210,9 @@
               0.022,
               0.015
             ],
-            "leaderboardId": 25154,
-            "total": 22127,
-            "sampledAt": "2026-08-19T00:03:27.884Z"
+            "leaderboardId": 179408,
+            "total": 1466,
+            "sampledAt": "2026-09-03T01:08:58.856Z"
           },
           "why": "Frozen from this scenario's own board for the season variety expansion. This is a season target, not a copied benchmark tier."
         }
@@ -4221,18 +4221,18 @@
         0.011,
         0.006
       ],
-      "sampledAt": "2026-08-19T00:03:27.884Z",
-      "total": 22127,
-      "record": 1310,
-      "recordSampledAt": "2026-08-30T06:19:03.715Z",
+      "sampledAt": "2026-09-03T01:08:58.856Z",
+      "total": 1466,
+      "record": 134,
+      "recordSampledAt": "2026-09-03T01:19:31.649Z",
       "repairUnreachable": false,
       "rankMaxes": [
-        730,
-        770,
-        800,
-        823,
-        904,
-        942
+        91,
+        94,
+        96,
+        100,
+        109,
+        113
       ]
     },
     {
@@ -5802,18 +5802,18 @@
       ]
     },
     {
-      "scenario": "VT Snake Track Novice S5",
+      "scenario": "waldoTS Novice",
       "category": "Precise Tracking",
-      "family": "Snake Sweep",
+      "family": "Waldo Track",
       "window": 0,
       "before": {
         "rankMaxes": [
-          2439,
-          3022,
-          3401,
-          3524,
-          3626,
-          3737
+          98,
+          115,
+          124,
+          131,
+          137,
+          142
         ],
         "source": {
           "kind": "percentile",
@@ -5834,9 +5834,9 @@
               0.26,
               0.18
             ],
-            "leaderboardId": 101560,
-            "total": 93836,
-            "sampledAt": "2026-08-18T17:30:18.013Z"
+            "leaderboardId": 113019,
+            "total": 71439,
+            "sampledAt": "2026-08-29T17:29:38.172Z"
           },
           "why": "Frozen from this scenario's own board for the season variety expansion. This is a season target, not a copied benchmark tier."
         }
@@ -5845,33 +5845,33 @@
         0.13,
         0.072
       ],
-      "sampledAt": "2026-08-18T17:30:18.013Z",
-      "total": 93836,
-      "record": 5826,
-      "recordSampledAt": "2026-08-30T06:20:44.708Z",
+      "sampledAt": "2026-08-29T17:29:38.172Z",
+      "total": 71439,
+      "record": 213,
+      "recordSampledAt": "2026-08-30T06:20:49.457Z",
       "repairUnreachable": false,
       "rankMaxes": [
-        2439,
-        3022,
-        3401,
-        3524,
-        3851,
-        4073
+        98,
+        115,
+        124,
+        131,
+        144,
+        148
       ]
     },
     {
-      "scenario": "VT Snake Track Intermediate S5",
+      "scenario": "waldoTS Intermediate",
       "category": "Precise Tracking",
-      "family": "Snake Sweep",
+      "family": "Waldo Track",
       "window": 1,
       "before": {
         "rankMaxes": [
-          3187,
-          3404,
-          3519,
-          3713,
-          3781,
-          3819
+          143,
+          147,
+          149,
+          154,
+          156,
+          160
         ],
         "source": {
           "kind": "percentile",
@@ -5892,9 +5892,9 @@
               0.075,
               0.055
             ],
-            "leaderboardId": 98045,
-            "total": 59228,
-            "sampledAt": "2026-08-18T17:30:21.008Z"
+            "leaderboardId": 111273,
+            "total": 40339,
+            "sampledAt": "2026-08-29T17:29:45.876Z"
           },
           "why": "Frozen from this scenario's own board for the season variety expansion. This is a season target, not a copied benchmark tier."
         }
@@ -5903,33 +5903,33 @@
         0.0375,
         0.022000000000000002
       ],
-      "sampledAt": "2026-08-18T17:30:21.008Z",
-      "total": 59228,
-      "record": 5323,
-      "recordSampledAt": "2026-09-03T01:20:06.163Z",
+      "sampledAt": "2026-08-29T17:29:45.876Z",
+      "total": 40339,
+      "record": 204,
+      "recordSampledAt": "2026-08-30T06:20:54.239Z",
       "repairUnreachable": false,
       "rankMaxes": [
-        3187,
-        3404,
-        3519,
-        3713,
-        3866,
-        3946
+        143,
+        147,
+        149,
+        154,
+        163,
+        168
       ]
     },
     {
-      "scenario": "VT Snake Track Advanced S5",
+      "scenario": "waldoTS",
       "category": "Precise Tracking",
-      "family": "Snake Sweep",
+      "family": "Waldo Track",
       "window": 2,
       "before": {
         "rankMaxes": [
-          3098,
-          3161,
-          3245,
-          3343,
-          3446,
-          3583
+          134,
+          138,
+          142,
+          145,
+          148,
+          152
         ],
         "source": {
           "kind": "percentile",
@@ -5950,9 +5950,9 @@
               0.022,
               0.015
             ],
-            "leaderboardId": 98297,
-            "total": 19362,
-            "sampledAt": "2026-08-18T17:30:24.017Z"
+            "leaderboardId": 81042,
+            "total": 119350,
+            "sampledAt": "2026-08-29T17:29:53.578Z"
           },
           "why": "Frozen from this scenario's own board for the season variety expansion. This is a season target, not a copied benchmark tier."
         }
@@ -5961,18 +5961,18 @@
         0.011,
         0.006
       ],
-      "sampledAt": "2026-08-18T17:30:24.017Z",
-      "total": 19362,
-      "record": 4761,
-      "recordSampledAt": "2026-09-03T01:20:11.021Z",
+      "sampledAt": "2026-08-29T17:29:53.578Z",
+      "total": 119350,
+      "record": 202,
+      "recordSampledAt": "2026-08-30T06:20:59.044Z",
       "repairUnreachable": false,
       "rankMaxes": [
-        3098,
-        3161,
-        3245,
-        3343,
-        3671,
-        3795
+        134,
+        138,
+        142,
+        145,
+        155,
+        160
       ]
     },
     {
@@ -7368,18 +7368,18 @@
       ]
     },
     {
-      "scenario": "VT Air Novice",
+      "scenario": "Air Pure Revosect Entry",
       "category": "Reactive Tracking",
-      "family": "Air Gauntlet",
+      "family": "Pure Chase",
       "window": 0,
       "before": {
         "rankMaxes": [
-          2361,
-          2781,
-          2943,
-          3057,
-          3149,
-          3233
+          872,
+          890,
+          897,
+          902,
+          906,
+          909
         ],
         "source": {
           "kind": "percentile",
@@ -7400,9 +7400,9 @@
               0.26,
               0.18
             ],
-            "leaderboardId": 43180,
-            "total": 106584,
-            "sampledAt": "2026-08-18T23:59:31.185Z"
+            "leaderboardId": 142837,
+            "total": 1410,
+            "sampledAt": "2026-09-14T02:37:02.612Z"
           },
           "why": "Frozen from this scenario's own board for the season variety expansion. This is a season target, not a copied benchmark tier."
         }
@@ -7411,33 +7411,33 @@
         0.13,
         0.072
       ],
-      "sampledAt": "2026-08-18T23:59:31.185Z",
-      "total": 106584,
-      "record": 4190,
-      "recordSampledAt": "2026-09-02T21:06:41.006Z",
+      "sampledAt": "2026-09-14T02:37:02.612Z",
+      "total": 1410,
+      "record": 926,
+      "recordSampledAt": "2026-09-14T02:35:05.114Z",
       "repairUnreachable": false,
       "rankMaxes": [
-        2361,
-        2781,
-        2943,
-        3057,
-        3302,
-        3412
+        872,
+        890,
+        897,
+        902,
+        912,
+        915
       ]
     },
     {
-      "scenario": "VT Air Intermediate",
+      "scenario": "Air Pure Intermediate",
       "category": "Reactive Tracking",
-      "family": "Air Gauntlet",
+      "family": "Pure Chase",
       "window": 1,
       "before": {
         "rankMaxes": [
-          2691,
-          2840,
-          2912,
-          3033,
-          3153,
-          3214
+          887,
+          892,
+          894,
+          897,
+          900,
+          902
         ],
         "source": {
           "kind": "percentile",
@@ -7458,9 +7458,9 @@
               0.075,
               0.055
             ],
-            "leaderboardId": 43181,
-            "total": 53597,
-            "sampledAt": "2026-08-19T00:02:04.025Z"
+            "leaderboardId": 126338,
+            "total": 26044,
+            "sampledAt": "2026-09-14T02:35:13.401Z"
           },
           "why": "Frozen from this scenario's own board for the season variety expansion. This is a season target, not a copied benchmark tier."
         }
@@ -7469,33 +7469,33 @@
         0.0375,
         0.022000000000000002
       ],
-      "sampledAt": "2026-08-19T00:02:04.025Z",
-      "total": 53597,
-      "record": 4258,
-      "recordSampledAt": "2026-09-03T01:22:44.233Z",
+      "sampledAt": "2026-09-14T02:35:13.401Z",
+      "total": 26044,
+      "record": 925,
+      "recordSampledAt": "2026-09-14T02:35:14.842Z",
       "repairUnreachable": false,
       "rankMaxes": [
-        2691,
-        2840,
-        2912,
-        3033,
-        3261,
-        3331
+        887,
+        892,
+        894,
+        897,
+        905,
+        907
       ]
     },
     {
-      "scenario": "VT Air Advanced",
+      "scenario": "Air Pure",
       "category": "Reactive Tracking",
-      "family": "Air Gauntlet",
+      "family": "Pure Chase",
       "window": 2,
       "before": {
         "rankMaxes": [
-          2918,
-          3011,
-          3077,
-          3151,
-          3235,
-          3319
+          889,
+          892,
+          895,
+          897,
+          900,
+          902
         ],
         "source": {
           "kind": "percentile",
@@ -7516,9 +7516,9 @@
               0.022,
               0.015
             ],
-            "leaderboardId": 43182,
-            "total": 15164,
-            "sampledAt": "2026-08-19T00:04:45.018Z"
+            "leaderboardId": 13213,
+            "total": 8579,
+            "sampledAt": "2026-09-14T02:35:23.348Z"
           },
           "why": "Frozen from this scenario's own board for the season variety expansion. This is a season target, not a copied benchmark tier."
         }
@@ -7527,18 +7527,18 @@
         0.011,
         0.006
       ],
-      "sampledAt": "2026-08-19T00:04:45.018Z",
-      "total": 15164,
-      "record": 4028,
-      "recordSampledAt": "2026-09-03T01:22:49.136Z",
+      "sampledAt": "2026-09-14T02:35:23.348Z",
+      "total": 8579,
+      "record": 919,
+      "recordSampledAt": "2026-09-14T02:35:24.793Z",
       "repairUnreachable": false,
       "rankMaxes": [
-        2918,
-        3011,
-        3077,
-        3151,
-        3369,
-        3501
+        889,
+        892,
+        895,
+        897,
+        904,
+        907
       ]
     },
     {
@@ -8998,12 +8998,12 @@
       "window": 1,
       "before": {
         "rankMaxes": [
-          942,
-          975,
+          943,
+          977,
           994,
-          1032,
+          1034,
           1060,
-          1092
+          1094
         ],
         "source": {
           "kind": "percentile",
@@ -9025,8 +9025,8 @@
               0.055
             ],
             "leaderboardId": 142903,
-            "total": 1032,
-            "sampledAt": "2026-08-18T23:48:43.285Z"
+            "total": 1114,
+            "sampledAt": "2026-09-14T02:37:10.361Z"
           },
           "why": "Frozen from this scenario's own board for the season variety expansion. This is a season target, not a copied benchmark tier."
         }
@@ -9035,18 +9035,18 @@
         0.0375,
         0.022000000000000002
       ],
-      "sampledAt": "2026-08-18T23:48:43.285Z",
-      "total": 1032,
+      "sampledAt": "2026-09-14T02:37:10.361Z",
+      "total": 1114,
       "record": 1330,
       "recordSampledAt": "2026-09-14T00:58:28.165Z",
       "repairUnreachable": false,
       "rankMaxes": [
-        942,
-        975,
+        943,
+        977,
         994,
-        1032,
-        1125,
-        1161
+        1034,
+        1126,
+        1158
       ]
     },
     {
@@ -9056,12 +9056,12 @@
       "window": 2,
       "before": {
         "rankMaxes": [
-          1044,
-          1057,
-          1068,
-          1087,
-          1113,
-          1127
+          1040,
+          1056,
+          1067,
+          1078,
+          1088,
+          1109
         ],
         "source": {
           "kind": "percentile",
@@ -9083,8 +9083,8 @@
               0.015
             ],
             "leaderboardId": 143210,
-            "total": 585,
-            "sampledAt": "2026-08-18T23:52:52.981Z"
+            "total": 643,
+            "sampledAt": "2026-09-14T02:37:18.073Z"
           },
           "why": "Frozen from this scenario's own board for the season variety expansion. This is a season target, not a copied benchmark tier."
         }
@@ -9093,18 +9093,18 @@
         0.011,
         0.006
       ],
-      "sampledAt": "2026-08-18T23:52:52.981Z",
-      "total": 585,
+      "sampledAt": "2026-09-14T02:37:18.073Z",
+      "total": 643,
       "record": 1232,
       "recordSampledAt": "2026-09-14T00:58:30.196Z",
       "repairUnreachable": false,
       "rankMaxes": [
-        1044,
-        1057,
-        1068,
-        1087,
-        1133,
-        1186
+        1040,
+        1056,
+        1067,
+        1078,
+        1124,
+        1178
       ]
     },
     {
@@ -10500,18 +10500,18 @@
       ]
     },
     {
-      "scenario": "VT DriftTS Novice S5",
+      "scenario": "domiSwitch Easier",
       "category": "Evasive Switching",
-      "family": "Drift Relay",
+      "family": "Domi Relay",
       "window": 0,
       "before": {
         "rankMaxes": [
-          328,
-          388,
-          424,
-          437,
-          446,
-          457
+          5437,
+          6260,
+          6737,
+          7159,
+          7469,
+          7637
         ],
         "source": {
           "kind": "percentile",
@@ -10532,9 +10532,9 @@
               0.26,
               0.18
             ],
-            "leaderboardId": 104862,
-            "total": 84474,
-            "sampledAt": "2026-08-18T17:44:02.304Z"
+            "leaderboardId": 185428,
+            "total": 20300,
+            "sampledAt": "2026-09-03T01:29:00.957Z"
           },
           "why": "Frozen from this scenario's own board for the season variety expansion. This is a season target, not a copied benchmark tier."
         }
@@ -10543,33 +10543,33 @@
         0.13,
         0.072
       ],
-      "sampledAt": "2026-08-18T17:44:02.304Z",
-      "total": 84474,
-      "record": 778,
-      "recordSampledAt": "2026-09-03T01:25:36.103Z",
+      "sampledAt": "2026-09-03T01:29:00.957Z",
+      "total": 20300,
+      "record": 10628,
+      "recordSampledAt": "2026-09-03T01:26:34.681Z",
       "repairUnreachable": false,
       "rankMaxes": [
-        328,
-        388,
-        424,
-        437,
-        467,
-        483
+        5437,
+        6260,
+        6737,
+        7159,
+        7757,
+        7985
       ]
     },
     {
-      "scenario": "VT DriftTS Intermediate S5",
+      "scenario": "domiSwitch Easy",
       "category": "Evasive Switching",
-      "family": "Drift Relay",
+      "family": "Domi Relay",
       "window": 1,
       "before": {
         "rankMaxes": [
-          428,
-          449,
-          460,
-          478,
-          490,
-          496
+          6061,
+          6331,
+          6439,
+          6682,
+          6836,
+          7015
         ],
         "source": {
           "kind": "percentile",
@@ -10590,9 +10590,9 @@
               0.075,
               0.055
             ],
-            "leaderboardId": 104863,
-            "total": 47760,
-            "sampledAt": "2026-08-18T17:44:09.879Z"
+            "leaderboardId": 83043,
+            "total": 37779,
+            "sampledAt": "2026-08-19T01:20:58.171Z"
           },
           "why": "Frozen from this scenario's own board for the season variety expansion. This is a season target, not a copied benchmark tier."
         }
@@ -10601,33 +10601,33 @@
         0.0375,
         0.022000000000000002
       ],
-      "sampledAt": "2026-08-18T17:44:09.879Z",
-      "total": 47760,
-      "record": 673,
-      "recordSampledAt": "2026-09-03T01:25:41.975Z",
+      "sampledAt": "2026-08-19T01:20:58.171Z",
+      "total": 37779,
+      "record": 9536,
+      "recordSampledAt": "2026-09-03T01:26:39.584Z",
       "repairUnreachable": false,
       "rankMaxes": [
-        428,
-        449,
-        460,
-        478,
-        500,
-        509
+        6061,
+        6331,
+        6439,
+        6682,
+        7201,
+        7461
       ]
     },
     {
-      "scenario": "VT DriftTS Advanced S5",
+      "scenario": "domiSwitch",
       "category": "Evasive Switching",
-      "family": "Drift Relay",
+      "family": "Domi Relay",
       "window": 2,
       "before": {
         "rankMaxes": [
-          439,
-          445,
-          457,
-          468,
-          477,
-          495
+          5803,
+          6009,
+          6200,
+          6356,
+          6494,
+          6696
         ],
         "source": {
           "kind": "percentile",
@@ -10648,9 +10648,9 @@
               0.022,
               0.015
             ],
-            "leaderboardId": 104866,
-            "total": 8941,
-            "sampledAt": "2026-08-18T17:44:17.778Z"
+            "leaderboardId": 83035,
+            "total": 18273,
+            "sampledAt": "2026-08-30T15:56:35.975Z"
           },
           "why": "Frozen from this scenario's own board for the season variety expansion. This is a season target, not a copied benchmark tier."
         }
@@ -10659,18 +10659,18 @@
         0.011,
         0.006
       ],
-      "sampledAt": "2026-08-18T17:44:17.778Z",
-      "total": 8941,
-      "record": 590,
-      "recordSampledAt": "2026-09-03T01:25:46.812Z",
+      "sampledAt": "2026-08-30T15:56:35.975Z",
+      "total": 18273,
+      "record": 8516,
+      "recordSampledAt": "2026-08-30T15:56:56.689Z",
       "repairUnreachable": false,
       "rankMaxes": [
-        439,
-        445,
-        457,
-        468,
-        507,
-        519
+        5803,
+        6009,
+        6200,
+        6356,
+        6830,
+        7087
       ]
     },
     {
@@ -11088,10 +11088,10 @@
         "rankMaxes": [
           515,
           535,
-          541,
-          559,
-          577,
-          594
+          542,
+          560,
+          580,
+          595
         ],
         "source": {
           "kind": "percentile",
@@ -11113,8 +11113,8 @@
               0.055
             ],
             "leaderboardId": 142911,
-            "total": 1000,
-            "sampledAt": "2026-08-18T23:49:26.955Z"
+            "total": 1069,
+            "sampledAt": "2026-09-14T02:37:25.884Z"
           },
           "why": "Frozen from this scenario's own board for the season variety expansion. This is a season target, not a copied benchmark tier."
         }
@@ -11123,18 +11123,18 @@
         0.0375,
         0.022000000000000002
       ],
-      "sampledAt": "2026-08-18T23:49:26.955Z",
-      "total": 1000,
+      "sampledAt": "2026-09-14T02:37:25.884Z",
+      "total": 1069,
       "record": 715,
       "recordSampledAt": "2026-09-14T00:59:00.277Z",
       "repairUnreachable": false,
       "rankMaxes": [
         515,
         535,
-        541,
-        559,
+        542,
+        560,
         609,
-        628
+        626
       ]
     },
     {
@@ -11144,11 +11144,11 @@
       "window": 2,
       "before": {
         "rankMaxes": [
-          540,
-          549,
-          556,
-          559,
-          561,
+          539,
+          548,
+          554,
+          557,
+          560,
           565
         ],
         "source": {
@@ -11171,8 +11171,8 @@
               0.015
             ],
             "leaderboardId": 142909,
-            "total": 705,
-            "sampledAt": "2026-08-18T23:53:38.656Z"
+            "total": 769,
+            "sampledAt": "2026-09-14T02:37:33.629Z"
           },
           "why": "Frozen from this scenario's own board for the season variety expansion. This is a season target, not a copied benchmark tier."
         }
@@ -11181,16 +11181,16 @@
         0.011,
         0.006
       ],
-      "sampledAt": "2026-08-18T23:53:38.656Z",
-      "total": 705,
+      "sampledAt": "2026-09-14T02:37:33.629Z",
+      "total": 769,
       "record": 603,
       "recordSampledAt": "2026-09-14T00:59:02.355Z",
       "repairUnreachable": false,
       "rankMaxes": [
-        540,
-        549,
-        556,
-        559,
+        539,
+        548,
+        554,
+        557,
         569,
         581
       ]

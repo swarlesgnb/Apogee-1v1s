@@ -419,6 +419,10 @@
       "subCategory": "Reactive Tracking",
       "why": "Air Divine-style movement brings a longer aerial course into the season. Easy Slowed, Easy, No UFO and Harder progress from a slowed course to the full challenge; the final UFO handover needs playtesting. This season classifies the complete circuit by its dominant firing and movement task."
     },
+    "Air Pure Hard": {
+      "subCategory": "Reactive Tracking",
+      "why": "Air Pure mixes bots with different dodge profiles in one air arena, so every target asks for a different read. Revosect's time-scored entry cut, six bots circling the player, leads into the Intermediate, standard and Hard cuts that Viscose and snakbox grade. The handover between the two editions needs playtesting. This season classifies the complete circuit by its dominant firing and movement task."
+    },
     "Close Fast Strafes Easy Invincible - Thin": {
       "subCategory": "Reactive Tracking",
       "why": "A close strafing opponent adds a grounded duel-like chase beside the aerial courses. Easy Thin, standard, Thin and Precise+ are a proposed progression; speed and size both change, so the first handover needs playtesting. This season classifies the complete circuit by its dominant firing and movement task."
@@ -434,6 +438,14 @@
     "StaticSwitchingVox": {
       "subCategory": "Speed Switching",
       "why": "Stationary Vox targets reward route choice and rapid full-auto clears without movement reading. Jumbo, standard, Small and xxSmall turn the room into a four-band switching sprint. This season classifies the complete circuit by its dominant firing and movement task."
+    },
+    "domiSwitch Easier": {
+      "subCategory": "Evasive Switching",
+      "why": "domiSwitch targets carry 55 health and regenerate 0.3 seconds after damage stops, so leaving early costs the whole kill; Aimerz+, snakbox and Viscose file it under evasive switching. Viscose's Easier cut and the Easy and standard cuts lead into Avasive's edit for the top band, whose top score is the lowest of the four. That edition handover needs playtesting. This season classifies the complete circuit by its dominant firing and movement task."
+    },
+    "domiSwitch Avasive": {
+      "subCategory": "Evasive Switching",
+      "why": "domiSwitch targets carry 55 health and regenerate 0.3 seconds after damage stops, so leaving early costs the whole kill; Aimerz+, snakbox and Viscose file it under evasive switching. Viscose's Easier cut and the Easy and standard cuts lead into Avasive's edit for the top band, whose top score is the lowest of the four. That edition handover needs playtesting. This season classifies the complete circuit by its dominant firing and movement task."
     },
     "VT Penta Bounce Novice S5": {
       "subCategory": "Evasive Switching",
@@ -1444,100 +1456,106 @@
       ]
     },
     {
-      "family": "Multiclick Gallery",
+      "family": "Evo Gallery",
       "category": "Static Clicking",
       "subCategory": "Static Clicking",
-      "focus": "Sweep the room. Keep the magazine rolling.",
-      "$why": "Single-hit targets spread across three walls turn clicking into a room-clearing score chase. Reload-on-kill rewards a sustained rhythm. The four published Multiclick cuts widen the arena as difficulty rises.",
+      "focus": "Hold the pace as the targets multiply.",
+      "$why": "EvoClick adds a target every twenty seconds, so a run opens as a calm static read and ends as a crowded wall: a pacing arc no other static circuit here has. Community Benchmarks' easy cut leads into Revosect's three EvoClick tiers. The first cross-author handover needs playtesting.",
       "$order": {
-        "why": "Single-hit targets spread across three walls turn clicking into a room-clearing score chase. Reload-on-kill rewards a sustained rhythm. The four published Multiclick cuts widen the arena as difficulty rises. Difficulty order is a curation judgement; board populations cannot prove equivalence between edits."
+        "why": "EvoClick adds a target every twenty seconds, so a run opens as a calm static read and ends as a crowded wall: a pacing arc no other static circuit here has. Community Benchmarks' easy cut leads into Revosect's three EvoClick tiers. The first cross-author handover needs playtesting. Difficulty order is a curation judgement; board populations cannot prove equivalence between edits."
       },
       "variants": [
         {
           "window": 0,
-          "scenario": "VT Multiclick 120 Novice",
-          "label": "VT Multiclick 120 Novice",
-          "leaderboardId": 24969,
+          "scenario": "CB EvoClick Easy",
+          "label": "CB EvoClick Easy",
+          "leaderboardId": 96088,
           "admitted": {
-            "why": "Single-hit targets spread across three walls turn clicking into a room-clearing score chase. Reload-on-kill rewards a sustained rhythm. The four published Multiclick cuts widen the arena as difficulty rises."
+            "why": "EvoClick adds a target every twenty seconds, so a run opens as a calm static read and ends as a crowded wall: a pacing arc no other static circuit here has. Community Benchmarks' easy cut leads into Revosect's three EvoClick tiers. The first cross-author handover needs playtesting."
           },
           "rankMaxes": [
-            1134,
-            1313,
-            1406,
-            1472,
-            1590,
-            1656
+            556,
+            684,
+            755,
+            812,
+            967,
+            1045
           ],
           "source": {
             "kind": "authored",
             "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
           },
-          "arm": "Blending",
+          "arm": "Wrist",
           "armFrom": "Apogee"
         },
         {
           "window": 1,
-          "scenario": "VT Multiclick 120 Intermediate",
-          "label": "VT Multiclick 120 Intermediate",
-          "leaderboardId": 24957,
+          "scenario": "EvoClick Revosect Entry",
+          "label": "EvoClick Revosect Entry",
+          "leaderboardId": 142851,
           "admitted": {
-            "why": "Single-hit targets spread across three walls turn clicking into a room-clearing score chase. Reload-on-kill rewards a sustained rhythm. The four published Multiclick cuts widen the arena as difficulty rises."
+            "why": "EvoClick adds a target every twenty seconds, so a run opens as a calm static read and ends as a crowded wall: a pacing arc no other static circuit here has. Community Benchmarks' easy cut leads into Revosect's three EvoClick tiers. The first cross-author handover needs playtesting."
           },
           "rankMaxes": [
-            1418,
-            1472,
-            1490,
-            1544,
-            1655,
-            1686
+            1059,
+            1110,
+            1132,
+            1176,
+            1307,
+            1359
           ],
+          "thinBoard": {
+            "why": "Retained for this variety circuit with 2008 sampled leaderboard entries. These frozen draft targets are based on a small population, especially at Expert; difficulty equivalence requires playtesting. EvoClick adds a target every twenty seconds, so a run opens as a calm static read and ends as a crowded wall: a pacing arc no other static circuit here has. Community Benchmarks' easy cut leads into Revosect's three EvoClick tiers. The first cross-author handover needs playtesting."
+          },
           "source": {
             "kind": "authored",
             "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
           },
-          "arm": "Blending",
+          "arm": "Wrist",
           "armFrom": "Apogee"
         },
         {
           "window": 2,
-          "scenario": "VT Multiclick 180 Advanced",
-          "label": "VT Multiclick 180 Advanced",
-          "leaderboardId": 23559,
+          "scenario": "EvoClick Revosect Int",
+          "label": "EvoClick Revosect Int",
+          "leaderboardId": 142850,
           "admitted": {
-            "why": "Single-hit targets spread across three walls turn clicking into a room-clearing score chase. Reload-on-kill rewards a sustained rhythm. The four published Multiclick cuts widen the arena as difficulty rises."
+            "why": "EvoClick adds a target every twenty seconds, so a run opens as a calm static read and ends as a crowded wall: a pacing arc no other static circuit here has. Community Benchmarks' easy cut leads into Revosect's three EvoClick tiers. The first cross-author handover needs playtesting."
           },
           "rankMaxes": [
-            1420,
-            1476,
-            1517,
-            1553,
-            1663,
-            1718
+            1146,
+            1162,
+            1180,
+            1201,
+            1262,
+            1301
           ],
+          "thinBoard": {
+            "why": "Retained for this variety circuit with 1571 sampled leaderboard entries. These frozen draft targets are based on a small population, especially at Expert; difficulty equivalence requires playtesting. EvoClick adds a target every twenty seconds, so a run opens as a calm static read and ends as a crowded wall: a pacing arc no other static circuit here has. Community Benchmarks' easy cut leads into Revosect's three EvoClick tiers. The first cross-author handover needs playtesting."
+          },
           "source": {
             "kind": "authored",
             "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
           },
-          "arm": "Blending",
+          "arm": "Wrist",
           "armFrom": "Apogee"
         },
         {
           "window": 3,
-          "scenario": "VT Multiclick 180 Elite",
-          "label": "VT Multiclick 180 Elite",
-          "leaderboardId": 86801,
+          "scenario": "EvoClick Revosect",
+          "label": "EvoClick Revosect",
+          "leaderboardId": 141058,
           "admitted": {
-            "why": "Single-hit targets spread across three walls turn clicking into a room-clearing score chase. Reload-on-kill rewards a sustained rhythm. The four published Multiclick cuts widen the arena as difficulty rises."
+            "why": "EvoClick adds a target every twenty seconds, so a run opens as a calm static read and ends as a crowded wall: a pacing arc no other static circuit here has. Community Benchmarks' easy cut leads into Revosect's three EvoClick tiers. The first cross-author handover needs playtesting."
           },
           "rankMaxes": [
-            1694,
-            1720,
-            1728,
-            1758
+            1222,
+            1278,
+            1320,
+            1345
           ],
           "thinBoard": {
-            "why": "Retained for this variety circuit with 386 sampled leaderboard entries. These frozen draft targets are based on a small population, especially at Expert; difficulty equivalence requires playtesting. Single-hit targets spread across three walls turn clicking into a room-clearing score chase. Reload-on-kill rewards a sustained rhythm. The four published Multiclick cuts widen the arena as difficulty rises."
+            "why": "Retained for this variety circuit with 551 sampled leaderboard entries. These frozen draft targets are based on a small population, especially at Expert; difficulty equivalence requires playtesting. EvoClick adds a target every twenty seconds, so a run opens as a calm static read and ends as a crowded wall: a pacing arc no other static circuit here has. Community Benchmarks' easy cut leads into Revosect's three EvoClick tiers. The first cross-author handover needs playtesting."
           },
           "source": {
             "kind": "percentile",
@@ -1554,13 +1572,13 @@
                 0.011,
                 0.008
               ],
-              "leaderboardId": 86801,
-              "total": 386,
-              "sampledAt": "2026-08-19T00:07:03.752Z"
+              "leaderboardId": 141058,
+              "total": 551,
+              "sampledAt": "2026-09-14T02:36:39.582Z"
             },
             "why": "Frozen from this scenario's own board for the season variety expansion. This is a season target, not a copied benchmark tier."
           },
-          "arm": "Blending",
+          "arm": "Wrist",
           "armFrom": "Apogee"
         }
       ]
@@ -2678,12 +2696,12 @@
             "why": "Floating heads in a layered arena offer a shooting-gallery rhythm with depth changes. Viscose's Entry through Hard edits supply a coherent four-band progression without replacing the core Pasu and Popcorn tests."
           },
           "rankMaxes": [
-            989,
-            1037,
-            1048,
-            1071,
-            1146,
-            1198
+            981,
+            1032,
+            1043,
+            1065,
+            1138,
+            1188
           ],
           "source": {
             "kind": "authored",
@@ -2701,12 +2719,12 @@
             "why": "Floating heads in a layered arena offer a shooting-gallery rhythm with depth changes. Viscose's Entry through Hard edits supply a coherent four-band progression without replacing the core Pasu and Popcorn tests."
           },
           "rankMaxes": [
-            1029,
-            1074,
-            1110,
-            1148,
-            1229,
-            1256
+            1018,
+            1057,
+            1094,
+            1132,
+            1221,
+            1247
           ],
           "source": {
             "kind": "authored",
@@ -3009,100 +3027,103 @@
       ]
     },
     {
-      "family": "Bounce Gallery",
+      "family": "Cat Click",
       "category": "Dynamic Clicking",
       "subCategory": "Dynamic Clicking",
-      "focus": "Catch the leap. Reload on every clear.",
-      "$why": "Four single-click bots leap across a flat surface at different depths. A three-shot magazine refills on each kill, creating an arcade-like clear-and-reload loop. The four published Bounceshot cuts keep that loop across the bands.",
+      "focus": "One clean click per mover.",
+      "$why": "CatClick is graded by Viscose in all four of its tiers, Easier, Medium, Hard and Expert, so the family is one scenario's own four cuts with no handover between authors, and its two easier cuts carry some of the busiest boards in the pool. Its author description says nothing about the mechanic; the season files it where Viscose does, under dynamic clicking.",
       "$order": {
-        "why": "Four single-click bots leap across a flat surface at different depths. A three-shot magazine refills on each kill, creating an arcade-like clear-and-reload loop. The four published Bounceshot cuts keep that loop across the bands. Difficulty order is a curation judgement; board populations cannot prove equivalence between edits."
+        "why": "CatClick is graded by Viscose in all four of its tiers, Easier, Medium, Hard and Expert, so the family is one scenario's own four cuts with no handover between authors, and its two easier cuts carry some of the busiest boards in the pool. Its author description says nothing about the mechanic; the season files it where Viscose does, under dynamic clicking. Difficulty order is a curation judgement; board populations cannot prove equivalence between edits."
       },
       "variants": [
         {
           "window": 0,
-          "scenario": "VT Bounceshot Novice",
-          "label": "VT Bounceshot Novice",
-          "leaderboardId": 24975,
+          "scenario": "CatClick Easier",
+          "label": "CatClick Easier",
+          "leaderboardId": 184866,
           "admitted": {
-            "why": "Four single-click bots leap across a flat surface at different depths. A three-shot magazine refills on each kill, creating an arcade-like clear-and-reload loop. The four published Bounceshot cuts keep that loop across the bands."
+            "why": "CatClick is graded by Viscose in all four of its tiers, Easier, Medium, Hard and Expert, so the family is one scenario's own four cuts with no handover between authors, and its two easier cuts carry some of the busiest boards in the pool. Its author description says nothing about the mechanic; the season files it where Viscose does, under dynamic clicking."
           },
           "rankMaxes": [
-            442,
-            613,
-            716,
-            790,
-            892,
-            945
+            45,
+            59,
+            69,
+            75,
+            86,
+            90
           ],
           "source": {
             "kind": "authored",
             "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
           },
-          "arm": "Blending",
+          "arm": "Wrist",
           "armFrom": "Apogee"
         },
         {
           "window": 1,
-          "scenario": "VT Bounceshot Intermediate",
-          "label": "VT Bounceshot Intermediate",
-          "leaderboardId": 24955,
+          "scenario": "CatClick Medium",
+          "label": "CatClick Medium",
+          "leaderboardId": 184780,
           "admitted": {
-            "why": "Four single-click bots leap across a flat surface at different depths. A three-shot magazine refills on each kill, creating an arcade-like clear-and-reload loop. The four published Bounceshot cuts keep that loop across the bands."
+            "why": "CatClick is graded by Viscose in all four of its tiers, Easier, Medium, Hard and Expert, so the family is one scenario's own four cuts with no handover between authors, and its two easier cuts carry some of the busiest boards in the pool. Its author description says nothing about the mechanic; the season files it where Viscose does, under dynamic clicking."
           },
           "rankMaxes": [
-            684,
-            736,
-            760,
-            805,
-            908,
-            936
+            72,
+            77,
+            79,
+            84,
+            93,
+            98
           ],
           "source": {
             "kind": "authored",
             "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
           },
-          "arm": "Blending",
+          "arm": "Wrist",
           "armFrom": "Apogee"
         },
         {
           "window": 2,
-          "scenario": "VT Bounceshot Advanced",
-          "label": "VT Bounceshot Advanced",
-          "leaderboardId": 25154,
+          "scenario": "CatClick",
+          "label": "CatClick",
+          "leaderboardId": 179408,
           "admitted": {
-            "why": "Four single-click bots leap across a flat surface at different depths. A three-shot magazine refills on each kill, creating an arcade-like clear-and-reload loop. The four published Bounceshot cuts keep that loop across the bands."
+            "why": "CatClick is graded by Viscose in all four of its tiers, Easier, Medium, Hard and Expert, so the family is one scenario's own four cuts with no handover between authors, and its two easier cuts carry some of the busiest boards in the pool. Its author description says nothing about the mechanic; the season files it where Viscose does, under dynamic clicking."
           },
           "rankMaxes": [
-            730,
-            770,
-            800,
-            823,
-            904,
-            942
+            91,
+            94,
+            96,
+            100,
+            109,
+            113
           ],
+          "thinBoard": {
+            "why": "Retained for this variety circuit with 1466 sampled leaderboard entries. These frozen draft targets are based on a small population, especially at Expert; difficulty equivalence requires playtesting. CatClick is graded by Viscose in all four of its tiers, Easier, Medium, Hard and Expert, so the family is one scenario's own four cuts with no handover between authors, and its two easier cuts carry some of the busiest boards in the pool. Its author description says nothing about the mechanic; the season files it where Viscose does, under dynamic clicking."
+          },
           "source": {
             "kind": "authored",
             "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
           },
-          "arm": "Blending",
+          "arm": "Wrist",
           "armFrom": "Apogee"
         },
         {
           "window": 3,
-          "scenario": "VT Bounceshot Elite",
-          "label": "VT Bounceshot Elite",
-          "leaderboardId": 86805,
+          "scenario": "CatClick Harder",
+          "label": "CatClick Harder",
+          "leaderboardId": 184865,
           "admitted": {
-            "why": "Four single-click bots leap across a flat surface at different depths. A three-shot magazine refills on each kill, creating an arcade-like clear-and-reload loop. The four published Bounceshot cuts keep that loop across the bands."
+            "why": "CatClick is graded by Viscose in all four of its tiers, Easier, Medium, Hard and Expert, so the family is one scenario's own four cuts with no handover between authors, and its two easier cuts carry some of the busiest boards in the pool. Its author description says nothing about the mechanic; the season files it where Viscose does, under dynamic clicking."
           },
           "rankMaxes": [
-            703,
-            745,
-            773,
-            836
+            86,
+            90,
+            92,
+            97
           ],
           "thinBoard": {
-            "why": "Retained for this variety circuit with 435 sampled leaderboard entries. These frozen draft targets are based on a small population, especially at Expert; difficulty equivalence requires playtesting. Four single-click bots leap across a flat surface at different depths. A three-shot magazine refills on each kill, creating an arcade-like clear-and-reload loop. The four published Bounceshot cuts keep that loop across the bands."
+            "why": "Retained for this variety circuit with 666 sampled leaderboard entries. These frozen draft targets are based on a small population, especially at Expert; difficulty equivalence requires playtesting. CatClick is graded by Viscose in all four of its tiers, Easier, Medium, Hard and Expert, so the family is one scenario's own four cuts with no handover between authors, and its two easier cuts carry some of the busiest boards in the pool. Its author description says nothing about the mechanic; the season files it where Viscose does, under dynamic clicking."
           },
           "source": {
             "kind": "percentile",
@@ -3119,13 +3140,13 @@
                 0.011,
                 0.008
               ],
-              "leaderboardId": 86805,
-              "total": 435,
-              "sampledAt": "2026-08-19T00:06:34.787Z"
+              "leaderboardId": 184865,
+              "total": 666,
+              "sampledAt": "2026-09-03T01:09:06.598Z"
             },
             "why": "Frozen from this scenario's own board for the season variety expansion. This is a season target, not a copied benchmark tier."
           },
-          "arm": "Blending",
+          "arm": "Wrist",
           "armFrom": "Apogee"
         }
       ]
@@ -4211,30 +4232,30 @@
       ]
     },
     {
-      "family": "Snake Sweep",
+      "family": "Waldo Track",
       "category": "Precise Tracking",
       "subCategory": "Precise Tracking",
-      "focus": "Sweep around the dish in one flowing motion.",
-      "$why": "Wide sweeping strafes in a circular dish give tracking a distinctive arena and long flowing paths. The four published Snake Track bands provide a consistent scene from Novice through Expert.",
+      "focus": "Stay on it, not near it.",
+      "$why": "waldoTS is one of the most-played tracking scenarios in the catalogue, with 3.7 million plays on its standard cut. Viscose grades its Novice, Intermediate, standard and Elite cuts as Easier, Medium, Hard and Expert, and AimSpeed grades the standard and Elite cuts too, so the progression is one scenario's own cuts.",
       "$order": {
-        "why": "Wide sweeping strafes in a circular dish give tracking a distinctive arena and long flowing paths. The four published Snake Track bands provide a consistent scene from Novice through Expert. Difficulty order is a curation judgement; board populations cannot prove equivalence between edits."
+        "why": "waldoTS is one of the most-played tracking scenarios in the catalogue, with 3.7 million plays on its standard cut. Viscose grades its Novice, Intermediate, standard and Elite cuts as Easier, Medium, Hard and Expert, and AimSpeed grades the standard and Elite cuts too, so the progression is one scenario's own cuts. Difficulty order is a curation judgement; board populations cannot prove equivalence between edits."
       },
       "variants": [
         {
           "window": 0,
-          "scenario": "VT Snake Track Novice S5",
-          "label": "VT Snake Track Novice S5",
-          "leaderboardId": 101560,
+          "scenario": "waldoTS Novice",
+          "label": "waldoTS Novice",
+          "leaderboardId": 113019,
           "admitted": {
-            "why": "Wide sweeping strafes in a circular dish give tracking a distinctive arena and long flowing paths. The four published Snake Track bands provide a consistent scene from Novice through Expert."
+            "why": "waldoTS is one of the most-played tracking scenarios in the catalogue, with 3.7 million plays on its standard cut. Viscose grades its Novice, Intermediate, standard and Elite cuts as Easier, Medium, Hard and Expert, and AimSpeed grades the standard and Elite cuts too, so the progression is one scenario's own cuts."
           },
           "rankMaxes": [
-            2439,
-            3022,
-            3401,
-            3524,
-            3851,
-            4073
+            98,
+            115,
+            124,
+            131,
+            144,
+            148
           ],
           "source": {
             "kind": "authored",
@@ -4245,19 +4266,19 @@
         },
         {
           "window": 1,
-          "scenario": "VT Snake Track Intermediate S5",
-          "label": "VT Snake Track Intermediate S5",
-          "leaderboardId": 98045,
+          "scenario": "waldoTS Intermediate",
+          "label": "waldoTS Intermediate",
+          "leaderboardId": 111273,
           "admitted": {
-            "why": "Wide sweeping strafes in a circular dish give tracking a distinctive arena and long flowing paths. The four published Snake Track bands provide a consistent scene from Novice through Expert."
+            "why": "waldoTS is one of the most-played tracking scenarios in the catalogue, with 3.7 million plays on its standard cut. Viscose grades its Novice, Intermediate, standard and Elite cuts as Easier, Medium, Hard and Expert, and AimSpeed grades the standard and Elite cuts too, so the progression is one scenario's own cuts."
           },
           "rankMaxes": [
-            3187,
-            3404,
-            3519,
-            3713,
-            3866,
-            3946
+            143,
+            147,
+            149,
+            154,
+            163,
+            168
           ],
           "source": {
             "kind": "authored",
@@ -4268,19 +4289,19 @@
         },
         {
           "window": 2,
-          "scenario": "VT Snake Track Advanced S5",
-          "label": "VT Snake Track Advanced S5",
-          "leaderboardId": 98297,
+          "scenario": "waldoTS",
+          "label": "waldoTS",
+          "leaderboardId": 81042,
           "admitted": {
-            "why": "Wide sweeping strafes in a circular dish give tracking a distinctive arena and long flowing paths. The four published Snake Track bands provide a consistent scene from Novice through Expert."
+            "why": "waldoTS is one of the most-played tracking scenarios in the catalogue, with 3.7 million plays on its standard cut. Viscose grades its Novice, Intermediate, standard and Elite cuts as Easier, Medium, Hard and Expert, and AimSpeed grades the standard and Elite cuts too, so the progression is one scenario's own cuts."
           },
           "rankMaxes": [
-            3098,
-            3161,
-            3245,
-            3343,
-            3671,
-            3795
+            134,
+            138,
+            142,
+            145,
+            155,
+            160
           ],
           "source": {
             "kind": "authored",
@@ -4291,20 +4312,20 @@
         },
         {
           "window": 3,
-          "scenario": "VT Snake Track Elite S5",
-          "label": "VT Snake Track Elite S5",
-          "leaderboardId": 104622,
+          "scenario": "waldoTS Elite",
+          "label": "waldoTS Elite",
+          "leaderboardId": 111257,
           "admitted": {
-            "why": "Wide sweeping strafes in a circular dish give tracking a distinctive arena and long flowing paths. The four published Snake Track bands provide a consistent scene from Novice through Expert."
+            "why": "waldoTS is one of the most-played tracking scenarios in the catalogue, with 3.7 million plays on its standard cut. Viscose grades its Novice, Intermediate, standard and Elite cuts as Easier, Medium, Hard and Expert, and AimSpeed grades the standard and Elite cuts too, so the progression is one scenario's own cuts."
           },
           "rankMaxes": [
-            2473,
-            2570,
-            2636,
-            2712
+            160,
+            164,
+            167,
+            170
           ],
           "thinBoard": {
-            "why": "Retained for this variety circuit with 2100 sampled leaderboard entries. These frozen draft targets are based on a small population, especially at Expert; difficulty equivalence requires playtesting. Wide sweeping strafes in a circular dish give tracking a distinctive arena and long flowing paths. The four published Snake Track bands provide a consistent scene from Novice through Expert."
+            "why": "Retained for this variety circuit with 1072 sampled leaderboard entries. These frozen draft targets are based on a small population, especially at Expert; difficulty equivalence requires playtesting. waldoTS is one of the most-played tracking scenarios in the catalogue, with 3.7 million plays on its standard cut. Viscose grades its Novice, Intermediate, standard and Elite cuts as Easier, Medium, Hard and Expert, and AimSpeed grades the standard and Elite cuts too, so the progression is one scenario's own cuts."
           },
           "source": {
             "kind": "percentile",
@@ -4321,9 +4342,9 @@
                 0.011,
                 0.008
               ],
-              "leaderboardId": 104622,
-              "total": 2100,
-              "sampledAt": "2026-08-19T00:11:52.956Z"
+              "leaderboardId": 111257,
+              "total": 1072,
+              "sampledAt": "2026-09-14T02:34:44.750Z"
             },
             "why": "Frozen from this scenario's own board for the season variety expansion. This is a season target, not a copied benchmark tier."
           },
@@ -5279,31 +5300,34 @@
       ]
     },
     {
-      "family": "Air Gauntlet",
+      "family": "Pure Chase",
       "category": "Reactive Tracking",
       "subCategory": "Reactive Tracking",
-      "focus": "Clear the full aerial gauntlet.",
-      "$why": "The full Air scenario changes phases within a run, unlike the existing single-bot Air Reading circuit. Published Novice through Elite variants make this a varied endurance chase with a clear finish.",
+      "focus": "Read each dodge before it happens.",
+      "$why": "Air Pure mixes bots with different dodge profiles in one air arena, so every target asks for a different read. Revosect's time-scored entry cut, six bots circling the player, leads into the Intermediate, standard and Hard cuts that Viscose and snakbox grade. The handover between the two editions needs playtesting.",
       "$order": {
-        "why": "The full Air scenario changes phases within a run, unlike the existing single-bot Air Reading circuit. Published Novice through Elite variants make this a varied endurance chase with a clear finish. Difficulty order is a curation judgement; board populations cannot prove equivalence between edits."
+        "why": "Air Pure mixes bots with different dodge profiles in one air arena, so every target asks for a different read. Revosect's time-scored entry cut, six bots circling the player, leads into the Intermediate, standard and Hard cuts that Viscose and snakbox grade. The handover between the two editions needs playtesting. Difficulty order is a curation judgement; board populations cannot prove equivalence between edits."
       },
       "variants": [
         {
           "window": 0,
-          "scenario": "VT Air Novice",
-          "label": "VT Air Novice",
-          "leaderboardId": 43180,
+          "scenario": "Air Pure Revosect Entry",
+          "label": "Air Pure Revosect Entry",
+          "leaderboardId": 142837,
           "admitted": {
-            "why": "The full Air scenario changes phases within a run, unlike the existing single-bot Air Reading circuit. Published Novice through Elite variants make this a varied endurance chase with a clear finish."
+            "why": "Air Pure mixes bots with different dodge profiles in one air arena, so every target asks for a different read. Revosect's time-scored entry cut, six bots circling the player, leads into the Intermediate, standard and Hard cuts that Viscose and snakbox grade. The handover between the two editions needs playtesting."
           },
           "rankMaxes": [
-            2361,
-            2781,
-            2943,
-            3057,
-            3302,
-            3412
+            872,
+            890,
+            897,
+            902,
+            912,
+            915
           ],
+          "thinBoard": {
+            "why": "Retained for this variety circuit with 1410 sampled leaderboard entries. These frozen draft targets are based on a small population, especially at Expert; difficulty equivalence requires playtesting. Air Pure mixes bots with different dodge profiles in one air arena, so every target asks for a different read. Revosect's time-scored entry cut, six bots circling the player, leads into the Intermediate, standard and Hard cuts that Viscose and snakbox grade. The handover between the two editions needs playtesting."
+          },
           "source": {
             "kind": "authored",
             "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
@@ -5313,19 +5337,19 @@
         },
         {
           "window": 1,
-          "scenario": "VT Air Intermediate",
-          "label": "VT Air Intermediate",
-          "leaderboardId": 43181,
+          "scenario": "Air Pure Intermediate",
+          "label": "Air Pure Intermediate",
+          "leaderboardId": 126338,
           "admitted": {
-            "why": "The full Air scenario changes phases within a run, unlike the existing single-bot Air Reading circuit. Published Novice through Elite variants make this a varied endurance chase with a clear finish."
+            "why": "Air Pure mixes bots with different dodge profiles in one air arena, so every target asks for a different read. Revosect's time-scored entry cut, six bots circling the player, leads into the Intermediate, standard and Hard cuts that Viscose and snakbox grade. The handover between the two editions needs playtesting."
           },
           "rankMaxes": [
-            2691,
-            2840,
-            2912,
-            3033,
-            3261,
-            3331
+            887,
+            892,
+            894,
+            897,
+            905,
+            907
           ],
           "source": {
             "kind": "authored",
@@ -5336,20 +5360,23 @@
         },
         {
           "window": 2,
-          "scenario": "VT Air Advanced",
-          "label": "VT Air Advanced",
-          "leaderboardId": 43182,
+          "scenario": "Air Pure",
+          "label": "Air Pure",
+          "leaderboardId": 13213,
           "admitted": {
-            "why": "The full Air scenario changes phases within a run, unlike the existing single-bot Air Reading circuit. Published Novice through Elite variants make this a varied endurance chase with a clear finish."
+            "why": "Air Pure mixes bots with different dodge profiles in one air arena, so every target asks for a different read. Revosect's time-scored entry cut, six bots circling the player, leads into the Intermediate, standard and Hard cuts that Viscose and snakbox grade. The handover between the two editions needs playtesting."
           },
           "rankMaxes": [
-            2918,
-            3011,
-            3077,
-            3151,
-            3369,
-            3501
+            889,
+            892,
+            895,
+            897,
+            904,
+            907
           ],
+          "thinBoard": {
+            "why": "Retained for this variety circuit with 8579 sampled leaderboard entries. These frozen draft targets are based on a small population, especially at Expert; difficulty equivalence requires playtesting. Air Pure mixes bots with different dodge profiles in one air arena, so every target asks for a different read. Revosect's time-scored entry cut, six bots circling the player, leads into the Intermediate, standard and Hard cuts that Viscose and snakbox grade. The handover between the two editions needs playtesting."
+          },
           "source": {
             "kind": "authored",
             "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
@@ -5359,20 +5386,20 @@
         },
         {
           "window": 3,
-          "scenario": "VT Air Elite",
-          "label": "VT Air Elite",
-          "leaderboardId": 86816,
+          "scenario": "Air Pure Hard",
+          "label": "Air Pure Hard",
+          "leaderboardId": 185019,
           "admitted": {
-            "why": "The full Air scenario changes phases within a run, unlike the existing single-bot Air Reading circuit. Published Novice through Elite variants make this a varied endurance chase with a clear finish."
+            "why": "Air Pure mixes bots with different dodge profiles in one air arena, so every target asks for a different read. Revosect's time-scored entry cut, six bots circling the player, leads into the Intermediate, standard and Hard cuts that Viscose and snakbox grade. The handover between the two editions needs playtesting."
           },
           "rankMaxes": [
-            2900,
-            3054,
-            3175,
-            3205
+            914,
+            915,
+            916,
+            917
           ],
           "thinBoard": {
-            "why": "Retained for this variety circuit with 196 sampled leaderboard entries. These frozen draft targets are based on a small population, especially at Expert; difficulty equivalence requires playtesting. The full Air scenario changes phases within a run, unlike the existing single-bot Air Reading circuit. Published Novice through Elite variants make this a varied endurance chase with a clear finish."
+            "why": "Retained for this variety circuit with 1621 sampled leaderboard entries. These frozen draft targets are based on a small population, especially at Expert; difficulty equivalence requires playtesting. Air Pure mixes bots with different dodge profiles in one air arena, so every target asks for a different read. Revosect's time-scored entry cut, six bots circling the player, leads into the Intermediate, standard and Hard cuts that Viscose and snakbox grade. The handover between the two editions needs playtesting."
           },
           "source": {
             "kind": "percentile",
@@ -5389,9 +5416,9 @@
                 0.011,
                 0.008
               ],
-              "leaderboardId": 86816,
-              "total": 196,
-              "sampledAt": "2026-08-19T00:08:02.553Z"
+              "leaderboardId": 185019,
+              "total": 1621,
+              "sampledAt": "2026-09-14T02:35:33.209Z"
             },
             "why": "Frozen from this scenario's own board for the season variety expansion. This is a season target, not a copied benchmark tier."
           },
@@ -6374,15 +6401,15 @@
             "why": "Smoothly drifting targets give switching a visible wave rhythm. Community Benchmarks' easy cut leads into Revosect Entry, Intermediate and standard. The cross-author first handover is provisional."
           },
           "rankMaxes": [
-            942,
-            975,
+            943,
+            977,
             994,
-            1032,
-            1125,
-            1161
+            1034,
+            1126,
+            1158
           ],
           "thinBoard": {
-            "why": "Retained for this variety circuit with 1032 sampled leaderboard entries. These frozen draft targets are based on a small population, especially at Expert; difficulty equivalence requires playtesting. Smoothly drifting targets give switching a visible wave rhythm. Community Benchmarks' easy cut leads into Revosect Entry, Intermediate and standard. The cross-author first handover is provisional."
+            "why": "Retained for this variety circuit with 1114 sampled leaderboard entries. These frozen draft targets are based on a small population, especially at Expert; difficulty equivalence requires playtesting. Smoothly drifting targets give switching a visible wave rhythm. Community Benchmarks' easy cut leads into Revosect Entry, Intermediate and standard. The cross-author first handover is provisional."
           },
           "source": {
             "kind": "authored",
@@ -6400,15 +6427,15 @@
             "why": "Smoothly drifting targets give switching a visible wave rhythm. Community Benchmarks' easy cut leads into Revosect Entry, Intermediate and standard. The cross-author first handover is provisional."
           },
           "rankMaxes": [
-            1044,
-            1057,
-            1068,
-            1087,
-            1133,
-            1186
+            1040,
+            1056,
+            1067,
+            1078,
+            1124,
+            1178
           ],
           "thinBoard": {
-            "why": "Retained for this variety circuit with 585 sampled leaderboard entries. These frozen draft targets are based on a small population, especially at Expert; difficulty equivalence requires playtesting. Smoothly drifting targets give switching a visible wave rhythm. Community Benchmarks' easy cut leads into Revosect Entry, Intermediate and standard. The cross-author first handover is provisional."
+            "why": "Retained for this variety circuit with 643 sampled leaderboard entries. These frozen draft targets are based on a small population, especially at Expert; difficulty equivalence requires playtesting. Smoothly drifting targets give switching a visible wave rhythm. Community Benchmarks' easy cut leads into Revosect Entry, Intermediate and standard. The cross-author first handover is provisional."
           },
           "source": {
             "kind": "authored",
@@ -7396,103 +7423,100 @@
       ]
     },
     {
-      "family": "Drift Relay",
+      "family": "Domi Relay",
       "category": "Evasive Switching",
       "subCategory": "Evasive Switching",
-      "focus": "Chase the drift between the two chambers.",
-      "$why": "Four jumping and floating targets in layered chambers give each run an arena-clearing loop. The published DriftTS Novice through Elite scenarios supply a consistent four-band progression.",
+      "focus": "Stay on target until it drops.",
+      "$why": "domiSwitch targets carry 55 health and regenerate 0.3 seconds after damage stops, so leaving early costs the whole kill; Aimerz+, snakbox and Viscose file it under evasive switching. Viscose's Easier cut and the Easy and standard cuts lead into Avasive's edit for the top band, whose top score is the lowest of the four. That edition handover needs playtesting.",
       "$order": {
-        "why": "Four jumping and floating targets in layered chambers give each run an arena-clearing loop. The published DriftTS Novice through Elite scenarios supply a consistent four-band progression. Difficulty order is a curation judgement; board populations cannot prove equivalence between edits."
+        "why": "domiSwitch targets carry 55 health and regenerate 0.3 seconds after damage stops, so leaving early costs the whole kill; Aimerz+, snakbox and Viscose file it under evasive switching. Viscose's Easier cut and the Easy and standard cuts lead into Avasive's edit for the top band, whose top score is the lowest of the four. That edition handover needs playtesting. Difficulty order is a curation judgement; board populations cannot prove equivalence between edits."
       },
       "variants": [
         {
           "window": 0,
-          "scenario": "VT DriftTS Novice S5",
-          "label": "VT DriftTS Novice S5",
-          "leaderboardId": 104862,
+          "scenario": "domiSwitch Easier",
+          "label": "domiSwitch Easier",
+          "leaderboardId": 185428,
           "admitted": {
-            "why": "Four jumping and floating targets in layered chambers give each run an arena-clearing loop. The published DriftTS Novice through Elite scenarios supply a consistent four-band progression."
+            "why": "domiSwitch targets carry 55 health and regenerate 0.3 seconds after damage stops, so leaving early costs the whole kill; Aimerz+, snakbox and Viscose file it under evasive switching. Viscose's Easier cut and the Easy and standard cuts lead into Avasive's edit for the top band, whose top score is the lowest of the four. That edition handover needs playtesting."
           },
           "rankMaxes": [
-            328,
-            388,
-            424,
-            437,
-            467,
-            483
+            5437,
+            6260,
+            6737,
+            7159,
+            7757,
+            7985
           ],
           "source": {
             "kind": "authored",
             "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
           },
-          "arm": "Blending",
+          "arm": "Wrist",
           "armFrom": "Apogee"
         },
         {
           "window": 1,
-          "scenario": "VT DriftTS Intermediate S5",
-          "label": "VT DriftTS Intermediate S5",
-          "leaderboardId": 104863,
+          "scenario": "domiSwitch Easy",
+          "label": "domiSwitch Easy",
+          "leaderboardId": 83043,
           "admitted": {
-            "why": "Four jumping and floating targets in layered chambers give each run an arena-clearing loop. The published DriftTS Novice through Elite scenarios supply a consistent four-band progression."
+            "why": "domiSwitch targets carry 55 health and regenerate 0.3 seconds after damage stops, so leaving early costs the whole kill; Aimerz+, snakbox and Viscose file it under evasive switching. Viscose's Easier cut and the Easy and standard cuts lead into Avasive's edit for the top band, whose top score is the lowest of the four. That edition handover needs playtesting."
           },
           "rankMaxes": [
-            428,
-            449,
-            460,
-            478,
-            500,
-            509
+            6061,
+            6331,
+            6439,
+            6682,
+            7201,
+            7461
           ],
           "source": {
             "kind": "authored",
             "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
           },
-          "arm": "Blending",
+          "arm": "Wrist",
           "armFrom": "Apogee"
         },
         {
           "window": 2,
-          "scenario": "VT DriftTS Advanced S5",
-          "label": "VT DriftTS Advanced S5",
-          "leaderboardId": 104866,
+          "scenario": "domiSwitch",
+          "label": "domiSwitch",
+          "leaderboardId": 83035,
           "admitted": {
-            "why": "Four jumping and floating targets in layered chambers give each run an arena-clearing loop. The published DriftTS Novice through Elite scenarios supply a consistent four-band progression."
+            "why": "domiSwitch targets carry 55 health and regenerate 0.3 seconds after damage stops, so leaving early costs the whole kill; Aimerz+, snakbox and Viscose file it under evasive switching. Viscose's Easier cut and the Easy and standard cuts lead into Avasive's edit for the top band, whose top score is the lowest of the four. That edition handover needs playtesting."
           },
           "rankMaxes": [
-            439,
-            445,
-            457,
-            468,
-            507,
-            519
+            5803,
+            6009,
+            6200,
+            6356,
+            6830,
+            7087
           ],
-          "thinBoard": {
-            "why": "Retained for this variety circuit with 8941 sampled leaderboard entries. These frozen draft targets are based on a small population, especially at Expert; difficulty equivalence requires playtesting. Four jumping and floating targets in layered chambers give each run an arena-clearing loop. The published DriftTS Novice through Elite scenarios supply a consistent four-band progression."
-          },
           "source": {
             "kind": "authored",
             "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
           },
-          "arm": "Blending",
+          "arm": "Wrist",
           "armFrom": "Apogee"
         },
         {
           "window": 3,
-          "scenario": "VT DriftTS Elite S5",
-          "label": "VT DriftTS Elite S5",
-          "leaderboardId": 104867,
+          "scenario": "domiSwitch Avasive",
+          "label": "domiSwitch Avasive",
+          "leaderboardId": 129746,
           "admitted": {
-            "why": "Four jumping and floating targets in layered chambers give each run an arena-clearing loop. The published DriftTS Novice through Elite scenarios supply a consistent four-band progression."
+            "why": "domiSwitch targets carry 55 health and regenerate 0.3 seconds after damage stops, so leaving early costs the whole kill; Aimerz+, snakbox and Viscose file it under evasive switching. Viscose's Easier cut and the Easy and standard cuts lead into Avasive's edit for the top band, whose top score is the lowest of the four. That edition handover needs playtesting."
           },
           "rankMaxes": [
-            387,
-            396,
-            401,
-            409
+            5864,
+            6042,
+            6162,
+            6259
           ],
           "thinBoard": {
-            "why": "Retained for this variety circuit with 619 sampled leaderboard entries. These frozen draft targets are based on a small population, especially at Expert; difficulty equivalence requires playtesting. Four jumping and floating targets in layered chambers give each run an arena-clearing loop. The published DriftTS Novice through Elite scenarios supply a consistent four-band progression."
+            "why": "Retained for this variety circuit with 8397 sampled leaderboard entries. These frozen draft targets are based on a small population, especially at Expert; difficulty equivalence requires playtesting. domiSwitch targets carry 55 health and regenerate 0.3 seconds after damage stops, so leaving early costs the whole kill; Aimerz+, snakbox and Viscose file it under evasive switching. Viscose's Easier cut and the Easy and standard cuts lead into Avasive's edit for the top band, whose top score is the lowest of the four. That edition handover needs playtesting."
           },
           "source": {
             "kind": "percentile",
@@ -7509,13 +7533,13 @@
                 0.011,
                 0.008
               ],
-              "leaderboardId": 104867,
-              "total": 619,
-              "sampledAt": "2026-08-19T00:13:12.342Z"
+              "leaderboardId": 129746,
+              "total": 8397,
+              "sampledAt": "2026-09-04T00:05:00.449Z"
             },
             "why": "Frozen from this scenario's own board for the season variety expansion. This is a season target, not a copied benchmark tier."
           },
-          "arm": "Blending",
+          "arm": "Wrist",
           "armFrom": "Apogee"
         }
       ]
@@ -7817,13 +7841,13 @@
           "rankMaxes": [
             515,
             535,
-            541,
-            559,
+            542,
+            560,
             609,
-            628
+            626
           ],
           "thinBoard": {
-            "why": "Retained for this variety circuit with 1000 sampled leaderboard entries. These frozen draft targets are based on a small population, especially at Expert; difficulty equivalence requires playtesting. Smooth transfer adds longer flowing target-to-target routes beside the sharper evasive circuits. Community Benchmarks' easy cut leads into Revosect's three SmoothTS tiers. The first cross-author handover needs playtesting."
+            "why": "Retained for this variety circuit with 1069 sampled leaderboard entries. These frozen draft targets are based on a small population, especially at Expert; difficulty equivalence requires playtesting. Smooth transfer adds longer flowing target-to-target routes beside the sharper evasive circuits. Community Benchmarks' easy cut leads into Revosect's three SmoothTS tiers. The first cross-author handover needs playtesting."
           },
           "source": {
             "kind": "authored",
@@ -7841,15 +7865,15 @@
             "why": "Smooth transfer adds longer flowing target-to-target routes beside the sharper evasive circuits. Community Benchmarks' easy cut leads into Revosect's three SmoothTS tiers. The first cross-author handover needs playtesting."
           },
           "rankMaxes": [
-            540,
-            549,
-            556,
-            559,
+            539,
+            548,
+            554,
+            557,
             569,
             581
           ],
           "thinBoard": {
-            "why": "Retained for this variety circuit with 705 sampled leaderboard entries. These frozen draft targets are based on a small population, especially at Expert; difficulty equivalence requires playtesting. Smooth transfer adds longer flowing target-to-target routes beside the sharper evasive circuits. Community Benchmarks' easy cut leads into Revosect's three SmoothTS tiers. The first cross-author handover needs playtesting."
+            "why": "Retained for this variety circuit with 769 sampled leaderboard entries. These frozen draft targets are based on a small population, especially at Expert; difficulty equivalence requires playtesting. Smooth transfer adds longer flowing target-to-target routes beside the sharper evasive circuits. Community Benchmarks' easy cut leads into Revosect's three SmoothTS tiers. The first cross-author handover needs playtesting."
           },
           "source": {
             "kind": "authored",

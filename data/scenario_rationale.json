@@ -1539,36 +1539,36 @@
       }
     },
     {
-      "family": "Multiclick Gallery",
+      "family": "Evo Gallery",
       "subCategory": "Static Clicking",
-      "isolates": "Sweep the room. Keep the magazine rolling.",
-      "why": "Single-hit targets spread across three walls turn clicking into a room-clearing score chase. Reload-on-kill rewards a sustained rhythm. The four published Multiclick cuts widen the arena as difficulty rises.",
+      "isolates": "Hold the pace as the targets multiply.",
+      "why": "EvoClick adds a target every twenty seconds, so a run opens as a calm static read and ends as a crowded wall: a pacing arc no other static circuit here has. Community Benchmarks' easy cut leads into Revosect's three EvoClick tiers. The first cross-author handover needs playtesting.",
       "evidence": [
         {
           "source": "expansion-catalogue",
-          "scenario": "VT Multiclick 120 Novice",
-          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:50:31.273Z. Author description: Medium sized bots spawn on the inner three walls within a rectangular prism, with every single click elimination reloading the player's three round magazine."
+          "scenario": "CB EvoClick Easy",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T02:34:08.376Z. Author description: 2-4 static targets(+1 target every 20s), unique static scenario. Spawns are made in 3D. Targets in the corners will have the same size as in the middle.\r\nScoring: +10 per click, -3 per miss\r\n(STATIC CLICKING)"
         },
         {
           "source": "expansion-catalogue",
-          "scenario": "VT Multiclick 120 Intermediate",
-          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:50:33.794Z. Author description: Medium sized bots spawn on the inner three walls within a rectangular prism, with every single click elimination reloading the player's three round magazine."
+          "scenario": "EvoClick Revosect Entry",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T02:34:16.413Z. Author description: Static clicking scenario where the number of targets increases every 20s in order to force the players pacing to increase as the run goes on.\r\n\r\nThis scenario uses SQRT ABS scoring.\r\n\r\nTo change the walls, enable \"Override Scenario Visuals\" in the main settings tab."
         },
         {
           "source": "expansion-catalogue",
-          "scenario": "VT Multiclick 180 Advanced",
-          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:50:36.272Z. Author description: Medium sized bots spawn on the inner three walls within a rectangular prism, with every single click elimination reloading the player's three round magazine."
+          "scenario": "EvoClick Revosect Int",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T02:34:19.486Z. Author description: Static clicking scenario where the number of targets increases every 20s in order to force the players pacing to increase as the run goes on.\r\n\r\nThis scenario uses SQRT ABS scoring.\r\n\r\nTo change the walls, enable \"Override Scenario Visuals\" in the main settings tab."
         },
         {
           "source": "expansion-catalogue",
-          "scenario": "VT Multiclick 180 Elite",
-          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:50:38.534Z. Author description: Medium sized bots spawn on the inner three walls within a rectangular prism, with every single click elimination reloading the player's three round magazine.\r\n\r\nElite scenarios are meant to serve as a challenge for advanced players"
+          "scenario": "EvoClick Revosect",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T02:34:28.195Z. Author description: Static clicking scenario where the number of targets increases every 20s in order to force the players pacing to increase as the run goes on.\r\n\r\nThis scenario uses SQRT ABS scoring.\r\n\r\nTo change the walls, enable \"Override Scenario Visuals\" in the main settings tab."
         }
       ],
       "audience": {
-        "scenario": "VT Multiclick 120 Novice",
-        "plays": 2494518,
-        "entries": 214434
+        "scenario": "CB EvoClick Easy",
+        "plays": 142638,
+        "entries": 45665
       },
       "thin": "Selection is based on catalogue mechanics and published variants. No measured enjoyment or cross-band difficulty equivalence is claimed."
     },
@@ -1777,36 +1777,36 @@
       "thin": "Selection is based on catalogue mechanics and published variants. No measured enjoyment or cross-band difficulty equivalence is claimed."
     },
     {
-      "family": "Bounce Gallery",
+      "family": "Cat Click",
       "subCategory": "Dynamic Clicking",
-      "isolates": "Catch the leap. Reload on every clear.",
-      "why": "Four single-click bots leap across a flat surface at different depths. A three-shot magazine refills on each kill, creating an arcade-like clear-and-reload loop. The four published Bounceshot cuts keep that loop across the bands.",
+      "isolates": "One clean click per mover.",
+      "why": "CatClick is graded by Viscose in all four of its tiers, Easier, Medium, Hard and Expert, so the family is one scenario's own four cuts with no handover between authors, and its two easier cuts carry some of the busiest boards in the pool. Its author description says nothing about the mechanic; the season files it where Viscose does, under dynamic clicking.",
       "evidence": [
         {
           "source": "expansion-catalogue",
-          "scenario": "VT Bounceshot Novice",
-          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:54:07.803Z. Author description: Four single-click bots leap in mid-high arcs on top of a flat surface, changing depths as they traverse. The player's weapon has three shots and empty magazines recover in their entirety upon each elimination."
+          "scenario": "CatClick Easier",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T02:34:31.007Z. Author description: meow meow meow"
         },
         {
           "source": "expansion-catalogue",
-          "scenario": "VT Bounceshot Intermediate",
-          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:54:08.638Z. Author description: Four single-click bots leap in mid-high arcs on top of a flat surface, changing depths as they traverse. The player's weapon has three shots and empty magazines recover in their entirety upon each elimination."
+          "scenario": "CatClick Medium",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T02:34:31.737Z. Author description: meow meow meow"
         },
         {
           "source": "expansion-catalogue",
-          "scenario": "VT Bounceshot Advanced",
-          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:54:09.565Z. Author description: Four single-click bots leap in mid-high arcs on top of a flat surface, changing depths as they traverse. The player's weapon has three shots and empty magazines recover in their entirety upon each elimination."
+          "scenario": "CatClick",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T02:34:32.544Z. Author description: meow meow meow"
         },
         {
           "source": "expansion-catalogue",
-          "scenario": "VT Bounceshot Elite",
-          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:55:17.341Z. Author description: Four single-click bots leap in mid-high arcs on top of a flat surface, changing depths as they traverse. The player's weapon has three shots and empty magazines recover in their entirety upon each elimination.\r\n\r\nElite scenarios are meant to serve as a challenge for advanced players "
+          "scenario": "CatClick Harder",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T02:34:33.461Z. Author description: meow meow meow"
         }
       ],
       "audience": {
-        "scenario": "VT Bounceshot Novice",
-        "plays": 1967572,
-        "entries": 213995
+        "scenario": "CatClick Easier",
+        "plays": 200703,
+        "entries": 38451
       },
       "thin": "Selection is based on catalogue mechanics and published variants. No measured enjoyment or cross-band difficulty equivalence is claimed."
     },
@@ -1913,36 +1913,36 @@
       "thin": "Selection is based on catalogue mechanics and published variants. No measured enjoyment or cross-band difficulty equivalence is claimed."
     },
     {
-      "family": "Snake Sweep",
+      "family": "Waldo Track",
       "subCategory": "Precise Tracking",
-      "isolates": "Sweep around the dish in one flowing motion.",
-      "why": "Wide sweeping strafes in a circular dish give tracking a distinctive arena and long flowing paths. The four published Snake Track bands provide a consistent scene from Novice through Expert.",
+      "isolates": "Stay on it, not near it.",
+      "why": "waldoTS is one of the most-played tracking scenarios in the catalogue, with 3.7 million plays on its standard cut. Viscose grades its Novice, Intermediate, standard and Elite cuts as Easier, Medium, Hard and Expert, and AimSpeed grades the standard and Elite cuts too, so the progression is one scenario's own cuts.",
       "evidence": [
         {
           "source": "expansion-catalogue",
-          "scenario": "VT Snake Track Novice S5",
-          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:56:58.427Z. Author description: To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto tracking with an invincible grounded target performing wide sweeping strafes in a circular dish surrounding the player. Score is earned at a rate of 1 point per hit with a firerate of 100 per second."
+          "scenario": "waldoTS Novice",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T02:34:34.393Z. Author description: ..."
         },
         {
           "source": "expansion-catalogue",
-          "scenario": "VT Snake Track Intermediate S5",
-          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:56:59.221Z. Author description: To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto tracking with an invincible grounded target performing wide sweeping strafes in a circular dish surrounding the player. Score is earned at a rate of 1 point per hit with a firerate of 100 per second."
+          "scenario": "waldoTS Intermediate",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T02:34:35.297Z. Author description: ... "
         },
         {
           "source": "expansion-catalogue",
-          "scenario": "VT Snake Track Advanced S5",
-          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:56:59.950Z. Author description: To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto tracking with an invincible grounded target performing wide sweeping strafes in a circular dish surrounding the player. Score is earned at a rate of 1 point per hit with a firerate of 100 per second."
+          "scenario": "waldoTS",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T02:34:35.997Z. Author description: ..."
         },
         {
           "source": "expansion-catalogue",
-          "scenario": "VT Snake Track Elite S5",
-          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:57:01.235Z. Author description: For those looking for a real challenge, intended for those who are Astra and above"
+          "scenario": "waldoTS Elite",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T02:34:36.976Z. Author description: ... "
         }
       ],
       "audience": {
-        "scenario": "VT Snake Track Novice S5",
-        "plays": 1363980,
-        "entries": 208726
+        "scenario": "waldoTS",
+        "plays": 3698827,
+        "entries": 240024
       },
       "thin": "Selection is based on catalogue mechanics and published variants. No measured enjoyment or cross-band difficulty equivalence is claimed."
     },
@@ -2015,36 +2015,36 @@
       "thin": "Selection is based on catalogue mechanics and published variants. No measured enjoyment or cross-band difficulty equivalence is claimed."
     },
     {
-      "family": "Air Gauntlet",
+      "family": "Pure Chase",
       "subCategory": "Reactive Tracking",
-      "isolates": "Clear the full aerial gauntlet.",
-      "why": "The full Air scenario changes phases within a run, unlike the existing single-bot Air Reading circuit. Published Novice through Elite variants make this a varied endurance chase with a clear finish.",
+      "isolates": "Read each dodge before it happens.",
+      "why": "Air Pure mixes bots with different dodge profiles in one air arena, so every target asks for a different read. Revosect's time-scored entry cut, six bots circling the player, leads into the Intermediate, standard and Hard cuts that Viscose and snakbox grade. The handover between the two editions needs playtesting.",
       "evidence": [
         {
           "source": "expansion-catalogue",
-          "scenario": "VT Air Novice",
-          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:57:58.439Z. Author description: Five bots will make uniquely characteristic horizontal and vertical strafes within a rectangular prism, with each one expiring after ten seconds elapse from its initial movements."
+          "scenario": "Air Pure Revosect Entry",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T02:35:03.658Z. Author description: Pure reactive Air scenario comprised of 6 unique bots that travel around the player in a circle while moving up and down unpredictably.\r\n\r\nThis scenario uses time based scoring, meaning you have 1000 seconds to kill all 6 bots, score is calculated as seconds left.\r\n\r\nTo change the walls, enable \"Override Scenario Visuals\" in the main settings tab."
         },
         {
           "source": "expansion-catalogue",
-          "scenario": "VT Air Intermediate",
-          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:57:59.096Z. Author description: Five bots will make uniquely characteristic horizontal and vertical strafes within a rectangular prism, with each one expiring after ten seconds elapse from its initial movements."
+          "scenario": "Air Pure Intermediate",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T02:35:05.705Z. Author description: Track bots with different dodge profiles and a UFO."
         },
         {
           "source": "expansion-catalogue",
-          "scenario": "VT Air Advanced",
-          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:57:59.732Z. Author description: Five bots will make uniquely characteristic horizontal and vertical strafes within a rectangular prism, with each one expiring after ten seconds elapse from its initial movements."
+          "scenario": "Air Pure",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T02:35:15.490Z. Author description: Track bots with different dodge profiles and a UFO."
         },
         {
           "source": "expansion-catalogue",
-          "scenario": "VT Air Elite",
-          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:58:00.332Z. Author description: Five bots will make uniquely characteristic horizontal and vertical strafes within a rectangular prism, with each one expiring after ten seconds elapse from its initial movements.\r\n\r\nElite scenarios are meant to serve as a challenge for advanced players"
+          "scenario": "Air Pure Hard",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T02:35:25.430Z. Author description: Track bots with different dodge profiles and a UFO."
         }
       ],
       "audience": {
-        "scenario": "VT Air Novice",
-        "plays": 1068631,
-        "entries": 192246
+        "scenario": "Air Pure Intermediate",
+        "plays": 647615,
+        "entries": 51389
       },
       "thin": "Selection is based on catalogue mechanics and published variants. No measured enjoyment or cross-band difficulty equivalence is claimed."
     },
@@ -2219,36 +2219,36 @@
       "thin": "Selection is based on catalogue mechanics and published variants. No measured enjoyment or cross-band difficulty equivalence is claimed."
     },
     {
-      "family": "Drift Relay",
+      "family": "Domi Relay",
       "subCategory": "Evasive Switching",
-      "isolates": "Chase the drift between the two chambers.",
-      "why": "Four jumping and floating targets in layered chambers give each run an arena-clearing loop. The published DriftTS Novice through Elite scenarios supply a consistent four-band progression.",
+      "isolates": "Stay on target until it drops.",
+      "why": "domiSwitch targets carry 55 health and regenerate 0.3 seconds after damage stops, so leaving early costs the whole kill; Aimerz+, snakbox and Viscose file it under evasive switching. Viscose's Easier cut and the Easy and standard cuts lead into Avasive's edit for the top band, whose top score is the lowest of the four. That edition handover needs playtesting.",
       "evidence": [
         {
           "source": "expansion-catalogue",
-          "scenario": "VT DriftTS Novice S5",
-          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:58:46.643Z. Author description: To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto target switching with four targets jumping and floating around in two layered chambers infront of the player. Each target takes 50 hits to eliminate with a TTK of ~0.5 seconds, and is worth a total of 10 points."
+          "scenario": "domiSwitch Easier",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T02:35:35.307Z. Author description: domiswitch easy, bigger + slower with less punishing regeneration "
         },
         {
           "source": "expansion-catalogue",
-          "scenario": "VT DriftTS Intermediate S5",
-          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:58:47.277Z. Author description: To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto target switching with four targets jumping and floating around in two layered chambers infront of the player. Each target takes 50 hits to eliminate with a TTK of ~0.5 seconds, and is worth a total of 10 points."
+          "scenario": "domiSwitch Easy",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T02:35:35.901Z. Author description: 55 hp, regen after 0.3 seconds without damage. "
         },
         {
           "source": "expansion-catalogue",
-          "scenario": "VT DriftTS Advanced S5",
-          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:58:48.111Z. Author description: To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto target switching with four targets jumping and floating around in two layered chambers infront of the player. Each target takes 50 hits to eliminate with a TTK of ~0.5 seconds, and is worth a total of 10 points."
+          "scenario": "domiSwitch",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T02:35:36.473Z. Author description: 55 hp, regen after 0.3 seconds without damage. "
         },
         {
           "source": "expansion-catalogue",
-          "scenario": "VT DriftTS Elite S5",
-          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:58:49.116Z. Author description: For those looking for a real challenge, intended for those who are Astra and above"
+          "scenario": "domiSwitch Avasive",
+          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T02:35:37.264Z. Author description: 55 hp, regen after 0.3 seconds without damage. "
         }
       ],
       "audience": {
-        "scenario": "VT DriftTS Novice S5",
-        "plays": 818208,
-        "entries": 168927
+        "scenario": "domiSwitch Easy",
+        "plays": 713438,
+        "entries": 77522
       },
       "thin": "Selection is based on catalogue mechanics and published variants. No measured enjoyment or cross-band difficulty equivalence is claimed."
     },

@@ -4,12 +4,22 @@ The season adds four families to each of its six categories, with one exact scen
 
 | Category | Added families |
 | --- | --- |
-| Static Clicking | Multiclick Gallery, Vox Gallery, Reload Rush, Micro Chain |
-| Dynamic Clicking | Floating Gallery, Sky Gallery, Wave Click, Bounce Gallery |
-| Precise Tracking | DVD Chase, Flower Chase, Sphere Cruise, Snake Sweep |
-| Reactive Tracking | Spectral Chase, Celestial Chase, Air Gauntlet, Close Strafe Chase |
+| Static Clicking | Evo Gallery, Vox Gallery, Reload Rush, Micro Chain |
+| Dynamic Clicking | Floating Gallery, Sky Gallery, Wave Click, Cat Click |
+| Precise Tracking | DVD Chase, Flower Chase, Sphere Cruise, Waldo Track |
+| Reactive Tracking | Spectral Chase, Celestial Chase, Pure Chase, Close Strafe Chase |
 | Speed Switching | Vox Blitz, Wave Relay, Sky Relay, Dev Blitz |
-| Evasive Switching | Drift Relay, Penta Bounce, Chamber Relay, Smooth Relay |
+| Evasive Switching | Domi Relay, Penta Bounce, Chamber Relay, Smooth Relay |
+
+The first cut filled eight of the 24 families entirely from Voltaic's own seasons, which
+put Voltaic S4, S5 and S5.5 behind 58 benchmark marks across the 252 scenarios when the
+core had been chosen to keep them to 17. Five of the eight were replaced with families no
+Voltaic benchmark names, which brings the count to 35: EvoClick for Multiclick, CatClick for Bounceshot, waldoTS for Snake Track, Air Pure
+for VT Air and domiSwitch for DriftTS. The other three, Sky Relay (skyTS), Penta Bounce and
+Chamber Relay (ControlTS), stay. The non-Voltaic switching families found in the catalogue
+(Revosect's WhisphereTS, PasuTS and SpringTS, FloatTS Angelic, devTS Static, patCircleSwitch
+and xenTargetSwitch) have three cuts rather than four, or a hardest cut under 300 entries,
+so replacing them would mean a family with no Expert rung or one too thin to cut.
 
 The additions emphasize room clearing, continuous kill chains, flowing paths, layered galleries and distinctive arenas. These are design selections for variety; catalogue descriptions and leaderboard activity do not establish that every player will find them fun. Mixed-author or mixed-release handovers are explicitly noted in the curation and need in-game playtesting.
 

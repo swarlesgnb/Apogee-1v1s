@@ -1654,7 +1654,8 @@
       "description": "Track bots with different dodge profiles and a UFO.",
       "plays": 112102,
       "entries": 15200,
-      "topScore": 920
+      "topScore": 920,
+      "expansionVerifiedAt": "2026-09-14T02:35:15.490Z"
     },
     {
       "name": "Air Pure Easier No UFO",
@@ -1674,7 +1675,8 @@
       "description": "Track bots with different dodge profiles and a UFO.",
       "plays": 17581,
       "entries": 2965,
-      "topScore": 920
+      "topScore": 920,
+      "expansionVerifiedAt": "2026-09-14T02:35:25.430Z"
     },
     {
       "name": "Air Pure Intermediate",
@@ -1684,7 +1686,8 @@
       "description": "Track bots with different dodge profiles and a UFO.",
       "plays": 647615,
       "entries": 51389,
-      "topScore": 925
+      "topScore": 925,
+      "expansionVerifiedAt": "2026-09-14T02:35:05.705Z"
     },
     {
       "name": "Air Pure Intermediate Slower No UFO",
@@ -1744,7 +1747,8 @@
       "description": "Pure reactive Air scenario comprised of 6 unique bots that travel around the player in a circle while moving up and down unpredictably.\r\n\r\nThis scenario uses time based scoring, meaning you have 1000 seconds to kill all 6 bots, score is calculated as seconds left.\r\n\r\nTo change the walls, enable \"Override Scenario Visuals\" in the main settings tab.",
       "plays": 6416,
       "entries": 2775,
-      "topScore": 926
+      "topScore": 926,
+      "expansionVerifiedAt": "2026-09-14T02:35:03.658Z"
     },
     {
       "name": "Air Pure Revosect Int",
@@ -3129,7 +3133,8 @@
       "description": "2-4 static targets(+1 target every 20s), unique static scenario. Spawns are made in 3D. Targets in the corners will have the same size as in the middle.\r\nScoring: +10 per click, -3 per miss\r\n(STATIC CLICKING)",
       "plays": 142638,
       "entries": 45665,
-      "topScore": 1689
+      "topScore": 1689,
+      "expansionVerifiedAt": "2026-09-14T02:34:08.376Z"
     },
     {
       "name": "CB FiveClick",
@@ -3421,7 +3426,8 @@
       "description": "meow meow meow",
       "plays": 17705,
       "entries": 2907,
-      "topScore": 134
+      "topScore": 134,
+      "expansionVerifiedAt": "2026-09-14T02:34:32.544Z"
     },
     {
       "name": "CatClick Easier",
@@ -3431,7 +3437,8 @@
       "description": "meow meow meow",
       "plays": 200703,
       "entries": 38451,
-      "topScore": 174
+      "topScore": 174,
+      "expansionVerifiedAt": "2026-09-14T02:34:31.007Z"
     },
     {
       "name": "CatClick Harder",
@@ -3441,7 +3448,8 @@
       "description": "meow meow meow",
       "plays": 6336,
       "entries": 1291,
-      "topScore": 118
+      "topScore": 118,
+      "expansionVerifiedAt": "2026-09-14T02:34:33.461Z"
     },
     {
       "name": "CatClick Medium",
@@ -3451,7 +3459,8 @@
       "description": "meow meow meow",
       "plays": 216616,
       "entries": 33698,
-      "topScore": 145
+      "topScore": 145,
+      "expansionVerifiedAt": "2026-09-14T02:34:31.737Z"
     },
     {
       "name": "CatTrack",
@@ -4385,7 +4394,8 @@
       "description": "Static clicking scenario where the number of targets increases every 20s in order to force the players pacing to increase as the run goes on.\r\n\r\nThis scenario uses SQRT ABS scoring.\r\n\r\nTo change the walls, enable \"Override Scenario Visuals\" in the main settings tab.",
       "plays": 7031,
       "entries": 1069,
-      "topScore": 1411
+      "topScore": 1411,
+      "expansionVerifiedAt": "2026-09-14T02:34:28.195Z"
     },
     {
       "name": "EvoClick Revosect Entry",
@@ -4395,7 +4405,8 @@
       "description": "Static clicking scenario where the number of targets increases every 20s in order to force the players pacing to increase as the run goes on.\r\n\r\nThis scenario uses SQRT ABS scoring.\r\n\r\nTo change the walls, enable \"Override Scenario Visuals\" in the main settings tab.",
       "plays": 11617,
       "entries": 3936,
-      "topScore": 1723
+      "topScore": 1723,
+      "expansionVerifiedAt": "2026-09-14T02:34:16.413Z"
     },
     {
       "name": "EvoClick Revosect Int",
@@ -4405,7 +4416,8 @@
       "description": "Static clicking scenario where the number of targets increases every 20s in order to force the players pacing to increase as the run goes on.\r\n\r\nThis scenario uses SQRT ABS scoring.\r\n\r\nTo change the walls, enable \"Override Scenario Visuals\" in the main settings tab.",
       "plays": 16533,
       "entries": 3027,
-      "topScore": 1425
+      "topScore": 1425,
+      "expansionVerifiedAt": "2026-09-14T02:34:19.486Z"
     },
     {
       "name": "Extra Controlsphere",
@@ -9460,8 +9472,7 @@
       "description": "Five bots will make uniquely characteristic horizontal and vertical strafes within a rectangular prism, with each one expiring after ten seconds elapse from its initial movements.",
       "plays": 789134,
       "entries": 26744,
-      "topScore": 4028,
-      "expansionVerifiedAt": "2026-09-14T00:57:59.732Z"
+      "topScore": 4028
     },
     {
       "name": "VT Air Angelic Advanced S5",
@@ -9501,8 +9512,7 @@
       "description": "Five bots will make uniquely characteristic horizontal and vertical strafes within a rectangular prism, with each one expiring after ten seconds elapse from its initial movements.\r\n\r\nElite scenarios are meant to serve as a challenge for advanced players",
       "plays": 3568,
       "entries": 405,
-      "topScore": 3205,
-      "expansionVerifiedAt": "2026-09-14T00:58:00.332Z"
+      "topScore": 3205
     },
     {
       "name": "VT Air Intermediate",
@@ -9512,8 +9522,7 @@
       "description": "Five bots will make uniquely characteristic horizontal and vertical strafes within a rectangular prism, with each one expiring after ten seconds elapse from its initial movements.",
       "plays": 1943386,
       "entries": 92756,
-      "topScore": 4258,
-      "expansionVerifiedAt": "2026-09-14T00:57:59.096Z"
+      "topScore": 4258
     },
     {
       "name": "VT Air Novice",
@@ -9523,8 +9532,7 @@
       "description": "Five bots will make uniquely characteristic horizontal and vertical strafes within a rectangular prism, with each one expiring after ten seconds elapse from its initial movements.",
       "plays": 1068631,
       "entries": 192246,
-      "topScore": 4190,
-      "expansionVerifiedAt": "2026-09-14T00:57:58.439Z"
+      "topScore": 4190
     },
     {
       "name": "VT AirStrafe Advanced",
@@ -9654,19 +9662,17 @@
       "description": "Four single-click bots leap in mid-high arcs on top of a flat surface, changing depths as they traverse. The player's weapon has three shots and empty magazines recover in their entirety upon each elimination.",
       "plays": 583247,
       "entries": 38381,
-      "topScore": 1310,
-      "expansionVerifiedAt": "2026-09-14T00:54:09.565Z"
+      "topScore": 1310
     },
     {
       "name": "VT Bounceshot Elite",
       "difficulty": "Elite (Unofficial)",
       "leaderboardId": 86805,
       "aimType": "Clicking",
-      "description": "Four single-click bots leap in mid-high arcs on top of a flat surface, changing depths as they traverse. The player's weapon has three shots and empty magazines recover in their entirety upon each elimination.\r\n\r\nElite scenarios are meant to serve as a challenge for advanced players ",
+      "description": "Four single-click bots leap in mid-high arcs on top of a flat surface, changing depths as they traverse. The player's weapon has three shots and empty magazines recover in their entirety upon each elimination.\r\n\r\nElite scenarios are meant to serve as a challenge for advanced players",
       "plays": 5220,
       "entries": 886,
-      "topScore": 1030,
-      "expansionVerifiedAt": "2026-09-14T00:55:17.341Z"
+      "topScore": 1030
     },
     {
       "name": "VT Bounceshot Intermediate",
@@ -9676,8 +9682,7 @@
       "description": "Four single-click bots leap in mid-high arcs on top of a flat surface, changing depths as they traverse. The player's weapon has three shots and empty magazines recover in their entirety upon each elimination.",
       "plays": 3106438,
       "entries": 152437,
-      "topScore": 1450,
-      "expansionVerifiedAt": "2026-09-14T00:54:08.638Z"
+      "topScore": 1450
     },
     {
       "name": "VT Bounceshot Novice",
@@ -9687,8 +9692,7 @@
       "description": "Four single-click bots leap in mid-high arcs on top of a flat surface, changing depths as they traverse. The player's weapon has three shots and empty magazines recover in their entirety upon each elimination.",
       "plays": 1967572,
       "entries": 213995,
-      "topScore": 1880,
-      "expansionVerifiedAt": "2026-09-14T00:54:07.803Z"
+      "topScore": 1880
     },
     {
       "name": "VT Bounceshot Viscose Easier",
@@ -9992,8 +9996,7 @@
       "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto target switching with four targets jumping and floating around in two layered chambers infront of the player. Each target takes 50 hits to eliminate with a TTK of ~0.5 seconds, and is worth a total of 10 points.",
       "plays": 274688,
       "entries": 18100,
-      "topScore": 590,
-      "expansionVerifiedAt": "2026-09-14T00:58:48.111Z"
+      "topScore": 590
     },
     {
       "name": "VT DriftTS Elite S5",
@@ -10003,8 +10006,7 @@
       "description": "For those looking for a real challenge, intended for those who are Astra and above",
       "plays": 10068,
       "entries": 1279,
-      "topScore": 430,
-      "expansionVerifiedAt": "2026-09-14T00:58:49.116Z"
+      "topScore": 430
     },
     {
       "name": "VT DriftTS Intermediate S5",
@@ -10014,8 +10016,7 @@
       "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto target switching with four targets jumping and floating around in two layered chambers infront of the player. Each target takes 50 hits to eliminate with a TTK of ~0.5 seconds, and is worth a total of 10 points.",
       "plays": 1145463,
       "entries": 95674,
-      "topScore": 673,
-      "expansionVerifiedAt": "2026-09-14T00:58:47.277Z"
+      "topScore": 673
     },
     {
       "name": "VT DriftTS Novice S5",
@@ -10025,8 +10026,7 @@
       "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto target switching with four targets jumping and floating around in two layered chambers infront of the player. Each target takes 50 hits to eliminate with a TTK of ~0.5 seconds, and is worth a total of 10 points.",
       "plays": 818208,
       "entries": 168927,
-      "topScore": 778,
-      "expansionVerifiedAt": "2026-09-14T00:58:46.643Z"
+      "topScore": 778
     },
     {
       "name": "VT EddieTS Advanced S5",
@@ -10370,8 +10370,7 @@
       "description": "Medium sized bots spawn on the inner three walls within a rectangular prism, with every single click elimination reloading the player's three round magazine.",
       "plays": 3735803,
       "entries": 139962,
-      "topScore": 2300,
-      "expansionVerifiedAt": "2026-09-14T00:50:33.794Z"
+      "topScore": 2300
     },
     {
       "name": "VT Multiclick 120 Novice",
@@ -10381,8 +10380,7 @@
       "description": "Medium sized bots spawn on the inner three walls within a rectangular prism, with every single click elimination reloading the player's three round magazine.",
       "plays": 2494518,
       "entries": 214434,
-      "topScore": 2730,
-      "expansionVerifiedAt": "2026-09-14T00:50:31.273Z"
+      "topScore": 2730
     },
     {
       "name": "VT Multiclick 180 Advanced",
@@ -10392,8 +10390,7 @@
       "description": "Medium sized bots spawn on the inner three walls within a rectangular prism, with every single click elimination reloading the player's three round magazine.",
       "plays": 1818208,
       "entries": 138267,
-      "topScore": 2170,
-      "expansionVerifiedAt": "2026-09-14T00:50:36.272Z"
+      "topScore": 2170
     },
     {
       "name": "VT Multiclick 180 Elite",
@@ -10403,8 +10400,7 @@
       "description": "Medium sized bots spawn on the inner three walls within a rectangular prism, with every single click elimination reloading the player's three round magazine.\r\n\r\nElite scenarios are meant to serve as a challenge for advanced players",
       "plays": 3910,
       "entries": 793,
-      "topScore": 1800,
-      "expansionVerifiedAt": "2026-09-14T00:50:38.534Z"
+      "topScore": 1800
     },
     {
       "name": "VT PGT Advanced S5",
@@ -10878,8 +10874,7 @@
       "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto tracking with an invincible grounded target performing wide sweeping strafes in a circular dish surrounding the player. Score is earned at a rate of 1 point per hit with a firerate of 100 per second.",
       "plays": 1000820,
       "entries": 42987,
-      "topScore": 4761,
-      "expansionVerifiedAt": "2026-09-14T00:56:59.950Z"
+      "topScore": 4761
     },
     {
       "name": "VT Snake Track Elite S5",
@@ -10889,8 +10884,7 @@
       "description": "For those looking for a real challenge, intended for those who are Astra and above",
       "plays": 44528,
       "entries": 4479,
-      "topScore": 3727,
-      "expansionVerifiedAt": "2026-09-14T00:57:01.235Z"
+      "topScore": 3727
     },
     {
       "name": "VT Snake Track Intermediate S5",
@@ -10900,8 +10894,7 @@
       "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto tracking with an invincible grounded target performing wide sweeping strafes in a circular dish surrounding the player. Score is earned at a rate of 1 point per hit with a firerate of 100 per second.",
       "plays": 2896668,
       "entries": 136997,
-      "topScore": 5323,
-      "expansionVerifiedAt": "2026-09-14T00:56:59.221Z"
+      "topScore": 5323
     },
     {
       "name": "VT Snake Track Intermediate S5 Hard",
@@ -10921,8 +10914,7 @@
       "description": "To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto tracking with an invincible grounded target performing wide sweeping strafes in a circular dish surrounding the player. Score is earned at a rate of 1 point per hit with a firerate of 100 per second.",
       "plays": 1363980,
       "entries": 208726,
-      "topScore": 5826,
-      "expansionVerifiedAt": "2026-09-14T00:56:58.427Z"
+      "topScore": 5826
     },
     {
       "name": "VT Snake Track Novice S5 Hard",
@@ -12817,40 +12809,44 @@
       "difficulty": "Hard",
       "leaderboardId": 83035,
       "aimType": "Clicking",
-      "description": "55 hp, regen after 0.3 seconds without damage.",
+      "description": "55 hp, regen after 0.3 seconds without damage. ",
       "plays": 387700,
       "entries": 36637,
-      "topScore": 8516
+      "topScore": 8516,
+      "expansionVerifiedAt": "2026-09-14T02:35:36.473Z"
     },
     {
       "name": "domiSwitch Avasive",
       "difficulty": "All",
       "leaderboardId": 129746,
       "aimType": "Clicking",
-      "description": "55 hp, regen after 0.3 seconds without damage.",
+      "description": "55 hp, regen after 0.3 seconds without damage. ",
       "plays": 93089,
       "entries": 16388,
-      "topScore": 7224
+      "topScore": 7224,
+      "expansionVerifiedAt": "2026-09-14T02:35:37.264Z"
     },
     {
       "name": "domiSwitch Easier",
       "difficulty": "Easier",
       "leaderboardId": 185428,
       "aimType": "Clicking",
-      "description": "domiswitch easy, bigger + slower with less punishing regeneration",
+      "description": "domiswitch easy, bigger + slower with less punishing regeneration ",
       "plays": 159509,
       "entries": 38769,
-      "topScore": 10628
+      "topScore": 10628,
+      "expansionVerifiedAt": "2026-09-14T02:35:35.307Z"
     },
     {
       "name": "domiSwitch Easy",
       "difficulty": "Easy",
       "leaderboardId": 83043,
       "aimType": "Clicking",
-      "description": "55 hp, regen after 0.3 seconds without damage.",
+      "description": "55 hp, regen after 0.3 seconds without damage. ",
       "plays": 713438,
       "entries": 77522,
-      "topScore": 9536
+      "topScore": 9536,
+      "expansionVerifiedAt": "2026-09-14T02:35:35.901Z"
     },
     {
       "name": "domiSwitch Easy Slower",
@@ -14457,17 +14453,19 @@
       "description": "...",
       "plays": 3698827,
       "entries": 240024,
-      "topScore": 202
+      "topScore": 202,
+      "expansionVerifiedAt": "2026-09-14T02:34:35.997Z"
     },
     {
       "name": "waldoTS Elite",
       "difficulty": "Hard",
       "leaderboardId": 111257,
       "aimType": "Tracking",
-      "description": "...",
+      "description": "... ",
       "plays": 13615,
       "entries": 2043,
-      "topScore": 175
+      "topScore": 175,
+      "expansionVerifiedAt": "2026-09-14T02:34:36.976Z"
     },
     {
       "name": "waldoTS Entry",
@@ -14484,10 +14482,11 @@
       "difficulty": "Medium",
       "leaderboardId": 111273,
       "aimType": "Tracking",
-      "description": "...",
+      "description": "... ",
       "plays": 859643,
       "entries": 81261,
-      "topScore": 204
+      "topScore": 204,
+      "expansionVerifiedAt": "2026-09-14T02:34:35.297Z"
     },
     {
       "name": "waldoTS Novice",
@@ -14497,7 +14496,8 @@
       "description": "...",
       "plays": 794959,
       "entries": 144016,
-      "topScore": 213
+      "topScore": 213,
+      "expansionVerifiedAt": "2026-09-14T02:34:34.393Z"
     },
     {
       "name": "waldoTS Novice Static",

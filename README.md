@@ -358,11 +358,11 @@ not shown: `Reactive Tracking` is one list, not two called `Ground Plaza` and
 
 Nothing in the pool was invented. Every family was picked out of the corpus the community
 already grades itself against, and 227 of the 252 scenarios appear in at least one of the
-43 benchmarks under `data/benchmarks/`, 68 of them in two or more. Viscose S2 shares 42 of
-them and Viscose 32; thirty-eight benchmarks in total. Voltaic's own seasons name 24 from
-S5, 19 from S4 and 15 from S5.5, and most of those are in the variety families added on
-top of the core circuits: the core draws 17 of them, so an evening on the core is still
-mostly scenarios a Voltaic grinder isn't already playing.
+43 benchmarks under `data/benchmarks/`, 71 of them in two or more. Viscose S2 shares 55 of
+them and Viscose 37; thirty-eight benchmarks in total. Voltaic's own seasons are a small
+part of it (16 scenarios from S5, 12 from S5.5, 7 from S4, and the core circuits account
+for 17 of those), so an evening on this ladder is mostly scenarios a Voltaic grinder isn't
+already playing.
 
 So each row carries a mark per benchmark that names it, in that benchmark's own colour,
 filled in once your score holds a rank there. `voxTargetSwitch 2` is one scenario and
@@ -495,41 +495,41 @@ hard part, and it was already done. Each links to its own published sheet, which
 source Apogee reads rather than a hand-copied version of it. The counts overlap, because
 a scenario several benchmarks name is credited to all of them:
 
-- [Viscose Benchmarks S2](https://docs.google.com/spreadsheets/d/1WeuEk444WOkTpvOGMYiertxwlI9gRQSapYiwxjFbT08) (42 scenarios)
-- [Viscose Benchmarks](https://docs.google.com/spreadsheets/d/1bFAlt6g_Gm8P9RBkcAoObpbIGFwVS5gXIdIK9B_YyZE) (32 scenarios)
-- [Voltaic S5](https://docs.google.com/spreadsheets/d/1RjVJi9AdWLXIOkKR8z6mhmRo_SNokJPxKtLXHWk12Z4) (24 scenarios)
+- [Viscose Benchmarks S2](https://docs.google.com/spreadsheets/d/1WeuEk444WOkTpvOGMYiertxwlI9gRQSapYiwxjFbT08) (55 scenarios)
+- [Viscose Benchmarks](https://docs.google.com/spreadsheets/d/1bFAlt6g_Gm8P9RBkcAoObpbIGFwVS5gXIdIK9B_YyZE) (37 scenarios)
 - [TSK Mixed Benchmarks](https://docs.google.com/spreadsheets/d/1QlmPnGcQ9joO49Fx3wVmEGyYIWzEGlPgDdpfAulAu-E) (20 scenarios)
-- [Voltaic S4](https://docs.google.com/spreadsheets/d/1qUzF2KHcfs_FgsaDFRfGsLgHhoC1Md5bzMOUbsYzSjg) (19 scenarios)
-- [snakbox Benchmark](https://evxl.app/benchmarks/snakbox%20Benchmark) and
-  [Voltaic S5.5](https://docs.google.com/spreadsheets/d/1kiS9CvXTQjLsm42nBafhddu2Q7XdWtxaMtumeZ_sV-c) (15 scenarios each)
-- [Aimerz+ S1](https://docs.google.com/spreadsheets/d/1z-XwvdEXZ7rip2ZJ9aVff0-YqrnX6Yluf89f9LBbroc) and
+- [snakbox Benchmark](https://evxl.app/benchmarks/snakbox%20Benchmark) (19 scenarios)
+- [Voltaic S5](https://docs.google.com/spreadsheets/d/1RjVJi9AdWLXIOkKR8z6mhmRo_SNokJPxKtLXHWk12Z4) (16 scenarios)
+- [Aimerz+ S1](https://docs.google.com/spreadsheets/d/1z-XwvdEXZ7rip2ZJ9aVff0-YqrnX6Yluf89f9LBbroc),
+  [AimSpeed Benchmarks 2.0](https://evxl.app/benchmarks/AimSpeed%20Benchmarks%202.0) and
   [Revosect S1](https://docs.google.com/spreadsheets/d/1MQujX14dooQWcHu4mvvP5fetHVIr7Apg1taR96hSho0) (13 scenarios each)
-- [AimSpeed Benchmarks 2.0](https://evxl.app/benchmarks/AimSpeed%20Benchmarks%202.0),
-  [Astro Tracking Benchmark](https://docs.google.com/spreadsheets/d/1KXrXJpCl8xnoa3JuFcthE306Q9R9MOAJWhXj_xXzLOQ) and
-  [Lemon Static Benchmark](https://docs.google.com/spreadsheets/d/1V9lt5BjKLpzoKBPd-4WgStzhKv-javTWaNcISaLJERg) (11 scenarios each)
-- [Revosect S5](https://docs.google.com/spreadsheets/d/1aHN2bdUehBtmx5COqsMT1q8SN_JImQYUfsSN73uQyEE) (8 scenarios)
-- [Aimerz+ S0](https://evxl.app/benchmarks/Aimerz%2B%20S0) and
-  [Viscose Entry Benchmarks](https://docs.google.com/spreadsheets/d/1wMKCKhFQDwGvFgo9KvfbpNYzJ05XQ8gnyXjxNOhdCww) (7 scenarios each)
+- [Revosect S5](https://docs.google.com/spreadsheets/d/1aHN2bdUehBtmx5COqsMT1q8SN_JImQYUfsSN73uQyEE) and
+  [Voltaic S5.5](https://docs.google.com/spreadsheets/d/1kiS9CvXTQjLsm42nBafhddu2Q7XdWtxaMtumeZ_sV-c) (12 scenarios each)
+- [Lemon Static Benchmark](https://docs.google.com/spreadsheets/d/1V9lt5BjKLpzoKBPd-4WgStzhKv-javTWaNcISaLJERg) (11 scenarios)
+- [Astro Tracking Benchmark](https://docs.google.com/spreadsheets/d/1KXrXJpCl8xnoa3JuFcthE306Q9R9MOAJWhXj_xXzLOQ) (10 scenarios)
+- [Aimerz+ Evasive Switching](https://docs.google.com/spreadsheets/d/1kxI184tdhT55k98gsfCHy_CRBznu84aaJP8PAJg6-dU) (8 scenarios)
+- [Aimerz+ S0](https://evxl.app/benchmarks/Aimerz%2B%20S0),
+  [Viscose Entry Benchmarks](https://docs.google.com/spreadsheets/d/1wMKCKhFQDwGvFgo9KvfbpNYzJ05XQ8gnyXjxNOhdCww) and
+  [Voltaic S4](https://docs.google.com/spreadsheets/d/1qUzF2KHcfs_FgsaDFRfGsLgHhoC1Md5bzMOUbsYzSjg) (7 scenarios each)
 - [Aimerz+ Dynamic Clicking](https://docs.google.com/spreadsheets/d/1HGXrHC-3aMi0F0bmfN7rZE6j2oLGJsvGn3r6uKDrp70),
-  [Aimerz+ Evasive Switching](https://docs.google.com/spreadsheets/d/1kxI184tdhT55k98gsfCHy_CRBznu84aaJP8PAJg6-dU),
   [Jade Palace Air](https://docs.google.com/spreadsheets/d/11-E1KWTCw27s6fhW4nwB0F_2ckbdv5RDcBiseUcm1E4) and
   [Jade Palace Ground](https://docs.google.com/spreadsheets/d/131tMwNmJY-lJPVdddpOWKY9uajDWWe3I5ym-UzmF0QE) (6 scenarios each)
-- [Aimerz+ SpeedTS](https://docs.google.com/spreadsheets/d/1-9-RQ5-a78HF49eMsYcf7PjBkpbgIahpBwTLYSu9RK4) and
-  [Sparky (Voltaic) S1](https://evxl.app/benchmarks/Sparky%20%28Voltaic%29%20S1) (5 scenarios each)
-- [Aimerz+ Static Clicking](https://docs.google.com/spreadsheets/d/1rvrijNj9JY4WHhrWrojtk_Q2hvsFzO2-laUsPHxOMSs),
+- [Aimerz+ SpeedTS](https://docs.google.com/spreadsheets/d/1-9-RQ5-a78HF49eMsYcf7PjBkpbgIahpBwTLYSu9RK4),
   [Community Benchmarks](https://docs.google.com/spreadsheets/d/1X43zejitcxnCwN6DJmInrouG4m-eNup8sBqCOdk93eg) and
+  [Sparky (Voltaic) S1](https://evxl.app/benchmarks/Sparky%20%28Voltaic%29%20S1) (5 scenarios each)
+- [Aimerz+ Static Clicking](https://docs.google.com/spreadsheets/d/1rvrijNj9JY4WHhrWrojtk_Q2hvsFzO2-laUsPHxOMSs) and
   [SuperbAim S2](https://docs.google.com/spreadsheets/d/1u3aMTs-jM1zvXdsjtXh5hWSGnANJG7nUWCidQyvWQw4) (4 scenarios each)
 - [Aimerz+ Precise Tracking](https://docs.google.com/spreadsheets/d/1czvuvgks1SoMNUH_aevVPm5lOgqCQHa_UVR8izpUxfg),
   [Aimerz+ Reactive Tracking](https://docs.google.com/spreadsheets/d/15VloIkv-V-B3oq4JTbSnIKwsPMwccx2sQEwTohqlprw) and
   [AimSpeed Benchmarks](https://docs.google.com/spreadsheets/d/1V3UE_NltXh8YL0gYueJ6jarVZy8lxH7xcYT9K_9Z-Jo) (3 scenarios each)
-- [Avasive S2](https://docs.google.com/spreadsheets/d/1yF2M1j_FSN5MXz-TdxEnvsdNZ_nFZhGDSBrygWFJdDE),
+- [Anima Micro v2](https://evxl.app/benchmarks/Anima%20Micro%20v2),
+  [Avasive S2](https://docs.google.com/spreadsheets/d/1yF2M1j_FSN5MXz-TdxEnvsdNZ_nFZhGDSBrygWFJdDE),
   [cA Static S1](https://docs.google.com/spreadsheets/d/18YMQQZs7qy2xKxCEwHkTG4DeQTuEr0Z05cmAIvuuieE),
-  [e1se Smooth Benchmark](https://docs.google.com/spreadsheets/d/1IXyjASZHs8yaVgS_os0wMLuvHIdZ2L8wrah_ShjXQ7w) and
-  [Jade Palace Dynamic](https://docs.google.com/spreadsheets/d/1W_RYk3_xbvsS4BHnTItgkwWIoEVh-dbAWDhAWUyvnZU) (2 scenarios each)
+  [e1se Smooth Benchmark](https://docs.google.com/spreadsheets/d/1IXyjASZHs8yaVgS_os0wMLuvHIdZ2L8wrah_ShjXQ7w),
+  [Jade Palace Dynamic](https://docs.google.com/spreadsheets/d/1W_RYk3_xbvsS4BHnTItgkwWIoEVh-dbAWDhAWUyvnZU) and
+  [PureG S1](https://evxl.app/benchmarks/PureG%20S1) (2 scenarios each)
 - [Anima Micro v1](https://docs.google.com/spreadsheets/d/1H8WPvDyOGtSb9f-lNocNxULRDhptG5PlE2mcpyxnaSY),
-  [Anima Micro v2](https://evxl.app/benchmarks/Anima%20Micro%20v2),
   [e1se Tracking Routine](https://evxl.app/benchmarks/e1se%20Tracking%20Routine),
-  [PureG S1](https://evxl.app/benchmarks/PureG%20S1),
   [PureG S2](https://evxl.app/benchmarks/PureG%20S2),
   [Voltaic S3](https://docs.google.com/spreadsheets/d/1yHj87rQNW2WsuH24UoKZajNwNpI6CVyUjR3AwBMbnnY) and
   [wobin S1](https://docs.google.com/spreadsheets/d/1XhuTL78YAP4KIR7LfE6w66efKIvICGGmET6wU8zg5fE) (1 scenario each)

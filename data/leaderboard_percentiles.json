@@ -7437,78 +7437,6 @@
       "sampledAt": "2026-08-18T23:56:37.862Z"
     },
     {
-      "scenario": "Air Pure Revosect Entry",
-      "leaderboardId": 142837,
-      "total": 1328,
-      "points": [
-        {
-          "topFraction": 0.001,
-          "score": 926.64
-        },
-        {
-          "topFraction": 0.005,
-          "score": 924.51
-        },
-        {
-          "topFraction": 0.01,
-          "score": 922.38
-        },
-        {
-          "topFraction": 0.02,
-          "score": 919.54
-        },
-        {
-          "topFraction": 0.035,
-          "score": 917.7
-        },
-        {
-          "topFraction": 0.05,
-          "score": 916.23
-        },
-        {
-          "topFraction": 0.075,
-          "score": 915.16
-        },
-        {
-          "topFraction": 0.1,
-          "score": 913.76
-        },
-        {
-          "topFraction": 0.15,
-          "score": 910.67
-        },
-        {
-          "topFraction": 0.2,
-          "score": 908.62
-        },
-        {
-          "topFraction": 0.3,
-          "score": 904.15
-        },
-        {
-          "topFraction": 0.4,
-          "score": 900.71
-        },
-        {
-          "topFraction": 0.5,
-          "score": 896.34
-        },
-        {
-          "topFraction": 0.65,
-          "score": 889.91
-        },
-        {
-          "topFraction": 0.8,
-          "score": 883.45
-        },
-        {
-          "topFraction": 0.95,
-          "score": 853.48
-        }
-      ],
-      "sampledAt": "2026-08-18T23:47:50.215Z"
-    },
-    {
       "scenario": "Air Pure Revosect Int",
       "leaderboardId": 142834,
       "total": 1384,
@@ -16867,222 +16795,6 @@
         }
       ],
       "sampledAt": "2026-08-29T17:29:14.410Z"
-    },
-    {
-      "scenario": "EvoClick Revosect",
-      "leaderboardId": 141058,
-      "total": 512,
-      "points": [
-        {
-          "topFraction": 0.001,
-          "score": 1411.58
-        },
-        {
-          "topFraction": 0.005,
-          "score": 1366.26
-        },
-        {
-          "topFraction": 0.01,
-          "score": 1330.95
-        },
-        {
-          "topFraction": 0.02,
-          "score": 1251.76
-        },
-        {
-          "topFraction": 0.035,
-          "score": 1201.83
-        },
-        {
-          "topFraction": 0.05,
-          "score": 1185.27
-        },
-        {
-          "topFraction": 0.075,
-          "score": 1139.84
-        },
-        {
-          "topFraction": 0.1,
-          "score": 1106.53
-        },
-        {
-          "topFraction": 0.15,
-          "score": 1075.3
-        },
-        {
-          "topFraction": 0.2,
-          "score": 1051.19
-        },
-        {
-          "topFraction": 0.3,
-          "score": 989.01
-        },
-        {
-          "topFraction": 0.4,
-          "score": 938.4
-        },
-        {
-          "topFraction": 0.5,
-          "score": 892.4
-        },
-        {
-          "topFraction": 0.65,
-          "score": 788.35
-        },
-        {
-          "topFraction": 0.8,
-          "score": 678.58
-        },
-        {
-          "topFraction": 0.95,
-          "score": 520.56
-        }
-      ],
-      "sampledAt": "2026-08-18T23:53:46.549Z"
-    },
-    {
-      "scenario": "EvoClick Revosect Entry",
-      "leaderboardId": 142851,
-      "total": 1852,
-      "points": [
-        {
-          "topFraction": 0.001,
-          "score": 1723.29
-        },
-        {
-          "topFraction": 0.005,
-          "score": 1487.78
-        },
-        {
-          "topFraction": 0.01,
-          "score": 1425.02
-        },
-        {
-          "topFraction": 0.02,
-          "score": 1367.59
-        },
-        {
-          "topFraction": 0.035,
-          "score": 1315.02
-        },
-        {
-          "topFraction": 0.05,
-          "score": 1265.02
-        },
-        {
-          "topFraction": 0.075,
-          "score": 1215.73
-        },
-        {
-          "topFraction": 0.1,
-          "score": 1181.86
-        },
-        {
-          "topFraction": 0.15,
-          "score": 1130.5
-        },
-        {
-          "topFraction": 0.2,
-          "score": 1092
-        },
-        {
-          "topFraction": 0.3,
-          "score": 1033.22
-        },
-        {
-          "topFraction": 0.4,
-          "score": 982.14
-        },
-        {
-          "topFraction": 0.5,
-          "score": 941.32
-        },
-        {
-          "topFraction": 0.65,
-          "score": 876.89
-        },
-        {
-          "topFraction": 0.8,
-          "score": 811.48
-        },
-        {
-          "topFraction": 0.95,
-          "score": 672.56
-        }
-      ],
-      "sampledAt": "2026-08-18T23:44:52.663Z"
-    },
-    {
-      "scenario": "EvoClick Revosect Int",
-      "leaderboardId": 142850,
-      "total": 1441,
-      "points": [
-        {
-          "topFraction": 0.001,
-          "score": 1425.62
-        },
-        {
-          "topFraction": 0.005,
-          "score": 1310.44
-        },
-        {
-          "topFraction": 0.01,
-          "score": 1276.34
-        },
-        {
-          "topFraction": 0.02,
-          "score": 1231.79
-        },
-        {
-          "topFraction": 0.035,
-          "score": 1187.32
-        },
-        {
-          "topFraction": 0.05,
-          "score": 1168.46
-        },
-        {
-          "topFraction": 0.075,
-          "score": 1146.48
-        },
-        {
-          "topFraction": 0.1,
-          "score": 1127.44
-        },
-        {
-          "topFraction": 0.15,
-          "score": 1065.3
-        },
-        {
-          "topFraction": 0.2,
-          "score": 1037.63
-        },
-        {
-          "topFraction": 0.3,
-          "score": 976.35
-        },
-        {
-          "topFraction": 0.4,
-          "score": 935.93
-        },
-        {
-          "topFraction": 0.5,
-          "score": 895.36
-        },
-        {
-          "topFraction": 0.65,
-          "score": 841.28
-        },
-        {
-          "topFraction": 0.8,
-          "score": 772.16
-        },
-        {
-          "topFraction": 0.95,
-          "score": 646.88
-        }
-      ],
-      "sampledAt": "2026-08-18T23:49:37.044Z"
     },
     {
       "scenario": "Extra Controlsphere",
@@ -28029,150 +27741,6 @@
       "sampledAt": "2026-09-04T01:18:31.798Z"
     },
     {
-      "scenario": "SmoothTS Revosect Entry",
-      "leaderboardId": 142911,
-      "total": 1000,
-      "points": [
-        {
-          "topFraction": 0.001,
-          "score": 715.8
-        },
-        {
-          "topFraction": 0.005,
-          "score": 680.69
-        },
-        {
-          "topFraction": 0.01,
-          "score": 652.02
-        },
-        {
-          "topFraction": 0.02,
-          "score": 630.02
-        },
-        {
-          "topFraction": 0.035,
-          "score": 611.35
-        },
-        {
-          "topFraction": 0.05,
-          "score": 598.9
-        },
-        {
-          "topFraction": 0.075,
-          "score": 576.68
-        },
-        {
-          "topFraction": 0.1,
-          "score": 560.68
-        },
-        {
-          "topFraction": 0.15,
-          "score": 541.35
-        },
-        {
-          "topFraction": 0.2,
-          "score": 530.01
-        },
-        {
-          "topFraction": 0.3,
-          "score": 504.68
-        },
-        {
-          "topFraction": 0.4,
-          "score": 486.9
-        },
-        {
-          "topFraction": 0.5,
-          "score": 468.46
-        },
-        {
-          "topFraction": 0.65,
-          "score": 445.55
-        },
-        {
-          "topFraction": 0.8,
-          "score": 420.01
-        },
-        {
-          "topFraction": 0.95,
-          "score": 356.67
-        }
-      ],
-      "sampledAt": "2026-08-18T23:49:26.955Z"
-    },
-    {
-      "scenario": "SmoothTS Revosect Int",
-      "leaderboardId": 142909,
-      "total": 705,
-      "points": [
-        {
-          "topFraction": 0.001,
-          "score": 603.13
-        },
-        {
-          "topFraction": 0.005,
-          "score": 583.57
-        },
-        {
-          "topFraction": 0.01,
-          "score": 570.01
-        },
-        {
-          "topFraction": 0.02,
-          "score": 560.9
-        },
-        {
-          "topFraction": 0.035,
-          "score": 558.01
-        },
-        {
-          "topFraction": 0.05,
-          "score": 551.35
-        },
-        {
-          "topFraction": 0.075,
-          "score": 539.99
-        },
-        {
-          "topFraction": 0.1,
-          "score": 520.01
-        },
-        {
-          "topFraction": 0.15,
-          "score": 497.79
-        },
-        {
-          "topFraction": 0.2,
-          "score": 478.01
-        },
-        {
-          "topFraction": 0.3,
-          "score": 450.46
-        },
-        {
-          "topFraction": 0.4,
-          "score": 430.01
-        },
-        {
-          "topFraction": 0.5,
-          "score": 409.99
-        },
-        {
-          "topFraction": 0.65,
-          "score": 383.12
-        },
-        {
-          "topFraction": 0.8,
-          "score": 350.23
-        },
-        {
-          "topFraction": 0.95,
-          "score": 287.56
-        }
-      ],
-      "sampledAt": "2026-08-18T23:53:38.656Z"
-    },
-    {
       "scenario": "SnowClick Revosect",
       "leaderboardId": 142723,
       "total": 148,
@@ -36237,150 +35805,6 @@
       "sampledAt": "2026-08-18T17:29:59.151Z"
     },
     {
-      "scenario": "VT Floating Heads Viscose Easier",
-      "leaderboardId": 185409,
-      "total": 17660,
-      "points": [
-        {
-          "topFraction": 0.001,
-          "score": 1490.85
-        },
-        {
-          "topFraction": 0.005,
-          "score": 1356.14
-        },
-        {
-          "topFraction": 0.01,
-          "score": 1285.01
-        },
-        {
-          "topFraction": 0.02,
-          "score": 1205.09
-        },
-        {
-          "topFraction": 0.035,
-          "score": 1151.27
-        },
-        {
-          "topFraction": 0.05,
-          "score": 1121.95
-        },
-        {
-          "topFraction": 0.075,
-          "score": 1091.66
-        },
-        {
-          "topFraction": 0.1,
-          "score": 1073.39
-        },
-        {
-          "topFraction": 0.15,
-          "score": 1048.43
-        },
-        {
-          "topFraction": 0.2,
-          "score": 1030.02
-        },
-        {
-          "topFraction": 0.3,
-          "score": 962.3
-        },
-        {
-          "topFraction": 0.4,
-          "score": 905.35
-        },
-        {
-          "topFraction": 0.5,
-          "score": 855.12
-        },
-        {
-          "topFraction": 0.65,
-          "score": 770.22
-        },
-        {
-          "topFraction": 0.8,
-          "score": 682.24
-        },
-        {
-          "topFraction": 0.95,
-          "score": 525.3
-        }
-      ],
-      "sampledAt": "2026-08-19T00:38:39.469Z"
-    },
-    {
-      "scenario": "VT Floating Heads Viscose Medium",
-      "leaderboardId": 184827,
-      "total": 12960,
-      "points": [
-        {
-          "topFraction": 0.001,
-          "score": 1389.06
-        },
-        {
-          "topFraction": 0.005,
-          "score": 1262.31
-        },
-        {
-          "topFraction": 0.01,
-          "score": 1232.46
-        },
-        {
-          "topFraction": 0.02,
-          "score": 1201.05
-        },
-        {
-          "topFraction": 0.035,
-          "score": 1121.41
-        },
-        {
-          "topFraction": 0.05,
-          "score": 1085.8
-        },
-        {
-          "topFraction": 0.075,
-          "score": 1028.71
-        },
-        {
-          "topFraction": 0.1,
-          "score": 999.13
-        },
-        {
-          "topFraction": 0.15,
-          "score": 948.32
-        },
-        {
-          "topFraction": 0.2,
-          "score": 910.66
-        },
-        {
-          "topFraction": 0.3,
-          "score": 849.12
-        },
-        {
-          "topFraction": 0.4,
-          "score": 800.55
-        },
-        {
-          "topFraction": 0.5,
-          "score": 757.59
-        },
-        {
-          "topFraction": 0.65,
-          "score": 678.77
-        },
-        {
-          "topFraction": 0.8,
-          "score": 587.92
-        },
-        {
-          "topFraction": 0.95,
-          "score": 434.7
-        }
-      ],
-      "sampledAt": "2026-08-19T00:39:12.982Z"
-    },
-    {
       "scenario": "VT FlyTS Advanced S5",
       "leaderboardId": 105143,
       "total": 9501,
@@ -42861,150 +42285,6 @@
       "sampledAt": "2026-08-19T01:16:34.545Z"
     },
     {
-      "scenario": "WaveSwitch Revosect Entry",
-      "leaderboardId": 142903,
-      "total": 1032,
-      "points": [
-        {
-          "topFraction": 0.001,
-          "score": 1330.05
-        },
-        {
-          "topFraction": 0.005,
-          "score": 1280.05
-        },
-        {
-          "topFraction": 0.01,
-          "score": 1230.04
-        },
-        {
-          "topFraction": 0.02,
-          "score": 1165.26
-        },
-        {
-          "topFraction": 0.035,
-          "score": 1130.48
-        },
-        {
-          "topFraction": 0.05,
-          "score": 1100.04
-        },
-        {
-          "topFraction": 0.075,
-          "score": 1060.04
-        },
-        {
-          "topFraction": 0.1,
-          "score": 1035.69
-        },
-        {
-          "topFraction": 0.15,
-          "score": 993.95
-        },
-        {
-          "topFraction": 0.2,
-          "score": 962.21
-        },
-        {
-          "topFraction": 0.3,
-          "score": 927.86
-        },
-        {
-          "topFraction": 0.4,
-          "score": 900.03
-        },
-        {
-          "topFraction": 0.5,
-          "score": 879.16
-        },
-        {
-          "topFraction": 0.65,
-          "score": 848.29
-        },
-        {
-          "topFraction": 0.8,
-          "score": 790.03
-        },
-        {
-          "topFraction": 0.95,
-          "score": 676.11
-        }
-      ],
-      "sampledAt": "2026-08-18T23:48:43.285Z"
-    },
-    {
-      "scenario": "WaveSwitch Revosect Int",
-      "leaderboardId": 143210,
-      "total": 585,
-      "points": [
-        {
-          "topFraction": 0.001,
-          "score": 1232.22
-        },
-        {
-          "topFraction": 0.005,
-          "score": 1198.3
-        },
-        {
-          "topFraction": 0.01,
-          "score": 1134.82
-        },
-        {
-          "topFraction": 0.02,
-          "score": 1119.61
-        },
-        {
-          "topFraction": 0.035,
-          "score": 1071.34
-        },
-        {
-          "topFraction": 0.05,
-          "score": 1060.04
-        },
-        {
-          "topFraction": 0.075,
-          "score": 1044.38
-        },
-        {
-          "topFraction": 0.1,
-          "score": 1010.04
-        },
-        {
-          "topFraction": 0.15,
-          "score": 973.95
-        },
-        {
-          "topFraction": 0.2,
-          "score": 945.69
-        },
-        {
-          "topFraction": 0.3,
-          "score": 903.51
-        },
-        {
-          "topFraction": 0.4,
-          "score": 870.03
-        },
-        {
-          "topFraction": 0.5,
-          "score": 839.59
-        },
-        {
-          "topFraction": 0.65,
-          "score": 799.59
-        },
-        {
-          "topFraction": 0.8,
-          "score": 733.07
-        },
-        {
-          "topFraction": 0.95,
-          "score": 639.59
-        }
-      ],
-      "sampledAt": "2026-08-18T23:52:52.981Z"
-    },
-    {
       "scenario": "Whisphere",
       "leaderboardId": 34963,
       "total": 53727,
@@ -49051,6 +48331,1014 @@
         }
       ],
       "sampledAt": "2026-09-14T01:00:29.485Z"
+    },
+    {
+      "scenario": "waldoTS Elite",
+      "leaderboardId": 111257,
+      "total": 1072,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 175.65
+        },
+        {
+          "topFraction": 0.005,
+          "score": 173.4
+        },
+        {
+          "topFraction": 0.01,
+          "score": 167.3
+        },
+        {
+          "topFraction": 0.02,
+          "score": 160.8
+        },
+        {
+          "topFraction": 0.035,
+          "score": 155
+        },
+        {
+          "topFraction": 0.05,
+          "score": 151.25
+        },
+        {
+          "topFraction": 0.075,
+          "score": 147.59
+        },
+        {
+          "topFraction": 0.1,
+          "score": 145.2
+        },
+        {
+          "topFraction": 0.15,
+          "score": 139.84
+        },
+        {
+          "topFraction": 0.2,
+          "score": 134.39
+        },
+        {
+          "topFraction": 0.3,
+          "score": 126.45
+        },
+        {
+          "topFraction": 0.4,
+          "score": 118.8
+        },
+        {
+          "topFraction": 0.5,
+          "score": 112.8
+        },
+        {
+          "topFraction": 0.65,
+          "score": 102.39
+        },
+        {
+          "topFraction": 0.8,
+          "score": 89.85
+        },
+        {
+          "topFraction": 0.95,
+          "score": 72
+        }
+      ],
+      "sampledAt": "2026-09-14T02:34:44.750Z"
+    },
+    {
+      "scenario": "Air Pure Intermediate",
+      "leaderboardId": 126338,
+      "total": 26044,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 916.03
+        },
+        {
+          "topFraction": 0.005,
+          "score": 912.81
+        },
+        {
+          "topFraction": 0.01,
+          "score": 910.71
+        },
+        {
+          "topFraction": 0.02,
+          "score": 907.7
+        },
+        {
+          "topFraction": 0.035,
+          "score": 904.97
+        },
+        {
+          "topFraction": 0.05,
+          "score": 903.04
+        },
+        {
+          "topFraction": 0.075,
+          "score": 900.08
+        },
+        {
+          "topFraction": 0.1,
+          "score": 897.51
+        },
+        {
+          "topFraction": 0.15,
+          "score": 894.23
+        },
+        {
+          "topFraction": 0.2,
+          "score": 890.3
+        },
+        {
+          "topFraction": 0.3,
+          "score": 884.36
+        },
+        {
+          "topFraction": 0.4,
+          "score": 878.1
+        },
+        {
+          "topFraction": 0.5,
+          "score": 871.71
+        },
+        {
+          "topFraction": 0.65,
+          "score": 861.38
+        },
+        {
+          "topFraction": 0.8,
+          "score": 846.51
+        },
+        {
+          "topFraction": 0.95,
+          "score": 806.6
+        }
+      ],
+      "sampledAt": "2026-09-14T02:35:13.401Z"
+    },
+    {
+      "scenario": "Air Pure",
+      "leaderboardId": 13213,
+      "total": 8579,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 913.8
+        },
+        {
+          "topFraction": 0.005,
+          "score": 908.18
+        },
+        {
+          "topFraction": 0.01,
+          "score": 904.72
+        },
+        {
+          "topFraction": 0.02,
+          "score": 900.25
+        },
+        {
+          "topFraction": 0.035,
+          "score": 895.88
+        },
+        {
+          "topFraction": 0.05,
+          "score": 892.79
+        },
+        {
+          "topFraction": 0.075,
+          "score": 888.93
+        },
+        {
+          "topFraction": 0.1,
+          "score": 886.01
+        },
+        {
+          "topFraction": 0.15,
+          "score": 879.71
+        },
+        {
+          "topFraction": 0.2,
+          "score": 873.39
+        },
+        {
+          "topFraction": 0.3,
+          "score": 863
+        },
+        {
+          "topFraction": 0.4,
+          "score": 853.12
+        },
+        {
+          "topFraction": 0.5,
+          "score": 843.16
+        },
+        {
+          "topFraction": 0.65,
+          "score": 824.15
+        },
+        {
+          "topFraction": 0.8,
+          "score": 798.94
+        },
+        {
+          "topFraction": 0.95,
+          "score": 739.65
+        }
+      ],
+      "sampledAt": "2026-09-14T02:35:23.348Z"
+    },
+    {
+      "scenario": "Air Pure Hard",
+      "leaderboardId": 185019,
+      "total": 1621,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 921.42
+        },
+        {
+          "topFraction": 0.005,
+          "score": 917.11
+        },
+        {
+          "topFraction": 0.01,
+          "score": 915.82
+        },
+        {
+          "topFraction": 0.02,
+          "score": 914.16
+        },
+        {
+          "topFraction": 0.035,
+          "score": 911.54
+        },
+        {
+          "topFraction": 0.05,
+          "score": 910.15
+        },
+        {
+          "topFraction": 0.075,
+          "score": 908.12
+        },
+        {
+          "topFraction": 0.1,
+          "score": 906.27
+        },
+        {
+          "topFraction": 0.15,
+          "score": 903.37
+        },
+        {
+          "topFraction": 0.2,
+          "score": 901.28
+        },
+        {
+          "topFraction": 0.3,
+          "score": 896.91
+        },
+        {
+          "topFraction": 0.4,
+          "score": 893.39
+        },
+        {
+          "topFraction": 0.5,
+          "score": 888.57
+        },
+        {
+          "topFraction": 0.65,
+          "score": 878.97
+        },
+        {
+          "topFraction": 0.8,
+          "score": 864.78
+        },
+        {
+          "topFraction": 0.95,
+          "score": 825.41
+        }
+      ],
+      "sampledAt": "2026-09-14T02:35:33.209Z"
+    },
+    {
+      "scenario": "EvoClick Revosect Entry",
+      "leaderboardId": 142851,
+      "total": 2008,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 1672.07
+        },
+        {
+          "topFraction": 0.005,
+          "score": 1487.78
+        },
+        {
+          "topFraction": 0.01,
+          "score": 1421.57
+        },
+        {
+          "topFraction": 0.02,
+          "score": 1366.26
+        },
+        {
+          "topFraction": 0.035,
+          "score": 1315.24
+        },
+        {
+          "topFraction": 0.05,
+          "score": 1263.8
+        },
+        {
+          "topFraction": 0.075,
+          "score": 1215.73
+        },
+        {
+          "topFraction": 0.1,
+          "score": 1181.07
+        },
+        {
+          "topFraction": 0.15,
+          "score": 1131.94
+        },
+        {
+          "topFraction": 0.2,
+          "score": 1095.03
+        },
+        {
+          "topFraction": 0.3,
+          "score": 1034.53
+        },
+        {
+          "topFraction": 0.4,
+          "score": 984.02
+        },
+        {
+          "topFraction": 0.5,
+          "score": 943.49
+        },
+        {
+          "topFraction": 0.65,
+          "score": 878.05
+        },
+        {
+          "topFraction": 0.8,
+          "score": 813.03
+        },
+        {
+          "topFraction": 0.95,
+          "score": 674.76
+        }
+      ],
+      "sampledAt": "2026-09-14T02:36:24.019Z"
+    },
+    {
+      "scenario": "EvoClick Revosect Int",
+      "leaderboardId": 142850,
+      "total": 1571,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 1425.62
+        },
+        {
+          "topFraction": 0.005,
+          "score": 1310.44
+        },
+        {
+          "topFraction": 0.01,
+          "score": 1265.7
+        },
+        {
+          "topFraction": 0.02,
+          "score": 1230.46
+        },
+        {
+          "topFraction": 0.035,
+          "score": 1186.43
+        },
+        {
+          "topFraction": 0.05,
+          "score": 1166.46
+        },
+        {
+          "topFraction": 0.075,
+          "score": 1145.77
+        },
+        {
+          "topFraction": 0.1,
+          "score": 1125.78
+        },
+        {
+          "topFraction": 0.15,
+          "score": 1063.14
+        },
+        {
+          "topFraction": 0.2,
+          "score": 1035.85
+        },
+        {
+          "topFraction": 0.3,
+          "score": 972.22
+        },
+        {
+          "topFraction": 0.4,
+          "score": 934.95
+        },
+        {
+          "topFraction": 0.5,
+          "score": 894.75
+        },
+        {
+          "topFraction": 0.65,
+          "score": 838.18
+        },
+        {
+          "topFraction": 0.8,
+          "score": 769.87
+        },
+        {
+          "topFraction": 0.95,
+          "score": 648.9
+        }
+      ],
+      "sampledAt": "2026-09-14T02:36:31.714Z"
+    },
+    {
+      "scenario": "EvoClick Revosect",
+      "leaderboardId": 141058,
+      "total": 551,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 1411.58
+        },
+        {
+          "topFraction": 0.005,
+          "score": 1366.26
+        },
+        {
+          "topFraction": 0.01,
+          "score": 1330.95
+        },
+        {
+          "topFraction": 0.02,
+          "score": 1225.03
+        },
+        {
+          "topFraction": 0.035,
+          "score": 1200.47
+        },
+        {
+          "topFraction": 0.05,
+          "score": 1184.03
+        },
+        {
+          "topFraction": 0.075,
+          "score": 1137.42
+        },
+        {
+          "topFraction": 0.1,
+          "score": 1101.51
+        },
+        {
+          "topFraction": 0.15,
+          "score": 1073.11
+        },
+        {
+          "topFraction": 0.2,
+          "score": 1045.84
+        },
+        {
+          "topFraction": 0.3,
+          "score": 983.36
+        },
+        {
+          "topFraction": 0.4,
+          "score": 931.25
+        },
+        {
+          "topFraction": 0.5,
+          "score": 886.89
+        },
+        {
+          "topFraction": 0.65,
+          "score": 787.09
+        },
+        {
+          "topFraction": 0.8,
+          "score": 672.26
+        },
+        {
+          "topFraction": 0.95,
+          "score": 514.35
+        }
+      ],
+      "sampledAt": "2026-09-14T02:36:39.582Z"
+    },
+    {
+      "scenario": "VT Floating Heads Viscose Easier",
+      "leaderboardId": 185409,
+      "total": 22932,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 1477.79
+        },
+        {
+          "topFraction": 0.005,
+          "score": 1347.07
+        },
+        {
+          "topFraction": 0.01,
+          "score": 1272.26
+        },
+        {
+          "topFraction": 0.02,
+          "score": 1195.34
+        },
+        {
+          "topFraction": 0.035,
+          "score": 1142.94
+        },
+        {
+          "topFraction": 0.05,
+          "score": 1113.14
+        },
+        {
+          "topFraction": 0.075,
+          "score": 1085.19
+        },
+        {
+          "topFraction": 0.1,
+          "score": 1067.54
+        },
+        {
+          "topFraction": 0.15,
+          "score": 1043.19
+        },
+        {
+          "topFraction": 0.2,
+          "score": 1024.57
+        },
+        {
+          "topFraction": 0.3,
+          "score": 951.63
+        },
+        {
+          "topFraction": 0.4,
+          "score": 896.36
+        },
+        {
+          "topFraction": 0.5,
+          "score": 842.55
+        },
+        {
+          "topFraction": 0.65,
+          "score": 760.03
+        },
+        {
+          "topFraction": 0.8,
+          "score": 669.92
+        },
+        {
+          "topFraction": 0.95,
+          "score": 515.75
+        }
+      ],
+      "sampledAt": "2026-09-14T02:36:47.246Z"
+    },
+    {
+      "scenario": "VT Floating Heads Viscose Medium",
+      "leaderboardId": 184827,
+      "total": 16754,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 1356.14
+        },
+        {
+          "topFraction": 0.005,
+          "score": 1252.71
+        },
+        {
+          "topFraction": 0.01,
+          "score": 1225.22
+        },
+        {
+          "topFraction": 0.02,
+          "score": 1181.86
+        },
+        {
+          "topFraction": 0.035,
+          "score": 1107.66
+        },
+        {
+          "topFraction": 0.05,
+          "score": 1067.39
+        },
+        {
+          "topFraction": 0.075,
+          "score": 1017.85
+        },
+        {
+          "topFraction": 0.1,
+          "score": 989.01
+        },
+        {
+          "topFraction": 0.15,
+          "score": 934.95
+        },
+        {
+          "topFraction": 0.2,
+          "score": 902.71
+        },
+        {
+          "topFraction": 0.3,
+          "score": 837.88
+        },
+        {
+          "topFraction": 0.4,
+          "score": 784.48
+        },
+        {
+          "topFraction": 0.5,
+          "score": 737.71
+        },
+        {
+          "topFraction": 0.65,
+          "score": 656.81
+        },
+        {
+          "topFraction": 0.8,
+          "score": 562.02
+        },
+        {
+          "topFraction": 0.95,
+          "score": 410.12
+        }
+      ],
+      "sampledAt": "2026-09-14T02:36:54.996Z"
+    },
+    {
+      "scenario": "Air Pure Revosect Entry",
+      "leaderboardId": 142837,
+      "total": 1410,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 926.64
+        },
+        {
+          "topFraction": 0.005,
+          "score": 924.27
+        },
+        {
+          "topFraction": 0.01,
+          "score": 921.8
+        },
+        {
+          "topFraction": 0.02,
+          "score": 919.38
+        },
+        {
+          "topFraction": 0.035,
+          "score": 917.48
+        },
+        {
+          "topFraction": 0.05,
+          "score": 916.11
+        },
+        {
+          "topFraction": 0.075,
+          "score": 915.06
+        },
+        {
+          "topFraction": 0.1,
+          "score": 913.51
+        },
+        {
+          "topFraction": 0.15,
+          "score": 910.53
+        },
+        {
+          "topFraction": 0.2,
+          "score": 908.39
+        },
+        {
+          "topFraction": 0.3,
+          "score": 903.99
+        },
+        {
+          "topFraction": 0.4,
+          "score": 900.58
+        },
+        {
+          "topFraction": 0.5,
+          "score": 896.45
+        },
+        {
+          "topFraction": 0.65,
+          "score": 890.08
+        },
+        {
+          "topFraction": 0.8,
+          "score": 883.51
+        },
+        {
+          "topFraction": 0.95,
+          "score": 855.18
+        }
+      ],
+      "sampledAt": "2026-09-14T02:37:02.612Z"
+    },
+    {
+      "scenario": "WaveSwitch Revosect Entry",
+      "leaderboardId": 142903,
+      "total": 1114,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 1330.05
+        },
+        {
+          "topFraction": 0.005,
+          "score": 1284.83
+        },
+        {
+          "topFraction": 0.01,
+          "score": 1230.04
+        },
+        {
+          "topFraction": 0.02,
+          "score": 1162.22
+        },
+        {
+          "topFraction": 0.035,
+          "score": 1130.48
+        },
+        {
+          "topFraction": 0.05,
+          "score": 1102.65
+        },
+        {
+          "topFraction": 0.075,
+          "score": 1060.04
+        },
+        {
+          "topFraction": 0.1,
+          "score": 1038.3
+        },
+        {
+          "topFraction": 0.15,
+          "score": 993.95
+        },
+        {
+          "topFraction": 0.2,
+          "score": 965.25
+        },
+        {
+          "topFraction": 0.3,
+          "score": 927.86
+        },
+        {
+          "topFraction": 0.4,
+          "score": 900.03
+        },
+        {
+          "topFraction": 0.5,
+          "score": 879.6
+        },
+        {
+          "topFraction": 0.65,
+          "score": 849.16
+        },
+        {
+          "topFraction": 0.8,
+          "score": 790.46
+        },
+        {
+          "topFraction": 0.95,
+          "score": 677.41
+        }
+      ],
+      "sampledAt": "2026-09-14T02:37:10.361Z"
+    },
+    {
+      "scenario": "WaveSwitch Revosect Int",
+      "leaderboardId": 143210,
+      "total": 643,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 1232.22
+        },
+        {
+          "topFraction": 0.005,
+          "score": 1190.04
+        },
+        {
+          "topFraction": 0.01,
+          "score": 1127.87
+        },
+        {
+          "topFraction": 0.02,
+          "score": 1090.04
+        },
+        {
+          "topFraction": 0.035,
+          "score": 1071.34
+        },
+        {
+          "topFraction": 0.05,
+          "score": 1059.6
+        },
+        {
+          "topFraction": 0.075,
+          "score": 1040.04
+        },
+        {
+          "topFraction": 0.1,
+          "score": 1009.99
+        },
+        {
+          "topFraction": 0.15,
+          "score": 970.03
+        },
+        {
+          "topFraction": 0.2,
+          "score": 946.12
+        },
+        {
+          "topFraction": 0.3,
+          "score": 903.51
+        },
+        {
+          "topFraction": 0.4,
+          "score": 870.03
+        },
+        {
+          "topFraction": 0.5,
+          "score": 839.59
+        },
+        {
+          "topFraction": 0.65,
+          "score": 800.03
+        },
+        {
+          "topFraction": 0.8,
+          "score": 734.37
+        },
+        {
+          "topFraction": 0.95,
+          "score": 636.54
+        }
+      ],
+      "sampledAt": "2026-09-14T02:37:18.073Z"
+    },
+    {
+      "scenario": "SmoothTS Revosect Entry",
+      "leaderboardId": 142911,
+      "total": 1069,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 715.8
+        },
+        {
+          "topFraction": 0.005,
+          "score": 680.69
+        },
+        {
+          "topFraction": 0.01,
+          "score": 652.02
+        },
+        {
+          "topFraction": 0.02,
+          "score": 628.46
+        },
+        {
+          "topFraction": 0.035,
+          "score": 611.35
+        },
+        {
+          "topFraction": 0.05,
+          "score": 599.13
+        },
+        {
+          "topFraction": 0.075,
+          "score": 580.02
+        },
+        {
+          "topFraction": 0.1,
+          "score": 561.57
+        },
+        {
+          "topFraction": 0.15,
+          "score": 542.01
+        },
+        {
+          "topFraction": 0.2,
+          "score": 530.24
+        },
+        {
+          "topFraction": 0.3,
+          "score": 505.57
+        },
+        {
+          "topFraction": 0.4,
+          "score": 489.35
+        },
+        {
+          "topFraction": 0.5,
+          "score": 470.01
+        },
+        {
+          "topFraction": 0.65,
+          "score": 446.9
+        },
+        {
+          "topFraction": 0.8,
+          "score": 420.68
+        },
+        {
+          "topFraction": 0.95,
+          "score": 360.01
+        }
+      ],
+      "sampledAt": "2026-09-14T02:37:25.884Z"
+    },
+    {
+      "scenario": "SmoothTS Revosect Int",
+      "leaderboardId": 142909,
+      "total": 769,
+      "points": [
+        {
+          "topFraction": 0.001,
+          "score": 603.13
+        },
+        {
+          "topFraction": 0.005,
+          "score": 583.57
+        },
+        {
+          "topFraction": 0.01,
+          "score": 570.01
+        },
+        {
+          "topFraction": 0.02,
+          "score": 560.43
+        },
+        {
+          "topFraction": 0.035,
+          "score": 555.13
+        },
+        {
+          "topFraction": 0.05,
+          "score": 550.46
+        },
+        {
+          "topFraction": 0.075,
+          "score": 538.68
+        },
+        {
+          "topFraction": 0.1,
+          "score": 520.01
+        },
+        {
+          "topFraction": 0.15,
+          "score": 499.1
+        },
+        {
+          "topFraction": 0.2,
+          "score": 480.01
+        },
+        {
+          "topFraction": 0.3,
+          "score": 450.21
+        },
+        {
+          "topFraction": 0.4,
+          "score": 430.23
+        },
+        {
+          "topFraction": 0.5,
+          "score": 410.01
+        },
+        {
+          "topFraction": 0.65,
+          "score": 386.45
+        },
+        {
+          "topFraction": 0.8,
+          "score": 353.56
+        },
+        {
+          "topFraction": 0.95,
+          "score": 288.67
+        }
+      ],
+      "sampledAt": "2026-09-14T02:37:33.629Z"
     }
   ]
 }

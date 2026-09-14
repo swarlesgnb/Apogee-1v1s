@@ -4501,7 +4501,7 @@ function renderSeasonView(data) {
         //
         // This is the argument for the whole pool on one line: nothing here was invented,
         // and a session on this ladder is a session on the ladders people already grind.
-        // 227 of the 252 carry at least one mark, 73 of them two or more.
+        // 227 of the 252 carry at least one mark, 76 of them two or more.
         //
         // The mark is the benchmark's own abbreviation in the benchmark's own brand
         // colour, and it fills in solid once the score holds a rank there - so an unplayed

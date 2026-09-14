@@ -18528,194 +18528,6 @@
       "sampledAt": "2026-09-13T19:26:32.568Z"
     },
     {
-      "scenario": "VT Multiclick 120 Novice",
-      "leaderboardId": 24969,
-      "total": 126689,
-      "points": [
-        {
-          "rank": 1,
-          "score": 2730
-        },
-        {
-          "rank": 2,
-          "score": 2670
-        },
-        {
-          "rank": 3,
-          "score": 2660
-        },
-        {
-          "rank": 5,
-          "score": 2600
-        },
-        {
-          "rank": 10,
-          "score": 2490
-        },
-        {
-          "rank": 25,
-          "score": 2390
-        },
-        {
-          "rank": 50,
-          "score": 2320
-        },
-        {
-          "rank": 100,
-          "score": 2220
-        },
-        {
-          "rank": 250,
-          "score": 2090
-        },
-        {
-          "rank": 500,
-          "score": 2010
-        }
-      ],
-      "sampledAt": "2026-09-14T00:50:32.691Z"
-    },
-    {
-      "scenario": "VT Multiclick 120 Intermediate",
-      "leaderboardId": 24957,
-      "total": 83234,
-      "points": [
-        {
-          "rank": 1,
-          "score": 2300
-        },
-        {
-          "rank": 2,
-          "score": 2250
-        },
-        {
-          "rank": 3,
-          "score": 2250
-        },
-        {
-          "rank": 5,
-          "score": 2230
-        },
-        {
-          "rank": 10,
-          "score": 2160
-        },
-        {
-          "rank": 25,
-          "score": 2060
-        },
-        {
-          "rank": 50,
-          "score": 1990
-        },
-        {
-          "rank": 100,
-          "score": 1920
-        },
-        {
-          "rank": 250,
-          "score": 1830
-        },
-        {
-          "rank": 500,
-          "score": 1760
-        }
-      ],
-      "sampledAt": "2026-09-14T00:50:35.229Z"
-    },
-    {
-      "scenario": "VT Multiclick 180 Advanced",
-      "leaderboardId": 23559,
-      "total": 75309,
-      "points": [
-        {
-          "rank": 1,
-          "score": 2170
-        },
-        {
-          "rank": 2,
-          "score": 2160
-        },
-        {
-          "rank": 3,
-          "score": 2120
-        },
-        {
-          "rank": 5,
-          "score": 2110
-        },
-        {
-          "rank": 10,
-          "score": 2060
-        },
-        {
-          "rank": 25,
-          "score": 1980
-        },
-        {
-          "rank": 50,
-          "score": 1910
-        },
-        {
-          "rank": 100,
-          "score": 1850
-        },
-        {
-          "rank": 250,
-          "score": 1770
-        },
-        {
-          "rank": 500,
-          "score": 1700
-        }
-      ],
-      "sampledAt": "2026-09-14T00:50:37.713Z"
-    },
-    {
-      "scenario": "VT Multiclick 180 Elite",
-      "leaderboardId": 86801,
-      "total": 410,
-      "points": [
-        {
-          "rank": 1,
-          "score": 1800
-        },
-        {
-          "rank": 2,
-          "score": 1770
-        },
-        {
-          "rank": 3,
-          "score": 1730
-        },
-        {
-          "rank": 5,
-          "score": 1720
-        },
-        {
-          "rank": 10,
-          "score": 1630
-        },
-        {
-          "rank": 25,
-          "score": 1530
-        },
-        {
-          "rank": 50,
-          "score": 1450
-        },
-        {
-          "rank": 100,
-          "score": 1300
-        },
-        {
-          "rank": 250,
-          "score": 1050
-        }
-      ],
-      "sampledAt": "2026-09-14T00:50:39.512Z"
-    },
-    {
       "scenario": "VoxTS Click Entry",
       "leaderboardId": 192530,
       "total": 3047,
@@ -19724,50 +19536,6 @@
       "sampledAt": "2026-09-14T00:54:06.842Z"
     },
     {
-      "scenario": "VT Bounceshot Elite",
-      "leaderboardId": 86805,
-      "total": 462,
-      "points": [
-        {
-          "rank": 1,
-          "score": 1030
-        },
-        {
-          "rank": 2,
-          "score": 920
-        },
-        {
-          "rank": 3,
-          "score": 800
-        },
-        {
-          "rank": 5,
-          "score": 740
-        },
-        {
-          "rank": 10,
-          "score": 690
-        },
-        {
-          "rank": 25,
-          "score": 620
-        },
-        {
-          "rank": 50,
-          "score": 550
-        },
-        {
-          "rank": 100,
-          "score": 470
-        },
-        {
-          "rank": 250,
-          "score": 270
-        }
-      ],
-      "sampledAt": "2026-09-14T00:55:18.322Z"
-    },
-    {
       "scenario": "TSK - DVD Tracking MASSIVE",
       "leaderboardId": 132420,
       "total": 4052,
@@ -20248,54 +20016,6 @@
       "sampledAt": "2026-09-14T00:56:57.790Z"
     },
     {
-      "scenario": "VT Snake Track Elite S5",
-      "leaderboardId": 104622,
-      "total": 2233,
-      "points": [
-        {
-          "rank": 1,
-          "score": 3727
-        },
-        {
-          "rank": 2,
-          "score": 3263
-        },
-        {
-          "rank": 3,
-          "score": 3121
-        },
-        {
-          "rank": 5,
-          "score": 3053
-        },
-        {
-          "rank": 10,
-          "score": 2801
-        },
-        {
-          "rank": 25,
-          "score": 2631
-        },
-        {
-          "rank": 50,
-          "score": 2474
-        },
-        {
-          "rank": 100,
-          "score": 2303
-        },
-        {
-          "rank": 250,
-          "score": 1961
-        },
-        {
-          "rank": 500,
-          "score": 1654
-        }
-      ],
-      "sampledAt": "2026-09-14T00:57:02.704Z"
-    },
-    {
       "scenario": "Air Spectral Easy 85%",
       "leaderboardId": 185693,
       "total": 23187,
@@ -20530,46 +20250,6 @@
         }
       ],
       "sampledAt": "2026-09-14T00:57:57.821Z"
-    },
-    {
-      "scenario": "VT Air Elite",
-      "leaderboardId": 86816,
-      "total": 208,
-      "points": [
-        {
-          "rank": 1,
-          "score": 3205.06
-        },
-        {
-          "rank": 2,
-          "score": 3021.05
-        },
-        {
-          "rank": 3,
-          "score": 2903.05
-        },
-        {
-          "rank": 5,
-          "score": 2890.05
-        },
-        {
-          "rank": 10,
-          "score": 2729.05
-        },
-        {
-          "rank": 25,
-          "score": 2376.04
-        },
-        {
-          "rank": 50,
-          "score": 2149.03
-        },
-        {
-          "rank": 100,
-          "score": 1598.02
-        }
-      ],
-      "sampledAt": "2026-09-14T00:58:00.817Z"
     },
     {
       "scenario": "Close Fast Strafes Easy Invincible - Thin",
@@ -21174,6 +20854,438 @@
         }
       ],
       "sampledAt": "2026-09-14T00:59:03.438Z"
+    },
+    {
+      "scenario": "CB EvoClick Easy",
+      "leaderboardId": 96088,
+      "total": 23538,
+      "points": [
+        {
+          "rank": 1,
+          "score": 1689
+        },
+        {
+          "rank": 2,
+          "score": 1656
+        },
+        {
+          "rank": 3,
+          "score": 1635
+        },
+        {
+          "rank": 5,
+          "score": 1591
+        },
+        {
+          "rank": 10,
+          "score": 1504
+        },
+        {
+          "rank": 25,
+          "score": 1431
+        },
+        {
+          "rank": 50,
+          "score": 1366
+        },
+        {
+          "rank": 100,
+          "score": 1303
+        },
+        {
+          "rank": 250,
+          "score": 1222
+        },
+        {
+          "rank": 500,
+          "score": 1170
+        }
+      ],
+      "sampledAt": "2026-09-14T02:34:09.842Z"
+    },
+    {
+      "scenario": "EvoClick Revosect Entry",
+      "leaderboardId": 142851,
+      "total": 2008,
+      "points": [
+        {
+          "rank": 1,
+          "score": 1723.29
+        },
+        {
+          "rank": 2,
+          "score": 1672.07
+        },
+        {
+          "rank": 3,
+          "score": 1624.06
+        },
+        {
+          "rank": 5,
+          "score": 1555.57
+        },
+        {
+          "rank": 10,
+          "score": 1487.78
+        },
+        {
+          "rank": 25,
+          "score": 1410.9
+        },
+        {
+          "rank": 50,
+          "score": 1351.64
+        },
+        {
+          "rank": 100,
+          "score": 1263.8
+        },
+        {
+          "rank": 250,
+          "score": 1157.38
+        },
+        {
+          "rank": 500,
+          "score": 1058.77
+        }
+      ],
+      "sampledAt": "2026-09-14T02:34:17.882Z"
+    },
+    {
+      "scenario": "EvoClick Revosect Int",
+      "leaderboardId": 142850,
+      "total": 1571,
+      "points": [
+        {
+          "rank": 1,
+          "score": 1425.62
+        },
+        {
+          "rank": 2,
+          "score": 1375.65
+        },
+        {
+          "rank": 3,
+          "score": 1343.52
+        },
+        {
+          "rank": 5,
+          "score": 1322.03
+        },
+        {
+          "rank": 10,
+          "score": 1295.68
+        },
+        {
+          "rank": 25,
+          "score": 1240.46
+        },
+        {
+          "rank": 50,
+          "score": 1191.06
+        },
+        {
+          "rank": 100,
+          "score": 1155.76
+        },
+        {
+          "rank": 250,
+          "score": 1057.58
+        },
+        {
+          "rank": 500,
+          "score": 963.43
+        }
+      ],
+      "sampledAt": "2026-09-14T02:34:20.949Z"
+    },
+    {
+      "scenario": "EvoClick Revosect",
+      "leaderboardId": 141058,
+      "total": 551,
+      "points": [
+        {
+          "rank": 1,
+          "score": 1411.58
+        },
+        {
+          "rank": 2,
+          "score": 1366.26
+        },
+        {
+          "rank": 3,
+          "score": 1361.63
+        },
+        {
+          "rank": 5,
+          "score": 1330.95
+        },
+        {
+          "rank": 10,
+          "score": 1251.76
+        },
+        {
+          "rank": 25,
+          "score": 1185.74
+        },
+        {
+          "rank": 50,
+          "score": 1121.12
+        },
+        {
+          "rank": 100,
+          "score": 1055.83
+        },
+        {
+          "rank": 250,
+          "score": 906.84
+        },
+        {
+          "rank": 500,
+          "score": 575.54
+        }
+      ],
+      "sampledAt": "2026-09-14T02:34:29.632Z"
+    },
+    {
+      "scenario": "waldoTS Elite",
+      "leaderboardId": 111257,
+      "total": 1072,
+      "points": [
+        {
+          "rank": 1,
+          "score": 175.65
+        },
+        {
+          "rank": 2,
+          "score": 175.2
+        },
+        {
+          "rank": 3,
+          "score": 174.2
+        },
+        {
+          "rank": 5,
+          "score": 173.4
+        },
+        {
+          "rank": 10,
+          "score": 167.3
+        },
+        {
+          "rank": 25,
+          "score": 158.5
+        },
+        {
+          "rank": 50,
+          "score": 152.2
+        },
+        {
+          "rank": 100,
+          "score": 145.84
+        },
+        {
+          "rank": 250,
+          "score": 131.75
+        },
+        {
+          "rank": 500,
+          "score": 115.2
+        }
+      ],
+      "sampledAt": "2026-09-14T02:35:03.035Z"
+    },
+    {
+      "scenario": "Air Pure Revosect Entry",
+      "leaderboardId": 142837,
+      "total": 1410,
+      "points": [
+        {
+          "rank": 1,
+          "score": 926.64
+        },
+        {
+          "rank": 2,
+          "score": 926.16
+        },
+        {
+          "rank": 3,
+          "score": 926
+        },
+        {
+          "rank": 5,
+          "score": 924.67
+        },
+        {
+          "rank": 10,
+          "score": 922.85
+        },
+        {
+          "rank": 25,
+          "score": 919.97
+        },
+        {
+          "rank": 50,
+          "score": 917.45
+        },
+        {
+          "rank": 100,
+          "score": 915.16
+        },
+        {
+          "rank": 250,
+          "score": 909.13
+        },
+        {
+          "rank": 500,
+          "score": 901.98
+        }
+      ],
+      "sampledAt": "2026-09-14T02:35:05.114Z"
+    },
+    {
+      "scenario": "Air Pure Intermediate",
+      "leaderboardId": 126338,
+      "total": 26044,
+      "points": [
+        {
+          "rank": 1,
+          "score": 925.55
+        },
+        {
+          "rank": 2,
+          "score": 923.38
+        },
+        {
+          "rank": 3,
+          "score": 922.48
+        },
+        {
+          "rank": 5,
+          "score": 919.51
+        },
+        {
+          "rank": 10,
+          "score": 918.24
+        },
+        {
+          "rank": 25,
+          "score": 916.19
+        },
+        {
+          "rank": 50,
+          "score": 915.03
+        },
+        {
+          "rank": 100,
+          "score": 913.52
+        },
+        {
+          "rank": 250,
+          "score": 910.82
+        },
+        {
+          "rank": 500,
+          "score": 907.86
+        }
+      ],
+      "sampledAt": "2026-09-14T02:35:14.842Z"
+    },
+    {
+      "scenario": "Air Pure",
+      "leaderboardId": 13213,
+      "total": 8579,
+      "points": [
+        {
+          "rank": 1,
+          "score": 919.56
+        },
+        {
+          "rank": 2,
+          "score": 919.51
+        },
+        {
+          "rank": 3,
+          "score": 916.13
+        },
+        {
+          "rank": 5,
+          "score": 915.44
+        },
+        {
+          "rank": 10,
+          "score": 913.61
+        },
+        {
+          "rank": 25,
+          "score": 909.58
+        },
+        {
+          "rank": 50,
+          "score": 907.49
+        },
+        {
+          "rank": 100,
+          "score": 903.69
+        },
+        {
+          "rank": 250,
+          "score": 897.56
+        },
+        {
+          "rank": 500,
+          "score": 891.47
+        }
+      ],
+      "sampledAt": "2026-09-14T02:35:24.793Z"
+    },
+    {
+      "scenario": "Air Pure Hard",
+      "leaderboardId": 185019,
+      "total": 1621,
+      "points": [
+        {
+          "rank": 1,
+          "score": 921.42
+        },
+        {
+          "rank": 2,
+          "score": 920.4
+        },
+        {
+          "rank": 3,
+          "score": 920.2
+        },
+        {
+          "rank": 5,
+          "score": 917.36
+        },
+        {
+          "rank": 10,
+          "score": 916.55
+        },
+        {
+          "rank": 25,
+          "score": 915.02
+        },
+        {
+          "rank": 50,
+          "score": 912.03
+        },
+        {
+          "rank": 100,
+          "score": 909
+        },
+        {
+          "rank": 250,
+          "score": 903.14
+        },
+        {
+          "rank": 500,
+          "score": 896.42
+        }
+      ],
+      "sampledAt": "2026-09-14T02:35:34.667Z"
     }
   ]
 }

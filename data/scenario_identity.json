@@ -850,7 +850,7 @@
     "Air Pure Hard": {
       "leaderboardId": 185019,
       "aimType": "Tracking",
-      "subCategory": "Reading Tracking"
+      "subCategory": "Reactive Tracking"
     },
     "Air Pure Intermediate": {
       "leaderboardId": 126338,
@@ -6460,12 +6460,12 @@
     "domiSwitch Avasive": {
       "leaderboardId": 129746,
       "aimType": "Switching",
-      "subCategory": "Stability Switching"
+      "subCategory": "Evasive Switching"
     },
     "domiSwitch Easier": {
       "leaderboardId": 185428,
       "aimType": "Switching",
-      "subCategory": null
+      "subCategory": "Evasive Switching"
     },
     "domiSwitch Easy": {
       "leaderboardId": 83043,

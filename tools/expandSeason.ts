@@ -36,7 +36,8 @@ function applyArmTags(families: any[]): void {
   // Sensitivity and technique affect the actual division of movement.
   const cues: Record<string, string> = {
     "Micro Chain": "Fingertip", "Sky Gallery": "Fingertip", "Reload Rush": "Wrist",
-    "Floating Gallery": "Wrist", "Wave Click": "Wrist", "Snake Sweep": "Arm",
+    "Floating Gallery": "Wrist", "Wave Click": "Wrist", "Cat Click": "Wrist", "Waldo Track": "Arm",
+    "Domi Relay": "Wrist", "Evo Gallery": "Wrist",
     "Sphere Cruise": "Arm", "Close Strafe Chase": "Arm", "Dev Blitz": "Wrist",
     "Chamber Relay": "Wrist", "Smooth Relay": "Arm",
   };
