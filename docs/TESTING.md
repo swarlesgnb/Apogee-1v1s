@@ -74,6 +74,10 @@ Scores are graded against **your own** recent runs, not against a global number,
 match is winnable regardless of rank. Rating, verification and settlement all happen on
 the server.
 
+If you want the season's scenarios as practice playlists, the **Season** screen writes
+them into KovaaK's for you. A filled mark on a playlist means it is already there.
+KovaaK's only reads playlists when it starts, so restart the game to see new ones.
+
 ## 6. Saturday's tournament
 
 Round-robin groups, then a single-elimination bracket. Every fixture is an ordinary
