@@ -4790,53 +4790,89 @@ function renderPlaylists() {
   if (!chips) return;
   chips.textContent = "";
 
-  const install = async (btn, names, label) => {
-    btn.disabled = true;
-    const prev = btn.innerHTML;
-    btn.textContent = "Writing…";
+  // Installed, by name. A chip that cannot say whether it has already been written is a
+  // chip you have to click to find out, and clicking to find out is what made this list
+  // hard to work through.
+  const installed = new Set(practice.installedNames || []);
+
+  /**
+   * Write, then redraw from what is actually on disk.
+   *
+   * Nothing here changes a chip's text. The old version swapped the label for "Writing…"
+   * and then "Installed", and since the chips are a wrapping row, every chip after the one
+   * being clicked moved twice per click - so the next chip was never where it had just
+   * been. State goes on a class and a fixed-size mark instead, and the row never reflows.
+   */
+  const install = async (btn, names) => {
+    if (btn.dataset.busy) return;
+    btn.dataset.busy = "1";
+    btn.classList.add("is-writing");
+    showError(null);
     try {
       const r = await api.installPlaylists(names);
       if (r && r.error) {
         showError(r.error);
-        btn.innerHTML = prev;
-      } else {
-        btn.textContent = "Installed";
-        practice.installed = r.installed;
-        if (note) {
-          note.dataset.done = "1";
-          note.textContent = r.dir + " · " + r.note;
-        }
-        setTimeout(() => {
-          btn.innerHTML = prev;
-          btn.disabled = false;
-        }, 1600);
         return;
       }
+      practice.installed = r.installed;
+      practice.installedNames = r.installedNames || [];
+      if (note) {
+        note.dataset.done = "1";
+        note.textContent = r.dir + " · " + r.note;
+      }
+      renderPlaylists();
     } finally {
-      btn.disabled = false;
+      delete btn.dataset.busy;
+      btn.classList.remove("is-writing");
     }
   };
 
-  for (const list of here) {
+  /** Mark, label, count - always all three, always the same size, whatever the state. */
+  const chipFor = (label, count, isIn) => {
     const chip = document.createElement("button");
     chip.type = "button";
-    chip.className = "pool-chip" + (list.category === null ? " all" : "");
+    chip.className = "pool-chip" + (isIn ? " is-installed" : "");
+    // Not a checkmark glyph: the mark is drawn by the stylesheet, so it occupies the same
+    // box in both states and the label beside it never moves.
     chip.innerHTML =
-      esc(list.category || "Everything") +
-      '<span class="n">' + list.scenarios + "</span>";
-    chip.title = "Install “" + list.name + "” in KovaaK's";
+      '<span class="mark" aria-hidden="true"></span>' +
+      '<span class="lbl">' + esc(label) + "</span>" +
+      '<span class="n">' + count + "</span>";
+    // The state is on the button itself, so it reaches a screen reader without the
+    // stylesheet and without a second label to keep in step.
+    chip.setAttribute("aria-pressed", isIn ? "true" : "false");
+    return chip;
+  };
+
+  for (const list of here) {
+    const isIn = installed.has(list.name);
+    const chip = chipFor(list.category || "Everything", list.scenarios, isIn);
+    if (list.category === null) chip.classList.add("all");
+    chip.title = isIn
+      ? "“" + list.name + "” is in KovaaK's Playlists folder. Writing it again is safe."
+      : "Install “" + list.name + "” in KovaaK's";
     chip.addEventListener("click", () => install(chip, [list.name]));
     chips.append(chip);
   }
 
-  const all = document.createElement("button");
-  all.type = "button";
-  all.className = "pool-chip all";
-  all.innerHTML =
-    "All bands" + '<span class="n">' + (practice.playlists || []).length + "</span>";
-  all.title = "Install every playlist for this season";
+  const every = practice.playlists || [];
+  const allIn = every.length > 0 && every.every((p) => installed.has(p.name));
+  const all = chipFor("All bands", every.length, allIn);
+  all.classList.add("all");
+  all.title = allIn
+    ? "Every playlist for this season is installed. Writing them again is safe."
+    : "Install every playlist for this season";
   all.addEventListener("click", () => install(all, null));
   chips.append(all);
+
+  // What the mark means, said once, rather than left to be worked out from the colours.
+  const legend = $("svChipLegend");
+  if (legend) {
+    const n = every.filter((p) => installed.has(p.name)).length;
+    legend.textContent = n === 0
+      ? "None installed yet. A filled mark means the playlist is already in KovaaK's."
+      : n + " of " + every.length + " installed. A filled mark means it is already in KovaaK's.";
+  }
 }
 
 /**

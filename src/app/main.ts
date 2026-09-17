@@ -84,6 +84,7 @@ import { apexSources, apexStanding } from "../core/season/standing.ts";
 import type { ApexBoard } from "../core/season/apex.ts";
 import {
   installedPlaylistCount,
+  installedPlaylistNames,
   playlistsFolderFor,
   practicePlaylists,
   practiceRows,
@@ -864,6 +865,12 @@ function runSmokeTest(): void {
         ).length,
         nums: document.querySelectorAll("#svPool .pool-num").length,
         chips: document.querySelectorAll("#svChips .pool-chip").length,
+        marks: document.querySelectorAll("#svChips .pool-chip .mark").length,
+        stated: [...document.querySelectorAll("#svChips .pool-chip")].filter(
+          (c) => c.getAttribute("aria-pressed") !== null,
+        ).length,
+        chipsIn: document.querySelectorAll("#svChips .pool-chip.is-installed").length,
+        legend: (document.getElementById("svChipLegend")?.textContent ?? "").length,
         play: document.querySelector("#svPool .pool-row .scen-play") !== null,
       };
     })()`);
@@ -888,7 +895,21 @@ function runSmokeTest(): void {
       else if (practice.rows === 0) problems.push("the Season screen lists no scenarios to play");
       else if (practice.subs === 0) problems.push("the Season screen groups nothing by sub-skill");
       else if (!practice.play) problems.push("the Season screen has no Play button");
-      else if (practice.fills !== practice.rows) {
+      // A chip that cannot say whether that playlist is already in KovaaK's is the bug
+      // this replaced: the only way to find out was to click it and watch. Counting the
+      // chips alone would pass with every one of them mute, which is the state that was
+      // wrong, so the mark and the pressed state are what get counted.
+      else if (practice.marks !== practice.chips) {
+        problems.push(
+          `${practice.chips - practice.marks} playlist chip(s) draw no installed mark`,
+        );
+      } else if (practice.stated !== practice.chips) {
+        problems.push(
+          `${practice.chips - practice.stated} playlist chip(s) do not say whether they are installed`,
+        );
+      } else if (practice.legend === 0) {
+        problems.push("the playlist chips carry a mark with nothing saying what it means");
+      } else if (practice.fills !== practice.rows) {
         // Progress is the row's own ground now, so a row with no --fill is not a row
         // missing a decoration - it is a row that silently claims no progress at all.
         problems.push("not every row carries its progress");
@@ -912,7 +933,8 @@ function runSmokeTest(): void {
             (practice.painted
               ? `, ${practice.bands} bands, ${practice.rows} rows in ${practice.subs} ` +
                 `sub-skills, ${practice.next} to play next, ${practice.chips} playlist ` +
-                `chips, Play ${practice.play ? "wired" : "MISSING"}`
+                `chips (${practice.chipsIn} installed, ${practice.marks} marked), ` +
+                `Play ${practice.play ? "wired" : "MISSING"}`
               : ", screen not painted (no snapshot in this window)")
       }`,
     );
@@ -3437,6 +3459,10 @@ ipcMain.handle("apogee:practice", () => {
   const history = state.statsDir ? scanStatsFolder(state.statsDir) : new Map();
   const { rows, families } = practiceRows(season, history);
   const playlistDir = state.statsDir ? playlistsFolderFor(state.statsDir) : null;
+  const allPlaylists = practicePlaylists(season);
+  const installedNames = playlistDir
+    ? installedPlaylistNames(playlistDir, allPlaylists.map((p) => p.name))
+    : [];
 
   return {
     families,
@@ -3452,7 +3478,7 @@ ipcMain.handle("apogee:practice", () => {
         rankColors: c.rankColors,
       })),
     },
-    playlists: practicePlaylists(season).map((p) => ({
+    playlists: allPlaylists.map((p) => ({
       name: p.name,
       category: p.category,
       window: p.window,
@@ -3460,6 +3486,8 @@ ipcMain.handle("apogee:practice", () => {
     })),
     playlistDir,
     installed: playlistDir ? installedPlaylistCount(playlistDir) : 0,
+    // Which ones, not just how many: the chips draw their own state from this.
+    installedNames,
   };
 });
 
@@ -3500,6 +3528,9 @@ ipcMain.handle("apogee:installPlaylists", (_e, args) => {
     dir,
     written: result.written?.length ?? 0,
     installed: installedPlaylistCount(dir),
+    // Re-read rather than assume what was written: a folder the player cleaned out by
+    // hand between two clicks should leave the chips telling the truth.
+    installedNames: installedPlaylistNames(dir, practicePlaylists(season).map((p) => p.name)),
     note: "KovaaK's reads playlists at startup - restart the game to see them.",
   };
 });

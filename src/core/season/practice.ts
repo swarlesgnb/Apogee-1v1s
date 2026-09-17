@@ -192,6 +192,28 @@ export function installedPlaylistCount(dir: string): number {
   }
 }
 
+/**
+ * Which of `names` are on disk right now.
+ *
+ * A count answered "how many", which is the one question the screen was not asking: with
+ * eight chips and one number, the only way to find out whether a particular playlist was
+ * already written was to write it again and watch what happened. The set is what lets a
+ * chip say what it is, so the answer survives a redraw and a relaunch.
+ *
+ * Compared through `fileNameFor`, the same rule the writer uses, so a name with a
+ * character Windows forbids is matched by the file it actually produced rather than by
+ * the name it was asked for.
+ */
+export function installedPlaylistNames(dir: string, names: readonly string[]): string[] {
+  let present: Set<string>;
+  try {
+    present = new Set(readdirSync(dir));
+  } catch {
+    return [];
+  }
+  return names.filter((name) => present.has(fileNameFor(name)));
+}
+
 // ---------------------------------------------------------------------------
 // Where a family stands, and which of its variants to play next
 // ---------------------------------------------------------------------------

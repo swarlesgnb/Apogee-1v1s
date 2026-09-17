@@ -226,6 +226,36 @@ body[data-queue="working"] .queue-stage { border-top-color: var(--brand); }
 .sound-preview button { flex: 1; border: 1px solid var(--rule-2); background: var(--control); color: var(--ink); font-size: 12px; }
 .sound-menu p { font-size: 11px; color: var(--ink-dim); margin: 14px 0 0; }
 
+/* ------------------------------------------------------------------ playlists ----
+   Two complaints, one cause. A chip could not say whether that playlist was already in
+   KovaaK's, so the only way to find out was to click it; and clicking swapped the label
+   for "Writing..." and then "Installed", which in a wrapping row moved every chip after
+   it, twice, 1.6s apart. The row was hardest to use exactly while it was being used.
+
+   So every rule here holds the box still. The mark is drawn, not written, and reserves
+   the same space empty as filled; no state changes a font, a padding or a width. What
+   changes on click is colour, and colour cannot reflow a row. */
+.pool-chip .mark {
+  flex: none; width: 9px; height: 9px; border-radius: 50%;
+  border: 1.5px solid var(--rule-3); background: transparent;
+}
+.pool-chip .lbl { white-space: nowrap; }
+.pool-chip.is-installed {
+  color: var(--ink); border-color: var(--brand-line); background: var(--brand-well);
+}
+.pool-chip.is-installed .mark { border-color: var(--brand); background: var(--brand); }
+.pool-chip.is-installed:hover { border-color: var(--brand); background: var(--brand-well); }
+/* Busy, not disabled: :disabled dims the whole chip, which reads as "not available"
+   rather than "working", and the chip is available - it is being acted on.
+   No pulse on it. Writing a handful of small files off a local disk is over in
+   milliseconds, so an animation long enough to read would outlast the thing it reports,
+   and the audit is right to count that as motion nobody needs. */
+.pool-chip.is-writing { color: var(--ink-dim); cursor: progress; }
+.pool-chip.is-writing .mark { border-color: var(--brand); background: var(--brand-dim); }
+.pool-chip-legend {
+  margin: 10px 0 0; font-size: var(--t-sm); color: var(--ink-dim);
+}
+
 /* Keep feedback local to the control that changed. */
 @media (prefers-reduced-motion: no-preference) {
   .tab, #cats .cat, .queue-stage .commit, .sound-preview button { transition: background-color 140ms, border-color 140ms, color 140ms; }
