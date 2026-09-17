@@ -171,10 +171,8 @@ function countTo(el, value, format = (v) => String(Math.round(v)), key) {
  *
  * The rules the palette below holds to, and where each came from:
  *
- *   One voice. Every pitched sound is the same struck glass (FM at an inharmonic ratio)
- *   in one key, D major, so the app sounds like one object rather than a preset pack.
- *   The first palette mixed triangle arpeggios, sawtooth buzzes and sine chirps, and a
- *   triangle major arpeggio is the most recognisable chiptune cliché there is.
+ *   An arcade voice: filtered pulse leads, triangle bass and percussive contacts,
+ *   in D major. Short interfaces, syncopated run receipts, wider match fanfares.
  *
  *   Frequency buys restraint. The more often a sound plays, the shorter, quieter, drier
  *   and less pitched it is: a press is mostly a contact, a result is a phrase with a room
@@ -183,7 +181,7 @@ function countTo(el, value, format = (v) => String(Math.round(v)), key) {
  *   loudness.
  *
  *   Direction means something. Up is on and good, down is off and bad, and a draw takes
- *   a step that does not resolve. A toggle is one tick, brighter for on than for off.
+ *   a step that does not resolve. A toggle is one pulse, higher for on than for off.
  *
  *   Near and far. Frequent sounds are dry, close to the ear; only the rare moments are
  *   sent into the room, so the room itself is a signal that something mattered.
@@ -197,6 +195,14 @@ function countTo(el, value, format = (v) => String(Math.round(v)), key) {
  */
 
 const SOUND_KEY = "apogee.sound";
+const SOUND_VOLUME_KEY = "apogee.sound.volume";
+let soundVolume = 0.65;
+try {
+  const storedVolume = localStorage.getItem(SOUND_VOLUME_KEY);
+  const parsedVolume = Number(storedVolume);
+  if (storedVolume !== null && Number.isFinite(parsedVolume)) soundVolume = Math.max(0, Math.min(1, parsedVolume));
+} catch { /* Use the default when local preferences are unavailable. */ }
+let soundMaster = null;
 
 /**
  * Master level.
@@ -240,7 +246,8 @@ function audio() {
   comp.attack.value = 0.004;
   comp.release.value = 0.2;
   const master = ac.createGain();
-  master.gain.value = SOUND_GAIN;
+  soundMaster = master;
+  master.gain.value = SOUND_GAIN * soundVolume;
   comp.connect(master);
   master.connect(ac.destination);
 
@@ -341,9 +348,8 @@ function route(ctx, node, o) {
  *
  * `from` glides onto the note, and only ever slowly: a sine that falls fast is how a
  * water drop is synthesised, which is what the first press sounded like on every click,
- * and `validate:sound` now fails anything that does it. `fm` makes it glass - a modulator at a fixed
- * ratio whose depth collapses after the strike, so the attack is bright and inharmonic
- * and the tail is nearly a pure tone, which is how a struck bar behaves.
+ * and `validate:sound` fails anything that does it. `fm` adds a short harmonic attack.
+ * Pulse and saw voices use low-pass filtering for comfortable long sessions.
  */
 function tone(o) {
   const ctx = audio();
@@ -353,7 +359,7 @@ function tone(o) {
   const f = o.freq * Math.pow(2, (o.cents || 0) / 1200);
 
   const osc = ctx.createOscillator();
-  osc.type = "sine";
+  osc.type = o.wave || "triangle";
   if (o.from) {
     osc.frequency.setValueAtTime(o.from * Math.pow(2, (o.cents || 0) / 1200), t0);
     osc.frequency.exponentialRampToValueAtTime(f, t0 + (o.glide || 0.03));
@@ -428,8 +434,8 @@ const NOTE = {
   D5: 587.33, E5: 659.25, Fs5: 739.99, A5: 880.0, D6: 1174.66, Fs6: 1479.98, A6: 1760.0,
 };
 
-/** The app's one timbre. 3.5 is inharmonic, which is what makes it glass and not organ. */
-const GLASS = { ratio: 3.5, index: 1.1, decay: 0.12 };
+/** A harmonic attack used for the unresolved draw cue. */
+const CHIP = { ratio: 2, index: 0.35, decay: 0.045 };
 
 /**
  * How far one press lands from the last, in cents.
@@ -457,9 +463,9 @@ function pressVariation() {
  * weight and a press its body.
  */
 const SOUNDS = {
-  /** Moving between screens. A breath of air, no pitch and no sweep: the most frequent sound gets the least. */
+  /** A short, dry cabinet-button pulse for navigation. */
   nav() {
-    tick({ type: "highpass", hz: 2400, q: 0.5, dur: 0.07, attack: 0.02, gain: 0.035 });
+    tone({ freq: NOTE.A4, wave: "square", lowpass: 1600, dur: 0.045, gain: 0.022 });
   },
 
   /**
@@ -476,25 +482,25 @@ const SOUNDS = {
     tick({ type: "highpass", hz: 2600 * shift, q: 0.5, dur: 0.006, gain: 0.14 });
   },
 
-  /** One tick, brighter than a press. One burst and no pitch, for the press's reasons. */
+  /** A higher pulse confirms selection. */
   toggleOn() {
-    tick({ type: "highpass", hz: 3600, q: 0.5, dur: 0.007, gain: 0.12 });
+    tone({ freq: NOTE.D5, wave: "square", lowpass: 2200, dur: 0.035, gain: 0.026 });
   },
 
-  /** The same tick, darker and a little quieter: off is less news than on. */
+  /** A lower pulse confirms deselection. */
   toggleOff() {
-    tick({ type: "highpass", hz: 1800, q: 0.5, dur: 0.007, gain: 0.1 });
+    tone({ freq: NOTE.A4, wave: "square", lowpass: 1300, dur: 0.028, gain: 0.022 });
   },
 
-  /** A run landed in the stats folder. One struck glass: good news, but news every minute. */
+  /** A three-note receipt when a run lands in the stats folder. */
   run() {
-    tone({ freq: NOTE.D6, fm: GLASS, dur: 0.5, gain: 0.05, send: 0.2 });
+    [NOTE.D5, NOTE.A5, NOTE.D6].forEach((freq, i) => tone({ freq, wave: "square", lowpass: 3200, dur: i === 2 ? 0.24 : 0.09, gain: 0.036, delay: i * 0.065, send: 0.08 }));
   },
 
-  /** Something worked. Up a fourth, glass. */
+  /** Success: a short rising fourth. */
   ok() {
-    tone({ freq: NOTE.A5, fm: GLASS, dur: 0.2, gain: 0.045, send: 0.12 });
-    tone({ freq: NOTE.D6, fm: GLASS, dur: 0.32, gain: 0.04, delay: 0.07, send: 0.18 });
+    tone({ freq: NOTE.A5, wave: "square", lowpass: 2800, dur: 0.09, gain: 0.037 });
+    tone({ freq: NOTE.D6, wave: "square", lowpass: 3200, dur: 0.26, gain: 0.036, delay: 0.09, send: 0.12 });
   },
 
   /**
@@ -513,9 +519,9 @@ const SOUNDS = {
 
   /** The big commitment - Find opponent. Weight first, then a ring, so the commitment has a pitch. */
   press() {
-    tick({ hz: 2400, q: 0.7, dur: 0.018, gain: 0.12 });
-    tone({ freq: NOTE.D3, dur: 0.18, gain: 0.2, lowpass: 900 });
-    tone({ freq: NOTE.A4, fm: { ratio: 2, index: 1.2, decay: 0.12 }, dur: 0.24, gain: 0.07, delay: 0.01, send: 0.15 });
+    tick({ type: "highpass", hz: 1800, q: 0.5, dur: 0.025, gain: 0.13 });
+    tone({ freq: NOTE.D3, wave: "triangle", dur: 0.21, gain: 0.14, lowpass: 900 });
+    [NOTE.D4, NOTE.A4, NOTE.D5].forEach((freq, i) => tone({ freq, wave: "square", lowpass: 2300, dur: 0.12, gain: 0.045, delay: 0.04 + i * 0.065, send: 0.1 }));
   },
 
   /**
@@ -523,8 +529,8 @@ const SOUNDS = {
    * win would have given it, which is what a draw is.
    */
   draw() {
-    tone({ freq: NOTE.D5, fm: GLASS, dur: 0.4, gain: 0.04, send: 0.15 });
-    tone({ freq: NOTE.E5, fm: GLASS, dur: 0.55, gain: 0.036, delay: 0.12, send: 0.2 });
+    tone({ freq: NOTE.D5, fm: CHIP, dur: 0.4, gain: 0.04, send: 0.15 });
+    tone({ freq: NOTE.E5, fm: CHIP, dur: 0.55, gain: 0.036, delay: 0.12, send: 0.2 });
   },
 
   /**
@@ -547,22 +553,21 @@ const SOUNDS = {
    * left when it hits.
    */
   matchFound() {
-    tick({ hz: 300, to: 3800, q: 1.2, dur: 0.36, attack: 0.3, gain: 0.045 });
-    tone({ freq: NOTE.D5, from: NOTE.D4, glide: 0.34, dur: 0.36, attack: 0.3, gain: 0.03, lowpass: 2500 });
+    [NOTE.D4, NOTE.A4, NOTE.D5].forEach((freq, i) => tone({ freq, wave: "square", lowpass: 2600, dur: 0.065, gain: 0.045, delay: i * 0.1 }));
     const at = 0.36;
     tick({ hz: 2200, dur: 0.02, gain: 0.09, delay: at });
     tone({ freq: NOTE.D3, dur: 0.35, gain: 0.18, delay: at, lowpass: 700 });
-    tone({ freq: NOTE.D5, fm: GLASS, dur: 0.7, gain: 0.055, delay: at, pan: -0.3, send: 0.3 });
-    tone({ freq: NOTE.A5, fm: GLASS, dur: 0.8, gain: 0.05, delay: at + 0.02, pan: 0.3, send: 0.3 });
+    tone({ freq: NOTE.D5, wave: "sawtooth", lowpass: 2300, dur: 0.7, gain: 0.055, delay: at, pan: -0.3, send: 0.2 });
+    tone({ freq: NOTE.A5, wave: "square", lowpass: 3200, dur: 0.8, gain: 0.045, delay: at + 0.02, pan: 0.3, send: 0.2 });
   },
 
   /** A quest completed or a benchmark promotion. The chord, climbing left to right. */
   celebrate() {
     [NOTE.D5, NOTE.Fs5, NOTE.A5, NOTE.D6].forEach((f, i) => {
-      tone({ freq: f, fm: GLASS, dur: 0.9 - i * 0.1, gain: 0.055, delay: i * 0.07, pan: -0.45 + i * 0.3, send: 0.35 });
+      tone({ freq: f, wave: "square", lowpass: 3400, dur: 0.9 - i * 0.1, gain: 0.04, delay: i * 0.085, pan: -0.45 + i * 0.3, send: 0.2 });
     });
     tone({ freq: NOTE.D4, dur: 0.6, gain: 0.07, delay: 0.21, lowpass: 800, send: 0.2 });
-    tone({ freq: NOTE.A6, fm: GLASS, dur: 1.2, gain: 0.025, delay: 0.28, send: 0.5 });
+    tone({ freq: NOTE.A6, wave: "triangle", dur: 1.2, gain: 0.025, delay: 0.28, send: 0.25 });
   },
 
   /**
@@ -571,13 +576,13 @@ const SOUNDS = {
    */
   victory() {
     [NOTE.A4, NOTE.D5, NOTE.Fs5].forEach((f, i) => {
-      tone({ freq: f, fm: GLASS, dur: 0.3, gain: 0.055, delay: i * 0.09, send: 0.2 });
+      tone({ freq: f, wave: "square", lowpass: 3300, dur: 0.14, gain: 0.05, delay: i * 0.09, send: 0.12 });
     });
     const at = 0.27;
     tick({ hz: 2600, dur: 0.02, gain: 0.08, delay: at });
     tone({ freq: NOTE.D3, dur: 0.7, gain: 0.15, delay: at, lowpass: 600, send: 0.15 });
     [NOTE.A5, NOTE.D6, NOTE.Fs6].forEach((f, i) => {
-      tone({ freq: f, fm: GLASS, dur: 1.3, gain: 0.05, delay: at + i * 0.012, pan: [-0.4, 0, 0.4][i], send: 0.45 });
+      tone({ freq: f, wave: "square", lowpass: 3800, dur: 1.3, gain: 0.04, delay: at + i * 0.012, pan: [-0.4, 0, 0.4][i], send: 0.3 });
     });
   },
 };
@@ -624,6 +629,7 @@ function playSound(name) {
 
 function setSound(on, announce) {
   soundOn = on;
+  if (soundMaster && ac) soundMaster.gain.setTargetAtTime(on ? SOUND_GAIN * soundVolume : 0, ac.currentTime, 0.015);
   const btn = $("soundToggle");
   if (btn) {
     btn.setAttribute("aria-pressed", on ? "true" : "false");
@@ -636,6 +642,19 @@ function setSound(on, announce) {
   }
   // Confirm unmuting by being audible. Muting confirms itself by going quiet.
   if (on && announce) playSound("toggleOn");
+}
+
+/** Volume changes the existing master bus, including any cue already playing. */
+function setSoundVolume(value) {
+  const parsed = Number(value);
+  if (!Number.isFinite(parsed)) return;
+  soundVolume = Math.max(0, Math.min(1, parsed));
+  if (soundMaster && ac) soundMaster.gain.setTargetAtTime(soundOn ? SOUND_GAIN * soundVolume : 0, ac.currentTime, 0.015);
+  try { localStorage.setItem(SOUND_VOLUME_KEY, String(soundVolume)); } catch { /* Session-only preference. */ }
+  const slider = $('soundVolume');
+  if (slider) slider.value = String(Math.round(soundVolume * 100));
+  const readout = $('soundVolumeReadout');
+  if (readout) readout.textContent = Math.round(soundVolume * 100) + '%';
 }
 
 
@@ -732,13 +751,13 @@ function badge(tier, uid) {
 
 /* Discipline marks describe movement; they never decide the scenario pool. */
 const DISCIPLINES = {
-  "Any": { key: "all", ink: "#b6c7dd", cue: "A complete test of your aim", path: '<path d="M4 7h5l6 10h5M4 17h5l6-10h5"/><path d="m17 4 3 3-3 3m0 4 3 3-3 3"/>' },
-  "Static Clicking": { key: "static", ink: "#d4b38c", cue: "Big flick → micro → click. Straight line.", path: '<path d="M4 9V4h5m6 0h5v5m0 6v5h-5M9 20H4v-5"/><path d="M9 12h6m-3-3v6"/>' },
-  "Dynamic Clicking": { key: "dynamic", ink: "#d69ea8", cue: "Read path → match → confirm → click.", path: '<path d="M3 18Q9 1 20 6"/><circle cx="14" cy="7" r="3"/><path d="m18 3 3 3-3 3M4 21h6"/>' },
-  "Precise Tracking": { key: "precise", ink: "#8dc9bf", cue: "Match speed. Centred. Micro small.", path: '<ellipse cx="12" cy="12" rx="9" ry="5" transform="rotate(-30 12 12)"/><circle cx="12" cy="12" r="2"/><path d="M12 2v3m0 14v3"/>' },
-  "Reactive Tracking": { key: "reactive", ink: "#a9bafa", cue: "React, never predict. Underaim.", path: '<path d="m3 16 5-9 5 10 5-10 3 4"/><circle cx="8" cy="7" r="2"/><path d="M3 21h18"/>' },
-  "Speed Switching": { key: "speed", ink: "#c8c991", cue: "One flick, no micro. Next chosen.", path: '<path d="M3 5h6v6H3zm12 8h6v6h-6zM8 16l8-8m-5 0h5v5"/>' },
-  "Evasive Switching": { key: "evasive", ink: "#bda5d6", cue: "Track to kill. Then switch. Read next.", path: '<circle cx="5" cy="6" r="3"/><circle cx="19" cy="18" r="3"/><path d="M5 11c0 10 14-10 14 2m-7-8 3 3-3 3"/>' },
+  "Any": { key: "all", ink: "#d7fa52", cue: "A complete test of your aim", path: '<path d="M4 7h5l6 10h5M4 17h5l6-10h5"/><path d="m17 4 3 3-3 3m0 4 3 3-3 3"/>' },
+  "Static Clicking": { key: "static", ink: "#f3ca6c", cue: "Big flick → micro → click. Straight line.", path: '<path d="M4 9V4h5m6 0h5v5m0 6v5h-5M9 20H4v-5"/><path d="M9 12h6m-3-3v6"/>' },
+  "Dynamic Clicking": { key: "dynamic", ink: "#ff9dae", cue: "Read path → match → confirm → click.", path: '<path d="M3 18Q9 1 20 6"/><circle cx="14" cy="7" r="3"/><path d="m18 3 3 3-3 3M4 21h6"/>' },
+  "Precise Tracking": { key: "precise", ink: "#98e3ce", cue: "Match speed. Centred. Micro small.", path: '<ellipse cx="12" cy="12" rx="9" ry="5" transform="rotate(-30 12 12)"/><circle cx="12" cy="12" r="2"/><path d="M12 2v3m0 14v3"/>' },
+  "Reactive Tracking": { key: "reactive", ink: "#a2bfff", cue: "React, never predict. Underaim.", path: '<path d="m3 16 5-9 5 10 5-10 3 4"/><circle cx="8" cy="7" r="2"/><path d="M3 21h18"/>' },
+  "Speed Switching": { key: "speed", ink: "#d7fa52", cue: "One flick, no micro. Next chosen.", path: '<path d="M3 5h6v6H3zm12 8h6v6h-6zM8 16l8-8m-5 0h5v5"/>' },
+  "Evasive Switching": { key: "evasive", ink: "#cfb0f1", cue: "Track to kill. Then switch. Read next.", path: '<circle cx="5" cy="6" r="3"/><circle cx="19" cy="18" r="3"/><path d="M5 11c0 10 14-10 14 2m-7-8 3 3-3 3"/>' },
 };
 
 function disciplineOf(name) { return DISCIPLINES[name] || DISCIPLINES.Any; }
@@ -752,7 +771,12 @@ function paintDiscipline(name) {
   const mark = $('disciplineMark');
   if (mark) mark.style.setProperty('--discipline', d.ink);
   if (mark) mark.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d.path + '</svg>';
+  if (mark && soundReady && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    mark.classList.remove('is-picking');
+    requestAnimationFrame(() => mark.classList.add('is-picking'));
+  }
   if ($('disciplineCue')) $('disciplineCue').textContent = d.cue;
+  if ($('selectedDisciplineLabel')) $('selectedDisciplineLabel').textContent = name === 'Any' || !name ? 'All categories' : name;
 }
 
 function paintQueueJourney(state) {
@@ -1106,7 +1130,7 @@ function renderDraw(data) {
   const count = $("drawCount");
   if (count) {
     count.textContent =
-      "3 of " + rows.length + " drawn · " + measured + " with a baseline";
+      rows.length + " scenarios · " + measured + " with a baseline";
   }
 
   host.textContent = "";
@@ -1901,7 +1925,7 @@ function legibleOn(color, ground, min) {
   return out;
 }
 
-const legibleOnDark = (color, min) => legibleOn(color, "#242b3e", min);
+const legibleOnDark = (color, min) => legibleOn(color, "#304c5c", min);
 const legibleOnLight = (color, min) => legibleOn(color, LIGHT_GROUND, min);
 
 /** Body-size rank labels meet 4.5:1 against the brightest standard control surface. */
@@ -7097,14 +7121,14 @@ numberTabs();
  * press it again, which is not what a click somewhere else means.
  */
 document.addEventListener("pointerdown", (e) => {
-  document.querySelectorAll("details[open]").forEach((d) => {
+  document.querySelectorAll("details[open]:not(.pool-disclosure)").forEach((d) => {
     if (!d.contains(e.target)) d.open = false;
   });
 });
 
 document.addEventListener("keydown", (e) => {
   if (e.key !== "Escape") return;
-  const open = document.querySelector("details[open]");
+  const open = document.querySelector("details[open]:not(.pool-disclosure)");
   if (open) open.open = false;
 });
 
@@ -7129,6 +7153,7 @@ document.addEventListener("keydown", (e) => {
   // A modal is showing: its own Escape handling owns the keyboard.
   const modal = $("celebrate");
   if (modal && !modal.hidden) return;
+  if ($('arcadeCommand')?.open) return;
 
   const tabs = [...document.querySelectorAll(".tab")].filter((tab) => !tab.hidden);
   if (tabs.length === 0) return;
@@ -9760,6 +9785,99 @@ const soundToggle = $("soundToggle");
 if (soundToggle) {
   soundToggle.addEventListener("click", () => setSound(!soundOn, true));
 }
+
+const volumeSlider = $('soundVolume');
+if (volumeSlider) {
+  volumeSlider.addEventListener('input', () => setSoundVolume(Number(volumeSlider.value) / 100));
+  volumeSlider.value = String(Math.round(soundVolume * 100));
+  $('soundVolumeReadout').textContent = Math.round(soundVolume * 100) + '%';
+}
+let lastSoundPreview = -Infinity;
+document.querySelectorAll('[data-sound-preview]').forEach(button => {
+  button.addEventListener('click', () => {
+    if (performance.now() - lastSoundPreview < 1800) return;
+    lastSoundPreview = performance.now();
+    if (!soundOn) setSound(true, false);
+    playSound(button.dataset.soundPreview);
+  });
+});
+document.querySelectorAll('[data-arcade-route]').forEach(button => {
+  button.addEventListener('click', () => openScreen(button.dataset.arcadeRoute));
+});
+
+/** The jump menu routes through the existing tabs, keeping all screen lifecycles intact. */
+function mountArcadeCommand() {
+  const dialog = $('arcadeCommand');
+  const input = $('arcadeCommandSearch');
+  const list = $('arcadeCommandList');
+  if (!dialog || !input || !list) return;
+  let opener = null;
+  const descriptions = {
+    queue: 'Pick a discipline. Find your rival.', seasonview: 'Benchmarks, families and your next rank.',
+    tournaments: 'Groups, brackets and fixtures.', result: 'Every round. Every rating point.',
+    profile: 'Your strengths and the work ahead.', quests: 'A fresh target for your next session.',
+    scenarios: 'Find the right scenario to train.', ranks: 'The ladder and your place on it.',
+    consistency: 'See what your recent runs are saying.', admin: 'Local appearance and app settings.',
+    season: 'Manage the season definition.'
+  };
+  function renderRoutes() {
+    const query = input.value.trim().toLowerCase();
+    list.replaceChildren();
+    document.querySelectorAll('.nav .tab').forEach(tab => {
+      if (tab.hidden) return;
+      const label = tab.querySelector('.tab-label')?.textContent || '';
+      const description = descriptions[tab.dataset.screen] || '';
+      if (query && !(label + ' ' + description).toLowerCase().includes(query)) return;
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'arcade-command-route';
+      button.innerHTML = '<span class="arcade-command-icon" aria-hidden="true">' + (tab.querySelector('svg')?.outerHTML || '') + '</span><span><strong>' + esc(label) + '</strong><small>' + esc(description) + '</small></span><span aria-hidden="true">↗</span>';
+      button.addEventListener('click', () => {
+        dialog.close();
+        openScreen(tab.dataset.screen);
+      });
+      list.append(button);
+    });
+    $('arcadeCommandEmpty').hidden = list.childElementCount > 0;
+  }
+  function show() {
+    if (dialog.open || !$('celebrate').hidden) return;
+    opener = document.activeElement;
+    input.value = '';
+    renderRoutes();
+    dialog.showModal();
+    input.focus();
+  }
+  $('arcadeJump').addEventListener('click', show);
+  $('arcadeCommandClose').addEventListener('click', () => dialog.close());
+  dialog.addEventListener('close', () => { if (opener?.isConnected) opener.focus(); });
+  dialog.addEventListener('click', event => {
+    if (event.target !== dialog) return;
+    const r = dialog.getBoundingClientRect();
+    if (event.clientX < r.left || event.clientX > r.right || event.clientY < r.top || event.clientY > r.bottom) dialog.close();
+  });
+  input.addEventListener('input', renderRoutes);
+  dialog.addEventListener('keydown', event => {
+    const routes = [...list.querySelectorAll('button')];
+    if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+      event.preventDefault();
+      if (!routes.length) return;
+      const index = routes.indexOf(document.activeElement);
+      const next = index < 0 ? (event.key === 'ArrowDown' ? 0 : routes.length - 1) : (index + (event.key === 'ArrowDown' ? 1 : -1) + routes.length) % routes.length;
+      routes[next].focus();
+    } else if (event.key === 'Enter' && event.target === input) {
+      event.preventDefault();
+      routes[0]?.click();
+    }
+  });
+  document.addEventListener('keydown', event => {
+    if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') {
+      event.preventDefault();
+      if (dialog.open) dialog.close(); else show();
+    }
+  });
+}
+mountArcadeCommand();
 
 // Reflect the stored preference on the control before anything can be heard, then let
 // the rest of the app make noise.

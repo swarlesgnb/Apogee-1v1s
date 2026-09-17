@@ -88,7 +88,8 @@ if (!styleMatch || !bodyMatch) {
 
 const arenaCss = readFileSync(new URL("arena.css", RENDERER_DIR), "utf8");
 const tournamentCss = readFileSync(new URL("tournament.css", RENDERER_DIR), "utf8");
-const style = styleMatch[0] + "\n<style>" + arenaCss + "</style>\n<style>" + tournamentCss + "</style>";
+const arcadeCss = readFileSync(new URL("arcade.css", RENDERER_DIR), "utf8");
+const style = styleMatch[0] + "\n<style>" + arenaCss + "</style>\n<style>" + tournamentCss + "</style>\n<style>" + arcadeCss + "</style>";
 
 // An example tournament, built by the real engine and view with invented players, so the
 // screen has something honest to draw with no server behind it. Labelled on the page.

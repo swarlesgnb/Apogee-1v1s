@@ -3593,6 +3593,342 @@ html.preview .topbar-right { margin-left: auto; }
   .tn-bracket-wrap { padding-inline: 12px; }
 }
 </style>
+<style>/* Apogee: competition first. A restrained system for selection, evidence and results. */
+:root {
+  --ground: #171918;
+  --panel: #202321;
+  --well: #1b1e1c;
+  --control: #2d332f;
+  --control-hi: #363f38;
+  --rule: #343c36;
+  --rule-2: #4c574e;
+  --rule-3: #748077;
+  --ink: #f1f2e9;
+  --ink-mid: #d1d8cf;
+  --ink-dim: #acb8ad;
+  --brand: #ff9468;
+  --brand-ink: #211b16;
+  --brand-well: #40332b;
+  --brand-line: #80604a;
+  --brand-dim: #8a6953;
+  --chrome: #111512;
+  --card: #1e2420;
+  --sunk: #151b17;
+  --raised: #303b32;
+  --slot: #262e28;
+  --tab-on: #28312a;
+  --tab-on-line: #4c5c4e;
+  --tab-on-ink: #f1f2e9;
+  --tab-on-key: #c7d3c9;
+  --up: #c2d99d;
+  --down: #ffab96;
+  --warn: #e6c57f;
+  --rail-w: 218px;
+  --bar-h: 58px;
+  --r: 5px;
+  --radius-panel: 8px;
+  --display: "Bahnschrift", "Arial Narrow", "Segoe UI", sans-serif;
+  --font: "Segoe UI Variable Text", "Segoe UI", sans-serif;
+}
+
+body { background: var(--ground); font-size: 14px; }
+.orbfield { display: none; }
+button { border-radius: 5px; }
+.rail { background: var(--chrome); border-right: 1px solid var(--rule); }
+.rail-top { min-height: 104px; padding: 28px 24px; border: 0; }
+.wordmark { font-size: 29px; letter-spacing: -.055em; font-weight: 750; gap: 12px; }
+.wordmark .brand-mark { color: var(--ink); width: 27px; height: 29px; }
+.brand-caption { display: none; }
+.nav { padding: 2px 12px 22px; gap: 3px; }
+.nav-label { padding: 28px 14px 10px; font: 600 10px var(--font); letter-spacing: .09em; text-transform: uppercase; color: var(--ink-dim); }
+.nav-label:first-child { padding-top: 4px; }
+.tab { min-height: 45px; border: 1px solid transparent; border-radius: 5px; padding: 10px 13px; font-size: 13px; font-weight: 500; gap: 11px; }
+.tab .nav-icon { width: 18px; height: 18px; }
+.tab[aria-selected="true"] { background: var(--tab-on); border-color: transparent; color: var(--ink); }
+.tab[aria-selected="true"] .nav-icon { color: var(--brand); }
+.tab::before { left: -12px; top: 10px; bottom: 10px; width: 2px; border-radius: 0; background: var(--brand); }
+.tab .tab-key, .tab[aria-selected="true"] .tab-key { font: 10px var(--mono); color: var(--ink-dim); opacity: .65; }
+.tab:hover:not([aria-selected="true"]) { color: var(--ink); background: var(--well); }
+.rail-foot { padding: 22px; border-top: 1px solid var(--rule); background: transparent; }
+.rail-foot .tier { font-size: 16px; font-weight: 650; }
+.signin { border-radius: 5px; font-weight: 650; }
+.legal { gap: 8px 13px; }
+.legal a { font-size: 10px; }
+.topbar { background: var(--ground); border-bottom: 1px solid var(--rule); padding-inline: 32px; }
+.app-context { font: 11px var(--font); letter-spacing: .01em; }
+.app-context b { color: var(--ink-mid); font-weight: 650; letter-spacing: .06em; }
+.topbar-right { gap: 8px; }
+.sound-toggle { border: 1px solid var(--rule); border-radius: 5px; background: transparent; min-height: 32px; font: 650 10px var(--font); }
+.arcade-jump { display: flex; gap: 16px; align-items: center; min-height: 32px; padding: 5px 10px; border: 1px solid var(--rule); background: transparent; color: var(--ink-dim); font-size: 11px; }
+.arcade-jump kbd { font: 10px var(--mono); }
+.content { max-width: 1640px; padding: 30px clamp(24px, 3.1vw, 48px) 64px; }
+.screen.active { gap: 26px; }
+.screen-head { padding: 6px 0 28px; border-bottom: 1px solid var(--rule); }
+.screen-head h1 { font: 650 clamp(36px, 4.2vw, 58px)/1.04 var(--display); letter-spacing: -.045em; }
+.screen-head p { color: var(--ink-dim); font-size: 13px; line-height: 1.6; max-width: 66ch; margin-top: 14px; }
+.mode-tag, .queue-heading .mode-tag { margin-bottom: 12px; padding: 0; border: 0; background: transparent; color: var(--ink-dim); font: 600 10px var(--font); letter-spacing: .08em; text-transform: uppercase; }
+.panel { border: 1px solid var(--rule); border-radius: 8px; background: var(--panel); box-shadow: none; overflow: hidden; }
+.phead { padding: 21px 24px; border-bottom: 1px solid var(--rule); }
+.phead h2 { font: 600 19px var(--display); letter-spacing: -.015em; }
+.phead .note { font-size: 12px; }
+.pbody { padding: 24px; }
+.preview-note { border: 0; border-left: 2px solid var(--rule-3); padding: 5px 12px; border-radius: 0; background: transparent; margin-bottom: 24px; font-size: 11px; }
+.banner { border-radius: 5px; box-shadow: none; }
+
+/* The decision, the selected discipline and the action share one reading order. */
+#screen-queue.active { grid-template-columns: minmax(0, 1fr) 294px; gap: 24px; }
+#screen-queue .queue-heading { grid-row: 1; grid-column: 1 / -1; }
+.queue-heading { min-height: 0; align-items: end; gap: 24px; }
+.queue-heading h1 { font-size: clamp(40px, 4.5vw, 62px); max-width: none; }
+.queue-heading p { max-width: 58ch; }
+.arcade-hero-links { display: grid; gap: 7px; flex: none; padding-bottom: 3px; }
+.arcade-hero-links button { display: flex; justify-content: space-between; gap: 22px; min-height: 28px; text-align: left; padding: 3px 0; border: 0; border-radius: 0; background: transparent; color: var(--ink-mid); font-size: 12px; }
+.arcade-hero-links button span { color: var(--ink-dim); }
+.arcade-hero-links button:hover { color: var(--brand); }
+#screen-queue .queue-stage { grid-row: 2; grid-column: 1; border-top: 2px solid var(--ink-mid); }
+#screen-queue .rank-showcase { grid-row: 2; grid-column: 2; }
+.queue-body { display: grid; grid-template-columns: minmax(0, 1fr); padding: 25px; gap: 22px; }
+.queue-body > * { grid-column: 1; }
+.queue-journey { padding-bottom: 18px; gap: 8px; border-bottom: 1px solid var(--rule); }
+.queue-journey li { gap: 7px; font-size: 11px; }
+.queue-journey li span { border: 0; border-radius: 0; padding: 0; color: var(--ink-dim); font: 11px var(--mono); }
+.queue-journey li.current span { color: var(--brand); }
+.queue-journey li.current { font-weight: 650; }
+.queue-journey li.complete span { background: transparent; color: var(--up); }
+.queue-signal { display: block; }
+#queueSignal { font: 600 25px/1.2 var(--display); letter-spacing: -.025em; }
+#cats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+#cats .cat { display: grid; grid-template-columns: 29px minmax(0, 1fr) 14px; align-items: center; gap: 11px; min-height: 79px; padding: 13px 15px; background: var(--well); color: var(--ink); border: 1px solid var(--rule); border-radius: 5px; text-align: left; }
+#cats .cat:first-child { grid-column: 1 / -1; min-height: 44px; padding-block: 9px; }
+#cats .cat .cat-icon { width: 28px; height: 28px; color: var(--ink-dim); padding: 0; background: transparent; }
+#cats .cat .cat-name { display: block; font-size: 13px; font-weight: 650; line-height: 1.3; }
+#cats .cat .cat-description { display: block; margin-top: 5px; color: var(--ink-dim); font-size: 11px; line-height: 1.4; }
+#cats .cat:first-child .cat-description { display: none; }
+#cats .cat .cat-check { width: 12px; height: 12px; border: 1px solid var(--rule-3); border-radius: 50%; }
+#cats .cat:hover { border-color: var(--rule-3); background: var(--control); }
+#cats .cat[aria-pressed="true"], #cats .cat[aria-pressed="true"]:hover { border: 1px solid var(--ink-mid); background: var(--raised); box-shadow: none; }
+#cats .cat[aria-pressed="true"] .cat-icon { color: var(--ink); }
+#cats .cat[aria-pressed="true"] .cat-check { background: var(--ink); border-color: var(--ink); box-shadow: inset 0 0 0 3px var(--raised); }
+.cat-weak { display: inline-block; margin-left: 5px; padding: 0; border: 0; background: transparent; font-size: 9px; font-weight: 500; color: var(--ink-dim); vertical-align: 1px; }
+.queue-selection { display: grid; grid-template-columns: 36px minmax(0, 1fr) minmax(160px, 42%); align-items: center; gap: 12px; padding-top: 20px; border-top: 1px solid var(--rule-2); }
+.queue-selection .versus-mark { display: grid; place-items: center; width: 34px; height: 40px; border: 0; border-radius: 0; padding: 0; color: var(--brand); }
+.queue-selection .versus-mark svg { width: 30px; height: 30px; }
+.queue-selection-copy { display: grid; gap: 5px; }
+.selection-label { color: var(--ink-dim); font-size: 10px; }
+.queue-selection-copy strong { color: var(--ink); font: 600 16px var(--display); letter-spacing: -.01em; }
+.queue-selection-copy #disciplineCue { color: var(--ink-dim); font-size: 10px; line-height: 1.4; }
+.queue-stage .commit { width: 100%; min-height: 72px; padding: 14px 17px; background: var(--brand); border: 1px solid var(--brand); border-radius: 5px; color: var(--brand-ink); box-shadow: none; gap: 0; }
+.commit-verb { font: 650 21px var(--display); letter-spacing: -.02em; }
+.commit-sub { margin-top: 6px; font-size: 10px; white-space: normal; line-height: 1.45; }
+.commit-meta { display: none; }
+.queue-stage .commit.working, .queue-stage .commit.held { background: var(--brand-well); color: var(--ink); border-color: var(--brand-line); }
+.queue-stage .commit.held .commit-verb { color: var(--brand); }
+.queue-stage .commit:disabled:not(.working):not(.held) { background: var(--control); border-color: var(--rule); color: var(--ink-dim); }
+body[data-queue="working"] .queue-stage { border-top-color: var(--brand); }
+.queue-stage .pool-note { padding-top: 0; border-top: 0; font-size: 11px; }
+.queue-stage .pool-note::before { display: none; }
+.queue-format { justify-content: flex-start; gap: 8px 18px; font-size: 10px; }
+.queue-format svg { color: var(--ink-dim); }
+.queue-gate { border-radius: 5px; font-size: 12px; }
+.pool-disclosure > summary { display: flex; cursor: pointer; list-style: none; gap: 16px; border-bottom: 0; }
+.pool-disclosure > summary::-webkit-details-marker { display: none; }
+.pool-disclosure > summary::after { content: '+'; margin-left: auto; color: var(--ink); font: 22px var(--display); }
+.pool-disclosure[open] > summary { border-bottom: 1px solid var(--rule); }
+.pool-disclosure[open] > summary::after { content: '−'; }
+
+/* Standing is useful context beside the queue, never a second primary action. */
+.rank-showcase { background: transparent; border: 0; border-radius: 0; }
+.rank-showcase .hero { padding: 20px 0 8px 25px; display: grid; grid-template-columns: 58px minmax(0, 1fr); gap: 17px; align-items: start; border-left: 1px solid var(--rule); text-align: left; }
+.rank-showcase .hero .rank-link { width: 58px; height: 76px; border: 0; border-radius: 0; background: transparent; padding: 0; }
+.rank-showcase .hero .badge { width: 53px; height: 66px; }
+.rank-showcase .hero .rank-link::before, .rank-showcase .hero .rank-link::after { display: none; }
+.hero-kicker { font: 11px var(--font); letter-spacing: 0; text-transform: none; color: var(--ink-dim); margin-bottom: 7px; }
+.rank-showcase .name { font: 650 32px/1.1 var(--display); letter-spacing: -.035em; }
+.rank-showcase .hero-id { min-width: 0; }
+.rank-showcase .climb { margin-top: 24px; }
+.climb-head { font-size: 11px; }
+.rank-showcase .placement { padding-top: 16px; font-size: 11px; line-height: 1.65; }
+.rank-showcase .hero-stats { grid-column: 1 / -1; width: 100%; display: grid; grid-template-columns: 1fr; gap: 0; border: 0; padding: 0; }
+.rank-showcase .stat { display: grid; grid-template-columns: 1fr auto; padding: 17px 0; border-top: 1px solid var(--rule); align-items: baseline; }
+.rank-showcase .stat:last-child { grid-column: auto; }
+.rank-showcase .stat-k { font-size: 12px; }
+.rank-showcase .stat-v { font: 550 29px var(--display); letter-spacing: -.03em; }
+.rank-showcase .stat-s { grid-column: 1 / -1; font-size: 11px; margin-top: 5px; }
+.climb-track, .gate-track, .qtrack { border-radius: 2px; }
+.command-focus { border: 1px solid var(--rule); border-radius: 5px; background: transparent; padding: 20px 24px; }
+.command-focus .command-kicker { color: var(--ink-dim); font: 11px var(--font); text-transform: none; letter-spacing: 0; }
+.command-focus strong { font-size: 20px; }
+.command-focus button { border: 1px solid var(--rule-2); border-radius: 5px; color: var(--ink); background: var(--control); }
+
+/* Reports retain their own content hierarchy with one shared type and spacing scale. */
+.tn-mark { display: none; }
+.verdict { border-radius: 8px; padding: 29px; background: var(--panel); }
+.verdict .outcome { font-weight: 650; letter-spacing: -.045em; }
+.debrief-round { border-radius: 5px; padding: 20px; }
+.debrief-round h3 { font-size: 16px; }
+.debrief-comparison strong { font-size: 29px; }
+.quest, .duel-item, .tn-card { border-radius: 5px; }
+.quest { background: var(--well); border-left: 1px solid var(--rule); }
+.xp { background: transparent; border: 0; font-family: var(--display); color: var(--ink); }
+.tn-hero { background: var(--panel); border-radius: 0; padding: 30px; }
+.tn-name { font-weight: 650; letter-spacing: -.04em; }
+.tn-crest, .tn-hero .tn-crest { background: transparent; border: 0; border-radius: 0; transform: none; box-shadow: none; }
+.tn-crest svg { color: var(--ink-mid); }
+.tn-steps { background: var(--well); }
+.tn-step.now .n { background: transparent; color: var(--brand); border-color: var(--brand-line); }
+.tn-card-name { font-weight: 600; }
+.tn-card.turn { border-color: var(--brand-line); }
+.tn-tabs button, .tn-filter, .seg button { border-radius: 4px; }
+.tn-bracket-wrap { padding-bottom: 16px; }
+.tn-letter { background: var(--control); color: var(--ink); border-color: var(--rule-2); border-radius: 4px; }
+.band-grid th, .scen-table th, .rounds th { font: 600 11px var(--font); letter-spacing: 0; text-transform: none; }
+.band-row, .wrow { border-radius: 4px; }
+.pool-row:hover, .band-row:hover { background: var(--control); }
+.pool-row .scen-play { border-radius: 4px; }
+.achievement-toast { border: 1px solid var(--brand-line); border-radius: 6px; }
+.celebrate { background: #0a100de6; }
+.celebrate .celebrate-card, .celebrate[data-kind="promotion"] .celebrate-card { border: 1px solid var(--rule-2); border-top: 3px solid var(--brand); border-radius: 8px; background: var(--ground); box-shadow: 0 20px 70px #0008; }
+.celebrate .celebrate-title { font-weight: 650; letter-spacing: -.045em; }
+.celebrate .celebrate-card button { background: var(--brand); color: var(--brand-ink); border: 0; border-radius: 5px; font-weight: 650; }
+.celebrate .celebrate-track { border-radius: 2px; }
+.empty { border-radius: 8px; }
+
+/* Familiar keyboard access and preference controls. */
+.arcade-command { padding: 0; width: min(540px, calc(100vw - 32px)); max-height: min(680px, calc(100vh - 48px)); border: 1px solid var(--rule-2); border-radius: 8px; background: var(--ground); color: var(--ink); box-shadow: 0 20px 70px #0008; }
+.arcade-command::backdrop { background: #0a100dbd; }
+.arcade-command-head { display: flex; align-items: center; justify-content: space-between; padding: 23px 24px 12px; font: 600 25px var(--display); letter-spacing: -.025em; }
+.arcade-command-head button { min-height: 28px; border: 1px solid var(--rule); background: transparent; color: var(--ink-dim); padding: 3px 8px; font: 11px var(--mono); }
+.arcade-command input { display: block; margin: 6px 24px 16px; width: calc(100% - 48px); border: 1px solid var(--rule-2); border-radius: 5px; background: var(--well); color: var(--ink); padding: 13px; font-size: 14px; }
+.arcade-command-list { display: grid; padding: 0 14px 10px; gap: 3px; max-height: 410px; overflow: auto; }
+.arcade-command-route { display: grid; grid-template-columns: 28px 1fr 20px; text-align: left; gap: 14px; align-items: center; border: 1px solid transparent; border-radius: 5px; background: transparent; color: var(--ink); padding: 11px; }
+.arcade-command-route:hover, .arcade-command-route:focus-visible { background: var(--control); border-color: var(--rule); }
+.arcade-command-route strong, .arcade-command-route small { display: block; }
+.arcade-command-route strong { font-size: 13px; font-weight: 600; }
+.arcade-command-route small { color: var(--ink-dim); font-size: 11px; margin-top: 3px; }
+.arcade-command-icon { color: var(--ink-dim); }
+.arcade-command-icon svg { width: 22px; height: 22px; }
+.arcade-command-foot { display: flex; justify-content: space-between; padding: 13px 24px; border-top: 1px solid var(--rule); color: var(--ink-dim); font: 10px var(--mono); }
+.arcade-command-empty { padding: 18px 24px; font-size: 13px; color: var(--ink-dim); }
+.sound-studio { position: relative; }
+.sound-studio > summary { list-style: none; display: grid; place-items: center; cursor: pointer; }
+.sound-studio > summary::-webkit-details-marker { display: none; }
+.sound-menu { width: 280px; border-radius: 6px; }
+.sound-menu strong { display: block; font: 600 22px var(--display); margin-bottom: 17px; }
+.sound-menu label { display: flex; justify-content: space-between; font-size: 12px; }
+.sound-menu input { width: 100%; accent-color: var(--brand); cursor: pointer; }
+.sound-menu output { font-family: var(--mono); color: var(--ink); }
+.sound-preview { display: flex; gap: 6px; }
+.sound-preview button { flex: 1; border: 1px solid var(--rule-2); background: var(--control); color: var(--ink); font-size: 12px; }
+.sound-menu p { font-size: 11px; color: var(--ink-dim); margin: 14px 0 0; }
+
+/* Keep feedback local to the control that changed. */
+@media (prefers-reduced-motion: no-preference) {
+  .tab, #cats .cat, .queue-stage .commit, .sound-preview button { transition: background-color 140ms, border-color 140ms, color 140ms; }
+  .screen.active > .screen-head { animation: competition-arrive 180ms ease-out; }
+  .queue-selection .versus-mark.is-picking { animation: competition-select 180ms ease-out; }
+  @keyframes competition-arrive { from { opacity: .5; } to { opacity: 1; } }
+  @keyframes competition-select { from { opacity: .3; transform: translateY(3px); } to { opacity: 1; transform: none; } }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; }
+  .queue-selection .versus-mark { animation: none !important; }
+}
+@media (max-width: 1180px) {
+  :root { --rail-w: 190px; }
+  .rail-top { padding-inline: 20px; }
+  .tab { font-size: 12px; padding-inline: 10px; gap: 9px; }
+  .queue-selection { grid-template-columns: 30px minmax(0, 1fr); }
+  .queue-selection .commit { grid-column: 1 / -1; }
+  .queue-selection-copy #disciplineCue { display: none; }
+  #screen-queue.active { grid-template-columns: minmax(0, 1fr) 248px; }
+}
+@media (max-width: 1100px) {
+  :root { --rail-w: 68px; }
+  .rail-top { padding: 24px 20px; }
+  .wordmark > span, .tab-label, .tab-key, .nav-label { display: none; }
+  .nav { padding: 2px 8px 20px; gap: 5px; }
+  .tab { grid-template-columns: 1fr; place-items: center; padding: 11px; }
+  .tab::before { left: -8px; }
+  .rail-foot { padding: 8px; }
+  .rail-foot .whoami, .rail-foot .legal { display: none; }
+  .signin, .signed-in { font-size: 9px; padding: 7px 3px; min-width: 0; }
+  .content { padding-inline: 24px; }
+  #screen-queue.active { grid-template-columns: minmax(0, 1fr); }
+  #screen-queue .rank-showcase { grid-row: 3; grid-column: 1; }
+  .rank-showcase .hero { padding: 24px 0 0; border-left: 0; border-top: 1px solid var(--rule); grid-template-columns: 62px minmax(0, 1fr) minmax(230px, 1fr); gap: 22px; }
+  .rank-showcase .hero-stats { grid-column: 3; }
+  .rank-showcase .stat:first-child { border-top: 0; padding-top: 0; }
+  .queue-selection { grid-template-columns: 36px minmax(0, 1fr) minmax(190px, 37%); }
+  .queue-selection .commit { grid-column: auto; }
+  .queue-selection-copy #disciplineCue { display: block; }
+}
+@media (max-width: 760px) {
+  .content { padding: 24px 20px 40px; }
+  .topbar { padding-inline: 20px; }
+  .app-context { display: none; }
+  .screen-head h1, .queue-heading h1 { font-size: 40px; }
+  .screen-head { padding-bottom: 22px; }
+  .queue-heading { display: block; }
+  .arcade-hero-links { display: flex; margin-top: 18px; gap: 22px; }
+  .arcade-hero-links button { gap: 8px; }
+  .queue-body { padding: 20px; }
+  #cats { grid-template-columns: 1fr; }
+  #cats .cat { min-height: 66px; }
+  .queue-selection { grid-template-columns: 32px minmax(0, 1fr); }
+  .queue-selection .commit { grid-column: 1 / -1; }
+  .queue-selection-copy #disciplineCue { display: none; }
+  .rank-showcase .hero { grid-template-columns: 58px minmax(0, 1fr); }
+  .rank-showcase .hero-stats { grid-column: 1 / -1; }
+  .rank-showcase .stat:first-child { border-top: 1px solid var(--rule); padding-top: 17px; }
+  .arcade-jump kbd { display: none; }
+  .pool-disclosure > summary { flex-wrap: wrap; gap: 6px; }
+  .pool-disclosure > summary .note { order: 3; flex-basis: 100%; }
+}
+@media (max-width: 480px) {
+  :root { --rail-w: 54px; }
+  .rail-top { min-height: 82px; padding: 24px 13px; }
+  .wordmark .brand-mark { width: 26px; }
+  .nav { padding-inline: 5px; }
+  .tab { min-height: 43px; padding: 10px; }
+  .tab::before { left: -5px; }
+  .content { padding: 20px 14px 32px; }
+  .screen-head h1, .queue-heading h1 { font-size: 36px; }
+  .screen-head p { font-size: 12px; }
+  .arcade-hero-links { gap: 14px; }
+  .arcade-hero-links button { font-size: 11px; }
+  .queue-body { padding: 17px; gap: 19px; }
+  .queue-journey { padding-bottom: 15px; }
+  .queue-journey li { flex-direction: column; align-items: flex-start; font-size: 10px; }
+  #queueSignal { font-size: 23px; }
+  #cats .cat { padding: 12px; gap: 10px; }
+  #cats .cat .cat-name { font-size: 12px; }
+  #cats .cat .cat-description { font-size: 10px; }
+  .topbar { padding-inline: 9px; }
+  .topbar-right { gap: 5px; }
+  .sound-menu, .status-menu { position: fixed; top: 58px; left: 64px; right: 8px; width: auto; max-height: calc(100vh - 78px); overflow: auto; }
+  .phead, .pbody { padding: 18px; }
+  .command-focus { padding: 18px; }
+}
+@media (min-width: 761px) and (max-height: 760px) {
+  .content { padding-top: 18px; }
+  .preview-note { margin-bottom: 15px; }
+  .queue-heading .mode-tag { display: none; }
+  .queue-heading { padding-bottom: 14px; }
+  .queue-heading h1 { font-size: 36px; }
+  .queue-heading p { margin-top: 6px; font-size: 11px; line-height: 1.5; }
+  #screen-queue.active { gap: 18px; }
+  .queue-body { padding: 16px; gap: 12px; }
+  body:not([data-queue]) .queue-journey, body[data-queue="idle"] .queue-journey { display: none; }
+  .queue-journey { padding-bottom: 12px; }
+  .queue-signal { display: block; }
+  #queueSignal { font-size: 22px; }
+  #cats .cat { min-height: 56px; padding: 10px 13px; }
+  #cats .cat:first-child { min-height: 38px; padding-block: 8px; }
+  #cats .cat .cat-description { margin-top: 3px; font-size: 10px; }
+  .queue-selection { padding-top: 14px; }
+  .queue-stage .commit { min-height: 61px; padding: 11px 16px; }
+}
+</style>
 </head><body data-screen="queue">
 
 <a class="skip-link" href="#mainContent">Skip to content</a>
@@ -3605,18 +3941,17 @@ html.preview .topbar-right { margin-left: auto; }
     </div>
 
     <nav class="nav" role="tablist" aria-label="Screens" aria-orientation="vertical">
-      <div class="nav-label" data-copy="nav.group.play">Play</div>
-
+      <div class="nav-label" data-copy="nav.group.play">Compete</div>
       <button class="tab" role="tab" aria-selected="true" data-screen="queue">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 3 6 6-2 2-6-6V3h2Zm14 0-6 6 2 2 6-6V3h-2ZM3 21l6-6m6 0 6 6M2 16l6 6m8-20-5 5m5 15 6-6M9 11l4 4m2-6-4 4"/></svg>
         <span class="tab-key"></span>
-        <span class="tab-label" data-copy="nav.tab.queue">Find a match</span>
+        <span class="tab-label" data-copy="nav.tab.queue">Play arena</span>
       </button>
 
-      <button class="tab" role="tab" aria-selected="false" data-screen="result">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3h8v7a4 4 0 0 1-8 0V3Zm4 11v6m-4 1h8M8 5H4v3a4 4 0 0 0 4 4m8-7h4v3a4 4 0 0 1-4 4"/></svg>
+      <button class="tab" role="tab" aria-selected="false" data-screen="seasonview">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M8 3v4m8-4v4M4 11h16m-11 4h2m3 0h2"/></svg>
         <span class="tab-key"></span>
-        <span class="tab-label" data-copy="nav.tab.result">Last match</span>
+        <span class="tab-label" data-copy="nav.tab.seasonview">Season</span>
       </button>
 
       <button class="tab" role="tab" aria-selected="false" data-screen="tournaments">
@@ -3625,28 +3960,18 @@ html.preview .topbar-right { margin-left: auto; }
         <span class="tab-label" data-copy="nav.tab.tournaments">Tournaments</span>
       </button>
 
-      <div class="nav-label" data-copy="nav.group.standing">Standing</div>
-
-      <button class="tab" role="tab" aria-selected="false" data-screen="ranks">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 10 8-6 8 6M4 15l8-6 8 6M4 20l8-6 8 6"/></svg>
+      <button class="tab" role="tab" aria-selected="false" data-screen="result">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3h8v7a4 4 0 0 1-8 0V3Zm4 11v6m-4 1h8M8 5H4v3a4 4 0 0 0 4 4m8-7h4v3a4 4 0 0 1-4 4"/></svg>
         <span class="tab-key"></span>
-        <span class="tab-label" data-copy="nav.tab.ranks">Ranks</span>
+        <span class="tab-label" data-copy="nav.tab.result">Last match</span>
       </button>
 
+      <div class="nav-label" data-copy="nav.group.practice">Improve</div>
       <button class="tab" role="tab" aria-selected="false" data-screen="profile">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2"/><path d="M12 1v4m0 14v4M1 12h4m14 0h4"/></svg>
         <span class="tab-key"></span>
         <span class="tab-label" data-copy="nav.tab.profile">Your aim</span>
       </button>
-
-      <button class="tab" role="tab" aria-selected="false" data-screen="consistency">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17h18M3 12l4-5 4 7 5-10 5 6M3 21h18"/></svg>
-        <span class="tab-key"></span>
-        <span class="tab-label" data-copy="nav.tab.consistency">Consistency</span>
-      </button>
-
-
-      <div class="nav-label" data-copy="nav.group.practice">Practice</div>
 
       <button class="tab" role="tab" aria-selected="false" data-screen="quests">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3h6v6M20 3 9 14M10 4H4v16h16v-6"/></svg>
@@ -3660,10 +3985,17 @@ html.preview .topbar-right { margin-left: auto; }
         <span class="tab-label" data-copy="nav.tab.scenarios">Scenarios</span>
       </button>
 
-      <button class="tab" role="tab" aria-selected="false" data-screen="seasonview">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M8 3v4m8-4v4M4 11h16m-11 4h2m3 0h2"/></svg>
+      <div class="nav-label" data-copy="nav.group.standing">Progress</div>
+      <button class="tab" role="tab" aria-selected="false" data-screen="ranks">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 10 8-6 8 6M4 15l8-6 8 6M4 20l8-6 8 6"/></svg>
         <span class="tab-key"></span>
-        <span class="tab-label" data-copy="nav.tab.seasonview">Season</span>
+        <span class="tab-label" data-copy="nav.tab.ranks">Ranks</span>
+      </button>
+
+      <button class="tab" role="tab" aria-selected="false" data-screen="consistency">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17h18M3 12l4-5 4 7 5-10 5 6M3 21h18"/></svg>
+        <span class="tab-key"></span>
+        <span class="tab-label" data-copy="nav.tab.consistency">Consistency</span>
       </button>
 
       <button class="tab" role="tab" aria-selected="false" data-screen="admin" id="tabAdmin" hidden>
@@ -3671,26 +4003,16 @@ html.preview .topbar-right { margin-left: auto; }
         <span class="tab-key"></span>
         <span class="tab-label" data-copy="nav.tab.admin">Admin</span>
       </button>
-
-      <!-- No label and never shown in the rail. A band's detail page is reached by clicking
-           a band, not by navigating to it, but it is a screen like any other - giving it a
-           tab means it uses the one switcher instead of a parallel one, and `hidden` is
-           what makes `restoreScreen` skip it when the app reopens. -->
       <button class="tab" role="tab" aria-selected="false" data-screen="band" id="tabBand" hidden>
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 7-7 7 7-7 7-7-7Z"/></svg>
         <span class="tab-key"></span>
         <span class="tab-label">Band</span>
       </button>
-
-      <!-- Admin-only, revealed after boot by `refreshSeasonTab`, and a different thing
-           from the Season tab above it: that one is the player's read-only view, this one
-           writes the season file. Both are wanted. -->
       <button class="tab" role="tab" aria-selected="false" data-screen="season" id="tabSeason" hidden>
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 4 5 5M4 20l5-1L21 7l-4-4L5 15l-1 5Z"/></svg>
         <span class="tab-key"></span>
         <span class="tab-label" data-copy="nav.tab.season">Season editor</span>
       </button>
-
     </nav>
 
     <div class="rail-foot">
@@ -3751,7 +4073,7 @@ html.preview .topbar-right { margin-left: auto; }
     </div>
 
     <header class="topbar">
-      <div class="app-context"><b>KovaaK’s</b><span>/</span>Ranked 1v1</div>
+      <div class="app-context"><b>APOGEE</b><span>/</span>KovaaK’s competition</div>
       <div class="status" id="status">
         <details>
           <summary class="status-pill">
@@ -3800,6 +4122,17 @@ html.preview .topbar-right { margin-left: auto; }
       </button>
 
       <div class="topbar-right">
+        <button type="button" class="arcade-jump" id="arcadeJump" aria-haspopup="dialog">Jump to <kbd>Ctrl K</kbd></button>
+        <details class="sound-studio" id="soundStudio">
+          <summary class="sound-toggle" aria-label="Sound settings" title="Sound settings">SFX</summary>
+          <div class="status-menu sound-menu">
+            <strong>Arcade audio</strong>
+            <label for="soundVolume">Volume <output id="soundVolumeReadout">65%</output></label>
+            <input id="soundVolume" type="range" min="0" max="100" step="1" value="65" aria-label="Sound volume">
+            <div class="sound-preview"><button type="button" data-sound-preview="press">Ready</button><button type="button" data-sound-preview="matchFound">Match</button><button type="button" data-sound-preview="victory">Win</button></div>
+            <p>Short cues. Big moments. Press M to mute.</p>
+          </div>
+        </details>
         <!-- The player's own chrome. Beside the sound because it is the same kind of
              thing: a preference about this machine, which nobody should have to leave the
              screen they are on to change. Filled in by buildThemeMenu. -->
@@ -3867,12 +4200,13 @@ html.preview .topbar-right { margin-left: auto; }
           <section class="screen active" id="screen-queue">
             <div class="screen-head queue-heading">
               <div>
-                <div class="mode-tag"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 3 6 6-2 2-6-6V3h2Zm14 0-6 6 2 2 6-6V3h-2ZM3 21l6-6m6 0 6 6M2 16l6 6m8-20-5 5m5 15 6-6M9 11l4 4m2-6-4 4"/></svg>Ranked 1v1</div>
-                <h1 data-copy="queue.title">Make your next set count.</h1>
+                <div class="mode-tag">Compete</div>
+                <h1 data-copy="queue.title">Ranked 1v1</h1>
                 <p data-copy="queue.lede">3 scenarios, one opponent. Each round goes to whoever beats their own baseline by more.</p>
               </div>
-              <div class="versus-mark" id="disciplineMark" aria-hidden="true"></div>
+              <div class="arcade-hero-links"><button type="button" data-arcade-route="seasonview">Season benchmarks <span aria-hidden="true">→</span></button><button type="button" data-arcade-route="tournaments">Tournaments <span aria-hidden="true">→</span></button></div>
             </div>
+
 
             <div class="panel rank-showcase">
               <div class="hero">
@@ -3925,7 +4259,7 @@ html.preview .topbar-right { margin-left: auto; }
               </div>
               <div class="pbody queue-body">
                 <ol class="queue-journey" aria-label="Match stages"><li class="current" aria-current="step"><span>01</span>Discipline</li><li><span>02</span>Lock</li><li><span>03</span>Play</li><li><span>04</span>Debrief</li></ol>
-                <div class="queue-signal"><span id="queueSignal" role="status">Choose your discipline</span><span id="disciplineCue"></span></div>
+                <div class="queue-signal"><span id="queueSignal" role="status">Choose your discipline</span></div>
 
                 <div class="queue-pick">
                   <div>
@@ -3934,19 +4268,22 @@ html.preview .topbar-right { margin-left: auto; }
                   </div>
                 </div>
 
+                <div class="queue-selection">
+                  <div class="versus-mark" id="disciplineMark" aria-hidden="true"></div>
+                  <div class="queue-selection-copy"><span class="selection-label">Your selection</span><strong id="selectedDisciplineLabel">All categories</strong><span id="disciplineCue"></span></div>
+                  <button type="button" class="commit" id="queueBtn" aria-describedby="poolNote queueGateText">
+                    <span><span class="commit-verb" id="queueVerb">Find opponent</span><span class="commit-sub" id="queueSub"></span></span>
+                    <span class="commit-meta" id="queueMeta"></span>
+                    <span class="commit-sweep" aria-hidden="true"></span>
+                  </button>
+                </div>
+
                 <!-- Only while the server is looking; see the searching orb notes in
                      the stylesheet and mountSearchOrb() in the renderer. Decorative,
                      and the clock on the button is what actually reports progress. -->
                 <div class="orb-search" id="orbSearch" hidden aria-hidden="true"></div>
 
-                <button type="button" class="commit" id="queueBtn" aria-describedby="poolNote queueGateText">
-                  <span>
-                    <span class="commit-verb" id="queueVerb">Find opponent</span>
-                    <span class="commit-sub" id="queueSub"></span>
-                  </span>
-                  <span class="commit-meta" id="queueMeta"></span>
-                  <span class="commit-sweep" aria-hidden="true"></span>
-                </button>
+
 
                 <div class="queue-gate" id="queueGate" role="status">
                   <span id="queueGateText"></span>
@@ -4057,16 +4394,16 @@ html.preview .topbar-right { margin-left: auto; }
                 </div>
               </div>
             </div>
-            <div class="panel" id="drawPanel" hidden>
-              <div class="phead">
-                <h2 data-copy="queue.p2.head">Drawn from</h2>
+            <details class="panel pool-disclosure" id="drawPanel" hidden>
+              <summary class="phead">
+                <h2 data-copy="queue.p2.head">Scenario pool</h2>
                 <span class="note" id="drawCount"></span>
-              </div>
+              </summary>
               <div class="pbody">
                 <div class="draw-rows" id="drawRows"></div>
                 <p class="draw-legend" id="drawLegend"></p>
               </div>
-            </div>
+            </details>
 
           </section>
 
@@ -4750,6 +5087,13 @@ html.preview .topbar-right { margin-left: auto; }
   <div class="t-score" id="toastScore"></div>
 </div>
 
+<dialog class="arcade-command" id="arcadeCommand" aria-labelledby="arcadeCommandTitle">
+  <div class="arcade-command-head"><span id="arcadeCommandTitle">Where to next?</span><button type="button" id="arcadeCommandClose" aria-label="Close jump menu">Esc</button></div>
+  <input id="arcadeCommandSearch" type="search" placeholder="Find your next move…" autocomplete="off" aria-label="Find a screen">
+  <div class="arcade-command-list" id="arcadeCommandList"></div>
+  <p class="arcade-command-empty" id="arcadeCommandEmpty" hidden>No screens match. Try “season”, “rank”, or “aim”.</p>
+  <div class="arcade-command-foot">↑ ↓ to move <span>Enter to go</span></div>
+</dialog>
 
 
 <script id="apogee-snapshot" type="application/json">{
@@ -10762,10 +11106,8 @@ function countTo(el, value, format = (v) => String(Math.round(v)), key) {
  *
  * The rules the palette below holds to, and where each came from:
  *
- *   One voice. Every pitched sound is the same struck glass (FM at an inharmonic ratio)
- *   in one key, D major, so the app sounds like one object rather than a preset pack.
- *   The first palette mixed triangle arpeggios, sawtooth buzzes and sine chirps, and a
- *   triangle major arpeggio is the most recognisable chiptune cliché there is.
+ *   An arcade voice: filtered pulse leads, triangle bass and percussive contacts,
+ *   in D major. Short interfaces, syncopated run receipts, wider match fanfares.
  *
  *   Frequency buys restraint. The more often a sound plays, the shorter, quieter, drier
  *   and less pitched it is: a press is mostly a contact, a result is a phrase with a room
@@ -10774,7 +11116,7 @@ function countTo(el, value, format = (v) => String(Math.round(v)), key) {
  *   loudness.
  *
  *   Direction means something. Up is on and good, down is off and bad, and a draw takes
- *   a step that does not resolve. A toggle is one tick, brighter for on than for off.
+ *   a step that does not resolve. A toggle is one pulse, higher for on than for off.
  *
  *   Near and far. Frequent sounds are dry, close to the ear; only the rare moments are
  *   sent into the room, so the room itself is a signal that something mattered.
@@ -10788,6 +11130,14 @@ function countTo(el, value, format = (v) => String(Math.round(v)), key) {
  */
 
 const SOUND_KEY = "apogee.sound";
+const SOUND_VOLUME_KEY = "apogee.sound.volume";
+let soundVolume = 0.65;
+try {
+  const storedVolume = localStorage.getItem(SOUND_VOLUME_KEY);
+  const parsedVolume = Number(storedVolume);
+  if (storedVolume !== null && Number.isFinite(parsedVolume)) soundVolume = Math.max(0, Math.min(1, parsedVolume));
+} catch { /* Use the default when local preferences are unavailable. */ }
+let soundMaster = null;
 
 /**
  * Master level.
@@ -10831,7 +11181,8 @@ function audio() {
   comp.attack.value = 0.004;
   comp.release.value = 0.2;
   const master = ac.createGain();
-  master.gain.value = SOUND_GAIN;
+  soundMaster = master;
+  master.gain.value = SOUND_GAIN * soundVolume;
   comp.connect(master);
   master.connect(ac.destination);
 
@@ -10932,9 +11283,8 @@ function route(ctx, node, o) {
  *
  * `from` glides onto the note, and only ever slowly: a sine that falls fast is how a
  * water drop is synthesised, which is what the first press sounded like on every click,
- * and `validate:sound` now fails anything that does it. `fm` makes it glass - a modulator at a fixed
- * ratio whose depth collapses after the strike, so the attack is bright and inharmonic
- * and the tail is nearly a pure tone, which is how a struck bar behaves.
+ * and `validate:sound` fails anything that does it. `fm` adds a short harmonic attack.
+ * Pulse and saw voices use low-pass filtering for comfortable long sessions.
  */
 function tone(o) {
   const ctx = audio();
@@ -10944,7 +11294,7 @@ function tone(o) {
   const f = o.freq * Math.pow(2, (o.cents || 0) / 1200);
 
   const osc = ctx.createOscillator();
-  osc.type = "sine";
+  osc.type = o.wave || "triangle";
   if (o.from) {
     osc.frequency.setValueAtTime(o.from * Math.pow(2, (o.cents || 0) / 1200), t0);
     osc.frequency.exponentialRampToValueAtTime(f, t0 + (o.glide || 0.03));
@@ -11019,8 +11369,8 @@ const NOTE = {
   D5: 587.33, E5: 659.25, Fs5: 739.99, A5: 880.0, D6: 1174.66, Fs6: 1479.98, A6: 1760.0,
 };
 
-/** The app's one timbre. 3.5 is inharmonic, which is what makes it glass and not organ. */
-const GLASS = { ratio: 3.5, index: 1.1, decay: 0.12 };
+/** A harmonic attack used for the unresolved draw cue. */
+const CHIP = { ratio: 2, index: 0.35, decay: 0.045 };
 
 /**
  * How far one press lands from the last, in cents.
@@ -11048,9 +11398,9 @@ function pressVariation() {
  * weight and a press its body.
  */
 const SOUNDS = {
-  /** Moving between screens. A breath of air, no pitch and no sweep: the most frequent sound gets the least. */
+  /** A short, dry cabinet-button pulse for navigation. */
   nav() {
-    tick({ type: "highpass", hz: 2400, q: 0.5, dur: 0.07, attack: 0.02, gain: 0.035 });
+    tone({ freq: NOTE.A4, wave: "square", lowpass: 1600, dur: 0.045, gain: 0.022 });
   },
 
   /**
@@ -11067,25 +11417,25 @@ const SOUNDS = {
     tick({ type: "highpass", hz: 2600 * shift, q: 0.5, dur: 0.006, gain: 0.14 });
   },
 
-  /** One tick, brighter than a press. One burst and no pitch, for the press's reasons. */
+  /** A higher pulse confirms selection. */
   toggleOn() {
-    tick({ type: "highpass", hz: 3600, q: 0.5, dur: 0.007, gain: 0.12 });
+    tone({ freq: NOTE.D5, wave: "square", lowpass: 2200, dur: 0.035, gain: 0.026 });
   },
 
-  /** The same tick, darker and a little quieter: off is less news than on. */
+  /** A lower pulse confirms deselection. */
   toggleOff() {
-    tick({ type: "highpass", hz: 1800, q: 0.5, dur: 0.007, gain: 0.1 });
+    tone({ freq: NOTE.A4, wave: "square", lowpass: 1300, dur: 0.028, gain: 0.022 });
   },
 
-  /** A run landed in the stats folder. One struck glass: good news, but news every minute. */
+  /** A three-note receipt when a run lands in the stats folder. */
   run() {
-    tone({ freq: NOTE.D6, fm: GLASS, dur: 0.5, gain: 0.05, send: 0.2 });
+    [NOTE.D5, NOTE.A5, NOTE.D6].forEach((freq, i) => tone({ freq, wave: "square", lowpass: 3200, dur: i === 2 ? 0.24 : 0.09, gain: 0.036, delay: i * 0.065, send: 0.08 }));
   },
 
-  /** Something worked. Up a fourth, glass. */
+  /** Success: a short rising fourth. */
   ok() {
-    tone({ freq: NOTE.A5, fm: GLASS, dur: 0.2, gain: 0.045, send: 0.12 });
-    tone({ freq: NOTE.D6, fm: GLASS, dur: 0.32, gain: 0.04, delay: 0.07, send: 0.18 });
+    tone({ freq: NOTE.A5, wave: "square", lowpass: 2800, dur: 0.09, gain: 0.037 });
+    tone({ freq: NOTE.D6, wave: "square", lowpass: 3200, dur: 0.26, gain: 0.036, delay: 0.09, send: 0.12 });
   },
 
   /**
@@ -11104,9 +11454,9 @@ const SOUNDS = {
 
   /** The big commitment - Find opponent. Weight first, then a ring, so the commitment has a pitch. */
   press() {
-    tick({ hz: 2400, q: 0.7, dur: 0.018, gain: 0.12 });
-    tone({ freq: NOTE.D3, dur: 0.18, gain: 0.2, lowpass: 900 });
-    tone({ freq: NOTE.A4, fm: { ratio: 2, index: 1.2, decay: 0.12 }, dur: 0.24, gain: 0.07, delay: 0.01, send: 0.15 });
+    tick({ type: "highpass", hz: 1800, q: 0.5, dur: 0.025, gain: 0.13 });
+    tone({ freq: NOTE.D3, wave: "triangle", dur: 0.21, gain: 0.14, lowpass: 900 });
+    [NOTE.D4, NOTE.A4, NOTE.D5].forEach((freq, i) => tone({ freq, wave: "square", lowpass: 2300, dur: 0.12, gain: 0.045, delay: 0.04 + i * 0.065, send: 0.1 }));
   },
 
   /**
@@ -11114,8 +11464,8 @@ const SOUNDS = {
    * win would have given it, which is what a draw is.
    */
   draw() {
-    tone({ freq: NOTE.D5, fm: GLASS, dur: 0.4, gain: 0.04, send: 0.15 });
-    tone({ freq: NOTE.E5, fm: GLASS, dur: 0.55, gain: 0.036, delay: 0.12, send: 0.2 });
+    tone({ freq: NOTE.D5, fm: CHIP, dur: 0.4, gain: 0.04, send: 0.15 });
+    tone({ freq: NOTE.E5, fm: CHIP, dur: 0.55, gain: 0.036, delay: 0.12, send: 0.2 });
   },
 
   /**
@@ -11138,22 +11488,21 @@ const SOUNDS = {
    * left when it hits.
    */
   matchFound() {
-    tick({ hz: 300, to: 3800, q: 1.2, dur: 0.36, attack: 0.3, gain: 0.045 });
-    tone({ freq: NOTE.D5, from: NOTE.D4, glide: 0.34, dur: 0.36, attack: 0.3, gain: 0.03, lowpass: 2500 });
+    [NOTE.D4, NOTE.A4, NOTE.D5].forEach((freq, i) => tone({ freq, wave: "square", lowpass: 2600, dur: 0.065, gain: 0.045, delay: i * 0.1 }));
     const at = 0.36;
     tick({ hz: 2200, dur: 0.02, gain: 0.09, delay: at });
     tone({ freq: NOTE.D3, dur: 0.35, gain: 0.18, delay: at, lowpass: 700 });
-    tone({ freq: NOTE.D5, fm: GLASS, dur: 0.7, gain: 0.055, delay: at, pan: -0.3, send: 0.3 });
-    tone({ freq: NOTE.A5, fm: GLASS, dur: 0.8, gain: 0.05, delay: at + 0.02, pan: 0.3, send: 0.3 });
+    tone({ freq: NOTE.D5, wave: "sawtooth", lowpass: 2300, dur: 0.7, gain: 0.055, delay: at, pan: -0.3, send: 0.2 });
+    tone({ freq: NOTE.A5, wave: "square", lowpass: 3200, dur: 0.8, gain: 0.045, delay: at + 0.02, pan: 0.3, send: 0.2 });
   },
 
   /** A quest completed or a benchmark promotion. The chord, climbing left to right. */
   celebrate() {
     [NOTE.D5, NOTE.Fs5, NOTE.A5, NOTE.D6].forEach((f, i) => {
-      tone({ freq: f, fm: GLASS, dur: 0.9 - i * 0.1, gain: 0.055, delay: i * 0.07, pan: -0.45 + i * 0.3, send: 0.35 });
+      tone({ freq: f, wave: "square", lowpass: 3400, dur: 0.9 - i * 0.1, gain: 0.04, delay: i * 0.085, pan: -0.45 + i * 0.3, send: 0.2 });
     });
     tone({ freq: NOTE.D4, dur: 0.6, gain: 0.07, delay: 0.21, lowpass: 800, send: 0.2 });
-    tone({ freq: NOTE.A6, fm: GLASS, dur: 1.2, gain: 0.025, delay: 0.28, send: 0.5 });
+    tone({ freq: NOTE.A6, wave: "triangle", dur: 1.2, gain: 0.025, delay: 0.28, send: 0.25 });
   },
 
   /**
@@ -11162,13 +11511,13 @@ const SOUNDS = {
    */
   victory() {
     [NOTE.A4, NOTE.D5, NOTE.Fs5].forEach((f, i) => {
-      tone({ freq: f, fm: GLASS, dur: 0.3, gain: 0.055, delay: i * 0.09, send: 0.2 });
+      tone({ freq: f, wave: "square", lowpass: 3300, dur: 0.14, gain: 0.05, delay: i * 0.09, send: 0.12 });
     });
     const at = 0.27;
     tick({ hz: 2600, dur: 0.02, gain: 0.08, delay: at });
     tone({ freq: NOTE.D3, dur: 0.7, gain: 0.15, delay: at, lowpass: 600, send: 0.15 });
     [NOTE.A5, NOTE.D6, NOTE.Fs6].forEach((f, i) => {
-      tone({ freq: f, fm: GLASS, dur: 1.3, gain: 0.05, delay: at + i * 0.012, pan: [-0.4, 0, 0.4][i], send: 0.45 });
+      tone({ freq: f, wave: "square", lowpass: 3800, dur: 1.3, gain: 0.04, delay: at + i * 0.012, pan: [-0.4, 0, 0.4][i], send: 0.3 });
     });
   },
 };
@@ -11215,6 +11564,7 @@ function playSound(name) {
 
 function setSound(on, announce) {
   soundOn = on;
+  if (soundMaster && ac) soundMaster.gain.setTargetAtTime(on ? SOUND_GAIN * soundVolume : 0, ac.currentTime, 0.015);
   const btn = $("soundToggle");
   if (btn) {
     btn.setAttribute("aria-pressed", on ? "true" : "false");
@@ -11227,6 +11577,19 @@ function setSound(on, announce) {
   }
   // Confirm unmuting by being audible. Muting confirms itself by going quiet.
   if (on && announce) playSound("toggleOn");
+}
+
+/** Volume changes the existing master bus, including any cue already playing. */
+function setSoundVolume(value) {
+  const parsed = Number(value);
+  if (!Number.isFinite(parsed)) return;
+  soundVolume = Math.max(0, Math.min(1, parsed));
+  if (soundMaster && ac) soundMaster.gain.setTargetAtTime(soundOn ? SOUND_GAIN * soundVolume : 0, ac.currentTime, 0.015);
+  try { localStorage.setItem(SOUND_VOLUME_KEY, String(soundVolume)); } catch { /* Session-only preference. */ }
+  const slider = $('soundVolume');
+  if (slider) slider.value = String(Math.round(soundVolume * 100));
+  const readout = $('soundVolumeReadout');
+  if (readout) readout.textContent = Math.round(soundVolume * 100) + '%';
 }
 
 
@@ -11323,13 +11686,13 @@ function badge(tier, uid) {
 
 /* Discipline marks describe movement; they never decide the scenario pool. */
 const DISCIPLINES = {
-  "Any": { key: "all", ink: "#b6c7dd", cue: "A complete test of your aim", path: '<path d="M4 7h5l6 10h5M4 17h5l6-10h5"/><path d="m17 4 3 3-3 3m0 4 3 3-3 3"/>' },
-  "Static Clicking": { key: "static", ink: "#d4b38c", cue: "Big flick → micro → click. Straight line.", path: '<path d="M4 9V4h5m6 0h5v5m0 6v5h-5M9 20H4v-5"/><path d="M9 12h6m-3-3v6"/>' },
-  "Dynamic Clicking": { key: "dynamic", ink: "#d69ea8", cue: "Read path → match → confirm → click.", path: '<path d="M3 18Q9 1 20 6"/><circle cx="14" cy="7" r="3"/><path d="m18 3 3 3-3 3M4 21h6"/>' },
-  "Precise Tracking": { key: "precise", ink: "#8dc9bf", cue: "Match speed. Centred. Micro small.", path: '<ellipse cx="12" cy="12" rx="9" ry="5" transform="rotate(-30 12 12)"/><circle cx="12" cy="12" r="2"/><path d="M12 2v3m0 14v3"/>' },
-  "Reactive Tracking": { key: "reactive", ink: "#a9bafa", cue: "React, never predict. Underaim.", path: '<path d="m3 16 5-9 5 10 5-10 3 4"/><circle cx="8" cy="7" r="2"/><path d="M3 21h18"/>' },
-  "Speed Switching": { key: "speed", ink: "#c8c991", cue: "One flick, no micro. Next chosen.", path: '<path d="M3 5h6v6H3zm12 8h6v6h-6zM8 16l8-8m-5 0h5v5"/>' },
-  "Evasive Switching": { key: "evasive", ink: "#bda5d6", cue: "Track to kill. Then switch. Read next.", path: '<circle cx="5" cy="6" r="3"/><circle cx="19" cy="18" r="3"/><path d="M5 11c0 10 14-10 14 2m-7-8 3 3-3 3"/>' },
+  "Any": { key: "all", ink: "#d7fa52", cue: "A complete test of your aim", path: '<path d="M4 7h5l6 10h5M4 17h5l6-10h5"/><path d="m17 4 3 3-3 3m0 4 3 3-3 3"/>' },
+  "Static Clicking": { key: "static", ink: "#f3ca6c", cue: "Big flick → micro → click. Straight line.", path: '<path d="M4 9V4h5m6 0h5v5m0 6v5h-5M9 20H4v-5"/><path d="M9 12h6m-3-3v6"/>' },
+  "Dynamic Clicking": { key: "dynamic", ink: "#ff9dae", cue: "Read path → match → confirm → click.", path: '<path d="M3 18Q9 1 20 6"/><circle cx="14" cy="7" r="3"/><path d="m18 3 3 3-3 3M4 21h6"/>' },
+  "Precise Tracking": { key: "precise", ink: "#98e3ce", cue: "Match speed. Centred. Micro small.", path: '<ellipse cx="12" cy="12" rx="9" ry="5" transform="rotate(-30 12 12)"/><circle cx="12" cy="12" r="2"/><path d="M12 2v3m0 14v3"/>' },
+  "Reactive Tracking": { key: "reactive", ink: "#a2bfff", cue: "React, never predict. Underaim.", path: '<path d="m3 16 5-9 5 10 5-10 3 4"/><circle cx="8" cy="7" r="2"/><path d="M3 21h18"/>' },
+  "Speed Switching": { key: "speed", ink: "#d7fa52", cue: "One flick, no micro. Next chosen.", path: '<path d="M3 5h6v6H3zm12 8h6v6h-6zM8 16l8-8m-5 0h5v5"/>' },
+  "Evasive Switching": { key: "evasive", ink: "#cfb0f1", cue: "Track to kill. Then switch. Read next.", path: '<circle cx="5" cy="6" r="3"/><circle cx="19" cy="18" r="3"/><path d="M5 11c0 10 14-10 14 2m-7-8 3 3-3 3"/>' },
 };
 
 function disciplineOf(name) { return DISCIPLINES[name] || DISCIPLINES.Any; }
@@ -11343,7 +11706,12 @@ function paintDiscipline(name) {
   const mark = $('disciplineMark');
   if (mark) mark.style.setProperty('--discipline', d.ink);
   if (mark) mark.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d.path + '</svg>';
+  if (mark && soundReady && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    mark.classList.remove('is-picking');
+    requestAnimationFrame(() => mark.classList.add('is-picking'));
+  }
   if ($('disciplineCue')) $('disciplineCue').textContent = d.cue;
+  if ($('selectedDisciplineLabel')) $('selectedDisciplineLabel').textContent = name === 'Any' || !name ? 'All categories' : name;
 }
 
 function paintQueueJourney(state) {
@@ -11697,7 +12065,7 @@ function renderDraw(data) {
   const count = $("drawCount");
   if (count) {
     count.textContent =
-      "3 of " + rows.length + " drawn · " + measured + " with a baseline";
+      rows.length + " scenarios · " + measured + " with a baseline";
   }
 
   host.textContent = "";
@@ -12492,7 +12860,7 @@ function legibleOn(color, ground, min) {
   return out;
 }
 
-const legibleOnDark = (color, min) => legibleOn(color, "#242b3e", min);
+const legibleOnDark = (color, min) => legibleOn(color, "#304c5c", min);
 const legibleOnLight = (color, min) => legibleOn(color, LIGHT_GROUND, min);
 
 /** Body-size rank labels meet 4.5:1 against the brightest standard control surface. */
@@ -17688,14 +18056,14 @@ numberTabs();
  * press it again, which is not what a click somewhere else means.
  */
 document.addEventListener("pointerdown", (e) => {
-  document.querySelectorAll("details[open]").forEach((d) => {
+  document.querySelectorAll("details[open]:not(.pool-disclosure)").forEach((d) => {
     if (!d.contains(e.target)) d.open = false;
   });
 });
 
 document.addEventListener("keydown", (e) => {
   if (e.key !== "Escape") return;
-  const open = document.querySelector("details[open]");
+  const open = document.querySelector("details[open]:not(.pool-disclosure)");
   if (open) open.open = false;
 });
 
@@ -17720,6 +18088,7 @@ document.addEventListener("keydown", (e) => {
   // A modal is showing: its own Escape handling owns the keyboard.
   const modal = $("celebrate");
   if (modal && !modal.hidden) return;
+  if ($('arcadeCommand')?.open) return;
 
   const tabs = [...document.querySelectorAll(".tab")].filter((tab) => !tab.hidden);
   if (tabs.length === 0) return;
@@ -20351,6 +20720,99 @@ const soundToggle = $("soundToggle");
 if (soundToggle) {
   soundToggle.addEventListener("click", () => setSound(!soundOn, true));
 }
+
+const volumeSlider = $('soundVolume');
+if (volumeSlider) {
+  volumeSlider.addEventListener('input', () => setSoundVolume(Number(volumeSlider.value) / 100));
+  volumeSlider.value = String(Math.round(soundVolume * 100));
+  $('soundVolumeReadout').textContent = Math.round(soundVolume * 100) + '%';
+}
+let lastSoundPreview = -Infinity;
+document.querySelectorAll('[data-sound-preview]').forEach(button => {
+  button.addEventListener('click', () => {
+    if (performance.now() - lastSoundPreview < 1800) return;
+    lastSoundPreview = performance.now();
+    if (!soundOn) setSound(true, false);
+    playSound(button.dataset.soundPreview);
+  });
+});
+document.querySelectorAll('[data-arcade-route]').forEach(button => {
+  button.addEventListener('click', () => openScreen(button.dataset.arcadeRoute));
+});
+
+/** The jump menu routes through the existing tabs, keeping all screen lifecycles intact. */
+function mountArcadeCommand() {
+  const dialog = $('arcadeCommand');
+  const input = $('arcadeCommandSearch');
+  const list = $('arcadeCommandList');
+  if (!dialog || !input || !list) return;
+  let opener = null;
+  const descriptions = {
+    queue: 'Pick a discipline. Find your rival.', seasonview: 'Benchmarks, families and your next rank.',
+    tournaments: 'Groups, brackets and fixtures.', result: 'Every round. Every rating point.',
+    profile: 'Your strengths and the work ahead.', quests: 'A fresh target for your next session.',
+    scenarios: 'Find the right scenario to train.', ranks: 'The ladder and your place on it.',
+    consistency: 'See what your recent runs are saying.', admin: 'Local appearance and app settings.',
+    season: 'Manage the season definition.'
+  };
+  function renderRoutes() {
+    const query = input.value.trim().toLowerCase();
+    list.replaceChildren();
+    document.querySelectorAll('.nav .tab').forEach(tab => {
+      if (tab.hidden) return;
+      const label = tab.querySelector('.tab-label')?.textContent || '';
+      const description = descriptions[tab.dataset.screen] || '';
+      if (query && !(label + ' ' + description).toLowerCase().includes(query)) return;
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'arcade-command-route';
+      button.innerHTML = '<span class="arcade-command-icon" aria-hidden="true">' + (tab.querySelector('svg')?.outerHTML || '') + '</span><span><strong>' + esc(label) + '</strong><small>' + esc(description) + '</small></span><span aria-hidden="true">↗</span>';
+      button.addEventListener('click', () => {
+        dialog.close();
+        openScreen(tab.dataset.screen);
+      });
+      list.append(button);
+    });
+    $('arcadeCommandEmpty').hidden = list.childElementCount > 0;
+  }
+  function show() {
+    if (dialog.open || !$('celebrate').hidden) return;
+    opener = document.activeElement;
+    input.value = '';
+    renderRoutes();
+    dialog.showModal();
+    input.focus();
+  }
+  $('arcadeJump').addEventListener('click', show);
+  $('arcadeCommandClose').addEventListener('click', () => dialog.close());
+  dialog.addEventListener('close', () => { if (opener?.isConnected) opener.focus(); });
+  dialog.addEventListener('click', event => {
+    if (event.target !== dialog) return;
+    const r = dialog.getBoundingClientRect();
+    if (event.clientX < r.left || event.clientX > r.right || event.clientY < r.top || event.clientY > r.bottom) dialog.close();
+  });
+  input.addEventListener('input', renderRoutes);
+  dialog.addEventListener('keydown', event => {
+    const routes = [...list.querySelectorAll('button')];
+    if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+      event.preventDefault();
+      if (!routes.length) return;
+      const index = routes.indexOf(document.activeElement);
+      const next = index < 0 ? (event.key === 'ArrowDown' ? 0 : routes.length - 1) : (index + (event.key === 'ArrowDown' ? 1 : -1) + routes.length) % routes.length;
+      routes[next].focus();
+    } else if (event.key === 'Enter' && event.target === input) {
+      event.preventDefault();
+      routes[0]?.click();
+    }
+  });
+  document.addEventListener('keydown', event => {
+    if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') {
+      event.preventDefault();
+      if (dialog.open) dialog.close(); else show();
+    }
+  });
+}
+mountArcadeCommand();
 
 // Reflect the stored preference on the control before anything can be heard, then let
 // the rest of the app make noise.

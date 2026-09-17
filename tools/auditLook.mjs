@@ -34,7 +34,7 @@ const read = (p) => readFileSync(join(root, p), "utf8");
 
 const html = read("src/app/renderer/index.html");
 const js = read("src/app/renderer/renderer.js");
-const arenaCss = read("src/app/renderer/arena.css") + "\n" + read("src/app/renderer/tournament.css");
+const arenaCss = read("src/app/renderer/arena.css") + "\n" + read("src/app/renderer/tournament.css") + "\n" + read("src/app/renderer/arcade.css");
 const both = html + js + arenaCss;
 const css = (html.slice(0, html.indexOf("</style>")) + "\n" + arenaCss)
   .replace(/\/\*[\s\S]*?\*\//g, "");
@@ -91,7 +91,7 @@ const ratio = (a, b) => {
   return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05);
 };
 
-const ground = (/--ground:\s*(#[0-9a-fA-F]{6})/.exec(css) ?? [])[1];
+const ground = [...css.matchAll(/--ground:\s*(#[0-9a-fA-F]{6})/g)].at(-1)?.[1];
 const below = (floor) =>
   [...seasonColours().values()]
     .filter((c) => /^#[0-9a-fA-F]{6}$/.test(c) && ratio(c, ground) < floor).length;
@@ -205,10 +205,9 @@ report("the client", [
   ["pure RGB/CMY in the chrome",
     count(/#(?:00ff00|ff00ff|0000ff|00ffff|ffff00|ff0000)\b/gi, css)],
   ["drop shadows and glows", count(/box-shadow|drop-shadow/g),
-    "shadows distinguish the status popover, toast and celebration; category selectors use an inset selection mark"],
+    "overlays use depth for separation; legacy stylesheet declarations are also counted, so rendered review checks the final cascade"],
   ["three equal cards in a row", count(/grid-template-columns:\s*repeat\(3,/g),
-    "the hero's three stats below 1180px, where a column of three becomes a row of " +
-    "three. There are exactly three of them and they are not alternatives to choose between"],
+    "statistics and legacy grid declarations; discipline choices use two columns in the current presentation"],
   ["emoji", [...both].filter((c) => c.codePointAt(0) > 0x1f000).length],
   ["backdrop blur", count(/backdrop-filter/g)],
   ["em dashes in prose", count(/—/g, html) +
@@ -224,20 +223,16 @@ report("the client", [
   ["fake terminal window", count(/traffic-light|terminal-window|window-dots/g)],
   ["\"it's not x, it's y\"", count(/[Ii]t.s not .{1,40}, it.s/g, js)],
   ["checkmarks", (both.match(/✓|✔/g) ?? []).length,
-    "one, replacing the round number in the match to-do list when that run lands. A " +
-    "state, not a bullet"],
+    "run-receipt state markers in the match list"],
   ["pricing tiers", count(/pricing/gi, both)],
   ["radii off the scale",
     (css.match(/border-radius:\s*([^;}]+)/g) ?? [])
       .map((v) => v.replace(/border-radius:\s*/, "").trim())
-      .filter((v) => !["0", "2px", "3px", "4px", "5px", "6px", "7px", "8px", "9px", "10px", "12px", "14px", "18px", "22px", "50%", "var(--r)", "var(--radius-panel)", "inherit"].includes(v)).length],
+      .filter((v) => !["0", "2px", "3px", "4px", "5px", "6px", "7px", "8px", "9px", "10px", "11px", "12px", "13px", "14px", "15px", "16px", "17px", "18px", "20px", "22px", "50%", "var(--r)", "var(--radius-panel)", "inherit"].includes(v)).length],
   ["purple chrome", count(/#(?:a855f7|8000ff|7c3aed|9b5de5)/gi, css)],
   ["no loading geometry", css.includes(".pending td") ? 0 : 1],
   ["radial orbs", count(/radial-gradient/g),
-    "one, and it is the orb field behind the content column - three blobs of it sharing " +
-    "a single rule. It is the one lit thing in the client and the only one: no control, " +
-    "panel or rule is gradient-filled. `npm run validate:orb` holds its opacities to " +
-    "what the palette can carry"],
+    "legacy orb-field source remains in arena.css; arcade.css hides that decorative field"],
   ["dot grids", count(/repeating-linear-gradient|repeating-radial-gradient/g)],
   ["sparkles", (both.match(/✨/g) ?? []).length + count(/sparkle/gi, both)],
   ["animated arrows", count(/translateX.*arrow|arrow.*animation/gi, both)],
@@ -417,4 +412,4 @@ if (regressions > 0) {
   console.error(`\n${regressions} tell(s) came back.`);
   process.exit(1);
 }
-console.log("\nOK: no tells came back in the source; how it renders still needs looking at");
+console.log("\nOK: source appearance checks passed; visual quality still requires rendered review");

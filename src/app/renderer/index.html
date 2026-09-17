@@ -2755,6 +2755,7 @@
 </style>
 <link rel="stylesheet" href="arena.css">
 <link rel="stylesheet" href="tournament.css">
+<link rel="stylesheet" href="arcade.css">
 </head>
 <body data-screen="queue">
 <a class="skip-link" href="#mainContent">Skip to content</a>
@@ -2767,18 +2768,17 @@
     </div>
 
     <nav class="nav" role="tablist" aria-label="Screens" aria-orientation="vertical">
-      <div class="nav-label" data-copy="nav.group.play">Play</div>
-
+      <div class="nav-label" data-copy="nav.group.play">Compete</div>
       <button class="tab" role="tab" aria-selected="true" data-screen="queue">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 3 6 6-2 2-6-6V3h2Zm14 0-6 6 2 2 6-6V3h-2ZM3 21l6-6m6 0 6 6M2 16l6 6m8-20-5 5m5 15 6-6M9 11l4 4m2-6-4 4"/></svg>
         <span class="tab-key"></span>
-        <span class="tab-label" data-copy="nav.tab.queue">Find a match</span>
+        <span class="tab-label" data-copy="nav.tab.queue">Play arena</span>
       </button>
 
-      <button class="tab" role="tab" aria-selected="false" data-screen="result">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3h8v7a4 4 0 0 1-8 0V3Zm4 11v6m-4 1h8M8 5H4v3a4 4 0 0 0 4 4m8-7h4v3a4 4 0 0 1-4 4"/></svg>
+      <button class="tab" role="tab" aria-selected="false" data-screen="seasonview">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M8 3v4m8-4v4M4 11h16m-11 4h2m3 0h2"/></svg>
         <span class="tab-key"></span>
-        <span class="tab-label" data-copy="nav.tab.result">Last match</span>
+        <span class="tab-label" data-copy="nav.tab.seasonview">Season</span>
       </button>
 
       <button class="tab" role="tab" aria-selected="false" data-screen="tournaments">
@@ -2787,28 +2787,18 @@
         <span class="tab-label" data-copy="nav.tab.tournaments">Tournaments</span>
       </button>
 
-      <div class="nav-label" data-copy="nav.group.standing">Standing</div>
-
-      <button class="tab" role="tab" aria-selected="false" data-screen="ranks">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 10 8-6 8 6M4 15l8-6 8 6M4 20l8-6 8 6"/></svg>
+      <button class="tab" role="tab" aria-selected="false" data-screen="result">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3h8v7a4 4 0 0 1-8 0V3Zm4 11v6m-4 1h8M8 5H4v3a4 4 0 0 0 4 4m8-7h4v3a4 4 0 0 1-4 4"/></svg>
         <span class="tab-key"></span>
-        <span class="tab-label" data-copy="nav.tab.ranks">Ranks</span>
+        <span class="tab-label" data-copy="nav.tab.result">Last match</span>
       </button>
 
+      <div class="nav-label" data-copy="nav.group.practice">Improve</div>
       <button class="tab" role="tab" aria-selected="false" data-screen="profile">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2"/><path d="M12 1v4m0 14v4M1 12h4m14 0h4"/></svg>
         <span class="tab-key"></span>
         <span class="tab-label" data-copy="nav.tab.profile">Your aim</span>
       </button>
-
-      <button class="tab" role="tab" aria-selected="false" data-screen="consistency">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17h18M3 12l4-5 4 7 5-10 5 6M3 21h18"/></svg>
-        <span class="tab-key"></span>
-        <span class="tab-label" data-copy="nav.tab.consistency">Consistency</span>
-      </button>
-
-
-      <div class="nav-label" data-copy="nav.group.practice">Practice</div>
 
       <button class="tab" role="tab" aria-selected="false" data-screen="quests">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3h6v6M20 3 9 14M10 4H4v16h16v-6"/></svg>
@@ -2822,10 +2812,17 @@
         <span class="tab-label" data-copy="nav.tab.scenarios">Scenarios</span>
       </button>
 
-      <button class="tab" role="tab" aria-selected="false" data-screen="seasonview">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M8 3v4m8-4v4M4 11h16m-11 4h2m3 0h2"/></svg>
+      <div class="nav-label" data-copy="nav.group.standing">Progress</div>
+      <button class="tab" role="tab" aria-selected="false" data-screen="ranks">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 10 8-6 8 6M4 15l8-6 8 6M4 20l8-6 8 6"/></svg>
         <span class="tab-key"></span>
-        <span class="tab-label" data-copy="nav.tab.seasonview">Season</span>
+        <span class="tab-label" data-copy="nav.tab.ranks">Ranks</span>
+      </button>
+
+      <button class="tab" role="tab" aria-selected="false" data-screen="consistency">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17h18M3 12l4-5 4 7 5-10 5 6M3 21h18"/></svg>
+        <span class="tab-key"></span>
+        <span class="tab-label" data-copy="nav.tab.consistency">Consistency</span>
       </button>
 
       <button class="tab" role="tab" aria-selected="false" data-screen="admin" id="tabAdmin" hidden>
@@ -2833,26 +2830,16 @@
         <span class="tab-key"></span>
         <span class="tab-label" data-copy="nav.tab.admin">Admin</span>
       </button>
-
-      <!-- No label and never shown in the rail. A band's detail page is reached by clicking
-           a band, not by navigating to it, but it is a screen like any other - giving it a
-           tab means it uses the one switcher instead of a parallel one, and `hidden` is
-           what makes `restoreScreen` skip it when the app reopens. -->
       <button class="tab" role="tab" aria-selected="false" data-screen="band" id="tabBand" hidden>
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 7-7 7 7-7 7-7-7Z"/></svg>
         <span class="tab-key"></span>
         <span class="tab-label">Band</span>
       </button>
-
-      <!-- Admin-only, revealed after boot by `refreshSeasonTab`, and a different thing
-           from the Season tab above it: that one is the player's read-only view, this one
-           writes the season file. Both are wanted. -->
       <button class="tab" role="tab" aria-selected="false" data-screen="season" id="tabSeason" hidden>
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 4 5 5M4 20l5-1L21 7l-4-4L5 15l-1 5Z"/></svg>
         <span class="tab-key"></span>
         <span class="tab-label" data-copy="nav.tab.season">Season editor</span>
       </button>
-
     </nav>
 
     <div class="rail-foot">
@@ -2913,7 +2900,7 @@
     </div>
 
     <header class="topbar">
-      <div class="app-context"><b>KovaaK’s</b><span>/</span>Ranked 1v1</div>
+      <div class="app-context"><b>APOGEE</b><span>/</span>KovaaK’s competition</div>
       <div class="status" id="status">
         <details>
           <summary class="status-pill">
@@ -2962,6 +2949,17 @@
       </button>
 
       <div class="topbar-right">
+        <button type="button" class="arcade-jump" id="arcadeJump" aria-haspopup="dialog">Jump to <kbd>Ctrl K</kbd></button>
+        <details class="sound-studio" id="soundStudio">
+          <summary class="sound-toggle" aria-label="Sound settings" title="Sound settings">SFX</summary>
+          <div class="status-menu sound-menu">
+            <strong>Arcade audio</strong>
+            <label for="soundVolume">Volume <output id="soundVolumeReadout">65%</output></label>
+            <input id="soundVolume" type="range" min="0" max="100" step="1" value="65" aria-label="Sound volume">
+            <div class="sound-preview"><button type="button" data-sound-preview="press">Ready</button><button type="button" data-sound-preview="matchFound">Match</button><button type="button" data-sound-preview="victory">Win</button></div>
+            <p>Short cues. Big moments. Press M to mute.</p>
+          </div>
+        </details>
         <!-- The player's own chrome. Beside the sound because it is the same kind of
              thing: a preference about this machine, which nobody should have to leave the
              screen they are on to change. Filled in by buildThemeMenu. -->
@@ -3029,12 +3027,13 @@
           <section class="screen active" id="screen-queue">
             <div class="screen-head queue-heading">
               <div>
-                <div class="mode-tag"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 3 6 6-2 2-6-6V3h2Zm14 0-6 6 2 2 6-6V3h-2ZM3 21l6-6m6 0 6 6M2 16l6 6m8-20-5 5m5 15 6-6M9 11l4 4m2-6-4 4"/></svg>Ranked 1v1</div>
-                <h1 data-copy="queue.title">Make your next set count.</h1>
+                <div class="mode-tag">Compete</div>
+                <h1 data-copy="queue.title">Ranked 1v1</h1>
                 <p data-copy="queue.lede">3 scenarios, one opponent. Each round goes to whoever beats their own baseline by more.</p>
               </div>
-              <div class="versus-mark" id="disciplineMark" aria-hidden="true"></div>
+              <div class="arcade-hero-links"><button type="button" data-arcade-route="seasonview">Season benchmarks <span aria-hidden="true">→</span></button><button type="button" data-arcade-route="tournaments">Tournaments <span aria-hidden="true">→</span></button></div>
             </div>
+
 
             <div class="panel rank-showcase">
               <div class="hero">
@@ -3087,7 +3086,7 @@
               </div>
               <div class="pbody queue-body">
                 <ol class="queue-journey" aria-label="Match stages"><li class="current" aria-current="step"><span>01</span>Discipline</li><li><span>02</span>Lock</li><li><span>03</span>Play</li><li><span>04</span>Debrief</li></ol>
-                <div class="queue-signal"><span id="queueSignal" role="status">Choose your discipline</span><span id="disciplineCue"></span></div>
+                <div class="queue-signal"><span id="queueSignal" role="status">Choose your discipline</span></div>
 
                 <div class="queue-pick">
                   <div>
@@ -3096,19 +3095,22 @@
                   </div>
                 </div>
 
+                <div class="queue-selection">
+                  <div class="versus-mark" id="disciplineMark" aria-hidden="true"></div>
+                  <div class="queue-selection-copy"><span class="selection-label">Your selection</span><strong id="selectedDisciplineLabel">All categories</strong><span id="disciplineCue"></span></div>
+                  <button type="button" class="commit" id="queueBtn" aria-describedby="poolNote queueGateText">
+                    <span><span class="commit-verb" id="queueVerb">Find opponent</span><span class="commit-sub" id="queueSub"></span></span>
+                    <span class="commit-meta" id="queueMeta"></span>
+                    <span class="commit-sweep" aria-hidden="true"></span>
+                  </button>
+                </div>
+
                 <!-- Only while the server is looking; see the searching orb notes in
                      the stylesheet and mountSearchOrb() in the renderer. Decorative,
                      and the clock on the button is what actually reports progress. -->
                 <div class="orb-search" id="orbSearch" hidden aria-hidden="true"></div>
 
-                <button type="button" class="commit" id="queueBtn" aria-describedby="poolNote queueGateText">
-                  <span>
-                    <span class="commit-verb" id="queueVerb">Find opponent</span>
-                    <span class="commit-sub" id="queueSub"></span>
-                  </span>
-                  <span class="commit-meta" id="queueMeta"></span>
-                  <span class="commit-sweep" aria-hidden="true"></span>
-                </button>
+
 
                 <div class="queue-gate" id="queueGate" role="status">
                   <span id="queueGateText"></span>
@@ -3219,16 +3221,16 @@
                 </div>
               </div>
             </div>
-            <div class="panel" id="drawPanel" hidden>
-              <div class="phead">
-                <h2 data-copy="queue.p2.head">Drawn from</h2>
+            <details class="panel pool-disclosure" id="drawPanel" hidden>
+              <summary class="phead">
+                <h2 data-copy="queue.p2.head">Scenario pool</h2>
                 <span class="note" id="drawCount"></span>
-              </div>
+              </summary>
               <div class="pbody">
                 <div class="draw-rows" id="drawRows"></div>
                 <p class="draw-legend" id="drawLegend"></p>
               </div>
-            </div>
+            </details>
 
           </section>
 
@@ -3912,6 +3914,13 @@
   <div class="t-score" id="toastScore"></div>
 </div>
 
+<dialog class="arcade-command" id="arcadeCommand" aria-labelledby="arcadeCommandTitle">
+  <div class="arcade-command-head"><span id="arcadeCommandTitle">Where to next?</span><button type="button" id="arcadeCommandClose" aria-label="Close jump menu">Esc</button></div>
+  <input id="arcadeCommandSearch" type="search" placeholder="Find your next move…" autocomplete="off" aria-label="Find a screen">
+  <div class="arcade-command-list" id="arcadeCommandList"></div>
+  <p class="arcade-command-empty" id="arcadeCommandEmpty" hidden>No screens match. Try “season”, “rank”, or “aim”.</p>
+  <div class="arcade-command-foot">↑ ↓ to move <span>Enter to go</span></div>
+</dialog>
 <script src="renderer.js"></script>
 </body>
 </html>
