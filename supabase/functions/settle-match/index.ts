@@ -14,6 +14,7 @@
 import {
   baselineFor,
   handler,
+  isCopiedSide,
   json,
   rateChallenger,
   readJson,
@@ -60,10 +61,12 @@ Deno.serve(handler(async (req, admin) => {
 
   const { data: sides } = await admin
     .from("match_sides")
-    .select("match_id, player_id, run_ids, deltas, match_score, result, provisional, rating_before, rd_before, rating_after, rd_after")
+    .select("match_id, player_id, run_ids, deltas, match_score, result, provisional, rating_before, rd_before, rating_after, rd_after, submitted_at")
     .eq("match_id", matchId);
 
-  const mine = (sides ?? []).find((s: any) => s.player_id === caller.playerId);
+  // The caller's own side, never a copy of their stored run set that is the opponent
+  // here: settling through that closed a stranger's match before they had played it.
+  const mine = (sides ?? []).find((s: any) => s.player_id === caller.playerId && !isCopiedSide(s, match));
   const theirs = (sides ?? []).find((s: any) => s.player_id !== caller.playerId);
 
   if (!mine) throw new HttpError(403, "you are not in that match");

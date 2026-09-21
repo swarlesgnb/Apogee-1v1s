@@ -21,6 +21,7 @@
 import {
   deadlineAfterRun,
   handler,
+  isCopiedSide,
   json,
   readJson,
   refreshBaseline,
@@ -127,14 +128,15 @@ Deno.serve(handler(async (req, admin) => {
     if (!match) throw new HttpError(404, "no such match");
     if (match.status === "settled") throw new HttpError(409, "match is already settled");
 
-    // The caller must actually be in this match.
+    // The caller must actually be playing this match. A copy of their stored run set
+    // sitting in it as the opponent carries their player_id too, and does not count.
     const { data: side } = await admin
       .from("match_sides")
-      .select("player_id")
+      .select("player_id, submitted_at")
       .eq("match_id", body.matchId)
       .eq("player_id", caller.playerId)
       .maybeSingle();
-    if (!side) throw new HttpError(403, "you are not in that match");
+    if (!side || isCopiedSide(side, match)) throw new HttpError(403, "you are not in that match");
 
     if (scenario && !(match.scenario_ids as number[]).includes(scenario.id)) {
       throw new HttpError(400, "that scenario is not part of this match");

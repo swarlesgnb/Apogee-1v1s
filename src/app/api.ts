@@ -475,15 +475,24 @@ export async function fetchActiveMatch(): Promise<FoundMatch | null> {
   const token = await accessToken();
   if (!token) return null;
 
+  const me = (await client.auth.getUser()).data.user?.id;
+  if (!me) return null;
+
+  // Participant RLS returns every side of every match the player can see, so the
+  // opponent's side comes back too; and a copy of this player's own stored run set in a
+  // stranger's match carries their id. Neither is the match they are playing. A copy is
+  // recognisable by having been played before the match it sits in was created.
   const { data: sides } = await client
     .from("match_sides")
-    .select("match_id, player_id, rating_before, provisional, submitted_at, matches!inner(id, status, category, difficulty, scenario_ids, expires_at)")
+    .select("match_id, player_id, rating_before, provisional, submitted_at, matches!inner(id, status, category, difficulty, scenario_ids, expires_at, created_at)")
+    .eq("player_id", me)
     .in("matches.status", ["open", "awaiting_runs"]);
 
   const now = Date.now();
   const mine = (sides ?? []).find((row: any) => {
     const m = row.matches;
     if (!m) return false;
+    if (row.submitted_at && m.created_at && new Date(row.submitted_at).getTime() < new Date(m.created_at).getTime()) return false;
     return m.expires_at == null || new Date(m.expires_at).getTime() > now;
   });
 

@@ -211,6 +211,38 @@ await readOthers("who entered which tournament", `select * from tournament_membe
 await readOthers("which match is which fixture leg", `select * from tournament_legs`);
 await readOthers("the receipts behind a bracket", `select * from tournament_receipts`);
 
+// A match the attacker has no side in. The participant policies used to query
+// match_sides from inside match_sides' own policy, which Postgres refuses as infinite
+// recursion - so these two printed "blocked" for the wrong reason, and so did the
+// attacker's reads of their OWN match, which nothing here checked.
+await db.exec("reset role");
+const victimMatch = (await db.query("insert into matches (category, status, benchmark_name, difficulty, seed, scenario_ids) values ('Clicking', 'awaiting_runs', 'Voltaic S5', 'Intermediate', 'seed-2', array[" + scen + "," + scen + "," + scen + "]::bigint[]) returning id")).rows[0].id;
+await db.exec("insert into match_sides (match_id, player_id) values ('" + victimMatch + "', '" + victim + "')");
+await db.exec("set role authenticated");
+await db.exec("set test.player_id = '" + attacker + "'");
+await readOthers("a match I have no side in", `select id from matches where id = '${victimMatch}'`);
+await readOthers("the sides of a match I have no side in", `select player_id from match_sides where match_id = '${victimMatch}'`);
+
+// The other direction: a participant must be able to read their own match, or the
+// client cannot restore it after a restart. An error here is a failure, not a pass.
+const readOwn = async (label, sql) => {
+  try {
+    const r = await db.query(sql);
+    if (r.rows.length > 0) console.log(`  ok     ${label}: ${r.rows.length} row(s)`);
+    else { findings++; console.log(`  BROKEN ${label}: 0 rows`); }
+  } catch (e) { findings++; console.log(`  BROKEN ${label}: ${String(e.message).split("\n")[0]}`); }
+};
+await readOwn("my own match", `select id from matches where id = '${realMatch}'`);
+await readOwn("my own side", `select player_id from match_sides where match_id = '${realMatch}'`);
+
+// `attack` counts changed rows, and a SELECT changes none, so it would pass this even if
+// the call went through. Only a refusal counts.
+try {
+  await db.query(`select consume_rate_limit('${victim}', 'find-match', 1, '1 hour'::interval)`);
+  findings++;
+  console.log("  HOLE   spend another player's rate limit: the call went through");
+} catch { console.log("  ok     spend another player's rate limit: refused"); }
+
 // Column privileges, on rows RLS does hand over.
 const readOwnColumn = async (label, column) => {
   try {

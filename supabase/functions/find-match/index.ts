@@ -15,11 +15,13 @@
 import {
   handler,
   INITIAL_TTL_MS,
+  isCopiedSide,
   json,
   loadSeasonPool,
   readJson,
   requireCaller,
   requireEligible,
+  runSetId,
   sweepStaleMatches,
   HttpError,
 } from "../_shared/apogee.ts";
@@ -144,7 +146,7 @@ Deno.serve(handler(async (req, admin) => {
     .select(
       "match_id, player_id, deltas, match_score, provisional, submitted_at, " +
         "players!inner(display_name), " +
-        "matches!inner(category, difficulty, window_index, scenario_ids, benchmark_name), " +
+        "matches!inner(category, difficulty, window_index, scenario_ids, benchmark_name, created_at), " +
         "ratings:players!inner(id)",
     )
     .not("match_score", "is", null)
@@ -196,31 +198,34 @@ Deno.serve(handler(async (req, admin) => {
   const FACED_SCAN = 500;
   const { data: myGames } = await admin
     .from("match_sides")
-    .select("match_id, submitted_at")
+    .select("match_id, submitted_at, matches!inner(created_at)")
     .eq("player_id", caller.playerId)
     .not("submitted_at", "is", null)
     .order("submitted_at", { ascending: false })
     .limit(FACED_SCAN);
 
   const playedAtByMatch = new Map<string, number>(
-    (myGames ?? []).map((m: any) => [m.match_id, new Date(m.submitted_at).getTime()]),
+    // Only matches the caller played, not ones a copy of their own run set was drawn into.
+    (myGames ?? [])
+      .filter((m: any) => !isCopiedSide(m, m.matches))
+      .map((m: any) => [m.match_id, new Date(m.submitted_at).getTime()]),
   );
 
   const { data: theirSides } = playedAtByMatch.size
     ? await admin
         .from("match_sides")
-        .select("match_id, player_id")
+        .select("match_id, player_id, submitted_at")
         .in("match_id", [...playedAtByMatch.keys()])
         .neq("player_id", caller.playerId)
-    : { data: [] as { match_id: string; player_id: string }[] };
+    : { data: [] as { match_id: string; player_id: string; submitted_at: string | null }[] };
 
   const recentSince = Date.now() - RECENT_OPPONENT_WINDOW_MS;
   const recentOpponentIds = new Set<string>();
   const facedRunSetIds = new Set<string>();
 
-  for (const side of (theirSides ?? []) as { match_id: string; player_id: string }[]) {
-    // The id shape findOpponent assigns to a candidate below: match id, then player id.
-    facedRunSetIds.add(`${side.match_id}:${side.player_id}`);
+  for (const side of (theirSides ?? []) as { match_id: string; player_id: string; submitted_at: string | null }[]) {
+    // What the caller faced was a copy; runSetId names the original it was copied from.
+    if (side.submitted_at) facedRunSetIds.add(runSetId({ player_id: side.player_id, submitted_at: side.submitted_at }));
     if ((playedAtByMatch.get(side.match_id) ?? 0) >= recentSince) {
       recentOpponentIds.add(side.player_id);
     }
@@ -228,8 +233,12 @@ Deno.serve(handler(async (req, admin) => {
 
   const runSets: StoredRunSet[] = (candidates ?? [])
     .filter((c: any) => ratingByPlayer.has(c.player_id))
+    // Originals only. Every match answered from the pool holds a copy of the side it drew,
+    // and each copy has a match_score, so without this one afternoon's run set multiplied
+    // into as many candidates as it had opponents.
+    .filter((c: any) => !isCopiedSide(c, c.matches))
     .map((c: any) => ({
-      id: `${c.match_id}:${c.player_id}`,
+      id: runSetId(c),
       playerId: c.player_id,
       displayName: c.players?.display_name ?? "player",
       category: c.matches.category,

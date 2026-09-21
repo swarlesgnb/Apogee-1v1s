@@ -14,7 +14,7 @@
  * would be the only one anybody used.
  */
 
-import { forfeitMatch, handler, json, requireCaller } from "../_shared/apogee.ts";
+import { forfeitMatch, handler, isCopiedSide, json, requireCaller } from "../_shared/apogee.ts";
 import { enforceRateLimit } from "../_shared/rateLimit.ts";
 import { afterLegSettled } from "../_shared/tournament.ts";
 import { updateRating } from "../../../src/core/rating/glicko2.ts";
@@ -23,13 +23,16 @@ Deno.serve(handler(async (req, admin) => {
   const caller = await requireCaller(req, admin);
   await enforceRateLimit(admin, caller.playerId, "abandon-match");
 
-  const { data: side } = await admin
+  // Not `.limit(1)`: the first open side can be a copy of the caller's run set in someone
+  // else's match, which forfeitMatch reports as "already played" while the caller's own
+  // match stays open and they stay stuck in it.
+  const { data: sides } = await admin
     .from("match_sides")
-    .select("match_id, matches!inner(id, status)")
+    .select("match_id, submitted_at, matches!inner(id, status, created_at)")
     .eq("player_id", caller.playerId)
-    .in("matches.status", ["open", "awaiting_runs"])
-    .limit(1)
-    .maybeSingle();
+    .in("matches.status", ["open", "awaiting_runs"]);
+
+  const side = (sides ?? []).find((s: any) => !isCopiedSide(s, s.matches));
 
   if (!side) return json({ ok: true, nothingToAbandon: true });
 

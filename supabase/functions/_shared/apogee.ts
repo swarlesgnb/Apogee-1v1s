@@ -560,14 +560,18 @@ export async function sweepStaleMatches(
     games: { opponent: { rating: number; rd: number; volatility: number }; score: number }[],
   ) => { rating: number; rd: number; volatility: number },
 ): Promise<LiveMatch | null> {
-  const { data: openMatches } = await admin
+  const { data: rows } = await admin
     .from("match_sides")
-    .select("match_id, matches!inner(id, status, category, difficulty, scenario_ids, expires_at)")
+    .select("match_id, submitted_at, matches!inner(id, status, category, difficulty, scenario_ids, expires_at, created_at)")
     .eq("player_id", playerId)
     .in("matches.status", ["open", "awaiting_runs"]);
 
+  // A copy of this player's stored run set, sitting in somebody else's live match, is not
+  // a match this player is in. Treating it as one resumed them into a stranger's match.
+  const openMatches = (rows ?? []).filter((row: any) => !isCopiedSide(row, row.matches));
+
   const now = Date.now();
-  const stale = (openMatches ?? []).filter((row: any) => {
+  const stale = openMatches.filter((row: any) => {
     const expiresAt = row.matches?.expires_at;
     return expiresAt != null && new Date(expiresAt).getTime() < now;
   });
@@ -577,9 +581,43 @@ export async function sweepStaleMatches(
   }
 
   const staleIds = new Set(stale.map((row: any) => row.match_id));
-  const live = (openMatches ?? []).find((row: any) => !staleIds.has(row.match_id));
+  const live = openMatches.find((row: any) => !staleIds.has(row.match_id));
 
   return live ? { matchId: (live as any).match_id, match: (live as any).matches } : null;
+}
+
+/**
+ * Whether a side is a stored run set copied into someone else's match.
+ *
+ * find-match, answer-duel and play-fixture all answer a caller with an opponent's
+ * finished side, inserted into the new match under the OPPONENT's player_id. Every
+ * lookup of the form "this player's side of an open match" therefore also finds those
+ * copies, and each one that trusted it was a bug: the owner was resumed into the
+ * stranger's match, could submit runs into it and settle it out from under them, and
+ * Abandon hit the copy and reported "already played" while their real match stayed open.
+ *
+ * A copy carries the submitted_at of the run set it was copied from, which was
+ * necessarily before the match it now sits in was created; a side played IN a match is
+ * submitted after it. That holds through a settle that died halfway, which is why this
+ * is not "match_score is set": a retried settle would have been refused by that.
+ */
+export function isCopiedSide(
+  side: { submitted_at?: string | null },
+  match: { created_at?: string | null } | null | undefined,
+): boolean {
+  if (!side.submitted_at || !match?.created_at) return false;
+  return new Date(side.submitted_at).getTime() < new Date(match.created_at).getTime();
+}
+
+/**
+ * The identity of a stored run set, shared by the original and every copy of it.
+ *
+ * `match_id:player_id` named the SIDE, and a copy is a new side, so a player who had
+ * played a copy was offered the original straight back, and each copy became a fresh
+ * candidate of its own. The owner and the moment it was played survive copying.
+ */
+export function runSetId(side: { player_id: string; submitted_at: string }): string {
+  return `${side.player_id}@${new Date(side.submitted_at).toISOString()}`;
 }
 
 export interface ChallengerOutcome {
