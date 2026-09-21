@@ -5,19 +5,22 @@ it. The solo campaign rules are in [the solo guide](solo-expedition.md).
 
 ## Last local candidate, 2026-09-21
 
-- Installer: `release/candidate-2026-09-21/Apogee-0.4.0-rc.1-setup.exe`
-- Unpacked: `release/candidate-2026-09-21/win-unpacked/Apogee.exe`
-- Unsigned. Builder messages about running signtool do not mean it was signed.
-- Built with `extraMetadata.version=0.4.0-rc.1`; `package.json` stays at `0.3.0`.
-- It predates the v3 difficulty journeys: the installer still carries the v2 campaign.
-  Rebuild before handing it to anyone.
+- Installer: `release/candidate-2026-09-21-rc2/Apogee-0.4.0-rc.2-setup.exe`
+- SHA-256: `52765aaebd372db6573b6f2e2c1a1d1dff700bc7a0cb361875303cdb1a0b3a66`
+- Unpacked: `release/candidate-2026-09-21-rc2/win-unpacked/Apogee.exe`
+- Unsigned (`Get-AuthenticodeSignature` reports NotSigned). Builder messages about running
+  signtool do not mean it was signed.
+- Built with `extraMetadata.version=0.4.0-rc.2`; `package.json` stays at `0.3.0`. It
+  carries the v3 difficulty journeys, the match fixes in migration 19 and the functions
+  (which have to be deployed separately), and the pool grid in the season editor.
+- rc.1 in `release/candidate-2026-09-21/` predates all of that and should not go out.
 
-`validate:release` passed 35 of 36 checks at the time; the one failure is gate 1 below.
-`validatePackage` passed 13 of 13 against the archive, and the unpacked build booted in
-`--smoke` from outside the repository against 13,618 local runs. Smoke mode puts
-settings, progress, logs and Chromium caches in a fresh temporary profile, so it never
-touches a real one. The pool validator passes with two warnings, and Electron prints a
-console-message deprecation warning; neither is a clean run.
+`validate:release` passed 35 of 36 checks; the one failure is gate 1 below.
+`validatePackage` passed 13 of 13 against the archive, which holds no image, manifest or
+player snapshot, and the unpacked build booted in `--smoke` from outside the repository
+against the local stats folder. Smoke mode puts settings, progress, logs and Chromium
+caches in a fresh temporary profile, so it never touches a real one. Electron prints a
+console-message deprecation warning, so the run is not warning-free.
 
 ## Gates
 
@@ -45,7 +48,7 @@ console-message deprecation warning; neither is a clean run.
 
 ```powershell
 npm.cmd run validate:release
-node tools/validatePackage.mjs release/candidate-2026-09-21
+node tools/validatePackage.mjs release/candidate-2026-09-21-rc2
 ```
 
 `validate:release` writes each result under `.cache/release-readiness/`, failures
@@ -56,7 +59,7 @@ Rebuilding the candidate:
 ```powershell
 npm.cmd run build:icon
 npm.cmd run build:app
-& .\node_modules\.bin\electron-builder.cmd --win --publish never --config.directories.output=release/candidate-2026-09-21 --config.extraMetadata.version=0.4.0-rc.1
+& .\node_modules\.bin\electron-builder.cmd --win --publish never --config.directories.output=release/candidate-2026-09-21-rc2 --config.extraMetadata.version=0.4.0-rc.2
 ```
 
 The hash changes on every rebuild, so re-run the package check and the signature check
