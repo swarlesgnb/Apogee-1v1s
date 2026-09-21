@@ -84,6 +84,7 @@ export interface SnapshotOptions {
 }
 
 export interface Snapshot {
+  expedition?: import("../expedition/types.ts").ExpeditionView;
   generatedAt: string;
   benchmark: {
     name: string;

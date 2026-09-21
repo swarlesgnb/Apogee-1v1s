@@ -2756,6 +2756,8 @@
 <link rel="stylesheet" href="arena.css">
 <link rel="stylesheet" href="tournament.css">
 <link rel="stylesheet" href="arcade.css">
+<link rel="stylesheet" href="expedition.css">
+<link rel="stylesheet" href="cosmic.css">
 </head>
 <body data-screen="queue">
 <a class="skip-link" href="#mainContent">Skip to content</a>
@@ -2764,7 +2766,7 @@
   <!-- ============================================================ rail -->
   <aside class="rail">
     <div class="rail-top">
-      <div class="wordmark"><svg class="brand-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 20 9-17 9 17M8.5 11.5h7M5 20l7-5.5 7 5.5"/></svg><span>apogee</span></div><span class="brand-caption">1v1s</span>
+      <div class="wordmark"><svg class="brand-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 20 9-17 9 17M3 20l9-6 9 6M8 11h8M12 3l0 11"/></svg><span>apogee</span></div><span class="brand-caption">Beyond your limits</span>
     </div>
 
     <nav class="nav" role="tablist" aria-label="Screens" aria-orientation="vertical">
@@ -2794,6 +2796,10 @@
       </button>
 
       <div class="nav-label" data-copy="nav.group.practice">Improve</div>
+      <button class="tab" role="tab" aria-selected="false" data-screen="expedition">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" aria-hidden="true"><path d="M12 2 22 12 12 22 2 12Z M12 6v12M6 12h12"/><circle cx="12" cy="12" r="3"/></svg>
+        <span class="tab-key"></span><span class="tab-label">Expedition</span>
+      </button>
       <button class="tab" role="tab" aria-selected="false" data-screen="profile">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2"/><path d="M12 1v4m0 14v4M1 12h4m14 0h4"/></svg>
         <span class="tab-key"></span>
@@ -3031,7 +3037,7 @@
                 <h1 data-copy="queue.title">Ranked 1v1</h1>
                 <p data-copy="queue.lede">3 scenarios, one opponent. Each round goes to whoever beats their own baseline by more.</p>
               </div>
-              <div class="arcade-hero-links"><button type="button" data-arcade-route="seasonview">Season benchmarks <span aria-hidden="true">→</span></button><button type="button" data-arcade-route="tournaments">Tournaments <span aria-hidden="true">→</span></button></div>
+              <div class="arcade-hero-links"><button type="button" class="exp-home" id="expeditionHome" data-arcade-route="expedition"><span class="exp-home-symbol" aria-hidden="true">✦</span><span><small>YOUR SOLO JOURNEY</small><strong id="expeditionHomeTitle">First Light awaits</strong><span id="expeditionHomeDetail">Six destinations, a ship from each, then the final passage.</span></span><b>Continue →</b></button><button type="button" data-arcade-route="seasonview">Season benchmarks <span aria-hidden="true">→</span></button><button type="button" data-arcade-route="tournaments">Tournaments <span aria-hidden="true">→</span></button></div>
             </div>
 
 
@@ -3245,7 +3251,7 @@
                 <h1 data-copy="tournaments.title">Tournaments</h1>
                 <p data-copy="tournaments.lede">Round robin in groups, then a single-elimination bracket. Each fixture is a standard 3-scenario match scored against your own baselines. Unrated.</p>
               </div>
-              <svg class="tn-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 20 9-17 9 17M8.5 11.5h7M5 20l7-5.5 7 5.5"/></svg>
+              <svg class="tn-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 20 9-17 9 17M3 20l9-6 9 6M8 11h8M12 3l0 11"/></svg>
             </div>
 
             <div class="preview-note" id="tnPreviewNote" hidden>
@@ -3388,6 +3394,10 @@
           </section>
 
           <!-- --------------------------------------------- profile -->
+          <section class="screen" id="screen-expedition">
+            <div id="expeditionRoot"><p class="exp-loading">Charting your expedition…</p></div>
+            <p id="expeditionMessage" class="exp-message" role="status" aria-live="polite"></p>
+          </section>
           <section class="screen" id="screen-profile">
             <div class="screen-head">
               <h1 data-copy="profile.title">Your aim</h1>
@@ -3923,5 +3933,7 @@
   <div class="arcade-command-foot">↑ ↓ to move <span>Enter to go</span></div>
 </dialog>
 <script src="renderer.js"></script>
+<script src="cosmic.js"></script>
+<script src="expedition.js"></script>
 </body>
 </html>

@@ -55,7 +55,7 @@ const T = new Function(
 // The stock values, from the stylesheets in the order the page loads them: index.html's
 // own :root first, then arena.css and arcade.css. The final declaration wins.
 const html = read("src/app/renderer/index.html");
-const css = html.slice(0, html.indexOf("</style>")) + "\n" + read("src/app/renderer/arena.css") + "\n" + read("src/app/renderer/arcade.css");
+const css = html.slice(0, html.indexOf("</style>")) + "\n" + read("src/app/renderer/arena.css") + "\n" + read("src/app/renderer/arcade.css") + "\n" + read("src/app/renderer/cosmic.css");
 const stock = {};
 for (const name of T.THEME_TOKENS) {
   const m = [...css.matchAll(new RegExp(name + ":\\s*(#[0-9a-fA-F]{6})", 'g'))].at(-1);

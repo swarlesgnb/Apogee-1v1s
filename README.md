@@ -4,6 +4,11 @@ Ranked 1v1 for KovaaK's. Queue for a category, get matched against someone near 
 rank, play three scenarios in KovaaK's as normal, and the ladder settles itself. Scores
 are read straight from the stats folder, never typed in.
 
+Solo players can open **Expedition** for First Light: six destinations, four different
+journeys (checkpoints, route choices, optional preparation, and direct trials), and 122
+earnable appearances and trophies. Ordinary training advances accepted challenges. See
+[the solo guide](docs/solo-expedition.md) for progression, saved state, and validation.
+
 See [PLAN.md](PLAN.md) for the full design: match format, rating, anti-cheat, and the
 phased build.
 

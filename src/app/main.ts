@@ -12,7 +12,7 @@
  */
 
 import { app, BrowserWindow, ipcMain, screen, shell, dialog } from "electron";
-import { existsSync, mkdirSync, readdirSync, readFileSync, unlinkSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, unlinkSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { createHash } from "node:crypto";
 
@@ -29,6 +29,7 @@ import { loadRankTheme } from "../core/ranks/apogeeRanks.ts";
 import { rebuildPool } from "../core/season/rebuildPool.ts";
 import { syncBandLadders, syncOverallLadder } from "../core/season/bandLadders.ts";
 import { loadQuestState, saveQuestState } from "./questStore.ts";
+import { ExpeditionService } from "./expedition.ts";
 import { clearOverrides, loadOverrides, overridesPath, saveOverrides } from "./adminStore.ts";
 import { MAX_COPY, PAIRS, TOKENS } from "../core/admin/overrides.ts";
 import { buildSnapshot, type Snapshot } from "../core/report/snapshot.ts";
@@ -99,6 +100,15 @@ import {
 const here = __dirname;
 setDataDir(join(here, "..", "data"));
 
+// Smoke probes exercise settings and appearance writes as well as progress. Give
+// the entire process a fresh profile before any stores or Chromium caches open.
+const SMOKE = process.argv.includes("--smoke");
+if (SMOKE) {
+  const profile = mkdtempSync(join(app.getPath("temp"), "apogee-smoke-"));
+  app.setPath("userData", profile);
+  app.setPath("sessionData", profile);
+}
+
 /**
  * When this bundle was built. Replaced at build time by esbuild's `define`.
  *
@@ -156,6 +166,10 @@ let window: BrowserWindow | null = null;
 let watcher: StatsWatcher | null = null;
 const observedBests = new Map<string, number>();
 let rebuildTimer: NodeJS.Timeout | null = null;
+let expeditionService: ExpeditionService | null = null;
+function expedition(): ExpeditionService {
+  return expeditionService ??= new ExpeditionService(app.getPath("userData"));
+}
 
 function broadcast(channel: string, payload: unknown): void {
   if (window && !window.isDestroyed()) window.webContents.send(channel, payload);
@@ -186,6 +200,16 @@ function rebuild(reason: string): void {
   broadcast("apogee:scanning", { scanning: true, reason });
 
   try {
+    // Its own try: the solo Expedition failing to load must not cost the player their
+    // snapshot, which is what the ranked screens are drawn from. It shares the parse of the
+    // stats folder with the snapshot (stats/folderCache.ts), so this costs nothing extra.
+    let expeditionView: ReturnType<ExpeditionService["view"]> | undefined;
+    try {
+      expeditionView = expedition().view(state.statsDir, true);
+      broadcast("apogee:expedition", expeditionView);
+    } catch (err) {
+      console.error("expedition sync failed:", err);
+    }
     if (!state.quests) state.quests = loadQuestState();
     const syncs: QuestSync[] = [];
     const snapshot = buildSnapshot({
@@ -193,6 +217,7 @@ function rebuild(reason: string): void {
       quests: { state: state.quests, ranked: state.session !== null, onSync: (sync) => syncs.push(sync) },
     });
     if (snapshot) {
+      snapshot.expedition = expeditionView;
       const previous = state.snapshot;
       state.snapshot = snapshot;
       state.lastError = null;
@@ -588,7 +613,6 @@ function createWindow(): void {
  * snapshot, prints the result and exits. Lets the desktop client be checked in CI and
  * from a terminal without a human watching a window appear.
  */
-const SMOKE = process.argv.includes("--smoke");
 
 // The failure-surface probe rejects a promise on purpose; this marks that rejection so
 // its own console error is not counted as a renderer error.
@@ -1879,6 +1903,23 @@ ipcMain.handle("apogee:getState", () => ({
   signingIn: state.signingIn,
   configured: isConfigured(),
 }));
+
+ipcMain.handle("apogee:expedition", () => expedition().view(state.statsDir, true));
+ipcMain.handle("apogee:expeditionAction", async (_e, action: unknown) => {
+  try {
+    if (action && typeof action === "object" && (action as { type?: unknown }).type === "launch") {
+      const view = expedition().view(state.statsDir, true);
+      if (view.error) return { error: view.error };
+      const result = expedition().playlist(state.statsDir);
+      const launched = await launchKovaaks(result.scenario);
+      broadcast("apogee:expedition", view);
+      return launched.ok ? { view, note: result.note } : { view, error: launched.error ?? "KovaaK's could not be opened. Your activity is still saved." };
+    }
+    const view = expedition().action(action, state.statsDir);
+    broadcast("apogee:expedition", view);
+    return { view };
+  } catch (e) { return { error: e instanceof Error ? e.message : String(e) }; }
+});
 
 // ---------------------------------------------------------------------------
 // Steam sign-in

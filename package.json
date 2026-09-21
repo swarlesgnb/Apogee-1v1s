@@ -7,6 +7,9 @@
   "license": "AGPL-3.0-or-later",
   "type": "module",
   "scripts": {
+    "validate:release": "node tools/releaseReadiness.mjs",
+    "validate:expedition": "tsx src/core/expedition/validateExpedition.ts && tsx src/core/expedition/validateJourneys.ts",
+    "validate:expedition-ui": "npm run build:cosmic && tsx tools/buildUiPreview.ts && node tools/buildExpeditionUiTest.mjs && electron .cache/expedition-ui/main.cjs",
     "profile": "tsx src/core/report/profile.ts",
     "validate:parser": "tsx src/core/stats/validate.ts",
     "validate:engine": "tsx src/core/benchmarks/validateEngine.ts",
@@ -35,11 +38,11 @@
     "compare:baselines": "tsx src/core/history/compareBaselines.ts",
     "measure:coldstart": "tsx src/core/history/coldStart.ts",
     "snapshot": "tsx src/core/report/exportSnapshot.ts",
-    "ui": "tsx src/core/report/exportSnapshot.ts && tsx tools/buildUiPreview.ts",
-    "validate": "npm run validate:parser && npm run validate:duration && npm run validate:season && npm run validate:pool && npm run validate:thresholds && npm run validate:rationale && npm run validate:aimtypes && npm run validate:standing && npm run validate:engine && npm run validate:ranks && npm run validate:sync && npm run validate:verify && npm run validate:kovaaks && npm run validate:glicko && npm run validate:match && npm run validate:duels && npm run validate:tournament && npm run validate:playlist && npm run validate:quests && npm run validate:live && npm run validate:schema && npm run validate:functions && npm run validate:sound && npm run validate:orb && npm run validate:theme && npm run validate:counter && npm run validate:progression && npm run validate:presentation && npm run validate:curation && npm run validate:theory",
+    "ui": "npm run build:cosmic && tsx src/core/report/exportSnapshot.ts && tsx tools/buildUiPreview.ts",
+    "validate": "npm run validate:expedition && npm run validate:parser && npm run validate:duration && npm run validate:season && npm run validate:pool && npm run validate:thresholds && npm run validate:rationale && npm run validate:aimtypes && npm run validate:standing && npm run validate:engine && npm run validate:ranks && npm run validate:sync && npm run validate:verify && npm run validate:kovaaks && npm run validate:glicko && npm run validate:match && npm run validate:duels && npm run validate:tournament && npm run validate:playlist && npm run validate:quests && npm run validate:live && npm run validate:schema && npm run validate:functions && npm run validate:sound && npm run validate:orb && npm run validate:theme && npm run validate:counter && npm run validate:progression && npm run validate:presentation && npm run validate:curation && npm run validate:theory",
     "ranks": "tsx src/core/ranks/validateRanks.ts",
     "typecheck": "tsc --noEmit",
-    "build:app": "node tools/buildApp.mjs",
+    "build:app": "npm run build:cosmic && node tools/buildApp.mjs",
     "start": "npm run build:app && electron .",
     "dev": "node tools/devApp.mjs",
     "doctor": "tsx tools/doctor.ts",
@@ -80,7 +83,8 @@
     "validate:curation": "tsx tools/validateSeasonCuration.ts && tsx tools/validateSeasonExpansion.ts && tsx tools/validateEvasiveRework.ts",
     "validate:evasive": "tsx tools/validateEvasiveRework.ts",
     "validate:expansion": "tsx tools/validateSeasonExpansion.ts",
-    "validate:theory": "tsx tools/validateBenchmarkTheory.ts"
+    "validate:theory": "tsx tools/validateBenchmarkTheory.ts",
+    "build:cosmic": "node tools/buildCosmic.mjs"
   },
   "devDependencies": {
     "@electric-sql/pglite": "^0.5.5",
@@ -93,6 +97,7 @@
   },
   "main": "dist/app/main.cjs",
   "dependencies": {
-    "@supabase/supabase-js": "^2.112.3"
+    "@supabase/supabase-js": "^2.112.3",
+    "three": "0.180.0"
   }
 }

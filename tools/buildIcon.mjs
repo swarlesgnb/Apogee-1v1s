@@ -10,8 +10,8 @@
  * and it matched nothing on screen.
  *
  * Nothing about it is chosen here. The path is read out of index.html, and this refuses
- * to draw if the rail's mark and the one below ever differ. The colours are --brand from
- * arena.css on --ground from index.html, read the way validate:theme reads them. Rank
+ * to draw if the rail's mark and the one below ever differ. The colours are the final
+ * stock --brand and --ground values, read in stylesheet order like validate:theme. Rank
  * colours are left out on purpose: they are the player's, and the icon is the app's.
  *
  * Drawn rather than exported from an editor so it is reproducible from the repository,
@@ -33,10 +33,10 @@ const read = (p) => readFileSync(join(root, p), "utf8");
 // --- what it draws, read from the app -------------------------------------------
 
 const html = read("src/app/renderer/index.html");
-const css = html.slice(0, html.indexOf("</style>")) + "\n" + read("src/app/renderer/arena.css");
+const css = html.slice(0, html.indexOf("</style>")) + "\n" + read("src/app/renderer/arena.css") + "\n" + read("src/app/renderer/arcade.css") + "\n" + read("src/app/renderer/cosmic.css");
 
 function token(name) {
-  const m = new RegExp("--" + name + ":\\s*(#[0-9a-fA-F]{6})").exec(css);
+  const m = [...css.matchAll(new RegExp("--" + name + ":\\s*(#[0-9a-fA-F]{6})", "g"))].at(-1);
   if (!m) throw new Error(`--${name} has no hex value in the stylesheets`);
   return m[1].toLowerCase();
 }
@@ -45,15 +45,8 @@ const GROUND = token("ground");
 const MARK = token("brand");
 const EDGE = token("rule-2");
 
-/**
- * The rail's mark, in its own 24-unit box.
- *
- * The crossbar sits at half height and the inner peak three units below it. They used to
- * sit one unit apart, crossbar at 14 and peak at 13, and with a stroke 1.65 wide that is
- * an overlap: a bump in the middle of the A, too small to see in the rail and the first
- * thing anybody saw at 512px. Three units clears it at both weights drawn below.
- */
-const PATH = "m3 20 9-17 9 17M8.5 11.5h7M5 20l7-5.5 7 5.5";
+/** The rail's 24-unit ascent mark shares one geometry with the installer and store icons. */
+const PATH = "m3 20 9-17 9 17M3 20l9-6 9 6M8 11h8M12 3l0 11";
 if (!/<svg class="brand-mark"/.test(html)) throw new Error("the rail's brand mark is missing from index.html");
 // The app draws the mark in more than one place - the rail, the tournaments header, and
 // one the renderer builds - and every copy has to be this one. Checking only the rail let

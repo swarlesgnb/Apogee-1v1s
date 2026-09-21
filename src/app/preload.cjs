@@ -21,6 +21,9 @@ function subscribe(channel, handler) {
 contextBridge.exposeInMainWorld("apogee", {
   /** Current state: stats folder, snapshot, error, scanning flag, session. */
   getState: () => ipcRenderer.invoke("apogee:getState"),
+  expedition: () => ipcRenderer.invoke("apogee:expedition"),
+  expeditionAction: (action) => ipcRenderer.invoke("apogee:expeditionAction", action),
+  onExpedition: (handler) => subscribe("apogee:expedition", handler),
 
   /**
    * Start Steam sign-in. Opens the system browser and resolves once a session exists.

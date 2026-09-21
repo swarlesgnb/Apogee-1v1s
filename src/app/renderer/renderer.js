@@ -465,7 +465,7 @@ function pressVariation() {
 const SOUNDS = {
   /** A short, dry cabinet-button pulse for navigation. */
   nav() {
-    tone({ freq: NOTE.A4, wave: "square", lowpass: 1600, dur: 0.045, gain: 0.022 });
+    tone({ freq: NOTE.A4, wave: "triangle", lowpass: 1600, dur: 0.045, gain: 0.022 });
   },
 
   /**
@@ -484,23 +484,23 @@ const SOUNDS = {
 
   /** A higher pulse confirms selection. */
   toggleOn() {
-    tone({ freq: NOTE.D5, wave: "square", lowpass: 2200, dur: 0.035, gain: 0.026 });
+    tone({ freq: NOTE.D5, wave: "triangle", lowpass: 2200, dur: 0.035, gain: 0.026 });
   },
 
   /** A lower pulse confirms deselection. */
   toggleOff() {
-    tone({ freq: NOTE.A4, wave: "square", lowpass: 1300, dur: 0.028, gain: 0.022 });
+    tone({ freq: NOTE.A4, wave: "triangle", lowpass: 1300, dur: 0.028, gain: 0.022 });
   },
 
   /** A three-note receipt when a run lands in the stats folder. */
   run() {
-    [NOTE.D5, NOTE.A5, NOTE.D6].forEach((freq, i) => tone({ freq, wave: "square", lowpass: 3200, dur: i === 2 ? 0.24 : 0.09, gain: 0.036, delay: i * 0.065, send: 0.08 }));
+    [NOTE.D5, NOTE.A5, NOTE.D6].forEach((freq, i) => tone({ freq, wave: "triangle", lowpass: 3200, dur: i === 2 ? 0.24 : 0.09, gain: 0.036, delay: i * 0.065, send: 0.08 }));
   },
 
   /** Success: a short rising fourth. */
   ok() {
-    tone({ freq: NOTE.A5, wave: "square", lowpass: 2800, dur: 0.09, gain: 0.037 });
-    tone({ freq: NOTE.D6, wave: "square", lowpass: 3200, dur: 0.26, gain: 0.036, delay: 0.09, send: 0.12 });
+    tone({ freq: NOTE.A5, wave: "triangle", lowpass: 2800, dur: 0.09, gain: 0.037 });
+    tone({ freq: NOTE.D6, wave: "triangle", lowpass: 3200, dur: 0.26, gain: 0.036, delay: 0.09, send: 0.12 });
   },
 
   /**
@@ -521,7 +521,7 @@ const SOUNDS = {
   press() {
     tick({ type: "highpass", hz: 1800, q: 0.5, dur: 0.025, gain: 0.13 });
     tone({ freq: NOTE.D3, wave: "triangle", dur: 0.21, gain: 0.14, lowpass: 900 });
-    [NOTE.D4, NOTE.A4, NOTE.D5].forEach((freq, i) => tone({ freq, wave: "square", lowpass: 2300, dur: 0.12, gain: 0.045, delay: 0.04 + i * 0.065, send: 0.1 }));
+    [NOTE.D4, NOTE.A4, NOTE.D5].forEach((freq, i) => tone({ freq, wave: "triangle", lowpass: 2300, dur: 0.12, gain: 0.045, delay: 0.04 + i * 0.065, send: 0.1 }));
   },
 
   /**
@@ -553,18 +553,18 @@ const SOUNDS = {
    * left when it hits.
    */
   matchFound() {
-    [NOTE.D4, NOTE.A4, NOTE.D5].forEach((freq, i) => tone({ freq, wave: "square", lowpass: 2600, dur: 0.065, gain: 0.045, delay: i * 0.1 }));
+    [NOTE.D4, NOTE.A4, NOTE.D5].forEach((freq, i) => tone({ freq, wave: "triangle", lowpass: 2600, dur: 0.065, gain: 0.045, delay: i * 0.1 }));
     const at = 0.36;
     tick({ hz: 2200, dur: 0.02, gain: 0.09, delay: at });
     tone({ freq: NOTE.D3, dur: 0.35, gain: 0.18, delay: at, lowpass: 700 });
-    tone({ freq: NOTE.D5, wave: "sawtooth", lowpass: 2300, dur: 0.7, gain: 0.055, delay: at, pan: -0.3, send: 0.2 });
-    tone({ freq: NOTE.A5, wave: "square", lowpass: 3200, dur: 0.8, gain: 0.045, delay: at + 0.02, pan: 0.3, send: 0.2 });
+    tone({ freq: NOTE.D5, wave: "triangle", lowpass: 2300, dur: 0.7, gain: 0.055, delay: at, pan: -0.3, send: 0.2 });
+    tone({ freq: NOTE.A5, wave: "triangle", lowpass: 3200, dur: 0.8, gain: 0.045, delay: at + 0.02, pan: 0.3, send: 0.2 });
   },
 
   /** A quest completed or a benchmark promotion. The chord, climbing left to right. */
   celebrate() {
     [NOTE.D5, NOTE.Fs5, NOTE.A5, NOTE.D6].forEach((f, i) => {
-      tone({ freq: f, wave: "square", lowpass: 3400, dur: 0.9 - i * 0.1, gain: 0.04, delay: i * 0.085, pan: -0.45 + i * 0.3, send: 0.2 });
+      tone({ freq: f, wave: "triangle", lowpass: 3400, dur: 0.9 - i * 0.1, gain: 0.04, delay: i * 0.085, pan: -0.45 + i * 0.3, send: 0.2 });
     });
     tone({ freq: NOTE.D4, dur: 0.6, gain: 0.07, delay: 0.21, lowpass: 800, send: 0.2 });
     tone({ freq: NOTE.A6, wave: "triangle", dur: 1.2, gain: 0.025, delay: 0.28, send: 0.25 });
@@ -576,13 +576,13 @@ const SOUNDS = {
    */
   victory() {
     [NOTE.A4, NOTE.D5, NOTE.Fs5].forEach((f, i) => {
-      tone({ freq: f, wave: "square", lowpass: 3300, dur: 0.14, gain: 0.05, delay: i * 0.09, send: 0.12 });
+      tone({ freq: f, wave: "triangle", lowpass: 3300, dur: 0.14, gain: 0.05, delay: i * 0.09, send: 0.12 });
     });
     const at = 0.27;
     tick({ hz: 2600, dur: 0.02, gain: 0.08, delay: at });
     tone({ freq: NOTE.D3, dur: 0.7, gain: 0.15, delay: at, lowpass: 600, send: 0.15 });
     [NOTE.A5, NOTE.D6, NOTE.Fs6].forEach((f, i) => {
-      tone({ freq: f, wave: "square", lowpass: 3800, dur: 1.3, gain: 0.04, delay: at + i * 0.012, pan: [-0.4, 0, 0.4][i], send: 0.3 });
+      tone({ freq: f, wave: "triangle", lowpass: 3800, dur: 1.3, gain: 0.04, delay: at + i * 0.012, pan: [-0.4, 0, 0.4][i], send: 0.3 });
     });
   },
 };
@@ -751,13 +751,13 @@ function badge(tier, uid) {
 
 /* Discipline marks describe movement; they never decide the scenario pool. */
 const DISCIPLINES = {
-  "Any": { key: "all", ink: "#d7fa52", cue: "A complete test of your aim", path: '<path d="M4 7h5l6 10h5M4 17h5l6-10h5"/><path d="m17 4 3 3-3 3m0 4 3 3-3 3"/>' },
-  "Static Clicking": { key: "static", ink: "#f3ca6c", cue: "Big flick → micro → click. Straight line.", path: '<path d="M4 9V4h5m6 0h5v5m0 6v5h-5M9 20H4v-5"/><path d="M9 12h6m-3-3v6"/>' },
-  "Dynamic Clicking": { key: "dynamic", ink: "#ff9dae", cue: "Read path → match → confirm → click.", path: '<path d="M3 18Q9 1 20 6"/><circle cx="14" cy="7" r="3"/><path d="m18 3 3 3-3 3M4 21h6"/>' },
-  "Precise Tracking": { key: "precise", ink: "#98e3ce", cue: "Match speed. Centred. Micro small.", path: '<ellipse cx="12" cy="12" rx="9" ry="5" transform="rotate(-30 12 12)"/><circle cx="12" cy="12" r="2"/><path d="M12 2v3m0 14v3"/>' },
-  "Reactive Tracking": { key: "reactive", ink: "#a2bfff", cue: "React, never predict. Underaim.", path: '<path d="m3 16 5-9 5 10 5-10 3 4"/><circle cx="8" cy="7" r="2"/><path d="M3 21h18"/>' },
-  "Speed Switching": { key: "speed", ink: "#d7fa52", cue: "One flick, no micro. Next chosen.", path: '<path d="M3 5h6v6H3zm12 8h6v6h-6zM8 16l8-8m-5 0h5v5"/>' },
-  "Evasive Switching": { key: "evasive", ink: "#cfb0f1", cue: "Track to kill. Then switch. Read next.", path: '<circle cx="5" cy="6" r="3"/><circle cx="19" cy="18" r="3"/><path d="M5 11c0 10 14-10 14 2m-7-8 3 3-3 3"/>' },
+  "Any": { key: "all", ink: "#d7fa52", cue: "A complete test of your aim", path: '<path d="M12 2 22 12 12 22 2 12ZM12 7v10M7 12h10"/>' },
+  "Static Clicking": { key: "static", ink: "#f3ca6c", cue: "Big flick → micro → click. Straight line.", path: '<path d="M3 8V3h5m8 0h5v5m0 8v5h-5M8 21H3v-5M12 7l5 5-5 5-5-5ZM12 10v4m-2-2h4"/>' },
+  "Dynamic Clicking": { key: "dynamic", ink: "#ff9dae", cue: "Read path → match → confirm → click.", path: '<path d="M3 18C5 9 9 5 17 5M14 2l5 3-5 3M7 18l4-4 4 4-4 4ZM20 11v6"/>' },
+  "Precise Tracking": { key: "precise", ink: "#98e3ce", cue: "Match speed. Centred. Micro small.", path: '<path d="M2 12c4-7 16-7 20 0-4 7-16 7-20 0ZM12 8v8m-4-4h8M12 2v3m0 14v3"/>' },
+  "Reactive Tracking": { key: "reactive", ink: "#a2bfff", cue: "React, never predict. Underaim.", path: '<path d="M2 16l5-9 5 10 5-13 5 8M7 3v4m5 10v4M3 21h4m10 0h4"/>' },
+  "Speed Switching": { key: "speed", ink: "#d7fa52", cue: "One flick, no micro. Next chosen.", path: '<path d="M3 4h6v6H3Zm12 10h6v6h-6ZM11 4h7l3 3-3 3M13 20H6l-3-3 3-3M9 15l6-6"/>' },
+  "Evasive Switching": { key: "evasive", ink: "#cfb0f1", cue: "Track to kill. Then switch. Read next.", path: '<path d="M5 2l4 4-4 4-4-4Zm14 12l4 4-4 4-4-4ZM5 12c0 7 14-8 14 0M12 3l3 3-3 3"/>' },
 };
 
 function disciplineOf(name) { return DISCIPLINES[name] || DISCIPLINES.Any; }
@@ -8367,7 +8367,7 @@ const TN_POLL_MS = 30000;
 
 const TN_MARK =
   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" ' +
-  'stroke-linejoin="round" aria-hidden="true"><path d="m3 20 9-17 9 17M8.5 11.5h7M5 20l7-5.5 7 5.5"/></svg>';
+  'stroke-linejoin="round" aria-hidden="true"><path d="m3 20 9-17 9 17M3 20l9-6 9 6M8 11h8M12 3l0 11"/></svg>';
 
 function tnEl(tag, className, text) {
   const node = document.createElement(tag);

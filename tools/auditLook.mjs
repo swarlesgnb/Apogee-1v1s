@@ -34,7 +34,7 @@ const read = (p) => readFileSync(join(root, p), "utf8");
 
 const html = read("src/app/renderer/index.html");
 const js = read("src/app/renderer/renderer.js");
-const arenaCss = read("src/app/renderer/arena.css") + "\n" + read("src/app/renderer/tournament.css") + "\n" + read("src/app/renderer/arcade.css");
+const arenaCss = read("src/app/renderer/arena.css") + "\n" + read("src/app/renderer/tournament.css") + "\n" + read("src/app/renderer/arcade.css") + "\n" + read("src/app/renderer/cosmic.css");
 const both = html + js + arenaCss;
 const css = (html.slice(0, html.indexOf("</style>")) + "\n" + arenaCss)
   .replace(/\/\*[\s\S]*?\*\//g, "");
@@ -157,6 +157,9 @@ function longMotion() {
  * all evening is the thing this check exists to notice.
  */
 const LONG_ON_PURPOSE = [
+  // The expedition clear reveal: rare, skippable, and off under reduced motion.
+  "animation:cosmic-enter .6s both",
+  "animation:cosmic-reveal 1.4s cubic-bezier(.16,1,.3,1) both",
   // A settled set reveals its rounds in sequence; a local benchmark promotion is rare.
   // Both are transform/opacity only and live inside the no-preference motion guard.
   "animation: debrief-reveal 340ms ease-out both",

@@ -15,6 +15,7 @@ import { scanStatsFolder } from "../src/core/history/history.ts";
 import { loadSeason } from "../src/core/season/season.ts";
 import { practicePlaylists, practiceRows } from "../src/core/season/practice.ts";
 import { sampleTournamentView } from "../src/core/tournament/sample.ts";
+import { loadExpedition, rewardCatalog } from "../src/core/expedition/definition.ts";
 
 const RENDERER_DIR = new URL("../src/app/renderer/", import.meta.url);
 const OUT = new URL("./apogee-ui-preview.html", import.meta.url);
@@ -75,6 +76,15 @@ const practice = (() => {
 })();
 const indexHtml = readFileSync(new URL("index.html", RENDERER_DIR), "utf8");
 const rendererJs = readFileSync(new URL("renderer.js", RENDERER_DIR), "utf8");
+const cosmicJs = readFileSync(new URL("cosmic.js", RENDERER_DIR), "utf8");
+const atlasFiles = [...Array.from({length:6}, (_,i) => `world-${i+1}`), "final", "ship"];
+const atlasAssets = Object.fromEntries(atlasFiles.map(name => [name, "data:image/svg+xml;base64," + readFileSync(new URL(`assets/atlas/${name}.svg`, RENDERER_DIR)).toString("base64")]));
+const cosmicAssets = atlasFiles.slice(0,7).map(name => atlasAssets[name]);
+const cosmicCss = readFileSync(new URL("cosmic.css", RENDERER_DIR), "utf8").replace(/url\('assets\/atlas\/([a-z0-9-]+)\.svg'\)/g, (_, name) => `url('${atlasAssets[name]}')`);
+const expeditionJs = readFileSync(new URL("expedition.js", RENDERER_DIR), "utf8");
+const expeditionDefinition = loadExpedition();
+const { journeys } = await import('../src/core/expedition/journey.ts');
+const expeditionView = { definition: expeditionDefinition, state: null, rewards: rewardCatalog(expeditionDefinition), error: null, canPlay: false, sessionStartedAt: Date.now(), journeys };
 
 // Only the style block and the body content are taken from index.html. The document
 // around them is rebuilt below, because the preview swaps the Electron bridge for inline
@@ -89,7 +99,7 @@ if (!styleMatch || !bodyMatch) {
 const arenaCss = readFileSync(new URL("arena.css", RENDERER_DIR), "utf8");
 const tournamentCss = readFileSync(new URL("tournament.css", RENDERER_DIR), "utf8");
 const arcadeCss = readFileSync(new URL("arcade.css", RENDERER_DIR), "utf8");
-const style = styleMatch[0] + "\n<style>" + arenaCss + "</style>\n<style>" + tournamentCss + "</style>\n<style>" + arcadeCss + "</style>";
+const style = styleMatch[0] + "\n<style>" + arenaCss + "</style>\n<style>" + tournamentCss + "</style>\n<style>" + arcadeCss + "</style>\n<style>" + readFileSync(new URL("expedition.css", RENDERER_DIR), "utf8") + "</style>";
 
 // An example tournament, built by the real engine and view with invented players, so the
 // screen has something honest to draw with no server behind it. Labelled on the page.
@@ -101,18 +111,21 @@ const tournamentSample = {
 };
 const body = bodyMatch[1]
   // The preview supplies its own inline script instead of loading the file.
-  .replace(/<script src="renderer\.js"><\/script>/, "");
+  .replace(/<script src="(?:renderer|cosmic|expedition)\.js"><\/script>/g, "");
 
 const html = `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Apogee Client Preview</title>
 ${style}
+<style>${cosmicCss}</style>
 </head><body data-screen="queue">
 ${body}
 <script id="apogee-snapshot" type="application/json">${snapshot}</script>
 <script id="apogee-season" type="application/json">${JSON.stringify(previewSeason)}</script>
 <script id="apogee-practice" type="application/json">${JSON.stringify(practice)}</script>
 <script id="apogee-tournament" type="application/json">${JSON.stringify(tournamentSample).replace(/</g, "\\u003c")}</script>
+<script id="apogee-expedition" type="application/json">${JSON.stringify(expeditionView).replace(/</g, "\\u003c")}</script>
 <script>
+  window.__APOGEE_EXPEDITION__ = JSON.parse(document.getElementById('apogee-expedition').textContent);
   // Static host: hand the renderer its data instead of an Electron bridge.
   window.__APOGEE_SNAPSHOT__ = JSON.parse(
     document.getElementById("apogee-snapshot").textContent
@@ -130,6 +143,9 @@ ${body}
 <script>
 ${rendererJs}
 </script>
+<script>window.__COSMIC_ASSETS__ = ${JSON.stringify(cosmicAssets)};</script>
+<script>${cosmicJs}</script>
+<script>${expeditionJs}</script>
 </body></html>
 `;
 

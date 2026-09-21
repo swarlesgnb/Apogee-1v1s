@@ -1,0 +1,692 @@
+{
+  "version": 1,
+  "id": "first-light-v1",
+  "name": "First Light",
+  "sourceSeason": "Season 1",
+  "bands": [
+    "Novice",
+    "Intermediate",
+    "Advanced",
+    "Expert"
+  ],
+  "destinations": [
+    {
+      "id": "destination-1",
+      "name": "Glass Meridian",
+      "category": "Static Clicking",
+      "color": "#8de8ff",
+      "description": "Quiet structures catch the light. Find the shortest path between them.",
+      "bands": [
+        [
+          {
+            "name": "2 Tile Jumbo Tile Frenzy",
+            "family": "2Guys",
+            "focus": "Your score is how little time passes between kills, so flick straight at each target, fix it with one small correction if you need to, and be looking at the next target before you click.",
+            "target": 125,
+            "finalTarget": 131,
+            "precision": 0
+          },
+          {
+            "name": "ClickTrack Diagonal 3t Short",
+            "family": "Diagonal",
+            "focus": "Your score is how little time passes between kills, so flick straight at each target, fix it with one small correction if you need to, and be looking at the next target before you click.",
+            "target": 101,
+            "finalTarget": 108,
+            "precision": 0
+          },
+          {
+            "name": "ClickTrack Horizontal 3t Short",
+            "family": "Horizontal",
+            "focus": "Your score is how little time passes between kills, so flick straight at each target, fix it with one small correction if you need to, and be looking at the next target before you click.",
+            "target": 95,
+            "finalTarget": 101,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "1w2ts Perfected Easier",
+            "family": "2Guys",
+            "focus": "Your score is how little time passes between kills, so flick straight at each target, fix it with one small correction if you need to, and be looking at the next target before you click.",
+            "target": 121,
+            "finalTarget": 146,
+            "precision": 0
+          },
+          {
+            "name": "ClickTrack Diagonal 3t",
+            "family": "Diagonal",
+            "focus": "Your score is how little time passes between kills, so flick straight at each target, fix it with one small correction if you need to, and be looking at the next target before you click.",
+            "target": 70,
+            "finalTarget": 72,
+            "precision": 0
+          },
+          {
+            "name": "ClickTrack Horizontal 3t",
+            "family": "Horizontal",
+            "focus": "Your score is how little time passes between kills, so flick straight at each target, fix it with one small correction if you need to, and be looking at the next target before you click.",
+            "target": 71,
+            "finalTarget": 73,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "1w2ts Perfected",
+            "family": "2Guys",
+            "focus": "Your score is how little time passes between kills, so flick straight at each target, fix it with one small correction if you need to, and be looking at the next target before you click.",
+            "target": 155,
+            "finalTarget": 170,
+            "precision": 0
+          },
+          {
+            "name": "ClickTrack Diagonal 2t Short",
+            "family": "Diagonal",
+            "focus": "Your score is how little time passes between kills, so flick straight at each target, fix it with one small correction if you need to, and be looking at the next target before you click.",
+            "target": 125,
+            "finalTarget": 129,
+            "precision": 0
+          },
+          {
+            "name": "ClickTrack Horizontal 2t Short",
+            "family": "Horizontal",
+            "focus": "Your score is how little time passes between kills, so flick straight at each target, fix it with one small correction if you need to, and be looking at the next target before you click.",
+            "target": 117,
+            "finalTarget": 121,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "1w2ts Pasu Perfected 30% Smaller",
+            "family": "2Guys",
+            "focus": "Your score is how little time passes between kills, so flick straight at each target, fix it with one small correction if you need to, and be looking at the next target before you click.",
+            "target": 93,
+            "finalTarget": 103,
+            "precision": 0
+          },
+          {
+            "name": "ClickTrack Diagonal 2t",
+            "family": "Diagonal",
+            "focus": "Your score is how little time passes between kills, so flick straight at each target, fix it with one small correction if you need to, and be looking at the next target before you click.",
+            "target": 72,
+            "finalTarget": 74,
+            "precision": 0
+          },
+          {
+            "name": "ClickTrack Horizontal 2t",
+            "family": "Horizontal",
+            "focus": "Your score is how little time passes between kills, so flick straight at each target, fix it with one small correction if you need to, and be looking at the next target before you click.",
+            "target": 75,
+            "finalTarget": 77,
+            "precision": 0
+          }
+        ]
+      ]
+    },
+    {
+      "id": "destination-2",
+      "name": "Ember Reach",
+      "category": "Dynamic Clicking",
+      "color": "#ffab79",
+      "description": "Fragments move through a copper sky. Catch their rhythm before they disappear.",
+      "bands": [
+        [
+          {
+            "name": "Pasu Viscose Entry",
+            "family": "Pasu",
+            "focus": "The targets are moving, so stay on each one for a split second until you're sure you're on it before you click, and don't let a sudden change of direction drag your crosshair with it. On targets that take several hits, move with them until the last click.",
+            "target": 945,
+            "finalTarget": 1019,
+            "precision": 0
+          },
+          {
+            "name": "Aimerz+ pipeClick Easy S1",
+            "family": "PipeClick",
+            "focus": "The targets are moving, so stay on each one for a split second until you're sure you're on it before you click, and don't let a sudden change of direction drag your crosshair with it. On targets that take several hits, move with them until the last click.",
+            "target": 606,
+            "finalTarget": 688,
+            "precision": 0
+          },
+          {
+            "name": "BounceClick SuperbAim Easy",
+            "family": "Bounce",
+            "focus": "The targets are moving, so stay on each one for a split second until you're sure you're on it before you click, and don't let a sudden change of direction drag your crosshair with it. On targets that take several hits, move with them until the last click.",
+            "target": 48,
+            "finalTarget": 54,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Pasu SuperbAim Easy",
+            "family": "Pasu",
+            "focus": "The targets are moving, so stay on each one for a split second until you're sure you're on it before you click, and don't let a sudden change of direction drag your crosshair with it. On targets that take several hits, move with them until the last click.",
+            "target": 80,
+            "finalTarget": 85,
+            "precision": 0
+          },
+          {
+            "name": "aimerz+ PipeClick Normal",
+            "family": "PipeClick",
+            "focus": "The targets are moving, so stay on each one for a split second until you're sure you're on it before you click, and don't let a sudden change of direction drag your crosshair with it. On targets that take several hits, move with them until the last click.",
+            "target": 95,
+            "finalTarget": 100,
+            "precision": 0
+          },
+          {
+            "name": "BounceClick SuperbAim",
+            "family": "Bounce",
+            "focus": "The targets are moving, so stay on each one for a split second until you're sure you're on it before you click, and don't let a sudden change of direction drag your crosshair with it. On targets that take several hits, move with them until the last click.",
+            "target": 41,
+            "finalTarget": 46,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Pasu SuperbAim",
+            "family": "Pasu",
+            "focus": "The targets are moving, so stay on each one for a split second until you're sure you're on it before you click, and don't let a sudden change of direction drag your crosshair with it. On targets that take several hits, move with them until the last click.",
+            "target": 85,
+            "finalTarget": 88,
+            "precision": 0
+          },
+          {
+            "name": "aimerz+ PipeClick Hard",
+            "family": "PipeClick",
+            "focus": "The targets are moving, so stay on each one for a split second until you're sure you're on it before you click, and don't let a sudden change of direction drag your crosshair with it. On targets that take several hits, move with them until the last click.",
+            "target": 92,
+            "finalTarget": 96,
+            "precision": 0
+          },
+          {
+            "name": "Bounce 180 Sparky",
+            "family": "Bounce",
+            "focus": "The targets are moving, so stay on each one for a split second until you're sure you're on it before you click, and don't let a sudden change of direction drag your crosshair with it. On targets that take several hits, move with them until the last click.",
+            "target": 87,
+            "finalTarget": 90,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Pasu Reload Goated",
+            "family": "Pasu",
+            "focus": "The targets are moving, so stay on each one for a split second until you're sure you're on it before you click, and don't let a sudden change of direction drag your crosshair with it. On targets that take several hits, move with them until the last click.",
+            "target": 136,
+            "finalTarget": 140,
+            "precision": 0
+          },
+          {
+            "name": "Aimerz+ pipeClick Hard S1",
+            "family": "PipeClick",
+            "focus": "The targets are moving, so stay on each one for a split second until you're sure you're on it before you click, and don't let a sudden change of direction drag your crosshair with it. On targets that take several hits, move with them until the last click.",
+            "target": 995,
+            "finalTarget": 1032,
+            "precision": 0
+          },
+          {
+            "name": "Bounce 180 rAim",
+            "family": "Bounce",
+            "focus": "The targets are moving, so stay on each one for a split second until you're sure you're on it before you click, and don't let a sudden change of direction drag your crosshair with it. On targets that take several hits, move with them until the last click.",
+            "target": 100,
+            "finalTarget": 103,
+            "precision": 0
+          }
+        ]
+      ]
+    },
+    {
+      "id": "destination-3",
+      "name": "Tidal Archive",
+      "category": "Precise Tracking",
+      "color": "#86efc4",
+      "description": "Follow the current through a sea of old signals. Keep your movement steady.",
+      "bands": [
+        [
+          {
+            "name": "SmoothBot Invincible Goated 75%",
+            "family": "Smoothbot",
+            "focus": "Stay smooth and keep your crosshair in the middle of the target the whole time, moving with it in one steady motion and using your arm on long strafes. If your aim gets shaky or you keep losing the target, drop to an easier version.",
+            "target": 2884,
+            "finalTarget": 3175,
+            "precision": 0
+          },
+          {
+            "name": "Centering II 180 Entry",
+            "family": "Centering",
+            "focus": "Stay smooth and keep your crosshair in the middle of the target the whole time, moving with it in one steady motion and using your arm on long strafes. If your aim gets shaky or you keep losing the target, drop to an easier version.",
+            "target": 10865,
+            "finalTarget": 11743,
+            "precision": 0
+          },
+          {
+            "name": "PreciseTrack Avasive Easier",
+            "family": "PreciseTrack",
+            "focus": "Stay smooth and keep your crosshair in the middle of the target the whole time, moving with it in one steady motion and using your arm on long strafes. If your aim gets shaky or you keep losing the target, drop to an easier version.",
+            "target": 4434,
+            "finalTarget": 4702,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Smoothbot Invincible Goated Easy",
+            "family": "Smoothbot",
+            "focus": "Stay smooth and keep your crosshair in the middle of the target the whole time, moving with it in one steady motion and using your arm on long strafes. If your aim gets shaky or you keep losing the target, drop to an easier version.",
+            "target": 3570,
+            "finalTarget": 3824,
+            "precision": 0
+          },
+          {
+            "name": "Centering II 180 Novice",
+            "family": "Centering",
+            "focus": "Stay smooth and keep your crosshair in the middle of the target the whole time, moving with it in one steady motion and using your arm on long strafes. If your aim gets shaky or you keep losing the target, drop to an easier version.",
+            "target": 11394,
+            "finalTarget": 11945,
+            "precision": 0
+          },
+          {
+            "name": "Aimerz+ PreciseTrack Easy S1",
+            "family": "PreciseTrack",
+            "focus": "Stay smooth and keep your crosshair in the middle of the target the whole time, moving with it in one steady motion and using your arm on long strafes. If your aim gets shaky or you keep losing the target, drop to an easier version.",
+            "target": 2942,
+            "finalTarget": 3009,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "SmoothBot Invincible Goated",
+            "family": "Smoothbot",
+            "focus": "Stay smooth and keep your crosshair in the middle of the target the whole time, moving with it in one steady motion and using your arm on long strafes. If your aim gets shaky or you keep losing the target, drop to an easier version.",
+            "target": 4242,
+            "finalTarget": 4364,
+            "precision": 0
+          },
+          {
+            "name": "Centering II 180 Intermediate",
+            "family": "Centering",
+            "focus": "Stay smooth and keep your crosshair in the middle of the target the whole time, moving with it in one steady motion and using your arm on long strafes. If your aim gets shaky or you keep losing the target, drop to an easier version.",
+            "target": 12990,
+            "finalTarget": 13356,
+            "precision": 0
+          },
+          {
+            "name": "Aimerz+ PreciseTrack Med S1",
+            "family": "PreciseTrack",
+            "focus": "Stay smooth and keep your crosshair in the middle of the target the whole time, moving with it in one steady motion and using your arm on long strafes. If your aim gets shaky or you keep losing the target, drop to an easier version.",
+            "target": 3046,
+            "finalTarget": 3122,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "SmoothBot Invincible Goated Smaller",
+            "family": "Smoothbot",
+            "focus": "Stay smooth and keep your crosshair in the middle of the target the whole time, moving with it in one steady motion and using your arm on long strafes. If your aim gets shaky or you keep losing the target, drop to an easier version.",
+            "target": 4009,
+            "finalTarget": 4126,
+            "precision": 0
+          },
+          {
+            "name": "Centering II 180 no strafes",
+            "family": "Centering",
+            "focus": "Stay smooth and keep your crosshair in the middle of the target the whole time, moving with it in one steady motion and using your arm on long strafes. If your aim gets shaky or you keep losing the target, drop to an easier version.",
+            "target": 11925,
+            "finalTarget": 12308,
+            "precision": 0
+          },
+          {
+            "name": "Aimerz+ PreciseTrack Hard S1",
+            "family": "PreciseTrack",
+            "focus": "Stay smooth and keep your crosshair in the middle of the target the whole time, moving with it in one steady motion and using your arm on long strafes. If your aim gets shaky or you keep losing the target, drop to an easier version.",
+            "target": 2992,
+            "finalTarget": 3066,
+            "precision": 0
+          }
+        ]
+      ]
+    },
+    {
+      "id": "destination-4",
+      "name": "Ion Wilds",
+      "category": "Reactive Tracking",
+      "color": "#c0a3ff",
+      "description": "Nothing holds its course here. Read each turn and stay with it.",
+      "bands": [
+        [
+          {
+            "name": "Ground Plaza Sparky v3 Easy",
+            "family": "Ground Plaza",
+            "focus": "React to where the target goes instead of guessing, and sit slightly on the side it's moving away from so you have room when it turns. Stay relaxed, because jittery aim usually means you're tensing up, and if you catch yourself predicting, play an easier version for a while.",
+            "target": 878,
+            "finalTarget": 885,
+            "precision": 0
+          },
+          {
+            "name": "Air Voltaic Invincible 4 Entry",
+            "family": "Air Reading",
+            "focus": "React to where the target goes instead of guessing, and sit slightly on the side it's moving away from so you have room when it turns. Stay relaxed, because jittery aim usually means you're tensing up, and if you catch yourself predicting, play an easier version for a while.",
+            "target": 4610,
+            "finalTarget": 4820,
+            "precision": 0
+          },
+          {
+            "name": "Air Angelic rAim Biggest",
+            "family": "Air Angelic",
+            "focus": "React to where the target goes instead of guessing, and sit slightly on the side it's moving away from so you have room when it turns. Stay relaxed, because jittery aim usually means you're tensing up, and if you catch yourself predicting, play an easier version for a while.",
+            "target": 924,
+            "finalTarget": 927,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Ground Plaza Sparky V3",
+            "family": "Ground Plaza",
+            "focus": "React to where the target goes instead of guessing, and sit slightly on the side it's moving away from so you have room when it turns. Stay relaxed, because jittery aim usually means you're tensing up, and if you catch yourself predicting, play an easier version for a while.",
+            "target": 894,
+            "finalTarget": 897,
+            "precision": 0
+          },
+          {
+            "name": "Air Voltaic Invincible 4 Easier",
+            "family": "Air Reading",
+            "focus": "React to where the target goes instead of guessing, and sit slightly on the side it's moving away from so you have room when it turns. Stay relaxed, because jittery aim usually means you're tensing up, and if you catch yourself predicting, play an easier version for a while.",
+            "target": 4422,
+            "finalTarget": 4516,
+            "precision": 0
+          },
+          {
+            "name": "Air Angelic Easier",
+            "family": "Air Angelic",
+            "focus": "React to where the target goes instead of guessing, and sit slightly on the side it's moving away from so you have room when it turns. Stay relaxed, because jittery aim usually means you're tensing up, and if you catch yourself predicting, play an easier version for a while.",
+            "target": 934,
+            "finalTarget": 935,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Ground Plaza Sparky v3 OW",
+            "family": "Ground Plaza",
+            "focus": "React to where the target goes instead of guessing, and sit slightly on the side it's moving away from so you have room when it turns. Stay relaxed, because jittery aim usually means you're tensing up, and if you catch yourself predicting, play an easier version for a while.",
+            "target": 889,
+            "finalTarget": 892,
+            "precision": 0
+          },
+          {
+            "name": "Air Voltaic Invincible 4 Medium",
+            "family": "Air Reading",
+            "focus": "React to where the target goes instead of guessing, and sit slightly on the side it's moving away from so you have room when it turns. Stay relaxed, because jittery aim usually means you're tensing up, and if you catch yourself predicting, play an easier version for a while.",
+            "target": 4435,
+            "finalTarget": 4511,
+            "precision": 0
+          },
+          {
+            "name": "Air Angelic rAim Easy",
+            "family": "Air Angelic",
+            "focus": "React to where the target goes instead of guessing, and sit slightly on the side it's moving away from so you have room when it turns. Stay relaxed, because jittery aim usually means you're tensing up, and if you catch yourself predicting, play an easier version for a while.",
+            "target": 925,
+            "finalTarget": 927,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Ground Plaza Sparky V3 Thin",
+            "family": "Ground Plaza",
+            "focus": "React to where the target goes instead of guessing, and sit slightly on the side it's moving away from so you have room when it turns. Stay relaxed, because jittery aim usually means you're tensing up, and if you catch yourself predicting, play an easier version for a while.",
+            "target": 900,
+            "finalTarget": 902,
+            "precision": 0
+          },
+          {
+            "name": "Air Voltaic Invincible 4",
+            "family": "Air Reading",
+            "focus": "React to where the target goes instead of guessing, and sit slightly on the side it's moving away from so you have room when it turns. Stay relaxed, because jittery aim usually means you're tensing up, and if you catch yourself predicting, play an easier version for a while.",
+            "target": 3739,
+            "finalTarget": 3828,
+            "precision": 0
+          },
+          {
+            "name": "Air Angelic",
+            "family": "Air Angelic",
+            "focus": "React to where the target goes instead of guessing, and sit slightly on the side it's moving away from so you have room when it turns. Stay relaxed, because jittery aim usually means you're tensing up, and if you catch yourself predicting, play an easier version for a while.",
+            "target": 927,
+            "finalTarget": 929,
+            "precision": 0
+          }
+        ]
+      ]
+    },
+    {
+      "id": "destination-5",
+      "name": "Prism Crossing",
+      "category": "Speed Switching",
+      "color": "#f1e386",
+      "description": "Light splits across the crossing. Move decisively from one signal to the next.",
+      "bands": [
+        [
+          {
+            "name": "wobin DotTS Easy",
+            "family": "DotTS",
+            "focus": "Hold fire and get to the next target as fast as you can in a straight line, without flicking past it. Kill each target fully before you move, and start finding the next one while you finish the current one.",
+            "target": 1275,
+            "finalTarget": 1331,
+            "precision": 0
+          },
+          {
+            "name": "voxTargetSwitch 2 Large",
+            "family": "Vox Pace",
+            "focus": "Hold fire and get to the next target as fast as you can in a straight line, without flicking past it. Kill each target fully before you move, and start finding the next one while you finish the current one.",
+            "target": 104,
+            "finalTarget": 110,
+            "precision": 0
+          },
+          {
+            "name": "VT EddieTS Novice S5",
+            "family": "EddieTS",
+            "focus": "Hold fire and get to the next target as fast as you can in a straight line, without flicking past it. Kill each target fully before you move, and start finding the next one while you finish the current one.",
+            "target": 854,
+            "finalTarget": 897,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "DotTS Entry",
+            "family": "DotTS",
+            "focus": "Hold fire and get to the next target as fast as you can in a straight line, without flicking past it. Kill each target fully before you move, and start finding the next one while you finish the current one.",
+            "target": 2352,
+            "finalTarget": 2518,
+            "precision": 0
+          },
+          {
+            "name": "voxTargetSwitch 2",
+            "family": "Vox Pace",
+            "focus": "Hold fire and get to the next target as fast as you can in a straight line, without flicking past it. Kill each target fully before you move, and start finding the next one while you finish the current one.",
+            "target": 109,
+            "finalTarget": 113,
+            "precision": 0
+          },
+          {
+            "name": "VT EddieTS Intermediate S5",
+            "family": "EddieTS",
+            "focus": "Hold fire and get to the next target as fast as you can in a straight line, without flicking past it. Kill each target fully before you move, and start finding the next one while you finish the current one.",
+            "target": 998,
+            "finalTarget": 1036,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "DotTS 30% Larger",
+            "family": "DotTS",
+            "focus": "Hold fire and get to the next target as fast as you can in a straight line, without flicking past it. Kill each target fully before you move, and start finding the next one while you finish the current one.",
+            "target": 2695,
+            "finalTarget": 2743,
+            "precision": 0
+          },
+          {
+            "name": "voxTS Viscose Varied",
+            "family": "Vox Pace",
+            "focus": "Hold fire and get to the next target as fast as you can in a straight line, without flicking past it. Kill each target fully before you move, and start finding the next one while you finish the current one.",
+            "target": 107,
+            "finalTarget": 109,
+            "precision": 0
+          },
+          {
+            "name": "VT EddieTS Advanced S5",
+            "family": "EddieTS",
+            "focus": "Hold fire and get to the next target as fast as you can in a straight line, without flicking past it. Kill each target fully before you move, and start finding the next one while you finish the current one.",
+            "target": 1043,
+            "finalTarget": 1065,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "DotTS",
+            "family": "DotTS",
+            "focus": "Hold fire and get to the next target as fast as you can in a straight line, without flicking past it. Kill each target fully before you move, and start finding the next one while you finish the current one.",
+            "target": 2842,
+            "finalTarget": 2890,
+            "precision": 0
+          },
+          {
+            "name": "voxTS rAim",
+            "family": "Vox Pace",
+            "focus": "Hold fire and get to the next target as fast as you can in a straight line, without flicking past it. Kill each target fully before you move, and start finding the next one while you finish the current one.",
+            "target": 112,
+            "finalTarget": 114,
+            "precision": 0
+          },
+          {
+            "name": "VT EddieTS Elite S5",
+            "family": "EddieTS",
+            "focus": "Hold fire and get to the next target as fast as you can in a straight line, without flicking past it. Kill each target fully before you move, and start finding the next one while you finish the current one.",
+            "target": 919,
+            "finalTarget": 951,
+            "precision": 0
+          }
+        ]
+      ]
+    },
+    {
+      "id": "destination-6",
+      "name": "Cinder Veil",
+      "category": "Evasive Switching",
+      "color": "#ff8dbb",
+      "description": "Signals slip behind the veil. Find them again without losing your pace.",
+      "bands": [
+        [
+          {
+            "name": "VT PasuTS Entry S5",
+            "family": "Pasu Switch",
+            "focus": "Keep the crosshair on the bot through its direction changes. Switch after the kill.",
+            "target": 736,
+            "finalTarget": 769,
+            "precision": 0
+          },
+          {
+            "name": "Floatswitch Entry",
+            "family": "Floating Heads",
+            "focus": "Build a target order and keep each burst on the head until it drops.",
+            "target": 612,
+            "finalTarget": 638,
+            "precision": 0
+          },
+          {
+            "name": "VT ControlTS Entry S5 Speed",
+            "family": "Chamber Relay",
+            "focus": "Track the jump through the narrow space. Recenter before moving on.",
+            "target": 648,
+            "finalTarget": 670,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "VT PasuTS Intermediate S5",
+            "family": "Pasu Switch",
+            "focus": "Keep the crosshair on the bot through its direction changes. Switch after the kill.",
+            "target": 786,
+            "finalTarget": 802,
+            "precision": 0
+          },
+          {
+            "name": "Floatswitch Intermediate",
+            "family": "Floating Heads",
+            "focus": "Build a target order and keep each burst on the head until it drops.",
+            "target": 719,
+            "finalTarget": 735,
+            "precision": 0
+          },
+          {
+            "name": "VT ControlTS Intermediate S5",
+            "family": "Chamber Relay",
+            "focus": "Track the jump through the narrow space. Recenter before moving on.",
+            "target": 487,
+            "finalTarget": 503,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "VT PasuTS Advanced S5",
+            "family": "Pasu Switch",
+            "focus": "Keep the crosshair on the bot through its direction changes. Switch after the kill.",
+            "target": 800,
+            "finalTarget": 810,
+            "precision": 0
+          },
+          {
+            "name": "Floatswitch Advanced",
+            "family": "Floating Heads",
+            "focus": "Build a target order and keep each burst on the head until it drops.",
+            "target": 776,
+            "finalTarget": 787,
+            "precision": 0
+          },
+          {
+            "name": "VT ControlTS Advanced S5",
+            "family": "Chamber Relay",
+            "focus": "Track the jump through the narrow space. Recenter before moving on.",
+            "target": 473,
+            "finalTarget": 483,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "VT PasuTS Elite S5",
+            "family": "Pasu Switch",
+            "focus": "Keep the crosshair on the bot through its direction changes. Switch after the kill.",
+            "target": 711,
+            "finalTarget": 726,
+            "precision": 0
+          },
+          {
+            "name": "Floatswitch Elite",
+            "family": "Floating Heads",
+            "focus": "Build a target order and keep each burst on the head until it drops.",
+            "target": 746,
+            "finalTarget": 754,
+            "precision": 0
+          },
+          {
+            "name": "VT ControlTS Elite S5",
+            "family": "Chamber Relay",
+            "focus": "Track the jump through the narrow space. Recenter before moving on.",
+            "target": 406,
+            "finalTarget": 416,
+            "precision": 0
+          }
+        ]
+      ]
+    }
+  ]
+}
