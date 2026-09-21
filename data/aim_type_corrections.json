@@ -124,13 +124,14 @@
       "aimType": "Switching",
       "kovaaksSays": "Clicking",
       "measured": {
-        "runs": 5,
-        "kills": 251,
-        "shotsPerKill": 93.3,
+        "runs": 6,
+        "kills": 304,
+        "shotsPerKill": 92.5,
         "weapon": "Poke-Drill",
-        "bot": "regen_dot"
+        "bot": "regen_dot",
+        "sampledAt": "2026-09-20"
       },
-      "why": "The third member of the domiSwitch lineage, same Poke-Drill against the same regenerating dot, 93.3 shots per kill over 198 kills. Viscose Benchmarks S2 files it under Post-Flick, which is a switching label. Corrected for the same reason as its siblings: a lineage split across two categories is invisible to both the weakness map and the sub-skill queues.",
+      "why": "The third member of the domiSwitch lineage, same Poke-Drill against the same regenerating dot, 92.5 shots per kill over 304 kills in 6 local runs. Viscose Benchmarks S2 files it under Post-Flick, which is a switching label. Corrected for the same reason as its siblings: a lineage split across two categories is invisible to both the weakness map and the sub-skill queues.",
       "namedBy": [
         {
           "benchmark": "Viscose Benchmarks S2",
@@ -142,13 +143,14 @@
       "aimType": "Switching",
       "kovaaksSays": "Clicking",
       "measured": {
-        "runs": 1,
-        "kills": 25,
-        "shotsPerKill": 161.4,
+        "runs": 2,
+        "kills": 54,
+        "shotsPerKill": 148.5,
         "weapon": "LG",
-        "bot": "regen_dot"
+        "bot": "regen_dot",
+        "sampledAt": "2026-09-20"
       },
-      "why": "161 shots per kill with a lightning gun against the same regen_dot bot. Anima Micro v2 files it under Micro-Switching, which is a switching label. The sample is one run and 25 kills, which is thin - it is corrected anyway because the refutation does not depend on precision: at 161 shots per kill it would have to be wrong by a factor of a hundred to be a clicking scenario, and the weapon is not one a clicking scenario uses.",
+      "why": "148.5 shots per kill with a lightning gun against the same regen_dot bot, across 2 local runs and 54 kills. Anima Micro v2 files it under Micro-Switching, which is a switching label. The sample is small, but the separation from clicking remains over a factor of a hundred and the weapon requires sustained fire.",
       "namedBy": [
         {
           "benchmark": "Anima Micro v2",
