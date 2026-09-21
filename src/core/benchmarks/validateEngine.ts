@@ -43,6 +43,7 @@ interface ServerProgress {
 async function fetchProgress(benchmarkId: number, steamId: string): Promise<ServerProgress> {
   const res = await fetch(`${API}?benchmarkId=${benchmarkId}&steamId=${steamId}`, {
     headers: { "User-Agent": "Mozilla/5.0" },
+    signal: AbortSignal.timeout(15_000),
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return (await res.json()) as ServerProgress;
@@ -68,7 +69,7 @@ async function main(): Promise<void> {
       try {
         server = await fetchProgress(difficulty.kovaaksBenchmarkId, steamId);
       } catch (err) {
-        console.log(`${steamId} ${difficulty.name}: fetch failed (${String(err)}) - skipped`);
+        fail(`${steamId} ${difficulty.name}: live comparison unavailable (${String(err)})`);
         continue;
       }
 
@@ -130,7 +131,8 @@ async function main(): Promise<void> {
     }
   }
 
-  console.log(`\n${checks - failures}/${checks} checks passed`);
+  if (checks === 0) fail("No scored accounts could be compared; the engine is unverified.");
+  console.log(`\n${checks} category/overall comparisons, ${failures} disagreement(s) or unavailable checks`);
   if (failures > 0) {
     console.error("FAIL: engine disagrees with KovaaK's");
     process.exit(1);
