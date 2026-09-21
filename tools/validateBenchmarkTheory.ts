@@ -18,6 +18,8 @@ const expansion = read("season_expansion.json");
 const calibration = read("season_expansion_calibration.json");
 const additions = new Set(expansion.families.map((f: any) => f.family));
 const before = new Map<string, any>(calibration.adjustments.map((a: any) => [a.scenario, a.before]));
+// Record repairs came later and are checked in validateSeasonExpansion; undo them here too.
+for (const r of read("record_repairs.json").repairs) before.set(r.scenario, { ...(before.get(r.scenario) ?? {}), ...r.before });
 const canonical = (value: any): any => value && typeof value === "object"
   ? Array.isArray(value) ? value.map(canonical)
     : Object.fromEntries(Object.keys(value).sort().map(key => [key, canonical(value[key])]))

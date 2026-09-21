@@ -23,7 +23,10 @@ const distributions = new Map<string, any>(read("leaderboard_percentiles.json").
 const boards = new Map<string, any>(read("leaderboard_apex.json").boards.map((s: any) => [s.scenario, s]));
 const families = pool.families.filter((f: any) => f.category === spec.category);
 const withoutFocus = ({ focus, ...f }: any): any => f;
-assert.equal(createHash("sha256").update(JSON.stringify(pool.families.filter((f: any) => f.category !== spec.category).map(withoutFocus))).digest("hex"),
+// Record repairs came later and are checked in validateSeasonExpansion; undo them here too.
+const repairedBefore = new Map<string, any>(read("record_repairs.json").repairs.map((r: any) => [r.scenario, r.before]));
+const unrepaired = (f: any): any => ({ ...f, variants: f.variants.map((v: any) => ({ ...v, ...(repairedBefore.get(v.scenario) ?? {}) })) });
+assert.equal(createHash("sha256").update(JSON.stringify(pool.families.filter((f: any) => f.category !== spec.category).map(unrepaired).map(withoutFocus))).digest("hex"),
   calibration.otherFamiliesSha256, "Other category selections or targets changed");
 assert.equal(families.length, 11);
 assert.equal(season.scenarios.length, 256);

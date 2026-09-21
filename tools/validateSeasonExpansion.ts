@@ -22,6 +22,9 @@ const taxonomy = new Map<string, any>(read("scenario_taxonomy.json").scenarios.m
 const distributions = new Map<string, any>(read("leaderboard_percentiles.json").distributions.map((d: any) => [d.scenario, d]));
 const boards = new Map<string, any>(read("leaderboard_apex.json").boards.map((d: any) => [d.scenario, d]));
 const adjustments = new Map<string, any>(calibration.adjustments.map((a: any) => [a.scenario, a]));
+// Top rungs lowered to what the board's record allows, after the expansion was frozen.
+const recordRepairs = read("record_repairs.json").repairs as any[];
+const repairedBefore = new Map<string, any>(recordRepairs.map((r) => [r.scenario, r.before]));
 const canonical = (v: any): any => v && typeof v === "object"
   ? Array.isArray(v) ? v.map(canonical) : Object.fromEntries(Object.keys(v).sort().map(k => [k, canonical(v[k])])) : v;
 const hash = (v: any) => createHash("sha256").update(JSON.stringify(canonical(v))).digest("hex");
@@ -37,7 +40,7 @@ for (const original of calibration.originalFamilies) {
   const current = pool.families.find((f: any) => f.family === original.family);
   assert(current, `${original.family}: original family removed`);
   const restored = { ...current, variants: current.variants.map((v: any) => ({
-    ...v, ...(adjustments.get(v.scenario)?.before ?? {}),
+    ...v, ...(adjustments.get(v.scenario)?.before ?? {}), ...(repairedBefore.get(v.scenario) ?? {}),
   })) };
   assert.equal(hash(restored), original.sha256, `${original.family}: core changed beyond recorded overlap targets`);
 }
@@ -83,6 +86,21 @@ for (const a of calibration.ceilingAdjustments) {
   for (let i = expected.length - 2; i >= 0; i--) expected[i] = Math.min(expected[i], expected[i + 1] - 1);
   assert.deepEqual(a.rankMaxes, expected);
   assert.deepEqual(season.scenarios.find(s => s.scenario === a.scenario)!.rankMaxes, expected);
+}
+
+// Each record repair: the old top rung really was past the record, the new one is not, it is
+// the highest rung the cited author publishes at or below the record, and pool and season
+// both carry it. Nothing else about the variant moved.
+for (const r of recordRepairs) {
+  const v = pool.families.flatMap((f: any) => f.variants).find((v: any) => v.scenario === r.scenario && v.window === r.window);
+  assert(v, `${r.scenario}: repaired variant missing`);
+  assert.equal(r.record, boards.get(r.scenario).points[0].score, `${r.scenario}: record resampled since the repair`);
+  assert(r.before.rankMaxes.at(-1) > r.record, `${r.scenario}: was not past the record`);
+  const published: number[] = r.before.source.from[0].rankMaxes;
+  const top = Math.max(...published.filter((n) => n <= r.record && n > r.rankMaxes.at(-2)));
+  assert.deepEqual(r.rankMaxes, [...r.before.rankMaxes.slice(0, -1), top], `${r.scenario}: not the author's highest rung under the record`);
+  assert.deepEqual(v.rankMaxes, r.rankMaxes);
+  assert.deepEqual(season.scenarios.find(s => s.scenario === r.scenario)!.rankMaxes, r.rankMaxes);
 }
 
 // Play only the easier band's scenarios. The real energy path must award both

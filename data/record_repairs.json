@@ -1,0 +1,94 @@
+{
+  "rule": "An adopted Expert ladder whose top rung is above its board's world record grades a rank nobody can earn. The top rung is replaced by the highest rung the same author publishes at or below the record, so every number is still the author's. validateThresholds finds these; validateSeasonExpansion re-derives each repair.",
+  "repairs": [
+    {
+      "scenario": "Aimerz+ 1w4ts HF Hard S1",
+      "family": "Micro",
+      "window": 3,
+      "before": {
+        "rankMaxes": [
+          158,
+          182,
+          208,
+          250
+        ],
+        "source": {
+          "kind": "adopted",
+          "from": [
+            {
+              "benchmark": "Aimerz+ S1",
+              "difficulty": "Hard",
+              "rankMaxes": [
+                158,
+                170,
+                182,
+                194,
+                208,
+                223,
+                250
+              ],
+              "used": [
+                158,
+                182,
+                208,
+                250
+              ]
+            }
+          ]
+        }
+      },
+      "record": 244,
+      "recordSampledAt": "2026-09-02T21:03:21.374Z",
+      "rankMaxes": [
+        158,
+        182,
+        208,
+        223
+      ]
+    },
+    {
+      "scenario": "darkPressure",
+      "family": "Wide Pressure",
+      "window": 3,
+      "before": {
+        "rankMaxes": [
+          7300,
+          8550,
+          9000,
+          10400
+        ],
+        "source": {
+          "kind": "adopted",
+          "from": [
+            {
+              "benchmark": "Aimerz+ Static Clicking",
+              "difficulty": "Hard",
+              "rankMaxes": [
+                7300,
+                7950,
+                8550,
+                9000,
+                9400,
+                10400
+              ],
+              "used": [
+                7300,
+                8550,
+                9000,
+                10400
+              ]
+            }
+          ]
+        }
+      },
+      "record": 10300,
+      "recordSampledAt": "2026-09-02T21:05:35.010Z",
+      "rankMaxes": [
+        7300,
+        8550,
+        9000,
+        9400
+      ]
+    }
+  ]
+}

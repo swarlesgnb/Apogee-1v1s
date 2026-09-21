@@ -28,7 +28,7 @@ import { join } from "node:path";
 import { dataFile } from "../dataDir.ts";
 import { checkAgainstSource, type ThresholdSource } from "./thresholds.ts";
 import { thresholdsFrom, type Distribution } from "./percentiles.ts";
-import { windowRankCount } from "./windows.ts";
+import { windowRankCount, windowRankIndices } from "./windows.ts";
 
 const BOLD = "\x1b[1m";
 const DIM = "\x1b[2m";
@@ -256,6 +256,48 @@ check(
 for (const [kind, n] of [...byKind].sort()) {
   console.log(`  ${DIM}${kind.padEnd(12)} ${n}${RESET}`);
 }
+
+// ---- every rank can be earned ----------------------------------------------------------------
+//
+// A threshold above the board's world record is a rank that scenario cannot give out. On an
+// Advanced variant reaching into the Expert window that is expected - those ranks are the
+// Expert variant's to award, and a family takes the best of its variants - so the question is
+// asked of the family: is every rank it grades awarded by at least one variant? Two Expert
+// thresholds adopted verbatim from Aimerz+ failed this (darkPressure 10400 against a record of
+// 10300, 1w4ts HF Hard 250 against 244), leaving Static Clicking's top two ranks and its
+// positional rank out of reach. Nothing checked it, although PLAN.md said something did.
+
+const records = new Map(
+  (
+    JSON.parse(readFileSync(dataFile("leaderboard_apex.json"), "utf8")) as {
+      boards: { scenario: string; points: { score: number }[] }[];
+    }
+  ).boards.map((b) => [b.scenario, b.points[0]?.score]),
+);
+const unearnable: string[] = [];
+let unmeasured = 0;
+for (const family of pool.families) {
+  const graded = new Set<number>();
+  const awarded = new Set<number>();
+  for (const v of family.variants) {
+    const covers = windowRankIndices(v.window, pool.windowSize, totalRanks, overlap);
+    const record = records.get(v.scenario);
+    covers.forEach((rank, i) => {
+      if (v.rankMaxes?.[i] === undefined) return;
+      graded.add(rank);
+      if (record === undefined) { unmeasured++; awarded.add(rank); }
+      else if (v.rankMaxes[i] <= record) awarded.add(rank);
+    });
+  }
+  const missing = [...graded].filter((r) => !awarded.has(r));
+  if (missing.length) unearnable.push(`${family.family}: rank(s) ${missing.map((r) => r + 1).join(", ")}`);
+}
+check(
+  "every rank a family grades is at or below some variant's world record",
+  unearnable.length === 0,
+  unearnable.length ? `\n       ${unearnable.slice(0, 6).join("\n       ")}` : "",
+);
+if (unmeasured > 0) console.log(`  ${DIM}${unmeasured} threshold(s) on scenarios with no sampled record, not checked${RESET}`);
 
 // ---- the debt --------------------------------------------------------------------------------
 //
