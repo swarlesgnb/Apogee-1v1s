@@ -39,6 +39,9 @@ export interface RebuildSeason {
     leaderboardId?: number | null;
     rankMaxes: number[];
     window?: number;
+    source?: { kind?: string } & Record<string, unknown>;
+    arm?: string;
+    armFrom?: string;
   }[];
 }
 
@@ -50,7 +53,17 @@ export interface RebuildSeason {
  * deleted without a message; this way a new one survives by default, and the worst case is
  * a stale value rather than no value.
  */
-export function rebuildPool(poolIn: Record<string, unknown>, season: RebuildSeason): Record<string, unknown> {
+export function rebuildPool(
+  poolIn: Record<string, unknown>,
+  season: RebuildSeason,
+  /**
+   * Families renamed in the editor, "Category/new" to "Category/old". What a family carries
+   * that the season does not model - its sub-skill, notes, place in the circuit - is keyed
+   * by name in the pool, so without this a rename loses all of it.
+   */
+  renamed: Record<string, string> = {},
+): Record<string, unknown> {
+  const was = (key: string): string => renamed[key] ?? key;
   // Deep-copied so a caller's pool is never half-rewritten by a throw partway through, and
   // typed loosely on purpose: the point of this function is that it does not know the whole
   // shape of a pool and must not need to.
@@ -135,7 +148,7 @@ export function rebuildPool(poolIn: Record<string, unknown>, season: RebuildSeas
     families[key] ??= {
       family: scen.family,
       category: scen.category,
-      ...(subCategoryOf.has(key) ? { subCategory: subCategoryOf.get(key)! } : {}),
+      ...(subCategoryOf.has(was(key)) ? { subCategory: subCategoryOf.get(was(key))! } : {}),
       variants: [],
     };
     // A number the editor changed is a number somebody authored, and it says so.
@@ -153,7 +166,12 @@ export function rebuildPool(poolIn: Record<string, unknown>, season: RebuildSeas
       label: scen.label,
       leaderboardId: scen.leaderboardId ?? null,
       rankMaxes: scen.rankMaxes.slice(),
-      source: edited
+      // Except a fresh cut. The grid cuts a replacement's thresholds from its own board and
+      // says so on the scenario; that is a percentile source validateThresholds can
+      // re-derive to the digit, and calling it unexplained would be the less true label.
+      source: edited && scen.source?.kind === "percentile"
+        ? scen.source
+        : edited
         ? {
             kind: "authored",
             why:
@@ -169,12 +187,17 @@ export function rebuildPool(poolIn: Record<string, unknown>, season: RebuildSeas
       // order, then the written reasons after them. Spreading first put `admitted` above
       // `window` and rewrote all sixteen of them as pure churn in the diff.
       ...(keptOnVariant.get(scen.scenario) ?? {}),
+      // The arm the season carries, over what the pool had. A replacement is a scenario the
+      // pool has never held, so it has nothing kept, and validate:pool refuses a variant
+      // that does not name a part of the arm. Assigned over a kept one in place, so an
+      // unchanged variant keeps its key order.
+      ...(scen.arm ? { arm: scen.arm, armFrom: scen.armFrom } : {}),
     });
   }
 
   for (const [key, f] of Object.entries(families)) {
     f.variants.sort((a, b) => (a.window as number) - (b.window as number));
-    Object.assign(f, keptOnFamily.get(key) ?? {});
+    Object.assign(f, keptOnFamily.get(was(key)) ?? {});
   }
 
   pool.windowSize = season.windowSize ?? pool.windowSize;
@@ -189,12 +212,22 @@ export function rebuildPool(poolIn: Record<string, unknown>, season: RebuildSeas
     ]),
   );
   pool.families = Object.values(families).sort((a, b) => {
-    const ai = priorOrder.get(`${a.category}/${a.family}`) ?? Infinity;
-    const bi = priorOrder.get(`${b.category}/${b.family}`) ?? Infinity;
+    const ai = priorOrder.get(was(`${a.category}/${a.family}`)) ?? Infinity;
+    const bi = priorOrder.get(was(`${b.category}/${b.family}`)) ?? Infinity;
     return (ai === bi ? 0 : ai < bi ? -1 : 1)
       || a.category.localeCompare(b.category) || a.family.localeCompare(b.family);
   });
   delete pool.overrides;
+
+  // A sub-skill override names one scenario and says why it is filed against the
+  // benchmarks. Once that scenario has left the pool the reason is about nothing, and
+  // validate:pool refuses the orphan, so it goes with the scenario.
+  if (pool.subCategoryOverrides && typeof pool.subCategoryOverrides === "object") {
+    const present = new Set(season.scenarios.map((s) => s.scenario));
+    for (const name of Object.keys(pool.subCategoryOverrides)) {
+      if (!present.has(name)) delete pool.subCategoryOverrides[name];
+    }
+  }
 
   return pool;
 }

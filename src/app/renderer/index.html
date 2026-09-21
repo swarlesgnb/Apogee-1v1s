@@ -1886,6 +1886,166 @@
   .season-actions button.go:hover:not(:disabled) { filter: brightness(1.1); color: var(--ground); }
   .season-actions button:disabled { opacity: .5; cursor: default; }
 
+  /* The pool grid. A row per family, a column per difficulty, and the slot being worked on
+     beside it. The grid scrolls inside its own box so its header row and the detail stay
+     put while 64 families go past; the panel around it clips, so nothing inside it can be
+     sticky to the page. */
+  .season-savebar {
+    position: sticky; top: 0; z-index: 6; margin-bottom: var(--s3);
+    padding: var(--s2) 0; background: var(--ground);
+  }
+  .pool-panel .phead .note b { color: var(--ink); font-weight: 650; }
+  .pool-panel .pg-busy { color: var(--accent); }
+  .pool-panel .pg-warn { color: var(--warn); }
+  .pool-bar {
+    display: flex; flex-wrap: wrap; gap: var(--s3); align-items: center;
+    padding: var(--s3) var(--s4); border-bottom: 1px solid var(--rule-2);
+  }
+  .pool-search { position: relative; flex: 1 1 420px; display: flex; align-items: center; gap: 10px; min-width: 0; }
+  .pool-target {
+    flex: 0 1 auto; max-width: 42%; font-family: var(--mono); font-size: var(--t-xs);
+    color: var(--ink-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .pool-search input {
+    flex: 1 1 200px; min-width: 0; font: inherit; font-size: var(--t);
+    color: var(--ink); background: var(--well); border: 1px solid var(--rule-2);
+    border-radius: var(--r); padding: 8px 11px;
+  }
+  .pool-search input:focus { outline: none; border-color: var(--accent); }
+  .pool-hits {
+    display: none; position: absolute; z-index: 20; left: 0; right: 0; top: calc(100% + 4px);
+    max-height: 380px; overflow-y: auto; background: var(--panel);
+    border: 1px solid var(--rule-3); border-radius: var(--r);
+    box-shadow: 0 14px 40px rgb(0 0 0 / .45);
+  }
+  .pool-search.open .pool-hits { display: block; }
+  .pg-hint { padding: 12px 14px; font-size: var(--t-sm); color: var(--ink-dim); }
+  .pg-hit {
+    display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 12px;
+    padding: 8px 14px; cursor: pointer; border-bottom: 1px solid var(--rule);
+  }
+  .pg-hit:last-child { border-bottom: 0; }
+  .pg-hit.active { background: var(--well); }
+  .pg-hit.active .pg-hit-name { color: var(--accent); }
+  .pg-hit-name { font-size: var(--t-sm); font-weight: 550; color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .pg-hit-meta { grid-column: 1; font-size: var(--t-xs); color: var(--ink-dim); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .pg-hit.thin .pg-hit-meta { color: var(--down); }
+  .pg-hit-used {
+    grid-column: 2; grid-row: 1 / span 2; align-self: center; font-family: var(--mono);
+    font-size: var(--t-2xs); color: var(--warn); white-space: nowrap;
+  }
+  .pool-tools { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+  .pool-filter { display: inline-flex; border: 1px solid var(--rule-2); border-radius: var(--r); overflow: hidden; }
+  .pool-tools button, .pool-btn {
+    font: inherit; font-size: var(--t-xs); color: var(--ink-mid);
+    background: transparent; border: 1px solid var(--rule); border-radius: var(--r);
+    padding: 5px 10px; cursor: pointer;
+  }
+  .pool-filter button { border: 0; border-radius: 0; border-right: 1px solid var(--rule-2); }
+  .pool-filter button:last-child { border-right: 0; }
+  .pool-filter button[aria-pressed="true"] { color: var(--ink); background: var(--well); }
+  .pool-tools button:hover:not(:disabled), .pool-btn:hover:not(:disabled) { color: var(--ink); border-color: var(--rule-3); }
+  .pool-btn.danger:hover:not(:disabled) { color: var(--down); border-color: color-mix(in srgb, var(--down) 40%, transparent); }
+  .pool-tools button:disabled, .pool-btn:disabled { opacity: .4; cursor: default; }
+  .pool-reset { margin-left: 6px; }
+
+  .pool-body {
+    display: grid; grid-template-columns: minmax(0, 1fr) 320px;
+    height: min(74vh, 920px); min-height: 420px;
+  }
+  .pool-grid { overflow: auto; outline: none; border-right: 1px solid var(--rule-2); }
+  .pool-grid:focus-visible { box-shadow: inset 0 0 0 1px var(--accent); }
+  table.pgrid { width: 100%; border-collapse: separate; border-spacing: 0; table-layout: fixed; min-width: 640px; }
+  table.pgrid col.pg-famcol { width: 150px; }
+  table.pgrid thead th {
+    position: sticky; top: 0; z-index: 2; background: var(--panel); text-align: left;
+    padding: 9px 10px 7px; font-size: var(--t-xs); font-weight: 600; color: var(--ink);
+    border-bottom: 1px solid var(--rule-2);
+  }
+  table.pgrid thead th small {
+    display: block; font-family: var(--mono); font-size: var(--t-2xs); font-weight: 400; color: var(--ink-dim);
+  }
+  tr.pg-cat th {
+    text-align: left; padding: 16px 10px 6px; border-bottom: 0; font-family: var(--mono); font-size: var(--t-2xs);
+    font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-mid);
+  }
+  tr.pg-cat th > * { vertical-align: middle; }
+  .pg-catcount { margin: 0 10px; letter-spacing: 0; text-transform: none; color: var(--ink-dim); font-weight: 400; }
+  .pool-addfam { font-family: var(--font); letter-spacing: 0; text-transform: none; padding: 2px 8px; }
+  /* The page styles every th and td as a right-aligned number column; this is a table of names. */
+  table.pgrid td, table.pgrid th { text-align: left; font-variant-numeric: normal; }
+  table.pgrid td.pg-cell { font-family: var(--font); font-size: var(--t-sm); font-weight: 400; }
+  th.pg-fam {
+    text-align: left; padding: 7px 10px; font-family: var(--font); font-size: var(--t-sm); font-weight: 550;
+    text-transform: none; letter-spacing: 0; color: var(--ink-mid); border-bottom: 0;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; border-top: 1px solid var(--rule);
+  }
+  td.pg-cell {
+    padding: 6px 10px; border-top: 1px solid var(--rule); border-left: 1px solid var(--rule);
+    cursor: pointer; vertical-align: top; min-width: 0;
+  }
+  td.pg-cell:hover { background: color-mix(in srgb, var(--well) 60%, transparent); }
+  .pg-name, .pg-meta { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .pg-name { font-size: var(--t-sm); color: var(--ink); }
+  .pg-meta { font-family: var(--mono); font-size: var(--t-2xs); color: var(--ink-dim); margin-top: 1px; }
+  td.pg-cell.replaced { background: color-mix(in srgb, var(--up) 9%, transparent); }
+  td.pg-cell.empty .pg-name { color: var(--warn); font-style: italic; }
+  td.pg-cell.pending .pg-meta { color: var(--accent); }
+  td.pg-cell.error, td.pg-cell.check { background: color-mix(in srgb, var(--down) 11%, transparent); }
+  td.pg-cell.error .pg-meta, td.pg-cell.check .pg-meta { color: var(--down); }
+  td.pg-cell.dup .pg-name { color: var(--warn); }
+  td.pg-cell.sel { background: var(--well); outline: 2px solid var(--accent); outline-offset: -2px; }
+  .pool-grid:not(:focus-within) td.pg-cell.sel { outline-color: var(--rule-3); }
+
+  .pool-detail { overflow-y: auto; padding: var(--s4); display: grid; gap: 10px; align-content: start; }
+  .pgd-where { font-family: var(--mono); font-size: var(--t-2xs); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-dim); }
+  .pgd-family { display: flex; gap: 8px; align-items: center; }
+  .pgd-family input {
+    flex: 1; min-width: 0; font: inherit; font-size: var(--t); font-weight: 600; color: var(--ink);
+    background: transparent; border: 1px solid transparent; border-radius: var(--r); padding: 4px 6px; margin-left: -6px;
+  }
+  .pgd-family input:hover { border-color: var(--rule); }
+  .pgd-family input:focus { outline: none; border-color: var(--accent); background: var(--well); }
+  .pgd-name { display: flex; gap: 10px; align-items: center; justify-content: space-between; }
+  .pgd-name strong { font-size: var(--t); color: var(--ink); overflow-wrap: anywhere; }
+  .pgd-was { display: flex; gap: 8px; align-items: center; justify-content: space-between; font-size: var(--t-xs); color: var(--ink-dim); }
+  .pgd-facts { font-size: var(--t-xs); color: var(--ink-dim); line-height: 1.5; }
+  .pgd-facts.thin { color: var(--down); }
+  .pgd-empty, .pgd-busy, .pgd-warn { margin: 0; font-size: var(--t-sm); line-height: 1.5; }
+  .pgd-empty { color: var(--ink-dim); }
+  .pgd-busy { color: var(--accent); }
+  .pgd-warn { color: var(--warn); }
+  .pgd-arm { display: grid; grid-template-columns: minmax(0, 1fr) 110px 64px; gap: 8px; align-items: center; font-size: var(--t-xs); color: var(--ink-mid); }
+  .pgd-arm select {
+    font: inherit; font-size: var(--t-sm); color: var(--ink); background: var(--well);
+    border: 1px solid var(--rule); border-radius: var(--r); padding: 4px 6px;
+  }
+  .pgd-arm select:disabled { opacity: .7; }
+  .pgd-arm small { font-family: var(--mono); font-size: var(--t-2xs); color: var(--ink-dim); text-align: right; }
+  .pgd-thr { display: grid; gap: 4px; margin-top: 4px; }
+  .pgd-rung { display: grid; grid-template-columns: minmax(0, 1fr) 92px 64px; gap: 8px; align-items: center; }
+  .pgd-rank { font-size: var(--t-xs); color: var(--ink-mid); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .pgd-rung input.thr {
+    width: 100%; font: inherit; font-family: var(--mono); font-size: var(--t-sm); text-align: right;
+    color: var(--ink); background: var(--well); border: 1px solid var(--rule); border-radius: var(--r); padding: 4px 7px;
+  }
+  .pgd-rung input.thr:focus { outline: none; border-color: var(--accent); }
+  .pgd-rung input.thr.override { border-color: color-mix(in srgb, var(--warn) 55%, transparent); color: var(--warn); }
+  .pgd-share { font-family: var(--mono); font-size: var(--t-2xs); color: var(--ink-dim); text-align: right; }
+  .pgd-tools { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+  .pool-keys {
+    margin: 0; padding: var(--s2) var(--s4) var(--s3); border-top: 1px solid var(--rule-2);
+    font-size: var(--t-xs); color: var(--ink-dim);
+  }
+  .pool-keys kbd {
+    font-family: var(--mono); font-size: var(--t-2xs); color: var(--ink-mid);
+    border: 1px solid var(--rule-2); border-radius: 3px; padding: 0 4px;
+  }
+  @media (max-width: 1100px) {
+    .pool-body { grid-template-columns: 1fr; height: auto; }
+    .pool-grid { max-height: 60vh; border-right: 0; border-bottom: 1px solid var(--rule-2); }
+  }
+
   .season-add { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
   .season-add input[type="search"], .season-add select {
     font: inherit; font-size: var(--t-sm); color: var(--ink);
@@ -3771,6 +3931,50 @@
               </p>
             </div>
 
+            <div class="season-actions season-savebar">
+              <button type="button" class="go" id="seasonSave">Save season</button>
+              <button type="button" id="seasonReload">Discard changes</button>
+              <button type="button" id="seasonPurge" class="purge" hidden></button>
+              <span class="season-status" id="seasonStatus" role="status"></span>
+            </div>
+
+            <div class="panel pool-panel" id="poolPanel" hidden>
+              <div class="phead">
+                <h2>Pool</h2>
+                <span class="note" id="poolGridCount"></span>
+              </div>
+              <div class="pool-bar">
+                <div class="pool-search" id="poolGridSearch">
+                  <span class="pool-target" id="poolGridTarget">Select a slot</span>
+                  <input type="text" id="poolGridQuery" placeholder="Type to put a scenario in this slot…"
+                         autocomplete="off" spellcheck="false" aria-controls="poolGridHits">
+                  <div class="pool-hits" id="poolGridHits" role="listbox"></div>
+                </div>
+                <div class="pool-tools">
+                  <div class="pool-filter" role="group" aria-label="Show">
+                    <button type="button" data-grid-filter="all" aria-pressed="true">All</button>
+                    <button type="button" data-grid-filter="todo" aria-pressed="false">To do</button>
+                    <button type="button" data-grid-filter="done" aria-pressed="false">Replaced</button>
+                    <button type="button" data-grid-filter="attention" aria-pressed="false">Needs a look</button>
+                  </div>
+                  <button type="button" id="poolGridUndo" title="Undo (Ctrl+Z)">Undo</button>
+                  <button type="button" id="poolGridRedo" title="Redo (Ctrl+Y)">Redo</button>
+                  <button type="button" id="poolGridReset" class="pool-reset"
+                          title="Count replacements from the pool as it is now">Count from here</button>
+                </div>
+              </div>
+              <div class="pool-body">
+                <div class="pool-grid" id="poolGrid" tabindex="0" role="grid"
+                     aria-label="Scenario slots: a row per family, a column per difficulty"></div>
+                <aside class="pool-detail" id="poolGridDetail" aria-live="polite"></aside>
+              </div>
+              <p class="pool-keys">
+                <kbd>↑↓←→</kbd> move · type or <kbd>Enter</kbd> to replace · <kbd>Tab</kbd> keep and
+                move on · <kbd>⌫</kbd> revert · <kbd>Shift+Enter</kbd> thresholds ·
+                <kbd>Ctrl+Z</kbd> undo · <kbd>Ctrl+S</kbd> save
+              </p>
+            </div>
+
             <div class="panel">
               <div class="phead">
                 <h2>Ladders</h2>
@@ -3782,16 +3986,10 @@
                   season that breaks either is refused on save.
                 </p>
                 <div class="season-ranks" id="seasonRanks"></div>
-                <div class="season-actions">
-                  <button type="button" class="go" id="seasonSave">Save season</button>
-                  <button type="button" id="seasonReload">Discard changes</button>
-                  <button type="button" id="seasonPurge" class="purge" hidden></button>
-                  <span class="season-status" id="seasonStatus"></span>
-                </div>
               </div>
             </div>
 
-            <div class="panel">
+            <div class="panel" id="seasonTablePanel">
               <div class="phead">
                 <h2>Scenarios and thresholds</h2>
                 <span class="note">one category at a time · add families and difficulties here</span>

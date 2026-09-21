@@ -2406,8 +2406,12 @@ function seasonDirty(dirty) {
   // in progress, and the gate says what is left rather than what is wrong.
   const gaps = seasonGaps();
   const orphans = seasonOrphans();
+  // A replaced slot still carries the previous scenario's thresholds until its cut lands,
+  // and saving then would publish numbers that belong to a different scenario.
+  const { cutting, failed } = gridWaiting();
 
-  $("seasonSave").disabled = !dirty || gaps.length > 0 || orphans.length > 0;
+  $("seasonSave").disabled =
+    !dirty || gaps.length > 0 || orphans.length > 0 || cutting > 0 || failed > 0;
   $("seasonReload").disabled = !dirty;
 
   const purge = $("seasonPurge");
@@ -2438,6 +2442,22 @@ function seasonDirty(dirty) {
         (gaps.length > 4 ? `, and ${gaps.length - 4} more` : ""),
       "bad",
     );
+    return;
+  }
+
+  if (failed > 0) {
+    stashDraft();
+    setSeasonStatus(
+      `${failed} slot${failed === 1 ? "" : "s"} could not be cut from ${failed === 1 ? "its" : "their"} ` +
+        "board: type the thresholds, cut again, or pick another scenario",
+      "bad",
+    );
+    return;
+  }
+
+  if (cutting > 0) {
+    stashDraft();
+    setSeasonStatus(`cutting thresholds for ${cutting} slot${cutting === 1 ? "" : "s"}…`, "");
     return;
   }
 
@@ -2499,6 +2519,13 @@ async function loadSeasonEditor() {
   }
 
   seasonDraft = result.season;
+  seasonPercentiles = result.ladder ?? null;
+  // What the replaced count and Revert measure against: the pool as it stood when this
+  // rebuild began, kept on this machine so the count survives a restart and a save.
+  seasonOriginal = gridBaseline(result.season);
+  gridUndo.length = 0;
+  gridRedo.length = 0;
+  gridCuts.clear();
   // The rating ladder rides along, because it is edited on this screen and saved by the
   // same button. A main process without the handler simply leaves it null and the section
   // does not render, rather than failing the whole editor.
@@ -2532,6 +2559,8 @@ async function loadSeasonEditor() {
   // source cell reading "—" until something else happened to redraw.
   renderSeasonEditor();
   await loadSeasonPicker();
+  // A restored draft can hold slots whose cut had not landed when the app closed.
+  if (restored) gridResumeCuts();
   renderSeasonEditor();
 
   if (restored) {
@@ -2563,9 +2592,11 @@ function fillSeasonPicker(query) {
   const pick = $("seasonPick");
   const needle = (query ?? "").trim().toLowerCase();
 
+  // This row adds a scenario, so the ones already in the season are not offered.
+  const addable = seasonAvailable.filter((s) => !s.inSeason);
   const matches = needle
-    ? seasonAvailable.filter((s) => s.name.toLowerCase().includes(needle))
-    : seasonAvailable;
+    ? addable.filter((s) => s.name.toLowerCase().includes(needle))
+    : addable;
 
   pick.innerHTML = '<option value="">Add a scenario…</option>';
 
@@ -2944,7 +2975,11 @@ function renderSeasonEditor() {
     group.append(tools);
 
     ranks.append(group);
+  }
 
+  // Only a season that still carries its own per-window percentiles. Thresholds moved into
+  // data/pool.json, and a heading over nothing would read as a section that failed to load.
+  if (size > 0 && s.derivedFrom?.perWindow) {
     // The percentile ladder: the season's actual control surface.
     //
     // Every threshold is the score at one of these percentiles on that scenario's own
@@ -3009,7 +3044,16 @@ function renderSeasonEditor() {
   const body = $("seasonBody");
   body.textContent = "";
 
-  s.categories.forEach((cat) => {
+  // A windowed season is edited in the pool grid; the table stays for one that is not.
+  const useGrid = size > 0 && !!$("poolGrid");
+  if ($("poolPanel")) $("poolPanel").hidden = !useGrid;
+  if ($("seasonTablePanel")) $("seasonTablePanel").hidden = useGrid;
+  if (useGrid) {
+    wirePoolGrid();
+    renderPoolGrid();
+  }
+
+  (useGrid ? [] : s.categories).forEach((cat) => {
     const windows = size > 0 ? cat.rankNames.length / size : 1;
     const window = Math.min(seasonWindowOf(cat.name), windows - 1);
     const offset = size > 0 ? window * size : 0;
@@ -3901,6 +3945,1268 @@ function renderSeasonCategories() {
     });
 
     catBody.append(tr);
+  });
+}
+
+/* --------------------------------------------------------------- the pool grid */
+/*
+ * Every slot of a windowed season on one screen: a row per family, a column per difficulty.
+ *
+ * The table this replaces showed one category at one difficulty. Replacing a scenario meant
+ * clearing it, which threw its thresholds away, then searching into the empty slot, with the
+ * whole editor redrawn after each step. Rebuilding a pool of 256 that way is a few thousand
+ * clicks. Here a slot is replaced in place: select a cell, type, press Enter, and the caret
+ * is on the next slot with the search still open. The new scenario's thresholds are cut from
+ * its own board in the background while the next name is being typed, and nothing but the
+ * cells that changed is redrawn.
+ */
+
+/** The pool's percentile ladder, `{ ranks, overlap }`, sent with the season. */
+let seasonPercentiles = null;
+/** Each slot as it is on disk, keyed by slot, for the replaced count, the "was" line and Revert. */
+let seasonOriginal = new Map();
+/** Cut state by slot and scenario: `{ state: "pending" | "error" | "check", message }`. */
+const gridCuts = new Map();
+/** What a finished cut produced, by slot and scenario, so it survives an undo and a redo. */
+const gridCutResults = new Map();
+const gridUndo = [];
+const gridRedo = [];
+const GRID_UNDO_LIMIT = 100;
+/** How many boards are sampled at once. KovaaK's rate-limits well above this. */
+const GRID_CUT_CONCURRENCY = 3;
+/** Marks a slot whose thresholds are still the previous scenario's, until its cut lands. */
+const CUT_WAITING = "Waiting for thresholds to be cut from this scenario's board.";
+const HAND_SET =
+  "Set by hand in the season editor and not yet explained. Replace this with the reason " +
+  "the number is what it is.";
+
+let gridSel = { family: null, window: 0 };
+let gridFilter = "all";
+let gridSearchSlot = null;
+let gridSearchActive = 0;
+let gridSearchHits = [];
+let gridRemoteTimer = null;
+const gridRemoteAsked = new Set();
+const gridCutQueue = [];
+let gridCutsRunning = 0;
+
+const slotKeyOf = (x) => `${x.category}/${x.family}/${x.window ?? 0}`;
+const familyKeyOf = (x) => `${x.category}/${x.family}`;
+const cutKeyOf = (x) => `${slotKeyOf(x)}|${x.scenario}`;
+
+/** A rename is recorded new -> old, so the slot's original can still be found under it. */
+function originalFamilyKey(key) {
+  const renamed = seasonDraft?.$renamed ?? {};
+  let at = key;
+  for (let hops = 0; renamed[at] && hops < 50; hops++) at = renamed[at];
+  return at;
+}
+
+function originalOf(slot) {
+  const w = slot.window ?? 0;
+  return (
+    seasonOriginal.get(`${familyKeyOf(slot)}/${w}`) ??
+    seasonOriginal.get(`${originalFamilyKey(familyKeyOf(slot))}/${w}`) ??
+    null
+  );
+}
+
+function isReplaced(slot) {
+  if (!slot?.scenario) return false;
+  const was = originalOf(slot);
+  return !was || was.scenario !== slot.scenario;
+}
+
+/** The pool ladder's ranks and shares for one window, as `sampleScenario` wants them. */
+function windowCut(window) {
+  const size = seasonWindowSize();
+  const all = seasonPercentiles?.ranks;
+  if (!Array.isArray(all) || size <= 0) return null;
+  const start = window * size;
+  const count = Math.min(size + (seasonPercentiles.overlap ?? 0), all.length - start);
+  if (count <= 0) return null;
+  return {
+    ranks: Array.from({ length: count }, (_, i) => start + i),
+    fractions: all.slice(start, start + count),
+  };
+}
+
+const pctText = (f) => `${Number((f * 100).toFixed(2))}%`;
+
+function cutWhy(cut, total) {
+  return (
+    `Cut from this scenario's own KovaaK's board at the pool ladder's ranks ` +
+    `${cut.ranks.map((r) => r + 1).join(", ")} - the top ${cut.fractions.map(pctText).join(", ")} ` +
+    `of ${num(total)} entries. Chosen in the season editor.`
+  );
+}
+
+/** Families in season order, grouped by category in the order the categories are listed. */
+function gridFamilies() {
+  const order = seasonDraft.categories.map((c) => c.name);
+  const seen = new Map();
+  for (const x of seasonDraft.scenarios) {
+    const key = familyKeyOf(x);
+    if (!seen.has(key)) seen.set(key, { key, category: x.category, family: x.family });
+  }
+  return [...seen.values()].sort(
+    (a, b) => order.indexOf(a.category) - order.indexOf(b.category),
+  );
+}
+
+function gridSlot(familyKey, window) {
+  return (
+    seasonDraft?.scenarios.find(
+      (x) => familyKeyOf(x) === familyKey && (x.window ?? 0) === window,
+    ) ?? null
+  );
+}
+
+function gridDuplicates() {
+  const where = new Map();
+  for (const x of seasonDraft.scenarios) {
+    if (!x.scenario) continue;
+    const list = where.get(x.scenario) ?? [];
+    list.push(`${x.family} · ${windowLabel(x.window ?? 0)}`);
+    where.set(x.scenario, list);
+  }
+  return where;
+}
+
+/** Slots whose thresholds are not settled, for the counts and the Save gate. */
+function gridWaiting() {
+  if (!seasonDraft) return { cutting: 0, failed: 0 };
+  let cutting = 0;
+  let failed = 0;
+  for (const x of seasonDraft.scenarios) {
+    const state = gridCuts.get(cutKeyOf(x))?.state;
+    if (state === "error") failed++;
+    else if (state === "pending" || x.source?.why === CUT_WAITING) cutting++;
+  }
+  return { cutting, failed };
+}
+
+/* ---- the baseline ---- */
+
+/**
+ * The pool as it stood when this rebuild began.
+ *
+ * Kept in localStorage rather than read from disk on every load: a pool of 256 is rebuilt
+ * over several evenings and saves, and a count that went back to zero at every restart would
+ * say nothing about how far through it is. "Count from here" starts it again.
+ */
+const SEASON_BASELINE_KEY = "apogee.seasonBaseline";
+
+function gridBaseline(season) {
+  let slots = null;
+  try {
+    const raw = JSON.parse(localStorage.getItem(SEASON_BASELINE_KEY) ?? "null");
+    if (raw && raw.season === season.name && Array.isArray(raw.slots)) slots = raw.slots;
+  } catch {
+    // Unreadable: start from what is on disk.
+  }
+  if (!slots) {
+    slots = JSON.parse(JSON.stringify(season.scenarios));
+    gridSaveBaseline(season.name, slots);
+  }
+  return new Map(slots.map((x) => [slotKeyOf(x), x]));
+}
+
+function gridSaveBaseline(name, slots) {
+  try {
+    localStorage.setItem(SEASON_BASELINE_KEY, JSON.stringify({ season: name, slots }));
+  } catch {
+    // Without storage the count lasts this session, which is still most of its use.
+  }
+}
+
+/** After a save the renames are on disk, so the baseline takes the new names too. */
+function gridFoldRenames() {
+  const renamed = seasonDraft?.$renamed;
+  if (!renamed || Object.keys(renamed).length === 0) return;
+  const slots = [...seasonOriginal.values()];
+  for (const [now, was] of Object.entries(renamed)) {
+    const family = now.slice(now.indexOf("/") + 1);
+    for (const slot of slots) if (familyKeyOf(slot) === was) slot.family = family;
+  }
+  delete seasonDraft.$renamed;
+  seasonOriginal = new Map(slots.map((x) => [slotKeyOf(x), x]));
+  gridSaveBaseline(seasonDraft.name, slots);
+}
+
+function gridCountFromHere() {
+  const slots = JSON.parse(JSON.stringify(seasonDraft.scenarios));
+  seasonOriginal = new Map(slots.map((x) => [slotKeyOf(x), x]));
+  gridSaveBaseline(seasonDraft.name, slots);
+  renderPoolGrid();
+}
+
+/* ---- undo ---- */
+
+function gridSnapshot() {
+  return JSON.stringify({
+    scenarios: seasonDraft.scenarios,
+    energy: seasonDraft.categories.map((c) => c.rankMaxes),
+    renamed: seasonDraft.$renamed ?? {},
+  });
+}
+
+function gridRemember(snapshot) {
+  gridUndo.push(snapshot ?? gridSnapshot());
+  if (gridUndo.length > GRID_UNDO_LIMIT) gridUndo.shift();
+  gridRedo.length = 0;
+}
+
+function gridStep(direction) {
+  const from = direction < 0 ? gridUndo : gridRedo;
+  const to = direction < 0 ? gridRedo : gridUndo;
+  if (from.length === 0) return;
+  to.push(gridSnapshot());
+  const snap = JSON.parse(from.pop());
+  seasonDraft.scenarios = snap.scenarios;
+  seasonDraft.categories.forEach((c, i) => {
+    if (snap.energy[i]) c.rankMaxes = snap.energy[i];
+  });
+  seasonDraft.$renamed = snap.renamed;
+  gridResumeCuts();
+  renderPoolGrid();
+  renderSeasonCategories();
+  seasonDirty(true);
+  scheduleDistribution();
+}
+
+/* ---- cutting thresholds ---- */
+
+function gridQueueCut(slot) {
+  gridCuts.set(cutKeyOf(slot), { state: "pending" });
+  gridCutQueue.push({ key: slotKeyOf(slot), name: slot.scenario, window: slot.window ?? 0 });
+  gridPumpCuts();
+}
+
+function gridPumpCuts() {
+  while (gridCutsRunning < GRID_CUT_CONCURRENCY && gridCutQueue.length > 0) {
+    const job = gridCutQueue.shift();
+    gridCutsRunning++;
+    void gridRunCut(job).finally(() => {
+      gridCutsRunning--;
+      gridPumpCuts();
+    });
+  }
+}
+
+/** The slot a job belongs to, if it still holds the scenario the job was started for. */
+function gridLiveSlot(key, name) {
+  return seasonDraft?.scenarios.find((x) => slotKeyOf(x) === key && x.scenario === name) ?? null;
+}
+
+function gridApplyCut(slot, result) {
+  slot.leaderboardId = result.leaderboardId;
+  slot.rankMaxes = result.rankMaxes.slice();
+  slot.source = JSON.parse(JSON.stringify(result.source));
+  const flat = slot.rankMaxes.findIndex((v, i) => i > 0 && v <= slot.rankMaxes[i - 1]);
+  if (flat > 0) {
+    gridCuts.set(cutKeyOf(slot), {
+      state: "check",
+      message:
+        `The board is too flat here: two ranks both came out at ${num(slot.rankMaxes[flat])}. ` +
+        `Set them by hand.`,
+    });
+  } else {
+    gridCuts.delete(cutKeyOf(slot));
+  }
+}
+
+async function gridRunCut(job) {
+  const key = `${job.key}|${job.name}`;
+  // Every ending repaints the slot and re-reads the Save gate, which is what says how many
+  // slots are still cutting or need a hand.
+  const done = () => {
+    gridPaintSlot(job.key);
+    seasonDirty(true);
+  };
+  const fail = (message) => {
+    if (gridLiveSlot(job.key, job.name)) gridCuts.set(key, { state: "error", message });
+    else gridCuts.delete(key);
+    done();
+  };
+
+  if (!gridLiveSlot(job.key, job.name)) {
+    gridCuts.delete(key);
+    return;
+  }
+
+  const cut = windowCut(job.window);
+  if (!cut) return fail("There is no percentile ladder in data/pool.json to cut from. Type the thresholds.");
+
+  try {
+    const option = seasonAvailable.find((o) => o.name === job.name);
+    let id = gridLiveSlot(job.key, job.name)?.leaderboardId ?? option?.leaderboardId ?? null;
+    if (!id) {
+      const found = await window.apogee.searchScenarios(job.name);
+      const hit = found?.scenarios?.find((h) => h.name.toLowerCase() === job.name.toLowerCase());
+      id = hit?.leaderboardId ?? null;
+      if (option && id) option.leaderboardId = id;
+    }
+    if (!id) return fail("KovaaK's has no leaderboard for this scenario. Type the thresholds.");
+
+    let result = await window.apogee.sampleScenario(job.name, id, cut.fractions);
+    // One patient retry. A burst of replacements is exactly when the limit is hit, and
+    // saying "try again" for something that will work in half a minute is busywork.
+    if (result?.error && /rate-limit/i.test(result.error)) {
+      gridCuts.set(key, { state: "pending", message: "KovaaK's is rate-limiting; retrying shortly" });
+      done();
+      await new Promise((resolve) => setTimeout(resolve, 20000));
+      result = await window.apogee.sampleScenario(job.name, id, cut.fractions);
+    }
+    if (!result || result.error) return fail(result?.error ?? "Could not cut thresholds from that board.");
+
+    const cutResult = {
+      leaderboardId: id,
+      rankMaxes: result.rankMaxes,
+      source: {
+        kind: "percentile",
+        cut: {
+          ranks: cut.ranks,
+          topFractions: cut.fractions,
+          leaderboardId: id,
+          total: result.entries,
+          sampledAt: result.sampledAt,
+        },
+        why: cutWhy(cut, result.entries),
+      },
+    };
+    gridCutResults.set(key, cutResult);
+
+    const slot = gridLiveSlot(job.key, job.name);
+    if (!slot) {
+      gridCuts.delete(key);
+      return;
+    }
+    gridApplyCut(slot, cutResult);
+    done();
+    scheduleDistribution();
+  } catch (err) {
+    fail(err && err.message ? err.message : "Could not reach KovaaK's.");
+  }
+}
+
+/**
+ * After an undo or redo: a slot still waiting for its cut either gets the result that
+ * landed while it was undone, or is queued again.
+ */
+function gridResumeCuts() {
+  for (const slot of seasonDraft.scenarios) {
+    if (slot.source?.why !== CUT_WAITING) continue;
+    const key = cutKeyOf(slot);
+    const landed = gridCutResults.get(key);
+    if (landed) gridApplyCut(slot, landed);
+    else if (gridCuts.get(key)?.state !== "pending") gridQueueCut(slot);
+  }
+}
+
+/* ---- changing slots ---- */
+
+/** The parts of the arm validate:pool accepts, easiest to name first. */
+const ARM_PARTS = ["Fingertip", "Wrist", "Arm", "Blending"];
+
+const labelFor = (name) => name.replace(/^VT\s+/, "").replace(/\s*S\d(\.\d)?\s*$/i, "").trim();
+
+/**
+ * Put a scenario in a slot.
+ *
+ * Its original slot's numbers come back if it is going back where it was, and a scenario
+ * moved from another family in the same difficulty keeps the thresholds and source it had
+ * there, since those were cut or authored for exactly these ranks. Anything else is cut
+ * fresh from its board.
+ */
+function gridReplace(slot, option) {
+  const was = originalOf(slot);
+  const index = seasonDraft.scenarios.indexOf(slot);
+  if (index < 0) return;
+
+  if (was && was.scenario === option.name) {
+    seasonDraft.scenarios[index] = JSON.parse(JSON.stringify({ ...was, category: slot.category, family: slot.family }));
+    return;
+  }
+
+  const moved = [...seasonOriginal.values()].find(
+    (o) => o.scenario === option.name && (o.window ?? 0) === (slot.window ?? 0),
+  );
+
+  const previousArm = slot.arm;
+  slot.scenario = option.name;
+  slot.label = labelFor(option.name);
+  for (const stale of ["sanity", "corpus", "arm", "armFrom"]) delete slot[stale];
+
+  if (moved) {
+    slot.label = moved.label ?? slot.label;
+    slot.leaderboardId = moved.leaderboardId ?? option.leaderboardId ?? null;
+    slot.rankMaxes = moved.rankMaxes.slice();
+    slot.source = JSON.parse(JSON.stringify(moved.source));
+    for (const carried of ["sanity", "arm", "armFrom"]) {
+      if (moved[carried] !== undefined) slot[carried] = JSON.parse(JSON.stringify(moved[carried]));
+    }
+    gridCuts.delete(cutKeyOf(slot));
+    return;
+  }
+
+  // validate:pool wants every variant to name the part of the arm it asks for. Viscose's
+  // word where Viscose gives one, since the check refuses any other; otherwise the slot's
+  // previous one, as the season's own guess, which the detail can change.
+  if (ARM_PARTS.includes(option.publishedArm)) {
+    slot.arm = option.publishedArm;
+    slot.armFrom = "Viscose";
+  } else {
+    slot.arm = ARM_PARTS.includes(previousArm) ? previousArm : "Blending";
+    slot.armFrom = "Apogee";
+  }
+
+  slot.leaderboardId = option.leaderboardId ?? null;
+  slot.source = { kind: "authored", why: CUT_WAITING };
+  const landed = gridCutResults.get(cutKeyOf(slot));
+  if (landed) gridApplyCut(slot, landed);
+  else gridQueueCut(slot);
+}
+
+function gridRevert(slot) {
+  const was = originalOf(slot);
+  if (!was) return;
+  const index = seasonDraft.scenarios.indexOf(slot);
+  if (index < 0) return;
+  if (JSON.stringify({ ...was, category: slot.category, family: slot.family }) === JSON.stringify(slot)) return;
+  gridRemember();
+  seasonDraft.scenarios[index] = JSON.parse(JSON.stringify({ ...was, category: slot.category, family: slot.family }));
+  gridCuts.delete(cutKeyOf(slot));
+  gridPaintSlot(slotKeyOf(slot));
+  seasonDirty(true);
+  scheduleDistribution();
+}
+
+function gridRecut(slot) {
+  if (!slot?.scenario) return;
+  gridRemember();
+  gridCutResults.delete(cutKeyOf(slot));
+  slot.source = { kind: "authored", why: CUT_WAITING };
+  gridQueueCut(slot);
+  gridPaintSlot(slotKeyOf(slot));
+  seasonDirty(true);
+}
+
+function gridRenameFamily(familyKey, name) {
+  const [category] = familyKey.split("/");
+  const next = `${category}/${name}`;
+  if (next === familyKey) return true;
+  if (seasonDraft.scenarios.some((x) => familyKeyOf(x) === next)) {
+    setSeasonStatus(`${category} already has a family called ${name}`, "bad");
+    return false;
+  }
+  gridRemember();
+  const renamed = (seasonDraft.$renamed ??= {});
+  const origin = originalFamilyKey(familyKey);
+  delete renamed[familyKey];
+  if (origin !== next) renamed[next] = origin;
+  for (const x of seasonDraft.scenarios) {
+    if (familyKeyOf(x) !== familyKey) continue;
+    if (x.label === x.family) x.label = name;
+    x.family = name;
+  }
+  gridSel.family = next;
+  renderPoolGrid();
+  seasonDirty(true);
+  return true;
+}
+
+/* ---- drawing ---- */
+
+function gridVisible(family) {
+  if (gridFilter === "all") return true;
+  const windows = (seasonDraft.windows ?? []).length;
+  const slots = Array.from({ length: windows }, (_, w) => gridSlot(family.key, w));
+  if (gridFilter === "todo") return slots.some((s) => s && s.scenario && !isReplaced(s));
+  if (gridFilter === "done") return slots.some((s) => isReplaced(s));
+  if (gridFilter === "attention") {
+    const dup = gridDuplicates();
+    return slots.some(
+      (s) =>
+        !s || !s.scenario || gridCuts.has(cutKeyOf(s)) ||
+        s.source?.why === CUT_WAITING || (dup.get(s.scenario)?.length ?? 0) > 1,
+    );
+  }
+  return true;
+}
+
+function renderPoolGrid() {
+  const host = $("poolGrid");
+  if (!host || !seasonDraft) return;
+
+  const windows = seasonDraft.windows ?? [];
+  const size = seasonWindowSize();
+  const families = gridFamilies();
+  if (!families.some((f) => f.key === gridSel.family)) gridSel.family = families[0]?.key ?? null;
+  gridSel.window = Math.max(0, Math.min(gridSel.window, windows.length - 1));
+
+  const table = document.createElement("table");
+  table.className = "pgrid";
+
+  const colgroup = document.createElement("colgroup");
+  const famCol = document.createElement("col");
+  famCol.className = "pg-famcol";
+  colgroup.append(famCol);
+  windows.forEach(() => colgroup.append(document.createElement("col")));
+  table.append(colgroup);
+
+  const head = document.createElement("thead");
+  const headRow = document.createElement("tr");
+  const corner = document.createElement("th");
+  corner.textContent = "Family";
+  headRow.append(corner);
+  windows.forEach((name, w) => {
+    const th = document.createElement("th");
+    const cut = windowCut(w);
+    th.textContent = name;
+    const small = document.createElement("small");
+    const count = cut ? cut.ranks.length : size;
+    small.textContent = `ranks ${w * size + 1}–${w * size + count}`;
+    th.append(small);
+    headRow.append(th);
+  });
+  head.append(headRow);
+  table.append(head);
+
+  const body = document.createElement("tbody");
+  const dup = gridDuplicates();
+
+  for (const cat of seasonDraft.categories) {
+    const mine = families.filter((f) => f.category === cat.name);
+    const shown = mine.filter(gridVisible);
+    if (gridFilter !== "all" && shown.length === 0) continue;
+
+    const catRow = document.createElement("tr");
+    catRow.className = "pg-cat";
+    const th = document.createElement("th");
+    th.colSpan = windows.length + 1;
+    const title = document.createElement("span");
+    title.textContent = cat.name;
+    const count = document.createElement("span");
+    count.className = "pg-catcount";
+    count.textContent = `${mine.length} famil${mine.length === 1 ? "y" : "ies"}`;
+    const add = document.createElement("button");
+    add.type = "button";
+    add.className = "pool-btn pool-addfam";
+    add.textContent = "+ family";
+    add.title = `Add a family to ${cat.name}, with an empty slot in every difficulty`;
+    add.addEventListener("click", () => {
+      askInline(add, `New ${cat.name} family…`, (name) => {
+        if (seasonDraft.scenarios.some((x) => x.category === cat.name && x.family === name)) {
+          setSeasonStatus(`${cat.name} already has a family called ${name}`, "bad");
+          return;
+        }
+        gridRemember();
+        addFamily(cat.name, name);
+        gridSel = { family: `${cat.name}/${name}`, window: 0 };
+        renderPoolGrid();
+        renderSeasonCategories();
+        seasonDirty(true);
+        gridOpenSearch("");
+      });
+    });
+    th.append(title, count, add);
+    catRow.append(th);
+    body.append(catRow);
+
+    for (const family of shown) {
+      const tr = document.createElement("tr");
+      tr.dataset.family = family.key;
+      const name = document.createElement("th");
+      name.className = "pg-fam";
+      name.textContent = family.family;
+      name.title = family.family;
+      tr.append(name);
+      windows.forEach((_, w) => {
+        const td = document.createElement("td");
+        td.dataset.family = family.key;
+        td.dataset.window = String(w);
+        gridFillCell(td, gridSlot(family.key, w), dup);
+        tr.append(td);
+      });
+      body.append(tr);
+    }
+  }
+
+  table.append(body);
+  host.replaceChildren(table);
+  gridPaintBar();
+  gridPaintDetail();
+  gridSetSearchTarget();
+}
+
+function gridFillCell(td, slot, dup) {
+  const selected = td.dataset.family === gridSel.family && Number(td.dataset.window) === gridSel.window;
+  const cut = slot ? gridCuts.get(cutKeyOf(slot)) : null;
+  const waiting = slot?.source?.why === CUT_WAITING;
+  const shared = slot?.scenario ? (dup.get(slot.scenario) ?? []) : [];
+
+  const classes = ["pg-cell"];
+  if (!slot || !slot.scenario) classes.push("empty");
+  else {
+    if (isReplaced(slot)) classes.push("replaced");
+    if (shared.length > 1) classes.push("dup");
+  }
+  if (cut) classes.push(cut.state);
+  else if (waiting) classes.push("pending");
+  if (selected) classes.push("sel");
+  td.className = classes.join(" ");
+  td.setAttribute("aria-selected", selected ? "true" : "false");
+
+  const name = document.createElement("span");
+  name.className = "pg-name";
+  name.textContent = slot?.scenario ? slot.label || slot.scenario : "empty";
+
+  const meta = document.createElement("span");
+  meta.className = "pg-meta";
+  if (cut?.state === "error") meta.textContent = "needs thresholds";
+  else if (cut?.state === "check") meta.textContent = "check thresholds";
+  else if (cut?.state === "pending" || waiting) meta.textContent = "cutting…";
+  else if (slot?.scenario && slot.rankMaxes?.length) {
+    meta.textContent = `${num(slot.rankMaxes[0])} → ${num(slot.rankMaxes[slot.rankMaxes.length - 1])}`;
+  } else meta.textContent = "Enter to fill";
+
+  td.replaceChildren(name, meta);
+
+  const lines = [];
+  if (slot?.scenario) lines.push(slot.scenario);
+  const was = slot ? originalOf(slot) : null;
+  if (slot?.scenario && isReplaced(slot)) lines.push(was ? `was ${was.scenario}` : "new slot");
+  if (shared.length > 1) lines.push(`also in ${shared.filter((s) => s !== `${slot.family} · ${windowLabel(slot.window ?? 0)}`).join(", ")}`);
+  if (cut?.message) lines.push(cut.message);
+  td.title = lines.join("\n");
+}
+
+/** Redraw one slot, its detail if it is selected, and the counts. */
+function gridPaintSlot(key) {
+  const host = $("poolGrid");
+  if (!host || !seasonDraft) return;
+  const cut = key.lastIndexOf("/");
+  const familyKey = key.slice(0, cut);
+  const window = Number(key.slice(cut + 1));
+  const dup = gridDuplicates();
+  // Duplicates are a property of two cells, so every cell holding a scenario that is now
+  // shared, or has just stopped being, is redrawn with it.
+  for (const td of host.querySelectorAll("td.pg-cell")) {
+    const slot = gridSlot(td.dataset.family, Number(td.dataset.window));
+    const here = td.dataset.family === familyKey && Number(td.dataset.window) === window;
+    if (here || td.classList.contains("dup") || (slot?.scenario && (dup.get(slot.scenario)?.length ?? 0) > 1)) {
+      gridFillCell(td, slot, dup);
+    }
+  }
+  if (gridSel.family === familyKey && gridSel.window === window) gridPaintDetail();
+  gridPaintBar();
+}
+
+function gridPaintBar() {
+  const bar = $("poolGridCount");
+  if (!bar || !seasonDraft) return;
+  const filled = seasonDraft.scenarios.filter((x) => x.scenario);
+  const replaced = filled.filter(isReplaced).length;
+  const { cutting, failed } = gridWaiting();
+  const dup = [...gridDuplicates().values()].filter((l) => l.length > 1).length;
+  const empty = seasonDraft.scenarios.length - filled.length;
+
+  const parts = [`<b>${replaced}</b> of ${seasonDraft.scenarios.length} replaced`];
+  if (cutting) parts.push(`<span class="pg-busy">${cutting} cutting</span>`);
+  const attention = failed + dup + empty;
+  if (attention) parts.push(`<span class="pg-warn">${attention} need${attention === 1 ? "s" : ""} a look</span>`);
+  bar.innerHTML = parts.join(" · ");
+
+  $("poolGridUndo").disabled = gridUndo.length === 0;
+  $("poolGridRedo").disabled = gridRedo.length === 0;
+}
+
+function gridPaintDetail() {
+  const host = $("poolGridDetail");
+  if (!host || !seasonDraft) return;
+  host.textContent = "";
+
+  const familyKey = gridSel.family;
+  if (!familyKey) return;
+  const w = gridSel.window;
+  const slot = gridSlot(familyKey, w);
+  const [category] = familyKey.split("/");
+  const family = familyKey.slice(category.length + 1);
+  const cat = seasonDraft.categories.find((c) => c.name === category);
+  const size = seasonWindowSize();
+  const cut = windowCut(w);
+
+  const add = (tag, className, text) => {
+    const el = document.createElement(tag);
+    if (className) el.className = className;
+    if (text != null) el.textContent = text;
+    host.append(el);
+    return el;
+  };
+
+  add("div", "pgd-where", `${category} · ${windowLabel(w)}`);
+
+  const famRow = add("div", "pgd-family");
+  const famInput = document.createElement("input");
+  famInput.type = "text";
+  famInput.value = family;
+  famInput.title = "The family's name. Renaming it renames every difficulty's slot.";
+  famInput.spellcheck = false;
+  famInput.addEventListener("keydown", (e) => {
+    e.stopPropagation();
+    if (e.key === "Enter") famInput.blur();
+    if (e.key === "Escape") { famInput.value = family; gridFocus(); }
+  });
+  famInput.addEventListener("change", () => {
+    const name = famInput.value.trim();
+    if (!name || !gridRenameFamily(familyKey, name)) famInput.value = family;
+  });
+  const dropFamily = document.createElement("button");
+  dropFamily.type = "button";
+  dropFamily.className = "pool-btn danger";
+  dropFamily.textContent = "Remove family";
+  dropFamily.title = `Remove ${family} from every difficulty`;
+  dropFamily.addEventListener("click", () => {
+    gridRemember();
+    removeFamily(category, family);
+    renderPoolGrid();
+    renderSeasonCategories();
+    seasonDirty(true);
+    scheduleDistribution();
+    gridFocus();
+  });
+  famRow.append(famInput, dropFamily);
+
+  if (!slot || !slot.scenario) {
+    add("p", "pgd-empty", "Empty. Press Enter, or start typing, to fill it.");
+    return;
+  }
+
+  const nameRow = add("div", "pgd-name");
+  const nameText = document.createElement("strong");
+  nameText.textContent = slot.scenario;
+  nameRow.append(nameText);
+  const play = playButton(slot.scenario);
+  if (play) nameRow.append(play);
+
+  const was = originalOf(slot);
+  if (isReplaced(slot)) {
+    const wasRow = add("div", "pgd-was");
+    wasRow.append(document.createTextNode(was ? `was ${was.scenario}` : "new slot"));
+    if (was) {
+      const revert = document.createElement("button");
+      revert.type = "button";
+      revert.className = "pool-btn";
+      revert.textContent = "Revert";
+      revert.title = "Put the original scenario and its thresholds back (Backspace)";
+      revert.addEventListener("click", () => { gridRevert(slot); gridFocus(); });
+      wasRow.append(revert);
+    }
+  }
+
+  const option = seasonAvailable.find((o) => o.name === slot.scenario);
+  const p = provenanceOf(slot.scenario);
+  const facts = [p.text, p.board];
+  if (option?.runs) facts.push(`you: ${option.runs} runs, best ${num(option.best)}`);
+  const factRow = add("div", "pgd-facts" + (p.thin ? " thin" : ""), facts.filter(Boolean).join(" · "));
+  factRow.title = p.title;
+
+  // The sub-skill check in validate:pool, said while the choice is still being made.
+  if (option?.subSkill && slot.subCategory && option.subSkill !== slot.subCategory) {
+    add(
+      "p",
+      "pgd-warn",
+      `The benchmarks file this under ${option.subSkill}, and the ${family} family is ${slot.subCategory}. ` +
+        `validate:pool will want the reason in data/pool.json's subCategoryOverrides.`,
+    );
+  }
+
+  const armRow = add("label", "pgd-arm");
+  const armLabel = document.createElement("span");
+  armLabel.textContent = "Part of the arm";
+  const arm = document.createElement("select");
+  for (const part of ARM_PARTS) {
+    const opt = document.createElement("option");
+    opt.value = part;
+    opt.textContent = part;
+    arm.append(opt);
+  }
+  arm.value = ARM_PARTS.includes(slot.arm) ? slot.arm : "";
+  const viscose = slot.armFrom === "Viscose";
+  arm.disabled = viscose;
+  arm.title = viscose
+    ? "Viscose publishes this one, and validate:pool holds the season to it"
+    : "The season's own call: which part of the arm this scenario mostly asks for";
+  const armFrom = document.createElement("small");
+  armFrom.textContent = viscose ? "Viscose" : "Apogee";
+  arm.addEventListener("keydown", (e) => e.stopPropagation());
+  arm.addEventListener("change", () => {
+    gridRemember();
+    slot.arm = arm.value;
+    slot.armFrom = "Apogee";
+    seasonDirty(true);
+  });
+  armRow.append(armLabel, arm, armFrom);
+
+  const shared = gridDuplicates().get(slot.scenario) ?? [];
+  if (shared.length > 1) add("p", "pgd-warn", `Also used in ${shared.filter((s) => s !== `${family} · ${windowLabel(w)}`).join(", ")}.`);
+
+  const state = gridCuts.get(cutKeyOf(slot));
+  if (state?.state === "pending" || slot.source?.why === CUT_WAITING) {
+    add("p", "pgd-busy", state?.message ?? "Cutting thresholds from its board…");
+  } else if (state?.message) {
+    add("p", "pgd-warn", state.message);
+  }
+
+  const thresholds = add("div", "pgd-thr");
+  const derived = gridCutResults.get(cutKeyOf(slot))?.rankMaxes ?? null;
+  const rankNames = cat ? cat.rankNames.slice(w * size, w * size + slot.rankMaxes.length) : [];
+  let before = null;
+
+  slot.rankMaxes.forEach((value, i) => {
+    const row = document.createElement("label");
+    row.className = "pgd-rung";
+    const rank = document.createElement("span");
+    rank.className = "pgd-rank";
+    rank.textContent = rankNames[i] ?? `rank ${w * size + i + 1}`;
+    const input = document.createElement("input");
+    input.type = "number";
+    input.className = "thr";
+    input.value = String(value);
+    if (derived && derived[i] !== value) {
+      input.classList.add("override");
+      input.title = `Set by hand. The board gives ${num(derived[i])}.`;
+    }
+    const share = document.createElement("span");
+    share.className = "pgd-share";
+    share.textContent = cut?.fractions[i] != null ? `top ${pctText(cut.fractions[i])}` : "";
+
+    input.addEventListener("focus", () => { before = gridSnapshot(); });
+    input.addEventListener("keydown", (e) => {
+      e.stopPropagation();
+      if (e.key === "Enter") {
+        e.preventDefault();
+        const inputs = [...thresholds.querySelectorAll("input")];
+        const next = inputs[inputs.indexOf(input) + 1];
+        if (next) next.focus();
+        else gridFocus();
+      } else if (e.key === "Escape") {
+        e.preventDefault();
+        gridFocus();
+      }
+    });
+    input.addEventListener("change", () => {
+      const next = Number(input.value);
+      if (input.value === "" || !Number.isFinite(next)) {
+        input.value = String(slot.rankMaxes[i]);
+        return;
+      }
+      if (next === slot.rankMaxes[i]) return;
+      gridRemember(before);
+      slot.rankMaxes[i] = next;
+
+      const landed = gridCutResults.get(cutKeyOf(slot));
+      const original = originalOf(slot);
+      if (landed && landed.rankMaxes.every((v, j) => v === slot.rankMaxes[j])) {
+        slot.source = JSON.parse(JSON.stringify(landed.source));
+      } else if (original && original.scenario === slot.scenario &&
+                 original.rankMaxes.every((v, j) => v === slot.rankMaxes[j])) {
+        slot.source = JSON.parse(JSON.stringify(original.source));
+      } else {
+        slot.source = { kind: "authored", why: HAND_SET };
+      }
+
+      const ascending = slot.rankMaxes.every((v, j) => Number.isFinite(v) && (j === 0 || v > slot.rankMaxes[j - 1]));
+      if (ascending) gridCuts.delete(cutKeyOf(slot));
+      else gridCuts.set(cutKeyOf(slot), { state: "check", message: "Thresholds have to rise from each rank to the next." });
+
+      input.classList.toggle("override", !!derived && derived[i] !== next);
+      const td = $("poolGrid").querySelector(`td[data-family="${CSS.escape(familyKey)}"][data-window="${w}"]`);
+      if (td) gridFillCell(td, slot, gridDuplicates());
+      gridPaintBar();
+      seasonDirty(true);
+      scheduleDistribution();
+    });
+
+    row.append(rank, input, share);
+    thresholds.append(row);
+  });
+
+  const tools = add("div", "pgd-tools");
+  const recut = document.createElement("button");
+  recut.type = "button";
+  recut.className = "pool-btn";
+  recut.textContent = "Cut from board again";
+  recut.title = `Replace these thresholds with the ${windowLabel(w)} shares of this scenario's board`;
+  recut.disabled = !cut;
+  recut.addEventListener("click", () => { gridRecut(slot); gridFocus(); });
+  tools.append(recut);
+}
+
+/* ---- moving around ---- */
+
+function gridFocus() {
+  const wrap = $("poolGrid");
+  if (wrap) wrap.focus({ preventScroll: true });
+}
+
+function gridRowsOnScreen() {
+  return [...($("poolGrid")?.querySelectorAll("tr[data-family]") ?? [])].map((tr) => tr.dataset.family);
+}
+
+function gridSelect(familyKey, window) {
+  const host = $("poolGrid");
+  if (!host) return;
+  const previous = host.querySelector("td.pg-cell.sel");
+  if (previous) {
+    previous.classList.remove("sel");
+    previous.setAttribute("aria-selected", "false");
+  }
+  gridSel = { family: familyKey, window };
+  const td = host.querySelector(`td[data-family="${CSS.escape(familyKey)}"][data-window="${window}"]`);
+  if (td) {
+    td.classList.add("sel");
+    td.setAttribute("aria-selected", "true");
+    td.scrollIntoView({ block: "nearest", inline: "nearest" });
+  }
+  gridPaintDetail();
+  // The search box names the slot it will fill, so it follows the selection even while closed.
+  gridSetSearchTarget();
+}
+
+function gridMove(dRow, dCol) {
+  const rows = gridRowsOnScreen();
+  if (rows.length === 0) return;
+  const windows = (seasonDraft.windows ?? []).length;
+  const at = Math.max(0, rows.indexOf(gridSel.family));
+  const row = Math.max(0, Math.min(rows.length - 1, at + dRow));
+  const col = Math.max(0, Math.min(windows - 1, gridSel.window + dCol));
+  gridSelect(rows[row], col);
+}
+
+/** The next slot in reading order: across the family, then down to the next one. */
+function gridAdvance(direction) {
+  const rows = gridRowsOnScreen();
+  const windows = (seasonDraft.windows ?? []).length;
+  if (rows.length === 0 || windows === 0) return;
+  let row = Math.max(0, rows.indexOf(gridSel.family));
+  let col = gridSel.window + direction;
+  if (col >= windows) { col = 0; row = Math.min(rows.length - 1, row + 1); }
+  if (col < 0) { col = windows - 1; row = Math.max(0, row - 1); }
+  gridSelect(rows[row], col);
+}
+
+/* ---- the search ---- */
+
+function gridSetSearchTarget() {
+  const slot = gridSlot(gridSel.family, gridSel.window);
+  gridSearchSlot = slot;
+  const label = $("poolGridTarget");
+  if (!label) return;
+  const family = gridSel.family ? gridSel.family.split("/").slice(1).join("/") : "";
+  label.textContent = slot?.scenario
+    ? `${family} · ${windowLabel(gridSel.window)} · now ${slot.label || slot.scenario}`
+    : `${family} · ${windowLabel(gridSel.window)} · empty`;
+}
+
+function gridOpenSearch(seed) {
+  const input = $("poolGridQuery");
+  if (!input) return;
+  gridSetSearchTarget();
+  $("poolGridSearch").classList.add("open");
+  input.value = seed ?? "";
+  input.focus();
+  const end = input.value.length;
+  input.setSelectionRange(end, end);
+  gridRenderHits();
+  gridSearchRemote(input.value.trim());
+}
+
+function gridCloseSearch(focusGrid) {
+  gridSearchSlot = null;
+  $("poolGridSearch")?.classList.remove("open");
+  const input = $("poolGridQuery");
+  if (input) input.value = "";
+  const list = $("poolGridHits");
+  if (list) list.textContent = "";
+  if (focusGrid) gridFocus();
+}
+
+/**
+ * Scenarios matching every word typed, best first.
+ *
+ * Every word, in any order, so "pasu adv" finds VT Pasu Advanced S5. Ranked by how the name
+ * matches, then by the things that decide whether a scenario belongs in the slot: the slot's
+ * own category, a board big enough to cut from, and how many people are on it.
+ */
+function gridMatches(term, slot) {
+  const words = term.toLowerCase().split(/\s+/).filter(Boolean);
+  if (words.length === 0) return [];
+  const whole = term.trim().toLowerCase();
+  const scored = [];
+  for (const option of seasonAvailable) {
+    const name = option.name.toLowerCase();
+    if (!words.every((w) => name.includes(w))) continue;
+    let score = 0;
+    if (name === whole) score += 1000;
+    else if (name.startsWith(whole)) score += 400;
+    else if (name.startsWith(words[0])) score += 150;
+    if (slot && option.category === slot.category) score += 60;
+    if (option.leaderboardId && (option.entries ?? 0) >= MIN_BOARD) score += 40;
+    score += Math.min(30, Math.log10((option.entries ?? 0) + 1) * 6);
+    if (option.runs) score += Math.min(10, option.runs / 5);
+    scored.push({ option, score });
+  }
+  return scored
+    .sort((a, b) => b.score - a.score || a.option.name.localeCompare(b.option.name))
+    .slice(0, 40)
+    .map((s) => s.option);
+}
+
+function gridRenderHits() {
+  const list = $("poolGridHits");
+  const input = $("poolGridQuery");
+  if (!list || !input) return;
+  const term = input.value.trim();
+  const previous = gridSearchHits[gridSearchActive]?.name;
+  gridSearchHits = gridMatches(term, gridSearchSlot);
+  const keep = gridSearchHits.findIndex((o) => o.name === previous);
+  gridSearchActive = keep >= 0 ? keep : 0;
+  list.textContent = "";
+
+  if (!term) {
+    const hint = document.createElement("div");
+    hint.className = "pg-hint";
+    hint.textContent =
+      "Type a scenario name. Enter puts it here and moves on · Tab keeps this one · " +
+      "Esc closes";
+    list.append(hint);
+    return;
+  }
+  if (gridSearchHits.length === 0) {
+    const hint = document.createElement("div");
+    hint.className = "pg-hint";
+    hint.textContent = gridRemoteAsked.has(term.toLowerCase())
+      ? "Nothing by that name here or on KovaaK's."
+      : "Searching KovaaK's…";
+    list.append(hint);
+    return;
+  }
+
+  const where = new Map();
+  for (const x of seasonDraft.scenarios) {
+    if (x.scenario) where.set(x.scenario, `${x.family} · ${windowLabel(x.window ?? 0)}`);
+  }
+
+  gridSearchHits.forEach((option, i) => {
+    const row = document.createElement("div");
+    row.className = "pg-hit" + (i === gridSearchActive ? " active" : "");
+    row.setAttribute("role", "option");
+    row.setAttribute("aria-selected", i === gridSearchActive ? "true" : "false");
+
+    const name = document.createElement("span");
+    name.className = "pg-hit-name";
+    name.textContent = option.name;
+
+    const meta = document.createElement("span");
+    meta.className = "pg-hit-meta";
+    const thin = option.entries != null && option.entries < MIN_BOARD;
+    const facts = [];
+    if (option.category) facts.push(option.category);
+    if (option.tiers?.length) facts.push(option.tiers[0]);
+    facts.push(option.entries == null ? "board not sampled" : `${num(option.entries)} on the board${thin ? ", thin" : ""}`);
+    if (option.runs) facts.push(`${option.runs} run${option.runs === 1 ? "" : "s"} here`);
+    meta.textContent = facts.join(" · ");
+
+    row.append(name, meta);
+    const used = where.get(option.name);
+    if (used) {
+      const tag = document.createElement("span");
+      tag.className = "pg-hit-used";
+      tag.textContent = `in ${used}`;
+      row.append(tag);
+    }
+    if (thin) row.classList.add("thin");
+
+    // mousedown, not click: a click lands after the input's blur would have closed the list.
+    row.addEventListener("mousedown", (e) => {
+      e.preventDefault();
+      gridSearchActive = i;
+      gridPick();
+    });
+    list.append(row);
+  });
+
+  list.querySelector(".pg-hit.active")?.scrollIntoView({ block: "nearest" });
+}
+
+function gridSearchRemote(term) {
+  if (gridRemoteTimer) clearTimeout(gridRemoteTimer);
+  const key = term.toLowerCase();
+  if (term.length < 2 || gridRemoteAsked.has(key)) return;
+  gridRemoteTimer = setTimeout(async () => {
+    gridRemoteAsked.add(key);
+    let found = null;
+    try {
+      found = await window.apogee.searchScenarios(term);
+    } catch {
+      found = null;
+    }
+    for (const hit of found?.scenarios ?? []) {
+      const category = hit.aimType === "Target Switching" ? "Switching" : hit.aimType;
+      const existing = seasonAvailable.find((o) => o.name === hit.name);
+      if (existing) {
+        if (!existing.leaderboardId) existing.leaderboardId = hit.leaderboardId;
+        if (!existing.category && category) existing.category = category;
+        if (existing.entries == null && hit.entries) existing.entries = hit.entries;
+        continue;
+      }
+      seasonAvailable.push({
+        name: hit.name,
+        category,
+        difficulty: null,
+        leaderboardId: hit.leaderboardId,
+        entries: hit.entries ?? null,
+        runs: 0,
+        best: null,
+        suggested: {},
+      });
+    }
+    if ($("poolGridQuery")?.value.trim().toLowerCase() === key) gridRenderHits();
+  }, 250);
+}
+
+function gridPick() {
+  const option = gridSearchHits[gridSearchActive];
+  const slot = gridSlot(gridSel.family, gridSel.window);
+  if (!option || !slot) return;
+  if (option.name !== slot.scenario) {
+    gridRemember();
+    gridReplace(slot, option);
+    gridPaintSlot(`${gridSel.family}/${gridSel.window}`);
+    seasonDirty(true);
+    scheduleDistribution();
+  }
+  gridAdvance(1);
+  const input = $("poolGridQuery");
+  input.value = "";
+  gridRenderHits();
+  input.focus();
+}
+
+/* ---- wiring, once ---- */
+
+function wirePoolGrid() {
+  const wrap = $("poolGrid");
+  if (!wrap || wrap.dataset.wired) return;
+  wrap.dataset.wired = "1";
+
+  wrap.addEventListener("mousedown", (e) => {
+    const td = e.target.closest("td.pg-cell");
+    if (!td) return;
+    e.preventDefault();
+    gridCloseSearch(false);
+    gridSelect(td.dataset.family, Number(td.dataset.window));
+    gridFocus();
+  });
+  wrap.addEventListener("dblclick", (e) => {
+    if (e.target.closest("td.pg-cell")) gridOpenSearch("");
+  });
+
+  wrap.addEventListener("keydown", (e) => {
+    const ctrl = e.ctrlKey || e.metaKey;
+    const k = e.key;
+    let handled = true;
+    if (ctrl && (k === "z" || k === "Z")) gridStep(e.shiftKey ? 1 : -1);
+    else if (ctrl && (k === "y" || k === "Y")) gridStep(1);
+    else if (ctrl || e.altKey) handled = false;
+    else if (k === "ArrowUp") gridMove(-1, 0);
+    else if (k === "ArrowDown") gridMove(1, 0);
+    else if (k === "ArrowLeft") gridMove(0, -1);
+    else if (k === "ArrowRight") gridMove(0, 1);
+    else if (k === "PageUp") gridMove(-10, 0);
+    else if (k === "PageDown") gridMove(10, 0);
+    else if (k === "Home") gridMove(0, -99);
+    else if (k === "End") gridMove(0, 99);
+    else if (k === "Enter" && e.shiftKey) $("poolGridDetail")?.querySelector("input.thr")?.focus();
+    else if (k === "Enter" || k === "F2") gridOpenSearch("");
+    else if (k === "Backspace" || k === "Delete") {
+      const slot = gridSlot(gridSel.family, gridSel.window);
+      if (slot) gridRevert(slot);
+    } else if (k.length === 1 && k !== " ") gridOpenSearch(k);
+    else handled = false;
+    if (handled) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  });
+
+  const input = $("poolGridQuery");
+  input.addEventListener("input", () => {
+    gridRenderHits();
+    gridSearchRemote(input.value.trim());
+  });
+  input.addEventListener("keydown", (e) => {
+    e.stopPropagation();
+    const k = e.key;
+    if (k === "ArrowDown" || k === "ArrowUp") {
+      e.preventDefault();
+      if (gridSearchHits.length === 0) return;
+      gridSearchActive = (gridSearchActive + (k === "ArrowDown" ? 1 : -1) + gridSearchHits.length) % gridSearchHits.length;
+      gridRenderHits();
+    } else if (k === "Enter") {
+      e.preventDefault();
+      if (gridSearchHits.length > 0) gridPick();
+    } else if (k === "Tab") {
+      e.preventDefault();
+      gridAdvance(e.shiftKey ? -1 : 1);
+      input.value = "";
+      gridRenderHits();
+    } else if (k === "Escape") {
+      e.preventDefault();
+      gridCloseSearch(true);
+    } else if ((e.ctrlKey || e.metaKey) && (k === "z" || k === "Z") && input.value === "") {
+      e.preventDefault();
+      gridStep(e.shiftKey ? 1 : -1);
+    }
+  });
+  input.addEventListener("blur", () => {
+    setTimeout(() => {
+      if (document.activeElement !== input) gridCloseSearch(false);
+    }, 120);
+  });
+  input.addEventListener("focus", () => {
+    if (!gridSearchSlot) gridSetSearchTarget();
+    $("poolGridSearch").classList.add("open");
+    gridRenderHits();
+  });
+
+  $("poolGridUndo").addEventListener("click", () => gridStep(-1));
+  $("poolGridRedo").addEventListener("click", () => gridStep(1));
+  $("poolGridReset").addEventListener("click", () => {
+    gridCountFromHere();
+    gridFocus();
+  });
+
+  for (const button of document.querySelectorAll("[data-grid-filter]")) {
+    button.addEventListener("click", () => {
+      gridFilter = button.dataset.gridFilter;
+      for (const b of document.querySelectorAll("[data-grid-filter]")) {
+        b.setAttribute("aria-pressed", b === button ? "true" : "false");
+      }
+      renderPoolGrid();
+      gridFocus();
+    });
+  }
+
+  // Save from anywhere on the screen. The button is at the top and the grid is long.
+  $("screen-season")?.addEventListener("keydown", (e) => {
+    if ((e.ctrlKey || e.metaKey) && (e.key === "s" || e.key === "S")) {
+      e.preventDefault();
+      const save = $("seasonSave");
+      if (save && !save.disabled) save.click();
+    }
   });
 }
 
@@ -6576,6 +7882,7 @@ if (hasSeasonEditor) {
       return;
     }
     seasonForce = false;
+    if (result.fingerprint) seasonFingerprint = result.fingerprint;
 
     // Name the files. A save that reports success without saying where wrote to the
     // build output for an afternoon before anybody noticed.
@@ -6588,6 +7895,7 @@ if (hasSeasonEditor) {
     );
     // Saved, so the stash is no longer the newer copy of anything.
     clearStashedDraft();
+    gridFoldRenames();
     seasonDirty(false);
   });
 

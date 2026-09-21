@@ -1665,91 +1665,95 @@ function runSmokeTest(): void {
       `look editor  : ${editor.tokens} colours, ${editor.copy} strings, ${editor.ranks} ranks`,
     );
 
-    // The season editor, driven the way an evening of pool building drives it.
+    // The season editor, driven the way rebuilding a pool drives it.
     //
-    // Neither read behind it is admin-gated - the role gates writing, not looking - so
-    // this signed-out account can open it and add a family in memory. Nothing is saved
-    // and the window is discarded when the run ends.
+    // Neither read behind it is admin-gated - the role gates writing, not looking - so this
+    // signed-out account can open it and edit in memory. Nothing is saved and the window is
+    // discarded when the run ends. No step here reaches KovaaK's: the replacement moves a
+    // scenario between two families in the same difficulty, which keeps the thresholds it
+    // had rather than cutting new ones, so it answers the same offline as online.
     //
-    // What is worth checking is the part that only appears under load. A family opens one
-    // slot per difficulty in the draft, though the table shows one difficulty at a time so
-    // only one of them is on screen. Each slot's list is every scenario this machine knows,
-    // and it is built when the input takes focus rather than at render: four slots holding
-    // seventeen hundred options each, rebuilt on every edit, is what an evening of adding
-    // families used to cost. Each slot also has to say which family and window it is, or
-    // the caret cannot move to the next one after a fill.
     // Caught here as well as inside. A rejected executeJavaScript leaves this handler's
     // await pending for ever, and the smoke run then hangs with no output rather than
     // failing - which is the worst way for a check to break.
     const season = await probe.webContents.executeJavaScript(`(async () => {
       try {
-      if (typeof loadSeasonEditor !== "function" || typeof addFamily !== "function") return null;
+      if (typeof loadSeasonEditor !== "function" || typeof renderPoolGrid !== "function") return null;
 
-      // The editor stashes an unfinished draft in localStorage so a restart does not throw
-      // an afternoon away, and this window shares that storage with the real app. Whatever
-      // is in there before this runs is put back exactly afterwards - the probe adds a
-      // family, and without this it added one to the user's own unsaved work, every run,
-      // for good.
+      // The editor stashes an unfinished draft and a rebuild baseline in localStorage, and
+      // this window shares that storage with the real app. Both are put back exactly as
+      // they were found.
       const KEY = "apogee.seasonDraft";
+      const BASE = "apogee.seasonBaseline";
       const stashBefore = localStorage.getItem(KEY);
+      const baseBefore = localStorage.getItem(BASE);
 
       await loadSeasonEditor();
-      const rows = document.querySelectorAll("#seasonBody tr").length;
-      if (!seasonDraft || !(seasonDraft.categories || []).length) return { rows, noSeason: true };
-
-      // The screen has to be the visible one: a slot builds its list when the input takes
-      // focus, and focus does nothing to an element inside a hidden screen.
+      if (!seasonDraft || !(seasonDraft.categories || []).length) return { noSeason: true };
       document.getElementById("tabSeason").click();
 
+      const cellsOf = () => [...document.querySelectorAll("#poolGrid td.pg-cell")];
+      const cells = cellsOf().length;
+      const slots = seasonDraft.scenarios.length;
+      const ladder = seasonPercentiles && Array.isArray(seasonPercentiles.ranks)
+        ? seasonPercentiles.ranks.length : 0;
+      const rungs = (seasonDraft.categories[0].rankNames || []).length;
+
+      // Arrow keys move the selection, and do not fall through to the tab strip.
+      const first = cellsOf()[0];
+      gridSelect(first.dataset.family, 0);
+      const screenBefore = document.body.dataset.screen;
+      document.getElementById("poolGrid").dispatchEvent(
+        new KeyboardEvent("keydown", { key: "ArrowRight", bubbles: true, cancelable: true }));
+      const moved = gridSel.window === 1 && document.body.dataset.screen === screenBefore;
+
+      // The search finds a scenario from the first few letters of its name.
+      const named = seasonDraft.scenarios.find((x) => x.scenario && x.scenario.length > 6);
+      gridOpenSearch(named.scenario.slice(0, 6));
+      const found = gridSearchHits.some((o) => o.name === named.scenario);
+      gridCloseSearch(false);
+
+      // Move a scenario into another family's slot in the same difficulty. It keeps the
+      // thresholds it had, so nothing is left waiting on a cut, and undo puts it back.
+      const w0 = seasonDraft.scenarios.filter((x) => (x.window ?? 0) === 0 && x.scenario);
+      const into = w0[0];
+      const from = w0.find((x) => x.family !== into.family);
+      const intoKey = slotKeyOf(into);
+      const wasName = into.scenario;
+      gridRemember();
+      gridReplace(into, { name: from.scenario, leaderboardId: from.leaderboardId });
+      const after = gridSlot(familyKeyOf(into), 0);
+      const kept = after.scenario === from.scenario &&
+        JSON.stringify(after.rankMaxes) === JSON.stringify(from.rankMaxes);
+      const waiting = gridWaiting();
+      renderPoolGrid();
+      const replacedShown = document.querySelectorAll("#poolGrid td.pg-cell.replaced").length;
+      gridStep(-1);
+      const undone = seasonDraft.scenarios.find((x) => slotKeyOf(x) === intoKey).scenario === wasName;
+
+      // A new family opens a slot in every difficulty, drawn in the grid, and undo removes it.
       const category = seasonDraft.categories[0].name;
       const family = "ZZ smoke probe";
+      gridRemember();
       addFamily(category, family);
-      renderSeasonEditor();
+      renderPoolGrid();
+      const inDraft = seasonDraft.scenarios.filter((x) => x.family === family).length;
+      const onScreen = cellsOf().filter((td) => td.dataset.family === category + "/" + family).length;
+      gridStep(-1);
+      const familyUndone = seasonDraft.scenarios.every((x) => x.family !== family);
 
-      const mine = [...document.querySelectorAll(".slotsearch")]
-        .filter((el) => el.dataset.family === family);
-      const first = mine[0];
-      const list = first ? document.getElementById(first.getAttribute("list")) : null;
-
-      // Dispatched rather than called. This window is created with show:false, so a real
-      // focus() may never land and the listener would look broken when it is only unfocused.
-      // The listener is what is under test; the browser delivering the event is not.
-      const before = list ? list.options.length : -1;
-      if (first) first.dispatchEvent(new Event("focus"));
-      const after = list ? list.options.length : -1;
-
-      // Put back what was there, and take out anything a run of this left behind before
-      // the restore existed.
-      const clean = (raw) => {
-        if (!raw) return null;
-        try {
-          const draft = JSON.parse(raw);
-          draft.scenarios = (draft.scenarios || []).filter((x) => x.family !== family);
-          return JSON.stringify(draft);
-        } catch {
-          return raw;
-        }
-      };
-      const restored = clean(stashBefore);
-      if (restored) localStorage.setItem(KEY, restored);
-      else localStorage.removeItem(KEY);
+      if (stashBefore === null) localStorage.removeItem(KEY);
+      else localStorage.setItem(KEY, stashBefore);
+      if (baseBefore === null) localStorage.removeItem(BASE);
+      else localStorage.setItem(BASE, baseBefore);
 
       return {
-        rows,
-        stashRestored: localStorage.getItem(KEY) === restored,
-        leftBehind: restored ? (JSON.parse(restored).scenarios || [])
-          .filter((x) => x.family === family).length : 0,
-        onScreen: mine.length,
-        inDraft: seasonDraft.scenarios.filter((x) => x.family === family).length,
-        draftWindows: seasonDraft.scenarios
-          .filter((x) => x.family === family)
-          .map((x) => x.window)
-          .join(","),
+        cells, slots, ladder, rungs, moved, found, kept,
+        cutting: waiting.cutting, replacedShown, undone,
+        inDraft, onScreen, familyUndone,
         windows: (seasonDraft.windows || []).length,
         available: seasonAvailable.length,
-        tagged: mine.filter((el) => el.dataset.category === category).length,
-        lazyBefore: before,
-        lazyAfter: after,
+        restored: localStorage.getItem(KEY) === stashBefore && localStorage.getItem(BASE) === baseBefore,
       };
       } catch (err) {
         return { failed: String(err && err.message ? err.message : err) };
@@ -1762,34 +1766,40 @@ function runSmokeTest(): void {
       problems.push(`the season editor threw: ${season.failed}`);
     } else if (season.noSeason) {
       problems.push("the season editor loaded no season to edit");
-    } else if (season.rows === 0) {
-      problems.push("the season editor drew no scenario rows");
+    } else if (season.cells !== season.slots) {
+      problems.push(`the pool grid drew ${season.cells} cells for ${season.slots} slots`);
+    } else if (season.ladder !== season.rungs) {
+      problems.push(
+        `the editor has ${season.ladder} percentile ranks for a ${season.rungs}-rank ladder, ` +
+          `so a replaced scenario cannot be cut from its board`,
+      );
     } else if (season.available === 0) {
-      problems.push("the season editor knows no scenarios to add");
-    } else if (season.inDraft !== season.windows) {
+      problems.push("the season editor knows no scenarios to put in a slot");
+    } else if (!season.moved) {
+      problems.push("an arrow key did not move the grid's selection, or switched screens");
+    } else if (!season.found) {
+      problems.push("the grid's search did not find a scenario from its first letters");
+    } else if (!season.kept || season.cutting !== 0) {
+      problems.push("a scenario moved between families lost its thresholds or waited on a cut");
+    } else if (season.replacedShown !== 1) {
+      problems.push(`one replacement showed ${season.replacedShown} replaced cells`);
+    } else if (!season.undone) {
+      problems.push("undo did not put the replaced scenario back");
+    } else if (season.inDraft !== season.windows || season.onScreen !== season.windows) {
       problems.push(
-        `a new family opened ${season.inDraft} slots for ${season.windows} difficulties`,
+        `a new family opened ${season.inDraft} slots and drew ${season.onScreen} ` +
+          `for ${season.windows} difficulties`,
       );
-    } else if (season.onScreen === 0) {
-      problems.push("a family was added and no slot picker rendered for it");
-    } else if (season.tagged !== season.onScreen) {
-      problems.push("a slot does not say which family it is, so the caret cannot move on");
-    } else if (season.lazyBefore !== 0) {
-      problems.push(`a slot built ${season.lazyBefore} options before anyone focused it`);
-    } else if (season.lazyAfter !== season.available) {
-      problems.push(
-        `a focused slot offers ${season.lazyAfter} of ${season.available} scenarios`,
-      );
-    } else if (season.leftBehind !== 0) {
-      problems.push("the probe left its own family in the stashed draft");
-    } else if (!season.stashRestored) {
-      problems.push("the probe did not put the stashed draft back as it found it");
+    } else if (!season.familyUndone) {
+      problems.push("undo did not remove the family it had just added");
+    } else if (!season.restored) {
+      problems.push("the probe did not put the stashed draft and baseline back as it found them");
     }
 
     console.log(
-      `season editor: ${season && season.rows} rows, ${season && season.inDraft} slots per family, ` +
-        `${season && season.lazyAfter} of ${season && season.available} scenarios on focus ` +
-        `(${season && season.lazyBefore} before) [${season && season.draftWindows}]`,
+      `season editor: ${season && season.cells} cells for ${season && season.slots} slots, ` +
+        `${season && season.ladder}-rank percentile ladder, ` +
+        `${season && season.available} scenarios to choose from`,
     );
 
     console.log(`preload      : ${hasBridge ? "bridge exposed" : "MISSING"}`);
@@ -2683,14 +2693,35 @@ ipcMain.handle("apogee:availableScenarios", () => {
       // No sample yet: the picker loses the board sizes, not the scenarios.
     }
 
+    // What the benchmarks say about each scenario that validate:pool holds a variant to:
+    // the sub-skill they file it under, and the part of the arm Viscose names for it. A
+    // replacement carries the arm Viscose publishes, and the editor warns when the family's
+    // sub-skill disagrees - both would otherwise surface only as a failed validate:pool.
+    const benchmarkSays = new Map<string, { subSkill: string | null; mechanic: string | null }>();
+    try {
+      const subskills = JSON.parse(readFileSync(dataFile("subskills.json"), "utf8")) as {
+        scenarios: { scenario: string; subSkill: string | null; mechanic?: string | null }[];
+      };
+      for (const s of subskills.scenarios) {
+        benchmarkSays.set(s.scenario, { subSkill: s.subSkill ?? null, mechanic: s.mechanic ?? null });
+      }
+    } catch {
+      // Without it the editor cannot warn; the scenarios are still offered.
+    }
+
     const options = [...known.entries()]
-      .filter(([name]) => !already.has(name))
       .map(([name, meta]) => {
         const local = history.get(name);
         const scores = local ? local.runs.map((r: { score: number }) => r.score) : [];
 
         return {
           name,
+          // Offered, not hidden. Rebuilding a pool is mostly moving scenarios between
+          // slots, and a picker that hides every scenario in use cannot put one back
+          // where it was or into the slot it is about to leave.
+          inSeason: already.has(name),
+          subSkill: benchmarkSays.get(name)?.subSkill ?? null,
+          publishedArm: benchmarkSays.get(name)?.mechanic ?? null,
           // KovaaK's calls it Target Switching; the season's category is Switching.
           category: meta.aimType === "Target Switching" ? "Switching" : meta.aimType,
           difficulty: meta.difficulty,
@@ -2721,8 +2752,8 @@ ipcMain.handle("apogee:availableScenarios", () => {
     return {
       scenarios: options,
       categories: season.categories.map((c) => c.name),
-      // Where every scenario is published and how big its board is - including the ones
-      // already in the season, which `scenarios` above deliberately excludes.
+      // Where every scenario is published and how big its board is, keyed by name for the
+      // rows already in the season.
       //
       // The rows the editor spends its time on are the filled ones, and until now they
       // said only a name. On a pool drawn from one benchmark that was no loss; on one
@@ -2780,6 +2811,16 @@ ipcMain.handle("apogee:availableScenarios", () => {
  * scenario twice costs nothing and so the next `build:season` derives the same numbers
  * this dialog just showed.
  */
+type PercentileCache = {
+  source: string;
+  sampledAt: string;
+  samplePoints: number[];
+  distributions: Distribution[];
+};
+/** The sampled boards, read once and shared by every sample the editor starts. */
+let percentileCache: PercentileCache | null = null;
+let percentileWrite: Promise<void> = Promise.resolve();
+
 ipcMain.handle("apogee:sampleScenario", async (_e, { scenario, leaderboardId, topFractions }) => {
   if (!state.session || !(await isAdmin().catch(() => false))) {
     return { error: "only an admin can edit the season" };
@@ -2787,9 +2828,9 @@ ipcMain.handle("apogee:sampleScenario", async (_e, { scenario, leaderboardId, to
   if (!leaderboardId) return { error: "no leaderboard id for this scenario" };
 
   const file = dataFile("leaderboard_percentiles.json");
-  let cache: { source: string; sampledAt: string; samplePoints: number[]; distributions: Distribution[] };
+  let cache: PercentileCache;
   try {
-    cache = JSON.parse(readFileSync(file, "utf8"));
+    cache = percentileCache ??= JSON.parse(readFileSync(file, "utf8")) as PercentileCache;
   } catch {
     return { error: "no leaderboard_percentiles.json - run npm run sample:leaderboards" };
   }
@@ -2823,21 +2864,32 @@ ipcMain.handle("apogee:sampleScenario", async (_e, { scenario, leaderboardId, to
   if (sampled) {
     // Written back so the pool and the cache stay in step; a scenario in the season with
     // no sampled board is one `build:season` would refuse to build.
-    cache.distributions.push(dist);
-    cache.distributions.sort((a, b) => a.scenario.localeCompare(b.scenario));
-    try {
-      const body = JSON.stringify(cache, null, 2) + "\n";
-      writeFileSync(file, body, "utf8");
-      const source = sourceDataDir();
-      if (source) {
-        writeFileSync(join(source, "leaderboard_percentiles.json"), body, "utf8");
-      }
-    } catch {
-      // A cache we could not write still gave correct thresholds for this dialog.
+    //
+    // The grid samples several slots at once. Each call used to read the file, add its
+    // board and write the whole file back, so two samples in flight each wrote a copy
+    // missing the other's board. They now share one cache in memory, a board sampled by
+    // two calls is kept once, and writes are queued so no two overlap.
+    const found = dist;
+    if (!cache.distributions.some((d) => d.scenario === found.scenario)) {
+      cache.distributions.push(found);
+      cache.distributions.sort((a, b) => a.scenario.localeCompare(b.scenario));
     }
+    percentileWrite = percentileWrite.then(() => {
+      try {
+        const body = JSON.stringify(cache, null, 2) + "\n";
+        writeFileSync(file, body, "utf8");
+        const source = sourceDataDir();
+        if (source) {
+          writeFileSync(join(source, "leaderboard_percentiles.json"), body, "utf8");
+        }
+      } catch {
+        // A cache we could not write still gave correct thresholds for this dialog.
+      }
+    });
+    await percentileWrite;
   }
 
-  return { rankMaxes, entries: dist.total, sampled };
+  return { rankMaxes, entries: dist.total, sampledAt: dist.sampledAt, sampled };
 });
 
 /**
@@ -3024,11 +3076,26 @@ ipcMain.handle("apogee:getSeason", () => {
     // energyPerRank travels with the season because the renderer needs it to rebalance a
     // category's ladder and cannot import it - it is a browser script. It used to be a
     // literal 2500 there, a third copy of a constant that has one owner.
+    // The percentile ladder travels with it. It lives in the pool, not the season, and a
+    // scenario dropped into a slot has its thresholds cut from its own board at that
+    // window's share of the ladder. The editor used to read it from `season.derivedFrom`,
+    // which the season stopped carrying when thresholds moved into the pool, so every slot
+    // fill failed with "this season has no percentile ladder to derive from".
+    let ladder: { ranks: number[]; overlap: number } | null = null;
+    try {
+      const pool = JSON.parse(readFileSync(dataFile("pool.json"), "utf8"));
+      if (Array.isArray(pool.ladder?.ranks)) {
+        ladder = { ranks: pool.ladder.ranks, overlap: pool.ladder.overlap ?? 0 };
+      }
+    } catch {
+      // No pool: scenarios can still be moved between slots, only not re-cut.
+    }
     return {
       season: loadSeason(),
       path: seasonPath(),
       energyPerRank: ENERGY_PER_RANK,
       fingerprint: seasonFingerprint(),
+      ladder,
     };
   } catch (err) {
     return { error: err instanceof Error ? err.message : String(err) };
@@ -3181,6 +3248,13 @@ ipcMain.handle("apogee:saveSeason", async (_e, { season, fingerprint, force }) =
   // in a field nothing displays - which is what "the season editor is not saving" was, for
   // three whole ladders. Derived rather than reconciled: the bands are slices of the ladder
   // by construction, so the ladder is where the information is.
+  // Families renamed in the grid, new key to old. Not part of the season - it is what lets
+  // the pool rebuild below find what a renamed family carried under its old name - so it is
+  // taken off before anything validates or writes the season.
+  const renamed: Record<string, string> =
+    season && typeof season.$renamed === "object" && season.$renamed ? season.$renamed : {};
+  if (season) delete season.$renamed;
+
   syncBandLadders(season);
   // And the overall readout takes its names from the rating ladder, which is now the only
   // place they are chosen.
@@ -3207,10 +3281,35 @@ ipcMain.handle("apogee:saveSeason", async (_e, { season, fingerprint, force }) =
   const poolBody = (() => {
     try {
       const pool = JSON.parse(readFileSync(dataFile("pool.json"), "utf8"));
-      return JSON.stringify(rebuildPool(pool, season), null, 2) + "\n";
+      return JSON.stringify(rebuildPool(pool, season, renamed), null, 2) + "\n";
     } catch {
       // A pool we could not rebuild must not stop the season being saved: the season is
       // the thing the app grades against, and losing that edit would be worse.
+      return null;
+    }
+  })();
+
+  // A renamed family keeps its written rationale. `data/scenario_rationale.json` is keyed
+  // by family name, and validate:rationale refuses a family with none and a rationale for a
+  // family that no longer exists, so a rename in the grid would otherwise orphan both.
+  const rationaleBody = (() => {
+    if (Object.keys(renamed).length === 0) return null;
+    try {
+      const file = JSON.parse(readFileSync(dataFile("scenario_rationale.json"), "utf8"));
+      let changed = false;
+      for (const [now, was] of Object.entries(renamed)) {
+        const category = was.slice(0, was.indexOf("/"));
+        const oldName = was.slice(category.length + 1);
+        const newName = now.slice(category.length + 1);
+        for (const f of file.families ?? []) {
+          if (f.family === oldName) {
+            f.family = newName;
+            changed = true;
+          }
+        }
+      }
+      return changed ? JSON.stringify(file, null, 2) + "\n" : null;
+    } catch {
       return null;
     }
   })();
@@ -3229,6 +3328,7 @@ ipcMain.handle("apogee:saveSeason", async (_e, { season, fingerprint, force }) =
     written.push(seasonPath());
 
     if (poolBody) writeFileSync(dataFile("pool.json"), poolBody, "utf8");
+    if (rationaleBody) writeFileSync(dataFile("scenario_rationale.json"), rationaleBody, "utf8");
 
     const source = sourceDataDir();
     if (source) {
@@ -3242,6 +3342,10 @@ ipcMain.handle("apogee:saveSeason", async (_e, { season, fingerprint, force }) =
       if (poolBody) {
         writeFileSync(join(source, "pool.json"), poolBody, "utf8");
         written.push(join(source, "pool.json"));
+      }
+      if (rationaleBody) {
+        writeFileSync(join(source, "scenario_rationale.json"), rationaleBody, "utf8");
+        written.push(join(source, "scenario_rationale.json"));
       }
 
       // Refresh the rank sheet alongside the source.
@@ -3279,7 +3383,10 @@ ipcMain.handle("apogee:saveSeason", async (_e, { season, fingerprint, force }) =
   // had failed.
   rebuild("season edited");
   broadcast("apogee:seasonChanged", { at: Date.now() });
-  return { ok: true, path: written[0], paths: written };
+  // The files as this save left them, so the editor's next save is measured against its
+  // own last write. Without it every save after the first in a session was refused as
+  // "changed on disk since this editor loaded it" - the change being the previous save.
+  return { ok: true, path: written[0], paths: written, fingerprint: seasonFingerprint() };
 });
 
 ipcMain.handle("apogee:openStatsFolder", () => {
