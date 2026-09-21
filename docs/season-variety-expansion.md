@@ -45,4 +45,4 @@ Ranks remain earned within each band: an exceptional Novice run can award a shar
 
 `npx tsx tools/expandSeason.ts --sample` checks and resumes missing evidence. The initial `--apply` is intentionally one-shot: it refuses to overwrite the saved baseline. Normal subsequent builds use `npm run build:season`. `npm run validate:expansion` reproduces all crossover adjustments, checks preservation of the core, verifies both queue categories for the new scenarios, and exercises all eighteen two-rank handovers through the energy calculation.
 
-The local season and generated client/reference files are the deliverables. This change does not publish a backend season or create an installer. Human playtesting is still needed for enjoyment, band transitions, and sparse Expert leaderboards.
+This changes the local season and the generated client and reference files only; the backend season and the installer are untouched. Human playtesting is still needed for enjoyment, band transitions, and sparse Expert leaderboards.

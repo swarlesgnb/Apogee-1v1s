@@ -9,7 +9,12 @@ Ten minutes, most of it the installer and the first sign-in.
 
 It reads. KovaaK's writes a CSV into its stats folder every time you finish a scenario;
 Apogee parses those files and uploads the scores. Nothing is typed in by hand, and
-nothing is written back into the stats folder or into KovaaK's.
+nothing in the stats folder is ever changed.
+
+The one thing it writes into KovaaK's is playlists: the season's, a playlist for each
+match you are in, and the Expedition's, all in `FPSAimTrainer\Saved\SaveGames\Playlists`
+and all named `Apogee …`. Old match playlists are cleared out as new ones are written;
+nothing whose name does not start with `Apogee` is touched.
 
 What leaves your machine is in [PRIVACY.md](../PRIVACY.md): scores, scenario names,
 timestamps and your Steam id. Not your files, not your inputs, not your screen.
@@ -107,5 +112,6 @@ Worth reporting:
   something you did.
 - A rank or number that is obviously nonsense.
 
-**Logs:** **Apogee → Open log**. **Uninstall:** normal Windows Apps & features. It leaves
-nothing in the KovaaK's folder.
+**Logs:** **Apogee → Open log**. **Uninstall:** normal Windows Apps & features. The
+`Apogee …` playlists stay in KovaaK's afterwards; delete them from the Playlists folder
+above if you want them gone.

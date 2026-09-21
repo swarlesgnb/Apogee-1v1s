@@ -24,7 +24,7 @@ The exact four rungs and reasons are in `data/pool_curation.json`. Pool membersh
 
 | Document principle | Apogee application |
 | --- | --- |
-| Initial acquisition, correction, confirmation and route planning | Static is preserved as requested. DotTS, PivoTS and Pokeball retain the acquisition/finish contrast in switching. Cues allow corrections instead of demanding a perfect first flick. |
+| Initial acquisition, correction, confirmation and route planning | Static Clicking stays as it was. DotTS, PivoTS and Pokeball retain the acquisition/finish contrast in switching. Cues allow corrections instead of demanding a perfect first flick. |
 | Dynamic target reading across axes, arcs and distances | Pasu, PipeClick, Angelic, Bounce and Popcorn retain contrasting paths. The category guide replaces apex-only/stop-only advice with reading into the shot. |
 | Repeated clicks while matching movement | Pasu Sequence adds three-hit moving targets. It replaces HopClick, leaving two arc families rather than three. This is not VT Multiclick, whose catalogue description specifies single-hit static targets. |
 | Separate stability from overwhelming reactive difficulty | Centering isolates horizontal velocity matching. Vertical Control gives pure vertical smoothness its own test. Smoothbot, Whisphere, PreciseTrack and Controlsphere retain broad arcs, curves and fine corrections. |
@@ -35,7 +35,7 @@ The exact four rungs and reasons are in `data/pool_curation.json`. Pool membersh
 | Complete kills under regeneration pressure | Regen Control adds wiggling regenerative targets and a change in time to kill. Arc Transfer finishes with regenerative bounce variants. Smooth tam and Expert Pasu Switch retain other regenerative patterns. |
 | Keep reading the field while tracking an evasive target | Evasive guidance distinguishes selecting the next target from leaving the current one early. FlyTS, Hop Transfer, Pasu Switch and the two arc/regen patterns retain different movement demands. |
 
-The aim is broader skill coverage within a manageable circuit, not one scored slot for every task in a long training routine. Pure reactive Z-axis work, dedicated dash switching and automatic-player-motion drills are not separately isolated by this pool. The selected geometry provides some related demands, but those gaps are not claimed as fully covered. The document's game examples motivate variety; this benchmark does not measure transfer into a particular FPS.
+The aim is broader skill coverage within a manageable circuit, not one scored slot for every task in a long training routine. Pure reactive Z-axis work, dedicated dash switching and automatic-player-motion drills are not separately isolated by this pool. The selected geometry provides some related demands, but those gaps are not fully covered. The document's game examples motivate variety; this benchmark does not measure transfer into a particular FPS.
 
 ## Practice beside the benchmark
 
@@ -52,7 +52,7 @@ The default category playlists remain six scenarios. The app does not automatica
 
 New names and leaderboard IDs were checked against KovaaK's public scenario catalogue. Each new target set is cut once from its own sampled leaderboard using the existing Apogee rank percentiles. Dated distributions and apex anchors are committed; the score targets do not move on launch. Existing retained variants keep their previous targets and provenance.
 
-`data/benchmark_theory.json` records the replacement identities, source and Static Clicking fingerprint. `data/scenario_rationale.json` links family decisions to the training reference and exact catalogue entries. Metadata gaps remain null rather than receiving invented aim types or body-part labels. Category queue availability is checked through the actual selection predicate and generated identities.
+`data/benchmark_theory.json` records the replacement identities, source and Static Clicking fingerprint. `data/scenario_rationale.json` links family decisions to the training reference and exact catalogue entries. Metadata gaps stay null rather than getting invented aim types or body-part labels. Category queue availability is checked through the actual selection predicate and generated identities.
 
 Some specialised Expert boards fall below the existing population floor. Each exception names the board size and the limitation in `pool.json`; these remain provisional draft calibration choices. A percentile of different player populations is not proof of equal skill across bands. No target is set above its sampled leaderboard record. The retained EddieTS and FlyTS Elite adjustments remain reproducible from their original frozen evidence; the removed bounceTS adjustment is retired.
 
@@ -62,6 +62,6 @@ Direct VT/Voltaic-named picks are reduced from the previous mix. Community edits
 
 `validate:theory` checks the frozen static fingerprint, all 26 new identities through pool/season/generated reference data, category queue eligibility, source dates, the selected mechanics against catalogue descriptions, and the reviewed ceiling on direct Voltaic names. Existing curation, pool, threshold, season, practice and UI checks remain in place.
 
-Still needs human playtesting: the three-click and vertical Expert steps, stop-to-teleport handover, changing TTK in Regen Control, cross-author Arc Transfer progression, and whether the circuits are enjoyable over repeated sessions. Catalogue descriptions, score samples and a rendered preview cannot establish that. No live match or in-game run is claimed as part of this pass.
+Still needs human playtesting: the three-click and vertical Expert steps, stop-to-teleport handover, changing TTK in Regen Control, cross-author Arc Transfer progression, and whether the circuits are enjoyable over repeated sessions. Catalogue descriptions, score samples and a rendered preview cannot establish that. No live match or in-game run was part of this pass.
 
 Deployment remains separate: the rebuilt local client and generated reference files must not be confused with the server's published season. No backend publication or installer release is performed by this revision.
