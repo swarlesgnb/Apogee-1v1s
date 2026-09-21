@@ -244,8 +244,8 @@ if (history.size === 0) {
 
   // Runs that satisfy exactly what the quest names, played inside its window. Returned
   // as a new history plus any matches, so the real one is never touched.
-  function satisfy(q: IssuedQuest): { h: Map<string, ScenarioHistory>; matches: typeof board.matches } | null {
-    const h = new Map(history);
+  function satisfy(q: IssuedQuest, base = history): { h: Map<string, ScenarioHistory>; matches: typeof board.matches } | null {
+    const h = new Map(base);
     const start = new Date(q.since).getTime() + 60_000;
     let minute = 0;
     const play = (scenario: string, score: number) => {
@@ -334,9 +334,14 @@ if (history.size === 0) {
   check("most kinds were issued at least once", seen.size >= 9, [...seen.keys()].join(", "));
 
   // The whole loop, on today's board: finish one quest, and the board keeps it and pays it.
-  const target = board.daily.find((q) => q.kind !== "ranked_play") ?? board.daily[0];
-  const played = satisfy(target)!;
-  const paid = syncBoard(board, ctxAt(played.h, now));
+  const priorDay = new Map([...history].map(([name,h]) => {
+    const runs = h.runs.filter(r=>!r.playedAt || r.playedAt < startOfDay(now));
+    return [name,{...h,runs,best:Math.max(0,...runs.map(r=>r.score)),lastPlayed:runs.at(-1)?.playedAt??null}];
+  }));
+  const unpaid = syncBoard(null,ctxAt(priorDay,now)).state;
+  const target = unpaid.daily.find((q) => q.kind !== "ranked_play") ?? unpaid.daily[0];
+  const played = satisfy(target,priorDay)!;
+  const paid = syncBoard(unpaid, ctxAt(played.h, now));
   const kept = paid.state.daily.find((q) => q.id === target.id);
   check("the finished quest is still on the board", kept !== undefined, target.title);
   check("and was paid", kept?.completedAt !== null && paid.xpAwarded >= target.xp, `+${paid.xpAwarded} XP`);
@@ -365,7 +370,7 @@ if (history.size === 0) {
   console.log(`       ${appearances.size} distinct quests and ${kinds.size} kinds over ${DAYS} days;` +
     ` the most frequent appeared on ${mostSeen}`);
   check("the same subject is never on two boards in a row", repeats === 0, `${repeats} repeats`);
-  check("no single quest dominates", mostSeen <= DAYS / 3, `${mostSeen} of ${DAYS} days`);
+  check("no single quest dominates", mostSeen <= DAYS / 3, `${mostSeen} of ${DAYS} days: ${[...appearances].filter(([,n])=>n===mostSeen).map(([title])=>title).join(", ")}`);
   check("every daily kind that needs no server shows up", kinds.size >= 6, [...kinds].join(", "));
 
   // -------------------------------------------------------------------------

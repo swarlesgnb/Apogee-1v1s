@@ -531,16 +531,29 @@ function dailyCandidates(ctx: IssueContext): Record<"ceiling" | "floor" | "varie
     if (median > 0) bars[p.def.name] = median * DISASTER_FRACTION;
   }
   if (Object.keys(bars).length >= 3) {
-    floor.push({
+    const steady: Quest = {
       id: "no_disasters",
-      slot: "floor",
-      kind: "no_disasters",
+      slot: "floor" as const,
+      kind: "no_disasters" as const,
       title: "No disasters",
       detail: `Five runs in a row on anything in the pool you have a median on, without one landing under ${Math.round(DISASTER_FRACTION * 100)}% of it.`,
       xp: XP.no_disasters,
       target: CLEAN_SET,
       unit: "runs",
       params: { bars },
+    };
+    // Give the broad consistency quest a concrete discipline. A single generic
+    // candidate otherwise takes half the floor draws, however large the pool gets.
+    const disciplines = [...result.categories].sort((a, b) => a.energy - b.energy)
+      .map(cat => ({ cat, bars: Object.fromEntries(pool.filter(p => p.category.name === cat.name && bars[p.def.name] !== undefined)
+        .map(p => [p.def.name, bars[p.def.name]])) }))
+      .filter(entry => Object.keys(entry.bars).length >= 3);
+    if (!disciplines.length) floor.push(steady);
+    else for (const entry of disciplines) floor.push({
+      ...steady, id: `no_disasters:${entry.cat.name}`,
+      title: `Keep your ${entry.cat.name} runs steady`,
+      detail: `Five runs in a row in ${entry.cat.name}, each at least ${Math.round(DISASTER_FRACTION * 100)}% of its recent median. ${Object.keys(entry.bars).length} familiar scenarios count; other disciplines do not break the set.`,
+      params: { category: entry.cat.name, bars: entry.bars },
     });
   }
 
