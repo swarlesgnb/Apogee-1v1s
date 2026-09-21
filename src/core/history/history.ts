@@ -31,10 +31,7 @@
  *     baseline = max( median(last 50 runs), 0.9 × verified PB )
  */
 
-import { readdirSync, readFileSync } from "node:fs";
-import { join } from "node:path";
-
-import { parseStatsFile, type ParsedRun } from "../stats/parseStatsFile.ts";
+import { readStatsFolder } from "../stats/folderCache.ts";
 import { baselineFromScores, type Baseline } from "./baseline.ts";
 
 // The maths lives in baseline.ts so the server can import it without pulling in
@@ -59,57 +56,17 @@ export interface ScenarioHistory {
   lastPlayed: Date | null;
 }
 
-type CachedRun = Pick<ParsedRun, "scenario" | "score" | "playedAt">;
-
-/**
- * What each file parsed to, so a rescan reads only the files it has not seen.
- *
- * KovaaK's writes a stats file once, when the run ends, and never touches it again, so a
- * file that parsed once cannot parse differently later. Reparsing all 13,138 files of a
- * real folder took about 3 seconds, and the client did it on Electron's main process
- * after every run, every settlement and before any quest could be announced, with every
- * button waiting behind it. Only the three fields history needs are kept: a parsed run
- * carries its kill table, and 13k of those is memory spent on nothing.
- *
- * Failures are not cached. A file caught mid-write fails now and parses on the next scan.
- */
-const parsedFiles = new Map<string, CachedRun>();
-let parsedDir: string | null = null;
-
 /**
  * Build per-scenario history from a KovaaK's stats folder.
  *
  * Files that fail to parse are skipped silently, since an incomplete run is normal, not an
- * error. Returns a map keyed on the scenario name recorded inside the file.
+ * error. Returns a map keyed on the scenario name recorded inside the file. Each file is
+ * parsed once per session (stats/folderCache.ts), so a rescan reads only new files.
  */
 export function scanStatsFolder(dir: string): Map<string, ScenarioHistory> {
   const history = new Map<string, ScenarioHistory>();
 
-  let files: string[];
-  try {
-    files = readdirSync(dir).filter((f) => f.endsWith("Stats.csv"));
-  } catch {
-    return history;
-  }
-
-  if (dir !== parsedDir) {
-    parsedFiles.clear();
-    parsedDir = dir;
-  }
-
-  for (const file of files) {
-    let run = parsedFiles.get(file);
-    if (!run) {
-      try {
-        const result = parseStatsFile(file, readFileSync(join(dir, file), "utf8"));
-        if (!result.ok) continue;
-        run = { scenario: result.run.scenario, score: result.run.score, playedAt: result.run.playedAt };
-        parsedFiles.set(file, run);
-      } catch {
-        continue;
-      }
-    }
-
+  for (const { run } of readStatsFolder(dir)) {
     let entry = history.get(run.scenario);
     if (!entry) {
       entry = { scenario: run.scenario, runs: [], best: 0, lastPlayed: null };
