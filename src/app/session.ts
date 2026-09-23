@@ -15,7 +15,7 @@
  * from the refresh token on launch.
  */
 
-import { createClient, type Session, type SupabaseClient } from "@supabase/supabase-js";
+import { createClient, isAuthRetryableFetchError, type Session, type SupabaseClient } from "@supabase/supabase-js";
 import { app, safeStorage, shell } from "electron";
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -68,6 +68,13 @@ export function supabase(): SupabaseClient {
         autoRefreshToken: true,
         detectSessionInUrl: false,
       },
+    });
+    // Refresh-token rotation is on, so every hourly auto-refresh retires the token on
+    // disk. Two refreshes later the stored one is a grandparent, which the server treats
+    // as reuse and answers by revoking the family - signing out a player who simply kept
+    // Apogee open beside KovaaK's for an evening. Persist every rotation as it happens.
+    client.auth.onAuthStateChange((event, session) => {
+      if ((event === "TOKEN_REFRESHED" || event === "SIGNED_IN") && session) saveRefreshToken(session.refresh_token);
     });
   }
   return client;
@@ -139,6 +146,12 @@ async function profileFor(session: Session): Promise<ApogeeSession | null> {
   };
 }
 
+/**
+ * Thrown by restoreSession when the server could not be reached. The stored token is kept:
+ * the player is still signed in, the network just is not up yet.
+ */
+export class SessionUnreachable extends Error {}
+
 /** Restore a session from the encrypted refresh token, if there is one. */
 export async function restoreSession(): Promise<ApogeeSession | null> {
   if (!isConfigured()) return null;
@@ -147,6 +160,9 @@ export async function restoreSession(): Promise<ApogeeSession | null> {
   if (!refreshToken) return null;
 
   const { data, error } = await supabase().auth.refreshSession({ refresh_token: refreshToken });
+  // Only the server saying no ends a session. A launch with the Wi-Fi still connecting
+  // used to land here too, and deleted the token of a player who had done nothing wrong.
+  if (error && isAuthRetryableFetchError(error)) throw new SessionUnreachable(error.message);
   if (error || !data.session) {
     clearStoredSession();
     return null;

@@ -1,4 +1,4 @@
-import { canStartTrial, preparationReady, savedCheckpoints } from "./engine.ts";
+import { canStartTrial, preparationReady, savedCheckpoints, trialSteps } from "./engine.ts";
 import type { ExpeditionDefinition, ExpeditionState, JourneyView } from "./types.ts";
 
 export const journeys = [
@@ -12,7 +12,7 @@ export function journeyView(state: ExpeditionState | null, def: ExpeditionDefini
   const destinations = Object.fromEntries([...def.destinations.map(d => d.id), "final"].map(destination => [destination, {
     ready: state ? canStartTrial(state, def, destination, band) : destination !== "final" && band !== 1,
     preparationReady: state ? preparationReady(state, def, destination, band) : false,
-    checkpoints: state ? savedCheckpoints(state, destination, band).length : 0,
+    checkpoints: state ? savedCheckpoints(state, destination, band, destination === "final" ? undefined : trialSteps(def, destination, band)).length : 0,
   }]));
   const cleared = def.destinations.filter(d => state?.rewards[`${d.id}:${band}:clear`]).length;
   const active = state?.trials.find(t => t.status === "active" && t.band === band);

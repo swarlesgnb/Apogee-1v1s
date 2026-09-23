@@ -3,9 +3,9 @@
  * in each of them.
  *
  * Apogee's pool is not invented. Every family in it was picked out of the corpus the
- * community already grades itself against, and 227 of the season's 252 scenarios appear
- * in at least one of the 43 benchmarks under `data/benchmarks/` - 71 of them in two or
- * more. `1wall5targets_pasu Reload` is in Aimerz+ Easy, Aimerz+ Hard, snakbox Medium,
+ * community already grades itself against, and 184 of the season's 256 scenarios appear
+ * in at least one of the 43 benchmarks under `data/benchmarks/`; the fun rebuild chose
+ * some families for how much they are replayed rather than for benchmark membership. `1wall5targets_pasu Reload` is in Aimerz+ Easy, Aimerz+ Hard, snakbox Medium,
  * Voltaic All and Viscose Medium at once.
  *
  * That is worth saying out loud rather than leaving as a fact about the data. A session

@@ -27,6 +27,19 @@ export interface SteamAuthConfig {
    * a button that appears to do nothing.
    */
   open?: (url: string) => void;
+  /**
+   * Abandons the attempt and closes the loopback port. A second click, or Cancel, has
+   * to end the first attempt rather than leave it to time out three minutes later and
+   * report an error over whatever the player is doing by then.
+   */
+  signal?: AbortSignal;
+}
+
+/** The attempt was abandoned on purpose; nothing to tell the player. */
+export class SignInCancelled extends Error {
+  constructor() {
+    super("sign-in cancelled");
+  }
 }
 
 export interface SteamAuthResult {
@@ -146,6 +159,12 @@ export function signInWithSteam(config: SteamAuthConfig): Promise<SteamAuthResul
     });
 
     server.on("error", (err) => finish(() => reject(err)));
+
+    if (config.signal?.aborted) {
+      finish(() => reject(new SignInCancelled()));
+      return;
+    }
+    config.signal?.addEventListener("abort", () => finish(() => reject(new SignInCancelled())), { once: true });
 
     // Port 0 asks the OS for a free ephemeral port; binding to 127.0.0.1 rather than
     // 0.0.0.0 keeps the listener off the network entirely.

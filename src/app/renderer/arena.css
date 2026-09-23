@@ -487,7 +487,8 @@ html.preview .topbar-right { margin-left: auto; }
 .debrief-kicker { font: 10px var(--mono); text-transform: uppercase; letter-spacing: .1em; color: var(--ink-mid); margin-bottom: 12px; line-height: 1.6; }
 .debrief-rounds { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; margin: 0 24px 24px; }
 .debrief-round { padding: 18px; background: var(--well); border: 1px solid var(--rule); border-top: 2px solid var(--rule-3); border-radius: 7px; min-width: 0; }
-.debrief-round.win { border-top-color: var(--up); }
+/* `.win` is also the window label (mono, uppercase, dim), which greyed out won rounds. */
+.debrief-round.win { border-top-color: var(--up); font-family: var(--font); text-transform: none; color: inherit; }
 .debrief-round.loss { border-top-color: var(--down); }
 .debrief-round-head { display: flex; justify-content: space-between; gap: 12px; font: 10px var(--mono); color: var(--ink-dim); }
 .debrief-round-head b { font: 600 11px var(--font); color: var(--ink-mid); }

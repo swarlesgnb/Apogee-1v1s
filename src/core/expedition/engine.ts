@@ -92,10 +92,26 @@ export function preparationReady(state: ExpeditionState, def: ExpeditionDefiniti
   return id === "final" ? def.destinations.every(d => preparationReady(state, def, d.id, band))
     : !!state.routes[routeKey(id, band)]?.challenges.some(c => c.kind !== "discovery" && c.completedAt);
 }
-export function savedCheckpoints(state: ExpeditionState, id: string, band: number): ExpeditionRun[] {
+/**
+ * Checkpoints banked by earlier attempts, as the leading run of steps they still satisfy.
+ *
+ * Given the current steps, a banked result only counts while it is the scenario at that
+ * position and still meets its target. A save made before the v4 roster change could
+ * otherwise carry a checkpoint on a retired scenario into a trial that no longer has it,
+ * fail validation, and leave the destination impossible to start again.
+ */
+export function savedCheckpoints(state: ExpeditionState, id: string, band: number,
+  steps?: { scenario: string; target: number }[]): ExpeditionRun[] {
   if (state.rewards[`${id}:${band}:clear`]) return [];
   const attempts = state.trials.filter(t => t.destination === id && t.band === band && t.mode === "checkpoint");
-  return [...(attempts.sort((a, b) => b.results.length - a.results.length)[0]?.results ?? [])];
+  const best = [...(attempts.sort((a, b) => b.results.length - a.results.length)[0]?.results ?? [])];
+  if (!steps) return best;
+  const kept: ExpeditionRun[] = [];
+  for (const [i, r] of best.entries()) {
+    if (!steps[i] || r.scenario !== steps[i].scenario || !meets(r.score, steps[i].target)) break;
+    kept.push(r);
+  }
+  return kept;
 }
 export function startTrial(state: ExpeditionState, def: ExpeditionDefinition, id: string, band: number, now: number, approach?: "direct" | "prepared"): ExpeditionState {
   const steps = trialSteps(def, id, band);
@@ -104,7 +120,7 @@ export function startTrial(state: ExpeditionState, def: ExpeditionDefinition, id
   const next = structuredClone(state);
   const mode = def.version < 3 ? undefined : band === 0 && !state.rewards[`${id}:${band}:clear`] ? "checkpoint" : band === 2 && approach === "prepared" ? "prepared" : "strict";
   if (approach === "prepared" && (band !== 2 || !preparationReady(state, def, id, band))) throw new Error("Complete a preparation route first. The final passage needs preparation at all six destinations.");
-  const carried = mode === "checkpoint" ? savedCheckpoints(state, id, band) : [];
+  const carried = mode === "checkpoint" ? savedCheckpoints(state, id, band, steps) : [];
   next.trials.push({ id: `${now}-${next.trials.length}`, destination: id, band, startedAt: now, endedAt: null, status: "active", steps, results: [...carried],
     ...(mode ? { mode, misses: [], carried } : {}) });
   next.selected = id; next.band = band;

@@ -13,7 +13,7 @@
 
 import { app, BrowserWindow, ipcMain, screen, shell, dialog } from "electron";
 import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, unlinkSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
 import { createHash } from "node:crypto";
 
 import { dataFile, setDataDir, sourceDataDir } from "../core/dataDir.ts";
@@ -36,7 +36,7 @@ import { buildSnapshot, type Snapshot } from "../core/report/snapshot.ts";
 import { renderRankSheet } from "../core/report/rankSheet.ts";
 import { DARK_CHROME } from "../core/report/contrast.ts";
 import { scanStatsFolder, type ScenarioHistory } from "../core/history/history.ts";
-import { signInWithSteam } from "../core/sync/steamAuth.ts";
+import { SignInCancelled, signInWithSteam } from "../core/sync/steamAuth.ts";
 import {
   fetchUploadedRuns,
   fetchStanding,
@@ -58,6 +58,8 @@ import {
   fetchTournaments,
   playFixture,
   tournamentAction,
+  friendlyError,
+  setOnUnauthorized,
   type DuelBoard,
   type FoundMatch,
   type TournamentAction,
@@ -67,11 +69,12 @@ import { sampleTournamentView } from "../core/tournament/sample.ts";
 import {
   isConfigured,
   restoreSession,
+  SessionUnreachable,
   signIn,
   signOut,
   type ApogeeSession,
 } from "./session.ts";
-import { findStatsFolder, watchStatsFolder, type StatsWatcher } from "./watcher.ts";
+import { candidateStatsFolders, findStatsFolder, watchStatsFolder, type StatsWatcher } from "./watcher.ts";
 import { loadSettings, saveSettings, settingsPath, type WindowBounds } from "./settings.ts";
 import { installMenu } from "./menu.ts";
 import { launchKovaaks, writeMatchPlaylist } from "./playlist.ts";
@@ -87,6 +90,7 @@ import {
   installedPlaylistCount,
   installedPlaylistNames,
   playlistsFolderFor,
+  refreshStalePlaylists,
   practicePlaylists,
   practiceRows,
   writePracticePlaylists,
@@ -127,6 +131,8 @@ interface State {
   statsDir: string | null;
   snapshot: Snapshot | null;
   lastError: string | null;
+  /** A neutral message for the banner: news, not a failure. Null when there is none. */
+  notice: string | null;
   scanning: boolean;
   session: ApogeeSession | null;
   signingIn: boolean;
@@ -147,6 +153,7 @@ const state: State = {
   statsDir: null,
   snapshot: null,
   lastError: null,
+  notice: null,
   scanning: false,
   session: null,
   signingIn: false,
@@ -169,6 +176,12 @@ let rebuildTimer: NodeJS.Timeout | null = null;
 let expeditionService: ExpeditionService | null = null;
 function expedition(): ExpeditionService {
   return expeditionService ??= new ExpeditionService(app.getPath("userData"));
+}
+
+/** Show a neutral message, and keep it for a window that has not loaded yet. */
+function notify(message: string | null): void {
+  state.notice = message;
+  broadcast("apogee:notice", message);
 }
 
 function broadcast(channel: string, payload: unknown): void {
@@ -233,11 +246,13 @@ function rebuild(reason: string): void {
       }
       if (syncs[0]) applyQuestSync(syncs[0]);
     } else {
-      state.lastError = "No runs found in the stats folder yet.";
-      broadcast("apogee:error", state.lastError);
+      // A new KovaaK's install is a normal state, not a failure: the folder is right and
+      // the watcher picks up the first run the moment it lands.
+      state.lastError = null;
+      notify("Folder found. Play any scenario in KovaaK's and it will show up here.");
     }
   } catch (err) {
-    state.lastError = err instanceof Error ? err.message : String(err);
+    state.lastError = friendlyError(err);
     broadcast("apogee:error", state.lastError);
   } finally {
     state.scanning = false;
@@ -296,6 +311,25 @@ function startWatching(dir: string): void {
   });
 
   rebuild("initial scan");
+  refreshInstalledPlaylists(dir);
+}
+
+/**
+ * Bring the practice playlists the player already installed up to this season. Their
+ * names outlive a change of scenarios, so without this a player who installed before a
+ * season changed kept practising the old pool.
+ */
+function refreshInstalledPlaylists(statsDir: string): void {
+  try {
+    const refreshed = refreshStalePlaylists(loadSeason(), playlistsFolderFor(statsDir));
+    if (refreshed.length > 0) {
+      broadcast("apogee:notice",
+        `Updated ${refreshed.length} Apogee playlist${refreshed.length === 1 ? "" : "s"} to this season's scenarios. ` +
+        "If KovaaK's is open, restart it to load them.");
+    }
+  } catch (err) {
+    console.warn("could not refresh installed playlists:", friendlyError(err));
+  }
 }
 
 /**
@@ -304,17 +338,47 @@ function startWatching(dir: string): void {
  * Shared by the button in the status bar and the menu item, because two ways to do the
  * same thing should not be two implementations of it.
  */
-async function chooseStatsFolder(): Promise<string | null> {
+/** True when the folder holds at least one KovaaK's run file. */
+function holdsRuns(dir: string): boolean {
+  try {
+    return readdirSync(dir).some((name) => name.endsWith(" Stats.csv"));
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * The stats folder a pick most plausibly meant. The obvious guess is the game folder or
+ * the Steam library, one or three levels above the real one, and saving that for good
+ * left the player watching a folder that would never hold a run.
+ */
+function resolveStatsFolder(chosen: string): string | null {
+  const tries = [chosen, join(chosen, "stats"), join(chosen, "FPSAimTrainer", "stats"),
+    join(chosen, "FPSAimTrainer", "FPSAimTrainer", "stats"),
+    join(chosen, "steamapps", "common", "FPSAimTrainer", "FPSAimTrainer", "stats"),
+    join(chosen, "common", "FPSAimTrainer", "FPSAimTrainer", "stats")];
+  return tries.find((dir) => existsSync(dir) && holdsRuns(dir))
+    // A fresh install has the folder and no runs yet. That is the right folder too.
+    ?? tries.find((dir) => /[\\/]FPSAimTrainer[\\/]stats$/i.test(dir) && existsSync(dir))
+    ?? null;
+}
+
+async function chooseStatsFolder(): Promise<string | { error: string } | null> {
+  const nearest = candidateStatsFolders().map((dir) => dirname(dir)).find((dir) => existsSync(dir));
   const result = await dialog.showOpenDialog({
     title: "Select your KovaaK's stats folder",
     properties: ["openDirectory"],
-    defaultPath: state.statsDir ?? undefined,
+    defaultPath: state.statsDir ?? nearest ?? undefined,
   });
 
   if (result.canceled || result.filePaths.length === 0) return null;
 
-  const chosen = result.filePaths[0];
-  if (!existsSync(chosen)) return null;
+  const chosen = resolveStatsFolder(result.filePaths[0]);
+  if (!chosen) {
+    return {
+      error: "That folder has no KovaaK's stats. It is usually Steam\\steamapps\\common\\FPSAimTrainer\\FPSAimTrainer\\stats.",
+    };
+  }
 
   // Remembered from here on: this is the one thing the app cannot work out for itself
   // when auto-detection misses, so asking twice is asking one time too many.
@@ -426,7 +490,7 @@ async function maybeSubmitForMatch(scenarioName: string, file: string): Promise<
   } catch (err) {
     // Let them retry the scenario rather than stranding the match.
     state.submitted.delete(wanted.id);
-    const message = err instanceof Error ? err.message : String(err);
+    const message = friendlyError(err);
     broadcast("apogee:matchProgress", {
       matchId: match.matchId,
       scenarioId: wanted.id,
@@ -453,13 +517,38 @@ async function keepHistoryCurrent(reason: string, only?: string[]): Promise<void
     const result = await uploadRecentRuns(state.statsDir, state.session.playerId, only);
     if (result.errors.length) console.warn(`history upload (${reason}): ${result.errors.join("; ")}`);
   } catch (err) {
-    console.warn(`history upload (${reason}): ${err instanceof Error ? err.message : String(err)}`);
+    console.warn(`history upload (${reason}): ${friendlyError(err)}`);
   }
 }
 
-async function settleActiveMatch(): Promise<void> {
+/**
+ * Retries after a failed settle. Every run is already in when settle is called, so a
+ * failure here used to leave the player one way out - Abandon, which forfeits a match
+ * they finished - and waiting it out expired the match as a forfeit too. One network
+ * blip turned a possible win into a loss.
+ */
+const SETTLE_RETRY_MS = [2_000, 5_000, 15_000, 30_000];
+let settleRetry: NodeJS.Timeout | null = null;
+
+/**
+ * Take the runs already filed against a recovered match as submitted, and settle it if
+ * that is all three. A restart used to forget them, ask for them again, and never settle.
+ */
+function seedSubmitted(match: FoundMatch): void {
+  state.submitted = new Set(match.submittedScenarioIds ?? []);
+  if (match.scenarios.length > 0 && match.scenarios.every((s) => state.submitted.has(s.id))) {
+    void settleActiveMatch();
+  }
+}
+
+/** Settle the active match. Resolves with an error message when it could not, else null. */
+async function settleActiveMatch(attempt = 0): Promise<string | null> {
   const match = state.match;
-  if (!match) return;
+  if (!match) return null;
+  if (settleRetry) {
+    clearTimeout(settleRetry);
+    settleRetry = null;
+  }
 
   try {
     const settled = await settleMatch(match.matchId);
@@ -480,8 +569,20 @@ async function settleActiveMatch(): Promise<void> {
     scheduleRebuild("match settled");
     // A settled leg can decide a fixture, open the next round or crown somebody.
     if (settled.tournament) void refreshTournaments("a fixture leg settled");
+    // Duel buttons read the active match when drawn; redraw them now it is gone.
+    void refreshDuels("match settled", true);
+    return null;
   } catch (err) {
-    broadcast("apogee:error", err instanceof Error ? err.message : String(err));
+    const message = friendlyError(err);
+    const retrying = attempt < SETTLE_RETRY_MS.length;
+    broadcast("apogee:matchProgress", { matchId: match.matchId, status: "settle-failed", message, retrying });
+    if (retrying) {
+      settleRetry = setTimeout(() => {
+        settleRetry = null;
+        if (state.match?.matchId === match.matchId) void settleActiveMatch(attempt + 1);
+      }, SETTLE_RETRY_MS[attempt]);
+    }
+    return message;
   }
 }
 
@@ -639,13 +740,16 @@ installCrashHandlers();
 if (SMOKE) suppressCrashDialogs();
 log(`built ${BUILD}`);
 
-if (!SMOKE && !app.requestSingleInstanceLock()) {
+const HAS_LOCK = SMOKE || app.requestSingleInstanceLock();
+if (!HAS_LOCK) {
   console.log(
     "another Apogee instance already holds the lock, so this one is quitting and the " +
       "existing window will be focused. That window is running whatever bundle it " +
       "started with - close it fully before `npm start` to pick up a new build.",
   );
-  app.quit();
+  // exit, not quit: quit waits for ready, and the ready handler below then ran the whole
+  // startup - window, session restore, a full stats rebuild - racing the real instance.
+  app.exit(0);
 } else if (!SMOKE) {
   // A second launch focuses the window that already exists, which is what someone
   // double-clicking the icon actually wants.
@@ -692,7 +796,7 @@ function runSmokeTest(): void {
           `${snapshot.quests.weekly ? 1 : 0} weekly`);
       }
     } catch (err) {
-      problems.push(`snapshot threw: ${err instanceof Error ? err.message : String(err)}`);
+      problems.push(`snapshot threw: ${friendlyError(err)}`);
     }
   }
 
@@ -1399,6 +1503,9 @@ function runSmokeTest(): void {
     const rematch = await probe.webContents.executeJavaScript(`(() => {
       if (typeof renderRematch !== "function") return null;
       const box = document.getElementById("rematch");
+      // The box also holds Queue again, which every result offers; the duel is the rematch.
+      const duel = document.getElementById("rematchBtn");
+      const offering = () => !box.hidden && !duel.hidden;
       const base = {
         matchId: "m", verdict: "win", explanation: "", voidReason: null, ratingWeight: 1,
         yourMatchScore: 0.05, theirMatchScore: 0.02, ratingBefore: 1500, ratingAfter: 1512,
@@ -1406,17 +1513,17 @@ function runSmokeTest(): void {
       };
 
       renderRematch({ ...base, seeding: true, verdict: null, opponent: null, category: null });
-      const afterSeeding = box.hidden;
+      const afterSeeding = !offering();
 
       renderRematch({ ...base, verdict: "void", opponent: { playerId: "p", displayName: "x" },
         category: "Static Clicking" });
-      const afterVoid = box.hidden;
+      const afterVoid = !offering();
 
       renderRematch({ ...base, opponent: { playerId: "p9", displayName: "rival" },
         category: "Static Clicking" });
       const shown = {
         afterSeeding, afterVoid,
-        offered: !box.hidden,
+        offered: offering(),
         label: document.getElementById("rematchBtn").textContent,
         bound: typeof document.getElementById("rematchBtn").onclick === "function",
       };
@@ -1818,7 +1925,61 @@ function runSmokeTest(): void {
   void probe.loadFile(join(here, "renderer", "index.html"));
 }
 
+
+/**
+ * Restore the stored sign-in, retrying while the server cannot be reached. A launch with
+ * the network still coming up used to delete the token and sign the player out.
+ */
+const RESTORE_RETRY_MS = [5_000, 15_000, 60_000, 120_000];
+async function restoreSignedIn(attempt = 0): Promise<void> {
+  let session: ApogeeSession | null;
+  try {
+    session = await restoreSession();
+  } catch (err) {
+    if (!(err instanceof SessionUnreachable)) return;
+    if (attempt === 0) notify("Can't reach Apogee's server yet. You're still signed in; retrying.");
+    setTimeout(() => void restoreSignedIn(attempt + 1), RESTORE_RETRY_MS[Math.min(attempt, RESTORE_RETRY_MS.length - 1)]);
+    return;
+  }
+  if (attempt > 0) notify(null);
+
+  if (!session) return;
+
+  state.session = session;
+  broadcast("apogee:session", session);
+
+  // Recover a match left open by a previous run of the app. The watcher only
+  // submits a run against a match it knows about, so without this a player who
+  // restarts mid-match plays all three scenarios for nothing: the runs upload as
+  // ordinary history, the match stays at awaiting_runs, and nothing reports a
+  // problem because nothing went wrong from anyone's point of view.
+  try {
+    const active = await fetchActiveMatch();
+    if (active) {
+      state.match = active;
+      broadcast("apogee:match", active);
+      seedSubmitted(active);
+    }
+  } catch {
+    // Best effort. Queueing surfaces the same match anyway, so a failure here
+    // costs a convenience rather than the match.
+  }
+
+  // Whatever was played while the app was shut.
+  void keepHistoryCurrent("session restored");
+
+  // And the duel board, for the same reason: somebody who was challenged while the
+  // app was shut should be told on the way in rather than the next time they think
+  // to look. Nothing here is on a timer - this fires on the way in and after every
+  // action - so a duel that arrives mid-session appears when the player next does
+  // something, which is the honest limit of it until there is a reason to poll.
+  void refreshDuels("session restored");
+  // Same reasoning: a fixture that became yours to play while the app was shut.
+  void refreshTournaments("session restored");
+}
+
 app.whenReady().then(() => {
+  if (!HAS_LOCK) return;
   if (SMOKE) {
     runSmokeTest();
     return;
@@ -1827,7 +1988,7 @@ app.whenReady().then(() => {
   createWindow();
   installMenu({
     rescan: () => rebuild("menu rescan"),
-    chooseFolder: () => void chooseStatsFolder(),
+    chooseFolder: () => void chooseStatsFolder().then((r) => { if (r && typeof r === "object") broadcast("apogee:error", r.error); }),
     openStatsFolder: () => {
       if (state.statsDir) void shell.openPath(state.statsDir);
     },
@@ -1835,45 +1996,17 @@ app.whenReady().then(() => {
   });
 
   // A previous sign-in is restored from the encrypted refresh token, so the player
-  // does not re-authenticate every launch. Failure here is not worth surfacing: it
-  // simply means they are signed out.
-  void restoreSession()
-    .then(async (session) => {
-      if (!session) return;
+  // does not re-authenticate every launch.
+  void restoreSignedIn();
 
-      state.session = session;
-      broadcast("apogee:session", session);
-
-      // Recover a match left open by a previous run of the app. The watcher only
-      // submits a run against a match it knows about, so without this a player who
-      // restarts mid-match plays all three scenarios for nothing: the runs upload as
-      // ordinary history, the match stays at awaiting_runs, and nothing reports a
-      // problem because nothing went wrong from anyone's point of view.
-      try {
-        const active = await fetchActiveMatch();
-        if (active) {
-          state.match = active;
-          state.submitted.clear();
-          broadcast("apogee:match", active);
-        }
-      } catch {
-        // Best effort. Queueing surfaces the same match anyway, so a failure here
-        // costs a convenience rather than the match.
-      }
-
-      // Whatever was played while the app was shut.
-      void keepHistoryCurrent("session restored");
-
-      // And the duel board, for the same reason: somebody who was challenged while the
-      // app was shut should be told on the way in rather than the next time they think
-      // to look. Nothing here is on a timer - this fires on the way in and after every
-      // action - so a duel that arrives mid-session appears when the player next does
-      // something, which is the honest limit of it until there is a reason to poll.
-      void refreshDuels("session restored");
-      // Same reasoning: a fixture that became yours to play while the app was shut.
-      void refreshTournaments("session restored");
-    })
-    .catch(() => undefined);
+  setOnUnauthorized(() => {
+    // The server refused the access token. Say so where the player looks, rather than
+    // showing them signed in while every action answers "sign in".
+    if (!state.session) return;
+    state.session = null;
+    broadcast("apogee:session", null);
+    broadcast("apogee:error", "Your session expired. Sign in with Steam again.");
+  });
 
   // A folder the player picked themselves wins over auto-detection. Someone with two
   // Steam libraries, or a stats folder copied off another machine, told us the answer
@@ -1912,9 +2045,18 @@ ipcMain.handle("apogee:getState", () => ({
   session: state.session,
   signingIn: state.signingIn,
   configured: isConfigured(),
+  // A reloaded window has to be able to repaint a match in progress.
+  match: state.match,
+  notice: state.notice,
 }));
 
-ipcMain.handle("apogee:expedition", () => expedition().view(state.statsDir, true));
+ipcMain.handle("apogee:expedition", () => {
+  try {
+    return expedition().view(state.statsDir, true);
+  } catch (err) {
+    return { error: friendlyError(err) };
+  }
+});
 ipcMain.handle("apogee:expeditionAction", async (_e, action: unknown) => {
   try {
     if (action && typeof action === "object" && (action as { type?: unknown }).type === "launch") {
@@ -1939,6 +2081,8 @@ ipcMain.handle("apogee:expeditionAction", async (_e, action: unknown) => {
 // has nothing to steal.
 // ---------------------------------------------------------------------------
 
+let signInAbort: AbortController | null = null;
+
 ipcMain.handle("apogee:signIn", async () => {
   if (!isConfigured()) {
     const message =
@@ -1952,17 +2096,16 @@ ipcMain.handle("apogee:signIn", async () => {
   // five-minute timeout, with the only feedback being "already in progress" on every
   // retry. Now the attempt is abandoned and a fresh one starts, because the common
   // case is a user who wants to try again immediately.
-  if (state.signingIn) {
-    state.signingIn = false;
-    broadcast("apogee:signingIn", { signingIn: false });
-  }
+  signInAbort?.abort();
+  const attempt = new AbortController();
+  signInAbort = attempt;
 
   state.signingIn = true;
   broadcast("apogee:signingIn", { signingIn: true });
 
   try {
     const session = await signIn(
-      (config) => signInWithSteam(config),
+      (config) => signInWithSteam({ ...config, signal: attempt.signal }),
       // Hand the URL to the renderer as a fallback, so a browser that fails to open is
       // recoverable rather than a dead end.
       (url) => {
@@ -1978,19 +2121,32 @@ ipcMain.handle("apogee:signIn", async () => {
     void keepHistoryCurrent("signed in");
     return { session };
   } catch (err) {
-    const message = err instanceof Error ? err.message : String(err);
+    // Superseded by a newer attempt, or cancelled: the player already knows.
+    if (err instanceof SignInCancelled) return { cancelled: true };
+    const message = friendlyError(err);
     state.lastError = message;
     broadcast("apogee:error", message);
     return { error: message };
   } finally {
-    state.signingIn = false;
-    broadcast("apogee:signingIn", { signingIn: false });
+    if (signInAbort === attempt) {
+      signInAbort = null;
+      state.signingIn = false;
+      broadcast("apogee:signingIn", { signingIn: false });
+    }
   }
 });
 
+ipcMain.handle("apogee:cancelSignIn", () => {
+  signInAbort?.abort();
+  return { ok: true };
+});
+
 ipcMain.handle("apogee:signOut", async () => {
-  await signOut();
+  await signOut().catch(() => undefined);
   state.session = null;
+  // The match panel reads this broadcast; without it an open match stayed on screen
+  // while nothing submitted its runs any more.
+  if (state.match) broadcast("apogee:match", null);
   state.match = null;
   state.submitted.clear();
   // Somebody else's inbox must not be left on screen for whoever signs in next.
@@ -2009,7 +2165,7 @@ ipcMain.handle("apogee:signOut", async () => {
 // ---------------------------------------------------------------------------
 
 ipcMain.handle("apogee:uploadHistory", async () => {
-  if (!state.session) return { error: "sign in first" };
+  if (!state.session) return { error: "Sign in with Steam to play ranked." };
   if (!state.statsDir) return { error: "no stats folder" };
   if (state.uploading) return { error: "upload already in progress" };
 
@@ -2043,7 +2199,7 @@ ipcMain.handle("apogee:uploadHistory", async () => {
 
     return { result, baselines, standing };
   } catch (err) {
-    const message = err instanceof Error ? err.message : String(err);
+    const message = friendlyError(err);
     broadcast("apogee:error", message);
     return { error: message };
   } finally {
@@ -2087,16 +2243,30 @@ function adoptMatch(match: FoundMatch): void {
   nudge();
 }
 
-ipcMain.handle("apogee:findMatch", async (_e, { category, pool }) => {
-  if (!state.session) return { error: "sign in first" };
-  if (typeof pool?.window !== "number") return { error: "no match pool: rebuild the snapshot" };
+ipcMain.handle("apogee:findMatch", async (_e, args) => {
+  const { category, pool } = args ?? {};
+  if (!state.session) return { error: "Sign in with Steam to play ranked." };
+  if (typeof pool?.window !== "number") return { error: "Your history is still loading. Try again in a moment." };
 
   try {
     const match = await findMatch(category, pool);
     adoptMatch(match);
+    // A match handed back rather than created may already hold some of this player's
+    // runs; find out which, so they are not asked for again and a complete one settles.
+    if (match.resumed) {
+      void fetchActiveMatch()
+        .then((active) => {
+          if (active && active.matchId === match.matchId && state.match?.matchId === match.matchId) {
+            state.match.submittedScenarioIds = active.submittedScenarioIds;
+            broadcast("apogee:match", state.match);
+            seedSubmitted(state.match);
+          }
+        })
+        .catch(() => undefined);
+    }
     return { match };
   } catch (err) {
-    const message = err instanceof Error ? err.message : String(err);
+    const message = friendlyError(err);
     return { error: message };
   }
 });
@@ -2110,7 +2280,7 @@ ipcMain.handle("apogee:findMatch", async (_e, { category, pool }) => {
  * away a scroll position and a half-typed filter for nothing. Comparing the ids is enough:
  * everything else on a duel that can move - ready, played, status - moves with them.
  */
-async function refreshDuels(reason: string): Promise<void> {
+async function refreshDuels(reason: string, force = false): Promise<void> {
   if (!state.session) {
     state.duels = null;
     return;
@@ -2124,7 +2294,7 @@ async function refreshDuels(reason: string): Promise<void> {
       board.friends.map((f) => f.playerId),
     ]);
 
-    const changed = key !== duelBoardKey;
+    const changed = force || key !== duelBoardKey;
     duelBoardKey = key;
     state.duels = board;
     if (changed) broadcast("apogee:duels", board);
@@ -2136,18 +2306,18 @@ async function refreshDuels(reason: string): Promise<void> {
 }
 
 ipcMain.handle("apogee:duels", async () => {
-  if (!state.session) return { error: "sign in first" };
+  if (!state.session) return { error: "Sign in with Steam to play ranked." };
   try {
     const board = await fetchDuels();
     state.duels = board;
     return { board };
   } catch (err) {
-    return { error: err instanceof Error ? err.message : String(err) };
+    return { error: friendlyError(err) };
   }
 });
 
-ipcMain.handle("apogee:sendDuel", async (_e, { to, category, pool }) => {
-  if (!state.session) return { error: "sign in first" };
+ipcMain.handle("apogee:sendDuel", async (_e, { to, category, pool } = {} as any) => {
+  if (!state.session) return { error: "Sign in with Steam to play ranked." };
   if (typeof pool?.window !== "number") return { error: "no match pool: rebuild the snapshot" };
 
   try {
@@ -2156,12 +2326,12 @@ ipcMain.handle("apogee:sendDuel", async (_e, { to, category, pool }) => {
     void refreshDuels("sent a duel");
     return { match };
   } catch (err) {
-    return { error: err instanceof Error ? err.message : String(err) };
+    return { error: friendlyError(err) };
   }
 });
 
-ipcMain.handle("apogee:answerDuel", async (_e, { duelId, action }) => {
-  if (!state.session) return { error: "sign in first" };
+ipcMain.handle("apogee:answerDuel", async (_e, { duelId, action } = {} as any) => {
+  if (!state.session) return { error: "Sign in with Steam to play ranked." };
 
   try {
     const result = await answerDuel(duelId, action);
@@ -2171,18 +2341,18 @@ ipcMain.handle("apogee:answerDuel", async (_e, { duelId, action }) => {
     void refreshDuels(`answered a duel: ${action}`);
     return { ok: true, status: result.status, match: action === "accept" ? result : undefined };
   } catch (err) {
-    return { error: err instanceof Error ? err.message : String(err) };
+    return { error: friendlyError(err) };
   }
 });
 
-ipcMain.handle("apogee:setFriend", async (_e, { playerId, friend }) => {
-  if (!state.session) return { error: "sign in first" };
+ipcMain.handle("apogee:setFriend", async (_e, { playerId, friend } = {} as any) => {
+  if (!state.session) return { error: "Sign in with Steam to play ranked." };
   try {
     await setFriend(playerId, friend);
     void refreshDuels("changed the shortlist");
     return { ok: true };
   } catch (err) {
-    return { error: err instanceof Error ? err.message : String(err) };
+    return { error: friendlyError(err) };
   }
 });
 
@@ -2272,7 +2442,7 @@ function tournamentRequest(raw: Record<string, unknown> | null | undefined): Tou
 }
 
 ipcMain.handle("apogee:tournaments", async (_e, args) => {
-  if (!state.session) return { error: "sign in first" };
+  if (!state.session) return { error: "Sign in with Steam to play ranked." };
   const tournamentId = args?.tournamentId;
   if (tournamentId != null && (typeof tournamentId !== "string" || !UUID.test(tournamentId))) {
     return { error: "No such tournament." };
@@ -2282,12 +2452,12 @@ ipcMain.handle("apogee:tournaments", async (_e, args) => {
     publishTournaments(result.tournaments);
     return result;
   } catch (err) {
-    return { error: err instanceof Error ? err.message : String(err) };
+    return { error: friendlyError(err) };
   }
 });
 
 ipcMain.handle("apogee:tournamentAction", async (_e, raw) => {
-  if (!state.session) return { error: "sign in first" };
+  if (!state.session) return { error: "Sign in with Steam to play ranked." };
   const request = tournamentRequest(raw);
   if (typeof request === "string") return { error: request };
   try {
@@ -2295,12 +2465,12 @@ ipcMain.handle("apogee:tournamentAction", async (_e, raw) => {
     void refreshTournaments(`tournament ${request.action}`);
     return { view: result.view };
   } catch (err) {
-    return { error: err instanceof Error ? err.message : String(err) };
+    return { error: friendlyError(err) };
   }
 });
 
 ipcMain.handle("apogee:playFixture", async (_e, args) => {
-  if (!state.session) return { error: "sign in first" };
+  if (!state.session) return { error: "Sign in with Steam to play ranked." };
   const { tournamentId, fixtureId, attempt } = args ?? {};
   if (
     typeof tournamentId !== "string" || !UUID.test(tournamentId) ||
@@ -2322,7 +2492,7 @@ ipcMain.handle("apogee:playFixture", async (_e, args) => {
     void refreshTournaments("opened a fixture leg");
     return { match };
   } catch (err) {
-    return { error: err instanceof Error ? err.message : String(err) };
+    return { error: friendlyError(err) };
   }
 });
 
@@ -2355,20 +2525,24 @@ ipcMain.handle("apogee:cancelMatch", async () => {
     // usable app than stuck on a match screen, and find-match will surface the open
     // match again the moment they queue.
     clearLocal();
-    return { ok: false, error: err instanceof Error ? err.message : String(err) };
+    return { ok: false, error: friendlyError(err) };
   }
 });
 
 /** Settle early, for a match where a run was played before Apogee was watching. */
 ipcMain.handle("apogee:settleMatch", async () => {
-  if (!state.match) return { error: "no active match" };
-  await settleActiveMatch();
-  return { ok: true };
+  if (!state.match) return { error: "There is no match open to settle." };
+  const error = await settleActiveMatch();
+  return error ? { error } : { ok: true };
 });
 
 ipcMain.handle("apogee:getStanding", async () => {
   if (!state.session) return null;
-  return fetchStanding(state.session.playerId);
+  try {
+    return await fetchStanding(state.session.playerId);
+  } catch (err) {
+    return { error: friendlyError(err) };
+  }
 });
 
 /**
@@ -2433,7 +2607,7 @@ ipcMain.handle("apogee:isAdmin", async () => {
  */
 
 async function adminOrRefusal(): Promise<string | null> {
-  if (!state.session) return "sign in first";
+  if (!state.session) return "Sign in with Steam to play ranked.";
   if (!(await isAdmin().catch(() => false))) return "only an admin can change how this looks";
   return null;
 }
@@ -2455,14 +2629,14 @@ ipcMain.handle("apogee:adminOverrides", () => {
   };
 });
 
-ipcMain.handle("apogee:saveAdminOverrides", async (_e, { overrides }) => {
+ipcMain.handle("apogee:saveAdminOverrides", async (_e, { overrides } = {} as any) => {
   const refusal = await adminOrRefusal();
   if (refusal) return { error: refusal };
   try {
     const saved = saveOverrides(overrides);
     return { overrides: saved.overrides, rejected: saved.rejected, path: overridesPath() };
   } catch (err) {
-    return { error: err instanceof Error ? err.message : String(err) };
+    return { error: friendlyError(err) };
   }
 });
 
@@ -2473,7 +2647,7 @@ ipcMain.handle("apogee:resetAdminOverrides", async () => {
     const cleared = clearOverrides();
     return { overrides: cleared.overrides, rejected: [], path: overridesPath() };
   } catch (err) {
-    return { error: err instanceof Error ? err.message : String(err) };
+    return { error: friendlyError(err) };
   }
 });
 
@@ -2503,7 +2677,7 @@ ipcMain.handle("apogee:exportAdminOverrides", async () => {
     );
     return { path: target.filePath };
   } catch (err) {
-    return { error: err instanceof Error ? err.message : String(err) };
+    return { error: friendlyError(err) };
   }
 });
 
@@ -2526,7 +2700,7 @@ ipcMain.handle("apogee:importAdminOverrides", async () => {
     const saved = saveOverrides(parsed);
     return { overrides: saved.overrides, rejected: saved.rejected, path: overridesPath() };
   } catch (err) {
-    return { error: err instanceof Error ? err.message : String(err) };
+    return { error: friendlyError(err) };
   }
 });
 
@@ -2796,7 +2970,7 @@ ipcMain.handle("apogee:availableScenarios", () => {
           : null,
     };
   } catch (err) {
-    return { error: err instanceof Error ? err.message : String(err) };
+    return { error: friendlyError(err) };
   }
 });
 
@@ -2821,7 +2995,7 @@ type PercentileCache = {
 let percentileCache: PercentileCache | null = null;
 let percentileWrite: Promise<void> = Promise.resolve();
 
-ipcMain.handle("apogee:sampleScenario", async (_e, { scenario, leaderboardId, topFractions }) => {
+ipcMain.handle("apogee:sampleScenario", async (_e, { scenario, leaderboardId, topFractions } = {} as any) => {
   if (!state.session || !(await isAdmin().catch(() => false))) {
     return { error: "only an admin can edit the season" };
   }
@@ -2903,7 +3077,7 @@ ipcMain.handle("apogee:sampleScenario", async (_e, { scenario, leaderboardId, to
  *
  * Read-only, and the same host the app already talks to for verification.
  */
-ipcMain.handle("apogee:searchScenarios", async (_e, { query }) => {
+ipcMain.handle("apogee:searchScenarios", async (_e, { query } = {} as any) => {
   if (!state.session || !(await isAdmin().catch(() => false))) {
     return { error: "only an admin can edit the season" };
   }
@@ -2945,7 +3119,7 @@ ipcMain.handle("apogee:searchScenarios", async (_e, { query }) => {
         })),
     };
   } catch (err) {
-    return { error: err instanceof Error ? err.message : String(err) };
+    return { error: friendlyError(err) };
   }
 });
 
@@ -2956,7 +3130,7 @@ ipcMain.handle("apogee:searchScenarios", async (_e, { query }) => {
  * not that it holds two players in a thousand or that nobody holds it at all. Computed
  * from the draft rather than the saved season, so it answers for what is being edited.
  */
-ipcMain.handle("apogee:rankDistribution", async (_e, { season }) => {
+ipcMain.handle("apogee:rankDistribution", async (_e, { season } = {} as any) => {
   if (!state.session || !(await isAdmin().catch(() => false))) {
     return { error: "only an admin can edit the season" };
   }
@@ -2976,7 +3150,7 @@ ipcMain.handle("apogee:rankDistribution", async (_e, { season }) => {
       ),
     };
   } catch (err) {
-    return { error: err instanceof Error ? err.message : String(err) };
+    return { error: friendlyError(err) };
   }
 });
 
@@ -2989,7 +3163,7 @@ ipcMain.handle("apogee:rankDistribution", async (_e, { season }) => {
  * re-derives from the cached boards immediately, so what is on screen is always what the
  * next `build:season` would produce.
  */
-ipcMain.handle("apogee:deriveWindow", async (_e, { scenarios, topFractions }) => {
+ipcMain.handle("apogee:deriveWindow", async (_e, { scenarios, topFractions } = {} as any) => {
   if (!state.session || !(await isAdmin().catch(() => false))) {
     return { error: "only an admin can edit the season" };
   }
@@ -3098,7 +3272,7 @@ ipcMain.handle("apogee:getSeason", () => {
       ladder,
     };
   } catch (err) {
-    return { error: err instanceof Error ? err.message : String(err) };
+    return { error: friendlyError(err) };
   }
 });
 
@@ -3132,11 +3306,11 @@ ipcMain.handle("apogee:getRankTheme", () => {
       fingerprint: fileFingerprint(path),
     };
   } catch (err) {
-    return { error: err instanceof Error ? err.message : String(err) };
+    return { error: friendlyError(err) };
   }
 });
 
-ipcMain.handle("apogee:saveRankTheme", async (_e, { theme, fingerprint, force }) => {
+ipcMain.handle("apogee:saveRankTheme", async (_e, { theme, fingerprint, force } = {} as any) => {
   if (!state.session || !(await isAdmin().catch(() => false))) {
     return { error: "only an admin can edit the ranks" };
   }
@@ -3167,7 +3341,7 @@ ipcMain.handle("apogee:saveRankTheme", async (_e, { theme, fingerprint, force })
       try { unlinkSync(probe); } catch { /* a temp file that will not delete is not an error */ }
     }
   } catch (err) {
-    return { error: err instanceof Error ? err.message : String(err) };
+    return { error: friendlyError(err) };
   }
 
   try {
@@ -3210,7 +3384,7 @@ ipcMain.handle("apogee:saveRankTheme", async (_e, { theme, fingerprint, force })
   return { ok: true, paths: written };
 });
 
-ipcMain.handle("apogee:saveSeason", async (_e, { season, fingerprint, force }) => {
+ipcMain.handle("apogee:saveSeason", async (_e, { season, fingerprint, force } = {} as any) => {
   if (!state.session || !(await isAdmin().catch(() => false))) {
     return { error: "only an admin can edit the season" };
   }
@@ -3263,7 +3437,7 @@ ipcMain.handle("apogee:saveSeason", async (_e, { season, fingerprint, force }) =
   try {
     validateSeason(season);
   } catch (err) {
-    return { error: err instanceof Error ? err.message : String(err) };
+    return { error: friendlyError(err) };
   }
 
   // Write the pool back too, or an evening of editing lives until the next build.
@@ -3452,7 +3626,7 @@ ipcMain.handle("apogee:rerollQuest", (_event, args: { id?: unknown } | undefined
  * is checked against the match and the season first. Both lists come from the main
  * process, so a renderer with injected script cannot widen them.
  */
-ipcMain.handle("apogee:launchScenario", async (_e, { scenario }) => {
+ipcMain.handle("apogee:launchScenario", async (_e, { scenario } = {} as any) => {
   if (typeof scenario !== "string" || scenario.length === 0) {
     return { error: "no scenario given" };
   }
@@ -3503,7 +3677,7 @@ ipcMain.handle("apogee:apex", () => {
   try {
     season = loadSeason();
   } catch (err) {
-    return { error: err instanceof Error ? err.message : String(err) };
+    return { error: friendlyError(err) };
   }
 
   let sources;
@@ -3578,7 +3752,7 @@ ipcMain.handle("apogee:apex", () => {
  * own row updated, and the most likely cause is the rate limit, which means their row
  * was written moments ago anyway.
  */
-ipcMain.handle("apogee:apexBoard", async (_e, { category }) => {
+ipcMain.handle("apogee:apexBoard", async (_e, { category } = {} as any) => {
   if (!state.session) return { error: "sign in to see the board" };
 
   let refreshed = true;
@@ -3592,7 +3766,7 @@ ipcMain.handle("apogee:apexBoard", async (_e, { category }) => {
     const board = await fetchApexBoard(String(category ?? "Overall"));
     return { ...board, refreshed };
   } catch (err) {
-    return { error: err instanceof Error ? err.message : String(err) };
+    return { error: friendlyError(err) };
   }
 });
 
@@ -3601,7 +3775,7 @@ ipcMain.handle("apogee:practice", () => {
   try {
     season = loadSeason();
   } catch (err) {
-    return { error: err instanceof Error ? err.message : String(err) };
+    return { error: friendlyError(err) };
   }
 
   const history = state.statsDir ? scanStatsFolder(state.statsDir) : new Map();
@@ -3658,7 +3832,7 @@ ipcMain.handle("apogee:installPlaylists", (_e, args) => {
   try {
     season = loadSeason();
   } catch (err) {
-    return { error: err instanceof Error ? err.message : String(err) };
+    return { error: friendlyError(err) };
   }
 
   const dir = playlistsFolderFor(state.statsDir);

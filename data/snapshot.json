@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-21T18:34:51.183Z",
+  "generatedAt": "2026-09-23T20:36:42.020Z",
   "coverage": [
     {
       "category": "Dynamic Clicking",
@@ -7,18 +7,10 @@
       "windowName": "Novice",
       "total": 10,
       "measured": 3,
-      "runs": 55,
+      "runs": 59,
       "matchable": true,
       "complete": false,
       "scenarios": [
-        {
-          "scenario": "Pasu Viscose Entry",
-          "label": "Pasu Viscose Entry",
-          "family": "Pasu",
-          "runs": 0,
-          "measured": false,
-          "needs": 5
-        },
         {
           "scenario": "BounceClick SuperbAim Easy",
           "label": "BounceClick SuperbAim Easy",
@@ -28,25 +20,25 @@
           "needs": 5
         },
         {
-          "scenario": "Pasu 3-Click Wide Easy",
-          "label": "Pasu 3-Click Wide Easy",
-          "family": "Pasu Sequence",
+          "scenario": "Tamspeed 2bp Iron",
+          "label": "Tamspeed 2bp Iron",
+          "family": "Tamspeed",
           "runs": 0,
           "measured": false,
           "needs": 5
         },
         {
-          "scenario": "VT Floating Heads Viscose Entry",
-          "label": "VT Floating Heads Viscose Entry",
-          "family": "Floating Gallery",
+          "scenario": "VT Bounceshot Novice",
+          "label": "VT Bounceshot Novice",
+          "family": "Bounceshot",
           "runs": 0,
           "measured": false,
           "needs": 5
         },
         {
-          "scenario": "Aimerz+ sunClick Easy S1",
-          "label": "Aimerz+ sunClick Easy S1",
-          "family": "Wave Click",
+          "scenario": "1wall5targets_pasu slow",
+          "label": "1wall5targets_pasu slow",
+          "family": "Pasu Wall",
           "runs": 1,
           "measured": false,
           "needs": 4
@@ -66,6 +58,14 @@
           "runs": 3,
           "measured": false,
           "needs": 2
+        },
+        {
+          "scenario": "Floating Heads Timing 400% Larger",
+          "label": "Floating Heads Timing 400% Larger",
+          "family": "Timing",
+          "runs": 4,
+          "measured": false,
+          "needs": 1
         },
         {
           "scenario": "CatClick Easier",
@@ -98,8 +98,8 @@
       "window": 1,
       "windowName": "Intermediate",
       "total": 10,
-      "measured": 4,
-      "runs": 82,
+      "measured": 5,
+      "runs": 99,
       "matchable": true,
       "complete": false,
       "scenarios": [
@@ -107,6 +107,14 @@
           "scenario": "BounceClick SuperbAim",
           "label": "BounceClick SuperbAim",
           "family": "Bounce",
+          "runs": 0,
+          "measured": false,
+          "needs": 5
+        },
+        {
+          "scenario": "Tamspeed 2bp Silver",
+          "label": "Tamspeed 2bp Silver",
+          "family": "Tamspeed",
           "runs": 0,
           "measured": false,
           "needs": 5
@@ -120,17 +128,9 @@
           "needs": 5
         },
         {
-          "scenario": "aimerz+ WaveClick Normal",
-          "label": "aimerz+ WaveClick Normal",
-          "family": "Wave Click",
-          "runs": 0,
-          "measured": false,
-          "needs": 5
-        },
-        {
-          "scenario": "Pasu SuperbAim Easy",
-          "label": "Pasu SuperbAim Easy",
-          "family": "Pasu",
+          "scenario": "1wall5targets_pasu",
+          "label": "1wall5targets_pasu",
+          "family": "Pasu Wall",
           "runs": 1,
           "measured": false,
           "needs": 4
@@ -144,18 +144,18 @@
           "needs": 4
         },
         {
-          "scenario": "Pasu 3-Click v2 Less Easy",
-          "label": "Pasu 3-Click v2 Less Easy",
-          "family": "Pasu Sequence",
-          "runs": 1,
-          "measured": false,
-          "needs": 4
+          "scenario": "Floating Heads Timing 400%",
+          "label": "Floating Heads Timing 400%",
+          "family": "Timing",
+          "runs": 5,
+          "measured": true,
+          "needs": 0
         },
         {
-          "scenario": "VT Floating Heads Viscose Easier",
-          "label": "VT Floating Heads Viscose Easier",
-          "family": "Floating Gallery",
-          "runs": 7,
+          "scenario": "VT Bounceshot Intermediate",
+          "label": "VT Bounceshot Intermediate",
+          "family": "Bounceshot",
+          "runs": 20,
           "measured": true,
           "needs": 0
         },
@@ -190,15 +190,15 @@
       "window": 2,
       "windowName": "Advanced",
       "total": 10,
-      "measured": 4,
-      "runs": 54,
+      "measured": 3,
+      "runs": 25,
       "matchable": true,
       "complete": false,
       "scenarios": [
         {
-          "scenario": "Pasu SuperbAim",
-          "label": "Pasu SuperbAim",
-          "family": "Pasu",
+          "scenario": "1wall5targets_pasu_small",
+          "label": "1wall5targets_pasu_small",
+          "family": "Pasu Wall",
           "runs": 0,
           "measured": false,
           "needs": 5
@@ -212,17 +212,9 @@
           "needs": 5
         },
         {
-          "scenario": "Pasu 3-click v2",
-          "label": "Pasu 3-click v2",
-          "family": "Pasu Sequence",
-          "runs": 0,
-          "measured": false,
-          "needs": 5
-        },
-        {
-          "scenario": "aimerz+ WaveClick Hard",
-          "label": "aimerz+ WaveClick Hard",
-          "family": "Wave Click",
+          "scenario": "Tamspeed 2bp Gold",
+          "label": "Tamspeed 2bp Gold",
+          "family": "Tamspeed",
           "runs": 0,
           "measured": false,
           "needs": 5
@@ -236,9 +228,25 @@
           "needs": 4
         },
         {
+          "scenario": "VT Bounceshot Advanced",
+          "label": "VT Bounceshot Advanced",
+          "family": "Bounceshot",
+          "runs": 1,
+          "measured": false,
+          "needs": 4
+        },
+        {
           "scenario": "Popcorn Sparky",
           "label": "Popcorn Sparky",
           "family": "Popcorn",
+          "runs": 2,
+          "measured": false,
+          "needs": 3
+        },
+        {
+          "scenario": "Floating Heads Timing 400% FIXED",
+          "label": "Floating Heads Timing 400% FIXED",
+          "family": "Timing",
           "runs": 2,
           "measured": false,
           "needs": 3
@@ -266,14 +274,6 @@
           "runs": 7,
           "measured": true,
           "needs": 0
-        },
-        {
-          "scenario": "VT Floating Heads Viscose Medium",
-          "label": "VT Floating Heads Viscose Medium",
-          "family": "Floating Gallery",
-          "runs": 32,
-          "measured": true,
-          "needs": 0
         }
       ]
     },
@@ -282,11 +282,19 @@
       "window": 3,
       "windowName": "Expert",
       "total": 10,
-      "measured": 2,
-      "runs": 44,
+      "measured": 0,
+      "runs": 7,
       "matchable": false,
       "complete": false,
       "scenarios": [
+        {
+          "scenario": "1wall5targets_pasu_small_reactive",
+          "label": "1wall5targets_pasu_small_reactive",
+          "family": "Pasu Wall",
+          "runs": 0,
+          "measured": false,
+          "needs": 5
+        },
         {
           "scenario": "Aimerz+ pipeClick Hard S1",
           "label": "Aimerz+ pipeClick Hard S1",
@@ -296,9 +304,17 @@
           "needs": 5
         },
         {
-          "scenario": "Pasu 3-Click Wide",
-          "label": "Pasu 3-Click Wide",
-          "family": "Pasu Sequence",
+          "scenario": "Tamspeed 2bp Platinum",
+          "label": "Tamspeed 2bp Platinum",
+          "family": "Tamspeed",
+          "runs": 0,
+          "measured": false,
+          "needs": 5
+        },
+        {
+          "scenario": "Floating Heads Timing Extra Small Speed",
+          "label": "Floating Heads Timing Extra Small Speed",
+          "family": "Timing",
           "runs": 0,
           "measured": false,
           "needs": 5
@@ -312,9 +328,9 @@
           "needs": 5
         },
         {
-          "scenario": "Aimerz+ sunClick Hard S1",
-          "label": "Aimerz+ sunClick Hard S1",
-          "family": "Wave Click",
+          "scenario": "VT Bounceshot Advanced 20% smaller",
+          "label": "VT Bounceshot Advanced 20% smaller",
+          "family": "Bounceshot",
           "runs": 0,
           "measured": false,
           "needs": 5
@@ -350,22 +366,6 @@
           "runs": 4,
           "measured": false,
           "needs": 1
-        },
-        {
-          "scenario": "VT Floating Heads Viscose Hard",
-          "label": "VT Floating Heads Viscose Hard",
-          "family": "Floating Gallery",
-          "runs": 15,
-          "measured": true,
-          "needs": 0
-        },
-        {
-          "scenario": "Pasu Reload Goated",
-          "label": "Pasu Reload Goated",
-          "family": "Pasu",
-          "runs": 22,
-          "measured": true,
-          "needs": 0
         }
       ]
     },
@@ -374,26 +374,18 @@
       "window": 0,
       "windowName": "Novice",
       "total": 11,
-      "measured": 1,
-      "runs": 20,
+      "measured": 2,
+      "runs": 72,
       "matchable": false,
       "complete": false,
       "scenarios": [
         {
-          "scenario": "CB JumpSwitch Easy",
-          "label": "CB JumpSwitch Easy",
-          "family": "Hop Transfer",
+          "scenario": "Skeet Tracking 85% Speed",
+          "label": "Skeet Tracking 85% Speed",
+          "family": "Skeet",
           "runs": 0,
           "measured": false,
           "needs": 5
-        },
-        {
-          "scenario": "Floatswitch Entry",
-          "label": "Floatswitch Entry",
-          "family": "Floating Heads",
-          "runs": 1,
-          "measured": false,
-          "needs": 4
         },
         {
           "scenario": "VT ControlTS Entry S5 Speed",
@@ -466,6 +458,14 @@
           "runs": 6,
           "measured": true,
           "needs": 0
+        },
+        {
+          "scenario": "patTargetSwitch easy",
+          "label": "patTargetSwitch easy",
+          "family": "patTargetSwitch",
+          "runs": 53,
+          "measured": true,
+          "needs": 0
         }
       ]
     },
@@ -475,10 +475,26 @@
       "windowName": "Intermediate",
       "total": 11,
       "measured": 6,
-      "runs": 151,
+      "runs": 147,
       "matchable": true,
       "complete": false,
       "scenarios": [
+        {
+          "scenario": "patTargetSwitch",
+          "label": "patTargetSwitch",
+          "family": "patTargetSwitch",
+          "runs": 0,
+          "measured": false,
+          "needs": 5
+        },
+        {
+          "scenario": "Skeet Tracking",
+          "label": "Skeet Tracking",
+          "family": "Skeet",
+          "runs": 0,
+          "measured": false,
+          "needs": 5
+        },
         {
           "scenario": "tamTargetSwitch Control Intermediate",
           "label": "tamTargetSwitch Control Intermediate",
@@ -496,25 +512,9 @@
           "needs": 5
         },
         {
-          "scenario": "Aimerz+ hopTS Easy S1",
-          "label": "Aimerz+ hopTS Easy S1",
-          "family": "Hop Transfer",
-          "runs": 1,
-          "measured": false,
-          "needs": 4
-        },
-        {
           "scenario": "VT PasuTS Intermediate S5",
           "label": "VT PasuTS Intermediate S5",
           "family": "Pasu Switch",
-          "runs": 4,
-          "measured": false,
-          "needs": 1
-        },
-        {
-          "scenario": "Floatswitch Intermediate",
-          "label": "Floatswitch Intermediate",
-          "family": "Floating Heads",
           "runs": 4,
           "measured": false,
           "needs": 1
@@ -528,17 +528,17 @@
           "needs": 0
         },
         {
-          "scenario": "B180T Voltaic Easy",
-          "label": "B180T Voltaic Easy",
-          "family": "Arc Transfer",
-          "runs": 17,
+          "scenario": "VT Penta Bounce Intermediate S5",
+          "label": "VT Penta Bounce Intermediate S5",
+          "family": "Penta Bounce",
+          "runs": 18,
           "measured": true,
           "needs": 0
         },
         {
-          "scenario": "VT Penta Bounce Intermediate S5",
-          "label": "VT Penta Bounce Intermediate S5",
-          "family": "Penta Bounce",
+          "scenario": "B180T Voltaic Easy",
+          "label": "B180T Voltaic Easy",
+          "family": "Arc Transfer",
           "runs": 18,
           "measured": true,
           "needs": 0
@@ -575,14 +575,22 @@
       "windowName": "Advanced",
       "total": 11,
       "measured": 2,
-      "runs": 20,
+      "runs": 21,
       "matchable": false,
       "complete": false,
       "scenarios": [
         {
-          "scenario": "Aimerz+ hopTS Med S1",
-          "label": "Aimerz+ hopTS Med S1",
-          "family": "Hop Transfer",
+          "scenario": "patTargetSwitch Small",
+          "label": "patTargetSwitch Small",
+          "family": "patTargetSwitch",
+          "runs": 0,
+          "measured": false,
+          "needs": 5
+        },
+        {
+          "scenario": "Skeet Tracking Goated",
+          "label": "Skeet Tracking Goated",
+          "family": "Skeet",
           "runs": 0,
           "measured": false,
           "needs": 5
@@ -612,22 +620,6 @@
           "needs": 4
         },
         {
-          "scenario": "Floatswitch Advanced",
-          "label": "Floatswitch Advanced",
-          "family": "Floating Heads",
-          "runs": 1,
-          "measured": false,
-          "needs": 4
-        },
-        {
-          "scenario": "VT FlyTS Advanced S5",
-          "label": "VT FlyTS Advanced S5",
-          "family": "FlyTS",
-          "runs": 1,
-          "measured": false,
-          "needs": 4
-        },
-        {
           "scenario": "VT DriftTS Advanced S5",
           "label": "VT DriftTS Advanced S5",
           "family": "Layered Chase",
@@ -636,20 +628,28 @@
           "needs": 4
         },
         {
-          "scenario": "VT ControlTS Advanced S5",
-          "label": "VT ControlTS Advanced S5",
-          "family": "Chamber Relay",
-          "runs": 2,
-          "measured": false,
-          "needs": 3
-        },
-        {
           "scenario": "VT Penta Bounce Advanced S5",
           "label": "VT Penta Bounce Advanced S5",
           "family": "Penta Bounce",
           "runs": 2,
           "measured": false,
           "needs": 3
+        },
+        {
+          "scenario": "VT FlyTS Advanced S5",
+          "label": "VT FlyTS Advanced S5",
+          "family": "FlyTS",
+          "runs": 2,
+          "measured": false,
+          "needs": 3
+        },
+        {
+          "scenario": "VT ControlTS Advanced S5",
+          "label": "VT ControlTS Advanced S5",
+          "family": "Chamber Relay",
+          "runs": 3,
+          "measured": false,
+          "needs": 2
         },
         {
           "scenario": "B180T Voltaic",
@@ -680,6 +680,14 @@
       "complete": false,
       "scenarios": [
         {
+          "scenario": "patTargetSwitch Dodge 360",
+          "label": "patTargetSwitch Dodge 360",
+          "family": "patTargetSwitch",
+          "runs": 0,
+          "measured": false,
+          "needs": 5
+        },
+        {
           "scenario": "VT ControlTS Elite S5",
           "label": "VT ControlTS Elite S5",
           "family": "Chamber Relay",
@@ -688,9 +696,9 @@
           "needs": 5
         },
         {
-          "scenario": "Aimerz+ hopTS Hard S1",
-          "label": "Aimerz+ hopTS Hard S1",
-          "family": "Hop Transfer",
+          "scenario": "Skeet Tracking Goated Small",
+          "label": "Skeet Tracking Goated Small",
+          "family": "Skeet",
           "runs": 0,
           "measured": false,
           "needs": 5
@@ -755,17 +763,9 @@
           "scenario": "VT PasuTS Elite S5",
           "label": "VT PasuTS Elite S5",
           "family": "Pasu Switch",
-          "runs": 1,
+          "runs": 2,
           "measured": false,
-          "needs": 4
-        },
-        {
-          "scenario": "Floatswitch Elite",
-          "label": "Floatswitch Elite",
-          "family": "Floating Heads",
-          "runs": 1,
-          "measured": false,
-          "needs": 4
+          "needs": 3
         }
       ]
     },
@@ -774,47 +774,15 @@
       "window": 0,
       "windowName": "Novice",
       "total": 10,
-      "measured": 2,
-      "runs": 40,
-      "matchable": false,
+      "measured": 5,
+      "runs": 110,
+      "matchable": true,
       "complete": false,
       "scenarios": [
-        {
-          "scenario": "Centering II 180 Entry",
-          "label": "Centering II 180 Entry",
-          "family": "Centering",
-          "runs": 2,
-          "measured": false,
-          "needs": 3
-        },
-        {
-          "scenario": "PreciseTrack Avasive Easier",
-          "label": "PreciseTrack Avasive Easier",
-          "family": "PreciseTrack",
-          "runs": 2,
-          "measured": false,
-          "needs": 3
-        },
-        {
-          "scenario": "Smooth Your Vertical Altered POV Entry",
-          "label": "Smooth Your Vertical Altered POV Entry",
-          "family": "Vertical Control",
-          "runs": 2,
-          "measured": false,
-          "needs": 3
-        },
         {
           "scenario": "Controlsphere Viscose Entry",
           "label": "Controlsphere Viscose Entry",
           "family": "Controlsphere",
-          "runs": 2,
-          "measured": false,
-          "needs": 3
-        },
-        {
-          "scenario": "Flower Entry",
-          "label": "Flower Entry",
-          "family": "Flower Chase",
           "runs": 2,
           "measured": false,
           "needs": 3
@@ -826,6 +794,14 @@
           "runs": 2,
           "measured": false,
           "needs": 3
+        },
+        {
+          "scenario": "Centering II 180 Entry",
+          "label": "Centering II 180 Entry",
+          "family": "Centering",
+          "runs": 3,
+          "measured": false,
+          "needs": 2
         },
         {
           "scenario": "Whisphere Small & Slow 55%",
@@ -844,10 +820,18 @@
           "needs": 2
         },
         {
+          "scenario": "PGTI Voltaic Easy 80%",
+          "label": "PGTI Voltaic Easy 80%",
+          "family": "PGTI",
+          "runs": 5,
+          "measured": true,
+          "needs": 0
+        },
+        {
           "scenario": "SmoothBot Invincible Goated 75%",
           "label": "SmoothBot Invincible Goated 75%",
           "family": "Smoothbot",
-          "runs": 8,
+          "runs": 9,
           "measured": true,
           "needs": 0
         },
@@ -858,6 +842,22 @@
           "runs": 14,
           "measured": true,
           "needs": 0
+        },
+        {
+          "scenario": "SYW Easy",
+          "label": "SYW Easy",
+          "family": "SYW",
+          "runs": 22,
+          "measured": true,
+          "needs": 0
+        },
+        {
+          "scenario": "cloverRawControl Big",
+          "label": "cloverRawControl Big",
+          "family": "Clover Control",
+          "runs": 47,
+          "measured": true,
+          "needs": 0
         }
       ]
     },
@@ -866,18 +866,18 @@
       "window": 1,
       "windowName": "Intermediate",
       "total": 10,
-      "measured": 5,
-      "runs": 149,
+      "measured": 6,
+      "runs": 206,
       "matchable": true,
       "complete": false,
       "scenarios": [
         {
-          "scenario": "Smooth Your Vertical Altered POV Easy v2",
-          "label": "Smooth Your Vertical Altered POV Easy v2",
-          "family": "Vertical Control",
-          "runs": 1,
+          "scenario": "SYW (Smooth Your Wrist)",
+          "label": "SYW (Smooth Your Wrist)",
+          "family": "SYW",
+          "runs": 0,
           "measured": false,
-          "needs": 4
+          "needs": 5
         },
         {
           "scenario": "Controlsphere rAim Easy 90%",
@@ -904,22 +904,6 @@
           "needs": 1
         },
         {
-          "scenario": "Aimerz+ PreciseTrack Easy S1",
-          "label": "Aimerz+ PreciseTrack Easy S1",
-          "family": "PreciseTrack",
-          "runs": 4,
-          "measured": false,
-          "needs": 1
-        },
-        {
-          "scenario": "Flower Easier 50cm",
-          "label": "Flower Easier 50cm",
-          "family": "Flower Chase",
-          "runs": 9,
-          "measured": true,
-          "needs": 0
-        },
-        {
           "scenario": "Smoothsphere Viscose Easier",
           "label": "Smoothsphere Viscose Easier",
           "family": "Sphere Cruise",
@@ -944,6 +928,22 @@
           "needs": 0
         },
         {
+          "scenario": "cloverRawControl Easy",
+          "label": "cloverRawControl Easy",
+          "family": "Clover Control",
+          "runs": 33,
+          "measured": true,
+          "needs": 0
+        },
+        {
+          "scenario": "PGTI Voltaic Easy",
+          "label": "PGTI Voltaic Easy",
+          "family": "PGTI",
+          "runs": 38,
+          "measured": true,
+          "needs": 0
+        },
+        {
           "scenario": "waldoTS Intermediate",
           "label": "waldoTS Intermediate",
           "family": "Waldo Track",
@@ -958,23 +958,23 @@
       "window": 2,
       "windowName": "Advanced",
       "total": 10,
-      "measured": 7,
-      "runs": 322,
+      "measured": 5,
+      "runs": 271,
       "matchable": true,
       "complete": false,
       "scenarios": [
         {
+          "scenario": "SYW (Smooth Your Wrist) FIXED",
+          "label": "SYW (Smooth Your Wrist) FIXED",
+          "family": "SYW",
+          "runs": 0,
+          "measured": false,
+          "needs": 5
+        },
+        {
           "scenario": "Centering II 180 Intermediate",
           "label": "Centering II 180 Intermediate",
           "family": "Centering",
-          "runs": 1,
-          "measured": false,
-          "needs": 4
-        },
-        {
-          "scenario": "Smooth Your Vertical Altered POV Intermediate",
-          "label": "Smooth Your Vertical Altered POV Intermediate",
-          "family": "Vertical Control",
           "runs": 1,
           "measured": false,
           "needs": 4
@@ -986,6 +986,22 @@
           "runs": 2,
           "measured": false,
           "needs": 3
+        },
+        {
+          "scenario": "PGTI Voltaic Slower - 80%",
+          "label": "PGTI Voltaic Slower - 80%",
+          "family": "PGTI",
+          "runs": 2,
+          "measured": false,
+          "needs": 3
+        },
+        {
+          "scenario": "cloverRawControl",
+          "label": "cloverRawControl",
+          "family": "Clover Control",
+          "runs": 4,
+          "measured": false,
+          "needs": 1
         },
         {
           "scenario": "TSK - DVD Tracking",
@@ -1004,30 +1020,6 @@
           "needs": 0
         },
         {
-          "scenario": "Flower 50cm",
-          "label": "Flower 50cm",
-          "family": "Flower Chase",
-          "runs": 25,
-          "measured": true,
-          "needs": 0
-        },
-        {
-          "scenario": "Aimerz+ PreciseTrack Med S1",
-          "label": "Aimerz+ PreciseTrack Med S1",
-          "family": "PreciseTrack",
-          "runs": 35,
-          "measured": true,
-          "needs": 0
-        },
-        {
-          "scenario": "Controlsphere rAim Easy",
-          "label": "Controlsphere rAim Easy",
-          "family": "Controlsphere",
-          "runs": 53,
-          "measured": true,
-          "needs": 0
-        },
-        {
           "scenario": "SmoothBot Invincible Goated",
           "label": "SmoothBot Invincible Goated",
           "family": "Smoothbot",
@@ -1036,10 +1028,18 @@
           "needs": 0
         },
         {
+          "scenario": "Controlsphere rAim Easy",
+          "label": "Controlsphere rAim Easy",
+          "family": "Controlsphere",
+          "runs": 54,
+          "measured": true,
+          "needs": 0
+        },
+        {
           "scenario": "Smoothsphere Viscose",
           "label": "Smoothsphere Viscose",
           "family": "Sphere Cruise",
-          "runs": 134,
+          "runs": 137,
           "measured": true,
           "needs": 0
         }
@@ -1051,7 +1051,7 @@
       "windowName": "Expert",
       "total": 10,
       "measured": 1,
-      "runs": 20,
+      "runs": 25,
       "matchable": false,
       "complete": false,
       "scenarios": [
@@ -1059,22 +1059,6 @@
           "scenario": "Centering II 180 no strafes",
           "label": "Centering II 180 no strafes",
           "family": "Centering",
-          "runs": 0,
-          "measured": false,
-          "needs": 5
-        },
-        {
-          "scenario": "Aimerz+ PreciseTrack Hard S1",
-          "label": "Aimerz+ PreciseTrack Hard S1",
-          "family": "PreciseTrack",
-          "runs": 0,
-          "measured": false,
-          "needs": 5
-        },
-        {
-          "scenario": "Smooth Your Vertical Altered POV v2",
-          "label": "Smooth Your Vertical Altered POV v2",
-          "family": "Vertical Control",
           "runs": 0,
           "measured": false,
           "needs": 5
@@ -1096,6 +1080,14 @@
           "needs": 4
         },
         {
+          "scenario": "cloverRawControl Viscose Hard 50cm",
+          "label": "cloverRawControl Viscose Hard 50cm",
+          "family": "Clover Control",
+          "runs": 1,
+          "measured": false,
+          "needs": 4
+        },
+        {
           "scenario": "Whisphere Extra Small & Slow",
           "label": "Whisphere Extra Small & Slow",
           "family": "Whisphere",
@@ -1112,12 +1104,20 @@
           "needs": 4
         },
         {
-          "scenario": "Flower Hard 50cm",
-          "label": "Flower Hard 50cm",
-          "family": "Flower Chase",
+          "scenario": "PGTI Voltaic",
+          "label": "PGTI Voltaic",
+          "family": "PGTI",
           "runs": 1,
           "measured": false,
           "needs": 4
+        },
+        {
+          "scenario": "SYW (Smooth Your Wrist) FIXED Extra thin",
+          "label": "SYW (Smooth Your Wrist) FIXED Extra thin",
+          "family": "SYW",
+          "runs": 4,
+          "measured": false,
+          "needs": 1
         },
         {
           "scenario": "TSK - DVD Tracking Small",
@@ -1142,11 +1142,27 @@
       "window": 0,
       "windowName": "Novice",
       "total": 10,
-      "measured": 5,
-      "runs": 37,
+      "measured": 4,
+      "runs": 29,
       "matchable": true,
       "complete": false,
       "scenarios": [
+        {
+          "scenario": "Air Angelic 4 Voltaic Easy 80% (Good Version)",
+          "label": "Air Angelic 4 Voltaic Easy 80% (Good Version)",
+          "family": "Air Angelic",
+          "runs": 0,
+          "measured": false,
+          "needs": 5
+        },
+        {
+          "scenario": "Kindafar Long Strafes",
+          "label": "Kindafar Long Strafes",
+          "family": "Long Strafes",
+          "runs": 0,
+          "measured": false,
+          "needs": 5
+        },
         {
           "scenario": "Air Pure Revosect Entry",
           "label": "Air Pure Revosect Entry",
@@ -1180,14 +1196,6 @@
           "needs": 4
         },
         {
-          "scenario": "CB StrafeTrack Easy",
-          "label": "CB StrafeTrack Easy",
-          "family": "Strafe Gallery",
-          "runs": 2,
-          "measured": false,
-          "needs": 3
-        },
-        {
           "scenario": "Leapstrafes Control wobin Easier",
           "label": "Leapstrafes Control wobin Easier",
           "family": "Leapstrafes",
@@ -1200,14 +1208,6 @@
           "label": "Air Spectral Easy 85%",
           "family": "Spectral Chase",
           "runs": 5,
-          "measured": true,
-          "needs": 0
-        },
-        {
-          "scenario": "Air Angelic rAim Biggest",
-          "label": "Air Angelic rAim Biggest",
-          "family": "Air Angelic",
-          "runs": 6,
           "measured": true,
           "needs": 0
         },
@@ -1235,17 +1235,17 @@
       "windowName": "Intermediate",
       "total": 10,
       "measured": 6,
-      "runs": 163,
+      "runs": 183,
       "matchable": true,
       "complete": false,
       "scenarios": [
         {
-          "scenario": "Aimerz+ VGS Easy S1",
-          "label": "Aimerz+ VGS Easy S1",
-          "family": "Strafe Gallery",
-          "runs": 1,
+          "scenario": "Midrange Long Strafes Invincible",
+          "label": "Midrange Long Strafes Invincible",
+          "family": "Long Strafes",
+          "runs": 0,
           "measured": false,
-          "needs": 4
+          "needs": 5
         },
         {
           "scenario": "Flicker Plaza rAim Easy Less Blinks",
@@ -1280,18 +1280,10 @@
           "needs": 0
         },
         {
-          "scenario": "Air Angelic Easier",
-          "label": "Air Angelic Easier",
-          "family": "Air Angelic",
-          "runs": 17,
-          "measured": true,
-          "needs": 0
-        },
-        {
           "scenario": "Air Spectral Easy",
           "label": "Air Spectral Easy",
           "family": "Spectral Chase",
-          "runs": 25,
+          "runs": 26,
           "measured": true,
           "needs": 0
         },
@@ -1304,10 +1296,18 @@
           "needs": 0
         },
         {
+          "scenario": "Air Angelic 4 Voltaic Easy",
+          "label": "Air Angelic 4 Voltaic Easy",
+          "family": "Air Angelic",
+          "runs": 36,
+          "measured": true,
+          "needs": 0
+        },
+        {
           "scenario": "Leapstrafes Control Medium",
           "label": "Leapstrafes Control Medium",
           "family": "Leapstrafes",
-          "runs": 36,
+          "runs": 37,
           "measured": true,
           "needs": 0
         },
@@ -1327,14 +1327,14 @@
       "windowName": "Advanced",
       "total": 10,
       "measured": 5,
-      "runs": 141,
+      "runs": 143,
       "matchable": true,
       "complete": false,
       "scenarios": [
         {
-          "scenario": "Aimerz+ VGS Med S1",
-          "label": "Aimerz+ VGS Med S1",
-          "family": "Strafe Gallery",
+          "scenario": "Close Long Strafes Invincible",
+          "label": "Close Long Strafes Invincible",
+          "family": "Long Strafes",
           "runs": 0,
           "measured": false,
           "needs": 5
@@ -1364,8 +1364,8 @@
           "needs": 5
         },
         {
-          "scenario": "Air Angelic rAim Easy",
-          "label": "Air Angelic rAim Easy",
+          "scenario": "Air Angelic 4 Voltaic",
+          "label": "Air Angelic 4 Voltaic",
           "family": "Air Angelic",
           "runs": 2,
           "measured": false,
@@ -1391,7 +1391,7 @@
           "scenario": "Close Fast Strafes Invincible - Thin",
           "label": "Close Fast Strafes Invincible - Thin",
           "family": "Close Strafe Chase",
-          "runs": 20,
+          "runs": 21,
           "measured": true,
           "needs": 0
         },
@@ -1407,7 +1407,7 @@
           "scenario": "Leapstrafes Control wobin",
           "label": "Leapstrafes Control wobin",
           "family": "Leapstrafes",
-          "runs": 47,
+          "runs": 48,
           "measured": true,
           "needs": 0
         }
@@ -1419,7 +1419,7 @@
       "windowName": "Expert",
       "total": 10,
       "measured": 1,
-      "runs": 14,
+      "runs": 13,
       "matchable": false,
       "complete": false,
       "scenarios": [
@@ -1432,9 +1432,17 @@
           "needs": 5
         },
         {
-          "scenario": "Aimerz+ VGS Hard S1",
-          "label": "Aimerz+ VGS Hard S1",
-          "family": "Strafe Gallery",
+          "scenario": "Air Angelic 4 Voltaic Smaller",
+          "label": "Air Angelic 4 Voltaic Smaller",
+          "family": "Air Angelic",
+          "runs": 0,
+          "measured": false,
+          "needs": 5
+        },
+        {
+          "scenario": "Close long strafes invincible very thin",
+          "label": "Close long strafes invincible very thin",
+          "family": "Long Strafes",
           "runs": 0,
           "measured": false,
           "needs": 5
@@ -1472,14 +1480,6 @@
           "needs": 5
         },
         {
-          "scenario": "Air Angelic",
-          "label": "Air Angelic",
-          "family": "Air Angelic",
-          "runs": 1,
-          "measured": false,
-          "needs": 4
-        },
-        {
           "scenario": "Ground Plaza Sparky V3 Thin",
           "label": "Ground Plaza Sparky V3 Thin",
           "family": "Ground Plaza",
@@ -1510,23 +1510,15 @@
       "window": 0,
       "windowName": "Novice",
       "total": 10,
-      "measured": 2,
-      "runs": 234,
-      "matchable": false,
+      "measured": 3,
+      "runs": 293,
+      "matchable": true,
       "complete": false,
       "scenarios": [
         {
-          "scenario": "wobin DotTS Easy",
-          "label": "wobin DotTS Easy",
-          "family": "DotTS",
-          "runs": 0,
-          "measured": false,
-          "needs": 5
-        },
-        {
-          "scenario": "CB WaveSwitch Easy",
-          "label": "CB WaveSwitch Easy",
-          "family": "Wave Relay",
+          "scenario": "patCircleSwitch easy NR",
+          "label": "patCircleSwitch easy NR",
+          "family": "patCircleSwitch",
           "runs": 0,
           "measured": false,
           "needs": 5
@@ -1564,20 +1556,20 @@
           "needs": 4
         },
         {
-          "scenario": "VT EddieTS Novice S5",
-          "label": "VT EddieTS Novice S5",
-          "family": "EddieTS",
+          "scenario": "VT DotTS Novice S5",
+          "label": "VT DotTS Novice S5",
+          "family": "DotTS",
           "runs": 2,
           "measured": false,
           "needs": 3
         },
         {
-          "scenario": "Aimerz+ pivoTS Easy S1",
-          "label": "Aimerz+ pivoTS Easy S1",
-          "family": "PivoTS",
-          "runs": 2,
+          "scenario": "VT EddieTS Novice S5",
+          "label": "VT EddieTS Novice S5",
+          "family": "EddieTS",
+          "runs": 3,
           "measured": false,
-          "needs": 3
+          "needs": 2
         },
         {
           "scenario": "Pokeball 1w4ts 30% Easy",
@@ -1588,10 +1580,18 @@
           "needs": 0
         },
         {
+          "scenario": "beanTS Larger",
+          "label": "beanTS Larger",
+          "family": "beanTS",
+          "runs": 55,
+          "measured": true,
+          "needs": 0
+        },
+        {
           "scenario": "voxTargetSwitch 2 Large",
           "label": "voxTargetSwitch 2 Large",
           "family": "Vox Pace",
-          "runs": 191,
+          "runs": 194,
           "measured": true,
           "needs": 0
         }
@@ -1602,8 +1602,8 @@
       "window": 1,
       "windowName": "Intermediate",
       "total": 10,
-      "measured": 3,
-      "runs": 191,
+      "measured": 5,
+      "runs": 313,
       "matchable": true,
       "complete": false,
       "scenarios": [
@@ -1611,22 +1611,6 @@
           "scenario": "DotTS Entry",
           "label": "DotTS Entry",
           "family": "DotTS",
-          "runs": 0,
-          "measured": false,
-          "needs": 5
-        },
-        {
-          "scenario": "aimerz+ pivoTS Normal",
-          "label": "aimerz+ pivoTS Normal",
-          "family": "PivoTS",
-          "runs": 0,
-          "measured": false,
-          "needs": 5
-        },
-        {
-          "scenario": "WaveSwitch Revosect Entry",
-          "label": "WaveSwitch Revosect Entry",
-          "family": "Wave Relay",
           "runs": 0,
           "measured": false,
           "needs": 5
@@ -1672,10 +1656,26 @@
           "needs": 0
         },
         {
+          "scenario": "patCircleSwitch NR",
+          "label": "patCircleSwitch NR",
+          "family": "patCircleSwitch",
+          "runs": 38,
+          "measured": true,
+          "needs": 0
+        },
+        {
           "scenario": "VT EddieTS Intermediate S5",
           "label": "VT EddieTS Intermediate S5",
           "family": "EddieTS",
-          "runs": 61,
+          "runs": 63,
+          "measured": true,
+          "needs": 0
+        },
+        {
+          "scenario": "beanTS",
+          "label": "beanTS",
+          "family": "beanTS",
+          "runs": 82,
           "measured": true,
           "needs": 0
         },
@@ -1694,15 +1694,15 @@
       "window": 2,
       "windowName": "Advanced",
       "total": 10,
-      "measured": 2,
-      "runs": 42,
-      "matchable": false,
+      "measured": 3,
+      "runs": 43,
+      "matchable": true,
       "complete": false,
       "scenarios": [
         {
-          "scenario": "aimerz+ pivoTS Hard",
-          "label": "aimerz+ pivoTS Hard",
-          "family": "PivoTS",
+          "scenario": "patCircleSwitch small NR",
+          "label": "patCircleSwitch small NR",
+          "family": "patCircleSwitch",
           "runs": 0,
           "measured": false,
           "needs": 5
@@ -1748,26 +1748,26 @@
           "needs": 4
         },
         {
-          "scenario": "WaveSwitch Revosect Int",
-          "label": "WaveSwitch Revosect Int",
-          "family": "Wave Relay",
-          "runs": 2,
+          "scenario": "beanTS 30% Smaller",
+          "label": "beanTS 30% Smaller",
+          "family": "beanTS",
+          "runs": 1,
           "measured": false,
-          "needs": 3
+          "needs": 4
         },
         {
           "scenario": "voxTS Viscose Varied",
           "label": "voxTS Viscose Varied",
           "family": "Vox Pace",
-          "runs": 4,
-          "measured": false,
-          "needs": 1
+          "runs": 5,
+          "measured": true,
+          "needs": 0
         },
         {
           "scenario": "DotTS 30% Larger",
           "label": "DotTS 30% Larger",
           "family": "DotTS",
-          "runs": 5,
+          "runs": 6,
           "measured": true,
           "needs": 0
         },
@@ -1786,8 +1786,8 @@
       "window": 3,
       "windowName": "Expert",
       "total": 10,
-      "measured": 1,
-      "runs": 56,
+      "measured": 2,
+      "runs": 72,
       "matchable": false,
       "complete": false,
       "scenarios": [
@@ -1816,9 +1816,9 @@
           "needs": 5
         },
         {
-          "scenario": "Aimerz+ pivoTS Hard S1",
-          "label": "Aimerz+ pivoTS Hard S1",
-          "family": "PivoTS",
+          "scenario": "PatCircleSwitch Speed",
+          "label": "PatCircleSwitch Speed",
+          "family": "patCircleSwitch",
           "runs": 0,
           "measured": false,
           "needs": 5
@@ -1827,14 +1827,6 @@
           "scenario": "VT psalmTS Advanced",
           "label": "VT psalmTS Advanced",
           "family": "psalmTS",
-          "runs": 0,
-          "measured": false,
-          "needs": 5
-        },
-        {
-          "scenario": "WaveSwitch Revosect",
-          "label": "WaveSwitch Revosect",
-          "family": "Wave Relay",
           "runs": 0,
           "measured": false,
           "needs": 5
@@ -1864,6 +1856,14 @@
           "needs": 3
         },
         {
+          "scenario": "beanTS 200%",
+          "label": "beanTS 200%",
+          "family": "beanTS",
+          "runs": 16,
+          "measured": true,
+          "needs": 0
+        },
+        {
           "scenario": "Pokeball Frenzy Auto Small Wide",
           "label": "Pokeball Frenzy Auto Small Wide",
           "family": "Pokeball",
@@ -1878,31 +1878,31 @@
       "window": 0,
       "windowName": "Novice",
       "total": 13,
-      "measured": 8,
-      "runs": 108,
+      "measured": 9,
+      "runs": 130,
       "matchable": true,
       "complete": false,
       "scenarios": [
         {
+          "scenario": "1w4ts 30% larger",
+          "label": "1w4ts 30% larger",
+          "family": "Four Targets",
+          "runs": 0,
+          "measured": false,
+          "needs": 5
+        },
+        {
+          "scenario": "Wide Wall 6Targets",
+          "label": "Wide Wall 6Targets",
+          "family": "Wide wall",
+          "runs": 0,
+          "measured": false,
+          "needs": 5
+        },
+        {
           "scenario": "No23 ca micropressure supereasy",
           "label": "No23 ca micropressure supereasy",
           "family": "Micro Pressure",
-          "runs": 1,
-          "measured": false,
-          "needs": 4
-        },
-        {
-          "scenario": "1w4t Pressure Revosect Entry",
-          "label": "1w4t Pressure Revosect Entry",
-          "family": "Wide Pressure",
-          "runs": 1,
-          "measured": false,
-          "needs": 4
-        },
-        {
-          "scenario": "CB EvoClick Easy",
-          "label": "CB EvoClick Easy",
-          "family": "Evo Gallery",
           "runs": 1,
           "measured": false,
           "needs": 4
@@ -1916,26 +1916,18 @@
           "needs": 4
         },
         {
-          "scenario": "ww6t Avasive Easier",
-          "label": "ww6t Avasive Easier",
-          "family": "Wide wall",
-          "runs": 2,
-          "measured": false,
-          "needs": 3
-        },
-        {
-          "scenario": "SCS 8xs Uniform",
-          "label": "SCS 8xs Uniform",
-          "family": "Micro",
+          "scenario": "RawMouseControl Reload Easy",
+          "label": "RawMouseControl Reload Easy",
+          "family": "Raw Mouse",
           "runs": 5,
           "measured": true,
           "needs": 0
         },
         {
-          "scenario": "ClickTrack Horizontal 3t Short",
-          "label": "ClickTrack Horizontal 3t Short",
-          "family": "Horizontal",
-          "runs": 7,
+          "scenario": "5 Sphere Hipfire",
+          "label": "5 Sphere Hipfire",
+          "family": "Hipfire",
+          "runs": 8,
           "measured": true,
           "needs": 0
         },
@@ -1956,18 +1948,18 @@
           "needs": 0
         },
         {
-          "scenario": "1w3ts Pasu Perfected Micro Goated Larger 80%",
-          "label": "1w3ts Pasu Perfected Micro Goated Larger 80%",
-          "family": "Micro Chain",
-          "runs": 15,
+          "scenario": "Jumbo Tile Frenzy",
+          "label": "Jumbo Tile Frenzy",
+          "family": "Tile Frenzy",
+          "runs": 13,
           "measured": true,
           "needs": 0
         },
         {
-          "scenario": "ClickTrack Diagonal 3t Short",
-          "label": "ClickTrack Diagonal 3t Short",
-          "family": "Diagonal",
-          "runs": 16,
+          "scenario": "1w3ts Pasu Perfected Micro Goated Larger 80%",
+          "label": "1w3ts Pasu Perfected Micro Goated Larger 80%",
+          "family": "Micro Chain",
+          "runs": 15,
           "measured": true,
           "needs": 0
         },
@@ -1986,6 +1978,14 @@
           "runs": 17,
           "measured": true,
           "needs": 0
+        },
+        {
+          "scenario": "Jumbo 1wall6targets TE",
+          "label": "Jumbo 1wall6targets TE",
+          "family": "Six Targets",
+          "runs": 28,
+          "measured": true,
+          "needs": 0
         }
       ]
     },
@@ -1994,34 +1994,18 @@
       "window": 1,
       "windowName": "Intermediate",
       "total": 13,
-      "measured": 8,
-      "runs": 231,
+      "measured": 9,
+      "runs": 292,
       "matchable": true,
       "complete": false,
       "scenarios": [
         {
-          "scenario": "EvoClick Revosect Entry",
-          "label": "EvoClick Revosect Entry",
-          "family": "Evo Gallery",
+          "scenario": "RawMouseControl Reload",
+          "label": "RawMouseControl Reload",
+          "family": "Raw Mouse",
           "runs": 1,
           "measured": false,
           "needs": 4
-        },
-        {
-          "scenario": "Cartoon's Micro RawMouseControlReact 30s",
-          "label": "Cartoon's Micro RawMouseControlReact 30s",
-          "family": "Micro",
-          "runs": 2,
-          "measured": false,
-          "needs": 3
-        },
-        {
-          "scenario": "1w4t Pressure Revosect Int",
-          "label": "1w4t Pressure Revosect Int",
-          "family": "Wide Pressure",
-          "runs": 2,
-          "measured": false,
-          "needs": 3
         },
         {
           "scenario": "shimPressure Micro",
@@ -2040,26 +2024,18 @@
           "needs": 2
         },
         {
+          "scenario": "5 Sphere Hipfire Small",
+          "label": "5 Sphere Hipfire Small",
+          "family": "Hipfire",
+          "runs": 4,
+          "measured": false,
+          "needs": 1
+        },
+        {
           "scenario": "1w6ts reload v2 20% bigger",
           "label": "1w6ts reload v2 20% bigger",
           "family": "Reload Rush",
           "runs": 6,
-          "measured": true,
-          "needs": 0
-        },
-        {
-          "scenario": "ClickTrack Diagonal 3t",
-          "label": "ClickTrack Diagonal 3t",
-          "family": "Diagonal",
-          "runs": 13,
-          "measured": true,
-          "needs": 0
-        },
-        {
-          "scenario": "ClickTrack Horizontal 3t",
-          "label": "ClickTrack Horizontal 3t",
-          "family": "Horizontal",
-          "runs": 13,
           "measured": true,
           "needs": 0
         },
@@ -2075,6 +2051,14 @@
           "scenario": "1w2ts Perfected Easier",
           "label": "1w2ts Perfected Easier",
           "family": "2Guys",
+          "runs": 21,
+          "measured": true,
+          "needs": 0
+        },
+        {
+          "scenario": "1wall6targets TE",
+          "label": "1wall6targets TE",
+          "family": "Six Targets",
           "runs": 21,
           "measured": true,
           "needs": 0
@@ -2096,6 +2080,22 @@
           "needs": 0
         },
         {
+          "scenario": "1w4ts Voltaic",
+          "label": "1w4ts Voltaic",
+          "family": "Four Targets",
+          "runs": 29,
+          "measured": true,
+          "needs": 0
+        },
+        {
+          "scenario": "Tile Frenzy",
+          "label": "Tile Frenzy",
+          "family": "Tile Frenzy",
+          "runs": 37,
+          "measured": true,
+          "needs": 0
+        },
+        {
           "scenario": "ww4t Voltaic",
           "label": "ww4t Voltaic",
           "family": "Wide wall",
@@ -2110,23 +2110,39 @@
       "window": 2,
       "windowName": "Advanced",
       "total": 13,
-      "measured": 9,
-      "runs": 343,
+      "measured": 7,
+      "runs": 410,
       "matchable": true,
       "complete": false,
       "scenarios": [
         {
-          "scenario": "Wide Wall 3 Targets",
-          "label": "Wide Wall 3 Targets",
-          "family": "Wide wall",
+          "scenario": "RawMouseControlClicking3",
+          "label": "RawMouseControlClicking3",
+          "family": "Raw Mouse",
+          "runs": 0,
+          "measured": false,
+          "needs": 5
+        },
+        {
+          "scenario": "1w4ts reload",
+          "label": "1w4ts reload",
+          "family": "Four Targets",
+          "runs": 0,
+          "measured": false,
+          "needs": 5
+        },
+        {
+          "scenario": "5 Sphere Hipfire Extra Small",
+          "label": "5 Sphere Hipfire Extra Small",
+          "family": "Hipfire",
           "runs": 1,
           "measured": false,
           "needs": 4
         },
         {
-          "scenario": "EvoClick Revosect Int",
-          "label": "EvoClick Revosect Int",
-          "family": "Evo Gallery",
+          "scenario": "Wide Wall 3 Targets",
+          "label": "Wide Wall 3 Targets",
+          "family": "Wide wall",
           "runs": 1,
           "measured": false,
           "needs": 4
@@ -2140,20 +2156,12 @@
           "needs": 2
         },
         {
-          "scenario": "cA 7ts pressure",
-          "label": "cA 7ts pressure",
-          "family": "Wide Pressure",
-          "runs": 4,
+          "scenario": "Tile Frenzy Mini",
+          "label": "Tile Frenzy Mini",
+          "family": "Tile Frenzy",
+          "runs": 3,
           "measured": false,
-          "needs": 1
-        },
-        {
-          "scenario": "ClickTrack Horizontal 2t Short",
-          "label": "ClickTrack Horizontal 2t Short",
-          "family": "Horizontal",
-          "runs": 6,
-          "measured": true,
-          "needs": 0
+          "needs": 2
         },
         {
           "scenario": "ClickTrack 3t Long",
@@ -2164,18 +2172,10 @@
           "needs": 0
         },
         {
-          "scenario": "ClickTrack Diagonal 2t Short",
-          "label": "ClickTrack Diagonal 2t Short",
-          "family": "Diagonal",
-          "runs": 13,
-          "measured": true,
-          "needs": 0
-        },
-        {
           "scenario": "1w3ts Pasu Perfected Micro Goated",
           "label": "1w3ts Pasu Perfected Micro Goated",
           "family": "Micro Chain",
-          "runs": 14,
+          "runs": 15,
           "measured": true,
           "needs": 0
         },
@@ -2196,14 +2196,6 @@
           "needs": 0
         },
         {
-          "scenario": "1w2ts Pasu Perfected",
-          "label": "1w2ts Pasu Perfected",
-          "family": "Micro",
-          "runs": 32,
-          "measured": true,
-          "needs": 0
-        },
-        {
           "scenario": "1w6ts reload v2",
           "label": "1w6ts reload v2",
           "family": "Reload Rush",
@@ -2212,10 +2204,18 @@
           "needs": 0
         },
         {
+          "scenario": "1wall 6targets small",
+          "label": "1wall 6targets small",
+          "family": "Six Targets",
+          "runs": 115,
+          "measured": true,
+          "needs": 0
+        },
+        {
           "scenario": "1w2ts Perfected",
           "label": "1w2ts Perfected",
           "family": "2Guys",
-          "runs": 116,
+          "runs": 119,
           "measured": true,
           "needs": 0
         }
@@ -2226,15 +2226,39 @@
       "window": 3,
       "windowName": "Expert",
       "total": 13,
-      "measured": 8,
-      "runs": 298,
+      "measured": 4,
+      "runs": 219,
       "matchable": true,
       "complete": false,
       "scenarios": [
         {
-          "scenario": "EvoClick Revosect",
-          "label": "EvoClick Revosect",
-          "family": "Evo Gallery",
+          "scenario": "5 Sphere Hipfire Extra Extra Small",
+          "label": "5 Sphere Hipfire Extra Extra Small",
+          "family": "Hipfire",
+          "runs": 0,
+          "measured": false,
+          "needs": 5
+        },
+        {
+          "scenario": "RawMouseControlClicking3 30% smaller",
+          "label": "RawMouseControlClicking3 30% smaller",
+          "family": "Raw Mouse",
+          "runs": 0,
+          "measured": false,
+          "needs": 5
+        },
+        {
+          "scenario": "1w4ts reload 30% smaller",
+          "label": "1w4ts reload 30% smaller",
+          "family": "Four Targets",
+          "runs": 0,
+          "measured": false,
+          "needs": 5
+        },
+        {
+          "scenario": "Extra mini Tile Frenzy",
+          "label": "Extra mini Tile Frenzy",
+          "family": "Tile Frenzy",
           "runs": 0,
           "measured": false,
           "needs": 5
@@ -2272,34 +2296,18 @@
           "needs": 3
         },
         {
-          "scenario": "Aimerz+ 1w4ts HF Hard S1",
-          "label": "Aimerz+ 1w4ts HF Hard",
-          "family": "Micro",
-          "runs": 5,
-          "measured": true,
-          "needs": 0
+          "scenario": "1wall 6targets extra small",
+          "label": "1wall 6targets extra small",
+          "family": "Six Targets",
+          "runs": 2,
+          "measured": false,
+          "needs": 3
         },
         {
           "scenario": "6 Sphere Hipfire 200% Size",
           "label": "6 Sphere Hipfire 200% Size",
           "family": "Speed",
           "runs": 13,
-          "measured": true,
-          "needs": 0
-        },
-        {
-          "scenario": "ClickTrack Horizontal 2t",
-          "label": "ClickTrack Horizontal 2t",
-          "family": "Horizontal",
-          "runs": 14,
-          "measured": true,
-          "needs": 0
-        },
-        {
-          "scenario": "ClickTrack Diagonal 2t",
-          "label": "ClickTrack Diagonal 2t",
-          "family": "Diagonal",
-          "runs": 22,
           "measured": true,
           "needs": 0
         },
@@ -2320,18 +2328,10 @@
           "needs": 0
         },
         {
-          "scenario": "darkPressure",
-          "label": "darkPressure",
-          "family": "Wide Pressure",
-          "runs": 42,
-          "measured": true,
-          "needs": 0
-        },
-        {
           "scenario": "fuglaaPressure 6 Sphere Hipfire no reload",
           "label": "fuglaaPressure 6 Sphere Hipfire no reload",
           "family": "Micro Pressure",
-          "runs": 134,
+          "runs": 136,
           "measured": true,
           "needs": 0
         }
@@ -2374,25 +2374,25 @@
     "windowSize": 4
   },
   "player": {
-    "totalRuns": 13654,
-    "scenarioCount": 1015,
-    "streak": 10,
+    "totalRuns": 13837,
+    "scenarioCount": 1017,
+    "streak": 12,
     "benchmarkRank": "Lunar",
-    "benchmarkEnergy": 1133333,
-    "progressToNextRank": 0.4780951840559795,
+    "benchmarkEnergy": 1169857,
+    "progressToNextRank": 0.597401594372061,
     "nextRankName": "Odyssey",
     "apogee": {
       "rating": 1617,
       "rd": 105,
-      "percentile": 49.8,
+      "percentile": 51.1,
       "tier": {
-        "id": "tier-4",
-        "name": "Lunar",
+        "id": "tier-5",
+        "name": "Odyssey",
         "percentile": [
-          35,
-          50
+          50,
+          80
         ],
-        "color": "#29008a"
+        "color": "#FF46FF"
       }
     }
   },
@@ -2473,7 +2473,7 @@
   "categories": [
     {
       "name": "Static Clicking",
-      "energy": 312801,
+      "energy": 323882,
       "rankName": "Carbine",
       "rankNames": [
         "Blunderbuss",
@@ -2530,7 +2530,7 @@
         520000
       ],
       "rankCount": 16,
-      "progressToNextRank": 0.6246309376481974,
+      "progressToNextRank": 0.965594356167689,
       "bands": [
         {
           "window": 0,
@@ -2561,10 +2561,10 @@
             162500,
             195000
           ],
-          "energy": 158146,
+          "energy": 143362,
           "rankCount": 6,
-          "progressToNextRank": 0.8660427016440914,
-          "played": 13,
+          "progressToNextRank": 0.4111436998376623,
+          "played": 11,
           "total": 13,
           "positional": null
         },
@@ -2597,9 +2597,9 @@
             162500,
             195000
           ],
-          "energy": 121526,
+          "energy": 128317,
           "rankCount": 6,
-          "progressToNextRank": 0.739268683427604,
+          "progressToNextRank": 0.9482032992766942,
           "played": 13,
           "total": 13,
           "positional": null
@@ -2633,10 +2633,10 @@
             162500,
             195000
           ],
-          "energy": 38394,
+          "energy": 42571,
           "rankCount": 6,
-          "progressToNextRank": 0.18133996382964787,
-          "played": 13,
+          "progressToNextRank": 0.3098678557049613,
+          "played": 11,
           "total": 13,
           "positional": null
         },
@@ -2665,10 +2665,10 @@
             97500,
             130000
           ],
-          "energy": 24489,
+          "energy": 17241,
           "rankCount": 4,
-          "progressToNextRank": 0.75349669221016,
-          "played": 9,
+          "progressToNextRank": 0.5304891537596464,
+          "played": 6,
           "total": 13,
           "positional": {
             "rankName": "Deadeye",
@@ -2677,7 +2677,7 @@
           }
         }
       ],
-      "perScenario": 24062,
+      "perScenario": 24914,
       "scenarios": [
         {
           "name": "1w2ts Pasu Perfected 30% Smaller",
@@ -2699,61 +2699,61 @@
           "runs": 2
         },
         {
-          "name": "ClickTrack Diagonal 3t",
-          "label": "ClickTrack Diagonal 3t",
-          "family": "Diagonal",
-          "window": 1,
-          "windowName": "Intermediate",
-          "subCategory": "Static Clicking",
-          "score": 69.020927,
-          "rankName": "Musket",
-          "energy": 15052,
-          "nextRankName": "Flintlock",
-          "nextRankScore": 70,
-          "nextRankScenario": "ClickTrack Diagonal 3t",
-          "nextRankLabel": "ClickTrack Diagonal 3t",
-          "nextRankWindowName": "Intermediate",
-          "nextRankIsNewScenario": false,
-          "gap": 0.9790729999999996,
-          "runs": 13
-        },
-        {
-          "name": "ClickTrack Horizontal 3t",
-          "label": "ClickTrack Horizontal 3t",
-          "family": "Horizontal",
-          "window": 1,
-          "windowName": "Intermediate",
-          "subCategory": "Static Clicking",
-          "score": 71.020363,
-          "rankName": "Flintlock",
-          "energy": 17525,
-          "nextRankName": "Revolver",
-          "nextRankScore": 73,
-          "nextRankScenario": "ClickTrack Horizontal 3t",
-          "nextRankLabel": "ClickTrack Horizontal 3t",
-          "nextRankWindowName": "Intermediate",
-          "nextRankIsNewScenario": false,
-          "gap": 1.9796369999999968,
-          "runs": 13
-        },
-        {
-          "name": "1w2ts Pasu Perfected",
-          "label": "1w2ts Pasu Perfected",
-          "family": "Micro",
+          "name": "1wall 6targets small",
+          "label": "1wall 6targets small",
+          "family": "Six Targets",
           "window": 2,
           "windowName": "Advanced",
           "subCategory": "Static Clicking",
-          "score": 100,
-          "rankName": "Rifle",
-          "energy": 27381,
-          "nextRankName": "Marksman",
-          "nextRankScore": 101,
-          "nextRankScenario": "1w2ts Pasu Perfected",
-          "nextRankLabel": "1w2ts Pasu Perfected",
+          "score": 1252.627686,
+          "rankName": "Match Rifle",
+          "energy": 32112,
+          "nextRankName": "Sniper",
+          "nextRankScore": 1268,
+          "nextRankScenario": "1wall 6targets small",
+          "nextRankLabel": "1wall 6targets small",
           "nextRankWindowName": "Advanced",
           "nextRankIsNewScenario": false,
-          "gap": 1,
-          "runs": 32
+          "gap": 15.37231399999996,
+          "runs": 115
+        },
+        {
+          "name": "5 Sphere Hipfire Small",
+          "label": "5 Sphere Hipfire Small",
+          "family": "Hipfire",
+          "window": 1,
+          "windowName": "Intermediate",
+          "subCategory": "Static Clicking",
+          "score": 1188.642822,
+          "rankName": "Musket",
+          "energy": 15659,
+          "nextRankName": "Flintlock",
+          "nextRankScore": 1210,
+          "nextRankScenario": "5 Sphere Hipfire Small",
+          "nextRankLabel": "5 Sphere Hipfire Small",
+          "nextRankWindowName": "Intermediate",
+          "nextRankIsNewScenario": false,
+          "gap": 21.357177999999976,
+          "runs": 4
+        },
+        {
+          "name": "RawMouseControl Reload Easy",
+          "label": "RawMouseControl Reload Easy",
+          "family": "Raw Mouse",
+          "window": 0,
+          "windowName": "Novice",
+          "subCategory": "Static Clicking",
+          "score": 237,
+          "rankName": "Crossbow",
+          "energy": 12875,
+          "nextRankName": "Musket",
+          "nextRankScore": 254,
+          "nextRankScenario": "RawMouseControl Reload Easy",
+          "nextRankLabel": "RawMouseControl Reload Easy",
+          "nextRankWindowName": "Novice",
+          "nextRankIsNewScenario": false,
+          "gap": 17,
+          "runs": 5
         },
         {
           "name": "fuglaaPressure 6 Sphere Hipfire no reload",
@@ -2772,7 +2772,7 @@
           "nextRankWindowName": "Advanced",
           "nextRankIsNewScenario": true,
           "gap": 50,
-          "runs": 134
+          "runs": 136
         },
         {
           "name": "1wall9000targets",
@@ -2813,23 +2813,23 @@
           "runs": 20
         },
         {
-          "name": "1w4t Pressure Revosect Int",
-          "label": "1w4t Pressure Revosect Int",
-          "family": "Wide Pressure",
+          "name": "1w4ts Voltaic",
+          "label": "1w4ts Voltaic",
+          "family": "Four Targets",
           "window": 1,
           "windowName": "Intermediate",
           "subCategory": "Static Clicking",
-          "score": 1556.114868,
-          "rankName": "Flintlock",
-          "energy": 18153,
-          "nextRankName": "Revolver",
-          "nextRankScore": 1630,
-          "nextRankScenario": "1w4t Pressure Revosect Int",
-          "nextRankLabel": "1w4t Pressure Revosect Int",
+          "score": 111,
+          "rankName": "Revolver",
+          "energy": 20250,
+          "nextRankName": "Carbine",
+          "nextRankScore": 120,
+          "nextRankScenario": "1w4ts Voltaic",
+          "nextRankLabel": "1w4ts Voltaic",
           "nextRankWindowName": "Intermediate",
           "nextRankIsNewScenario": false,
-          "gap": 73.88513200000011,
-          "runs": 2
+          "gap": 9,
+          "runs": 29
         },
         {
           "name": "Wide Wall 4 Targets Small",
@@ -2851,23 +2851,23 @@
           "runs": 40
         },
         {
-          "name": "EvoClick Revosect Entry",
-          "label": "EvoClick Revosect Entry",
-          "family": "Evo Gallery",
+          "name": "Tile Frenzy",
+          "label": "Tile Frenzy",
+          "family": "Tile Frenzy",
           "window": 1,
           "windowName": "Intermediate",
           "subCategory": "Static Clicking",
-          "score": 1296.323608,
-          "rankName": "Revolver",
-          "energy": 22296,
-          "nextRankName": "Carbine",
-          "nextRankScore": 1307,
-          "nextRankScenario": "EvoClick Revosect Entry",
-          "nextRankLabel": "EvoClick Revosect Entry",
+          "score": 124.355072,
+          "rankName": "Carbine",
+          "energy": 23678,
+          "nextRankName": "Rifle",
+          "nextRankScore": 127,
+          "nextRankScenario": "Tile Frenzy",
+          "nextRankLabel": "Tile Frenzy",
           "nextRankWindowName": "Intermediate",
           "nextRankIsNewScenario": false,
-          "gap": 10.676392000000078,
-          "runs": 1
+          "gap": 2.644927999999993,
+          "runs": 37
         },
         {
           "name": "VoxTS Click Medium",
@@ -2908,29 +2908,29 @@
           "runs": 6
         },
         {
-          "name": "1w3ts Pasu Perfected Micro Goated Larger",
-          "label": "1w3ts Pasu Perfected Micro Goated Larger",
+          "name": "1w3ts Pasu Perfected Micro Goated",
+          "label": "1w3ts Pasu Perfected Micro Goated",
           "family": "Micro Chain",
-          "window": 1,
-          "windowName": "Intermediate",
+          "window": 2,
+          "windowName": "Advanced",
           "subCategory": "Static Clicking",
-          "score": 1388,
-          "rankName": "Flintlock",
-          "energy": 19397,
-          "nextRankName": "Revolver",
-          "nextRankScore": 1402,
-          "nextRankScenario": "1w3ts Pasu Perfected Micro Goated Larger",
-          "nextRankLabel": "1w3ts Pasu Perfected Micro Goated Larger",
-          "nextRankWindowName": "Intermediate",
+          "score": 1206,
+          "rankName": "Rifle",
+          "energy": 26313,
+          "nextRankName": "Marksman",
+          "nextRankScore": 1225,
+          "nextRankScenario": "1w3ts Pasu Perfected Micro Goated",
+          "nextRankLabel": "1w3ts Pasu Perfected Micro Goated",
+          "nextRankWindowName": "Advanced",
           "nextRankIsNewScenario": false,
-          "gap": 14,
-          "runs": 23
+          "gap": 19,
+          "runs": 15
         }
       ]
     },
     {
       "name": "Dynamic Clicking",
-      "energy": 161860,
+      "energy": 172817,
       "rankName": "Falcon",
       "rankNames": [
         "Tardigrade",
@@ -2987,7 +2987,7 @@
         400000
       ],
       "rankCount": 16,
-      "progressToNextRank": 0.474399099110479,
+      "progressToNextRank": 0.9126959354368422,
       "bands": [
         {
           "window": 0,
@@ -3018,10 +3018,10 @@
             125000,
             150000
           ],
-          "energy": 82720,
+          "energy": 97029,
           "rankCount": 6,
-          "progressToNextRank": 0.30880952380952364,
-          "played": 6,
+          "progressToNextRank": 0.8811538461538463,
+          "played": 7,
           "total": 10,
           "positional": null
         },
@@ -3054,9 +3054,9 @@
             125000,
             150000
           ],
-          "energy": 52071,
+          "energy": 61216,
           "rankCount": 6,
-          "progressToNextRank": 0.08283729329037276,
+          "progressToNextRank": 0.4486483163892239,
           "played": 7,
           "total": 10,
           "positional": null
@@ -3090,10 +3090,10 @@
             125000,
             150000
           ],
-          "energy": 15969,
+          "energy": 17545,
           "rankCount": 6,
-          "progressToNextRank": 0.6387684947893408,
-          "played": 6,
+          "progressToNextRank": 0.7018002182728211,
+          "played": 7,
           "total": 10,
           "positional": null
         },
@@ -3122,10 +3122,10 @@
             75000,
             100000
           ],
-          "energy": 9136,
+          "energy": 5369,
           "rankCount": 4,
-          "progressToNextRank": 0.36545420145024604,
-          "played": 5,
+          "progressToNextRank": 0.21476348603957712,
+          "played": 3,
           "total": 10,
           "positional": {
             "rankName": "Leviathan",
@@ -3134,25 +3134,25 @@
           }
         }
       ],
-      "perScenario": 16186,
+      "perScenario": 17282,
       "scenarios": [
         {
-          "name": "Pasu SuperbAim Easy",
-          "label": "Pasu SuperbAim Easy",
-          "family": "Pasu",
+          "name": "1wall5targets_pasu",
+          "label": "1wall5targets_pasu",
+          "family": "Pasu Wall",
           "window": 1,
           "windowName": "Intermediate",
           "subCategory": "Dynamic Clicking",
-          "score": 86,
-          "rankName": "Wolverine",
-          "energy": 20250,
-          "nextRankName": "Lionesse",
-          "nextRankScore": 95,
-          "nextRankScenario": "Pasu SuperbAim Easy",
-          "nextRankLabel": "Pasu SuperbAim Easy",
+          "score": 98.95092,
+          "rankName": "Lionesse",
+          "energy": 23554,
+          "nextRankName": "Grizzly Bear",
+          "nextRankScore": 103,
+          "nextRankScenario": "1wall5targets_pasu",
+          "nextRankLabel": "1wall5targets_pasu",
           "nextRankWindowName": "Intermediate",
           "nextRankIsNewScenario": false,
-          "gap": 9,
+          "gap": 4.049080000000004,
           "runs": 1
         },
         {
@@ -3213,9 +3213,9 @@
           "runs": 23
         },
         {
-          "name": "Pasu 3-Click Wide Easy",
-          "label": "Pasu 3-Click Wide Easy",
-          "family": "Pasu Sequence",
+          "name": "Tamspeed 2bp Iron",
+          "label": "Tamspeed 2bp Iron",
+          "family": "Tamspeed",
           "window": 0,
           "windowName": "Novice",
           "subCategory": "Dynamic Clicking",
@@ -3223,12 +3223,12 @@
           "rankName": null,
           "energy": 0,
           "nextRankName": "Tardigrade",
-          "nextRankScore": 11,
-          "nextRankScenario": "Pasu 3-Click Wide Easy",
-          "nextRankLabel": "Pasu 3-Click Wide Easy",
+          "nextRankScore": 98,
+          "nextRankScenario": "Tamspeed 2bp Iron",
+          "nextRankLabel": "Tamspeed 2bp Iron",
           "nextRankWindowName": "Novice",
           "nextRankIsNewScenario": false,
-          "gap": 11,
+          "gap": 98,
           "runs": 0
         },
         {
@@ -3251,23 +3251,23 @@
           "runs": 18
         },
         {
-          "name": "VT Floating Heads Viscose Easier",
-          "label": "VT Floating Heads Viscose Easier",
-          "family": "Floating Gallery",
+          "name": "Floating Heads Timing 400%",
+          "label": "Floating Heads Timing 400%",
+          "family": "Timing",
           "window": 1,
           "windowName": "Intermediate",
           "subCategory": "Dynamic Clicking",
-          "score": 1089.210693,
-          "rankName": "Wolverine",
-          "energy": 20829,
-          "nextRankName": "Lionesse",
-          "nextRankScore": 1138,
-          "nextRankScenario": "VT Floating Heads Viscose Easier",
-          "nextRankLabel": "VT Floating Heads Viscose Easier",
+          "score": 2664,
+          "rankName": "Lynx",
+          "energy": 19356,
+          "nextRankName": "Wolverine",
+          "nextRankScore": 2689,
+          "nextRankScenario": "Floating Heads Timing 400%",
+          "nextRankLabel": "Floating Heads Timing 400%",
           "nextRankWindowName": "Intermediate",
           "nextRankIsNewScenario": false,
-          "gap": 48.78930700000001,
-          "runs": 7
+          "gap": 25,
+          "runs": 5
         },
         {
           "name": "skyClick Goated Medium",
@@ -3289,23 +3289,23 @@
           "runs": 25
         },
         {
-          "name": "Aimerz+ sunClick Easy S1",
-          "label": "Aimerz+ sunClick Easy S1",
-          "family": "Wave Click",
-          "window": 0,
-          "windowName": "Novice",
+          "name": "VT Bounceshot Intermediate",
+          "label": "VT Bounceshot Intermediate",
+          "family": "Bounceshot",
+          "window": 1,
+          "windowName": "Intermediate",
           "subCategory": "Dynamic Clicking",
-          "score": 660,
-          "rankName": "Hornet",
-          "energy": 10595,
-          "nextRankName": "Hummingbird",
-          "nextRankScore": 756,
-          "nextRankScenario": "Aimerz+ sunClick Easy S1",
-          "nextRankLabel": "Aimerz+ sunClick Easy S1",
-          "nextRankWindowName": "Novice",
+          "score": 800,
+          "rankName": "Lynx",
+          "energy": 19722,
+          "nextRankName": "Wolverine",
+          "nextRankScore": 805,
+          "nextRankScenario": "VT Bounceshot Intermediate",
+          "nextRankLabel": "VT Bounceshot Intermediate",
+          "nextRankWindowName": "Intermediate",
           "nextRankIsNewScenario": false,
-          "gap": 96,
-          "runs": 1
+          "gap": 5,
+          "runs": 20
         },
         {
           "name": "CatClick Easier",
@@ -3330,8 +3330,8 @@
     },
     {
       "name": "Precise Tracking",
-      "energy": 201172,
-      "rankName": "Chimp",
+      "energy": 194033,
+      "rankName": "Primate",
       "rankNames": [
         "Amoeba",
         "Multicellular",
@@ -3387,7 +3387,7 @@
         400000
       ],
       "rankCount": 16,
-      "progressToNextRank": 0.04689669198568212,
+      "progressToNextRank": 0.7613185025670333,
       "bands": [
         {
           "window": 0,
@@ -3418,9 +3418,9 @@
             125000,
             150000
           ],
-          "energy": 137077,
+          "energy": 140581,
           "rankCount": 6,
-          "progressToNextRank": 0.48309262447897344,
+          "progressToNextRank": 0.6232260321735952,
           "played": 10,
           "total": 10,
           "positional": null
@@ -3454,10 +3454,10 @@
             125000,
             150000
           ],
-          "energy": 91566,
+          "energy": 82405,
           "rankCount": 6,
-          "progressToNextRank": 0.6626332471483574,
-          "played": 10,
+          "progressToNextRank": 0.2961895355551754,
+          "played": 9,
           "total": 10,
           "positional": null
         },
@@ -3490,10 +3490,10 @@
             125000,
             150000
           ],
-          "energy": 22804,
+          "energy": 21312,
           "rankCount": 6,
-          "progressToNextRank": 0.9121644069398461,
-          "played": 10,
+          "progressToNextRank": 0.8524638078281195,
+          "played": 9,
           "total": 10,
           "positional": null
         },
@@ -3522,10 +3522,10 @@
             75000,
             100000
           ],
-          "energy": 8476,
+          "energy": 11307,
           "rankCount": 4,
-          "progressToNextRank": 0.33903624340525346,
-          "played": 6,
+          "progressToNextRank": 0.45228237307859803,
+          "played": 8,
           "total": 10,
           "positional": {
             "rankName": "Omega",
@@ -3534,7 +3534,7 @@
           }
         }
       ],
-      "perScenario": 20117,
+      "perScenario": 19403,
       "scenarios": [
         {
           "name": "Smoothbot Invincible Goated Easy",
@@ -3575,23 +3575,23 @@
           "runs": 4
         },
         {
-          "name": "Aimerz+ PreciseTrack Easy S1",
-          "label": "Aimerz+ PreciseTrack Easy S1",
-          "family": "PreciseTrack",
+          "name": "cloverRawControl Easy",
+          "label": "cloverRawControl Easy",
+          "family": "Clover Control",
           "window": 1,
           "windowName": "Intermediate",
           "subCategory": "Precise Tracking",
-          "score": 3046,
-          "rankName": "Chimp",
-          "energy": 20367,
-          "nextRankName": "Hominid",
-          "nextRankScore": 3261,
-          "nextRankScenario": "Aimerz+ PreciseTrack Easy S1",
-          "nextRankLabel": "Aimerz+ PreciseTrack Easy S1",
+          "score": 8166,
+          "rankName": "Mammal",
+          "energy": 16103,
+          "nextRankName": "Primate",
+          "nextRankScore": 8328,
+          "nextRankScenario": "cloverRawControl Easy",
+          "nextRankLabel": "cloverRawControl Easy",
           "nextRankWindowName": "Intermediate",
           "nextRankIsNewScenario": false,
-          "gap": 215,
-          "runs": 4
+          "gap": 162,
+          "runs": 33
         },
         {
           "name": "Whisphere Small & Slow 75%",
@@ -3613,23 +3613,23 @@
           "runs": 26
         },
         {
-          "name": "Smooth Your Vertical Altered POV Entry",
-          "label": "Smooth Your Vertical Altered POV Entry",
-          "family": "Vertical Control",
+          "name": "SYW Easy",
+          "label": "SYW Easy",
+          "family": "SYW",
           "window": 0,
           "windowName": "Novice",
           "subCategory": "Precise Tracking",
-          "score": 4824,
-          "rankName": "Mammal",
-          "energy": 15000,
-          "nextRankName": "Primate",
-          "nextRankScore": 4494,
-          "nextRankScenario": "Smooth Your Vertical Altered POV Easy v2",
-          "nextRankLabel": "Smooth Your Vertical Altered POV Easy v2",
-          "nextRankWindowName": "Intermediate",
-          "nextRankIsNewScenario": true,
-          "gap": 858,
-          "runs": 2
+          "score": 797,
+          "rankName": "Reptile",
+          "energy": 14583,
+          "nextRankName": "Mammal",
+          "nextRankScore": 798,
+          "nextRankScenario": "SYW Easy",
+          "nextRankLabel": "SYW Easy",
+          "nextRankWindowName": "Novice",
+          "nextRankIsNewScenario": false,
+          "gap": 1,
+          "runs": 22
         },
         {
           "name": "Controlsphere rAim Easy 90%",
@@ -3670,23 +3670,23 @@
           "runs": 14
         },
         {
-          "name": "Flower Easier 50cm",
-          "label": "Flower Easier 50cm",
-          "family": "Flower Chase",
+          "name": "PGTI Voltaic Easy",
+          "label": "PGTI Voltaic Easy",
+          "family": "PGTI",
           "window": 1,
           "windowName": "Intermediate",
           "subCategory": "Precise Tracking",
-          "score": 3798,
-          "rankName": "Primate",
-          "energy": 18435,
-          "nextRankName": "Chimp",
-          "nextRankScore": 3870,
-          "nextRankScenario": "Flower Easier 50cm",
-          "nextRankLabel": "Flower Easier 50cm",
+          "score": 1718,
+          "rankName": "Mammal",
+          "energy": 15976,
+          "nextRankName": "Primate",
+          "nextRankScore": 1768,
+          "nextRankScenario": "PGTI Voltaic Easy",
+          "nextRankLabel": "PGTI Voltaic Easy",
           "nextRankWindowName": "Intermediate",
           "nextRankIsNewScenario": false,
-          "gap": 72,
-          "runs": 9
+          "gap": 50,
+          "runs": 38
         },
         {
           "name": "Smoothsphere Viscose Easier",
@@ -3730,7 +3730,7 @@
     },
     {
       "name": "Reactive Tracking",
-      "energy": 118419,
+      "energy": 113127,
       "rankName": "Permafrost",
       "rankNames": [
         "Absolute Zero",
@@ -3787,7 +3787,7 @@
         400000
       ],
       "rankCount": 16,
-      "progressToNextRank": 0.7367476819066988,
+      "progressToNextRank": 0.5250716909963085,
       "bands": [
         {
           "window": 0,
@@ -3818,10 +3818,10 @@
             125000,
             150000
           ],
-          "energy": 97972,
+          "energy": 77125,
           "rankCount": 6,
-          "progressToNextRank": 0.9188964623622538,
-          "played": 9,
+          "progressToNextRank": 0.0850031981749268,
+          "played": 7,
           "total": 10,
           "positional": null
         },
@@ -3854,10 +3854,10 @@
             125000,
             150000
           ],
-          "energy": 45233,
+          "energy": 46962,
           "rankCount": 6,
-          "progressToNextRank": 0.8093337859292794,
-          "played": 10,
+          "progressToNextRank": 0.8784848165242648,
+          "played": 9,
           "total": 10,
           "positional": null
         },
@@ -3890,9 +3890,9 @@
             125000,
             150000
           ],
-          "energy": 13957,
+          "energy": 13519,
           "rankCount": 6,
-          "progressToNextRank": 0.558275887122095,
+          "progressToNextRank": 0.5407434337750409,
           "played": 6,
           "total": 10,
           "positional": null
@@ -3922,10 +3922,10 @@
             75000,
             100000
           ],
-          "energy": 8884,
+          "energy": 6520,
           "rankCount": 4,
-          "progressToNextRank": 0.35536692339849624,
-          "played": 4,
+          "progressToNextRank": 0.26078513921648105,
+          "played": 3,
           "total": 10,
           "positional": {
             "rankName": "Big Bang",
@@ -3934,7 +3934,7 @@
           }
         }
       ],
-      "perScenario": 11842,
+      "perScenario": 11313,
       "scenarios": [
         {
           "name": "Ground Plaza Sparky v3 Easy",
@@ -3975,42 +3975,42 @@
           "runs": 3
         },
         {
-          "name": "Air Angelic rAim Biggest",
-          "label": "Air Angelic rAim Biggest",
+          "name": "Air Angelic 4 Voltaic Easy",
+          "label": "Air Angelic 4 Voltaic Easy",
           "family": "Air Angelic",
-          "window": 0,
-          "windowName": "Novice",
-          "subCategory": "Reactive Tracking",
-          "score": 926.400269,
-          "rankName": "Dry Ice",
-          "energy": 9500,
-          "nextRankName": "Permafrost",
-          "nextRankScore": 927,
-          "nextRankScenario": "Air Angelic rAim Biggest",
-          "nextRankLabel": "Air Angelic rAim Biggest",
-          "nextRankWindowName": "Novice",
-          "nextRankIsNewScenario": false,
-          "gap": 0.5997310000000198,
-          "runs": 6
-        },
-        {
-          "name": "Aimerz+ VGS Easy S1",
-          "label": "Aimerz+ VGS Easy S1",
-          "family": "Strafe Gallery",
           "window": 1,
           "windowName": "Intermediate",
           "subCategory": "Reactive Tracking",
-          "score": 3106,
-          "rankName": "Sweaty",
-          "energy": 15127,
-          "nextRankName": "Scalding",
-          "nextRankScore": 3162,
-          "nextRankScenario": "Aimerz+ VGS Easy S1",
-          "nextRankLabel": "Aimerz+ VGS Easy S1",
+          "score": 3467,
+          "rankName": "Scalding",
+          "energy": 19335,
+          "nextRankName": "Bonfire",
+          "nextRankScore": 3509,
+          "nextRankScenario": "Air Angelic 4 Voltaic Easy",
+          "nextRankLabel": "Air Angelic 4 Voltaic Easy",
           "nextRankWindowName": "Intermediate",
           "nextRankIsNewScenario": false,
-          "gap": 56,
-          "runs": 1
+          "gap": 42,
+          "runs": 36
+        },
+        {
+          "name": "Kindafar Long Strafes",
+          "label": "Kindafar Long Strafes",
+          "family": "Long Strafes",
+          "window": 0,
+          "windowName": "Novice",
+          "subCategory": "Reactive Tracking",
+          "score": 0,
+          "rankName": null,
+          "energy": 0,
+          "nextRankName": "Absolute Zero",
+          "nextRankScore": 8755,
+          "nextRankScenario": "Kindafar Long Strafes",
+          "nextRankLabel": "Kindafar Long Strafes",
+          "nextRankWindowName": "Novice",
+          "nextRankIsNewScenario": false,
+          "gap": 8755,
+          "runs": 0
         },
         {
           "name": "Leapstrafes Control Medium",
@@ -4029,7 +4029,7 @@
           "nextRankWindowName": "Intermediate",
           "nextRankIsNewScenario": false,
           "gap": 432,
-          "runs": 36
+          "runs": 37
         },
         {
           "name": "Flicker Plaza rAim Easy Less Blinks",
@@ -4130,8 +4130,8 @@
     },
     {
       "name": "Speed Switching",
-      "energy": 144166,
-      "rankName": "Koala",
+      "energy": 191161,
+      "rankName": "Housecat",
       "rankNames": [
         "Banana Slug",
         "Sloth",
@@ -4187,7 +4187,7 @@
         400000
       ],
       "rankCount": 16,
-      "progressToNextRank": 0.7666363426118251,
+      "progressToNextRank": 0.6464507325578446,
       "bands": [
         {
           "window": 0,
@@ -4218,18 +4218,18 @@
             125000,
             150000
           ],
-          "energy": 107463,
+          "energy": 122973,
           "rankCount": 6,
-          "progressToNextRank": 0.2985260707775917,
-          "played": 8,
+          "progressToNextRank": 0.9189106111622072,
+          "played": 9,
           "total": 10,
           "positional": null
         },
         {
           "window": 1,
           "windowName": "Intermediate",
-          "rankName": "Slow Loris",
-          "rankIndex": 1,
+          "rankName": "Housecat",
+          "rankIndex": 2,
           "rankNames": [
             "Koala",
             "Slow Loris",
@@ -4254,10 +4254,10 @@
             125000,
             150000
           ],
-          "energy": 54901,
+          "energy": 79012,
           "rankCount": 6,
-          "progressToNextRank": 0.19604385192796006,
-          "played": 7,
+          "progressToNextRank": 0.1604736264893634,
+          "played": 9,
           "total": 10,
           "positional": null
         },
@@ -4290,9 +4290,9 @@
             125000,
             150000
           ],
-          "energy": 17815,
+          "energy": 17770,
           "rankCount": 6,
-          "progressToNextRank": 0.7126005622083331,
+          "progressToNextRank": 0.710805943304487,
           "played": 5,
           "total": 10,
           "positional": null
@@ -4322,10 +4322,10 @@
             75000,
             100000
           ],
-          "energy": 4481,
+          "energy": 6474,
           "rankCount": 4,
-          "progressToNextRank": 0.17923416334866793,
-          "played": 2,
+          "progressToNextRank": 0.2589638930783977,
+          "played": 3,
           "total": 10,
           "positional": {
             "rankName": "Terminal Velocity",
@@ -4334,26 +4334,26 @@
           }
         }
       ],
-      "perScenario": 14417,
+      "perScenario": 19116,
       "scenarios": [
         {
-          "name": "wobin DotTS Easy",
-          "label": "wobin DotTS Easy",
+          "name": "VT DotTS Novice S5",
+          "label": "VT DotTS Novice S5",
           "family": "DotTS",
           "window": 0,
           "windowName": "Novice",
           "subCategory": "Speed Switching",
-          "score": 0,
-          "rankName": null,
-          "energy": 0,
-          "nextRankName": "Banana Slug",
-          "nextRankScore": 1053,
-          "nextRankScenario": "wobin DotTS Easy",
-          "nextRankLabel": "wobin DotTS Easy",
-          "nextRankWindowName": "Novice",
-          "nextRankIsNewScenario": false,
-          "gap": 1053,
-          "runs": 0
+          "score": 1240,
+          "rankName": "Slow Loris",
+          "energy": 15000,
+          "nextRankName": "Housecat",
+          "nextRankScore": 2352,
+          "nextRankScenario": "DotTS Entry",
+          "nextRankLabel": "DotTS Entry",
+          "nextRankWindowName": "Intermediate",
+          "nextRankIsNewScenario": true,
+          "gap": 2352,
+          "runs": 2
         },
         {
           "name": "voxTS Viscose Varied",
@@ -4372,7 +4372,7 @@
           "nextRankWindowName": "Advanced",
           "nextRankIsNewScenario": false,
           "gap": 0.75,
-          "runs": 4
+          "runs": 5
         },
         {
           "name": "VT EddieTS Intermediate S5",
@@ -4381,36 +4381,36 @@
           "window": 1,
           "windowName": "Intermediate",
           "subCategory": "Speed Switching",
-          "score": 1010,
+          "score": 1031,
           "rankName": "Housecat",
-          "energy": 18289,
+          "energy": 19671,
           "nextRankName": "Ferret",
           "nextRankScore": 1036,
           "nextRankScenario": "VT EddieTS Intermediate S5",
           "nextRankLabel": "VT EddieTS Intermediate S5",
           "nextRankWindowName": "Intermediate",
           "nextRankIsNewScenario": false,
-          "gap": 26,
-          "runs": 61
+          "gap": 5,
+          "runs": 63
         },
         {
-          "name": "Aimerz+ pivoTS Easy S1",
-          "label": "Aimerz+ pivoTS Easy S1",
-          "family": "PivoTS",
-          "window": 0,
-          "windowName": "Novice",
+          "name": "patCircleSwitch NR",
+          "label": "patCircleSwitch NR",
+          "family": "patCircleSwitch",
+          "window": 1,
+          "windowName": "Intermediate",
           "subCategory": "Speed Switching",
-          "score": 112,
-          "rankName": "Manatee",
-          "energy": 12115,
-          "nextRankName": "Koala",
-          "nextRankScore": 114,
-          "nextRankScenario": "Aimerz+ pivoTS Easy S1",
-          "nextRankLabel": "Aimerz+ pivoTS Easy S1",
-          "nextRankWindowName": "Novice",
+          "score": 100.949997,
+          "rankName": "Ferret",
+          "energy": 21229,
+          "nextRankName": "Greyhound",
+          "nextRankScore": 104,
+          "nextRankScenario": "patCircleSwitch NR",
+          "nextRankLabel": "patCircleSwitch NR",
+          "nextRankWindowName": "Intermediate",
           "nextRankIsNewScenario": false,
-          "gap": 2,
-          "runs": 2
+          "gap": 3.050003000000004,
+          "runs": 38
         },
         {
           "name": "Pokeball 1w4ts 30%",
@@ -4470,23 +4470,23 @@
           "runs": 3
         },
         {
-          "name": "CB WaveSwitch Easy",
-          "label": "CB WaveSwitch Easy",
-          "family": "Wave Relay",
-          "window": 0,
-          "windowName": "Novice",
+          "name": "beanTS",
+          "label": "beanTS",
+          "family": "beanTS",
+          "window": 1,
+          "windowName": "Intermediate",
           "subCategory": "Speed Switching",
-          "score": 0,
-          "rankName": null,
-          "energy": 0,
-          "nextRankName": "Banana Slug",
-          "nextRankScore": 540,
-          "nextRankScenario": "CB WaveSwitch Easy",
-          "nextRankLabel": "CB WaveSwitch Easy",
-          "nextRankWindowName": "Novice",
+          "score": 137,
+          "rankName": "Ferret",
+          "energy": 21500,
+          "nextRankName": "Greyhound",
+          "nextRankScore": 141,
+          "nextRankScenario": "beanTS",
+          "nextRankLabel": "beanTS",
+          "nextRankWindowName": "Intermediate",
           "nextRankIsNewScenario": false,
-          "gap": 540,
-          "runs": 0
+          "gap": 4,
+          "runs": 82
         },
         {
           "name": "VT skyTS Intermediate",
@@ -4530,8 +4530,8 @@
     },
     {
       "name": "Evasive Switching",
-      "energy": 194915,
-      "rankName": "Hawk",
+      "energy": 174836,
+      "rankName": "Viper",
       "rankNames": [
         "Plankton",
         "Tadpole",
@@ -4587,7 +4587,7 @@
         440000
       ],
       "rankCount": 16,
-      "progressToNextRank": 0.08783145540887702,
+      "progressToNextRank": 0.35768791473902106,
       "bands": [
         {
           "window": 0,
@@ -4654,10 +4654,10 @@
             137500,
             165000
           ],
-          "energy": 74915,
+          "energy": 59836,
           "rankCount": 6,
-          "progressToNextRank": 0.7241950917725134,
-          "played": 9,
+          "progressToNextRank": 0.17586973292083896,
+          "played": 7,
           "total": 11,
           "positional": null
         },
@@ -4690,10 +4690,10 @@
             137500,
             165000
           ],
-          "energy": 15812,
+          "energy": 13823,
           "rankCount": 6,
-          "progressToNextRank": 0.574983559706271,
-          "played": 8,
+          "progressToNextRank": 0.5026505838891109,
+          "played": 7,
           "total": 11,
           "positional": null
         },
@@ -4722,10 +4722,10 @@
             82500,
             110000
           ],
-          "energy": 3766,
+          "energy": 1780,
           "rankCount": 4,
-          "progressToNextRank": 0.1369455040491204,
-          "played": 2,
+          "progressToNextRank": 0.0647340275823248,
+          "played": 1,
           "total": 11,
           "positional": {
             "rankName": "Extinction",
@@ -4734,7 +4734,7 @@
           }
         }
       ],
-      "perScenario": 17720,
+      "perScenario": 15894,
       "scenarios": [
         {
           "name": "VT PasuTS Intermediate S5",
@@ -4756,23 +4756,23 @@
           "runs": 4
         },
         {
-          "name": "Floatswitch Intermediate",
-          "label": "Floatswitch Intermediate",
-          "family": "Floating Heads",
-          "window": 1,
-          "windowName": "Intermediate",
+          "name": "patTargetSwitch easy",
+          "label": "patTargetSwitch easy",
+          "family": "patTargetSwitch",
+          "window": 0,
+          "windowName": "Novice",
           "subCategory": "Evasive Switching",
-          "score": 740,
-          "rankName": "Honey Badger",
-          "energy": 20329,
-          "nextRankName": "Hyena",
-          "nextRankScore": 773,
-          "nextRankScenario": "Floatswitch Intermediate",
-          "nextRankLabel": "Floatswitch Intermediate",
+          "score": 8440,
+          "rankName": "Viper",
+          "energy": 15000,
+          "nextRankName": "Hawk",
+          "nextRankScore": 5890,
+          "nextRankScenario": "patTargetSwitch",
+          "nextRankLabel": "patTargetSwitch",
           "nextRankWindowName": "Intermediate",
-          "nextRankIsNewScenario": false,
-          "gap": 33,
-          "runs": 4
+          "nextRankIsNewScenario": true,
+          "gap": 5890,
+          "runs": 53
         },
         {
           "name": "VT ControlTS Intermediate S5",
@@ -4794,23 +4794,23 @@
           "runs": 23
         },
         {
-          "name": "Aimerz+ hopTS Easy S1",
-          "label": "Aimerz+ hopTS Easy S1",
-          "family": "Hop Transfer",
-          "window": 1,
-          "windowName": "Intermediate",
+          "name": "Skeet Tracking 85% Speed",
+          "label": "Skeet Tracking 85% Speed",
+          "family": "Skeet",
+          "window": 0,
+          "windowName": "Novice",
           "subCategory": "Evasive Switching",
-          "score": 75.5,
-          "rankName": "Toad",
-          "energy": 14750,
-          "nextRankName": "Viper",
-          "nextRankScore": 574,
-          "nextRankScenario": "CB JumpSwitch Easy",
-          "nextRankLabel": "CB JumpSwitch Easy",
+          "score": 0,
+          "rankName": null,
+          "energy": 0,
+          "nextRankName": "Plankton",
+          "nextRankScore": 527,
+          "nextRankScenario": "Skeet Tracking 85% Speed",
+          "nextRankLabel": "Skeet Tracking 85% Speed",
           "nextRankWindowName": "Novice",
-          "nextRankIsNewScenario": true,
-          "gap": 574,
-          "runs": 1
+          "nextRankIsNewScenario": false,
+          "gap": 527,
+          "runs": 0
         },
         {
           "name": "VT Penta Bounce Intermediate S5",
@@ -4848,7 +4848,7 @@
           "nextRankWindowName": "Intermediate",
           "nextRankIsNewScenario": false,
           "gap": 3.5999979999999994,
-          "runs": 17
+          "runs": 18
         },
         {
           "name": "VT FlyTS Intermediate S5",
@@ -4952,19 +4952,11 @@
   "consistency": {
     "method": "worstOfLast5",
     "ceilingRank": "Lunar",
-    "ceilingEnergy": 1133333,
+    "ceilingEnergy": 1169857,
     "floorRank": "Cosmonaut",
-    "floorEnergy": 784915,
-    "gap": 0.1524287302326212,
+    "floorEnergy": 786057,
+    "gap": 0.14272170780022844,
     "scenarios": [
-      {
-        "name": "1w2ts Pasu Perfected",
-        "label": "1w2ts Pasu Perfected adv",
-        "ceiling": 100,
-        "floor": 23,
-        "median": 83,
-        "gap": 0.77
-      },
       {
         "name": "B180T Voltaic Easy",
         "label": "B180T Voltaic Easy int",
@@ -4988,14 +4980,6 @@
         "floor": 768,
         "median": 1246,
         "gap": 0.44508670520231214
-      },
-      {
-        "name": "darkPressure",
-        "label": "darkPressure exp",
-        "ceiling": 7200,
-        "floor": 4700,
-        "median": 5200,
-        "gap": 0.3472222222222222
       },
       {
         "name": "Whisphere Small & Slow 75%",
@@ -5022,19 +5006,19 @@
         "gap": 0.27586206896551724
       },
       {
-        "name": "ClickTrack Horizontal 2t Short",
-        "label": "ClickTrack Horizontal 2t Short adv",
-        "ceiling": 101.767677,
-        "floor": 75.019318,
-        "median": 86.66357049999999,
-        "gap": 0.2628374724520833
+        "name": "1wall6targets TE",
+        "label": "1wall6targets TE int",
+        "ceiling": 154.938889,
+        "floor": 115.222855,
+        "median": 135.542175,
+        "gap": 0.2563335406387224
       },
       {
         "name": "SmoothBot Invincible Goated 75%",
         "label": "SmoothBot Invincible Goated 75% nov",
         "ceiling": 4038,
         "floor": 3084,
-        "median": 3420,
+        "median": 3450,
         "gap": 0.2362555720653789
       },
       {
@@ -5078,12 +5062,36 @@
         "gap": 0.22627737226277372
       },
       {
-        "name": "VT Floating Heads Viscose Medium",
-        "label": "VT Floating Heads Viscose Medium adv",
-        "ceiling": 976.357788,
-        "floor": 769.872681,
-        "median": 816.4475405000001,
-        "gap": 0.21148508214695583
+        "name": "PGTI Voltaic Easy 80%",
+        "label": "PGTI Voltaic Easy 80% nov",
+        "ceiling": 1964,
+        "floor": 1524,
+        "median": 1875,
+        "gap": 0.2240325865580448
+      },
+      {
+        "name": "cloverRawControl Easy",
+        "label": "cloverRawControl Easy int",
+        "ceiling": 8166,
+        "floor": 6342,
+        "median": 6732,
+        "gap": 0.2233651726671565
+      },
+      {
+        "name": "Close Fast Strafes Invincible - Thin",
+        "label": "Close Fast Strafes Invincible - Thin adv",
+        "ceiling": 7416,
+        "floor": 5778,
+        "median": 6588,
+        "gap": 0.220873786407767
+      },
+      {
+        "name": "1w3ts Pasu Perfected Micro Goated",
+        "label": "1w3ts Pasu Perfected Micro Goated adv",
+        "ceiling": 1206,
+        "floor": 948,
+        "median": 948,
+        "gap": 0.21393034825870647
       },
       {
         "name": "ww4t Voltaic",
@@ -5094,20 +5102,12 @@
         "gap": 0.20714285714285716
       },
       {
-        "name": "ClickTrack Horizontal 2t",
-        "label": "ClickTrack Horizontal 2t exp",
-        "ceiling": 65.505608,
-        "floor": 52.104668,
-        "median": 53.5267105,
-        "gap": 0.2045769882786219
-      },
-      {
-        "name": "ClickTrack Diagonal 3t Short",
-        "label": "ClickTrack Diagonal 3t Short nov",
-        "ceiling": 108.868507,
-        "floor": 86.895134,
-        "median": 96.64244450000001,
-        "gap": 0.20183406207637253
+        "name": "Smoothsphere Viscose",
+        "label": "Smoothsphere Viscose adv",
+        "ceiling": 12759,
+        "floor": 10206,
+        "median": 10509,
+        "gap": 0.20009405125793558
       },
       {
         "name": "Leapstrafes Control wobin Hard",
@@ -5116,14 +5116,6 @@
         "floor": 2304,
         "median": 2526,
         "gap": 0.19805081796032023
-      },
-      {
-        "name": "Pasu Reload Goated",
-        "label": "Pasu Reload Goated exp",
-        "ceiling": 112,
-        "floor": 90,
-        "median": 97.5,
-        "gap": 0.19642857142857142
       },
       {
         "name": "2 Tile Jumbo Tile Frenzy",
@@ -5150,12 +5142,12 @@
         "gap": 0.1864406779661017
       },
       {
-        "name": "Flower Easier 50cm",
-        "label": "Flower Easier 50cm int",
-        "ceiling": 3798,
-        "floor": 3097,
-        "median": 3312,
-        "gap": 0.18457082675092154
+        "name": "5 Sphere Hipfire",
+        "label": "5 Sphere Hipfire nov",
+        "ceiling": 2184.20166,
+        "floor": 1785.714233,
+        "median": 1920.2155765,
+        "gap": 0.18244076739690795
       },
       {
         "name": "TSK - DVD Tracking Big",
@@ -5174,28 +5166,12 @@
         "gap": 0.18164399380555968
       },
       {
-        "name": "ClickTrack Horizontal 3t Short",
-        "label": "ClickTrack Horizontal 3t Short nov",
-        "ceiling": 101.461708,
-        "floor": 83.531487,
-        "median": 88.689491,
-        "gap": 0.17671909288181906
-      },
-      {
         "name": "Leapstrafes Control wobin Easier",
         "label": "Leapstrafes Control wobin Easier nov",
         "ceiling": 4052,
         "floor": 3336,
         "median": 3635,
         "gap": 0.17670286278381048
-      },
-      {
-        "name": "VT Floating Heads Viscose Hard",
-        "label": "VT Floating Heads Viscose Hard exp",
-        "ceiling": 746.282349,
-        "floor": 614.561951,
-        "median": 703.08252,
-        "gap": 0.17650209491957305
       },
       {
         "name": "Leapstrafes Control Medium",
@@ -5206,12 +5182,20 @@
         "gap": 0.16751918158567775
       },
       {
-        "name": "Close Fast Strafes Invincible - Thin",
-        "label": "Close Fast Strafes Invincible - Thin adv",
-        "ceiling": 7416,
-        "floor": 6210,
-        "median": 6660,
-        "gap": 0.16262135922330098
+        "name": "RawMouseControl Reload Easy",
+        "label": "RawMouseControl Reload Easy nov",
+        "ceiling": 237,
+        "floor": 198,
+        "median": 203,
+        "gap": 0.16455696202531644
+      },
+      {
+        "name": "PGTI Voltaic Easy",
+        "label": "PGTI Voltaic Easy int",
+        "ceiling": 1718,
+        "floor": 1437,
+        "median": 1498,
+        "gap": 0.16356228172293363
       },
       {
         "name": "CatClick Easier",
@@ -5230,12 +5214,12 @@
         "gap": 0.1592920353982301
       },
       {
-        "name": "ClickTrack Diagonal 2t Short",
-        "label": "ClickTrack Diagonal 2t Short adv",
-        "ceiling": 102.033539,
-        "floor": 86.300346,
-        "median": 88.370193,
-        "gap": 0.15419628834005258
+        "name": "Jumbo 1wall6targets TE",
+        "label": "Jumbo 1wall6targets TE nov",
+        "ceiling": 230,
+        "floor": 194,
+        "median": 204,
+        "gap": 0.1565217391304348
       },
       {
         "name": "1wall6targets TE Horizontalish",
@@ -5262,6 +5246,14 @@
         "gap": 0.15018074268813672
       },
       {
+        "name": "VT Bounceshot Intermediate",
+        "label": "VT Bounceshot Intermediate int",
+        "ceiling": 800,
+        "floor": 680,
+        "median": 675,
+        "gap": 0.15
+      },
+      {
         "name": "VT DriftTS Intermediate S5",
         "label": "VT DriftTS Intermediate S5 int",
         "ceiling": 460,
@@ -5270,28 +5262,12 @@
         "gap": 0.14826083043478255
       },
       {
-        "name": "1w3ts Pasu Perfected Micro Goated",
-        "label": "1w3ts Pasu Perfected Micro Goated adv",
-        "ceiling": 1106,
-        "floor": 948,
-        "median": 933,
-        "gap": 0.14285714285714285
-      },
-      {
-        "name": "ClickTrack Diagonal 3t",
-        "label": "ClickTrack Diagonal 3t int",
-        "ceiling": 69.020927,
-        "floor": 59.20155,
-        "median": 61.551529,
-        "gap": 0.14226666355843065
-      },
-      {
-        "name": "Flower 50cm",
-        "label": "Flower 50cm adv",
-        "ceiling": 3193,
-        "floor": 2741,
-        "median": 2518,
-        "gap": 0.1415596617601002
+        "name": "Tile Frenzy",
+        "label": "Tile Frenzy int",
+        "ceiling": 124.355072,
+        "floor": 106.52459,
+        "median": 107.937988,
+        "gap": 0.143383632957086
       },
       {
         "name": "Jumbo1wall9000targets",
@@ -5310,12 +5286,20 @@
         "gap": 0.13896556761266912
       },
       {
-        "name": "ClickTrack Diagonal 2t",
-        "label": "ClickTrack Diagonal 2t exp",
-        "ceiling": 60.506065,
-        "floor": 52.225082,
-        "median": 50.114448499999995,
-        "gap": 0.13686203193018748
+        "name": "1wall 6targets small",
+        "label": "1wall 6targets small adv",
+        "ceiling": 1252.627686,
+        "floor": 1079.379883,
+        "median": 1066.532227,
+        "gap": 0.13830749945598758
+      },
+      {
+        "name": "Air Angelic 4 Voltaic Easy",
+        "label": "Air Angelic 4 Voltaic Easy int",
+        "ceiling": 3467,
+        "floor": 2990,
+        "median": 3089,
+        "gap": 0.13758292471877703
       },
       {
         "name": "Pokeball 1w4ts 30% Easy",
@@ -5326,20 +5310,12 @@
         "gap": 0.13675213675213677
       },
       {
-        "name": "SCS 8xs Uniform",
-        "label": "SCS 8xs Uniform nov",
-        "ceiling": 98,
-        "floor": 85,
-        "median": 96,
-        "gap": 0.1326530612244898
-      },
-      {
-        "name": "VT Floating Heads Viscose Easier",
-        "label": "VT Floating Heads Viscose Easier int",
-        "ceiling": 1089.210693,
-        "floor": 946.402588,
-        "median": 1006.508789,
-        "gap": 0.13111155253779716
+        "name": "VT EddieTS Intermediate S5",
+        "label": "VT EddieTS Intermediate S5 int",
+        "ceiling": 1031,
+        "floor": 892,
+        "median": 916,
+        "gap": 0.13482056256062075
       },
       {
         "name": "CatClick Medium",
@@ -5406,27 +5382,35 @@
         "gap": 0.11862820845639895
       },
       {
-        "name": "VT EddieTS Intermediate S5",
-        "label": "VT EddieTS Intermediate S5 int",
-        "ceiling": 1010,
-        "floor": 892,
-        "median": 910,
-        "gap": 0.11683168316831684
+        "name": "patCircleSwitch NR",
+        "label": "patCircleSwitch NR int",
+        "ceiling": 100.949997,
+        "floor": 90,
+        "median": 88.625,
+        "gap": 0.10846951288170911
       },
       {
-        "name": "Smoothsphere Viscose",
-        "label": "Smoothsphere Viscose adv",
-        "ceiling": 11964,
-        "floor": 10623,
-        "median": 10503,
-        "gap": 0.11208625877632898
+        "name": "Floating Heads Timing 400%",
+        "label": "Floating Heads Timing 400% int",
+        "ceiling": 2664,
+        "floor": 2376,
+        "median": 2520,
+        "gap": 0.10810810810810811
+      },
+      {
+        "name": "beanTS",
+        "label": "beanTS int",
+        "ceiling": 137,
+        "floor": 122.949997,
+        "median": 119.949997,
+        "gap": 0.10255476642335769
       },
       {
         "name": "DotTS 30% Larger",
         "label": "DotTS 30% Larger adv",
         "ceiling": 2504,
         "floor": 2250,
-        "median": 2390,
+        "median": 2407,
         "gap": 0.10143769968051118
       },
       {
@@ -5450,7 +5434,7 @@
         "label": "Leapstrafes Control wobin adv",
         "ceiling": 3515,
         "floor": 3178,
-        "median": 3075,
+        "median": 3083,
         "gap": 0.09587482219061166
       },
       {
@@ -5472,10 +5456,10 @@
       {
         "name": "Controlsphere rAim Easy",
         "label": "Controlsphere rAim Easy adv",
-        "ceiling": 12357,
-        "floor": 11268,
-        "median": 11442,
-        "gap": 0.08812818645302258
+        "ceiling": 12531,
+        "floor": 11427,
+        "median": 11461.5,
+        "gap": 0.0881015082595164
       },
       {
         "name": "1w6ts reload v2",
@@ -5510,6 +5494,14 @@
         "gap": 0.08411214953271028
       },
       {
+        "name": "Jumbo Tile Frenzy",
+        "label": "Jumbo Tile Frenzy nov",
+        "ceiling": 148,
+        "floor": 136,
+        "median": 140,
+        "gap": 0.08108108108108109
+      },
+      {
         "name": "domiSwitch Easier",
         "label": "domiSwitch Easier nov",
         "ceiling": 7880.799805,
@@ -5518,12 +5510,12 @@
         "gap": 0.08009335633669225
       },
       {
-        "name": "ClickTrack Horizontal 3t",
-        "label": "ClickTrack Horizontal 3t int",
-        "ceiling": 71.020363,
-        "floor": 65.548561,
-        "median": 62.023193,
-        "gap": 0.07704553692579685
+        "name": "patTargetSwitch easy",
+        "label": "patTargetSwitch easy nov",
+        "ceiling": 8440,
+        "floor": 7770,
+        "median": 7720,
+        "gap": 0.07938388625592417
       },
       {
         "name": "VT ControlTS Intermediate S5",
@@ -5550,11 +5542,19 @@
         "gap": 0.07348629339274121
       },
       {
+        "name": "beanTS Larger",
+        "label": "beanTS Larger nov",
+        "ceiling": 139.199997,
+        "floor": 129,
+        "median": 129,
+        "gap": 0.07327584209646208
+      },
+      {
         "name": "fuglaaPressure 6 Sphere Hipfire no reload",
         "label": "fuglaaPressure 6 Sphere Hipfire no reload exp",
         "ceiling": 9451.036133,
         "floor": 8765.707031,
-        "median": 8277.592284999999,
+        "median": 8288.690429499999,
         "gap": 0.07251364743036473
       },
       {
@@ -5582,12 +5582,12 @@
         "gap": 0.0661764705882353
       },
       {
-        "name": "Aimerz+ 1w4ts HF Hard S1",
-        "label": "Aimerz+ 1w4ts HF Hard exp",
-        "ceiling": 154,
-        "floor": 144,
-        "median": 146,
-        "gap": 0.06493506493506493
+        "name": "cloverRawControl Big",
+        "label": "cloverRawControl Big nov",
+        "ceiling": 13380,
+        "floor": 12510,
+        "median": 11901,
+        "gap": 0.06502242152466367
       },
       {
         "name": "skyClick Goated Hard",
@@ -5606,12 +5606,20 @@
         "gap": 0.06360427337087379
       },
       {
-        "name": "voxTargetSwitch 2 Large",
-        "label": "voxTargetSwitch 2 Large nov",
-        "ceiling": 129,
-        "floor": 121.149994,
-        "median": 117,
-        "gap": 0.06085275968992243
+        "name": "beanTS 200%",
+        "label": "beanTS 200% exp",
+        "ceiling": 118,
+        "floor": 111.149994,
+        "median": 112.624996,
+        "gap": 0.05805089830508469
+      },
+      {
+        "name": "SYW Easy",
+        "label": "SYW Easy nov",
+        "ceiling": 797,
+        "floor": 751,
+        "median": 772,
+        "gap": 0.05771643663739021
       },
       {
         "name": "StaticSwitchingVox Small",
@@ -5622,12 +5630,28 @@
         "gap": 0.05445169646624196
       },
       {
-        "name": "Aimerz+ PreciseTrack Med S1",
-        "label": "Aimerz+ PreciseTrack Med S1 adv",
-        "ceiling": 2528,
-        "floor": 2412,
-        "median": 2247,
-        "gap": 0.04588607594936709
+        "name": "voxTargetSwitch 2 Large",
+        "label": "voxTargetSwitch 2 Large nov",
+        "ceiling": 129,
+        "floor": 122,
+        "median": 117,
+        "gap": 0.05426356589147287
+      },
+      {
+        "name": "voxTS Viscose Varied",
+        "label": "voxTS Viscose Varied adv",
+        "ceiling": 108.25,
+        "floor": 102.949997,
+        "median": 104,
+        "gap": 0.04896076674364899
+      },
+      {
+        "name": "1w4ts Voltaic",
+        "label": "1w4ts Voltaic int",
+        "ceiling": 111,
+        "floor": 106,
+        "median": 102,
+        "gap": 0.04504504504504504
       },
       {
         "name": "waldoTS",
@@ -5662,14 +5686,6 @@
         "gap": 0.01582662118018239
       },
       {
-        "name": "Air Angelic Easier",
-        "label": "Air Angelic Easier int",
-        "ceiling": 922.39209,
-        "floor": 911.444092,
-        "median": 911.444092,
-        "gap": 0.011869136909012411
-      },
-      {
         "name": "Ground Plaza Sparky v3 OW",
         "label": "Ground Plaza Sparky v3 OW adv",
         "ceiling": 869.715576,
@@ -5690,7 +5706,7 @@
         "label": "Air Spectral Easy int",
         "ceiling": 923.681763,
         "floor": 915.353577,
-        "median": 917.13562,
+        "median": 917.544281,
         "gap": 0.009016293634456083
       },
       {
@@ -5700,14 +5716,6 @@
         "floor": 886.804382,
         "median": 884.377472,
         "gap": 0.0057895131032353305
-      },
-      {
-        "name": "Air Angelic rAim Biggest",
-        "label": "Air Angelic rAim Biggest nov",
-        "ceiling": 926.400269,
-        "floor": 921.44751,
-        "median": 924.699219,
-        "gap": 0.005346240891473677
       },
       {
         "name": "Air Spectral Easy 85%",
@@ -5784,21 +5792,21 @@
     ]
   },
   "quests": {
-    "day": "2026-09-21",
+    "day": "2026-09-23",
     "daily": [
       {
-        "id": "beat_median:1w6ts reload v2 20% bigger",
+        "id": "beat_median:fuglaaPressure 6 Sphere Hipfire no reload",
         "slot": "ceiling",
         "kind": "beat_median",
-        "title": "Beat your 1w6ts reload v2 20% bigger int median three times",
-        "detail": "Your median over your last 6 runs is 115. Three runs above it today.",
+        "title": "Beat your fuglaaPressure 6 Sphere Hipfire no reload exp median three times",
+        "detail": "Your median over your last 50 runs is 8,916. Three runs above it today.",
         "xp": 200,
         "target": 3,
         "unit": "runs",
         "progress": 0,
         "fraction": 0,
         "complete": false,
-        "scenario": "1w6ts reload v2 20% bigger"
+        "scenario": "fuglaaPressure 6 Sphere Hipfire no reload"
       },
       {
         "id": "clean_set:2 Tile Jumbo Tile Frenzy",
@@ -5815,18 +5823,18 @@
         "scenario": "2 Tile Jumbo Tile Frenzy"
       },
       {
-        "id": "variety",
+        "id": "revisit:domiSwitch Easy",
         "slot": "variety",
-        "kind": "variety",
-        "title": "Play four different scenarios",
-        "detail": "Anything in the season pool. A match draws three from it, so breadth is what gets tested.",
-        "xp": 150,
-        "target": 4,
-        "unit": "scenarios",
-        "progress": 4,
-        "fraction": 1,
-        "complete": true,
-        "scenario": null
+        "kind": "revisit",
+        "title": "Revisit domiSwitch Easy int",
+        "detail": "Untouched for 26 days. Get within a tenth of your best of 6,621: 5,959.",
+        "xp": 250,
+        "target": 5959,
+        "unit": "score",
+        "progress": 0,
+        "fraction": 0,
+        "complete": false,
+        "scenario": "domiSwitch Easy"
       }
     ],
     "weekly": {
@@ -5838,8 +5846,8 @@
       "xp": 800,
       "target": 5,
       "unit": "days",
-      "progress": 1,
-      "fraction": 0.2,
+      "progress": 3,
+      "fraction": 0.6,
       "complete": false,
       "scenario": null
     },
@@ -5847,7 +5855,7 @@
     "canReroll": true,
     "bonus": {
       "xp": 400,
-      "streak": 10,
+      "streak": 12,
       "earned": false
     }
   }

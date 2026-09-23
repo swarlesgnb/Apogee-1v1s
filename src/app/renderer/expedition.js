@@ -109,7 +109,7 @@
     const count = inTrial ? active.results.length : b === 0 ? j.checkpoints : 0;
     const goalId = cleared ? has(`${id}:${b}:mastery`) ? `${id}:${b}:clear` : `${id}:${b}:mastery` : has(`${id}:ship`) ? `${id}:${b}:clear` : `${id}:ship`;
     const nextId = j.next;
-    const begin = (primary = true) => button(b === 0 ? cleared ? 'Replay for mastery →' : count ? 'Resume checkpoints →' : 'Start checkpoints →' : b === 2 ? 'Start unassisted →' : cleared ? 'Replay trial →' : 'Start finale →', 'start', 'data-approach="direct"', !canAct, primary);
+    const begin = (primary = true) => button(b === 0 ? cleared ? 'Replay for mastery →' : count ? 'Resume checkpoints →' : 'Start checkpoints →' : b === 2 ? 'Start unassisted →' : cleared ? 'Replay trial →' : b === 3 ? 'Start trial →' : 'Start finale →', 'start', 'data-approach="direct"', !canAct, primary);
     let heading, reason, actions = '';
     if (!s) {
       heading = 'Your first destination'; reason = j.description;
@@ -132,7 +132,7 @@
     } else if (!ready) {
       heading = 'Choose your way through'; reason = 'One short route unlocks your finale. Pick a challenge below; you can switch without losing progress.';
     } else {
-      heading = b === 0 ? count ? `${count} of ${roster.length} checkpoints secured` : 'One target at a time' : b === 2 ? 'Choose how to attempt the trial' : 'Your finale is open';
+      heading = b === 0 ? count ? `${count} of ${roster.length} checkpoints secured` : 'One target at a time' : b === 2 ? 'Choose how to attempt the trial' : b === 3 ? 'Your trial is open' : 'Your finale is open';
       reason = b === 0 ? 'Meet the targets in order. Successful steps stay saved, even if you stop for the day.' : b === 2 ? j.preparationReady ? 'Your preparation is complete. Use one retry, or earn the Unassisted trophy without support.' : 'Go straight in for the Unassisted trophy, or complete an optional preparation route for one retry per attempt.' : 'Meet every target in order in one attempt. Your destination clear is permanent.';
       actions = b === 2 && j.preparationReady ? button('Start with one retry →', 'start', 'data-approach="prepared"', !canAct, true) + begin(false) : begin();
     }
@@ -159,7 +159,7 @@
       <div class="exp-objective"><small>${inTrial ? 'PLAYING NOW' : challenge ? ready ? 'OPTIONAL ACTIVITY' : 'YOUR CHOSEN ROUTE' : cleared ? 'CLEAR COMPLETE' : 'YOUR NEXT STEP'}</small><h3>${e(heading)}</h3><p>${e(reason)}</p></div>
       <div class="exp-actions exp-main-action">${actions}</div>
       ${active && !inTrial ? `<div class="exp-finale-ready"><p>An attempt at ${e(destinationName(active.destination))} is still active.</p>${button('Return to active attempt', 'select', `data-destination="${active.destination}" data-band="${active.band}"`)}</div>` : ''}
-      ${showSteps ? `<div class="exp-step-progress"><span>${progress} / ${total} ${challenge && !inTrial ? 'qualifying runs' : 'targets cleared'}</span><progress max="${total}" value="${progress}" aria-label="Current activity progress"></progress></div><ol class="exp-scenarios exp-next-target">${stepRows[currentIndex] || ''}</ol><details class="exp-all-targets"><summary>See all ${steps.length} targets</summary><ol class="exp-scenarios">${stepRows.join('')}</ol></details>` : ''}
+      ${showSteps ? `<div class="exp-step-progress"><span>${progress} / ${total} ${challenge && !inTrial ? 'qualifying runs' : 'targets cleared'}</span><progress max="${total}" value="${progress}" aria-label="Current activity progress"></progress></div><ol class="exp-scenarios exp-next-target">${stepRows[currentIndex] || ''}</ol>${steps.length > 1 ? `<details class="exp-all-targets"><summary>See all ${steps.length} targets</summary><ol class="exp-scenarios">${stepRows.join('')}</ol></details>` : ''}` : ''}
       ${feedback && currentTrial?.status !== 'cleared' ? `<div class="exp-last-result ${currentTrial?.status === 'failed' ? 'failed' : ''}"><strong>${recovered ? 'Earlier miss · you have moved on' : currentTrial?.status === 'failed' ? 'Attempt ended · your destination progress is safe' : 'Keep going · your cleared steps are safe'}</strong><span>${e(feedback)}</span></div>` : ''}
       ${s && !inTrial && !challenge && !ready && !final ? routeChoices(id, b, route, ready) : ''}
       ${rewardSpotlight(goalId, cleared ? has(`${id}:${b}:mastery`) ? 'EARNED IN THIS DIFFICULTY' : 'OPTIONAL MASTERY' : 'YOUR DESTINATION REWARD', cleared ? has(`${id}:${b}:mastery`) ? 'Clear and mastery complete. Try another destination or difficulty whenever you like.' : 'For a mastery trophy, beat every target by 10% in one attempt with no misses or carried checkpoints.' : has(`${id}:ship`) ? `Your ship is already collected. Earn the ${def.bands[b]} insignia here and move closer to this difficulty’s First Light clear.` : 'Clear these targets to earn this ship, plus its frame, banner, and title. Equip the ship on your star chart.')}
@@ -223,7 +223,7 @@
         const prior = (s?.trials || []).filter(p => p.destination === t.destination && p.band === t.band && p.status === 'cleared' && p.startedAt < t.startedAt);
         const score = t.status === 'cleared' ? Math.min(...t.results.map((r, i) => r.score / t.steps[i].target)) : 0;
         const record = score && prior.every(p => Math.min(...p.results.map((r, i) => r.score / p.steps[i].target)) < score);
-        const status = t.status === 'abandoned' && t.mode === 'checkpoint' ? 'Stopped · checkpoints saved' : { active: 'In progress', failed: 'Attempt ended · retry available', cleared: 'Cleared', abandoned: 'Attempt ended' }[t.status];
+        const status = t.status === 'abandoned' && t.mode === 'checkpoint' ? (t.results.length ? 'Stopped · checkpoints saved' : 'Stopped') : { active: 'In progress', failed: 'Attempt ended · retry available', cleared: 'Cleared', abandoned: 'Attempt ended' }[t.status];
         return `<p class="exp-recap-entry">${e(destinationName(t.destination))} · ${e(view.definition.bands[t.band])}<span>${e(status)}${t.mode === 'prepared' ? ' · with retry support' : ''}${record ? ' · Personal trial record' : ''}${score ? ` · ${number(score * 100)}% minimum target` : ''}</span></p>`;
       }).join('') || '<p>No trials attempted this session.</p>'}</div></div>
       <h3>New in your collection</h3>${earned.length ? `<div class="exp-rewards">${earned.map(rewardCard).join('')}</div>` : '<p>No new rewards this session. Accepted challenges stay saved.</p>'}<div class="exp-actions">${button('Continue your route →', 'page', 'data-page="map"', false, true)}</div>`;

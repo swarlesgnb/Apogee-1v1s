@@ -37,6 +37,12 @@ contextBridge.exposeInMainWorld("apogee", {
   /** Fires when the signed-in player changes, with null on sign-out. */
   onSession: (handler) => subscribe("apogee:session", handler),
 
+  /** Abandon a sign-in in progress and close its loopback port. */
+  cancelSignIn: () => ipcRenderer.invoke("apogee:cancelSignIn"),
+
+  /** A neutral message for the banner - news, not a failure - or null to clear it. */
+  onNotice: (handler) => subscribe("apogee:notice", handler),
+
   /** Sign-in started or finished, for a spinner. */
   onSigningIn: (handler) => subscribe("apogee:signingIn", handler),
 

@@ -1309,6 +1309,22 @@
   .rounds-wrap, .scen-wrap { overflow-x: auto; }
   table { width: 100%; border-collapse: collapse; }
   table.rounds { min-width: 560px; }
+  table.rounds.no-them th:nth-child(4), table.rounds.no-them td:nth-child(4) { display: none; }
+  body.awaiting-data .tab:not([data-screen="mixtape"]):not([data-screen="expedition"]) { opacity: .45; cursor: default; }
+  #queueGateUpload { margin: 8px 0 4px; }
+  .sv-how { margin: 0 0 16px; }
+  .sv-how > summary { cursor: pointer; padding: 12px 16px; border: 1px solid var(--rule); border-radius: 7px; color: var(--ink-mid); font-weight: 600; list-style: none; }
+  .sv-how > summary::-webkit-details-marker { display: none; }
+  .sv-how > summary::before { content: "\25B8"; display: inline-block; margin-right: 8px; transition: transform .15s; }
+  .sv-how[open] > summary::before { transform: rotate(90deg); }
+  .sv-how[open] > summary { margin-bottom: 12px; }
+  #svInstallNote { overflow-wrap: anywhere; }
+  .sc-search { width: 100%; max-width: 360px; margin: 0 0 12px; padding: 8px 10px; background: var(--well); color: var(--ink); border: 1px solid var(--rule); border-radius: 6px; font: inherit; }
+  #scInstall { margin-top: 8px; }
+  #nextRankBody .scen-play { margin-left: 8px; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .banner-close { margin-left: 12px; padding: 0 6px; background: none; border: 0; color: inherit; font-size: 16px; line-height: 1; cursor: pointer; opacity: .8; }
+  .banner-close:hover, .banner-close:focus-visible { opacity: 1; }
   table.scen { min-width: 620px; }
 
   th {
@@ -3184,6 +3200,7 @@
           <div class="signin-link-row">
             <code id="signinLink"></code>
             <button type="button" id="signinCopy">Copy link</button>
+            <button type="button" id="signinCancel">Cancel</button>
           </div>
         </div>
 
@@ -3280,6 +3297,7 @@
 
                 <div class="queue-gate" id="queueGate" role="status">
                   <span id="queueGateText"></span>
+                  <button type="button" class="go" id="queueGateUpload" hidden></button>
                   <div class="gate-track"><div class="gate-fill" id="queueGateFill"></div></div>
                 </div>
                 <div class="pool-note" id="poolNote"></div>
@@ -3454,7 +3472,8 @@
                    void did not count. -->
               <div class="rematch" id="rematch" hidden>
                 <span class="rematch-note" id="rematchNote"></span>
-                <button type="button" class="go" id="rematchBtn"></button>
+                <button type="button" id="rematchBtn"></button>
+                <button type="button" class="go" id="queueAgainBtn" hidden>Queue again</button>
               </div>
 
               <div class="rounds-wrap">
@@ -3707,8 +3726,10 @@
                 <span class="note" id="scNote"></span>
               </div>
               <div class="pbody">
+                <input type="search" class="sc-search" id="scSearch" placeholder="Search scenarios" aria-label="Search scenarios" autocomplete="off">
                 <div class="pool-bands sc-filter" id="scCats"></div>
                 <div class="pool-bands sc-filter" id="scBands"></div>
+                <button type="button" class="go" id="scInstall" hidden></button>
               </div>
               <div class="scen-wrap">
                 <table class="scen sc-table">
@@ -3733,9 +3754,9 @@
             <div class="screen-head">
               <h1 data-copy="seasonview.title">Season</h1>
               <p data-copy="seasonview.lede">
-                Current rank thresholds and the full scenario pool. Every scenario
-                comes from an existing community benchmark, so practice here counts
-                there too. Thresholds can change while the season is a draft.
+                Every scenario the season ranks you on, what your next rank costs, and
+                one-click playlists for KovaaK's. Most scenarios also appear in community
+                benchmarks, so practice here counts there too.
               </p>
             </div>
 
@@ -3747,6 +3768,40 @@
               <div class="pbody"><div class="sv-stats" id="svStats"></div></div>
             </div>
 
+            <div class="panel">
+              <div class="phead">
+                <h2 data-copy="seasonview.p4.head">The pool</h2>
+                <span class="note" id="svPoolNote"></span>
+              </div>
+              <div class="pbody">
+                <p class="rank-lede">
+                  One difficulty at a time: the rank you hold on each scenario, the score
+                  for the next one, and what your last run reached. Highlighted rows count
+                  toward your next rank.
+                </p>
+                <p class="rank-lede">
+                  Most scenarios also appear in community benchmarks. The marks
+                  under a name are the other benchmarks that scenario counts on, filled
+                  once your score holds a rank there. Hover for the rank and next threshold.
+                </p>
+                <div class="pool-lists" id="svPlaylists" hidden>
+                  <div class="pool-lists-head">
+                    <h4 id="svListsTitle">Playlists</h4>
+                    <span class="note" id="svInstallNote"></span>
+                  </div>
+                  <div class="pool-chips" id="svChips"></div>
+                  <p class="pool-chip-legend" id="svChipLegend"></p>
+                </div>
+                <div class="pool-bands" id="svDiffs"></div>
+                <div class="pool-layout">
+                  <nav class="pool-nav" id="svCatNav" aria-label="Categories"></nav>
+                  <div class="pool-grid" id="svPool"></div>
+                </div>
+              </div>
+            </div>
+
+            <details class="sv-how">
+              <summary>How ranks work: tiers, bands and category ladders</summary>
             <div class="panel">
               <div class="phead">
                 <h2 data-copy="seasonview.p2.head">Overall tier</h2>
@@ -3776,37 +3831,7 @@
               </div>
             </div>
 
-            <div class="panel">
-              <div class="phead">
-                <h2 data-copy="seasonview.p4.head">The pool</h2>
-                <span class="note" id="svPoolNote"></span>
-              </div>
-              <div class="pbody">
-                <p class="rank-lede">
-                  One difficulty at a time: the rank you hold on each scenario, the score
-                  for the next one, and what your last run reached. Highlighted rows count
-                  toward your next rank.
-                </p>
-                <p class="rank-lede">
-                  Every scenario comes from an existing community benchmark. The marks
-                  under a name are the other benchmarks that scenario counts on, filled
-                  once your score holds a rank there. Hover for the rank and next threshold.
-                </p>
-                <div class="pool-bands" id="svDiffs"></div>
-                <div class="pool-layout">
-                  <nav class="pool-nav" id="svCatNav" aria-label="Categories"></nav>
-                  <div class="pool-grid" id="svPool"></div>
-                </div>
-                <div class="pool-lists" id="svPlaylists" hidden>
-                  <div class="pool-lists-head">
-                    <h4 id="svListsTitle">Playlists</h4>
-                    <span class="note" id="svInstallNote"></span>
-                  </div>
-                  <div class="pool-chips" id="svChips"></div>
-                  <p class="pool-chip-legend" id="svChipLegend"></p>
-                </div>
-              </div>
-            </div>
+            </details>
 
             <div class="sv-section">
               <h2 class="sv-section-title">Beyond the top rank</h2>

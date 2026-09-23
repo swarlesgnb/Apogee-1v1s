@@ -123,7 +123,7 @@ app.whenReady().then(async () => {
   await chooseBand(0);
   await click('.exp-main-action [data-exp-action="start"]');
   await click('[data-exp-action="launch"]');
-  assert.match(await evaluate<string>(`document.querySelector('#expeditionMessage').textContent`), /Restart KovaaK/);
+  assert.match(await evaluate<string>(`document.querySelector('#expeditionMessage').textContent`), /Come back here/);
   state = syncExpedition(service.view(dir).state!, def, [run(roster[0].name, roster[0].target), run(roster[1].name, 0)], advance());
   await publish(state);
   assert.match(await evaluate<string>(`document.querySelector('.exp-objective h3').textContent`), /Checkpoint 2 of 3/);

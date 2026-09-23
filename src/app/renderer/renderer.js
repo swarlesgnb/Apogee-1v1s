@@ -47,6 +47,27 @@ const pct = (v) => (v >= 0 ? "+" : "−") + Math.abs(v * 100).toFixed(1) + "%";
 const num = (v) => Math.round(v).toLocaleString();
 
 /**
+ * Scores keep a decimal below 1,000 and never round UP. A best of 78.54 against a target
+ * of 79 read "79 -> 79, +0": the rank looked earned and never arrived. Points still to
+ * find round up for the same reason, so a gap is never shown as nothing.
+ */
+const decimals = (v, below) => (Math.abs(v) < below && !Number.isInteger(v) ? 1 : 0);
+const pts = (v) => {
+  if (v === null || v === undefined || !Number.isFinite(v)) return "—";
+  const f = 10 ** decimals(v, 1000);
+  return (Math.floor(v * f + 1e-9) / f).toLocaleString(undefined, { maximumFractionDigits: 1 });
+};
+const need = (v) => {
+  if (v === null || v === undefined || !Number.isFinite(v)) return "—";
+  if (v <= 0) return "0";
+  const f = 10 ** decimals(v, 100);
+  return (Math.ceil(v * f - 1e-9) / f).toLocaleString(undefined, { maximumFractionDigits: 1 });
+};
+/** A threshold, shown as written. */
+const tgt = (v) => (v === null || v === undefined || !Number.isFinite(v) ? "—"
+  : v.toLocaleString(undefined, { maximumFractionDigits: Math.abs(v) < 1000 ? 2 : 0 }));
+
+/**
  * Declared up here rather than beside the press effects that used to own it: `countTo`
  * reads it too, and `render` runs at the bottom of this file in the static preview -
  * before the old declaration was reached, which made this a boot-time ReferenceError
@@ -892,8 +913,23 @@ function showError(message) {
     return;
   }
   banner.textContent = message;
+  addDismiss(banner);
   banner.classList.add("on");
   playSound("error");
+}
+
+/**
+ * A close control on the banner. It had none, so an error stayed over every screen the
+ * player went on to until something else happened to replace it.
+ */
+function addDismiss(banner) {
+  const close = document.createElement("button");
+  close.type = "button";
+  close.className = "banner-close";
+  close.setAttribute("aria-label", "Dismiss");
+  close.textContent = "\u00d7";
+  close.addEventListener("click", () => banner.classList.remove("on"));
+  banner.append(close);
 }
 
 /**
@@ -929,12 +965,13 @@ function makeCopyable(el, name) {
   });
 }
 
-/** The same banner, for something that worked. */
-function showNotice(message) {
+/** The same banner, for something that worked. `quiet` for news nobody just asked for. */
+function showNotice(message, quiet = false) {
   const banner = $("banner");
   banner.textContent = message;
+  addDismiss(banner);
   banner.classList.add("on", "notice");
-  playSound("ok");
+  if (!quiet) playSound("ok");
 }
 
 /**
@@ -973,12 +1010,46 @@ let current = null;
 let selectedCategory = null;
 /** Scenarios the current match asks for, ticked off as runs land. */
 let pendingScenarios = [];
+/** Which match `pendingScenarios` belongs to, so a repaint keeps rows already played. */
+let pendingMatchId = null;
+
+/**
+ * The rating is the server's. The snapshot used to carry one worked out from a fixed
+ * series of made-up results, so every player saw the same number and it never moved -
+ * the one figure a ranked 1v1 has to move. Signed out or unplayed reads "unrated".
+ */
+let standing = null;
+function paintRating() {
+  const me = current?.player?.apogee;
+  const rated = HOST !== "electron" ? me : standing && standing.matchesPlayed > 0 ? standing : null;
+  $("myRating").textContent = rated ? Math.round(rated.rating) + " \u00b1" + Math.round(rated.rd) : "unrated";
+  const hero = $("heroRating");
+  if (!hero) return;
+  if (rated) {
+    countTo(hero, rated.rating);
+    countTo($("heroRd"), rated.rd, (v) => "\u00b1" + Math.round(v) + " uncertainty");
+  } else {
+    hero.textContent = "Unrated";
+    $("heroRd").textContent = HOST === "electron" && !standing && !signedIn
+      ? "sign in to play rated" : "play a rated match to place";
+  }
+}
+function refreshStanding() {
+  if (HOST !== "electron" || !api || !api.getStanding) return;
+  api.getStanding().then((s) => {
+    standing = s && !s.error ? s : null;
+    paintRating();
+  }).catch(() => undefined);
+}
+/** Whether a Steam session is present, for the queue button's wording. */
+let signedIn = false;
 
 function render(data) {
   lastSnapshot = data;
   current = data;
   $("app").hidden = false;
   $("empty").hidden = true;
+  document.body.classList.remove("awaiting-data");
   $("whoami").hidden = false;
 
   const me = data.player.apogee;
@@ -992,7 +1063,7 @@ function render(data) {
   $("myBadge").innerHTML = badge(me.tier, "me");
   $("myTier").textContent = me.tier.name;
   $("myTier").style.color = legibleOnDark(me.tier.color, RANK_TEXT_CONTRAST);
-  $("myRating").textContent = me.rating + " ±" + me.rd;
+  paintRating();
   $("myStreak").textContent = data.player.streak + "-day streak";
 
   $("heroBadge").innerHTML = badge(me.tier, "hero");
@@ -1005,19 +1076,19 @@ function render(data) {
   // The four that move because the player played. The tier name, the scenario count and
   // the placement sentence below are not counters - they change by becoming a different
   // thing, not by travelling to a new value.
-  countTo($("heroRating"), me.rating);
-  countTo($("heroRd"), me.rd, (v) => "±" + Math.round(v) + " uncertainty");
-  countTo($("heroPercentile"), 100 - me.percentile, (v) => "top " + v.toFixed(1) + "%");
+  paintRating();
+  // "Top 100.0%" is a placement nobody has; below the lowest rung it is simply unplaced.
+  countTo($("heroPercentile"), Math.min(99.9, 100 - me.percentile), (v) => "top " + v.toFixed(1) + "%");
   countTo($("heroRuns"), data.player.totalRuns, num);
   countTo(
     $("heroScenarios"),
     data.player.scenarioCount,
     (v) => "across " + Math.round(v) + " scenarios",
   );
-  $("heroPlacement").textContent =
-    "Provisional. Estimated from your " + data.benchmark.name + " " +
-    data.benchmark.difficulty + " standing (" + data.player.benchmarkRank + ", " +
-    num(data.player.benchmarkEnergy) + " energy) until there is a live population.";
+  $("heroPlacement").textContent = data.player.benchmarkRank
+    ? "Provisional. Estimated from your " + data.benchmark.name + " scores (" +
+      num(data.player.benchmarkEnergy) + " season energy) until there is a live population."
+    : "Play any " + data.benchmark.name + " scenario to be placed.";
 
   renderClimb(data);
   renderCommandFocus(data);
@@ -1175,11 +1246,11 @@ function renderDraw(data) {
     if (r.measured) {
       const at = typeof r.progress === "number" ? r.progress : 0;
       setFill(bar, at);
-      base.textContent = r.best === null ? "unplayed" : num(r.best);
+      base.textContent = r.best === null ? "unplayed" : pts(r.best);
       base.title =
         num(r.runs) + " runs · baseline set" +
         (r.nextRankScore !== null && r.gap !== null
-          ? " · " + num(r.gap) + " points to next rank"
+          ? " · " + need(r.gap) + " points to next rank"
           : "");
       el.className = "draw-row";
     } else {
@@ -1194,7 +1265,7 @@ function renderDraw(data) {
       base.title =
         (r.runs === 0
           ? "no runs yet"
-          : (r.runs === 1 ? "1 run" : num(r.runs) + " runs") + ", best " + num(r.best)) +
+          : (r.runs === 1 ? "1 run" : num(r.runs) + " runs") + ", best " + pts(r.best)) +
         " · no baseline, scored against an estimate";
       el.className = "draw-row short" + (r.runs === 0 ? " none" : "");
     }
@@ -1342,6 +1413,13 @@ function commitSub(data) {
 function resetCommit(data) {
   const btn = $("queueBtn");
   if (!btn) return;
+  // Signed out, the button used to say Find opponent, play the search, and then answer
+  // "sign in first". It says what pressing it will actually do.
+  if (HOST === "electron" && !signedIn) {
+    setCommit("idle", "Sign in to queue", "Ranked uses your Steam account", "");
+    btn.disabled = false;
+    return;
+  }
   setCommit("idle", "Find opponent", data ? commitSub(data) : "", "matched on rating");
   if (btn.dataset.gated !== "1") btn.disabled = false;
 }
@@ -1699,6 +1777,8 @@ function renderCategories(data) {
       Array.prototype.forEach.call(host.children, (c) =>
         c.setAttribute("aria-pressed", "false"));
       b.setAttribute("aria-pressed", "true");
+      // The choice is kept for the next queue; the match on screen stays put.
+      if (activeMatch) return;
       $("opponent").classList.remove("on");
       resetCommit(data);
       renderEligibility();
@@ -2605,7 +2685,7 @@ function fillSeasonPicker(query) {
     // Indexed against the full list, so filtering never changes what a value means.
     opt.value = String(seasonAvailable.indexOf(s));
     opt.textContent =
-      s.name + (s.runs > 0 ? `  ·  ${s.runs} runs, best ${num(s.best)}` : "  ·  no history");
+      s.name + (s.runs > 0 ? `  ·  ${s.runs} runs, best ${pts(s.best)}` : "  ·  no history");
     pick.append(opt);
   });
 
@@ -3764,7 +3844,7 @@ function renderSeasonRow(body, scenario, index) {
     // is guessing.
     const best = document.createElement("td");
     best.className = "corpus";
-    best.textContent = scenario.corpus ? num(scenario.corpus.best) : "—";
+    best.textContent = scenario.corpus ? pts(scenario.corpus.best) : "—";
     best.title = scenario.corpus
       ? `${scenario.corpus.runs} runs, median ${num(scenario.corpus.median)}` +
         (scenario.corpus.reaches ? `, reaches ${scenario.corpus.reaches}` : ", unranked")
@@ -4708,7 +4788,7 @@ function gridPaintDetail() {
   const option = seasonAvailable.find((o) => o.name === slot.scenario);
   const p = provenanceOf(slot.scenario);
   const facts = [p.text, p.board];
-  if (option?.runs) facts.push(`you: ${option.runs} runs, best ${num(option.best)}`);
+  if (option?.runs) facts.push(`you: ${option.runs} runs, best ${pts(option.best)}`);
   const factRow = add("div", "pgd-facts" + (p.thin ? " thin" : ""), facts.filter(Boolean).join(" · "));
   factRow.title = p.title;
 
@@ -5308,12 +5388,19 @@ function playButton(scenario) {
         play.textContent = prev;
       } else {
         play.textContent = "Opened";
+        // Back to Play, so the same button can open it again after a restart of the game.
+        setTimeout(() => { play.textContent = prev; }, 3000);
       }
     } finally {
       play.disabled = false;
     }
   });
   return play;
+}
+
+/** The scenario that the next rank is scored on, which is not always the one being played. */
+function nextRankTarget(s) {
+  return s.nextRankIsNewScenario && s.nextRankScenario ? s.nextRankScenario : s.name;
 }
 
 /* ---------------------------------------------------------- scenario ranks */
@@ -5323,7 +5410,45 @@ function playButton(scenario) {
  * reason as `seasonBand`: a run landing mid-grind repaints the table, and a filter that
  * reset itself would lose the scenario the player was watching.
  */
-const scenarioView = { category: null, window: null, sort: "closest" };
+const scenarioView = { category: null, window: null, sort: "closest", query: "" };
+
+/** Every word, any order, against the name, label and family. */
+function matchesQuery(row, query) {
+  const words = query.toLowerCase().split(/s+/).filter(Boolean);
+  if (words.length === 0) return true;
+  const hay = [row.scenario, row.name, row.label, row.family, row.category].filter(Boolean).join(" ").toLowerCase();
+  return words.every((w) => hay.includes(w));
+}
+
+/**
+ * The playlist that holds exactly what the Scenarios filter shows, when one exists: a
+ * difficulty is chosen, and either one category or all of them. One press from "this is
+ * what I want to practice" to having it in KovaaK's.
+ */
+function renderScenarioInstall() {
+  const btn = $("scInstall");
+  if (!btn) return;
+  const windows = (practice && practice.season && practice.season.windows) || [];
+  const w = scenarioView.window;
+  const name = w === null || !windows[w] ? null
+    : "Apogee " + (scenarioView.category === null ? "All" : scenarioView.category) + " " + windows[w];
+  const offered = name && (practice.playlists || []).some((p) => p.name === name);
+  btn.hidden = HOST !== "electron" || !offered;
+  if (!offered) return;
+  const installed = new Set(practice.installedNames || []).has(name);
+  btn.textContent = installed ? "Installed in KovaaK's · " + name : "Install as a KovaaK's playlist · " + name;
+  btn.onclick = async () => {
+    btn.disabled = true;
+    try {
+      const r = await api.installPlaylists([name]);
+      if (r && r.error) showError(r.error);
+      else showNotice("“" + name + "” is in KovaaK's Playlists. If the game is open, restart it to load it.");
+    } finally {
+      btn.disabled = false;
+      refreshPractice();
+    }
+  };
+}
 
 /**
  * Every scenario in the season with the rank its best run earns on it.
@@ -5374,6 +5499,15 @@ function renderScenarioRanks() {
   };
   filterRow($("scCats"), cats.map((c) => ({ value: c.name, label: c.name })), "category");
   filterRow($("scBands"), windows.map((name, w) => ({ value: w, label: name })), "window");
+  renderScenarioInstall();
+  const search = $("scSearch");
+  if (search && !search.dataset.wired) {
+    search.dataset.wired = "1";
+    search.addEventListener("input", () => {
+      scenarioView.query = search.value;
+      renderScenarioRanks();
+    });
+  }
 
   document.querySelectorAll(".sc-sort").forEach((b) => {
     b.setAttribute("aria-pressed", String(b.dataset.sort === scenarioView.sort));
@@ -5393,7 +5527,8 @@ function renderScenarioRanks() {
     .filter(
       ({ r }) =>
         (scenarioView.category === null || r.category === scenarioView.category) &&
-        (scenarioView.window === null || r.window === scenarioView.window),
+        (scenarioView.window === null || r.window === scenarioView.window) &&
+        matchesQuery(r, scenarioView.query),
     );
 
   // Closest is in proportion to the target, as on the Ranks screen: 300 points is nothing
@@ -5444,10 +5579,10 @@ function renderScenarioRanks() {
       "<td>" + esc(r.label) + ' <span class="win">' + esc(r.windowName) + "</span></td>" +
       "<td>" + esc(r.category) + "</td>" +
       '<td class="sc-rank">' + esc(held ?? "unranked") + "</td>" +
-      "<td>" + (r.best === null ? '<span class="base">unplayed</span>' : num(r.best)) + "</td>" +
+      "<td>" + (r.best === null ? '<span class="base">unplayed</span>' : pts(r.best)) + "</td>" +
       '<td class="sc-rank">' + (maxedHere ? "maxed" : esc(next ?? "")) + "</td>" +
-      "<td>" + (maxedHere ? "" : num(r.nextRankScore)) + "</td>" +
-      '<td class="sc-gap">' + (maxedHere || r.gap === null ? "" : "+" + num(r.gap)) + "</td>" +
+      "<td>" + (maxedHere ? "" : tgt(r.nextRankScore)) + "</td>" +
+      '<td class="sc-gap">' + (maxedHere || r.gap === null ? "" : "+" + need(r.gap)) + "</td>" +
       '<td class="sc-prog"><span class="sc-bar"><i></i></span></td>' +
       '<td class="sc-act"></td>';
 
@@ -5937,7 +6072,8 @@ function renderSeasonView(data) {
         //
         // This is the argument for the whole pool on one line: nothing here was invented,
         // and a session on this ladder is a session on the ladders people already grind.
-        // 227 of the 252 carry at least one mark, 76 of them two or more.
+        // 184 of the 256 carry at least one mark since the fun rebuild, which chose some
+        // families for replay over benchmark membership.
         //
         // The mark is the benchmark's own abbreviation in the benchmark's own brand
         // colour, and it fills in solid once the score holds a rank there - so an unplayed
@@ -5961,9 +6097,9 @@ function renderSeasonView(data) {
               o.benchmark + (o.difficulty ? " " + o.difficulty : "") +
               " · " +
               (o.rankName
-                ? o.rankName + (o.nextName ? ", " + num(o.nextScore) + " for " + o.nextName : "")
+                ? o.rankName + (o.nextName ? ", " + tgt(o.nextScore) + " for " + o.nextName : "")
                 : o.nextName
-                  ? num(o.nextScore) + " for " + o.nextName
+                  ? tgt(o.nextScore) + " for " + o.nextName
                   : "not ranked here");
             marks.append(chip);
           }
@@ -5987,18 +6123,18 @@ function renderSeasonView(data) {
 
         const pb = document.createElement("span");
         pb.className = "pb" + (v.best === null ? " none" : "");
-        pb.textContent = v.best === null ? "unplayed" : num(v.best);
+        pb.textContent = v.best === null ? "unplayed" : pts(v.best);
 
         const to = document.createElement("span");
         to.className = "to";
         to.textContent = maxedHere ? "" : "→";
 
-        const tgt = document.createElement("span");
-        tgt.className = "tgt" + (maxedHere ? " max" : "");
-        tgt.textContent = maxedHere ? "maxed" : num(v.nextRankScore);
-        if (!maxedHere && v.best !== null) tgt.title = num(v.gap || 0) + " to go";
+        const targetEl = document.createElement("span");
+        targetEl.className = "tgt" + (maxedHere ? " max" : "");
+        targetEl.textContent = maxedHere ? "maxed" : tgt(v.nextRankScore);
+        if (!maxedHere && v.best !== null) targetEl.title = need(v.gap || 0) + " to go";
 
-        nums.append(pb, to, tgt);
+        nums.append(pb, to, targetEl);
 
         // The ranks those two numbers stand for, under them: the one the best holds and
         // the one the target buys. A tile that said "842 → 900" left the player working
@@ -6084,7 +6220,7 @@ function renderPlaylists() {
   const here = (practice.playlists || []).filter((p) => p.window === band);
 
   const title = $("svListsTitle");
-  if (title) title.textContent = "Playlists · " + (bands[band] || "");
+  if (title) title.textContent = "Install as KovaaK's playlists · " + (bands[band] || "");
 
   const note = $("svInstallNote");
   if (note && !note.dataset.done) {
@@ -6198,7 +6334,10 @@ function renderPlaylists() {
  * Drawn entirely from the snapshot and the practice list, both of which the window already
  * holds, so opening this fetches nothing and works with the app offline.
  */
+/** Where Ranks was scrolled when a band opened, so Back returns there. */
+let ranksScroll = null;
 function openBand(category, window_) {
+  ranksScroll = document.querySelector(".scroll")?.scrollTop ?? null;
   bandOpen = { category, window: window_ };
   renderBand();
   const tab = document.querySelector('.tab[data-screen="band"]');
@@ -6296,7 +6435,7 @@ function renderBand() {
 
     const bestCell = document.createElement("td");
     bestCell.className = "best" + (r.best === null ? " none" : "");
-    bestCell.textContent = r.best === null ? "unplayed" : num(r.best);
+    bestCell.textContent = r.best === null ? "unplayed" : pts(r.best);
     tr.append(bestCell);
 
     // The first threshold this score has not beaten. Marked once per row: the ones above
@@ -6310,16 +6449,17 @@ function renderBand() {
       td.className = "cell" + (cleared ? " cleared" : i === nextIndex ? " next" : "");
       const colour = band.rankColors?.[name];
       if (colour) td.style.setProperty("--cell", colour);
-      td.textContent = target === undefined ? "" : num(target);
+      td.textContent = target === undefined ? "" : tgt(target);
+      // .title is text, not HTML: escaping here showed "Small &amp; Slow".
       td.title =
-        esc(r.label) + " · " + name +
+        r.label + " · " + name +
         (target === undefined
           ? ""
           : cleared
             ? " · cleared"
             : r.best === null
-              ? " · wants " + num(target)
-              : " · " + num(Math.round(target - r.best)) + " to go");
+              ? " · wants " + tgt(target)
+              : " · " + need(target - r.best) + " to go");
       tr.append(td);
     });
 
@@ -6368,7 +6508,7 @@ function renderRanks(data) {
     // climbs, and a key per tier would make the percentile restart from nothing at every
     // promotion - which is the one moment it most wants to be continuous.
     if (here) {
-      countTo(li.querySelector(".you-pc"), 100 - me.percentile, (v) => v.toFixed(1), "ladder:you");
+      countTo(li.querySelector(".you-pc"), Math.min(99.9, 100 - me.percentile), (v) => v.toFixed(1), "ladder:you");
     }
     ladder.append(li);
   });
@@ -6379,7 +6519,11 @@ function renderRanks(data) {
   $("benchLede").textContent =
     `Your ${bench.name} standing, from scores alone. Each band is ranked separately, ` +
     "so you hold a rank in every band you've played. " +
-    `Overall: ${data.player.benchmarkRank}, ${num(data.player.benchmarkEnergy)} energy.`;
+    // The overall energy ladder shares its eight names with the tier above it, so naming
+    // it here showed two different ranks side by side. The energy is the useful part.
+    (data.player.benchmarkRank
+      ? `Season energy: ${num(data.player.benchmarkEnergy)}.`
+      : "Play any season scenario to place.");
 
   const host = $("catRanks");
   host.textContent = "";
@@ -6531,13 +6675,16 @@ function renderRanks(data) {
     const note = document.createElement("div");
     note.className = "cat-rank-note";
     note.innerHTML = climbing
-      ? "Closest: " + num(climbing.gap) + " points on <b>" +
+      ? "Closest: " + need(climbing.gap) + " point" + (climbing.gap === 1 ? "" : "s") + " on <b>" +
         esc(climbing.nextRankIsNewScenario ? targetName(climbing) : climbing.label) +
         "</b> for " + esc(climbing.nextRankName) +
         (climbing.nextRankIsNewScenario
           ? ' <span class="onscen">harder scenario than your current one</span>'
           : "")
       : "Every scenario here is at its top rank.";
+    // "Closest: 1 point on X" is advice; the button makes it one press from playing it.
+    const go = climbing ? playButton(nextRankTarget(climbing)) : null;
+    if (go) note.append(" ", go);
     el.append(note);
 
     host.append(el);
@@ -6549,7 +6696,9 @@ function renderRanks(data) {
   const rows = data.categories
     .reduce((all, c) => all.concat(c.scenarios.map((s) => ({ s, cat: c }))), [])
     .filter(({ s }) => s.nextRankName && s.gap > 0)
-    .sort((a, b) => a.s.gap - b.s.gap);
+    // Proportional, as the category's "Closest" note sorts: one point on a 900-point
+    // scenario and one on a 15,000-point one are not the same distance.
+    .sort((a, b) => a.s.gap / Math.max(1, a.s.nextRankScore) - b.s.gap / Math.max(1, b.s.nextRankScore));
 
   const body = $("nextRankBody");
   settled(body);
@@ -6580,8 +6729,12 @@ function renderRanks(data) {
       '<td style="color:' + esc(ink) + '">' + esc(s.rankName || "unranked") + "</td>" +
       '<td class="c-best"></td>' +
       '<td style="color:' + esc(nextInk) + '">' + esc(s.nextRankName) + "</td>" +
-      "<td>" + num(s.nextRankScore) + target + "</td>" +
+      "<td>" + tgt(s.nextRankScore) + target + "</td>" +
       '<td class="c-gap"></td>';
+    // In the name cell rather than a column of its own, which pushed the table past the
+    // page at 940px.
+    const go = playButton(nextRankTarget(s));
+    if (go) tr.firstElementChild.append(" ", go);
 
     // The two columns that move because the player played. The target beside them is a
     // threshold and does not move, so it is written rather than counted - a number that
@@ -6589,8 +6742,8 @@ function renderRanks(data) {
     //
     // Keyed on the scenario, not the row: this table re-sorts as gaps close, so the row
     // holding a scenario is a different row every render.
-    countTo(tr.querySelector(".c-best"), s.score, num, "best:" + s.label);
-    countTo(tr.querySelector(".c-gap"), s.gap, (v) => "+" + num(v), "gap:" + s.label);
+    countTo(tr.querySelector(".c-best"), s.score, pts, "best:" + s.label);
+    countTo(tr.querySelector(".c-gap"), s.gap, (v) => "+" + need(v), "gap:" + s.label);
     body.append(tr);
   });
 }
@@ -6627,6 +6780,11 @@ function startMatchClock(expiresAt) {
       clock.textContent = "time up";
       clock.className = "match-clock out";
       stopMatchClock();
+      // "time up" and nothing else was a dead end. Say what it means and what to do.
+      if (activeMatch && !activeMatch.seeding && !activeMatch.tournament && pendingScenarios.some((s) => !s.done)) {
+        $("matchHint").textContent = "Time's up. This match has expired and counts as a forfeit. Close it to queue again.";
+        $("cancelMatchBtn").textContent = "Close match";
+      }
       return;
     }
 
@@ -6695,7 +6853,7 @@ function renderTodo(arriving) {
       (mine
         ? '<span class="scen-best" title="' +
           esc(num(mine.runs) + " runs on this scenario") +
-          '">to beat <b>' + esc(num(mine.best)) + "</b></span>"
+          '">to beat <b>' + esc(pts(mine.best)) + "</b></span>"
         : "");
 
     // Each scenario opens itself. KovaaK's reads its playlists at startup, so a playlist
@@ -6760,9 +6918,9 @@ function renderResult(data) {
     const tr = document.createElement("tr");
     tr.innerHTML =
       "<td>" + esc(r.label) + "</td>" +
-      "<td>" + num(r.you.score) + '<div class="base">base ' + num(r.you.baseline) + "</div></td>" +
+      "<td>" + pts(r.you.score) + '<div class="base">base ' + num(r.you.baseline) + "</div></td>" +
       '<td class="' + (r.you.delta >= 0 ? "up" : "down") + '">' + pct(r.you.delta) + "</td>" +
-      "<td>" + num(r.them.score) + '<div class="base">base ' + num(r.them.baseline) + "</div></td>" +
+      "<td>" + pts(r.them.score) + '<div class="base">base ' + num(r.them.baseline) + "</div></td>" +
       '<td class="' + (r.them.delta >= 0 ? "up" : "down") + '">' + pct(r.them.delta) + "</td>" +
       '<td class="' + (youWon ? "won-round" : "") + '">' + (r.you.delta === r.them.delta ? "draw" : youWon ? "won" : "lost") + "</td>";
     body.append(tr);
@@ -6869,7 +7027,9 @@ function renderRematch(settled) {
   const leg = settled && settled.tournament;
   if (leg) {
     box.hidden = false;
+    if ($("queueAgainBtn")) $("queueAgainBtn").hidden = true;
     const back = $("rematchBtn");
+    back.hidden = false;
     back.textContent = "Back to " + leg.name;
     back.disabled = false;
     $("rematchNote").textContent = leg.label + " · unrated";
@@ -6892,10 +7052,25 @@ function renderRematch(settled) {
   const sendable =
     opponent && category && category !== "Any" && settled.verdict !== "void";
 
-  box.hidden = !sendable;
-  if (!sendable) return;
-
+  // The loop is result, then queue again. It took a tab switch, a scroll and a click.
+  const again = $("queueAgainBtn");
+  if (again) {
+    again.hidden = !settled && !lastSettled;
+    again.disabled = Boolean(activeMatch);
+    again.textContent = activeMatch ? "Match in progress" : "Queue again";
+    again.onclick = () => {
+      openScreen("queue");
+      if (!activeMatch && !$("queueBtn").disabled) $("queueBtn").click();
+    };
+  }
   const button = $("rematchBtn");
+  button.hidden = !sendable;
+  box.hidden = !sendable && (!again || again.hidden);
+  if (!sendable) {
+    $("rematchNote").textContent = activeMatch ? "Finish or abandon your current match first." : "";
+    return;
+  }
+
   button.textContent = "Duel " + opponent.displayName;
   button.disabled = Boolean(activeMatch);
   $("rematchNote").textContent = activeMatch
@@ -6968,11 +7143,15 @@ function renderSettled(s) {
     ? "var(--ink-dim)"
     : change > 0 ? "var(--up)" : change < 0 ? "var(--down)" : "var(--ink-mid)";
 
-  $("explain").textContent = s.explanation;
+  // A void's reason arrives as `message`, and it names the scenario that ended early.
+  $("explain").textContent = s.explanation || s.message || "";
 
   const body = $("roundsBody");
   settled(body);
   body.textContent = "";
+  // The server does not send the opponent's raw scores, so that column was a dash on
+  // every real result. Their improvement, which decides the round, is still shown.
+  body.closest?.("table")?.classList.add("no-them");
   (s.rounds || []).forEach((r) => {
     const yours = r.delta;
     // Null means there is nobody on the other side, which is not the same as an
@@ -6987,7 +7166,7 @@ function renderSettled(s) {
     const tr = document.createElement("tr");
     tr.innerHTML =
       "<td>" + esc(r.scenario) + "</td>" +
-      "<td>" + (Number.isFinite(r.score) ? num(r.score) : "—") + '<div class="base">base ' + (Number.isFinite(r.baseline) ? num(r.baseline) : "—") +
+      "<td>" + (Number.isFinite(r.score) ? pts(r.score) : "—") + '<div class="base">base ' + (Number.isFinite(r.baseline) ? num(r.baseline) : "—") +
         (r.verificationTier && r.verificationTier !== "verified"
           ? " · " + esc(r.verificationTier)
           : "") +
@@ -7078,7 +7257,7 @@ function renderCoverage(data) {
         const next = document.createElement("div");
         next.className = "cover-next";
         next.textContent =
-          `${cheapest.row.windowName} needs ${cheapest.cost} more runs: ` +
+          `${cheapest.row.windowName} needs ${cheapest.cost} more run${cheapest.cost === 1 ? "" : "s"}: ` +
           cheapest.need.map((x) => `${x.label} +${x.needs}`).join(", ");
         block.append(next);
       }
@@ -7089,7 +7268,11 @@ function renderCoverage(data) {
 }
 
 function renderProfile(data) {
-  $("weakNote").textContent = data.weakest + " is your weakest category";
+  // With nothing played there is no weakest category, only an unplayed one.
+  const played = data.categories.filter((c) => c.energy > 0);
+  $("weakNote").textContent = played.length < 2
+    ? "Not enough runs yet to compare categories"
+    : data.weakest + " is your weakest category";
 
   const maxEnergy = Math.max.apply(null, data.categories.map((c) => c.energy));
   const wmap = $("wmap");
@@ -7133,13 +7316,13 @@ function renderProfile(data) {
         "<td>" + esc(s.label) +
           (s.windowName ? ' <span class="win">' + esc(s.windowName) + "</span>" : "") + "</td>" +
         "<td>" + esc(s.subCategory || "—") + "</td>" +
-        "<td>" + (s.score ? num(s.score) : "—") + "</td>" +
+        "<td>" + (s.score ? pts(s.score) : "—") + "</td>" +
         '<td style="color:' + esc(ink) + '">' + esc(s.rankName || "—") + "</td>" +
         "<td>" + num(s.energy) + "</td>" +
         "<td>" + s.runs + "</td>" +
         "<td>" +
           (s.gap != null
-            ? "+" + num(s.gap) + " → " + esc(s.nextRankName) +
+            ? "+" + need(s.gap) + " → " + esc(s.nextRankName) +
               (s.nextRankIsNewScenario
                 ? ' <span class="onscen">on ' + esc(targetName(s)) + "</span>"
                 : "")
@@ -7158,7 +7341,18 @@ function renderProfile(data) {
  */
 function renderConsistency(data) {
   const c = data.consistency;
-  if (!c) return;
+  const body = $("consistencyBody");
+  // Returning early left the previous snapshot's ceiling and rows on screen.
+  if (!c || c.scenarios.length === 0) {
+    $("ceilRank").textContent = "—";
+    $("ceilEnergy").textContent = "";
+    $("floorRank").textContent = "—";
+    $("floorEnergy").textContent = "";
+    $("gapVal").textContent = "—";
+    settled(body);
+    body.innerHTML = '<tr><td colspan="6" style="color:var(--ink-dim)">Play any season scenario 5 times to see your floor.</td></tr>';
+    return;
+  }
 
   const inkOf = (rank) =>
     data.benchmark.rankColors[rank]
@@ -7175,7 +7369,6 @@ function renderConsistency(data) {
 
   $("gapVal").textContent = (c.gap * 100).toFixed(1) + "%";
 
-  const body = $("consistencyBody");
   settled(body);
   body.textContent = "";
 
@@ -7430,18 +7623,40 @@ function renderEligibility() {
   }
 
   const { uploaded, required, missing } = eligibility;
+  // The gate said "0 uploaded" to a player with thousands of runs on this PC and no way
+  // to act on it: the upload control sat 500px further down. It names both counts and
+  // carries the button, and a history big enough to qualify is sent without asking.
+  const local = current && current.player ? current.player.totalRuns : 0;
+  const coverable = local >= required;
   $("queueGateText").innerHTML =
     'Ranked needs <span class="gate-count">' + num(required) + "</span> uploaded runs. " +
-    'You have <span class="gate-count">' + num(uploaded) + "</span> \u00b7 " +
-    num(missing) + " to go.";
+    (local > uploaded
+      ? 'You have <span class="gate-count">' + num(local) + "</span> on this PC and " +
+        num(uploaded) + " uploaded."
+      : 'You have <span class="gate-count">' + num(uploaded) + "</span> \u00b7 " + num(missing) + " to go.");
+  const gateUpload = $("queueGateUpload");
+  if (gateUpload) {
+    gateUpload.hidden = !(signedIn && local > uploaded);
+    gateUpload.disabled = uploadBusy;
+    gateUpload.textContent = uploadBusy ? "Uploading\u2026" : "Upload my " + num(local) + " runs";
+  }
   setFill($("queueGateFill"), uploaded / required);
   gate.classList.add("on");
+  if (signedIn && coverable && !autoUploaded && !uploadBusy) {
+    autoUploaded = true;
+    showNotice("Uploading your run history so you can play ranked. This takes a minute.", true);
+    $("uploadBtn").click();
+  }
 
   // Marked so the paths that re-enable the button on a category change or a finished
   // match do not quietly hand it back.
   btn.disabled = true;
   btn.dataset.gated = "1";
 }
+
+/** One automatic upload per session: if it fails, the button is there. */
+let autoUploaded = false;
+let uploadBusy = false;
 
 function refreshEligibility() {
   if (!api || !api.queueEligibility) return;
@@ -7462,7 +7677,7 @@ function refreshEligibility() {
 let toastTimer = null;
 function showRunToast(run) {
   $("toastScen").textContent = run.scenario;
-  $("toastScore").textContent = num(run.score);
+  $("toastScore").textContent = pts(run.score);
   $("toast").classList.add("on");
   playSound("run");
 
@@ -8377,6 +8592,9 @@ function restoreScreen() {
   if (tab && !tab.hidden) tab.click();
 }
 
+/** Screens that work before any stats are read. */
+const STANDALONE_SCREENS = new Set(["mixtape", "expedition"]);
+
 document.querySelectorAll(".tab").forEach((tab) => {
   tab.id ||= "nav-" + tab.dataset.screen;
   tab.setAttribute("aria-controls", "screen-" + tab.dataset.screen);
@@ -8388,6 +8606,16 @@ document.querySelectorAll(".tab").forEach((tab) => {
     panel.setAttribute("tabindex", "0");
   }
   tab.addEventListener("click", () => {
+    // Before any stats are read, the screens that draw from them are empty. Nine tabs
+    // used to open onto a blank page; they point back at the one thing to do instead.
+    if (document.body.classList.contains("awaiting-data") && !STANDALONE_SCREENS.has(tab.dataset.screen)) {
+      const choose = $("emptyChoose");
+      if (choose) choose.focus();
+      return;
+    }
+    // An error belongs to what the player was doing; moving on leaves it behind.
+    if (tab.getAttribute("aria-selected") !== "true" && $("banner").classList.contains("on") &&
+        !$("banner").classList.contains("notice")) showError(null);
     // Only when the screen actually changes. Every route into a tab goes through
     // `.click()`, including the one that re-selects the tab already showing, and a
     // navigation sound for going nowhere is just a noise.
@@ -8421,9 +8649,16 @@ document.querySelectorAll(".tab").forEach((tab) => {
 });
 
 if ($("bandBack")) {
-  $("bandBack").addEventListener("click", () => {
+  const backToRanks = () => {
     const tab = document.querySelector('.tab[data-screen="ranks"]');
     if (tab) tab.click();
+    // Back where the card was, not the top of Ranks.
+    if (ranksScroll !== null) requestAnimationFrame(() => { document.querySelector(".scroll").scrollTop = ranksScroll; });
+  };
+  $("bandBack").addEventListener("click", backToRanks);
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && $("screen-band")?.classList.contains("active") &&
+        !document.querySelector("dialog[open]")) backToRanks();
   });
 }
 
@@ -8547,6 +8782,7 @@ let activeMatch = null;
  */
 function paintActiveMatch() {
   if (!activeMatch || !current) return;
+  const arriving = pendingMatchId !== activeMatch.matchId;
 
   setCommit(
     "held",
@@ -8564,8 +8800,28 @@ function paintActiveMatch() {
     "Play the 3 below in KovaaK's · abandon to queue again",
     "",
   );
-  $("queueBtn").disabled = true;
+  // Pressing the held button takes the player to the match rather than doing nothing.
+  $("queueBtn").disabled = false;
+  $("queueBtn").dataset.held = "1";
   showRealMatch(activeMatch, current);
+  if (activeMatch.scenarios.length && pendingScenarios.every((s) => s.done)) markAllIn();
+  if (duelBoard) renderDuels(duelBoard);
+  // The match used to land below the fold, behind the rank card and the duels panel.
+  if (arriving && document.querySelector(".tab[data-screen=queue][aria-selected=true]")) {
+    $("opponent").scrollIntoView({ block: "start", behavior: reduceMotion.matches ? "auto" : "smooth" });
+    $("playMatchBtn").focus({ preventScroll: true });
+  }
+}
+
+/** Every run is in: nothing left to play, and abandoning now would forfeit a finished set. */
+function markAllIn() {
+  $("matchHint").textContent = "All runs in. Getting your result\u2026";
+  $("playMatchBtn").disabled = true;
+  const abandon = $("cancelMatchBtn");
+  abandon.disabled = true;
+  abandon.textContent = "Settling\u2026";
+  stopMatchClock();
+  $("matchClock").hidden = true;
 }
 
 function showRealMatch(match, data) {
@@ -8573,7 +8829,9 @@ function showRealMatch(match, data) {
 
   // The payoff of pressing Find opponent. Seeding gets the same riser: the player still
   // has three scenarios to go and play, which is the thing the sound is announcing.
-  playSound("matchFound");
+  // Once per match: a repaint after a run is not a new match.
+  const sameMatch = pendingMatchId === match.matchId;
+  if (!sameMatch) playSound("matchFound");
 
   // A seeding match has no opponent: the pool was empty, so the server handed out three
   // scenarios to play against nobody. Everything downstream is identical, which is the
@@ -8628,18 +8886,28 @@ function showRealMatch(match, data) {
     }
   }
 
+  // Rows already played stay played: a repaint used to flip them back to "Awaiting run",
+  // and a match recovered after a restart asked again for runs the server already had.
+  const prior = new Map(sameMatch ? pendingScenarios.map((s) => [s.id, s]) : []);
+  const filed = new Set(match.submittedScenarioIds || []);
   pendingScenarios = match.scenarios.map((s) => ({
     id: s.id,
     label: s.name,
-    done: false,
-    tier: null,
+    done: Boolean(prior.get(s.id)?.done) || filed.has(s.id),
+    tier: prior.get(s.id)?.tier ?? null,
   }));
-  renderTodo(true);
+  pendingMatchId = match.matchId;
+  renderTodo(!sameMatch);
 
   // A new match means a new playlist to write, so the button goes back to offering it.
   $("playMatchBtn").textContent = "Play in KovaaK's";
   $("playMatchBtn").disabled = false;
-  $("matchHint").textContent = match.resumed
+  $("cancelMatchBtn").disabled = false;
+  $("cancelMatchBtn").textContent = "Abandon match";
+  const left = pendingScenarios.filter((s) => !s.done).length;
+  $("matchHint").textContent = left > 0 && left < pendingScenarios.length
+    ? left + " scenario" + (left === 1 ? "" : "s") + " left. Your earlier runs already count."
+    : match.resumed
     ? "Match already open. Finish or abandon it to queue again."
     : match.seeding || !match.opponent
       ? "Unrated. Your runs become the first entry in this pool. First run on each " +
@@ -8702,6 +8970,16 @@ $("queueBtn").addEventListener("click", async () => {
     return;
   }
 
+  if (!signedIn) {
+    const signed = await api.signIn();
+    if (signed && signed.error) showError(signed.error);
+    return;
+  }
+  if (activeMatch) {
+    $("opponent").scrollIntoView({ block: "start", behavior: reduceMotion.matches ? "auto" : "smooth" });
+    return;
+  }
+
   btn.disabled = true;
   setCommit("working", "Searching", "matching on rating · " +
     (!selectedCategory || selectedCategory === "Any" ? "any category" : selectedCategory), "0:00");
@@ -8709,10 +8987,16 @@ $("queueBtn").addEventListener("click", async () => {
   $("opponent").classList.remove("on");
   showError(null);
 
-  const result = await window.apogee.findMatch(selectedCategory, current.benchmark.matchPool);
-
-  stopSearchClock();
-  btn.disabled = false;
+  // A rejected call used to leave the button on "Searching" for good.
+  let result;
+  try {
+    result = await window.apogee.findMatch(selectedCategory, current.benchmark.matchPool);
+  } catch (err) {
+    result = { error: err && err.message ? err.message : String(err) };
+  } finally {
+    stopSearchClock();
+    btn.disabled = false;
+  }
 
   if (result.error) {
     resetCommit(current);
@@ -8744,6 +9028,17 @@ function renderSession(session, configured) {
   // The header holds the sign-in control, so it has to be visible before there is any
   // snapshot to show. Otherwise a new user with no stats yet has nothing to click.
   $("whoami").hidden = false;
+
+  signedIn = Boolean(session);
+  if (!activeMatch) resetCommit(current);
+  if (session) refreshStanding();
+  else {
+    standing = null;
+    paintRating();
+  }
+  // No snapshot yet means no rank to show: an empty bordered pill was a tab stop to nowhere.
+  const rankLink = $("myRankLink");
+  if (rankLink) rankLink.hidden = !current;
 
   if (session) {
     btn.hidden = true;
@@ -9556,6 +9851,8 @@ function rosterRow(person, isFriend) {
   send.type = "button";
   send.className = "go";
   send.textContent = "Duel";
+  send.disabled = Boolean(activeMatch);
+  if (activeMatch) send.title = "Finish or abandon your current match first";
   send.addEventListener("click", async () => {
     if (!duelCategory) {
       showError("Pick a category to duel in first.");
@@ -9742,10 +10039,9 @@ function renderTournaments(list) {
   const side = tnEl("div");
 
   if (!list) {
-    main.append(tnEmpty(
-      HOST === "electron" ? "Sign in to play" : "Loading",
-      "Sign in to see and join tournaments.",
-    ));
+    main.append(HOST === "electron" && signedIn
+      ? tnEmpty("Couldn't load tournaments", "The server did not answer. They reload on their own while this screen is open.")
+      : tnEmpty(HOST === "electron" ? "Sign in to play" : "Loading", "Sign in to see and join tournaments."));
   } else {
     const live = (t) => t.phase === "groups" || t.phase === "playoffs";
     const mine = (t) => t.entered || t.hostedByYou;
@@ -9928,6 +10224,8 @@ function setTournamentCount(list) {
   if (ready > 0) $("tnLiveText").textContent = ready === 1 ? "Your fixture" : ready + " fixtures";
 }
 
+let tnLastList = "";
+let tnLastView = "";
 async function tnRefresh() {
   if (HOST !== "electron") return;
   const r = await api.tournaments(tnOpenId || undefined).catch(() => null);
@@ -9935,8 +10233,21 @@ async function tnRefresh() {
     if (r && r.error && tnOpenId) showError(r.error);
     return;
   }
-  if (r.tournaments) renderTournaments(r.tournaments);
-  if (tnOpenId && r.view) renderTournamentView(r.view);
+  // Nothing redraws while the player is typing into a form, and nothing redraws at all
+  // when nothing changed: a redraw threw away focus and a half-typed cancel reason.
+  const typing = document.activeElement && document.activeElement.closest &&
+    document.activeElement.closest("#tnIndex .tn-host, #tnDetail input, #tnDetail textarea, #tnDetail select");
+  if (typing) return;
+  const list = JSON.stringify(r.tournaments || null);
+  if (r.tournaments && list !== tnLastList) {
+    tnLastList = list;
+    renderTournaments(r.tournaments);
+  }
+  const view = JSON.stringify(r.view || null);
+  if (tnOpenId && r.view && view !== tnLastView) {
+    tnLastView = view;
+    renderTournamentView(r.view);
+  }
 }
 
 function tnOpen(id) {
@@ -9944,6 +10255,7 @@ function tnOpen(id) {
     if (tnSamples && tnSamples[id]) renderTournamentView(tnSamples[id], id);
     return;
   }
+  tnLastView = "";
   tnOpenId = id;
   tnTab = null;
   void tnRefresh();
@@ -10581,7 +10893,14 @@ if (HOST === "electron") {
 
   $("btnRescan").addEventListener("click", () => api.rescan());
   $("btnOpen").addEventListener("click", () => api.openStatsFolder());
-  const choose = () => api.chooseFolder();
+  const choose = async () => {
+    const chosen = await api.chooseFolder();
+    if (chosen && typeof chosen === "object" && chosen.error) showError(chosen.error);
+    else if (typeof chosen === "string") {
+      currentPath = chosen;
+      setStatus("scanning", "Scanning\u2026", currentPath);
+    }
+  };
   $("btnChoose").addEventListener("click", choose);
   $("emptyChoose").addEventListener("click", choose);
 
@@ -10597,6 +10916,8 @@ if (HOST === "electron") {
   $("btnSignIn").dataset.wired = "1";
 
   $("btnSignOut").addEventListener("click", async () => {
+    if (activeMatch && !activeMatch.seeding &&
+        !window.confirm("You have a match open. Signing out leaves it to expire, which counts as a forfeit.\n\nSign out anyway?")) return;
     await api.signOut();
   });
 
@@ -10604,6 +10925,8 @@ if (HOST === "electron") {
     renderSession(session, true);
     // Uploading only makes sense once there is an account to attach runs to.
     $("uploadRow").hidden = !session;
+    // A "sign in first" left over from before signing in is no longer true.
+    if (session && !$("banner").classList.contains("notice")) showError(null);
 
     // Signing out clears the gate rather than leaving the last account's progress on
     // screen; signing in asks for this one's.
@@ -10624,15 +10947,27 @@ if (HOST === "electron") {
   }
 
   // ---- history upload ----------------------------------------------------
+  const gateUpload = $("queueGateUpload");
+  if (gateUpload) gateUpload.addEventListener("click", () => $("uploadBtn").click());
+
   $("uploadBtn").addEventListener("click", async () => {
     const btn = $("uploadBtn");
     btn.disabled = true;
+    uploadBusy = true;
+    renderEligibility();
     $("uploadTrack").hidden = false;
     showError(null);
 
-    const result = await api.uploadHistory();
+    let result;
+    try {
+      result = await api.uploadHistory();
+    } catch (err) {
+      result = { error: err && err.message ? err.message : String(err) };
+    }
 
     btn.disabled = false;
+    uploadBusy = false;
+    refreshEligibility();
     if (result.error) {
       showError(result.error);
       return;
@@ -10667,6 +11002,12 @@ if (HOST === "electron") {
   api.onMatch((match) => {
     activeMatch = match;
     if (!match) {
+      // An abandon can move the rating; show where it landed.
+      refreshStanding();
+      pendingMatchId = null;
+      delete $("queueBtn").dataset.held;
+      delete $("cancelMatchBtn").dataset.settle;
+      if (duelBoard) renderDuels(duelBoard);
       $("opponent").classList.remove("on");
       $("matchActions").hidden = true;
       resetCommit(current);
@@ -10703,13 +11044,24 @@ if (HOST === "electron") {
         startMatchClock(p.expiresAt);
       }
 
-      $("matchHint").textContent = p.remaining && p.remaining.length
-        ? `${p.remaining.length} scenario(s) left`
-        : "All runs in. Settling…";
+      if (p.remaining && p.remaining.length) {
+        $("matchHint").textContent = p.remaining.length + " scenario" + (p.remaining.length === 1 ? "" : "s") + " left";
+      } else {
+        markAllIn();
+      }
+    } else if (p.status === "settle-failed") {
+      // The runs are in and only the result is missing. Main retries on its own; the
+      // button is for a player who would rather not wait for it.
+      $("matchHint").textContent = "Your runs are in, but the result could not be fetched. " +
+        (p.retrying ? "Retrying\u2026 " : "") + p.message;
+      const retry = $("cancelMatchBtn");
+      retry.disabled = false;
+      retry.textContent = "Get result";
+      retry.dataset.settle = "1";
     } else if (p.status === "failed") {
       const s = pendingScenarios.find(x => x.id === p.scenarioId);
       if (s) { s.uploading = false; s.failed = true; s.done = false; renderTodo(); }
-      showError(`Could not submit that run: ${p.message}`);
+      showError(`Could not submit that run: ${p.message} Play it again to count it.`);
     } else if (p.status === "already-submitted") {
       $("matchHint").textContent = p.message;
     }
@@ -10717,6 +11069,11 @@ if (HOST === "electron") {
 
   api.onMatchSettled((settled) => {
     activeMatch = null;
+    pendingMatchId = null;
+    delete $("queueBtn").dataset.held;
+    delete $("cancelMatchBtn").dataset.settle;
+    refreshStanding();
+    if (duelBoard) renderDuels(duelBoard);
     $("matchActions").hidden = true;
     $("opponent").classList.remove("on");
     resetCommit(current);
@@ -10734,6 +11091,21 @@ if (HOST === "electron") {
   // Abandoning a contested match is a forfeit and costs a loss, so it asks first. A
   // seeding match has no opponent and costs nothing, so it does not.
   $("cancelMatchBtn").addEventListener("click", async () => {
+    // After a failed settle the same button asks for the result instead of forfeiting.
+    if ($("cancelMatchBtn").dataset.settle === "1") {
+      const btn = $("cancelMatchBtn");
+      btn.disabled = true;
+      btn.textContent = "Getting result\u2026";
+      const result = await api.settleMatch();
+      if (result && result.error) {
+        btn.disabled = false;
+        btn.textContent = "Get result";
+        $("matchHint").textContent = "Your runs are in, but the result could not be fetched. " + result.error;
+      } else {
+        delete btn.dataset.settle;
+      }
+      return;
+    }
     const contested = activeMatch && !activeMatch.seeding && activeMatch.opponent;
 
     if (contested) {
@@ -10844,12 +11216,23 @@ if (HOST === "electron") {
     if (e.key === "Escape" && !$("celebrate").hidden) nextCelebration();
   });
 
+  // The button stays pressable while waiting: a closed tab or the wrong Steam account
+  // used to mean three minutes of a disabled button. Pressing again restarts; Cancel stops.
   api.onSigningIn(({ signingIn }) => {
     const btn = $("btnSignIn");
-    btn.disabled = signingIn;
-    btn.textContent = signingIn ? "Check your browser…" : "Sign in with Steam";
+    btn.disabled = false;
+    btn.textContent = signingIn ? "Waiting for Steam \u00b7 click to restart" : "Sign in with Steam";
     if (!signingIn) $("signinHelp").hidden = true;
   });
+  const cancelSignIn = $("signinCancel");
+  if (cancelSignIn) cancelSignIn.addEventListener("click", () => void api.cancelSignIn());
+
+  if (api.onNotice) {
+    api.onNotice((message) => {
+      if (message) showNotice(message, true);
+      else if ($("banner").classList.contains("notice")) showError(null);
+    });
+  }
 
   // If the browser does not appear, the flow is still completable by hand. Showing the
   // link turns a dead end into an inconvenience.
@@ -11025,7 +11408,16 @@ if (HOST === "electron") {
     currentPath = state.statsDir || "";
     showBuild(state.build);
     renderSession(state.session, state.configured);
+    // onSession was the only place this was shown, so a session restored before this
+    // window subscribed, or a reload, left the upload panel hidden while signed in.
+    $("uploadRow").hidden = !state.session;
     if (state.session) refreshEligibility();
+    if (state.notice) showNotice(state.notice, true);
+    if (!state.snapshot) document.body.classList.add("awaiting-data");
+    if (state.match) {
+      activeMatch = state.match;
+      if (current) paintActiveMatch();
+    }
     if (state.snapshot) {
       render(state.snapshot);
       setStatus("ok", "Watching", currentPath);

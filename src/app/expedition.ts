@@ -140,6 +140,6 @@ export class ExpeditionService {
     });
     const folder = playlistsFolderFor(dir); mkdirSync(folder, { recursive: true });
     writeFileSync(join(folder, playlist.playlistName + ".json"), serializePlaylist(playlist), "utf8");
-    return { scenario: scenarios[0], note: `Opening ${scenarios[0]}. Use Play next for each step. Restart KovaaK's if the expedition playlist is missing from its menu.` };
+    return { scenario: scenarios[0], note: `Opening ${scenarios[0]} in KovaaK's. Come back here and press Play for each next step.` };
   }
 }

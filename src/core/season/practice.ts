@@ -21,7 +21,7 @@
  *   - stable per season, so re-installing overwrites rather than accumulating.
  */
 
-import { existsSync, mkdirSync, readdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
 import { MIN_RUNS_FOR_BASELINE } from "../history/baseline.ts";
@@ -96,10 +96,12 @@ export function practicePlaylists(season: SeasonLike): PracticePlaylist[] {
     }
   }
 
+  // Category by category in the season's own order, each in circuit order: the same
+  // sequence the per-category playlists keep. Alphabetical scrambled the circuit.
   for (let w = 0; w < windows.length; w++) {
     const scenarios = season.scenarios
       .filter((s) => (s.window ?? 0) === w)
-      .sort((a, b) => a.category.localeCompare(b.category) || a.scenario.localeCompare(b.scenario))
+      .sort((a, b) => categories.indexOf(a.category) - categories.indexOf(b.category))
       .map((s) => s.scenario);
     if (scenarios.length === 0) continue;
     out.push({
@@ -181,6 +183,54 @@ export function writePracticePlaylists(
   }
 
   return { ok: true, dir, written };
+}
+
+/**
+ * Installed practice playlists whose scenarios no longer match this season.
+ *
+ * A name alone said "installed", and a season that changed its scenarios under the same
+ * names left every player who installed before it practising the old pool while the
+ * app reported them up to date.
+ */
+export function stalePlaylistNames(season: SeasonLike, dir: string): string[] {
+  const stale: string[] = [];
+  for (const playlist of practicePlaylists(season)) {
+    const path = join(dir, fileNameFor(playlist.name));
+    if (!existsSync(path)) continue;
+    try {
+      const list = (JSON.parse(readFileSync(path, "utf8")).scenarioList ?? [])
+        .map((s: { scenario_name?: string }) => s.scenario_name);
+      if (JSON.stringify(list) !== JSON.stringify(playlist.scenarios)) stale.push(playlist.name);
+    } catch {
+      stale.push(playlist.name);
+    }
+  }
+  return stale;
+}
+
+/**
+ * Rewrite the Apogee playlists the player already installed that are out of date. Only
+ * ones already there: the player agreed to those files, and the names are Apogee's own.
+ * Resolves with the names rewritten.
+ */
+export function refreshStalePlaylists(season: SeasonLike, dir: string): string[] {
+  const stale = stalePlaylistNames(season, dir);
+  if (stale.length === 0) return [];
+  const result = writePracticePlaylists(season, dir, { only: new Set(stale) });
+  return result.ok ? (result.written ?? []) : [];
+}
+
+const oneDecimalBelow = (v: number, below: number) => (Math.abs(v) < below ? 10 : 1);
+/** A best as the ladder should read it: never rounded up past a threshold. */
+export function floorScore(v: number): number {
+  const f = oneDecimalBelow(v, 1000);
+  return Math.floor(v * f + 1e-9) / f;
+}
+/** Points still to find: never rounded down to nothing while any remain. */
+export function ceilGap(v: number): number {
+  if (v <= 0) return 0;
+  const f = oneDecimalBelow(v, 100);
+  return Math.ceil(v * f - 1e-9) / f;
 }
 
 /** How many Apogee playlists are sitting in a folder now, for a "20 installed" readout. */
@@ -426,11 +476,13 @@ export function practiceRows(
       rankMaxes: s.rankMaxes,
       runs: scores.length,
       measured: scores.length >= MIN_RUNS_FOR_BASELINE,
-      best: best === null ? null : Math.round(best),
+      // Down for a best and up for a gap, one decimal below 1,000: rounding to the nearest
+      // showed a 78.54 against a target of 79 as "79 -> 79, +0", a rank that looked earned.
+      best: best === null ? null : floorScore(best),
       rankIndex,
       nextRankIndex: rankIndex === null ? base : rankIndex + 1,
       nextRankScore,
-      gap: nextRankScore === null || best === null ? null : Math.max(0, Math.round(nextRankScore - best)),
+      gap: nextRankScore === null || best === null ? null : ceilGap(nextRankScore - best),
       heldRankScore,
       progress,
       isNext: false,

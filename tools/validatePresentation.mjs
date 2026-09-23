@@ -42,9 +42,9 @@ assert.ok(!$('debriefRounds').children[0].innerHTML.includes('<img'));
 assert.ok($('debriefRounds').children[0].innerHTML.includes('Recorded'));
 ui.renderDebrief([], 'No settled match'); assert.equal($('debriefRounds').hidden, true);
 
-const settlement = new Function('$','document','esc','num','pct','roundPresentation','renderDebrief','renderRematch','renderScoreline','settled',
+const settlement = new Function('$','document','esc','num','pts','pct','roundPresentation','renderDebrief','renderRematch','renderScoreline','settled',
   'let hasRealResult=false;\n' + lift('function renderSettled(') + '\nreturn renderSettled;')(
-  $,document,esc,String,v=>(v*100).toFixed(1)+'%',ui.roundPresentation,ui.renderDebrief,()=>{},()=>{},()=>{});
+  $,document,esc,String,String,v=>(v*100).toFixed(1)+'%',ui.roundPresentation,ui.renderDebrief,()=>{},()=>{},()=>{});
 settlement({verdict:'win',rounds:[{...round(null,null),score:null,baseline:null}],ratingChange:null,ratingAfter:null,yourMatchScore:null,theirMatchScore:null,explanation:'Recorded by server'});
 assert.ok($('verdictScores').textContent.includes('unavailable vs unavailable'));
 assert.ok($('ratingMove').innerHTML.includes('unavailable'));
@@ -55,8 +55,8 @@ assert.ok($('verdictScores').textContent.includes('0.0% vs 0.0%'));
 assert.ok($('roundsBody').children.at(-1).innerHTML.includes('draw'));
 
 const pending = [{ id: 1, label: 'VT Pasu', done: false }, { id: 2, label: 'VT Pasu Small', done: false }];
-const toast = new Function('$','pendingScenarios','num','playSound','renderTodo','setTimeout','clearTimeout',
-  'let toastTimer = null;\n' + lift('function showRunToast(') + '\nreturn showRunToast;')($,pending,String,()=>{},()=>{},()=>1,()=>{});
+const toast = new Function('$','pendingScenarios','num','pts','playSound','renderTodo','setTimeout','clearTimeout',
+  'let toastTimer = null;\n' + lift('function showRunToast(') + '\nreturn showRunToast;')($,pending,String,String,()=>{},()=>{},()=>1,()=>{});
 toast({ scenario: 'VT Pasu', score: 100 });
 assert.equal(pending[0].done, false, 'local detection never completes a submission');
 assert.equal(pending[0].uploading, true);
@@ -68,9 +68,9 @@ assert.equal($('toastNote').textContent, 'Local personal best · previous 100');
 const start = source.indexOf('  api.onMatchProgress((p) => {');
 const end = source.indexOf('\n  });', start);
 let receipt;
-new Function('api','$','pendingScenarios','renderTodo','startMatchClock','showError',
+new Function('api','$','pendingScenarios','renderTodo','startMatchClock','showError','markAllIn',
   'let activeMatch = {matchId:"current"};\n' + source.slice(start, end + 6))(
-  {onMatchProgress: fn => {receipt=fn;}},$,pending,()=>{},()=>{},()=>{});
+  {onMatchProgress: fn => {receipt=fn;}},$,pending,()=>{},()=>{},()=>{},()=>{});
 receipt({matchId:'old',status:'submitted',scenarioId:1,verificationTier:'verified'});
 assert.equal(pending[0].done,false,'stale match receipt ignored');
 receipt({matchId:'current',status:'submitted',scenarioId:1,verificationTier:'verified',remaining:['second']});

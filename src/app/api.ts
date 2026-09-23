@@ -35,18 +35,61 @@ export class ApiError extends Error {
   }
 }
 
+/** What a player reads when the server cannot be reached at all. */
+export const OFFLINE_MESSAGE =
+  "Can't reach the Apogee server. Check your connection and try again; your runs are saved on this PC.";
+const EXPIRED_MESSAGE = "Your session expired. Sign in with Steam again.";
+
+/**
+ * How long a function call may take. fetch's own default is about five minutes, which
+ * left "Searching" spinning with nothing to press.
+ */
+const CALL_TIMEOUT_MS = 20_000;
+
+let onUnauthorized: (() => void) | null = null;
+/** Called when the server says the session is no longer valid, so the UI can say so. */
+export function setOnUnauthorized(handler: () => void): void {
+  onUnauthorized = handler;
+}
+
+/**
+ * Turn any failure into a sentence a player can act on. "fetch failed" and "HTTP 503"
+ * are true, and they are what reached the banner.
+ */
+export function friendlyError(err: unknown): string {
+  if (err instanceof ApiError) return err.message;
+  const name = (err as { name?: string })?.name;
+  if (name === "TimeoutError" || name === "AbortError") return "The Apogee server did not answer in time. Try again.";
+  if (err instanceof TypeError) return OFFLINE_MESSAGE;
+  return err instanceof Error ? err.message : String(err);
+}
+
 async function callFunction<T>(name: string, body: unknown): Promise<T> {
   const token = await accessToken();
-  if (!token) throw new ApiError("you are not signed in", 401);
+  if (!token) throw new ApiError("Sign in with Steam to play ranked.", 401);
 
-  const res = await fetch(`${FUNCTIONS_BASE}/${name}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(body),
-  });
+  let res: Response;
+  try {
+    res = await fetch(`${FUNCTIONS_BASE}/${name}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(body),
+      signal: AbortSignal.timeout(CALL_TIMEOUT_MS),
+    });
+  } catch (err) {
+    throw new ApiError(friendlyError(err), 0);
+  }
+
+  if (res.status === 401) {
+    onUnauthorized?.();
+    throw new ApiError(EXPIRED_MESSAGE, 401);
+  }
+  if (res.status >= 500) {
+    throw new ApiError("Apogee's server is having trouble. Try again in a minute.", res.status);
+  }
 
   const text = await res.text();
   let parsed: unknown;
@@ -222,6 +265,12 @@ export interface FoundMatch {
   seeding?: boolean;
   /** True when this is a match the player already had, handed back rather than created. */
   resumed?: boolean;
+  /**
+   * Scenarios this player already has a run in for this match, known only for a match
+   * recovered from the server. Without it a restart forgot which of the three were
+   * played, asked for them again, and never settled a match that was already complete.
+   */
+  submittedScenarioIds?: number[];
   winProbability: number | null;
   /** Null when the pool was not searched, which is the case for a resumed match. */
   poolSize: number | null;
@@ -516,12 +565,24 @@ export async function fetchActiveMatch(): Promise<FoundMatch | null> {
 
   const other = (allSides ?? []).find((s: any) => s.player_id !== (mine as any).player_id);
 
+  // Own runs already filed against this match. A rejected run never counted, so it does
+  // not count here either.
+  const { data: filed } = await client
+    .from("runs")
+    .select("scenario_id, verification_tier")
+    .eq("match_id", match.id)
+    .eq("player_id", me);
+  const submittedScenarioIds = [...new Set((filed ?? [])
+    .filter((r: any) => r.verification_tier !== "rejected" && scenarioIds.includes(Number(r.scenario_id)))
+    .map((r: any) => Number(r.scenario_id)))];
+
   return {
     matchId: match.id,
     category: match.category,
     difficulty: match.difficulty,
     expiresAt: match.expires_at,
     scenarios: scenarioIds.map((id) => ({ id, name: nameById.get(id) ?? `scenario ${id}` })),
+    submittedScenarioIds,
     opponent: other
       ? {
           // Display names are not readable from the client any more (players is

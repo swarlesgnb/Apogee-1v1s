@@ -116,6 +116,20 @@ for (const [key, route] of Object.entries(mid.routes)) {
   if (playable) assert.deepEqual(migrated.routes[key], route);
 }
 assert.ok(validState(migrated, def));
+// Checkpoints banked on v3's roster: one on a scenario v4 keeps, one on a scenario it
+// retired. The destination must still start, carrying only the checkpoint still offered.
+{
+  const v3Roster = v3.destinations[0].bands[0];
+  let banked = startTrial(enroll(v3, tick()), v3, d.id, 0, tick());
+  banked = syncExpedition(banked, v3, v3Roster.slice(0, 2).map(sc => run(sc.name, sc.target)), tick());
+  banked = abandonTrial(banked, tick());
+  const moved = migrateExpedition(banked, v3, def, tick());
+  const resumed = startTrial(moved, def, d.id, 0, tick());
+  assert.ok(validState(resumed, def), 'a destination with checkpoints on a retired scenario still starts');
+  const carried = resumed.trials.at(-1)!.results.map(r => r.scenario);
+  assert.deepEqual(carried, v3Roster.slice(0, 2).filter((sc, i) => roster[i]?.name === sc.name).map(sc => sc.name));
+  assert.ok(v3Roster.slice(0, 2).some((sc, i) => roster[i]?.name !== sc.name), 'the fixture must include a retired checkpoint');
+}
 const strictStep = migrated.trials.at(-1)!.steps[1].scenario;
 const stillStrict = sync(migrated, [run(strictStep, 0)]);
 assert.equal(stillStrict.trials.at(-1)!.status, 'failed', 'migrated active trial keeps its contract');
