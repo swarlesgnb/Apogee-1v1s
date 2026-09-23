@@ -211,16 +211,20 @@ async function main(): Promise<void> {
   // "481 new to the project" was measured against a table this only saw two thirds of.
   // A short page is the last one; an exactly-full page is never assumed to be.
   const live = new Set<string>();
+  const filed = new Set<string>();
   const PAGE = 1000;
   for (let from = 0; ; from += PAGE) {
-    const page = await fetch(`${URL_BASE}/rest/v1/scenarios?select=name`, {
+    const page = await fetch(`${URL_BASE}/rest/v1/scenarios?select=name,sub_category`, {
       headers: {
         apikey: SECRET!,
         Authorization: `Bearer ${SECRET}`,
         Range: `${from}-${from + PAGE - 1}`,
       },
-    }).then((r) => r.json() as Promise<{ name: string }[]>);
-    for (const s of page) live.add(s.name);
+    }).then((r) => r.json() as Promise<{ name: string; sub_category: string | null }[]>);
+    for (const s of page) {
+      live.add(s.name);
+      if (s.sub_category) filed.add(s.name);
+    }
     if (page.length < PAGE) break;
   }
 
@@ -284,6 +288,15 @@ async function main(): Promise<void> {
     });
   }
 
+  // Those rows do lose one column: the sub-category. It is only ever "the one the season pool
+  // puts it in", so a scenario the committed definitions stopped naming has no claim to
+  // one, and leaving it made the project disagree with this checkout. The fun rebuild
+  // dropped Smooth Your Vertical Altered POV Intermediate, its row kept Precise Tracking,
+  // and verify:deployment counted 10 live against 9 expected. find-match draws from
+  // season_scenarios, so the stale value never reached a queue, but a sub-category read
+  // from the catalogue would have found it. Aim type and board are left as they are.
+  const retired = [...filed].filter((name) => !identity[name]).sort();
+
   const rows = [...withIdentity, ...referenceOnly];
 
   console.log(`scenarios in project : ${live.size}`);
@@ -292,6 +305,7 @@ async function main(): Promise<void> {
   console.log(`rows to update       : ${rows.length}`);
   console.log(`  with an identity   : ${withIdentity.length}`);
   console.log(`  with a sub-category: ${withIdentity.filter((r) => r.sub_category).length}`);
+  console.log(`  sub-category cleared: ${retired.length}${retired.length ? ` (${retired.join(", ")})` : ""}`);
   console.log(`  with a score model : ${rows.filter((r) => r.score_model_stat).length}`);
   console.log(
     `  with a weapon model: ${rows.filter((r) => r.weapon_score_per_damage != null).length}`,
@@ -307,6 +321,9 @@ async function main(): Promise<void> {
 
   if (withIdentity.length > 0) await upsert("scenarios", withIdentity, "name");
   if (referenceOnly.length > 0) await upsert("scenarios", referenceOnly, "name");
+  if (retired.length > 0) {
+    await upsert("scenarios", retired.map((name) => ({ name, sub_category: null })), "name");
+  }
 
   await syncBoards();
 
