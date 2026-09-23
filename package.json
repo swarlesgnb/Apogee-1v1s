@@ -30,6 +30,7 @@
     "build:subskills": "tsx tools/deriveSubskills.ts",
     "validate:duration": "tsx src/core/stats/validateDuration.ts",
     "validate:season": "tsx src/core/season/validateSeasonEdits.ts",
+    "validate:season-ui": "tsx tools/buildUiPreview.ts && electron tools/seasonEditorUi.cjs",
     "validate:pool": "tsx src/core/season/validatePool.ts",
     "validate:thresholds": "tsx src/core/season/validateThresholds.ts",
     "validate:rationale": "tsx src/core/season/validateRationale.ts",

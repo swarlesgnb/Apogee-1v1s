@@ -374,6 +374,40 @@ check(
   );
 }
 
+{
+  const pool = JSON.parse(readFileSync(dataFile("pool.json"), "utf8"));
+  const edited = clone() as unknown as RebuildSeason;
+  const first = edited.scenarios[0];
+  const oldCategory = first.category, oldFamily = first.family;
+  const category = edited.categories.find(c => c.name === oldCategory)!;
+  category.name = "Custom Clicking";
+  category.headline = "Edited headline";
+  for (const s of edited.scenarios) if (s.category === oldCategory) s.category = category.name;
+  const renamed = Object.fromEntries(pool.families.filter((f: {category:string}) => f.category === oldCategory)
+    .map((f: {family:string}) => [`${category.name}/${f.family}`, `${oldCategory}/${f.family}`]));
+  for (const s of edited.scenarios) if (s.family === oldFamily) {
+    s.focus = "Watch the next target before moving.";
+    s.subCategory = "Custom Clicking";
+  }
+  first.label = "Edited display name";
+  first.rankMaxes = first.rankMaxes.map(n => n + 1);
+  first.source = {kind:"authored",why:"Thresholds measured in a local playtest."};
+  const rebuilt = rebuildPool(pool, edited, renamed) as typeof pool;
+  const family = rebuilt.families.find((f: {family:string}) => f.family === oldFamily);
+  check("category rename carries family metadata", family.category === category.name &&
+    family.focus === "Watch the next target before moving.");
+  check("edited sub-categories survive in source declarations", rebuilt.subCategories[category.name].includes("Custom Clicking") &&
+    family.subCategory === "Custom Clicking");
+  check("category guide survives a rename", rebuilt.categoryGuides[category.name].headline === "Edited headline");
+  check("scenario labels and authored threshold reasons survive saving", family.variants[0].label === first.label &&
+    family.variants[0].source.why === first.source.why);
+  check("removed category declarations do not linger", !(oldCategory in rebuilt.subCategories) && !(oldCategory in rebuilt.categoryGuides));
+  const twice = rebuildPool(rebuilt, edited, renamed) as typeof pool;
+  check("saving again with rename history preserves family metadata", JSON.stringify(twice.families) === JSON.stringify(rebuilt.families));
+  check("pool rebuild does not mutate its input", JSON.stringify(pool) === readFileSync(dataFile("pool.json"), "utf8").trim().replace(/\r/g, "") ||
+    JSON.stringify(pool) === JSON.stringify(JSON.parse(readFileSync(dataFile("pool.json"), "utf8"))));
+}
+
 console.log(
   failures === 0
     ? "\nOK: season edits and the derived overall validated"

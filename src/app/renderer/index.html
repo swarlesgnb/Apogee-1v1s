@@ -2062,6 +2062,73 @@
     .pool-grid { max-height: 60vh; border-right: 0; border-bottom: 1px solid var(--rule-2); }
   }
 
+  .editor-structure { display: flex; flex-wrap: wrap; gap: 10px; align-items: end; padding: 14px var(--s4); border-bottom: 1px solid var(--rule-2); }
+  .editor-structure label { display: grid; gap: 5px; color: var(--ink-dim); font-size: var(--t-xs); }
+  .editor-structure .editor-name { flex: 1 1 180px; }
+  .editor-structure input, .editor-structure select, .editor-field input, .editor-field textarea, .editor-field select {
+    width: 100%; min-width: 0; box-sizing: border-box; font: inherit; font-size: var(--t-sm); color: var(--ink);
+    background: var(--well); border: 1px solid var(--rule-2); border-radius: var(--r); padding: 7px 9px;
+  }
+  .editor-structure .pool-btn { min-height: 33px; }
+  .editor-structure input:focus, .editor-structure select:focus, .editor-field :is(input,textarea,select):focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .editor-toggle { display: inline-flex; gap: 5px; align-items: center; font-size: var(--t-xs); color: var(--ink-mid); cursor: pointer; }
+  .editor-toggle input { accent-color: var(--accent); }
+  .editor-field { display: grid; gap: 5px; font-size: var(--t-xs); color: var(--ink-dim); }
+  .editor-field textarea { resize: vertical; min-height: 64px; }
+  .editor-notes { border-top: 1px solid var(--rule-2); padding-top: 10px; }
+  .editor-notes summary { cursor: pointer; color: var(--ink-mid); font-size: var(--t-sm); padding: 4px 0; }
+  .editor-notes[open] > :not(summary) { margin-top: 12px; }
+  .editor-dialog { width: min(520px, calc(100vw - 40px)); box-sizing: border-box; color: var(--ink); background: var(--panel); border: 1px solid var(--rule-3); border-radius: 12px; padding: 24px; }
+  .editor-dialog::backdrop { background: rgb(0 0 0 / .65); }
+  .editor-dialog form { display: grid; gap: 14px; }
+  .editor-dialog :is(h2,p) { margin: 0; }
+  .editor-dialog p { font-size: var(--t-sm); color: var(--ink-dim); }
+  #seasonBatchError { color: var(--warn); }
+  #seasonImportFile[hidden] { display: none; }
+  #poolGrid { display: block; position: relative; overscroll-behavior: contain; scroll-behavior: auto; }
+  #poolPanel .pool-detail { overscroll-behavior: contain; }
+  #poolPanel.compact td.pg-cell { padding-top: 4px; padding-bottom: 4px; }
+  #poolPanel.compact .pg-meta { display: none; }
+  #poolPanel .pg-cat .pool-btn { margin-left: 6px; letter-spacing: 0; text-transform: none; }
+  #poolPanel .pool-search { flex-basis: 100%; }
+  #poolPanel .pool-target { max-width: 36%; }
+  #poolPanel .pool-body { min-height: 340px; height: clamp(340px, 60vh, 760px); }
+  #poolPanel .pool-detail { min-width: 0; }
+  #poolPanel .pgd-family { flex-wrap: wrap; }
+  #poolPanel .pgd-family input { flex-basis: 100%; }
+  #screen-season .season-savebar { z-index: 25; }
+  body[data-screen="season"] #screen-season { gap: 14px; }
+  body[data-screen="season"] #screen-season .screen-head { min-height: 0; padding: 16px 20px; margin-bottom: 0; }
+  body[data-screen="season"] #screen-season .screen-head h1 { font-size: 28px; line-height: 1.15; margin: 0 0 5px; }
+  body[data-screen="season"] #screen-season .screen-head p { margin: 0; max-width: none; }
+  body[data-screen="season"] #screen-season .screen-head::before,
+  body[data-screen="season"] #screen-season .screen-head::after { display: none; }
+  body[data-screen="season"] #screen-season .screen-head > :not(h1):not(p) { display: none; }
+  body[data-screen="season"] #screen-season .season-actions { margin: 0; padding: 8px 0; }
+  body[data-screen="season"] #screen-season .panel { margin-top: 0; }
+  @media (max-width: 1100px) {
+    body[data-screen="season"] #screen-season .screen-head { display: none; }
+    #screen-season #poolPanel .phead { padding: 10px 16px; min-height: 0; }
+    #screen-season #poolPanel .editor-structure { padding: 10px 16px; }
+    #screen-season #poolPanel .pool-bar { padding: 10px 16px; gap: 8px; }
+    #screen-season #poolPanel :is(button,input,select) { min-height: 30px; }
+    #screen-season #poolPanel .editor-name { flex-basis: 140px; }
+    #screen-season #poolPanel .pool-body { height: max(340px, calc(100vh - 330px)); }
+    #poolPanel .pool-body { grid-template-columns: minmax(0, 1fr) 275px; }
+    #poolPanel table.pgrid { min-width: 510px; }
+    #poolPanel table.pgrid col.pg-famcol { width: 105px; }
+    #poolPanel table.pgrid :is(td.pg-cell,th.pg-fam) { padding-left: 7px; padding-right: 7px; }
+    #poolGrid { max-height: none; border-right: 1px solid var(--rule-2); }
+    #poolPanel .pgd-rung { grid-template-columns: minmax(0,1fr) 75px; }
+    #poolPanel .pgd-share { display: none; }
+  }
+  @media (max-width: 740px) {
+    #poolPanel .pool-body { grid-template-columns: minmax(0,1fr); height: auto; }
+    #poolGrid { height: 340px; border-right: 0; }
+    #poolGridDetail { max-height: 340px; }
+    #poolPanel .pool-target { display: none; }
+    .editor-structure label { flex: 1 1 160px; }
+  }
   .season-add { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
   .season-add input[type="search"], .season-add select {
     font: inherit; font-size: var(--t-sm); color: var(--ink);
@@ -3951,8 +4018,7 @@
             <div class="screen-head">
               <h1>Season</h1>
               <p>
-                What a rank means on this machine. Edits are written to the season file
-                and take effect on the next rebuild.
+                Edit categories, scenarios and rank thresholds. Your draft is backed up locally as you work.
               </p>
             </div>
 
@@ -3965,16 +4031,26 @@
 
             <div class="panel pool-panel" id="poolPanel" hidden>
               <div class="phead">
-                <h2>Pool</h2>
+                <h2>Scenario pool</h2>
                 <span class="note" id="poolGridCount"></span>
               </div>
               <div class="pool-bar">
                 <div class="pool-search" id="poolGridSearch">
                   <span class="pool-target" id="poolGridTarget">Select a slot</span>
                   <input type="text" id="poolGridQuery" placeholder="Type to put a scenario in this slot…"
-                         autocomplete="off" spellcheck="false" aria-controls="poolGridHits">
+                         autocomplete="off" spellcheck="false" aria-controls="poolGridHits" aria-label="Find a scenario for the selected slot" role="combobox" aria-autocomplete="list" aria-expanded="false">
                   <div class="pool-hits" id="poolGridHits" role="listbox"></div>
                 </div>
+              <div class="editor-structure">
+                <label class="editor-name">Season name<input id="seasonName" type="text" autocomplete="off" aria-label="Season name"></label>
+                <label>Category<select id="poolCategory" aria-label="Show category"></select></label>
+                <button type="button" class="pool-btn" id="poolAddCategory">+ Category</button>
+                <button type="button" class="pool-btn" id="poolAddFamily">+ Family</button>
+                <button type="button" class="pool-btn" id="poolAddWindow">+ Difficulty</button>
+                <button type="button" class="pool-btn" id="seasonExportDraft" title="Download a backup, including an unfinished season">Export draft</button>
+                <button type="button" class="pool-btn" id="seasonImportDraft">Import draft</button>
+                <input type="file" id="seasonImportFile" accept=".json,application/json" hidden>
+              </div>
                 <div class="pool-tools">
                   <div class="pool-filter" role="group" aria-label="Show">
                     <button type="button" data-grid-filter="all" aria-pressed="true">All</button>
@@ -3983,6 +4059,9 @@
                     <button type="button" data-grid-filter="attention" aria-pressed="false">Needs a look</button>
                   </div>
                   <button type="button" id="poolGridUndo" title="Undo (Ctrl+Z)">Undo</button>
+                  <label class="editor-toggle"><input type="checkbox" id="poolAutoAdvance" checked> Move to next slot</label>
+                  <label class="editor-toggle"><input type="checkbox" id="poolCompact"> Compact</label>
+                  <button type="button" id="poolBatchFamilies">Add families…</button>
                   <button type="button" id="poolGridRedo" title="Redo (Ctrl+Y)">Redo</button>
                   <button type="button" id="poolGridReset" class="pool-reset"
                           title="Count replacements from the pool as it is now">Count from here</button>
@@ -3995,8 +4074,8 @@
               </div>
               <p class="pool-keys">
                 <kbd>↑↓←→</kbd> move · type or <kbd>Enter</kbd> to replace · <kbd>Tab</kbd> keep and
-                move on · <kbd>⌫</kbd> revert · <kbd>Shift+Enter</kbd> thresholds ·
-                <kbd>Ctrl+Z</kbd> undo · <kbd>Ctrl+S</kbd> save
+                move on · <kbd>Delete</kbd> clear · <kbd>⌫</kbd> revert · <kbd>Shift+Enter</kbd> thresholds ·
+                <kbd>Ctrl+Z</kbd> undo · <kbd>Ctrl+S</kbd> save · paste a list or spreadsheet into the grid
               </p>
             </div>
 
@@ -4154,6 +4233,16 @@
   <div class="arcade-command-list" id="arcadeCommandList"></div>
   <p class="arcade-command-empty" id="arcadeCommandEmpty" hidden>No screens match. Try “season”, “rank”, or “aim”.</p>
   <div class="arcade-command-foot">↑ ↓ to move <span>Enter to go</span></div>
+</dialog>
+<dialog id="seasonBatchDialog" class="editor-dialog" aria-labelledby="seasonBatchTitle">
+  <form id="seasonBatchForm">
+    <h2 id="seasonBatchTitle">Add families together</h2>
+    <p>One name per line. Each family gets a slot in every difficulty.</p>
+    <label class="editor-field">Category<select id="seasonBatchCategory"></select></label>
+    <label class="editor-field">Family names<textarea id="seasonBatchNames" rows="8" placeholder="Wide clicks&#10;Small targets&#10;Micro corrections" required></textarea></label>
+    <p id="seasonBatchError" role="status"></p>
+    <div class="pgd-tools"><button type="submit" class="pool-btn">Add families</button><button type="button" class="pool-btn" id="seasonBatchCancel">Cancel</button></div>
+  </form>
 </dialog>
 <script src="renderer.js"></script>
 <script src="cosmic.js"></script>

@@ -1908,9 +1908,12 @@ function seasonOrphans() {
 /** Every unfilled slot in the draft, for the Save gate. */
 function seasonGaps() {
   if (!seasonDraft) return [];
+  const emptyCategories = seasonDraft.categories
+    .filter(c => !seasonDraft.scenarios.some(s => s.category === c.name))
+    .map(c => `${c.name} needs a family, or remove the category`);
   return seasonDraft.scenarios
     .filter(isEmptySlot)
-    .map((x) => `${x.family ?? "?"} · ${windowLabel(x.window ?? 0)}`);
+    .map((x) => `${x.family ?? "?"} · ${windowLabel(x.window ?? 0)}`).concat(emptyCategories);
 }
 
 /**
@@ -2195,7 +2198,9 @@ function askInline(button, placeholder, onName) {
   };
 
   input.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") commit();
+    e.stopPropagation();
+    if (e.isComposing) return;
+    if (e.key === "Enter") { e.preventDefault(); commit(); }
     else if (e.key === "Escape") restore();
   });
   input.addEventListener("blur", commit);
@@ -2223,7 +2228,8 @@ function addFamily(category, family) {
       window: size > 0 ? w : undefined,
       label: family,
       leaderboardId: null,
-      rankMaxes: Array.from({ length: size > 0 ? size : 1 }, (_, i) => i + 1),
+      subCategory: seasonDraft.scenarios.find(s => s.category === category && s.subCategory)?.subCategory ?? category,
+      rankMaxes: Array.from({ length: size > 0 ? (windowCut(w)?.ranks.length ?? size) : 1 }, (_, i) => i + 1),
     });
   }
 
@@ -2232,6 +2238,9 @@ function addFamily(category, family) {
 
 /** Remove a family and every variant of it. Single variants are never removed alone. */
 function removeFamily(category, family) {
+  for (const slot of seasonDraft.scenarios) {
+    if (slot.category === category && slot.family === family) gridCancelCut(slot);
+  }
   seasonDraft.scenarios = seasonDraft.scenarios.filter(
     (x) => !(x.category === category && x.family === family),
   );
@@ -2258,6 +2267,8 @@ function rebalanceEnergy(category) {
   // copy of a constant owned by src/core/benchmarks/energy.ts - and a change there would
   // have left the season editor quietly computing a different ladder to everything else.
   cat.rankMaxes = cat.rankNames.map((_, i) => families * energyPerRank * (i + 1));
+  if (seasonWindowSize() > 0) editorSyncBands(cat, families);
+
 }
 
 /**
@@ -2267,71 +2278,55 @@ function rebalanceEnergy(category) {
  * scenarios makes them unreachable; adding the scenarios without the ranks makes them
  * ungraded. Both halves happen here, once.
  */
+function editorSyncBands(cat, families) {
+  const size = seasonWindowSize(), windows = seasonDraft.windows ?? [];
+  const old = cat.bands ?? [];
+  const apex = old.find(b => b.positional);
+  cat.bands = windows.map((_, w) => {
+    const count = Math.min(size + (seasonDraft.windowOverlap ?? 0), cat.rankNames.length - w * size);
+    const names = cat.rankNames.slice(w * size, w * size + count);
+    const colors = Object.fromEntries(names.map(n => [n, cat.rankColors[n] ?? "#8891a3"]));
+    const positional = w === windows.length - 1 ? (apex?.positional ?? {topN: 3}) : null;
+    if (positional) {
+      const name = apex?.rankNames.at(-1) ?? "Apex";
+      names.push(name); colors[name] = apex?.rankColors[name] ?? "#e5c47e";
+    }
+    return {window:w,rankNames:names,rankColors:colors,
+      rankMaxes:Array.from({length:count},(_,i)=>families*energyPerRank*(i+1)),
+      ...(positional ? {positional} : {})};
+  });
+}
+
 function addWindow(name) {
   const size = seasonWindowSize();
   if (size <= 0) return;
-
-  seasonDraft.windows = (seasonDraft.windows ?? []).concat(name);
-  const window = seasonDraft.windows.length - 1;
-
-  // A window needs percentiles as much as it needs ranks and scenarios.
-  //
-  // Without them every slot in the new difficulty refuses to fill - "this season has no
-  // percentile ladder to derive from" - because thresholds are derived from a percentile
-  // and there is none for a window nobody gave one. The ladder and the pool moved together
-  // here from the start; the percentiles were the third thing and were left behind.
-  //
-  // The new window reuses the percentiles of the one below it, not smaller ones.
-  //
-  // Percentiles are percentiles of a *board*, and a new window means harder scenarios,
-  // which means a different and stronger population. "Top 8%" of an Advanced board is a
-  // far higher bar than "top 8%" of an Easy one, so the same numbers on a harder board
-  // already describe a harder rank - that is the whole mechanism the windows run on.
-  //
-  // Continuing to shrink them instead was wrong and the arithmetic said so: carrying on
-  // from a window that closes at 0.1% produced 0.11%, 0.05%, 0.05%, 0.05% - three ranks
-  // pinned to the floor and no longer descending. There is no room above one in a
-  // thousand; the room is on the next board along.
-  seasonDraft.derivedFrom ??= {};
-  const ladders = (seasonDraft.derivedFrom.perWindow ??= []);
-  const below = ladders[window - 1];
-
-  ladders[window] =
-    below && below.length === size
-      ? below.slice()
-      : Array.from({ length: size }, (_, i) => Number((0.5 / 2 ** i).toFixed(4)));
-
+  gridCutResults.clear();
+  const families = gridFamilies();
+  const w = seasonDraft.windows.length;
+  seasonDraft.windows.push(name);
+  if (seasonPercentiles?.ranks) {
+    let tail = seasonPercentiles.ranks.at(-1);
+    for (let i = 0; i < size; i++) { tail *= 0.75; seasonPercentiles.ranks.push(tail); }
+  }
   for (const cat of seasonDraft.categories) {
-    for (let i = 0; i < size; i++) {
-      let rank = `${name} ${i + 1}`;
-      while (cat.rankNames.includes(rank)) rank += "*";
-      cat.rankNames.push(rank);
-      cat.rankColors[rank] = "#8891a3";
-    }
-    // Derived from the family count rather than extrapolated from the last gap, which is
-    // how a ladder ends up with ranks nobody can reach.
-    rebalanceEnergy(cat.name);
-  }
-
-  const families = [];
-  for (const x of seasonDraft.scenarios) {
-    const key = `${x.category}/${x.family}`;
-    if (!families.some((f) => `${f.category}/${f.family}` === key)) {
-      families.push({ category: x.category, family: x.family });
+    for (let i=0;i<size;i++) {
+      let rank = `${name} ${i+1}`;
+      while(cat.rankNames.includes(rank)) rank += "*";
+      cat.rankNames.push(rank); cat.rankColors[rank] = "#8891a3";
     }
   }
-
-  for (const f of families) {
-    seasonDraft.scenarios.push({
-      scenario: "",
-      category: f.category,
-      family: f.family,
-      window,
-      label: f.family,
-      leaderboardId: null,
-      rankMaxes: Array.from({ length: size }, (_, i) => i + 1),
-    });
+  // The old top window now overlaps the new one. Its additional thresholds need a real cut.
+  for (const slot of seasonDraft.scenarios) {
+    const count = windowCut(slot.window ?? 0)?.ranks.length ?? size;
+    if (slot.rankMaxes.length < count) {
+      while(slot.rankMaxes.length < count) slot.rankMaxes.push((slot.rankMaxes.at(-1) ?? 0)+1);
+      if(slot.scenario) { slot.source = {kind:"authored",why:CUT_WAITING}; gridCutResults.delete(cutKeyOf(slot)); }
+    }
   }
+  for (const f of families) seasonDraft.scenarios.push({scenario:"",category:f.category,family:f.family,
+    subCategory:seasonDraft.scenarios.find(s=>familyKeyOf(s)===f.key)?.subCategory ?? f.category,
+    window:w,label:f.family,leaderboardId:null,rankMaxes:Array.from({length:size},(_,i)=>i+1)});
+  for (const cat of seasonDraft.categories) rebalanceEnergy(cat.name);
 }
 
 /** Remove the top difficulty, with the ranks it graded and the slots that filled it. */
@@ -2340,7 +2335,9 @@ function removeWindow() {
   const windows = (seasonDraft.windows ?? []).length;
   if (size <= 0 || windows <= 1) return;
 
+  gridCutResults.clear();
   const window = windows - 1;
+  if (seasonPercentiles?.ranks) seasonPercentiles.ranks = seasonPercentiles.ranks.slice(0, window * size);
   seasonDraft.windows = seasonDraft.windows.slice(0, window);
   seasonDraft.scenarios = seasonDraft.scenarios.filter((x) => (x.window ?? 0) !== window);
   // The percentiles go with it, or the next window added inherits a ladder for a window
@@ -2353,7 +2350,16 @@ function removeWindow() {
   for (const cat of seasonDraft.categories) {
     for (const name of cat.rankNames.splice(window * size, size)) delete cat.rankColors[name];
     cat.rankMaxes.splice(window * size, size);
+    rebalanceEnergy(cat.name);
   }
+  for (const slot of seasonDraft.scenarios) {
+    const count = windowCut(slot.window ?? 0)?.ranks.length ?? size;
+    if (slot.rankMaxes.length > count) {
+      slot.rankMaxes = slot.rankMaxes.slice(0, count);
+      if (slot.source?.kind === "percentile") slot.source = {kind:"authored",why:"Retained thresholds after removing the top difficulty."};
+    }
+  }
+  if ((seasonDraft.matchPool?.window ?? 0) >= window) seasonDraft.matchPool.window = window - 1;
   for (const [category] of seasonWindowFor) {
     if (seasonWindowOf(category) >= window) seasonWindowFor.set(category, window - 1);
   }
@@ -2453,18 +2459,37 @@ async function renderDistribution() {
  * afternoon's editing should not depend on never needing to restart.
  */
 const SEASON_DRAFT_KEY = "apogee.seasonDraft";
+let seasonStashTimer = null;
+let seasonRevision = 0;
+let seasonSaving = false;
+let seasonHasChanges = false;
+
+function scheduleDraftStash() {
+  clearTimeout(seasonStashTimer);
+  seasonStashTimer = setTimeout(stashDraft, 180);
+}
+
+window.addEventListener("pagehide", () => { if (seasonStashTimer) stashDraft(); });
+window.addEventListener("beforeunload", () => { if (seasonStashTimer) stashDraft(); });
 
 function stashDraft() {
+  clearTimeout(seasonStashTimer);
+  seasonStashTimer = null;
   if (!seasonDraft) return;
   try {
-    localStorage.setItem(SEASON_DRAFT_KEY, JSON.stringify(seasonDraft));
+    localStorage.setItem(SEASON_DRAFT_KEY, JSON.stringify({
+      ...seasonDraft,
+      $editor: { fingerprint: seasonFingerprint, ladder: seasonPercentiles,
+        rankTheme: rankThemeDirty ? rankTheme : null, rankThemeFingerprint },
+    }));
   } catch {
-    // A draft too large to stash is still a working draft; losing the safety net is not
-    // worth interrupting the edit for.
+    setSeasonStatus("Draft backup failed. Keep this window open until you save or export the draft.", "bad");
   }
 }
 
 function clearStashedDraft() {
+  clearTimeout(seasonStashTimer);
+  seasonStashTimer = null;
   try {
     localStorage.removeItem(SEASON_DRAFT_KEY);
   } catch {
@@ -2482,6 +2507,8 @@ function stashedDraft() {
 }
 
 function seasonDirty(dirty) {
+  seasonHasChanges = dirty;
+  if (dirty) seasonRevision++;
   // An unfilled slot is not a validation failure to discover on Save - it is visible work
   // in progress, and the gate says what is left rather than what is wrong.
   const gaps = seasonGaps();
@@ -2491,8 +2518,8 @@ function seasonDirty(dirty) {
   const { cutting, failed } = gridWaiting();
 
   $("seasonSave").disabled =
-    !dirty || gaps.length > 0 || orphans.length > 0 || cutting > 0 || failed > 0;
-  $("seasonReload").disabled = !dirty;
+    seasonSaving || !dirty || gaps.length > 0 || orphans.length > 0 || cutting > 0 || failed > 0;
+  $("seasonReload").disabled = !dirty || seasonSaving;
 
   const purge = $("seasonPurge");
   if (purge) {
@@ -2504,7 +2531,7 @@ function seasonDirty(dirty) {
   }
 
   if (orphans.length > 0) {
-    stashDraft();
+    scheduleDraftStash();
     setSeasonStatus(
       `${orphans.map((o) => o.scenario || "(unnamed)").slice(0, 3).join(", ")}` +
         (orphans.length > 3 ? ` and ${orphans.length - 3} more` : "") +
@@ -2515,7 +2542,7 @@ function seasonDirty(dirty) {
   }
 
   if (gaps.length > 0) {
-    stashDraft();
+    scheduleDraftStash();
     setSeasonStatus(
       `${gaps.length} slot${gaps.length === 1 ? "" : "s"} still to fill: ` +
         gaps.slice(0, 4).join(", ") +
@@ -2526,7 +2553,7 @@ function seasonDirty(dirty) {
   }
 
   if (failed > 0) {
-    stashDraft();
+    scheduleDraftStash();
     setSeasonStatus(
       `${failed} slot${failed === 1 ? "" : "s"} could not be cut from ${failed === 1 ? "its" : "their"} ` +
         "board: type the thresholds, cut again, or pick another scenario",
@@ -2536,13 +2563,13 @@ function seasonDirty(dirty) {
   }
 
   if (cutting > 0) {
-    stashDraft();
+    scheduleDraftStash();
     setSeasonStatus(`cutting thresholds for ${cutting} slot${cutting === 1 ? "" : "s"}…`, "");
     return;
   }
 
   if (dirty) {
-    stashDraft();
+    scheduleDraftStash();
     setSeasonStatus("unsaved changes", "");
   }
 }
@@ -2598,6 +2625,9 @@ async function loadSeasonEditor() {
     return;
   }
 
+  gridCancelCuts();
+  seasonForce = false;
+  gridCutResults.clear();
   seasonDraft = result.season;
   seasonPercentiles = result.ladder ?? null;
   // What the replaced count and Revert measure against: the pool as it stood when this
@@ -2627,8 +2657,21 @@ async function loadSeasonEditor() {
   // An unsaved draft from a previous session wins over what is on disk, because it is the
   // newer of the two and the only copy of that work. Discard puts the saved season back.
   const stashed = stashedDraft();
-  const restored = stashed && JSON.stringify(stashed) !== JSON.stringify(result.season);
-  if (restored) seasonDraft = stashed;
+  const restored = stashed && (stashed.$editor?.rankTheme || JSON.stringify({...stashed, $editor: undefined}) !== JSON.stringify(result.season));
+  if (restored) {
+    const backup = stashed.$editor;
+    delete stashed.$editor;
+    seasonDraft = stashed;
+    if (backup) {
+      seasonFingerprint = backup.fingerprint ?? seasonFingerprint;
+      seasonPercentiles = backup.ladder ?? seasonPercentiles;
+      if (backup.rankTheme) {
+        rankTheme = backup.rankTheme;
+        rankThemeDirty = true;
+        rankThemeFingerprint = backup.rankThemeFingerprint;
+      }
+    }
+  }
 
   $("seasonNote").textContent = `${seasonDraft.name} · ${result.path}`;
 
@@ -2638,15 +2681,21 @@ async function loadSeasonEditor() {
   // blank on the slow half of the load, and drawing once without waiting would leave every
   // source cell reading "—" until something else happened to redraw.
   renderSeasonEditor();
+  const loadRevision = seasonRevision;
   await loadSeasonPicker();
+  const editedDuringLoad = seasonRevision !== loadRevision;
   // A restored draft can hold slots whose cut had not landed when the app closed.
   if (restored) gridResumeCuts();
-  renderSeasonEditor();
+  if (seasonWindowSize() > 0) {
+    if (!$("poolGridDetail").contains(document.activeElement)) gridPaintDetail();
+    if ($("poolGridSearch").classList.contains("open")) gridRenderHits();
+  } else renderSeasonEditor();
 
-  if (restored) {
+  if (restored || editedDuringLoad) {
     seasonDirty(true);
-    setSeasonStatus("restored unsaved changes from your last session", "");
+    if (restored) setSeasonStatus("restored unsaved changes from your last session", "");
   } else {
+    clearStashedDraft();
     seasonDirty(false);
     setSeasonStatus("", "");
   }
@@ -2889,6 +2938,9 @@ function renderSeasonEditor() {
       const text = document.createElement("input");
       text.type = "text";
       text.value = name;
+      let textBefore;
+      text.addEventListener("focus", () => { textBefore = gridSnapshot(); });
+      text.addEventListener("change", () => { if (text.value !== name) gridRemember(textBefore); });
       text.addEventListener("input", () => {
         const previous = owner.rankNames[i];
         owner.rankNames[i] = text.value;
@@ -2904,6 +2956,9 @@ function renderSeasonEditor() {
       const colour = document.createElement("input");
       colour.type = "color";
       colour.value = owner.rankColors[name] ?? "#8891a3";
+      let colourBefore;
+      colour.addEventListener("focus", () => { colourBefore = gridSnapshot(); });
+      colour.addEventListener("change", () => { gridRemember(colourBefore); });
 
       // Said while the colour is being chosen, not after it has shipped. The editor's own
       // background is neither of the grounds a rank has to survive, so a near-black looks
@@ -2944,6 +2999,7 @@ function renderSeasonEditor() {
         : "Remove this rank";
       drop.disabled = owner.rankNames.length <= 1 || windowed;
       drop.addEventListener("click", () => {
+        gridRemember();
         removeRank(owner, i, isCategory);
         renderSeasonEditor();
         seasonDirty(true);
@@ -2967,6 +3023,7 @@ function renderSeasonEditor() {
         ? "Add a rank, and a threshold for it on every scenario in this category"
         : "Add a rank to the overall ladder";
     add.addEventListener("click", () => {
+      gridRemember();
       addRank(owner, isCategory);
       renderSeasonEditor();
       seasonDirty(true);
@@ -3026,7 +3083,9 @@ function renderSeasonEditor() {
         ? "Only the hardest difficulty can be removed"
         : `Remove ${name}, its ${size} ranks, and its scenarios`;
       drop.addEventListener("click", () => {
+        gridRemember();
         removeWindow();
+        gridCancelCuts(); gridResumeCuts();
         renderSeasonEditor();
         seasonDirty(true);
       });
@@ -3046,7 +3105,9 @@ function renderSeasonEditor() {
           setSeasonStatus(`there is already a difficulty called ${name}`, "bad");
           return;
         }
+        gridRemember();
         addWindow(name);
+        gridCancelCuts(); gridResumeCuts();
         renderSeasonEditor();
         seasonDirty(true);
       });
@@ -3177,9 +3238,10 @@ function renderSeasonEditor() {
       add.title = `Add a scenario family to ${cat.name}, one slot per difficulty`;
       add.addEventListener("click", () => {
         askInline(add, `New ${cat.name} family…`, (name) => {
+        if (!editorName(name)) return;
           const taken = s.scenarios.some((x) => x.category === cat.name && x.family === name);
           if (taken) {
-            setSeasonStatus(`${cat.name} already has a family called ${name}`, "bad");
+            setSeasonStatus(`A family called ${name} already exists. Choose a different name.`, "bad");
             return;
           }
           addFamily(cat.name, name);
@@ -4062,12 +4124,17 @@ const HAND_SET =
 
 let gridSel = { family: null, window: 0 };
 let gridFilter = "all";
+let gridCategory = "";
 let gridSearchSlot = null;
 let gridSearchActive = 0;
 let gridSearchHits = [];
 let gridRemoteTimer = null;
 const gridRemoteAsked = new Set();
+const gridRemoteState = new Map();
 const gridCutQueue = [];
+let gridCutEpoch = 0;
+const gridCutTokens = new Map();
+let gridCutSerial = 0;
 let gridCutsRunning = 0;
 
 const slotKeyOf = (x) => `${x.category}/${x.family}/${x.window ?? 0}`;
@@ -4160,7 +4227,7 @@ function gridWaiting() {
   let failed = 0;
   for (const x of seasonDraft.scenarios) {
     const state = gridCuts.get(cutKeyOf(x))?.state;
-    if (state === "error") failed++;
+    if (state === "error" || state === "check") failed++;
     else if (state === "pending" || x.source?.why === CUT_WAITING) cutting++;
   }
   return { cutting, failed };
@@ -4206,8 +4273,9 @@ function gridFoldRenames() {
   if (!renamed || Object.keys(renamed).length === 0) return;
   const slots = [...seasonOriginal.values()];
   for (const [now, was] of Object.entries(renamed)) {
+    const category = now.slice(0, now.indexOf("/"));
     const family = now.slice(now.indexOf("/") + 1);
-    for (const slot of slots) if (familyKeyOf(slot) === was) slot.family = family;
+    for (const slot of slots) if (familyKeyOf(slot) === was) { slot.family = family; slot.category = category; }
   }
   delete seasonDraft.$renamed;
   seasonOriginal = new Map(slots.map((x) => [slotKeyOf(x), x]));
@@ -4224,17 +4292,14 @@ function gridCountFromHere() {
 /* ---- undo ---- */
 
 function gridSnapshot() {
-  return JSON.stringify({
-    scenarios: seasonDraft.scenarios,
-    energy: seasonDraft.categories.map((c) => c.rankMaxes),
-    renamed: seasonDraft.$renamed ?? {},
-  });
+  return JSON.stringify({ season: seasonDraft, ladder: seasonPercentiles, rankTheme, rankThemeDirty, selection: gridSel });
 }
 
 function gridRemember(snapshot) {
   gridUndo.push(snapshot ?? gridSnapshot());
   if (gridUndo.length > GRID_UNDO_LIMIT) gridUndo.shift();
   gridRedo.length = 0;
+  gridPaintBar();
 }
 
 function gridStep(direction) {
@@ -4243,23 +4308,37 @@ function gridStep(direction) {
   if (from.length === 0) return;
   to.push(gridSnapshot());
   const snap = JSON.parse(from.pop());
-  seasonDraft.scenarios = snap.scenarios;
-  seasonDraft.categories.forEach((c, i) => {
-    if (snap.energy[i]) c.rankMaxes = snap.energy[i];
-  });
-  seasonDraft.$renamed = snap.renamed;
+  gridCancelCuts();
+  seasonDraft = snap.season;
+  seasonPercentiles = snap.ladder;
+  rankTheme = snap.rankTheme;
+  // A saved theme can still be undone; the restored copy needs writing again.
+  rankThemeDirty = !!rankTheme;
+  gridSel = snap.selection;
   gridResumeCuts();
-  renderPoolGrid();
-  renderSeasonCategories();
+  renderSeasonEditor();
   seasonDirty(true);
-  scheduleDistribution();
 }
 
 /* ---- cutting thresholds ---- */
 
+function gridCancelCuts() {
+  gridCutEpoch++;
+  gridCutQueue.length = 0;
+  gridCuts.clear();
+  gridCutTokens.clear();
+}
+
+function gridCancelCut(slot) {
+  gridCutTokens.delete(cutKeyOf(slot));
+  gridCuts.delete(cutKeyOf(slot));
+}
+
 function gridQueueCut(slot) {
   gridCuts.set(cutKeyOf(slot), { state: "pending" });
-  gridCutQueue.push({ key: slotKeyOf(slot), name: slot.scenario, window: slot.window ?? 0 });
+  const token = ++gridCutSerial;
+  gridCutTokens.set(cutKeyOf(slot), token);
+  gridCutQueue.push({ key: slotKeyOf(slot), name: slot.scenario, window: slot.window ?? 0, epoch: gridCutEpoch, token });
   gridPumpCuts();
 }
 
@@ -4298,15 +4377,19 @@ function gridApplyCut(slot, result) {
 
 async function gridRunCut(job) {
   const key = `${job.key}|${job.name}`;
+  const currentJob = () => job.epoch === gridCutEpoch && gridCutTokens.get(key) === job.token;
+  if (!currentJob()) return;
   // Every ending repaints the slot and re-reads the Save gate, which is what says how many
   // slots are still cutting or need a hand.
   const done = () => {
+    if (!currentJob()) return;
     gridPaintSlot(job.key);
     seasonDirty(true);
   };
   const fail = (message) => {
-    if (gridLiveSlot(job.key, job.name)) gridCuts.set(key, { state: "error", message });
-    else gridCuts.delete(key);
+    if (!currentJob()) return;
+    if (!gridLiveSlot(job.key, job.name)) { gridCuts.delete(key); return; }
+    gridCuts.set(key, { state: "error", message });
     done();
   };
 
@@ -4327,17 +4410,21 @@ async function gridRunCut(job) {
       id = hit?.leaderboardId ?? null;
       if (option && id) option.leaderboardId = id;
     }
+    if (!currentJob()) return;
     if (!id) return fail("KovaaK's has no leaderboard for this scenario. Type the thresholds.");
 
     let result = await window.apogee.sampleScenario(job.name, id, cut.fractions);
     // One patient retry. A burst of replacements is exactly when the limit is hit, and
     // saying "try again" for something that will work in half a minute is busywork.
+    if (!currentJob()) return;
     if (result?.error && /rate-limit/i.test(result.error)) {
       gridCuts.set(key, { state: "pending", message: "KovaaK's is rate-limiting; retrying shortly" });
       done();
       await new Promise((resolve) => setTimeout(resolve, 20000));
+      if (!currentJob()) return;
       result = await window.apogee.sampleScenario(job.name, id, cut.fractions);
     }
+    if (!currentJob()) return;
     if (!result || result.error) return fail(result?.error ?? "Could not cut thresholds from that board.");
 
     const cutResult = {
@@ -4404,6 +4491,7 @@ function gridReplace(slot, option) {
   const index = seasonDraft.scenarios.indexOf(slot);
   if (index < 0) return;
 
+  gridCancelCut(slot);
   if (was && was.scenario === option.name) {
     seasonDraft.scenarios[index] = JSON.parse(JSON.stringify({ ...was, category: slot.category, family: slot.family }));
     return;
@@ -4422,7 +4510,7 @@ function gridReplace(slot, option) {
     slot.label = moved.label ?? slot.label;
     slot.leaderboardId = moved.leaderboardId ?? option.leaderboardId ?? null;
     slot.rankMaxes = moved.rankMaxes.slice();
-    slot.source = JSON.parse(JSON.stringify(moved.source));
+    slot.source = JSON.parse(JSON.stringify(moved.source ?? { kind: "authored", why: HAND_SET }));
     for (const carried of ["sanity", "arm", "armFrom"]) {
       if (moved[carried] !== undefined) slot[carried] = JSON.parse(JSON.stringify(moved[carried]));
     }
@@ -4455,6 +4543,7 @@ function gridRevert(slot) {
   if (index < 0) return;
   if (JSON.stringify({ ...was, category: slot.category, family: slot.family }) === JSON.stringify(slot)) return;
   gridRemember();
+  gridCancelCut(slot);
   seasonDraft.scenarios[index] = JSON.parse(JSON.stringify({ ...was, category: slot.category, family: slot.family }));
   gridCuts.delete(cutKeyOf(slot));
   gridPaintSlot(slotKeyOf(slot));
@@ -4474,10 +4563,11 @@ function gridRecut(slot) {
 
 function gridRenameFamily(familyKey, name) {
   const [category] = familyKey.split("/");
+  if (!editorName(name)) return false;
   const next = `${category}/${name}`;
   if (next === familyKey) return true;
-  if (seasonDraft.scenarios.some((x) => familyKeyOf(x) === next)) {
-    setSeasonStatus(`${category} already has a family called ${name}`, "bad");
+  if (seasonDraft.scenarios.some((x) => familyKeyOf(x) !== familyKey && x.family?.toLowerCase() === name.toLowerCase())) {
+    setSeasonStatus(`A family called ${name} already exists. Choose a different name.`, "bad");
     return false;
   }
   gridRemember();
@@ -4487,10 +4577,12 @@ function gridRenameFamily(familyKey, name) {
   if (origin !== next) renamed[next] = origin;
   for (const x of seasonDraft.scenarios) {
     if (familyKeyOf(x) !== familyKey) continue;
+    gridCancelCut(x);
     if (x.label === x.family) x.label = name;
     x.family = name;
   }
   gridSel.family = next;
+  gridResumeCuts();
   renderPoolGrid();
   seasonDirty(true);
   return true;
@@ -4499,10 +4591,11 @@ function gridRenameFamily(familyKey, name) {
 /* ---- drawing ---- */
 
 function gridVisible(family) {
+  if (gridCategory && family.category !== gridCategory) return false;
   if (gridFilter === "all") return true;
   const windows = (seasonDraft.windows ?? []).length;
   const slots = Array.from({ length: windows }, (_, w) => gridSlot(family.key, w));
-  if (gridFilter === "todo") return slots.some((s) => s && s.scenario && !isReplaced(s));
+  if (gridFilter === "todo") return slots.some((s) => !s?.scenario || !isReplaced(s));
   if (gridFilter === "done") return slots.some((s) => isReplaced(s));
   if (gridFilter === "attention") {
     const dup = gridDuplicates();
@@ -4521,7 +4614,7 @@ function renderPoolGrid() {
 
   const windows = seasonDraft.windows ?? [];
   const size = seasonWindowSize();
-  const families = gridFamilies();
+  const families = gridFamilies().filter(gridVisible);
   if (!families.some((f) => f.key === gridSel.family)) gridSel.family = families[0]?.key ?? null;
   gridSel.window = Math.max(0, Math.min(gridSel.window, windows.length - 1));
 
@@ -4559,7 +4652,7 @@ function renderPoolGrid() {
   for (const cat of seasonDraft.categories) {
     const mine = families.filter((f) => f.category === cat.name);
     const shown = mine.filter(gridVisible);
-    if (gridFilter !== "all" && shown.length === 0) continue;
+    if ((gridCategory && cat.name !== gridCategory) || (gridFilter !== "all" && shown.length === 0)) continue;
 
     const catRow = document.createElement("tr");
     catRow.className = "pg-cat";
@@ -4573,16 +4666,19 @@ function renderPoolGrid() {
     const add = document.createElement("button");
     add.type = "button";
     add.className = "pool-btn pool-addfam";
+    add.dataset.category = cat.name;
     add.textContent = "+ family";
     add.title = `Add a family to ${cat.name}, with an empty slot in every difficulty`;
     add.addEventListener("click", () => {
       askInline(add, `New ${cat.name} family…`, (name) => {
-        if (seasonDraft.scenarios.some((x) => x.category === cat.name && x.family === name)) {
-          setSeasonStatus(`${cat.name} already has a family called ${name}`, "bad");
+        if (!editorName(name)) return;
+        if (seasonDraft.scenarios.some((x) => x.family?.toLowerCase() === name.toLowerCase())) {
+          setSeasonStatus(`A family called ${name} already exists. Choose a different name.`, "bad");
           return;
         }
         gridRemember();
         addFamily(cat.name, name);
+        gridFilter = "all";
         gridSel = { family: `${cat.name}/${name}`, window: 0 };
         renderPoolGrid();
         renderSeasonCategories();
@@ -4590,7 +4686,16 @@ function renderPoolGrid() {
         gridOpenSearch("");
       });
     });
-    th.append(title, count, add);
+    const rename = document.createElement("button");
+    rename.type = "button"; rename.className = "pool-btn"; rename.textContent = "Rename";
+    rename.setAttribute("aria-label", `Rename ${cat.name}`);
+    rename.addEventListener("click", () => askInline(rename, cat.name, name => editorRenameCategory(cat, name)));
+    const remove = document.createElement("button");
+    remove.type = "button"; remove.className = "pool-btn danger"; remove.textContent = "Remove";
+    remove.title = `Remove ${cat.name} and all its families. Undo restores them.`;
+    remove.disabled = seasonDraft.categories.length <= 1;
+    remove.addEventListener("click", () => editorRemoveCategory(cat));
+    th.append(title, count, add, rename, remove);
     catRow.append(th);
     body.append(catRow);
 
@@ -4615,6 +4720,7 @@ function renderPoolGrid() {
 
   table.append(body);
   host.replaceChildren(table);
+  editorRenderToolbar();
   gridPaintBar();
   gridPaintDetail();
   gridSetSearchTarget();
@@ -4670,16 +4776,17 @@ function gridPaintSlot(key) {
   const familyKey = key.slice(0, cut);
   const window = Number(key.slice(cut + 1));
   const dup = gridDuplicates();
+  const slots = new Map(seasonDraft.scenarios.map(s => [slotKeyOf(s), s]));
   // Duplicates are a property of two cells, so every cell holding a scenario that is now
   // shared, or has just stopped being, is redrawn with it.
   for (const td of host.querySelectorAll("td.pg-cell")) {
-    const slot = gridSlot(td.dataset.family, Number(td.dataset.window));
+    const slot = slots.get(`${td.dataset.family}/${td.dataset.window}`);
     const here = td.dataset.family === familyKey && Number(td.dataset.window) === window;
     if (here || td.classList.contains("dup") || (slot?.scenario && (dup.get(slot.scenario)?.length ?? 0) > 1)) {
       gridFillCell(td, slot, dup);
     }
   }
-  if (gridSel.family === familyKey && gridSel.window === window) gridPaintDetail();
+  if (gridSel.family === familyKey && gridSel.window === window && !$("poolGridDetail").contains(document.activeElement)) gridPaintDetail();
   gridPaintBar();
 }
 
@@ -4702,6 +4809,7 @@ function gridPaintBar() {
   $("poolGridRedo").disabled = gridRedo.length === 0;
 }
 
+let gridDetailsOpen = false;
 function gridPaintDetail() {
   const host = $("poolGridDetail");
   if (!host || !seasonDraft) return;
@@ -4725,7 +4833,7 @@ function gridPaintDetail() {
     return el;
   };
 
-  add("div", "pgd-where", `${category} · ${windowLabel(w)}`);
+  const location = add("div", "pgd-where", `${family} · ${windowLabel(w)}`);
 
   const famRow = add("div", "pgd-family");
   const famInput = document.createElement("input");
@@ -4758,6 +4866,14 @@ function gridPaintDetail() {
   });
   famRow.append(famInput, dropFamily);
 
+  const categoryField = add("label", "editor-field");
+  categoryField.append(document.createTextNode("Move family to category"));
+  const categoryPicker = document.createElement("select");
+  seasonDraft.categories.forEach(c => categoryPicker.add(new Option(c.name, c.name)));
+  categoryPicker.value = category;
+  categoryPicker.addEventListener("change", () => editorMoveFamily(familyKey, categoryPicker.value));
+  categoryField.append(categoryPicker);
+
   if (!slot || !slot.scenario) {
     add("p", "pgd-empty", "Empty. Press Enter, or start typing, to fill it.");
     return;
@@ -4769,6 +4885,37 @@ function gridPaintDetail() {
   nameRow.append(nameText);
   const play = playButton(slot.scenario);
   if (play) nameRow.append(play);
+  const actions = add("div", "pgd-tools");
+  const replace = document.createElement("button");
+  replace.type = "button"; replace.className = "pool-btn"; replace.textContent = "Replace";
+  replace.addEventListener("click", () => gridOpenSearch(""));
+  const clear = document.createElement("button");
+  clear.type = "button"; clear.className = "pool-btn danger"; clear.textContent = "Clear slot";
+  clear.addEventListener("click", () => { editorClearSlot(); gridFocus(); });
+  actions.append(replace, clear);
+
+  const field = (label, key, multiline = false) => {
+    const wrap = add("label", "editor-field");
+    wrap.append(document.createTextNode(label));
+    const input = document.createElement(multiline ? "textarea" : "input");
+    input.value = slot[key] ?? "";
+    input.addEventListener("change", () => {
+      if (input.value === (slot[key] ?? "")) return;
+      gridRemember(); slot[key] = input.value;
+      if (key === "focus" || key === "subCategory") {
+        for (const sibling of seasonDraft.scenarios) if (familyKeyOf(sibling) === familyKey) sibling[key] = input.value;
+      }
+      seasonDirty(true);
+      if (key === "label") {
+        const td = $("poolGrid").querySelector("td.sel");
+        if (td) gridFillCell(td, slot, gridDuplicates());
+      }
+    });
+    wrap.append(input);
+  };
+  field("Display name", "label");
+  field("Family practice cue", "focus", true);
+  field("Family sub-category", "subCategory");
 
   const was = originalOf(slot);
   if (isReplaced(slot)) {
@@ -4798,7 +4945,7 @@ function gridPaintDetail() {
       "p",
       "pgd-warn",
       `The benchmarks file this under ${option.subSkill}, and the ${family} family is ${slot.subCategory}. ` +
-        `validate:pool will want the reason in data/pool.json's subCategoryOverrides.`,
+        `Check that this scenario belongs in the family before saving.`,
     );
   }
 
@@ -4816,7 +4963,7 @@ function gridPaintDetail() {
   const viscose = slot.armFrom === "Viscose";
   arm.disabled = viscose;
   arm.title = viscose
-    ? "Viscose publishes this one, and validate:pool holds the season to it"
+    ? "This arm classification comes from the Viscose benchmark."
     : "The season's own call: which part of the arm this scenario mostly asks for";
   const armFrom = document.createElement("small");
   armFrom.textContent = viscose ? "Viscose" : "Apogee";
@@ -4863,6 +5010,17 @@ function gridPaintDetail() {
     share.textContent = cut?.fractions[i] != null ? `top ${pctText(cut.fractions[i])}` : "";
 
     input.addEventListener("focus", () => { before = gridSnapshot(); });
+    input.addEventListener("paste", e => {
+      const text = e.clipboardData?.getData("text/plain") ?? "";
+      if (!/[\t\n]/.test(text)) return;
+      e.preventDefault();
+      const values = text.trim().split(/\s+/).map(Number);
+      if (editorPasteThresholds(slot, i, values)) {
+        gridPaintDetail();
+        const next = $("poolGridDetail").querySelectorAll("input.thr")[Math.min(i + values.length, slot.rankMaxes.length - 1)];
+        next?.focus();
+      }
+    });
     input.addEventListener("keydown", (e) => {
       e.stopPropagation();
       if (e.key === "Enter") {
@@ -4884,6 +5042,7 @@ function gridPaintDetail() {
       }
       if (next === slot.rankMaxes[i]) return;
       gridRemember(before);
+      gridCancelCut(slot);
       slot.rankMaxes[i] = next;
 
       const landed = gridCutResults.get(cutKeyOf(slot));
@@ -4892,7 +5051,7 @@ function gridPaintDetail() {
         slot.source = JSON.parse(JSON.stringify(landed.source));
       } else if (original && original.scenario === slot.scenario &&
                  original.rankMaxes.every((v, j) => v === slot.rankMaxes[j])) {
-        slot.source = JSON.parse(JSON.stringify(original.source));
+        slot.source = JSON.parse(JSON.stringify(original.source ?? { kind: "authored", why: HAND_SET }));
       } else {
         slot.source = { kind: "authored", why: HAND_SET };
       }
@@ -4922,6 +5081,28 @@ function gridPaintDetail() {
   recut.disabled = !cut;
   recut.addEventListener("click", () => { gridRecut(slot); gridFocus(); });
   tools.append(recut);
+  const reason = add("label", "editor-field");
+  reason.append(document.createTextNode("Threshold rationale"));
+  const why = document.createElement("textarea");
+  why.value = slot.source?.why ?? "";
+  why.addEventListener("change", () => {
+    if (why.value === (slot.source?.why ?? "")) return;
+    gridRemember();
+    slot.source = {...(slot.source ?? {kind:"authored"}), why:why.value};
+    seasonDirty(true);
+  });
+  reason.append(why);
+  // Numbers stay in reach. Naming and family metadata remain available without pushing
+  // the primary controls below the fold on a laptop.
+  const notes = document.createElement("details");
+  notes.className = "editor-notes"; notes.open = gridDetailsOpen;
+  const summary = document.createElement("summary"); summary.textContent = "Names, family and notes";
+  notes.append(summary);
+  const warnings = [...host.querySelectorAll(".pgd-warn,.pgd-busy")];
+  const primary = new Set([location,nameRow,actions,thresholds,tools,...warnings]);
+  for (const child of [...host.children]) if (!primary.has(child)) notes.append(child);
+  host.replaceChildren(location,nameRow,actions,...warnings,thresholds,tools,notes);
+  notes.addEventListener("toggle", () => { if (notes.isConnected) gridDetailsOpen = notes.open; });
 }
 
 /* ---- moving around ---- */
@@ -4935,6 +5116,7 @@ function gridRowsOnScreen() {
   return [...($("poolGrid")?.querySelectorAll("tr[data-family]") ?? [])].map((tr) => tr.dataset.family);
 }
 
+let gridSelectionFrame = null;
 function gridSelect(familyKey, window) {
   const host = $("poolGrid");
   if (!host) return;
@@ -4948,9 +5130,10 @@ function gridSelect(familyKey, window) {
   if (td) {
     td.classList.add("sel");
     td.setAttribute("aria-selected", "true");
-    td.scrollIntoView({ block: "nearest", inline: "nearest" });
+
   }
-  gridPaintDetail();
+  cancelAnimationFrame(gridSelectionFrame);
+  gridSelectionFrame = requestAnimationFrame(() => { if (td?.isConnected) gridReveal(td); gridPaintDetail(); });
   // The search box names the slot it will fill, so it follows the selection even while closed.
   gridSetSearchTarget();
 }
@@ -4972,9 +5155,10 @@ function gridAdvance(direction) {
   if (rows.length === 0 || windows === 0) return;
   let row = Math.max(0, rows.indexOf(gridSel.family));
   let col = gridSel.window + direction;
-  if (col >= windows) { col = 0; row = Math.min(rows.length - 1, row + 1); }
-  if (col < 0) { col = windows - 1; row = Math.max(0, row - 1); }
+  if (col >= windows) { if (row === rows.length - 1) return false; col = 0; row++; }
+  if (col < 0) { if (row === 0) return false; col = windows - 1; row--; }
   gridSelect(rows[row], col);
+  return true;
 }
 
 /* ---- the search ---- */
@@ -4995,6 +5179,7 @@ function gridOpenSearch(seed) {
   if (!input) return;
   gridSetSearchTarget();
   $("poolGridSearch").classList.add("open");
+  input.setAttribute("aria-expanded", "true");
   input.value = seed ?? "";
   input.focus();
   const end = input.value.length;
@@ -5007,7 +5192,7 @@ function gridCloseSearch(focusGrid) {
   gridSearchSlot = null;
   $("poolGridSearch")?.classList.remove("open");
   const input = $("poolGridQuery");
-  if (input) input.value = "";
+  if (input) { input.value = ""; input.setAttribute("aria-expanded", "false"); input.removeAttribute("aria-activedescendant"); }
   const list = $("poolGridHits");
   if (list) list.textContent = "";
   if (focusGrid) gridFocus();
@@ -5067,8 +5252,10 @@ function gridRenderHits() {
   if (gridSearchHits.length === 0) {
     const hint = document.createElement("div");
     hint.className = "pg-hint";
-    hint.textContent = gridRemoteAsked.has(term.toLowerCase())
-      ? "Nothing by that name here or on KovaaK's."
+    const remote = gridRemoteState.get(term.toLowerCase());
+    hint.textContent = term.length < 2 ? "Type at least two characters to search KovaaK's."
+      : remote === "done" ? "No matching scenarios here or on KovaaK's."
+      : remote === "error" ? "KovaaK's search is unavailable. Edit the search to retry; local results still work."
       : "Searching KovaaK's…";
     list.append(hint);
     return;
@@ -5118,7 +5305,7 @@ function gridRenderHits() {
     list.append(row);
   });
 
-  list.querySelector(".pg-hit.active")?.scrollIntoView({ block: "nearest" });
+  gridHighlightHit();
 }
 
 function gridSearchRemote(term) {
@@ -5127,12 +5314,15 @@ function gridSearchRemote(term) {
   if (term.length < 2 || gridRemoteAsked.has(key)) return;
   gridRemoteTimer = setTimeout(async () => {
     gridRemoteAsked.add(key);
+    gridRemoteState.set(key, "pending");
     let found = null;
     try {
       found = await window.apogee.searchScenarios(term);
     } catch {
       found = null;
     }
+    gridRemoteState.set(key, found && !found.error ? "done" : "error");
+    if (!found || found.error) gridRemoteAsked.delete(key);
     for (const hit of found?.scenarios ?? []) {
       const category = hit.aimType === "Target Switching" ? "Switching" : hit.aimType;
       const existing = seasonAvailable.find((o) => o.name === hit.name);
@@ -5153,7 +5343,7 @@ function gridSearchRemote(term) {
         suggested: {},
       });
     }
-    if ($("poolGridQuery")?.value.trim().toLowerCase() === key) gridRenderHits();
+    if ($("poolGridSearch").classList.contains("open") && $("poolGridQuery")?.value.trim().toLowerCase() === key) gridRenderHits();
   }, 250);
 }
 
@@ -5168,7 +5358,7 @@ function gridPick() {
     seasonDirty(true);
     scheduleDistribution();
   }
-  gridAdvance(1);
+  if ($("poolAutoAdvance")?.checked !== false) gridAdvance(1);
   const input = $("poolGridQuery");
   input.value = "";
   gridRenderHits();
@@ -5177,10 +5367,310 @@ function gridPick() {
 
 /* ---- wiring, once ---- */
 
+function editorName(name) {
+  if (!name.trim() || /[\/|\x00-\x1f]/.test(name) || name.length > 80) {
+    setSeasonStatus("Use a name of 1–80 characters, without / or |.", "bad");
+    return false;
+  }
+  return true;
+}
+
+function gridReveal(td) {
+  // Only scroll the grid. scrollIntoView also moves the entire page on each keypress.
+  const host = $("poolGrid");
+  const top = td.offsetTop, bottom = top + td.offsetHeight;
+  const inset = host.querySelector("thead")?.offsetHeight ?? 0;
+  if (top < host.scrollTop + inset) host.scrollTop = Math.max(0, top - inset);
+  else if (bottom > host.scrollTop + host.clientHeight) host.scrollTop = bottom - host.clientHeight;
+  if (td.offsetLeft < host.scrollLeft) host.scrollLeft = td.offsetLeft;
+  else if (td.offsetLeft + td.offsetWidth > host.scrollLeft + host.clientWidth) {
+    host.scrollLeft = td.offsetLeft + td.offsetWidth - host.clientWidth;
+  }
+}
+
+function gridHighlightHit() {
+  const list = $("poolGridHits");
+  [...list.querySelectorAll(".pg-hit")].forEach((row, i) => {
+    row.classList.toggle("active", i === gridSearchActive);
+    row.setAttribute("aria-selected", String(i === gridSearchActive));
+    row.id = `pool-hit-${i}`;
+  });
+  $("poolGridQuery").setAttribute("aria-activedescendant", `pool-hit-${gridSearchActive}`);
+  const row = list.querySelector(".active");
+  if (row) {
+    if (row.offsetTop < list.scrollTop) list.scrollTop = row.offsetTop;
+    else if (row.offsetTop + row.offsetHeight > list.scrollTop + list.clientHeight) {
+      list.scrollTop = row.offsetTop + row.offsetHeight - list.clientHeight;
+    }
+  }
+}
+
+function editorClearSlot() {
+  const slot = gridSlot(gridSel.family, gridSel.window);
+  if (!slot?.scenario) return;
+  gridRemember();
+  gridCancelCut(slot);
+  const replacement = { category: slot.category, family: slot.family, window: slot.window,
+    subCategory: slot.subCategory, scenario: "", label: slot.family, leaderboardId: null,
+    rankMaxes: slot.rankMaxes.map((_, i) => i + 1) };
+  seasonDraft.scenarios[seasonDraft.scenarios.indexOf(slot)] = replacement;
+  gridPaintSlot(slotKeyOf(replacement));
+  gridSetSearchTarget();
+  seasonDirty(true);
+  scheduleDistribution();
+}
+
+function editorStructureChanged() {
+  gridCancelCuts();
+  gridResumeCuts();
+  renderSeasonEditor();
+  seasonDirty(true);
+}
+
+function editorAddCategory(name) {
+  name = name.trim();
+  if (!editorName(name)) return false;
+  if (seasonDraft.categories.some(c => c.name.toLowerCase() === name.toLowerCase())) {
+    setSeasonStatus(`There is already a category called ${name}.`, "bad");
+    return false;
+  }
+  const template = seasonDraft.categories.find(c => c.name === gridCategory) ?? seasonDraft.categories[0];
+  if (!template) return false;
+  gridRemember();
+  const category = { name, rankNames: template.rankNames.slice(), rankColors: {...template.rankColors}, rankMaxes: template.rankMaxes.slice() };
+  seasonDraft.categories.push(category);
+  let family = `${name} 1`;
+  while (seasonDraft.scenarios.some(s => s.family === family)) family += " new";
+  addFamily(name, family);
+  gridCategory = name;
+  gridFilter = "all";
+  gridSel = { family: `${name}/${family}`, window: 0 };
+  editorStructureChanged();
+  gridOpenSearch("");
+  return true;
+}
+
+function editorRenameCategory(category, name) {
+  name = name.trim();
+  if (!editorName(name) || name === category.name) return false;
+  if (seasonDraft.categories.some(c => c !== category && c.name.toLowerCase() === name.toLowerCase())) {
+    setSeasonStatus(`There is already a category called ${name}.`, "bad"); return false;
+  }
+  gridRemember();
+  const oldName = category.name;
+  const renamed = (seasonDraft.$renamed ??= {});
+  for (const f of gridFamilies().filter(f => f.category === oldName)) {
+    const origin = originalFamilyKey(f.key);
+    delete renamed[f.key];
+    const next = `${name}/${f.family}`;
+    if (next !== origin) renamed[next] = origin;
+    if (gridSel.family === f.key) gridSel.family = next;
+  }
+  for (const slot of seasonDraft.scenarios) if (slot.category === oldName) slot.category = name;
+  category.name = name;
+  if (gridCategory === oldName) gridCategory = name;
+  editorStructureChanged();
+  return true;
+}
+
+function editorRemoveCategory(category) {
+  if (seasonDraft.categories.length <= 1) return;
+  gridRemember();
+  seasonDraft.categories = seasonDraft.categories.filter(c => c !== category);
+  seasonDraft.scenarios = seasonDraft.scenarios.filter(s => s.category !== category.name);
+  if (gridCategory === category.name) gridCategory = "";
+  editorStructureChanged();
+  gridFocus();
+}
+
+function editorMoveFamily(key, category) {
+  const slots = seasonDraft.scenarios.filter(s => familyKeyOf(s) === key);
+  if (!slots.length || slots[0].category === category) return;
+  const oldCategory = slots[0].category, family = slots[0].family;
+  if (seasonDraft.scenarios.some(s => s.category === category && s.family === family)) {
+    setSeasonStatus(`${category} already contains ${family}.`, "bad"); return;
+  }
+  gridRemember();
+  const next = `${category}/${family}`, origin = originalFamilyKey(key);
+  const renamed = (seasonDraft.$renamed ??= {});
+  delete renamed[key];
+  if (origin !== next) renamed[next] = origin;
+  slots.forEach(s => { s.category = category; });
+  rebalanceEnergy(oldCategory); rebalanceEnergy(category);
+  gridSel.family = next;
+  if (gridCategory) gridCategory = category;
+  editorStructureChanged();
+}
+
+function editorRenderToolbar() {
+  const picker = $("poolCategory");
+  if (!picker) return;
+  if (!seasonDraft.categories.some(c => c.name === gridCategory)) gridCategory = "";
+  picker.replaceChildren(new Option("All categories", ""), ...seasonDraft.categories.map(c => new Option(c.name, c.name)));
+  picker.value = gridCategory;
+  for (const b of document.querySelectorAll("[data-grid-filter]")) b.setAttribute("aria-pressed", String(b.dataset.gridFilter === gridFilter));
+  if (document.activeElement !== $("seasonName")) $("seasonName").value = seasonDraft.name;
+}
+
+/** A rectangular TSV paste replaces only explicitly named cells. One undo covers it all. */
+function editorPaste(text) {
+  const matrix = text.replace(/\r/g, "").replace(/\n+$/, "").split("\n").map(line => line.split("\t"));
+  const rows = gridRowsOnScreen(), start = rows.indexOf(gridSel.family);
+  if (start < 0 || !text.trim()) return false;
+  const names = new Map(seasonAvailable.map(s => [s.name.toLowerCase(), s]));
+  const changes = [], problems = [];
+  const columns = (seasonDraft.windows ?? []).length;
+  const oneColumn = matrix.every(row => row.length === 1);
+  matrix.forEach((row, r) => row.forEach((value, c) => {
+    const name = value.trim();
+    if (!name) return;
+    // A line-separated list fills in reading order; TSV keeps its spreadsheet shape.
+    const offset = gridSel.window + r;
+    const targetRow = oneColumn ? start + Math.floor(offset / columns) : start + r;
+    const targetColumn = oneColumn ? offset % columns : gridSel.window + c;
+    const slot = targetColumn < columns ? gridSlot(rows[targetRow], targetColumn) : null;
+    if (!slot) { problems.push(`No slot for “${name}”`); return; }
+    const option = names.get(name.toLowerCase());
+    if (!option) { problems.push(`Search once to load “${name}” before pasting it`); return; }
+    if (slot.scenario !== option.name) changes.push({slot,option});
+  }));
+  if (problems.length) { setSeasonStatus(`${problems.slice(0, 2).join(". ")}. Nothing pasted.`, "bad"); return false; }
+  if (!changes.length) return true;
+  gridRemember();
+  changes.forEach(({slot,option}) => gridReplace(slot, option));
+  renderPoolGrid();
+  seasonDirty(true);
+  scheduleDistribution();
+  gridCloseSearch(true);
+  return true;
+}
+
+function editorExportDraft() {
+  const contents = JSON.stringify({ format: "apogee-season-draft", version: 1, season: seasonDraft,
+    ladder: seasonPercentiles, rankTheme: rankThemeDirty ? rankTheme : null }, null, 2);
+  const url = URL.createObjectURL(new Blob([contents], { type: "application/json" }));
+  const a = document.createElement("a");
+  a.href = url; a.download = `${seasonDraft.name.replace(/[^a-z0-9_-]+/gi, "-")}-draft.json`;
+  a.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+function editorPasteThresholds(slot, start, values) {
+  if (!values.length || values.some(n => !Number.isFinite(n)) || start + values.length > slot.rankMaxes.length) {
+    setSeasonStatus("Paste one number per remaining rank, separated by tabs or new lines. Nothing changed.", "bad"); return false;
+  }
+  const proposed = slot.rankMaxes.slice();
+  proposed.splice(start, values.length, ...values);
+  if (proposed.some((n,i) => !Number.isFinite(n) || n < 0 || (i > 0 && n <= proposed[i-1]))) {
+    setSeasonStatus("Thresholds must rise from each rank to the next. Nothing changed.", "bad"); return false;
+  }
+  gridRemember(); gridCancelCut(slot);
+  slot.rankMaxes = proposed; slot.source = {kind:"authored",why:HAND_SET};
+  gridPaintSlot(slotKeyOf(slot)); seasonDirty(true); scheduleDistribution();
+  return true;
+}
+
+function editorAddFamilies(category, text) {
+  const names = text.split(/\r?\n/).map(n => n.trim()).filter(Boolean);
+  if (!seasonDraft.categories.some(c => c.name === category)) return "Choose a category.";
+  if (!names.length || names.length > 100) return "Enter between 1 and 100 family names.";
+  const existing = new Set(seasonDraft.scenarios.map(s => s.family?.toLowerCase()));
+  for (const name of names) {
+    if (!editorName(name)) return "Family names must be 1–80 characters without / or |.";
+    if (existing.has(name.toLowerCase())) return `A family named ${name} already exists. Nothing added.`;
+    existing.add(name.toLowerCase());
+  }
+  gridRemember();
+  names.forEach(name => addFamily(category, name));
+  gridCategory = category; gridFilter = "all";
+  gridSel = {family:`${category}/${names[0]}`,window:0};
+  editorStructureChanged();
+  return null;
+}
+
+function editorImportDraft(raw) {
+  const draft = raw?.season;
+  if (raw?.format !== "apogee-season-draft" || raw.version !== 1 || !draft ||
+      typeof draft.name !== "string" || !Array.isArray(draft.categories) || !draft.categories.length ||
+      !Array.isArray(draft.scenarios) || !Array.isArray(draft.rankNames) || !draft.rankColors ||
+      !Array.isArray(draft.windows) || !draft.windows.length || !draft.windows.every(w => typeof w === "string") ||
+      !Number.isInteger(draft.windowSize) || draft.windowSize < 1 ||
+      draft.categories.some(c => !c || typeof c.name !== "string" || !c.name.trim() ||
+        !Array.isArray(c.rankNames) || !c.rankNames.every(n => typeof n === "string") || !c.rankColors || !Array.isArray(c.rankMaxes)) ||
+      draft.scenarios.some(s => !s || typeof s.scenario !== "string" || typeof s.category !== "string" ||
+        typeof s.family !== "string" || !Array.isArray(s.rankMaxes) || !Number.isInteger(s.window))) {
+    throw new Error("This is not a supported Apogee season draft export.");
+  }
+  if (raw.ladder && (!Array.isArray(raw.ladder.ranks) || raw.ladder.ranks.length !== draft.windows.length * draft.windowSize ||
+      raw.ladder.ranks.some((n,i,a) => !Number.isFinite(n) || n <= 0 || n > 1 || (i > 0 && n >= a[i-1])))) {
+    throw new Error("The draft's percentile ladder is invalid.");
+  }
+  if (raw.rankTheme && (!Array.isArray(raw.rankTheme.tiers) || raw.rankTheme.tiers.some(t => !t || typeof t.name !== "string" || typeof t.color !== "string"))) {
+    throw new Error("The draft's rating tiers are invalid.");
+  }
+  gridRemember();
+  gridCancelCuts(); gridCutResults.clear();
+  seasonDraft = structuredClone(draft); delete seasonDraft.$editor;
+  seasonPercentiles = structuredClone(raw.ladder ?? seasonPercentiles);
+  if (raw.rankTheme) { rankTheme = structuredClone(raw.rankTheme); rankThemeDirty = true; }
+  gridCategory = ""; gridFilter = "all";
+  editorStructureChanged();
+}
+
 function wirePoolGrid() {
   const wrap = $("poolGrid");
   if (!wrap || wrap.dataset.wired) return;
   wrap.dataset.wired = "1";
+  $("poolCategory").addEventListener("change", e => {
+    gridCategory = e.target.value; renderPoolGrid(); gridFocus();
+  });
+  $("poolAddCategory").addEventListener("click", e => askInline(e.target, "Category name…", editorAddCategory));
+  $("poolAddFamily").addEventListener("click", () => {
+    const category = gridCategory || gridSlot(gridSel.family, gridSel.window)?.category || seasonDraft.categories[0]?.name;
+    const add = [...wrap.querySelectorAll(".pool-addfam")].find(b => b.dataset.category === category);
+    add?.click();
+  });
+  $("poolAddWindow").addEventListener("click", e => askInline(e.target, "Difficulty name…", name => {
+    if (!editorName(name) || seasonDraft.windows.includes(name)) return;
+    gridRemember(); addWindow(name); editorStructureChanged();
+  }));
+  $("seasonName").addEventListener("change", e => {
+    const name = e.target.value.trim();
+    if (!name) { e.target.value = seasonDraft.name; return; }
+    if (name === seasonDraft.name) return;
+    gridRemember(); seasonDraft.name = name; seasonDirty(true);
+  });
+  $("seasonExportDraft").addEventListener("click", editorExportDraft);
+  $("seasonImportDraft").addEventListener("click", () => $("seasonImportFile").click());
+  $("seasonImportFile").addEventListener("change", async e => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    try {
+      if (file.size > 5 * 1024 * 1024) throw new Error("Draft files must be smaller than 5 MB.");
+      editorImportDraft(JSON.parse(await file.text()));
+    } catch (error) { setSeasonStatus(error.message, "bad"); }
+    e.target.value = "";
+  });
+  $("poolBatchFamilies").addEventListener("click", () => {
+    const category = $("seasonBatchCategory");
+    category.replaceChildren(...seasonDraft.categories.map(c => new Option(c.name,c.name)));
+    category.value = gridCategory || gridSlot(gridSel.family,gridSel.window)?.category || seasonDraft.categories[0].name;
+    $("seasonBatchNames").value = ""; $("seasonBatchError").textContent = "";
+    $("seasonBatchDialog").showModal(); $("seasonBatchNames").focus();
+  });
+  $("seasonBatchCancel").addEventListener("click", () => $("seasonBatchDialog").close());
+  $("seasonBatchForm").addEventListener("submit", e => {
+    e.preventDefault();
+    const error = editorAddFamilies($("seasonBatchCategory").value, $("seasonBatchNames").value);
+    if (error) { $("seasonBatchError").textContent = error; return; }
+    $("seasonBatchDialog").close(); gridOpenSearch("");
+  });
+  $("poolCompact").addEventListener("change", e => $("poolPanel").classList.toggle("compact", e.target.checked));
+  const paste = e => {
+    const text = e.clipboardData?.getData("text/plain") ?? "";
+    if (e.target === wrap || /[\t\n]/.test(text)) { e.preventDefault(); editorPaste(text); }
+  };
+  wrap.addEventListener("paste", paste);
+  $("poolGridQuery").addEventListener("paste", paste);
 
   wrap.addEventListener("mousedown", (e) => {
     const td = e.target.closest("td.pg-cell");
@@ -5195,6 +5685,7 @@ function wirePoolGrid() {
   });
 
   wrap.addEventListener("keydown", (e) => {
+    if (e.target !== wrap || e.isComposing) return;
     const ctrl = e.ctrlKey || e.metaKey;
     const k = e.key;
     let handled = true;
@@ -5209,9 +5700,14 @@ function wirePoolGrid() {
     else if (k === "PageDown") gridMove(10, 0);
     else if (k === "Home") gridMove(0, -99);
     else if (k === "End") gridMove(0, 99);
-    else if (k === "Enter" && e.shiftKey) $("poolGridDetail")?.querySelector("input.thr")?.focus();
+    else if (k === "Enter" && e.shiftKey) {
+      cancelAnimationFrame(gridSelectionFrame); gridPaintDetail();
+      $("poolGridDetail")?.querySelector("input.thr")?.focus();
+    }
     else if (k === "Enter" || k === "F2") gridOpenSearch("");
-    else if (k === "Backspace" || k === "Delete") {
+    else if (k === "Delete") editorClearSlot();
+    else if (k === "Tab") gridAdvance(e.shiftKey ? -1 : 1);
+    else if (k === "Backspace") {
       const slot = gridSlot(gridSel.family, gridSel.window);
       if (slot) gridRevert(slot);
     } else if (k.length === 1 && k !== " ") gridOpenSearch(k);
@@ -5228,13 +5724,15 @@ function wirePoolGrid() {
     gridSearchRemote(input.value.trim());
   });
   input.addEventListener("keydown", (e) => {
+    if (e.isComposing) return;
     e.stopPropagation();
     const k = e.key;
+    if ((e.ctrlKey || e.metaKey) && k.toLowerCase() === "s") { e.preventDefault(); $("seasonSave").click(); return; }
     if (k === "ArrowDown" || k === "ArrowUp") {
       e.preventDefault();
       if (gridSearchHits.length === 0) return;
       gridSearchActive = (gridSearchActive + (k === "ArrowDown" ? 1 : -1) + gridSearchHits.length) % gridSearchHits.length;
-      gridRenderHits();
+      gridHighlightHit();
     } else if (k === "Enter") {
       e.preventDefault();
       if (gridSearchHits.length > 0) gridPick();
@@ -5259,6 +5757,7 @@ function wirePoolGrid() {
   input.addEventListener("focus", () => {
     if (!gridSearchSlot) gridSetSearchTarget();
     $("poolGridSearch").classList.add("open");
+    input.setAttribute("aria-expanded", "true");
     gridRenderHits();
   });
 
@@ -5280,14 +5779,17 @@ function wirePoolGrid() {
     });
   }
 
-  // Save from anywhere on the screen. The button is at the top and the grid is long.
   $("screen-season")?.addEventListener("keydown", (e) => {
-    if ((e.ctrlKey || e.metaKey) && (e.key === "s" || e.key === "S")) {
-      e.preventDefault();
+    if (!(e.ctrlKey || e.metaKey)) return;
+    const key = e.key.toLowerCase();
+    if (key === "s") {
+      e.preventDefault(); e.stopPropagation();
       const save = $("seasonSave");
       if (save && !save.disabled) save.click();
+    } else if ((key === "z" || key === "y") && !e.target.closest("input,textarea,select,[contenteditable=true]")) {
+      e.preventDefault(); e.stopPropagation(); gridStep(key === "y" || e.shiftKey ? 1 : -1);
     }
-  });
+  }, true);
 }
 
 /* ------------------------------------------------------------------ ranks */
@@ -8053,11 +8555,17 @@ refreshPractice();
 // client that would not start.
 const hasSeasonEditor = HOST === "electron" && window.apogee.isAdmin && $("seasonSave") !== null;
 
-if (hasSeasonEditor) {
-  void refreshAdminTabs();
-
-  $("seasonSave").addEventListener("click", async () => {
-    const btn = $("seasonSave");
+async function saveSeasonDraft() {
+  if (seasonSaving || !seasonDraft) return;
+  const btn = $("seasonSave");
+  const revision = seasonRevision;
+  const draftToSave = structuredClone(seasonDraft);
+  draftToSave.$editorLadder = structuredClone(seasonPercentiles);
+  const themeToSave = structuredClone(rankTheme);
+  seasonSaving = true;
+  $("seasonReload").disabled = true;
+  stashDraft();
+  try {
     btn.disabled = true;
     setSeasonStatus("saving…", "");
 
@@ -8065,34 +8573,34 @@ if (hasSeasonEditor) {
     // season that saves while the ranks fail to leaves the two disagreeing - and the
     // ranks are the cheaper of the two to redo.
     if (rankThemeDirty && rankTheme && window.apogee.saveRankTheme) {
-      const ranks = await window.apogee.saveRankTheme(rankTheme, rankThemeFingerprint, seasonForce);
-      if (ranks && ranks.error) {
-        setSeasonStatus(ranks.error, "bad");
-        if (ranks.stale) seasonForce = true;
+      const ranks = await window.apogee.saveRankTheme(themeToSave, rankThemeFingerprint, seasonForce);
+      if (!ranks || ranks.error) {
+        setSeasonStatus(ranks?.error ?? "Rating tiers could not be saved.", "bad");
+        if (ranks?.stale) seasonForce = true;
         btn.disabled = false;
         return;
       }
-      rankThemeDirty = false;
+      rankThemeDirty = JSON.stringify(rankTheme) !== JSON.stringify(themeToSave);
       if (window.apogee.getRankTheme) {
         const fresh = await window.apogee.getRankTheme();
         if (fresh && !fresh.error) rankThemeFingerprint = fresh.fingerprint ?? null;
       }
     }
 
-    const result = await window.apogee.saveSeason(seasonDraft, seasonFingerprint, seasonForce);
+    const result = await window.apogee.saveSeason(draftToSave, seasonFingerprint, seasonForce);
 
-    if (result && result.error) {
+    if (!result || result.error) {
       // Say what is wrong and leave the draft alone: the numbers on screen are the ones
       // that need fixing, so throwing them away would be the worst possible response.
       //
       // A stale draft is the one case where the draft is the problem rather than the
       // numbers in it, so the message points at Discard - which is the only way out, and
       // is not obvious from a status line that has only ever meant "fix this row".
-      setSeasonStatus(result.error, "bad");
+      setSeasonStatus(result?.error ?? "The season could not be saved. Your draft is still here.", "bad");
       // Arm the override rather than blocking. The draft on screen can be the only copy of
       // an afternoon's work, and a guard whose only other exit is Discard trades "you might
       // overwrite the file" for "you will certainly lose your own".
-      if (result.stale) seasonForce = true;
+      if (result?.stale) seasonForce = true;
       btn.disabled = false;
       return;
     }
@@ -8109,10 +8617,28 @@ if (hasSeasonEditor) {
       "good",
     );
     // Saved, so the stash is no longer the newer copy of anything.
-    clearStashedDraft();
-    gridFoldRenames();
-    seasonDirty(false);
-  });
+    if (seasonRevision === revision) {
+      clearStashedDraft();
+      gridFoldRenames();
+      seasonDirty(false);
+    } else {
+      seasonDirty(true);
+      setSeasonStatus("Saved. Newer edits are still in the draft; save again when ready.", "");
+    }
+  } catch (error) {
+    setSeasonStatus(`Save failed: ${error?.message ?? error}. Your draft is still here.`, "bad");
+  } finally {
+    seasonSaving = false;
+    $("seasonReload").disabled = !seasonHasChanges;
+    const waiting = gridWaiting();
+    btn.disabled = !seasonHasChanges || seasonGaps().length > 0 || seasonOrphans().length > 0 || waiting.cutting > 0 || waiting.failed > 0;
+  }
+  }
+
+if (hasSeasonEditor) {
+  void refreshAdminTabs();
+
+  $("seasonSave").addEventListener("click", saveSeasonDraft);
 
   $("seasonPurge").addEventListener("click", () => {
     const orphans = new Set(seasonOrphans());
@@ -8126,6 +8652,7 @@ if (hasSeasonEditor) {
 
   $("seasonReload").addEventListener("click", () => {
     // Discard means the season on disk, not the draft that was being restored.
+    if (seasonSaving) return;
     clearStashedDraft();
     void loadSeasonEditor();
   });

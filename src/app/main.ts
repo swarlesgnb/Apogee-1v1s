@@ -3427,7 +3427,14 @@ ipcMain.handle("apogee:saveSeason", async (_e, { season, fingerprint, force } = 
   // taken off before anything validates or writes the season.
   const renamed: Record<string, string> =
     season && typeof season.$renamed === "object" && season.$renamed ? season.$renamed : {};
+  const editorLadder = season?.$editorLadder;
   if (season) delete season.$renamed;
+  if (season) { delete season.$editorLadder; delete season.$editor; }
+  if (editorLadder && (!Array.isArray(editorLadder.ranks) ||
+      editorLadder.ranks.length !== (season.windows?.length ?? 0) * (season.windowSize ?? 0) ||
+      editorLadder.ranks.some((n: number, i: number) => !Number.isFinite(n) || n <= 0 || n > 1 || (i > 0 && n >= editorLadder.ranks[i - 1])))) {
+    return { error: "The percentile ladder must have one descending share per rank, between zero and one." };
+  }
 
   syncBandLadders(season);
   // And the overall readout takes its names from the rating ladder, which is now the only
@@ -3455,13 +3462,18 @@ ipcMain.handle("apogee:saveSeason", async (_e, { season, fingerprint, force } = 
   const poolBody = (() => {
     try {
       const pool = JSON.parse(readFileSync(dataFile("pool.json"), "utf8"));
-      return JSON.stringify(rebuildPool(pool, season, renamed), null, 2) + "\n";
+      const rebuilt = rebuildPool(pool, season, renamed);
+      if (editorLadder) rebuilt.ladder = { ...(pool.ladder ?? {}), ...editorLadder };
+      return JSON.stringify(rebuilt, null, 2) + "\n";
     } catch {
-      // A pool we could not rebuild must not stop the season being saved: the season is
-      // the thing the app grades against, and losing that edit would be worse.
+      // A windowed season must keep its source pool in sync, or the next build erases
+      // the edit. The renderer retains the draft when this save is refused below.
       return null;
     }
   })();
+  if (!poolBody && season.windowSize) {
+    return { error: "Could not rebuild the source pool. The season was not saved; your draft is still in the editor." };
+  }
 
   // A renamed family keeps its written rationale. `data/scenario_rationale.json` is keyed
   // by family name, and validate:rationale refuses a family with none and a rationale for a
@@ -3474,7 +3486,7 @@ ipcMain.handle("apogee:saveSeason", async (_e, { season, fingerprint, force } = 
       for (const [now, was] of Object.entries(renamed)) {
         const category = was.slice(0, was.indexOf("/"));
         const oldName = was.slice(category.length + 1);
-        const newName = now.slice(category.length + 1);
+        const newName = now.slice(now.indexOf("/") + 1);
         for (const f of file.families ?? []) {
           if (f.family === oldName) {
             f.family = newName;
