@@ -24,14 +24,18 @@ console-message deprecation warning, so the run is not warning-free.
 
 ## Gates
 
-1. **The benchmark overall-rank disagreement.** `validate:engine` compares 24
-   category/overall results against KovaaK's. Voltaic S5 Intermediate at 135930.08
-   overall energy is Diamond locally and Jade on the server, while every category energy
-   and rank matches. The suspect is the assumption that the overall threshold is the sum
-   of the category thresholds: KovaaK's creator export carries a separate overall array. The live
-   benchmark definition endpoint returns 401 without auth. Get the real definition before
-   changing the model or the fixtures; a guessed formula, or muting the check, would hide
-   exactly the thing it exists to catch.
+1. **The benchmark overall-rank rule, now fitted rather than published.** `validate:engine`
+   compares 24 category/overall results against KovaaK's, and summed category thresholds
+   disagreed twice: Voltaic S5 Intermediate at 135930.08 and at 139179.96 overall energy is
+   Jade on the server, where the summed Jade bar is 142,500. The engine now takes the lowest
+   category's threshold at each rank times the number of categories (Jade at 135,000), which
+   matches all 24 comparisons; the two rules differ only where categories ask different
+   amounts per rank, which in Voltaic S5 is Intermediate alone. What is still unconfirmed is
+   the exact published number: KovaaK's creator export carries a separate overall array,
+   the definition endpoint returns 401 without auth, and neither public route nor Voltaic's
+   sheet (a different energy scale) exposes it. Replace the rule with that array when it
+   can be read. The check still runs live on every release, so a third disagreement fails
+   it again.
 2. **Play the solo path in KovaaK's.** Playlist discovery, scenario launches, stats
    arriving, target difficulty, a failed and retried finale, and whether a full session is
    varied enough to want to finish. None of that shows up in an automated check.

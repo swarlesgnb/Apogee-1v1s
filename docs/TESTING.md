@@ -21,7 +21,7 @@ timestamps and your Steam id. Not your files, not your inputs, not your screen.
 
 ## 1. Install
 
-Download `Apogee-0.3.0-setup.exe` and run it.
+Download `Apogee-0.4.0-rc.3-setup.exe` and run it.
 
 Windows will show a blue **Windows protected your PC** box, because the installer is not
 code-signed. Click **More info**, then **Run anyway**. A signing certificate is a few
@@ -42,8 +42,13 @@ being asked. It looks for:
 ```
 
 If it cannot find it, the status bar at the bottom says so and offers a button. The same
-thing lives in the menu under **Apogee → Choose stats folder…**. Pick the `stats` folder
-itself, not the `FPSAimTrainer` folder above it. It is remembered after that.
+thing lives in the menu under **Apogee → Choose stats folder…**. Picking the game folder
+or the Steam library above it is fine: Apogee finds the `stats` folder inside. A folder
+with no KovaaK's stats at all is refused with a note on where it usually is. Your choice
+is remembered after that.
+
+A fresh KovaaK's install with no runs yet is fine too; Apogee says the folder was found
+and picks up your first run as it lands.
 
 The status bar shows how many runs it found. If that number is zero and you have played
 KovaaK's, the folder is wrong.
@@ -54,15 +59,18 @@ KovaaK's, the folder is wrong.
 Apogee never sees your password: Steam signs an assertion, the browser hands it back to
 the app on a loopback port, and the server verifies it with Steam directly.
 
-## 4. Upload your history, once
+Closed the tab, or signed into the wrong Steam account? Press the button again to start
+over, or **Cancel**. You stay signed in between launches, and launching before your
+network is up does not sign you out: the app says it is retrying and carries on.
 
-**This does not happen by itself, and nothing works properly until it is done.**
-
-On the Play screen there is a **Your history** panel with an **Upload** button. Press it.
+## 4. Your history uploads itself
 
 A match is scored against your own recent runs, so those runs have to be on the server
-before the first match means anything. Several thousand runs takes a minute or two and
-there is a progress bar. It is safe to press again; a file already sent is ignored.
+before the first match means anything. Ranked needs 100 uploaded runs. If your PC holds
+enough, Apogee starts the upload the first time you sign in and says so; several thousand
+runs takes a minute or two, with a progress bar. If it does not start, the note under the
+queue button has an **Upload my runs** button, and so does the **Your history** panel.
+Pressing it again is safe; a file already sent is ignored.
 
 After that first upload the app keeps itself current on its own — new runs go up as they
 land, and anything played while it was closed goes up on the way in.
@@ -75,13 +83,28 @@ Play them in KovaaK's the way you always would. Apogee is watching the stats fol
 each run appears in the app a second or two after you finish it. Alt-tab back whenever
 you want to look; you do not have to keep the window in front.
 
+Closing Apogee mid-match is safe: on the next launch the match comes back with the
+scenarios you already played marked done. If the result cannot be fetched after your
+third run, the app retries on its own and offers **Get result**; do not abandon a match
+you have finished, because abandoning counts as a loss. The result screen has **Queue
+again**.
+
 Scores are graded against **your own** recent runs, not against a global number, so a
 match is winnable regardless of rank. Rating, verification and settlement all happen on
 the server.
 
 If you want the season's scenarios as practice playlists, the **Season** screen writes
-them into KovaaK's for you. A filled mark on a playlist means it is already there.
-KovaaK's only reads playlists when it starts, so restart the game to see new ones.
+them into KovaaK's for you, and the **Scenarios** screen can install whatever you have
+filtered it to. A filled mark on a playlist means it is already there. KovaaK's only reads
+playlists when it starts, so restart the game to see new ones. Apogee playlists you
+installed before a season change are brought up to date the next time Apogee starts.
+
+## Practice on your own terms: Mixtape
+
+The **Mixtape** tab builds a 3, 6 or 9 scenario set from the season pool: a balanced
+mix, the scenarios closest to their next threshold, or the ones you play least. Press
+**Open in KovaaK's** for each track, or turn on **Auto-open next track** and the next one
+opens as each run lands. Finished sets are kept as recaps. Nothing here is rated.
 
 ## 6. Saturday's tournament
 

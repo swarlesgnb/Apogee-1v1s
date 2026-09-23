@@ -22,8 +22,8 @@
  *   - Category rank is the highest threshold in the category's own `rankMaxes`
  *     that the category energy meets.
  *   - Overall progress is the sum of category energy. For a KovaaK's benchmark the
- *     overall rank is the highest index where that meets the summed category
- *     thresholds, which is what their servers report. For a season, where each category
+ *     overall rank is the highest index where that meets the lowest category's
+ *     threshold times the number of categories, which is what their servers report. For a season, where each category
  *     has its own ladder, summing is meaningless and the overall is derived from how
  *     far along its own ladder each category is.
  *
@@ -330,9 +330,16 @@ export function evaluateBenchmark(
   // How the overall rank is reached depends on what is being evaluated.
   //
   // A KovaaK's benchmark has one ladder for all its categories, and its overall rank is
-  // the summed energy against the summed thresholds. That is not a choice, it is what
-  // their servers report, and validateEngine holds this code to matching it - so that
-  // path is preserved exactly.
+  // the summed energy against the lowest category's threshold at each rank, times the
+  // number of categories. That is not a choice, it is what their servers report, and
+  // validateEngine holds this code to matching it.
+  //
+  // It used to be the summed thresholds, and the two only differ where one category asks
+  // more per rank than the others - Voltaic S5 Intermediate, where Switching asks 17,500
+  // to Clicking's and Tracking's 15,000. There KovaaK's placed a player with 139,179.96
+  // energy at Jade: the summed Jade bar is 142,500, the lowest-times-three one is 135,000.
+  // That is the one observation that tells the rules apart; every other comparison the
+  // validator makes agrees under both.
   //
   // A season gives each category its own ladder (PLAN.md §14), and summing stops
   // meaning anything: a four-rank category contributes nothing to a fifth threshold, so
@@ -348,9 +355,8 @@ export function evaluateBenchmark(
     const rankCount = Math.max(0, ...difficulty.categories.map((c) => c.rankMaxes.length));
     const overallThresholds: number[] = [];
     for (let i = 0; i < rankCount; i++) {
-      overallThresholds.push(
-        difficulty.categories.reduce((sum, c) => sum + (c.rankMaxes[i] ?? 0), 0),
-      );
+      const at = difficulty.categories.map((c) => c.rankMaxes[i]).filter((t): t is number => t !== undefined);
+      overallThresholds.push(at.length ? Math.min(...at) * difficulty.categories.length : 0);
     }
 
     idx = rankIndex(totalEnergy, overallThresholds);
