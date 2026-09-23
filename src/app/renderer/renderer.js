@@ -772,13 +772,13 @@ function badge(tier, uid) {
 
 /* Discipline marks describe movement; they never decide the scenario pool. */
 const DISCIPLINES = {
-  "Any": { key: "all", ink: "#d7fa52", cue: "A complete test of your aim", path: '<path d="M12 2 22 12 12 22 2 12ZM12 7v10M7 12h10"/>' },
-  "Static Clicking": { key: "static", ink: "#f3ca6c", cue: "Big flick → micro → click. Straight line.", path: '<path d="M3 8V3h5m8 0h5v5m0 8v5h-5M8 21H3v-5M12 7l5 5-5 5-5-5ZM12 10v4m-2-2h4"/>' },
-  "Dynamic Clicking": { key: "dynamic", ink: "#ff9dae", cue: "Read path → match → confirm → click.", path: '<path d="M3 18C5 9 9 5 17 5M14 2l5 3-5 3M7 18l4-4 4 4-4 4ZM20 11v6"/>' },
-  "Precise Tracking": { key: "precise", ink: "#98e3ce", cue: "Match speed. Centred. Micro small.", path: '<path d="M2 12c4-7 16-7 20 0-4 7-16 7-20 0ZM12 8v8m-4-4h8M12 2v3m0 14v3"/>' },
-  "Reactive Tracking": { key: "reactive", ink: "#a2bfff", cue: "React, never predict. Underaim.", path: '<path d="M2 16l5-9 5 10 5-13 5 8M7 3v4m5 10v4M3 21h4m10 0h4"/>' },
-  "Speed Switching": { key: "speed", ink: "#d7fa52", cue: "One flick, no micro. Next chosen.", path: '<path d="M3 4h6v6H3Zm12 10h6v6h-6ZM11 4h7l3 3-3 3M13 20H6l-3-3 3-3M9 15l6-6"/>' },
-  "Evasive Switching": { key: "evasive", ink: "#cfb0f1", cue: "Track to kill. Then switch. Read next.", path: '<path d="M5 2l4 4-4 4-4-4Zm14 12l4 4-4 4-4-4ZM5 12c0 7 14-8 14 0M12 3l3 3-3 3"/>' },
+  "Any": { key: "all", ink: "#d7fa52", cue: "Scenarios from all six categories", path: '<path d="M12 2 22 12 12 22 2 12ZM12 7v10M7 12h10"/>' },
+  "Static Clicking": { key: "static", ink: "#f3ca6c", cue: "Click stationary targets quickly and accurately.", path: '<path d="M3 8V3h5m8 0h5v5m0 8v5h-5M8 21H3v-5M12 7l5 5-5 5-5-5ZM12 10v4m-2-2h4"/>' },
+  "Dynamic Clicking": { key: "dynamic", ink: "#ff9dae", cue: "Time your shots on moving targets.", path: '<path d="M3 18C5 9 9 5 17 5M14 2l5 3-5 3M7 18l4-4 4 4-4 4ZM20 11v6"/>' },
+  "Precise Tracking": { key: "precise", ink: "#98e3ce", cue: "Keep your crosshair steady on the target.", path: '<path d="M2 12c4-7 16-7 20 0-4 7-16 7-20 0ZM12 8v8m-4-4h8M12 2v3m0 14v3"/>' },
+  "Reactive Tracking": { key: "reactive", ink: "#a2bfff", cue: "Follow targets through sudden direction changes.", path: '<path d="M2 16l5-9 5 10 5-13 5 8M7 3v4m5 10v4M3 21h4m10 0h4"/>' },
+  "Speed Switching": { key: "speed", ink: "#d7fa52", cue: "Move quickly from one target to the next.", path: '<path d="M3 4h6v6H3Zm12 10h6v6h-6ZM11 4h7l3 3-3 3M13 20H6l-3-3 3-3M9 15l6-6"/>' },
+  "Evasive Switching": { key: "evasive", ink: "#cfb0f1", cue: "Finish each moving target before switching.", path: '<path d="M5 2l4 4-4 4-4-4Zm14 12l4 4-4 4-4-4ZM5 12c0 7 14-8 14 0M12 3l3 3-3 3"/>' },
 };
 
 function disciplineOf(name) { return DISCIPLINES[name] || DISCIPLINES.Any; }
@@ -809,7 +809,7 @@ function paintQueueJourney(state) {
     else el.removeAttribute('aria-current');
   });
   if ($('queueSignal')) $('queueSignal').textContent = state === 'working'
-    ? 'Searching for a compatible set' : state === 'held' ? 'Set locked · play in KovaaK’s' : 'Choose your discipline';
+    ? 'Looking for an opponent' : state === 'held' ? 'Match ready · play in KovaaK’s' : 'Choose a category';
 }
 
 function renderCommandFocus(data) {
@@ -7434,7 +7434,7 @@ let hasRealResult = false;
 
 /** Empty state for the result tab before any real match has been played. */
 function renderNoResultYet() {
-  renderDebrief([], "Your debrief appears after a completed set");
+  renderDebrief([], "Your results appear after a completed match");
   $("verdictBig").textContent = "No matches yet";
   $("verdictBig").style.color = "var(--ink-mid)";
   $("verdictScores").textContent =
@@ -8531,6 +8531,7 @@ function refreshPractice() {
   void api.practice().then((r) => {
     if (!r || r.error) return;
     practice = r;
+    window.dispatchEvent(new CustomEvent('apogee:practice-ready', { detail:r }));
     // Not behind `current`: the table needs only the practice list, and a machine with no
     // runs yet never gets a snapshot but still has a season to show.
     renderScenarioRanks();
@@ -8651,8 +8652,8 @@ if (hasSeasonEditor) {
   });
 
   $("seasonReload").addEventListener("click", () => {
-    // Discard means the season on disk, not the draft that was being restored.
     if (seasonSaving) return;
+    // Discard means the season on disk, not the draft that was being restored.
     clearStashedDraft();
     void loadSeasonEditor();
   });
@@ -12076,6 +12077,7 @@ function mountArcadeCommand() {
   if (!dialog || !input || !list) return;
   let opener = null;
   const descriptions = {
+    mixtape: 'Build a personal practice mix and keep your session recaps.',
     queue: 'Pick a discipline. Find your rival.', seasonview: 'Benchmarks, families and your next rank.',
     tournaments: 'Groups, brackets and fixtures.', result: 'Every round. Every rating point.',
     profile: 'Your strengths and the work ahead.', quests: 'A fresh target for your next session.',

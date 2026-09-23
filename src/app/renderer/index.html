@@ -3001,6 +3001,8 @@
 <link rel="stylesheet" href="arcade.css">
 <link rel="stylesheet" href="expedition.css">
 <link rel="stylesheet" href="cosmic.css">
+<link rel="stylesheet" href="presentation.css">
+<link rel="stylesheet" href="mixtape.css">
 </head>
 <body data-screen="queue">
 <a class="skip-link" href="#mainContent">Skip to content</a>
@@ -3009,7 +3011,7 @@
   <!-- ============================================================ rail -->
   <aside class="rail">
     <div class="rail-top">
-      <div class="wordmark"><svg class="brand-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 20 9-17 9 17M3 20l9-6 9 6M8 11h8M12 3l0 11"/></svg><span>apogee</span></div><span class="brand-caption">Beyond your limits</span>
+      <div class="wordmark"><svg class="brand-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 20 9-17 9 17M3 20l9-6 9 6M8 11h8M12 3l0 11"/></svg><span>apogee</span></div><span class="brand-caption">Ranked aim training</span>
     </div>
 
     <nav class="nav" role="tablist" aria-label="Screens" aria-orientation="vertical">
@@ -3039,6 +3041,10 @@
       </button>
 
       <div class="nav-label" data-copy="nav.group.practice">Improve</div>
+      <button class="tab" role="tab" aria-selected="false" data-screen="mixtape">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><path d="M5 12a7 7 0 0 1 7-7m0 14a7 7 0 0 0 7-7"/></svg>
+        <span class="tab-key"></span><span class="tab-label">Mixtape</span>
+      </button>
       <button class="tab" role="tab" aria-selected="false" data-screen="expedition">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" aria-hidden="true"><path d="M12 2 22 12 12 22 2 12Z M12 6v12M6 12h12"/><circle cx="12" cy="12" r="3"/></svg>
         <span class="tab-key"></span><span class="tab-label">Expedition</span>
@@ -3272,6 +3278,7 @@
         </div>
 
         <div id="app" hidden>
+          <section class="screen" id="screen-mixtape"><div id="mixtapeRoot"></div></section>
 
           <!-- ------------------------------------------------ play -->
           <section class="screen active" id="screen-queue">
@@ -3281,7 +3288,7 @@
                 <h1 data-copy="queue.title">Ranked 1v1</h1>
                 <p data-copy="queue.lede">3 scenarios, one opponent. Each round goes to whoever beats their own baseline by more.</p>
               </div>
-              <div class="arcade-hero-links"><button type="button" class="exp-home" id="expeditionHome" data-arcade-route="expedition"><span class="exp-home-symbol" aria-hidden="true">✦</span><span><small>YOUR SOLO JOURNEY</small><strong id="expeditionHomeTitle">First Light awaits</strong><span id="expeditionHomeDetail">Six destinations, a ship from each, then the final passage.</span></span><b>Continue →</b></button><button type="button" data-arcade-route="seasonview">Season benchmarks <span aria-hidden="true">→</span></button><button type="button" data-arcade-route="tournaments">Tournaments <span aria-hidden="true">→</span></button></div>
+              <div class="arcade-hero-links"><button type="button" class="exp-home" id="expeditionHome" data-arcade-route="expedition"><span class="exp-home-symbol" aria-hidden="true">✦</span><span><small>SOLO PRACTICE</small><strong id="expeditionHomeTitle">First Light expedition</strong><span id="expeditionHomeDetail">Complete six destinations to earn ships and open the final challenge.</span></span><b>Continue →</b></button><button type="button" class="mixtape-entry" data-arcade-route="mixtape">Make a mixtape <span aria-hidden="true">↗</span></button><button type="button" data-arcade-route="tournaments">Tournaments <span aria-hidden="true">→</span></button></div>
             </div>
 
 
@@ -3335,7 +3342,7 @@
                 <span class="note" data-copy="queue.p1.note" id="queueNote">Best of three</span>
               </div>
               <div class="pbody queue-body">
-                <ol class="queue-journey" aria-label="Match stages"><li class="current" aria-current="step"><span>01</span>Discipline</li><li><span>02</span>Lock</li><li><span>03</span>Play</li><li><span>04</span>Debrief</li></ol>
+                <ol class="queue-journey" aria-label="Match stages"><li class="current" aria-current="step"><span>01</span>Category</li><li><span>02</span>Match</li><li><span>03</span>Play</li><li><span>04</span>Results</li></ol>
                 <div class="queue-signal"><span id="queueSignal" role="status">Choose your discipline</span></div>
 
                 <div class="queue-pick">
@@ -4034,13 +4041,6 @@
                 <h2>Scenario pool</h2>
                 <span class="note" id="poolGridCount"></span>
               </div>
-              <div class="pool-bar">
-                <div class="pool-search" id="poolGridSearch">
-                  <span class="pool-target" id="poolGridTarget">Select a slot</span>
-                  <input type="text" id="poolGridQuery" placeholder="Type to put a scenario in this slot…"
-                         autocomplete="off" spellcheck="false" aria-controls="poolGridHits" aria-label="Find a scenario for the selected slot" role="combobox" aria-autocomplete="list" aria-expanded="false">
-                  <div class="pool-hits" id="poolGridHits" role="listbox"></div>
-                </div>
               <div class="editor-structure">
                 <label class="editor-name">Season name<input id="seasonName" type="text" autocomplete="off" aria-label="Season name"></label>
                 <label>Category<select id="poolCategory" aria-label="Show category"></select></label>
@@ -4051,7 +4051,17 @@
                 <button type="button" class="pool-btn" id="seasonImportDraft">Import draft</button>
                 <input type="file" id="seasonImportFile" accept=".json,application/json" hidden>
               </div>
+              <div class="pool-bar">
+                <div class="pool-search" id="poolGridSearch">
+                  <span class="pool-target" id="poolGridTarget">Select a slot</span>
+                  <input type="text" id="poolGridQuery" placeholder="Type to put a scenario in this slot…"
+                         autocomplete="off" spellcheck="false" aria-controls="poolGridHits" aria-label="Find a scenario for the selected slot" role="combobox" aria-autocomplete="list" aria-expanded="false">
+                  <div class="pool-hits" id="poolGridHits" role="listbox"></div>
+                </div>
                 <div class="pool-tools">
+                  <label class="editor-toggle"><input type="checkbox" id="poolAutoAdvance" checked> Move to next slot</label>
+                  <label class="editor-toggle"><input type="checkbox" id="poolCompact"> Compact</label>
+                  <button type="button" id="poolBatchFamilies">Add families…</button>
                   <div class="pool-filter" role="group" aria-label="Show">
                     <button type="button" data-grid-filter="all" aria-pressed="true">All</button>
                     <button type="button" data-grid-filter="todo" aria-pressed="false">To do</button>
@@ -4059,9 +4069,6 @@
                     <button type="button" data-grid-filter="attention" aria-pressed="false">Needs a look</button>
                   </div>
                   <button type="button" id="poolGridUndo" title="Undo (Ctrl+Z)">Undo</button>
-                  <label class="editor-toggle"><input type="checkbox" id="poolAutoAdvance" checked> Move to next slot</label>
-                  <label class="editor-toggle"><input type="checkbox" id="poolCompact"> Compact</label>
-                  <button type="button" id="poolBatchFamilies">Add families…</button>
                   <button type="button" id="poolGridRedo" title="Redo (Ctrl+Y)">Redo</button>
                   <button type="button" id="poolGridReset" class="pool-reset"
                           title="Count replacements from the pool as it is now">Count from here</button>
@@ -4228,8 +4235,8 @@
 </div>
 
 <dialog class="arcade-command" id="arcadeCommand" aria-labelledby="arcadeCommandTitle">
-  <div class="arcade-command-head"><span id="arcadeCommandTitle">Where to next?</span><button type="button" id="arcadeCommandClose" aria-label="Close jump menu">Esc</button></div>
-  <input id="arcadeCommandSearch" type="search" placeholder="Find your next move…" autocomplete="off" aria-label="Find a screen">
+  <div class="arcade-command-head"><span id="arcadeCommandTitle">Go to</span><button type="button" id="arcadeCommandClose" aria-label="Close jump menu">Esc</button></div>
+  <input id="arcadeCommandSearch" type="search" placeholder="Find a screen…" autocomplete="off" aria-label="Find a screen">
   <div class="arcade-command-list" id="arcadeCommandList"></div>
   <p class="arcade-command-empty" id="arcadeCommandEmpty" hidden>No screens match. Try “season”, “rank”, or “aim”.</p>
   <div class="arcade-command-foot">↑ ↓ to move <span>Enter to go</span></div>
@@ -4247,5 +4254,8 @@
 <script src="renderer.js"></script>
 <script src="cosmic.js"></script>
 <script src="expedition.js"></script>
+<script src="presentation.js"></script>
+<script src="mixtape-engine.js"></script>
+<script src="mixtape.js"></script>
 </body>
 </html>

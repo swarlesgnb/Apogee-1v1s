@@ -324,3 +324,26 @@ dialog::backdrop { background:#03070ee8; }
 }
 
 .queue-heading .exp-home>b { background:var(--well); padding:4px 6px; border-radius:3px; }
+/* Keep illustrations with the expedition; working screens need room for their content. */
+body .screen:where(:not(#screen-queue):not(#screen-expedition)) > .screen-head {
+  min-height: 0;
+  padding: 8px 0 22px;
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--cosmic-line);
+  border-radius: 0;
+}
+body .screen:where(:not(#screen-queue):not(#screen-expedition)) > .screen-head::after { display: none; }
+body #app .screen > .screen-head { background-image: none; }
+body .screen:where(:not(#screen-queue):not(#screen-expedition)) > .screen-head h1 {
+  font-size: clamp(30px, 3.2vw, 44px);
+  letter-spacing: -.035em;
+}
+body[data-screen="season"] #poolPanel .pgrid thead th,
+body[data-screen="season"] #poolPanel .pg-cat th {
+  font-family: var(--font);
+  text-transform: none;
+  letter-spacing: 0;
+}
+body[data-screen="season"] #poolPanel .pg-cat th { padding-top: 13px; padding-bottom: 8px; }
+body[data-screen="season"] #poolPanel .pg-cat th > span:first-child { font-size: 12px; color: var(--ink); }
