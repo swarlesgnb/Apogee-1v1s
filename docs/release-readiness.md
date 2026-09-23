@@ -3,7 +3,18 @@
 What still stands between the local candidate and a public release, and how to re-check
 it. The solo campaign rules are in [the solo guide](solo-expedition.md).
 
-## Last local candidate, 2026-09-21
+## Last local candidate, 2026-09-23
+
+- Installer: `release/candidate-2026-09-23-rc3/Apogee-0.4.0-rc.3-setup.exe`
+- SHA-256: `be7de9de60853046ea4d9d00afdf3389dec11a197a26d1e1430ccf9e22b2c270`
+- Unpacked: `release/candidate-2026-09-23-rc3/win-unpacked/Apogee.exe`
+- Carries the fun rebuild of the Season 1 pool (which needs `sync:reference` and
+  `push:season` on the live project), First Light v4, the match and sign-in fixes, the
+  season-editor polish, and Mixtape. `validate:release` passed 36 of 36,
+  `validatePackage` 14 of 14, and the unpacked build booted in `--smoke` from a temporary
+  directory. Unsigned.
+
+rc.2 predates all of that and should not go out. Its details follow.
 
 - Installer: `release/candidate-2026-09-21-rc2/Apogee-0.4.0-rc.2-setup.exe`
 - SHA-256: `52765aaebd372db6573b6f2e2c1a1d1dff700bc7a0cb361875303cdb1a0b3a66`
@@ -52,7 +63,7 @@ console-message deprecation warning, so the run is not warning-free.
 
 ```powershell
 npm.cmd run validate:release
-node tools/validatePackage.mjs release/candidate-2026-09-21-rc2
+node tools/validatePackage.mjs release/candidate-2026-09-23-rc3
 ```
 
 `validate:release` writes each result under `.cache/release-readiness/`, failures
@@ -63,7 +74,7 @@ Rebuilding the candidate:
 ```powershell
 npm.cmd run build:icon
 npm.cmd run build:app
-& .\node_modules\.bin\electron-builder.cmd --win --publish never --config.directories.output=release/candidate-2026-09-21-rc2 --config.extraMetadata.version=0.4.0-rc.2
+& .\node_modules\.bin\electron-builder.cmd --win --publish never --config.directories.output=release/candidate-2026-09-23-rc3 --config.extraMetadata.version=0.4.0-rc.3
 ```
 
 The hash changes on every rebuild, so re-run the package check and the signature check
