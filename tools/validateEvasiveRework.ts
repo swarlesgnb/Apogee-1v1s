@@ -10,15 +10,18 @@ import { practicePlaylists } from "../src/core/season/practice.ts";
 import { matchesCategory } from "../src/core/match/scenarioSelection.ts";
 import { rankIndex, scenarioEnergy } from "../src/core/benchmarks/energy.ts";
 import { beforeEvasiveSeason } from "./evasiveReworkHistory.ts";
+import { beforeFunRebuildIdentity, beforeFunRebuildPool, beforeFunRebuildSeason } from "./funRebuildHistory.ts";
 
 const read = (name: string): any => JSON.parse(readFileSync(dataFile(name), "utf8"));
 const spec = read("evasive_rework.json");
 const calibration = read("evasive_rework_calibration.json");
 const evidence = read("evasive_rework_evidence.json").identities;
-const pool = read("pool.json");
-const season = loadSeason();
+// The fun rebuild replaced two of these families later; audit the rework as it was applied.
+// The live circuit is checked by validateFunRebuild.ts.
+const pool = beforeFunRebuildPool(read("pool.json"));
+const season = beforeFunRebuildSeason(loadSeason());
 validateSeason(beforeEvasiveSeason(season));
-const identity = read("scenario_identity.json").scenarios;
+const identity = beforeFunRebuildIdentity(read("scenario_identity.json").scenarios);
 const distributions = new Map<string, any>(read("leaderboard_percentiles.json").distributions.map((s: any) => [s.scenario, s]));
 const boards = new Map<string, any>(read("leaderboard_apex.json").boards.map((s: any) => [s.scenario, s]));
 const families = pool.families.filter((f: any) => f.category === spec.category);

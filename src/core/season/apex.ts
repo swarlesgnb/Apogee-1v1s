@@ -67,11 +67,28 @@ export interface ApexBoard {
  * rank 100 and rank 250. Ten anchors is enough to interpolate that faithfully and cheap
  * enough that re-running the whole pool is a six minute job.
  *
- * 500 is the last one because it is below the 0.1% point of every board in the pool -
- * the thinnest is 9,878 entries, whose 0.1% is rank 10 - so the fractional distribution
- * is always there to take over underneath.
+ * 500 is the last one because it is below the 0.1% point of every board up to half a
+ * million entries, so the fractional distribution is there to take over underneath. The
+ * fun rebuild brought in boards past that - 1wall 6targets small has 882,063, where rank
+ * 500 is the top 0.057% - so `apexRanksFor` adds one anchor at the 0.1% rank for those.
  */
 export const APEX_RANKS = [1, 2, 3, 5, 10, 25, 50, 100, 250, 500];
+
+/**
+ * The ranks to sample on a board of `total` entries.
+ *
+ * APEX_RANKS as far as the board reaches, plus the rank at `finest` - the finest fraction
+ * the percentile distribution samples - when that lies past rank 500. Without it the two
+ * sources leave a gap on the biggest boards: `apexTopFraction` floors a score below the
+ * last anchor at that anchor's fraction, and there the distribution has nothing finer to
+ * hand over with.
+ */
+export function apexRanksFor(total: number, finest = 0.001): number[] {
+  const ranks = APEX_RANKS.filter((r) => r <= total);
+  const handover = Math.ceil(total * finest);
+  if (handover > ranks[ranks.length - 1]) ranks.push(handover);
+  return ranks;
+}
 
 /**
  * Position on the board for a score, as a real number of ranks from the top.

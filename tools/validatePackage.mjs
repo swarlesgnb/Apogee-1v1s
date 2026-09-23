@@ -26,7 +26,7 @@ check('Application metadata points to the bundled main process', metadata.name =
 const copies = [
   ['dist/app/preload.cjs', 'src/app/preload.cjs'],
   ...['index.html', 'expedition.js', 'expedition.css', 'arcade.css'].map(name => [`dist/app/renderer/${name}`, `src/app/renderer/${name}`]),
-  ...['first-light-v1.json', 'first-light-v2.json'].map(name => [`dist/data/expeditions/${name}`, `data/expeditions/${name}`]),
+  ...['first-light-v1.json', 'first-light-v2.json', 'first-light-v4.json'].map(name => [`dist/data/expeditions/${name}`, `data/expeditions/${name}`]),
 ];
 for (const [shipped, source] of copies) {
   check(`${shipped} matches source`, hash(readArchive(shipped)) === hash(readFileSync(join(root, source))));

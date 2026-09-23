@@ -21,21 +21,27 @@ export class ExpeditionService {
   private loaded = false;
   private history: ExpeditionRun[] = [];
   readonly sessionStartedAt = Date.now();
-  constructor(private folder: string) { this.store = new ExpeditionStore(join(folder, "expedition-first-light-v3.json"), this.definition); }
+  constructor(private folder: string) { this.store = new ExpeditionStore(join(folder, "expedition-first-light-v4.json"), this.definition); }
   private load() {
     if (this.loaded) return;
     const result = this.store.load();
     this.state = result.state; this.warning = result.warning;
     if (!this.state) {
-      const v2 = loadExpedition(2), prior = new ExpeditionStore(join(this.folder, "expedition-first-light-v2.json"), v2).load();
-      let old = prior.state;
+      // Each older save is read from its own file and walked forward one version at a
+      // time; none of them is ever rewritten, so a failed upgrade loses nothing.
+      const v3 = loadExpedition(3), v2 = loadExpedition(2);
+      let old = new ExpeditionStore(join(this.folder, "expedition-first-light-v3.json"), v3).load().state;
       if (!old) {
-        const legacy = loadExpedition(1), source = new ExpeditionStore(join(this.folder, "expedition-first-light-v1.json"), legacy).load();
-        if (source.state) old = migrateExpedition(source.state, legacy, v2, Date.now());
+        let older = new ExpeditionStore(join(this.folder, "expedition-first-light-v2.json"), v2).load().state;
+        if (!older) {
+          const legacy = loadExpedition(1), source = new ExpeditionStore(join(this.folder, "expedition-first-light-v1.json"), legacy).load();
+          if (source.state) older = migrateExpedition(source.state, legacy, v2, Date.now());
+        }
+        if (older) old = migrateExpedition(older, v2, v3, Date.now());
       }
       if (old) {
-        this.commit(migrateExpedition(old, v2, this.definition, Date.now()));
-        this.warning = "Your rewards, accepted targets, and progress are carried over. An active attempt keeps its original rules. Your previous save is preserved separately.";
+        this.commit(migrateExpedition(old, v3, this.definition, Date.now()));
+        this.warning = "Your rewards, cosmetics and run history are carried over, and an active attempt keeps its original rules. Routes whose scenarios changed with the new season start fresh. Your previous save is preserved separately.";
       }
     }
     this.loaded = true;

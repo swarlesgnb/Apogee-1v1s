@@ -1,0 +1,4599 @@
+{
+  "$comment": "Written by tools/funAudit.ts; do not hand-edit. replay = KovaaK's plays/players, weighted 35/35/20/10 over the four rungs; reach = players on the Novice and Intermediate rungs; consensus = distinct evxl-listed benchmarks using any rung; noise = median local run-to-run change over median score (one player's corpus, reported only). composite = mean percentile of replay, log reach and consensus across every family listed here.",
+  "measuredAt": "2026-09-23T17:35:38.525Z",
+  "benchmarksCrawled": 128,
+  "families": [
+    {
+      "category": "Static Clicking",
+      "family": "2Guys",
+      "status": "kept",
+      "rungs": [
+        {
+          "scenario": "2 Tile Jumbo Tile Frenzy",
+          "leaderboardId": 1469,
+          "plays": 627852,
+          "players": 50729,
+          "replay": 12.4,
+          "benchmarks": 1,
+          "seconds": 29,
+          "noise": 0.036,
+          "localRuns": 13
+        },
+        {
+          "scenario": "1w2ts Perfected Easier",
+          "leaderboardId": 160751,
+          "plays": 30882,
+          "players": 6894,
+          "replay": 4.5,
+          "benchmarks": 3,
+          "seconds": 60,
+          "noise": 0.026,
+          "localRuns": 21
+        },
+        {
+          "scenario": "1w2ts Perfected",
+          "leaderboardId": 565,
+          "plays": 1521486,
+          "players": 102281,
+          "replay": 14.9,
+          "benchmarks": 7,
+          "seconds": 60,
+          "noise": 0.05,
+          "localRuns": 119
+        },
+        {
+          "scenario": "1w2ts Pasu Perfected 30% Smaller",
+          "leaderboardId": 28243,
+          "plays": 1229997,
+          "players": 90333,
+          "replay": 13.6,
+          "benchmarks": 5,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 10.3,
+      "reach": 57623,
+      "consensus": 11,
+      "noise": 0.036,
+      "composite": 0.6
+    },
+    {
+      "category": "Static Clicking",
+      "family": "Diagonal",
+      "status": "replaced",
+      "rungs": [
+        {
+          "scenario": "ClickTrack Diagonal 3t Short",
+          "leaderboardId": 115375,
+          "plays": 7444,
+          "players": 1465,
+          "replay": 5.1,
+          "benchmarks": 1,
+          "seconds": 29,
+          "noise": 0.107,
+          "localRuns": 16
+        },
+        {
+          "scenario": "ClickTrack Diagonal 3t",
+          "leaderboardId": 102635,
+          "plays": 13053,
+          "players": 2846,
+          "replay": 4.6,
+          "benchmarks": 1,
+          "seconds": 29,
+          "noise": 0.073,
+          "localRuns": 13
+        },
+        {
+          "scenario": "ClickTrack Diagonal 2t Short",
+          "leaderboardId": 115390,
+          "plays": 8579,
+          "players": 1623,
+          "replay": 5.3,
+          "benchmarks": 1,
+          "seconds": 29,
+          "noise": 0.135,
+          "localRuns": 13
+        },
+        {
+          "scenario": "ClickTrack Diagonal 2t",
+          "leaderboardId": 102618,
+          "plays": 15528,
+          "players": 3271,
+          "replay": 4.7,
+          "benchmarks": 1,
+          "seconds": 30,
+          "noise": 0.04,
+          "localRuns": 22
+        }
+      ],
+      "replay": 4.9,
+      "reach": 4311,
+      "consensus": 1,
+      "noise": 0.107,
+      "composite": 0.04
+    },
+    {
+      "category": "Static Clicking",
+      "family": "Horizontal",
+      "status": "replaced",
+      "rungs": [
+        {
+          "scenario": "ClickTrack Horizontal 3t Short",
+          "leaderboardId": 115480,
+          "plays": 7860,
+          "players": 1811,
+          "replay": 4.3,
+          "benchmarks": 1,
+          "seconds": 29,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "ClickTrack Horizontal 3t",
+          "leaderboardId": 102627,
+          "plays": 18558,
+          "players": 3549,
+          "replay": 5.2,
+          "benchmarks": 1,
+          "seconds": 29,
+          "noise": 0.04,
+          "localRuns": 13
+        },
+        {
+          "scenario": "ClickTrack Horizontal 2t Short",
+          "leaderboardId": 115374,
+          "plays": 11072,
+          "players": 2050,
+          "replay": 5.4,
+          "benchmarks": 1,
+          "seconds": 29,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "ClickTrack Horizontal 2t",
+          "leaderboardId": 102619,
+          "plays": 27506,
+          "players": 4248,
+          "replay": 6.5,
+          "benchmarks": 1,
+          "seconds": 29,
+          "noise": 0.064,
+          "localRuns": 14
+        }
+      ],
+      "replay": 5.1,
+      "reach": 5360,
+      "consensus": 1,
+      "noise": 0.064,
+      "composite": 0.06
+    },
+    {
+      "category": "Static Clicking",
+      "family": "Micro",
+      "status": "replaced",
+      "rungs": [
+        {
+          "scenario": "SCS 8xs Uniform",
+          "leaderboardId": 188314,
+          "plays": 1383,
+          "players": 417,
+          "replay": 3.3,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Cartoon's Micro RawMouseControlReact 30s",
+          "leaderboardId": 80173,
+          "plays": 10731,
+          "players": 1189,
+          "replay": 9,
+          "benchmarks": 2,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "1w2ts Pasu Perfected",
+          "leaderboardId": 22601,
+          "plays": 1107043,
+          "players": 98938,
+          "replay": 11.2,
+          "benchmarks": 5,
+          "seconds": 60,
+          "noise": 0.084,
+          "localRuns": 32
+        },
+        {
+          "scenario": "Aimerz+ 1w4ts HF Hard S1",
+          "leaderboardId": 68287,
+          "plays": 1365570,
+          "players": 129953,
+          "replay": 10.5,
+          "benchmarks": 6,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 7.6,
+      "reach": 1606,
+      "consensus": 12,
+      "noise": 0.084,
+      "composite": 0.43
+    },
+    {
+      "category": "Static Clicking",
+      "family": "Micro Pressure",
+      "status": "kept",
+      "rungs": [
+        {
+          "scenario": "No23 ca micropressure supereasy",
+          "leaderboardId": 114049,
+          "plays": 8690,
+          "players": 1507,
+          "replay": 5.8,
+          "benchmarks": 0,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "shimPressure Micro",
+          "leaderboardId": 84026,
+          "plays": 501534,
+          "players": 51391,
+          "replay": 9.8,
+          "benchmarks": 2,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "cA fuglaapressure",
+          "leaderboardId": 94284,
+          "plays": 144890,
+          "players": 16471,
+          "replay": 8.8,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "fuglaaPressure 6 Sphere Hipfire no reload",
+          "leaderboardId": 30400,
+          "plays": 64019,
+          "players": 10553,
+          "replay": 6.1,
+          "benchmarks": 1,
+          "seconds": 59,
+          "noise": 0.045,
+          "localRuns": 136
+        }
+      ],
+      "replay": 7.8,
+      "reach": 52898,
+      "consensus": 4,
+      "noise": 0.045,
+      "composite": 0.35
+    },
+    {
+      "category": "Static Clicking",
+      "family": "Speed",
+      "status": "kept",
+      "rungs": [
+        {
+          "scenario": "Jumbo1wall9000targets",
+          "leaderboardId": 1912,
+          "plays": 139337,
+          "players": 16612,
+          "replay": 8.4,
+          "benchmarks": 2,
+          "seconds": 60,
+          "noise": 0.03,
+          "localRuns": 12
+        },
+        {
+          "scenario": "1wall9000targets",
+          "leaderboardId": 470,
+          "plays": 3069884,
+          "players": 154871,
+          "replay": 19.8,
+          "benchmarks": 2,
+          "seconds": 59,
+          "noise": 0.051,
+          "localRuns": 26
+        },
+        {
+          "scenario": "1wall6targets TE Horizontalish",
+          "leaderboardId": 2561,
+          "plays": 73982,
+          "players": 4665,
+          "replay": 15.9,
+          "benchmarks": 1,
+          "seconds": 60,
+          "noise": 0.07,
+          "localRuns": 18
+        },
+        {
+          "scenario": "6 Sphere Hipfire 200% Size",
+          "leaderboardId": 3982,
+          "plays": 43096,
+          "players": 6516,
+          "replay": 6.6,
+          "benchmarks": 2,
+          "seconds": 60,
+          "noise": 0.047,
+          "localRuns": 13
+        }
+      ],
+      "replay": 13.7,
+      "reach": 171483,
+      "consensus": 3,
+      "noise": 0.051,
+      "composite": 0.55
+    },
+    {
+      "category": "Static Clicking",
+      "family": "Triangle",
+      "status": "kept",
+      "rungs": [
+        {
+          "scenario": "ClickTrack 3t Short",
+          "leaderboardId": 115370,
+          "plays": 16495,
+          "players": 2586,
+          "replay": 6.4,
+          "benchmarks": 1,
+          "seconds": 30,
+          "noise": 0.07,
+          "localRuns": 17
+        },
+        {
+          "scenario": "ClickTrack 3t",
+          "leaderboardId": 102616,
+          "plays": 45064,
+          "players": 6038,
+          "replay": 7.5,
+          "benchmarks": 1,
+          "seconds": 30,
+          "noise": 0.043,
+          "localRuns": 20
+        },
+        {
+          "scenario": "ClickTrack 3t Long",
+          "leaderboardId": 115474,
+          "plays": 8878,
+          "players": 1703,
+          "replay": 5.2,
+          "benchmarks": 1,
+          "seconds": 29,
+          "noise": 0.101,
+          "localRuns": 8
+        },
+        {
+          "scenario": "ClickTrack 5t",
+          "leaderboardId": 102615,
+          "plays": 26725,
+          "players": 4681,
+          "replay": 5.7,
+          "benchmarks": 1,
+          "seconds": 29,
+          "noise": 0.052,
+          "localRuns": 26
+        }
+      ],
+      "replay": 6.5,
+      "reach": 8624,
+      "consensus": 1,
+      "noise": 0.07,
+      "composite": 0.11
+    },
+    {
+      "category": "Static Clicking",
+      "family": "Wide Pressure",
+      "status": "replaced",
+      "rungs": [
+        {
+          "scenario": "1w4t Pressure Revosect Entry",
+          "leaderboardId": 142878,
+          "plays": 12566,
+          "players": 4104,
+          "replay": 3.1,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "1w4t Pressure Revosect Int",
+          "leaderboardId": 143201,
+          "plays": 10657,
+          "players": 2705,
+          "replay": 3.9,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "cA 7ts pressure",
+          "leaderboardId": 96432,
+          "plays": 96302,
+          "players": 11034,
+          "replay": 8.7,
+          "benchmarks": 2,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "darkPressure",
+          "leaderboardId": 16344,
+          "plays": 33968,
+          "players": 9433,
+          "replay": 3.6,
+          "benchmarks": 1,
+          "seconds": 59,
+          "noise": 0.111,
+          "localRuns": 42
+        }
+      ],
+      "replay": 4.6,
+      "reach": 6809,
+      "consensus": 4,
+      "noise": 0.111,
+      "composite": 0.14
+    },
+    {
+      "category": "Static Clicking",
+      "family": "Wide wall",
+      "status": "kept",
+      "rungs": [
+        {
+          "scenario": "Wide Wall 6Targets",
+          "leaderboardId": 235,
+          "plays": 2534894,
+          "players": 170785,
+          "replay": 14.8,
+          "benchmarks": 0,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "ww4t Voltaic",
+          "leaderboardId": 23921,
+          "plays": 832847,
+          "players": 56541,
+          "replay": 14.7,
+          "benchmarks": 2,
+          "seconds": 60,
+          "noise": 0.033,
+          "localRuns": 98
+        },
+        {
+          "scenario": "Wide Wall 3 Targets",
+          "leaderboardId": 337,
+          "plays": 5680837,
+          "players": 563398,
+          "replay": 10.1,
+          "benchmarks": 3,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Wide Wall 4 Targets Small",
+          "leaderboardId": 339,
+          "plays": 2505837,
+          "players": 326183,
+          "replay": 7.7,
+          "benchmarks": 2,
+          "seconds": 59,
+          "noise": 0.048,
+          "localRuns": 40
+        }
+      ],
+      "replay": 13.1,
+      "reach": 227326,
+      "consensus": 7,
+      "noise": 0.048,
+      "composite": 0.73
+    },
+    {
+      "category": "Static Clicking",
+      "family": "Evo Gallery",
+      "status": "replaced",
+      "rungs": [
+        {
+          "scenario": "CB EvoClick Easy",
+          "leaderboardId": 96088,
+          "plays": 150491,
+          "players": 48233,
+          "replay": 3.1,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "EvoClick Revosect Entry",
+          "leaderboardId": 142851,
+          "plays": 12286,
+          "players": 4192,
+          "replay": 2.9,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "EvoClick Revosect Int",
+          "leaderboardId": 142850,
+          "plays": 17876,
+          "players": 3290,
+          "replay": 5.4,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "EvoClick Revosect",
+          "leaderboardId": 141058,
+          "plays": 7627,
+          "players": 1130,
+          "replay": 6.7,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 3.9,
+      "reach": 52425,
+      "consensus": 2,
+      "noise": null,
+      "composite": 0.15
+    },
+    {
+      "category": "Static Clicking",
+      "family": "Vox Gallery",
+      "status": "kept",
+      "rungs": [
+        {
+          "scenario": "VoxTS Click Entry",
+          "leaderboardId": 192530,
+          "plays": 19788,
+          "players": 6932,
+          "replay": 2.9,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "VoxTS Click Easier",
+          "leaderboardId": 136076,
+          "plays": 240054,
+          "players": 47148,
+          "replay": 5.1,
+          "benchmarks": 3,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "VoxTS Click Medium",
+          "leaderboardId": 136098,
+          "plays": 452938,
+          "players": 54328,
+          "replay": 8.3,
+          "benchmarks": 2,
+          "seconds": 60,
+          "noise": 0.041,
+          "localRuns": 18
+        },
+        {
+          "scenario": "VoxTS Click Hard",
+          "leaderboardId": 136746,
+          "plays": 6263,
+          "players": 1244,
+          "replay": 5,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 5,
+      "reach": 54080,
+      "consensus": 5,
+      "noise": 0.041,
+      "composite": 0.3
+    },
+    {
+      "category": "Static Clicking",
+      "family": "Reload Rush",
+      "status": "kept",
+      "rungs": [
+        {
+          "scenario": "1w6ts reload Easier",
+          "leaderboardId": 178820,
+          "plays": 34189,
+          "players": 5841,
+          "replay": 5.9,
+          "benchmarks": 2,
+          "seconds": 60,
+          "noise": 0.032,
+          "localRuns": 17
+        },
+        {
+          "scenario": "1w6ts reload v2 20% bigger",
+          "leaderboardId": 21620,
+          "plays": 405547,
+          "players": 52991,
+          "replay": 7.7,
+          "benchmarks": 2,
+          "seconds": 59,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "1w6ts reload v2",
+          "leaderboardId": 666,
+          "plays": 1757128,
+          "players": 104250,
+          "replay": 16.9,
+          "benchmarks": 5,
+          "seconds": 60,
+          "noise": 0.046,
+          "localRuns": 109
+        },
+        {
+          "scenario": "1w6ts_trustechain Raspberry",
+          "leaderboardId": 10625,
+          "plays": 451416,
+          "players": 41699,
+          "replay": 10.8,
+          "benchmarks": 2,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 9.2,
+      "reach": 58832,
+      "consensus": 5,
+      "noise": 0.046,
+      "composite": 0.45
+    },
+    {
+      "category": "Static Clicking",
+      "family": "Micro Chain",
+      "status": "kept",
+      "rungs": [
+        {
+          "scenario": "1w3ts Pasu Perfected Micro Goated Larger 80%",
+          "leaderboardId": 128920,
+          "plays": 1124255,
+          "players": 141843,
+          "replay": 7.9,
+          "benchmarks": 2,
+          "seconds": 59,
+          "noise": 0.053,
+          "localRuns": 15
+        },
+        {
+          "scenario": "1w3ts Pasu Perfected Micro Goated Larger",
+          "leaderboardId": 125923,
+          "plays": 1005030,
+          "players": 97581,
+          "replay": 10.3,
+          "benchmarks": 3,
+          "seconds": 59,
+          "noise": 0.048,
+          "localRuns": 23
+        },
+        {
+          "scenario": "1w3ts Pasu Perfected Micro Goated",
+          "leaderboardId": 65396,
+          "plays": 1433093,
+          "players": 107246,
+          "replay": 13.4,
+          "benchmarks": 9,
+          "seconds": 60,
+          "noise": 0.112,
+          "localRuns": 15
+        },
+        {
+          "scenario": "1w3ts Pasu Perfected Micro Goated 10% small",
+          "leaderboardId": 172862,
+          "plays": 11508,
+          "players": 1345,
+          "replay": 8.6,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 9.9,
+      "reach": 239424,
+      "consensus": 10,
+      "noise": 0.053,
+      "composite": 0.73
+    },
+    {
+      "category": "Dynamic Clicking",
+      "family": "Pasu",
+      "status": "replaced",
+      "rungs": [
+        {
+          "scenario": "Pasu Viscose Entry",
+          "leaderboardId": 192535,
+          "plays": 25736,
+          "players": 7216,
+          "replay": 3.6,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Pasu SuperbAim Easy",
+          "leaderboardId": 35298,
+          "plays": 203053,
+          "players": 9143,
+          "replay": 22.2,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Pasu SuperbAim",
+          "leaderboardId": 35929,
+          "plays": 116630,
+          "players": 5221,
+          "replay": 22.3,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Pasu Reload Goated",
+          "leaderboardId": 583,
+          "plays": 551875,
+          "players": 40083,
+          "replay": 13.8,
+          "benchmarks": 4,
+          "seconds": null,
+          "noise": 0.103,
+          "localRuns": 23
+        }
+      ],
+      "replay": 14.9,
+      "reach": 16359,
+      "consensus": 6,
+      "noise": 0.103,
+      "composite": 0.51
+    },
+    {
+      "category": "Dynamic Clicking",
+      "family": "PipeClick",
+      "status": "kept",
+      "rungs": [
+        {
+          "scenario": "Aimerz+ pipeClick Easy S1",
+          "leaderboardId": 68431,
+          "plays": 456581,
+          "players": 67983,
+          "replay": 6.7,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "aimerz+ PipeClick Normal",
+          "leaderboardId": 44344,
+          "plays": 260745,
+          "players": 34989,
+          "replay": 7.5,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "aimerz+ PipeClick Hard",
+          "leaderboardId": 44342,
+          "plays": 121779,
+          "players": 19598,
+          "replay": 6.2,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Aimerz+ pipeClick Hard S1",
+          "leaderboardId": 68391,
+          "plays": 119649,
+          "players": 10142,
+          "replay": 11.8,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 7.4,
+      "reach": 102972,
+      "consensus": 2,
+      "noise": null,
+      "composite": 0.32
+    },
+    {
+      "category": "Dynamic Clicking",
+      "family": "Bounce",
+      "status": "kept",
+      "rungs": [
+        {
+          "scenario": "BounceClick SuperbAim Easy",
+          "leaderboardId": 35901,
+          "plays": 163199,
+          "players": 8159,
+          "replay": 20,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "BounceClick SuperbAim",
+          "leaderboardId": 35900,
+          "plays": 122939,
+          "players": 13969,
+          "replay": 8.8,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Bounce 180 Sparky",
+          "leaderboardId": 762,
+          "plays": 936475,
+          "players": 44572,
+          "replay": 21,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Bounce 180 rAim",
+          "leaderboardId": 526,
+          "plays": 56802,
+          "players": 5844,
+          "replay": 9.7,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 15.3,
+      "reach": 22128,
+      "consensus": 3,
+      "noise": null,
+      "composite": 0.4
+    },
+    {
+      "category": "Dynamic Clicking",
+      "family": "Angelic",
+      "status": "kept",
+      "rungs": [
+        {
+          "scenario": "psalmTS angelic click 30% Larger",
+          "leaderboardId": 89546,
+          "plays": 31050,
+          "players": 7423,
+          "replay": 4.2,
+          "benchmarks": 2,
+          "seconds": 59,
+          "noise": 0.081,
+          "localRuns": 25
+        },
+        {
+          "scenario": "Pasu Angelic 20% Larger",
+          "leaderboardId": 89821,
+          "plays": 600634,
+          "players": 59558,
+          "replay": 10.1,
+          "benchmarks": 3,
+          "seconds": 60,
+          "noise": 0.059,
+          "localRuns": 23
+        },
+        {
+          "scenario": "psalmTS angelic click",
+          "leaderboardId": 578,
+          "plays": 583818,
+          "players": 37746,
+          "replay": 15.5,
+          "benchmarks": 2,
+          "seconds": 60,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Pasu Angelic",
+          "leaderboardId": 38540,
+          "plays": 656365,
+          "players": 67056,
+          "replay": 9.8,
+          "benchmarks": 4,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 9.1,
+      "reach": 66981,
+      "consensus": 6,
+      "noise": 0.081,
+      "composite": 0.49
+    },
+    {
+      "category": "Dynamic Clicking",
+      "family": "Pasu Sequence",
+      "status": "replaced",
+      "rungs": [
+        {
+          "scenario": "Pasu 3-Click Wide Easy",
+          "leaderboardId": 54718,
+          "plays": 314343,
+          "players": 22342,
+          "replay": 14.1,
+          "benchmarks": 0,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Pasu 3-Click v2 Less Easy",
+          "leaderboardId": 3876,
+          "plays": 68469,
+          "players": 4359,
+          "replay": 15.7,
+          "benchmarks": 0,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Pasu 3-click v2",
+          "leaderboardId": 1094,
+          "plays": 382729,
+          "players": 38330,
+          "replay": 10,
+          "benchmarks": 0,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Pasu 3-Click Wide",
+          "leaderboardId": 54719,
+          "plays": 101921,
+          "players": 6214,
+          "replay": 16.4,
+          "benchmarks": 0,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 14.1,
+      "reach": 26701,
+      "consensus": 0,
+      "noise": null,
+      "composite": 0.3
+    },
+    {
+      "category": "Dynamic Clicking",
+      "family": "Popcorn",
+      "status": "kept",
+      "rungs": [
+        {
+          "scenario": "Popcorn Goated rAim easy",
+          "leaderboardId": 63202,
+          "plays": 16085,
+          "players": 5122,
+          "replay": 3.1,
+          "benchmarks": 1,
+          "seconds": 60,
+          "noise": 0.106,
+          "localRuns": 18
+        },
+        {
+          "scenario": "Popcorn rAim Easy",
+          "leaderboardId": 607,
+          "plays": 184320,
+          "players": 17043,
+          "replay": 10.8,
+          "benchmarks": 3,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Popcorn Sparky",
+          "leaderboardId": 502,
+          "plays": 363211,
+          "players": 25985,
+          "replay": 14,
+          "benchmarks": 2,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Popcorn Goated rAim",
+          "leaderboardId": 777,
+          "plays": 105668,
+          "players": 11067,
+          "replay": 9.5,
+          "benchmarks": 3,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 8.6,
+      "reach": 22165,
+      "consensus": 6,
+      "noise": 0.106,
+      "composite": 0.4
+    },
+    {
+      "category": "Dynamic Clicking",
+      "family": "Floating Gallery",
+      "status": "replaced",
+      "rungs": [
+        {
+          "scenario": "VT Floating Heads Viscose Entry",
+          "leaderboardId": 192531,
+          "plays": 22810,
+          "players": 6993,
+          "replay": 3.3,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "VT Floating Heads Viscose Easier",
+          "leaderboardId": 185409,
+          "plays": 356640,
+          "players": 53636,
+          "replay": 6.6,
+          "benchmarks": 2,
+          "seconds": 60,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "VT Floating Heads Viscose Medium",
+          "leaderboardId": 184827,
+          "plays": 299462,
+          "players": 37055,
+          "replay": 8.1,
+          "benchmarks": 2,
+          "seconds": 60,
+          "noise": 0.063,
+          "localRuns": 32
+        },
+        {
+          "scenario": "VT Floating Heads Viscose Hard",
+          "leaderboardId": 184829,
+          "plays": 26679,
+          "players": 3816,
+          "replay": 7,
+          "benchmarks": 1,
+          "seconds": 59,
+          "noise": 0.044,
+          "localRuns": 15
+        }
+      ],
+      "replay": 5.8,
+      "reach": 60629,
+      "consensus": 4,
+      "noise": 0.063,
+      "composite": 0.29
+    },
+    {
+      "category": "Dynamic Clicking",
+      "family": "Sky Gallery",
+      "status": "kept",
+      "rungs": [
+        {
+          "scenario": "skyClick Goated Easier",
+          "leaderboardId": 185490,
+          "plays": 226855,
+          "players": 46355,
+          "replay": 4.9,
+          "benchmarks": 2,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "skyClick Goated Medium",
+          "leaderboardId": 185491,
+          "plays": 444610,
+          "players": 50880,
+          "replay": 8.7,
+          "benchmarks": 1,
+          "seconds": 60,
+          "noise": 0.054,
+          "localRuns": 25
+        },
+        {
+          "scenario": "skyClick Goated Hard",
+          "leaderboardId": 185492,
+          "plays": 27486,
+          "players": 3513,
+          "replay": 7.8,
+          "benchmarks": 1,
+          "seconds": 60,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "skyClick Goated Expert",
+          "leaderboardId": 185489,
+          "plays": 5358,
+          "players": 1109,
+          "replay": 4.8,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 6.8,
+      "reach": 97235,
+      "consensus": 2,
+      "noise": 0.054,
+      "composite": 0.29
+    },
+    {
+      "category": "Dynamic Clicking",
+      "family": "Wave Click",
+      "status": "replaced",
+      "rungs": [
+        {
+          "scenario": "Aimerz+ sunClick Easy S1",
+          "leaderboardId": 68434,
+          "plays": 123604,
+          "players": 24732,
+          "replay": 5,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "aimerz+ WaveClick Normal",
+          "leaderboardId": 44337,
+          "plays": 129894,
+          "players": 20895,
+          "replay": 6.2,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "aimerz+ WaveClick Hard",
+          "leaderboardId": 44336,
+          "plays": 79240,
+          "players": 10153,
+          "replay": 7.8,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Aimerz+ sunClick Hard S1",
+          "leaderboardId": 68298,
+          "plays": 44698,
+          "players": 5577,
+          "replay": 8,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 6.3,
+      "reach": 45627,
+      "consensus": 2,
+      "noise": null,
+      "composite": 0.2
+    },
+    {
+      "category": "Dynamic Clicking",
+      "family": "Cat Click",
+      "status": "kept",
+      "rungs": [
+        {
+          "scenario": "CatClick Easier",
+          "leaderboardId": 184866,
+          "plays": 253599,
+          "players": 46359,
+          "replay": 5.5,
+          "benchmarks": 2,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "CatClick Medium",
+          "leaderboardId": 184780,
+          "plays": 299172,
+          "players": 43790,
+          "replay": 6.8,
+          "benchmarks": 1,
+          "seconds": 60,
+          "noise": 0.059,
+          "localRuns": 24
+        },
+        {
+          "scenario": "CatClick",
+          "leaderboardId": 179408,
+          "plays": 21117,
+          "players": 3349,
+          "replay": 6.3,
+          "benchmarks": 2,
+          "seconds": 59,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "CatClick Harder",
+          "leaderboardId": 184865,
+          "plays": 8784,
+          "players": 1693,
+          "replay": 5.2,
+          "benchmarks": 2,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 6.1,
+      "reach": 90149,
+      "consensus": 4,
+      "noise": 0.059,
+      "composite": 0.33
+    },
+    {
+      "category": "Precise Tracking",
+      "family": "Smoothbot",
+      "status": "kept",
+      "rungs": [
+        {
+          "scenario": "SmoothBot Invincible Goated 75%",
+          "leaderboardId": 75962,
+          "plays": 2931765,
+          "players": 162479,
+          "replay": 18,
+          "benchmarks": 4,
+          "seconds": 60,
+          "noise": 0.066,
+          "localRuns": 9
+        },
+        {
+          "scenario": "Smoothbot Invincible Goated Easy",
+          "leaderboardId": 955,
+          "plays": 412387,
+          "players": 66147,
+          "replay": 6.2,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "SmoothBot Invincible Goated",
+          "leaderboardId": 348,
+          "plays": 2664165,
+          "players": 131188,
+          "replay": 20.3,
+          "benchmarks": 3,
+          "seconds": 60,
+          "noise": 0.09,
+          "localRuns": 54
+        },
+        {
+          "scenario": "SmoothBot Invincible Goated Smaller",
+          "leaderboardId": 815,
+          "plays": 173005,
+          "players": 19328,
+          "replay": 9,
+          "benchmarks": 2,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 13.4,
+      "reach": 228626,
+      "consensus": 6,
+      "noise": 0.09,
+      "composite": 0.69
+    },
+    {
+      "category": "Precise Tracking",
+      "family": "Centering",
+      "status": "kept",
+      "rungs": [
+        {
+          "scenario": "Centering II 180 Entry",
+          "leaderboardId": 111447,
+          "plays": 97088,
+          "players": 16014,
+          "replay": 6.1,
+          "benchmarks": 0,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Centering II 180 Novice",
+          "leaderboardId": 111445,
+          "plays": 120595,
+          "players": 20347,
+          "replay": 5.9,
+          "benchmarks": 0,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Centering II 180 Intermediate",
+          "leaderboardId": 111448,
+          "plays": 363095,
+          "players": 31351,
+          "replay": 11.6,
+          "benchmarks": 0,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Centering II 180 no strafes",
+          "leaderboardId": 423,
+          "plays": 1921817,
+          "players": 81406,
+          "replay": 23.6,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 8.9,
+      "reach": 36361,
+      "consensus": 1,
+      "noise": null,
+      "composite": 0.25
+    },
+    {
+      "category": "Precise Tracking",
+      "family": "PreciseTrack",
+      "status": "replaced",
+      "rungs": [
+        {
+          "scenario": "PreciseTrack Avasive Easier",
+          "leaderboardId": 203404,
+          "plays": 1428,
+          "players": 689,
+          "replay": 2.1,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Aimerz+ PreciseTrack Easy S1",
+          "leaderboardId": 68361,
+          "plays": 135352,
+          "players": 20104,
+          "replay": 6.7,
+          "benchmarks": 2,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Aimerz+ PreciseTrack Med S1",
+          "leaderboardId": 69248,
+          "plays": 127528,
+          "players": 11636,
+          "replay": 11,
+          "benchmarks": 1,
+          "seconds": 60,
+          "noise": 0.051,
+          "localRuns": 36
+        },
+        {
+          "scenario": "Aimerz+ PreciseTrack Hard S1",
+          "leaderboardId": 68330,
+          "plays": 84191,
+          "players": 7826,
+          "replay": 10.8,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 6.4,
+      "reach": 20793,
+      "consensus": 4,
+      "noise": 0.051,
+      "composite": 0.22
+    },
+    {
+      "category": "Precise Tracking",
+      "family": "Whisphere",
+      "status": "kept",
+      "rungs": [
+        {
+          "scenario": "Whisphere Small & Slow 55%",
+          "leaderboardId": 128693,
+          "plays": 808789,
+          "players": 146025,
+          "replay": 5.5,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Whisphere Small & Slow 75%",
+          "leaderboardId": 77068,
+          "plays": 502147,
+          "players": 63141,
+          "replay": 8,
+          "benchmarks": 3,
+          "seconds": 60,
+          "noise": 0.075,
+          "localRuns": 26
+        },
+        {
+          "scenario": "Whisphere Small & Slow",
+          "leaderboardId": 34966,
+          "plays": 544483,
+          "players": 39409,
+          "replay": 13.8,
+          "benchmarks": 5,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Whisphere Extra Small & Slow",
+          "leaderboardId": 34968,
+          "plays": 121350,
+          "players": 11644,
+          "replay": 10.4,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 8.5,
+      "reach": 209166,
+      "consensus": 6,
+      "noise": 0.075,
+      "composite": 0.58
+    },
+    {
+      "category": "Precise Tracking",
+      "family": "Vertical Control",
+      "status": "replaced",
+      "rungs": [
+        {
+          "scenario": "Smooth Your Vertical Altered POV Entry",
+          "leaderboardId": 112748,
+          "plays": 37433,
+          "players": 9833,
+          "replay": 3.8,
+          "benchmarks": 0,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Smooth Your Vertical Altered POV Easy v2",
+          "leaderboardId": 48398,
+          "plays": 120469,
+          "players": 19402,
+          "replay": 6.2,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Smooth Your Vertical Altered POV Intermediate",
+          "leaderboardId": 107995,
+          "plays": 140973,
+          "players": 21145,
+          "replay": 6.7,
+          "benchmarks": 0,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Smooth Your Vertical Altered POV v2",
+          "leaderboardId": 48393,
+          "plays": 88677,
+          "players": 9480,
+          "replay": 9.4,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 5.8,
+      "reach": 29235,
+      "consensus": 1,
+      "noise": null,
+      "composite": 0.13
+    },
+    {
+      "category": "Precise Tracking",
+      "family": "Controlsphere",
+      "status": "kept",
+      "rungs": [
+        {
+          "scenario": "Controlsphere Viscose Entry",
+          "leaderboardId": 190002,
+          "plays": 36170,
+          "players": 9150,
+          "replay": 4,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Controlsphere rAim Easy 90%",
+          "leaderboardId": 83485,
+          "plays": 1533317,
+          "players": 175397,
+          "replay": 8.7,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Controlsphere rAim Easy",
+          "leaderboardId": 5137,
+          "plays": 1708132,
+          "players": 119053,
+          "replay": 14.3,
+          "benchmarks": 7,
+          "seconds": 60,
+          "noise": 0.026,
+          "localRuns": 54
+        },
+        {
+          "scenario": "Controlsphere rAim",
+          "leaderboardId": 5102,
+          "plays": 893359,
+          "players": 47554,
+          "replay": 18.8,
+          "benchmarks": 6,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 9.2,
+      "reach": 184547,
+      "consensus": 11,
+      "noise": 0.026,
+      "composite": 0.68
+    },
+    {
+      "category": "Precise Tracking",
+      "family": "DVD Chase",
+      "status": "kept",
+      "rungs": [
+        {
+          "scenario": "TSK - DVD Tracking MASSIVE",
+          "leaderboardId": 132420,
+          "plays": 59473,
+          "players": 8431,
+          "replay": 7.1,
+          "benchmarks": 2,
+          "seconds": 29,
+          "noise": 0.054,
+          "localRuns": 14
+        },
+        {
+          "scenario": "TSK - DVD Tracking Big",
+          "leaderboardId": 123665,
+          "plays": 127494,
+          "players": 9180,
+          "replay": 13.9,
+          "benchmarks": 3,
+          "seconds": 29,
+          "noise": 0.093,
+          "localRuns": 22
+        },
+        {
+          "scenario": "TSK - DVD Tracking",
+          "leaderboardId": 123669,
+          "plays": 69681,
+          "players": 6402,
+          "replay": 10.9,
+          "benchmarks": 1,
+          "seconds": 29,
+          "noise": 0.036,
+          "localRuns": 8
+        },
+        {
+          "scenario": "TSK - DVD Tracking Small",
+          "leaderboardId": 123668,
+          "plays": 11148,
+          "players": 1217,
+          "replay": 9.2,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 10.5,
+      "reach": 17611,
+      "consensus": 4,
+      "noise": 0.054,
+      "composite": 0.34
+    },
+    {
+      "category": "Precise Tracking",
+      "family": "Flower Chase",
+      "status": "replaced",
+      "rungs": [
+        {
+          "scenario": "Flower Entry",
+          "leaderboardId": 190139,
+          "plays": 30390,
+          "players": 7909,
+          "replay": 3.8,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Flower Easier 50cm",
+          "leaderboardId": 185354,
+          "plays": 277472,
+          "players": 60355,
+          "replay": 4.6,
+          "benchmarks": 3,
+          "seconds": 60,
+          "noise": 0.065,
+          "localRuns": 9
+        },
+        {
+          "scenario": "Flower 50cm",
+          "leaderboardId": 184580,
+          "plays": 319000,
+          "players": 35165,
+          "replay": 9.1,
+          "benchmarks": 1,
+          "seconds": 60,
+          "noise": 0.084,
+          "localRuns": 25
+        },
+        {
+          "scenario": "Flower Hard 50cm",
+          "leaderboardId": 184591,
+          "plays": 33687,
+          "players": 4601,
+          "replay": 7.3,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 5.5,
+      "reach": 68264,
+      "consensus": 4,
+      "noise": 0.084,
+      "composite": 0.29
+    },
+    {
+      "category": "Precise Tracking",
+      "family": "Sphere Cruise",
+      "status": "kept",
+      "rungs": [
+        {
+          "scenario": "Smoothsphere Viscose Horizontal Entry",
+          "leaderboardId": 189903,
+          "plays": 57587,
+          "players": 11132,
+          "replay": 5.2,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Smoothsphere Viscose Easier",
+          "leaderboardId": 185342,
+          "plays": 959314,
+          "players": 81335,
+          "replay": 11.8,
+          "benchmarks": 4,
+          "seconds": 60,
+          "noise": 0.034,
+          "localRuns": 15
+        },
+        {
+          "scenario": "Smoothsphere Viscose",
+          "leaderboardId": 184106,
+          "plays": 1146473,
+          "players": 51137,
+          "replay": 22.4,
+          "benchmarks": 5,
+          "seconds": 60,
+          "noise": 0.047,
+          "localRuns": 137
+        },
+        {
+          "scenario": "Smoothsphere Viscose Hard",
+          "leaderboardId": 184518,
+          "plays": 105791,
+          "players": 9702,
+          "replay": 10.9,
+          "benchmarks": 2,
+          "seconds": null,
+          "noise": 0.064,
+          "localRuns": 12
+        }
+      ],
+      "replay": 11.5,
+      "reach": 92467,
+      "consensus": 6,
+      "noise": 0.047,
+      "composite": 0.58
+    },
+    {
+      "category": "Precise Tracking",
+      "family": "Waldo Track",
+      "status": "kept",
+      "rungs": [
+        {
+          "scenario": "waldoTS Novice",
+          "leaderboardId": 113019,
+          "plays": 866451,
+          "players": 155420,
+          "replay": 5.6,
+          "benchmarks": 3,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "waldoTS Intermediate",
+          "leaderboardId": 111273,
+          "plays": 925140,
+          "players": 86998,
+          "replay": 10.6,
+          "benchmarks": 7,
+          "seconds": 60,
+          "noise": 0.028,
+          "localRuns": 64
+        },
+        {
+          "scenario": "waldoTS",
+          "leaderboardId": 81042,
+          "plays": 3833477,
+          "players": 248015,
+          "replay": 15.5,
+          "benchmarks": 6,
+          "seconds": 59,
+          "noise": 0.014,
+          "localRuns": 9
+        },
+        {
+          "scenario": "waldoTS Elite",
+          "leaderboardId": 111257,
+          "plays": 15263,
+          "players": 2301,
+          "replay": 6.6,
+          "benchmarks": 2,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 9.4,
+      "reach": 242418,
+      "consensus": 11,
+      "noise": 0.028,
+      "composite": 0.73
+    },
+    {
+      "category": "Reactive Tracking",
+      "family": "Ground Plaza",
+      "status": "kept",
+      "rungs": [
+        {
+          "scenario": "Ground Plaza Sparky v3 Easy",
+          "leaderboardId": 134502,
+          "plays": 270464,
+          "players": 52253,
+          "replay": 5.2,
+          "benchmarks": 3,
+          "seconds": null,
+          "noise": 0.008,
+          "localRuns": 8
+        },
+        {
+          "scenario": "Ground Plaza Sparky V3",
+          "leaderboardId": 517,
+          "plays": 1612727,
+          "players": 104291,
+          "replay": 15.5,
+          "benchmarks": 11,
+          "seconds": null,
+          "noise": 0.005,
+          "localRuns": 38
+        },
+        {
+          "scenario": "Ground Plaza Sparky v3 OW",
+          "leaderboardId": 871,
+          "plays": 486222,
+          "players": 40973,
+          "replay": 11.9,
+          "benchmarks": 8,
+          "seconds": null,
+          "noise": 0.005,
+          "localRuns": 11
+        },
+        {
+          "scenario": "Ground Plaza Sparky V3 Thin",
+          "leaderboardId": 1408,
+          "plays": 155293,
+          "players": 15399,
+          "replay": 10.1,
+          "benchmarks": 6,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 10.6,
+      "reach": 156544,
+      "consensus": 16,
+      "noise": 0.005,
+      "composite": 0.73
+    },
+    {
+      "category": "Reactive Tracking",
+      "family": "Air Reading",
+      "status": "kept",
+      "rungs": [
+        {
+          "scenario": "Air Voltaic Invincible 4 Entry",
+          "leaderboardId": 143160,
+          "plays": 35109,
+          "players": 9689,
+          "replay": 3.6,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": 0.023,
+          "localRuns": 8
+        },
+        {
+          "scenario": "Air Voltaic Invincible 4 Easier",
+          "leaderboardId": 185406,
+          "plays": 227552,
+          "players": 49287,
+          "replay": 4.6,
+          "benchmarks": 2,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Air Voltaic Invincible 4 Medium",
+          "leaderboardId": 184775,
+          "plays": 257872,
+          "players": 29761,
+          "replay": 8.7,
+          "benchmarks": 2,
+          "seconds": 60,
+          "noise": 0.047,
+          "localRuns": 47
+        },
+        {
+          "scenario": "Air Voltaic Invincible 4",
+          "leaderboardId": 1092,
+          "plays": 189957,
+          "players": 20234,
+          "replay": 9.4,
+          "benchmarks": 3,
+          "seconds": 60,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 5.6,
+      "reach": 58976,
+      "consensus": 6,
+      "noise": 0.047,
+      "composite": 0.37
+    },
+    {
+      "category": "Reactive Tracking",
+      "family": "Air Angelic",
+      "status": "replaced",
+      "rungs": [
+        {
+          "scenario": "Air Angelic rAim Biggest",
+          "leaderboardId": 12233,
+          "plays": 8058,
+          "players": 1465,
+          "replay": 5.5,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Air Angelic Easier",
+          "leaderboardId": 189778,
+          "plays": 24582,
+          "players": 3604,
+          "replay": 6.8,
+          "benchmarks": 3,
+          "seconds": null,
+          "noise": 0.005,
+          "localRuns": 17
+        },
+        {
+          "scenario": "Air Angelic rAim Easy",
+          "leaderboardId": 572,
+          "plays": 111980,
+          "players": 14820,
+          "replay": 7.6,
+          "benchmarks": 3,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Air Angelic",
+          "leaderboardId": 419,
+          "plays": 432095,
+          "players": 23898,
+          "replay": 18.1,
+          "benchmarks": 7,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 7.6,
+      "reach": 5069,
+      "consensus": 7,
+      "noise": 0.005,
+      "composite": 0.38
+    },
+    {
+      "category": "Reactive Tracking",
+      "family": "Strafe Gallery",
+      "status": "replaced",
+      "rungs": [
+        {
+          "scenario": "CB StrafeTrack Easy",
+          "leaderboardId": 93207,
+          "plays": 31646,
+          "players": 12572,
+          "replay": 2.5,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Aimerz+ VGS Easy S1",
+          "leaderboardId": 68358,
+          "plays": 170848,
+          "players": 21495,
+          "replay": 7.9,
+          "benchmarks": 2,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Aimerz+ VGS Med S1",
+          "leaderboardId": 69298,
+          "plays": 37831,
+          "players": 5598,
+          "replay": 6.8,
+          "benchmarks": 4,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Aimerz+ VGS Hard S1",
+          "leaderboardId": 68332,
+          "plays": 278519,
+          "players": 17997,
+          "replay": 15.5,
+          "benchmarks": 2,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 6.6,
+      "reach": 34067,
+      "consensus": 6,
+      "noise": null,
+      "composite": 0.35
+    },
+    {
+      "category": "Reactive Tracking",
+      "family": "Leapstrafes",
+      "status": "kept",
+      "rungs": [
+        {
+          "scenario": "Leapstrafes Control wobin Easier",
+          "leaderboardId": 185344,
+          "plays": 409814,
+          "players": 67371,
+          "replay": 6.1,
+          "benchmarks": 2,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Leapstrafes Control Medium",
+          "leaderboardId": 63065,
+          "plays": 44864,
+          "players": 8209,
+          "replay": 5.5,
+          "benchmarks": 1,
+          "seconds": 60,
+          "noise": 0.029,
+          "localRuns": 37
+        },
+        {
+          "scenario": "Leapstrafes Control wobin",
+          "leaderboardId": 184561,
+          "plays": 502438,
+          "players": 42713,
+          "replay": 11.8,
+          "benchmarks": 2,
+          "seconds": 60,
+          "noise": 0.045,
+          "localRuns": 48
+        },
+        {
+          "scenario": "Leapstrafes Control wobin Hard",
+          "leaderboardId": 184845,
+          "plays": 50056,
+          "players": 6249,
+          "replay": 8,
+          "benchmarks": 1,
+          "seconds": 60,
+          "noise": 0.132,
+          "localRuns": 9
+        }
+      ],
+      "replay": 7.2,
+      "reach": 75580,
+      "consensus": 4,
+      "noise": 0.045,
+      "composite": 0.35
+    },
+    {
+      "category": "Reactive Tracking",
+      "family": "Recovery",
+      "status": "kept",
+      "rungs": [
+        {
+          "scenario": "Kindaclose long stop strafes",
+          "leaderboardId": 15877,
+          "plays": 120916,
+          "players": 12309,
+          "replay": 9.8,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Flicker Plaza rAim Easy Less Blinks",
+          "leaderboardId": 128774,
+          "plays": 477147,
+          "players": 117048,
+          "replay": 4.1,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Flicker Plaza rAim Easy",
+          "leaderboardId": 606,
+          "plays": 370317,
+          "players": 57580,
+          "replay": 6.4,
+          "benchmarks": 4,
+          "seconds": null,
+          "noise": 0.002,
+          "localRuns": 14
+        },
+        {
+          "scenario": "Flicker Plaza",
+          "leaderboardId": 677,
+          "plays": 272385,
+          "players": 28685,
+          "replay": 9.5,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 7.1,
+      "reach": 129357,
+      "consensus": 5,
+      "noise": 0.002,
+      "composite": 0.46
+    },
+    {
+      "category": "Reactive Tracking",
+      "family": "Spectral Chase",
+      "status": "kept",
+      "rungs": [
+        {
+          "scenario": "Air Spectral Easy 85%",
+          "leaderboardId": 185693,
+          "plays": 271433,
+          "players": 50307,
+          "replay": 5.4,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Air Spectral Easy",
+          "leaderboardId": 143228,
+          "plays": 317959,
+          "players": 32176,
+          "replay": 9.9,
+          "benchmarks": 4,
+          "seconds": null,
+          "noise": 0.003,
+          "localRuns": 26
+        },
+        {
+          "scenario": "Air Spectral",
+          "leaderboardId": 142893,
+          "plays": 31288,
+          "players": 5114,
+          "replay": 6.1,
+          "benchmarks": 4,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Air Spectral Harder",
+          "leaderboardId": 185018,
+          "plays": 6148,
+          "players": 982,
+          "replay": 6.3,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 7.2,
+      "reach": 82483,
+      "consensus": 4,
+      "noise": 0.003,
+      "composite": 0.36
+    },
+    {
+      "category": "Reactive Tracking",
+      "family": "Celestial Chase",
+      "status": "kept",
+      "rungs": [
+        {
+          "scenario": "Air CELESTIAL No UFO Easy Slowed",
+          "leaderboardId": 131872,
+          "plays": 622074,
+          "players": 122962,
+          "replay": 5.1,
+          "benchmarks": 4,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Air CELESTIAL No UFO Easy",
+          "leaderboardId": 70930,
+          "plays": 441482,
+          "players": 61425,
+          "replay": 7.2,
+          "benchmarks": 4,
+          "seconds": null,
+          "noise": 0.009,
+          "localRuns": 27
+        },
+        {
+          "scenario": "Air CELESTIAL No UFO",
+          "leaderboardId": 70970,
+          "plays": 41179,
+          "players": 5790,
+          "replay": 7.1,
+          "benchmarks": 3,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Air CELESTIAL Harder",
+          "leaderboardId": 185225,
+          "plays": 25599,
+          "players": 4070,
+          "replay": 6.3,
+          "benchmarks": 2,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 6.4,
+      "reach": 184387,
+      "consensus": 9,
+      "noise": 0.009,
+      "composite": 0.58
+    },
+    {
+      "category": "Reactive Tracking",
+      "family": "Pure Chase",
+      "status": "kept",
+      "rungs": [
+        {
+          "scenario": "Air Pure Revosect Entry",
+          "leaderboardId": 142837,
+          "plays": 6745,
+          "players": 2925,
+          "replay": 2.3,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Air Pure Intermediate",
+          "leaderboardId": 126338,
+          "plays": 665378,
+          "players": 53077,
+          "replay": 12.5,
+          "benchmarks": 2,
+          "seconds": null,
+          "noise": 0.005,
+          "localRuns": 14
+        },
+        {
+          "scenario": "Air Pure",
+          "leaderboardId": 13213,
+          "plays": 115324,
+          "players": 15741,
+          "replay": 7.3,
+          "benchmarks": 3,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Air Pure Hard",
+          "leaderboardId": 185019,
+          "plays": 21620,
+          "players": 3451,
+          "replay": 6.3,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 7.3,
+      "reach": 56002,
+      "consensus": 5,
+      "noise": 0.005,
+      "composite": 0.39
+    },
+    {
+      "category": "Reactive Tracking",
+      "family": "Close Strafe Chase",
+      "status": "kept",
+      "rungs": [
+        {
+          "scenario": "Close Fast Strafes Easy Invincible - Thin",
+          "leaderboardId": 154186,
+          "plays": 43802,
+          "players": 7195,
+          "replay": 6.1,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Close Fast Strafes Invincible",
+          "leaderboardId": 494,
+          "plays": 2636152,
+          "players": 117749,
+          "replay": 22.4,
+          "benchmarks": 5,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Close Fast Strafes Invincible - Thin",
+          "leaderboardId": 814,
+          "plays": 775936,
+          "players": 52720,
+          "replay": 14.7,
+          "benchmarks": 2,
+          "seconds": null,
+          "noise": 0.066,
+          "localRuns": 21
+        },
+        {
+          "scenario": "Close Fast Strafes Invincible Precise+",
+          "leaderboardId": 1343,
+          "plays": 108964,
+          "players": 7476,
+          "replay": 14.6,
+          "benchmarks": 2,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 14.4,
+      "reach": 124944,
+      "consensus": 8,
+      "noise": 0.066,
+      "composite": 0.73
+    },
+    {
+      "category": "Speed Switching",
+      "family": "DotTS",
+      "status": "kept",
+      "rungs": [
+        {
+          "scenario": "VT DotTS Novice S5",
+          "leaderboardId": 104868,
+          "plays": 1275876,
+          "players": 195817,
+          "replay": 6.5,
+          "benchmarks": 2,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "DotTS Entry",
+          "leaderboardId": 111232,
+          "plays": 29581,
+          "players": 8869,
+          "replay": 3.3,
+          "benchmarks": 2,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "DotTS 30% Larger",
+          "leaderboardId": 75698,
+          "plays": 236755,
+          "players": 36041,
+          "replay": 6.6,
+          "benchmarks": 3,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "DotTS",
+          "leaderboardId": 75317,
+          "plays": 83058,
+          "players": 10281,
+          "replay": 8.1,
+          "benchmarks": 2,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 5.6,
+      "reach": 204686,
+      "consensus": 6,
+      "noise": null,
+      "composite": 0.48
+    },
+    {
+      "category": "Speed Switching",
+      "family": "Vox Pace",
+      "status": "kept",
+      "rungs": [
+        {
+          "scenario": "voxTargetSwitch 2 Large",
+          "leaderboardId": 84880,
+          "plays": 1846250,
+          "players": 159700,
+          "replay": 11.6,
+          "benchmarks": 6,
+          "seconds": 60,
+          "noise": 0.03,
+          "localRuns": 194
+        },
+        {
+          "scenario": "voxTargetSwitch 2",
+          "leaderboardId": 551,
+          "plays": 1955039,
+          "players": 158644,
+          "replay": 12.3,
+          "benchmarks": 6,
+          "seconds": 60,
+          "noise": 0.028,
+          "localRuns": 86
+        },
+        {
+          "scenario": "voxTS Viscose Varied",
+          "leaderboardId": 417,
+          "plays": 4679732,
+          "players": 439926,
+          "replay": 10.6,
+          "benchmarks": 5,
+          "seconds": 60,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "voxTS rAim",
+          "leaderboardId": 528,
+          "plays": 321070,
+          "players": 25365,
+          "replay": 12.7,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 11.8,
+      "reach": 318344,
+      "consensus": 14,
+      "noise": 0.03,
+      "composite": 0.83
+    },
+    {
+      "category": "Speed Switching",
+      "family": "EddieTS",
+      "status": "kept",
+      "rungs": [
+        {
+          "scenario": "VT EddieTS Novice S5",
+          "leaderboardId": 104835,
+          "plays": 1264440,
+          "players": 185895,
+          "replay": 6.8,
+          "benchmarks": 2,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "VT EddieTS Intermediate S5",
+          "leaderboardId": 105176,
+          "plays": 1880169,
+          "players": 110454,
+          "replay": 17,
+          "benchmarks": 2,
+          "seconds": 60,
+          "noise": 0.033,
+          "localRuns": 63
+        },
+        {
+          "scenario": "VT EddieTS Advanced S5",
+          "leaderboardId": 104864,
+          "plays": 467688,
+          "players": 24894,
+          "replay": 18.8,
+          "benchmarks": 3,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "VT EddieTS Elite S5",
+          "leaderboardId": 104858,
+          "plays": 13947,
+          "players": 1549,
+          "replay": 9,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 13,
+      "reach": 296349,
+      "consensus": 3,
+      "noise": 0.033,
+      "composite": 0.58
+    },
+    {
+      "category": "Speed Switching",
+      "family": "PivoTS",
+      "status": "replaced",
+      "rungs": [
+        {
+          "scenario": "Aimerz+ pivoTS Easy S1",
+          "leaderboardId": 68432,
+          "plays": 253189,
+          "players": 29643,
+          "replay": 8.5,
+          "benchmarks": 2,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "aimerz+ pivoTS Normal",
+          "leaderboardId": 44376,
+          "plays": 48777,
+          "players": 9542,
+          "replay": 5.1,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "aimerz+ pivoTS Hard",
+          "leaderboardId": 44373,
+          "plays": 43022,
+          "players": 5851,
+          "replay": 7.4,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Aimerz+ pivoTS Hard S1",
+          "leaderboardId": 68313,
+          "plays": 93864,
+          "players": 11463,
+          "replay": 8.2,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 7.1,
+      "reach": 39185,
+      "consensus": 3,
+      "noise": null,
+      "composite": 0.26
+    },
+    {
+      "category": "Speed Switching",
+      "family": "Pokeball",
+      "status": "kept",
+      "rungs": [
+        {
+          "scenario": "Pokeball 1w4ts 30% Easy",
+          "leaderboardId": 178814,
+          "plays": 119113,
+          "players": 9749,
+          "replay": 12.2,
+          "benchmarks": 2,
+          "seconds": 60,
+          "noise": 0.047,
+          "localRuns": 35
+        },
+        {
+          "scenario": "Pokeball 1w4ts 30%",
+          "leaderboardId": 456,
+          "plays": 2513295,
+          "players": 159509,
+          "replay": 15.8,
+          "benchmarks": 3,
+          "seconds": 59,
+          "noise": 0.045,
+          "localRuns": 34
+        },
+        {
+          "scenario": "Pokeball Wide rAim",
+          "leaderboardId": 527,
+          "plays": 317687,
+          "players": 11644,
+          "replay": 27.3,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Pokeball Frenzy Auto Small Wide",
+          "leaderboardId": 106,
+          "plays": 1400863,
+          "players": 84840,
+          "replay": 16.5,
+          "benchmarks": 2,
+          "seconds": 60,
+          "noise": 0.04,
+          "localRuns": 54
+        }
+      ],
+      "replay": 16.9,
+      "reach": 169258,
+      "consensus": 6,
+      "noise": 0.045,
+      "composite": 0.71
+    },
+    {
+      "category": "Speed Switching",
+      "family": "psalmTS",
+      "status": "kept",
+      "rungs": [
+        {
+          "scenario": "VT psalmTS Novice",
+          "leaderboardId": 24979,
+          "plays": 1934933,
+          "players": 195513,
+          "replay": 9.9,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "VT psalmTS Intermediate",
+          "leaderboardId": 24960,
+          "plays": 1606610,
+          "players": 95574,
+          "replay": 16.8,
+          "benchmarks": 2,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "psalmTS Voltaic",
+          "leaderboardId": 1114,
+          "plays": 883955,
+          "players": 66868,
+          "replay": 13.2,
+          "benchmarks": 2,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "VT psalmTS Advanced",
+          "leaderboardId": 25177,
+          "plays": 609270,
+          "players": 36632,
+          "replay": 16.6,
+          "benchmarks": 3,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 13.6,
+      "reach": 291087,
+      "consensus": 5,
+      "noise": null,
+      "composite": 0.69
+    },
+    {
+      "category": "Speed Switching",
+      "family": "Vox Blitz",
+      "status": "kept",
+      "rungs": [
+        {
+          "scenario": "StaticSwitchingVox Jumbo",
+          "leaderboardId": 15654,
+          "plays": 134430,
+          "players": 13442,
+          "replay": 10,
+          "benchmarks": 3,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "StaticSwitchingVox",
+          "leaderboardId": 15659,
+          "plays": 223754,
+          "players": 61028,
+          "replay": 3.7,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "StaticSwitchingVox Small",
+          "leaderboardId": 15662,
+          "plays": 377877,
+          "players": 45250,
+          "replay": 8.4,
+          "benchmarks": 2,
+          "seconds": 60,
+          "noise": 0.025,
+          "localRuns": 30
+        },
+        {
+          "scenario": "StaticSwitchingVox xxSmall",
+          "leaderboardId": 18203,
+          "plays": 225710,
+          "players": 21509,
+          "replay": 10.5,
+          "benchmarks": 3,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 7.5,
+      "reach": 74470,
+      "consensus": 5,
+      "noise": 0.025,
+      "composite": 0.43
+    },
+    {
+      "category": "Speed Switching",
+      "family": "Wave Relay",
+      "status": "replaced",
+      "rungs": [
+        {
+          "scenario": "CB WaveSwitch Easy",
+          "leaderboardId": 93205,
+          "plays": 19023,
+          "players": 8726,
+          "replay": 2.2,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "WaveSwitch Revosect Entry",
+          "leaderboardId": 142903,
+          "plays": 5504,
+          "players": 2315,
+          "replay": 2.4,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "WaveSwitch Revosect Int",
+          "leaderboardId": 143210,
+          "plays": 5932,
+          "players": 1351,
+          "replay": 4.4,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "WaveSwitch Revosect",
+          "leaderboardId": 141138,
+          "plays": 1374,
+          "players": 325,
+          "replay": 4.2,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 2.9,
+      "reach": 11041,
+      "consensus": 2,
+      "noise": null,
+      "composite": 0.07
+    },
+    {
+      "category": "Speed Switching",
+      "family": "Sky Relay",
+      "status": "kept",
+      "rungs": [
+        {
+          "scenario": "VT skyTS Novice",
+          "leaderboardId": 24971,
+          "plays": 7835490,
+          "players": 355267,
+          "replay": 22.1,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "VT skyTS Intermediate",
+          "leaderboardId": 24964,
+          "plays": 2050655,
+          "players": 110840,
+          "replay": 18.5,
+          "benchmarks": 2,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "VT skyTS Advanced",
+          "leaderboardId": 25150,
+          "plays": 992440,
+          "players": 49513,
+          "replay": 20,
+          "benchmarks": 3,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "VT skyTS Elite",
+          "leaderboardId": 86810,
+          "plays": 6211,
+          "players": 989,
+          "replay": 6.3,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 18.8,
+      "reach": 466107,
+      "consensus": 3,
+      "noise": null,
+      "composite": 0.7
+    },
+    {
+      "category": "Speed Switching",
+      "family": "Dev Blitz",
+      "status": "kept",
+      "rungs": [
+        {
+          "scenario": "devTS Goated Easy",
+          "leaderboardId": 1333,
+          "plays": 177811,
+          "players": 13129,
+          "replay": 13.5,
+          "benchmarks": 2,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "devTS Goated NR",
+          "leaderboardId": 532,
+          "plays": 208563,
+          "players": 19098,
+          "replay": 10.9,
+          "benchmarks": 2,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "devTS Goated rAim",
+          "leaderboardId": 5133,
+          "plays": 56323,
+          "players": 6480,
+          "replay": 8.7,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "devTS Goated NR Small",
+          "leaderboardId": 3632,
+          "plays": 4231,
+          "players": 521,
+          "replay": 8.1,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 11.1,
+      "reach": 32227,
+      "consensus": 4,
+      "noise": null,
+      "composite": 0.39
+    },
+    {
+      "category": "Evasive Switching",
+      "family": "Pasu Switch",
+      "status": "kept",
+      "rungs": [
+        {
+          "scenario": "VT PasuTS Entry S5",
+          "leaderboardId": 106755,
+          "plays": 50317,
+          "players": 10718,
+          "replay": 4.7,
+          "benchmarks": 0,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "VT PasuTS Intermediate S5",
+          "leaderboardId": 106756,
+          "plays": 248266,
+          "players": 25306,
+          "replay": 9.8,
+          "benchmarks": 0,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "VT PasuTS Advanced S5",
+          "leaderboardId": 106331,
+          "plays": 36820,
+          "players": 3747,
+          "replay": 9.8,
+          "benchmarks": 0,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "VT PasuTS Elite S5",
+          "leaderboardId": 106754,
+          "plays": 7738,
+          "players": 1041,
+          "replay": 7.4,
+          "benchmarks": 0,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 7.8,
+      "reach": 36024,
+      "consensus": 0,
+      "noise": null,
+      "composite": 0.21
+    },
+    {
+      "category": "Evasive Switching",
+      "family": "Floating Heads",
+      "status": "replaced",
+      "rungs": [
+        {
+          "scenario": "Floatswitch Entry",
+          "leaderboardId": 112237,
+          "plays": 27764,
+          "players": 8791,
+          "replay": 3.2,
+          "benchmarks": 0,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Floatswitch Intermediate",
+          "leaderboardId": 111979,
+          "plays": 108768,
+          "players": 19678,
+          "replay": 5.5,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Floatswitch Advanced",
+          "leaderboardId": 112006,
+          "plays": 21476,
+          "players": 3065,
+          "replay": 7,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Floatswitch Elite",
+          "leaderboardId": 112062,
+          "plays": 4060,
+          "players": 733,
+          "replay": 5.5,
+          "benchmarks": 0,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 5,
+      "reach": 28469,
+      "consensus": 1,
+      "noise": null,
+      "composite": 0.09
+    },
+    {
+      "category": "Evasive Switching",
+      "family": "Chamber Relay",
+      "status": "kept",
+      "rungs": [
+        {
+          "scenario": "VT ControlTS Entry S5 Speed",
+          "leaderboardId": 106720,
+          "plays": 18171,
+          "players": 4471,
+          "replay": 4.1,
+          "benchmarks": 0,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "VT ControlTS Intermediate S5",
+          "leaderboardId": 104890,
+          "plays": 1553882,
+          "players": 104336,
+          "replay": 14.9,
+          "benchmarks": 2,
+          "seconds": 59,
+          "noise": 0.023,
+          "localRuns": 23
+        },
+        {
+          "scenario": "VT ControlTS Advanced S5",
+          "leaderboardId": 104833,
+          "plays": 413118,
+          "players": 21342,
+          "replay": 19.4,
+          "benchmarks": 3,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "VT ControlTS Elite S5",
+          "leaderboardId": 106693,
+          "plays": 10633,
+          "players": 1235,
+          "replay": 8.6,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 11.4,
+      "reach": 108807,
+      "consensus": 3,
+      "noise": 0.023,
+      "composite": 0.48
+    },
+    {
+      "category": "Evasive Switching",
+      "family": "Hop Transfer",
+      "status": "replaced",
+      "rungs": [
+        {
+          "scenario": "CB JumpSwitch Easy",
+          "leaderboardId": 93212,
+          "plays": 21391,
+          "players": 7564,
+          "replay": 2.8,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Aimerz+ hopTS Easy S1",
+          "leaderboardId": 68429,
+          "plays": 75286,
+          "players": 12810,
+          "replay": 5.9,
+          "benchmarks": 2,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Aimerz+ hopTS Med S1",
+          "leaderboardId": 69310,
+          "plays": 21287,
+          "players": 3667,
+          "replay": 5.8,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Aimerz+ hopTS Hard S1",
+          "leaderboardId": 68311,
+          "plays": 32773,
+          "players": 3460,
+          "replay": 9.5,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 5.2,
+      "reach": 20374,
+      "consensus": 4,
+      "noise": null,
+      "composite": 0.19
+    },
+    {
+      "category": "Evasive Switching",
+      "family": "Penta Bounce",
+      "status": "kept",
+      "rungs": [
+        {
+          "scenario": "VT Penta Bounce Entry S5 Speed",
+          "leaderboardId": 107639,
+          "plays": 20909,
+          "players": 5027,
+          "replay": 4.2,
+          "benchmarks": 0,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "VT Penta Bounce Intermediate S5",
+          "leaderboardId": 103261,
+          "plays": 1301576,
+          "players": 101172,
+          "replay": 12.9,
+          "benchmarks": 2,
+          "seconds": 59,
+          "noise": 0.064,
+          "localRuns": 18
+        },
+        {
+          "scenario": "VT Penta Bounce Advanced S5",
+          "leaderboardId": 98619,
+          "plays": 299099,
+          "players": 20701,
+          "replay": 14.4,
+          "benchmarks": 3,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "VT Penta Bounce Elite S5",
+          "leaderboardId": 104669,
+          "plays": 10099,
+          "players": 1197,
+          "replay": 8.4,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 9.7,
+      "reach": 106199,
+      "consensus": 3,
+      "noise": 0.064,
+      "composite": 0.44
+    },
+    {
+      "category": "Evasive Switching",
+      "family": "Arc Transfer",
+      "status": "kept",
+      "rungs": [
+        {
+          "scenario": "B180T Voltaic Easy Slower",
+          "leaderboardId": 185571,
+          "plays": 359839,
+          "players": 47532,
+          "replay": 7.6,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "B180T Voltaic Easy",
+          "leaderboardId": 543,
+          "plays": 1632896,
+          "players": 108665,
+          "replay": 15,
+          "benchmarks": 4,
+          "seconds": 59,
+          "noise": 0.041,
+          "localRuns": 18
+        },
+        {
+          "scenario": "B180T Voltaic",
+          "leaderboardId": 947,
+          "plays": 611368,
+          "players": 34624,
+          "replay": 17.7,
+          "benchmarks": 4,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "B180T Voltaic Regen",
+          "leaderboardId": 2153,
+          "plays": 205300,
+          "players": 12996,
+          "replay": 15.8,
+          "benchmarks": 0,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 13,
+      "reach": 156197,
+      "consensus": 5,
+      "noise": 0.041,
+      "composite": 0.6
+    },
+    {
+      "category": "Evasive Switching",
+      "family": "FlyTS",
+      "status": "kept",
+      "rungs": [
+        {
+          "scenario": "VT FlyTS Entry S5 Speed",
+          "leaderboardId": 106708,
+          "plays": 28266,
+          "players": 6411,
+          "replay": 4.4,
+          "benchmarks": 0,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "VT FlyTS Intermediate S5",
+          "leaderboardId": 105142,
+          "plays": 1397800,
+          "players": 117991,
+          "replay": 11.8,
+          "benchmarks": 2,
+          "seconds": 60,
+          "noise": 0.033,
+          "localRuns": 19
+        },
+        {
+          "scenario": "VT FlyTS Advanced S5",
+          "leaderboardId": 105143,
+          "plays": 365068,
+          "players": 23317,
+          "replay": 15.7,
+          "benchmarks": 3,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "VT FlyTS Elite S5",
+          "leaderboardId": 106747,
+          "plays": 9973,
+          "players": 1371,
+          "replay": 7.3,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 9.5,
+      "reach": 124402,
+      "consensus": 3,
+      "noise": 0.033,
+      "composite": 0.44
+    },
+    {
+      "category": "Evasive Switching",
+      "family": "Layered Chase",
+      "status": "kept",
+      "rungs": [
+        {
+          "scenario": "VT DriftTS Entry S5 Speed",
+          "leaderboardId": 104861,
+          "plays": 20481,
+          "players": 4998,
+          "replay": 4.1,
+          "benchmarks": 0,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "VT DriftTS Intermediate S5",
+          "leaderboardId": 104863,
+          "plays": 1216461,
+          "players": 101287,
+          "replay": 12,
+          "benchmarks": 1,
+          "seconds": 60,
+          "noise": 0.069,
+          "localRuns": 12
+        },
+        {
+          "scenario": "VT DriftTS Advanced S5",
+          "leaderboardId": 104866,
+          "plays": 287585,
+          "players": 19401,
+          "replay": 14.8,
+          "benchmarks": 2,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "VT DriftTS Elite S5",
+          "leaderboardId": 104867,
+          "plays": 10435,
+          "players": 1342,
+          "replay": 7.8,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 9.4,
+      "reach": 106285,
+      "consensus": 2,
+      "noise": 0.069,
+      "composite": 0.39
+    },
+    {
+      "category": "Evasive Switching",
+      "family": "Regen Control",
+      "status": "kept",
+      "rungs": [
+        {
+          "scenario": "tamTargetSwitch Control Entry",
+          "leaderboardId": 110651,
+          "plays": 43597,
+          "players": 9588,
+          "replay": 4.5,
+          "benchmarks": 0,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "tamTargetSwitch Control Intermediate",
+          "leaderboardId": 110123,
+          "plays": 199131,
+          "players": 19720,
+          "replay": 10.1,
+          "benchmarks": 0,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "tamTargetSwitch Control",
+          "leaderboardId": 57,
+          "plays": 721834,
+          "players": 48932,
+          "replay": 14.8,
+          "benchmarks": 0,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "tamTargetSwitch Control Hard",
+          "leaderboardId": 757,
+          "plays": 1570076,
+          "players": 114518,
+          "replay": 13.7,
+          "benchmarks": 3,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 9.4,
+      "reach": 29308,
+      "consensus": 3,
+      "noise": null,
+      "composite": 0.31
+    },
+    {
+      "category": "Evasive Switching",
+      "family": "Domi Relay",
+      "status": "kept",
+      "rungs": [
+        {
+          "scenario": "domiSwitch Easier",
+          "leaderboardId": 185428,
+          "plays": 213599,
+          "players": 48463,
+          "replay": 4.4,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "domiSwitch Easy",
+          "leaderboardId": 83043,
+          "plays": 794040,
+          "players": 84526,
+          "replay": 9.4,
+          "benchmarks": 7,
+          "seconds": 60,
+          "noise": 0.044,
+          "localRuns": 53
+        },
+        {
+          "scenario": "domiSwitch",
+          "leaderboardId": 83035,
+          "plays": 431401,
+          "players": 39600,
+          "replay": 10.9,
+          "benchmarks": 5,
+          "seconds": 59,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "domiSwitch Hard",
+          "leaderboardId": 83042,
+          "plays": 13401,
+          "players": 1683,
+          "replay": 8,
+          "benchmarks": 0,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 7.8,
+      "reach": 132989,
+      "consensus": 8,
+      "noise": 0.044,
+      "composite": 0.6
+    },
+    {
+      "category": "Evasive Switching",
+      "family": "tamTargetSwitch Smooth",
+      "status": "kept",
+      "rungs": [
+        {
+          "scenario": "tamTargetSwitch Smooth Entry",
+          "leaderboardId": 111266,
+          "plays": 87285,
+          "players": 15304,
+          "replay": 5.7,
+          "benchmarks": 0,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "tamTargetSwitch Smooth Novice",
+          "leaderboardId": 111343,
+          "plays": 122228,
+          "players": 20299,
+          "replay": 6,
+          "benchmarks": 0,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "tamTargetSwitch Smooth Intermediate",
+          "leaderboardId": 113137,
+          "plays": 377045,
+          "players": 32176,
+          "replay": 11.7,
+          "benchmarks": 0,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "tamTargetSwitch Smooth Elite",
+          "leaderboardId": 111685,
+          "plays": 9580,
+          "players": 986,
+          "replay": 9.7,
+          "benchmarks": 0,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 7.4,
+      "reach": 35603,
+      "consensus": 0,
+      "noise": null,
+      "composite": 0.18
+    },
+    {
+      "category": "Static Clicking",
+      "family": "Six Targets",
+      "status": "added",
+      "rungs": [
+        {
+          "scenario": "Jumbo 1wall6targets TE",
+          "leaderboardId": 44,
+          "plays": 4142331,
+          "players": 376176,
+          "replay": 11,
+          "benchmarks": 1,
+          "seconds": 60,
+          "noise": 0.034,
+          "localRuns": 28
+        },
+        {
+          "scenario": "1wall6targets TE",
+          "leaderboardId": 10420,
+          "plays": 23568582,
+          "players": 829707,
+          "replay": 28.4,
+          "benchmarks": 2,
+          "seconds": 59,
+          "noise": 0.037,
+          "localRuns": 21
+        },
+        {
+          "scenario": "1wall 6targets small",
+          "leaderboardId": 2,
+          "plays": 73505472,
+          "players": 1291787,
+          "replay": 56.9,
+          "benchmarks": 4,
+          "seconds": 60,
+          "noise": 0.059,
+          "localRuns": 115
+        },
+        {
+          "scenario": "1wall 6targets extra small",
+          "leaderboardId": 169,
+          "plays": 4204272,
+          "players": 100261,
+          "replay": 41.9,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 29.4,
+      "reach": 1205883,
+      "consensus": 6,
+      "noise": 0.037,
+      "composite": 0.87
+    },
+    {
+      "category": "Static Clicking",
+      "family": "Hipfire",
+      "status": "added",
+      "rungs": [
+        {
+          "scenario": "5 Sphere Hipfire",
+          "leaderboardId": 786,
+          "plays": 541471,
+          "players": 40181,
+          "replay": 13.5,
+          "benchmarks": 1,
+          "seconds": 60,
+          "noise": 0.054,
+          "localRuns": 8
+        },
+        {
+          "scenario": "5 Sphere Hipfire Small",
+          "leaderboardId": 125,
+          "plays": 8741805,
+          "players": 505612,
+          "replay": 17.3,
+          "benchmarks": 3,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "5 Sphere Hipfire Extra Small",
+          "leaderboardId": 94,
+          "plays": 4857066,
+          "players": 188172,
+          "replay": 25.8,
+          "benchmarks": 3,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "5 Sphere Hipfire Extra Extra Small",
+          "leaderboardId": 11973,
+          "plays": 91008,
+          "players": 6269,
+          "replay": 14.5,
+          "benchmarks": 0,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 17.4,
+      "reach": 545793,
+      "consensus": 7,
+      "noise": 0.054,
+      "composite": 0.86
+    },
+    {
+      "category": "Static Clicking",
+      "family": "Tile Frenzy",
+      "status": "added",
+      "rungs": [
+        {
+          "scenario": "Jumbo Tile Frenzy",
+          "leaderboardId": 196,
+          "plays": 2200129,
+          "players": 63082,
+          "replay": 34.9,
+          "benchmarks": 1,
+          "seconds": 29,
+          "noise": 0.029,
+          "localRuns": 13
+        },
+        {
+          "scenario": "Tile Frenzy",
+          "leaderboardId": 11,
+          "plays": 21686025,
+          "players": 739328,
+          "replay": 29.3,
+          "benchmarks": 4,
+          "seconds": 30,
+          "noise": 0.067,
+          "localRuns": 37
+        },
+        {
+          "scenario": "Tile Frenzy Mini",
+          "leaderboardId": 67,
+          "plays": 13779768,
+          "players": 490598,
+          "replay": 28.1,
+          "benchmarks": 2,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Extra mini Tile Frenzy",
+          "leaderboardId": 5078,
+          "plays": 222327,
+          "players": 37306,
+          "replay": 6,
+          "benchmarks": 0,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 28.7,
+      "reach": 802410,
+      "consensus": 4,
+      "noise": 0.067,
+      "composite": 0.78
+    },
+    {
+      "category": "Static Clicking",
+      "family": "Four Targets",
+      "status": "added",
+      "rungs": [
+        {
+          "scenario": "1w4ts 30% larger",
+          "leaderboardId": 830,
+          "plays": 1668080,
+          "players": 156623,
+          "replay": 10.7,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "1w4ts Voltaic",
+          "leaderboardId": 319,
+          "plays": 7928070,
+          "players": 278577,
+          "replay": 28.5,
+          "benchmarks": 4,
+          "seconds": 60,
+          "noise": 0.049,
+          "localRuns": 29
+        },
+        {
+          "scenario": "1w4ts reload",
+          "leaderboardId": 387,
+          "plays": 1524397,
+          "players": 64125,
+          "replay": 23.8,
+          "benchmarks": 3,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "1w4ts reload 30% smaller",
+          "leaderboardId": 92,
+          "plays": 1610062,
+          "players": 99362,
+          "replay": 16.2,
+          "benchmarks": 0,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 20.1,
+      "reach": 435200,
+      "consensus": 7,
+      "noise": 0.049,
+      "composite": 0.88
+    },
+    {
+      "category": "Static Clicking",
+      "family": "Raw Mouse",
+      "status": "added",
+      "rungs": [
+        {
+          "scenario": "RawMouseControl Reload Easy",
+          "leaderboardId": 42155,
+          "plays": 304263,
+          "players": 37792,
+          "replay": 8.1,
+          "benchmarks": 2,
+          "seconds": 59,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "RawMouseControl Reload",
+          "leaderboardId": 17318,
+          "plays": 2882861,
+          "players": 129848,
+          "replay": 22.2,
+          "benchmarks": 2,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "RawMouseControlClicking3",
+          "leaderboardId": 5144,
+          "plays": 18349513,
+          "players": 355689,
+          "replay": 51.6,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "RawMouseControlClicking3 30% smaller",
+          "leaderboardId": 24395,
+          "plays": 294753,
+          "players": 13791,
+          "replay": 21.4,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 23.1,
+      "reach": 167640,
+      "consensus": 6,
+      "noise": null,
+      "composite": 0.74
+    },
+    {
+      "category": "Dynamic Clicking",
+      "family": "Pasu Wall",
+      "status": "added",
+      "rungs": [
+        {
+          "scenario": "1wall5targets_pasu slow",
+          "leaderboardId": 544,
+          "plays": 2755609,
+          "players": 248261,
+          "replay": 11.1,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "1wall5targets_pasu",
+          "leaderboardId": 16,
+          "plays": 6214927,
+          "players": 324866,
+          "replay": 19.1,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "1wall5targets_pasu_small",
+          "leaderboardId": 244,
+          "plays": 1170422,
+          "players": 79778,
+          "replay": 14.7,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "1wall5targets_pasu_small_reactive",
+          "leaderboardId": 26439,
+          "plays": 42039,
+          "players": 3383,
+          "replay": 12.4,
+          "benchmarks": 0,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 14.8,
+      "reach": 573127,
+      "consensus": 2,
+      "noise": null,
+      "composite": 0.64
+    },
+    {
+      "category": "Dynamic Clicking",
+      "family": "Tamspeed",
+      "status": "added",
+      "rungs": [
+        {
+          "scenario": "Tamspeed 2bp Iron",
+          "leaderboardId": 11607,
+          "plays": 704751,
+          "players": 51079,
+          "replay": 13.8,
+          "benchmarks": 0,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Tamspeed 2bp Silver",
+          "leaderboardId": 7792,
+          "plays": 618426,
+          "players": 33560,
+          "replay": 18.4,
+          "benchmarks": 0,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Tamspeed 2bp Gold",
+          "leaderboardId": 8056,
+          "plays": 606755,
+          "players": 29844,
+          "replay": 20.3,
+          "benchmarks": 0,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Tamspeed 2bp Platinum",
+          "leaderboardId": 11958,
+          "plays": 582841,
+          "players": 23938,
+          "replay": 24.3,
+          "benchmarks": 0,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 17.8,
+      "reach": 84639,
+      "consensus": 0,
+      "noise": null,
+      "composite": 0.45
+    },
+    {
+      "category": "Dynamic Clicking",
+      "family": "Timing",
+      "status": "added",
+      "rungs": [
+        {
+          "scenario": "Floating Heads Timing 400% Larger",
+          "leaderboardId": 1607,
+          "plays": 915146,
+          "players": 148264,
+          "replay": 6.2,
+          "benchmarks": 5,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Floating Heads Timing 400%",
+          "leaderboardId": 341,
+          "plays": 8415840,
+          "players": 352281,
+          "replay": 23.9,
+          "benchmarks": 1,
+          "seconds": 60,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Floating Heads Timing 400% FIXED",
+          "leaderboardId": 1730,
+          "plays": 2786615,
+          "players": 281561,
+          "replay": 9.9,
+          "benchmarks": 3,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Floating Heads Timing Extra Small Speed",
+          "leaderboardId": 31494,
+          "plays": 34626,
+          "players": 2598,
+          "replay": 13.3,
+          "benchmarks": 0,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 13.8,
+      "reach": 500545,
+      "consensus": 8,
+      "noise": null,
+      "composite": 0.84
+    },
+    {
+      "category": "Dynamic Clicking",
+      "family": "Bounceshot",
+      "status": "added",
+      "rungs": [
+        {
+          "scenario": "VT Bounceshot Novice",
+          "leaderboardId": 24975,
+          "plays": 1991352,
+          "players": 217694,
+          "replay": 9.1,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "VT Bounceshot Intermediate",
+          "leaderboardId": 24955,
+          "plays": 3197601,
+          "players": 161812,
+          "replay": 19.8,
+          "benchmarks": 3,
+          "seconds": 60,
+          "noise": 0.103,
+          "localRuns": 20
+        },
+        {
+          "scenario": "VT Bounceshot Advanced",
+          "leaderboardId": 25154,
+          "plays": 591576,
+          "players": 39501,
+          "replay": 15,
+          "benchmarks": 3,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "VT Bounceshot Advanced 20% smaller",
+          "leaderboardId": 31509,
+          "plays": 240819,
+          "players": 19533,
+          "replay": 12.3,
+          "benchmarks": 0,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 14.3,
+      "reach": 379506,
+      "consensus": 4,
+      "noise": 0.103,
+      "composite": 0.67
+    },
+    {
+      "category": "Precise Tracking",
+      "family": "Clover Control",
+      "status": "added",
+      "rungs": [
+        {
+          "scenario": "cloverRawControl Big",
+          "leaderboardId": 69579,
+          "plays": 986219,
+          "players": 76250,
+          "replay": 12.9,
+          "benchmarks": 3,
+          "seconds": 60,
+          "noise": 0.042,
+          "localRuns": 47
+        },
+        {
+          "scenario": "cloverRawControl Easy",
+          "leaderboardId": 69150,
+          "plays": 4082682,
+          "players": 164559,
+          "replay": 24.8,
+          "benchmarks": 9,
+          "seconds": 60,
+          "noise": 0.061,
+          "localRuns": 33
+        },
+        {
+          "scenario": "cloverRawControl",
+          "leaderboardId": 68993,
+          "plays": 1897465,
+          "players": 95603,
+          "replay": 19.8,
+          "benchmarks": 11,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "cloverRawControl Viscose Hard 50cm",
+          "leaderboardId": 184568,
+          "plays": 50011,
+          "players": 5122,
+          "replay": 9.8,
+          "benchmarks": 2,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 18.1,
+      "reach": 240809,
+      "consensus": 20,
+      "noise": 0.061,
+      "composite": 0.9
+    },
+    {
+      "category": "Precise Tracking",
+      "family": "SYW",
+      "status": "added",
+      "rungs": [
+        {
+          "scenario": "SYW Easy",
+          "leaderboardId": 2182,
+          "plays": 448526,
+          "players": 24325,
+          "replay": 18.4,
+          "benchmarks": 0,
+          "seconds": 45,
+          "noise": 0.021,
+          "localRuns": 22
+        },
+        {
+          "scenario": "SYW (Smooth Your Wrist)",
+          "leaderboardId": 185,
+          "plays": 3285009,
+          "players": 166933,
+          "replay": 19.7,
+          "benchmarks": 0,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "SYW (Smooth Your Wrist) FIXED",
+          "leaderboardId": 1189,
+          "plays": 13874987,
+          "players": 291775,
+          "replay": 47.6,
+          "benchmarks": 0,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "SYW (Smooth Your Wrist) FIXED Extra thin",
+          "leaderboardId": 1552,
+          "plays": 296471,
+          "players": 30712,
+          "replay": 9.7,
+          "benchmarks": 0,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 23.8,
+      "reach": 191258,
+      "consensus": 0,
+      "noise": 0.021,
+      "composite": 0.56
+    },
+    {
+      "category": "Precise Tracking",
+      "family": "PGTI",
+      "status": "added",
+      "rungs": [
+        {
+          "scenario": "PGTI Voltaic Easy 80%",
+          "leaderboardId": 2107,
+          "plays": 1306047,
+          "players": 133463,
+          "replay": 9.8,
+          "benchmarks": 2,
+          "seconds": 60,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "PGTI Voltaic Easy",
+          "leaderboardId": 510,
+          "plays": 3299506,
+          "players": 160057,
+          "replay": 20.6,
+          "benchmarks": 4,
+          "seconds": 60,
+          "noise": 0.048,
+          "localRuns": 38
+        },
+        {
+          "scenario": "PGTI Voltaic Slower - 80%",
+          "leaderboardId": 509,
+          "plays": 576286,
+          "players": 24650,
+          "replay": 23.4,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "PGTI Voltaic",
+          "leaderboardId": 99,
+          "plays": 1352769,
+          "players": 51300,
+          "replay": 26.4,
+          "benchmarks": 10,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 18,
+      "reach": 293520,
+      "consensus": 10,
+      "noise": 0.048,
+      "composite": 0.86
+    },
+    {
+      "category": "Reactive Tracking",
+      "family": "Long Strafes",
+      "status": "added",
+      "rungs": [
+        {
+          "scenario": "Kindafar Long Strafes",
+          "leaderboardId": 2152,
+          "plays": 5914293,
+          "players": 148040,
+          "replay": 40,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Midrange Long Strafes Invincible",
+          "leaderboardId": 147,
+          "plays": 3217562,
+          "players": 156165,
+          "replay": 20.6,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Close Long Strafes Invincible",
+          "leaderboardId": 117,
+          "plays": 4742868,
+          "players": 229271,
+          "replay": 20.7,
+          "benchmarks": 2,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Close long strafes invincible very thin",
+          "leaderboardId": 2244,
+          "plays": 211931,
+          "players": 21518,
+          "replay": 9.8,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 26.3,
+      "reach": 304205,
+      "consensus": 4,
+      "noise": null,
+      "composite": 0.73
+    },
+    {
+      "category": "Reactive Tracking",
+      "family": "Air Angelic",
+      "status": "added",
+      "rungs": [
+        {
+          "scenario": "Air Angelic 4 Voltaic Easy 80% (Good Version)",
+          "leaderboardId": 13681,
+          "plays": 1962460,
+          "players": 199633,
+          "replay": 9.8,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Air Angelic 4 Voltaic Easy",
+          "leaderboardId": 42,
+          "plays": 4268980,
+          "players": 223982,
+          "replay": 19.1,
+          "benchmarks": 9,
+          "seconds": 60,
+          "noise": 0.051,
+          "localRuns": 36
+        },
+        {
+          "scenario": "Air Angelic 4 Voltaic",
+          "leaderboardId": 30,
+          "plays": 3356067,
+          "players": 139415,
+          "replay": 24.1,
+          "benchmarks": 7,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Air Angelic 4 Voltaic Smaller",
+          "leaderboardId": 518,
+          "plays": 331349,
+          "players": 18177,
+          "replay": 18.2,
+          "benchmarks": 0,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 16.8,
+      "reach": 423615,
+      "consensus": 11,
+      "noise": 0.051,
+      "composite": 0.88
+    },
+    {
+      "category": "Speed Switching",
+      "family": "beanTS",
+      "status": "added",
+      "rungs": [
+        {
+          "scenario": "beanTS Larger",
+          "leaderboardId": 129353,
+          "plays": 1618551,
+          "players": 154813,
+          "replay": 10.5,
+          "benchmarks": 5,
+          "seconds": 59,
+          "noise": 0.031,
+          "localRuns": 55
+        },
+        {
+          "scenario": "beanTS",
+          "leaderboardId": 2648,
+          "plays": 2445797,
+          "players": 172272,
+          "replay": 14.2,
+          "benchmarks": 8,
+          "seconds": 60,
+          "noise": 0.039,
+          "localRuns": 82
+        },
+        {
+          "scenario": "beanTS 30% Smaller",
+          "leaderboardId": 6779,
+          "plays": 178781,
+          "players": 21313,
+          "replay": 8.4,
+          "benchmarks": 3,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "beanTS 200%",
+          "leaderboardId": 58888,
+          "plays": 65074,
+          "players": 9752,
+          "replay": 6.7,
+          "benchmarks": 3,
+          "seconds": 60,
+          "noise": 0.032,
+          "localRuns": 16
+        }
+      ],
+      "replay": 11,
+      "reach": 327085,
+      "consensus": 12,
+      "noise": 0.032,
+      "composite": 0.81
+    },
+    {
+      "category": "Speed Switching",
+      "family": "patCircleSwitch",
+      "status": "added",
+      "rungs": [
+        {
+          "scenario": "patCircleSwitch easy NR",
+          "leaderboardId": 3719,
+          "plays": 92768,
+          "players": 10702,
+          "replay": 8.7,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "patCircleSwitch NR",
+          "leaderboardId": 535,
+          "plays": 746700,
+          "players": 66300,
+          "replay": 11.3,
+          "benchmarks": 6,
+          "seconds": 60,
+          "noise": 0.038,
+          "localRuns": 38
+        },
+        {
+          "scenario": "patCircleSwitch small NR",
+          "leaderboardId": 946,
+          "plays": 339607,
+          "players": 28260,
+          "replay": 12,
+          "benchmarks": 0,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "PatCircleSwitch Speed",
+          "leaderboardId": 36090,
+          "plays": 100599,
+          "players": 5962,
+          "replay": 16.9,
+          "benchmarks": 0,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 11.1,
+      "reach": 77002,
+      "consensus": 7,
+      "noise": 0.038,
+      "composite": 0.6
+    },
+    {
+      "category": "Evasive Switching",
+      "family": "patTargetSwitch",
+      "status": "added",
+      "rungs": [
+        {
+          "scenario": "patTargetSwitch easy",
+          "leaderboardId": 600,
+          "plays": 1192026,
+          "players": 75742,
+          "replay": 15.7,
+          "benchmarks": 1,
+          "seconds": 59,
+          "noise": 0.022,
+          "localRuns": 53
+        },
+        {
+          "scenario": "patTargetSwitch",
+          "leaderboardId": 116,
+          "plays": 2183826,
+          "players": 164732,
+          "replay": 13.3,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "patTargetSwitch Small",
+          "leaderboardId": 172,
+          "plays": 220887,
+          "players": 13654,
+          "replay": 16.2,
+          "benchmarks": 0,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "patTargetSwitch Dodge 360",
+          "leaderboardId": 1563,
+          "plays": 190410,
+          "players": 21083,
+          "replay": 9,
+          "benchmarks": 0,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 14.3,
+      "reach": 240474,
+      "consensus": 2,
+      "noise": 0.022,
+      "composite": 0.56
+    },
+    {
+      "category": "Evasive Switching",
+      "family": "Skeet",
+      "status": "added",
+      "rungs": [
+        {
+          "scenario": "Skeet Tracking 85% Speed",
+          "leaderboardId": 86918,
+          "plays": 19318,
+          "players": 2132,
+          "replay": 9.1,
+          "benchmarks": 0,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Skeet Tracking",
+          "leaderboardId": 145,
+          "plays": 12085555,
+          "players": 385771,
+          "replay": 31.3,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Skeet Tracking Goated",
+          "leaderboardId": 977,
+          "plays": 1462384,
+          "players": 72762,
+          "replay": 20.1,
+          "benchmarks": 1,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        },
+        {
+          "scenario": "Skeet Tracking Goated Small",
+          "leaderboardId": 504,
+          "plays": 238546,
+          "players": 14827,
+          "replay": 16.1,
+          "benchmarks": 0,
+          "seconds": null,
+          "noise": null,
+          "localRuns": 0
+        }
+      ],
+      "replay": 19.8,
+      "reach": 387903,
+      "consensus": 2,
+      "noise": null,
+      "composite": 0.65
+    }
+  ]
+}

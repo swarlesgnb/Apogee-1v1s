@@ -80,11 +80,13 @@
     "distribution": "tsx src/core/season/validateDistribution.ts",
     "coverage": "tsx src/core/history/validateCoverage.ts",
     "practice": "tsx tools/checkPractice.ts",
-    "validate:curation": "tsx tools/validateSeasonCuration.ts && tsx tools/validateSeasonExpansion.ts && tsx tools/validateEvasiveRework.ts",
+    "validate:curation": "tsx tools/validateSeasonCuration.ts && tsx tools/validateSeasonExpansion.ts && tsx tools/validateEvasiveRework.ts && tsx tools/validateFunRebuild.ts",
     "validate:evasive": "tsx tools/validateEvasiveRework.ts",
     "validate:expansion": "tsx tools/validateSeasonExpansion.ts",
     "validate:theory": "tsx tools/validateBenchmarkTheory.ts",
-    "build:cosmic": "node tools/buildCosmic.mjs"
+    "build:cosmic": "node tools/buildCosmic.mjs",
+    "audit:fun": "tsx tools/funAudit.ts",
+    "validate:rebuild": "tsx tools/validateFunRebuild.ts"
   },
   "devDependencies": {
     "@electric-sql/pglite": "^0.5.5",

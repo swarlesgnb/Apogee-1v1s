@@ -38,7 +38,7 @@ export function validState(v: unknown, def: ExpeditionDefinition): v is Expediti
     ["active", "failed", "cleared", "abandoned"].includes(t.status) && Array.isArray(t.steps) && [3, 6].includes(t.steps.length) &&
     t.steps.every((s: any) => object(s) && typeof s.scenario === "string" && finite(s.target) && s.target > 0) &&
     Array.isArray(t.results) && t.results.every(run) && t.results.length <= t.steps.length &&
-    (t.mode === undefined || def.version === 3 && ['checkpoint', 'prepared', 'strict'].includes(t.mode) &&
+    (t.mode === undefined || def.version >= 3 && ['checkpoint', 'prepared', 'strict'].includes(t.mode) &&
       (t.mode !== 'checkpoint' || t.band === 0) && (t.mode !== 'prepared' || t.band === 2) &&
       Array.isArray(t.misses) && t.misses.every(run) && Array.isArray(t.carried) && t.carried.every(run) &&
       (t.mode === 'checkpoint' || t.carried.length === 0) && t.carried.length <= t.results.length &&

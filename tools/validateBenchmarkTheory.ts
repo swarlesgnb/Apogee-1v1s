@@ -6,14 +6,15 @@ import { dataFile } from "../src/core/dataDir.ts";
 import { loadSeason } from "../src/core/season/season.ts";
 import { matchesCategory } from "../src/core/match/scenarioSelection.ts";
 import { beforeEvasivePool, beforeEvasiveSeason } from "./evasiveReworkHistory.ts";
+import { beforeFunRebuildIdentity, beforeFunRebuildPool, beforeFunRebuildSeason } from "./funRebuildHistory.ts";
 
 const read = (name: string): any => JSON.parse(readFileSync(dataFile(name), "utf8"));
-// Audit the frozen theory migration before the later evasive rework.
-const pool = beforeEvasivePool(read("pool.json"));
+// Audit the frozen theory migration before the later evasive rework and fun rebuild.
+const pool = beforeEvasivePool(beforeFunRebuildPool(read("pool.json")));
 const theory = read("benchmark_theory.json");
-const season = beforeEvasiveSeason(loadSeason());
+const season = beforeEvasiveSeason(beforeFunRebuildSeason(loadSeason()));
 const taxonomy = new Map<string, any>(read("scenario_taxonomy.json").scenarios.map((s: any) => [s.name, s]));
-const identity = read("scenario_identity.json").scenarios;
+const identity = beforeFunRebuildIdentity(read("scenario_identity.json").scenarios);
 const expansion = read("season_expansion.json");
 const calibration = read("season_expansion_calibration.json");
 const additions = new Set(expansion.families.map((f: any) => f.family));

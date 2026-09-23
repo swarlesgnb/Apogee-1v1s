@@ -11,21 +11,30 @@ import { ExpeditionRunReader } from "./runs.ts";
 import { ExpeditionService } from "../../app/expedition.ts";
 import type { ExpeditionRun, ExpeditionState } from "./types.ts";
 
-const def = loadExpedition(2), season = loadSeason(), catalog = rewardCatalog(def);
-assert.equal(def.destinations.length, 6); assert.deepEqual(def.bands, season.windows);
+// The engine checks below run on v2, whose rules they were written for. What ships is v4,
+// so the season it names has to be the season that ships: every finale and route scenario
+// exists in the live season with the targets v4 froze. v2 is history, checked against v1.
+const def = loadExpedition(2), current = loadExpedition(4), season = loadSeason(), catalog = rewardCatalog(def);
+assert.equal(current.destinations.length, 6); assert.deepEqual(current.bands, season.windows);
 assert.equal(catalog.length, 115); assert.equal(new Set(catalog.map(r => r.id)).size, catalog.length);
-for (const d of def.destinations) {
+assert.deepEqual(rewardCatalog(current).map(r => r.id), rewardCatalog(loadExpedition(3)).map(r => r.id), "v4 keeps every v3 reward");
+for (const d of current.destinations) {
   assert.equal(d.bands.length, 4);
   for (const [b, scenarios] of d.bands.entries()) {
     assert.equal(scenarios.length, 3); assert.equal(new Set(scenarios.map(s => s.family)).size, 3);
-    for (const s of scenarios) {
+    for (const s of [...scenarios, ...d.pool![b]]) {
       const source = season.scenarios.find(row => row.scenario === s.name && row.category === d.category && row.window === b);
       assert.ok(source, `Missing ${s.name}`); assert.equal(s.target, source.rankMaxes[2]); assert.equal(s.finalTarget, source.rankMaxes[3]);
       assert.ok(s.focus.length > 0); assert.ok(s.target > 0 && s.finalTarget >= s.target);
     }
   }
 }
-console.log("PASS: immutable content coverage, four bands, targets, cues, 115 unique rewards");
+for (const destination of current.destinations) for (let band = 0; band < 4; band++) {
+  const groups = [destination.discovery![band], destination.circuits![band], destination.bands[band]];
+  assert.equal(new Set(groups.flat().map(s => s.family)).size, 9, "v4: discovery, circuit and finale have different families");
+  assert.ok(destination.pool![band].length >= 10);
+}
+console.log("PASS: v4 finales, routes and pools are the live season's scenarios and targets; 115 v2 rewards, every v3 reward kept");
 const epoch = new Date("2026-09-20T12:00:00Z").getTime(); let clock = epoch, serial = 0;
 const tick = () => clock += 1000;
 const run = (scenario: string, score = 100, at = tick()): ExpeditionRun => ({ id: `run-${++serial}`, scenario, score, at });
@@ -190,9 +199,9 @@ const migrationFolder=join(folder,"migration");mkdirSync(migrationFolder);
 const legacyStore=new ExpeditionStore(join(migrationFolder,"expedition-first-light-v1.json"),legacy);
 legacyStore.save(legacyState);const original=readFileSync(legacyStore.path,"utf8");
 const upgraded=new ExpeditionService(migrationFolder).view(null);
-assert.equal(upgraded.error,null);assert.equal(upgraded.state?.version,3);assert.equal(readFileSync(legacyStore.path,"utf8"),original);
+assert.equal(upgraded.error,null);assert.equal(upgraded.state?.version,4);assert.equal(readFileSync(legacyStore.path,"utf8"),original);
 assert.deepEqual(new ExpeditionService(migrationFolder).view(null).state,upgraded.state);
-console.log("PASS: service migration leaves original save untouched and reloads v3 independently");
+console.log("PASS: service migration leaves original save untouched and reloads v4 independently");
 const service = new ExpeditionService(join(folder, "service"));
 assert.equal(service.view(null).state, null); assert.throws(() => service.action({ type: "enroll" }, null), /stats folder/);
 const enrolled = service.action({ type: "enroll" }, stats); assert.ok(enrolled.state);

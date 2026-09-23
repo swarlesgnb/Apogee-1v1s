@@ -1045,19 +1045,19 @@
   "thresholds": {
     "owner": "data/pool.json",
     "sourced": {
-      "authored": 199,
-      "adopted": 4,
-      "percentile": 53
+      "authored": 216,
+      "adopted": 2,
+      "percentile": 38
     },
     "note": "Every threshold in this file is an authored score read from data/pool.json, not a percentile of anybody's population. A percentile moves when the population moves, so the target slides while somebody is chasing it, and a benchmark for improvement wants a number that sits still. Each one carries a `source` saying whether it was adopted verbatim from a published benchmark, reconciled between several, authored outright with a reason, or is still seeded - inherited from the percentile era and not yet given a source. npm run validate:thresholds re-derives the first two and counts the last."
   },
   "boards": {
     "source": "kovaaks.com/webapp-backend/leaderboard/scores/global",
     "sampledAt": "2026-09-13T03:09:23.048Z",
-    "leaderboardEntries": 5689676,
+    "leaderboardEntries": 12847691,
     "note": "The boards no longer set the thresholds; they audit them. Each scenario carries `sanity.clears` - what share of that leaderboard meets each rank - which is how a threshold nobody can reach, or one everybody clears, gets caught now that no percentile guarantees it by construction."
   },
-  "builtAt": "2026-09-14T19:37:41.373Z",
+  "builtAt": "2026-09-23T17:35:03.373Z",
   "scenarios": [
     {
       "scenario": "2 Tile Jumbo Tile Frenzy",
@@ -1135,7 +1135,7 @@
         "sampledAt": "2026-09-02T19:41:47.671Z"
       },
       "corpus": {
-        "runs": 19,
+        "runs": 21,
         "best": 127,
         "median": 116,
         "reaches": "rank 7"
@@ -1176,7 +1176,7 @@
         "sampledAt": "2026-09-02T19:43:20.608Z"
       },
       "corpus": {
-        "runs": 114,
+        "runs": 119,
         "best": 117,
         "median": 100,
         "reaches": null
@@ -1239,537 +1239,465 @@
       }
     },
     {
-      "scenario": "ClickTrack Diagonal 3t Short",
+      "scenario": "Jumbo 1wall6targets TE",
       "category": "Static Clicking",
-      "family": "Diagonal",
+      "family": "Six Targets",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
       "window": 0,
-      "label": "ClickTrack Diagonal 3t Short",
-      "leaderboardId": 115375,
+      "label": "Jumbo 1wall6targets TE",
+      "leaderboardId": 44,
       "rankMaxes": [
-        79,
-        93,
-        101,
-        108,
-        122,
-        129
+        123,
+        145,
+        158,
+        168,
+        195,
+        207
       ],
       "source": {
         "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 690,
+        "leaderboardEntries": 241802,
         "clears": [
-          0.855085324232082,
-          0.6387657853561421,
-          0.46646611978903335,
-          0.3486486490965855,
-          0.13233602998484192,
-          0.06887242592107265
+          0.8625,
+          0.6615384615384615,
+          0.4875,
+          0.36250000000000004,
+          0.12777777777777777,
+          0.071875
         ],
-        "sampledAt": "2026-09-02T20:57:15.714Z"
+        "sampledAt": "2026-09-23T17:12:19.432Z"
       },
       "corpus": {
-        "runs": 15,
-        "best": 109,
-        "median": 97,
-        "reaches": "rank 4"
+        "runs": 28,
+        "best": 230,
+        "median": 204,
+        "reaches": "rank 6"
       }
     },
     {
-      "scenario": "ClickTrack Diagonal 3t",
+      "scenario": "1wall6targets TE",
       "category": "Static Clicking",
-      "family": "Diagonal",
+      "family": "Six Targets",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
       "window": 1,
-      "label": "ClickTrack Diagonal 3t",
-      "leaderboardId": 102635,
+      "label": "1wall6targets TE",
+      "leaderboardId": 10420,
       "rankMaxes": [
-        66,
-        69,
-        70,
-        72,
-        78,
-        81
-      ],
-      "source": {
-        "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
-      },
-      "sanity": {
-        "leaderboardEntries": 1356,
-        "clears": [
-          0.2460987931729413,
-          0.17003041237964917,
-          0.14461694605821104,
-          0.1046175010557008,
-          0.03993844851631765,
-          0.022506164351424524
-        ],
-        "sampledAt": "2026-09-02T20:57:23.480Z"
-      },
-      "corpus": {
-        "runs": 12,
-        "best": 68,
-        "median": 61,
-        "reaches": "rank 5"
-      }
-    },
-    {
-      "scenario": "ClickTrack Diagonal 2t Short",
-      "category": "Static Clicking",
-      "family": "Diagonal",
-      "arm": "Wrist",
-      "armFrom": "Apogee",
-      "subCategory": "Static Clicking",
-      "window": 2,
-      "label": "ClickTrack Diagonal 2t Short",
-      "leaderboardId": 115390,
-      "rankMaxes": [
-        118,
-        121,
-        125,
-        129,
         139,
-        145
+        147,
+        150,
+        157,
+        173,
+        181
       ],
       "source": {
         "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 772,
+        "leaderboardEntries": 610918,
         "clears": [
-          0.07594961104198174,
-          0.05652753464316722,
-          0.03810456207295806,
-          0.02582191376908275,
-          0.00925212820208136,
-          0.004587935647848532
+          0.25805038335158814,
+          0.17672413793103453,
+          0.15086206896551718,
+          0.1024793388429753,
+          0.038210431654676254,
+          0.02255785627283801
         ],
-        "sampledAt": "2026-09-04T00:05:08.158Z"
+        "sampledAt": "2026-09-23T17:12:29.938Z"
       },
       "corpus": {
-        "runs": 13,
-        "best": 102,
-        "median": 88,
-        "reaches": null
+        "runs": 21,
+        "best": 155,
+        "median": 136,
+        "reaches": "rank 7"
       }
     },
     {
-      "scenario": "ClickTrack Diagonal 2t",
+      "scenario": "1wall 6targets small",
       "category": "Static Clicking",
-      "family": "Diagonal",
-      "arm": "Wrist",
-      "armFrom": "Apogee",
-      "subCategory": "Static Clicking",
-      "window": 3,
-      "label": "ClickTrack Diagonal 2t",
-      "leaderboardId": 102618,
-      "rankMaxes": [
-        70,
-        71,
-        72,
-        74
-      ],
-      "source": {
-        "kind": "percentile",
-        "cut": {
-          "ranks": [
-            12,
-            13,
-            14,
-            15
-          ],
-          "topFractions": [
-            0.022,
-            0.015,
-            0.011,
-            0.008
-          ],
-          "leaderboardId": 102618,
-          "total": 1562,
-          "sampledAt": "2026-09-04T00:06:25.969Z"
-        },
-        "why": "Cut from this scenario's own KovaaK's board at the pool ladder's ranks 13, 14, 15, 16 - the top 2.2%, 1.5%, 1.1%, 0.8% of 1,562 entries. No benchmark publishes a tier for this scenario at this window, so there is nothing to adopt. Re-cut with npm run cut:thresholds."
-      },
-      "sanity": {
-        "leaderboardEntries": 1562,
-        "clears": [
-          0.018131944386936615,
-          0.014561826063142179,
-          0.011857458737411371,
-          0.007862183713618616
-        ],
-        "sampledAt": "2026-09-04T00:06:25.969Z"
-      },
-      "corpus": {
-        "runs": 22,
-        "best": 61,
-        "median": 50,
-        "reaches": null
-      }
-    },
-    {
-      "scenario": "ClickTrack Horizontal 3t Short",
-      "category": "Static Clicking",
-      "family": "Horizontal",
-      "arm": "Wrist",
-      "armFrom": "Apogee",
-      "subCategory": "Static Clicking",
-      "window": 0,
-      "label": "ClickTrack Horizontal 3t Short",
-      "leaderboardId": 115480,
-      "rankMaxes": [
-        75,
-        87,
-        95,
-        101,
-        116,
-        122
-      ],
-      "source": {
-        "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
-      },
-      "sanity": {
-        "leaderboardEntries": 860,
-        "clears": [
-          0.8618630573248408,
-          0.665748031496063,
-          0.46860016118580666,
-          0.3409693013183364,
-          0.12180534974749004,
-          0.06930701692618498
-        ],
-        "sampledAt": "2026-09-02T19:20:12.638Z"
-      },
-      "corpus": {
-        "runs": 7,
-        "best": 101,
-        "median": 89,
-        "reaches": "rank 4"
-      }
-    },
-    {
-      "scenario": "ClickTrack Horizontal 3t",
-      "category": "Static Clicking",
-      "family": "Horizontal",
-      "arm": "Wrist",
-      "armFrom": "Apogee",
-      "subCategory": "Static Clicking",
-      "window": 1,
-      "label": "ClickTrack Horizontal 3t",
-      "leaderboardId": 102627,
-      "rankMaxes": [
-        66,
-        69,
-        71,
-        73,
-        79,
-        82
-      ],
-      "source": {
-        "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
-      },
-      "sanity": {
-        "leaderboardEntries": 1692,
-        "clears": [
-          0.26619126536226984,
-          0.18162875746456728,
-          0.13860962039367242,
-          0.09902853252854504,
-          0.03525068891061564,
-          0.018785294782228238
-        ],
-        "sampledAt": "2026-09-02T19:20:53.459Z"
-      },
-      "corpus": {
-        "runs": 12,
-        "best": 68,
-        "median": 62,
-        "reaches": "rank 5"
-      }
-    },
-    {
-      "scenario": "ClickTrack Horizontal 2t Short",
-      "category": "Static Clicking",
-      "family": "Horizontal",
+      "family": "Six Targets",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
       "window": 2,
-      "label": "ClickTrack Horizontal 2t Short",
-      "leaderboardId": 115374,
+      "label": "1wall 6targets small",
+      "leaderboardId": 2,
       "rankMaxes": [
-        110,
-        113,
-        117,
-        121,
-        135,
-        141
+        1061,
+        1100,
+        1136,
+        1169,
+        1268,
+        1328
       ],
       "source": {
         "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 977,
+        "leaderboardEntries": 882063,
         "clears": [
-          0.07596790840882332,
-          0.05519588091972345,
-          0.04153177628959846,
-          0.03221907800825035,
-          0.011167472164448253,
-          0.005181959095959535
+          0.07489853896103893,
+          0.05511363636363633,
+          0.039981963411491905,
+          0.030063819342169874,
+          0.011003567550798826,
+          0.006020666071959562
         ],
-        "sampledAt": "2026-09-04T00:05:16.119Z"
+        "sampledAt": "2026-09-23T17:12:40.643Z"
       },
       "corpus": {
-        "runs": 6,
-        "best": 102,
-        "median": 87,
-        "reaches": null
+        "runs": 115,
+        "best": 1253,
+        "median": 1067,
+        "reaches": "rank 12"
       }
     },
     {
-      "scenario": "ClickTrack Horizontal 2t",
+      "scenario": "1wall 6targets extra small",
       "category": "Static Clicking",
-      "family": "Horizontal",
+      "family": "Six Targets",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
       "window": 3,
-      "label": "ClickTrack Horizontal 2t",
-      "leaderboardId": 102619,
+      "label": "1wall 6targets extra small",
+      "leaderboardId": 169,
       "rankMaxes": [
-        72,
-        74,
-        75,
-        77
+        975,
+        1002,
+        1020,
+        1043
       ],
       "source": {
-        "kind": "percentile",
-        "cut": {
-          "ranks": [
-            12,
-            13,
-            14,
-            15
-          ],
-          "topFractions": [
-            0.022,
-            0.015,
-            0.011,
-            0.008
-          ],
-          "leaderboardId": 102619,
-          "total": 2030,
-          "sampledAt": "2026-09-04T00:05:23.874Z"
-        },
-        "why": "Cut from this scenario's own KovaaK's board at the pool ladder's ranks 13, 14, 15, 16 - the top 2.2%, 1.5%, 1.1%, 0.8% of 2,030 entries. No benchmark publishes a tier for this scenario at this window, so there is nothing to adopt. Re-cut with npm run cut:thresholds."
+        "kind": "authored",
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 2030,
+        "leaderboardEntries": 71046,
         "clears": [
-          0.022115271628130137,
-          0.013845021426309617,
-          0.011332696605652257,
-          0.008126254654581935
+          0.02202175543885971,
+          0.015069587040839608,
+          0.010962810860141461,
+          0.00798368048099635
         ],
-        "sampledAt": "2026-09-04T00:05:23.874Z"
+        "sampledAt": "2026-09-23T17:12:50.926Z"
       },
       "corpus": {
-        "runs": 14,
-        "best": 66,
-        "median": 54,
+        "runs": 2,
+        "best": 815,
+        "median": 761,
         "reaches": null
       }
     },
     {
-      "scenario": "SCS 8xs Uniform",
+      "scenario": "5 Sphere Hipfire",
       "category": "Static Clicking",
-      "family": "Micro",
+      "family": "Hipfire",
       "arm": "Fingertip",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
       "window": 0,
-      "label": "SCS 8xs Uniform",
-      "leaderboardId": 188314,
+      "label": "5 Sphere Hipfire",
+      "leaderboardId": 786,
       "rankMaxes": [
-        75,
-        89,
-        97,
-        102,
-        116,
-        120
+        1265,
+        1499,
+        1633,
+        1737,
+        1976,
+        2084
       ],
       "source": {
         "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 175,
+        "leaderboardEntries": 26758,
         "clears": [
-          0.8642857142857143,
-          0.6666666666666667,
-          0.5714285714285714,
-          0.37052558704314564,
-          0.10995242562952867,
-          0.06513441605986268
+          0.8598033057202308,
+          0.6601569648764692,
+          0.49050025920165896,
+          0.3594613833194921,
+          0.13017339577268705,
+          0.0721548301720336
         ],
-        "sampledAt": "2026-09-02T19:54:38.732Z"
+        "sampledAt": "2026-09-23T17:13:01.041Z"
+      },
+      "corpus": {
+        "runs": 8,
+        "best": 2184,
+        "median": 1920,
+        "reaches": "rank 6"
+      }
+    },
+    {
+      "scenario": "5 Sphere Hipfire Small",
+      "category": "Static Clicking",
+      "family": "Hipfire",
+      "arm": "Fingertip",
+      "armFrom": "Apogee",
+      "subCategory": "Static Clicking",
+      "window": 1,
+      "label": "5 Sphere Hipfire Small",
+      "leaderboardId": 125,
+      "rankMaxes": [
+        1115,
+        1181,
+        1210,
+        1266,
+        1404,
+        1471
+      ],
+      "source": {
+        "kind": "authored",
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
+      },
+      "sanity": {
+        "leaderboardEntries": 348053,
+        "clears": [
+          0.2593766033863519,
+          0.1799000611870283,
+          0.15032633081786653,
+          0.10473170731707312,
+          0.037575757575757596,
+          0.022084723632670816
+        ],
+        "sampledAt": "2026-09-23T17:13:11.012Z"
       },
       "corpus": {
         "runs": 4,
-        "best": 98,
-        "median": 95,
-        "reaches": "rank 3"
+        "best": 1189,
+        "median": 1164,
+        "reaches": "rank 6"
       }
     },
     {
-      "scenario": "Cartoon's Micro RawMouseControlReact 30s",
+      "scenario": "5 Sphere Hipfire Extra Small",
       "category": "Static Clicking",
-      "family": "Micro",
-      "arm": "Fingertip",
-      "armFrom": "Apogee",
-      "subCategory": "Static Clicking",
-      "window": 1,
-      "label": "Cartoon's Micro RawMouseControlReact 30s",
-      "leaderboardId": 80173,
-      "rankMaxes": [
-        30,
-        36,
-        38,
-        43,
-        51,
-        56
-      ],
-      "source": {
-        "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
-      },
-      "sanity": {
-        "leaderboardEntries": 532,
-        "clears": [
-          0.2602520880629266,
-          0.17204578671757437,
-          0.1446726853103135,
-          0.09380863039399624,
-          0.0345593949215796,
-          0.020772479904125913
-        ],
-        "sampledAt": "2026-09-02T20:02:40.194Z"
-      },
-      "corpus": {
-        "runs": 1,
-        "best": 13,
-        "median": 13,
-        "reaches": null
-      }
-    },
-    {
-      "scenario": "1w2ts Pasu Perfected",
-      "category": "Static Clicking",
-      "family": "Micro",
+      "family": "Hipfire",
       "arm": "Fingertip",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
       "window": 2,
-      "label": "1w2ts Pasu Perfected",
-      "leaderboardId": 22601,
+      "label": "5 Sphere Hipfire Extra Small",
+      "leaderboardId": 94,
       "rankMaxes": [
-        60,
-        80,
-        101,
-        112,
-        139,
-        149
+        1033,
+        1069,
+        1101,
+        1130,
+        1221,
+        1278
       ],
       "source": {
         "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 44007,
+        "leaderboardEntries": 128105,
         "clears": [
-          0.8954545454545455,
-          0.475,
-          0.06666666666666667,
-          0.011360796164595215,
-          0.0001431370623133845,
-          0.000022721592329190428
+          0.07516165535079214,
+          0.05496418177747925,
+          0.039852295992980374,
+          0.029901477832512298,
+          0.010971061093247582,
+          0.005972178311729368
         ],
-        "sampledAt": "2026-09-02T19:56:19.938Z"
+        "sampledAt": "2026-09-23T17:13:22.105Z"
       },
       "corpus": {
-        "runs": 31,
-        "best": 100,
-        "median": 83,
-        "reaches": "rank 10"
+        "runs": 1,
+        "best": 984,
+        "median": 984,
+        "reaches": null
       }
     },
     {
-      "scenario": "Aimerz+ 1w4ts HF Hard S1",
+      "scenario": "5 Sphere Hipfire Extra Extra Small",
       "category": "Static Clicking",
-      "family": "Micro",
+      "family": "Hipfire",
       "arm": "Fingertip",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
       "window": 3,
-      "label": "Aimerz+ 1w4ts HF Hard",
-      "leaderboardId": 68287,
+      "label": "5 Sphere Hipfire Extra Extra Small",
+      "leaderboardId": 11973,
       "rankMaxes": [
-        158,
-        182,
-        208,
-        223
+        944,
+        976,
+        997,
+        1029
       ],
       "source": {
-        "kind": "adopted",
-        "from": [
-          {
-            "benchmark": "Aimerz+ S1",
-            "difficulty": "Hard",
-            "rankMaxes": [
-              158,
-              170,
-              182,
-              194,
-              208,
-              223,
-              250
-            ],
-            "used": [
-              158,
-              182,
-              208,
-              223
-            ]
-          }
-        ]
+        "kind": "authored",
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 60662,
+        "leaderboardEntries": 4597,
         "clears": [
-          0.075,
-          0.012222222222222223,
-          0.0012982329002273372,
-          0.0003429874927806464
+          0.020837372427985994,
+          0.01336567524923935,
+          0.01018032062870761,
+          0.0072152433292543465
         ],
-        "sampledAt": "2026-08-18T23:42:46.240Z"
+        "sampledAt": "2026-09-23T17:13:32.769Z"
+      }
+    },
+    {
+      "scenario": "RawMouseControl Reload Easy",
+      "category": "Static Clicking",
+      "family": "Raw Mouse",
+      "arm": "Fingertip",
+      "armFrom": "Apogee",
+      "subCategory": "Static Clicking",
+      "window": 0,
+      "label": "RawMouseControl Reload Easy",
+      "leaderboardId": 42155,
+      "rankMaxes": [
+        141,
+        168,
+        184,
+        197,
+        234,
+        254
+      ],
+      "source": {
+        "kind": "authored",
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
+      },
+      "sanity": {
+        "leaderboardEntries": 19312,
+        "clears": [
+          0.86,
+          0.659375,
+          0.49,
+          0.36363636363636365,
+          0.13076923076923078,
+          0.07115384615384615
+        ],
+        "sampledAt": "2026-09-23T17:14:51.381Z"
       },
       "corpus": {
         "runs": 5,
-        "best": 154,
-        "median": 146,
+        "best": 237,
+        "median": 203,
+        "reaches": "rank 5"
+      }
+    },
+    {
+      "scenario": "RawMouseControl Reload",
+      "category": "Static Clicking",
+      "family": "Raw Mouse",
+      "arm": "Fingertip",
+      "armFrom": "Apogee",
+      "subCategory": "Static Clicking",
+      "window": 1,
+      "label": "RawMouseControl Reload",
+      "leaderboardId": 17318,
+      "rankMaxes": [
+        212,
+        223,
+        228,
+        237,
+        261,
+        273
+      ],
+      "source": {
+        "kind": "authored",
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
+      },
+      "sanity": {
+        "leaderboardEntries": 72509,
+        "clears": [
+          0.26153846153846155,
+          0.18125000000000002,
+          0.15,
+          0.10500000000000001,
+          0.036875000000000005,
+          0.02230769230769231
+        ],
+        "sampledAt": "2026-09-23T17:15:01.816Z"
+      },
+      "corpus": {
+        "runs": 1,
+        "best": 188,
+        "median": 188,
         "reaches": null
+      }
+    },
+    {
+      "scenario": "RawMouseControlClicking3",
+      "category": "Static Clicking",
+      "family": "Raw Mouse",
+      "arm": "Fingertip",
+      "armFrom": "Apogee",
+      "subCategory": "Static Clicking",
+      "window": 2,
+      "label": "RawMouseControlClicking3",
+      "leaderboardId": 5144,
+      "rankMaxes": [
+        2400,
+        2469,
+        2537,
+        2600,
+        2800,
+        2920
+      ],
+      "source": {
+        "kind": "authored",
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
+      },
+      "sanity": {
+        "leaderboardEntries": 194137,
+        "clears": [
+          0.075,
+          0.05494186046511628,
+          0.039934210526315794,
+          0.030000000000000002,
+          0.011014492753623189,
+          0.005984848484848485
+        ],
+        "sampledAt": "2026-09-23T17:15:13.207Z"
+      }
+    },
+    {
+      "scenario": "RawMouseControlClicking3 30% smaller",
+      "category": "Static Clicking",
+      "family": "Raw Mouse",
+      "arm": "Fingertip",
+      "armFrom": "Apogee",
+      "subCategory": "Static Clicking",
+      "window": 3,
+      "label": "RawMouseControlClicking3 30% smaller",
+      "leaderboardId": 24395,
+      "rankMaxes": [
+        2516,
+        2606,
+        2662,
+        2728
+      ],
+      "source": {
+        "kind": "authored",
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
+      },
+      "sanity": {
+        "leaderboardEntries": 7686,
+        "clears": [
+          0.02015148294835826,
+          0.013898885617391249,
+          0.010642521805185266,
+          0.0076396538478953925
+        ],
+        "sampledAt": "2026-09-23T17:15:23.542Z"
       }
     },
     {
@@ -1805,6 +1733,12 @@
           0.06944444444444445
         ],
         "sampledAt": "2026-09-02T20:00:59.385Z"
+      },
+      "corpus": {
+        "runs": 1,
+        "best": 173,
+        "median": 173,
+        "reaches": "rank 4"
       }
     },
     {
@@ -1842,9 +1776,9 @@
         "sampledAt": "2026-09-02T20:01:53.374Z"
       },
       "corpus": {
-        "runs": 2,
-        "best": 191,
-        "median": 188,
+        "runs": 3,
+        "best": 201,
+        "median": 191,
         "reaches": "rank 8"
       }
     },
@@ -1939,9 +1873,9 @@
         "sampledAt": "2026-09-02T19:48:27.516Z"
       },
       "corpus": {
-        "runs": 131,
+        "runs": 136,
         "best": 9451,
-        "median": 8265,
+        "median": 8289,
         "reaches": "rank 13"
       }
     },
@@ -2021,9 +1955,9 @@
         "sampledAt": "2026-09-02T19:32:12.208Z"
       },
       "corpus": {
-        "runs": 24,
+        "runs": 26,
         "best": 257,
-        "median": 221,
+        "median": 222,
         "reaches": "rank 9"
       }
     },
@@ -2157,9 +2091,9 @@
         "sampledAt": "2026-09-02T19:25:41.233Z"
       },
       "corpus": {
-        "runs": 15,
-        "best": 97,
-        "median": 83,
+        "runs": 17,
+        "best": 101,
+        "median": 85,
         "reaches": "rank 4"
       }
     },
@@ -2198,8 +2132,8 @@
         "sampledAt": "2026-09-02T19:24:21.601Z"
       },
       "corpus": {
-        "runs": 19,
-        "best": 77,
+        "runs": 20,
+        "best": 79,
         "median": 68,
         "reaches": "rank 7"
       }
@@ -2300,217 +2234,180 @@
       }
     },
     {
-      "scenario": "1w4t Pressure Revosect Entry",
+      "scenario": "1w4ts 30% larger",
       "category": "Static Clicking",
-      "family": "Wide Pressure",
-      "arm": "Arm",
+      "family": "Four Targets",
+      "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
       "window": 0,
-      "label": "1w4t Pressure Revosect Entry",
-      "leaderboardId": 142878,
+      "label": "1w4ts 30% larger",
+      "leaderboardId": 830,
       "rankMaxes": [
-        1101,
-        1287,
-        1352,
-        1408,
-        1558,
-        1633
+        72,
+        84,
+        90,
+        96,
+        109,
+        115
       ],
       "source": {
         "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 1780,
+        "leaderboardEntries": 100291,
         "clears": [
-          0.8597974036880227,
-          0.6608687258687261,
-          0.49010273114507635,
-          0.35911872705018366,
-          0.12956011011900476,
-          0.07416503451560177
+          0.8576923076923078,
+          0.65,
+          0.5,
+          0.35,
+          0.125,
+          0.07
         ],
-        "sampledAt": "2026-09-02T21:12:57.476Z"
+        "sampledAt": "2026-09-23T17:14:26.279Z"
       }
     },
     {
-      "scenario": "1w4t Pressure Revosect Int",
+      "scenario": "1w4ts Voltaic",
       "category": "Static Clicking",
-      "family": "Wide Pressure",
-      "arm": "Arm",
+      "family": "Four Targets",
+      "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
       "window": 1,
-      "label": "1w4t Pressure Revosect Int",
-      "leaderboardId": 143201,
+      "label": "1w4ts Voltaic",
+      "leaderboardId": 319,
       "rankMaxes": [
-        1230,
-        1330,
-        1530,
-        1630,
-        1791,
-        1968
+        98,
+        103,
+        105,
+        110,
+        120,
+        126
       ],
       "source": {
         "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 1206,
+        "leaderboardEntries": 173643,
         "clears": [
-          0.753613870166726,
-          0.6050670640834577,
-          0.23358290475917995,
-          0.10086041075157234,
-          0.013436200076442568,
-          0.0023828549205709318
+          0.26666666666666666,
+          0.18333333333333335,
+          0.15,
+          0.1,
+          0.03875000000000001,
+          0.0225
         ],
-        "sampledAt": "2026-09-02T21:13:06.227Z"
+        "sampledAt": "2026-08-25T20:32:57.807Z"
       },
       "corpus": {
-        "runs": 1,
-        "best": 1440,
-        "median": 1440,
-        "reaches": "rank 6"
+        "runs": 29,
+        "best": 111,
+        "median": 102,
+        "reaches": "rank 8"
       }
     },
     {
-      "scenario": "cA 7ts pressure",
+      "scenario": "1w4ts reload",
       "category": "Static Clicking",
-      "family": "Wide Pressure",
-      "arm": "Arm",
+      "family": "Four Targets",
+      "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
       "window": 2,
-      "label": "cA 7ts pressure",
-      "leaderboardId": 96432,
+      "label": "1w4ts reload",
+      "leaderboardId": 387,
       "rankMaxes": [
-        157,
-        160,
-        163,
-        166,
-        177,
-        183
+        116,
+        120,
+        124,
+        127,
+        136,
+        142
       ],
       "source": {
         "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 5215,
+        "leaderboardEntries": 48585,
         "clears": [
-          0.06680903072435254,
-          0.05151680520905411,
-          0.03933074486970299,
-          0.02987790684210487,
-          0.011235894888536668,
-          0.005952007983252424
+          0.075,
+          0.055,
+          0.03875000000000001,
+          0.030000000000000002,
+          0.011666666666666667,
+          0.005705886784817878
         ],
-        "sampledAt": "2026-08-25T20:24:00.497Z"
-      },
-      "corpus": {
-        "runs": 4,
-        "best": 146,
-        "median": 133,
-        "reaches": null
+        "sampledAt": "2026-08-25T20:26:14.803Z"
       }
     },
     {
-      "scenario": "darkPressure",
+      "scenario": "1w4ts reload 30% smaller",
       "category": "Static Clicking",
-      "family": "Wide Pressure",
-      "arm": "Arm",
+      "family": "Four Targets",
+      "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
       "window": 3,
-      "label": "darkPressure",
-      "leaderboardId": 16344,
+      "label": "1w4ts reload 30% smaller",
+      "leaderboardId": 92,
       "rankMaxes": [
-        7300,
-        8550,
-        9000,
-        9400
+        108,
+        112,
+        114,
+        117
       ],
       "source": {
-        "kind": "adopted",
-        "from": [
-          {
-            "benchmark": "Aimerz+ Static Clicking",
-            "difficulty": "Hard",
-            "rankMaxes": [
-              7300,
-              7950,
-              8550,
-              9000,
-              9400,
-              10400
-            ],
-            "used": [
-              7300,
-              8550,
-              9000,
-              9400
-            ]
-          }
-        ]
+        "kind": "authored",
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 4439,
+        "leaderboardEntries": 70443,
         "clears": [
-          0.06697494452594735,
-          0.020657896895802465,
-          0.009805705826719125,
-          0.005631899076368551
+          0.02375,
+          0.015,
+          0.011666666666666667,
+          0.008333333333333333
         ],
-        "sampledAt": "2026-09-02T19:47:39.359Z"
-      },
-      "corpus": {
-        "runs": 42,
-        "best": 7200,
-        "median": 5200,
-        "reaches": null
+        "sampledAt": "2026-09-23T17:14:41.085Z"
       }
     },
     {
-      "scenario": "ww6t Avasive Easier",
+      "scenario": "Wide Wall 6Targets",
       "category": "Static Clicking",
       "family": "Wide wall",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
       "window": 0,
-      "label": "ww6t Avasive Easier",
-      "leaderboardId": 203401,
+      "label": "Wide Wall 6Targets",
+      "leaderboardId": 235,
       "rankMaxes": [
-        1094,
-        1243,
-        1283,
-        1334,
-        1504,
-        1636
+        67,
+        82,
+        91,
+        98,
+        114,
+        121
       ],
       "source": {
         "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 225,
+        "leaderboardEntries": 133606,
         "clears": [
-          0.86,
-          0.6605,
-          0.49,
-          0.349575801709459,
-          0.11488184123197613,
-          0.05609030459053885
+          0.8566108007448789,
+          0.6559741657696448,
+          0.4862135922330098,
+          0.3557093425605536,
+          0.13083003952569172,
+          0.07063397129186601
         ],
-        "sampledAt": "2026-09-02T19:17:31.581Z"
-      },
-      "corpus": {
-        "runs": 1,
-        "best": 1320,
-        "median": 1320,
-        "reaches": "rank 3"
+        "sampledAt": "2026-09-23T17:22:28.824Z"
       }
     },
     {
@@ -2548,8 +2445,8 @@
         "sampledAt": "2026-09-04T00:10:28.258Z"
       },
       "corpus": {
-        "runs": 95,
-        "best": 137,
+        "runs": 98,
+        "best": 140,
         "median": 122,
         "reaches": "rank 7"
       }
@@ -2650,162 +2547,157 @@
       }
     },
     {
-      "scenario": "CB EvoClick Easy",
+      "scenario": "Jumbo Tile Frenzy",
       "category": "Static Clicking",
-      "family": "Evo Gallery",
+      "family": "Tile Frenzy",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
       "window": 0,
-      "label": "CB EvoClick Easy",
-      "leaderboardId": 96088,
+      "label": "Jumbo Tile Frenzy",
+      "leaderboardId": 196,
       "rankMaxes": [
-        556,
-        684,
-        755,
-        812,
-        967,
-        1045
+        109,
+        125,
+        135,
+        143,
+        165,
+        174
       ],
       "source": {
         "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 22678,
+        "leaderboardEntries": 58811,
         "clears": [
-          0.8604166666666667,
-          0.66,
-          0.4904761904761905,
-          0.36041666666666666,
-          0.12962962962962962,
-          0.071875
+          0.861764705882353,
+          0.665,
+          0.48333333333333334,
+          0.35714285714285715,
+          0.12857142857142856,
+          0.07083333333333333
         ],
-        "sampledAt": "2026-08-25T20:24:08.200Z"
+        "sampledAt": "2026-09-23T17:13:42.880Z"
+      },
+      "corpus": {
+        "runs": 13,
+        "best": 148,
+        "median": 140,
+        "reaches": "rank 4"
       }
     },
     {
-      "scenario": "EvoClick Revosect Entry",
+      "scenario": "Tile Frenzy",
       "category": "Static Clicking",
-      "family": "Evo Gallery",
+      "family": "Tile Frenzy",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
       "window": 1,
-      "label": "EvoClick Revosect Entry",
-      "leaderboardId": 142851,
+      "label": "Tile Frenzy",
+      "leaderboardId": 11,
       "rankMaxes": [
-        1059,
-        1110,
-        1132,
-        1176,
-        1307,
-        1359
+        99,
+        105,
+        107,
+        111,
+        122,
+        127
       ],
       "source": {
         "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 2008,
+        "leaderboardEntries": 555805,
         "clears": [
-          0.24860174187688214,
-          0.17370598695617875,
-          0.1488177254139701,
-          0.1060595759436671,
-          0.035415122852720894,
-          0.022846455840708445
+          0.2599700149925037,
+          0.175,
+          0.15,
+          0.10833333333333331,
+          0.03751470588235292,
+          0.02282967032967033
         ],
-        "sampledAt": "2026-09-14T02:36:24.019Z"
+        "sampledAt": "2026-09-23T17:13:53.368Z"
+      },
+      "corpus": {
+        "runs": 37,
+        "best": 124,
+        "median": 108,
+        "reaches": "rank 9"
       }
     },
     {
-      "scenario": "EvoClick Revosect Int",
+      "scenario": "Tile Frenzy Mini",
       "category": "Static Clicking",
-      "family": "Evo Gallery",
+      "family": "Tile Frenzy",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
       "window": 2,
-      "label": "EvoClick Revosect Int",
-      "leaderboardId": 142850,
+      "label": "Tile Frenzy Mini",
+      "leaderboardId": 67,
       "rankMaxes": [
-        1146,
-        1162,
-        1180,
-        1201,
-        1262,
-        1301
+        132,
+        136,
+        141,
+        145,
+        158,
+        166
       ],
       "source": {
         "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 1571,
+        "leaderboardEntries": 382290,
         "clears": [
-          0.06972407029993079,
-          0.05631324846321969,
-          0.039546756159697403,
-          0.027683576490538927,
-          0.011131071006328572,
-          0.0055340948892761395
+          0.07357621440536011,
+          0.056825795644891104,
+          0.03984939759036147,
+          0.030332031250000016,
+          0.011238636363636366,
+          0.005708074534161484
         ],
-        "sampledAt": "2026-09-14T02:36:31.714Z"
+        "sampledAt": "2026-09-23T17:14:06.176Z"
       },
       "corpus": {
-        "runs": 1,
-        "best": 1001,
-        "median": 1001,
+        "runs": 3,
+        "best": 114,
+        "median": 112,
         "reaches": null
       }
     },
     {
-      "scenario": "EvoClick Revosect",
+      "scenario": "Extra mini Tile Frenzy",
       "category": "Static Clicking",
-      "family": "Evo Gallery",
+      "family": "Tile Frenzy",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
       "window": 3,
-      "label": "EvoClick Revosect",
-      "leaderboardId": 141058,
+      "label": "Extra mini Tile Frenzy",
+      "leaderboardId": 5078,
       "rankMaxes": [
-        1222,
-        1278,
-        1320,
-        1345
+        40,
+        41,
+        42,
+        43
       ],
       "source": {
-        "kind": "percentile",
-        "cut": {
-          "ranks": [
-            12,
-            13,
-            14,
-            15
-          ],
-          "topFractions": [
-            0.022,
-            0.015,
-            0.011,
-            0.008
-          ],
-          "leaderboardId": 141058,
-          "total": 551,
-          "sampledAt": "2026-09-14T02:36:39.582Z"
-        },
-        "why": "Frozen from this scenario's own board for the season variety expansion. This is a season target, not a copied benchmark tier."
+        "kind": "authored",
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 551,
+        "leaderboardEntries": 27558,
         "clears": [
-          0.027430189694520348,
-          0.014424494958713549,
-          0.009987190608356893,
-          0.007181614530461554
+          0.02,
+          0.018143551781696785,
+          0.009071775890848392,
+          0.006684141626098385
         ],
-        "sampledAt": "2026-09-14T02:36:39.582Z"
+        "sampledAt": "2026-09-23T17:14:16.244Z"
       }
     },
     {
@@ -2841,6 +2733,12 @@
           0.06742092326117675
         ],
         "sampledAt": "2026-09-14T00:50:47.910Z"
+      },
+      "corpus": {
+        "runs": 1,
+        "best": 149,
+        "median": 149,
+        "reaches": "rank 6"
       }
     },
     {
@@ -3008,8 +2906,8 @@
         "sampledAt": "2026-09-14T00:51:27.607Z"
       },
       "corpus": {
-        "runs": 16,
-        "best": 134,
+        "runs": 17,
+        "best": 136,
         "median": 126,
         "reaches": "rank 4"
       }
@@ -3049,10 +2947,10 @@
         "sampledAt": "2026-08-29T17:28:26.781Z"
       },
       "corpus": {
-        "runs": 5,
-        "best": 131,
-        "median": 114,
-        "reaches": "rank 8"
+        "runs": 6,
+        "best": 137,
+        "median": 115,
+        "reaches": "rank 9"
       }
     },
     {
@@ -3090,7 +2988,7 @@
         "sampledAt": "2026-08-25T20:08:02.934Z"
       },
       "corpus": {
-        "runs": 108,
+        "runs": 109,
         "best": 127,
         "median": 108,
         "reaches": "rank 9"
@@ -3220,9 +3118,9 @@
         "sampledAt": "2026-09-14T00:52:27.433Z"
       },
       "corpus": {
-        "runs": 22,
+        "runs": 23,
         "best": 1388,
-        "median": 1253,
+        "median": 1258,
         "reaches": "rank 7"
       }
     },
@@ -3261,10 +3159,10 @@
         "sampledAt": "2026-08-29T17:29:22.837Z"
       },
       "corpus": {
-        "runs": 13,
-        "best": 1106,
-        "median": 918,
-        "reaches": null
+        "runs": 15,
+        "best": 1206,
+        "median": 948,
+        "reaches": "rank 10"
       }
     },
     {
@@ -3316,162 +3214,151 @@
       }
     },
     {
-      "scenario": "Pasu Viscose Entry",
+      "scenario": "1wall5targets_pasu slow",
       "category": "Dynamic Clicking",
-      "family": "Pasu",
+      "family": "Pasu Wall",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
       "window": 0,
-      "label": "Pasu Viscose Entry",
-      "leaderboardId": 192535,
+      "label": "1wall5targets_pasu slow",
+      "leaderboardId": 544,
       "rankMaxes": [
-        638,
-        839,
-        945,
-        1019,
-        1260,
-        1389
+        80,
+        100,
+        111,
+        119,
+        138,
+        147
       ],
       "source": {
         "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 3130,
+        "leaderboardEntries": 148701,
         "clears": [
-          0.8599258960528305,
-          0.6601860358291227,
-          0.48921848260125506,
-          0.3607023654041503,
-          0.12494266116360331,
-          0.0715842174114425
+          0.8613636363636363,
+          0.6625,
+          0.4857142857142857,
+          0.3666666666666667,
+          0.13333333333333333,
+          0.075
         ],
-        "sampledAt": "2026-09-13T03:03:41.729Z"
+        "sampledAt": "2026-09-03T01:07:01.872Z"
+      },
+      "corpus": {
+        "runs": 1,
+        "best": 145,
+        "median": 145,
+        "reaches": "rank 5"
       }
     },
     {
-      "scenario": "Pasu SuperbAim Easy",
+      "scenario": "1wall5targets_pasu",
       "category": "Dynamic Clicking",
-      "family": "Pasu",
+      "family": "Pasu Wall",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
       "window": 1,
-      "label": "Pasu SuperbAim Easy",
-      "leaderboardId": 35298,
+      "label": "1wall5targets_pasu",
+      "leaderboardId": 16,
       "rankMaxes": [
+        65,
         72,
-        78,
-        80,
-        85,
-        95,
-        98
+        75,
+        81,
+        96,
+        103
       ],
       "source": {
         "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 6553,
+        "leaderboardEntries": 247493,
         "clears": [
-          0.2571428571428571,
-          0.175,
-          0.15,
-          0.1,
-          0.038150465435678314,
-          0.022015869157747805
+          0.256788665879575,
+          0.17937853107344637,
+          0.1511299435028249,
+          0.10605381165919285,
+          0.03790123456790123,
+          0.021553254437869828
         ],
-        "sampledAt": "2026-09-13T03:03:49.090Z"
+        "sampledAt": "2026-09-23T17:15:34.395Z"
+      },
+      "corpus": {
+        "runs": 1,
+        "best": 99,
+        "median": 99,
+        "reaches": "rank 9"
       }
     },
     {
-      "scenario": "Pasu SuperbAim",
+      "scenario": "1wall5targets_pasu_small",
       "category": "Dynamic Clicking",
-      "family": "Pasu",
+      "family": "Pasu Wall",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
       "window": 2,
-      "label": "Pasu SuperbAim",
-      "leaderboardId": 35929,
+      "label": "1wall5targets_pasu_small",
+      "leaderboardId": 244,
       "rankMaxes": [
-        78,
-        82,
-        85,
-        88,
-        98,
-        104
+        41,
+        44,
+        47,
+        49,
+        58,
+        63
       ],
       "source": {
         "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 3218,
+        "leaderboardEntries": 50818,
         "clears": [
-          0.07768800497203232,
-          0.051700142821461174,
-          0.03809299092769394,
-          0.028496085867143302,
-          0.010250993713276058,
-          0.004602138433724633
+          0.07474424552429668,
+          0.055562659846547305,
+          0.0391326530612245,
+          0.03131198347107439,
+          0.011272430668841763,
+          0.0059607547223886745
         ],
-        "sampledAt": "2026-09-13T03:03:56.342Z"
+        "sampledAt": "2026-09-23T17:15:44.991Z"
       }
     },
     {
-      "scenario": "Pasu Reload Goated",
+      "scenario": "1wall5targets_pasu_small_reactive",
       "category": "Dynamic Clicking",
-      "family": "Pasu",
+      "family": "Pasu Wall",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
       "window": 3,
-      "label": "Pasu Reload Goated",
-      "leaderboardId": 583,
+      "label": "1wall5targets_pasu_small_reactive",
+      "leaderboardId": 26439,
       "rankMaxes": [
-        128,
-        133,
-        136,
-        140
+        29,
+        30,
+        31,
+        32
       ],
       "source": {
-        "kind": "percentile",
-        "cut": {
-          "ranks": [
-            12,
-            13,
-            14,
-            15
-          ],
-          "topFractions": [
-            0.022,
-            0.015,
-            0.011,
-            0.008
-          ],
-          "leaderboardId": 583,
-          "total": 25879,
-          "sampledAt": "2026-08-25T20:08:26.623Z"
-        },
-        "why": "Cut from this scenario's own KovaaK's board at the pool ladder's ranks 13, 14, 15, 16 - the top 2.2%, 1.5%, 1.1%, 0.8% of 25,879 entries. No benchmark publishes a tier for this scenario at this window, so there is nothing to adopt. Re-cut with npm run cut:thresholds."
+        "kind": "authored",
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 25879,
+        "leaderboardEntries": 2007,
         "clears": [
-          0.021875000000000002,
-          0.014106562101927268,
-          0.011196385760127046,
-          0.00799087426000953
+          0.02375768605107268,
+          0.014778120738427325,
+          0.010095060048340921,
+          0.007269057079395453
         ],
-        "sampledAt": "2026-08-25T20:08:26.623Z"
-      },
-      "corpus": {
-        "runs": 18,
-        "best": 112,
-        "median": 97,
-        "reaches": null
+        "sampledAt": "2026-09-23T17:15:55.079Z"
       }
     },
     {
@@ -3509,10 +3396,10 @@
         "sampledAt": "2026-08-18T23:38:52.061Z"
       },
       "corpus": {
-        "runs": 2,
-        "best": 850,
-        "median": 815,
-        "reaches": "rank 4"
+        "runs": 3,
+        "best": 990,
+        "median": 850,
+        "reaches": "rank 6"
       }
     },
     {
@@ -3548,6 +3435,12 @@
           0.023
         ],
         "sampledAt": "2026-09-03T01:08:27.910Z"
+      },
+      "corpus": {
+        "runs": 1,
+        "best": 86,
+        "median": 86,
+        "reaches": "rank 5"
       }
     },
     {
@@ -3874,7 +3767,7 @@
         "sampledAt": "2026-09-03T01:09:22.182Z"
       },
       "corpus": {
-        "runs": 22,
+        "runs": 23,
         "best": 105,
         "median": 85,
         "reaches": "rank 8"
@@ -3976,156 +3869,139 @@
       }
     },
     {
-      "scenario": "Pasu 3-Click Wide Easy",
+      "scenario": "Tamspeed 2bp Iron",
       "category": "Dynamic Clicking",
-      "family": "Pasu Sequence",
-      "arm": "Wrist",
+      "family": "Tamspeed",
+      "arm": "Fingertip",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
       "window": 0,
-      "label": "Pasu 3-Click Wide Easy",
-      "leaderboardId": 54718,
+      "label": "Tamspeed 2bp Iron",
+      "leaderboardId": 11607,
       "rankMaxes": [
-        11,
-        16,
-        19,
-        22,
-        30,
-        35
+        98,
+        115,
+        125,
+        132,
+        150,
+        159
       ],
       "source": {
         "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 11096,
+        "leaderboardEntries": 32060,
         "clears": [
-          0.8563291139240506,
-          0.651840490797546,
-          0.5044262295081967,
-          0.3732558139534884,
-          0.13506493506493503,
-          0.06794019933554815
+          0.8631578947368421,
+          0.665,
+          0.48333333333333334,
+          0.3666666666666667,
+          0.12857142857142856,
+          0.07
         ],
-        "sampledAt": "2026-09-13T19:19:52.735Z"
+        "sampledAt": "2026-09-23T17:16:05.866Z"
       }
     },
     {
-      "scenario": "Pasu 3-Click v2 Less Easy",
+      "scenario": "Tamspeed 2bp Silver",
       "category": "Dynamic Clicking",
-      "family": "Pasu Sequence",
-      "arm": "Wrist",
+      "family": "Tamspeed",
+      "arm": "Fingertip",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
       "window": 1,
-      "label": "Pasu 3-Click v2 Less Easy",
-      "leaderboardId": 3876,
+      "label": "Tamspeed 2bp Silver",
+      "leaderboardId": 7792,
       "rankMaxes": [
-        27,
-        29,
-        30,
-        31,
-        33,
-        34
+        132,
+        138,
+        140,
+        144,
+        156,
+        161
       ],
       "source": {
         "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 4328,
+        "leaderboardEntries": 22772,
         "clears": [
-          0.24949999999999992,
-          0.16231343283582084,
-          0.11512710984610293,
-          0.08140716007058792,
-          0.03889487010870104,
-          0.026292536937314603
+          0.26666666666666666,
+          0.175,
+          0.15,
+          0.1,
+          0.035,
+          0.0225
         ],
-        "sampledAt": "2026-09-13T19:20:06.744Z"
+        "sampledAt": "2026-09-23T17:16:16.143Z"
       }
     },
     {
-      "scenario": "Pasu 3-click v2",
+      "scenario": "Tamspeed 2bp Gold",
       "category": "Dynamic Clicking",
-      "family": "Pasu Sequence",
-      "arm": "Wrist",
+      "family": "Tamspeed",
+      "arm": "Fingertip",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
       "window": 2,
-      "label": "Pasu 3-click v2",
-      "leaderboardId": 1094,
+      "label": "Tamspeed 2bp Gold",
+      "leaderboardId": 8056,
       "rankMaxes": [
-        25,
-        26,
-        28,
-        29,
-        31,
-        33
+        145,
+        148,
+        152,
+        155,
+        164,
+        172
       ],
       "source": {
         "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 23073,
+        "leaderboardEntries": 20467,
         "clears": [
-          0.07485029940119758,
-          0.05988023952095808,
-          0.034910179640718554,
-          0.025928143712574847,
-          0.012148031010580634,
-          0.005618457992165163
+          0.075,
+          0.05625,
+          0.03875000000000001,
+          0.029,
+          0.011238528588747135,
+          0.005771630759454932
         ],
-        "sampledAt": "2026-09-13T19:20:20.757Z"
+        "sampledAt": "2026-09-23T17:16:26.107Z"
       }
     },
     {
-      "scenario": "Pasu 3-Click Wide",
+      "scenario": "Tamspeed 2bp Platinum",
       "category": "Dynamic Clicking",
-      "family": "Pasu Sequence",
-      "arm": "Wrist",
+      "family": "Tamspeed",
+      "arm": "Fingertip",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
       "window": 3,
-      "label": "Pasu 3-Click Wide",
-      "leaderboardId": 54719,
+      "label": "Tamspeed 2bp Platinum",
+      "leaderboardId": 11958,
       "rankMaxes": [
-        25,
-        27,
-        29,
-        37
+        157,
+        161,
+        163,
+        166
       ],
       "source": {
-        "kind": "percentile",
-        "cut": {
-          "ranks": [
-            12,
-            13,
-            14,
-            15
-          ],
-          "topFractions": [
-            0.022,
-            0.015,
-            0.011,
-            0.008
-          ],
-          "leaderboardId": 54719,
-          "total": 3082,
-          "sampledAt": "2026-09-13T19:20:34.799Z"
-        },
-        "why": "Frozen once for the theory-led draft rebuild from this exact scenario's own dated leaderboard. Existing Apogee percentile positions are retained. The target is a fixed score, not a live percentile or proof of equal difficulty across variants. Provisional calibration: 3082 players; this board is below the population floor for this band. Validate the difficulty step through group playtesting before publishing the season."
+        "kind": "authored",
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 3082,
+        "leaderboardEntries": 16741,
         "clears": [
-          0.02380284234192268,
-          0.016151764785386668,
-          0.010386784727760317,
-          0.007069385238755715
+          0.022634797301690424,
+          0.013101168719367732,
+          0.010083536954933326,
+          0.006808746676110129
         ],
-        "sampledAt": "2026-09-13T19:20:34.799Z"
+        "sampledAt": "2026-09-23T17:16:36.146Z"
       }
     },
     {
@@ -4300,174 +4176,157 @@
       }
     },
     {
-      "scenario": "VT Floating Heads Viscose Entry",
+      "scenario": "Floating Heads Timing 400% Larger",
       "category": "Dynamic Clicking",
-      "family": "Floating Gallery",
+      "family": "Timing",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
       "window": 0,
-      "label": "VT Floating Heads Viscose Entry",
-      "leaderboardId": 192531,
+      "label": "Floating Heads Timing 400% Larger",
+      "leaderboardId": 1607,
       "rankMaxes": [
-        679,
-        833,
-        913,
-        966,
-        1149,
-        1248
+        2239,
+        2614,
+        2855,
+        3010,
+        3478,
+        3685
       ],
       "source": {
         "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 3074,
+        "leaderboardEntries": 69285,
         "clears": [
-          0.8598972922502335,
-          0.6596824570536179,
-          0.4892935377875138,
-          0.35972743432747384,
-          0.12809702749065005,
-          0.07239764351474995
+          0.8600694444444444,
+          0.6597222222222222,
+          0.4898148148148148,
+          0.3597222222222222,
+          0.1298611111111111,
+          0.07199074074074074
         ],
-        "sampledAt": "2026-09-14T00:52:47.754Z"
+        "sampledAt": "2026-08-29T18:33:09.115Z"
+      },
+      "corpus": {
+        "runs": 4,
+        "best": 3096,
+        "median": 3042,
+        "reaches": "rank 4"
       }
     },
     {
-      "scenario": "VT Floating Heads Viscose Easier",
+      "scenario": "Floating Heads Timing 400%",
       "category": "Dynamic Clicking",
-      "family": "Floating Gallery",
+      "family": "Timing",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
       "window": 1,
-      "label": "VT Floating Heads Viscose Easier",
-      "leaderboardId": 185409,
+      "label": "Floating Heads Timing 400%",
+      "leaderboardId": 341,
       "rankMaxes": [
-        981,
-        1032,
-        1043,
-        1065,
-        1138,
-        1188
+        2398,
+        2527,
+        2592,
+        2689,
+        3006,
+        3149
       ],
       "source": {
         "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 22932,
+        "leaderboardEntries": 234169,
         "clears": [
-          0.259734027968193,
-          0.18004833512352306,
-          0.1505102040816328,
-          0.1052156057494866,
-          0.03748657718120809,
-          0.021305747862521863
+          0.2597222222222222,
+          0.18009259259259258,
+          0.15,
+          0.1050925925925926,
+          0.037500000000000006,
+          0.021979166666666668
         ],
-        "sampledAt": "2026-09-14T02:36:47.246Z"
+        "sampledAt": "2026-09-23T17:16:47.057Z"
       },
       "corpus": {
-        "runs": 7,
-        "best": 1089,
-        "median": 1007,
-        "reaches": "rank 8"
+        "runs": 5,
+        "best": 2664,
+        "median": 2520,
+        "reaches": "rank 7"
       }
     },
     {
-      "scenario": "VT Floating Heads Viscose Medium",
+      "scenario": "Floating Heads Timing 400% FIXED",
       "category": "Dynamic Clicking",
-      "family": "Floating Gallery",
+      "family": "Timing",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
       "window": 2,
-      "label": "VT Floating Heads Viscose Medium",
-      "leaderboardId": 184827,
+      "label": "Floating Heads Timing 400% FIXED",
+      "leaderboardId": 1730,
       "rankMaxes": [
-        1018,
-        1057,
-        1094,
-        1132,
-        1221,
-        1247
+        2664,
+        2779,
+        2904,
+        3012,
+        3326,
+        3521
       ],
       "source": {
         "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 16754,
+        "leaderboardEntries": 182809,
         "clears": [
-          0.07492430359305613,
-          0.05524323778764639,
-          0.04008815495406013,
-          0.028512088399183625,
-          0.011133545327921119,
-          0.005778476107851428
+          0.075,
+          0.05503472222222222,
+          0.04,
+          0.030000000000000002,
+          0.011018518518518518,
+          0.0059953703703703705
         ],
-        "sampledAt": "2026-09-14T02:36:54.996Z"
+        "sampledAt": "2026-08-29T17:28:42.753Z"
       },
       "corpus": {
-        "runs": 32,
-        "best": 976,
-        "median": 816,
+        "runs": 2,
+        "best": 2592,
+        "median": 2556,
         "reaches": null
       }
     },
     {
-      "scenario": "VT Floating Heads Viscose Hard",
+      "scenario": "Floating Heads Timing Extra Small Speed",
       "category": "Dynamic Clicking",
-      "family": "Floating Gallery",
+      "family": "Timing",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
       "window": 3,
-      "label": "VT Floating Heads Viscose Hard",
-      "leaderboardId": 184829,
+      "label": "Floating Heads Timing Extra Small Speed",
+      "leaderboardId": 31494,
       "rankMaxes": [
-        1181,
-        1215,
-        1237,
-        1257
+        30,
+        32,
+        33,
+        35
       ],
       "source": {
-        "kind": "percentile",
-        "cut": {
-          "ranks": [
-            12,
-            13,
-            14,
-            15
-          ],
-          "topFractions": [
-            0.022,
-            0.015,
-            0.011,
-            0.008
-          ],
-          "leaderboardId": 184829,
-          "total": 1752,
-          "sampledAt": "2026-09-14T00:53:01.658Z"
-        },
-        "why": "Frozen from this scenario's own board for the season variety expansion. This is a season target, not a copied benchmark tier."
+        "kind": "authored",
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 1752,
+        "leaderboardEntries": 2115,
         "clears": [
-          0.022992747192883488,
-          0.01532171454869955,
-          0.010420103949788569,
-          0.007040935023835817
+          0.02260847453009667,
+          0.014131332897684706,
+          0.011308713927899545,
+          0.007821254063397445
         ],
-        "sampledAt": "2026-09-14T00:53:01.658Z"
-      },
-      "corpus": {
-        "runs": 15,
-        "best": 746,
-        "median": 703,
-        "reaches": null
+        "sampledAt": "2026-09-23T17:23:39.252Z"
       }
     },
     {
@@ -4642,156 +4501,151 @@
       }
     },
     {
-      "scenario": "Aimerz+ sunClick Easy S1",
+      "scenario": "VT Bounceshot Novice",
       "category": "Dynamic Clicking",
-      "family": "Wave Click",
-      "arm": "Wrist",
+      "family": "Bounceshot",
+      "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
       "window": 0,
-      "label": "Aimerz+ sunClick Easy S1",
-      "leaderboardId": 68434,
+      "label": "VT Bounceshot Novice",
+      "leaderboardId": 24975,
       "rankMaxes": [
-        334,
-        474,
-        565,
-        630,
-        756,
-        805
+        442,
+        613,
+        716,
+        790,
+        892,
+        945
       ],
       "source": {
         "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 12638,
+        "leaderboardEntries": 125087,
         "clears": [
           0.86,
-          0.66,
+          0.6595454545454545,
           0.49,
           0.36,
           0.13,
           0.071875
         ],
-        "sampledAt": "2026-08-18T23:39:13.115Z"
+        "sampledAt": "2026-08-18T23:58:35.484Z"
       }
     },
     {
-      "scenario": "aimerz+ WaveClick Normal",
+      "scenario": "VT Bounceshot Intermediate",
       "category": "Dynamic Clicking",
-      "family": "Wave Click",
-      "arm": "Wrist",
+      "family": "Bounceshot",
+      "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
       "window": 1,
-      "label": "aimerz+ WaveClick Normal",
-      "leaderboardId": 44337,
+      "label": "VT Bounceshot Intermediate",
+      "leaderboardId": 24955,
       "rankMaxes": [
-        54,
-        60,
-        62,
-        67,
-        75,
-        78
+        684,
+        736,
+        760,
+        805,
+        908,
+        936
       ],
       "source": {
         "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 15898,
+        "leaderboardEntries": 86833,
         "clears": [
-          0.26666666666666666,
-          0.175,
+          0.26,
+          0.18,
           0.15,
-          0.1,
-          0.035,
-          0.023835019601685707
+          0.10500000000000001,
+          0.038000000000000006,
+          0.022000000000000002
         ],
-        "sampledAt": "2026-09-14T00:53:52.943Z"
+        "sampledAt": "2026-08-19T00:00:36.692Z"
+      },
+      "corpus": {
+        "runs": 20,
+        "best": 800,
+        "median": 675,
+        "reaches": "rank 7"
       }
     },
     {
-      "scenario": "aimerz+ WaveClick Hard",
+      "scenario": "VT Bounceshot Advanced",
       "category": "Dynamic Clicking",
-      "family": "Wave Click",
-      "arm": "Wrist",
+      "family": "Bounceshot",
+      "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
       "window": 2,
-      "label": "aimerz+ WaveClick Hard",
-      "leaderboardId": 44336,
+      "label": "VT Bounceshot Advanced",
+      "leaderboardId": 25154,
       "rankMaxes": [
-        56,
-        59,
-        62,
-        65,
-        72,
-        77
+        730,
+        770,
+        800,
+        823,
+        904,
+        942
       ],
       "source": {
         "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 8595,
+        "leaderboardEntries": 22127,
         "clears": [
           0.075,
-          0.058173356602675974,
-          0.04113477493813539,
-          0.029086678301337987,
-          0.010365313765448974,
-          0.005817335660267597
+          0.055,
+          0.04,
+          0.030125000000000002,
+          0.010517667887797068,
+          0.005886955880033261
         ],
-        "sampledAt": "2026-09-14T00:54:02.886Z"
+        "sampledAt": "2026-08-19T00:03:27.884Z"
+      },
+      "corpus": {
+        "runs": 1,
+        "best": 450,
+        "median": 450,
+        "reaches": null
       }
     },
     {
-      "scenario": "Aimerz+ sunClick Hard S1",
+      "scenario": "VT Bounceshot Advanced 20% smaller",
       "category": "Dynamic Clicking",
-      "family": "Wave Click",
-      "arm": "Wrist",
+      "family": "Bounceshot",
+      "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
       "window": 3,
-      "label": "Aimerz+ sunClick Hard S1",
-      "leaderboardId": 68298,
+      "label": "VT Bounceshot Advanced 20% smaller",
+      "leaderboardId": 31509,
       "rankMaxes": [
-        673,
-        705,
-        725,
-        742
+        585,
+        620,
+        644,
+        670
       ],
       "source": {
-        "kind": "percentile",
-        "cut": {
-          "ranks": [
-            12,
-            13,
-            14,
-            15
-          ],
-          "topFractions": [
-            0.022,
-            0.015,
-            0.011,
-            0.008
-          ],
-          "leaderboardId": 68298,
-          "total": 2866,
-          "sampledAt": "2026-08-18T23:42:17.794Z"
-        },
-        "why": "Frozen from this scenario's own board for the season variety expansion. This is a season target, not a copied benchmark tier."
+        "kind": "authored",
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 2866,
+        "leaderboardEntries": 11460,
         "clears": [
-          0.02062717819780662,
-          0.013069583266168987,
-          0.009241590954790315,
-          0.007386300825386576
+          0.02060080259241685,
+          0.01379702295012382,
+          0.010481016003328373,
+          0.007596427253892884
         ],
-        "sampledAt": "2026-08-18T23:42:17.794Z"
+        "sampledAt": "2026-09-23T17:17:10.242Z"
       }
     },
     {
@@ -5000,9 +4854,9 @@
         "sampledAt": "2026-09-13T03:04:32.752Z"
       },
       "corpus": {
-        "runs": 8,
+        "runs": 9,
         "best": 4038,
-        "median": 3420,
+        "median": 3450,
         "reaches": "rank 6"
       }
     },
@@ -5177,8 +5031,8 @@
         "sampledAt": "2026-09-13T19:20:48.763Z"
       },
       "corpus": {
-        "runs": 1,
-        "best": 15570,
+        "runs": 3,
+        "best": 16686,
         "median": 15570,
         "reaches": "rank 6"
       }
@@ -5218,9 +5072,9 @@
         "sampledAt": "2026-09-13T19:21:02.844Z"
       },
       "corpus": {
-        "runs": 3,
+        "runs": 4,
         "best": 14274,
-        "median": 12402,
+        "median": 12483,
         "reaches": "rank 9"
       }
     },
@@ -5314,174 +5168,163 @@
       }
     },
     {
-      "scenario": "PreciseTrack Avasive Easier",
+      "scenario": "cloverRawControl Big",
       "category": "Precise Tracking",
-      "family": "PreciseTrack",
-      "arm": "Fingertip",
+      "family": "Clover Control",
+      "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Precise Tracking",
       "window": 0,
-      "label": "PreciseTrack Avasive Easier",
-      "leaderboardId": 203404,
+      "label": "cloverRawControl Big",
+      "leaderboardId": 69579,
       "rankMaxes": [
-        3339,
-        4108,
-        4434,
-        4702,
-        5387,
-        5524
+        5172,
+        7066,
+        8281,
+        9297,
+        11620,
+        12563
       ],
       "source": {
         "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 293,
+        "leaderboardEntries": 33630,
         "clears": [
-          0.8599236641221374,
-          0.5482165863365266,
-          0.429158167127282,
-          0.3509142884164078,
-          0.1199599523259407,
-          0.07722772054629184
+          0.86,
+          0.66,
+          0.4900262467191601,
+          0.36,
+          0.1299731182795699,
+          0.07200239808153477
         ],
-        "sampledAt": "2026-09-13T03:09:15.815Z"
+        "sampledAt": "2026-09-03T01:10:24.846Z"
       },
       "corpus": {
-        "runs": 1,
-        "best": 4473,
-        "median": 4473,
-        "reaches": "rank 3"
+        "runs": 47,
+        "best": 13380,
+        "median": 11901,
+        "reaches": "rank 6"
       }
     },
     {
-      "scenario": "Aimerz+ PreciseTrack Easy S1",
+      "scenario": "cloverRawControl Easy",
       "category": "Precise Tracking",
-      "family": "PreciseTrack",
+      "family": "Clover Control",
       "arm": "Fingertip",
-      "armFrom": "Apogee",
+      "armFrom": "Viscose",
       "subCategory": "Precise Tracking",
       "window": 1,
-      "label": "Aimerz+ PreciseTrack Easy S1",
-      "leaderboardId": 68361,
+      "label": "cloverRawControl Easy",
+      "leaderboardId": 69150,
       "rankMaxes": [
-        2657,
-        2880,
-        2942,
-        3009,
-        3261,
-        3405
+        7354,
+        8038,
+        8328,
+        8903,
+        10138,
+        10619
       ],
       "source": {
         "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 10252,
+        "leaderboardEntries": 79718,
         "clears": [
-          0.26006600660066004,
-          0.18009708737864077,
+          0.2599511599511599,
+          0.18002070393374742,
           0.15,
-          0.10472972972972973,
-          0.03689044945828683,
-          0.022103537700950898
+          0.1050078247261346,
+          0.037480916030534356,
+          0.022000000000000002
         ],
-        "sampledAt": "2026-08-18T23:40:08.582Z"
+        "sampledAt": "2026-09-03T01:10:32.714Z"
       },
       "corpus": {
-        "runs": 3,
-        "best": 3046,
-        "median": 2950,
-        "reaches": "rank 8"
+        "runs": 33,
+        "best": 8166,
+        "median": 6732,
+        "reaches": "rank 6"
       }
     },
     {
-      "scenario": "Aimerz+ PreciseTrack Med S1",
+      "scenario": "cloverRawControl",
       "category": "Precise Tracking",
-      "family": "PreciseTrack",
+      "family": "Clover Control",
       "arm": "Fingertip",
-      "armFrom": "Apogee",
+      "armFrom": "Viscose",
       "subCategory": "Precise Tracking",
       "window": 2,
-      "label": "Aimerz+ PreciseTrack Med S1",
-      "leaderboardId": 69248,
+      "label": "cloverRawControl",
+      "leaderboardId": 68993,
       "rankMaxes": [
-        2900,
-        2981,
-        3046,
-        3122,
-        3371,
-        3530
+        5946,
+        6361,
+        6787,
+        7142,
+        8154,
+        8662
       ],
       "source": {
         "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 5479,
+        "leaderboardEntries": 45984,
         "clears": [
-          0.07724477005509044,
-          0.054143157673522034,
-          0.04122980711234461,
-          0.03065602283226502,
-          0.01023480146467137,
-          0.005512362860031243
+          0.075,
+          0.05500963391136802,
+          0.04,
+          0.030000000000000002,
+          0.010602009912896346,
+          0.005753027813574721
         ],
-        "sampledAt": "2026-09-03T01:12:43.220Z"
+        "sampledAt": "2026-09-03T01:10:40.849Z"
       },
       "corpus": {
-        "runs": 31,
-        "best": 2489,
-        "median": 2196,
+        "runs": 4,
+        "best": 4437,
+        "median": 4133,
         "reaches": null
       }
     },
     {
-      "scenario": "Aimerz+ PreciseTrack Hard S1",
+      "scenario": "cloverRawControl Viscose Hard 50cm",
       "category": "Precise Tracking",
-      "family": "PreciseTrack",
+      "family": "Clover Control",
       "arm": "Fingertip",
-      "armFrom": "Apogee",
+      "armFrom": "Viscose",
       "subCategory": "Precise Tracking",
       "window": 3,
-      "label": "Aimerz+ PreciseTrack Hard S1",
-      "leaderboardId": 68330,
+      "label": "cloverRawControl Viscose Hard 50cm",
+      "leaderboardId": 184568,
       "rankMaxes": [
-        2795,
-        2915,
-        2992,
-        3066
+        11314,
+        11777,
+        12102,
+        12295
       ],
       "source": {
-        "kind": "percentile",
-        "cut": {
-          "ranks": [
-            12,
-            13,
-            14,
-            15
-          ],
-          "topFractions": [
-            0.022,
-            0.015,
-            0.011,
-            0.008
-          ],
-          "leaderboardId": 68330,
-          "total": 3938,
-          "sampledAt": "2026-08-18T23:43:15.728Z"
-        },
-        "why": "Cut from this scenario's own KovaaK's board at the pool ladder's ranks 13, 14, 15, 16 - the top 2.2%, 1.5%, 1.1%, 0.8% of 3,938 entries. No benchmark publishes a tier for this scenario at this window, so there is nothing to adopt. Re-cut with npm run cut:thresholds."
+        "kind": "authored",
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 3938,
+        "leaderboardEntries": 2460,
         "clears": [
-          0.021480008441290513,
-          0.01356614797895874,
-          0.010090091880201681,
-          0.007588192591600352
+          0.021704087199907733,
+          0.013854854882598504,
+          0.01024782661739542,
+          0.006951728876437809
         ],
-        "sampledAt": "2026-08-18T23:43:15.728Z"
+        "sampledAt": "2026-09-23T17:23:49.398Z"
+      },
+      "corpus": {
+        "runs": 1,
+        "best": 6819,
+        "median": 6819,
+        "reaches": null
       }
     },
     {
@@ -5560,9 +5403,9 @@
         "sampledAt": "2026-09-10T23:39:51.708Z"
       },
       "corpus": {
-        "runs": 25,
+        "runs": 26,
         "best": 15910,
-        "median": 11770,
+        "median": 11795,
         "reaches": "rank 8"
       }
     },
@@ -5662,174 +5505,151 @@
       }
     },
     {
-      "scenario": "Smooth Your Vertical Altered POV Entry",
+      "scenario": "SYW Easy",
       "category": "Precise Tracking",
-      "family": "Vertical Control",
-      "arm": "Wrist",
+      "family": "SYW",
+      "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Precise Tracking",
       "window": 0,
-      "label": "Smooth Your Vertical Altered POV Entry",
-      "leaderboardId": 112748,
+      "label": "SYW Easy",
+      "leaderboardId": 2182,
       "rankMaxes": [
-        2160,
-        2801,
-        3191,
-        3502,
-        4283,
-        4745
+        649,
+        722,
+        752,
+        768,
+        792,
+        798
       ],
       "source": {
         "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 4830,
+        "leaderboardEntries": 14288,
         "clears": [
-          0.86,
-          0.6599206349206349,
-          0.4899122807017544,
-          0.35984848484848486,
-          0.1299679487179487,
-          0.06891394578118325
+          0.859375,
+          0.6618421052631579,
+          0.49230769230769234,
+          0.36363636363636365,
+          0.13,
+          0.075
         ],
-        "sampledAt": "2026-09-13T19:21:45.072Z"
+        "sampledAt": "2026-09-23T17:17:32.620Z"
       },
       "corpus": {
-        "runs": 2,
-        "best": 4824,
-        "median": 4587,
-        "reaches": "rank 6"
+        "runs": 22,
+        "best": 797,
+        "median": 772,
+        "reaches": "rank 5"
       }
     },
     {
-      "scenario": "Smooth Your Vertical Altered POV Easy v2",
+      "scenario": "SYW (Smooth Your Wrist)",
       "category": "Precise Tracking",
-      "family": "Vertical Control",
-      "arm": "Wrist",
+      "family": "SYW",
+      "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Precise Tracking",
       "window": 1,
-      "label": "Smooth Your Vertical Altered POV Easy v2",
-      "leaderboardId": 48398,
+      "label": "SYW (Smooth Your Wrist)",
+      "leaderboardId": 185,
       "rankMaxes": [
-        3728,
-        4264,
-        4494,
-        4867,
-        5658,
-        5981
+        454,
+        488,
+        503,
+        532,
+        597,
+        624
       ],
       "source": {
         "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 9672,
+        "leaderboardEntries": 123082,
         "clears": [
-          0.260062893081761,
-          0.17994791666666668,
+          0.26,
+          0.18,
           0.15,
-          0.10495169082125605,
-          0.03655432078094227,
-          0.02052941889839092
+          0.1046875,
+          0.037500000000000006,
+          0.022142857142857145
         ],
-        "sampledAt": "2026-09-13T19:21:59.057Z"
-      },
-      "corpus": {
-        "runs": 1,
-        "best": 3636,
-        "median": 3636,
-        "reaches": null
+        "sampledAt": "2026-09-23T17:17:43.156Z"
       }
     },
     {
-      "scenario": "Smooth Your Vertical Altered POV Intermediate",
+      "scenario": "SYW (Smooth Your Wrist) FIXED",
       "category": "Precise Tracking",
-      "family": "Vertical Control",
-      "arm": "Wrist",
+      "family": "SYW",
+      "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Precise Tracking",
       "window": 2,
-      "label": "Smooth Your Vertical Altered POV Intermediate",
-      "leaderboardId": 107995,
+      "label": "SYW (Smooth Your Wrist) FIXED",
+      "leaderboardId": 1189,
       "rankMaxes": [
-        3240,
-        3379,
-        3518,
-        3642,
-        4061,
-        4284
+        3672,
+        3792,
+        3906,
+        4008,
+        4317,
+        4516
       ],
       "source": {
         "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 10476,
+        "leaderboardEntries": 170836,
         "clears": [
           0.075,
-          0.05502873563218391,
-          0.038272857316995874,
-          0.02783813095590198,
-          0.01052859045256621,
-          0.00574828986343746
+          0.055,
+          0.04,
+          0.030000000000000002,
+          0.011,
+          0.005990990990990991
         ],
-        "sampledAt": "2026-09-13T19:22:12.994Z"
-      },
-      "corpus": {
-        "runs": 1,
-        "best": 1788,
-        "median": 1788,
-        "reaches": null
+        "sampledAt": "2026-09-23T17:17:53.742Z"
       }
     },
     {
-      "scenario": "Smooth Your Vertical Altered POV v2",
+      "scenario": "SYW (Smooth Your Wrist) FIXED Extra thin",
       "category": "Precise Tracking",
-      "family": "Vertical Control",
-      "arm": "Wrist",
+      "family": "SYW",
+      "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Precise Tracking",
       "window": 3,
-      "label": "Smooth Your Vertical Altered POV v2",
-      "leaderboardId": 48393,
+      "label": "SYW (Smooth Your Wrist) FIXED Extra thin",
+      "leaderboardId": 1552,
       "rankMaxes": [
-        3564,
-        3816,
-        3989,
-        4229
+        1710,
+        1812,
+        1879,
+        1985
       ],
       "source": {
-        "kind": "percentile",
-        "cut": {
-          "ranks": [
-            12,
-            13,
-            14,
-            15
-          ],
-          "topFractions": [
-            0.022,
-            0.015,
-            0.011,
-            0.008
-          ],
-          "leaderboardId": 48393,
-          "total": 4725,
-          "sampledAt": "2026-09-13T19:22:30.528Z"
-        },
-        "why": "Frozen once for the theory-led draft rebuild from this exact scenario's own dated leaderboard. Existing Apogee percentile positions are retained. The target is a fixed score, not a live percentile or proof of equal difficulty across variants. Provisional calibration: 4725 players; this board is below the population floor for this band. Validate the difficulty step through group playtesting before publishing the season."
+        "kind": "authored",
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 4725,
+        "leaderboardEntries": 17630,
         "clears": [
-          0.022238651950134317,
-          0.014604394022757617,
-          0.011021336721098072,
-          0.00787322418625428
+          0.020905689411388265,
+          0.013340077801419754,
+          0.010626990350586538,
+          0.007416209446537175
         ],
-        "sampledAt": "2026-09-13T19:22:30.528Z"
+        "sampledAt": "2026-09-23T17:18:04.122Z"
+      },
+      "corpus": {
+        "runs": 4,
+        "best": 1128,
+        "median": 954,
+        "reaches": null
       }
     },
     {
@@ -5867,10 +5687,10 @@
         "sampledAt": "2026-09-04T01:18:16.158Z"
       },
       "corpus": {
-        "runs": 1,
-        "best": 15825,
-        "median": 15825,
-        "reaches": "rank 4"
+        "runs": 2,
+        "best": 16152,
+        "median": 15989,
+        "reaches": "rank 5"
       }
     },
     {
@@ -5949,9 +5769,9 @@
         "sampledAt": "2026-09-13T03:05:09.221Z"
       },
       "corpus": {
-        "runs": 52,
-        "best": 12330,
-        "median": 11435,
+        "runs": 54,
+        "best": 12531,
+        "median": 11462,
         "reaches": null
       }
     },
@@ -6187,179 +6007,162 @@
       }
     },
     {
-      "scenario": "Flower Entry",
+      "scenario": "PGTI Voltaic Easy 80%",
       "category": "Precise Tracking",
-      "family": "Flower Chase",
-      "arm": "Fingertip",
+      "family": "PGTI",
+      "arm": "Blending",
       "armFrom": "Viscose",
       "subCategory": "Precise Tracking",
       "window": 0,
-      "label": "Flower Entry",
-      "leaderboardId": 190139,
+      "label": "PGTI Voltaic Easy 80%",
+      "leaderboardId": 2107,
       "rankMaxes": [
-        2874,
-        3703,
-        4204,
-        4510,
-        5031,
-        5327
+        725,
+        1089,
+        1347,
+        1563,
+        2125,
+        2320
       ],
       "source": {
         "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 3488,
+        "leaderboardEntries": 66575,
         "clears": [
-          0.86,
-          0.6600961538461538,
-          0.4900355871886121,
-          0.3601503759398496,
-          0.12671277243747275,
-          0.07077538900569844
+          0.8601769911504424,
+          0.6598360655737705,
+          0.49006211180124226,
+          0.35988700564971754,
+          0.13,
+          0.07210144927536231
         ],
-        "sampledAt": "2026-09-14T00:56:05.679Z"
+        "sampledAt": "2026-09-23T17:18:14.171Z"
       },
       "corpus": {
-        "runs": 1,
-        "best": 5391,
-        "median": 5391,
+        "runs": 5,
+        "best": 1964,
+        "median": 1875,
+        "reaches": "rank 4"
+      }
+    },
+    {
+      "scenario": "PGTI Voltaic Easy",
+      "category": "Precise Tracking",
+      "family": "PGTI",
+      "arm": "Blending",
+      "armFrom": "Viscose",
+      "subCategory": "Precise Tracking",
+      "window": 1,
+      "label": "PGTI Voltaic Easy",
+      "leaderboardId": 510,
+      "rankMaxes": [
+        1498,
+        1686,
+        1768,
+        1925,
+        2296,
+        2460
+      ],
+      "source": {
+        "kind": "authored",
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
+      },
+      "sanity": {
+        "leaderboardEntries": 103334,
+        "clears": [
+          0.2600896860986547,
+          0.1801470588235294,
+          0.15,
+          0.10488505747126438,
+          0.03744897959183674,
+          0.02203703703703704
+        ],
+        "sampledAt": "2026-09-03T01:10:01.215Z"
+      },
+      "corpus": {
+        "runs": 38,
+        "best": 1718,
+        "median": 1498,
         "reaches": "rank 6"
       }
     },
     {
-      "scenario": "Flower Easier 50cm",
+      "scenario": "PGTI Voltaic Slower - 80%",
       "category": "Precise Tracking",
-      "family": "Flower Chase",
-      "arm": "Fingertip",
-      "armFrom": "Viscose",
-      "subCategory": "Precise Tracking",
-      "window": 1,
-      "label": "Flower Easier 50cm",
-      "leaderboardId": 185354,
-      "rankMaxes": [
-        3575,
-        3702,
-        3755,
-        3870,
-        4271,
-        4502
-      ],
-      "source": {
-        "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
-      },
-      "sanity": {
-        "leaderboardEntries": 27695,
-        "clears": [
-          0.26026490066225166,
-          0.1797752808988764,
-          0.15,
-          0.10507812500000001,
-          0.0374671052631579,
-          0.022016806722689075
-        ],
-        "sampledAt": "2026-09-14T00:56:15.387Z"
-      },
-      "corpus": {
-        "runs": 9,
-        "best": 3798,
-        "median": 3312,
-        "reaches": "rank 7"
-      }
-    },
-    {
-      "scenario": "Flower 50cm",
-      "category": "Precise Tracking",
-      "family": "Flower Chase",
-      "arm": "Fingertip",
+      "family": "PGTI",
+      "arm": "Blending",
       "armFrom": "Viscose",
       "subCategory": "Precise Tracking",
       "window": 2,
-      "label": "Flower 50cm",
-      "leaderboardId": 184580,
+      "label": "PGTI Voltaic Slower - 80%",
+      "leaderboardId": 509,
       "rankMaxes": [
-        3724,
-        3888,
-        4004,
-        4129,
-        4385,
-        4482
+        2206,
+        2347,
+        2477,
+        2599,
+        2987,
+        3196
       ],
       "source": {
         "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 16335,
+        "leaderboardEntries": 16231,
         "clears": [
-          0.075,
-          0.055,
-          0.04004424778761062,
-          0.02843324307976262,
-          0.010894265708858585,
-          0.005610517414499386
+          0.07505882352941176,
+          0.055035460992907806,
+          0.039964601769911505,
+          0.028844663082570717,
+          0.010603734448984941,
+          0.005689099690459368
         ],
-        "sampledAt": "2026-09-14T00:56:25.047Z"
+        "sampledAt": "2026-09-23T17:18:25.387Z"
       },
       "corpus": {
-        "runs": 25,
-        "best": 3193,
-        "median": 2518,
+        "runs": 2,
+        "best": 1908,
+        "median": 1652,
         "reaches": null
       }
     },
     {
-      "scenario": "Flower Hard 50cm",
+      "scenario": "PGTI Voltaic",
       "category": "Precise Tracking",
-      "family": "Flower Chase",
-      "arm": "Fingertip",
+      "family": "PGTI",
+      "arm": "Blending",
       "armFrom": "Viscose",
       "subCategory": "Precise Tracking",
       "window": 3,
-      "label": "Flower Hard 50cm",
-      "leaderboardId": 184591,
+      "label": "PGTI Voltaic",
+      "leaderboardId": 99,
       "rankMaxes": [
-        4215,
-        4331,
-        4392,
-        4452
+        1931,
+        2073,
+        2171,
+        2281
       ],
       "source": {
-        "kind": "percentile",
-        "cut": {
-          "ranks": [
-            12,
-            13,
-            14,
-            15
-          ],
-          "topFractions": [
-            0.022,
-            0.015,
-            0.011,
-            0.008
-          ],
-          "leaderboardId": 184591,
-          "total": 2139,
-          "sampledAt": "2026-09-14T00:56:35.369Z"
-        },
-        "why": "Frozen from this scenario's own board for the season variety expansion. This is a season target, not a copied benchmark tier."
+        "kind": "authored",
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 2139,
+        "leaderboardEntries": 32947,
         "clears": [
-          0.017537537124597376,
-          0.013091477930521983,
-          0.01054883423577517,
-          0.007181854991832511
+          0.022000000000000002,
+          0.014158666595879008,
+          0.010483039552076735,
+          0.007483630054228401
         ],
-        "sampledAt": "2026-09-14T00:56:35.369Z"
+        "sampledAt": "2026-08-19T01:12:47.501Z"
       },
       "corpus": {
         "runs": 1,
-        "best": 2261,
-        "median": 2261,
+        "best": 785,
+        "median": 785,
         "reaches": null
       }
     },
@@ -6480,9 +6283,9 @@
         "sampledAt": "2026-09-14T00:56:46.318Z"
       },
       "corpus": {
-        "runs": 124,
-        "best": 11964,
-        "median": 10421,
+        "runs": 137,
+        "best": 12759,
+        "median": 10509,
         "reaches": null
       }
     },
@@ -6616,7 +6419,7 @@
         "sampledAt": "2026-08-29T17:29:45.876Z"
       },
       "corpus": {
-        "runs": 63,
+        "runs": 64,
         "best": 151,
         "median": 133,
         "reaches": "rank 7"
@@ -6746,10 +6549,10 @@
         "sampledAt": "2026-08-29T17:30:01.280Z"
       },
       "corpus": {
-        "runs": 2,
-        "best": 897,
-        "median": 894,
-        "reaches": "rank 5"
+        "runs": 8,
+        "best": 899,
+        "median": 892,
+        "reaches": "rank 6"
       }
     },
     {
@@ -6787,7 +6590,7 @@
         "sampledAt": "2026-08-25T20:09:14.121Z"
       },
       "corpus": {
-        "runs": 37,
+        "runs": 38,
         "best": 892,
         "median": 884,
         "reaches": "rank 5"
@@ -6828,7 +6631,7 @@
         "sampledAt": "2026-08-29T17:30:08.931Z"
       },
       "corpus": {
-        "runs": 9,
+        "runs": 11,
         "best": 870,
         "median": 864,
         "reaches": null
@@ -6923,9 +6726,9 @@
         "sampledAt": "2026-08-31T22:11:26.851Z"
       },
       "corpus": {
-        "runs": 2,
-        "best": 4988,
-        "median": 4987,
+        "runs": 8,
+        "best": 5245,
+        "median": 5011,
         "reaches": "rank 4"
       }
     },
@@ -7005,9 +6808,9 @@
         "sampledAt": "2026-08-31T22:12:17.595Z"
       },
       "corpus": {
-        "runs": 46,
+        "runs": 47,
         "best": 3577,
-        "median": 3204,
+        "median": 3201,
         "reaches": null
       }
     },
@@ -7060,345 +6863,287 @@
       }
     },
     {
-      "scenario": "Air Angelic rAim Biggest",
+      "scenario": "Air Angelic 4 Voltaic Easy 80% (Good Version)",
       "category": "Reactive Tracking",
       "family": "Air Angelic",
       "arm": "Fingertip",
-      "armFrom": "Apogee",
+      "armFrom": "Viscose",
       "subCategory": "Reactive Tracking",
       "window": 0,
-      "label": "Air Angelic rAim Biggest",
-      "leaderboardId": 12233,
+      "label": "Air Angelic 4 Voltaic Easy 80% (Good Version)",
+      "leaderboardId": 13681,
       "rankMaxes": [
-        896,
-        918,
-        924,
-        927,
-        933,
-        935
+        2415,
+        2891,
+        3146,
+        3332,
+        3690,
+        3808
       ],
       "source": {
         "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 798,
+        "leaderboardEntries": 99868,
         "clears": [
-          0.8604641350210971,
-          0.6636848341232225,
-          0.43463901232524205,
-          0.34204723171401646,
-          0.12967356504136665,
-          0.07586673458336922
+          0.8599437148217636,
+          0.6601063829787235,
+          0.49014084507042255,
+          0.3597222222222222,
+          0.1298780487804878,
+          0.072
         ],
-        "sampledAt": "2026-09-13T03:05:16.482Z"
-      },
-      "corpus": {
-        "runs": 1,
-        "best": 924,
-        "median": 924,
-        "reaches": "rank 3"
+        "sampledAt": "2026-09-23T17:19:18.228Z"
       }
     },
     {
-      "scenario": "Air Angelic Easier",
+      "scenario": "Air Angelic 4 Voltaic Easy",
       "category": "Reactive Tracking",
       "family": "Air Angelic",
       "arm": "Fingertip",
-      "armFrom": "Apogee",
+      "armFrom": "Viscose",
       "subCategory": "Reactive Tracking",
       "window": 1,
-      "label": "Air Angelic Easier",
-      "leaderboardId": 189778,
+      "label": "Air Angelic 4 Voltaic Easy",
+      "leaderboardId": 42,
       "rankMaxes": [
-        930,
-        933,
-        934,
-        935,
-        939,
-        940
+        3041,
+        3259,
+        3351,
+        3509,
+        3928,
+        4109
       ],
       "source": {
         "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 1637,
+        "leaderboardEntries": 141807,
         "clears": [
-          0.24395912465087616,
-          0.16108666263240196,
-          0.1303330407795351,
-          0.10061021938613098,
-          0.03208150042096312,
-          0.0139261834028617
-        ],
-        "sampledAt": "2026-09-13T03:05:23.741Z"
-      },
-      "corpus": {
-        "runs": 17,
-        "best": 922,
-        "median": 911,
-        "reaches": null
-      }
-    },
-    {
-      "scenario": "Air Angelic rAim Easy",
-      "category": "Reactive Tracking",
-      "family": "Air Angelic",
-      "arm": "Fingertip",
-      "armFrom": "Apogee",
-      "subCategory": "Reactive Tracking",
-      "window": 2,
-      "label": "Air Angelic rAim Easy",
-      "leaderboardId": 572,
-      "rankMaxes": [
-        922,
-        924,
-        925,
-        927,
-        931,
-        933
-      ],
-      "source": {
-        "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
-      },
-      "sanity": {
-        "leaderboardEntries": 9913,
-        "clears": [
-          0.07366803278688526,
-          0.05317622950819624,
-          0.043839225800286714,
-          0.029366831954318592,
-          0.010144630740818436,
-          0.005813285391068081
-        ],
-        "sampledAt": "2026-09-13T03:05:31.004Z"
-      },
-      "corpus": {
-        "runs": 2,
-        "best": 899,
-        "median": 899,
-        "reaches": null
-      }
-    },
-    {
-      "scenario": "Air Angelic",
-      "category": "Reactive Tracking",
-      "family": "Air Angelic",
-      "arm": "Fingertip",
-      "armFrom": "Apogee",
-      "subCategory": "Reactive Tracking",
-      "window": 3,
-      "label": "Air Angelic",
-      "leaderboardId": 419,
-      "rankMaxes": [
-        923,
-        926,
-        927,
-        929
-      ],
-      "source": {
-        "kind": "percentile",
-        "cut": {
-          "ranks": [
-            12,
-            13,
-            14,
-            15
-          ],
-          "topFractions": [
-            0.022,
-            0.015,
-            0.011,
-            0.008
-          ],
-          "leaderboardId": 419,
-          "total": 15308,
-          "sampledAt": "2026-08-25T20:09:06.304Z"
-        },
-        "why": "Cut from this scenario's own KovaaK's board at the pool ladder's ranks 13, 14, 15, 16 - the top 2.2%, 1.5%, 1.1%, 0.8% of 15,308 entries. No benchmark publishes a tier for this scenario at this window, so there is nothing to adopt. Re-cut with npm run cut:thresholds."
-      },
-      "sanity": {
-        "leaderboardEntries": 15308,
-        "clears": [
-          0.0212562857212861,
-          0.013517502391963405,
-          0.011113901379775503,
-          0.007512884391405847
-        ],
-        "sampledAt": "2026-08-25T20:09:06.304Z"
-      },
-      "corpus": {
-        "runs": 1,
-        "best": 873,
-        "median": 873,
-        "reaches": null
-      }
-    },
-    {
-      "scenario": "CB StrafeTrack Easy",
-      "category": "Reactive Tracking",
-      "family": "Strafe Gallery",
-      "arm": "Wrist",
-      "armFrom": "Apogee",
-      "subCategory": "Reactive Tracking",
-      "window": 0,
-      "label": "CB StrafeTrack Easy",
-      "leaderboardId": 93207,
-      "rankMaxes": [
-        1320,
-        1659,
-        1885,
-        2101,
-        2706,
-        2867
-      ],
-      "source": {
-        "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
-      },
-      "sanity": {
-        "leaderboardEntries": 5912,
-        "clears": [
-          0.8601769911504424,
-          0.6596774193548387,
-          0.4896774193548387,
-          0.3601036269430052,
-          0.13,
-          0.0721807930615724
-        ],
-        "sampledAt": "2026-08-25T20:25:10.745Z"
-      },
-      "corpus": {
-        "runs": 2,
-        "best": 2427,
-        "median": 2421,
-        "reaches": "rank 4"
-      }
-    },
-    {
-      "scenario": "Aimerz+ VGS Easy S1",
-      "category": "Reactive Tracking",
-      "family": "Strafe Gallery",
-      "arm": "Wrist",
-      "armFrom": "Apogee",
-      "subCategory": "Reactive Tracking",
-      "window": 1,
-      "label": "Aimerz+ VGS Easy S1",
-      "leaderboardId": 68358,
-      "rankMaxes": [
-        2987,
-        3103,
-        3162,
-        3281,
-        3573,
-        3702
-      ],
-      "source": {
-        "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
-      },
-      "sanity": {
-        "leaderboardEntries": 10546,
-        "clears": [
-          0.26015625,
-          0.18010204081632653,
+          0.26,
+          0.17987012987012987,
           0.15,
-          0.10492424242424243,
-          0.04263137949386397,
-          0.02463150357775169
+          0.10511363636363637,
+          0.0374812030075188,
+          0.02203804347826087
         ],
-        "sampledAt": "2026-08-18T23:40:28.004Z"
+        "sampledAt": "2026-08-25T20:08:50.381Z"
       },
       "corpus": {
-        "runs": 1,
-        "best": 3106,
-        "median": 3106,
-        "reaches": "rank 6"
+        "runs": 36,
+        "best": 3467,
+        "median": 3089,
+        "reaches": "rank 7"
       }
     },
     {
-      "scenario": "Aimerz+ VGS Med S1",
+      "scenario": "Air Angelic 4 Voltaic",
       "category": "Reactive Tracking",
-      "family": "Strafe Gallery",
-      "arm": "Wrist",
-      "armFrom": "Apogee",
+      "family": "Air Angelic",
+      "arm": "Fingertip",
+      "armFrom": "Viscose",
       "subCategory": "Reactive Tracking",
       "window": 2,
-      "label": "Aimerz+ VGS Med S1",
-      "leaderboardId": 69298,
+      "label": "Air Angelic 4 Voltaic",
+      "leaderboardId": 30,
       "rankMaxes": [
-        3363,
-        3433,
-        3485,
-        3530,
-        3672,
-        3726
+        2968,
+        3102,
+        3242,
+        3358,
+        3679,
+        3877
       ],
       "source": {
         "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 2661,
+        "leaderboardEntries": 82235,
         "clears": [
-          0.06858194260016261,
-          0.04927460838695031,
-          0.03854418340465425,
-          0.029102494299632634,
-          0.010245856236984742,
-          0.005986093225245014
+          0.075,
+          0.05494011976047904,
+          0.04003105590062112,
+          0.030000000000000002,
+          0.011004566210045662,
+          0.005943028038630502
         ],
-        "sampledAt": "2026-09-10T23:40:13.617Z"
+        "sampledAt": "2026-08-25T20:08:58.492Z"
+      },
+      "corpus": {
+        "runs": 2,
+        "best": 2375,
+        "median": 2129,
+        "reaches": null
       }
     },
     {
-      "scenario": "Aimerz+ VGS Hard S1",
+      "scenario": "Air Angelic 4 Voltaic Smaller",
       "category": "Reactive Tracking",
-      "family": "Strafe Gallery",
-      "arm": "Wrist",
+      "family": "Air Angelic",
+      "arm": "Fingertip",
       "armFrom": "Apogee",
       "subCategory": "Reactive Tracking",
       "window": 3,
-      "label": "Aimerz+ VGS Hard S1",
-      "leaderboardId": 68332,
+      "label": "Air Angelic 4 Voltaic Smaller",
+      "leaderboardId": 518,
       "rankMaxes": [
-        3287,
-        3365,
-        3416,
-        3477
+        2623,
+        2758,
+        2844,
+        2929
       ],
       "source": {
-        "kind": "percentile",
-        "cut": {
-          "ranks": [
-            12,
-            13,
-            14,
-            15
-          ],
-          "topFractions": [
-            0.022,
-            0.015,
-            0.011,
-            0.008
-          ],
-          "leaderboardId": 68332,
-          "total": 8704,
-          "sampledAt": "2026-08-18T23:43:34.416Z"
-        },
-        "why": "Score targets cut once from this scenario's own KovaaK's leaderboard, at the pool ladder's percentiles for this window (see cut). They're fixed and don't move while the app runs. Each category ladder weights its six families equally. Whether the targets are equally hard across scenarios hasn't been playtested."
+        "kind": "authored",
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 8704,
+        "leaderboardEntries": 11986,
         "clears": [
-          0.021529910316486985,
-          0.014105499453897961,
-          0.010682268844504803,
-          0.007553504738407131
+          0.021756675997192682,
+          0.014404871190296075,
+          0.010997851967572435,
+          0.008423045924434675
         ],
-        "sampledAt": "2026-08-18T23:43:34.416Z"
+        "sampledAt": "2026-08-19T01:06:43.594Z"
+      }
+    },
+    {
+      "scenario": "Kindafar Long Strafes",
+      "category": "Reactive Tracking",
+      "family": "Long Strafes",
+      "arm": "Arm",
+      "armFrom": "Apogee",
+      "subCategory": "Reactive Tracking",
+      "window": 0,
+      "label": "Kindafar Long Strafes",
+      "leaderboardId": 2152,
+      "rankMaxes": [
+        8755,
+        11184,
+        12609,
+        13676,
+        15862,
+        16632
+      ],
+      "source": {
+        "kind": "authored",
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
+      },
+      "sanity": {
+        "leaderboardEntries": 75463,
+        "clears": [
+          0.8600119904076738,
+          0.66,
+          0.49,
+          0.3600472813238771,
+          0.12996632996632995,
+          0.072
+        ],
+        "sampledAt": "2026-09-23T17:18:41.670Z"
+      }
+    },
+    {
+      "scenario": "Midrange Long Strafes Invincible",
+      "category": "Reactive Tracking",
+      "family": "Long Strafes",
+      "arm": "Arm",
+      "armFrom": "Apogee",
+      "subCategory": "Reactive Tracking",
+      "window": 1,
+      "label": "Midrange Long Strafes Invincible",
+      "leaderboardId": 147,
+      "rankMaxes": [
+        16531,
+        17132,
+        17370,
+        17807,
+        18696,
+        19050
+      ],
+      "source": {
+        "kind": "authored",
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
+      },
+      "sanity": {
+        "leaderboardEntries": 112155,
+        "clears": [
+          0.26002710027100273,
+          0.18005050505050504,
+          0.15,
+          0.10504115226337449,
+          0.037500000000000006,
+          0.022000000000000002
+        ],
+        "sampledAt": "2026-09-23T17:18:51.615Z"
+      }
+    },
+    {
+      "scenario": "Close Long Strafes Invincible",
+      "category": "Reactive Tracking",
+      "family": "Long Strafes",
+      "arm": "Arm",
+      "armFrom": "Apogee",
+      "subCategory": "Reactive Tracking",
+      "window": 2,
+      "label": "Close Long Strafes Invincible",
+      "leaderboardId": 117,
+      "rankMaxes": [
+        15894,
+        16312,
+        16680,
+        16998,
+        17905,
+        18338
+      ],
+      "source": {
+        "kind": "authored",
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
+      },
+      "sanity": {
+        "leaderboardEntries": 170643,
+        "clears": [
+          0.075,
+          0.054980842911877395,
+          0.04,
+          0.030000000000000002,
+          0.010993265993265994,
+          0.006004273504273504
+        ],
+        "sampledAt": "2026-08-29T18:34:34.965Z"
+      }
+    },
+    {
+      "scenario": "Close long strafes invincible very thin",
+      "category": "Reactive Tracking",
+      "family": "Long Strafes",
+      "arm": "Arm",
+      "armFrom": "Apogee",
+      "subCategory": "Reactive Tracking",
+      "window": 3,
+      "label": "Close long strafes invincible very thin",
+      "leaderboardId": 2244,
+      "rankMaxes": [
+        7448,
+        7848,
+        8122,
+        8420
+      ],
+      "source": {
+        "kind": "authored",
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
+      },
+      "sanity": {
+        "leaderboardEntries": 12516,
+        "clears": [
+          0.02157358059468492,
+          0.01419784053752013,
+          0.010800582327946682,
+          0.008021736441858121
+        ],
+        "sampledAt": "2026-09-23T17:19:02.763Z"
       }
     },
     {
@@ -7477,9 +7222,9 @@
         "sampledAt": "2026-09-13T03:09:23.048Z"
       },
       "corpus": {
-        "runs": 30,
+        "runs": 37,
         "best": 14076,
-        "median": 12249,
+        "median": 12348,
         "reaches": "rank 6"
       }
     },
@@ -7518,9 +7263,9 @@
         "sampledAt": "2026-09-13T03:05:45.616Z"
       },
       "corpus": {
-        "runs": 44,
+        "runs": 48,
         "best": 3515,
-        "median": 3053,
+        "median": 3083,
         "reaches": null
       }
     },
@@ -7825,9 +7570,9 @@
         "sampledAt": "2026-09-14T00:57:21.170Z"
       },
       "corpus": {
-        "runs": 24,
+        "runs": 26,
         "best": 924,
-        "median": 917,
+        "median": 918,
         "reaches": null
       }
     },
@@ -8361,9 +8106,9 @@
         "sampledAt": "2026-08-29T18:34:50.429Z"
       },
       "corpus": {
-        "runs": 16,
+        "runs": 21,
         "best": 7416,
-        "median": 6813,
+        "median": 6588,
         "reaches": null
       }
     },
@@ -8416,38 +8161,44 @@
       }
     },
     {
-      "scenario": "wobin DotTS Easy",
+      "scenario": "VT DotTS Novice S5",
       "category": "Speed Switching",
       "family": "DotTS",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
       "window": 0,
-      "label": "wobin DotTS Easy",
-      "leaderboardId": 125689,
+      "label": "VT DotTS Novice S5",
+      "leaderboardId": 104868,
       "rankMaxes": [
-        1053,
-        1205,
-        1275,
-        1331,
-        1417,
-        1481
+        860,
+        1002,
+        1082,
+        1107,
+        1170,
+        1209
       ],
       "source": {
         "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 441,
+        "leaderboardEntries": 91135,
         "clears": [
-          0.8596296296296296,
-          0.6598039215686274,
-          0.4418242403763347,
-          0.2981851497167128,
-          0.131751200335356,
-          0.07587013366704459
+          0.86,
+          0.6594285714285715,
+          0.49,
+          0.3621621621621622,
+          0.13076923076923078,
+          0.07211538461538461
         ],
-        "sampledAt": "2026-09-13T03:06:22.128Z"
+        "sampledAt": "2026-08-18T17:43:16.053Z"
+      },
+      "corpus": {
+        "runs": 2,
+        "best": 1240,
+        "median": 1221,
+        "reaches": "rank 6"
       }
     },
     {
@@ -8520,9 +8271,9 @@
         "sampledAt": "2026-09-03T01:13:23.738Z"
       },
       "corpus": {
-        "runs": 5,
+        "runs": 6,
         "best": 2504,
-        "median": 2390,
+        "median": 2407,
         "reaches": null
       }
     },
@@ -8609,7 +8360,7 @@
         "sampledAt": "2026-08-29T17:31:11.272Z"
       },
       "corpus": {
-        "runs": 184,
+        "runs": 194,
         "best": 129,
         "median": 117,
         "reaches": "rank 6"
@@ -8650,7 +8401,7 @@
         "sampledAt": "2026-09-10T23:40:20.922Z"
       },
       "corpus": {
-        "runs": 85,
+        "runs": 86,
         "best": 119,
         "median": 106,
         "reaches": "rank 8"
@@ -8691,7 +8442,7 @@
         "sampledAt": "2026-09-13T19:23:40.972Z"
       },
       "corpus": {
-        "runs": 4,
+        "runs": 5,
         "best": 108,
         "median": 104,
         "reaches": "rank 11"
@@ -8780,9 +8531,9 @@
         "sampledAt": "2026-08-18T17:43:39.076Z"
       },
       "corpus": {
-        "runs": 2,
-        "best": 1034,
-        "median": 988,
+        "runs": 3,
+        "best": 1111,
+        "median": 1034,
         "reaches": "rank 6"
       }
     },
@@ -8821,9 +8572,9 @@
         "sampledAt": "2026-08-18T17:43:46.727Z"
       },
       "corpus": {
-        "runs": 53,
-        "best": 1010,
-        "median": 901,
+        "runs": 63,
+        "best": 1031,
+        "median": 916,
         "reaches": "rank 7"
       }
     },
@@ -8900,162 +8651,145 @@
       }
     },
     {
-      "scenario": "Aimerz+ pivoTS Easy S1",
+      "scenario": "patCircleSwitch easy NR",
       "category": "Speed Switching",
-      "family": "PivoTS",
-      "arm": "Arm",
+      "family": "patCircleSwitch",
+      "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
       "window": 0,
-      "label": "Aimerz+ pivoTS Easy S1",
-      "leaderboardId": 68432,
+      "label": "patCircleSwitch easy NR",
+      "leaderboardId": 3719,
       "rankMaxes": [
-        72,
-        85,
-        94,
-        101,
-        114,
-        117
+        6272,
+        7392,
+        7970,
+        8360,
+        9080,
+        9319
       ],
       "source": {
         "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 14825,
+        "leaderboardEntries": 5678,
         "clears": [
-          0.8634823359769287,
-          0.668450184501845,
-          0.49858299595141714,
-          0.35847953216374273,
-          0.125,
-          0.075
+          0.86,
+          0.66,
+          0.49,
+          0.36,
+          0.13,
+          0.07524262930513421
         ],
-        "sampledAt": "2026-08-18T23:40:45.418Z"
-      },
-      "corpus": {
-        "runs": 2,
-        "best": 112,
-        "median": 111,
-        "reaches": "rank 4"
+        "sampledAt": "2026-09-23T17:19:55.229Z"
       }
     },
     {
-      "scenario": "aimerz+ pivoTS Normal",
+      "scenario": "patCircleSwitch NR",
       "category": "Speed Switching",
-      "family": "PivoTS",
-      "arm": "Arm",
+      "family": "patCircleSwitch",
+      "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
       "window": 1,
-      "label": "aimerz+ pivoTS Normal",
-      "leaderboardId": 44376,
+      "label": "patCircleSwitch NR",
+      "leaderboardId": 535,
       "rankMaxes": [
-        109,
-        115,
-        117,
-        121,
-        128,
-        131
+        90,
+        93,
+        95,
+        98,
+        104,
+        108
       ],
       "source": {
         "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 8284,
+        "leaderboardEntries": 38271,
         "clears": [
-          0.2625,
-          0.18333333333333335,
-          0.15,
-          0.1,
-          0.034653624803820275,
-          0.022227775423195283
+          0.25,
+          0.1803921568627451,
+          0.14338235294117643,
+          0.09939024390243906,
+          0.04034000000000001,
+          0.020237341772151887
         ],
-        "sampledAt": "2026-09-10T23:40:42.827Z"
+        "sampledAt": "2026-08-29T19:22:46.347Z"
+      },
+      "corpus": {
+        "runs": 38,
+        "best": 101,
+        "median": 89,
+        "reaches": "rank 8"
       }
     },
     {
-      "scenario": "aimerz+ pivoTS Hard",
+      "scenario": "patCircleSwitch small NR",
       "category": "Speed Switching",
-      "family": "PivoTS",
-      "arm": "Arm",
+      "family": "patCircleSwitch",
+      "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
       "window": 2,
-      "label": "aimerz+ pivoTS Hard",
-      "leaderboardId": 44373,
+      "label": "patCircleSwitch small NR",
+      "leaderboardId": 946,
       "rankMaxes": [
-        125,
-        128,
-        131,
-        133,
-        141,
-        144
+        5580,
+        5724,
+        5840,
+        5947,
+        6296,
+        6544
       ],
       "source": {
         "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 4959,
+        "leaderboardEntries": 17742,
         "clears": [
-          0.07491400933338109,
-          0.055660895022878215,
-          0.03880152144619382,
-          0.029864249807876313,
-          0.01131742335460146,
-          0.006351689100095146
+          0.075,
+          0.055,
+          0.04,
+          0.029975,
+          0.011335134603745647,
+          0.005550190243120455
         ],
-        "sampledAt": "2026-09-10T23:40:50.129Z"
+        "sampledAt": "2026-09-23T17:20:06.109Z"
       }
     },
     {
-      "scenario": "Aimerz+ pivoTS Hard S1",
+      "scenario": "PatCircleSwitch Speed",
       "category": "Speed Switching",
-      "family": "PivoTS",
-      "arm": "Arm",
+      "family": "patCircleSwitch",
+      "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
       "window": 3,
-      "label": "Aimerz+ pivoTS Hard S1",
-      "leaderboardId": 68313,
+      "label": "PatCircleSwitch Speed",
+      "leaderboardId": 36090,
       "rankMaxes": [
-        124,
-        127,
-        129,
-        132
+        103,
+        105,
+        107,
+        108
       ],
       "source": {
-        "kind": "percentile",
-        "cut": {
-          "ranks": [
-            12,
-            13,
-            14,
-            15
-          ],
-          "topFractions": [
-            0.022,
-            0.015,
-            0.011,
-            0.008
-          ],
-          "leaderboardId": 68313,
-          "total": 5800,
-          "sampledAt": "2026-08-18T23:43:53.331Z"
-        },
-        "why": "Score targets cut once from this scenario's own KovaaK's leaderboard, at the pool ladder's percentiles for this window (see cut). They're fixed and don't move while the app runs. Each category ladder weights its six families equally. Whether the targets are equally hard across scenarios hasn't been playtested."
+        "kind": "authored",
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 5800,
+        "leaderboardEntries": 3473,
         "clears": [
-          0.02211888359907065,
-          0.015128060918624855,
-          0.011945867088917105,
-          0.008270527668318749
+          0.023005442277142553,
+          0.013379326580777546,
+          0.008801222871243736,
+          0.007122971427796634
         ],
-        "sampledAt": "2026-08-18T23:43:53.331Z"
+        "sampledAt": "2026-09-23T17:20:16.070Z"
       }
     },
     {
@@ -9093,7 +8827,7 @@
         "sampledAt": "2026-09-02T19:35:51.823Z"
       },
       "corpus": {
-        "runs": 34,
+        "runs": 35,
         "best": 117,
         "median": 106,
         "reaches": "rank 4"
@@ -9511,7 +9245,7 @@
         "sampledAt": "2026-09-03T01:14:10.928Z"
       },
       "corpus": {
-        "runs": 29,
+        "runs": 30,
         "best": 133,
         "median": 126,
         "reaches": null
@@ -9572,162 +9306,163 @@
       }
     },
     {
-      "scenario": "CB WaveSwitch Easy",
+      "scenario": "beanTS Larger",
       "category": "Speed Switching",
-      "family": "Wave Relay",
-      "arm": "Blending",
+      "family": "beanTS",
+      "arm": "Fingertip",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
       "window": 0,
-      "label": "CB WaveSwitch Easy",
-      "leaderboardId": 93205,
+      "label": "beanTS Larger",
+      "leaderboardId": 129353,
       "rankMaxes": [
-        540,
-        646,
-        718,
-        784,
-        958,
-        1001
+        89,
+        106,
+        116,
+        122,
+        139,
+        143
       ],
       "source": {
         "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 3909,
+        "leaderboardEntries": 71281,
         "clears": [
-          0.859762805087659,
-          0.6594280326838466,
-          0.490595340811044,
-          0.36,
-          0.12957259585166564,
-          0.06978397688630705
+          0.8627906976744186,
+          0.6551724137931034,
+          0.48095238095238096,
+          0.36464646464646466,
+          0.12872340425531908,
+          0.07
         ],
-        "sampledAt": "2026-08-25T20:25:50.805Z"
+        "sampledAt": "2026-08-29T17:31:49.995Z"
+      },
+      "corpus": {
+        "runs": 55,
+        "best": 139,
+        "median": 129,
+        "reaches": "rank 5"
       }
     },
     {
-      "scenario": "WaveSwitch Revosect Entry",
+      "scenario": "beanTS",
       "category": "Speed Switching",
-      "family": "Wave Relay",
-      "arm": "Blending",
+      "family": "beanTS",
+      "arm": "Fingertip",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
       "window": 1,
-      "label": "WaveSwitch Revosect Entry",
-      "leaderboardId": 142903,
+      "label": "beanTS",
+      "leaderboardId": 2648,
       "rankMaxes": [
-        943,
-        977,
-        994,
-        1034,
-        1126,
-        1158
+        116,
+        123,
+        126,
+        131,
+        141,
+        145
       ],
       "source": {
         "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 1114,
+        "leaderboardEntries": 96570,
         "clears": [
-          0.2500361544973228,
-          0.17956367664618275,
-          0.15280475011848985,
-          0.10452950462427077,
-          0.03642282409920409,
-          0.023087041042678055
+          0.26197718631178707,
+          0.17935420743639924,
+          0.15,
+          0.1,
+          0.038797468354430396,
+          0.022465181058495834
         ],
-        "sampledAt": "2026-09-14T02:37:10.361Z"
+        "sampledAt": "2026-08-29T18:34:58.210Z"
+      },
+      "corpus": {
+        "runs": 82,
+        "best": 137,
+        "median": 120,
+        "reaches": "rank 8"
       }
     },
     {
-      "scenario": "WaveSwitch Revosect Int",
+      "scenario": "beanTS 30% Smaller",
       "category": "Speed Switching",
-      "family": "Wave Relay",
-      "arm": "Blending",
+      "family": "beanTS",
+      "arm": "Fingertip",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
       "window": 2,
-      "label": "WaveSwitch Revosect Int",
-      "leaderboardId": 143210,
+      "label": "beanTS 30% Smaller",
+      "leaderboardId": 6779,
       "rankMaxes": [
-        1040,
-        1056,
-        1067,
-        1078,
-        1124,
-        1178
+        125,
+        127,
+        130,
+        132,
+        140,
+        143
       ],
       "source": {
         "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 643,
+        "leaderboardEntries": 10769,
         "clears": [
-          0.07700131962856241,
-          0.0520072193416357,
-          0.03970908610073255,
-          0.03253856657257029,
-          0.012916182426903098,
-          0.005215326534105628
+          0.07272727272727275,
+          0.057575757575757586,
+          0.03960509418165754,
+          0.03071010682998644,
+          0.009837772432020294,
+          0.005625776023579522
         ],
-        "sampledAt": "2026-09-14T02:37:18.073Z"
+        "sampledAt": "2026-09-23T17:19:35.064Z"
       },
       "corpus": {
-        "runs": 2,
-        "best": 826,
-        "median": 808,
+        "runs": 1,
+        "best": 97,
+        "median": 97,
         "reaches": null
       }
     },
     {
-      "scenario": "WaveSwitch Revosect",
+      "scenario": "beanTS 200%",
       "category": "Speed Switching",
-      "family": "Wave Relay",
-      "arm": "Blending",
+      "family": "beanTS",
+      "arm": "Fingertip",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
       "window": 3,
-      "label": "WaveSwitch Revosect",
-      "leaderboardId": 141138,
+      "label": "beanTS 200%",
+      "leaderboardId": 58888,
       "rankMaxes": [
-        1174,
-        1192,
-        1203,
-        1206
+        148,
+        151,
+        152,
+        155
       ],
       "source": {
-        "kind": "percentile",
-        "cut": {
-          "ranks": [
-            12,
-            13,
-            14,
-            15
-          ],
-          "topFractions": [
-            0.022,
-            0.015,
-            0.011,
-            0.008
-          ],
-          "leaderboardId": 141138,
-          "total": 154,
-          "sampledAt": "2026-09-14T01:00:21.659Z"
-        },
-        "why": "Frozen from this scenario's own board for the season variety expansion. This is a season target, not a copied benchmark tier."
+        "kind": "authored",
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 154,
+        "leaderboardEntries": 4831,
         "clears": [
-          0.020766915371096574,
-          0.015376434196317715,
-          0.010692579093718688,
-          0.006629420667389285
+          0.021077579410401913,
+          0.012531469563506155,
+          0.010514578752302658,
+          0.007048169514474631
         ],
-        "sampledAt": "2026-09-14T01:00:21.659Z"
+        "sampledAt": "2026-09-23T17:19:44.992Z"
+      },
+      "corpus": {
+        "runs": 16,
+        "best": 118,
+        "median": 113,
+        "reaches": null
       }
     },
     {
@@ -10094,6 +9829,12 @@
           0.06946699557364767
         ],
         "sampledAt": "2026-09-14T19:14:24.079Z"
+      },
+      "corpus": {
+        "runs": 2,
+        "best": 1057,
+        "median": 1035,
+        "reaches": "rank 6"
       }
     },
     {
@@ -10130,6 +9871,12 @@
           0.021363370537695957
         ],
         "sampledAt": "2026-09-14T19:14:34.233Z"
+      },
+      "corpus": {
+        "runs": 4,
+        "best": 790,
+        "median": 750,
+        "reaches": "rank 7"
       }
     },
     {
@@ -10166,6 +9913,12 @@
           0.00563892383545456
         ],
         "sampledAt": "2026-09-14T19:14:44.277Z"
+      },
+      "corpus": {
+        "runs": 1,
+        "best": 649,
+        "median": 649,
+        "reaches": null
       }
     },
     {
@@ -10198,146 +9951,154 @@
           0.006818883550845847
         ],
         "sampledAt": "2026-09-14T19:14:54.218Z"
+      },
+      "corpus": {
+        "runs": 2,
+        "best": 460,
+        "median": 457,
+        "reaches": null
       }
     },
     {
-      "scenario": "Floatswitch Entry",
+      "scenario": "patTargetSwitch easy",
       "category": "Evasive Switching",
-      "family": "Floating Heads",
-      "focus": "Build a target order and keep each burst on the head until it drops.",
-      "arm": "Blending",
+      "family": "patTargetSwitch",
+      "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Evasive Switching",
       "window": 0,
-      "label": "Floatswitch Entry",
-      "leaderboardId": 112237,
+      "label": "patTargetSwitch easy",
+      "leaderboardId": 600,
       "rankMaxes": [
-        505,
-        577,
-        612,
-        638,
-        708,
-        742
+        5524,
+        6463,
+        6957,
+        7308,
+        8066,
+        8384
       ],
       "source": {
         "kind": "authored",
-        "why": "Frozen from this scenario's own dated leaderboard. The first four ranks use the season curve; lower bands keep stricter two-rank crossover cuts (0.5 and 0.4 factors). Ties are capped backward from the demonstrated record. Reproduce using data/evasive_rework_calibration.json. Physical difficulty and equal effort between scenarios require playtesting."
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 4300,
+        "leaderboardEntries": 55018,
         "clears": [
-          0.8601851851851852,
-          0.6605882352941177,
+          0.86,
+          0.6599107142857144,
           0.49,
           0.36,
-          0.12926829268292683,
-          0.06769417631682172
+          0.13,
+          0.072
         ],
-        "sampledAt": "2026-09-14T19:15:03.017Z"
+        "sampledAt": "2026-09-23T17:20:25.944Z"
+      },
+      "corpus": {
+        "runs": 53,
+        "best": 8440,
+        "median": 7720,
+        "reaches": "rank 6"
       }
     },
     {
-      "scenario": "Floatswitch Intermediate",
+      "scenario": "patTargetSwitch",
       "category": "Evasive Switching",
-      "family": "Floating Heads",
-      "focus": "Build a target order and keep each burst on the head until it drops.",
-      "arm": "Blending",
+      "family": "patTargetSwitch",
+      "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Evasive Switching",
       "window": 1,
-      "label": "Floatswitch Intermediate",
-      "leaderboardId": 111979,
+      "label": "patTargetSwitch",
+      "leaderboardId": 116,
       "rankMaxes": [
-        685,
-        708,
-        719,
-        735,
-        773,
-        796
+        5504,
+        5770,
+        5890,
+        6115,
+        6660,
+        6924
       ],
       "source": {
         "kind": "authored",
-        "why": "Frozen from this scenario's own dated leaderboard. The first four ranks use the season curve; lower bands keep stricter two-rank crossover cuts (0.5 and 0.4 factors). Ties are capped backward from the demonstrated record. Reproduce using data/evasive_rework_calibration.json. Physical difficulty and equal effort between scenarios require playtesting."
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 9749,
+        "leaderboardEntries": 136341,
         "clears": [
-          0.2612244897959184,
-          0.17894736842105263,
+          0.26,
+          0.18,
           0.15,
-          0.10555555555555556,
-          0.0379807557771711,
-          0.02170836971486937
+          0.10500000000000001,
+          0.037500000000000006,
+          0.022000000000000002
         ],
-        "sampledAt": "2026-09-14T19:15:12.937Z"
+        "sampledAt": "2026-09-23T17:20:35.861Z"
       }
     },
     {
-      "scenario": "Floatswitch Advanced",
+      "scenario": "patTargetSwitch Small",
       "category": "Evasive Switching",
-      "family": "Floating Heads",
-      "focus": "Build a target order and keep each burst on the head until it drops.",
-      "arm": "Blending",
+      "family": "patTargetSwitch",
+      "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Evasive Switching",
       "window": 2,
-      "label": "Floatswitch Advanced",
-      "leaderboardId": 112006,
+      "label": "patTargetSwitch Small",
+      "leaderboardId": 172,
       "rankMaxes": [
-        748,
-        764,
-        776,
-        787,
-        824,
-        839
+        4940,
+        5084,
+        5220,
+        5347,
+        5707,
+        5922
       ],
       "source": {
         "kind": "authored",
-        "why": "Frozen from this scenario's own dated leaderboard. The first four ranks use the season curve; lower bands keep stricter two-rank crossover cuts (0.5 and 0.4 factors). Ties are capped backward from the demonstrated record. Reproduce using data/evasive_rework_calibration.json. Physical difficulty and equal effort between scenarios require playtesting."
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 1509,
+        "leaderboardEntries": 17516,
         "clears": [
-          0.07481338250994929,
-          0.04959358337725867,
-          0.036649406472394196,
-          0.02818645331182424,
-          0.010562615390249759,
-          0.00652093787423192
+          0.075,
+          0.055,
+          0.04,
+          0.029978260869565218,
+          0.011036341595226979,
+          0.005845672532593595
         ],
-        "sampledAt": "2026-09-14T19:15:22.816Z"
+        "sampledAt": "2026-09-23T17:20:45.917Z"
       }
     },
     {
-      "scenario": "Floatswitch Elite",
+      "scenario": "patTargetSwitch Dodge 360",
       "category": "Evasive Switching",
-      "family": "Floating Heads",
-      "focus": "Build a target order and keep each burst on the head until it drops.",
-      "arm": "Blending",
+      "family": "patTargetSwitch",
+      "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Evasive Switching",
       "window": 3,
-      "label": "Floatswitch Elite",
-      "leaderboardId": 112062,
+      "label": "patTargetSwitch Dodge 360",
+      "leaderboardId": 1563,
       "rankMaxes": [
-        705,
-        730,
-        746,
-        754
+        12189,
+        12393,
+        12525,
+        12681
       ],
       "source": {
         "kind": "authored",
-        "why": "Frozen from this scenario's own dated leaderboard. The first four ranks use the season curve; lower bands keep stricter two-rank crossover cuts (0.5 and 0.4 factors). Ties are capped backward from the demonstrated record. Reproduce using data/evasive_rework_calibration.json. Physical difficulty and equal effort between scenarios require playtesting."
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 359,
+        "leaderboardEntries": 19841,
         "clears": [
-          0.01969656772107375,
-          0.01174697305434191,
-          0.008945541594730764,
-          0.007105428972845631
+          0.02214609072907409,
+          0.014728700219084066,
+          0.011100579941883326,
+          0.007694165116696385
         ],
-        "sampledAt": "2026-09-14T19:15:32.670Z"
+        "sampledAt": "2026-09-23T17:20:55.851Z"
       }
     },
     {
@@ -10374,6 +10135,12 @@
           0.07286344985447711
         ],
         "sampledAt": "2026-09-14T19:15:41.955Z"
+      },
+      "corpus": {
+        "runs": 1,
+        "best": 778,
+        "median": 778,
+        "reaches": "rank 6"
       }
     },
     {
@@ -10412,9 +10179,9 @@
         "sampledAt": "2026-08-18T17:44:56.408Z"
       },
       "corpus": {
-        "runs": 19,
+        "runs": 23,
         "best": 490,
-        "median": 449,
+        "median": 450,
         "reaches": "rank 7"
       }
     },
@@ -10454,9 +10221,9 @@
         "sampledAt": "2026-08-18T17:45:04.286Z"
       },
       "corpus": {
-        "runs": 1,
+        "runs": 3,
         "best": 344,
-        "median": 344,
+        "median": 342,
         "reaches": null
       }
     },
@@ -10510,160 +10277,139 @@
       }
     },
     {
-      "scenario": "CB JumpSwitch Easy",
+      "scenario": "Skeet Tracking 85% Speed",
       "category": "Evasive Switching",
-      "family": "Hop Transfer",
-      "focus": "Read the jump arc and keep firing through the landing. Do not switch early.",
-      "arm": "Wrist",
+      "family": "Skeet",
+      "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Evasive Switching",
       "window": 0,
-      "label": "CB JumpSwitch Easy",
-      "leaderboardId": 93212,
+      "label": "Skeet Tracking 85% Speed",
+      "leaderboardId": 86918,
       "rankMaxes": [
-        211,
-        287,
-        343,
-        393,
-        532,
-        574
+        527,
+        886,
+        1143,
+        1376,
+        1994,
+        2317
       ],
       "source": {
         "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 3388,
+        "leaderboardEntries": 1053,
         "clears": [
-          0.8590471019410887,
-          0.659,
-          0.49075,
-          0.3609068351003835,
-          0.12198352646194667,
-          0.0718494971712428
+          0.860061130922058,
+          0.6600587797003064,
+          0.48987489267754203,
+          0.34971931024408454,
+          0.12490537452140704,
+          0.06855307142455459
         ],
-        "sampledAt": "2026-08-25T20:26:06.868Z"
+        "sampledAt": "2026-09-23T17:21:46.577Z"
       }
     },
     {
-      "scenario": "Aimerz+ hopTS Easy S1",
+      "scenario": "Skeet Tracking",
       "category": "Evasive Switching",
-      "family": "Hop Transfer",
-      "focus": "Read the jump arc and keep firing through the landing. Do not switch early.",
-      "arm": "Wrist",
+      "family": "Skeet",
+      "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Evasive Switching",
       "window": 1,
-      "label": "Aimerz+ hopTS Easy S1",
-      "leaderboardId": 68429,
+      "label": "Skeet Tracking",
+      "leaderboardId": 145,
       "rankMaxes": [
-        71,
-        76,
-        77,
-        78,
-        84,
-        87
+        1188,
+        1404,
+        1503,
+        1706,
+        2317,
+        2637
       ],
       "source": {
         "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 6503,
+        "leaderboardEntries": 233392,
         "clears": [
-          0.2672131147540983,
-          0.16249999999999984,
-          0.1294117647058823,
-          0.1,
-          0.03747002398081535,
-          0.024220813678289276
+          0.2599561316051844,
+          0.18006920835356968,
+          0.1500182127246236,
+          0.10495827414772727,
+          0.03749601910828027,
+          0.022012479074722265
         ],
-        "sampledAt": "2026-08-18T23:41:30.641Z"
+        "sampledAt": "2026-09-23T17:21:57.067Z"
       }
     },
     {
-      "scenario": "Aimerz+ hopTS Med S1",
+      "scenario": "Skeet Tracking Goated",
       "category": "Evasive Switching",
-      "family": "Hop Transfer",
-      "focus": "Read the jump arc and keep firing through the landing. Do not switch early.",
-      "arm": "Wrist",
+      "family": "Skeet",
+      "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Evasive Switching",
       "window": 2,
-      "label": "Aimerz+ hopTS Med S1",
-      "leaderboardId": 69310,
+      "label": "Skeet Tracking Goated",
+      "leaderboardId": 977,
       "rankMaxes": [
-        80,
-        82,
-        84,
-        86,
-        94,
-        100
+        3042,
+        3191,
+        3332,
+        3456,
+        3811,
+        3997
       ],
       "source": {
         "kind": "authored",
-        "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 1712,
+        "leaderboardEntries": 41190,
         "clears": [
-          0.0728102738669911,
-          0.05790387955993052,
-          0.040944225893836006,
-          0.02895193977996526,
-          0.011011832805724476,
-          0.004476066407837234
+          0.075,
+          0.054973118279569896,
+          0.04,
+          0.030000000000000002,
+          0.010651358724850226,
+          0.0060414115105557106
         ],
-        "sampledAt": "2026-09-10T23:41:04.698Z"
+        "sampledAt": "2026-09-23T17:22:07.238Z"
       }
     },
     {
-      "scenario": "Aimerz+ hopTS Hard S1",
+      "scenario": "Skeet Tracking Goated Small",
       "category": "Evasive Switching",
-      "family": "Hop Transfer",
-      "focus": "Read the jump arc and keep firing through the landing. Do not switch early.",
-      "arm": "Wrist",
+      "family": "Skeet",
+      "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Evasive Switching",
       "window": 3,
-      "label": "Aimerz+ hopTS Hard S1",
-      "leaderboardId": 68311,
+      "label": "Skeet Tracking Goated Small",
+      "leaderboardId": 504,
       "rankMaxes": [
-        72,
-        74,
-        76,
-        79
+        1957,
+        2049,
+        2109,
+        2194
       ],
       "source": {
-        "kind": "percentile",
-        "cut": {
-          "ranks": [
-            12,
-            13,
-            14,
-            15
-          ],
-          "topFractions": [
-            0.022,
-            0.015,
-            0.011,
-            0.008
-          ],
-          "leaderboardId": 68311,
-          "total": 1809,
-          "sampledAt": "2026-08-18T23:44:31.403Z"
-        },
-        "why": "Score targets cut once from this scenario's own KovaaK's leaderboard, at the pool ladder's percentiles for this window (see cut). They're fixed and don't move while the app runs. Each category ladder weights its six families equally. Whether the targets are equally hard across scenarios hasn't been playtested."
+        "kind": "authored",
+        "why": "Frozen from this scenario's own dated leaderboard for the fun rebuild. The season curve sets the ranks the window grades; below Expert the two crossover ranks are cut stricter (0.5 and 0.4 of their fractions); a tail above the demonstrated record is capped backward from it. Reproduce from data/season_fun_rebuild_calibration.json. Equal effort between scenarios requires playtesting."
       },
       "sanity": {
-        "leaderboardEntries": 1809,
+        "leaderboardEntries": 11679,
         "clears": [
-          0.022674286872559304,
-          0.015588873052739621,
-          0.011589287918335625,
-          0.00803305515643458
+          0.021868822493511342,
+          0.014132460614445484,
+          0.010613571039283369,
+          0.007301162990647609
         ],
-        "sampledAt": "2026-08-18T23:44:31.403Z"
+        "sampledAt": "2026-09-23T17:22:18.254Z"
       }
     },
     {
@@ -10700,6 +10446,12 @@
           0.0770588377729462
         ],
         "sampledAt": "2026-09-14T19:15:53.601Z"
+      },
+      "corpus": {
+        "runs": 1,
+        "best": 790,
+        "median": 790,
+        "reaches": "rank 6"
       }
     },
     {
@@ -10738,9 +10490,9 @@
         "sampledAt": "2026-08-18T17:45:21.596Z"
       },
       "corpus": {
-        "runs": 17,
+        "runs": 18,
         "best": 542,
-        "median": 471,
+        "median": 472,
         "reaches": "rank 7"
       }
     },
@@ -10780,9 +10532,9 @@
         "sampledAt": "2026-08-18T17:45:30.161Z"
       },
       "corpus": {
-        "runs": 1,
-        "best": 334,
-        "median": 334,
+        "runs": 2,
+        "best": 369,
+        "median": 351,
         "reaches": null
       }
     },
@@ -10871,10 +10623,10 @@
         "sampledAt": "2026-09-14T19:16:05.275Z"
       },
       "corpus": {
-        "runs": 2,
-        "best": 72,
+        "runs": 3,
+        "best": 75,
         "median": 72,
-        "reaches": "rank 4"
+        "reaches": "rank 5"
       }
     },
     {
@@ -10913,7 +10665,7 @@
         "sampledAt": "2026-08-29T17:31:57.709Z"
       },
       "corpus": {
-        "runs": 17,
+        "runs": 18,
         "best": 75,
         "median": 69,
         "reaches": "rank 8"
@@ -11044,6 +10796,12 @@
           0.07062750102298355
         ],
         "sampledAt": "2026-09-14T19:16:18.565Z"
+      },
+      "corpus": {
+        "runs": 1,
+        "best": 933,
+        "median": 933,
+        "reaches": "rank 6"
       }
     },
     {
@@ -11082,9 +10840,9 @@
         "sampledAt": "2026-08-18T17:44:33.188Z"
       },
       "corpus": {
-        "runs": 18,
+        "runs": 19,
         "best": 612,
-        "median": 562,
+        "median": 565,
         "reaches": "rank 7"
       }
     },
@@ -11124,9 +10882,9 @@
         "sampledAt": "2026-08-18T17:44:41.155Z"
       },
       "corpus": {
-        "runs": 1,
-        "best": 422,
-        "median": 422,
+        "runs": 2,
+        "best": 462,
+        "median": 442,
         "reaches": null
       }
     },
@@ -11196,6 +10954,12 @@
           0.07409543777772423
         ],
         "sampledAt": "2026-09-14T19:17:26.182Z"
+      },
+      "corpus": {
+        "runs": 1,
+        "best": 794,
+        "median": 794,
+        "reaches": "rank 6"
       }
     },
     {
@@ -11350,9 +11114,9 @@
         "sampledAt": "2026-09-13T19:26:27.335Z"
       },
       "corpus": {
-        "runs": 2,
-        "best": 62,
-        "median": 60,
+        "runs": 3,
+        "best": 67,
+        "median": 62,
         "reaches": "rank 6"
       }
     },
@@ -11513,9 +11277,9 @@
         "sampledAt": "2026-09-03T01:29:00.957Z"
       },
       "corpus": {
-        "runs": 5,
-        "best": 7806,
-        "median": 7514,
+        "runs": 6,
+        "best": 7881,
+        "median": 7596,
         "reaches": "rank 5"
       }
     },
@@ -11669,6 +11433,12 @@
           0.0663746183459445
         ],
         "sampledAt": "2026-09-14T19:16:34.874Z"
+      },
+      "corpus": {
+        "runs": 1,
+        "best": 50,
+        "median": 50,
+        "reaches": "rank 6"
       }
     },
     {

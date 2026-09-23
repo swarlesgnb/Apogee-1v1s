@@ -88,7 +88,7 @@ assert.equal(expert.trials.at(-1)!.status, 'failed');
 assert.equal(expert.trials.at(-1)!.misses!.length, 1);
 console.log('PASS: Expert immediate entry, unrelated training ignored, out-of-order trial fails');
 
-const oldDef = loadExpedition(2);
+const oldDef = loadExpedition(2), v3 = loadExpedition(3), oldRoster = oldDef.destinations[0].bands[0];
 let old = enroll(oldDef, tick());
 for (const kind of ['discovery', 'score_attack'] as const) {
   old = acceptChallenge(old, oldDef, d.id, 0, [], tick(), kind);
@@ -96,21 +96,36 @@ for (const kind of ['discovery', 'score_attack'] as const) {
   old = syncExpedition(old, oldDef, c.steps!.map(st => run(st.scenario, st.target ?? 100)), tick());
 }
 old = startTrial(old, oldDef, d.id, 0, tick());
-old = syncExpedition(old, oldDef, [run(roster[0].name, roster[0].target)], tick());
+old = syncExpedition(old, oldDef, [run(oldRoster[0].name, oldRoster[0].target)], tick());
 const before = JSON.stringify(old);
-const migrated = migrateExpedition(old, oldDef, def, tick());
+const mid = migrateExpedition(old, oldDef, v3, tick());
 assert.equal(JSON.stringify(old), before);
-assert.deepEqual(migrated.routes, old.routes); assert.deepEqual(migrated.rewards, old.rewards); assert.deepEqual(migrated.trials, old.trials);
+assert.deepEqual(mid.routes, old.routes); assert.deepEqual(mid.rewards, old.rewards); assert.deepEqual(mid.trials, old.trials);
+assert.ok(validState(mid, v3));
+// v3 -> v4 changes the roster: rewards and trials carry over whole, and a route survives
+// exactly when every scenario it accepted is still offered in its v4 band.
+const midBefore = JSON.stringify(mid);
+const migrated = migrateExpedition(mid, v3, def, tick());
+assert.equal(JSON.stringify(mid), midBefore);
+assert.deepEqual(migrated.rewards, old.rewards); assert.deepEqual(migrated.trials, old.trials);
+for (const [key, route] of Object.entries(mid.routes)) {
+  const [id, band] = key.split(':');
+  const offered = new Set(def.destinations.find(x => x.id === id)!.pool![Number(band)].map(s => s.name));
+  const playable = route.challenges.every(c => (c.steps ?? []).every(st => offered.has(st.scenario)));
+  assert.equal(key in migrated.routes, playable, `${key}: kept exactly when still playable`);
+  if (playable) assert.deepEqual(migrated.routes[key], route);
+}
 assert.ok(validState(migrated, def));
-const stillStrict = sync(migrated, [run(roster[1].name, 0)]);
+const strictStep = migrated.trials.at(-1)!.steps[1].scenario;
+const stillStrict = sync(migrated, [run(strictStep, 0)]);
 assert.equal(stillStrict.trials.at(-1)!.status, 'failed', 'migrated active trial keeps its contract');
 const oldStore = new ExpeditionStore(join(folder, 'expedition-first-light-v2.json'), oldDef);
 oldStore.save(old); const bytes = readFileSync(oldStore.path);
 const serviceView = new ExpeditionService(folder).view(null);
-assert.equal(serviceView.error, null); assert.equal(serviceView.state!.version, 3);
+assert.equal(serviceView.error, null); assert.equal(serviceView.state!.version, 4);
 assert.deepEqual(readFileSync(oldStore.path), bytes);
 assert.deepEqual(new ExpeditionService(folder).view(null).state, serviceView.state);
-console.log('PASS: v2 migration preserves original bytes, rewards, contracts and active strict trials; v3 reloads independently');
+console.log('PASS: v2 -> v3 -> v4 preserves original bytes, rewards and active strict trials; routes survive where still playable; v4 reloads independently');
 
 const serviceFolder = join(folder, 'actions'), statsFolder = join(folder, 'stats'); mkdirSync(statsFolder);
 const service = new ExpeditionService(serviceFolder);
@@ -125,7 +140,7 @@ service.action({ type: 'select', destination: d.id, band: 3 }, statsFolder);
 service.action({ type: 'start' }, statsFolder); service.playlist(statsFolder);
 assert.equal(JSON.parse(readFileSync(playlistPath, 'utf8')).scenarioList.length, 3, 'strict attempt preserves ordered playlist');
 const appearanceFolder = join(folder, 'appearance');
-new ExpeditionStore(join(appearanceFolder, 'expedition-first-light-v3.json'), def).save(s);
+new ExpeditionStore(join(appearanceFolder, 'expedition-first-light-v4.json'), def).save(s);
 const appearanceService = new ExpeditionService(appearanceFolder);
 appearanceService.action({ type: 'equip', reward: `${d.id}:0:clear` }, null);
 assert.equal(appearanceService.view(null).state!.equipped.insignia, `${d.id}:0:clear`);

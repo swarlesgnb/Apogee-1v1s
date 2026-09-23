@@ -1448,6 +1448,13 @@ Nothing reads it at runtime. `npm run validate:rationale` re-derives every numbe
 against `scenario_taxonomy.json`, which is not ceremony: it caught fifteen figures that
 had been written from the wrong column of the wrong file.
 
+Whether a family is worth *playing* is a separate question from whether it measures the
+skill, and for a ranked game it is the one that decides whether anybody comes back. The
+fun rebuild (`docs/season-fun-rebuild.md`) answers it with numbers: KovaaK's plays per
+player, players on the entry rungs, and how many of the 128 benchmarks evxl lists use the
+lineage. `npm run audit:fun` re-derives all three into `data/fun_audit.json`, and
+`validate:rebuild` fails if a replacement measures below the family whose slot it took.
+
 ### The order to build it in
 
 1. Own the pool. A season file naming the scenarios per category, read where

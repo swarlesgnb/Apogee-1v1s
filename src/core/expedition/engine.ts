@@ -46,7 +46,7 @@ export function challengeOffers(def: ExpeditionDefinition, id: string, band: num
     { kind: "circuit", name: "Mixed circuit", purpose: "Meet a target on each of three more scenario families. Earn the Circuit seal and open the finale.", reward: challengeReward(id, "circuit"),
       steps: d.circuits![band].map(s => ({ scenario: s.name, focus: s.focus, required: 1, target: s.routeTarget!, source: "published" })) },
   ];
-  if (def.version === 3) for (const offer of offers) {
+  if (def.version >= 3) for (const offer of offers) {
     if (offer.kind === "discovery") offer.purpose = "Optional exploration: try three families and collect the Survey fragment. No score targets.";
     else {
       const task = { score_attack: "Beat one target.", steady: "Meet one target three times in a row. A miss resets this streak.", circuit: "Meet one target on each of three families. Each success stays earned." }[offer.kind];
@@ -80,7 +80,7 @@ export function trialSteps(def: ExpeditionDefinition, id: string, band: number) 
     : destinationFor(def, id, band).bands[band].map(s => ({ scenario: s.name, target: s.target }));
 }
 export function canStartTrial(state: ExpeditionState, def: ExpeditionDefinition, id: string, band: number): boolean {
-  if (def.version === 3 && id !== "final") {
+  if (def.version >= 3 && id !== "final") {
     destinationFor(def, id, band);
     return band !== 1 || !!state.rewards[`${id}:${band}:clear`] || preparationReady(state, def, id, band);
   }

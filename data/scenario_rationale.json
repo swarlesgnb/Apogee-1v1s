@@ -3,11 +3,6 @@
   "$evidence": "Three kinds, strongest first. A benchmark author's published design note says what the scenario was built to test, from the person who built it. KovaaK's in-game scenario description comes next and is first-party for scenarios no benchmark documents. Community discussion comes last and is only used where it says something the other two don't, which is mostly about scenarios older than the benchmarks that later picked them up. Where a family's evidence is thin, it gets a 'thin' note.",
   "$audience": "Audience figures reproduce the committed KovaaK's taxonomy snapshot; they are not live counts or evidence that a scenario is enjoyable.",
   "sources": {
-    "aimerz-s1": {
-      "title": "Aimerz+ S1",
-      "url": "https://docs.google.com/spreadsheets/d/1z-XwvdEXZ7rip2ZJ9aVff0-YqrnX6Yluf89f9LBbroc",
-      "kind": "design note"
-    },
     "aimerz-static-clicking": {
       "title": "Aimerz+ Static Clicking",
       "url": "https://docs.google.com/spreadsheets/d/1rvrijNj9JY4WHhrWrojtk_Q2hvsFzO2-laUsPHxOMSs/edit?gid=0#gid=0",
@@ -34,11 +29,6 @@
       "url": "https://docs.google.com/spreadsheets/d/1MQujX14dooQWcHu4mvvP5fetHVIr7Apg1taR96hSho0",
       "kind": "design note"
     },
-    "revosect-s5": {
-      "title": "Revosect S5",
-      "url": "https://docs.google.com/spreadsheets/d/1aHN2bdUehBtmx5COqsMT1q8SN_JImQYUfsSN73uQyEE/edit?usp=sharing",
-      "kind": "design note"
-    },
     "tsk-mixed-benchmarks": {
       "title": "TSK Mixed Benchmarks",
       "url": "https://docs.google.com/spreadsheets/d/1QlmPnGcQ9joO49Fx3wVmEGyYIWzEGlPgDdpfAulAu-E",
@@ -57,11 +47,6 @@
     "rebuild-voltaic-s5-5": {
       "title": "Voltaic S5.5",
       "url": "https://evxl.app/benchmarks/Voltaic%20S5.5",
-      "kind": "benchmark definition"
-    },
-    "rebuild-jade-palace-dynamic": {
-      "title": "Jade Palace Dynamic",
-      "url": "https://evxl.app/benchmarks/Jade%20Palace%20Dynamic",
       "kind": "benchmark definition"
     },
     "rebuild-aimerz-s1": {
@@ -92,11 +77,6 @@
     "rebuild-aimerz-dynamic-clicking": {
       "title": "Aimerz+ Dynamic Clicking",
       "url": "https://evxl.app/benchmarks/Aimerz%2B%20Dynamic%20Clicking",
-      "kind": "benchmark definition"
-    },
-    "rebuild-community-benchmarks": {
-      "title": "Community Benchmarks",
-      "url": "https://evxl.app/benchmarks/Community%20Benchmarks",
       "kind": "benchmark definition"
     },
     "rebuild-e1se-smooth-benchmark": {
@@ -169,11 +149,6 @@
       "url": "https://evxl.app/benchmarks/Voltaic%20S3",
       "kind": "benchmark definition"
     },
-    "rebuild-aimerz-evasive-switching": {
-      "title": "Aimerz+ Evasive Switching",
-      "url": "https://evxl.app/benchmarks/Aimerz%2B%20Evasive%20Switching",
-      "kind": "benchmark definition"
-    },
     "rebuild-superbaim-s2": {
       "title": "SuperbAim S2",
       "url": "https://evxl.app/benchmarks/SuperbAim%20S2",
@@ -182,16 +157,6 @@
     "rebuild-sparky-voltaic-s1": {
       "title": "Sparky (Voltaic) S1",
       "url": "https://evxl.app/benchmarks/Sparky%20%28Voltaic%29%20S1",
-      "kind": "benchmark definition"
-    },
-    "rebuild-wobin-s1": {
-      "title": "wobin S1",
-      "url": "https://evxl.app/benchmarks/wobin%20S1",
-      "kind": "benchmark definition"
-    },
-    "rebuild-avasive-s2": {
-      "title": "Avasive S2",
-      "url": "https://docs.google.com/spreadsheets/d/1yF2M1j_FSN5MXz-TdxEnvsdNZ_nFZhGDSBrygWFJdDE",
       "kind": "benchmark definition"
     },
     "weakness-specific-theory": {
@@ -213,6 +178,16 @@
       "title": "KovaaK's exact scenario catalogue checks for the evasive rework",
       "url": "https://kovaaks.com/kovaaks/scenarios",
       "kind": "first-party"
+    },
+    "fun-rebuild-catalogue": {
+      "title": "KovaaK's exact scenario catalogue checks for the fun rebuild",
+      "url": "https://kovaaks.com/kovaaks/scenarios",
+      "kind": "first-party"
+    },
+    "fun-audit": {
+      "title": "Apogee fun audit: replay, reach and benchmark consensus per family",
+      "url": "data/fun_audit.json",
+      "kind": "measurement"
     }
   },
   "families": [
@@ -242,70 +217,6 @@
         "scenario": "1w2ts Perfected",
         "plays": 1480204,
         "entries": 99608
-      }
-    },
-    {
-      "family": "Diagonal",
-      "subCategory": "Static Clicking",
-      "isolates": "Static clicking along a diagonal path, so you're moving on both axes at once.",
-      "why": "The diagonal ClickTrack path, which works both mouse axes at once. That's why there's an axis family besides Horizontal. Its Expert board is the thinnest in the season and is kept on a written exception: the lineage has three cuts above the Expert floor and Triangle and Horizontal already use two of them. If the boards grow, the exception goes away.",
-      "evidence": [
-        {
-          "source": "tsk-mixed-benchmarks",
-          "scenario": "ClickTrack Diagonal 2t",
-          "says": "Grades \"ClickTrack Diagonal 2t\" in its Static tier, filed under Normal."
-        }
-      ],
-      "audience": {
-        "scenario": "ClickTrack Diagonal 2t",
-        "plays": 14668,
-        "entries": 3075
-      }
-    },
-    {
-      "family": "Horizontal",
-      "subCategory": "Static Clicking",
-      "isolates": "Static clicking along one horizontal line: no vertical correction, just travel and stopping.",
-      "why": "ClickTrack along one axis: no vertical correction, just travel and stopping. Apart from Triangle it's the only ClickTrack axis family whose boards reach the Expert floor, which is why it stayed and Vertical didn't. Same caveat as Triangle: TSK Mixed grades the lineage but bands it by category name, so the difficulty order is the lineage's own, shorter to longer travel and three targets to two.",
-      "evidence": [
-        {
-          "source": "tsk-mixed-benchmarks",
-          "scenario": "ClickTrack Horizontal 2t",
-          "says": "Grades \"ClickTrack Horizontal 2t\" in its Static tier, filed under Normal."
-        }
-      ],
-      "audience": {
-        "scenario": "ClickTrack Horizontal 2t",
-        "plays": 25690,
-        "entries": 3978
-      }
-    },
-    {
-      "family": "Micro",
-      "subCategory": "Static Clicking",
-      "isolates": "Static clicking on targets smaller than a comfortable stop, so overshoot is most of the difficulty.",
-      "why": "Only the hard end of micro clicking is graded (Aimerz+ S1 and Anima Micro, both near the top of this ladder), so the family is built down from a graded Expert rung instead of up from a graded Novice one. The other static families go the other way, and this is why two of its four rungs are hand-picked. Nothing else in the pool covers it: at these sizes tremor in the stop limits you far more than travel speed.",
-      "evidence": [
-        {
-          "source": "aimerz-s1",
-          "scenario": "Aimerz+ 1w4ts HF Hard S1",
-          "says": "Grades \"Aimerz+ 1w4ts HF Hard S1\" in its Hard tier, filed under Static."
-        },
-        {
-          "source": "lemon-static-benchmark",
-          "scenario": "1w2ts Pasu Perfected",
-          "says": "Grades \"1w2ts Pasu Perfected\" in its Intermediate tier, filed under Micro."
-        },
-        {
-          "source": "viscose-benchmarks",
-          "scenario": "1w2ts Pasu Perfected",
-          "says": "Grades \"1w2ts Pasu Perfected\" in its Medium tier, filed under Precision."
-        }
-      ],
-      "audience": {
-        "scenario": "Aimerz+ 1w4ts HF Hard S1",
-        "plays": 1286561,
-        "entries": 123394
       }
     },
     {
@@ -368,34 +279,6 @@
       }
     },
     {
-      "family": "Wide Pressure",
-      "subCategory": "Static Clicking",
-      "isolates": "Wide static clicking on a shot clock, with flicks long enough to plan.",
-      "why": "Wide static clicking with a shot clock, and the family with the most varied sources: Revosect S5 grades the entry and intermediate cuts, cA Static S1 and Aimerz+ Static Clicking grade the hard ones. The difference from Micro Pressure is spacing. The flicks are long enough to plan, so the clock is on your plan more than your tremor.",
-      "evidence": [
-        {
-          "source": "aimerz-static-clicking",
-          "scenario": "darkPressure",
-          "says": "Grades \"darkPressure\" in its Hard tier, filed under Static Clicking."
-        },
-        {
-          "source": "revosect-s5",
-          "scenario": "1w4t Pressure Revosect Entry",
-          "says": "Grades \"1w4t Pressure Revosect Entry\" in its Entry tier, filed under Static."
-        },
-        {
-          "source": "ca-static-s1",
-          "scenario": "cA 7ts pressure",
-          "says": "Grades \"cA 7ts pressure\" in its All tier, filed under Pace Control."
-        }
-      ],
-      "audience": {
-        "scenario": "cA 7ts pressure",
-        "plays": 93169,
-        "entries": 10495
-      }
-    },
-    {
       "family": "Wide wall",
       "subCategory": "Static Clicking",
       "isolates": "Static clicking over long travel, on scenarios that don't reward dropping your sensitivity.",
@@ -415,49 +298,17 @@
           "source": "viscose-benchmarks-s2",
           "scenario": "ww4t Voltaic",
           "says": "Grades \"ww4t Voltaic\" in its Medium tier, filed under Speed."
+        },
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "Wide Wall 6Targets",
+          "says": "Exact identity checked 2026-09-23T17:22:20.469Z. 6 targets spawn on a wall.  Great practice for flicking to many targets quickly.  Challenge mode has accuracy-based scoring."
         }
       ],
       "audience": {
         "scenario": "Wide Wall 3 Targets",
         "plays": 5601340,
         "entries": 554846
-      }
-    },
-    {
-      "family": "Pasu",
-      "subCategory": "Dynamic Clicking",
-      "isolates": "Clicking slow, floating targets whose drift you have to read before you shoot.",
-      "why": "Pasu without Voltaic's cuts. Viscose's entry version with limited strafing for Novice, SuperbAim's Easy and standard cuts in the middle, and Pasu Reload Goated for Expert, which is smaller and uses a reload instead of accuracy scoring.",
-      "evidence": [
-        {
-          "source": "rebuild-viscose-entry-benchmarks",
-          "scenario": "Pasu Viscose Entry",
-          "says": "The cached KovaaK's definition linked through evxl lists this scenario by name. Where it sits in the circuit was picked by hand."
-        },
-        {
-          "source": "rebuild-superbaim-s2",
-          "scenario": "Pasu SuperbAim Easy",
-          "says": "The cached KovaaK's definition linked through evxl lists this scenario by name. Where it sits in the circuit was picked by hand."
-        },
-        {
-          "source": "rebuild-superbaim-s2",
-          "scenario": "Pasu SuperbAim",
-          "says": "The cached KovaaK's definition linked through evxl lists this scenario by name. Where it sits in the circuit was picked by hand."
-        },
-        {
-          "source": "rebuild-jade-palace-dynamic",
-          "scenario": "Pasu Reload Goated",
-          "says": "The cached KovaaK's definition linked through evxl lists this scenario by name. Where it sits in the circuit was picked by hand."
-        },
-        {
-          "source": "weakness-specific-theory",
-          "says": "The Dynamic Clicking routine informs the training role: Read the drift. Click on confirmation. KovaaK's selection and four-band placement are Apogee curation decisions, not recommendations by the document's authors."
-        }
-      ],
-      "audience": {
-        "scenario": "Pasu Reload Goated",
-        "plays": 539939,
-        "entries": 38352
       }
     },
     {
@@ -572,43 +423,6 @@
       }
     },
     {
-      "family": "Pasu Sequence",
-      "subCategory": "Dynamic Clicking",
-      "isolates": "Pasu-style targets that take three hits, so you have to stay with each one.",
-      "why": "Repeated hits add the sustained target reading missing from one-shot clicking. Wide Easy introduces the task; Less Easy uses a faster timescale than the easy v2 cut; standard v2 removes timescaling; Wide opens the field. These are related community edits, not a measured equal-step progression. Expert width and mixed v2/v4 behaviour need playtesting.",
-      "evidence": [
-        {
-          "source": "theory-kovaaks-catalogue",
-          "scenario": "Pasu 3-Click Wide Easy",
-          "says": "The catalogue identifies this exact scenario and leaderboard. Description: Pasu 3-Click v4 on wider map"
-        },
-        {
-          "source": "theory-kovaaks-catalogue",
-          "scenario": "Pasu 3-Click v2 Less Easy",
-          "says": "The catalogue identifies this exact scenario and leaderboard. Description: timescaled faster (.85) than ez (.70), 3 clicks to kill targets."
-        },
-        {
-          "source": "theory-kovaaks-catalogue",
-          "scenario": "Pasu 3-click v2",
-          "says": "The catalogue identifies this exact scenario and leaderboard. Description: No timescaling 3 clicks to kill targets."
-        },
-        {
-          "source": "theory-kovaaks-catalogue",
-          "scenario": "Pasu 3-Click Wide",
-          "says": "The catalogue identifies this exact scenario and leaderboard. Description: Pasu 3-Click v4 on wider map"
-        },
-        {
-          "source": "weakness-specific-theory",
-          "says": "The Dynamic Clicking routine informs the training role: Stay with each target for all three clicks. KovaaK's selection and four-band placement are Apogee curation decisions, not recommendations by the document's authors."
-        }
-      ],
-      "audience": {
-        "scenario": "Pasu 3-click v2",
-        "plays": 380058,
-        "entries": 38023
-      }
-    },
-    {
       "family": "Popcorn",
       "subCategory": "Dynamic Clicking",
       "isolates": "Clicking targets that pop up and fall in arcs.",
@@ -720,43 +534,6 @@
       }
     },
     {
-      "family": "PreciseTrack",
-      "subCategory": "Precise Tracking",
-      "isolates": "Tracking with frequent small corrections to get back on target.",
-      "why": "Aimerz+ PreciseTrack in place of PGT as the fine-correction test. Avasive's Easier cut for Novice, then Easy, Med and Hard from the Aimerz+ S1 set.",
-      "evidence": [
-        {
-          "source": "rebuild-avasive-s2",
-          "scenario": "PreciseTrack Avasive Easier",
-          "says": "The cached KovaaK's definition linked through evxl lists this scenario by name. Where it sits in the circuit was picked by hand."
-        },
-        {
-          "source": "rebuild-aimerz-s1",
-          "scenario": "Aimerz+ PreciseTrack Easy S1",
-          "says": "The cached KovaaK's definition linked through evxl lists this scenario by name. Where it sits in the circuit was picked by hand."
-        },
-        {
-          "source": "rebuild-aimerz-precise-tracking",
-          "scenario": "Aimerz+ PreciseTrack Med S1",
-          "says": "The cached KovaaK's definition linked through evxl lists this scenario by name. Where it sits in the circuit was picked by hand."
-        },
-        {
-          "source": "rebuild-aimerz-s1",
-          "scenario": "Aimerz+ PreciseTrack Hard S1",
-          "says": "The cached KovaaK's definition linked through evxl lists this scenario by name. Where it sits in the circuit was picked by hand."
-        },
-        {
-          "source": "weakness-specific-theory",
-          "says": "The Precise Tracking routine informs the training role: Recover cleanly. Settle back on target. KovaaK's selection and four-band placement are Apogee curation decisions, not recommendations by the document's authors."
-        }
-      ],
-      "audience": {
-        "scenario": "Aimerz+ PreciseTrack Easy S1",
-        "plays": 133090,
-        "entries": 19582
-      }
-    },
-    {
       "family": "Whisphere",
       "subCategory": "Precise Tracking",
       "isolates": "Tracking a target on curved paths whose speed keeps changing.",
@@ -791,43 +568,6 @@
         "scenario": "Whisphere Small & Slow 55%",
         "plays": 738608,
         "entries": 135952
-      }
-    },
-    {
-      "family": "Vertical Control",
-      "subCategory": "Precise Tracking",
-      "isolates": "Tracking up-and-down movement on its own.",
-      "why": "These four Altered POV cuts explicitly isolate vertical smoothness. They replace a second broad sphere-control test with an axis players can identify and practise directly. Entry, Easy, Intermediate and standard v2 are curated into four Apogee bands; difficulty spacing remains a playtest judgement.",
-      "evidence": [
-        {
-          "source": "theory-kovaaks-catalogue",
-          "scenario": "Smooth Your Vertical Altered POV Entry",
-          "says": "The catalogue identifies this exact scenario and leaderboard. Description: A pure test of vertical smoothness.\r\nBased on \"Smooth Your Vertical\"\r\nAltered point of view.\r\n "
-        },
-        {
-          "source": "theory-kovaaks-catalogue",
-          "scenario": "Smooth Your Vertical Altered POV Easy v2",
-          "says": "The catalogue identifies this exact scenario and leaderboard. Description: A pure test of vertical smoothness.\r\nBased on \"Smooth Your Vertical\"\r\nAltered point of view."
-        },
-        {
-          "source": "theory-kovaaks-catalogue",
-          "scenario": "Smooth Your Vertical Altered POV Intermediate",
-          "says": "The catalogue identifies this exact scenario and leaderboard. Description: A pure test of vertical smoothness.\r\nBased on \"Smooth Your Vertical\"\r\nAltered point of view."
-        },
-        {
-          "source": "theory-kovaaks-catalogue",
-          "scenario": "Smooth Your Vertical Altered POV v2",
-          "says": "The catalogue identifies this exact scenario and leaderboard. Description: A pure test of vertical smoothness.\r\nBased on \"Smooth Your Vertical\"\r\nAltered point of view."
-        },
-        {
-          "source": "weakness-specific-theory",
-          "says": "The Precise Tracking routine informs the training role: Stay connected through the rise and fall. KovaaK's selection and four-band placement are Apogee curation decisions, not recommendations by the document's authors."
-        }
-      ],
-      "audience": {
-        "scenario": "Smooth Your Vertical Altered POV Intermediate",
-        "plays": 140020,
-        "entries": 21048
       }
     },
     {
@@ -942,80 +682,6 @@
       }
     },
     {
-      "family": "Air Angelic",
-      "subCategory": "Reactive Tracking",
-      "isolates": "Tracking an air target through sharp turns and changes of speed.",
-      "why": "Air Angelic from Astro's and Jade Palace's sheets. rAim's Biggest cut, Easier, rAim Easy, then the standard version, which both of them grade at their top tier.",
-      "evidence": [
-        {
-          "source": "rebuild-astro-tracking-benchmark",
-          "scenario": "Air Angelic rAim Biggest",
-          "says": "The cached KovaaK's definition linked through evxl lists this scenario by name. Where it sits in the circuit was picked by hand."
-        },
-        {
-          "source": "rebuild-jade-palace-air",
-          "scenario": "Air Angelic Easier",
-          "says": "The cached KovaaK's definition linked through evxl lists this scenario by name. Where it sits in the circuit was picked by hand."
-        },
-        {
-          "source": "rebuild-revosect-s1",
-          "scenario": "Air Angelic rAim Easy",
-          "says": "The cached KovaaK's definition linked through evxl lists this scenario by name. Where it sits in the circuit was picked by hand."
-        },
-        {
-          "source": "rebuild-astro-tracking-benchmark",
-          "scenario": "Air Angelic",
-          "says": "The cached KovaaK's definition linked through evxl lists this scenario by name. Where it sits in the circuit was picked by hand."
-        },
-        {
-          "source": "weakness-specific-theory",
-          "says": "The Reactive Tracking routine informs the training role: Recover from the turn, then match speed. KovaaK's selection and four-band placement are Apogee curation decisions, not recommendations by the document's authors."
-        }
-      ],
-      "audience": {
-        "scenario": "Air Angelic",
-        "plays": 423821,
-        "entries": 23156
-      }
-    },
-    {
-      "family": "Strafe Gallery",
-      "subCategory": "Reactive Tracking",
-      "isolates": "Tracking strafing targets while keeping corrections small.",
-      "why": "Targets that only dodge horizontally. CB StrafeTrack Easy is the entry, then Aimerz+ VGS Easy, Med and Hard. Mixes two authors: the CB entry isn't part of the VGS set.",
-      "evidence": [
-        {
-          "source": "rebuild-community-benchmarks",
-          "scenario": "CB StrafeTrack Easy",
-          "says": "The cached KovaaK's definition linked through evxl lists this scenario by name. Where it sits in the circuit was picked by hand."
-        },
-        {
-          "source": "rebuild-aimerz-s1",
-          "scenario": "Aimerz+ VGS Easy S1",
-          "says": "The cached KovaaK's definition linked through evxl lists this scenario by name. Where it sits in the circuit was picked by hand."
-        },
-        {
-          "source": "rebuild-aimerz-reactive-tracking",
-          "scenario": "Aimerz+ VGS Med S1",
-          "says": "The cached KovaaK's definition linked through evxl lists this scenario by name. Where it sits in the circuit was picked by hand."
-        },
-        {
-          "source": "rebuild-aimerz-s1",
-          "scenario": "Aimerz+ VGS Hard S1",
-          "says": "The cached KovaaK's definition linked through evxl lists this scenario by name. Where it sits in the circuit was picked by hand."
-        },
-        {
-          "source": "weakness-specific-theory",
-          "says": "The Reactive Tracking routine informs the training role: Read the next strafe. Keep corrections clean. KovaaK's selection and four-band placement are Apogee curation decisions, not recommendations by the document's authors."
-        }
-      ],
-      "audience": {
-        "scenario": "Aimerz+ VGS Hard S1",
-        "plays": 267573,
-        "entries": 17284
-      }
-    },
-    {
       "family": "Leapstrafes",
       "subCategory": "Reactive Tracking",
       "isolates": "Tracking a target that jumps and strafes at the same time.",
@@ -1096,11 +762,6 @@
       "why": "Static dot switching without Voltaic's cuts. wobin's Easy, which leans on horizontal spawns, for Novice, AimSpeed's Entry, the 30% larger cut, then plain DotTS, which Aimerz+ SpeedTS and AimSpeed both grade at Hard.",
       "evidence": [
         {
-          "source": "rebuild-wobin-s1",
-          "scenario": "wobin DotTS Easy",
-          "says": "The cached KovaaK's definition linked through evxl lists this scenario by name. Where it sits in the circuit was picked by hand."
-        },
-        {
           "source": "rebuild-aimspeed-benchmarks-2-0",
           "scenario": "DotTS Entry",
           "says": "The cached KovaaK's definition linked through evxl lists this scenario by name. Where it sits in the circuit was picked by hand."
@@ -1118,6 +779,11 @@
         {
           "source": "weakness-specific-theory",
           "says": "The Speed Switching routine informs the training role: Land close. Confirm. Chain the next flick. KovaaK's selection and four-band placement are Apogee curation decisions, not recommendations by the document's authors."
+        },
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "VT DotTS Novice S5",
+          "says": "Exact identity checked 2026-09-23T17:22:30.944Z. To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nFull auto target switching with five static targets infront of the player. Each target takes 20 hits to eliminate with a TTK of ~0.26 seconds, and is worth a total of 10 points."
         }
       ],
       "audience": {
@@ -1198,43 +864,6 @@
         "scenario": "VT EddieTS Intermediate S5",
         "plays": 1756304,
         "entries": 103628
-      }
-    },
-    {
-      "family": "PivoTS",
-      "subCategory": "Speed Switching",
-      "isolates": "Switching where spotting the next target early is most of the speed.",
-      "why": "Aimerz+ pivoTS, a different switching pattern. The two Hard cuts are from different Aimerz+ releases (S0 and S1), and their order hasn't been playtested yet.",
-      "evidence": [
-        {
-          "source": "rebuild-aimerz-s1",
-          "scenario": "Aimerz+ pivoTS Easy S1",
-          "says": "The cached KovaaK's definition linked through evxl lists this scenario by name. Where it sits in the circuit was picked by hand."
-        },
-        {
-          "source": "rebuild-aimerz-s0",
-          "scenario": "aimerz+ pivoTS Normal",
-          "says": "The cached KovaaK's definition linked through evxl lists this scenario by name. Where it sits in the circuit was picked by hand."
-        },
-        {
-          "source": "rebuild-aimerz-s0",
-          "scenario": "aimerz+ pivoTS Hard",
-          "says": "The cached KovaaK's definition linked through evxl lists this scenario by name. Where it sits in the circuit was picked by hand."
-        },
-        {
-          "source": "rebuild-aimerz-s1",
-          "scenario": "Aimerz+ pivoTS Hard S1",
-          "says": "The cached KovaaK's definition linked through evxl lists this scenario by name. Where it sits in the circuit was picked by hand."
-        },
-        {
-          "source": "weakness-specific-theory",
-          "says": "The Speed Switching routine informs the training role: Find the next target before the pivot. KovaaK's selection and four-band placement are Apogee curation decisions, not recommendations by the document's authors."
-        }
-      ],
-      "audience": {
-        "scenario": "Aimerz+ pivoTS Easy S1",
-        "plays": 250280,
-        "entries": 29013
       }
     },
     {
@@ -1349,77 +978,6 @@
       }
     },
     {
-      "family": "Hop Transfer",
-      "subCategory": "Evasive Switching",
-      "isolates": "Read the jump arc and keep firing through the landing. Do not switch early.",
-      "why": "Jumping targets. CB JumpSwitch Easy (four jumping targets) first, then Aimerz+ hopTS Easy, Med and Hard. Mixes two authors.",
-      "evidence": [
-        {
-          "source": "rebuild-community-benchmarks",
-          "scenario": "CB JumpSwitch Easy",
-          "says": "The cached KovaaK's definition linked through evxl lists this scenario by name. Where it sits in the circuit was picked by hand."
-        },
-        {
-          "source": "rebuild-aimerz-s1",
-          "scenario": "Aimerz+ hopTS Easy S1",
-          "says": "The cached KovaaK's definition linked through evxl lists this scenario by name. Where it sits in the circuit was picked by hand."
-        },
-        {
-          "source": "rebuild-aimerz-evasive-switching",
-          "scenario": "Aimerz+ hopTS Med S1",
-          "says": "The cached KovaaK's definition linked through evxl lists this scenario by name. Where it sits in the circuit was picked by hand."
-        },
-        {
-          "source": "rebuild-aimerz-s1",
-          "scenario": "Aimerz+ hopTS Hard S1",
-          "says": "The cached KovaaK's definition linked through evxl lists this scenario by name. Where it sits in the circuit was picked by hand."
-        },
-        {
-          "source": "weakness-specific-theory",
-          "says": "The Evasive Switching routine informs the training role: Read the jump arc and keep firing through the landing. KovaaK's selection and four-band placement are Apogee curation decisions, not recommendations by the document's authors."
-        }
-      ],
-      "audience": {
-        "scenario": "Aimerz+ hopTS Easy S1",
-        "plays": 73843,
-        "entries": 12470
-      }
-    },
-    {
-      "family": "Evo Gallery",
-      "subCategory": "Static Clicking",
-      "isolates": "Static clicking where more targets appear as you go.",
-      "why": "EvoClick adds a target every twenty seconds, so a run opens as a calm static read and ends as a crowded wall: a pacing arc no other static circuit here has. Community Benchmarks' easy cut leads into Revosect's three EvoClick tiers. The first cross-author handover needs playtesting.",
-      "evidence": [
-        {
-          "source": "expansion-catalogue",
-          "scenario": "CB EvoClick Easy",
-          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T02:34:08.376Z. Author description: 2-4 static targets(+1 target every 20s), unique static scenario. Spawns are made in 3D. Targets in the corners will have the same size as in the middle.\r\nScoring: +10 per click, -3 per miss\r\n(STATIC CLICKING)"
-        },
-        {
-          "source": "expansion-catalogue",
-          "scenario": "EvoClick Revosect Entry",
-          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T02:34:16.413Z. Author description: Static clicking scenario where the number of targets increases every 20s in order to force the players pacing to increase as the run goes on.\r\n\r\nThis scenario uses SQRT ABS scoring.\r\n\r\nTo change the walls, enable \"Override Scenario Visuals\" in the main settings tab."
-        },
-        {
-          "source": "expansion-catalogue",
-          "scenario": "EvoClick Revosect Int",
-          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T02:34:19.486Z. Author description: Static clicking scenario where the number of targets increases every 20s in order to force the players pacing to increase as the run goes on.\r\n\r\nThis scenario uses SQRT ABS scoring.\r\n\r\nTo change the walls, enable \"Override Scenario Visuals\" in the main settings tab."
-        },
-        {
-          "source": "expansion-catalogue",
-          "scenario": "EvoClick Revosect",
-          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T02:34:28.195Z. Author description: Static clicking scenario where the number of targets increases every 20s in order to force the players pacing to increase as the run goes on.\r\n\r\nThis scenario uses SQRT ABS scoring.\r\n\r\nTo change the walls, enable \"Override Scenario Visuals\" in the main settings tab."
-        }
-      ],
-      "audience": {
-        "scenario": "CB EvoClick Easy",
-        "plays": 142638,
-        "entries": 45665
-      },
-      "thin": "Selection is based on catalogue mechanics and published variants. No measured enjoyment or cross-band difficulty equivalence is claimed."
-    },
-    {
       "family": "Vox Gallery",
       "subCategory": "Static Clicking",
       "isolates": "Static clicking on a spread of targets where you pick the route.",
@@ -1522,40 +1080,6 @@
       "thin": "Selection is based on catalogue mechanics and published variants. No measured enjoyment or cross-band difficulty equivalence is claimed."
     },
     {
-      "family": "Floating Gallery",
-      "subCategory": "Dynamic Clicking",
-      "isolates": "Clicking heads that drift slowly into view.",
-      "why": "Floating heads in a layered arena offer a shooting-gallery rhythm with depth changes. Viscose's Entry through Hard edits supply a coherent four-band progression without replacing the core Pasu and Popcorn tests.",
-      "evidence": [
-        {
-          "source": "expansion-catalogue",
-          "scenario": "VT Floating Heads Viscose Entry",
-          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:52:39.904Z. Author description: To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nSemi auto click timing with five targets floating around in a layered arena infront of the player. Each target takes 1 hit to eliminate and is worth 10 points. Sqrt acc scoring applies."
-        },
-        {
-          "source": "expansion-catalogue",
-          "scenario": "VT Floating Heads Viscose Easier",
-          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:52:49.807Z. Author description: To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nSemi auto click timing with five targets floating around in a layered arena infront of the player. Each target takes 1 hit to eliminate and is worth 10 points. Sqrt acc scoring applies."
-        },
-        {
-          "source": "expansion-catalogue",
-          "scenario": "VT Floating Heads Viscose Medium",
-          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:52:51.814Z. Author description: To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nSemi auto click timing with five targets floating around in a layered arena infront of the player. Each target takes 1 hit to eliminate and is worth 10 points. Sqrt acc scoring applies."
-        },
-        {
-          "source": "expansion-catalogue",
-          "scenario": "VT Floating Heads Viscose Hard",
-          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:52:53.860Z. Author description: To change the walls, enable \"Override Scenario Visuals\" in the main settings tab.\r\n\r\nSemi auto click timing with five targets floating around in a layered arena infront of the player. Each target takes 1 hit to eliminate and is worth 10 points. Sqrt acc scoring applies."
-        }
-      ],
-      "audience": {
-        "scenario": "VT Floating Heads Viscose Easier",
-        "plays": 263661,
-        "entries": 43533
-      },
-      "thin": "Selection is based on catalogue mechanics and published variants. No measured enjoyment or cross-band difficulty equivalence is claimed."
-    },
-    {
       "family": "Sky Gallery",
       "subCategory": "Dynamic Clicking",
       "isolates": "Clicking dots that pass through the sky at different heights.",
@@ -1586,40 +1110,6 @@
         "scenario": "skyClick Goated Medium",
         "plays": 309789,
         "entries": 38545
-      },
-      "thin": "Selection is based on catalogue mechanics and published variants. No measured enjoyment or cross-band difficulty equivalence is claimed."
-    },
-    {
-      "family": "Wave Click",
-      "subCategory": "Dynamic Clicking",
-      "isolates": "Clicking targets that move in waves.",
-      "why": "SunClick and WaveClick add a timing-focused wave circuit with a repeatable rhythm. This is a mixed-release progression using Aimerz's Easy S1, Normal, Hard and Hard S1 cuts; its handovers need playtesting.",
-      "evidence": [
-        {
-          "source": "expansion-catalogue",
-          "scenario": "Aimerz+ sunClick Easy S1",
-          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:53:43.101Z. Author description: Aimerz+ Benchmarks\r\n-------------------------------------\r\ntwitter: @AimerzHQ"
-        },
-        {
-          "source": "expansion-catalogue",
-          "scenario": "aimerz+ WaveClick Normal",
-          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:53:45.191Z. Author description: 1 kill = 1 points.\r\n1 miss = -0.25 points.\r\n5 misses in a row = 1 sec reload. \r\n1 kill = +1 ammo. \r\n---------------------------------\r\nWithout accuracy scoring."
-        },
-        {
-          "source": "expansion-catalogue",
-          "scenario": "aimerz+ WaveClick Hard",
-          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:53:55.171Z. Author description: 1 kill = 1 points.\r\n1 miss = -0.25 points.\r\n5 misses in a row = 1 sec reload. \r\n1 kill = +1 ammo. \r\n---------------------------------\r\nWithout accuracy scoring."
-        },
-        {
-          "source": "expansion-catalogue",
-          "scenario": "Aimerz+ sunClick Hard S1",
-          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:54:05.373Z. Author description: Aimerz+ Benchmarks\r\n-------------------------------------\r\ntwitter: @AimerzHQ"
-        }
-      ],
-      "audience": {
-        "scenario": "Aimerz+ sunClick Easy S1",
-        "plays": 121663,
-        "entries": 24203
       },
       "thin": "Selection is based on catalogue mechanics and published variants. No measured enjoyment or cross-band difficulty equivalence is claimed."
     },
@@ -1688,40 +1178,6 @@
         "scenario": "TSK - DVD Tracking Big",
         "plays": 115592,
         "entries": 8272
-      },
-      "thin": "Selection is based on catalogue mechanics and published variants. No measured enjoyment or cross-band difficulty equivalence is claimed."
-    },
-    {
-      "family": "Flower Chase",
-      "subCategory": "Precise Tracking",
-      "isolates": "Tracking a target along a looping, flower-shaped path.",
-      "why": "The author's bee-collecting-pollen theme gives compact tracking a playful identity. Entry, Easier, standard and Hard keep the Flower motion across the four bands. The scenario name is not a requirement to change sensitivity.",
-      "evidence": [
-        {
-          "source": "expansion-catalogue",
-          "scenario": "Flower Entry",
-          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:55:57.984Z. Author description: micro tracking scenario focused on making constant fingertip led adjustments, use a sensitivity faster than 50cm.\r\n\r\nimagine you are a buzzy little bee collecting pollen while playing this scenario\r\n\r\nmade by @robinwobin_"
-        },
-        {
-          "source": "expansion-catalogue",
-          "scenario": "Flower Easier 50cm",
-          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:56:07.646Z. Author description: micro tracking scenario focused on making constant fingertip led adjustments, use a sensitivity faster than 50cm.\r\n\r\nimagine you are a buzzy little bee collecting pollen while playing this scenario\r\n\r\nmade by @robinwobin_"
-        },
-        {
-          "source": "expansion-catalogue",
-          "scenario": "Flower 50cm",
-          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:56:17.360Z. Author description: micro tracking scenario focused on making constant fingertip led adjustments, use a sensitivity faster than 50cm.\r\n\r\nimagine you are a buzzy little bee collecting pollen while playing this scenario\r\n\r\nmade by @robinwobin_"
-        },
-        {
-          "source": "expansion-catalogue",
-          "scenario": "Flower Hard 50cm",
-          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:56:27.592Z. Author description: micro tracking scenario focused on making constant fingertip led adjustments, use a sensitivity faster than 50cm.\r\n\r\nimagine you are a buzzy little bee collecting pollen while playing this scenario\r\n\r\nmade by @robinwobin_"
-        }
-      ],
-      "audience": {
-        "scenario": "Flower Easier 50cm",
-        "plays": 217226,
-        "entries": 49347
       },
       "thin": "Selection is based on catalogue mechanics and published variants. No measured enjoyment or cross-band difficulty equivalence is claimed."
     },
@@ -1964,40 +1420,6 @@
       "thin": "Selection is based on catalogue mechanics and published variants. No measured enjoyment or cross-band difficulty equivalence is claimed."
     },
     {
-      "family": "Wave Relay",
-      "subCategory": "Speed Switching",
-      "isolates": "Switching between targets that come in waves.",
-      "why": "Smoothly drifting targets give switching a visible wave rhythm. Community Benchmarks' easy cut leads into Revosect Entry, Intermediate and standard. The cross-author first handover is provisional.",
-      "evidence": [
-        {
-          "source": "expansion-catalogue",
-          "scenario": "CB WaveSwitch Easy",
-          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:58:24.479Z. Author description: 5 targets that move smoothly in wavy motions\r\n(SPEED SWITCHING)"
-        },
-        {
-          "source": "expansion-catalogue",
-          "scenario": "WaveSwitch Revosect Entry",
-          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:58:26.722Z. Author description: Chaining speed switching scenario where the bots slowly drift up/down while quickly moving left and right.\r\n\r\nThis scenario uses hit based scoring, where each bot takes 23 hits to kill and grants 10 points total for a full kill. \r\n\r\nTo change the walls, enable \"Override Scenario Visuals\" in the main settings tab."
-        },
-        {
-          "source": "expansion-catalogue",
-          "scenario": "WaveSwitch Revosect Int",
-          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:58:28.731Z. Author description: Chaining speed switching scenario where the bots slowly drift up/down while quickly moving left and right.\r\n\r\nThis scenario uses hit based scoring, where each bot takes 23 hits to kill and grants 10 points total for a full kill. \r\n\r\nTo change the walls, enable \"Override Scenario Visuals\" in the main settings tab."
-        },
-        {
-          "source": "expansion-catalogue",
-          "scenario": "WaveSwitch Revosect",
-          "says": "Exact scenario and leaderboard identity verified on 2026-09-14T00:58:30.788Z. Author description: Chaining speed switching scenario where the bots slowly drift up/down while quickly moving left and right.\r\n\r\nThis scenario uses hit based scoring, where each bot takes 23 hits to kill and grants 10 points total for a full kill. \r\n\r\nTo change the walls, enable \"Override Scenario Visuals\" in the main settings tab."
-        }
-      ],
-      "audience": {
-        "scenario": "CB WaveSwitch Easy",
-        "plays": 18099,
-        "entries": 8305
-      },
-      "thin": "Selection is based on catalogue mechanics and published variants. No measured enjoyment or cross-band difficulty equivalence is claimed."
-    },
-    {
       "family": "Sky Relay",
       "subCategory": "Speed Switching",
       "isolates": "Switching between targets spread across the sky.",
@@ -2096,40 +1518,6 @@
         "scenario": "VT PasuTS Intermediate S5",
         "plays": 246487,
         "entries": 25202
-      },
-      "thin": "Draft: catalogue-verified selections and frozen score targets; human difficulty and enjoyment playtesting pending."
-    },
-    {
-      "family": "Floating Heads",
-      "subCategory": "Evasive Switching",
-      "isolates": "Build a target order and keep each burst on the head until it drops.",
-      "why": "A new floating-head gallery adds short 0.2-second, 20-hit clears and fast target choice. Use the same authored Entry, Intermediate, Advanced and Elite editions; these are sustained full-auto clears despite the broad catalogue Clicking tag.",
-      "evidence": [
-        {
-          "source": "evasive-rework-catalogue",
-          "scenario": "Floatswitch Entry",
-          "says": "Exact identity checked 2026-09-14T19:14:55.267Z. Switch between the floating heads! \r\n\r\nEach bot is worth 10 points and requires 20 hits to kill with a TTK of 0.2s "
-        },
-        {
-          "source": "evasive-rework-catalogue",
-          "scenario": "Floatswitch Intermediate",
-          "says": "Exact identity checked 2026-09-14T19:15:05.042Z. Switch between the floating heads! \r\n\r\nEach bot is worth 10 points and requires 20 hits to kill with a TTK of 0.2s "
-        },
-        {
-          "source": "evasive-rework-catalogue",
-          "scenario": "Floatswitch Advanced",
-          "says": "Exact identity checked 2026-09-14T19:15:14.987Z. Switch between the floating heads! \r\n\r\nEach bot is worth 10 points and requires 20 hits to kill with a TTK of 0.2s "
-        },
-        {
-          "source": "evasive-rework-catalogue",
-          "scenario": "Floatswitch Elite",
-          "says": "Exact identity checked 2026-09-14T19:15:24.870Z. Switch between the floating heads! \r\n\r\nEach bot is worth 10 points and requires 20 hits to kill with a TTK of 0.2s "
-        }
-      ],
-      "audience": {
-        "scenario": "Floatswitch Intermediate",
-        "plays": 106336,
-        "entries": 19308
       },
       "thin": "Draft: catalogue-verified selections and frozen score targets; human difficulty and enjoyment playtesting pending."
     },
@@ -2370,6 +1758,690 @@
         "entries": 32000
       },
       "thin": "Draft: catalogue-verified selections and frozen score targets; human difficulty and enjoyment playtesting pending."
+    },
+    {
+      "family": "Six Targets",
+      "subCategory": "Static Clicking",
+      "isolates": "Fast, clean flicks between small static targets on one wall.",
+      "why": "1wall 6targets small is the most played scenario on KovaaK's after the sandbox intro, 1.29 million players at 57 plays each, and the season had no member of its lineage. Jumbo introduces it, TE is the standard, small and extra small tighten the target without changing the rhythm.",
+      "evidence": [
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "Jumbo 1wall6targets TE",
+          "says": "Exact identity checked 2026-09-23T17:12:11.609Z. Six targets spawn on a wall.  Great practice for flicking to many targets quickly. Now with bigger Targets"
+        },
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "1wall6targets TE",
+          "says": "Exact identity checked 2026-09-23T17:12:21.840Z. Six targets spawn on a wall.  Great practice for flicking to many targets quickly.  Challenge mode has accuracy-based scoring."
+        },
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "1wall 6targets small",
+          "says": "Exact identity checked 2026-09-23T17:12:32.229Z. 1 click = 1 kill. Practice your precision on tiny targets. Good Luck!"
+        },
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "1wall 6targets extra small",
+          "says": "Exact identity checked 2026-09-23T17:12:42.993Z. 1 click = 1 kill.  Practice your precision on tiny targets. Good Luck!"
+        },
+        {
+          "source": "fun-audit",
+          "says": "Replay 29.4 plays per player (rung-weighted), 1205883 players on the Novice and Intermediate rungs, named by 6 of the benchmarks evxl lists; composite 0.87 against every family measured."
+        }
+      ],
+      "audience": {
+        "scenario": "1wall 6targets small",
+        "plays": 72039241,
+        "entries": 1260192
+      },
+      "thin": "Chosen on measured replay, reach and benchmark consensus. No measured enjoyment or cross-band difficulty equivalence is claimed; playtesting decides both."
+    },
+    {
+      "family": "Hipfire",
+      "subCategory": "Static Clicking",
+      "isolates": "Short snaps to spheres in a narrow field of view.",
+      "why": "5 Sphere Hipfire is a long-standing micro-flick staple; the Small edit alone has half a million players. The four rungs are one scenario at four target sizes, so the difficulty order is the author's own.",
+      "evidence": [
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "5 Sphere Hipfire",
+          "says": "Exact identity checked 2026-09-23T17:12:53.158Z. Practice snapping to targets in a narrow FOV."
+        },
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "5 Sphere Hipfire Small",
+          "says": "Exact identity checked 2026-09-23T17:13:03.179Z. Practice snapping to smaller than normal targets."
+        },
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "5 Sphere Hipfire Extra Small",
+          "says": "Exact identity checked 2026-09-23T17:13:13.219Z. Practice snapping to smaller than normal targets."
+        },
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "5 Sphere Hipfire Extra Extra Small",
+          "says": "Exact identity checked 2026-09-23T17:13:24.608Z. Practice snapping to smaller than normal targets."
+        },
+        {
+          "source": "fun-audit",
+          "says": "Replay 17.4 plays per player (rung-weighted), 545793 players on the Novice and Intermediate rungs, named by 7 of the benchmarks evxl lists; composite 0.86 against every family measured."
+        }
+      ],
+      "audience": {
+        "scenario": "5 Sphere Hipfire Small",
+        "plays": 8621836,
+        "entries": 498462
+      },
+      "thin": "Chosen on measured replay, reach and benchmark consensus. No measured enjoyment or cross-band difficulty equivalence is claimed; playtesting decides both."
+    },
+    {
+      "family": "Tile Frenzy",
+      "subCategory": "Static Clicking",
+      "isolates": "Rhythm clicking on a steady stream of tiles, fast feedback on every shot.",
+      "why": "Tile Frenzy is the scenario players describe as satisfying even when they concede it is easy, which is exactly the Novice job. Jumbo and standard carry the rhythm; Mini moves the wall far away so the same rhythm needs small movements; Extra mini is the smallest edit on a real board.",
+      "evidence": [
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "Jumbo Tile Frenzy",
+          "says": "Exact identity checked 2026-09-23T17:13:35.068Z. The long awaited sequel to the critically acclaimed tile frenzy scenario has finally arrived!!!!"
+        },
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "Tile Frenzy",
+          "says": "Exact identity checked 2026-09-23T17:13:45.568Z. 3 targets that respawn instantly when they die. Kill as many as you can in 30 seconds!"
+        },
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "Tile Frenzy Mini",
+          "says": "Exact identity checked 2026-09-23T17:13:57.962Z. Tile Frenzy but you are super far away so you move your mouse very little"
+        },
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "Extra mini Tile Frenzy",
+          "says": "Exact identity checked 2026-09-23T17:14:08.456Z. 2 Tiles Appear on screen once you shoot one it appears again for 30 seconds"
+        },
+        {
+          "source": "fun-audit",
+          "says": "Replay 28.7 plays per player (rung-weighted), 802410 players on the Novice and Intermediate rungs, named by 4 of the benchmarks evxl lists; composite 0.78 against every family measured."
+        }
+      ],
+      "audience": {
+        "scenario": "Tile Frenzy",
+        "plays": 21686241,
+        "entries": 739339
+      },
+      "thin": "Chosen on measured replay, reach and benchmark consensus. No measured enjoyment or cross-band difficulty equivalence is claimed; playtesting decides both."
+    },
+    {
+      "family": "Four Targets",
+      "subCategory": "Static Clicking",
+      "isolates": "One-wall target selection with ammo that reloads on kill instead of accuracy scoring.",
+      "why": "1w4ts Voltaic is named by four benchmarks and replayed 28.5 times per player, and the reload edits it grew are replayed nearly as often. The rungs step from larger targets through the Voltaic cut to the reload edits at smaller sizes.",
+      "evidence": [
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "1w4ts 30% larger",
+          "says": "Exact identity checked 2026-09-23T17:14:18.381Z. 1wall 4targets small, except accuracy isn't factored into score; instead, you have ammo that reloads on kill. Added 103 FOV minimum."
+        },
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "1w4ts Voltaic",
+          "says": "Exact identity checked 2026-09-23T17:14:28.633Z. 1wall 4targets small, except accuracy isn't factored into score; instead, you have ammo that reloads on kill. Added 103 FOV minimum."
+        },
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "1w4ts reload",
+          "says": "Exact identity checked 2026-09-23T17:14:30.737Z. 1wall 4targets small, except accuracy isn't factored into score; instead, you have ammo that reloads on kill."
+        },
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "1w4ts reload 30% smaller",
+          "says": "Exact identity checked 2026-09-23T17:14:33.120Z. 1wall 4targets small, except accuracy isn't factored into score; instead, you have ammo that reloads on kill."
+        },
+        {
+          "source": "fun-audit",
+          "says": "Replay 20.1 plays per player (rung-weighted), 435200 players on the Novice and Intermediate rungs, named by 7 of the benchmarks evxl lists; composite 0.88 against every family measured."
+        }
+      ],
+      "audience": {
+        "scenario": "1w4ts Voltaic",
+        "plays": 7770127,
+        "entries": 269310
+      },
+      "thin": "Chosen on measured replay, reach and benchmark consensus. No measured enjoyment or cross-band difficulty equivalence is claimed; playtesting decides both."
+    },
+    {
+      "family": "Raw Mouse",
+      "subCategory": "Static Clicking",
+      "isolates": "Three small static targets in a small range of motion: fingertip precision.",
+      "why": "The previous Micro family had Novice and Intermediate leaderboards of 175 and 532 entries. RawMouseControlClicking3 is replayed 51.6 times per player, among the highest on KovaaK's. Reload Easy is 25% bigger, Reload removes accuracy scoring, Clicking3 restores it, and 30% smaller tightens it.",
+      "evidence": [
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "RawMouseControl Reload Easy",
+          "says": "Exact identity checked 2026-09-23T17:14:43.191Z. 3 Small Targets, Small ROM, Static.\r\n\r\nEasy: 25% bigger, locked FOV."
+        },
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "RawMouseControl Reload",
+          "says": "Exact identity checked 2026-09-23T17:14:53.723Z. 3 Small Targets, Small ROM, Static."
+        },
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "RawMouseControlClicking3",
+          "says": "Exact identity checked 2026-09-23T17:15:03.934Z. 3 Small Targets, Small ROM, Static."
+        },
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "RawMouseControlClicking3 30% smaller",
+          "says": "Exact identity checked 2026-09-23T17:15:15.667Z. 3 Small Targets, Small ROM, Static."
+        },
+        {
+          "source": "fun-audit",
+          "says": "Replay 23.1 plays per player (rung-weighted), 167640 players on the Novice and Intermediate rungs, named by 6 of the benchmarks evxl lists; composite 0.74 against every family measured."
+        }
+      ],
+      "audience": {
+        "scenario": "RawMouseControlClicking3",
+        "plays": 18349927,
+        "entries": 355698
+      },
+      "thin": "Chosen on measured replay, reach and benchmark consensus. No measured enjoyment or cross-band difficulty equivalence is claimed; playtesting decides both."
+    },
+    {
+      "family": "Pasu Wall",
+      "subCategory": "Dynamic Clicking",
+      "isolates": "Reading dodging targets on one wall and clicking at the moment they settle.",
+      "why": "Keeps Pasu in the circuit on the lineage players actually play: its Novice and Intermediate rungs have about thirty-five times the players of the Pasu rungs they replace (fun_audit.json reach). Slow introduces it, small halves the target, and the reactive edit makes the small targets react. The Reload edit, which more benchmarks name, is left out because it runs 86 seconds (50 local runs, 84% agreement in scenario_durations.json).",
+      "evidence": [
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "1wall5targets_pasu slow",
+          "says": "Exact identity checked 2026-09-23T17:15:25.787Z. Pazu asked me to make this"
+        },
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "1wall5targets_pasu",
+          "says": "Exact identity checked 2026-09-23T17:15:26.529Z. Pazu asked me to make this"
+        },
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "1wall5targets_pasu_small",
+          "says": "Exact identity checked 2026-09-23T17:15:36.704Z. 1wall5targets_pasu but half size"
+        },
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "1wall5targets_pasu_small_reactive",
+          "says": "Exact identity checked 2026-09-23T17:15:47.241Z. My take on 1wall5targets_pasu_small. Dodge profile has been changed so that targets no longer stop before changing direction, and change directions much faster. A *reactive* dynamic scenario. This time it is pretty hard, sorry.\r\n\r\nChallenge mode has accuracy scoring, to incentivize actually reading the target and reward continuous microadjustments."
+        },
+        {
+          "source": "fun-audit",
+          "says": "Replay 14.8 plays per player (rung-weighted), 573127 players on the Novice and Intermediate rungs, named by 2 of the benchmarks evxl lists; composite 0.64 against every family measured."
+        }
+      ],
+      "audience": {
+        "scenario": "1wall5targets_pasu",
+        "plays": 6214977,
+        "entries": 324872
+      },
+      "thin": "Chosen on measured replay, reach and benchmark consensus. No measured enjoyment or cross-band difficulty equivalence is claimed; playtesting decides both."
+    },
+    {
+      "family": "Tamspeed",
+      "subCategory": "Dynamic Clicking",
+      "isolates": "Short dynamic micro-flicks between two bots, a hybrid of microshot, reflex flick and Pasu.",
+      "why": "Trims the circuit's Pasu-style families from four to three, the source of most complaints about luck deciding a run. Tamspeed's author publishes the ladder as named tiers, so the order is his.",
+      "evidence": [
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "Tamspeed 2bp Iron",
+          "says": "Exact identity checked 2026-09-23T17:15:58.058Z. Hybrid between Microshot speed 2 bots, reflex flick - micro, and pasu. Added 0.7 timescale."
+        },
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "Tamspeed 2bp Silver",
+          "says": "Exact identity checked 2026-09-23T17:16:08.243Z. Hybrid between Microshot speed 2 bots, reflex flick - micro, and pasu. Added 0.85 timescale."
+        },
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "Tamspeed 2bp Gold",
+          "says": "Exact identity checked 2026-09-23T17:16:18.309Z. Hybrid between Microshot speed 2 bots, reflex flick - micro, and pasu."
+        },
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "Tamspeed 2bp Platinum",
+          "says": "Exact identity checked 2026-09-23T17:16:28.303Z. Hybrid between Microshot speed 2 bots, reflex flick - micro, and pasu. Added."
+        },
+        {
+          "source": "fun-audit",
+          "says": "Replay 17.8 plays per player (rung-weighted), 84639 players on the Novice and Intermediate rungs, named by 0 of the benchmarks evxl lists; composite 0.45 against every family measured."
+        }
+      ],
+      "audience": {
+        "scenario": "Tamspeed 2bp Iron",
+        "plays": 704755,
+        "entries": 51079
+      },
+      "thin": "Chosen on measured replay, reach and benchmark consensus. No measured enjoyment or cross-band difficulty equivalence is claimed; playtesting decides both."
+    },
+    {
+      "family": "Timing",
+      "subCategory": "Dynamic Clicking",
+      "isolates": "Clicking linearly moving heads on time, with ammo refilled on kill.",
+      "why": "Floating Heads Timing 400% is the original the Floating Heads family was built from; its Novice and Intermediate rungs have eight times the players and more than twice the replay of the family it replaces. Larger introduces it; FIXED removes a frame-rate speed inconsistency and locks field of view; Extra Small Speed shrinks the head and speeds it up. The FIXED Extra Small edit was the natural Expert rung but its board is under the floor the Expert window sets for a board its ranks are cut from.",
+      "evidence": [
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "Floating Heads Timing 400% Larger",
+          "says": "Exact identity checked 2026-09-23T17:16:38.350Z. Click the floating heads! No accuracy multiplier, ammo is reloaded on kill"
+        },
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "Floating Heads Timing 400%",
+          "says": "Exact identity checked 2026-09-23T17:16:39.041Z. Click the floating heads! No accuracy multiplier, ammo is reloaded on kill"
+        },
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "Floating Heads Timing 400% FIXED",
+          "says": "Exact identity checked 2026-09-23T17:16:49.373Z. Click the floating heads! No accuracy multiplier, ammo is reloaded on kill. Fixed inconsistent speed at low fps, FOV lock"
+        },
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "Floating Heads Timing Extra Small Speed",
+          "says": "Exact identity checked 2026-09-23T17:23:31.185Z. Click the floating heads! No accuracy multiplier, ammo is reloaded on kill"
+        },
+        {
+          "source": "fun-audit",
+          "says": "Replay 13.8 plays per player (rung-weighted), 500545 players on the Novice and Intermediate rungs, named by 8 of the benchmarks evxl lists; composite 0.84 against every family measured."
+        }
+      ],
+      "audience": {
+        "scenario": "Floating Heads Timing 400%",
+        "plays": 8415921,
+        "entries": 352286
+      },
+      "thin": "Chosen on measured replay, reach and benchmark consensus. No measured enjoyment or cross-band difficulty equivalence is claimed; playtesting decides both."
+    },
+    {
+      "family": "Bounceshot",
+      "subCategory": "Dynamic Clicking",
+      "isolates": "Single-click bots leaping in arcs and changing depth.",
+      "why": "Adds arcing movement the circuit lacked and replaces one of its least replayed families. Voltaic's own tiers set the order; the Expert rung is the 20% smaller edit of Advanced.",
+      "evidence": [
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "VT Bounceshot Novice",
+          "says": "Exact identity checked 2026-09-23T17:17:00.359Z. Four single-click bots leap in mid-high arcs on top of a flat surface, changing depths as they traverse. The player's weapon has three shots and empty magazines recover in their entirety upon each elimination."
+        },
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "VT Bounceshot Intermediate",
+          "says": "Exact identity checked 2026-09-23T17:17:01.009Z. Four single-click bots leap in mid-high arcs on top of a flat surface, changing depths as they traverse. The player's weapon has three shots and empty magazines recover in their entirety upon each elimination."
+        },
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "VT Bounceshot Advanced",
+          "says": "Exact identity checked 2026-09-23T17:17:01.629Z. Four single-click bots leap in mid-high arcs on top of a flat surface, changing depths as they traverse. The player's weapon has three shots and empty magazines recover in their entirety upon each elimination."
+        },
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "VT Bounceshot Advanced 20% smaller",
+          "says": "Exact identity checked 2026-09-23T17:17:02.184Z. Four single-click bots leap in mid-high arcs on top of a flat surface, changing depths as they traverse. The player's weapon has three shots and empty magazines recover in their entirety upon each elimination.\r\n\r\n20% smaller version."
+        },
+        {
+          "source": "fun-audit",
+          "says": "Replay 14.3 plays per player (rung-weighted), 379506 players on the Novice and Intermediate rungs, named by 4 of the benchmarks evxl lists; composite 0.67 against every family measured."
+        }
+      ],
+      "audience": {
+        "scenario": "VT Bounceshot Novice",
+        "plays": 1967572,
+        "entries": 213995
+      },
+      "thin": "Chosen on measured replay, reach and benchmark consensus. No measured enjoyment or cross-band difficulty equivalence is claimed; playtesting decides both."
+    },
+    {
+      "family": "Clover Control",
+      "subCategory": "Precise Tracking",
+      "isolates": "Keeping a dot centred through semi-predictable strafes inside a small cage.",
+      "why": "cloverRawControl is named by eleven benchmarks, tied for the most of any scenario the season did not use, and its Easy edit by nine more. The previous PreciseTrack family started on a 293-entry leaderboard. Big, Easy and standard are the author's own steps; Expert is Viscose's hard edit, used because the author's Hard board is under the floor the Expert window sets.",
+      "evidence": [
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "cloverRawControl Big",
+          "says": "Exact identity checked 2026-09-23T17:17:12.719Z. Big dot makes semi-predictable strafes confined in a prison.\r\nWe recommend sensitivities faster than 40cm/360 for best practice"
+        },
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "cloverRawControl Easy",
+          "says": "Exact identity checked 2026-09-23T17:17:13.357Z. Small dot makes semi-predictable strafes confined in a prison.\r\nPlaying on a higher sensitivity is better practice"
+        },
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "cloverRawControl",
+          "says": "Exact identity checked 2026-09-23T17:17:14.032Z. Small dot makes semi-predictable strafes confined in a prison.\r\nPlaying on a higher sensitivity is better practice"
+        },
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "cloverRawControl Viscose Hard 50cm",
+          "says": "Exact identity checked 2026-09-23T17:23:41.475Z. This scenario is balanced around using 50cm/360 or faster. Sensitivities above that are worse for practice and change the intent of the scenario. I highly suggest sticking to 50cm at the slowest.\r\n\r\nSmall dot makes semi-predictable strafes confined in a prison. Altered to have slower acceleration, slight pauses between strafes and is slightly larger."
+        },
+        {
+          "source": "fun-audit",
+          "says": "Replay 18.1 plays per player (rung-weighted), 240809 players on the Novice and Intermediate rungs, named by 20 of the benchmarks evxl lists; composite 0.9 against every family measured."
+        }
+      ],
+      "audience": {
+        "scenario": "cloverRawControl Easy",
+        "plays": 3972941,
+        "entries": 159515
+      },
+      "thin": "Chosen on measured replay, reach and benchmark consensus. No measured enjoyment or cross-band difficulty equivalence is claimed; playtesting decides both."
+    },
+    {
+      "family": "SYW",
+      "subCategory": "Precise Tracking",
+      "isolates": "Pure smoothness against a strafing bot, with glass walls giving time to react.",
+      "why": "SYW FIXED is replayed 47.6 times per player, one of the highest rates of any tracking scenario on KovaaK's. Easy and the original lock field of view; FIXED forces ADS to remove the cheese; Extra thin narrows the bot.",
+      "evidence": [
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "SYW Easy",
+          "says": "Exact identity checked 2026-09-23T17:17:24.789Z. A pure test of smoothness. The glass on the sides give you time to react to bot strafes. ADS no longer required, FoV locked to 103 on challenge mode."
+        },
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "SYW (Smooth Your Wrist)",
+          "says": "Exact identity checked 2026-09-23T17:17:34.989Z. A pure test of smoothness. The glass on the sides give you time to react to bot strafes. ADS no longer required, FoV locked to 103 on challenge mode."
+        },
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "SYW (Smooth Your Wrist) FIXED",
+          "says": "Exact identity checked 2026-09-23T17:17:45.373Z. A pure test of smoothness. You MUST use ADS (forced 103OW FoV) to prevent cheese. The glass on the sides give you time to react to bot strafes."
+        },
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "SYW (Smooth Your Wrist) FIXED Extra thin",
+          "says": "Exact identity checked 2026-09-23T17:17:55.962Z. A pure test of smoothness. You MUST use ADS (forced 103OW FoV) to prevent cheese. The glass on the sides give you time to react to bot strafes."
+        },
+        {
+          "source": "fun-audit",
+          "says": "Replay 23.8 plays per player (rung-weighted), 191258 players on the Novice and Intermediate rungs, named by 0 of the benchmarks evxl lists; composite 0.56 against every family measured."
+        }
+      ],
+      "audience": {
+        "scenario": "SYW (Smooth Your Wrist) FIXED",
+        "plays": 13875031,
+        "entries": 291778
+      },
+      "thin": "Chosen on measured replay, reach and benchmark consensus. No measured enjoyment or cross-band difficulty equivalence is claimed; playtesting decides both."
+    },
+    {
+      "family": "PGTI",
+      "subCategory": "Precise Tracking",
+      "isolates": "Smooth, precise tracking of a bot moving along curved walls.",
+      "why": "PGTI is named by ten benchmarks and comes up again and again in community lists of favourite tracking scenarios. Easy 80% slows the Easy cut; Slower 80% slows the standard one; the standard edit is last. The Gold edit is left out because its bot is enlarged from Easy, which would put an easier scenario above a harder one.",
+      "evidence": [
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "PGTI Voltaic Easy 80%",
+          "says": "Exact identity checked 2026-09-23T17:18:06.275Z. PGTI Easy with curved walls and slightly tweaked bot movement."
+        },
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "PGTI Voltaic Easy",
+          "says": "Exact identity checked 2026-09-23T17:18:16.582Z. PGTI Easy with curved walls and slightly tweaked bot movement."
+        },
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "PGTI Voltaic Slower - 80%",
+          "says": "Exact identity checked 2026-09-23T17:18:17.292Z. PGTI with curved walls and slightly tweaked bot movement. 80% of normal speed"
+        },
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "PGTI Voltaic",
+          "says": "Exact identity checked 2026-09-23T17:18:27.828Z. PGTI with curved walls and slightly tweaked bot movement."
+        },
+        {
+          "source": "fun-audit",
+          "says": "Replay 18 plays per player (rung-weighted), 293520 players on the Novice and Intermediate rungs, named by 10 of the benchmarks evxl lists; composite 0.86 against every family measured."
+        }
+      ],
+      "audience": {
+        "scenario": "PGTI Voltaic Easy",
+        "plays": 3244218,
+        "entries": 156104
+      },
+      "thin": "Chosen on measured replay, reach and benchmark consensus. No measured enjoyment or cross-band difficulty equivalence is claimed; playtesting decides both."
+    },
+    {
+      "family": "Long Strafes",
+      "subCategory": "Reactive Tracking",
+      "isolates": "Reacting to long strafes, moving closer with every rung so the angular speed grows.",
+      "why": "The long-strafes lineage carries some of the highest replay in tracking. The ladder moves the bot from kinda far to midrange to close, then thins it, so difficulty grows along one visible axis.",
+      "evidence": [
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "Kindafar Long Strafes",
+          "says": "Exact identity checked 2026-09-23T17:18:28.411Z. 4Trit"
+        },
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "Midrange Long Strafes Invincible",
+          "says": "Exact identity checked 2026-09-23T17:18:43.852Z. mid range long strafe training"
+        },
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "Close Long Strafes Invincible",
+          "says": "Exact identity checked 2026-09-23T17:18:53.786Z. Close Fast Strafes, but the bots are invincible"
+        },
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "Close long strafes invincible very thin",
+          "says": "Exact identity checked 2026-09-23T17:18:54.469Z. Close Fast Strafes, but the bots are invincible"
+        },
+        {
+          "source": "fun-audit",
+          "says": "Replay 26.3 plays per player (rung-weighted), 304205 players on the Novice and Intermediate rungs, named by 4 of the benchmarks evxl lists; composite 0.73 against every family measured."
+        }
+      ],
+      "audience": {
+        "scenario": "Close Long Strafes Invincible",
+        "plays": 4659947,
+        "entries": 224790
+      },
+      "thin": "Chosen on measured replay, reach and benchmark consensus. No measured enjoyment or cross-band difficulty equivalence is claimed; playtesting decides both."
+    },
+    {
+      "family": "Air Angelic",
+      "subCategory": "Reactive Tracking",
+      "isolates": "Following an airborne bot's small, sharp dodges without overcorrecting.",
+      "why": "Same skill, rebuilt on the Air Angelic 4 lineage whose Easy edit nine benchmarks use. The previous Novice and Intermediate rungs had leaderboards of 798 and 1,637 entries. The steps go from 80% speed to Easy, the standard edit, then the smaller bot.",
+      "evidence": [
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "Air Angelic 4 Voltaic Easy 80% (Good Version)",
+          "says": "Exact identity checked 2026-09-23T17:19:05.230Z. Invincible version of Air Angelic bot 4, with slightly altered dodge profiles, for 60 seconds."
+        },
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "Air Angelic 4 Voltaic Easy",
+          "says": "Exact identity checked 2026-09-23T17:19:20.476Z. Invincible version of Air Angelic bot 4, with slightly altered dodge profiles, for 60 seconds."
+        },
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "Air Angelic 4 Voltaic",
+          "says": "Exact identity checked 2026-09-23T17:19:21.251Z. Invincible version of Air Angelic bot 4, with slightly altered dodge profiles, for 60 seconds."
+        },
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "Air Angelic 4 Voltaic Smaller",
+          "says": "Exact identity checked 2026-09-23T17:19:22.230Z. Invincible version of Air Angelic bot 4, with slightly altered dodge profiles, for 60 seconds."
+        },
+        {
+          "source": "fun-audit",
+          "says": "Replay 16.8 plays per player (rung-weighted), 423615 players on the Novice and Intermediate rungs, named by 11 of the benchmarks evxl lists; composite 0.88 against every family measured."
+        }
+      ],
+      "audience": {
+        "scenario": "Air Angelic 4 Voltaic Easy",
+        "plays": 4094559,
+        "entries": 215688
+      },
+      "thin": "Chosen on measured replay, reach and benchmark consensus. No measured enjoyment or cross-band difficulty equivalence is claimed; playtesting decides both."
+    },
+    {
+      "family": "beanTS",
+      "subCategory": "Speed Switching",
+      "isolates": "Small, fast switches between close targets: 1w2t smallflicks crossed with voxTS.",
+      "why": "Wave Relay had the lowest replay in the season, under three plays per player. beanTS is named by eight benchmarks and has a board of over nine thousand players at every rung. Larger, standard and 30% smaller are target sizes; 200% doubles the speed.",
+      "evidence": [
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "beanTS Larger",
+          "says": "Exact identity checked 2026-09-23T17:19:25.263Z. 1w2t Smallflicks and voxTS had baby, and they named it beanTS,"
+        },
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "beanTS",
+          "says": "Exact identity checked 2026-09-23T17:19:26.008Z. 1w2t Smallflicks and voxTS had baby, and they named it beanTS,"
+        },
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "beanTS 30% Smaller",
+          "says": "Exact identity checked 2026-09-23T17:19:27.265Z. 1w2t Smallflicks and voxTS had baby, and they named it beanTS,"
+        },
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "beanTS 200%",
+          "says": "Exact identity checked 2026-09-23T17:19:37.219Z. 1w2t Smallflicks and voxTS had baby, and they named it beanTS, 200% Speed"
+        },
+        {
+          "source": "fun-audit",
+          "says": "Replay 11 plays per player (rung-weighted), 327085 players on the Novice and Intermediate rungs, named by 12 of the benchmarks evxl lists; composite 0.81 against every family measured."
+        }
+      ],
+      "audience": {
+        "scenario": "beanTS",
+        "plays": 2334521,
+        "entries": 166119
+      },
+      "thin": "Chosen on measured replay, reach and benchmark consensus. No measured enjoyment or cross-band difficulty equivalence is claimed; playtesting decides both."
+    },
+    {
+      "family": "patCircleSwitch",
+      "subCategory": "Speed Switching",
+      "isolates": "Switching between heads with no bodies and no reload across a wide field.",
+      "why": "A long-standing switching classic whose NR edit six benchmarks name, with about twice the Novice and Intermediate players of PivoTS. Easy, standard and small are the author's sizes; Speed lowers time-to-kill and enlarges the heads for pure pace.",
+      "evidence": [
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "patCircleSwitch easy NR",
+          "says": "Exact identity checked 2026-09-23T17:19:47.439Z. PatTargetSwitch with no bodies, no reload and minimum FOV range 103-160 ow. A classic reinvented using patented bounding box tech. Truely an innovation in target switching. Credit to huekk for fixing the map!"
+        },
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "patCircleSwitch NR",
+          "says": "Exact identity checked 2026-09-23T17:19:57.519Z. PatTargetSwitch with no bodies, no reload and minimum FOV range 103-160 ow. A classic reinvented using patented bounding box tech. Truely an innovation in target switching. Credit to huekk for fixing the map!"
+        },
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "patCircleSwitch small NR",
+          "says": "Exact identity checked 2026-09-23T17:19:58.217Z. PatTargetSwitch with no bodies, no reload and minimum FOV range 103-160 ow. A classic reinvented using patented bounding box tech. Truely an innovation in target switching. Credit to huekk for fixing the map!"
+        },
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "PatCircleSwitch Speed",
+          "says": "Exact identity checked 2026-09-23T17:20:08.195Z. The head is now the actual body, and time between shots is 1ms making the health bar animation smoother with the same ttk as the original. Scoring is base 10 too.\r\n\r\nspeed version: 90. Lower ttk and bigger bots."
+        },
+        {
+          "source": "fun-audit",
+          "says": "Replay 11.1 plays per player (rung-weighted), 77002 players on the Novice and Intermediate rungs, named by 7 of the benchmarks evxl lists; composite 0.6 against every family measured."
+        }
+      ],
+      "audience": {
+        "scenario": "patCircleSwitch NR",
+        "plays": 733693,
+        "entries": 64517
+      },
+      "thin": "Chosen on measured replay, reach and benchmark consensus. No measured enjoyment or cross-band difficulty equivalence is claimed; playtesting decides both."
+    },
+    {
+      "family": "patTargetSwitch",
+      "subCategory": "Evasive Switching",
+      "isolates": "Flick then track: kill dodging bots and transfer cleanly to the next.",
+      "why": "Floatswitch was the least replayed evasive family. patTargetSwitch is the original flick-and-track switching scenario and is not Voltaic, which keeps the Voltaic share of this category from growing. The Expert rung plays the same task while moving through a 360 room.",
+      "evidence": [
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "patTargetSwitch easy",
+          "says": "Exact identity checked 2026-09-23T17:20:18.160Z. Target switching scenarios (flick + track)"
+        },
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "patTargetSwitch",
+          "says": "Exact identity checked 2026-09-23T17:20:28.033Z. Target switching scenarios (flick + track)"
+        },
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "patTargetSwitch Small",
+          "says": "Exact identity checked 2026-09-23T17:20:38.110Z. A classic reinvented using patented bounding box tech. Truely an innovation in target switching."
+        },
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "patTargetSwitch Dodge 360",
+          "says": "Exact identity checked 2026-09-23T17:20:48.087Z. patTargetSwitch but while moving on a 360 environment."
+        },
+        {
+          "source": "fun-audit",
+          "says": "Replay 14.3 plays per player (rung-weighted), 240474 players on the Novice and Intermediate rungs, named by 2 of the benchmarks evxl lists; composite 0.56 against every family measured."
+        }
+      ],
+      "audience": {
+        "scenario": "patTargetSwitch",
+        "plays": 2183844,
+        "entries": 164732
+      },
+      "thin": "Chosen on measured replay, reach and benchmark consensus. No measured enjoyment or cross-band difficulty equivalence is claimed; playtesting decides both."
+    },
+    {
+      "family": "Skeet",
+      "subCategory": "Evasive Switching",
+      "isolates": "Tracking fast arcing skeets and transferring to the next as each one breaks.",
+      "why": "Hop Transfer was the second least replayed evasive family. Skeet Tracking has 386 thousand players at 31 plays each. 85% Speed slows it for Novice; Goated and Goated Small are the published harder edits.",
+      "evidence": [
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "Skeet Tracking 85% Speed",
+          "says": "Exact identity checked 2026-09-23T17:21:38.576Z. Parabolic motion targets move to both sides of the map."
+        },
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "Skeet Tracking",
+          "says": "Exact identity checked 2026-09-23T17:21:49.182Z. Parabolic motion targets move to both sides of the map."
+        },
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "Skeet Tracking Goated",
+          "says": "Exact identity checked 2026-09-23T17:21:59.194Z. Parabolic motion targets move to both sides of the map. Removed Accuracy multiplier and effect when hitting walls and targets."
+        },
+        {
+          "source": "fun-rebuild-catalogue",
+          "scenario": "Skeet Tracking Goated Small",
+          "says": "Exact identity checked 2026-09-23T17:22:09.440Z. Parabolic motion targets move to both sides of the map. Removed Accuracy multiplier and effect when hitting walls and targets."
+        },
+        {
+          "source": "fun-audit",
+          "says": "Replay 19.8 plays per player (rung-weighted), 387903 players on the Novice and Intermediate rungs, named by 2 of the benchmarks evxl lists; composite 0.65 against every family measured."
+        }
+      ],
+      "audience": {
+        "scenario": "Skeet Tracking",
+        "plays": 12085701,
+        "entries": 385779
+      },
+      "thin": "Chosen on measured replay, reach and benchmark consensus. No measured enjoyment or cross-band difficulty equivalence is claimed; playtesting decides both."
     }
   ]
 }

@@ -1,0 +1,273 @@
+{
+  "version": 1,
+  "intent": "Replace the families players try and abandon with lineages they return to, without changing the shape of any circuit. A family is judged on four measured signals, all re-derived by tools/funAudit.ts into data/fun_audit.json: replay (KovaaK's plays per player), reach (players on its Novice and Intermediate rungs), consensus (how many benchmarks evxl lists use any of its rungs) and local run-to-run noise. Replay is the strongest signal of a scenario people enjoy; noise matters because a delta-scored match on a noisy scenario is decided by luck.",
+  "rules": {
+    "maxSeconds": 60,
+    "maxPasuStyleDynamic": 3,
+    "noVoltaicAddedTo": [
+      "Evasive Switching"
+    ],
+    "sizes": {
+      "Static Clicking": 13,
+      "Dynamic Clicking": 10,
+      "Precise Tracking": 10,
+      "Reactive Tracking": 10,
+      "Speed Switching": 10,
+      "Evasive Switching": 11
+    }
+  },
+  "families": [
+    {
+      "category": "Static Clicking",
+      "replaces": "Diagonal",
+      "family": "Six Targets",
+      "isolates": "Fast, clean flicks between small static targets on one wall.",
+      "why": "1wall 6targets small is the most played scenario on KovaaK's after the sandbox intro, 1.29 million players at 57 plays each, and the season had no member of its lineage. Jumbo introduces it, TE is the standard, small and extra small tighten the target without changing the rhythm.",
+      "rungs": [
+        "Jumbo 1wall6targets TE",
+        "1wall6targets TE",
+        "1wall 6targets small",
+        "1wall 6targets extra small"
+      ]
+    },
+    {
+      "category": "Static Clicking",
+      "replaces": "Horizontal",
+      "family": "Hipfire",
+      "isolates": "Short snaps to spheres in a narrow field of view.",
+      "why": "5 Sphere Hipfire is a long-standing micro-flick staple; the Small edit alone has half a million players. The four rungs are one scenario at four target sizes, so the difficulty order is the author's own.",
+      "rungs": [
+        "5 Sphere Hipfire",
+        "5 Sphere Hipfire Small",
+        "5 Sphere Hipfire Extra Small",
+        "5 Sphere Hipfire Extra Extra Small"
+      ]
+    },
+    {
+      "category": "Static Clicking",
+      "replaces": "Evo Gallery",
+      "family": "Tile Frenzy",
+      "isolates": "Rhythm clicking on a steady stream of tiles, fast feedback on every shot.",
+      "why": "Tile Frenzy is the scenario players describe as satisfying even when they concede it is easy, which is exactly the Novice job. Jumbo and standard carry the rhythm; Mini moves the wall far away so the same rhythm needs small movements; Extra mini is the smallest edit on a real board.",
+      "rungs": [
+        "Jumbo Tile Frenzy",
+        "Tile Frenzy",
+        "Tile Frenzy Mini",
+        "Extra mini Tile Frenzy"
+      ]
+    },
+    {
+      "category": "Static Clicking",
+      "replaces": "Wide Pressure",
+      "family": "Four Targets",
+      "isolates": "One-wall target selection with ammo that reloads on kill instead of accuracy scoring.",
+      "why": "1w4ts Voltaic is named by four benchmarks and replayed 28.5 times per player, and the reload edits it grew are replayed nearly as often. The rungs step from larger targets through the Voltaic cut to the reload edits at smaller sizes.",
+      "rungs": [
+        "1w4ts 30% larger",
+        "1w4ts Voltaic",
+        "1w4ts reload",
+        "1w4ts reload 30% smaller"
+      ]
+    },
+    {
+      "category": "Static Clicking",
+      "replaces": "Micro",
+      "family": "Raw Mouse",
+      "isolates": "Three small static targets in a small range of motion: fingertip precision.",
+      "why": "The previous Micro family had Novice and Intermediate leaderboards of 175 and 532 entries. RawMouseControlClicking3 is replayed 51.6 times per player, among the highest on KovaaK's. Reload Easy is 25% bigger, Reload removes accuracy scoring, Clicking3 restores it, and 30% smaller tightens it.",
+      "rungs": [
+        "RawMouseControl Reload Easy",
+        "RawMouseControl Reload",
+        "RawMouseControlClicking3",
+        "RawMouseControlClicking3 30% smaller"
+      ]
+    },
+    {
+      "category": "Dynamic Clicking",
+      "replaces": "Pasu",
+      "family": "Pasu Wall",
+      "isolates": "Reading dodging targets on one wall and clicking at the moment they settle.",
+      "why": "Keeps Pasu in the circuit on the lineage players actually play: its Novice and Intermediate rungs have about thirty-five times the players of the Pasu rungs they replace (fun_audit.json reach). Slow introduces it, small halves the target, and the reactive edit makes the small targets react. The Reload edit, which more benchmarks name, is left out because it runs 86 seconds (50 local runs, 84% agreement in scenario_durations.json).",
+      "rungs": [
+        "1wall5targets_pasu slow",
+        "1wall5targets_pasu",
+        "1wall5targets_pasu_small",
+        "1wall5targets_pasu_small_reactive"
+      ]
+    },
+    {
+      "category": "Dynamic Clicking",
+      "replaces": "Pasu Sequence",
+      "family": "Tamspeed",
+      "isolates": "Short dynamic micro-flicks between two bots, a hybrid of microshot, reflex flick and Pasu.",
+      "why": "Trims the circuit's Pasu-style families from four to three, the source of most complaints about luck deciding a run. Tamspeed's author publishes the ladder as named tiers, so the order is his.",
+      "rungs": [
+        "Tamspeed 2bp Iron",
+        "Tamspeed 2bp Silver",
+        "Tamspeed 2bp Gold",
+        "Tamspeed 2bp Platinum"
+      ]
+    },
+    {
+      "category": "Dynamic Clicking",
+      "replaces": "Floating Gallery",
+      "family": "Timing",
+      "isolates": "Clicking linearly moving heads on time, with ammo refilled on kill.",
+      "why": "Floating Heads Timing 400% is the original the Floating Heads family was built from; its Novice and Intermediate rungs have eight times the players and more than twice the replay of the family it replaces. Larger introduces it; FIXED removes a frame-rate speed inconsistency and locks field of view; Extra Small Speed shrinks the head and speeds it up. The FIXED Extra Small edit was the natural Expert rung but its board is under the floor the Expert window sets for a board its ranks are cut from.",
+      "rungs": [
+        "Floating Heads Timing 400% Larger",
+        "Floating Heads Timing 400%",
+        "Floating Heads Timing 400% FIXED",
+        "Floating Heads Timing Extra Small Speed"
+      ]
+    },
+    {
+      "category": "Dynamic Clicking",
+      "replaces": "Wave Click",
+      "family": "Bounceshot",
+      "isolates": "Single-click bots leaping in arcs and changing depth.",
+      "why": "Adds arcing movement the circuit lacked and replaces one of its least replayed families. Voltaic's own tiers set the order; the Expert rung is the 20% smaller edit of Advanced.",
+      "rungs": [
+        "VT Bounceshot Novice",
+        "VT Bounceshot Intermediate",
+        "VT Bounceshot Advanced",
+        "VT Bounceshot Advanced 20% smaller"
+      ]
+    },
+    {
+      "category": "Precise Tracking",
+      "replaces": "PreciseTrack",
+      "family": "Clover Control",
+      "isolates": "Keeping a dot centred through semi-predictable strafes inside a small cage.",
+      "why": "cloverRawControl is named by eleven benchmarks, tied for the most of any scenario the season did not use, and its Easy edit by nine more. The previous PreciseTrack family started on a 293-entry leaderboard. Big, Easy and standard are the author's own steps; Expert is Viscose's hard edit, used because the author's Hard board is under the floor the Expert window sets.",
+      "rungs": [
+        "cloverRawControl Big",
+        "cloverRawControl Easy",
+        "cloverRawControl",
+        "cloverRawControl Viscose Hard 50cm"
+      ]
+    },
+    {
+      "category": "Precise Tracking",
+      "replaces": "Vertical Control",
+      "family": "SYW",
+      "isolates": "Pure smoothness against a strafing bot, with glass walls giving time to react.",
+      "why": "SYW FIXED is replayed 47.6 times per player, one of the highest rates of any tracking scenario on KovaaK's. Easy and the original lock field of view; FIXED forces ADS to remove the cheese; Extra thin narrows the bot.",
+      "rungs": [
+        "SYW Easy",
+        "SYW (Smooth Your Wrist)",
+        "SYW (Smooth Your Wrist) FIXED",
+        "SYW (Smooth Your Wrist) FIXED Extra thin"
+      ]
+    },
+    {
+      "category": "Precise Tracking",
+      "replaces": "Flower Chase",
+      "family": "PGTI",
+      "isolates": "Smooth, precise tracking of a bot moving along curved walls.",
+      "why": "PGTI is named by ten benchmarks and comes up again and again in community lists of favourite tracking scenarios. Easy 80% slows the Easy cut; Slower 80% slows the standard one; the standard edit is last. The Gold edit is left out because its bot is enlarged from Easy, which would put an easier scenario above a harder one.",
+      "rungs": [
+        "PGTI Voltaic Easy 80%",
+        "PGTI Voltaic Easy",
+        "PGTI Voltaic Slower - 80%",
+        "PGTI Voltaic"
+      ]
+    },
+    {
+      "category": "Reactive Tracking",
+      "replaces": "Strafe Gallery",
+      "family": "Long Strafes",
+      "isolates": "Reacting to long strafes, moving closer with every rung so the angular speed grows.",
+      "why": "The long-strafes lineage carries some of the highest replay in tracking. The ladder moves the bot from kinda far to midrange to close, then thins it, so difficulty grows along one visible axis.",
+      "rungs": [
+        "Kindafar Long Strafes",
+        "Midrange Long Strafes Invincible",
+        "Close Long Strafes Invincible",
+        "Close long strafes invincible very thin"
+      ]
+    },
+    {
+      "category": "Reactive Tracking",
+      "replaces": "Air Angelic",
+      "family": "Air Angelic",
+      "isolates": "Following an airborne bot's small, sharp dodges without overcorrecting.",
+      "why": "Same skill, rebuilt on the Air Angelic 4 lineage whose Easy edit nine benchmarks use. The previous Novice and Intermediate rungs had leaderboards of 798 and 1,637 entries. The steps go from 80% speed to Easy, the standard edit, then the smaller bot.",
+      "rungs": [
+        "Air Angelic 4 Voltaic Easy 80% (Good Version)",
+        "Air Angelic 4 Voltaic Easy",
+        "Air Angelic 4 Voltaic",
+        "Air Angelic 4 Voltaic Smaller"
+      ]
+    },
+    {
+      "category": "Speed Switching",
+      "replaces": "Wave Relay",
+      "family": "beanTS",
+      "isolates": "Small, fast switches between close targets: 1w2t smallflicks crossed with voxTS.",
+      "why": "Wave Relay had the lowest replay in the season, under three plays per player. beanTS is named by eight benchmarks and has a board of over nine thousand players at every rung. Larger, standard and 30% smaller are target sizes; 200% doubles the speed.",
+      "rungs": [
+        "beanTS Larger",
+        "beanTS",
+        "beanTS 30% Smaller",
+        "beanTS 200%"
+      ]
+    },
+    {
+      "category": "Speed Switching",
+      "replaces": "PivoTS",
+      "family": "patCircleSwitch",
+      "isolates": "Switching between heads with no bodies and no reload across a wide field.",
+      "why": "A long-standing switching classic whose NR edit six benchmarks name, with about twice the Novice and Intermediate players of PivoTS. Easy, standard and small are the author's sizes; Speed lowers time-to-kill and enlarges the heads for pure pace.",
+      "rungs": [
+        "patCircleSwitch easy NR",
+        "patCircleSwitch NR",
+        "patCircleSwitch small NR",
+        "PatCircleSwitch Speed"
+      ]
+    },
+    {
+      "category": "Evasive Switching",
+      "replaces": "Floating Heads",
+      "family": "patTargetSwitch",
+      "isolates": "Flick then track: kill dodging bots and transfer cleanly to the next.",
+      "why": "Floatswitch was the least replayed evasive family. patTargetSwitch is the original flick-and-track switching scenario and is not Voltaic, which keeps the Voltaic share of this category from growing. The Expert rung plays the same task while moving through a 360 room.",
+      "rungs": [
+        "patTargetSwitch easy",
+        "patTargetSwitch",
+        "patTargetSwitch Small",
+        "patTargetSwitch Dodge 360"
+      ]
+    },
+    {
+      "category": "Evasive Switching",
+      "replaces": "Hop Transfer",
+      "family": "Skeet",
+      "isolates": "Tracking fast arcing skeets and transferring to the next as each one breaks.",
+      "why": "Hop Transfer was the second least replayed evasive family. Skeet Tracking has 386 thousand players at 31 plays each. 85% Speed slows it for Novice; Goated and Goated Small are the published harder edits.",
+      "rungs": [
+        "Skeet Tracking 85% Speed",
+        "Skeet Tracking",
+        "Skeet Tracking Goated",
+        "Skeet Tracking Goated Small"
+      ]
+    }
+  ],
+  "rungs": [
+    {
+      "category": "Static Clicking",
+      "family": "Wide wall",
+      "window": 0,
+      "replaces": "ww6t Avasive Easier",
+      "scenario": "Wide Wall 6Targets",
+      "why": "The Novice rung had 225 players on its board. Wide Wall 6Targets is the classic six-target wide wall, the natural entry to the ww4t and Wide Wall 3 rungs above it."
+    },
+    {
+      "category": "Speed Switching",
+      "family": "DotTS",
+      "window": 0,
+      "replaces": "wobin DotTS Easy",
+      "scenario": "VT DotTS Novice S5",
+      "why": "The Novice rung had 441 players on its board. Voltaic's own Novice cut is the same scenario as the DotTS rungs above it."
+    }
+  ]
+}

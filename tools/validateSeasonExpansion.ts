@@ -8,16 +8,18 @@ import { thresholdsFrom } from "../src/core/season/percentiles.ts";
 import { scenarioEnergy, rankIndex } from "../src/core/benchmarks/energy.ts";
 import { matchesCategory } from "../src/core/match/scenarioSelection.ts";
 import { beforeEvasivePool, beforeEvasiveSeason } from "./evasiveReworkHistory.ts";
+import { beforeFunRebuildIdentity, beforeFunRebuildPool, beforeFunRebuildSeason } from "./funRebuildHistory.ts";
 
 const read = (name: string): any => JSON.parse(readFileSync(dataFile(name), "utf8"));
 // This audit reproduces the prior expansion. The subsequent evasive migration has
 // its own live-state validator; preserve and verify the historical evidence here.
-const pool = beforeEvasivePool(read("pool.json"));
+// Both later migrations are undone, newest first: the fun rebuild, then the evasive rework.
+const pool = beforeEvasivePool(beforeFunRebuildPool(read("pool.json")));
 const spec = read("season_expansion.json");
 const calibration = read("season_expansion_calibration.json");
 const liveSeason = loadSeason();
-const season = beforeEvasiveSeason(liveSeason);
-const identity = read("scenario_identity.json").scenarios;
+const season = beforeEvasiveSeason(beforeFunRebuildSeason(liveSeason));
+const identity = beforeFunRebuildIdentity(read("scenario_identity.json").scenarios);
 const taxonomy = new Map<string, any>(read("scenario_taxonomy.json").scenarios.map((s: any) => [s.name, s]));
 const distributions = new Map<string, any>(read("leaderboard_percentiles.json").distributions.map((d: any) => [d.scenario, d]));
 const boards = new Map<string, any>(read("leaderboard_apex.json").boards.map((d: any) => [d.scenario, d]));

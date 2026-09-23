@@ -1,17 +1,17 @@
 {
-  "$comment": "Six category circuits, including the revised evasive progression in data/evasive_rework.json. Catalogue evidence is not a substitute for human difficulty and enjoyment playtesting.",
+  "$comment": "Six category circuits, rebuilt for replay and reach in data/season_fun_rebuild.json with the measurements in data/fun_audit.json. Catalogue evidence is not a substitute for human difficulty and enjoyment playtesting.",
   "categories": {
     "Dynamic Clicking": {
       "description": "The targets are moving, so stay on each one for a split second until you're sure you're on it before you click, and don't let a sudden change of direction drag your crosshair with it. On targets that take several hits, move with them until the last click.",
       "families": [
         {
-          "family": "Pasu",
-          "why": "Pasu without Voltaic's cuts. Viscose's entry version with limited strafing for Novice, SuperbAim's Easy and standard cuts in the middle, and Pasu Reload Goated for Expert, which is smaller and uses a reload instead of accuracy scoring.",
+          "family": "Pasu Wall",
+          "why": "Keeps Pasu in the circuit on the lineage players actually play: its Novice and Intermediate rungs have about thirty-five times the players of the Pasu rungs they replace (fun_audit.json reach). Slow introduces it, small halves the target, and the reactive edit makes the small targets react. The Reload edit, which more benchmarks name, is left out because it runs 86 seconds (50 local runs, 84% agreement in scenario_durations.json).",
           "rungs": [
-            "Pasu Viscose Entry",
-            "Pasu SuperbAim Easy",
-            "Pasu SuperbAim",
-            "Pasu Reload Goated"
+            "1wall5targets_pasu slow",
+            "1wall5targets_pasu",
+            "1wall5targets_pasu_small",
+            "1wall5targets_pasu_small_reactive"
           ]
         },
         {
@@ -45,14 +45,14 @@
           ]
         },
         {
-          "family": "Pasu Sequence",
+          "family": "Tamspeed",
+          "why": "Trims the circuit's Pasu-style families from four to three, the source of most complaints about luck deciding a run. Tamspeed's author publishes the ladder as named tiers, so the order is his.",
           "rungs": [
-            "Pasu 3-Click Wide Easy",
-            "Pasu 3-Click v2 Less Easy",
-            "Pasu 3-click v2",
-            "Pasu 3-Click Wide"
-          ],
-          "why": "Repeated hits add the sustained target reading missing from one-shot clicking. Wide Easy introduces the task; Less Easy uses a faster timescale than the easy v2 cut; standard v2 removes timescaling; Wide opens the field. These are related community edits, not a measured equal-step progression. Expert width and mixed v2/v4 behaviour need playtesting."
+            "Tamspeed 2bp Iron",
+            "Tamspeed 2bp Silver",
+            "Tamspeed 2bp Gold",
+            "Tamspeed 2bp Platinum"
+          ]
         },
         {
           "family": "Popcorn",
@@ -65,14 +65,13 @@
           ]
         },
         {
-          "category": "Dynamic Clicking",
-          "family": "Floating Gallery",
-          "why": "Floating heads in a layered arena offer a shooting-gallery rhythm with depth changes. Viscose's Entry through Hard edits supply a coherent four-band progression without replacing the core Pasu and Popcorn tests.",
+          "family": "Timing",
+          "why": "Floating Heads Timing 400% is the original the Floating Heads family was built from; its Novice and Intermediate rungs have eight times the players and more than twice the replay of the family it replaces. Larger introduces it; FIXED removes a frame-rate speed inconsistency and locks field of view; Extra Small Speed shrinks the head and speeds it up. The FIXED Extra Small edit was the natural Expert rung but its board is under the floor the Expert window sets for a board its ranks are cut from.",
           "rungs": [
-            "VT Floating Heads Viscose Entry",
-            "VT Floating Heads Viscose Easier",
-            "VT Floating Heads Viscose Medium",
-            "VT Floating Heads Viscose Hard"
+            "Floating Heads Timing 400% Larger",
+            "Floating Heads Timing 400%",
+            "Floating Heads Timing 400% FIXED",
+            "Floating Heads Timing Extra Small Speed"
           ]
         },
         {
@@ -87,14 +86,13 @@
           ]
         },
         {
-          "category": "Dynamic Clicking",
-          "family": "Wave Click",
-          "why": "SunClick and WaveClick add a timing-focused wave circuit with a repeatable rhythm. This is a mixed-release progression using Aimerz's Easy S1, Normal, Hard and Hard S1 cuts; its handovers need playtesting.",
+          "family": "Bounceshot",
+          "why": "Adds arcing movement the circuit lacked and replaces one of its least replayed families. Voltaic's own tiers set the order; the Expert rung is the 20% smaller edit of Advanced.",
           "rungs": [
-            "Aimerz+ sunClick Easy S1",
-            "aimerz+ WaveClick Normal",
-            "aimerz+ WaveClick Hard",
-            "Aimerz+ sunClick Hard S1"
+            "VT Bounceshot Novice",
+            "VT Bounceshot Intermediate",
+            "VT Bounceshot Advanced",
+            "VT Bounceshot Advanced 20% smaller"
           ]
         },
         {
@@ -134,13 +132,13 @@
           "why": "A dedicated horizontal centering test separates velocity matching from multidirectional control. Entry, Novice and Intermediate community cuts lead into the established no-strafes version. Apogee band names describe our progression, not the names of the source cuts. Exact target-size differences are not claimed; band handovers need playtesting."
         },
         {
-          "family": "PreciseTrack",
-          "why": "Aimerz+ PreciseTrack in place of PGT as the fine-correction test. Avasive's Easier cut for Novice, then Easy, Med and Hard from the Aimerz+ S1 set.",
+          "family": "Clover Control",
+          "why": "cloverRawControl is named by eleven benchmarks, tied for the most of any scenario the season did not use, and its Easy edit by nine more. The previous PreciseTrack family started on a 293-entry leaderboard. Big, Easy and standard are the author's own steps; Expert is Viscose's hard edit, used because the author's Hard board is under the floor the Expert window sets.",
           "rungs": [
-            "PreciseTrack Avasive Easier",
-            "Aimerz+ PreciseTrack Easy S1",
-            "Aimerz+ PreciseTrack Med S1",
-            "Aimerz+ PreciseTrack Hard S1"
+            "cloverRawControl Big",
+            "cloverRawControl Easy",
+            "cloverRawControl",
+            "cloverRawControl Viscose Hard 50cm"
           ]
         },
         {
@@ -154,14 +152,14 @@
           ]
         },
         {
-          "family": "Vertical Control",
+          "family": "SYW",
+          "why": "SYW FIXED is replayed 47.6 times per player, one of the highest rates of any tracking scenario on KovaaK's. Easy and the original lock field of view; FIXED forces ADS to remove the cheese; Extra thin narrows the bot.",
           "rungs": [
-            "Smooth Your Vertical Altered POV Entry",
-            "Smooth Your Vertical Altered POV Easy v2",
-            "Smooth Your Vertical Altered POV Intermediate",
-            "Smooth Your Vertical Altered POV v2"
-          ],
-          "why": "These four Altered POV cuts explicitly isolate vertical smoothness. They replace a second broad sphere-control test with an axis players can identify and practise directly. Entry, Easy, Intermediate and standard v2 are curated into four Apogee bands; difficulty spacing remains a playtest judgement."
+            "SYW Easy",
+            "SYW (Smooth Your Wrist)",
+            "SYW (Smooth Your Wrist) FIXED",
+            "SYW (Smooth Your Wrist) FIXED Extra thin"
+          ]
         },
         {
           "family": "Controlsphere",
@@ -185,14 +183,13 @@
           ]
         },
         {
-          "category": "Precise Tracking",
-          "family": "Flower Chase",
-          "why": "The author's bee-collecting-pollen theme gives compact tracking a playful identity. Entry, Easier, standard and Hard keep the Flower motion across the four bands. The scenario name is not a requirement to change sensitivity.",
+          "family": "PGTI",
+          "why": "PGTI is named by ten benchmarks and comes up again and again in community lists of favourite tracking scenarios. Easy 80% slows the Easy cut; Slower 80% slows the standard one; the standard edit is last. The Gold edit is left out because its bot is enlarged from Easy, which would put an easier scenario above a harder one.",
           "rungs": [
-            "Flower Entry",
-            "Flower Easier 50cm",
-            "Flower 50cm",
-            "Flower Hard 50cm"
+            "PGTI Voltaic Easy 80%",
+            "PGTI Voltaic Easy",
+            "PGTI Voltaic Slower - 80%",
+            "PGTI Voltaic"
           ]
         },
         {
@@ -244,22 +241,22 @@
         },
         {
           "family": "Air Angelic",
-          "why": "Air Angelic from Astro's and Jade Palace's sheets. rAim's Biggest cut, Easier, rAim Easy, then the standard version, which both of them grade at their top tier.",
+          "why": "Same skill, rebuilt on the Air Angelic 4 lineage whose Easy edit nine benchmarks use. The previous Novice and Intermediate rungs had leaderboards of 798 and 1,637 entries. The steps go from 80% speed to Easy, the standard edit, then the smaller bot.",
           "rungs": [
-            "Air Angelic rAim Biggest",
-            "Air Angelic Easier",
-            "Air Angelic rAim Easy",
-            "Air Angelic"
+            "Air Angelic 4 Voltaic Easy 80% (Good Version)",
+            "Air Angelic 4 Voltaic Easy",
+            "Air Angelic 4 Voltaic",
+            "Air Angelic 4 Voltaic Smaller"
           ]
         },
         {
-          "family": "Strafe Gallery",
-          "why": "Targets that only dodge horizontally. CB StrafeTrack Easy is the entry, then Aimerz+ VGS Easy, Med and Hard. Mixes two authors: the CB entry isn't part of the VGS set.",
+          "family": "Long Strafes",
+          "why": "The long-strafes lineage carries some of the highest replay in tracking. The ladder moves the bot from kinda far to midrange to close, then thins it, so difficulty grows along one visible axis.",
           "rungs": [
-            "CB StrafeTrack Easy",
-            "Aimerz+ VGS Easy S1",
-            "Aimerz+ VGS Med S1",
-            "Aimerz+ VGS Hard S1"
+            "Kindafar Long Strafes",
+            "Midrange Long Strafes Invincible",
+            "Close Long Strafes Invincible",
+            "Close long strafes invincible very thin"
           ]
         },
         {
@@ -335,7 +332,7 @@
           "family": "DotTS",
           "why": "Static dot switching without Voltaic's cuts. wobin's Easy, which leans on horizontal spawns, for Novice, AimSpeed's Entry, the 30% larger cut, then plain DotTS, which Aimerz+ SpeedTS and AimSpeed both grade at Hard.",
           "rungs": [
-            "wobin DotTS Easy",
+            "VT DotTS Novice S5",
             "DotTS Entry",
             "DotTS 30% Larger",
             "DotTS"
@@ -362,13 +359,13 @@
           ]
         },
         {
-          "family": "PivoTS",
-          "why": "Aimerz+ pivoTS, a different switching pattern. The two Hard cuts are from different Aimerz+ releases (S0 and S1), and their order hasn't been playtested yet.",
+          "family": "patCircleSwitch",
+          "why": "A long-standing switching classic whose NR edit six benchmarks name, with about twice the Novice and Intermediate players of PivoTS. Easy, standard and small are the author's sizes; Speed lowers time-to-kill and enlarges the heads for pure pace.",
           "rungs": [
-            "Aimerz+ pivoTS Easy S1",
-            "aimerz+ pivoTS Normal",
-            "aimerz+ pivoTS Hard",
-            "Aimerz+ pivoTS Hard S1"
+            "patCircleSwitch easy NR",
+            "patCircleSwitch NR",
+            "patCircleSwitch small NR",
+            "PatCircleSwitch Speed"
           ]
         },
         {
@@ -403,14 +400,13 @@
           ]
         },
         {
-          "category": "Speed Switching",
-          "family": "Wave Relay",
-          "why": "Smoothly drifting targets give switching a visible wave rhythm. Community Benchmarks' easy cut leads into Revosect Entry, Intermediate and standard. The cross-author first handover is provisional.",
+          "family": "beanTS",
+          "why": "Wave Relay had the lowest replay in the season, under three plays per player. beanTS is named by eight benchmarks and has a board of over nine thousand players at every rung. Larger, standard and 30% smaller are target sizes; 200% doubles the speed.",
           "rungs": [
-            "CB WaveSwitch Easy",
-            "WaveSwitch Revosect Entry",
-            "WaveSwitch Revosect Int",
-            "WaveSwitch Revosect"
+            "beanTS Larger",
+            "beanTS",
+            "beanTS 30% Smaller",
+            "beanTS 200%"
           ]
         },
         {
@@ -453,16 +449,14 @@
           "why": "Replace the mixed PureG/Aimerz progression with one published PasuTS lineage. Entry is explicitly 15% larger and 15% slower, with a short 20-hit clear; Intermediate, Advanced and Elite retain the task."
         },
         {
-          "family": "Floating Heads",
-          "focus": "Build a target order and keep each burst on the head until it drops.",
-          "category": "Evasive Switching",
+          "family": "patTargetSwitch",
+          "why": "Floatswitch was the least replayed evasive family. patTargetSwitch is the original flick-and-track switching scenario and is not Voltaic, which keeps the Voltaic share of this category from growing. The Expert rung plays the same task while moving through a 360 room.",
           "rungs": [
-            "Floatswitch Entry",
-            "Floatswitch Intermediate",
-            "Floatswitch Advanced",
-            "Floatswitch Elite"
-          ],
-          "why": "A new floating-head gallery adds short 0.2-second, 20-hit clears and fast target choice. Use the same authored Entry, Intermediate, Advanced and Elite editions; these are sustained full-auto clears despite the broad catalogue Clicking tag."
+            "patTargetSwitch easy",
+            "patTargetSwitch",
+            "patTargetSwitch Small",
+            "patTargetSwitch Dodge 360"
+          ]
         },
         {
           "family": "Chamber Relay",
@@ -477,16 +471,14 @@
           "why": "Keep the narrow room and floating, gently jumping targets. Entry Speed combines larger, slower entry bots with a 25% shorter clear. Intermediate, Advanced and Elite keep their existing bands, so the easier start does not lower the upper-band challenge."
         },
         {
-          "family": "Hop Transfer",
-          "focus": "Read the jump arc and keep firing through the landing. Do not switch early.",
-          "category": "Evasive Switching",
+          "family": "Skeet",
+          "why": "Hop Transfer was the second least replayed evasive family. Skeet Tracking has 386 thousand players at 31 plays each. 85% Speed slows it for Novice; Goated and Goated Small are the published harder edits.",
           "rungs": [
-            "CB JumpSwitch Easy",
-            "Aimerz+ hopTS Easy S1",
-            "Aimerz+ hopTS Med S1",
-            "Aimerz+ hopTS Hard S1"
-          ],
-          "why": "Jumping targets. CB JumpSwitch Easy (four jumping targets) first, then Aimerz+ hopTS Easy, Med and Hard. Mixes two authors."
+            "Skeet Tracking 85% Speed",
+            "Skeet Tracking",
+            "Skeet Tracking Goated",
+            "Skeet Tracking Goated Small"
+          ]
         },
         {
           "family": "Penta Bounce",
@@ -588,33 +580,33 @@
           ]
         },
         {
-          "family": "Diagonal",
-          "why": "Original authored static circuit.",
+          "family": "Six Targets",
+          "why": "1wall 6targets small is the most played scenario on KovaaK's after the sandbox intro, 1.29 million players at 57 plays each, and the season had no member of its lineage. Jumbo introduces it, TE is the standard, small and extra small tighten the target without changing the rhythm.",
           "rungs": [
-            "ClickTrack Diagonal 3t Short",
-            "ClickTrack Diagonal 3t",
-            "ClickTrack Diagonal 2t Short",
-            "ClickTrack Diagonal 2t"
+            "Jumbo 1wall6targets TE",
+            "1wall6targets TE",
+            "1wall 6targets small",
+            "1wall 6targets extra small"
           ]
         },
         {
-          "family": "Horizontal",
-          "why": "Original authored static circuit.",
+          "family": "Hipfire",
+          "why": "5 Sphere Hipfire is a long-standing micro-flick staple; the Small edit alone has half a million players. The four rungs are one scenario at four target sizes, so the difficulty order is the author's own.",
           "rungs": [
-            "ClickTrack Horizontal 3t Short",
-            "ClickTrack Horizontal 3t",
-            "ClickTrack Horizontal 2t Short",
-            "ClickTrack Horizontal 2t"
+            "5 Sphere Hipfire",
+            "5 Sphere Hipfire Small",
+            "5 Sphere Hipfire Extra Small",
+            "5 Sphere Hipfire Extra Extra Small"
           ]
         },
         {
-          "family": "Micro",
-          "why": "Original authored static circuit.",
+          "family": "Raw Mouse",
+          "why": "The previous Micro family had Novice and Intermediate leaderboards of 175 and 532 entries. RawMouseControlClicking3 is replayed 51.6 times per player, among the highest on KovaaK's. Reload Easy is 25% bigger, Reload removes accuracy scoring, Clicking3 restores it, and 30% smaller tightens it.",
           "rungs": [
-            "SCS 8xs Uniform",
-            "Cartoon's Micro RawMouseControlReact 30s",
-            "1w2ts Pasu Perfected",
-            "Aimerz+ 1w4ts HF Hard S1"
+            "RawMouseControl Reload Easy",
+            "RawMouseControl Reload",
+            "RawMouseControlClicking3",
+            "RawMouseControlClicking3 30% smaller"
           ]
         },
         {
@@ -648,34 +640,33 @@
           ]
         },
         {
-          "family": "Wide Pressure",
-          "why": "Original authored static circuit.",
+          "family": "Four Targets",
+          "why": "1w4ts Voltaic is named by four benchmarks and replayed 28.5 times per player, and the reload edits it grew are replayed nearly as often. The rungs step from larger targets through the Voltaic cut to the reload edits at smaller sizes.",
           "rungs": [
-            "1w4t Pressure Revosect Entry",
-            "1w4t Pressure Revosect Int",
-            "cA 7ts pressure",
-            "darkPressure"
+            "1w4ts 30% larger",
+            "1w4ts Voltaic",
+            "1w4ts reload",
+            "1w4ts reload 30% smaller"
           ]
         },
         {
           "family": "Wide wall",
           "why": "Original authored static circuit.",
           "rungs": [
-            "ww6t Avasive Easier",
+            "Wide Wall 6Targets",
             "ww4t Voltaic",
             "Wide Wall 3 Targets",
             "Wide Wall 4 Targets Small"
           ]
         },
         {
-          "category": "Static Clicking",
-          "family": "Evo Gallery",
-          "why": "EvoClick adds a target every twenty seconds, so a run opens as a calm static read and ends as a crowded wall: a pacing arc no other static circuit here has. Community Benchmarks' easy cut leads into Revosect's three EvoClick tiers. The first cross-author handover needs playtesting.",
+          "family": "Tile Frenzy",
+          "why": "Tile Frenzy is the scenario players describe as satisfying even when they concede it is easy, which is exactly the Novice job. Jumbo and standard carry the rhythm; Mini moves the wall far away so the same rhythm needs small movements; Extra mini is the smallest edit on a real board.",
           "rungs": [
-            "CB EvoClick Easy",
-            "EvoClick Revosect Entry",
-            "EvoClick Revosect Int",
-            "EvoClick Revosect"
+            "Jumbo Tile Frenzy",
+            "Tile Frenzy",
+            "Tile Frenzy Mini",
+            "Extra mini Tile Frenzy"
           ]
         },
         {

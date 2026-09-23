@@ -34,7 +34,7 @@ import { join } from "node:path";
 
 import { dataFile } from "../src/core/dataDir.ts";
 import { loadSeason } from "../src/core/season/season.ts";
-import { APEX_RANKS, type ApexBoard } from "../src/core/season/apex.ts";
+import { APEX_RANKS, apexRanksFor, type ApexBoard } from "../src/core/season/apex.ts";
 
 const OUT = join(dataFile("."), "leaderboard_apex.json");
 
@@ -106,9 +106,7 @@ async function sampleApex(scenario: string, leaderboardId: number): Promise<Apex
 
   const points: { rank: number; score: number }[] = [];
 
-  for (const rank of APEX_RANKS) {
-    if (rank > total) break;
-
+  for (const rank of apexRanksFor(total)) {
     const body =
       rank === 1 ? first : await getJson(`${BASE}?leaderboardId=${leaderboardId}&page=${rank - 1}&max=1`);
     const score = Number((body?.data as { score?: number }[] | undefined)?.[0]?.score);
