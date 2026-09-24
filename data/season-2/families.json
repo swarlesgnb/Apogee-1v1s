@@ -443,20 +443,20 @@
    "class": "click",
    "targetDeg": 1.6,
    "angularSpeed": 0,
-   "fittsIdNearest": 3.268,
+   "fittsIdNearest": 3.284,
    "ttk": 0,
-   "median": 1057,
+   "median": 1054,
    "medianRange": [
-    866,
-    1291
+    863,
+    1287
    ],
    "rankMaxes": [
-    808,
-    969,
-    1062,
-    1132,
-    1191,
-    1247
+    805,
+    966,
+    1059,
+    1128,
+    1187,
+    1244
    ]
   },
   {
@@ -466,20 +466,20 @@
    "class": "click",
    "targetDeg": 1.392,
    "angularSpeed": 0,
-   "fittsIdNearest": 3.449,
+   "fittsIdNearest": 3.466,
    "ttk": 0,
-   "median": 1022,
+   "median": 1019,
    "medianRange": [
-    837,
-    1248
+    834,
+    1244
    ],
    "rankMaxes": [
-    1152,
-    1207,
-    1232,
-    1279,
-    1318,
-    1353
+    1149,
+    1204,
+    1228,
+    1275,
+    1315,
+    1350
    ]
   },
   {
@@ -489,20 +489,20 @@
    "class": "click",
    "targetDeg": 1.211,
    "angularSpeed": 0,
-   "fittsIdNearest": 3.633,
+   "fittsIdNearest": 3.65,
    "ttk": 0,
-   "median": 987,
+   "median": 984,
    "medianRange": [
-    808,
-    1205
+    806,
+    1202
    ],
    "rankMaxes": [
-    1276,
-    1310,
-    1343,
-    1374,
-    1403,
-    1442
+    1273,
+    1307,
+    1340,
+    1370,
+    1399,
+    1438
    ]
   },
   {
@@ -512,18 +512,18 @@
    "class": "click",
    "targetDeg": 1.054,
    "angularSpeed": 0,
-   "fittsIdNearest": 3.819,
+   "fittsIdNearest": 3.835,
    "ttk": 0,
-   "median": 954,
+   "median": 951,
    "medianRange": [
-    781,
-    1164
+    778,
+    1161
    ],
    "rankMaxes": [
-    1358,
-    1396,
-    1420,
-    1450
+    1354,
+    1392,
+    1416,
+    1446
    ]
   },
   {
@@ -533,20 +533,20 @@
    "class": "click",
    "targetDeg": 1.6,
    "angularSpeed": 0,
-   "fittsIdNearest": 2.95,
+   "fittsIdNearest": 2.969,
    "ttk": 0,
-   "median": 1122,
+   "median": 1118,
    "medianRange": [
-    919,
-    1370
+    915,
+    1365
    ],
    "rankMaxes": [
-    863,
-    1030,
-    1127,
-    1200,
-    1262,
-    1321
+    859,
+    1026,
+    1123,
+    1196,
+    1257,
+    1316
    ]
   },
   {
@@ -556,20 +556,20 @@
    "class": "click",
    "targetDeg": 1.392,
    "angularSpeed": 0,
-   "fittsIdNearest": 3.126,
+   "fittsIdNearest": 3.146,
    "ttk": 0,
-   "median": 1085,
+   "median": 1081,
    "medianRange": [
-    889,
-    1325
+    886,
+    1320
    ],
    "rankMaxes": [
-    1222,
-    1279,
-    1305,
-    1355,
-    1396,
-    1433
+    1218,
+    1275,
+    1300,
+    1350,
+    1391,
+    1428
    ]
   },
   {
@@ -579,20 +579,20 @@
    "class": "click",
    "targetDeg": 1.211,
    "angularSpeed": 0,
-   "fittsIdNearest": 3.306,
+   "fittsIdNearest": 3.325,
    "ttk": 0,
-   "median": 1050,
+   "median": 1046,
    "medianRange": [
-    859,
-    1282
+    856,
+    1277
    ],
    "rankMaxes": [
-    1352,
-    1388,
-    1423,
-    1455,
-    1486,
-    1527
+    1348,
+    1384,
+    1418,
+    1450,
+    1481,
+    1522
    ]
   },
   {
@@ -602,18 +602,18 @@
    "class": "click",
    "targetDeg": 1.054,
    "angularSpeed": 0,
-   "fittsIdNearest": 3.487,
+   "fittsIdNearest": 3.507,
    "ttk": 0,
-   "median": 1014,
+   "median": 1011,
    "medianRange": [
-    831,
-    1239
+    828,
+    1234
    ],
    "rankMaxes": [
-    1440,
-    1479,
-    1505,
-    1537
+    1435,
+    1474,
+    1500,
+    1532
    ]
   },
   {
@@ -713,20 +713,20 @@
    "class": "click",
    "targetDeg": 2.2,
    "angularSpeed": 0,
-   "fittsIdNearest": 3.9,
+   "fittsIdNearest": 3.57,
    "ttk": 0,
-   "median": 939,
+   "median": 999,
    "medianRange": [
-    769,
-    1147
+    818,
+    1220
    ],
    "rankMaxes": [
-    708,
-    858,
-    944,
-    1008,
-    1062,
-    1114
+    758,
+    914,
+    1004,
+    1071,
+    1127,
+    1181
    ]
   },
   {
@@ -736,20 +736,20 @@
    "class": "click",
    "targetDeg": 1.914,
    "angularSpeed": 0,
-   "fittsIdNearest": 4.088,
+   "fittsIdNearest": 3.755,
    "ttk": 0,
-   "median": 907,
+   "median": 965,
    "medianRange": [
-    743,
-    1107
+    790,
+    1178
    ],
    "rankMaxes": [
-    1026,
-    1077,
-    1098,
-    1142,
-    1177,
-    1209
+    1090,
+    1143,
+    1166,
+    1212,
+    1249,
+    1282
    ]
   },
   {
@@ -759,20 +759,20 @@
    "class": "click",
    "targetDeg": 1.665,
    "angularSpeed": 0,
-   "fittsIdNearest": 4.278,
+   "fittsIdNearest": 3.942,
    "ttk": 0,
-   "median": 875,
+   "median": 932,
    "medianRange": [
-    717,
-    1069
+    763,
+    1138
    ],
    "rankMaxes": [
-    1139,
-    1169,
-    1199,
-    1227,
-    1253,
-    1287
+    1208,
+    1241,
+    1272,
+    1301,
+    1329,
+    1366
    ]
   },
   {
@@ -782,18 +782,18 @@
    "class": "click",
    "targetDeg": 1.449,
    "angularSpeed": 0,
-   "fittsIdNearest": 4.469,
+   "fittsIdNearest": 4.131,
    "ttk": 0,
-   "median": 844,
+   "median": 899,
    "medianRange": [
-    691,
-    1031
+    737,
+    1098
    ],
    "rankMaxes": [
-    1212,
-    1245,
-    1266,
-    1294
+    1286,
+    1321,
+    1344,
+    1373
    ]
   },
   {
@@ -2693,20 +2693,20 @@
    "class": "switch",
    "targetDeg": 2.8,
    "angularSpeed": 0,
-   "fittsIdNearest": 3.292,
+   "fittsIdNearest": 3.184,
    "ttk": 0.24,
-   "median": 2522,
+   "median": 2514,
    "medianRange": [
-    2295,
-    2755
+    2287,
+    2747
    ],
    "rankMaxes": [
-    2087,
-    2369,
-    2530,
-    2632,
-    2720,
-    2806
+    2080,
+    2361,
+    2522,
+    2623,
+    2712,
+    2797
    ]
   },
   {
@@ -2716,20 +2716,20 @@
    "class": "switch",
    "targetDeg": 2.436,
    "angularSpeed": 0,
-   "fittsIdNearest": 3.474,
+   "fittsIdNearest": 3.364,
    "ttk": 0.24,
-   "median": 2502,
+   "median": 2494,
    "medianRange": [
-    2276,
-    2735
+    2268,
+    2726
    ],
    "rankMaxes": [
-    2704,
-    2791,
-    2828,
-    2901,
-    2961,
-    3016
+    2695,
+    2782,
+    2819,
+    2892,
+    2952,
+    3006
    ]
   },
   {
@@ -2739,20 +2739,20 @@
    "class": "switch",
    "targetDeg": 2.119,
    "angularSpeed": 0,
-   "fittsIdNearest": 3.658,
+   "fittsIdNearest": 3.546,
    "ttk": 0.24,
-   "median": 2483,
+   "median": 2475,
    "medianRange": [
-    2257,
-    2715
+    2249,
+    2707
    ],
    "rankMaxes": [
-    2948,
-    3003,
-    3060,
-    3110,
-    3155,
-    3214
+    2938,
+    2993,
+    3049,
+    3099,
+    3144,
+    3203
    ]
   },
   {
@@ -2762,18 +2762,18 @@
    "class": "switch",
    "targetDeg": 1.844,
    "angularSpeed": 0,
-   "fittsIdNearest": 3.844,
+   "fittsIdNearest": 3.731,
    "ttk": 0.24,
-   "median": 2464,
+   "median": 2455,
    "medianRange": [
-    2239,
-    2696
+    2230,
+    2687
    ],
    "rankMaxes": [
-    3143,
-    3203,
-    3242,
-    3290
+    3132,
+    3192,
+    3230,
+    3279
    ]
   },
   {

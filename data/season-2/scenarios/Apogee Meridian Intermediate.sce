@@ -879,7 +879,7 @@ MaxSpeedModifier=1.0
     ],
     "objects": [
         {
-            "location": "-1088.000000, -1344.000000, -1101.402598",
+            "location": "-1088.000000, -1344.000000, -1105.868542",
             "materialSets": [
                 {
                     "group": 0,
@@ -909,11 +909,11 @@ MaxSpeedModifier=1.0
             "mesh": "Cube",
             "name": "Default",
             "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "26.860517, 10.240000, 22.028052",
+            "scale": "26.860517, 10.240000, 22.117371",
             "type": "brush"
         },
         {
-            "location": "-1088.000000, 320.000000, -1101.402598",
+            "location": "-1088.000000, 320.000000, -1105.868542",
             "materialSets": [
                 {
                     "group": 0,
@@ -943,11 +943,11 @@ MaxSpeedModifier=1.0
             "mesh": "Cube",
             "name": "Default",
             "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "26.860517, 10.240000, 22.028052",
+            "scale": "26.860517, 10.240000, 22.117371",
             "type": "brush"
         },
         {
-            "location": "-1088.000000, -1344.000000, -1101.402598",
+            "location": "-1088.000000, -1344.000000, -1105.868542",
             "materialSets": [
                 {
                     "group": 0,
@@ -977,11 +977,11 @@ MaxSpeedModifier=1.0
             "mesh": "Cube",
             "name": "Default",
             "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "10.240000, 26.880000, 22.028052",
+            "scale": "10.240000, 26.880000, 22.117371",
             "type": "brush"
         },
         {
-            "location": "574.051685, -1344.000000, -1101.402598",
+            "location": "574.051685, -1344.000000, -1105.868542",
             "materialSets": [
                 {
                     "group": 0,
@@ -1011,11 +1011,11 @@ MaxSpeedModifier=1.0
             "mesh": "Cube",
             "name": "Default",
             "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "10.240000, 26.880000, 22.028052",
+            "scale": "10.240000, 26.880000, 22.117371",
             "type": "brush"
         },
         {
-            "location": "-1088.000000, -1344.000000, -1101.402598",
+            "location": "-1088.000000, -1344.000000, -1105.868542",
             "materialSets": [
                 {
                     "group": 0,
@@ -1049,7 +1049,7 @@ MaxSpeedModifier=1.0
             "type": "brush"
         },
         {
-            "location": "-1088.000000, -1344.000000, 77.402598",
+            "location": "-1088.000000, -1344.000000, 81.868542",
             "materialSets": [
                 {
                     "group": 0,
@@ -1116,7 +1116,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "443.253063, -255.912275, -13.402598",
+            "location": "443.134896, -255.844052, -17.868542",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1182,7 +1182,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "443.253063, -255.912275, 13.402598",
+            "location": "443.134896, -255.844052, 17.868542",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1215,7 +1215,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "463.870576, -216.306402, -13.402598",
+            "location": "463.746913, -216.248737, -17.868542",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1281,7 +1281,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "463.870576, -216.306402, 13.402598",
+            "location": "463.746913, -216.248737, 17.868542",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1314,7 +1314,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "480.957753, -175.054306, -13.402598",
+            "location": "480.829535, -175.007638, -17.868542",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1380,7 +1380,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "480.957753, -175.054306, 13.402598",
+            "location": "480.829535, -175.007638, 17.868542",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1413,7 +1413,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "494.384552, -132.469941, -13.402598",
+            "location": "494.252754, -132.434626, -17.868542",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1479,7 +1479,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "494.384552, -132.469941, 13.402598",
+            "location": "494.252754, -132.434626, 17.868542",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1512,7 +1512,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "504.048785, -88.877400, -13.402598",
+            "location": "503.914411, -88.853707, -17.868542",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1578,7 +1578,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "504.048785, -88.877400, 13.402598",
+            "location": "503.914411, -88.853707, 17.868542",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1611,7 +1611,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "509.876903, -44.608449, -13.402598",
+            "location": "509.740976, -44.596557, -17.868542",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1677,7 +1677,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "509.876903, -44.608449, 13.402598",
+            "location": "509.740976, -44.596557, 17.868542",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1710,7 +1710,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "509.876903, 44.608449, -13.402598",
+            "location": "509.740976, 44.596557, -17.868542",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1776,7 +1776,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "509.876903, 44.608449, 13.402598",
+            "location": "509.740976, 44.596557, 17.868542",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1809,7 +1809,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "504.048785, 88.877400, -13.402598",
+            "location": "503.914411, 88.853707, -17.868542",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1875,7 +1875,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "504.048785, 88.877400, 13.402598",
+            "location": "503.914411, 88.853707, 17.868542",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1908,7 +1908,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "494.384552, 132.469941, -13.402598",
+            "location": "494.252754, 132.434626, -17.868542",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1974,7 +1974,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "494.384552, 132.469941, 13.402598",
+            "location": "494.252754, 132.434626, 17.868542",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -2007,7 +2007,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "480.957753, 175.054306, -13.402598",
+            "location": "480.829535, 175.007638, -17.868542",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -2073,7 +2073,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "480.957753, 175.054306, 13.402598",
+            "location": "480.829535, 175.007638, 17.868542",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -2106,7 +2106,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "463.870576, 216.306402, -13.402598",
+            "location": "463.746913, 216.248737, -17.868542",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -2172,7 +2172,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "463.870576, 216.306402, 13.402598",
+            "location": "463.746913, 216.248737, 17.868542",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -2205,7 +2205,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "443.253063, 255.912275, -13.402598",
+            "location": "443.134896, 255.844052, -17.868542",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -2271,7 +2271,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "443.253063, 255.912275, 13.402598",
+            "location": "443.134896, 255.844052, 17.868542",
             "name": "SpawnPoint",
             "properties": [
                 {

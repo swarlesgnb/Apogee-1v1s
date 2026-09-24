@@ -9,7 +9,10 @@
  *   3. Every threshold reproduces: each file is measured again and the committed model's
  *      predicted board, cut at the pool ladder, gives exactly the season's numbers.
  *   4. Every family's bands are strictly harder by the model's measure.
- *   5. Nothing a recipe set is outside what real scenarios use. For every numeric key in an
+ *   5. Generated spawn fields keep two limits: nothing more than 45 degrees off centre (the
+ *      edge of a 103-degree view is 51.5), and no two spawn points close enough for live
+ *      targets on them to overlap.
+ *   6. Nothing a recipe set is outside what real scenarios use. For every numeric key in an
  *      authored file's profiles, the value must lie within the range that key takes across
  *      the scenario files on this machine. No scenario here has been played in game, so the
  *      one thing that can be checked is that the game has loaded values like these before.
@@ -25,8 +28,8 @@ import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
 import { dataFile } from "../dataDir.ts";
-import { get, parseSce, type Sce } from "./sce.ts";
-import { scenarioFeatures } from "./features.ts";
+import { get, num, parseSce, profile, list, type Sce } from "./sce.ts";
+import { jsonSpawns, scenarioFeatures } from "./features.ts";
 import { classify, predictLadder, toMetric, type ClassModel } from "./difficulty.ts";
 import { thresholdsFrom } from "../season/percentiles.ts";
 import { windowRankIndices } from "../season/windows.ts";
@@ -143,7 +146,50 @@ for (const [family, list] of metrics) {
 }
 if (!disordered) pass(`every family's bands get strictly harder (${metrics.size} families)`);
 
-// ---- 5. values within what real files use ------------------------------------------------------
+// ---- 5. generated spawn fields ------------------------------------------------------------------
+
+const RAD = 180 / Math.PI;
+let fieldProblems = 0;
+let fields = 0;
+for (const [name, { sce }] of sces) {
+  if (!(get(sce.head, "MapName") ?? "").startsWith("Apogee ")) continue;
+  fields++;
+  const raw = sce.sections.find((x) => x.type === "Map Data")?.raw ?? "{}";
+  const spawns = jsonSpawns(raw);
+  const player = spawns.find((x) => x.teams === 1)?.at ?? { x: 0, y: 0, z: 0 };
+  const scale = num(sce.head, "MapScale", 1);
+  const bots = spawns.filter((x) => x.teams === 2).map((x) => ({ x: (x.at.x - player.x) * scale, y: (x.at.y - player.y) * scale, z: (x.at.z - player.z) * scale }));
+  const botName = list(get(sce.head, "AddedBots"))[0]?.replace(/\.bot$/, "") ?? "";
+  const character = profile(sce, "Character Profile", get(profile(sce, "Bot Profile", botName)?.lines ?? [], "CharacterProfile") ?? "");
+  const radius = num(character?.lines ?? [], "MainBBRadius", 0) * num(sce.head, "TargetSizeBaseMultiplier", 1);
+  const worstYaw = Math.max(...bots.map((v) => Math.abs(Math.atan2(v.y, v.x) * RAD)));
+  if (worstYaw > 45 + 1e-6) {
+    fieldProblems++;
+    fail(`${name}: a spawn sits ${worstYaw.toFixed(1)} degrees off centre`);
+  }
+  for (let i = 0; i < bots.length; i++) {
+    for (let j = i + 1; j < bots.length; j++) {
+      const a = bots[i], b = bots[j];
+      const la = Math.hypot(a.x, a.y, a.z), lb = Math.hypot(b.x, b.y, b.z);
+      const apart = Math.acos(Math.max(-1, Math.min(1, (a.x * b.x + a.y * b.y + a.z * b.z) / (la * lb)))) * RAD;
+      // Half of each target's angular size at its own distance: the two rings of Parallax
+      // put targets of two sizes side by side.
+      const needed = Math.atan(radius / la) * RAD + Math.atan(radius / lb) * RAD;
+      // Only a pair on the same line of sight can overlap on screen; a near target in
+      // front of a far one hides it, which a two-depth field accepts.
+      if (apart < needed && Math.abs(la - lb) < radius * 2) {
+        fieldProblems++;
+        fail(`${name}: spawns ${apart.toFixed(2)} degrees apart for targets needing ${needed.toFixed(2)}`);
+        i = bots.length;
+        break;
+      }
+    }
+  }
+}
+if (fields === 0) fail("no generated spawn field found to check");
+else if (!fieldProblems) pass(`${fields} generated spawn fields: all within 45 degrees, no overlapping spawns`);
+
+// ---- 6. values within what real files use ------------------------------------------------------
 
 const PROFILE_TYPES = new Set(["Character Profile", "Bot Profile", "Dodge Profile", "Weapon Profile"]);
 const ranges = new Map<string, { min: number; max: number }>();

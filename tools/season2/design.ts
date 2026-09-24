@@ -476,6 +476,18 @@ function switching(f: Family, spec: SwitchSpec, description: string, sub: "Speed
 
 const ring = (lo: number, hi: number, n: number) => [...span(-hi, -lo, n), ...span(lo, hi, n)];
 
+/*
+ * Two limits every spawn field below keeps, both checked by validate:season2:
+ *
+ *   - Nothing spawns more than 45 degrees off centre. At the 103-degree horizontal FOV the
+ *     templates lock to, 51.5 is the edge of the screen, and a target past it has to be
+ *     found before it can be flicked to, which turns a flick drill into a search. Horizon
+ *     first went to 60.
+ *   - Neighbouring spawn points are further apart than the Novice target is wide, so two
+ *     live targets can never overlap. Meridian and Zenith first put rows 1.5 degrees apart
+ *     for a 1.6-degree target.
+ */
+
 function family(f: Omit<Family, "build">, build: (f: Family) => Family["build"]): Family {
   const out = { ...f, build: (() => {}) as Family["build"] };
   out.build = build(out);
@@ -491,7 +503,7 @@ export const FAMILIES: Family[] = [
       why: "Horizontal flicks isolated. Wide Wall and 1w3ts mix both axes, so a player who over-travels sideways and one who under-travels vertically get the same score and no hint which they are.",
       learnsFrom: ["Wide Wall 3 Targets", "VT 1w3ts Intermediate S5"],
     },
-    (f) => staticClick(f, { alive: 3, deg: 1.6, yaws: ring(5, 30, 6), pitches: [-1.5, 0, 1.5] }, "Three targets on one horizontal band. One click each."),
+    (f) => staticClick(f, { alive: 3, deg: 1.6, yaws: ring(5, 30, 6), pitches: [-2, 0, 2] }, "Three targets on one horizontal band. One click each."),
   ),
   family(
     {
@@ -500,7 +512,7 @@ export const FAMILIES: Family[] = [
       why: "Vertical flicks isolated. Of the 58 static clicking scenarios measured with 10,000 or more players, 51 spawn targets over a field wider than it is tall (data/season-2/science.json), so vertical stopping gets the least practice.",
       learnsFrom: ["cA y-axis flick", "1wall6targets TE"],
     },
-    (f) => staticClick(f, { alive: 3, deg: 1.6, yaws: [-1.5, 0, 1.5], pitches: ring(4, 22, 6) }, "Three targets on one vertical band. One click each."),
+    (f) => staticClick(f, { alive: 3, deg: 1.6, yaws: [-2, 0, 2], pitches: ring(4, 22, 6) }, "Three targets on one vertical band. One click each."),
   ),
   family(
     {
@@ -518,7 +530,7 @@ export const FAMILIES: Family[] = [
       why: "Large-amplitude flicks, which small-field scenarios never ask for. Targets are larger to keep the index of difficulty in the same range as the rest of the category.",
       learnsFrom: ["Odd-Angleshot Avasive", "ww6t Avasive Easier"],
     },
-    (f) => staticClick(f, { alive: 3, deg: 2.2, yaws: ring(18, 60, 7), pitches: span(-10, 10, 5) }, "Three targets spread wide across the room. One click each."),
+    (f) => staticClick(f, { alive: 3, deg: 2.2, yaws: ring(18, 45, 6), pitches: span(-10, 10, 5) }, "Three targets spread wide across the room. One click each."),
   ),
   family(
     {
@@ -724,7 +736,7 @@ export const FAMILIES: Family[] = [
       why: "Speed switching across a wide field, where the flick between targets is most of the time spent.",
       learnsFrom: ["voxTS Viscose Varied", "VT DotTS Novice S5"],
     },
-    (f) => switching(f, { alive: 3, deg: 2.8, ttk: 0.25, speed: 0, range: 2000, field: { yaws: ring(10, 50, 6), pitches: span(-9, 9, 4) } }, "Three still targets spread wide. Hold fire to kill.", "Speed"),
+    (f) => switching(f, { alive: 3, deg: 2.8, ttk: 0.25, speed: 0, range: 2000, field: { yaws: ring(10, 45, 6), pitches: span(-9, 9, 4) } }, "Three still targets spread wide. Hold fire to kill.", "Speed"),
   ),
   family(
     {
