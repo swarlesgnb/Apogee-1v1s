@@ -197,6 +197,12 @@ export interface ClassModel {
   fits: FractionFit[];
   /** The five scenarios predicted worst at the board median, leave-one-out, with the miss. */
   worstMisses?: Array<{ scenario: string; error: number }>;
+  /**
+   * Every scenario's leave-one-out miss at the board median, predicted minus actual, in the
+   * class's metric. Kept so a claim about a group - "fliers are over-predicted" - can be
+   * checked against every member rather than the one that prompted it.
+   */
+  residualsAtMedian?: Record<string, number>;
   /** The scenarios the fit learned from, so a claim about it can be re-derived. */
   scenarios: string[];
 }
@@ -223,6 +229,7 @@ export function fitClass(cls: DifficultyClass, samples: Sample[], drop: number |
   const mine = samples.filter((s) => classify(s.features) === cls);
   const fits: FractionFit[] = [];
   let worstMisses: ClassModel["worstMisses"] = [];
+  let residualsAtMedian: Record<string, number> = {};
   const vector = (f: ScenarioFeatures) => {
     const v = featureVector(cls, f);
     return drop === null ? v : v.filter((_, i) => i !== drop);
@@ -252,10 +259,11 @@ export function fitClass(cls: DifficultyClass, samples: Sample[], drop: number |
         .map((error, i) => ({ scenario: names[i], error: Math.round(error * 1000) / 1000 }))
         .sort((a, b) => Math.abs(b.error) - Math.abs(a.error))
         .slice(0, 5);
+      residualsAtMedian = Object.fromEntries(signed.map((e, i) => [names[i], Math.round(e * 1000) / 1000]));
     }
     fits.push({ topFraction, coefficients, n: X.length, looMedian: quantile(residuals, 0.5), loo90: quantile(residuals, 0.9) });
   }
-  return { class: cls, features: FEATURE_NAMES[cls], fits, worstMisses, scenarios: mine.map((s) => s.name).sort() };
+  return { class: cls, features: FEATURE_NAMES[cls], fits, worstMisses, residualsAtMedian, scenarios: mine.map((s) => s.name).sort() };
 }
 
 export interface Prediction {

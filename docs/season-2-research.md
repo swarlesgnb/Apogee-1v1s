@@ -161,11 +161,14 @@ scenario, and predicted Voltaic's 1w4ts, scored on square-root accuracy, 15-25% 
 board, which also means it predicted every unmultiplied scenario - all of season 2's -
 below its own.
 
-One bias the model keeps: it predicts flying tracking targets as easier than their boards
-say. Voltaic's Aether is over-predicted by 0.2 to 0.5 logit with itself left out. A flag for
-flying targets was tried and made the fit worse overall (0.375 to 0.407 at the median), so
-the bias is documented instead: Lift, Loop and Wasp, the three families that fly, are
-likely to have thresholds set too high.
+One bias the model keeps, narrower than it first looked: Voltaic's Aether, the template
+the three flying families are built on, is over-predicted at every tier, by 0.19, 0.34 and
+0.94 logit at the median for Novice, Intermediate and Advanced (`residualsAtMedian` in the
+model file). Flying targets as a group are not: across all 41 in the tracking class the
+mean miss is +0.15 with a spread of 0.67, and 21 are over-predicted, which is no more than
+chance (`fliers` in the model file). A flag for flying targets was tried and made the fit worse (0.375 to 0.407 at the
+median). So nothing is corrected, and Lift, Loop and Wasp are named as the thresholds
+likeliest to be set too high.
 
 Two findings shaped how the model is used.
 

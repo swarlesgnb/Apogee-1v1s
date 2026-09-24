@@ -1046,11 +1046,11 @@
     "owner": "tools/buildSeason2.ts",
     "note": "Every threshold in this season is predicted, not sampled: no scenario in it has a KovaaK's board yet. Each was read off the board the difficulty model predicts from the scenario file, at the same ladder percentiles season 1 cuts from real boards. They are seeds to be recut from Apogee's own runs, and every one says so in its source.",
     "model": {
-      "fittedAt": "2026-09-24T05:23:19.591Z",
+      "fittedAt": "2026-09-24T05:34:16.874Z",
       "file": "data/season-2/difficulty_model.json"
     }
   },
-  "builtAt": "2026-09-24T05:29:46.050Z",
+  "builtAt": "2026-09-24T05:34:27.526Z",
   "scenarios": [
     {
       "scenario": "Apogee Meridian Novice",

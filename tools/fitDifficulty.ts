@@ -97,6 +97,23 @@ const ablation = models.map((m) => {
 
 const evidence = models.map((m) => ({ class: m.class, sibling: siblingTest(m) }));
 
+/**
+ * Flying tracking targets as a group: is the fit biased on them? Voltaic's Aether is
+ * over-predicted at every tier; whether that is Aether or flying decides whether anything
+ * should be corrected. Recorded so the answer is re-derived, not remembered.
+ */
+const tracking = models.find((m) => m.class === "track")!;
+const flierMisses = samples
+  .filter((s) => s.features.targets[0]?.flyer && tracking.residualsAtMedian?.[s.name] !== undefined)
+  .map((s) => tracking.residualsAtMedian![s.name]);
+const mean = flierMisses.reduce((a, v) => a + v, 0) / Math.max(1, flierMisses.length);
+const fliers = {
+  n: flierMisses.length,
+  meanMiss: Math.round(mean * 1000) / 1000,
+  spread: Math.round(Math.sqrt(flierMisses.reduce((a, v) => a + (v - mean) ** 2, 0) / Math.max(1, flierMisses.length)) * 1000) / 1000,
+  overPredicted: flierMisses.filter((v) => v > 0).length,
+};
+
 const out = dataFile("season-2", "difficulty_model.json");
 mkdirSync(dirname(out), { recursive: true });
 writeFileSync(
@@ -110,6 +127,7 @@ writeFileSync(
       models,
       sibling: evidence,
       ablation,
+      fliers,
     },
     null,
     1,
@@ -129,4 +147,5 @@ for (const a of ablation) {
   console.log(`${a.class} ablation (LOO median error at top 5% / median; full ${a.full.top5.toFixed(3)} / ${a.full.median.toFixed(3)}):`);
   for (const w of a.without) console.log(`   without ${w.feature.padEnd(32)} ${w.top5.toFixed(3)} / ${w.median.toFixed(3)}`);
 }
+console.log(`fliers in tracking: ${fliers.n}, mean miss ${fliers.meanMiss}, spread ${fliers.spread}, ${fliers.overPredicted} over-predicted`);
 console.log(`-> ${out}`);
