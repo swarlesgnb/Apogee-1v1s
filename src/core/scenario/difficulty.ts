@@ -177,6 +177,8 @@ export interface ClassModel {
   class: DifficultyClass;
   features: string[];
   fits: FractionFit[];
+  /** The five scenarios predicted worst at the board median, leave-one-out, with the miss. */
+  worstMisses?: Array<{ scenario: string; error: number }>;
   /** The scenarios the fit learned from, so a claim about it can be re-derived. */
   scenarios: string[];
 }
@@ -198,25 +200,36 @@ function quantile(values: number[], q: number): number {
 export function fitClass(cls: DifficultyClass, samples: Sample[]): ClassModel {
   const mine = samples.filter((s) => classify(s.features) === cls);
   const fits: FractionFit[] = [];
+  let worstMisses: ClassModel["worstMisses"] = [];
   for (const topFraction of FRACTIONS) {
     const X: number[][] = [];
     const y: number[] = [];
+    const names: string[] = [];
     for (const s of mine) {
       const point = s.ladder.find((p) => Math.abs(p.topFraction - topFraction) < 1e-9);
       const m = point ? toMetric(cls, s.features, point.score) : null;
       if (m === null || !Number.isFinite(m)) continue;
       X.push(withIntercept(featureVector(cls, s.features)));
       y.push(m);
+      names.push(s.name);
     }
     const coefficients = leastSquares(X, y);
     const residuals: number[] = [];
+    const signed: number[] = [];
     for (let i = 0; i < X.length; i++) {
       const b = leastSquares(X.filter((_, j) => j !== i), y.filter((_, j) => j !== i));
-      residuals.push(Math.abs(dot(X[i], b) - y[i]));
+      signed.push(dot(X[i], b) - y[i]);
+      residuals.push(Math.abs(signed[i]));
+    }
+    if (topFraction === 0.5) {
+      worstMisses = signed
+        .map((error, i) => ({ scenario: names[i], error: Math.round(error * 1000) / 1000 }))
+        .sort((a, b) => Math.abs(b.error) - Math.abs(a.error))
+        .slice(0, 5);
     }
     fits.push({ topFraction, coefficients, n: X.length, looMedian: quantile(residuals, 0.5), loo90: quantile(residuals, 0.9) });
   }
-  return { class: cls, features: FEATURE_NAMES[cls], fits, scenarios: mine.map((s) => s.name).sort() };
+  return { class: cls, features: FEATURE_NAMES[cls], fits, worstMisses, scenarios: mine.map((s) => s.name).sort() };
 }
 
 export interface Prediction {

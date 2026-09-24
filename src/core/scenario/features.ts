@@ -383,7 +383,12 @@ export function scenarioFeatures(sce: Sce, mapsDir: string | null = null): Scena
   const targets = [...bots]
     .map(([bot, count]) => target(sce, bot, count))
     .filter((t): t is TargetFeatures => t !== null)
-    .sort((a, b) => b.count - a.count);
+    // Most numerous first; among equals, the larger. Revosect's Pasu fills its arena with
+    // "Knocker" helper bots that push the targets off the walls - four of one kind, as many
+    // as the targets - and taking a 4-unit, hundred-health helper for the target put that
+    // scenario 13x off the model. No flag in the file separates helpers from targets:
+    // `Untargetable=true` is on Voltaic's real, shootable targets too.
+    .sort((a, b) => b.count - a.count || b.radius - a.radius);
 
   const player = characterOf(sce, get(h, "PlayerProfile") ?? "");
   const weaponName = list(get(player ?? [], "WeaponProfileNames"))[0];
