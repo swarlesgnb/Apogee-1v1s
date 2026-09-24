@@ -892,6 +892,16 @@ function pressureClick(f: Family, spec: PressureSpec, description: string) {
         .find((a) => a.toLowerCase() === "approach");
       if (!approach) throw new Error("the template's balloon has no Approach ability");
       setProfile(sce, "Movement Ability Profile", approach, { MainVelocity: spec.approach * Math.pow(1.2, band) });
+      // The burst fires only when the balloon checks its abilities while in range, and fuglaa
+      // checks every 0.3-0.6 s with a 7,000-10,000 window. At a slow dash that window is
+      // always caught; at 6,000 a second the balloon can cross all of it between two checks,
+      // pass the player and hang behind them - the playtest found exactly that. So the burst
+      // takes anything within 10,000, the self-only pop (which would now compete for the same
+      // distances) is put out of reach, and the balloon checks every 0.1 s, the rate Voltaic's
+      // Ground bots use.
+      setProfile(sce, "Weapon Ability Profile", "Damage Player and Self", { AIMinTargDist: 0 });
+      setProfile(sce, "Weapon Ability Profile", "Damage Self Only", { AIMinTargDist: 0, AIMaxTargDist: 1 });
+      setProfile(sce, "Bot Profile", bot, { UseAbilityFreqMinTime: 0.1, UseAbilityFreqMaxTime: 0.1 });
     }
     if (spec.magazine) setProfile(sce, "Weapon Profile", weaponOf(sce), { MagazineMax: spec.magazine });
     const timescale = spec.timescale + spec.timescaleStep * band;
