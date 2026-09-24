@@ -1,0 +1,167 @@
+# What makes a KovaaK's scenario good
+
+Research behind season 2. Three questions, because a ranked season asks all three of every
+scenario in it: does it make players better, do they want to play it again, and does its
+score say who played better today. The literature answers the first, the local corpus
+answers parts of all three, and some of it only playing can answer.
+
+Every number here that comes from this repository is re-derived by a script, named where it
+is used. Numbers from outside are cited.
+
+## What a scenario is
+
+A `.sce` file is self-contained: the scenario's own settings (time limit, scoring, which bots
+are added), then one section per profile it uses, then the map. Profiles refer to each other
+by name: the scenario names a player character and a list of bots; a bot names a character,
+dodge profiles and aim profiles; a character names its weapon
+([KovaaK's wiki, Intro to Scenario Creation](https://wiki.kovaaks.com/en/home/KovaaK's/ScenarioCreation/Intro)).
+Files saved by a 3.x build embed the Map Creator's JSON map verbatim; older ones embed a
+Reflex-format map.
+
+What a player experiences is not in any single key. A target's size is its radius over the
+distance it is shot at, and that distance is the spawn geometry scaled by `MapScale`, or, for
+a moving bot, the range its dodge profile holds. Its speed is `MaxSpeed` over the same
+distance, scaled again by `Timescale` and `TimeDilationBaseMultiplier`.
+`TargetSizeBaseMultiplier` shrinks everything: "1w2ts perfected 30% smaller" is its parent
+with that key at 0.7. `src/core/scenario/features.ts` turns all of this into angles and
+seconds. `npm run validate:sce` checks it against every file on this machine: it round-trips
+1,161 files byte for byte and resolves the geometry of 1,153.
+
+## Good for improvement
+
+**Difficulty should sit at the edge of the player's ability.** The challenge point framework
+([Guadagnoli & Lee, 2004](https://www.researchgate.net/publication/8574634_Challenge_Point_A_Framework_for_Conceptualizing_the_Effects_of_Various_Practice_Conditions_in_Motor_Learning))
+separates *nominal* difficulty (the task) from *functional* difficulty (the task for this
+player), and puts the most learning at an intermediate functional difficulty: hard enough to
+produce information about errors, not so hard that nothing can be learned from them.
+[Wilson et al. (2019)](https://www.nature.com/articles/s41467-019-12552-4) derive an optimum
+near 85% success for a broad class of gradient learners. It is a model result, not a
+measurement of aiming, but it points the same way. For a season this argues for bands, and
+for a band a player can place into rather than one ladder everyone climbs from the bottom.
+
+**Fitts' law describes a flick.** Movement time grows with the index of difficulty,
+ID = log2(D/W + 1), for distance D and target width W
+([Fitts's law](https://en.wikipedia.org/wiki/Fitts%27s_law)). In a first-person task
+[Boudaoud, Spjut & Kim (NVIDIA, 2022)](https://arxiv.org/abs/2203.12050) spanned 0.83 to
+5.50 bits and measured typical completion times of 0.4 to 0.8 s, with an optimal sensitivity
+zone of 20 to 80 cm/360. Across KovaaK's static clicking scenarios the same law holds on
+scores: the logarithm of seconds per kill rises with the Fitts ID of the flick to the nearest
+live target (`tools/fitDifficulty.ts`, clicking class). Size and distance are therefore not
+two knobs but one, their ratio, and a band ladder can step it deliberately.
+
+**Isolate what is being trained.** Voltaic's taxonomy splits clicking into static and
+dynamic, tracking into precise and reactive, and switching into speed and evasive
+([Voltaic](https://voltaic.gg/)). The
+[Voltaic x Aimlabs weakness routines](https://docs.google.com/document/d/1oNUBAaLovS0oMLn0_z3BEPT0_txlRtugr0Qzxqp0SvI/edit?tab=t.0),
+already the basis of season 1's theory pass, go further: separate stability from reactive
+difficulty, observe changes rather than predict them, and carry speed into smaller targets.
+A scenario that mixes two skills produces one score for two causes, and a player who is weak
+in one of them cannot tell which.
+
+**Cover the axes the popular pool neglects.** Of the 58 static clicking scenarios on this
+machine with 10,000 or more players, 51 spread targets over a field wider than it is tall
+(`tools/scenarioScience.ts`). Vertical stopping gets the least practice of any flick.
+
+## Fun, or at least replayed
+
+KovaaK's catalogue gives plays and players for every scenario. Plays per player (replay) is
+the closest measurable thing to "people come back to it", and players (reach) to "people try
+it". Over 614 catalogued scenarios with 300 or more players, against every design feature the
+reader extracts (`tools/scenarioScience.ts`):
+
+| Feature | Replay (Spearman) | Reach (Spearman) |
+| --- | ---: | ---: |
+| Bot under gravity | +0.10 | +0.13 |
+| Accuracy multiplier | -0.11 | -0.16 |
+| Targets alive at once | -0.11 | -0.00 |
+| Target size | -0.07 | +0.16 |
+| Time limit | -0.06 | +0.14 |
+
+The strongest replay correlation with anything a file states is 0.114. Fun is mostly not in
+the geometry: it is in feel, feedback and fashion, which the file does not record and a
+correlation cannot find. What the data does say is modest and consistent: players come back
+to arcs and bounces; they play less of scenarios that multiply the score by accuracy; bigger
+targets draw more first tries. Season 1's fun rebuild reached the same view from the other
+side, from community discussion: randomness is what players call unfair, and a fast,
+satisfying hit is what they call fun (docs/season-fun-rebuild.md).
+
+## Fair in a ranked match
+
+A match is decided on the change from a baseline (PLAN.md §3), so a scenario's run-to-run
+noise is its unfairness: on a noisy scenario, luck picks the winner. KovaaK's scenarios are
+reliable measurements between sessions. A pilot of four scenarios with ten players found
+test-retest ICCs of 0.947 to 0.995
+([Frontiers in Sports and Active Living, 2024](https://www.frontiersin.org/journals/sports-and-active-living/articles/10.3389/fspor.2024.1309991/full)).
+Within a player, though, the noise differs a lot by design. Over 296 scenarios with at least
+eight runs in the local stats folder, median run-to-run change as a share of the median score
+(`tools/scenarioScience.ts`):
+
+| Feature | Noise (Spearman) |
+| --- | ---: |
+| Time limit | **-0.36** |
+| Target size | -0.20 |
+| Accuracy multiplier | +0.16 |
+| Targets alive at once | +0.13 |
+| Shots to kill | -0.13 |
+| Regenerating target | -0.12 |
+
+Longer runs are steadier, which is expected: more events per run average out more luck. The
+accuracy multiplier adds noise, 5.8% median against 4.8% without. It compounds the miss rate
+into the score a second time. This is one player's history, so the sizes describe one
+player's consistency, but the directions are the design rules.
+
+## Predicting a board before anyone plays
+
+A season needs thresholds, and a new scenario has no board to cut them from.
+`src/core/scenario/difficulty.ts` learns how a file becomes a board from every scenario that
+has both. It first turns scores into comparable quantities (seconds per kill; share of the
+maximum score as a logit), then fits one least-squares model per class and board fraction.
+Leave-one-out median error at the board median (`data/season-2/difficulty_model.json`):
+
+| Class | Scenarios | Features | LOO median | LOO 90th pct |
+| --- | ---: | --- | ---: | ---: |
+| Clicking | 193 | nearest-flick Fitts ID, log angular speed, log shots to kill | 0.200 (about 22% in time per kill) | 0.524 |
+| Tracking | 166 | log speed/size, log size, log strafe period, airborne | 0.410 logit (about 10 points of share mid-board) | 1.001 |
+| Switching | 85 | log speed/size, nearest-flick Fitts ID, log time to kill | 0.158 logit | 0.434 |
+
+Two findings shaped how the model is used.
+
+- **Crowds differ by difficulty.** The median score on Voltaic S5 Floating Heads barely moves
+  from Novice (598) to Intermediate (568), although the target shrinks and speeds up: a harder
+  scenario draws a stronger crowd. A pooled model predicts the board of a typical crowd.
+- **A sibling's board was measured too.** Predicting a variant from another variant's board
+  (0.153, 0.327, 0.144) is as good as or better than the pooled fit, clearly so for tracking.
+  No season-2 scenario has a sibling with a board, so the pooled fit is the only option until
+  one does.
+
+The model is weakest where the file says least: moving targets whose paths the dodge profile
+only sketches (Popcorn is its worst clicking miss), and path-spawning or pressure scenarios
+(excluded from its classes). Season 2's static families sit squarely in its domain; its
+moving families carry the wider error.
+
+## The rules season 2 follows
+
+| Rule | Reason |
+| --- | --- |
+| 60 seconds for every scenario | Noise falls with length (-0.36); 60 s is the length of the popular benchmarks it replaces. |
+| No accuracy multiplier | More noise (5.8% vs 4.8%), less replay (-0.11) and less reach (-0.16). |
+| One skill per family, both axes covered | Isolating a skill makes a score diagnostic; the popular pool under-trains vertical movement. |
+| Static targets on an arc, not a wall | On a flat wall a target far to the side is further away and smaller, so where it spawns becomes luck. |
+| Band steps of 0.87x size, 1.10x speed, 0.87x strafe period | The progression Voltaic S5 applies across its own families, which players already accept as even. |
+| Scoring per kill (clicking) or per landed tick (holding fire) | The two forms whose boards the model can predict; neither multiplies by accuracy. |
+| Arcs and bounces in several families | The one feature with more replay and more reach. |
+| Every value within what real files use | Nothing here has been played; the game has at least loaded values like these (`validate:season2`). |
+
+## What only playing can answer
+
+- **Feel.** Whether Glide's reversals read as smooth or sluggish, whether Feint's jukes feel
+  fair, whether Hopper's arcs are satisfying. The file cannot say, and neither can a board.
+- **Band spacing.** The model sees only small differences between switching bands (about 1%
+  per band at the median for still targets). Thresholds still rise across bands, because each
+  band grades stricter percentiles, but whether an Advanced player feels the step needs play.
+- **Engine behaviour at the edges.** Pendulum's floaters hold their height with gravity and
+  hops off. Switching targets float at spawn height. Tracking targets never die. Each is
+  inferred from how the templates behave, not seen.
+- **Thresholds.** Every one is a prediction with the error above. They should be recut from
+  Apogee's own runs as soon as there are enough; `pool.json` already names that as season 2's
+  job ("Measuring the real step needs Apogee's own population").

@@ -1,0 +1,83 @@
+# Season 2
+
+A season of scenarios made for Apogee: 36 families, six per category, four bands each, 144
+scenarios. None existed before this. Season 1 is untouched; season 2 is a draft in
+`data/seasons/season-2.json`, and nothing reads it at runtime yet.
+
+Why each rule is what it is: [season-2-research.md](season-2-research.md).
+
+## The families
+
+| Category | Families |
+| --- | --- |
+| Static Clicking | Meridian (horizontal), Zenith (vertical), Pinpoint (micro), Horizon (wide), Constellation (five alive, tempo), Parallax (two depths) |
+| Dynamic Clicking | Drift (slow floaters), Pendulum (level swings), Hopper (bounces), Jitter (twitches), Comet (fast crossers), Triplet (three hits) |
+| Precise Tracking | Glide (smooth ground), Lift (vertical), Loop (curves), Thread (small and slow), Arc (floaty jumps), Orbit (close, wide) |
+| Reactive Tracking | Duel (close strafes), Skirmish (range changes), Stutter (stops before turns), Aerial (jumps), Wasp (3D flier), Feint (dodges when hit) |
+| Speed Switching | Relay (compact), Span (wide), Column (vertical), Cluster (six small), Drifters (slow movers), Finisher (long kills) |
+| Evasive Switching | Swarm (strafers), Skeet (arcs), Hive (fliers), Mender (regenerating), Scatter (fast and far), Brawl (close) |
+
+Each scenario is named `Apogee <Family> <Band>`. Every family's focus cue, reason, and the
+popular scenarios it learns from are in `data/season-2/families.json`, generated from
+`tools/season2/design.ts`, which is the one place to change a family.
+
+## How it is built
+
+```
+npm run fit:difficulty      fit the board model from the scenario files on this machine
+npm run build:season-2      forge the 144 files, predict each board, cut thresholds, write the season
+npm run validate:season2    hold it to its rules (below)
+npm run validate:sce        the scenario reader, against every .sce file on this machine
+npm run science:scenarios   re-derive the numbers the design rules cite
+```
+
+All of these read the local KovaaK's install: the templates are Voltaic S5 scenario files
+from the workshop folder, and the model learns from every scenario file there. A machine
+with fewer subscriptions fits a thinner model.
+
+`validate:season2` checks that the season file is valid and names exactly the files on disk;
+that every file keeps the shared rules (60 s, no accuracy multiplier, Apogee name and tag, six
+families of four bands per category); that every threshold reproduces from the committed
+model; that every family's bands are strictly harder; and that every numeric profile value is
+inside the range that key takes across the 1,161 real scenario files.
+
+## Playing it
+
+```
+npm run install:season-2            copy the scenarios and 24 playlists into KovaaK's
+npm run install:season-2 -- --remove    take exactly those out again
+```
+
+The playlists are `Apogee S2 <Category> <Band>`, one scenario per family.
+
+## Making it rankable
+
+Three steps, in order. None has been done.
+
+1. **Share every scenario from inside KovaaK's.** A ranked run is verified against KovaaK's
+   own servers (PLAN.md §5), and a scenario only has a board there once it has been shared.
+   Until then the season's `leaderboardId`s are `null` and no run on it can be verified.
+2. **Sample the new boards and record their ids.** The same sampler season 1 uses; the ids
+   go into `data/seasons/season-2.json`.
+3. **Recut thresholds from real play.** Every threshold is a prediction (`source.kind:
+   "predicted"`, with the model's error in its `why`). Once Apogee players have played a
+   scenario enough, its thresholds should come from their runs, not the model.
+
+Publishing the season itself follows season 1's path: the season file the app loads is
+`seasons/season-1.json` (`SEASON_FILE` in `src/core/season/season.ts`), and pushing a
+season is `npm run push:season`, which Rylee runs.
+
+## Playtest before anything else
+
+The files have been generated and checked, not played. In order of risk:
+
+1. **Load one of each template in KovaaK's**: a static family (Meridian), a floater
+   (Drift), a bouncer (Hopper), a ground tracker (Glide), a flier (Lift), a still switch
+   target (Relay) and a moving one (Swarm). Each map is embedded under a new name; check that
+   the room and targets appear where expected.
+2. **Pendulum**: targets should keep their height and only move sideways.
+3. **Switching targets**: they should float at spawn height, not sink or bounce.
+4. **Tracking targets**: they should never die during a run.
+5. **Feint**: the dodge on being hit should feel like a reaction, not a teleport.
+6. **Band steps in switching**: the model sees about 1% per band at the median; check that
+   Advanced and Expert feel harder than Novice.
