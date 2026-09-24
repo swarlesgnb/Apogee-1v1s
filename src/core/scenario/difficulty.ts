@@ -40,7 +40,24 @@ export const FRACTIONS = [
 ];
 
 /** The class a scenario's scoring puts it in, or null when no class describes it. */
-export function classify(f: ScenarioFeatures): DifficultyClass | null {
+/**
+ * What a season family may ask of `classify` that the corpus fit never does.
+ *
+ * `pressure`: targets that expire (Gravity Well's reach the middle and vanish), scored per
+ * hit on one-hit targets so an expiry can never score. The fit leaves pressure scenarios
+ * out, because their boards measure how many were caught, and a family that is one is
+ * predicted as if every target were caught - an upper bound its thresholds say so of.
+ */
+export interface ClassifyOptions {
+  pressure?: boolean;
+}
+
+/** Points a kill is worth: per kill, or per hit on a one-hit target under `pressure`. */
+function pointsPerKill(f: ScenarioFeatures): number {
+  return f.scoring.perKill > 0 ? f.scoring.perKill : f.scoring.perHit;
+}
+
+export function classify(f: ScenarioFeatures, options: ClassifyOptions = {}): DifficultyClass | null {
   const w = f.weapon;
   const s = f.scoring;
   if (!w || !f.geometry || !f.targets.length || f.multipliers.adaptive) return null;
@@ -52,6 +69,9 @@ export function classify(f: ScenarioFeatures): DifficultyClass | null {
   const expiring = f.targets.some((t) => t.regenPerSec < 0);
   if (w.fullyAutomatic === false && s.perKill > 0 && s.perDamage === 0 && s.perHit === 0) {
     if (expiring) return null;
+    return f.derived.fittsIdNearest !== null && f.derived.targetDeg ? "click" : null;
+  }
+  if (options.pressure && w.fullyAutomatic === false && s.perKill === 0 && s.perDamage === 0 && s.perHit > 0 && f.derived.shotsToKill === 1) {
     return f.derived.fittsIdNearest !== null && f.derived.targetDeg ? "click" : null;
   }
   if (w.fullyAutomatic && w.interval > 0 && w.interval <= 0.06 && s.perKill === 0 && (s.perHit > 0 || s.perDamage > 0)) {
@@ -91,7 +111,7 @@ const expit = (x: number) => 1 / (1 + Math.exp(-x));
 export function toMetric(cls: DifficultyClass, f: ScenarioFeatures, score: number): number | null {
   if (!(score > 0)) return null;
   if (cls === "click") {
-    const kills = score / f.scoring.perKill;
+    const kills = score / pointsPerKill(f);
     return Math.log(f.timelimit / kills);
   }
   const share = unAccuracy(f, score / maxScore(f));
@@ -100,7 +120,7 @@ export function toMetric(cls: DifficultyClass, f: ScenarioFeatures, score: numbe
 }
 
 export function fromMetric(cls: DifficultyClass, f: ScenarioFeatures, metric: number): number {
-  if (cls === "click") return (f.timelimit / Math.exp(metric)) * f.scoring.perKill;
+  if (cls === "click") return (f.timelimit / Math.exp(metric)) * pointsPerKill(f);
   return reAccuracy(f, expit(metric)) * maxScore(f);
 }
 

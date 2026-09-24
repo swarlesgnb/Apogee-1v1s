@@ -1050,7 +1050,7 @@
       "file": "data/season-2/difficulty_model.json"
     }
   },
-  "builtAt": "2026-09-24T15:24:41.252Z",
+  "builtAt": "2026-09-24T20:03:01.822Z",
   "scenarios": [
     {
       "scenario": "Apogee Galaga Novice",
@@ -1335,14 +1335,14 @@
       }
     },
     {
-      "scenario": "Apogee Invaders Novice",
+      "scenario": "Apogee Stars Novice",
       "category": "Static Clicking",
-      "family": "Invaders",
+      "family": "Stars",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
       "window": 0,
-      "label": "Invaders",
+      "label": "Stars",
       "focus": "A wide formation; big flicks across it, in both directions.",
       "leaderboardId": null,
       "rankMaxes": [
@@ -1359,14 +1359,14 @@
       }
     },
     {
-      "scenario": "Apogee Invaders Intermediate",
+      "scenario": "Apogee Stars Intermediate",
       "category": "Static Clicking",
-      "family": "Invaders",
+      "family": "Stars",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
       "window": 1,
-      "label": "Invaders",
+      "label": "Stars",
       "focus": "A wide formation; big flicks across it, in both directions.",
       "leaderboardId": null,
       "rankMaxes": [
@@ -1383,14 +1383,14 @@
       }
     },
     {
-      "scenario": "Apogee Invaders Advanced",
+      "scenario": "Apogee Stars Advanced",
       "category": "Static Clicking",
-      "family": "Invaders",
+      "family": "Stars",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
       "window": 2,
-      "label": "Invaders",
+      "label": "Stars",
       "focus": "A wide formation; big flicks across it, in both directions.",
       "leaderboardId": null,
       "rankMaxes": [
@@ -1407,14 +1407,14 @@
       }
     },
     {
-      "scenario": "Apogee Invaders Expert",
+      "scenario": "Apogee Stars Expert",
       "category": "Static Clicking",
-      "family": "Invaders",
+      "family": "Stars",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
       "window": 3,
-      "label": "Invaders",
+      "label": "Stars",
       "focus": "A wide formation; big flicks across it, in both directions.",
       "leaderboardId": null,
       "rankMaxes": [
@@ -1813,15 +1813,15 @@
       "subCategory": "Dynamic Clicking",
       "window": 0,
       "label": "Pendulum",
-      "focus": "Side-to-side swings; click on the swing, not only at the turn.",
+      "focus": "Slow swings from wall to wall; click on the swing, not only at the turn.",
       "leaderboardId": null,
       "rankMaxes": [
-        322,
-        457,
-        547,
-        612,
-        668,
-        721
+        416,
+        567,
+        663,
+        734,
+        794,
+        850
       ],
       "source": {
         "kind": "predicted",
@@ -1837,15 +1837,15 @@
       "subCategory": "Dynamic Clicking",
       "window": 1,
       "label": "Pendulum",
-      "focus": "Side-to-side swings; click on the swing, not only at the turn.",
+      "focus": "Slow swings from wall to wall; click on the swing, not only at the turn.",
       "leaderboardId": null,
       "rankMaxes": [
-        625,
-        675,
-        696,
-        738,
-        772,
-        802
+        743,
+        797,
+        819,
+        864,
+        901,
+        933
       ],
       "source": {
         "kind": "predicted",
@@ -1861,15 +1861,15 @@
       "subCategory": "Dynamic Clicking",
       "window": 2,
       "label": "Pendulum",
-      "focus": "Side-to-side swings; click on the swing, not only at the turn.",
+      "focus": "Slow swings from wall to wall; click on the swing, not only at the turn.",
       "leaderboardId": null,
       "rankMaxes": [
-        724,
-        752,
-        778,
-        802,
-        826,
-        856
+        845,
+        876,
+        904,
+        931,
+        957,
+        990
       ],
       "source": {
         "kind": "predicted",
@@ -1885,13 +1885,13 @@
       "subCategory": "Dynamic Clicking",
       "window": 3,
       "label": "Pendulum",
-      "focus": "Side-to-side swings; click on the swing, not only at the turn.",
+      "focus": "Slow swings from wall to wall; click on the swing, not only at the turn.",
       "leaderboardId": null,
       "rankMaxes": [
-        775,
-        804,
-        823,
-        846
+        899,
+        930,
+        950,
+        976
       ],
       "source": {
         "kind": "predicted",
@@ -2001,15 +2001,15 @@
       "subCategory": "Dynamic Clicking",
       "window": 0,
       "label": "Electric",
-      "focus": "Short, erratic twitches; stay with the target instead of chasing its last position.",
+      "focus": "Straight runs with a charged-up buzz; follow the line, not the shake.",
       "leaderboardId": null,
       "rankMaxes": [
-        401,
-        544,
-        635,
-        700,
-        757,
-        810
+        367,
+        507,
+        598,
+        663,
+        720,
+        773
       ],
       "source": {
         "kind": "predicted",
@@ -2025,15 +2025,15 @@
       "subCategory": "Dynamic Clicking",
       "window": 1,
       "label": "Electric",
-      "focus": "Short, erratic twitches; stay with the target instead of chasing its last position.",
+      "focus": "Straight runs with a charged-up buzz; follow the line, not the shake.",
       "leaderboardId": null,
       "rankMaxes": [
-        708,
-        758,
-        779,
+        673,
+        723,
+        745,
+        786,
         821,
-        856,
-        886
+        851
       ],
       "source": {
         "kind": "predicted",
@@ -2049,15 +2049,15 @@
       "subCategory": "Dynamic Clicking",
       "window": 2,
       "label": "Electric",
-      "focus": "Short, erratic twitches; stay with the target instead of chasing its last position.",
+      "focus": "Straight runs with a charged-up buzz; follow the line, not the shake.",
       "leaderboardId": null,
       "rankMaxes": [
-        803,
-        831,
-        858,
-        884,
-        908,
-        939
+        770,
+        798,
+        825,
+        850,
+        874,
+        905
       ],
       "source": {
         "kind": "predicted",
@@ -2073,13 +2073,13 @@
       "subCategory": "Dynamic Clicking",
       "window": 3,
       "label": "Electric",
-      "focus": "Short, erratic twitches; stay with the target instead of chasing its last position.",
+      "focus": "Straight runs with a charged-up buzz; follow the line, not the shake.",
       "leaderboardId": null,
       "rankMaxes": [
-        853,
-        882,
-        901,
-        924
+        820,
+        849,
+        868,
+        892
       ],
       "source": {
         "kind": "predicted",
@@ -2087,23 +2087,23 @@
       }
     },
     {
-      "scenario": "Apogee Comet Novice",
+      "scenario": "Apogee Sun and Moon Novice",
       "category": "Dynamic Clicking",
-      "family": "Comet",
+      "family": "Sun and Moon",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
       "window": 0,
-      "label": "Comet",
-      "focus": "Fast crossers; move with the target and click inside the motion.",
+      "label": "Sun and Moon",
+      "focus": "Two fast crossers in an open sky; move with the target and click inside the motion.",
       "leaderboardId": null,
       "rankMaxes": [
-        260,
-        380,
-        460,
-        520,
-        571,
-        619
+        271,
+        395,
+        478,
+        539,
+        592,
+        642
       ],
       "source": {
         "kind": "predicted",
@@ -2111,23 +2111,23 @@
       }
     },
     {
-      "scenario": "Apogee Comet Intermediate",
+      "scenario": "Apogee Sun and Moon Intermediate",
       "category": "Dynamic Clicking",
-      "family": "Comet",
+      "family": "Sun and Moon",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
       "window": 1,
-      "label": "Comet",
-      "focus": "Fast crossers; move with the target and click inside the motion.",
+      "label": "Sun and Moon",
+      "focus": "Two fast crossers in an open sky; move with the target and click inside the motion.",
       "leaderboardId": null,
       "rankMaxes": [
-        533,
-        579,
-        598,
-        636,
-        667,
-        694
+        553,
+        600,
+        620,
+        659,
+        691,
+        719
       ],
       "source": {
         "kind": "predicted",
@@ -2135,23 +2135,23 @@
       }
     },
     {
-      "scenario": "Apogee Comet Advanced",
+      "scenario": "Apogee Sun and Moon Advanced",
       "category": "Dynamic Clicking",
-      "family": "Comet",
+      "family": "Sun and Moon",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
       "window": 2,
-      "label": "Comet",
-      "focus": "Fast crossers; move with the target and click inside the motion.",
+      "label": "Sun and Moon",
+      "focus": "Two fast crossers in an open sky; move with the target and click inside the motion.",
       "leaderboardId": null,
       "rankMaxes": [
-        625,
-        650,
-        673,
-        695,
-        717,
-        744
+        648,
+        674,
+        698,
+        721,
+        743,
+        771
       ],
       "source": {
         "kind": "predicted",
@@ -2159,21 +2159,21 @@
       }
     },
     {
-      "scenario": "Apogee Comet Expert",
+      "scenario": "Apogee Sun and Moon Expert",
       "category": "Dynamic Clicking",
-      "family": "Comet",
+      "family": "Sun and Moon",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Dynamic Clicking",
       "window": 3,
-      "label": "Comet",
-      "focus": "Fast crossers; move with the target and click inside the motion.",
+      "label": "Sun and Moon",
+      "focus": "Two fast crossers in an open sky; move with the target and click inside the motion.",
       "leaderboardId": null,
       "rankMaxes": [
-        673,
-        698,
-        715,
-        736
+        697,
+        724,
+        741,
+        762
       ],
       "source": {
         "kind": "predicted",
@@ -2283,15 +2283,15 @@
       "subCategory": "Dynamic Clicking",
       "window": 0,
       "label": "Gravity Well",
-      "focus": "They spiral in from the rim; catch them before they reach the middle.",
+      "focus": "They come in from the rim toward the middle; shoot every one before it gets there.",
       "leaderboardId": null,
       "rankMaxes": [
-        428,
-        588,
-        691,
-        767,
-        831,
-        892
+        569,
+        753,
+        868,
+        953,
+        1025,
+        1092
       ],
       "source": {
         "kind": "predicted",
@@ -2307,15 +2307,15 @@
       "subCategory": "Dynamic Clicking",
       "window": 1,
       "label": "Gravity Well",
-      "focus": "They spiral in from the rim; catch them before they reach the middle.",
+      "focus": "They come in from the rim toward the middle; shoot every one before it gets there.",
       "leaderboardId": null,
       "rankMaxes": [
-        779,
-        837,
-        861,
-        909,
-        949,
-        983
+        962,
+        1027,
+        1055,
+        1108,
+        1153,
+        1193
       ],
       "source": {
         "kind": "predicted",
@@ -2331,15 +2331,15 @@
       "subCategory": "Dynamic Clicking",
       "window": 2,
       "label": "Gravity Well",
-      "focus": "They spiral in from the rim; catch them before they reach the middle.",
+      "focus": "They come in from the rim toward the middle; shoot every one before it gets there.",
       "leaderboardId": null,
       "rankMaxes": [
-        891,
-        924,
-        954,
-        982,
-        1010,
-        1046
+        1085,
+        1123,
+        1158,
+        1190,
+        1222,
+        1263
       ],
       "source": {
         "kind": "predicted",
@@ -2355,13 +2355,13 @@
       "subCategory": "Dynamic Clicking",
       "window": 3,
       "label": "Gravity Well",
-      "focus": "They spiral in from the rim; catch them before they reach the middle.",
+      "focus": "They come in from the rim toward the middle; shoot every one before it gets there.",
       "leaderboardId": null,
       "rankMaxes": [
-        950,
-        984,
-        1005,
-        1033
+        1151,
+        1190,
+        1215,
+        1247
       ],
       "source": {
         "kind": "predicted",
@@ -2377,15 +2377,15 @@
       "subCategory": "Dynamic Clicking",
       "window": 0,
       "label": "Meteor",
-      "focus": "Straight runs that only turn at the walls; time the click on the run.",
+      "focus": "Floating heads: big, slow drifters; confirm the shot before you click.",
       "leaderboardId": null,
       "rankMaxes": [
-        347,
-        486,
-        577,
-        643,
-        699,
-        752
+        462,
+        626,
+        729,
+        806,
+        870,
+        931
       ],
       "source": {
         "kind": "predicted",
@@ -2401,15 +2401,15 @@
       "subCategory": "Dynamic Clicking",
       "window": 1,
       "label": "Meteor",
-      "focus": "Straight runs that only turn at the walls; time the click on the run.",
+      "focus": "Floating heads: big, slow drifters; confirm the shot before you click.",
       "leaderboardId": null,
       "rankMaxes": [
-        654,
-        704,
-        725,
-        767,
-        802,
-        832
+        815,
+        874,
+        899,
+        946,
+        986,
+        1022
       ],
       "source": {
         "kind": "predicted",
@@ -2425,15 +2425,15 @@
       "subCategory": "Dynamic Clicking",
       "window": 2,
       "label": "Meteor",
-      "focus": "Straight runs that only turn at the walls; time the click on the run.",
+      "focus": "Floating heads: big, slow drifters; confirm the shot before you click.",
       "leaderboardId": null,
       "rankMaxes": [
-        752,
-        780,
-        807,
-        831,
-        856,
-        886
+        927,
+        960,
+        991,
+        1020,
+        1048,
+        1084
       ],
       "source": {
         "kind": "predicted",
@@ -2449,13 +2449,13 @@
       "subCategory": "Dynamic Clicking",
       "window": 3,
       "label": "Meteor",
-      "focus": "Straight runs that only turn at the walls; time the click on the run.",
+      "focus": "Floating heads: big, slow drifters; confirm the shot before you click.",
       "leaderboardId": null,
       "rankMaxes": [
-        803,
-        832,
-        851,
-        874
+        985,
+        1019,
+        1041,
+        1069
       ],
       "source": {
         "kind": "predicted",
@@ -2474,12 +2474,12 @@
       "focus": "Fliers circling you as they rise and fall; follow the orbit and click.",
       "leaderboardId": null,
       "rankMaxes": [
-        301,
-        429,
-        514,
-        576,
-        630,
-        680
+        389,
+        538,
+        634,
+        705,
+        765,
+        822
       ],
       "source": {
         "kind": "predicted",
@@ -2498,12 +2498,12 @@
       "focus": "Fliers circling you as they rise and fall; follow the orbit and click.",
       "leaderboardId": null,
       "rankMaxes": [
-        589,
-        636,
-        656,
-        696,
-        729,
-        757
+        716,
+        770,
+        793,
+        837,
+        874,
+        907
       ],
       "source": {
         "kind": "predicted",
@@ -2522,12 +2522,12 @@
       "focus": "Fliers circling you as they rise and fall; follow the orbit and click.",
       "leaderboardId": null,
       "rankMaxes": [
-        683,
-        709,
-        734,
-        757,
-        780,
-        809
+        820,
+        851,
+        879,
+        906,
+        932,
+        965
       ],
       "source": {
         "kind": "predicted",
@@ -2546,10 +2546,10 @@
       "focus": "Fliers circling you as they rise and fall; follow the orbit and click.",
       "leaderboardId": null,
       "rankMaxes": [
-        732,
-        759,
-        776,
-        798
+        875,
+        906,
+        926,
+        952
       ],
       "source": {
         "kind": "predicted",
@@ -3035,7 +3035,7 @@
       "subCategory": "Precise Tracking",
       "window": 0,
       "label": "AlienTrack",
-      "focus": "A close target sweeping wide; track with your arm, not only your wrist.",
+      "focus": "A close target sweeping wide that blinks now and then; track it, and find it again after the jump.",
       "leaderboardId": null,
       "rankMaxes": [
         2027,
@@ -3059,7 +3059,7 @@
       "subCategory": "Precise Tracking",
       "window": 1,
       "label": "AlienTrack",
-      "focus": "A close target sweeping wide; track with your arm, not only your wrist.",
+      "focus": "A close target sweeping wide that blinks now and then; track it, and find it again after the jump.",
       "leaderboardId": null,
       "rankMaxes": [
         3390,
@@ -3083,7 +3083,7 @@
       "subCategory": "Precise Tracking",
       "window": 2,
       "label": "AlienTrack",
-      "focus": "A close target sweeping wide; track with your arm, not only your wrist.",
+      "focus": "A close target sweeping wide that blinks now and then; track it, and find it again after the jump.",
       "leaderboardId": null,
       "rankMaxes": [
         3761,
@@ -3107,7 +3107,7 @@
       "subCategory": "Precise Tracking",
       "window": 3,
       "label": "AlienTrack",
-      "focus": "A close target sweeping wide; track with your arm, not only your wrist.",
+      "focus": "A close target sweeping wide that blinks now and then; track it, and find it again after the jump.",
       "leaderboardId": null,
       "rankMaxes": [
         3934,
@@ -3317,7 +3317,7 @@
       "subCategory": "Reactive Tracking",
       "window": 0,
       "label": "Stutter",
-      "focus": "It stops before it turns, and now and then stops dead for seconds; stop with it.",
+      "focus": "It stops before it turns, and now and then stops dead for a second or two; stop with it.",
       "leaderboardId": null,
       "rankMaxes": [
         1492,
@@ -3341,7 +3341,7 @@
       "subCategory": "Reactive Tracking",
       "window": 1,
       "label": "Stutter",
-      "focus": "It stops before it turns, and now and then stops dead for seconds; stop with it.",
+      "focus": "It stops before it turns, and now and then stops dead for a second or two; stop with it.",
       "leaderboardId": null,
       "rankMaxes": [
         2509,
@@ -3365,7 +3365,7 @@
       "subCategory": "Reactive Tracking",
       "window": 2,
       "label": "Stutter",
-      "focus": "It stops before it turns, and now and then stops dead for seconds; stop with it.",
+      "focus": "It stops before it turns, and now and then stops dead for a second or two; stop with it.",
       "leaderboardId": null,
       "rankMaxes": [
         2780,
@@ -3389,7 +3389,7 @@
       "subCategory": "Reactive Tracking",
       "window": 3,
       "label": "Stutter",
-      "focus": "It stops before it turns, and now and then stops dead for seconds; stop with it.",
+      "focus": "It stops before it turns, and now and then stops dead for a second or two; stop with it.",
       "leaderboardId": null,
       "rankMaxes": [
         2832,
@@ -4155,14 +4155,14 @@
       }
     },
     {
-      "scenario": "Apogee bruTeS Novice",
+      "scenario": "Apogee MartianTS Novice",
       "category": "Speed Switching",
-      "family": "bruTeS",
+      "family": "MartianTS",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
       "window": 0,
-      "label": "bruTeS",
+      "label": "MartianTS",
       "focus": "Each target takes a while; stay on it to the end, then switch.",
       "leaderboardId": null,
       "rankMaxes": [
@@ -4179,14 +4179,14 @@
       }
     },
     {
-      "scenario": "Apogee bruTeS Intermediate",
+      "scenario": "Apogee MartianTS Intermediate",
       "category": "Speed Switching",
-      "family": "bruTeS",
+      "family": "MartianTS",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
       "window": 1,
-      "label": "bruTeS",
+      "label": "MartianTS",
       "focus": "Each target takes a while; stay on it to the end, then switch.",
       "leaderboardId": null,
       "rankMaxes": [
@@ -4203,14 +4203,14 @@
       }
     },
     {
-      "scenario": "Apogee bruTeS Advanced",
+      "scenario": "Apogee MartianTS Advanced",
       "category": "Speed Switching",
-      "family": "bruTeS",
+      "family": "MartianTS",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
       "window": 2,
-      "label": "bruTeS",
+      "label": "MartianTS",
       "focus": "Each target takes a while; stay on it to the end, then switch.",
       "leaderboardId": null,
       "rankMaxes": [
@@ -4227,14 +4227,14 @@
       }
     },
     {
-      "scenario": "Apogee bruTeS Expert",
+      "scenario": "Apogee MartianTS Expert",
       "category": "Speed Switching",
-      "family": "bruTeS",
+      "family": "MartianTS",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
       "window": 3,
-      "label": "bruTeS",
+      "label": "MartianTS",
       "focus": "Each target takes a while; stay on it to the end, then switch.",
       "leaderboardId": null,
       "rankMaxes": [
@@ -4257,7 +4257,7 @@
       "subCategory": "Evasive Switching",
       "window": 0,
       "label": "FleeTS",
-      "focus": "Four strafing targets; kill one without losing track of the others.",
+      "focus": "Six strafing targets; kill one without losing track of the others.",
       "leaderboardId": null,
       "rankMaxes": [
         1552,
@@ -4281,7 +4281,7 @@
       "subCategory": "Evasive Switching",
       "window": 1,
       "label": "FleeTS",
-      "focus": "Four strafing targets; kill one without losing track of the others.",
+      "focus": "Six strafing targets; kill one without losing track of the others.",
       "leaderboardId": null,
       "rankMaxes": [
         2286,
@@ -4305,7 +4305,7 @@
       "subCategory": "Evasive Switching",
       "window": 2,
       "label": "FleeTS",
-      "focus": "Four strafing targets; kill one without losing track of the others.",
+      "focus": "Six strafing targets; kill one without losing track of the others.",
       "leaderboardId": null,
       "rankMaxes": [
         2569,
@@ -4329,7 +4329,7 @@
       "subCategory": "Evasive Switching",
       "window": 3,
       "label": "FleeTS",
-      "focus": "Four strafing targets; kill one without losing track of the others.",
+      "focus": "Six strafing targets; kill one without losing track of the others.",
       "leaderboardId": null,
       "rankMaxes": [
         2729,
@@ -4531,14 +4531,14 @@
       }
     },
     {
-      "scenario": "Apogee Mender Novice",
+      "scenario": "Apogee QuantumTS Novice",
       "category": "Evasive Switching",
-      "family": "Mender",
+      "family": "QuantumTS",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Evasive Switching",
       "window": 0,
-      "label": "Mender",
+      "label": "QuantumTS",
       "focus": "Targets heal when left alone; finish every kill you start.",
       "leaderboardId": null,
       "rankMaxes": [
@@ -4555,14 +4555,14 @@
       }
     },
     {
-      "scenario": "Apogee Mender Intermediate",
+      "scenario": "Apogee QuantumTS Intermediate",
       "category": "Evasive Switching",
-      "family": "Mender",
+      "family": "QuantumTS",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Evasive Switching",
       "window": 1,
-      "label": "Mender",
+      "label": "QuantumTS",
       "focus": "Targets heal when left alone; finish every kill you start.",
       "leaderboardId": null,
       "rankMaxes": [
@@ -4579,14 +4579,14 @@
       }
     },
     {
-      "scenario": "Apogee Mender Advanced",
+      "scenario": "Apogee QuantumTS Advanced",
       "category": "Evasive Switching",
-      "family": "Mender",
+      "family": "QuantumTS",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Evasive Switching",
       "window": 2,
-      "label": "Mender",
+      "label": "QuantumTS",
       "focus": "Targets heal when left alone; finish every kill you start.",
       "leaderboardId": null,
       "rankMaxes": [
@@ -4603,14 +4603,14 @@
       }
     },
     {
-      "scenario": "Apogee Mender Expert",
+      "scenario": "Apogee QuantumTS Expert",
       "category": "Evasive Switching",
-      "family": "Mender",
+      "family": "QuantumTS",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Evasive Switching",
       "window": 3,
-      "label": "Mender",
+      "label": "QuantumTS",
       "focus": "Targets heal when left alone; finish every kill you start.",
       "leaderboardId": null,
       "rankMaxes": [
@@ -4719,14 +4719,14 @@
       }
     },
     {
-      "scenario": "Apogee Brawl Novice",
+      "scenario": "Apogee InvadersTS Novice",
       "category": "Evasive Switching",
-      "family": "Brawl",
+      "family": "InvadersTS",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Evasive Switching",
       "window": 0,
-      "label": "Brawl",
+      "label": "InvadersTS",
       "focus": "Close targets moving fast across the view; stay with them, then turn to the next.",
       "leaderboardId": null,
       "rankMaxes": [
@@ -4743,14 +4743,14 @@
       }
     },
     {
-      "scenario": "Apogee Brawl Intermediate",
+      "scenario": "Apogee InvadersTS Intermediate",
       "category": "Evasive Switching",
-      "family": "Brawl",
+      "family": "InvadersTS",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Evasive Switching",
       "window": 1,
-      "label": "Brawl",
+      "label": "InvadersTS",
       "focus": "Close targets moving fast across the view; stay with them, then turn to the next.",
       "leaderboardId": null,
       "rankMaxes": [
@@ -4767,14 +4767,14 @@
       }
     },
     {
-      "scenario": "Apogee Brawl Advanced",
+      "scenario": "Apogee InvadersTS Advanced",
       "category": "Evasive Switching",
-      "family": "Brawl",
+      "family": "InvadersTS",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Evasive Switching",
       "window": 2,
-      "label": "Brawl",
+      "label": "InvadersTS",
       "focus": "Close targets moving fast across the view; stay with them, then turn to the next.",
       "leaderboardId": null,
       "rankMaxes": [
@@ -4791,14 +4791,14 @@
       }
     },
     {
-      "scenario": "Apogee Brawl Expert",
+      "scenario": "Apogee InvadersTS Expert",
       "category": "Evasive Switching",
-      "family": "Brawl",
+      "family": "InvadersTS",
       "arm": "Arm",
       "armFrom": "Apogee",
       "subCategory": "Evasive Switching",
       "window": 3,
-      "label": "Brawl",
+      "label": "InvadersTS",
       "focus": "Close targets moving fast across the view; stay with them, then turn to the next.",
       "leaderboardId": null,
       "rankMaxes": [

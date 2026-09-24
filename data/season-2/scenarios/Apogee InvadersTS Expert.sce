@@ -1,11 +1,11 @@
-Name=Apogee Brawl Intermediate
+Name=Apogee InvadersTS Expert
 PlayerCharacters=Player
-BotCharacters=Apogee Brawl.bot
+BotCharacters=Apogee InvadersTS.bot
 IsChallenge=true
 OvershotProtectionTimer=0.0
 Timelimit=60.0
 PlayerProfile=Player
-AddedBots=Apogee Brawl.bot;Apogee Brawl.bot;Apogee Brawl.bot
+AddedBots=Apogee InvadersTS.bot;Apogee InvadersTS.bot;Apogee InvadersTS.bot
 PlayerMaxLives=0
 BotMaxLives=0;0;0
 PlayerTeam=1
@@ -42,7 +42,7 @@ ScoreLossPerMiss=0.0
 ScoreLossPerReload=0.0
 MultSqrtAcc=false
 EnableOverDamage=false
-MapName=Apogee Brawl Intermediate.json
+MapName=Apogee InvadersTS Expert.json
 MapScale=4.0
 BlockProjectilePredictors=true
 BlockCheats=true
@@ -82,9 +82,9 @@ AimSubTypeTag=Evasive
 AimTypeFlicking=false
 AimTypeProjectile=false
 AimTypePlayerMovement=false
-DifficultyTag=2
-SearchTags=Apogee, Apogee Season 2, Evasive Switching, Intermediate
-Description=Three close targets strafing fast. Hold fire to kill.[nl][nl]Apogee Season 2, Evasive Switching, Intermediate. Close targets moving fast across the view; stay with them, then turn to the next.
+DifficultyTag=4
+SearchTags=Apogee, Apogee Season 2, Evasive Switching, Expert
+Description=Three close targets strafing fast. Hold fire to kill.[nl][nl]Apogee Season 2, Evasive Switching, Expert. Close targets moving fast across the view; stay with them, then turn to the next.
 GameVersion=3.7.1
 ScenarioVersion=Initial
 
@@ -120,8 +120,8 @@ MinShootDelay=0.3
 MaxShootDelay=0.6
 
 [Bot Profile]
-Name=Apogee Brawl
-DodgeProfileNames=Apogee Brawl Move
+Name=Apogee InvadersTS
+DodgeProfileNames=Apogee InvadersTS Move
 DodgeProfileWeights=1.0
 DodgeProfileMaxChangeTime=60.0
 DodgeProfileMinChangeTime=60.0
@@ -130,7 +130,7 @@ WeaponProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0;1.0;1.0
 AimingProfileNames=Default;Default;Default;Default;Default;Default;Default;Default
 WeaponSwitchTime=3.0
 UseWeapons=false
-CharacterProfile=Apogee Brawl Body
+CharacterProfile=Apogee InvadersTS Body
 SeeThroughWalls=false
 NoDodging=false
 StandStillUntilHurt=false
@@ -298,7 +298,7 @@ PlaybackOptions.LoopUponCompletion=true
 PlaybackOptions.BreakToInputMode=false
 
 [Character Profile]
-Name=Apogee Brawl Body
+Name=Apogee InvadersTS Body
 MaxHealth=45.0
 WeaponProfileNames=;;;;;;;
 MinRespawnDelay=0.001
@@ -309,9 +309,9 @@ CrouchAnimationSpeed=1.0
 CameraOffset=X=0.000 Y=0.000 Z=0.000
 HeadshotOnly=false
 DamageKnockbackFactor=0.0
-MaxSpeed=1055.924197
+MaxSpeed=1277.668279
 MaxCrouchSpeed=0.0
-Acceleration=4223.69679
+Acceleration=5110.673116
 CrouchingAcceleration=2400.0
 Friction=1.0
 BrakingFrictionFactor=0.0
@@ -334,8 +334,8 @@ EnemyHeadColorOnLookAt=X=1.000 Y=1.000 Z=1.000
 TeamBodyColor=X=1.000 Y=0.888 Z=0.000
 TeamHeadColor=X=1.000 Y=1.000 Z=1.000
 MainBBType=Spheroid
-MainBBHeight=75.958312
-MainBBRadius=37.979156
+MainBBHeight=57.481046
+MainBBRadius=28.740523
 MainBBHasHead=false
 MainBBHeadRadius=0.1
 MainBBHeadOffset=0.0
@@ -445,13 +445,13 @@ PlaybackOptions.LoopUponCompletion=true
 PlaybackOptions.BreakToInputMode=false
 
 [Dodge Profile]
-Name=Apogee Brawl Move
+Name=Apogee InvadersTS Move
 MaxTargetDistance=1100.0
 MinTargetDistance=900.0
 ToggleLeftRight=true
 ToggleForwardBack=true
-MinLRTimeChange=0.609
-MaxLRTimeChange=1.044
+MinLRTimeChange=0.460952
+MaxLRTimeChange=0.790204
 MinFBTimeChange=1.2
 MaxFBTimeChange=2.1
 DamageReactionChangesDirection=false

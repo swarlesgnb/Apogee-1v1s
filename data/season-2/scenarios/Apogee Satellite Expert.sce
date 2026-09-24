@@ -308,7 +308,7 @@ CrouchAnimationSpeed=2.0
 CameraOffset=X=0.000 Y=0.000 Z=0.000
 HeadshotOnly=false
 DamageKnockbackFactor=0.0
-MaxSpeed=1022.134623
+MaxSpeed=650.449306
 MaxCrouchSpeed=500.0
 Acceleration=800.0
 CrouchingAcceleration=800.0
@@ -332,8 +332,8 @@ EnemyHeadColorOnLookAt=X=1.000 Y=1.000 Z=1.000
 TeamBodyColor=X=1.000 Y=0.888 Z=0.000
 TeamHeadColor=X=1.000 Y=1.000 Z=1.000
 MainBBType=Spheroid
-MainBBHeight=50.572094
-MainBBRadius=25.286047
+MainBBHeight=68.965105
+MainBBRadius=34.482553
 MainBBHasHead=false
 MainBBHeadRadius=1.0
 MainBBHeadOffset=0.0
@@ -400,9 +400,9 @@ ViewBobCameraZOffset=0.0
 ViewBobAffectsShots=false
 IsFlyer=true
 FlightObeysPitch=false
-FlightVelocityUp=817.707699
+FlightVelocityUp=520.359445
 FlightAccelUp=800.0
-FlightVelocityDown=817.707699
+FlightVelocityDown=520.359445
 FlightAccelDown=800.0
 IsFlyUpOnJumpAndCrouch=false
 DisableCharacterCollision=true

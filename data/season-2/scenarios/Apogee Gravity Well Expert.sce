@@ -5,15 +5,15 @@ IsChallenge=true
 OvershotProtectionTimer=0.0
 Timelimit=60.0
 PlayerProfile=Player
-AddedBots=Apogee Gravity Well.bot;Apogee Gravity Well.bot;Apogee Gravity Well.bot;Apogee Gravity Well.bot;Apogee Gravity Well.bot;Apogee Gravity Well.bot
+AddedBots=Apogee Gravity Well.bot;Apogee Gravity Well.bot;Apogee Gravity Well.bot;Apogee Gravity Well.bot;Apogee Gravity Well.bot;Apogee Gravity Well.bot;Apogee Gravity Well.bot
 PlayerMaxLives=0
-BotMaxLives=0;0;0;0;0;0
+BotMaxLives=0;0;0;0;0;0;0
 PlayerTeam=1
-BotTeams=2;2;2;2;2;2
+BotTeams=2;2;2;2;2;2;2
 ScoreToWin=1000.0
 ScorePerDamage=0.0
-ScorePerHit=0.0
-ScorePerKill=10.0
+ScorePerHit=10.0
+ScorePerKill=0.0
 ScorePerMidairDirect=0.0
 ScorePerAnyDirect=0.0
 ScoreLossPerDamageTaken=0.0
@@ -84,7 +84,7 @@ AimTypeProjectile=false
 AimTypePlayerMovement=false
 DifficultyTag=4
 SearchTags=Apogee, Apogee Season 2, Dynamic Clicking, Expert
-Description=Targets spiral in from a ring toward the centre. One click each.[nl][nl]Apogee Season 2, Dynamic Clicking, Expert. They spiral in from the rim; catch them before they reach the middle.
+Description=Targets close in from a ring toward the centre; any that reach it are lost. One click each.[nl][nl]Apogee Season 2, Dynamic Clicking, Expert. They come in from the rim toward the middle; shoot every one before it gets there.
 GameVersion=3.7.0
 ScenarioVersion=Initial
 
@@ -308,7 +308,7 @@ CrouchAnimationSpeed=2.0
 CameraOffset=X=0.000 Y=0.000 Z=0.000
 HeadshotOnly=false
 DamageKnockbackFactor=0.0
-MaxSpeed=666.060089
+MaxSpeed=356.817905
 MaxCrouchSpeed=500.0
 Acceleration=100000.0
 CrouchingAcceleration=800.0
@@ -332,8 +332,8 @@ EnemyHeadColorOnLookAt=X=1.000 Y=1.000 Z=1.000
 TeamBodyColor=X=1.000 Y=0.888 Z=0.000
 TeamHeadColor=X=1.000 Y=1.000 Z=1.000
 MainBBType=Spheroid
-MainBBHeight=47.077587
-MainBBRadius=23.538794
+MainBBHeight=51.785825
+MainBBRadius=25.892912
 MainBBHasHead=false
 MainBBHeadRadius=1.0
 MainBBHeadOffset=0.0
@@ -379,7 +379,7 @@ LeanDisplacement=0.0
 AirJumpExtraControl=0.0
 ForwardSpeedBias=0.4
 HealthRegainedonkill=0.0
-HealthRegenPerSec=0.0
+HealthRegenPerSec=-0.443667
 HealthRegenDelay=0.0
 JumpSpeedPenaltyDuration=0.0
 JumpSpeedPenaltyPercent=0.0
@@ -400,9 +400,9 @@ ViewBobCameraZOffset=0.0
 ViewBobAffectsShots=false
 IsFlyer=true
 FlightObeysPitch=false
-FlightVelocityUp=666.060089
+FlightVelocityUp=356.817905
 FlightAccelUp=800.0
-FlightVelocityDown=666.060089
+FlightVelocityDown=356.817905
 FlightAccelDown=800.0
 IsFlyUpOnJumpAndCrouch=false
 DisableCharacterCollision=true
@@ -954,7 +954,7 @@ MaxSpeedModifier=1.0
     ],
     "objects": [
         {
-            "location": "-1088.000000, -1296.249161, -1296.249161",
+            "location": "-1088.000000, -1291.795447, -1292.477822",
             "materialSets": [
                 {
                     "group": 0,
@@ -984,11 +984,11 @@ MaxSpeedModifier=1.0
             "mesh": "Cube",
             "name": "Default",
             "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "26.872984, 10.240000, 25.924983",
+            "scale": "26.878246, 10.240000, 25.849556",
             "type": "brush"
         },
         {
-            "location": "-1088.000000, 272.249161, -1296.249161",
+            "location": "-1088.000000, 267.795447, -1292.477822",
             "materialSets": [
                 {
                     "group": 0,
@@ -1018,11 +1018,11 @@ MaxSpeedModifier=1.0
             "mesh": "Cube",
             "name": "Default",
             "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "26.872984, 10.240000, 25.924983",
+            "scale": "26.878246, 10.240000, 25.849556",
             "type": "brush"
         },
         {
-            "location": "-1088.000000, -1296.249161, -1296.249161",
+            "location": "-1088.000000, -1291.795447, -1292.477822",
             "materialSets": [
                 {
                     "group": 0,
@@ -1052,11 +1052,11 @@ MaxSpeedModifier=1.0
             "mesh": "Cube",
             "name": "Default",
             "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "10.240000, 25.924983, 25.924983",
+            "scale": "10.240000, 25.835909, 25.849556",
             "type": "brush"
         },
         {
-            "location": "575.298442, -1296.249161, -1296.249161",
+            "location": "575.824559, -1291.795447, -1292.477822",
             "materialSets": [
                 {
                     "group": 0,
@@ -1086,11 +1086,11 @@ MaxSpeedModifier=1.0
             "mesh": "Cube",
             "name": "Default",
             "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "10.240000, 25.924983, 25.924983",
+            "scale": "10.240000, 25.835909, 25.849556",
             "type": "brush"
         },
         {
-            "location": "-1088.000000, -1296.249161, -1296.249161",
+            "location": "-1088.000000, -1291.795447, -1292.477822",
             "materialSets": [
                 {
                     "group": 0,
@@ -1120,11 +1120,11 @@ MaxSpeedModifier=1.0
             "mesh": "Cube",
             "name": "Default",
             "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "26.872984, 25.924983, 10.240000",
+            "scale": "26.878246, 25.835909, 10.240000",
             "type": "brush"
         },
         {
-            "location": "-1088.000000, -1296.249161, 272.249161",
+            "location": "-1088.000000, -1291.795447, 268.477822",
             "materialSets": [
                 {
                     "group": 0,
@@ -1154,7 +1154,7 @@ MaxSpeedModifier=1.0
             "mesh": "Cube",
             "name": "Default",
             "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "26.872984, 25.924983, 10.240000",
+            "scale": "26.878246, 25.835909, 10.240000",
             "type": "brush"
         },
         {
@@ -1191,7 +1191,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "467.735274, 208.249161, 0.000000",
+            "location": "467.829779, 203.795447, 41.793700",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1204,7 +1204,7 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "Path",
-                    "value": "Gravity Well 1-1,Gravity Well 1-2,Gravity Well 1-3,Gravity Well 1-4,Gravity Well 1-5,Gravity Well 1-6,Gravity Well 1-7,Gravity Well 1-8,Gravity Well 1-9,Gravity Well 1-10,Gravity Well 1-11,Gravity Well 1-12,Gravity Well 1-13,Gravity Well 1-14,Gravity Well 1-15,Gravity Well 1-16"
+                    "value": "Gravity Well 1-1,Gravity Well 1-2"
                 },
                 {
                     "name": "LoopingPath",
@@ -1224,7 +1224,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "468.219270, 177.715913, 106.450786",
+            "location": "468.286096, 170.028309, 118.078389",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1237,7 +1237,7 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "Path",
-                    "value": "Gravity Well 2-1,Gravity Well 2-2,Gravity Well 2-3,Gravity Well 2-4,Gravity Well 2-5,Gravity Well 2-6,Gravity Well 2-7,Gravity Well 2-8,Gravity Well 2-9,Gravity Well 2-10,Gravity Well 2-11,Gravity Well 2-12,Gravity Well 2-13,Gravity Well 2-14,Gravity Well 2-15,Gravity Well 2-16"
+                    "value": "Gravity Well 2-1,Gravity Well 2-2"
                 },
                 {
                     "name": "LoopingPath",
@@ -1257,7 +1257,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "468.219270, 99.523078, 181.686192",
+            "location": "468.286096, 110.988884, 174.738660",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1270,7 +1270,7 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "Path",
-                    "value": "Gravity Well 3-1,Gravity Well 3-2,Gravity Well 3-3,Gravity Well 3-4,Gravity Well 3-5,Gravity Well 3-6,Gravity Well 3-7,Gravity Well 3-8,Gravity Well 3-9,Gravity Well 3-10,Gravity Well 3-11,Gravity Well 3-12,Gravity Well 3-13,Gravity Well 3-14,Gravity Well 3-15,Gravity Well 3-16"
+                    "value": "Gravity Well 3-1,Gravity Well 3-2"
                 },
                 {
                     "name": "LoopingPath",
@@ -1290,7 +1290,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "467.735274, 0.000000, 208.249161",
+            "location": "467.829779, 38.316025, 204.477822",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1303,7 +1303,7 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "Path",
-                    "value": "Gravity Well 4-1,Gravity Well 4-2,Gravity Well 4-3,Gravity Well 4-4,Gravity Well 4-5,Gravity Well 4-6,Gravity Well 4-7,Gravity Well 4-8,Gravity Well 4-9,Gravity Well 4-10,Gravity Well 4-11,Gravity Well 4-12,Gravity Well 4-13,Gravity Well 4-14,Gravity Well 4-15,Gravity Well 4-16"
+                    "value": "Gravity Well 4-1,Gravity Well 4-2"
                 },
                 {
                     "name": "LoopingPath",
@@ -1323,7 +1323,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "468.219270, -99.523078, 181.686192",
+            "location": "467.829779, -38.316025, 204.477822",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1336,7 +1336,7 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "Path",
-                    "value": "Gravity Well 5-1,Gravity Well 5-2,Gravity Well 5-3,Gravity Well 5-4,Gravity Well 5-5,Gravity Well 5-6,Gravity Well 5-7,Gravity Well 5-8,Gravity Well 5-9,Gravity Well 5-10,Gravity Well 5-11,Gravity Well 5-12,Gravity Well 5-13,Gravity Well 5-14,Gravity Well 5-15,Gravity Well 5-16"
+                    "value": "Gravity Well 5-1,Gravity Well 5-2"
                 },
                 {
                     "name": "LoopingPath",
@@ -1356,7 +1356,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "468.219270, -177.715913, 106.450786",
+            "location": "468.286096, -110.988884, 174.738660",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1369,7 +1369,7 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "Path",
-                    "value": "Gravity Well 6-1,Gravity Well 6-2,Gravity Well 6-3,Gravity Well 6-4,Gravity Well 6-5,Gravity Well 6-6,Gravity Well 6-7,Gravity Well 6-8,Gravity Well 6-9,Gravity Well 6-10,Gravity Well 6-11,Gravity Well 6-12,Gravity Well 6-13,Gravity Well 6-14,Gravity Well 6-15,Gravity Well 6-16"
+                    "value": "Gravity Well 6-1,Gravity Well 6-2"
                 },
                 {
                     "name": "LoopingPath",
@@ -1389,7 +1389,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "467.735274, -208.249161, 0.000000",
+            "location": "468.286096, -170.028309, 118.078389",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1402,7 +1402,7 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "Path",
-                    "value": "Gravity Well 7-1,Gravity Well 7-2,Gravity Well 7-3,Gravity Well 7-4,Gravity Well 7-5,Gravity Well 7-6,Gravity Well 7-7,Gravity Well 7-8,Gravity Well 7-9,Gravity Well 7-10,Gravity Well 7-11,Gravity Well 7-12,Gravity Well 7-13,Gravity Well 7-14,Gravity Well 7-15,Gravity Well 7-16"
+                    "value": "Gravity Well 7-1,Gravity Well 7-2"
                 },
                 {
                     "name": "LoopingPath",
@@ -1422,7 +1422,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "468.219270, -177.715913, -106.450786",
+            "location": "467.829779, -203.795447, 41.793700",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1435,7 +1435,7 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "Path",
-                    "value": "Gravity Well 8-1,Gravity Well 8-2,Gravity Well 8-3,Gravity Well 8-4,Gravity Well 8-5,Gravity Well 8-6,Gravity Well 8-7,Gravity Well 8-8,Gravity Well 8-9,Gravity Well 8-10,Gravity Well 8-11,Gravity Well 8-12,Gravity Well 8-13,Gravity Well 8-14,Gravity Well 8-15,Gravity Well 8-16"
+                    "value": "Gravity Well 8-1,Gravity Well 8-2"
                 },
                 {
                     "name": "LoopingPath",
@@ -1455,7 +1455,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "468.219270, -99.523078, -181.686192",
+            "location": "467.829779, -203.795447, -41.793700",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1468,7 +1468,7 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "Path",
-                    "value": "Gravity Well 9-1,Gravity Well 9-2,Gravity Well 9-3,Gravity Well 9-4,Gravity Well 9-5,Gravity Well 9-6,Gravity Well 9-7,Gravity Well 9-8,Gravity Well 9-9,Gravity Well 9-10,Gravity Well 9-11,Gravity Well 9-12,Gravity Well 9-13,Gravity Well 9-14,Gravity Well 9-15,Gravity Well 9-16"
+                    "value": "Gravity Well 9-1,Gravity Well 9-2"
                 },
                 {
                     "name": "LoopingPath",
@@ -1488,7 +1488,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "467.735274, -0.000000, -208.249161",
+            "location": "468.286096, -170.028309, -118.078389",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1501,7 +1501,7 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "Path",
-                    "value": "Gravity Well 10-1,Gravity Well 10-2,Gravity Well 10-3,Gravity Well 10-4,Gravity Well 10-5,Gravity Well 10-6,Gravity Well 10-7,Gravity Well 10-8,Gravity Well 10-9,Gravity Well 10-10,Gravity Well 10-11,Gravity Well 10-12,Gravity Well 10-13,Gravity Well 10-14,Gravity Well 10-15,Gravity Well 10-16"
+                    "value": "Gravity Well 10-1,Gravity Well 10-2"
                 },
                 {
                     "name": "LoopingPath",
@@ -1521,7 +1521,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "468.219270, 99.523078, -181.686192",
+            "location": "468.286096, -110.988884, -174.738660",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1534,7 +1534,7 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "Path",
-                    "value": "Gravity Well 11-1,Gravity Well 11-2,Gravity Well 11-3,Gravity Well 11-4,Gravity Well 11-5,Gravity Well 11-6,Gravity Well 11-7,Gravity Well 11-8,Gravity Well 11-9,Gravity Well 11-10,Gravity Well 11-11,Gravity Well 11-12,Gravity Well 11-13,Gravity Well 11-14,Gravity Well 11-15,Gravity Well 11-16"
+                    "value": "Gravity Well 11-1,Gravity Well 11-2"
                 },
                 {
                     "name": "LoopingPath",
@@ -1554,7 +1554,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "468.219270, 177.715913, -106.450786",
+            "location": "467.829779, -38.316025, -204.477822",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1567,7 +1567,7 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "Path",
-                    "value": "Gravity Well 12-1,Gravity Well 12-2,Gravity Well 12-3,Gravity Well 12-4,Gravity Well 12-5,Gravity Well 12-6,Gravity Well 12-7,Gravity Well 12-8,Gravity Well 12-9,Gravity Well 12-10,Gravity Well 12-11,Gravity Well 12-12,Gravity Well 12-13,Gravity Well 12-14,Gravity Well 12-15,Gravity Well 12-16"
+                    "value": "Gravity Well 12-1,Gravity Well 12-2"
                 },
                 {
                     "name": "LoopingPath",
@@ -1587,7 +1587,139 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "467.735274, 208.249161, 0.000000",
+            "location": "467.829779, 38.316025, -204.477822",
+            "name": "SpawnPoint",
+            "properties": [
+                {
+                    "name": "Name",
+                    "value": "SpawnPoint1"
+                },
+                {
+                    "name": "TeamMask",
+                    "value": 2
+                },
+                {
+                    "name": "Path",
+                    "value": "Gravity Well 13-1,Gravity Well 13-2"
+                },
+                {
+                    "name": "LoopingPath",
+                    "value": false
+                },
+                {
+                    "name": "PermittedCharacterProfiles",
+                    "value": ""
+                },
+                {
+                    "name": "Weight",
+                    "value": 1
+                }
+            ],
+            "rotation": "0.000000, 0.000000, 180.000000",
+            "scale": "0.250000, 0.250000, 0.250000",
+            "type": "gameObject"
+        },
+        {
+            "location": "468.286096, 110.988884, -174.738660",
+            "name": "SpawnPoint",
+            "properties": [
+                {
+                    "name": "Name",
+                    "value": "SpawnPoint1"
+                },
+                {
+                    "name": "TeamMask",
+                    "value": 2
+                },
+                {
+                    "name": "Path",
+                    "value": "Gravity Well 14-1,Gravity Well 14-2"
+                },
+                {
+                    "name": "LoopingPath",
+                    "value": false
+                },
+                {
+                    "name": "PermittedCharacterProfiles",
+                    "value": ""
+                },
+                {
+                    "name": "Weight",
+                    "value": 1
+                }
+            ],
+            "rotation": "0.000000, 0.000000, 180.000000",
+            "scale": "0.250000, 0.250000, 0.250000",
+            "type": "gameObject"
+        },
+        {
+            "location": "468.286096, 170.028309, -118.078389",
+            "name": "SpawnPoint",
+            "properties": [
+                {
+                    "name": "Name",
+                    "value": "SpawnPoint1"
+                },
+                {
+                    "name": "TeamMask",
+                    "value": 2
+                },
+                {
+                    "name": "Path",
+                    "value": "Gravity Well 15-1,Gravity Well 15-2"
+                },
+                {
+                    "name": "LoopingPath",
+                    "value": false
+                },
+                {
+                    "name": "PermittedCharacterProfiles",
+                    "value": ""
+                },
+                {
+                    "name": "Weight",
+                    "value": 1
+                }
+            ],
+            "rotation": "0.000000, 0.000000, 180.000000",
+            "scale": "0.250000, 0.250000, 0.250000",
+            "type": "gameObject"
+        },
+        {
+            "location": "467.829779, 203.795447, -41.793700",
+            "name": "SpawnPoint",
+            "properties": [
+                {
+                    "name": "Name",
+                    "value": "SpawnPoint1"
+                },
+                {
+                    "name": "TeamMask",
+                    "value": 2
+                },
+                {
+                    "name": "Path",
+                    "value": "Gravity Well 16-1,Gravity Well 16-2"
+                },
+                {
+                    "name": "LoopingPath",
+                    "value": false
+                },
+                {
+                    "name": "PermittedCharacterProfiles",
+                    "value": ""
+                },
+                {
+                    "name": "Weight",
+                    "value": 1
+                }
+            ],
+            "rotation": "0.000000, 0.000000, 180.000000",
+            "scale": "0.250000, 0.250000, 0.250000",
+            "type": "gameObject"
+        },
+        {
+            "location": "467.829779, 203.795447, 41.793700",
             "name": "Waypoint",
             "properties": [
                 {
@@ -1608,7 +1740,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "473.064957, 168.192022, 100.324426",
+            "location": "511.824552, 13.144956, 2.615004",
             "name": "Waypoint",
             "properties": [
                 {
@@ -1629,301 +1761,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "477.645600, 89.388944, 161.270881",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 1-3"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "481.730954, 0.000000, 173.433815",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 1-4"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "485.992947, -78.713682, 140.566752",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 1-5"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "489.750948, -128.688716, 75.678418",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 1-6"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "493.139234, -137.686948, 0.000000",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 1-7"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "496.416014, -108.214056, -63.283956",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 1-8"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "499.316125, -56.007277, -98.440807",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 1-9"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "501.898841, -0.000000, -101.200558",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 1-10"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "504.236371, 44.114966, -77.094435",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 1-11"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "506.251370, 66.180259, -38.389108",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 1-12"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "507.962727, 64.170616, -0.000000",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 1-13"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "509.380601, 44.770607, 25.903585",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 1-14"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "510.491565, 19.611108, 34.025964",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 1-15"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "511.298322, 0.000000, 26.796010",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 1-16"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "468.219270, 177.715913, 106.450786",
+            "location": "468.286096, 170.028309, 118.078389",
             "name": "Waypoint",
             "properties": [
                 {
@@ -1944,7 +1782,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "473.064957, 94.527706, 171.516937",
+            "location": "511.824559, 11.143067, 7.446672",
             "name": "Waypoint",
             "properties": [
                 {
@@ -1965,301 +1803,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "477.349786, 0.000000, 185.151780",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 2-3"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "481.956428, -84.114862, 150.952612",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 2-4"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "485.992947, -138.758538, 81.859168",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 2-5"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "489.628035, -149.694313, 0.000000",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 2-6"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "493.226512, -118.504225, -69.486373",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 2-7"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "496.416014, -61.831883, -109.050261",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 2-8"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "499.276469, -0.000000, -113.432831",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 2-9"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "501.923818, 50.098657, -87.787275",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 2-10"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "504.236371, 76.801067, -44.623740",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 2-11"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "506.243267, 76.562096, -0.000000",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 2-12"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "507.966711, 55.500261, 32.148746",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 2-13"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "509.380601, 25.804108, 44.828016",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 2-14"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "510.491009, 0.000000, 39.280142",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 2-15"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "511.298442, -13.388821, 23.208676",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 2-16"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "468.219270, 99.523078, 181.686192",
+            "location": "468.286096, 110.988884, 174.738660",
             "name": "Waypoint",
             "properties": [
                 {
@@ -2280,7 +1824,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "472.683631, 0.000000, 196.759205",
+            "location": "511.824559, 7.444908, 11.144246",
             "name": "Waypoint",
             "properties": [
                 {
@@ -2301,301 +1845,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "477.645600, -89.388944, 161.270881",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 3-3"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "481.956428, -148.704826, 88.027699",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 3-4"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "485.824518, -161.612307, 0.000000",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 3-5"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "489.750948, -128.688716, -75.678418",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 3-6"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "493.226512, -67.563628, -119.610884",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 3-7"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "496.356019, -0.000000, -125.597382",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 3-8"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "499.316125, 56.007277, -98.440807",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 3-9"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "501.923818, 87.353217, -50.851712",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 3-10"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "504.221570, 88.907867, -0.000000",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 3-11"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "506.251370, 66.180259, 38.389108",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 3-12"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "507.966711, 31.958557, 55.609995",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 3-13"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "509.378923, 0.000000, 51.740824",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 3-14"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "510.491565, -19.611108, 34.025964",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 3-15"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "511.298442, -23.200723, 13.402598",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 3-16"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "467.735274, 0.000000, 208.249161",
+            "location": "467.829779, 38.316025, 204.477822",
             "name": "Waypoint",
             "properties": [
                 {
@@ -2616,7 +1866,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "473.064957, -94.527706, 171.516937",
+            "location": "511.824552, 2.614142, 13.145128",
             "name": "Waypoint",
             "properties": [
                 {
@@ -2637,301 +1887,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "477.645600, -158.518849, 94.183092",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 4-3"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "481.730954, -173.433815, 0.000000",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 4-4"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "485.992947, -138.758538, -81.859168",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 4-5"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "489.750948, -73.193770, -130.117949",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 4-6"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "493.139234, -0.000000, -137.686948",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 4-7"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "496.416014, 61.831883, -109.050261",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 4-8"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "499.316125, 97.827316, -57.072093",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 4-9"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "501.898841, 101.200558, -0.000000",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 4-10"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "504.236371, 76.801067, 44.623740",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 4-11"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "506.251370, 38.065232, 66.367073",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 4-12"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "507.962727, 0.000000, 64.170616",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 4-13"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "509.380601, -25.804108, 44.828016",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 4-14"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "510.491565, -34.000884, 19.654558",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 4-15"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "511.298322, -26.796010, 0.000000",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 4-16"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "468.219270, -99.523078, 181.686192",
+            "location": "467.829779, -38.316025, 204.477822",
             "name": "Waypoint",
             "properties": [
                 {
@@ -2952,7 +1908,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "473.064957, -168.192022, 100.324426",
+            "location": "511.824552, -2.614142, 13.145128",
             "name": "Waypoint",
             "properties": [
                 {
@@ -2973,301 +1929,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "477.349786, -185.151780, 0.000000",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 5-3"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "481.956428, -148.704826, -88.027699",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 5-4"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "485.992947, -78.713682, -140.566752",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 5-5"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "489.628035, -0.000000, -149.694313",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 5-6"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "493.226512, 67.563628, -119.610884",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 5-7"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "496.416014, 108.214056, -63.283956",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 5-8"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "499.276469, 113.432831, -0.000000",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 5-9"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "501.923818, 87.353217, 50.851712",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 5-10"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "504.236371, 44.114966, 77.094435",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 5-11"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "506.243267, 0.000000, 76.562096",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 5-12"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "507.966711, -31.958557, 55.609995",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 5-13"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "509.380601, -44.770607, 25.903585",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 5-14"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "510.491009, -39.280142, 0.000000",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 5-15"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "511.298442, -23.200723, -13.402598",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 5-16"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "468.219270, -177.715913, 106.450786",
+            "location": "468.286096, -110.988884, 174.738660",
             "name": "Waypoint",
             "properties": [
                 {
@@ -3288,7 +1950,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "472.683631, -196.759205, 0.000000",
+            "location": "511.824559, -7.444908, 11.144246",
             "name": "Waypoint",
             "properties": [
                 {
@@ -3309,301 +1971,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "477.645600, -158.518849, -94.183092",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 6-3"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "481.956428, -84.114862, -150.952612",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 6-4"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "485.824518, -0.000000, -161.612307",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 6-5"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "489.750948, 73.193770, -130.117949",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 6-6"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "493.226512, 118.504225, -69.486373",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 6-7"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "496.356019, 125.597382, -0.000000",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 6-8"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "499.316125, 97.827316, 57.072093",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 6-9"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "501.923818, 50.098657, 87.787275",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 6-10"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "504.221570, 0.000000, 88.907867",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 6-11"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "506.251370, -38.065232, 66.367073",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 6-12"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "507.966711, -55.500261, 32.148746",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 6-13"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "509.378923, -51.740824, 0.000000",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 6-14"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "510.491565, -34.000884, -19.654558",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 6-15"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "511.298442, -13.388821, -23.208676",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 6-16"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "467.735274, -208.249161, 0.000000",
+            "location": "468.286096, -170.028309, 118.078389",
             "name": "Waypoint",
             "properties": [
                 {
@@ -3624,7 +1992,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "473.064957, -168.192022, -100.324426",
+            "location": "511.824559, -11.143067, 7.446672",
             "name": "Waypoint",
             "properties": [
                 {
@@ -3645,301 +2013,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "477.645600, -89.388944, -161.270881",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 7-3"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "481.730954, -0.000000, -173.433815",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 7-4"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "485.992947, 78.713682, -140.566752",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 7-5"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "489.750948, 128.688716, -75.678418",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 7-6"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "493.139234, 137.686948, -0.000000",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 7-7"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "496.416014, 108.214056, 63.283956",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 7-8"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "499.316125, 56.007277, 98.440807",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 7-9"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "501.898841, 0.000000, 101.200558",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 7-10"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "504.236371, -44.114966, 77.094435",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 7-11"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "506.251370, -66.180259, 38.389108",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 7-12"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "507.962727, -64.170616, 0.000000",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 7-13"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "509.380601, -44.770607, -25.903585",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 7-14"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "510.491565, -19.611108, -34.025964",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 7-15"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "511.298322, -0.000000, -26.796010",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 7-16"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "468.219270, -177.715913, -106.450786",
+            "location": "467.829779, -203.795447, 41.793700",
             "name": "Waypoint",
             "properties": [
                 {
@@ -3960,7 +2034,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "473.064957, -94.527706, -171.516937",
+            "location": "511.824552, -13.144956, 2.615004",
             "name": "Waypoint",
             "properties": [
                 {
@@ -3981,301 +2055,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "477.349786, -0.000000, -185.151780",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 8-3"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "481.956428, 84.114862, -150.952612",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 8-4"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "485.992947, 138.758538, -81.859168",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 8-5"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "489.628035, 149.694313, -0.000000",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 8-6"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "493.226512, 118.504225, 69.486373",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 8-7"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "496.416014, 61.831883, 109.050261",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 8-8"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "499.276469, 0.000000, 113.432831",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 8-9"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "501.923818, -50.098657, 87.787275",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 8-10"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "504.236371, -76.801067, 44.623740",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 8-11"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "506.243267, -76.562096, 0.000000",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 8-12"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "507.966711, -55.500261, -32.148746",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 8-13"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "509.380601, -25.804108, -44.828016",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 8-14"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "510.491009, -0.000000, -39.280142",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 8-15"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "511.298442, 13.388821, -23.208676",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 8-16"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "468.219270, -99.523078, -181.686192",
+            "location": "467.829779, -203.795447, -41.793700",
             "name": "Waypoint",
             "properties": [
                 {
@@ -4296,7 +2076,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "472.683631, -0.000000, -196.759205",
+            "location": "511.824552, -13.144956, -2.615004",
             "name": "Waypoint",
             "properties": [
                 {
@@ -4317,301 +2097,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "477.645600, 89.388944, -161.270881",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 9-3"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "481.956428, 148.704826, -88.027699",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 9-4"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "485.824518, 161.612307, -0.000000",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 9-5"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "489.750948, 128.688716, 75.678418",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 9-6"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "493.226512, 67.563628, 119.610884",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 9-7"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "496.356019, 0.000000, 125.597382",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 9-8"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "499.316125, -56.007277, 98.440807",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 9-9"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "501.923818, -87.353217, 50.851712",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 9-10"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "504.221570, -88.907867, 0.000000",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 9-11"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "506.251370, -66.180259, -38.389108",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 9-12"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "507.966711, -31.958557, -55.609995",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 9-13"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "509.378923, -0.000000, -51.740824",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 9-14"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "510.491565, 19.611108, -34.025964",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 9-15"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "511.298442, 23.200723, -13.402598",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 9-16"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "467.735274, -0.000000, -208.249161",
+            "location": "468.286096, -170.028309, -118.078389",
             "name": "Waypoint",
             "properties": [
                 {
@@ -4632,7 +2118,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "473.064957, 94.527706, -171.516937",
+            "location": "511.824559, -11.143067, -7.446672",
             "name": "Waypoint",
             "properties": [
                 {
@@ -4653,301 +2139,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "477.645600, 158.518849, -94.183092",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 10-3"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "481.730954, 173.433815, -0.000000",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 10-4"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "485.992947, 138.758538, 81.859168",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 10-5"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "489.750948, 73.193770, 130.117949",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 10-6"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "493.139234, 0.000000, 137.686948",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 10-7"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "496.416014, -61.831883, 109.050261",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 10-8"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "499.316125, -97.827316, 57.072093",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 10-9"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "501.898841, -101.200558, 0.000000",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 10-10"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "504.236371, -76.801067, -44.623740",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 10-11"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "506.251370, -38.065232, -66.367073",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 10-12"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "507.962727, -0.000000, -64.170616",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 10-13"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "509.380601, 25.804108, -44.828016",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 10-14"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "510.491565, 34.000884, -19.654558",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 10-15"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "511.298322, 26.796010, -0.000000",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 10-16"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "468.219270, 99.523078, -181.686192",
+            "location": "468.286096, -110.988884, -174.738660",
             "name": "Waypoint",
             "properties": [
                 {
@@ -4968,7 +2160,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "473.064957, 168.192022, -100.324426",
+            "location": "511.824559, -7.444908, -11.144246",
             "name": "Waypoint",
             "properties": [
                 {
@@ -4989,301 +2181,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "477.349786, 185.151780, -0.000000",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 11-3"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "481.956428, 148.704826, 88.027699",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 11-4"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "485.992947, 78.713682, 140.566752",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 11-5"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "489.628035, 0.000000, 149.694313",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 11-6"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "493.226512, -67.563628, 119.610884",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 11-7"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "496.416014, -108.214056, 63.283956",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 11-8"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "499.276469, -113.432831, 0.000000",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 11-9"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "501.923818, -87.353217, -50.851712",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 11-10"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "504.236371, -44.114966, -77.094435",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 11-11"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "506.243267, -0.000000, -76.562096",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 11-12"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "507.966711, 31.958557, -55.609995",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 11-13"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "509.380601, 44.770607, -25.903585",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 11-14"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "510.491009, 39.280142, -0.000000",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 11-15"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "511.298442, 23.200723, 13.402598",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 11-16"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "468.219270, 177.715913, -106.450786",
+            "location": "467.829779, -38.316025, -204.477822",
             "name": "Waypoint",
             "properties": [
                 {
@@ -5304,7 +2202,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "472.683631, 196.759205, -0.000000",
+            "location": "511.824552, -2.614142, -13.145128",
             "name": "Waypoint",
             "properties": [
                 {
@@ -5325,12 +2223,12 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "477.645600, 158.518849, 94.183092",
+            "location": "467.829779, 38.316025, -204.477822",
             "name": "Waypoint",
             "properties": [
                 {
                     "name": "Name",
-                    "value": "Gravity Well 12-3"
+                    "value": "Gravity Well 13-1"
                 },
                 {
                     "name": "BotPauseTimeMin",
@@ -5346,12 +2244,12 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "481.956428, 84.114862, 150.952612",
+            "location": "511.824552, 2.614142, -13.145128",
             "name": "Waypoint",
             "properties": [
                 {
                     "name": "Name",
-                    "value": "Gravity Well 12-4"
+                    "value": "Gravity Well 13-2"
                 },
                 {
                     "name": "BotPauseTimeMin",
@@ -5367,12 +2265,12 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "485.824518, 0.000000, 161.612307",
+            "location": "468.286096, 110.988884, -174.738660",
             "name": "Waypoint",
             "properties": [
                 {
                     "name": "Name",
-                    "value": "Gravity Well 12-5"
+                    "value": "Gravity Well 14-1"
                 },
                 {
                     "name": "BotPauseTimeMin",
@@ -5388,12 +2286,12 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "489.750948, -73.193770, 130.117949",
+            "location": "511.824559, 7.444908, -11.144246",
             "name": "Waypoint",
             "properties": [
                 {
                     "name": "Name",
-                    "value": "Gravity Well 12-6"
+                    "value": "Gravity Well 14-2"
                 },
                 {
                     "name": "BotPauseTimeMin",
@@ -5409,12 +2307,12 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "493.226512, -118.504225, 69.486373",
+            "location": "468.286096, 170.028309, -118.078389",
             "name": "Waypoint",
             "properties": [
                 {
                     "name": "Name",
-                    "value": "Gravity Well 12-7"
+                    "value": "Gravity Well 15-1"
                 },
                 {
                     "name": "BotPauseTimeMin",
@@ -5430,12 +2328,12 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "496.356019, -125.597382, 0.000000",
+            "location": "511.824559, 11.143067, -7.446672",
             "name": "Waypoint",
             "properties": [
                 {
                     "name": "Name",
-                    "value": "Gravity Well 12-8"
+                    "value": "Gravity Well 15-2"
                 },
                 {
                     "name": "BotPauseTimeMin",
@@ -5451,12 +2349,12 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "499.316125, -97.827316, -57.072093",
+            "location": "467.829779, 203.795447, -41.793700",
             "name": "Waypoint",
             "properties": [
                 {
                     "name": "Name",
-                    "value": "Gravity Well 12-9"
+                    "value": "Gravity Well 16-1"
                 },
                 {
                     "name": "BotPauseTimeMin",
@@ -5472,138 +2370,12 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "501.923818, -50.098657, -87.787275",
+            "location": "511.824552, 13.144956, -2.615004",
             "name": "Waypoint",
             "properties": [
                 {
                     "name": "Name",
-                    "value": "Gravity Well 12-10"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "504.221570, -0.000000, -88.907867",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 12-11"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "506.251370, 38.065232, -66.367073",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 12-12"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "507.966711, 55.500261, -32.148746",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 12-13"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "509.378923, 51.740824, -0.000000",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 12-14"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "510.491565, 34.000884, 19.654558",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 12-15"
-                },
-                {
-                    "name": "BotPauseTimeMin",
-                    "value": 0
-                },
-                {
-                    "name": "BotPauseTimeMax",
-                    "value": 0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "511.298442, 13.388821, 23.208676",
-            "name": "Waypoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "Gravity Well 12-16"
+                    "value": "Gravity Well 16-2"
                 },
                 {
                     "name": "BotPauseTimeMin",

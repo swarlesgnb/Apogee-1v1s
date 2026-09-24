@@ -128,7 +128,7 @@ for (const family of FAMILIES) {
     }
     const text = serializeSce(sce);
     const features = scenarioFeatures(parseSce(text), mapsDir);
-    const cls = classify(features);
+    const cls = classify(features, { pressure: family.pressure });
     const expected = family.modelClass ?? EXPECTED[family.category];
     if (cls !== expected) {
       problems.push(`${name}: classified ${cls ?? "as nothing"}, ${family.name} expects ${expected}`);
@@ -302,6 +302,7 @@ writeFileSync(
         ...(f.exceeds ? { exceeds: f.exceeds } : {}),
         ...(f.modelClass ? { modelClass: f.modelClass } : {}),
         ...(f.anchor ? { anchor: f.anchor } : {}),
+        ...(f.pressure ? { pressure: true } : {}),
       })),
       scenarios: summary,
     },

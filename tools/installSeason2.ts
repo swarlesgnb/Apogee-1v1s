@@ -63,10 +63,9 @@ for (const category of season.categories) {
     });
   }
 }
-// The playtest (docs/season-2.md): the Novice cut of every family whose mechanism is new
-// since the first round - waves, paths, the stop-dead profile, thrown targets, the open room -
-// so each is seen working once before anything else is judged.
-const PLAYTEST = ["Constellation", "Shooting Stars", "Gravity Well", "Meteor", "Satellite", "Stutter", "skeeTS", "comeTS", "LosTS", "Brawl"].map((f) => `Apogee ${f} Novice`);
+// The playtest (docs/season-2.md): the Novice cut of every family changed since the last
+// round was played, so each is seen working once before anything else is judged.
+const PLAYTEST = ["Gravity Well", "Pendulum", "Electric", "Meteor", "Sun and Moon", "Satellite", "AlienTrack", "Stutter", "FleeTS"].map((f) => `Apogee ${f} Novice`);
 if (PLAYTEST.every((n) => season.scenarios.some((s) => s.scenario === n))) {
   playlists.unshift({
     playlistName: `${PLAYLIST_PREFIX}Playtest`,

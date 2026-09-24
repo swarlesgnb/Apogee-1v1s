@@ -192,7 +192,8 @@ for (const s of season.scenarios) {
   fams.set(s.family!, (fams.get(s.family!) ?? new Set()).add(s.window!));
   byCategory.set(s.category, fams);
 }
-const designed = JSON.parse(readFileSync(dataFile("season-2", "families.json"), "utf8")) as { families: Array<{ family: string; category: string; anchor?: string }> };
+const designed = JSON.parse(readFileSync(dataFile("season-2", "families.json"), "utf8")) as { families: Array<{ family: string; category: string; anchor?: string; pressure?: boolean }> };
+const optionsFor = (family: string | undefined) => ({ pressure: designed.families.find((f) => f.family === family)?.pressure });
 for (const [cat, fams] of byCategory) {
   const want = designed.families.filter((f) => f.category === cat).length;
   if (fams.size !== want) fail(`${cat} has ${fams.size} families in the season and ${want} in the design`);
@@ -222,7 +223,7 @@ for (const s of season.scenarios) {
   const entry = sces.get(s.scenario);
   if (!entry) continue;
   const features = scenarioFeatures(entry.sce, mapsDir);
-  const cls = classify(features);
+  const cls = classify(features, optionsFor(s.family));
   const m = model.models.find((x) => x.class === cls);
   if (!cls || !m) {
     fail(`${s.scenario}: no difficulty class`);
@@ -338,7 +339,9 @@ for (const s of season.scenarios) {
   const entry = sces.get(s.scenario);
   if (!entry) continue;
   const f = scenarioFeatures(entry.sce, mapsDir);
-  const cls = classify(f);
+  // The peers are the corpus's own classes: a pressure family is compared with ordinary
+  // clicking, which is what it is apart from its expiry.
+  const cls = classify(f, optionsFor(s.family));
   const peers = popular.filter((r) => classify(r) === cls);
   for (const [label, measure] of Object.entries(QUANTITIES)) {
     const v = measure(f);

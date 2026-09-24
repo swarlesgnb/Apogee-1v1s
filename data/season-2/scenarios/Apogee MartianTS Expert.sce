@@ -1,11 +1,11 @@
-Name=Apogee bruTeS Expert
+Name=Apogee MartianTS Expert
 PlayerCharacters=Player
-BotCharacters=Apogee bruTeS.bot
+BotCharacters=Apogee MartianTS.bot
 IsChallenge=true
 OvershotProtectionTimer=0.0
 Timelimit=60.0
 PlayerProfile=Player
-AddedBots=Apogee bruTeS.bot;Apogee bruTeS.bot;Apogee bruTeS.bot;Apogee bruTeS.bot
+AddedBots=Apogee MartianTS.bot;Apogee MartianTS.bot;Apogee MartianTS.bot;Apogee MartianTS.bot
 PlayerMaxLives=0
 BotMaxLives=0;0;0;0
 PlayerTeam=1
@@ -42,7 +42,7 @@ ScoreLossPerMiss=0.0
 ScoreLossPerReload=0.0
 MultSqrtAcc=false
 EnableOverDamage=false
-MapName=Apogee bruTeS Expert.json
+MapName=Apogee MartianTS Expert.json
 MapScale=4.0
 BlockProjectilePredictors=true
 BlockCheats=true
@@ -120,8 +120,8 @@ MinShootDelay=0.3
 MaxShootDelay=0.6
 
 [Bot Profile]
-Name=Apogee bruTeS
-DodgeProfileNames=Apogee bruTeS Move
+Name=Apogee MartianTS
+DodgeProfileNames=Apogee MartianTS Move
 DodgeProfileWeights=1.0
 DodgeProfileMaxChangeTime=60.0
 DodgeProfileMinChangeTime=60.0
@@ -130,7 +130,7 @@ WeaponProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0;1.0;1.0
 AimingProfileNames=Default;Default;Default;Default;Default;Default;Default;Default
 WeaponSwitchTime=3.0
 UseWeapons=false
-CharacterProfile=Apogee bruTeS Body
+CharacterProfile=Apogee MartianTS Body
 SeeThroughWalls=false
 NoDodging=true
 StandStillUntilHurt=false
@@ -298,7 +298,7 @@ PlaybackOptions.LoopUponCompletion=true
 PlaybackOptions.BreakToInputMode=false
 
 [Character Profile]
-Name=Apogee bruTeS Body
+Name=Apogee MartianTS Body
 MaxHealth=50.0
 WeaponProfileNames=;;;;;;;
 MinRespawnDelay=0.001
@@ -445,7 +445,7 @@ PlaybackOptions.LoopUponCompletion=true
 PlaybackOptions.BreakToInputMode=false
 
 [Dodge Profile]
-Name=Apogee bruTeS Move
+Name=Apogee MartianTS Move
 MaxTargetDistance=2200.0
 MinTargetDistance=1800.0
 ToggleLeftRight=true

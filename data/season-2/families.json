@@ -38,10 +38,10 @@
    "arm": "Fingertip"
   },
   {
-   "family": "Invaders",
+   "family": "Stars",
    "category": "Static Clicking",
    "focus": "A wide formation; big flicks across it, in both directions.",
-   "why": "Large-amplitude flicks over a wide two-dimensional formation, where Galaga keeps to one line. Targets are larger to keep the index of difficulty in the same range as the rest of the category.",
+   "why": "Large-amplitude flicks over a wide two-dimensional field, where Galaga keeps to one line. Targets are larger to keep the index of difficulty in the same range as the rest of the category.",
    "learnsFrom": [
     "Odd-Angleshot Avasive",
     "ww6t Avasive Easier"
@@ -100,8 +100,8 @@
   {
    "family": "Pendulum",
    "category": "Dynamic Clicking",
-   "focus": "Side-to-side swings; click on the swing, not only at the turn.",
-   "why": "Pasu's long horizontal strafes with a predictable reversal, kept on one height so the skill is horizontal timing alone.",
+   "focus": "Slow swings from wall to wall; click on the swing, not only at the turn.",
+   "why": "A pendulum: slow, straight, level runs that turn only at the walls, so the swing is long and even and the skill is horizontal timing alone. Its movement is Floating Heads Timing 400%'s, slowed down.",
    "learnsFrom": [
     "1wall5targets_pasu",
     "VT Pasu Novice S5"
@@ -124,25 +124,19 @@
   {
    "family": "Electric",
    "category": "Dynamic Clicking",
-   "focus": "Short, erratic twitches; stay with the target instead of chasing its last position.",
-   "why": "Reactive micro-clicking: short strafes at low speed, so the target never travels far but never holds still either.",
+   "focus": "Straight runs with a charged-up buzz; follow the line, not the shake.",
+   "why": "Linear motion with a vibration on top: the target runs straight from wall to wall while shaking up and down many times a second, so the player has to read the path through the noise - the reactive micro-adjustment cA 5ts vibrate is played for, on a moving target.",
    "learnsFrom": [
     "cA 5ts vibrate",
     "VT Floating Heads Novice S5"
    ],
    "template": "VT Floating Heads Novice S5",
-   "arm": "Fingertip",
-   "exceeds": [
-    {
-     "quantity": "reversal period (s)",
-     "why": "Twitching is the idea: reversals faster than any clicking scenario with 20,000 players. It is not new ground - cA 5ts vibrate (11,339 players) reverses every 0.14 s at 1.9 degrees a second and Microshot Avasive (18,028) every 0.68 s at 3.8 - and Electric moves a little faster than either, from 7.5 degrees a second at Novice."
-    }
-   ]
+   "arm": "Fingertip"
   },
   {
-   "family": "Comet",
+   "family": "Sun and Moon",
    "category": "Dynamic Clicking",
-   "focus": "Fast crossers; move with the target and click inside the motion.",
+   "focus": "Two fast crossers in an open sky; move with the target and click inside the motion.",
    "why": "High-speed dynamic clicks. Speed is the other axis of difficulty besides size: at the board median the fitted model prices a doubling of angular speed, 20 to 40 degrees a second, at about half a bit of Fitts difficulty (0.55).",
    "learnsFrom": [
     "VT Pasu Intermediate S5",
@@ -166,32 +160,27 @@
   {
    "family": "Gravity Well",
    "category": "Dynamic Clicking",
-   "focus": "They spiral in from the rim; catch them before they reach the middle.",
-   "why": "Curved linear motion: each target enters on a ring round the centre of the view and spirals slowly inward, so the path is known and the angle of travel turns steadily - a read no strafing target gives.",
+   "focus": "They come in from the rim toward the middle; shoot every one before it gets there.",
+   "why": "Speed clicking under pressure: targets enter on a ring round the centre of the view and head straight for it, and one that reaches the middle is gone. The paths are known, so the skill is order and pace.",
    "learnsFrom": [
     "Floating Heads Timing 400%",
     "psalmTS angelic click"
    ],
    "template": "VT Floating Heads Novice S5",
-   "arm": "Wrist"
+   "arm": "Wrist",
+   "pressure": true
   },
   {
    "family": "Meteor",
    "category": "Dynamic Clicking",
-   "focus": "Straight runs that only turn at the walls; time the click on the run.",
-   "why": "Floating Heads Timing 400%'s motion itself: long straight runs at constant speed that reverse only off the arena's walls.",
+   "focus": "Floating heads: big, slow drifters; confirm the shot before you click.",
+   "why": "Voltaic's Floating Heads movement exactly - its own two dodge profiles, untouched - with larger, slower targets, so the most-played floating movement is in the season at a Novice anyone can start on.",
    "learnsFrom": [
-    "Floating Heads Timing 400%",
-    "Floating Heads Timing 400% FIXED"
+    "VT Floating Heads Novice S5",
+    "VT Floating Heads Viscose Easier"
    ],
    "template": "VT Floating Heads Novice S5",
-   "arm": "Wrist",
-   "exceeds": [
-    {
-     "quantity": "reversal period (s)",
-     "why": "The ten-second strafe timer is Floating Heads Timing 400%'s own (352,281 players, data/fun_audit.json), which the clicking peer set leaves out only because it scores per damage. It is set long so that it never fires: the targets turn at the walls, not on the timer."
-    }
-   ]
+   "arm": "Wrist"
   },
   {
    "family": "Satellite",
@@ -268,11 +257,11 @@
   {
    "family": "AlienTrack",
    "category": "Precise Tracking",
-   "focus": "A close target sweeping wide; track with your arm, not only your wrist.",
-   "why": "Close range means large angular speed at a modest real speed: the arm-tracking demand Smoothbot and Close Long Strafes are played for.",
+   "focus": "A close target sweeping wide that blinks now and then; track it, and find it again after the jump.",
+   "why": "Close range means large angular speed at a modest real speed, the arm-tracking demand Smoothbot and Close Long Strafes are played for; and Ground Plaza's blink, a short teleport, rare at Novice and more frequent every band, so recovery joins smoothness.",
    "learnsFrom": [
     "Close Long Strafes Invincible",
-    "SYW (Smooth Your Wrist) FIXED"
+    "Ground Plaza Sparky V3"
    ],
    "template": "VT Ground Novice S5",
    "arm": "Arm"
@@ -304,8 +293,8 @@
   {
    "family": "Stutter",
    "category": "Reactive Tracking",
-   "focus": "It stops before it turns, and now and then stops dead for seconds; stop with it.",
-   "why": "Stop-start movement: a pause before each reversal, and every so often a full stop of two to three seconds, punish the player who keeps moving on momentum, a common reactive-tracking fault.",
+   "focus": "It stops before it turns, and now and then stops dead for a second or two; stop with it.",
+   "why": "Stop-start movement: a pause before each reversal, and every so often a full stop of a second or two, punish the player who keeps moving on momentum, a common reactive-tracking fault.",
    "learnsFrom": [
     "Flicker Plaza rAim Easy Less Blinks",
     "Leapstrafes Control wobin Easier"
@@ -410,7 +399,7 @@
    "arm": "Wrist"
   },
   {
-   "family": "bruTeS",
+   "family": "MartianTS",
    "category": "Speed Switching",
    "focus": "Each target takes a while; stay on it to the end, then switch.",
    "why": "Longer kills on still targets: the discipline of finishing before leaving, which short-kill scenarios never test.",
@@ -424,7 +413,7 @@
   {
    "family": "FleeTS",
    "category": "Evasive Switching",
-   "focus": "Four strafing targets; kill one without losing track of the others.",
+   "focus": "Six strafing targets; kill one without losing track of the others.",
    "why": "The standard evasive-switching problem, targets that move while you are on them and while you are not, at the pace of DriftTS.",
    "learnsFrom": [
     "VT DriftTS Novice S5",
@@ -459,7 +448,7 @@
    "arm": "Wrist"
   },
   {
-   "family": "Mender",
+   "family": "QuantumTS",
    "category": "Evasive Switching",
    "focus": "Targets heal when left alone; finish every kill you start.",
    "why": "Regeneration makes leaving early costly: a half-killed target is back to full a second later. Regen Control and tamTargetSwitch are played for exactly this.",
@@ -484,7 +473,7 @@
    "modelClass": "track"
   },
   {
-   "family": "Brawl",
+   "family": "InvadersTS",
    "category": "Evasive Switching",
    "focus": "Close targets moving fast across the view; stay with them, then turn to the next.",
    "why": "Close-range evasive switching, where modest real speeds become large angular speeds and every switch is also a tracking catch-up.",
@@ -768,8 +757,8 @@
    ]
   },
   {
-   "scenario": "Apogee Invaders Novice",
-   "family": "Invaders",
+   "scenario": "Apogee Stars Novice",
+   "family": "Stars",
    "band": "Novice",
    "class": "click",
    "targetDeg": 2.2,
@@ -791,8 +780,8 @@
    ]
   },
   {
-   "scenario": "Apogee Invaders Intermediate",
-   "family": "Invaders",
+   "scenario": "Apogee Stars Intermediate",
+   "family": "Stars",
    "band": "Intermediate",
    "class": "click",
    "targetDeg": 1.914,
@@ -814,8 +803,8 @@
    ]
   },
   {
-   "scenario": "Apogee Invaders Advanced",
-   "family": "Invaders",
+   "scenario": "Apogee Stars Advanced",
+   "family": "Stars",
    "band": "Advanced",
    "class": "click",
    "targetDeg": 1.665,
@@ -837,8 +826,8 @@
    ]
   },
   {
-   "scenario": "Apogee Invaders Expert",
-   "family": "Invaders",
+   "scenario": "Apogee Stars Expert",
+   "family": "Stars",
    "band": "Expert",
    "class": "click",
    "targetDeg": 1.449,
@@ -1222,22 +1211,22 @@
    "family": "Pendulum",
    "band": "Novice",
    "class": "click",
-   "targetDeg": 2.2,
-   "angularSpeed": 22,
-   "fittsIdNearest": 3.647,
+   "targetDeg": 2.344,
+   "angularSpeed": 9.8,
+   "fittsIdNearest": 3.563,
    "ttk": 0,
-   "median": 542,
+   "median": 658,
    "medianRange": [
-    476,
-    616
+    578,
+    749
    ],
    "rankMaxes": [
-    322,
-    457,
-    547,
-    612,
-    668,
-    721
+    416,
+    567,
+    663,
+    734,
+    794,
+    850
    ]
   },
   {
@@ -1245,22 +1234,22 @@
    "family": "Pendulum",
    "band": "Intermediate",
    "class": "click",
-   "targetDeg": 1.914,
-   "angularSpeed": 24.2,
-   "fittsIdNearest": 3.833,
+   "targetDeg": 2.039,
+   "angularSpeed": 10.7,
+   "fittsIdNearest": 3.748,
    "ttk": 0,
-   "median": 504,
+   "median": 613,
    "medianRange": [
-    443,
-    573
+    539,
+    698
    ],
    "rankMaxes": [
-    625,
-    675,
-    696,
-    738,
-    772,
-    802
+    743,
+    797,
+    819,
+    864,
+    901,
+    933
    ]
   },
   {
@@ -1268,22 +1257,22 @@
    "family": "Pendulum",
    "band": "Advanced",
    "class": "click",
-   "targetDeg": 1.665,
-   "angularSpeed": 26.6,
-   "fittsIdNearest": 4.021,
+   "targetDeg": 1.774,
+   "angularSpeed": 11.8,
+   "fittsIdNearest": 3.935,
    "ttk": 0,
-   "median": 469,
+   "median": 571,
    "medianRange": [
-    412,
-    533
+    502,
+    649
    ],
    "rankMaxes": [
-    724,
-    752,
-    778,
-    802,
-    826,
-    856
+    845,
+    876,
+    904,
+    931,
+    957,
+    990
    ]
   },
   {
@@ -1291,20 +1280,20 @@
    "family": "Pendulum",
    "band": "Expert",
    "class": "click",
-   "targetDeg": 1.449,
-   "angularSpeed": 29.3,
-   "fittsIdNearest": 4.21,
+   "targetDeg": 1.543,
+   "angularSpeed": 13,
+   "fittsIdNearest": 4.124,
    "ttk": 0,
-   "median": 436,
+   "median": 531,
    "medianRange": [
-    383,
-    496
+    467,
+    604
    ],
    "rankMaxes": [
-    775,
-    804,
-    823,
-    846
+    899,
+    930,
+    950,
+    976
    ]
   },
   {
@@ -1402,22 +1391,22 @@
    "family": "Electric",
    "band": "Novice",
    "class": "click",
-   "targetDeg": 1.8,
-   "angularSpeed": 7.5,
-   "fittsIdNearest": 3.916,
+   "targetDeg": 1.953,
+   "angularSpeed": 11.7,
+   "fittsIdNearest": 3.806,
    "ttk": 0,
-   "median": 630,
+   "median": 593,
    "medianRange": [
-    553,
-    716
+    521,
+    674
    ],
    "rankMaxes": [
-    401,
-    544,
-    635,
-    700,
-    757,
-    810
+    367,
+    507,
+    598,
+    663,
+    720,
+    773
    ]
   },
   {
@@ -1425,22 +1414,22 @@
    "family": "Electric",
    "band": "Intermediate",
    "class": "click",
-   "targetDeg": 1.566,
-   "angularSpeed": 8.3,
-   "fittsIdNearest": 4.104,
+   "targetDeg": 1.699,
+   "angularSpeed": 12.9,
+   "fittsIdNearest": 3.993,
    "ttk": 0,
-   "median": 586,
+   "median": 552,
    "medianRange": [
-    515,
-    667
+    485,
+    627
    ],
    "rankMaxes": [
-    708,
-    758,
-    779,
+    673,
+    723,
+    745,
+    786,
     821,
-    856,
-    886
+    851
    ]
   },
   {
@@ -1448,22 +1437,22 @@
    "family": "Electric",
    "band": "Advanced",
    "class": "click",
-   "targetDeg": 1.362,
-   "angularSpeed": 9.1,
-   "fittsIdNearest": 4.294,
+   "targetDeg": 1.478,
+   "angularSpeed": 14.2,
+   "fittsIdNearest": 4.182,
    "ttk": 0,
-   "median": 546,
+   "median": 513,
    "medianRange": [
-    480,
-    621
+    451,
+    584
    ],
    "rankMaxes": [
-    803,
-    831,
-    858,
-    884,
-    908,
-    939
+    770,
+    798,
+    825,
+    850,
+    874,
+    905
    ]
   },
   {
@@ -1471,110 +1460,110 @@
    "family": "Electric",
    "band": "Expert",
    "class": "click",
-   "targetDeg": 1.185,
-   "angularSpeed": 10,
-   "fittsIdNearest": 4.485,
+   "targetDeg": 1.286,
+   "angularSpeed": 15.6,
+   "fittsIdNearest": 4.373,
    "ttk": 0,
-   "median": 508,
+   "median": 477,
    "medianRange": [
-    446,
-    577
+    419,
+    543
    ],
    "rankMaxes": [
-    853,
-    882,
-    901,
-    924
+    820,
+    849,
+    868,
+    892
    ]
   },
   {
-   "scenario": "Apogee Comet Novice",
-   "family": "Comet",
+   "scenario": "Apogee Sun and Moon Novice",
+   "family": "Sun and Moon",
    "band": "Novice",
    "class": "click",
    "targetDeg": 2.6,
    "angularSpeed": 34,
-   "fittsIdNearest": 3.928,
+   "fittsIdNearest": 3.791,
    "ttk": 0,
-   "median": 456,
+   "median": 473,
    "medianRange": [
-    401,
-    519
+    416,
+    539
    ],
    "rankMaxes": [
-    260,
-    380,
-    460,
-    520,
-    571,
-    619
+    271,
+    395,
+    478,
+    539,
+    592,
+    642
    ]
   },
   {
-   "scenario": "Apogee Comet Intermediate",
-   "family": "Comet",
+   "scenario": "Apogee Sun and Moon Intermediate",
+   "family": "Sun and Moon",
    "band": "Intermediate",
    "class": "click",
    "targetDeg": 2.262,
    "angularSpeed": 37.4,
-   "fittsIdNearest": 4.116,
+   "fittsIdNearest": 3.978,
    "ttk": 0,
-   "median": 424,
+   "median": 440,
    "medianRange": [
-    372,
-    482
+    387,
+    501
    ],
    "rankMaxes": [
-    533,
-    579,
-    598,
-    636,
-    667,
-    694
+    553,
+    600,
+    620,
+    659,
+    691,
+    719
    ]
   },
   {
-   "scenario": "Apogee Comet Advanced",
-   "family": "Comet",
+   "scenario": "Apogee Sun and Moon Advanced",
+   "family": "Sun and Moon",
    "band": "Advanced",
    "class": "click",
    "targetDeg": 1.968,
    "angularSpeed": 41.1,
-   "fittsIdNearest": 4.306,
+   "fittsIdNearest": 4.167,
    "ttk": 0,
-   "median": 394,
+   "median": 409,
    "medianRange": [
-    346,
-    448
+    359,
+    465
    ],
    "rankMaxes": [
-    625,
-    650,
-    673,
-    695,
-    717,
-    744
+    648,
+    674,
+    698,
+    721,
+    743,
+    771
    ]
   },
   {
-   "scenario": "Apogee Comet Expert",
-   "family": "Comet",
+   "scenario": "Apogee Sun and Moon Expert",
+   "family": "Sun and Moon",
    "band": "Expert",
    "class": "click",
    "targetDeg": 1.712,
    "angularSpeed": 45.3,
-   "fittsIdNearest": 4.498,
+   "fittsIdNearest": 4.358,
    "ttk": 0,
-   "median": 365,
+   "median": 380,
    "medianRange": [
-    321,
-    416
+    334,
+    432
    ],
    "rankMaxes": [
-    673,
-    698,
-    715,
-    736
+    697,
+    724,
+    741,
+    762
    ]
   },
   {
@@ -1672,22 +1661,22 @@
    "family": "Gravity Well",
    "band": "Novice",
    "class": "click",
-   "targetDeg": 2,
-   "angularSpeed": 14,
-   "fittsIdNearest": 3.146,
+   "targetDeg": 2.2,
+   "angularSpeed": 7.5,
+   "fittsIdNearest": 2.782,
    "ttk": 0,
-   "median": 685,
+   "median": 862,
    "medianRange": [
-    602,
-    780
+    758,
+    981
    ],
    "rankMaxes": [
-    428,
-    588,
-    691,
-    767,
-    831,
-    892
+    569,
+    753,
+    868,
+    953,
+    1025,
+    1092
    ]
   },
   {
@@ -1695,22 +1684,22 @@
    "family": "Gravity Well",
    "band": "Intermediate",
    "class": "click",
-   "targetDeg": 1.74,
-   "angularSpeed": 15.4,
-   "fittsIdNearest": 3.326,
+   "targetDeg": 1.914,
+   "angularSpeed": 8.2,
+   "fittsIdNearest": 2.955,
    "ttk": 0,
-   "median": 639,
+   "median": 806,
    "medianRange": [
-    562,
-    727
+    708,
+    917
    ],
    "rankMaxes": [
-    779,
-    837,
-    861,
-    909,
-    949,
-    983
+    962,
+    1027,
+    1055,
+    1108,
+    1153,
+    1193
    ]
   },
   {
@@ -1718,22 +1707,22 @@
    "family": "Gravity Well",
    "band": "Advanced",
    "class": "click",
-   "targetDeg": 1.514,
-   "angularSpeed": 16.9,
-   "fittsIdNearest": 3.508,
+   "targetDeg": 1.665,
+   "angularSpeed": 9.1,
+   "fittsIdNearest": 3.132,
    "ttk": 0,
-   "median": 595,
+   "median": 753,
    "medianRange": [
-    523,
-    677
+    662,
+    856
    ],
    "rankMaxes": [
-    891,
-    924,
-    954,
-    982,
-    1010,
-    1046
+    1085,
+    1123,
+    1158,
+    1190,
+    1222,
+    1263
    ]
   },
   {
@@ -1741,20 +1730,20 @@
    "family": "Gravity Well",
    "band": "Expert",
    "class": "click",
-   "targetDeg": 1.317,
-   "angularSpeed": 18.6,
-   "fittsIdNearest": 3.692,
+   "targetDeg": 1.449,
+   "angularSpeed": 10,
+   "fittsIdNearest": 3.311,
    "ttk": 0,
-   "median": 554,
+   "median": 702,
    "medianRange": [
-    487,
-    631
+    617,
+    799
    ],
    "rankMaxes": [
-    950,
-    984,
-    1005,
-    1033
+    1151,
+    1190,
+    1215,
+    1247
    ]
   },
   {
@@ -1762,22 +1751,22 @@
    "family": "Meteor",
    "band": "Novice",
    "class": "click",
-   "targetDeg": 1.758,
-   "angularSpeed": 15.6,
-   "fittsIdNearest": 3.717,
+   "targetDeg": 2.8,
+   "angularSpeed": 10,
+   "fittsIdNearest": 3.203,
    "ttk": 0,
-   "median": 572,
+   "median": 724,
    "medianRange": [
-    502,
-    650
+    636,
+    823
    ],
    "rankMaxes": [
-    347,
-    486,
-    577,
-    643,
-    699,
-    752
+    462,
+    626,
+    729,
+    806,
+    870,
+    931
    ]
   },
   {
@@ -1785,22 +1774,22 @@
    "family": "Meteor",
    "band": "Intermediate",
    "class": "click",
-   "targetDeg": 1.529,
-   "angularSpeed": 17.2,
-   "fittsIdNearest": 3.904,
+   "targetDeg": 2.436,
+   "angularSpeed": 11,
+   "fittsIdNearest": 3.383,
    "ttk": 0,
-   "median": 532,
+   "median": 675,
    "medianRange": [
-    468,
-    605
+    593,
+    768
    ],
    "rankMaxes": [
-    654,
-    704,
-    725,
-    767,
-    802,
-    832
+    815,
+    874,
+    899,
+    946,
+    986,
+    1022
    ]
   },
   {
@@ -1808,22 +1797,22 @@
    "family": "Meteor",
    "band": "Advanced",
    "class": "click",
-   "targetDeg": 1.33,
-   "angularSpeed": 18.9,
-   "fittsIdNearest": 4.092,
+   "targetDeg": 2.119,
+   "angularSpeed": 12.1,
+   "fittsIdNearest": 3.566,
    "ttk": 0,
-   "median": 495,
+   "median": 629,
    "medianRange": [
-    435,
-    563
+    553,
+    716
    ],
    "rankMaxes": [
-    752,
-    780,
-    807,
-    831,
-    856,
-    886
+    927,
+    960,
+    991,
+    1020,
+    1048,
+    1084
    ]
   },
   {
@@ -1831,20 +1820,20 @@
    "family": "Meteor",
    "band": "Expert",
    "class": "click",
-   "targetDeg": 1.158,
-   "angularSpeed": 20.8,
-   "fittsIdNearest": 4.282,
+   "targetDeg": 1.844,
+   "angularSpeed": 13.3,
+   "fittsIdNearest": 3.751,
    "ttk": 0,
-   "median": 460,
+   "median": 586,
    "medianRange": [
-    404,
-    523
+    515,
+    667
    ],
    "rankMaxes": [
-    803,
-    832,
-    851,
-    874
+    985,
+    1019,
+    1041,
+    1069
    ]
   },
   {
@@ -1852,22 +1841,22 @@
    "family": "Satellite",
    "band": "Novice",
    "class": "click",
-   "targetDeg": 2.2,
-   "angularSpeed": 22,
-   "fittsIdNearest": 3.868,
+   "targetDeg": 3,
+   "angularSpeed": 14,
+   "fittsIdNearest": 3.456,
    "ttk": 0,
-   "median": 509,
+   "median": 629,
    "medianRange": [
-    448,
-    580
+    553,
+    716
    ],
    "rankMaxes": [
-    301,
-    429,
-    514,
-    576,
-    630,
-    680
+    389,
+    538,
+    634,
+    705,
+    765,
+    822
    ]
   },
   {
@@ -1875,22 +1864,22 @@
    "family": "Satellite",
    "band": "Intermediate",
    "class": "click",
-   "targetDeg": 1.914,
-   "angularSpeed": 24.2,
-   "fittsIdNearest": 4.056,
+   "targetDeg": 2.61,
+   "angularSpeed": 15.4,
+   "fittsIdNearest": 3.64,
    "ttk": 0,
-   "median": 474,
+   "median": 586,
    "medianRange": [
-    416,
-    539
+    515,
+    666
    ],
    "rankMaxes": [
-    589,
-    636,
-    656,
-    696,
-    729,
-    757
+    716,
+    770,
+    793,
+    837,
+    874,
+    907
    ]
   },
   {
@@ -1898,22 +1887,22 @@
    "family": "Satellite",
    "band": "Advanced",
    "class": "click",
-   "targetDeg": 1.665,
-   "angularSpeed": 26.6,
-   "fittsIdNearest": 4.246,
+   "targetDeg": 2.271,
+   "angularSpeed": 16.9,
+   "fittsIdNearest": 3.826,
    "ttk": 0,
-   "median": 440,
+   "median": 545,
    "medianRange": [
-    387,
-    501
+    479,
+    620
    ],
    "rankMaxes": [
-    683,
-    709,
-    734,
-    757,
-    780,
-    809
+    820,
+    851,
+    879,
+    906,
+    932,
+    965
    ]
   },
   {
@@ -1921,20 +1910,20 @@
    "family": "Satellite",
    "band": "Expert",
    "class": "click",
-   "targetDeg": 1.449,
-   "angularSpeed": 29.3,
-   "fittsIdNearest": 4.437,
+   "targetDeg": 1.976,
+   "angularSpeed": 18.6,
+   "fittsIdNearest": 4.013,
    "ttk": 0,
-   "median": 409,
+   "median": 507,
    "medianRange": [
-    359,
-    465
+    446,
+    577
    ],
    "rankMaxes": [
-    732,
-    759,
-    776,
-    798
+    875,
+    906,
+    926,
+    952
    ]
   },
   {
@@ -3468,8 +3457,8 @@
    ]
   },
   {
-   "scenario": "Apogee bruTeS Novice",
-   "family": "bruTeS",
+   "scenario": "Apogee MartianTS Novice",
+   "family": "MartianTS",
    "band": "Novice",
    "class": "switch",
    "targetDeg": 2.3,
@@ -3491,8 +3480,8 @@
    ]
   },
   {
-   "scenario": "Apogee bruTeS Intermediate",
-   "family": "bruTeS",
+   "scenario": "Apogee MartianTS Intermediate",
+   "family": "MartianTS",
    "band": "Intermediate",
    "class": "switch",
    "targetDeg": 2.001,
@@ -3514,8 +3503,8 @@
    ]
   },
   {
-   "scenario": "Apogee bruTeS Advanced",
-   "family": "bruTeS",
+   "scenario": "Apogee MartianTS Advanced",
+   "family": "MartianTS",
    "band": "Advanced",
    "class": "switch",
    "targetDeg": 1.741,
@@ -3537,8 +3526,8 @@
    ]
   },
   {
-   "scenario": "Apogee bruTeS Expert",
-   "family": "bruTeS",
+   "scenario": "Apogee MartianTS Expert",
+   "family": "MartianTS",
    "band": "Expert",
    "class": "switch",
    "targetDeg": 1.515,
@@ -3564,7 +3553,7 @@
    "class": "switch",
    "targetDeg": 2.9,
    "angularSpeed": 28,
-   "fittsIdNearest": 2.856,
+   "fittsIdNearest": 2.626,
    "ttk": 0.44,
    "median": 2057,
    "medianRange": [
@@ -3587,7 +3576,7 @@
    "class": "switch",
    "targetDeg": 2.523,
    "angularSpeed": 30.8,
-   "fittsIdNearest": 3.03,
+   "fittsIdNearest": 2.796,
    "ttk": 0.44,
    "median": 2016,
    "medianRange": [
@@ -3610,7 +3599,7 @@
    "class": "switch",
    "targetDeg": 2.195,
    "angularSpeed": 33.9,
-   "fittsIdNearest": 3.208,
+   "fittsIdNearest": 2.97,
    "ttk": 0.44,
    "median": 1975,
    "medianRange": [
@@ -3633,7 +3622,7 @@
    "class": "switch",
    "targetDeg": 1.91,
    "angularSpeed": 37.3,
-   "fittsIdNearest": 3.389,
+   "fittsIdNearest": 3.146,
    "ttk": 0.44,
    "median": 1935,
    "medianRange": [
@@ -3828,8 +3817,8 @@
    ]
   },
   {
-   "scenario": "Apogee Mender Novice",
-   "family": "Mender",
+   "scenario": "Apogee QuantumTS Novice",
+   "family": "QuantumTS",
    "band": "Novice",
    "class": "switch",
    "targetDeg": 2.8,
@@ -3851,8 +3840,8 @@
    ]
   },
   {
-   "scenario": "Apogee Mender Intermediate",
-   "family": "Mender",
+   "scenario": "Apogee QuantumTS Intermediate",
+   "family": "QuantumTS",
    "band": "Intermediate",
    "class": "switch",
    "targetDeg": 2.436,
@@ -3874,8 +3863,8 @@
    ]
   },
   {
-   "scenario": "Apogee Mender Advanced",
-   "family": "Mender",
+   "scenario": "Apogee QuantumTS Advanced",
+   "family": "QuantumTS",
    "band": "Advanced",
    "class": "switch",
    "targetDeg": 2.119,
@@ -3897,8 +3886,8 @@
    ]
   },
   {
-   "scenario": "Apogee Mender Expert",
-   "family": "Mender",
+   "scenario": "Apogee QuantumTS Expert",
+   "family": "QuantumTS",
    "band": "Expert",
    "class": "switch",
    "targetDeg": 1.844,
@@ -4008,8 +3997,8 @@
    ]
   },
   {
-   "scenario": "Apogee Brawl Novice",
-   "family": "Brawl",
+   "scenario": "Apogee InvadersTS Novice",
+   "family": "InvadersTS",
    "band": "Novice",
    "class": "switch",
    "targetDeg": 5,
@@ -4031,8 +4020,8 @@
    ]
   },
   {
-   "scenario": "Apogee Brawl Intermediate",
-   "family": "Brawl",
+   "scenario": "Apogee InvadersTS Intermediate",
+   "family": "InvadersTS",
    "band": "Intermediate",
    "class": "switch",
    "targetDeg": 4.35,
@@ -4054,8 +4043,8 @@
    ]
   },
   {
-   "scenario": "Apogee Brawl Advanced",
-   "family": "Brawl",
+   "scenario": "Apogee InvadersTS Advanced",
+   "family": "InvadersTS",
    "band": "Advanced",
    "class": "switch",
    "targetDeg": 3.784,
@@ -4077,8 +4066,8 @@
    ]
   },
   {
-   "scenario": "Apogee Brawl Expert",
-   "family": "Brawl",
+   "scenario": "Apogee InvadersTS Expert",
+   "family": "InvadersTS",
    "band": "Expert",
    "class": "switch",
    "targetDeg": 3.293,

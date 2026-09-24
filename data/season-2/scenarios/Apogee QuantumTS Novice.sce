@@ -1,19 +1,19 @@
-Name=Apogee Comet Advanced
+Name=Apogee QuantumTS Novice
 PlayerCharacters=Player
-BotCharacters=Apogee Comet.bot
+BotCharacters=Apogee QuantumTS.bot
 IsChallenge=true
 OvershotProtectionTimer=0.0
 Timelimit=60.0
 PlayerProfile=Player
-AddedBots=Apogee Comet.bot;Apogee Comet.bot
+AddedBots=Apogee QuantumTS.bot;Apogee QuantumTS.bot;Apogee QuantumTS.bot
 PlayerMaxLives=0
-BotMaxLives=0;0
+BotMaxLives=0;0;0
 PlayerTeam=1
-BotTeams=2;2
+BotTeams=2;2;2
 ScoreToWin=1000.0
 ScorePerDamage=0.0
-ScorePerHit=0.0
-ScorePerKill=10.0
+ScorePerHit=1.0
+ScorePerKill=0.0
 ScorePerMidairDirect=0.0
 ScorePerAnyDirect=0.0
 ScoreLossPerDamageTaken=0.0
@@ -42,11 +42,11 @@ ScoreLossPerMiss=0.0
 ScoreLossPerReload=0.0
 MultSqrtAcc=false
 EnableOverDamage=false
-MapName=FOV Limited Layers.json
+MapName=2 Layer FOV Limited.json
 MapScale=4.0
 BlockProjectilePredictors=true
 BlockCheats=true
-InvinciblePlayer=true
+InvinciblePlayer=false
 InvincibleBots=false
 Timescale=1.0
 BlockHealthbars=false
@@ -65,7 +65,7 @@ ForceParticleEffectsOn=false
 IsTimeDilationActive=false
 IsTargetSizeActive=false
 IsHeightLocked=false
-PerformanceMetricType=KillsPerSecond
+PerformanceMetricType=Accuracy
 TimeDilationType=TargetDilation
 MaxTargetSizeMultiplier=2.0
 MinTargetSizeMultiplier=0.1
@@ -77,15 +77,15 @@ TimeDilationBaseMultiplier=1.0
 TargetSizeBaseMultiplier=1.0
 AdjustmentRate=0.05
 AdjustmentInterval=1.5
-AimTypeTag=Clicking
-AimSubTypeTag=Dynamic
+AimTypeTag=Target Switching
+AimSubTypeTag=Evasive
 AimTypeFlicking=false
 AimTypeProjectile=false
 AimTypePlayerMovement=false
-DifficultyTag=3
-SearchTags=Apogee, Apogee Season 2, Dynamic Clicking, Advanced
-Description=Two fast targets crossing the view. One click each.[nl][nl]Apogee Season 2, Dynamic Clicking, Advanced. Fast crossers; move with the target and click inside the motion.
-GameVersion=3.7.0
+DifficultyTag=1
+SearchTags=Apogee, Apogee Season 2, Evasive Switching, Novice
+Description=Three strafing targets that heal when not being hit. Hold fire to kill.[nl][nl]Apogee Season 2, Evasive Switching, Novice. Targets heal when left alone; finish every kill you start.
+GameVersion=3.7.1
 ScenarioVersion=Initial
 
 [Aim Profile]
@@ -120,8 +120,8 @@ MinShootDelay=0.3
 MaxShootDelay=0.6
 
 [Bot Profile]
-Name=Apogee Comet
-DodgeProfileNames=Apogee Comet Move
+Name=Apogee QuantumTS
+DodgeProfileNames=Apogee QuantumTS Move
 DodgeProfileWeights=1.0
 DodgeProfileMaxChangeTime=60.0
 DodgeProfileMinChangeTime=60.0
@@ -130,8 +130,8 @@ WeaponProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0;1.0;1.0
 AimingProfileNames=Default;Default;Default;Default;Default;Default;Default;Default
 WeaponSwitchTime=3.0
 UseWeapons=false
-CharacterProfile=Apogee Comet Body
-SeeThroughWalls=true
+CharacterProfile=Apogee QuantumTS Body
+SeeThroughWalls=false
 NoDodging=false
 StandStillUntilHurt=false
 NoAiming=false
@@ -153,27 +153,28 @@ Untargetable=true
 [Character Profile]
 Name=Player
 MaxHealth=1.0
-WeaponProfileNames=BB Gun;;;;;;;
+WeaponProfileNames=Track Master 100;;;;;;;
 MinRespawnDelay=0.001
 MaxRespawnDelay=0.001
-StepUpHeight=0.0
-CrouchHeightModifier=1.0
-CrouchAnimationSpeed=1.0
+StepUpHeight=75.0
+CrouchHeightModifier=0.5
+CrouchAnimationSpeed=2.0
 CameraOffset=X=0.000 Y=0.000 Z=0.000
 HeadshotOnly=false
-DamageKnockbackFactor=0.0
+DamageKnockbackFactor=4.0
 MaxSpeed=0.0
-MaxCrouchSpeed=0.0
-Acceleration=0.0
-CrouchingAcceleration=0.0
-Friction=0.0
-BrakingFrictionFactor=0.0
-JumpVelocity=0.0
+MaxCrouchSpeed=500.0
+Acceleration=9000.0
+CrouchingAcceleration=9000.0
+Friction=4.0
+BrakingFrictionFactor=2.0
+JumpVelocityMin=800.0
+JumpVelocityMax=800.0
 Gravity=0.0
-AirControl=0.0
-CanCrouch=false
+AirControl=0.25
+CanCrouch=true
 CanPogoJump=false
-CanCrouchInAir=false
+CanCrouchInAir=true
 CrouchInAirRaisesFeet=false
 CanJumpFromCrouch=false
 // Note: the color channel values are interpreted as 0.0 (0%) to 1.0 (100%) going over 1.0 will start to produce a glow effect when the user is in HDR mode (SceneColor is set to "Medium" or higher)
@@ -192,12 +193,12 @@ MainBBHasHead=false
 MainBBHeadRadius=0.1
 MainBBHeadOffset=0.0
 MainBBHide=false
-ProjBBType=Spheroid
-ProjBBHeight=0.2
-ProjBBRadius=0.1
+ProjBBType=Cylindrical
+ProjBBHeight=230.0
+ProjBBRadius=55.0
 ProjBBHasHead=false
-ProjBBHeadRadius=0.1
-ProjBBHeadOffset=0.1
+ProjBBHeadRadius=45.0
+ProjBBHeadOffset=0.0
 ProjBBHide=true
 BlockSelfDamage=false
 InvinciblePlayer=false
@@ -223,10 +224,10 @@ StrafeSpeedMult=1.0
 BackSpeedMult=1.0
 RespawnInvulnTime=0.0
 BlockedSpawnRadius=0.0
-BlockSpawnFOV=5.0
-BlockSpawnDistance=9999.0
+BlockSpawnFOV=20.0
+BlockSpawnDistance=1000000.0
 RespawnAnimationDuration=0.0
-AllowBufferedJumps=false
+AllowBufferedJumps=true
 BounceOffWalls=false
 LeanAngle=0.0
 LeanDisplacement=0.0
@@ -240,7 +241,7 @@ JumpSpeedPenaltyPercent=0.0
 ThirdPersonCamera=false
 TPSArmLength=300.0
 TPSOffset=X=0.000 Y=150.000 Z=150.000
-BrakingDeceleration=0.0
+BrakingDeceleration=2048.0
 TerminalVelocity=0.0
 CharacterModel=None
 CharacterSkin=Default
@@ -297,28 +298,29 @@ PlaybackOptions.LoopUponCompletion=true
 PlaybackOptions.BreakToInputMode=false
 
 [Character Profile]
-Name=Apogee Comet Body
-MaxHealth=1.0
+Name=Apogee QuantumTS Body
+MaxHealth=55.0
 WeaponProfileNames=;;;;;;;
 MinRespawnDelay=0.001
 MaxRespawnDelay=0.001
 StepUpHeight=0.0
-CrouchHeightModifier=0.5
-CrouchAnimationSpeed=2.0
+CrouchHeightModifier=1.0
+CrouchAnimationSpeed=1.0
 CameraOffset=X=0.000 Y=0.000 Z=0.000
 HeadshotOnly=false
 DamageKnockbackFactor=0.0
-MaxSpeed=1436.056909
-MaxCrouchSpeed=500.0
-Acceleration=800.0
-CrouchingAcceleration=800.0
-Friction=0.0
+MaxSpeed=729.547627
+MaxCrouchSpeed=0.0
+Acceleration=2918.190509
+CrouchingAcceleration=2400.0
+Friction=1.0
 BrakingFrictionFactor=0.0
-JumpVelocity=60.0
-Gravity=0.1
+JumpVelocityMin=100.0
+JumpVelocityMax=100.0
+Gravity=0.0
 AirControl=1.0
 CanCrouch=false
-CanPogoJump=false
+CanPogoJump=true
 CanCrouchInAir=false
 CrouchInAirRaisesFeet=false
 CanJumpFromCrouch=false
@@ -332,67 +334,67 @@ EnemyHeadColorOnLookAt=X=1.000 Y=1.000 Z=1.000
 TeamBodyColor=X=1.000 Y=0.888 Z=0.000
 TeamHeadColor=X=1.000 Y=1.000 Z=1.000
 MainBBType=Spheroid
-MainBBHeight=68.700819
-MainBBRadius=34.35041
+MainBBHeight=92.87
+MainBBRadius=46.435
 MainBBHasHead=false
-MainBBHeadRadius=1.0
+MainBBHeadRadius=0.1
 MainBBHeadOffset=0.0
 MainBBHide=false
-ProjBBType=Spheroid
-ProjBBHeight=1.0
-ProjBBRadius=1.0
+ProjBBType=Cylindrical
+ProjBBHeight=230.0
+ProjBBRadius=55.0
 ProjBBHasHead=false
-ProjBBHeadRadius=1.0
-ProjBBHeadOffset=1.0
+ProjBBHeadRadius=45.0
+ProjBBHeadOffset=0.0
 ProjBBHide=true
 BlockSelfDamage=false
 InvinciblePlayer=false
 InvincibleBots=false
 BlockTeamDamage=false
-HasJetpack=true
-JetpackActivationDelay=0.001
-JetpackFullFuelTime=9999.0
-JetpackFuelIncPerSec=1000.0
+HasJetpack=false
+JetpackActivationDelay=0.2
+JetpackFullFuelTime=4.0
+JetpackFuelIncPerSec=1.0
 JetpackFuelRegensInAir=false
-JetpackThrust=160.0
-JetpackMaxZVelocity=9999.0
-JetpackAirControlWithThrust=1.0
+JetpackThrust=6000.0
+JetpackMaxZVelocity=400.0
+JetpackAirControlWithThrust=0.25
 AirJumpCount=0
 AirJumpVelocity=0.0
 AbilityProfileNames=;;;
 HideWeapon=true
-AerialFriction=0.0
+AerialFriction=0.1
 AerialVerticalTurningFriction=100000.0
 AerialVerticalBreakingFriction=0.0
 UseAerialVerticalFriction=false
 StrafeSpeedMult=1.0
 BackSpeedMult=1.0
 RespawnInvulnTime=0.0
-BlockedSpawnRadius=600.0
+BlockedSpawnRadius=200.0
 BlockSpawnFOV=0.0
 BlockSpawnDistance=0.0
 RespawnAnimationDuration=0.0
-AllowBufferedJumps=false
+AllowBufferedJumps=true
 BounceOffWalls=false
 LeanAngle=0.0
 LeanDisplacement=0.0
 AirJumpExtraControl=0.0
-ForwardSpeedBias=0.4
+ForwardSpeedBias=0.5
 HealthRegainedonkill=0.0
-HealthRegenPerSec=0.0
-HealthRegenDelay=0.0
+HealthRegenPerSec=66.0
+HealthRegenDelay=0.35
 JumpSpeedPenaltyDuration=0.0
 JumpSpeedPenaltyPercent=0.0
 ThirdPersonCamera=false
 TPSArmLength=300.0
 TPSOffset=X=0.000 Y=150.000 Z=150.000
 BrakingDeceleration=0.0
-TerminalVelocity=450.0
+TerminalVelocity=0.0
 CharacterModel=None
 CharacterSkin=Default
 MeshHitDetection=false
-SpawnOffsetMin=X=-300.000 Y=-300.000 Z=-100.000
-SpawnOffsetMax=X=300.000 Y=300.000 Z=100.000
+SpawnOffsetMin=X=-300.000 Y=-300.000 Z=-300.000
+SpawnOffsetMax=X=300.000 Y=300.000 Z=300.000
 InvertBlockedSpawn=false
 ViewBobTime=0.0
 ViewBobAngleAdjustment=0.0
@@ -404,11 +406,11 @@ FlightVelocityUp=800.0
 FlightAccelUp=800.0
 FlightVelocityDown=800.0
 FlightAccelDown=800.0
-IsFlyUpOnJumpAndCrouch=false
+IsFlyUpOnJumpAndCrouch=true
 DisableCharacterCollision=true
 LifeStealPercent=0.0
 AbilityGlobalCooldown=0.0
-BlockAbilityOnStartDuration=1.0
+BlockAbilityOnStartDuration=0.0
 DragCoefficient=1.0
 AmmoRegainedOnKill=0
 ContinuousGroundFriction=0.0
@@ -443,15 +445,15 @@ PlaybackOptions.LoopUponCompletion=true
 PlaybackOptions.BreakToInputMode=false
 
 [Dodge Profile]
-Name=Apogee Comet Move
-MaxTargetDistance=2100.0
-MinTargetDistance=1900.0
+Name=Apogee QuantumTS Move
+MaxTargetDistance=2090.0
+MinTargetDistance=1710.0
 ToggleLeftRight=true
 ToggleForwardBack=true
-MinLRTimeChange=1.5138
-MaxLRTimeChange=2.2707
-MinFBTimeChange=2.0
-MaxFBTimeChange=3.0
+MinLRTimeChange=0.7
+MaxLRTimeChange=1.3
+MinFBTimeChange=1.2
+MaxFBTimeChange=2.1
 DamageReactionChangesDirection=false
 DamageReactionChanceToIgnore=0.5
 DamageReactionMinimumDelay=0.125
@@ -459,28 +461,28 @@ DamageReactionMaximumDelay=0.25
 DamageReactionCooldown=1.0
 DamageReactionThreshold=50.0
 DamageReactionResetTimer=0.5
-JumpFrequency=0.5
+JumpFrequency=0.0
 CrouchInAirFrequency=0.0
 CrouchOnGroundFrequency=0.0
 TargetStrafeOverride=Ignore
 TargetStrafeMinDelay=0.125
 TargetStrafeMaxDelay=0.25
-MinProfileChangeTime=0.3
-MaxProfileChangeTime=0.3
-MinCrouchTime=0.3
-MaxCrouchTime=0.6
-MinJumpTime=0.2
-MaxJumpTime=1.0
-AlterateJumpCrouchInput=true
-ToggleUpDownMinTime=1.5138
-ToggleUpDownMaxTime=2.2707
+MinProfileChangeTime=0.0
+MaxProfileChangeTime=0.0
+MinCrouchTime=1.0
+MaxCrouchTime=1.0
+MinJumpTime=0.1
+MaxJumpTime=0.1
+AlterateJumpCrouchInput=false
+ToggleUpDownMinTime=0.2
+ToggleUpDownMaxTime=0.5
 UpDownSwapPauseMinTime=0.0
 UpDownSwapPauseMaxTime=0.0
 LeftStrafeTimeMult=1.0
 RightStrafeTimeMult=1.0
 StrafeSwapMinPause=0.0
 StrafeSwapMaxPause=0.0
-BlockedMovementPercent=0.0
+BlockedMovementPercent=0.4
 BlockedMovementReactionMin=0.0
 BlockedMovementReactionMax=0.0
 WaypointLogic=Ignore
@@ -504,10 +506,10 @@ LOSReactKillBot=false
 LOSReactKillBotTimerMin=0.5
 LOSReactKillBotTimerMax=0.75
 InitialForwardMovementState=Random
-InitialRightMovementState=Random
-CounterStrafeOnCollision=false
-InitialLeftRightStrafeResetBehavior=EverySpawn
-InitialForwardBackStrafeResetBehavior=EverySpawn
+InitialRightMovementState=Right
+CounterStrafeOnCollision=true
+InitialLeftRightStrafeResetBehavior=InitialSpawn
+InitialForwardBackStrafeResetBehavior=InitialSpawn
 PlaybackOptions.PlaybackMode=Input
 PlaybackOptions.OverrideRotation=true
 PlaybackOptions.OverrideAbilities=true
@@ -518,14 +520,14 @@ PlaybackOptions.LoopUponCompletion=true
 PlaybackOptions.BreakToInputMode=false
 
 [Weapon Profile]
-Name=BB Gun
+Name=Track Master 100
 Type=Hitscan
 ShotsPerClick=1
 DamagePerShot=1.0
 KnockbackFactor=0.0
-TimeBetweenShots=0.1
+TimeBetweenShots=0.01
 Pierces=false
-Category=SemiAuto
+Category=FullyAuto
 BurstShotCount=1
 TimeBetweenBursts=0.5
 ChargeStartDamage=10.0
@@ -543,8 +545,8 @@ HeadshotCapable=false
 HeadshotMultiplier=1.0
 CooldownType=InfiniteUse
 MagazineMax=0
-ReloadTimeFromEmpty=1.2
-ReloadTimeFromPartial=1.2
+ReloadTimeFromEmpty=1.0
+ReloadTimeFromPartial=1.0
 CooldownTimer=0.8
 MaxCharges=3
 DamageFalloffStartDistance=100000.0
@@ -552,7 +554,7 @@ DamageFalloffStopDistance=100000.0
 DamageAtMaxRange=1.0
 DelayBeforeShot=0.0
 ProjectileGraphic=Ball
-VisualLifetime=0.1
+VisualLifetime=0.0001
 Explosive=false
 Radius=500.0
 DamageAtCenter=100.0
@@ -570,14 +572,14 @@ BounceOffWorld=false
 BounceFactor=0.5
 BounceCount=0
 HomingProjectileAcceleration=0.0
-SpreadSSA=1.0,1.0,-1.0,5.0
-SpreadSCA=1.0,1.0,-1.0,5.0
-SpreadMSA=1.0,1.0,-1.0,5.0
-SpreadMCA=1.0,1.0,-1.0,5.0
-SpreadSSH=0.0,0.1,0.0,0.0
-SpreadSCH=1.0,1.0,-1.0,5.0
-SpreadMSH=0.0,0.1,0.0,0.0
-SpreadMCH=1.0,1.0,-1.0,5.0
+SpreadSSA=1.0,1.0,-1.0,0.0
+SpreadSCA=1.0,1.0,-1.0,0.0
+SpreadMSA=1.0,1.0,-1.0,0.0
+SpreadMCA=1.0,1.0,-1.0,0.0
+SpreadSSH=1.0,1.0,-1.0,0.0
+SpreadSCH=1.0,1.0,-1.0,0.0
+SpreadMSH=1.0,1.0,-1.0,0.0
+SpreadMCH=1.0,1.0,-1.0,0.0
 MaxRecoilUp=0.0
 MinRecoilUp=0.0
 MinRecoilHoriz=0.0
@@ -589,15 +591,15 @@ TimeToRecoilReset=0.35
 ProjectileWorldHitRadius=0.0
 ProjectileEnemyHitRadius=1.0
 CanAimDownSight=false
-ADSZoomSensFactor=0.7
+ADSZoomSensFactor=0.5
 ADSMoveFactor=1.0
 ADSStartDelay=0.0
 AAMode=0
-AAPreferClosestPlayer=true
-AAAlpha=1.0
-AAMaxSpeed=360.0
+AAPreferClosestPlayer=false
+AAAlpha=0.05
+AAMaxSpeed=1.0
 AADeadZone=0.0
-AAFOV=360.0
+AAFOV=30.0
 AANeedsLOS=true
 TrackHorizontal=true
 TrackVertical=true
@@ -619,15 +621,15 @@ ADSBlocksShooting=false
 ShootingBlocksADS=false
 KnockbackFactorAir=0.0
 RecoilNegatable=false
-DecalType=1
-DecalSize=30.0
+DecalType=0
+DecalSize=4.0
 DelayAfterShooting=0.0
 BeamTracksCrosshair=false
 AlsoShoot=
 ADSShoot=
 ChargeMoveSpeedModifier=1.0
 StunDuration=0.0
-AmmoPerShot=20
+AmmoPerShot=0
 UsePerShotRecoil=false
 PSRLoopStartIndex=0
 PSRViewRecoilTracking=0.45
@@ -636,14 +638,14 @@ PSRCapRight=4.0
 PSRCapLeft=4.0
 PSRTimeToPeak=0.175
 PSRResetDegreesPerSec=40.0
-CircularSpread=true
-SpreadStationaryVelocity=0.0
+CircularSpread=false
+SpreadStationaryVelocity=300.0
 PassiveCharging=false
 BurstFullyAuto=true
 FlatKnockbackHorizontal=0.0
 FlatKnockbackVertical=0.0
 HitscanRadius=0.0
-HitscanVisualRadius=6.0
+HitscanVisualRadius=0.001
 TaggingDuration=0.0
 TaggingMaxFactor=1.0
 TaggingHitFactor=1.0
@@ -654,22 +656,22 @@ PSRADSScale=1.0
 ProjectileAcceleration=0.0
 AccelIncludeVertical=false
 AimPunchAmount=0.0
-AimPunchResetTime=0.05
+AimPunchResetTime=0.2
 AimPunchCooldown=0.5
 AimPunchHeadshotOnly=false
 AimPunchCosmeticOnly=false
 MinimumDecelVelocity=0.0
 PSRManualNegation=false
 PSRAutoReset=true
-UsePerBulletSpread=false
+UsePerBulletSpread=true
 PBS0=0.0,0.0
 AimPunchUpTime=0.05
-AmmoReloadedOnKill=25
+AmmoReloadedOnKill=0
 CancelReloadOnKill=false
 FlatKnockbackHorizontalMin=0.0
 FlatKnockbackVerticalMin=0.0
 ADSScope=No Scope
-ADSFOVOverride=72.099998
+ADSFOVOverride=79.0
 ADSAllowUserOverrideFOV=true
 HitscanGraphicOriginAtWeapon=false
 ProjectileGraphicOriginAtWeapon=false
@@ -680,7 +682,7 @@ ZoomBlockedInAir=false
 ADSCameraOffsetX=0.0
 ADSCameraOffsetY=0.0
 ADSCameraOffsetZ=0.0
-QuickSwitchTime=0.0
+QuickSwitchTime=0.1
 WeaponModel=Heavy Surge Rifle
 WeaponAnimation=Primary
 UseIncReload=false
@@ -697,14 +699,14 @@ ReloadBeforeRecovery=true
 3rdPersonWeaponSkin=Default
 ParticleMuzzleFlash=None
 ParticleWallImpact=None
-ParticleBodyImpact=Flare
+ParticleBodyImpact=None
 ParticleProjectileTrail=None
 ParticleHitscanTrace=None
 ParticleMuzzleFlashScale=1.0
 ParticleWallImpactScale=1.0
 ParticleBodyImpactScale=1.0
 ParticleProjectileTrailScale=1.0
-ADSFOVScale=Overwatch
+ADSFOVScale=Quake/Source
 ADSCustomFOVAspectX=16
 ADSCustomFOVAspectY=9
 ADSCustomFOVScale=hML
@@ -715,8 +717,8 @@ ADSFOVScaleString=Quake/Source
 FullyAutomatic=false
 DelayBeforePassiveCharge=0.0
 BaseChargeRecoilFactor=0.0
-AccelSpeedModifier=1.0
-MaxSpeedModifier=1.0
+AccelSpeedModifier=0.0
+MaxSpeedModifier=0.0
 
 [Map Data]
 {
@@ -954,106 +956,7 @@ MaxSpeedModifier=1.0
     ],
     "objects": [
         {
-            "location": "464.029541, -216.380554, 0.000000",
-            "name": "SpawnPoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "SpawnPoint1"
-                },
-                {
-                    "name": "TeamMask",
-                    "value": 2
-                },
-                {
-                    "name": "Path",
-                    "value": ""
-                },
-                {
-                    "name": "LoopingPath",
-                    "value": false
-                },
-                {
-                    "name": "PermittedCharacterProfiles",
-                    "value": "Apogee Comet Body"
-                },
-                {
-                    "name": "Weight",
-                    "value": 1
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 155.000214",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "478.014862, 0.000000, 183.428024",
-            "name": "SpawnPoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "SpawnPoint1"
-                },
-                {
-                    "name": "TeamMask",
-                    "value": 2
-                },
-                {
-                    "name": "Path",
-                    "value": ""
-                },
-                {
-                    "name": "LoopingPath",
-                    "value": false
-                },
-                {
-                    "name": "PermittedCharacterProfiles",
-                    "value": "Apogee Comet Body"
-                },
-                {
-                    "name": "Weight",
-                    "value": 1
-                }
-            ],
-            "rotation": "-0.000031, -20.993187, -179.999954",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "464.029572, 216.380554, 0.000000",
-            "name": "SpawnPoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "SpawnPoint1"
-                },
-                {
-                    "name": "TeamMask",
-                    "value": 2
-                },
-                {
-                    "name": "Path",
-                    "value": ""
-                },
-                {
-                    "name": "LoopingPath",
-                    "value": false
-                },
-                {
-                    "name": "PermittedCharacterProfiles",
-                    "value": "Apogee Comet Body"
-                },
-                {
-                    "name": "Weight",
-                    "value": 1
-                }
-            ],
-            "rotation": "0.000000, 0.000000, -154.999985",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "1008.442993, -1535.999634, 177.815643",
+            "location": "911.444519, -1535.999634, -31.828270",
             "materialSets": [
                 {
                     "group": 0,
@@ -1082,45 +985,12 @@ MaxSpeedModifier=1.0
             ],
             "mesh": "Cube",
             "name": "Default",
-            "rotation": "0.000000, 9.999997, 0.000000",
-            "scale": "2.560000, 30.720003, 0.100000",
+            "rotation": "0.000000, -1.999995, 0.000000",
+            "scale": "3.679997, 30.720003, 0.260000",
             "type": "brush"
         },
         {
-            "location": "433.228516, 216.380554, 166.242203",
-            "name": "SpawnPoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "SpawnPoint1"
-                },
-                {
-                    "name": "TeamMask",
-                    "value": 2
-                },
-                {
-                    "name": "Path",
-                    "value": ""
-                },
-                {
-                    "name": "LoopingPath",
-                    "value": false
-                },
-                {
-                    "name": "PermittedCharacterProfiles",
-                    "value": "Apogee Comet Body"
-                },
-                {
-                    "name": "Weight",
-                    "value": 1
-                }
-            ],
-            "rotation": "-9.211803, -18.946766, -153.459778",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "870.900330, -1535.999390, -538.854370",
+            "location": "911.860962, 1535.999512, 15.916390",
             "materialSets": [
                 {
                     "group": 0,
@@ -1149,284 +1019,17 @@ MaxSpeedModifier=1.0
             ],
             "mesh": "Cube",
             "name": "Default",
-            "rotation": "0.000000, -30.851252, 0.000000",
-            "scale": "2.560000, 30.720007, 0.160000",
+            "rotation": "-179.999954, 0.999987, -0.000031",
+            "scale": "3.679997, 30.720003, 0.260000",
             "type": "brush"
         },
         {
-            "location": "433.228485, -216.380554, 166.242233",
-            "name": "SpawnPoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "SpawnPoint1"
-                },
-                {
-                    "name": "TeamMask",
-                    "value": 2
-                },
-                {
-                    "name": "Path",
-                    "value": ""
-                },
-                {
-                    "name": "LoopingPath",
-                    "value": false
-                },
-                {
-                    "name": "PermittedCharacterProfiles",
-                    "value": "Apogee Comet Body"
-                },
-                {
-                    "name": "Weight",
-                    "value": 1
-                }
-            ],
-            "rotation": "9.211769, -18.946766, 153.459808",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "512.000000, 0.000000, 0.000000",
-            "name": "SpawnPoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "SpawnPoint1"
-                },
-                {
-                    "name": "TeamMask",
-                    "value": 2
-                },
-                {
-                    "name": "Path",
-                    "value": ""
-                },
-                {
-                    "name": "LoopingPath",
-                    "value": false
-                },
-                {
-                    "name": "PermittedCharacterProfiles",
-                    "value": "Apogee Comet Body"
-                },
-                {
-                    "name": "Weight",
-                    "value": 1
-                }
-            ],
-            "rotation": "0.000000, 0.000000, -179.999954",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "1007.116089, -1535.999390, 185.453033",
-            "materialSets": [
-                {
-                    "group": 0,
-                    "surface": "ground"
-                },
-                {
-                    "group": 0,
-                    "surface": "ground"
-                },
-                {
-                    "group": 0,
-                    "surface": "ground"
-                },
-                {
-                    "group": 0,
-                    "surface": "ground"
-                },
-                {
-                    "group": 0,
-                    "surface": "ground"
-                },
-                {
-                    "group": 0,
-                    "surface": "ground"
-                }
-            ],
-            "mesh": "Cube",
-            "name": "Default",
-            "rotation": "0.000000, 10.993223, 0.000000",
-            "scale": "2.560000, 30.720003, 0.100000",
-            "type": "brush"
-        },
-        {
-            "location": "478.467896, 0.000000, -182.242905",
-            "name": "SpawnPoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "SpawnPoint1"
-                },
-                {
-                    "name": "TeamMask",
-                    "value": 2
-                },
-                {
-                    "name": "Path",
-                    "value": ""
-                },
-                {
-                    "name": "LoopingPath",
-                    "value": false
-                },
-                {
-                    "name": "PermittedCharacterProfiles",
-                    "value": "Apogee Comet Body"
-                },
-                {
-                    "name": "Weight",
-                    "value": 1
-                }
-            ],
-            "rotation": "0.000016, 20.851139, -179.999954",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "1006.706543, -1535.999390, -187.663712",
-            "materialSets": [
-                {
-                    "group": 0,
-                    "surface": "ground"
-                },
-                {
-                    "group": 0,
-                    "surface": "ground"
-                },
-                {
-                    "group": 0,
-                    "surface": "ground"
-                },
-                {
-                    "group": 0,
-                    "surface": "ground"
-                },
-                {
-                    "group": 0,
-                    "surface": "ground"
-                },
-                {
-                    "group": 0,
-                    "surface": "ground"
-                }
-            ],
-            "mesh": "Cube",
-            "name": "Default",
-            "rotation": "0.000000, -9.999997, 0.000000",
-            "scale": "2.560000, 30.720003, 0.100000",
-            "type": "brush"
-        },
-        {
-            "location": "1005.689941, -1535.999634, -192.778122",
-            "materialSets": [
-                {
-                    "group": 0,
-                    "surface": "ground"
-                },
-                {
-                    "group": 0,
-                    "surface": "ground"
-                },
-                {
-                    "group": 0,
-                    "surface": "ground"
-                },
-                {
-                    "group": 0,
-                    "surface": "ground"
-                },
-                {
-                    "group": 0,
-                    "surface": "ground"
-                },
-                {
-                    "group": 0,
-                    "surface": "ground"
-                }
-            ],
-            "mesh": "Cube",
-            "name": "Default",
-            "rotation": "0.000000, -10.851251, 0.000000",
-            "scale": "2.560000, 30.720003, 0.100000",
-            "type": "brush"
-        },
-        {
-            "location": "433.639160, 216.380554, -165.168152",
-            "name": "SpawnPoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "SpawnPoint1"
-                },
-                {
-                    "name": "TeamMask",
-                    "value": 2
-                },
-                {
-                    "name": "Path",
-                    "value": ""
-                },
-                {
-                    "name": "LoopingPath",
-                    "value": false
-                },
-                {
-                    "name": "PermittedCharacterProfiles",
-                    "value": "Apogee Comet Body"
-                },
-                {
-                    "name": "Weight",
-                    "value": 1
-                }
-            ],
-            "rotation": "9.144704, 18.819841, -153.481567",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
-        },
-        {
-            "location": "126.032562, -1535.999390, 22.445450",
+            "location": "15.990326, -1535.999634, -0.558393",
             "mesh": "Cube",
             "name": "Clip",
-            "rotation": "0.000000, 10.993223, 0.000000",
-            "scale": "8.959998, 30.720001, 0.020000",
+            "rotation": "0.000000, -1.999995, 0.000000",
+            "scale": "12.639997, 30.720003, 0.020000",
             "type": "brush"
-        },
-        {
-            "location": "433.639130, -216.380554, -165.168137",
-            "name": "SpawnPoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": "SpawnPoint1"
-                },
-                {
-                    "name": "TeamMask",
-                    "value": 2
-                },
-                {
-                    "name": "Path",
-                    "value": ""
-                },
-                {
-                    "name": "LoopingPath",
-                    "value": false
-                },
-                {
-                    "name": "PermittedCharacterProfiles",
-                    "value": "Apogee Comet Body"
-                },
-                {
-                    "name": "Weight",
-                    "value": 1
-                }
-            ],
-            "rotation": "-9.144634, 18.819841, 153.481598",
-            "scale": "0.250000, 0.250000, 0.250000",
-            "type": "gameObject"
         },
         {
             "location": "0.000000, 0.000000, 0.000000",
@@ -1437,49 +1040,7 @@ MaxSpeedModifier=1.0
             "type": "brush"
         },
         {
-            "location": "877.802002, -1535.999634, 527.294312",
-            "materialSets": [
-                {
-                    "group": 0,
-                    "surface": "ground"
-                },
-                {
-                    "group": 0,
-                    "surface": "ground"
-                },
-                {
-                    "group": 0,
-                    "surface": "ground"
-                },
-                {
-                    "group": 0,
-                    "surface": "ground"
-                },
-                {
-                    "group": 0,
-                    "surface": "ground"
-                },
-                {
-                    "group": 0,
-                    "surface": "ground"
-                }
-            ],
-            "mesh": "Cube",
-            "name": "Default",
-            "rotation": "0.000000, 30.993164, 0.000000",
-            "scale": "2.560000, 30.720003, 0.160000",
-            "type": "brush"
-        },
-        {
-            "location": "109.725189, -1535.999634, 65.911942",
-            "mesh": "Cube",
-            "name": "Clip",
-            "rotation": "0.000000, 30.993164, 0.000000",
-            "scale": "8.959998, 30.720001, 0.160000",
-            "type": "brush"
-        },
-        {
-            "location": "1088.000000, -1536.000000, -668.000000",
+            "location": "1088.000000, -1536.000000, -540.000000",
             "materialSets": [
                 {
                     "group": 0,
@@ -1509,39 +1070,7 @@ MaxSpeedModifier=1.0
             "mesh": "Cube",
             "name": "Default",
             "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.320000, 30.719997, 13.400001",
-            "type": "brush"
-        },
-        {
-            "location": "126.055389, -1535.999634, 22.226959",
-            "mesh": "Cube",
-            "name": "Clip",
-            "rotation": "0.000000, 9.999997, 0.000000",
-            "scale": "8.959998, 30.720001, 0.020000",
-            "type": "brush"
-        },
-        {
-            "location": "125.708099, -1535.999390, -24.196568",
-            "mesh": "Cube",
-            "name": "Clip",
-            "rotation": "0.000000, -9.999997, 0.000000",
-            "scale": "8.959998, 30.720001, 0.020000",
-            "type": "brush"
-        },
-        {
-            "location": "125.711250, -1535.999634, -24.097294",
-            "mesh": "Cube",
-            "name": "Clip",
-            "rotation": "0.000000, -10.851251, 0.000000",
-            "scale": "8.959998, 30.720001, 0.020000",
-            "type": "brush"
-        },
-        {
-            "location": "101.683212, -1535.999390, -79.375847",
-            "mesh": "Cube",
-            "name": "Clip",
-            "rotation": "0.000000, -30.851225, 0.000000",
-            "scale": "8.959998, 30.720001, 0.160000",
+            "scale": "0.320000, 30.719997, 10.840004",
             "type": "brush"
         },
         {
@@ -1549,14 +1078,6 @@ MaxSpeedModifier=1.0
             "mesh": "Cube",
             "name": "Clip",
             "rotation": "89.999954, 0.000000, -45.000088",
-            "scale": "20.479998, 15.360001, 10.239999",
-            "type": "brush"
-        },
-        {
-            "location": "181.019333, 181.019333, 767.999634",
-            "mesh": "Cube",
-            "name": "Clip",
-            "rotation": "90.000008, 0.000000, 44.999866",
             "scale": "20.479998, 15.360001, 10.239999",
             "type": "brush"
         },
@@ -1619,7 +1140,7 @@ MaxSpeedModifier=1.0
             ],
             "mesh": "Ramp",
             "name": "Default",
-            "rotation": "-30.963440, -90.000000, -14.036263",
+            "rotation": "-44.998871, -90.000000, 0.000000",
             "scale": "7.679997, 2.559999, 10.240000",
             "type": "brush"
         },
@@ -1649,8 +1170,306 @@ MaxSpeedModifier=1.0
             ],
             "mesh": "Ramp",
             "name": "DefaultNoCollision",
-            "rotation": "149.036484, 90.000000, 14.036263",
+            "rotation": "144.463242, 90.000000, 9.462336",
             "scale": "7.679997, 2.559999, 10.240000",
+            "type": "brush"
+        },
+        {
+            "location": "14.380705, -1535.999634, 7.013938",
+            "mesh": "Cube",
+            "name": "Clip",
+            "rotation": "0.000000, 26.000002, 0.000000",
+            "scale": "12.639998, 30.720003, 0.160000",
+            "type": "brush"
+        },
+        {
+            "location": "15.997559, 1536.000122, 0.279233",
+            "mesh": "Cube",
+            "name": "Clip",
+            "rotation": "-179.999954, 0.999987, -0.000031",
+            "scale": "12.639997, 30.720003, 0.020000",
+            "type": "brush"
+        },
+        {
+            "location": "920.365234, 1023.999573, -448.890564",
+            "materialSets": [
+                {
+                    "group": 0,
+                    "surface": "ground"
+                },
+                {
+                    "group": 0,
+                    "surface": "ground"
+                },
+                {
+                    "group": 0,
+                    "surface": "ground"
+                },
+                {
+                    "group": 0,
+                    "surface": "ground"
+                },
+                {
+                    "group": 0,
+                    "surface": "ground"
+                },
+                {
+                    "group": 0,
+                    "surface": "ground"
+                }
+            ],
+            "mesh": "Cube",
+            "name": "Default",
+            "rotation": "-179.999954, -25.999899, -0.000031",
+            "scale": "5.119998, 20.480005, 0.320000",
+            "type": "brush"
+        },
+        {
+            "location": "14.380705, 1536.000000, -7.013938",
+            "mesh": "Cube",
+            "name": "Clip",
+            "rotation": "-179.999954, -25.999933, -0.000031",
+            "scale": "12.639997, 30.720003, 0.160000",
+            "type": "brush"
+        },
+        {
+            "location": "504.221558, 0.000000, 88.907860",
+            "name": "SpawnPoint",
+            "properties": [
+                {
+                    "name": "Name",
+                    "value": "SpawnPoint1"
+                },
+                {
+                    "name": "TeamMask",
+                    "value": 2
+                },
+                {
+                    "name": "Path",
+                    "value": ""
+                },
+                {
+                    "name": "LoopingPath",
+                    "value": false
+                },
+                {
+                    "name": "PermittedCharacterProfiles",
+                    "value": "Apogee QuantumTS Body"
+                },
+                {
+                    "name": "Weight",
+                    "value": 1
+                }
+            ],
+            "rotation": "0.000000, -9.526672, -179.999954",
+            "scale": "0.250000, 0.250000, 0.250000",
+            "type": "gameObject"
+        },
+        {
+            "location": "487.040619, 132.515350, 85.878395",
+            "name": "SpawnPoint",
+            "properties": [
+                {
+                    "name": "Name",
+                    "value": "SpawnPoint1"
+                },
+                {
+                    "name": "TeamMask",
+                    "value": 2
+                },
+                {
+                    "name": "Path",
+                    "value": ""
+                },
+                {
+                    "name": "LoopingPath",
+                    "value": false
+                },
+                {
+                    "name": "PermittedCharacterProfiles",
+                    "value": "Apogee QuantumTS Body"
+                },
+                {
+                    "name": "Weight",
+                    "value": 1
+                }
+            ],
+            "rotation": "-2.609436, -9.183073, -164.800629",
+            "scale": "0.250000, 0.250000, 0.250000",
+            "type": "gameObject"
+        },
+        {
+            "location": "487.040619, -132.515350, 85.878395",
+            "name": "SpawnPoint",
+            "properties": [
+                {
+                    "name": "Name",
+                    "value": "SpawnPoint1"
+                },
+                {
+                    "name": "TeamMask",
+                    "value": 2
+                },
+                {
+                    "name": "Path",
+                    "value": ""
+                },
+                {
+                    "name": "LoopingPath",
+                    "value": false
+                },
+                {
+                    "name": "PermittedCharacterProfiles",
+                    "value": "Apogee QuantumTS Body"
+                },
+                {
+                    "name": "Weight",
+                    "value": 1
+                }
+            ],
+            "rotation": "2.609411, -9.183073, 164.801041",
+            "scale": "0.250000, 0.250000, 0.250000",
+            "type": "gameObject"
+        },
+        {
+            "location": "477.702484, -132.515350, -127.999977",
+            "name": "SpawnPoint",
+            "properties": [
+                {
+                    "name": "Name",
+                    "value": "SpawnPoint1"
+                },
+                {
+                    "name": "TeamMask",
+                    "value": 2
+                },
+                {
+                    "name": "Path",
+                    "value": ""
+                },
+                {
+                    "name": "LoopingPath",
+                    "value": false
+                },
+                {
+                    "name": "PermittedCharacterProfiles",
+                    "value": "Apogee QuantumTS Body"
+                },
+                {
+                    "name": "Weight",
+                    "value": 1
+                }
+            ],
+            "rotation": "-3.975800, 14.949651, 164.461594",
+            "scale": "0.250000, 0.250000, 0.250000",
+            "type": "gameObject"
+        },
+        {
+            "location": "494.553955, 0.000000, -132.515335",
+            "name": "SpawnPoint",
+            "properties": [
+                {
+                    "name": "Name",
+                    "value": "SpawnPoint1"
+                },
+                {
+                    "name": "TeamMask",
+                    "value": 2
+                },
+                {
+                    "name": "Path",
+                    "value": ""
+                },
+                {
+                    "name": "LoopingPath",
+                    "value": false
+                },
+                {
+                    "name": "PermittedCharacterProfiles",
+                    "value": "Apogee QuantumTS Body"
+                },
+                {
+                    "name": "Weight",
+                    "value": 1
+                }
+            ],
+            "rotation": "0.000012, 15.473267, -179.999954",
+            "scale": "0.250000, 0.250000, 0.250000",
+            "type": "gameObject"
+        },
+        {
+            "location": "477.702484, 132.515350, -127.999977",
+            "name": "SpawnPoint",
+            "properties": [
+                {
+                    "name": "Name",
+                    "value": "SpawnPoint1"
+                },
+                {
+                    "name": "TeamMask",
+                    "value": 2
+                },
+                {
+                    "name": "Path",
+                    "value": ""
+                },
+                {
+                    "name": "LoopingPath",
+                    "value": false
+                },
+                {
+                    "name": "PermittedCharacterProfiles",
+                    "value": "Apogee QuantumTS Body"
+                },
+                {
+                    "name": "Weight",
+                    "value": 1
+                }
+            ],
+            "rotation": "3.975818, 14.949685, -164.461487",
+            "scale": "0.250000, 0.250000, 0.250000",
+            "type": "gameObject"
+        },
+        {
+            "location": "181.019287, 181.019287, 767.999634",
+            "mesh": "Cube",
+            "name": "Clip",
+            "rotation": "90.000008, 0.000000, 44.999866",
+            "scale": "20.479998, 15.360001, 10.239999",
+            "type": "brush"
+        },
+        {
+            "location": "920.365112, -1024.000000, 448.892090",
+            "materialSets": [
+                {
+                    "group": 0,
+                    "surface": "ground"
+                },
+                {
+                    "group": 0,
+                    "surface": "ground"
+                },
+                {
+                    "group": 0,
+                    "surface": "ground"
+                },
+                {
+                    "group": 0,
+                    "surface": "ground"
+                },
+                {
+                    "group": 0,
+                    "surface": "ceiling"
+                },
+                {
+                    "group": 0,
+                    "surface": "ground"
+                }
+            ],
+            "mesh": "Cube",
+            "name": "Default",
+            "rotation": "0.000000, 26.000002, 0.000000",
+            "scale": "5.119998, 20.479998, 0.320000",
             "type": "brush"
         }
     ],

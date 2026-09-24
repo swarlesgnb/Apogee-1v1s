@@ -1,11 +1,11 @@
-Name=Apogee Invaders Intermediate
+Name=Apogee Stars Novice
 PlayerCharacters=Player
-BotCharacters=Apogee Invaders.bot
+BotCharacters=Apogee Stars.bot
 IsChallenge=true
 OvershotProtectionTimer=0.0
 Timelimit=60.0
 PlayerProfile=Player
-AddedBots=Apogee Invaders.bot;Apogee Invaders.bot;Apogee Invaders.bot;Apogee Invaders.bot
+AddedBots=Apogee Stars.bot;Apogee Stars.bot;Apogee Stars.bot;Apogee Stars.bot
 PlayerMaxLives=0
 BotMaxLives=0;0;0;0
 PlayerTeam=1
@@ -42,7 +42,7 @@ ScoreLossPerMiss=0.0
 ScoreLossPerReload=0.0
 MultSqrtAcc=false
 EnableOverDamage=false
-MapName=Apogee Invaders Intermediate.json
+MapName=Apogee Stars Novice.json
 MapScale=4.0
 BlockProjectilePredictors=true
 BlockCheats=true
@@ -82,9 +82,9 @@ AimSubTypeTag=Static
 AimTypeFlicking=false
 AimTypeProjectile=false
 AimTypePlayerMovement=false
-DifficultyTag=2
-SearchTags=Apogee, Apogee Season 2, Static Clicking, Intermediate
-Description=Four targets in a wide formation. One click each.[nl][nl]Apogee Season 2, Static Clicking, Intermediate. A wide formation; big flicks across it, in both directions.
+DifficultyTag=1
+SearchTags=Apogee, Apogee Season 2, Static Clicking, Novice
+Description=Four targets in a wide formation. One click each.[nl][nl]Apogee Season 2, Static Clicking, Novice. A wide formation; big flicks across it, in both directions.
 GameVersion=3.7.0
 ScenarioVersion=Initial
 
@@ -120,7 +120,7 @@ MinShootDelay=0.3
 MaxShootDelay=0.6
 
 [Bot Profile]
-Name=Apogee Invaders
+Name=Apogee Stars
 DodgeProfileNames=
 DodgeProfileWeights=
 DodgeProfileMaxChangeTime=5.0
@@ -130,7 +130,7 @@ WeaponProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0;1.0;1.0
 AimingProfileNames=Default;Default;Default;Default;Default;Default;Default;Default
 WeaponSwitchTime=3.0
 UseWeapons=false
-CharacterProfile=Apogee Invaders Body
+CharacterProfile=Apogee Stars Body
 SeeThroughWalls=false
 NoDodging=true
 StandStillUntilHurt=false
@@ -297,7 +297,7 @@ PlaybackOptions.LoopUponCompletion=true
 PlaybackOptions.BreakToInputMode=false
 
 [Character Profile]
-Name=Apogee Invaders Body
+Name=Apogee Stars Body
 MaxHealth=1.0
 WeaponProfileNames=;;;;;;;
 MinRespawnDelay=0.001
@@ -332,8 +332,8 @@ EnemyHeadColorOnLookAt=X=1.000 Y=1.000 Z=1.000
 TeamBodyColor=X=0.000 Y=0.000 Z=255.000
 TeamHeadColor=X=255.000 Y=255.000 Z=255.000
 MainBBType=Spheroid
-MainBBHeight=68.421036
-MainBBRadius=34.210518
+MainBBHeight=78.647218
+MainBBRadius=39.323609
 MainBBHasHead=false
 MainBBHeadRadius=0.1
 MainBBHeadOffset=0.0

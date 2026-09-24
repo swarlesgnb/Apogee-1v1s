@@ -1,11 +1,11 @@
-Name=Apogee Mender Intermediate
+Name=Apogee QuantumTS Intermediate
 PlayerCharacters=Player
-BotCharacters=Apogee Mender.bot
+BotCharacters=Apogee QuantumTS.bot
 IsChallenge=true
 OvershotProtectionTimer=0.0
 Timelimit=60.0
 PlayerProfile=Player
-AddedBots=Apogee Mender.bot;Apogee Mender.bot;Apogee Mender.bot
+AddedBots=Apogee QuantumTS.bot;Apogee QuantumTS.bot;Apogee QuantumTS.bot
 PlayerMaxLives=0
 BotMaxLives=0;0;0
 PlayerTeam=1
@@ -120,8 +120,8 @@ MinShootDelay=0.3
 MaxShootDelay=0.6
 
 [Bot Profile]
-Name=Apogee Mender
-DodgeProfileNames=Apogee Mender Move
+Name=Apogee QuantumTS
+DodgeProfileNames=Apogee QuantumTS Move
 DodgeProfileWeights=1.0
 DodgeProfileMaxChangeTime=60.0
 DodgeProfileMinChangeTime=60.0
@@ -130,7 +130,7 @@ WeaponProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0;1.0;1.0
 AimingProfileNames=Default;Default;Default;Default;Default;Default;Default;Default
 WeaponSwitchTime=3.0
 UseWeapons=false
-CharacterProfile=Apogee Mender Body
+CharacterProfile=Apogee QuantumTS Body
 SeeThroughWalls=false
 NoDodging=false
 StandStillUntilHurt=false
@@ -298,7 +298,7 @@ PlaybackOptions.LoopUponCompletion=true
 PlaybackOptions.BreakToInputMode=false
 
 [Character Profile]
-Name=Apogee Mender Body
+Name=Apogee QuantumTS Body
 MaxHealth=55.0
 WeaponProfileNames=;;;;;;;
 MinRespawnDelay=0.001
@@ -445,7 +445,7 @@ PlaybackOptions.LoopUponCompletion=true
 PlaybackOptions.BreakToInputMode=false
 
 [Dodge Profile]
-Name=Apogee Mender Move
+Name=Apogee QuantumTS Move
 MaxTargetDistance=2090.0
 MinTargetDistance=1710.0
 ToggleLeftRight=true
@@ -1254,7 +1254,7 @@ MaxSpeedModifier=0.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": "Apogee Mender Body"
+                    "value": "Apogee QuantumTS Body"
                 },
                 {
                     "name": "Weight",
@@ -1287,7 +1287,7 @@ MaxSpeedModifier=0.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": "Apogee Mender Body"
+                    "value": "Apogee QuantumTS Body"
                 },
                 {
                     "name": "Weight",
@@ -1320,7 +1320,7 @@ MaxSpeedModifier=0.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": "Apogee Mender Body"
+                    "value": "Apogee QuantumTS Body"
                 },
                 {
                     "name": "Weight",
@@ -1353,7 +1353,7 @@ MaxSpeedModifier=0.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": "Apogee Mender Body"
+                    "value": "Apogee QuantumTS Body"
                 },
                 {
                     "name": "Weight",
@@ -1386,7 +1386,7 @@ MaxSpeedModifier=0.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": "Apogee Mender Body"
+                    "value": "Apogee QuantumTS Body"
                 },
                 {
                     "name": "Weight",
@@ -1419,7 +1419,7 @@ MaxSpeedModifier=0.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": "Apogee Mender Body"
+                    "value": "Apogee QuantumTS Body"
                 },
                 {
                     "name": "Weight",

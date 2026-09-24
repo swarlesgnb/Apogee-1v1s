@@ -75,7 +75,7 @@ states the same priorities from the author's side, and season 2 takes most of th
 - **One knob per behaviour.** Targets share a jump velocity and differ in gravity, so jump
   height and hang time vary together and predictably. Antigrav's bands step gravity alone.
 - **Kill time is a difficulty lever.** DotTS's longer time to kill separates it from
-  Pokeball's. bruTeS and Mender use it the same way.
+  Pokeball's. MartianTS and QuantumTS use it the same way.
 - **Accuracy pressure without an accuracy multiplier.** Voltaic uses square-root accuracy
   scoring where "every shot matters", and a reload economy (a miss on ww5t Intermediate costs
   30% of the magazine) where speed matters. Season 2 uses neither: in a match decided on a

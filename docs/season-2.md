@@ -12,18 +12,22 @@ scenario file format turned out to be, pitfalls included:
 
 | Category | Families |
 | --- | --- |
-| Static Clicking | Galaga (five on one line), Zenith (vertical), Pinpoint (micro), Invaders (wide formation), Constellation (real constellations as waves), Parallax (two depths), Nebula (six up at once) |
-| Dynamic Clicking | Gravclick (slow floaters), Pendulum (level swings), Antigrav (bounces), Electric (twitches), Comet (fast crossers), Shooting Stars (straight lanes), Gravity Well (inward spirals), Meteor (straight runs off the walls), Satellite (circling fliers) |
-| Precise Tracking | Glide (smooth ground), Blastoff (vertical), Orbit (curves), Thread (small and slow), Arc (floaty jumps), AlienTrack (close, wide) |
-| Reactive Tracking | Pong (close strafes), Pong3D (range changes), Stutter (stops, sometimes for seconds), Hover (jumps), UFO (3D flier), Feint (dodges when hit) |
-| Speed Switching | DNA (compact), CockpiTS (wide), Column (vertical), Asteroids (six small), RockeTS (slow movers, quick kills), bruTeS (long kills) |
-| Evasive Switching | FleeTS (strafers), skeeTS (thrown clay pigeons), comeTS (curving fliers), Mender (regenerating), LosTS (one tough target that respawns), Brawl (close) |
+| Static Clicking | Galaga (five on one line), Zenith (vertical), Pinpoint (micro), Stars (wide field), Constellation (real constellations as waves), Parallax (two depths), Nebula (six up at once) |
+| Dynamic Clicking | Gravclick (slow floaters), Pendulum (slow wall-to-wall swings), Antigrav (bounces), Electric (straight runs with a charged buzz), Sun and Moon (two fast crossers, open room), Shooting Stars (straight lanes), Gravity Well (close in on the centre; lost if they reach it), Meteor (Voltaic's Floating Heads, large and slow), Satellite (circling fliers) |
+| Precise Tracking | Glide (smooth ground), Blastoff (vertical), Orbit (curves), Thread (small and slow), Arc (floaty jumps), AlienTrack (close and wide, with Ground Plaza's blink) |
+| Reactive Tracking | Pong (close strafes), Pong3D (range changes), Stutter (stops, sometimes for a second or two), Hover (jumps), UFO (3D flier), Feint (dodges when hit) |
+| Speed Switching | DNA (compact), CockpiTS (wide), Column (vertical), Asteroids (six small), RockeTS (slow movers, quick kills), MartianTS (long kills) |
+| Evasive Switching | FleeTS (six strafers), skeeTS (thrown clay pigeons), comeTS (curving fliers), QuantumTS (regenerating), LosTS (one tough target that respawns), InvadersTS (close) |
 
 The second round of design came from Rylee's playtest of the first (2026-09-24): more
-variety in how many targets are up, Galaga and Invaders made distinct, Constellation turned
-into real constellations cleared as waves, four new linear dynamic families, skeeTS rebuilt
-on Skeet Tracking's own thrown-target mechanism, LosTS in place of Scatter, Triplet removed,
-Brawl moved out of an arena whose barrier trapped close targets, and the names.
+variety in how many targets are up, Galaga and Stars made distinct, Constellation turned
+into real constellations cleared as waves, new linear dynamic families, skeeTS rebuilt on
+Skeet Tracking's own thrown-target mechanism, LosTS in place of Scatter, Triplet removed,
+InvadersTS moved out of an arena whose barrier trapped close targets, and the names. The
+third, from the playtest of the second: Gravity Well as speed clicking under pressure,
+Pendulum on slow wall-to-wall runs, Meteor as Voltaic's Floating Heads made large and slow,
+Electric's charged buzz, Satellite and Meteor easier at Novice, AlienTrack's blink, shorter
+stops for Stutter, six targets for FleeTS, and more names.
 
 Each scenario is named `Apogee <Family> <Band>`. Every one, with its size, speed, reversal
 and kill time, predicted median and thresholds, is listed in
@@ -54,10 +58,6 @@ scenario's target size, angular speed and reversal period lie within what popula
 of its class ask (218 with 20,000 or more players), unless its family declares the exception
 with a reason and a precedent; and that every numeric profile value is inside the range that
 key takes across the 1,161 real scenario files.
-
-Two exceptions are declared: Electric reverses faster than any popular clicking scenario, on
-purpose, with cA 5ts vibrate and Microshot Avasive as precedent; Meteor's strafe timer is
-Floating Heads Timing 400%'s ten seconds, set long so the walls turn its targets instead.
 
 ## Playing it
 
@@ -93,24 +93,23 @@ season is `npm run push:season`, which Rylee runs.
 ## Playtest before anything else
 
 Confirmed in game on 2026-09-24: the first seven templates' scenarios load, generated rooms
-included. The mechanisms added since have not been played. `Apogee S2 Playtest` holds one of
-each, in this order:
+included, and so do the second round's (Constellation waves, waypoint paths, Stutter's stop,
+skeeTS, comeTS, LosTS, InvadersTS). The third round's changes have not been played.
+`Apogee S2 Playtest` holds one of each, in this order:
 
-1. **Constellation**: all seven stars of one constellation up together; the next appears
-   only when the last falls. The wave mechanism is StrawberryClick's (`SpawnGroup` with
-   fixed-order rotations), inferred from its file and description, not seen.
-2. **Shooting Stars, Gravity Well**: targets walk their lanes and spirals (waypoint paths),
-   and stay on them.
-3. **Meteor**: straight runs that turn only at the walls.
-4. **Satellite**: fliers circling and rising and falling.
-5. **Stutter**: now and then stops dead for two to three seconds.
-6. **skeeTS**: targets thrown in arcs, as Skeet Tracking's are.
-7. **comeTS**: fliers sweeping in curves rather than zig-zags.
-8. **LosTS**: one target; it respawns somewhere new when killed.
-9. **Brawl**: close targets no longer stick in the middle.
+1. **Gravity Well**: targets close in from the rim; one that reaches the middle vanishes
+   and scores nothing. Its thresholds are predicted as if every target were caught, so they
+   are an upper bound until a real board recuts them.
+2. **Pendulum**: slow, level runs from wall to wall.
+3. **Electric**: straight runs with a fast vertical buzz.
+4. **Meteor**: moves as Voltaic's Floating Heads do, larger and slower.
+5. **Sun and Moon**: two fast crossers in an open room.
+6. **Satellite**: easier at Novice than before.
+7. **AlienTrack**: blinks rarely at Novice, more often each band.
+8. **Stutter**: its full stops last a second or two.
+9. **FleeTS**: six targets.
 
-Still open from before: Pendulum's targets keep their height; switching targets float in
-place; tracking targets never die; Feint's dodge reads as a reaction; switching bands feel
-harder as they go; and the thresholds of Blastoff, Orbit and UFO, built on the template the
-model over-predicts (Voltaic's Aether, 0.14 to 0.90 logit at the median), are the likeliest
-to be set too high. Check them first when recutting.
+Still open from before: tracking targets never die; Feint's dodge reads as a reaction;
+switching bands feel harder as they go; and the thresholds of Blastoff, Orbit and UFO, built
+on the template the model over-predicts (Voltaic's Aether, 0.14 to 0.90 logit at the
+median), are the likeliest to be set too high. Check them first when recutting.

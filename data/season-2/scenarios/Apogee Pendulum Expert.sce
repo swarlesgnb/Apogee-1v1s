@@ -84,7 +84,7 @@ AimTypeProjectile=false
 AimTypePlayerMovement=false
 DifficultyTag=4
 SearchTags=Apogee, Apogee Season 2, Dynamic Clicking, Expert
-Description=Four targets swinging side to side. One click each.[nl][nl]Apogee Season 2, Dynamic Clicking, Expert. Side-to-side swings; click on the swing, not only at the turn.
+Description=Four targets swinging slowly from wall to wall. One click each.[nl][nl]Apogee Season 2, Dynamic Clicking, Expert. Slow swings from wall to wall; click on the swing, not only at the turn.
 GameVersion=3.7.0
 ScenarioVersion=Initial
 
@@ -308,9 +308,9 @@ CrouchAnimationSpeed=2.0
 CameraOffset=X=0.000 Y=0.000 Z=0.000
 HeadshotOnly=false
 DamageKnockbackFactor=0.0
-MaxSpeed=1022.134623
+MaxSpeed=464.606647
 MaxCrouchSpeed=500.0
-Acceleration=800.0
+Acceleration=100000.0
 CrouchingAcceleration=800.0
 Friction=0.0
 BrakingFrictionFactor=0.0
@@ -332,8 +332,8 @@ EnemyHeadColorOnLookAt=X=1.000 Y=1.000 Z=1.000
 TeamBodyColor=X=1.000 Y=0.888 Z=0.000
 TeamHeadColor=X=1.000 Y=1.000 Z=1.000
 MainBBType=Spheroid
-MainBBHeight=50.572094
-MainBBRadius=25.286047
+MainBBHeight=55.170116
+MainBBRadius=27.585058
 MainBBHasHead=false
 MainBBHeadRadius=1.0
 MainBBHeadOffset=0.0
@@ -373,7 +373,7 @@ BlockSpawnFOV=0.0
 BlockSpawnDistance=0.0
 RespawnAnimationDuration=0.0
 AllowBufferedJumps=false
-BounceOffWalls=false
+BounceOffWalls=true
 LeanAngle=0.0
 LeanDisplacement=0.0
 AirJumpExtraControl=0.0
@@ -444,12 +444,12 @@ PlaybackOptions.BreakToInputMode=false
 
 [Dodge Profile]
 Name=Apogee Pendulum Move
-MaxTargetDistance=2100.0
-MinTargetDistance=1900.0
+MaxTargetDistance=100000.0
+MinTargetDistance=1.0
 ToggleLeftRight=true
-ToggleForwardBack=true
-MinLRTimeChange=0.921904
-MaxLRTimeChange=1.317006
+ToggleForwardBack=false
+MinLRTimeChange=4.280269
+MaxLRTimeChange=4.609521
 MinFBTimeChange=2.0
 MaxFBTimeChange=3.0
 DamageReactionChangesDirection=false
