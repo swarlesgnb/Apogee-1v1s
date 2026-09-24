@@ -64,6 +64,39 @@ export function setBots(sce: Sce, bots: Array<{ bot: string; count: number }>): 
   set(sce.head, "BotCharacters", [...new Set(added)].join(";"));
 }
 
+/**
+ * Put these entries in the scenario as its added bots: `name.bot` for a bot, `name.rot`
+ * for a rotation. The general form of `setBots`, for scenarios whose slots rotate.
+ */
+export function setAddedBots(sce: Sce, entries: string[]): void {
+  for (const e of entries) {
+    const bare = e.replace(/\.(bot|rot)$/i, "");
+    const type = /\.rot$/i.test(e) ? "Bot Rotation Profile" : "Bot Profile";
+    if (!profile(sce, type, bare)) throw new Error(`no ${type} called ${bare}`);
+  }
+  set(sce.head, "AddedBots", entries.join(";"));
+  set(sce.head, "BotMaxLives", entries.map(() => "0").join(";"));
+  set(sce.head, "BotTeams", entries.map(() => "2").join(";"));
+  set(sce.head, "BotCharacters", [...new Set(entries)].join(";"));
+}
+
+/**
+ * Copy a profile section from another file into this one under a new name.
+ *
+ * For the one case the template itself cannot supply: a Bot Rotation Profile, which a
+ * static template has no use for and a wave scenario needs. The copy is a section KovaaK's
+ * wrote, with only its Name changed; the caller sets the rest through `set`.
+ */
+export function importProfile(sce: Sce, from: Sce, type: string, name: string, as: string): SceSection {
+  const source = profile(from, type, name);
+  if (!source) throw new Error(`no ${type} called ${name} to import`);
+  const copy: SceSection = { type, lines: source.lines.map((l) => ({ ...l })) };
+  set(copy.lines, "Name", as);
+  const mapAt = sce.sections.findIndex((s) => s.type === "Map Data");
+  sce.sections.splice(mapAt < 0 ? sce.sections.length : mapAt, 0, copy);
+  return copy;
+}
+
 /** Drop every profile the head cannot reach. Returns the names dropped, for the log. */
 export function prune(sce: Sce): string[] {
   const keep = new Set<string>();
@@ -129,8 +162,29 @@ export interface Vec {
 export interface Room {
   min: Vec;
   max: Vec;
-  spawns: Vec[];
+  spawns: Array<Vec | BotSpawn>;
+  /** Named points bots can be sent along, by a spawn's `path`. */
+  waypoints?: Array<{ name: string; at: Vec }>;
 }
+
+/**
+ * A bot spawn with more than a position.
+ *
+ * `admits` restricts it to one character (`PermittedCharacterProfiles`), which is how a
+ * star of a constellation gets exactly one bot. `path` names waypoints the bot walks, in
+ * order, from the moment it spawns, and `looping` sends it round again; the bot's dodge
+ * profile must say `WaypointLogic=FollowAimAtTarget` for it to follow them. Both are the
+ * Map Creator's own spawn-point properties, read off ZipTrack - THE FINALS, which moves
+ * its targets this way.
+ */
+export interface BotSpawn {
+  at: Vec;
+  admits?: string;
+  path?: string[];
+  looping?: boolean;
+}
+
+const isBotSpawn = (s: Vec | BotSpawn): s is BotSpawn => "at" in s;
 
 type JsonObject = Record<string, unknown>;
 
@@ -173,20 +227,39 @@ export function setRoom(sce: Sce, room: Room, mapName: string): void {
     rotation: triple({ x: 0, y: 0, z: 0 }),
   }));
 
-  const point = (at: Vec, mask: number, rotationZ: number): JsonObject => {
+  const point = (at: Vec, mask: number, rotationZ: number, extra: Omit<BotSpawn, "at"> = {}): JsonObject => {
     const o = structuredClone(spawn) as JsonObject;
     o.location = triple(at);
     o.rotation = triple({ x: 0, y: 0, z: rotationZ });
     // The team mask is what separates player from bots here. The copied spawn's own
     // character list is dropped: the prototype is often the template's player spawn, which
     // admits only `Player`, and a bot spawn that admits only the player spawns no bots.
-    o.properties = (o.properties as Array<{ name: string; value: unknown }>).map((p) =>
-      p.name === "TeamMask" ? { ...p, value: mask } : p.name === "PermittedCharacterProfiles" ? { ...p, value: "" } : { ...p },
-    );
+    o.properties = (o.properties as Array<{ name: string; value: unknown }>).map((p) => {
+      if (p.name === "TeamMask") return { ...p, value: mask };
+      if (p.name === "PermittedCharacterProfiles") return { ...p, value: extra.admits ?? "" };
+      if (p.name === "Path") return { ...p, value: (extra.path ?? []).join(",") };
+      if (p.name === "LoopingPath") return { ...p, value: Boolean(extra.looping) };
+      return { ...p };
+    });
     return o;
   };
   objects.push(point({ x: 0, y: 0, z: 0 }, 1, 0));
-  for (const s of room.spawns) objects.push(point(s, 2, 180));
+  for (const s of room.spawns) objects.push(isBotSpawn(s) ? point(s.at, 2, 180, s) : point(s, 2, 180));
+  // A waypoint is a spawn-sized game object with a name and a pause: the shape ZipTrack's
+  // map gives them, built on the spawn prototype so its scale and type come from a file
+  // KovaaK's wrote.
+  for (const w of room.waypoints ?? []) {
+    const o = structuredClone(spawn) as JsonObject;
+    o.name = "Waypoint";
+    o.location = triple(w.at);
+    o.rotation = triple({ x: 0, y: 0, z: 0 });
+    o.properties = [
+      { name: "Name", value: w.name },
+      { name: "BotPauseTimeMin", value: 0.0 },
+      { name: "BotPauseTimeMax", value: 0.0 },
+    ];
+    objects.push(o);
+  }
 
   map.objects = objects;
   section.raw = JSON.stringify(map, null, 4).replace(/\n/g, sce.eol);

@@ -25,14 +25,14 @@ import { join } from "node:path";
 
 import { dataFile } from "../src/core/dataDir.ts";
 import { ENERGY_PER_RANK } from "../src/core/benchmarks/energy.ts";
-import { parseSce, serializeSce, type Sce } from "../src/core/scenario/sce.ts";
+import { get, parseSce, serializeSce, type Sce } from "../src/core/scenario/sce.ts";
 import { scenarioFeatures, type ScenarioFeatures } from "../src/core/scenario/features.ts";
-import { classify, predictLadder, toMetric, type ClassModel, type DifficultyClass } from "../src/core/scenario/difficulty.ts";
+import { classify, predictFromAnchor, predictLadder, toMetric, type ClassModel, type DifficultyClass } from "../src/core/scenario/difficulty.ts";
 import { thresholdsFrom } from "../src/core/season/percentiles.ts";
 import { windowRankCount, windowRankIndices } from "../src/core/season/windows.ts";
 import { validateSeason, type Season, type SeasonScenario } from "../src/core/season/season.ts";
-import { kovaaksRoot, scenarioFiles } from "./scenarioCorpus.ts";
-import { BANDS, FAMILIES, TEMPLATES, buildScenario, scenarioName, type Band, type Category } from "./season2/design.ts";
+import { buildCorpus, kovaaksRoot, scenarioFiles } from "./scenarioCorpus.ts";
+import { BANDS, FAMILIES, TEMPLATES, buildScenario, scenarioName, type Band, type Category, type TemplateKey } from "./season2/design.ts";
 
 const dry = process.argv.includes("--dry");
 const root = kovaaksRoot();
@@ -47,9 +47,11 @@ const mapsDir = join(root, "maps");
 const wanted = new Set<string>(Object.values(TEMPLATES));
 const templates = new Map<string, { sce: Sce; file: string }>();
 for (const file of scenarioFiles(root)) {
-  const text = readFileSync(file, "utf8");
-  const name = /^Name=(.*)$/m.exec(text)?.[1]?.trim();
-  if (name && wanted.has(name) && !templates.has(name)) templates.set(name, { sce: parseSce(text), file });
+  const sce = parseSce(readFileSync(file, "utf8"));
+  // Through the parser, not a regex on the text: a file that opens with a byte-order mark
+  // hides its first line from ^Name=, which is how Skeet Tracking went missing.
+  const name = get(sce.head, "Name")?.trim();
+  if (name && wanted.has(name) && !templates.has(name)) templates.set(name, { sce, file });
 }
 const missing = [...wanted].filter((n) => !templates.has(n));
 if (missing.length) {
@@ -66,6 +68,26 @@ const ladder = pool.ladder.ranks;
 const windowSize = pool.windowSize;
 const overlap = pool.ladder.overlap;
 const totalRanks = ladder.length;
+
+/** Every template, parsed, for a recipe that borrows a profile from another. */
+const lib = (key: TemplateKey): Sce => {
+  const t = templates.get(TEMPLATES[key]);
+  if (!t) throw new Error(`template ${TEMPLATES[key]} is not loaded`);
+  return structuredClone(t.sce);
+};
+
+/**
+ * Real boards for the families that predict from a sibling (`anchor` in the design), with
+ * the anchor's measured features. Saved to data/season-2/anchors.json so validate:season2
+ * reproduces those rows from the same numbers.
+ */
+const wantedAnchors = new Set(FAMILIES.map((f) => f.anchor).filter((a): a is string => Boolean(a)));
+const anchors = new Map<string, { features: ScenarioFeatures; ladder: Array<{ topFraction: number; score: number }> }>();
+if (wantedAnchors.size) {
+  for (const row of buildCorpus(root)) {
+    if (wantedAnchors.has(row.name) && row.ladder) anchors.set(row.name, { features: row, ladder: row.ladder.points });
+  }
+}
 
 const EXPECTED: Record<Category, DifficultyClass> = {
   "Static Clicking": "click",
@@ -99,7 +121,7 @@ for (const family of FAMILIES) {
     const name = scenarioName(family, band);
     let sce: Sce;
     try {
-      sce = buildScenario(template.sce, family, band);
+      sce = buildScenario(template.sce, family, band, lib);
     } catch (err) {
       problems.push(`${name}: ${(err as Error).message}`);
       continue;
@@ -107,11 +129,23 @@ for (const family of FAMILIES) {
     const text = serializeSce(sce);
     const features = scenarioFeatures(parseSce(text), mapsDir);
     const cls = classify(features);
-    if (cls !== EXPECTED[family.category]) {
-      problems.push(`${name}: classified ${cls ?? "as nothing"}, ${family.category} expects ${EXPECTED[family.category]}`);
+    const expected = family.modelClass ?? EXPECTED[family.category];
+    if (cls !== expected) {
+      problems.push(`${name}: classified ${cls ?? "as nothing"}, ${family.name} expects ${expected}`);
       continue;
     }
-    const prediction = predictLadder(models.get(cls)!, features);
+    const anchor = family.anchor ? anchors.get(family.anchor) : undefined;
+    if (family.anchor && !anchor) {
+      problems.push(`${name}: its anchor ${family.anchor} has no board on this machine`);
+      continue;
+    }
+    if (anchor && classify(anchor.features) !== cls) {
+      problems.push(`${name}: its anchor ${family.anchor} is not in the ${cls} class`);
+      continue;
+    }
+    const prediction = anchor
+      ? predictFromAnchor(models.get(cls)!, features, anchor.features, anchor.ladder)
+      : predictLadder(models.get(cls)!, features);
     const dist = { scenario: name, leaderboardId: 0, total: 0, points: prediction.points.map((p) => ({ topFraction: p.topFraction, score: p.score })), sampledAt: modelFile.fittedAt };
     const ranks = windowRankIndices(band, windowSize, totalRanks, overlap).map((i) => ladder[i]);
     const rankMaxes = thresholdsFrom(dist, ranks);
@@ -249,6 +283,10 @@ mkdirSync(outDir, { recursive: true });
 for (const b of built) writeFileSync(join(outDir, `${b.name}.sce`), b.text);
 writeFileSync(dataFile("seasons", "season-2.json"), JSON.stringify(season, null, 2) + "\n");
 writeFileSync(
+  dataFile("season-2", "anchors.json"),
+  JSON.stringify({ $comment: "Written by tools/buildSeason2.ts: the real boards and features of the scenarios families predict from.", anchors: Object.fromEntries(anchors) }, null, 1) + "\n",
+);
+writeFileSync(
   dataFile("season-2", "families.json"),
   JSON.stringify(
     {
@@ -262,6 +300,8 @@ writeFileSync(
         template: TEMPLATES[f.template],
         arm: f.arm,
         ...(f.exceeds ? { exceeds: f.exceeds } : {}),
+        ...(f.modelClass ? { modelClass: f.modelClass } : {}),
+        ...(f.anchor ? { anchor: f.anchor } : {}),
       })),
       scenarios: summary,
     },

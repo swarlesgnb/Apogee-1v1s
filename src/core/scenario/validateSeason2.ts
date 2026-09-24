@@ -37,7 +37,7 @@ import { join } from "node:path";
 import { dataFile } from "../dataDir.ts";
 import { get, num, parseSce, profile, list, type Sce } from "./sce.ts";
 import { jsonSpawns, scenarioFeatures } from "./features.ts";
-import { classify, predictLadder, toMetric, type ClassModel } from "./difficulty.ts";
+import { classify, predictFromAnchor, predictLadder, toMetric, type ClassModel } from "./difficulty.ts";
 import { thresholdsFrom } from "../season/percentiles.ts";
 import { windowRankIndices } from "../season/windows.ts";
 import { validateSeason, type Season } from "../season/season.ts";
@@ -84,6 +84,34 @@ for (const f of files) {
   if (get(sce.head, "Name") !== f.replace(/\.sce$/, "")) fail(`${f}: Name= is ${get(sce.head, "Name")}`);
 }
 
+/** Every bot a scenario fields, through its rotations. */
+function botsOf(sce: Sce): string[] {
+  const out: string[] = [];
+  for (const entry of list(get(sce.head, "AddedBots"))) {
+    const bare = entry.replace(/\.(bot|rot)$/i, "");
+    if (/\.rot$/i.test(entry)) out.push(...list(get(profile(sce, "Bot Rotation Profile", bare)?.lines ?? [], "ProfileNames")).map((b) => b.replace(/\.bot$/i, "")));
+    else out.push(bare);
+  }
+  return [...new Set(out)];
+}
+
+/**
+ * Which wave each character appears in: the index of its bot in the rotation that fields it.
+ * Characters of a scenario without rotations are all in wave 0.
+ */
+function wavesOf(sce: Sce): Map<string, number> {
+  const waves = new Map<string, number>();
+  for (const entry of list(get(sce.head, "AddedBots"))) {
+    const bare = entry.replace(/\.(bot|rot)$/i, "");
+    const members = /\.rot$/i.test(entry) ? list(get(profile(sce, "Bot Rotation Profile", bare)?.lines ?? [], "ProfileNames")) : [bare];
+    members.forEach((b, k) => {
+      const chr = get(profile(sce, "Bot Profile", b.replace(/\.bot$/i, ""))?.lines ?? [], "CharacterProfile");
+      if (chr) waves.set(chr.toLowerCase(), /\.rot$/i.test(entry) ? k : 0);
+    });
+  }
+  return waves;
+}
+
 let dangling = 0;
 for (const [name, { sce }] of sces) {
   const missing: string[] = [];
@@ -101,30 +129,41 @@ for (const [name, { sce }] of sces) {
     }
   };
   character(get(sce.head, "PlayerProfile"));
-  for (const entry of list(get(sce.head, "AddedBots"))) {
-    need("Bot Profile", entry);
-    const bot = profile(sce, "Bot Profile", entry.replace(/\.bot$/i, ""));
+  const botChars: string[] = [];
+  for (const b of botsOf(sce)) {
+    need("Bot Profile", b);
+    const bot = profile(sce, "Bot Profile", b);
     character(get(bot?.lines ?? [], "CharacterProfile"));
+    botChars.push(get(bot?.lines ?? [], "CharacterProfile") ?? "");
     for (const d of list(get(bot?.lines ?? [], "DodgeProfileNames"))) need("Dodge Profile", d);
     for (const a of list(get(bot?.lines ?? [], "AimingProfileNames"))) need("Aim Profile", a);
   }
-  // A Map Creator spawn point can admit only named characters. Every spawn a team uses must
-  // admit that team's characters, or they have nowhere to appear: renaming a template's bot
-  // character once left fifteen families' targets with no spawn that would take them.
+  for (const entry of list(get(sce.head, "AddedBots"))) if (/\.rot$/i.test(entry)) need("Bot Rotation Profile", entry);
+  // A Map Creator spawn point can admit only named characters. Every character a team uses
+  // needs a spawn that will take it, and a restricted spawn must take at least one of them,
+  // or it is a spawn nothing can use. Renaming a template's bot character once left fifteen
+  // families' targets with nowhere to appear. (Constellation restricts every star's spawn
+  // to that star's own character on purpose, so "every spawn admits every bot" is not the
+  // rule.)
   const raw = sce.sections.find((x) => x.type === "Map Data")?.raw ?? "";
   if (raw.trimStart().startsWith("{")) {
     const map = JSON.parse(raw) as { objects: Array<{ name?: string; properties?: Array<{ name: string; value: unknown }> }> };
-    const botChars = list(get(sce.head, "AddedBots")).map((b) => get(profile(sce, "Bot Profile", b.replace(/\.bot$/i, ""))?.lines ?? [], "CharacterProfile") ?? "");
     const playerChar = get(sce.head, "PlayerProfile") ?? "";
+    const spawnsFor = (chr: string, team: number) =>
+      map.objects.some((o) => {
+        if (o.name !== "SpawnPoint" && o.name !== "SpawnVolume") return false;
+        const prop = (k: string) => o.properties?.find((q) => q.name === k)?.value;
+        if (!(Number(prop("TeamMask") ?? 3) & team)) return false;
+        const admits = String(prop("PermittedCharacterProfiles") ?? "").split(",").map((n) => n.trim().toLowerCase()).filter(Boolean);
+        return !admits.length || admits.includes(chr.toLowerCase());
+      });
+    if (!spawnsFor(playerChar, 1)) missing.push(`no spawn admits the player (${playerChar})`);
+    for (const c of new Set(botChars)) if (!spawnsFor(c, 2)) missing.push(`no spawn admits ${c}`);
+    const known = new Set([playerChar, ...botChars].map((c) => c.toLowerCase()));
     for (const o of map.objects) {
       if (o.name !== "SpawnPoint" && o.name !== "SpawnVolume") continue;
-      const prop = (k: string) => o.properties?.find((p) => p.name === k)?.value;
-      const admits = String(prop("PermittedCharacterProfiles") ?? "").split(",").map((n) => n.trim().toLowerCase()).filter(Boolean);
-      if (!admits.length) continue;
-      const mask = Number(prop("TeamMask") ?? 3);
-      const wanted = [...(mask & 1 ? [playerChar] : []), ...(mask & 2 ? botChars : [])];
-      const shut = wanted.filter((c) => !admits.includes(c.toLowerCase()));
-      if (shut.length) missing.push(`a spawn that admits only ${admits.join(", ")}, shutting out ${[...new Set(shut)].join(", ")}`);
+      const admits = String(o.properties?.find((q) => q.name === "PermittedCharacterProfiles")?.value ?? "").split(",").map((n) => n.trim().toLowerCase()).filter(Boolean);
+      if (admits.length && !admits.some((a) => known.has(a))) missing.push(`a spawn that admits only ${admits.join(", ")}, which nothing here uses`);
     }
   }
   if (missing.length) {
@@ -145,7 +184,7 @@ for (const [name, { sce }] of sces) {
   if (!name.startsWith("Apogee ")) broke("name does not start with Apogee");
   if (get(sce.head, "Timelimit") !== "60.0") broke(`Timelimit=${get(sce.head, "Timelimit")}`);
   if (get(sce.head, "ScoreMultAccuracy") !== "false") broke("accuracy multiplier is on");
-  if (!(get(sce.head, "SearchTags") ?? "").includes("Apogee Season 2")) broke("not tagged Apogee Season 2");
+  if (!(get(sce.head, "SearchTags") ?? get(sce.head, "GameTag") ?? "").includes("Apogee Season 2")) broke("not tagged Apogee Season 2");
 }
 const byCategory = new Map<string, Map<string, Set<number>>>();
 for (const s of season.scenarios) {
@@ -153,8 +192,11 @@ for (const s of season.scenarios) {
   fams.set(s.family!, (fams.get(s.family!) ?? new Set()).add(s.window!));
   byCategory.set(s.category, fams);
 }
+const designed = JSON.parse(readFileSync(dataFile("season-2", "families.json"), "utf8")) as { families: Array<{ family: string; category: string; anchor?: string }> };
 for (const [cat, fams] of byCategory) {
-  if (fams.size !== 6) fail(`${cat} has ${fams.size} families, not 6`);
+  const want = designed.families.filter((f) => f.category === cat).length;
+  if (fams.size !== want) fail(`${cat} has ${fams.size} families in the season and ${want} in the design`);
+  if (fams.size < 6) fail(`${cat} has ${fams.size} families; a ranked match draws three, and six is the floor for variety`);
   for (const [fam, windows] of fams) if (windows.size !== 4) fail(`${fam} has ${windows.size} bands, not 4`);
 }
 if (byCategory.size !== 6) fail(`${byCategory.size} categories, not 6`);
@@ -171,6 +213,9 @@ const recutBoards = new Map(
     : []
   ).map((d) => [d.scenario, d]),
 );
+const anchors = (existsSync(dataFile("season-2", "anchors.json"))
+  ? (JSON.parse(readFileSync(dataFile("season-2", "anchors.json"), "utf8")) as { anchors: Record<string, { features: ReturnType<typeof scenarioFeatures>; ladder: Array<{ topFraction: number; score: number }> }> }).anchors
+  : {}) as Record<string, { features: ReturnType<typeof scenarioFeatures>; ladder: Array<{ topFraction: number; score: number }> }>;
 const metrics = new Map<string, { band: number; metric: number; click: boolean }[]>();
 let reproduced = 0;
 for (const s of season.scenarios) {
@@ -183,7 +228,10 @@ for (const s of season.scenarios) {
     fail(`${s.scenario}: no difficulty class`);
     continue;
   }
-  const prediction = predictLadder(m, features);
+  const anchorName = designed.families.find((f) => f.family === s.family)?.anchor;
+  const anchor = anchorName ? anchors[anchorName] : undefined;
+  if (anchorName && !anchor) fail(`${s.scenario}: predicts from ${anchorName}, and no board for it is on record`);
+  const prediction = anchor ? predictFromAnchor(m, features, anchor.features, anchor.ladder) : predictLadder(m, features);
   // A row recut from its own board (tools/recutSeason2.ts) reproduces from that board.
   const kind = (s as unknown as { source?: { kind?: string } }).source?.kind;
   const real = kind === "percentile" ? recutBoards.get(s.scenario) : undefined;
@@ -225,8 +273,18 @@ for (const [name, { sce }] of sces) {
   const spawns = jsonSpawns(raw);
   const player = spawns.find((x) => x.teams === 1)?.at ?? { x: 0, y: 0, z: 0 };
   const scale = num(sce.head, "MapScale", 1);
+  // Each bot spawn with the wave its admitted character belongs to: two spawns whose bots
+  // are never alive together (different constellations) cannot overlap on screen.
+  const waves = wavesOf(sce);
+  const mapObjects = (JSON.parse(raw) as { objects: Array<{ name?: string; properties?: Array<{ name: string; value: unknown }> }> }).objects;
+  const botWaves = mapObjects
+    .filter((o) => o.name === "SpawnPoint" && Number(o.properties?.find((q) => q.name === "TeamMask")?.value) === 2)
+    .map((o) => {
+      const admits = String(o.properties?.find((q) => q.name === "PermittedCharacterProfiles")?.value ?? "").trim().toLowerCase();
+      return admits ? waves.get(admits) ?? -1 : -1;
+    });
   const bots = spawns.filter((x) => x.teams === 2).map((x) => ({ x: (x.at.x - player.x) * scale, y: (x.at.y - player.y) * scale, z: (x.at.z - player.z) * scale }));
-  const botName = list(get(sce.head, "AddedBots"))[0]?.replace(/\.bot$/, "") ?? "";
+  const botName = botsOf(sce)[0] ?? "";
   const character = profile(sce, "Character Profile", get(profile(sce, "Bot Profile", botName)?.lines ?? [], "CharacterProfile") ?? "");
   const radius = num(character?.lines ?? [], "MainBBRadius", 0) * num(sce.head, "TargetSizeBaseMultiplier", 1);
   const worstYaw = Math.max(...bots.map((v) => Math.abs(Math.atan2(v.y, v.x) * RAD)));
@@ -236,6 +294,7 @@ for (const [name, { sce }] of sces) {
   }
   for (let i = 0; i < bots.length; i++) {
     for (let j = i + 1; j < bots.length; j++) {
+      if (botWaves[i] !== -1 && botWaves[j] !== -1 && botWaves[i] !== botWaves[j]) continue;
       const a = bots[i], b = bots[j];
       const la = Math.hypot(a.x, a.y, a.z), lb = Math.hypot(b.x, b.y, b.z);
       const apart = Math.acos(Math.max(-1, Math.min(1, (a.x * b.x + a.y * b.y + a.z * b.z) / (la * lb)))) * RAD;
@@ -302,7 +361,7 @@ if (allowed.length) console.log(`       declared exceptions: ${allowed.join(", "
 // ---- 7. values within what real files use ------------------------------------------------------
 
 const PROFILE_TYPES = new Set(["Character Profile", "Bot Profile", "Dodge Profile", "Weapon Profile"]);
-const ranges = new Map<string, { min: number; max: number }>();
+const ranges = new Map<string, { min: number; max: number; whole: boolean }>();
 for (const file of scenarioFiles(root)) {
   let sce: Sce;
   try {
@@ -317,10 +376,12 @@ for (const file of scenarioFiles(root)) {
       const v = Number(value);
       const k = `${section.type}.${key}`;
       const r = ranges.get(k);
-      if (!r) ranges.set(k, { min: v, max: v });
+      const whole = !value.includes(".");
+      if (!r) ranges.set(k, { min: v, max: v, whole });
       else {
         r.min = Math.min(r.min, v);
         r.max = Math.max(r.max, v);
+        r.whole &&= whole;
       }
     }
   }
@@ -340,10 +401,17 @@ for (const [name, { sce }] of sces) {
         if (!seenOut.has(k)) fail(`${name}: ${k}=${value} is outside ${r.min}..${r.max} seen across ${ranges.size ? "the corpus" : ""}`);
         seenOut.add(k);
       }
+      // A key every real file writes as a whole number is written as one here too.
+      if (r?.whole && value.includes(".")) {
+        outOfRange++;
+        const k = `${section.type}.${key}`;
+        if (!seenOut.has(`${k}#whole`)) fail(`${name}: ${k}=${value}, and every real file writes ${key} as a whole number`);
+        seenOut.add(`${k}#whole`);
+      }
     }
   }
 }
-if (!outOfRange) pass(`every profile value lies within the range real scenario files use (${ranges.size} keys measured)`);
+if (!outOfRange) pass(`every profile value lies within the range real scenario files use, in the same number format (${ranges.size} keys measured)`);
 
 if (failures) {
   console.log(`\n${failures} failure(s)`);

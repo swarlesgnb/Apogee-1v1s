@@ -121,6 +121,13 @@ export function bool(lines: SceLine[], key: string): boolean {
 export function set(lines: SceLine[], key: string, value: string | number | boolean): void {
   const line = lines.find((l) => l.key === key);
   if (!line) throw new Error(`no ${key} to set`);
+  // A key the file writes as a whole number (SpawnGroup=0, DifficultyTag=2) stays one:
+  // "1.0" where the game wrote "1" is a guess about how it parses the key, and there is no
+  // reason to make it.
+  if (typeof value === "number" && Number.isInteger(value) && /^-?\d+$/.test(line.value)) {
+    line.value = String(value);
+    return;
+  }
   line.value = formatValue(value);
 }
 

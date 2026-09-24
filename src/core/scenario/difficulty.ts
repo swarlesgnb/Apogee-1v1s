@@ -291,3 +291,29 @@ export function predictLadder(model: ClassModel, f: ScenarioFeatures): Predictio
   }
   return { class: model.class, points };
 }
+
+/**
+ * Predict from a sibling's real board instead of the pooled fit: the anchor's own metric at
+ * each board fraction, moved by the fit's coefficients for whatever differs between the two
+ * files. This is the "sibling transfer" `tools/fitDifficulty.ts` measures; it is used only
+ * where a family is built on a scenario with a board and the pooled fit is known to misread
+ * that kind of scenario (skeeTS on Skeet Tracking).
+ */
+export function predictFromAnchor(model: ClassModel, f: ScenarioFeatures, anchor: ScenarioFeatures, anchorLadder: Array<{ topFraction: number; score: number }>): Prediction {
+  const x = featureVector(model.class, f);
+  const xa = featureVector(model.class, anchor);
+  const points = model.fits.map((fit) => {
+    const real = anchorLadder.find((p) => Math.abs(p.topFraction - fit.topFraction) < 1e-9);
+    const base = real ? toMetric(model.class, anchor, real.score) : null;
+    if (base === null) throw new Error(`the anchor's board has no usable score at ${fit.topFraction}`);
+    const m = base + x.reduce((acc, v, i) => acc + (v - xa[i]) * fit.coefficients[i + 1], 0);
+    const sign = model.class === "click" ? -1 : 1;
+    const a = fromMetric(model.class, f, m - sign * fit.looMedian);
+    const b = fromMetric(model.class, f, m + sign * fit.looMedian);
+    return { topFraction: fit.topFraction, score: fromMetric(model.class, f, m), low: Math.min(a, b), high: Math.max(a, b) };
+  });
+  for (let i = 1; i < points.length; i++) {
+    if (points[i].score > points[i - 1].score) points[i].score = points[i - 1].score;
+  }
+  return { class: model.class, points };
+}

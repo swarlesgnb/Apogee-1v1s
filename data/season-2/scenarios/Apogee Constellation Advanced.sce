@@ -1,15 +1,15 @@
 Name=Apogee Constellation Advanced
 PlayerCharacters=Player
-BotCharacters=Apogee Constellation.bot
+BotCharacters=Apogee Constellation Slot 1.rot;Apogee Constellation Slot 2.rot;Apogee Constellation Slot 3.rot;Apogee Constellation Slot 4.rot;Apogee Constellation Slot 5.rot;Apogee Constellation Slot 6.rot;Apogee Constellation Slot 7.rot
 IsChallenge=true
 OvershotProtectionTimer=0.0
 Timelimit=60.0
 PlayerProfile=Player
-AddedBots=Apogee Constellation.bot;Apogee Constellation.bot;Apogee Constellation.bot;Apogee Constellation.bot;Apogee Constellation.bot
+AddedBots=Apogee Constellation Slot 1.rot;Apogee Constellation Slot 2.rot;Apogee Constellation Slot 3.rot;Apogee Constellation Slot 4.rot;Apogee Constellation Slot 5.rot;Apogee Constellation Slot 6.rot;Apogee Constellation Slot 7.rot
 PlayerMaxLives=0
-BotMaxLives=0;0;0;0;0
+BotMaxLives=0;0;0;0;0;0;0
 PlayerTeam=1
-BotTeams=2;2;2;2;2
+BotTeams=2;2;2;2;2;2;2
 ScoreToWin=1000.0
 ScorePerDamage=0.0
 ScorePerHit=0.0
@@ -82,9 +82,9 @@ AimSubTypeTag=Static
 AimTypeFlicking=false
 AimTypeProjectile=false
 AimTypePlayerMovement=false
-DifficultyTag=3.0
+DifficultyTag=3
 SearchTags=Apogee, Apogee Season 2, Static Clicking, Advanced
-Description=Five targets alive at once in a medium field. One click each.[nl][nl]Apogee Season 2, Static Clicking, Advanced. Five targets up at once; keep a rhythm and take the nearest one next.
+Description=Real constellations, seven stars at a time. Clear one and the next appears.[nl][nl]Apogee Season 2, Static Clicking, Advanced. Clear the whole constellation; the next one appears when its last star falls.
 GameVersion=3.7.0
 ScenarioVersion=Initial
 
@@ -120,7 +120,7 @@ MinShootDelay=0.3
 MaxShootDelay=0.6
 
 [Bot Profile]
-Name=Apogee Constellation
+Name=Apogee Big Dipper 1
 DodgeProfileNames=
 DodgeProfileWeights=
 DodgeProfileMaxChangeTime=5.0
@@ -130,12 +130,1283 @@ WeaponProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0;1.0;1.0
 AimingProfileNames=Default;Default;Default;Default;Default;Default;Default;Default
 WeaponSwitchTime=3.0
 UseWeapons=false
-CharacterProfile=Apogee Constellation Body
+CharacterProfile=Apogee Big Dipper 1 Body
 SeeThroughWalls=false
 NoDodging=true
 StandStillUntilHurt=false
 NoAiming=true
-SpawnGroup=0
+SpawnGroup=1
+AbilityUseTimer=1.0
+UseAbilityFrequency=0.0
+UseAbilityFreqMinTime=1.0
+UseAbilityFreqMaxTime=1.0
+ShowLaser=false
+LaserRgb=X=1.000 Y=0.300 Z=0.000
+LaserAlpha=1.0
+RandomizeDodgeProfiles=false
+RepeatDodgeProfileEntries=true
+UseMinimumRespawnTime=true
+DisableScoring=false
+RestartDodgeProfileTimerOnRespawn=false
+Untargetable=false
+
+[Bot Profile]
+Name=Apogee Big Dipper 2
+DodgeProfileNames=
+DodgeProfileWeights=
+DodgeProfileMaxChangeTime=5.0
+DodgeProfileMinChangeTime=1.0
+WeaponsProfileNames=;;;;;;;
+WeaponProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0;1.0;1.0
+AimingProfileNames=Default;Default;Default;Default;Default;Default;Default;Default
+WeaponSwitchTime=3.0
+UseWeapons=false
+CharacterProfile=Apogee Big Dipper 2 Body
+SeeThroughWalls=false
+NoDodging=true
+StandStillUntilHurt=false
+NoAiming=true
+SpawnGroup=1
+AbilityUseTimer=1.0
+UseAbilityFrequency=0.0
+UseAbilityFreqMinTime=1.0
+UseAbilityFreqMaxTime=1.0
+ShowLaser=false
+LaserRgb=X=1.000 Y=0.300 Z=0.000
+LaserAlpha=1.0
+RandomizeDodgeProfiles=false
+RepeatDodgeProfileEntries=true
+UseMinimumRespawnTime=true
+DisableScoring=false
+RestartDodgeProfileTimerOnRespawn=false
+Untargetable=false
+
+[Bot Profile]
+Name=Apogee Big Dipper 3
+DodgeProfileNames=
+DodgeProfileWeights=
+DodgeProfileMaxChangeTime=5.0
+DodgeProfileMinChangeTime=1.0
+WeaponsProfileNames=;;;;;;;
+WeaponProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0;1.0;1.0
+AimingProfileNames=Default;Default;Default;Default;Default;Default;Default;Default
+WeaponSwitchTime=3.0
+UseWeapons=false
+CharacterProfile=Apogee Big Dipper 3 Body
+SeeThroughWalls=false
+NoDodging=true
+StandStillUntilHurt=false
+NoAiming=true
+SpawnGroup=1
+AbilityUseTimer=1.0
+UseAbilityFrequency=0.0
+UseAbilityFreqMinTime=1.0
+UseAbilityFreqMaxTime=1.0
+ShowLaser=false
+LaserRgb=X=1.000 Y=0.300 Z=0.000
+LaserAlpha=1.0
+RandomizeDodgeProfiles=false
+RepeatDodgeProfileEntries=true
+UseMinimumRespawnTime=true
+DisableScoring=false
+RestartDodgeProfileTimerOnRespawn=false
+Untargetable=false
+
+[Bot Profile]
+Name=Apogee Big Dipper 4
+DodgeProfileNames=
+DodgeProfileWeights=
+DodgeProfileMaxChangeTime=5.0
+DodgeProfileMinChangeTime=1.0
+WeaponsProfileNames=;;;;;;;
+WeaponProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0;1.0;1.0
+AimingProfileNames=Default;Default;Default;Default;Default;Default;Default;Default
+WeaponSwitchTime=3.0
+UseWeapons=false
+CharacterProfile=Apogee Big Dipper 4 Body
+SeeThroughWalls=false
+NoDodging=true
+StandStillUntilHurt=false
+NoAiming=true
+SpawnGroup=1
+AbilityUseTimer=1.0
+UseAbilityFrequency=0.0
+UseAbilityFreqMinTime=1.0
+UseAbilityFreqMaxTime=1.0
+ShowLaser=false
+LaserRgb=X=1.000 Y=0.300 Z=0.000
+LaserAlpha=1.0
+RandomizeDodgeProfiles=false
+RepeatDodgeProfileEntries=true
+UseMinimumRespawnTime=true
+DisableScoring=false
+RestartDodgeProfileTimerOnRespawn=false
+Untargetable=false
+
+[Bot Profile]
+Name=Apogee Big Dipper 5
+DodgeProfileNames=
+DodgeProfileWeights=
+DodgeProfileMaxChangeTime=5.0
+DodgeProfileMinChangeTime=1.0
+WeaponsProfileNames=;;;;;;;
+WeaponProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0;1.0;1.0
+AimingProfileNames=Default;Default;Default;Default;Default;Default;Default;Default
+WeaponSwitchTime=3.0
+UseWeapons=false
+CharacterProfile=Apogee Big Dipper 5 Body
+SeeThroughWalls=false
+NoDodging=true
+StandStillUntilHurt=false
+NoAiming=true
+SpawnGroup=1
+AbilityUseTimer=1.0
+UseAbilityFrequency=0.0
+UseAbilityFreqMinTime=1.0
+UseAbilityFreqMaxTime=1.0
+ShowLaser=false
+LaserRgb=X=1.000 Y=0.300 Z=0.000
+LaserAlpha=1.0
+RandomizeDodgeProfiles=false
+RepeatDodgeProfileEntries=true
+UseMinimumRespawnTime=true
+DisableScoring=false
+RestartDodgeProfileTimerOnRespawn=false
+Untargetable=false
+
+[Bot Profile]
+Name=Apogee Big Dipper 6
+DodgeProfileNames=
+DodgeProfileWeights=
+DodgeProfileMaxChangeTime=5.0
+DodgeProfileMinChangeTime=1.0
+WeaponsProfileNames=;;;;;;;
+WeaponProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0;1.0;1.0
+AimingProfileNames=Default;Default;Default;Default;Default;Default;Default;Default
+WeaponSwitchTime=3.0
+UseWeapons=false
+CharacterProfile=Apogee Big Dipper 6 Body
+SeeThroughWalls=false
+NoDodging=true
+StandStillUntilHurt=false
+NoAiming=true
+SpawnGroup=1
+AbilityUseTimer=1.0
+UseAbilityFrequency=0.0
+UseAbilityFreqMinTime=1.0
+UseAbilityFreqMaxTime=1.0
+ShowLaser=false
+LaserRgb=X=1.000 Y=0.300 Z=0.000
+LaserAlpha=1.0
+RandomizeDodgeProfiles=false
+RepeatDodgeProfileEntries=true
+UseMinimumRespawnTime=true
+DisableScoring=false
+RestartDodgeProfileTimerOnRespawn=false
+Untargetable=false
+
+[Bot Profile]
+Name=Apogee Big Dipper 7
+DodgeProfileNames=
+DodgeProfileWeights=
+DodgeProfileMaxChangeTime=5.0
+DodgeProfileMinChangeTime=1.0
+WeaponsProfileNames=;;;;;;;
+WeaponProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0;1.0;1.0
+AimingProfileNames=Default;Default;Default;Default;Default;Default;Default;Default
+WeaponSwitchTime=3.0
+UseWeapons=false
+CharacterProfile=Apogee Big Dipper 7 Body
+SeeThroughWalls=false
+NoDodging=true
+StandStillUntilHurt=false
+NoAiming=true
+SpawnGroup=1
+AbilityUseTimer=1.0
+UseAbilityFrequency=0.0
+UseAbilityFreqMinTime=1.0
+UseAbilityFreqMaxTime=1.0
+ShowLaser=false
+LaserRgb=X=1.000 Y=0.300 Z=0.000
+LaserAlpha=1.0
+RandomizeDodgeProfiles=false
+RepeatDodgeProfileEntries=true
+UseMinimumRespawnTime=true
+DisableScoring=false
+RestartDodgeProfileTimerOnRespawn=false
+Untargetable=false
+
+[Bot Profile]
+Name=Apogee Little Dipper 1
+DodgeProfileNames=
+DodgeProfileWeights=
+DodgeProfileMaxChangeTime=5.0
+DodgeProfileMinChangeTime=1.0
+WeaponsProfileNames=;;;;;;;
+WeaponProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0;1.0;1.0
+AimingProfileNames=Default;Default;Default;Default;Default;Default;Default;Default
+WeaponSwitchTime=3.0
+UseWeapons=false
+CharacterProfile=Apogee Little Dipper 1 Body
+SeeThroughWalls=false
+NoDodging=true
+StandStillUntilHurt=false
+NoAiming=true
+SpawnGroup=1
+AbilityUseTimer=1.0
+UseAbilityFrequency=0.0
+UseAbilityFreqMinTime=1.0
+UseAbilityFreqMaxTime=1.0
+ShowLaser=false
+LaserRgb=X=1.000 Y=0.300 Z=0.000
+LaserAlpha=1.0
+RandomizeDodgeProfiles=false
+RepeatDodgeProfileEntries=true
+UseMinimumRespawnTime=true
+DisableScoring=false
+RestartDodgeProfileTimerOnRespawn=false
+Untargetable=false
+
+[Bot Profile]
+Name=Apogee Little Dipper 2
+DodgeProfileNames=
+DodgeProfileWeights=
+DodgeProfileMaxChangeTime=5.0
+DodgeProfileMinChangeTime=1.0
+WeaponsProfileNames=;;;;;;;
+WeaponProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0;1.0;1.0
+AimingProfileNames=Default;Default;Default;Default;Default;Default;Default;Default
+WeaponSwitchTime=3.0
+UseWeapons=false
+CharacterProfile=Apogee Little Dipper 2 Body
+SeeThroughWalls=false
+NoDodging=true
+StandStillUntilHurt=false
+NoAiming=true
+SpawnGroup=1
+AbilityUseTimer=1.0
+UseAbilityFrequency=0.0
+UseAbilityFreqMinTime=1.0
+UseAbilityFreqMaxTime=1.0
+ShowLaser=false
+LaserRgb=X=1.000 Y=0.300 Z=0.000
+LaserAlpha=1.0
+RandomizeDodgeProfiles=false
+RepeatDodgeProfileEntries=true
+UseMinimumRespawnTime=true
+DisableScoring=false
+RestartDodgeProfileTimerOnRespawn=false
+Untargetable=false
+
+[Bot Profile]
+Name=Apogee Little Dipper 3
+DodgeProfileNames=
+DodgeProfileWeights=
+DodgeProfileMaxChangeTime=5.0
+DodgeProfileMinChangeTime=1.0
+WeaponsProfileNames=;;;;;;;
+WeaponProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0;1.0;1.0
+AimingProfileNames=Default;Default;Default;Default;Default;Default;Default;Default
+WeaponSwitchTime=3.0
+UseWeapons=false
+CharacterProfile=Apogee Little Dipper 3 Body
+SeeThroughWalls=false
+NoDodging=true
+StandStillUntilHurt=false
+NoAiming=true
+SpawnGroup=1
+AbilityUseTimer=1.0
+UseAbilityFrequency=0.0
+UseAbilityFreqMinTime=1.0
+UseAbilityFreqMaxTime=1.0
+ShowLaser=false
+LaserRgb=X=1.000 Y=0.300 Z=0.000
+LaserAlpha=1.0
+RandomizeDodgeProfiles=false
+RepeatDodgeProfileEntries=true
+UseMinimumRespawnTime=true
+DisableScoring=false
+RestartDodgeProfileTimerOnRespawn=false
+Untargetable=false
+
+[Bot Profile]
+Name=Apogee Little Dipper 4
+DodgeProfileNames=
+DodgeProfileWeights=
+DodgeProfileMaxChangeTime=5.0
+DodgeProfileMinChangeTime=1.0
+WeaponsProfileNames=;;;;;;;
+WeaponProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0;1.0;1.0
+AimingProfileNames=Default;Default;Default;Default;Default;Default;Default;Default
+WeaponSwitchTime=3.0
+UseWeapons=false
+CharacterProfile=Apogee Little Dipper 4 Body
+SeeThroughWalls=false
+NoDodging=true
+StandStillUntilHurt=false
+NoAiming=true
+SpawnGroup=1
+AbilityUseTimer=1.0
+UseAbilityFrequency=0.0
+UseAbilityFreqMinTime=1.0
+UseAbilityFreqMaxTime=1.0
+ShowLaser=false
+LaserRgb=X=1.000 Y=0.300 Z=0.000
+LaserAlpha=1.0
+RandomizeDodgeProfiles=false
+RepeatDodgeProfileEntries=true
+UseMinimumRespawnTime=true
+DisableScoring=false
+RestartDodgeProfileTimerOnRespawn=false
+Untargetable=false
+
+[Bot Profile]
+Name=Apogee Little Dipper 5
+DodgeProfileNames=
+DodgeProfileWeights=
+DodgeProfileMaxChangeTime=5.0
+DodgeProfileMinChangeTime=1.0
+WeaponsProfileNames=;;;;;;;
+WeaponProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0;1.0;1.0
+AimingProfileNames=Default;Default;Default;Default;Default;Default;Default;Default
+WeaponSwitchTime=3.0
+UseWeapons=false
+CharacterProfile=Apogee Little Dipper 5 Body
+SeeThroughWalls=false
+NoDodging=true
+StandStillUntilHurt=false
+NoAiming=true
+SpawnGroup=1
+AbilityUseTimer=1.0
+UseAbilityFrequency=0.0
+UseAbilityFreqMinTime=1.0
+UseAbilityFreqMaxTime=1.0
+ShowLaser=false
+LaserRgb=X=1.000 Y=0.300 Z=0.000
+LaserAlpha=1.0
+RandomizeDodgeProfiles=false
+RepeatDodgeProfileEntries=true
+UseMinimumRespawnTime=true
+DisableScoring=false
+RestartDodgeProfileTimerOnRespawn=false
+Untargetable=false
+
+[Bot Profile]
+Name=Apogee Little Dipper 6
+DodgeProfileNames=
+DodgeProfileWeights=
+DodgeProfileMaxChangeTime=5.0
+DodgeProfileMinChangeTime=1.0
+WeaponsProfileNames=;;;;;;;
+WeaponProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0;1.0;1.0
+AimingProfileNames=Default;Default;Default;Default;Default;Default;Default;Default
+WeaponSwitchTime=3.0
+UseWeapons=false
+CharacterProfile=Apogee Little Dipper 6 Body
+SeeThroughWalls=false
+NoDodging=true
+StandStillUntilHurt=false
+NoAiming=true
+SpawnGroup=1
+AbilityUseTimer=1.0
+UseAbilityFrequency=0.0
+UseAbilityFreqMinTime=1.0
+UseAbilityFreqMaxTime=1.0
+ShowLaser=false
+LaserRgb=X=1.000 Y=0.300 Z=0.000
+LaserAlpha=1.0
+RandomizeDodgeProfiles=false
+RepeatDodgeProfileEntries=true
+UseMinimumRespawnTime=true
+DisableScoring=false
+RestartDodgeProfileTimerOnRespawn=false
+Untargetable=false
+
+[Bot Profile]
+Name=Apogee Little Dipper 7
+DodgeProfileNames=
+DodgeProfileWeights=
+DodgeProfileMaxChangeTime=5.0
+DodgeProfileMinChangeTime=1.0
+WeaponsProfileNames=;;;;;;;
+WeaponProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0;1.0;1.0
+AimingProfileNames=Default;Default;Default;Default;Default;Default;Default;Default
+WeaponSwitchTime=3.0
+UseWeapons=false
+CharacterProfile=Apogee Little Dipper 7 Body
+SeeThroughWalls=false
+NoDodging=true
+StandStillUntilHurt=false
+NoAiming=true
+SpawnGroup=1
+AbilityUseTimer=1.0
+UseAbilityFrequency=0.0
+UseAbilityFreqMinTime=1.0
+UseAbilityFreqMaxTime=1.0
+ShowLaser=false
+LaserRgb=X=1.000 Y=0.300 Z=0.000
+LaserAlpha=1.0
+RandomizeDodgeProfiles=false
+RepeatDodgeProfileEntries=true
+UseMinimumRespawnTime=true
+DisableScoring=false
+RestartDodgeProfileTimerOnRespawn=false
+Untargetable=false
+
+[Bot Profile]
+Name=Apogee Orion 1
+DodgeProfileNames=
+DodgeProfileWeights=
+DodgeProfileMaxChangeTime=5.0
+DodgeProfileMinChangeTime=1.0
+WeaponsProfileNames=;;;;;;;
+WeaponProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0;1.0;1.0
+AimingProfileNames=Default;Default;Default;Default;Default;Default;Default;Default
+WeaponSwitchTime=3.0
+UseWeapons=false
+CharacterProfile=Apogee Orion 1 Body
+SeeThroughWalls=false
+NoDodging=true
+StandStillUntilHurt=false
+NoAiming=true
+SpawnGroup=1
+AbilityUseTimer=1.0
+UseAbilityFrequency=0.0
+UseAbilityFreqMinTime=1.0
+UseAbilityFreqMaxTime=1.0
+ShowLaser=false
+LaserRgb=X=1.000 Y=0.300 Z=0.000
+LaserAlpha=1.0
+RandomizeDodgeProfiles=false
+RepeatDodgeProfileEntries=true
+UseMinimumRespawnTime=true
+DisableScoring=false
+RestartDodgeProfileTimerOnRespawn=false
+Untargetable=false
+
+[Bot Profile]
+Name=Apogee Orion 2
+DodgeProfileNames=
+DodgeProfileWeights=
+DodgeProfileMaxChangeTime=5.0
+DodgeProfileMinChangeTime=1.0
+WeaponsProfileNames=;;;;;;;
+WeaponProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0;1.0;1.0
+AimingProfileNames=Default;Default;Default;Default;Default;Default;Default;Default
+WeaponSwitchTime=3.0
+UseWeapons=false
+CharacterProfile=Apogee Orion 2 Body
+SeeThroughWalls=false
+NoDodging=true
+StandStillUntilHurt=false
+NoAiming=true
+SpawnGroup=1
+AbilityUseTimer=1.0
+UseAbilityFrequency=0.0
+UseAbilityFreqMinTime=1.0
+UseAbilityFreqMaxTime=1.0
+ShowLaser=false
+LaserRgb=X=1.000 Y=0.300 Z=0.000
+LaserAlpha=1.0
+RandomizeDodgeProfiles=false
+RepeatDodgeProfileEntries=true
+UseMinimumRespawnTime=true
+DisableScoring=false
+RestartDodgeProfileTimerOnRespawn=false
+Untargetable=false
+
+[Bot Profile]
+Name=Apogee Orion 3
+DodgeProfileNames=
+DodgeProfileWeights=
+DodgeProfileMaxChangeTime=5.0
+DodgeProfileMinChangeTime=1.0
+WeaponsProfileNames=;;;;;;;
+WeaponProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0;1.0;1.0
+AimingProfileNames=Default;Default;Default;Default;Default;Default;Default;Default
+WeaponSwitchTime=3.0
+UseWeapons=false
+CharacterProfile=Apogee Orion 3 Body
+SeeThroughWalls=false
+NoDodging=true
+StandStillUntilHurt=false
+NoAiming=true
+SpawnGroup=1
+AbilityUseTimer=1.0
+UseAbilityFrequency=0.0
+UseAbilityFreqMinTime=1.0
+UseAbilityFreqMaxTime=1.0
+ShowLaser=false
+LaserRgb=X=1.000 Y=0.300 Z=0.000
+LaserAlpha=1.0
+RandomizeDodgeProfiles=false
+RepeatDodgeProfileEntries=true
+UseMinimumRespawnTime=true
+DisableScoring=false
+RestartDodgeProfileTimerOnRespawn=false
+Untargetable=false
+
+[Bot Profile]
+Name=Apogee Orion 4
+DodgeProfileNames=
+DodgeProfileWeights=
+DodgeProfileMaxChangeTime=5.0
+DodgeProfileMinChangeTime=1.0
+WeaponsProfileNames=;;;;;;;
+WeaponProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0;1.0;1.0
+AimingProfileNames=Default;Default;Default;Default;Default;Default;Default;Default
+WeaponSwitchTime=3.0
+UseWeapons=false
+CharacterProfile=Apogee Orion 4 Body
+SeeThroughWalls=false
+NoDodging=true
+StandStillUntilHurt=false
+NoAiming=true
+SpawnGroup=1
+AbilityUseTimer=1.0
+UseAbilityFrequency=0.0
+UseAbilityFreqMinTime=1.0
+UseAbilityFreqMaxTime=1.0
+ShowLaser=false
+LaserRgb=X=1.000 Y=0.300 Z=0.000
+LaserAlpha=1.0
+RandomizeDodgeProfiles=false
+RepeatDodgeProfileEntries=true
+UseMinimumRespawnTime=true
+DisableScoring=false
+RestartDodgeProfileTimerOnRespawn=false
+Untargetable=false
+
+[Bot Profile]
+Name=Apogee Orion 5
+DodgeProfileNames=
+DodgeProfileWeights=
+DodgeProfileMaxChangeTime=5.0
+DodgeProfileMinChangeTime=1.0
+WeaponsProfileNames=;;;;;;;
+WeaponProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0;1.0;1.0
+AimingProfileNames=Default;Default;Default;Default;Default;Default;Default;Default
+WeaponSwitchTime=3.0
+UseWeapons=false
+CharacterProfile=Apogee Orion 5 Body
+SeeThroughWalls=false
+NoDodging=true
+StandStillUntilHurt=false
+NoAiming=true
+SpawnGroup=1
+AbilityUseTimer=1.0
+UseAbilityFrequency=0.0
+UseAbilityFreqMinTime=1.0
+UseAbilityFreqMaxTime=1.0
+ShowLaser=false
+LaserRgb=X=1.000 Y=0.300 Z=0.000
+LaserAlpha=1.0
+RandomizeDodgeProfiles=false
+RepeatDodgeProfileEntries=true
+UseMinimumRespawnTime=true
+DisableScoring=false
+RestartDodgeProfileTimerOnRespawn=false
+Untargetable=false
+
+[Bot Profile]
+Name=Apogee Orion 6
+DodgeProfileNames=
+DodgeProfileWeights=
+DodgeProfileMaxChangeTime=5.0
+DodgeProfileMinChangeTime=1.0
+WeaponsProfileNames=;;;;;;;
+WeaponProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0;1.0;1.0
+AimingProfileNames=Default;Default;Default;Default;Default;Default;Default;Default
+WeaponSwitchTime=3.0
+UseWeapons=false
+CharacterProfile=Apogee Orion 6 Body
+SeeThroughWalls=false
+NoDodging=true
+StandStillUntilHurt=false
+NoAiming=true
+SpawnGroup=1
+AbilityUseTimer=1.0
+UseAbilityFrequency=0.0
+UseAbilityFreqMinTime=1.0
+UseAbilityFreqMaxTime=1.0
+ShowLaser=false
+LaserRgb=X=1.000 Y=0.300 Z=0.000
+LaserAlpha=1.0
+RandomizeDodgeProfiles=false
+RepeatDodgeProfileEntries=true
+UseMinimumRespawnTime=true
+DisableScoring=false
+RestartDodgeProfileTimerOnRespawn=false
+Untargetable=false
+
+[Bot Profile]
+Name=Apogee Orion 7
+DodgeProfileNames=
+DodgeProfileWeights=
+DodgeProfileMaxChangeTime=5.0
+DodgeProfileMinChangeTime=1.0
+WeaponsProfileNames=;;;;;;;
+WeaponProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0;1.0;1.0
+AimingProfileNames=Default;Default;Default;Default;Default;Default;Default;Default
+WeaponSwitchTime=3.0
+UseWeapons=false
+CharacterProfile=Apogee Orion 7 Body
+SeeThroughWalls=false
+NoDodging=true
+StandStillUntilHurt=false
+NoAiming=true
+SpawnGroup=1
+AbilityUseTimer=1.0
+UseAbilityFrequency=0.0
+UseAbilityFreqMinTime=1.0
+UseAbilityFreqMaxTime=1.0
+ShowLaser=false
+LaserRgb=X=1.000 Y=0.300 Z=0.000
+LaserAlpha=1.0
+RandomizeDodgeProfiles=false
+RepeatDodgeProfileEntries=true
+UseMinimumRespawnTime=true
+DisableScoring=false
+RestartDodgeProfileTimerOnRespawn=false
+Untargetable=false
+
+[Bot Profile]
+Name=Apogee Cassiopeia 1
+DodgeProfileNames=
+DodgeProfileWeights=
+DodgeProfileMaxChangeTime=5.0
+DodgeProfileMinChangeTime=1.0
+WeaponsProfileNames=;;;;;;;
+WeaponProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0;1.0;1.0
+AimingProfileNames=Default;Default;Default;Default;Default;Default;Default;Default
+WeaponSwitchTime=3.0
+UseWeapons=false
+CharacterProfile=Apogee Cassiopeia 1 Body
+SeeThroughWalls=false
+NoDodging=true
+StandStillUntilHurt=false
+NoAiming=true
+SpawnGroup=1
+AbilityUseTimer=1.0
+UseAbilityFrequency=0.0
+UseAbilityFreqMinTime=1.0
+UseAbilityFreqMaxTime=1.0
+ShowLaser=false
+LaserRgb=X=1.000 Y=0.300 Z=0.000
+LaserAlpha=1.0
+RandomizeDodgeProfiles=false
+RepeatDodgeProfileEntries=true
+UseMinimumRespawnTime=true
+DisableScoring=false
+RestartDodgeProfileTimerOnRespawn=false
+Untargetable=false
+
+[Bot Profile]
+Name=Apogee Cassiopeia 2
+DodgeProfileNames=
+DodgeProfileWeights=
+DodgeProfileMaxChangeTime=5.0
+DodgeProfileMinChangeTime=1.0
+WeaponsProfileNames=;;;;;;;
+WeaponProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0;1.0;1.0
+AimingProfileNames=Default;Default;Default;Default;Default;Default;Default;Default
+WeaponSwitchTime=3.0
+UseWeapons=false
+CharacterProfile=Apogee Cassiopeia 2 Body
+SeeThroughWalls=false
+NoDodging=true
+StandStillUntilHurt=false
+NoAiming=true
+SpawnGroup=1
+AbilityUseTimer=1.0
+UseAbilityFrequency=0.0
+UseAbilityFreqMinTime=1.0
+UseAbilityFreqMaxTime=1.0
+ShowLaser=false
+LaserRgb=X=1.000 Y=0.300 Z=0.000
+LaserAlpha=1.0
+RandomizeDodgeProfiles=false
+RepeatDodgeProfileEntries=true
+UseMinimumRespawnTime=true
+DisableScoring=false
+RestartDodgeProfileTimerOnRespawn=false
+Untargetable=false
+
+[Bot Profile]
+Name=Apogee Cassiopeia 3
+DodgeProfileNames=
+DodgeProfileWeights=
+DodgeProfileMaxChangeTime=5.0
+DodgeProfileMinChangeTime=1.0
+WeaponsProfileNames=;;;;;;;
+WeaponProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0;1.0;1.0
+AimingProfileNames=Default;Default;Default;Default;Default;Default;Default;Default
+WeaponSwitchTime=3.0
+UseWeapons=false
+CharacterProfile=Apogee Cassiopeia 3 Body
+SeeThroughWalls=false
+NoDodging=true
+StandStillUntilHurt=false
+NoAiming=true
+SpawnGroup=1
+AbilityUseTimer=1.0
+UseAbilityFrequency=0.0
+UseAbilityFreqMinTime=1.0
+UseAbilityFreqMaxTime=1.0
+ShowLaser=false
+LaserRgb=X=1.000 Y=0.300 Z=0.000
+LaserAlpha=1.0
+RandomizeDodgeProfiles=false
+RepeatDodgeProfileEntries=true
+UseMinimumRespawnTime=true
+DisableScoring=false
+RestartDodgeProfileTimerOnRespawn=false
+Untargetable=false
+
+[Bot Profile]
+Name=Apogee Cassiopeia 4
+DodgeProfileNames=
+DodgeProfileWeights=
+DodgeProfileMaxChangeTime=5.0
+DodgeProfileMinChangeTime=1.0
+WeaponsProfileNames=;;;;;;;
+WeaponProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0;1.0;1.0
+AimingProfileNames=Default;Default;Default;Default;Default;Default;Default;Default
+WeaponSwitchTime=3.0
+UseWeapons=false
+CharacterProfile=Apogee Cassiopeia 4 Body
+SeeThroughWalls=false
+NoDodging=true
+StandStillUntilHurt=false
+NoAiming=true
+SpawnGroup=1
+AbilityUseTimer=1.0
+UseAbilityFrequency=0.0
+UseAbilityFreqMinTime=1.0
+UseAbilityFreqMaxTime=1.0
+ShowLaser=false
+LaserRgb=X=1.000 Y=0.300 Z=0.000
+LaserAlpha=1.0
+RandomizeDodgeProfiles=false
+RepeatDodgeProfileEntries=true
+UseMinimumRespawnTime=true
+DisableScoring=false
+RestartDodgeProfileTimerOnRespawn=false
+Untargetable=false
+
+[Bot Profile]
+Name=Apogee Cassiopeia 5
+DodgeProfileNames=
+DodgeProfileWeights=
+DodgeProfileMaxChangeTime=5.0
+DodgeProfileMinChangeTime=1.0
+WeaponsProfileNames=;;;;;;;
+WeaponProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0;1.0;1.0
+AimingProfileNames=Default;Default;Default;Default;Default;Default;Default;Default
+WeaponSwitchTime=3.0
+UseWeapons=false
+CharacterProfile=Apogee Cassiopeia 5 Body
+SeeThroughWalls=false
+NoDodging=true
+StandStillUntilHurt=false
+NoAiming=true
+SpawnGroup=1
+AbilityUseTimer=1.0
+UseAbilityFrequency=0.0
+UseAbilityFreqMinTime=1.0
+UseAbilityFreqMaxTime=1.0
+ShowLaser=false
+LaserRgb=X=1.000 Y=0.300 Z=0.000
+LaserAlpha=1.0
+RandomizeDodgeProfiles=false
+RepeatDodgeProfileEntries=true
+UseMinimumRespawnTime=true
+DisableScoring=false
+RestartDodgeProfileTimerOnRespawn=false
+Untargetable=false
+
+[Bot Profile]
+Name=Apogee Cassiopeia 6
+DodgeProfileNames=
+DodgeProfileWeights=
+DodgeProfileMaxChangeTime=5.0
+DodgeProfileMinChangeTime=1.0
+WeaponsProfileNames=;;;;;;;
+WeaponProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0;1.0;1.0
+AimingProfileNames=Default;Default;Default;Default;Default;Default;Default;Default
+WeaponSwitchTime=3.0
+UseWeapons=false
+CharacterProfile=Apogee Cassiopeia 6 Body
+SeeThroughWalls=false
+NoDodging=true
+StandStillUntilHurt=false
+NoAiming=true
+SpawnGroup=1
+AbilityUseTimer=1.0
+UseAbilityFrequency=0.0
+UseAbilityFreqMinTime=1.0
+UseAbilityFreqMaxTime=1.0
+ShowLaser=false
+LaserRgb=X=1.000 Y=0.300 Z=0.000
+LaserAlpha=1.0
+RandomizeDodgeProfiles=false
+RepeatDodgeProfileEntries=true
+UseMinimumRespawnTime=true
+DisableScoring=false
+RestartDodgeProfileTimerOnRespawn=false
+Untargetable=false
+
+[Bot Profile]
+Name=Apogee Cassiopeia 7
+DodgeProfileNames=
+DodgeProfileWeights=
+DodgeProfileMaxChangeTime=5.0
+DodgeProfileMinChangeTime=1.0
+WeaponsProfileNames=;;;;;;;
+WeaponProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0;1.0;1.0
+AimingProfileNames=Default;Default;Default;Default;Default;Default;Default;Default
+WeaponSwitchTime=3.0
+UseWeapons=false
+CharacterProfile=Apogee Cassiopeia 7 Body
+SeeThroughWalls=false
+NoDodging=true
+StandStillUntilHurt=false
+NoAiming=true
+SpawnGroup=1
+AbilityUseTimer=1.0
+UseAbilityFrequency=0.0
+UseAbilityFreqMinTime=1.0
+UseAbilityFreqMaxTime=1.0
+ShowLaser=false
+LaserRgb=X=1.000 Y=0.300 Z=0.000
+LaserAlpha=1.0
+RandomizeDodgeProfiles=false
+RepeatDodgeProfileEntries=true
+UseMinimumRespawnTime=true
+DisableScoring=false
+RestartDodgeProfileTimerOnRespawn=false
+Untargetable=false
+
+[Bot Profile]
+Name=Apogee Cygnus 1
+DodgeProfileNames=
+DodgeProfileWeights=
+DodgeProfileMaxChangeTime=5.0
+DodgeProfileMinChangeTime=1.0
+WeaponsProfileNames=;;;;;;;
+WeaponProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0;1.0;1.0
+AimingProfileNames=Default;Default;Default;Default;Default;Default;Default;Default
+WeaponSwitchTime=3.0
+UseWeapons=false
+CharacterProfile=Apogee Cygnus 1 Body
+SeeThroughWalls=false
+NoDodging=true
+StandStillUntilHurt=false
+NoAiming=true
+SpawnGroup=1
+AbilityUseTimer=1.0
+UseAbilityFrequency=0.0
+UseAbilityFreqMinTime=1.0
+UseAbilityFreqMaxTime=1.0
+ShowLaser=false
+LaserRgb=X=1.000 Y=0.300 Z=0.000
+LaserAlpha=1.0
+RandomizeDodgeProfiles=false
+RepeatDodgeProfileEntries=true
+UseMinimumRespawnTime=true
+DisableScoring=false
+RestartDodgeProfileTimerOnRespawn=false
+Untargetable=false
+
+[Bot Profile]
+Name=Apogee Cygnus 2
+DodgeProfileNames=
+DodgeProfileWeights=
+DodgeProfileMaxChangeTime=5.0
+DodgeProfileMinChangeTime=1.0
+WeaponsProfileNames=;;;;;;;
+WeaponProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0;1.0;1.0
+AimingProfileNames=Default;Default;Default;Default;Default;Default;Default;Default
+WeaponSwitchTime=3.0
+UseWeapons=false
+CharacterProfile=Apogee Cygnus 2 Body
+SeeThroughWalls=false
+NoDodging=true
+StandStillUntilHurt=false
+NoAiming=true
+SpawnGroup=1
+AbilityUseTimer=1.0
+UseAbilityFrequency=0.0
+UseAbilityFreqMinTime=1.0
+UseAbilityFreqMaxTime=1.0
+ShowLaser=false
+LaserRgb=X=1.000 Y=0.300 Z=0.000
+LaserAlpha=1.0
+RandomizeDodgeProfiles=false
+RepeatDodgeProfileEntries=true
+UseMinimumRespawnTime=true
+DisableScoring=false
+RestartDodgeProfileTimerOnRespawn=false
+Untargetable=false
+
+[Bot Profile]
+Name=Apogee Cygnus 3
+DodgeProfileNames=
+DodgeProfileWeights=
+DodgeProfileMaxChangeTime=5.0
+DodgeProfileMinChangeTime=1.0
+WeaponsProfileNames=;;;;;;;
+WeaponProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0;1.0;1.0
+AimingProfileNames=Default;Default;Default;Default;Default;Default;Default;Default
+WeaponSwitchTime=3.0
+UseWeapons=false
+CharacterProfile=Apogee Cygnus 3 Body
+SeeThroughWalls=false
+NoDodging=true
+StandStillUntilHurt=false
+NoAiming=true
+SpawnGroup=1
+AbilityUseTimer=1.0
+UseAbilityFrequency=0.0
+UseAbilityFreqMinTime=1.0
+UseAbilityFreqMaxTime=1.0
+ShowLaser=false
+LaserRgb=X=1.000 Y=0.300 Z=0.000
+LaserAlpha=1.0
+RandomizeDodgeProfiles=false
+RepeatDodgeProfileEntries=true
+UseMinimumRespawnTime=true
+DisableScoring=false
+RestartDodgeProfileTimerOnRespawn=false
+Untargetable=false
+
+[Bot Profile]
+Name=Apogee Cygnus 4
+DodgeProfileNames=
+DodgeProfileWeights=
+DodgeProfileMaxChangeTime=5.0
+DodgeProfileMinChangeTime=1.0
+WeaponsProfileNames=;;;;;;;
+WeaponProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0;1.0;1.0
+AimingProfileNames=Default;Default;Default;Default;Default;Default;Default;Default
+WeaponSwitchTime=3.0
+UseWeapons=false
+CharacterProfile=Apogee Cygnus 4 Body
+SeeThroughWalls=false
+NoDodging=true
+StandStillUntilHurt=false
+NoAiming=true
+SpawnGroup=1
+AbilityUseTimer=1.0
+UseAbilityFrequency=0.0
+UseAbilityFreqMinTime=1.0
+UseAbilityFreqMaxTime=1.0
+ShowLaser=false
+LaserRgb=X=1.000 Y=0.300 Z=0.000
+LaserAlpha=1.0
+RandomizeDodgeProfiles=false
+RepeatDodgeProfileEntries=true
+UseMinimumRespawnTime=true
+DisableScoring=false
+RestartDodgeProfileTimerOnRespawn=false
+Untargetable=false
+
+[Bot Profile]
+Name=Apogee Cygnus 5
+DodgeProfileNames=
+DodgeProfileWeights=
+DodgeProfileMaxChangeTime=5.0
+DodgeProfileMinChangeTime=1.0
+WeaponsProfileNames=;;;;;;;
+WeaponProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0;1.0;1.0
+AimingProfileNames=Default;Default;Default;Default;Default;Default;Default;Default
+WeaponSwitchTime=3.0
+UseWeapons=false
+CharacterProfile=Apogee Cygnus 5 Body
+SeeThroughWalls=false
+NoDodging=true
+StandStillUntilHurt=false
+NoAiming=true
+SpawnGroup=1
+AbilityUseTimer=1.0
+UseAbilityFrequency=0.0
+UseAbilityFreqMinTime=1.0
+UseAbilityFreqMaxTime=1.0
+ShowLaser=false
+LaserRgb=X=1.000 Y=0.300 Z=0.000
+LaserAlpha=1.0
+RandomizeDodgeProfiles=false
+RepeatDodgeProfileEntries=true
+UseMinimumRespawnTime=true
+DisableScoring=false
+RestartDodgeProfileTimerOnRespawn=false
+Untargetable=false
+
+[Bot Profile]
+Name=Apogee Cygnus 6
+DodgeProfileNames=
+DodgeProfileWeights=
+DodgeProfileMaxChangeTime=5.0
+DodgeProfileMinChangeTime=1.0
+WeaponsProfileNames=;;;;;;;
+WeaponProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0;1.0;1.0
+AimingProfileNames=Default;Default;Default;Default;Default;Default;Default;Default
+WeaponSwitchTime=3.0
+UseWeapons=false
+CharacterProfile=Apogee Cygnus 6 Body
+SeeThroughWalls=false
+NoDodging=true
+StandStillUntilHurt=false
+NoAiming=true
+SpawnGroup=1
+AbilityUseTimer=1.0
+UseAbilityFrequency=0.0
+UseAbilityFreqMinTime=1.0
+UseAbilityFreqMaxTime=1.0
+ShowLaser=false
+LaserRgb=X=1.000 Y=0.300 Z=0.000
+LaserAlpha=1.0
+RandomizeDodgeProfiles=false
+RepeatDodgeProfileEntries=true
+UseMinimumRespawnTime=true
+DisableScoring=false
+RestartDodgeProfileTimerOnRespawn=false
+Untargetable=false
+
+[Bot Profile]
+Name=Apogee Cygnus 7
+DodgeProfileNames=
+DodgeProfileWeights=
+DodgeProfileMaxChangeTime=5.0
+DodgeProfileMinChangeTime=1.0
+WeaponsProfileNames=;;;;;;;
+WeaponProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0;1.0;1.0
+AimingProfileNames=Default;Default;Default;Default;Default;Default;Default;Default
+WeaponSwitchTime=3.0
+UseWeapons=false
+CharacterProfile=Apogee Cygnus 7 Body
+SeeThroughWalls=false
+NoDodging=true
+StandStillUntilHurt=false
+NoAiming=true
+SpawnGroup=1
+AbilityUseTimer=1.0
+UseAbilityFrequency=0.0
+UseAbilityFreqMinTime=1.0
+UseAbilityFreqMaxTime=1.0
+ShowLaser=false
+LaserRgb=X=1.000 Y=0.300 Z=0.000
+LaserAlpha=1.0
+RandomizeDodgeProfiles=false
+RepeatDodgeProfileEntries=true
+UseMinimumRespawnTime=true
+DisableScoring=false
+RestartDodgeProfileTimerOnRespawn=false
+Untargetable=false
+
+[Bot Profile]
+Name=Apogee Leo 1
+DodgeProfileNames=
+DodgeProfileWeights=
+DodgeProfileMaxChangeTime=5.0
+DodgeProfileMinChangeTime=1.0
+WeaponsProfileNames=;;;;;;;
+WeaponProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0;1.0;1.0
+AimingProfileNames=Default;Default;Default;Default;Default;Default;Default;Default
+WeaponSwitchTime=3.0
+UseWeapons=false
+CharacterProfile=Apogee Leo 1 Body
+SeeThroughWalls=false
+NoDodging=true
+StandStillUntilHurt=false
+NoAiming=true
+SpawnGroup=1
+AbilityUseTimer=1.0
+UseAbilityFrequency=0.0
+UseAbilityFreqMinTime=1.0
+UseAbilityFreqMaxTime=1.0
+ShowLaser=false
+LaserRgb=X=1.000 Y=0.300 Z=0.000
+LaserAlpha=1.0
+RandomizeDodgeProfiles=false
+RepeatDodgeProfileEntries=true
+UseMinimumRespawnTime=true
+DisableScoring=false
+RestartDodgeProfileTimerOnRespawn=false
+Untargetable=false
+
+[Bot Profile]
+Name=Apogee Leo 2
+DodgeProfileNames=
+DodgeProfileWeights=
+DodgeProfileMaxChangeTime=5.0
+DodgeProfileMinChangeTime=1.0
+WeaponsProfileNames=;;;;;;;
+WeaponProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0;1.0;1.0
+AimingProfileNames=Default;Default;Default;Default;Default;Default;Default;Default
+WeaponSwitchTime=3.0
+UseWeapons=false
+CharacterProfile=Apogee Leo 2 Body
+SeeThroughWalls=false
+NoDodging=true
+StandStillUntilHurt=false
+NoAiming=true
+SpawnGroup=1
+AbilityUseTimer=1.0
+UseAbilityFrequency=0.0
+UseAbilityFreqMinTime=1.0
+UseAbilityFreqMaxTime=1.0
+ShowLaser=false
+LaserRgb=X=1.000 Y=0.300 Z=0.000
+LaserAlpha=1.0
+RandomizeDodgeProfiles=false
+RepeatDodgeProfileEntries=true
+UseMinimumRespawnTime=true
+DisableScoring=false
+RestartDodgeProfileTimerOnRespawn=false
+Untargetable=false
+
+[Bot Profile]
+Name=Apogee Leo 3
+DodgeProfileNames=
+DodgeProfileWeights=
+DodgeProfileMaxChangeTime=5.0
+DodgeProfileMinChangeTime=1.0
+WeaponsProfileNames=;;;;;;;
+WeaponProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0;1.0;1.0
+AimingProfileNames=Default;Default;Default;Default;Default;Default;Default;Default
+WeaponSwitchTime=3.0
+UseWeapons=false
+CharacterProfile=Apogee Leo 3 Body
+SeeThroughWalls=false
+NoDodging=true
+StandStillUntilHurt=false
+NoAiming=true
+SpawnGroup=1
+AbilityUseTimer=1.0
+UseAbilityFrequency=0.0
+UseAbilityFreqMinTime=1.0
+UseAbilityFreqMaxTime=1.0
+ShowLaser=false
+LaserRgb=X=1.000 Y=0.300 Z=0.000
+LaserAlpha=1.0
+RandomizeDodgeProfiles=false
+RepeatDodgeProfileEntries=true
+UseMinimumRespawnTime=true
+DisableScoring=false
+RestartDodgeProfileTimerOnRespawn=false
+Untargetable=false
+
+[Bot Profile]
+Name=Apogee Leo 4
+DodgeProfileNames=
+DodgeProfileWeights=
+DodgeProfileMaxChangeTime=5.0
+DodgeProfileMinChangeTime=1.0
+WeaponsProfileNames=;;;;;;;
+WeaponProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0;1.0;1.0
+AimingProfileNames=Default;Default;Default;Default;Default;Default;Default;Default
+WeaponSwitchTime=3.0
+UseWeapons=false
+CharacterProfile=Apogee Leo 4 Body
+SeeThroughWalls=false
+NoDodging=true
+StandStillUntilHurt=false
+NoAiming=true
+SpawnGroup=1
+AbilityUseTimer=1.0
+UseAbilityFrequency=0.0
+UseAbilityFreqMinTime=1.0
+UseAbilityFreqMaxTime=1.0
+ShowLaser=false
+LaserRgb=X=1.000 Y=0.300 Z=0.000
+LaserAlpha=1.0
+RandomizeDodgeProfiles=false
+RepeatDodgeProfileEntries=true
+UseMinimumRespawnTime=true
+DisableScoring=false
+RestartDodgeProfileTimerOnRespawn=false
+Untargetable=false
+
+[Bot Profile]
+Name=Apogee Leo 5
+DodgeProfileNames=
+DodgeProfileWeights=
+DodgeProfileMaxChangeTime=5.0
+DodgeProfileMinChangeTime=1.0
+WeaponsProfileNames=;;;;;;;
+WeaponProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0;1.0;1.0
+AimingProfileNames=Default;Default;Default;Default;Default;Default;Default;Default
+WeaponSwitchTime=3.0
+UseWeapons=false
+CharacterProfile=Apogee Leo 5 Body
+SeeThroughWalls=false
+NoDodging=true
+StandStillUntilHurt=false
+NoAiming=true
+SpawnGroup=1
+AbilityUseTimer=1.0
+UseAbilityFrequency=0.0
+UseAbilityFreqMinTime=1.0
+UseAbilityFreqMaxTime=1.0
+ShowLaser=false
+LaserRgb=X=1.000 Y=0.300 Z=0.000
+LaserAlpha=1.0
+RandomizeDodgeProfiles=false
+RepeatDodgeProfileEntries=true
+UseMinimumRespawnTime=true
+DisableScoring=false
+RestartDodgeProfileTimerOnRespawn=false
+Untargetable=false
+
+[Bot Profile]
+Name=Apogee Leo 6
+DodgeProfileNames=
+DodgeProfileWeights=
+DodgeProfileMaxChangeTime=5.0
+DodgeProfileMinChangeTime=1.0
+WeaponsProfileNames=;;;;;;;
+WeaponProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0;1.0;1.0
+AimingProfileNames=Default;Default;Default;Default;Default;Default;Default;Default
+WeaponSwitchTime=3.0
+UseWeapons=false
+CharacterProfile=Apogee Leo 6 Body
+SeeThroughWalls=false
+NoDodging=true
+StandStillUntilHurt=false
+NoAiming=true
+SpawnGroup=1
+AbilityUseTimer=1.0
+UseAbilityFrequency=0.0
+UseAbilityFreqMinTime=1.0
+UseAbilityFreqMaxTime=1.0
+ShowLaser=false
+LaserRgb=X=1.000 Y=0.300 Z=0.000
+LaserAlpha=1.0
+RandomizeDodgeProfiles=false
+RepeatDodgeProfileEntries=true
+UseMinimumRespawnTime=true
+DisableScoring=false
+RestartDodgeProfileTimerOnRespawn=false
+Untargetable=false
+
+[Bot Profile]
+Name=Apogee Leo 7
+DodgeProfileNames=
+DodgeProfileWeights=
+DodgeProfileMaxChangeTime=5.0
+DodgeProfileMinChangeTime=1.0
+WeaponsProfileNames=;;;;;;;
+WeaponProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0;1.0;1.0
+AimingProfileNames=Default;Default;Default;Default;Default;Default;Default;Default
+WeaponSwitchTime=3.0
+UseWeapons=false
+CharacterProfile=Apogee Leo 7 Body
+SeeThroughWalls=false
+NoDodging=true
+StandStillUntilHurt=false
+NoAiming=true
+SpawnGroup=1
 AbilityUseTimer=1.0
 UseAbilityFrequency=0.0
 UseAbilityFreqMinTime=1.0
@@ -297,7 +1568,7 @@ PlaybackOptions.LoopUponCompletion=true
 PlaybackOptions.BreakToInputMode=false
 
 [Character Profile]
-Name=Apogee Constellation Body
+Name=Apogee Big Dipper 1 Body
 MaxHealth=1.0
 WeaponProfileNames=;;;;;;;
 MinRespawnDelay=0.001
@@ -332,8 +1603,5994 @@ EnemyHeadColorOnLookAt=X=1.000 Y=1.000 Z=1.000
 TeamBodyColor=X=0.000 Y=0.000 Z=255.000
 TeamHeadColor=X=255.000 Y=255.000 Z=255.000
 MainBBType=Spheroid
-MainBBHeight=51.406996
-MainBBRadius=25.703498
+MainBBHeight=45.995252
+MainBBRadius=22.997626
+MainBBHasHead=false
+MainBBHeadRadius=0.1
+MainBBHeadOffset=0.0
+MainBBHide=false
+ProjBBType=Spheroid
+ProjBBHeight=128.0
+ProjBBRadius=60.0
+ProjBBHasHead=false
+ProjBBHeadRadius=0.1
+ProjBBHeadOffset=0.0
+ProjBBHide=true
+BlockSelfDamage=false
+InvinciblePlayer=false
+InvincibleBots=false
+BlockTeamDamage=false
+HasJetpack=false
+JetpackActivationDelay=0.2
+JetpackFullFuelTime=100000.0
+JetpackFuelIncPerSec=0.1
+JetpackFuelRegensInAir=true
+JetpackThrust=6000.0
+JetpackMaxZVelocity=400.0
+JetpackAirControlWithThrust=1.0
+AirJumpCount=0
+AirJumpVelocity=800.0
+AbilityProfileNames=;;;
+HideWeapon=true
+AerialFriction=0.0
+AerialVerticalTurningFriction=100000.0
+AerialVerticalBreakingFriction=0.0
+UseAerialVerticalFriction=false
+StrafeSpeedMult=1.0
+BackSpeedMult=1.0
+RespawnInvulnTime=0.0
+BlockedSpawnRadius=190.0
+BlockSpawnFOV=0.0
+BlockSpawnDistance=0.0
+RespawnAnimationDuration=0.0
+AllowBufferedJumps=false
+BounceOffWalls=false
+LeanAngle=0.0
+LeanDisplacement=0.0
+AirJumpExtraControl=0.0
+ForwardSpeedBias=1.0
+HealthRegainedonkill=0.0
+HealthRegenPerSec=0.0
+HealthRegenDelay=0.0
+JumpSpeedPenaltyDuration=0.0
+JumpSpeedPenaltyPercent=0.0
+ThirdPersonCamera=false
+TPSArmLength=300.0
+TPSOffset=X=0.000 Y=150.000 Z=150.000
+BrakingDeceleration=0.0
+TerminalVelocity=0.0
+CharacterModel=None
+CharacterSkin=Default
+MeshHitDetection=false
+SpawnOffsetMin=X=0.000 Y=-100.000 Z=-100.000
+SpawnOffsetMax=X=0.000 Y=100.000 Z=100.000
+InvertBlockedSpawn=false
+ViewBobTime=0.0
+ViewBobAngleAdjustment=0.0
+ViewBobCameraZOffset=0.0
+ViewBobAffectsShots=false
+IsFlyer=false
+FlightObeysPitch=false
+FlightVelocityUp=800.0
+FlightAccelUp=800.0
+FlightVelocityDown=800.0
+FlightAccelDown=800.0
+IsFlyUpOnJumpAndCrouch=false
+DisableCharacterCollision=false
+LifeStealPercent=0.0
+AbilityGlobalCooldown=0.0
+BlockAbilityOnStartDuration=0.0
+DragCoefficient=10.0
+AmmoRegainedOnKill=0
+ContinuousGroundFriction=0.0
+ContinuousAirFriction=0.0
+ScaledGroundAcceleration=0.0
+ScaledAirAcceleration=0.0
+MaxAirSpeed=0.0
+StopSpeed=0.0
+StopSpeedThreshold=0.0
+ClampVelocityToInputSpeed=true
+JumpSkipsFriction=false
+EnableQuakeMovement=false
+EnableQuakeJump=false
+KtJump=0.0
+MovementPhysicsTickInterval=0.0
+MovementPhysicsTickEnabled=false
+TeamGlowUpHead=0.0
+TeamGlowUpBody=0.0
+EnemyGlowUpHead=0.0
+EnemyGlowUpBody=0.0
+EnemyGlowUpHeadOnHit=0.0
+EnemyGlowUpBodyOnHit=0.0
+EnemyGlowUpHeadOnLookAt=0.0
+EnemyGlowUpBodyOnLookAt=0.0
+PlaybackOptions.PlaybackMode=Input
+PlaybackOptions.OverrideRotation=true
+PlaybackOptions.OverrideAbilities=true
+PlaybackOptions.OverrideWeapons=true
+PlaybackOptions.OverrideMovement=true
+PlaybackOptions.OverrideDodgeTime=false
+PlaybackOptions.LoopUponCompletion=true
+PlaybackOptions.BreakToInputMode=false
+
+[Character Profile]
+Name=Apogee Big Dipper 2 Body
+MaxHealth=1.0
+WeaponProfileNames=;;;;;;;
+MinRespawnDelay=0.001
+MaxRespawnDelay=0.001
+StepUpHeight=0.0
+CrouchHeightModifier=1.0
+CrouchAnimationSpeed=1.0
+CameraOffset=X=0.000 Y=0.000 Z=0.000
+HeadshotOnly=false
+DamageKnockbackFactor=0.0
+MaxSpeed=0.0
+MaxCrouchSpeed=0.0
+Acceleration=0.0
+CrouchingAcceleration=0.0
+Friction=0.0
+BrakingFrictionFactor=0.0
+JumpVelocity=0.0
+Gravity=0.0
+AirControl=0.0
+CanCrouch=false
+CanPogoJump=false
+CanCrouchInAir=false
+CrouchInAirRaisesFeet=false
+CanJumpFromCrouch=false
+// Note: the color channel values are interpreted as 0.0 (0%) to 1.0 (100%) going over 1.0 will start to produce a glow effect when the user is in HDR mode (SceneColor is set to "Medium" or higher)
+EnemyBodyColor=X=255.000 Y=0.000 Z=0.000
+EnemyBodyColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyBodyColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColor=X=255.000 Y=255.000 Z=255.000
+EnemyHeadColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+TeamBodyColor=X=0.000 Y=0.000 Z=255.000
+TeamHeadColor=X=255.000 Y=255.000 Z=255.000
+MainBBType=Spheroid
+MainBBHeight=45.995252
+MainBBRadius=22.997626
+MainBBHasHead=false
+MainBBHeadRadius=0.1
+MainBBHeadOffset=0.0
+MainBBHide=false
+ProjBBType=Spheroid
+ProjBBHeight=128.0
+ProjBBRadius=60.0
+ProjBBHasHead=false
+ProjBBHeadRadius=0.1
+ProjBBHeadOffset=0.0
+ProjBBHide=true
+BlockSelfDamage=false
+InvinciblePlayer=false
+InvincibleBots=false
+BlockTeamDamage=false
+HasJetpack=false
+JetpackActivationDelay=0.2
+JetpackFullFuelTime=100000.0
+JetpackFuelIncPerSec=0.1
+JetpackFuelRegensInAir=true
+JetpackThrust=6000.0
+JetpackMaxZVelocity=400.0
+JetpackAirControlWithThrust=1.0
+AirJumpCount=0
+AirJumpVelocity=800.0
+AbilityProfileNames=;;;
+HideWeapon=true
+AerialFriction=0.0
+AerialVerticalTurningFriction=100000.0
+AerialVerticalBreakingFriction=0.0
+UseAerialVerticalFriction=false
+StrafeSpeedMult=1.0
+BackSpeedMult=1.0
+RespawnInvulnTime=0.0
+BlockedSpawnRadius=190.0
+BlockSpawnFOV=0.0
+BlockSpawnDistance=0.0
+RespawnAnimationDuration=0.0
+AllowBufferedJumps=false
+BounceOffWalls=false
+LeanAngle=0.0
+LeanDisplacement=0.0
+AirJumpExtraControl=0.0
+ForwardSpeedBias=1.0
+HealthRegainedonkill=0.0
+HealthRegenPerSec=0.0
+HealthRegenDelay=0.0
+JumpSpeedPenaltyDuration=0.0
+JumpSpeedPenaltyPercent=0.0
+ThirdPersonCamera=false
+TPSArmLength=300.0
+TPSOffset=X=0.000 Y=150.000 Z=150.000
+BrakingDeceleration=0.0
+TerminalVelocity=0.0
+CharacterModel=None
+CharacterSkin=Default
+MeshHitDetection=false
+SpawnOffsetMin=X=0.000 Y=-100.000 Z=-100.000
+SpawnOffsetMax=X=0.000 Y=100.000 Z=100.000
+InvertBlockedSpawn=false
+ViewBobTime=0.0
+ViewBobAngleAdjustment=0.0
+ViewBobCameraZOffset=0.0
+ViewBobAffectsShots=false
+IsFlyer=false
+FlightObeysPitch=false
+FlightVelocityUp=800.0
+FlightAccelUp=800.0
+FlightVelocityDown=800.0
+FlightAccelDown=800.0
+IsFlyUpOnJumpAndCrouch=false
+DisableCharacterCollision=false
+LifeStealPercent=0.0
+AbilityGlobalCooldown=0.0
+BlockAbilityOnStartDuration=0.0
+DragCoefficient=10.0
+AmmoRegainedOnKill=0
+ContinuousGroundFriction=0.0
+ContinuousAirFriction=0.0
+ScaledGroundAcceleration=0.0
+ScaledAirAcceleration=0.0
+MaxAirSpeed=0.0
+StopSpeed=0.0
+StopSpeedThreshold=0.0
+ClampVelocityToInputSpeed=true
+JumpSkipsFriction=false
+EnableQuakeMovement=false
+EnableQuakeJump=false
+KtJump=0.0
+MovementPhysicsTickInterval=0.0
+MovementPhysicsTickEnabled=false
+TeamGlowUpHead=0.0
+TeamGlowUpBody=0.0
+EnemyGlowUpHead=0.0
+EnemyGlowUpBody=0.0
+EnemyGlowUpHeadOnHit=0.0
+EnemyGlowUpBodyOnHit=0.0
+EnemyGlowUpHeadOnLookAt=0.0
+EnemyGlowUpBodyOnLookAt=0.0
+PlaybackOptions.PlaybackMode=Input
+PlaybackOptions.OverrideRotation=true
+PlaybackOptions.OverrideAbilities=true
+PlaybackOptions.OverrideWeapons=true
+PlaybackOptions.OverrideMovement=true
+PlaybackOptions.OverrideDodgeTime=false
+PlaybackOptions.LoopUponCompletion=true
+PlaybackOptions.BreakToInputMode=false
+
+[Character Profile]
+Name=Apogee Big Dipper 3 Body
+MaxHealth=1.0
+WeaponProfileNames=;;;;;;;
+MinRespawnDelay=0.001
+MaxRespawnDelay=0.001
+StepUpHeight=0.0
+CrouchHeightModifier=1.0
+CrouchAnimationSpeed=1.0
+CameraOffset=X=0.000 Y=0.000 Z=0.000
+HeadshotOnly=false
+DamageKnockbackFactor=0.0
+MaxSpeed=0.0
+MaxCrouchSpeed=0.0
+Acceleration=0.0
+CrouchingAcceleration=0.0
+Friction=0.0
+BrakingFrictionFactor=0.0
+JumpVelocity=0.0
+Gravity=0.0
+AirControl=0.0
+CanCrouch=false
+CanPogoJump=false
+CanCrouchInAir=false
+CrouchInAirRaisesFeet=false
+CanJumpFromCrouch=false
+// Note: the color channel values are interpreted as 0.0 (0%) to 1.0 (100%) going over 1.0 will start to produce a glow effect when the user is in HDR mode (SceneColor is set to "Medium" or higher)
+EnemyBodyColor=X=255.000 Y=0.000 Z=0.000
+EnemyBodyColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyBodyColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColor=X=255.000 Y=255.000 Z=255.000
+EnemyHeadColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+TeamBodyColor=X=0.000 Y=0.000 Z=255.000
+TeamHeadColor=X=255.000 Y=255.000 Z=255.000
+MainBBType=Spheroid
+MainBBHeight=45.995252
+MainBBRadius=22.997626
+MainBBHasHead=false
+MainBBHeadRadius=0.1
+MainBBHeadOffset=0.0
+MainBBHide=false
+ProjBBType=Spheroid
+ProjBBHeight=128.0
+ProjBBRadius=60.0
+ProjBBHasHead=false
+ProjBBHeadRadius=0.1
+ProjBBHeadOffset=0.0
+ProjBBHide=true
+BlockSelfDamage=false
+InvinciblePlayer=false
+InvincibleBots=false
+BlockTeamDamage=false
+HasJetpack=false
+JetpackActivationDelay=0.2
+JetpackFullFuelTime=100000.0
+JetpackFuelIncPerSec=0.1
+JetpackFuelRegensInAir=true
+JetpackThrust=6000.0
+JetpackMaxZVelocity=400.0
+JetpackAirControlWithThrust=1.0
+AirJumpCount=0
+AirJumpVelocity=800.0
+AbilityProfileNames=;;;
+HideWeapon=true
+AerialFriction=0.0
+AerialVerticalTurningFriction=100000.0
+AerialVerticalBreakingFriction=0.0
+UseAerialVerticalFriction=false
+StrafeSpeedMult=1.0
+BackSpeedMult=1.0
+RespawnInvulnTime=0.0
+BlockedSpawnRadius=190.0
+BlockSpawnFOV=0.0
+BlockSpawnDistance=0.0
+RespawnAnimationDuration=0.0
+AllowBufferedJumps=false
+BounceOffWalls=false
+LeanAngle=0.0
+LeanDisplacement=0.0
+AirJumpExtraControl=0.0
+ForwardSpeedBias=1.0
+HealthRegainedonkill=0.0
+HealthRegenPerSec=0.0
+HealthRegenDelay=0.0
+JumpSpeedPenaltyDuration=0.0
+JumpSpeedPenaltyPercent=0.0
+ThirdPersonCamera=false
+TPSArmLength=300.0
+TPSOffset=X=0.000 Y=150.000 Z=150.000
+BrakingDeceleration=0.0
+TerminalVelocity=0.0
+CharacterModel=None
+CharacterSkin=Default
+MeshHitDetection=false
+SpawnOffsetMin=X=0.000 Y=-100.000 Z=-100.000
+SpawnOffsetMax=X=0.000 Y=100.000 Z=100.000
+InvertBlockedSpawn=false
+ViewBobTime=0.0
+ViewBobAngleAdjustment=0.0
+ViewBobCameraZOffset=0.0
+ViewBobAffectsShots=false
+IsFlyer=false
+FlightObeysPitch=false
+FlightVelocityUp=800.0
+FlightAccelUp=800.0
+FlightVelocityDown=800.0
+FlightAccelDown=800.0
+IsFlyUpOnJumpAndCrouch=false
+DisableCharacterCollision=false
+LifeStealPercent=0.0
+AbilityGlobalCooldown=0.0
+BlockAbilityOnStartDuration=0.0
+DragCoefficient=10.0
+AmmoRegainedOnKill=0
+ContinuousGroundFriction=0.0
+ContinuousAirFriction=0.0
+ScaledGroundAcceleration=0.0
+ScaledAirAcceleration=0.0
+MaxAirSpeed=0.0
+StopSpeed=0.0
+StopSpeedThreshold=0.0
+ClampVelocityToInputSpeed=true
+JumpSkipsFriction=false
+EnableQuakeMovement=false
+EnableQuakeJump=false
+KtJump=0.0
+MovementPhysicsTickInterval=0.0
+MovementPhysicsTickEnabled=false
+TeamGlowUpHead=0.0
+TeamGlowUpBody=0.0
+EnemyGlowUpHead=0.0
+EnemyGlowUpBody=0.0
+EnemyGlowUpHeadOnHit=0.0
+EnemyGlowUpBodyOnHit=0.0
+EnemyGlowUpHeadOnLookAt=0.0
+EnemyGlowUpBodyOnLookAt=0.0
+PlaybackOptions.PlaybackMode=Input
+PlaybackOptions.OverrideRotation=true
+PlaybackOptions.OverrideAbilities=true
+PlaybackOptions.OverrideWeapons=true
+PlaybackOptions.OverrideMovement=true
+PlaybackOptions.OverrideDodgeTime=false
+PlaybackOptions.LoopUponCompletion=true
+PlaybackOptions.BreakToInputMode=false
+
+[Character Profile]
+Name=Apogee Big Dipper 4 Body
+MaxHealth=1.0
+WeaponProfileNames=;;;;;;;
+MinRespawnDelay=0.001
+MaxRespawnDelay=0.001
+StepUpHeight=0.0
+CrouchHeightModifier=1.0
+CrouchAnimationSpeed=1.0
+CameraOffset=X=0.000 Y=0.000 Z=0.000
+HeadshotOnly=false
+DamageKnockbackFactor=0.0
+MaxSpeed=0.0
+MaxCrouchSpeed=0.0
+Acceleration=0.0
+CrouchingAcceleration=0.0
+Friction=0.0
+BrakingFrictionFactor=0.0
+JumpVelocity=0.0
+Gravity=0.0
+AirControl=0.0
+CanCrouch=false
+CanPogoJump=false
+CanCrouchInAir=false
+CrouchInAirRaisesFeet=false
+CanJumpFromCrouch=false
+// Note: the color channel values are interpreted as 0.0 (0%) to 1.0 (100%) going over 1.0 will start to produce a glow effect when the user is in HDR mode (SceneColor is set to "Medium" or higher)
+EnemyBodyColor=X=255.000 Y=0.000 Z=0.000
+EnemyBodyColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyBodyColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColor=X=255.000 Y=255.000 Z=255.000
+EnemyHeadColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+TeamBodyColor=X=0.000 Y=0.000 Z=255.000
+TeamHeadColor=X=255.000 Y=255.000 Z=255.000
+MainBBType=Spheroid
+MainBBHeight=45.995252
+MainBBRadius=22.997626
+MainBBHasHead=false
+MainBBHeadRadius=0.1
+MainBBHeadOffset=0.0
+MainBBHide=false
+ProjBBType=Spheroid
+ProjBBHeight=128.0
+ProjBBRadius=60.0
+ProjBBHasHead=false
+ProjBBHeadRadius=0.1
+ProjBBHeadOffset=0.0
+ProjBBHide=true
+BlockSelfDamage=false
+InvinciblePlayer=false
+InvincibleBots=false
+BlockTeamDamage=false
+HasJetpack=false
+JetpackActivationDelay=0.2
+JetpackFullFuelTime=100000.0
+JetpackFuelIncPerSec=0.1
+JetpackFuelRegensInAir=true
+JetpackThrust=6000.0
+JetpackMaxZVelocity=400.0
+JetpackAirControlWithThrust=1.0
+AirJumpCount=0
+AirJumpVelocity=800.0
+AbilityProfileNames=;;;
+HideWeapon=true
+AerialFriction=0.0
+AerialVerticalTurningFriction=100000.0
+AerialVerticalBreakingFriction=0.0
+UseAerialVerticalFriction=false
+StrafeSpeedMult=1.0
+BackSpeedMult=1.0
+RespawnInvulnTime=0.0
+BlockedSpawnRadius=190.0
+BlockSpawnFOV=0.0
+BlockSpawnDistance=0.0
+RespawnAnimationDuration=0.0
+AllowBufferedJumps=false
+BounceOffWalls=false
+LeanAngle=0.0
+LeanDisplacement=0.0
+AirJumpExtraControl=0.0
+ForwardSpeedBias=1.0
+HealthRegainedonkill=0.0
+HealthRegenPerSec=0.0
+HealthRegenDelay=0.0
+JumpSpeedPenaltyDuration=0.0
+JumpSpeedPenaltyPercent=0.0
+ThirdPersonCamera=false
+TPSArmLength=300.0
+TPSOffset=X=0.000 Y=150.000 Z=150.000
+BrakingDeceleration=0.0
+TerminalVelocity=0.0
+CharacterModel=None
+CharacterSkin=Default
+MeshHitDetection=false
+SpawnOffsetMin=X=0.000 Y=-100.000 Z=-100.000
+SpawnOffsetMax=X=0.000 Y=100.000 Z=100.000
+InvertBlockedSpawn=false
+ViewBobTime=0.0
+ViewBobAngleAdjustment=0.0
+ViewBobCameraZOffset=0.0
+ViewBobAffectsShots=false
+IsFlyer=false
+FlightObeysPitch=false
+FlightVelocityUp=800.0
+FlightAccelUp=800.0
+FlightVelocityDown=800.0
+FlightAccelDown=800.0
+IsFlyUpOnJumpAndCrouch=false
+DisableCharacterCollision=false
+LifeStealPercent=0.0
+AbilityGlobalCooldown=0.0
+BlockAbilityOnStartDuration=0.0
+DragCoefficient=10.0
+AmmoRegainedOnKill=0
+ContinuousGroundFriction=0.0
+ContinuousAirFriction=0.0
+ScaledGroundAcceleration=0.0
+ScaledAirAcceleration=0.0
+MaxAirSpeed=0.0
+StopSpeed=0.0
+StopSpeedThreshold=0.0
+ClampVelocityToInputSpeed=true
+JumpSkipsFriction=false
+EnableQuakeMovement=false
+EnableQuakeJump=false
+KtJump=0.0
+MovementPhysicsTickInterval=0.0
+MovementPhysicsTickEnabled=false
+TeamGlowUpHead=0.0
+TeamGlowUpBody=0.0
+EnemyGlowUpHead=0.0
+EnemyGlowUpBody=0.0
+EnemyGlowUpHeadOnHit=0.0
+EnemyGlowUpBodyOnHit=0.0
+EnemyGlowUpHeadOnLookAt=0.0
+EnemyGlowUpBodyOnLookAt=0.0
+PlaybackOptions.PlaybackMode=Input
+PlaybackOptions.OverrideRotation=true
+PlaybackOptions.OverrideAbilities=true
+PlaybackOptions.OverrideWeapons=true
+PlaybackOptions.OverrideMovement=true
+PlaybackOptions.OverrideDodgeTime=false
+PlaybackOptions.LoopUponCompletion=true
+PlaybackOptions.BreakToInputMode=false
+
+[Character Profile]
+Name=Apogee Big Dipper 5 Body
+MaxHealth=1.0
+WeaponProfileNames=;;;;;;;
+MinRespawnDelay=0.001
+MaxRespawnDelay=0.001
+StepUpHeight=0.0
+CrouchHeightModifier=1.0
+CrouchAnimationSpeed=1.0
+CameraOffset=X=0.000 Y=0.000 Z=0.000
+HeadshotOnly=false
+DamageKnockbackFactor=0.0
+MaxSpeed=0.0
+MaxCrouchSpeed=0.0
+Acceleration=0.0
+CrouchingAcceleration=0.0
+Friction=0.0
+BrakingFrictionFactor=0.0
+JumpVelocity=0.0
+Gravity=0.0
+AirControl=0.0
+CanCrouch=false
+CanPogoJump=false
+CanCrouchInAir=false
+CrouchInAirRaisesFeet=false
+CanJumpFromCrouch=false
+// Note: the color channel values are interpreted as 0.0 (0%) to 1.0 (100%) going over 1.0 will start to produce a glow effect when the user is in HDR mode (SceneColor is set to "Medium" or higher)
+EnemyBodyColor=X=255.000 Y=0.000 Z=0.000
+EnemyBodyColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyBodyColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColor=X=255.000 Y=255.000 Z=255.000
+EnemyHeadColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+TeamBodyColor=X=0.000 Y=0.000 Z=255.000
+TeamHeadColor=X=255.000 Y=255.000 Z=255.000
+MainBBType=Spheroid
+MainBBHeight=45.995252
+MainBBRadius=22.997626
+MainBBHasHead=false
+MainBBHeadRadius=0.1
+MainBBHeadOffset=0.0
+MainBBHide=false
+ProjBBType=Spheroid
+ProjBBHeight=128.0
+ProjBBRadius=60.0
+ProjBBHasHead=false
+ProjBBHeadRadius=0.1
+ProjBBHeadOffset=0.0
+ProjBBHide=true
+BlockSelfDamage=false
+InvinciblePlayer=false
+InvincibleBots=false
+BlockTeamDamage=false
+HasJetpack=false
+JetpackActivationDelay=0.2
+JetpackFullFuelTime=100000.0
+JetpackFuelIncPerSec=0.1
+JetpackFuelRegensInAir=true
+JetpackThrust=6000.0
+JetpackMaxZVelocity=400.0
+JetpackAirControlWithThrust=1.0
+AirJumpCount=0
+AirJumpVelocity=800.0
+AbilityProfileNames=;;;
+HideWeapon=true
+AerialFriction=0.0
+AerialVerticalTurningFriction=100000.0
+AerialVerticalBreakingFriction=0.0
+UseAerialVerticalFriction=false
+StrafeSpeedMult=1.0
+BackSpeedMult=1.0
+RespawnInvulnTime=0.0
+BlockedSpawnRadius=190.0
+BlockSpawnFOV=0.0
+BlockSpawnDistance=0.0
+RespawnAnimationDuration=0.0
+AllowBufferedJumps=false
+BounceOffWalls=false
+LeanAngle=0.0
+LeanDisplacement=0.0
+AirJumpExtraControl=0.0
+ForwardSpeedBias=1.0
+HealthRegainedonkill=0.0
+HealthRegenPerSec=0.0
+HealthRegenDelay=0.0
+JumpSpeedPenaltyDuration=0.0
+JumpSpeedPenaltyPercent=0.0
+ThirdPersonCamera=false
+TPSArmLength=300.0
+TPSOffset=X=0.000 Y=150.000 Z=150.000
+BrakingDeceleration=0.0
+TerminalVelocity=0.0
+CharacterModel=None
+CharacterSkin=Default
+MeshHitDetection=false
+SpawnOffsetMin=X=0.000 Y=-100.000 Z=-100.000
+SpawnOffsetMax=X=0.000 Y=100.000 Z=100.000
+InvertBlockedSpawn=false
+ViewBobTime=0.0
+ViewBobAngleAdjustment=0.0
+ViewBobCameraZOffset=0.0
+ViewBobAffectsShots=false
+IsFlyer=false
+FlightObeysPitch=false
+FlightVelocityUp=800.0
+FlightAccelUp=800.0
+FlightVelocityDown=800.0
+FlightAccelDown=800.0
+IsFlyUpOnJumpAndCrouch=false
+DisableCharacterCollision=false
+LifeStealPercent=0.0
+AbilityGlobalCooldown=0.0
+BlockAbilityOnStartDuration=0.0
+DragCoefficient=10.0
+AmmoRegainedOnKill=0
+ContinuousGroundFriction=0.0
+ContinuousAirFriction=0.0
+ScaledGroundAcceleration=0.0
+ScaledAirAcceleration=0.0
+MaxAirSpeed=0.0
+StopSpeed=0.0
+StopSpeedThreshold=0.0
+ClampVelocityToInputSpeed=true
+JumpSkipsFriction=false
+EnableQuakeMovement=false
+EnableQuakeJump=false
+KtJump=0.0
+MovementPhysicsTickInterval=0.0
+MovementPhysicsTickEnabled=false
+TeamGlowUpHead=0.0
+TeamGlowUpBody=0.0
+EnemyGlowUpHead=0.0
+EnemyGlowUpBody=0.0
+EnemyGlowUpHeadOnHit=0.0
+EnemyGlowUpBodyOnHit=0.0
+EnemyGlowUpHeadOnLookAt=0.0
+EnemyGlowUpBodyOnLookAt=0.0
+PlaybackOptions.PlaybackMode=Input
+PlaybackOptions.OverrideRotation=true
+PlaybackOptions.OverrideAbilities=true
+PlaybackOptions.OverrideWeapons=true
+PlaybackOptions.OverrideMovement=true
+PlaybackOptions.OverrideDodgeTime=false
+PlaybackOptions.LoopUponCompletion=true
+PlaybackOptions.BreakToInputMode=false
+
+[Character Profile]
+Name=Apogee Big Dipper 6 Body
+MaxHealth=1.0
+WeaponProfileNames=;;;;;;;
+MinRespawnDelay=0.001
+MaxRespawnDelay=0.001
+StepUpHeight=0.0
+CrouchHeightModifier=1.0
+CrouchAnimationSpeed=1.0
+CameraOffset=X=0.000 Y=0.000 Z=0.000
+HeadshotOnly=false
+DamageKnockbackFactor=0.0
+MaxSpeed=0.0
+MaxCrouchSpeed=0.0
+Acceleration=0.0
+CrouchingAcceleration=0.0
+Friction=0.0
+BrakingFrictionFactor=0.0
+JumpVelocity=0.0
+Gravity=0.0
+AirControl=0.0
+CanCrouch=false
+CanPogoJump=false
+CanCrouchInAir=false
+CrouchInAirRaisesFeet=false
+CanJumpFromCrouch=false
+// Note: the color channel values are interpreted as 0.0 (0%) to 1.0 (100%) going over 1.0 will start to produce a glow effect when the user is in HDR mode (SceneColor is set to "Medium" or higher)
+EnemyBodyColor=X=255.000 Y=0.000 Z=0.000
+EnemyBodyColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyBodyColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColor=X=255.000 Y=255.000 Z=255.000
+EnemyHeadColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+TeamBodyColor=X=0.000 Y=0.000 Z=255.000
+TeamHeadColor=X=255.000 Y=255.000 Z=255.000
+MainBBType=Spheroid
+MainBBHeight=45.995252
+MainBBRadius=22.997626
+MainBBHasHead=false
+MainBBHeadRadius=0.1
+MainBBHeadOffset=0.0
+MainBBHide=false
+ProjBBType=Spheroid
+ProjBBHeight=128.0
+ProjBBRadius=60.0
+ProjBBHasHead=false
+ProjBBHeadRadius=0.1
+ProjBBHeadOffset=0.0
+ProjBBHide=true
+BlockSelfDamage=false
+InvinciblePlayer=false
+InvincibleBots=false
+BlockTeamDamage=false
+HasJetpack=false
+JetpackActivationDelay=0.2
+JetpackFullFuelTime=100000.0
+JetpackFuelIncPerSec=0.1
+JetpackFuelRegensInAir=true
+JetpackThrust=6000.0
+JetpackMaxZVelocity=400.0
+JetpackAirControlWithThrust=1.0
+AirJumpCount=0
+AirJumpVelocity=800.0
+AbilityProfileNames=;;;
+HideWeapon=true
+AerialFriction=0.0
+AerialVerticalTurningFriction=100000.0
+AerialVerticalBreakingFriction=0.0
+UseAerialVerticalFriction=false
+StrafeSpeedMult=1.0
+BackSpeedMult=1.0
+RespawnInvulnTime=0.0
+BlockedSpawnRadius=190.0
+BlockSpawnFOV=0.0
+BlockSpawnDistance=0.0
+RespawnAnimationDuration=0.0
+AllowBufferedJumps=false
+BounceOffWalls=false
+LeanAngle=0.0
+LeanDisplacement=0.0
+AirJumpExtraControl=0.0
+ForwardSpeedBias=1.0
+HealthRegainedonkill=0.0
+HealthRegenPerSec=0.0
+HealthRegenDelay=0.0
+JumpSpeedPenaltyDuration=0.0
+JumpSpeedPenaltyPercent=0.0
+ThirdPersonCamera=false
+TPSArmLength=300.0
+TPSOffset=X=0.000 Y=150.000 Z=150.000
+BrakingDeceleration=0.0
+TerminalVelocity=0.0
+CharacterModel=None
+CharacterSkin=Default
+MeshHitDetection=false
+SpawnOffsetMin=X=0.000 Y=-100.000 Z=-100.000
+SpawnOffsetMax=X=0.000 Y=100.000 Z=100.000
+InvertBlockedSpawn=false
+ViewBobTime=0.0
+ViewBobAngleAdjustment=0.0
+ViewBobCameraZOffset=0.0
+ViewBobAffectsShots=false
+IsFlyer=false
+FlightObeysPitch=false
+FlightVelocityUp=800.0
+FlightAccelUp=800.0
+FlightVelocityDown=800.0
+FlightAccelDown=800.0
+IsFlyUpOnJumpAndCrouch=false
+DisableCharacterCollision=false
+LifeStealPercent=0.0
+AbilityGlobalCooldown=0.0
+BlockAbilityOnStartDuration=0.0
+DragCoefficient=10.0
+AmmoRegainedOnKill=0
+ContinuousGroundFriction=0.0
+ContinuousAirFriction=0.0
+ScaledGroundAcceleration=0.0
+ScaledAirAcceleration=0.0
+MaxAirSpeed=0.0
+StopSpeed=0.0
+StopSpeedThreshold=0.0
+ClampVelocityToInputSpeed=true
+JumpSkipsFriction=false
+EnableQuakeMovement=false
+EnableQuakeJump=false
+KtJump=0.0
+MovementPhysicsTickInterval=0.0
+MovementPhysicsTickEnabled=false
+TeamGlowUpHead=0.0
+TeamGlowUpBody=0.0
+EnemyGlowUpHead=0.0
+EnemyGlowUpBody=0.0
+EnemyGlowUpHeadOnHit=0.0
+EnemyGlowUpBodyOnHit=0.0
+EnemyGlowUpHeadOnLookAt=0.0
+EnemyGlowUpBodyOnLookAt=0.0
+PlaybackOptions.PlaybackMode=Input
+PlaybackOptions.OverrideRotation=true
+PlaybackOptions.OverrideAbilities=true
+PlaybackOptions.OverrideWeapons=true
+PlaybackOptions.OverrideMovement=true
+PlaybackOptions.OverrideDodgeTime=false
+PlaybackOptions.LoopUponCompletion=true
+PlaybackOptions.BreakToInputMode=false
+
+[Character Profile]
+Name=Apogee Big Dipper 7 Body
+MaxHealth=1.0
+WeaponProfileNames=;;;;;;;
+MinRespawnDelay=0.001
+MaxRespawnDelay=0.001
+StepUpHeight=0.0
+CrouchHeightModifier=1.0
+CrouchAnimationSpeed=1.0
+CameraOffset=X=0.000 Y=0.000 Z=0.000
+HeadshotOnly=false
+DamageKnockbackFactor=0.0
+MaxSpeed=0.0
+MaxCrouchSpeed=0.0
+Acceleration=0.0
+CrouchingAcceleration=0.0
+Friction=0.0
+BrakingFrictionFactor=0.0
+JumpVelocity=0.0
+Gravity=0.0
+AirControl=0.0
+CanCrouch=false
+CanPogoJump=false
+CanCrouchInAir=false
+CrouchInAirRaisesFeet=false
+CanJumpFromCrouch=false
+// Note: the color channel values are interpreted as 0.0 (0%) to 1.0 (100%) going over 1.0 will start to produce a glow effect when the user is in HDR mode (SceneColor is set to "Medium" or higher)
+EnemyBodyColor=X=255.000 Y=0.000 Z=0.000
+EnemyBodyColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyBodyColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColor=X=255.000 Y=255.000 Z=255.000
+EnemyHeadColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+TeamBodyColor=X=0.000 Y=0.000 Z=255.000
+TeamHeadColor=X=255.000 Y=255.000 Z=255.000
+MainBBType=Spheroid
+MainBBHeight=45.995252
+MainBBRadius=22.997626
+MainBBHasHead=false
+MainBBHeadRadius=0.1
+MainBBHeadOffset=0.0
+MainBBHide=false
+ProjBBType=Spheroid
+ProjBBHeight=128.0
+ProjBBRadius=60.0
+ProjBBHasHead=false
+ProjBBHeadRadius=0.1
+ProjBBHeadOffset=0.0
+ProjBBHide=true
+BlockSelfDamage=false
+InvinciblePlayer=false
+InvincibleBots=false
+BlockTeamDamage=false
+HasJetpack=false
+JetpackActivationDelay=0.2
+JetpackFullFuelTime=100000.0
+JetpackFuelIncPerSec=0.1
+JetpackFuelRegensInAir=true
+JetpackThrust=6000.0
+JetpackMaxZVelocity=400.0
+JetpackAirControlWithThrust=1.0
+AirJumpCount=0
+AirJumpVelocity=800.0
+AbilityProfileNames=;;;
+HideWeapon=true
+AerialFriction=0.0
+AerialVerticalTurningFriction=100000.0
+AerialVerticalBreakingFriction=0.0
+UseAerialVerticalFriction=false
+StrafeSpeedMult=1.0
+BackSpeedMult=1.0
+RespawnInvulnTime=0.0
+BlockedSpawnRadius=190.0
+BlockSpawnFOV=0.0
+BlockSpawnDistance=0.0
+RespawnAnimationDuration=0.0
+AllowBufferedJumps=false
+BounceOffWalls=false
+LeanAngle=0.0
+LeanDisplacement=0.0
+AirJumpExtraControl=0.0
+ForwardSpeedBias=1.0
+HealthRegainedonkill=0.0
+HealthRegenPerSec=0.0
+HealthRegenDelay=0.0
+JumpSpeedPenaltyDuration=0.0
+JumpSpeedPenaltyPercent=0.0
+ThirdPersonCamera=false
+TPSArmLength=300.0
+TPSOffset=X=0.000 Y=150.000 Z=150.000
+BrakingDeceleration=0.0
+TerminalVelocity=0.0
+CharacterModel=None
+CharacterSkin=Default
+MeshHitDetection=false
+SpawnOffsetMin=X=0.000 Y=-100.000 Z=-100.000
+SpawnOffsetMax=X=0.000 Y=100.000 Z=100.000
+InvertBlockedSpawn=false
+ViewBobTime=0.0
+ViewBobAngleAdjustment=0.0
+ViewBobCameraZOffset=0.0
+ViewBobAffectsShots=false
+IsFlyer=false
+FlightObeysPitch=false
+FlightVelocityUp=800.0
+FlightAccelUp=800.0
+FlightVelocityDown=800.0
+FlightAccelDown=800.0
+IsFlyUpOnJumpAndCrouch=false
+DisableCharacterCollision=false
+LifeStealPercent=0.0
+AbilityGlobalCooldown=0.0
+BlockAbilityOnStartDuration=0.0
+DragCoefficient=10.0
+AmmoRegainedOnKill=0
+ContinuousGroundFriction=0.0
+ContinuousAirFriction=0.0
+ScaledGroundAcceleration=0.0
+ScaledAirAcceleration=0.0
+MaxAirSpeed=0.0
+StopSpeed=0.0
+StopSpeedThreshold=0.0
+ClampVelocityToInputSpeed=true
+JumpSkipsFriction=false
+EnableQuakeMovement=false
+EnableQuakeJump=false
+KtJump=0.0
+MovementPhysicsTickInterval=0.0
+MovementPhysicsTickEnabled=false
+TeamGlowUpHead=0.0
+TeamGlowUpBody=0.0
+EnemyGlowUpHead=0.0
+EnemyGlowUpBody=0.0
+EnemyGlowUpHeadOnHit=0.0
+EnemyGlowUpBodyOnHit=0.0
+EnemyGlowUpHeadOnLookAt=0.0
+EnemyGlowUpBodyOnLookAt=0.0
+PlaybackOptions.PlaybackMode=Input
+PlaybackOptions.OverrideRotation=true
+PlaybackOptions.OverrideAbilities=true
+PlaybackOptions.OverrideWeapons=true
+PlaybackOptions.OverrideMovement=true
+PlaybackOptions.OverrideDodgeTime=false
+PlaybackOptions.LoopUponCompletion=true
+PlaybackOptions.BreakToInputMode=false
+
+[Character Profile]
+Name=Apogee Little Dipper 1 Body
+MaxHealth=1.0
+WeaponProfileNames=;;;;;;;
+MinRespawnDelay=0.001
+MaxRespawnDelay=0.001
+StepUpHeight=0.0
+CrouchHeightModifier=1.0
+CrouchAnimationSpeed=1.0
+CameraOffset=X=0.000 Y=0.000 Z=0.000
+HeadshotOnly=false
+DamageKnockbackFactor=0.0
+MaxSpeed=0.0
+MaxCrouchSpeed=0.0
+Acceleration=0.0
+CrouchingAcceleration=0.0
+Friction=0.0
+BrakingFrictionFactor=0.0
+JumpVelocity=0.0
+Gravity=0.0
+AirControl=0.0
+CanCrouch=false
+CanPogoJump=false
+CanCrouchInAir=false
+CrouchInAirRaisesFeet=false
+CanJumpFromCrouch=false
+// Note: the color channel values are interpreted as 0.0 (0%) to 1.0 (100%) going over 1.0 will start to produce a glow effect when the user is in HDR mode (SceneColor is set to "Medium" or higher)
+EnemyBodyColor=X=255.000 Y=0.000 Z=0.000
+EnemyBodyColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyBodyColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColor=X=255.000 Y=255.000 Z=255.000
+EnemyHeadColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+TeamBodyColor=X=0.000 Y=0.000 Z=255.000
+TeamHeadColor=X=255.000 Y=255.000 Z=255.000
+MainBBType=Spheroid
+MainBBHeight=45.995252
+MainBBRadius=22.997626
+MainBBHasHead=false
+MainBBHeadRadius=0.1
+MainBBHeadOffset=0.0
+MainBBHide=false
+ProjBBType=Spheroid
+ProjBBHeight=128.0
+ProjBBRadius=60.0
+ProjBBHasHead=false
+ProjBBHeadRadius=0.1
+ProjBBHeadOffset=0.0
+ProjBBHide=true
+BlockSelfDamage=false
+InvinciblePlayer=false
+InvincibleBots=false
+BlockTeamDamage=false
+HasJetpack=false
+JetpackActivationDelay=0.2
+JetpackFullFuelTime=100000.0
+JetpackFuelIncPerSec=0.1
+JetpackFuelRegensInAir=true
+JetpackThrust=6000.0
+JetpackMaxZVelocity=400.0
+JetpackAirControlWithThrust=1.0
+AirJumpCount=0
+AirJumpVelocity=800.0
+AbilityProfileNames=;;;
+HideWeapon=true
+AerialFriction=0.0
+AerialVerticalTurningFriction=100000.0
+AerialVerticalBreakingFriction=0.0
+UseAerialVerticalFriction=false
+StrafeSpeedMult=1.0
+BackSpeedMult=1.0
+RespawnInvulnTime=0.0
+BlockedSpawnRadius=190.0
+BlockSpawnFOV=0.0
+BlockSpawnDistance=0.0
+RespawnAnimationDuration=0.0
+AllowBufferedJumps=false
+BounceOffWalls=false
+LeanAngle=0.0
+LeanDisplacement=0.0
+AirJumpExtraControl=0.0
+ForwardSpeedBias=1.0
+HealthRegainedonkill=0.0
+HealthRegenPerSec=0.0
+HealthRegenDelay=0.0
+JumpSpeedPenaltyDuration=0.0
+JumpSpeedPenaltyPercent=0.0
+ThirdPersonCamera=false
+TPSArmLength=300.0
+TPSOffset=X=0.000 Y=150.000 Z=150.000
+BrakingDeceleration=0.0
+TerminalVelocity=0.0
+CharacterModel=None
+CharacterSkin=Default
+MeshHitDetection=false
+SpawnOffsetMin=X=0.000 Y=-100.000 Z=-100.000
+SpawnOffsetMax=X=0.000 Y=100.000 Z=100.000
+InvertBlockedSpawn=false
+ViewBobTime=0.0
+ViewBobAngleAdjustment=0.0
+ViewBobCameraZOffset=0.0
+ViewBobAffectsShots=false
+IsFlyer=false
+FlightObeysPitch=false
+FlightVelocityUp=800.0
+FlightAccelUp=800.0
+FlightVelocityDown=800.0
+FlightAccelDown=800.0
+IsFlyUpOnJumpAndCrouch=false
+DisableCharacterCollision=false
+LifeStealPercent=0.0
+AbilityGlobalCooldown=0.0
+BlockAbilityOnStartDuration=0.0
+DragCoefficient=10.0
+AmmoRegainedOnKill=0
+ContinuousGroundFriction=0.0
+ContinuousAirFriction=0.0
+ScaledGroundAcceleration=0.0
+ScaledAirAcceleration=0.0
+MaxAirSpeed=0.0
+StopSpeed=0.0
+StopSpeedThreshold=0.0
+ClampVelocityToInputSpeed=true
+JumpSkipsFriction=false
+EnableQuakeMovement=false
+EnableQuakeJump=false
+KtJump=0.0
+MovementPhysicsTickInterval=0.0
+MovementPhysicsTickEnabled=false
+TeamGlowUpHead=0.0
+TeamGlowUpBody=0.0
+EnemyGlowUpHead=0.0
+EnemyGlowUpBody=0.0
+EnemyGlowUpHeadOnHit=0.0
+EnemyGlowUpBodyOnHit=0.0
+EnemyGlowUpHeadOnLookAt=0.0
+EnemyGlowUpBodyOnLookAt=0.0
+PlaybackOptions.PlaybackMode=Input
+PlaybackOptions.OverrideRotation=true
+PlaybackOptions.OverrideAbilities=true
+PlaybackOptions.OverrideWeapons=true
+PlaybackOptions.OverrideMovement=true
+PlaybackOptions.OverrideDodgeTime=false
+PlaybackOptions.LoopUponCompletion=true
+PlaybackOptions.BreakToInputMode=false
+
+[Character Profile]
+Name=Apogee Little Dipper 2 Body
+MaxHealth=1.0
+WeaponProfileNames=;;;;;;;
+MinRespawnDelay=0.001
+MaxRespawnDelay=0.001
+StepUpHeight=0.0
+CrouchHeightModifier=1.0
+CrouchAnimationSpeed=1.0
+CameraOffset=X=0.000 Y=0.000 Z=0.000
+HeadshotOnly=false
+DamageKnockbackFactor=0.0
+MaxSpeed=0.0
+MaxCrouchSpeed=0.0
+Acceleration=0.0
+CrouchingAcceleration=0.0
+Friction=0.0
+BrakingFrictionFactor=0.0
+JumpVelocity=0.0
+Gravity=0.0
+AirControl=0.0
+CanCrouch=false
+CanPogoJump=false
+CanCrouchInAir=false
+CrouchInAirRaisesFeet=false
+CanJumpFromCrouch=false
+// Note: the color channel values are interpreted as 0.0 (0%) to 1.0 (100%) going over 1.0 will start to produce a glow effect when the user is in HDR mode (SceneColor is set to "Medium" or higher)
+EnemyBodyColor=X=255.000 Y=0.000 Z=0.000
+EnemyBodyColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyBodyColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColor=X=255.000 Y=255.000 Z=255.000
+EnemyHeadColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+TeamBodyColor=X=0.000 Y=0.000 Z=255.000
+TeamHeadColor=X=255.000 Y=255.000 Z=255.000
+MainBBType=Spheroid
+MainBBHeight=45.995252
+MainBBRadius=22.997626
+MainBBHasHead=false
+MainBBHeadRadius=0.1
+MainBBHeadOffset=0.0
+MainBBHide=false
+ProjBBType=Spheroid
+ProjBBHeight=128.0
+ProjBBRadius=60.0
+ProjBBHasHead=false
+ProjBBHeadRadius=0.1
+ProjBBHeadOffset=0.0
+ProjBBHide=true
+BlockSelfDamage=false
+InvinciblePlayer=false
+InvincibleBots=false
+BlockTeamDamage=false
+HasJetpack=false
+JetpackActivationDelay=0.2
+JetpackFullFuelTime=100000.0
+JetpackFuelIncPerSec=0.1
+JetpackFuelRegensInAir=true
+JetpackThrust=6000.0
+JetpackMaxZVelocity=400.0
+JetpackAirControlWithThrust=1.0
+AirJumpCount=0
+AirJumpVelocity=800.0
+AbilityProfileNames=;;;
+HideWeapon=true
+AerialFriction=0.0
+AerialVerticalTurningFriction=100000.0
+AerialVerticalBreakingFriction=0.0
+UseAerialVerticalFriction=false
+StrafeSpeedMult=1.0
+BackSpeedMult=1.0
+RespawnInvulnTime=0.0
+BlockedSpawnRadius=190.0
+BlockSpawnFOV=0.0
+BlockSpawnDistance=0.0
+RespawnAnimationDuration=0.0
+AllowBufferedJumps=false
+BounceOffWalls=false
+LeanAngle=0.0
+LeanDisplacement=0.0
+AirJumpExtraControl=0.0
+ForwardSpeedBias=1.0
+HealthRegainedonkill=0.0
+HealthRegenPerSec=0.0
+HealthRegenDelay=0.0
+JumpSpeedPenaltyDuration=0.0
+JumpSpeedPenaltyPercent=0.0
+ThirdPersonCamera=false
+TPSArmLength=300.0
+TPSOffset=X=0.000 Y=150.000 Z=150.000
+BrakingDeceleration=0.0
+TerminalVelocity=0.0
+CharacterModel=None
+CharacterSkin=Default
+MeshHitDetection=false
+SpawnOffsetMin=X=0.000 Y=-100.000 Z=-100.000
+SpawnOffsetMax=X=0.000 Y=100.000 Z=100.000
+InvertBlockedSpawn=false
+ViewBobTime=0.0
+ViewBobAngleAdjustment=0.0
+ViewBobCameraZOffset=0.0
+ViewBobAffectsShots=false
+IsFlyer=false
+FlightObeysPitch=false
+FlightVelocityUp=800.0
+FlightAccelUp=800.0
+FlightVelocityDown=800.0
+FlightAccelDown=800.0
+IsFlyUpOnJumpAndCrouch=false
+DisableCharacterCollision=false
+LifeStealPercent=0.0
+AbilityGlobalCooldown=0.0
+BlockAbilityOnStartDuration=0.0
+DragCoefficient=10.0
+AmmoRegainedOnKill=0
+ContinuousGroundFriction=0.0
+ContinuousAirFriction=0.0
+ScaledGroundAcceleration=0.0
+ScaledAirAcceleration=0.0
+MaxAirSpeed=0.0
+StopSpeed=0.0
+StopSpeedThreshold=0.0
+ClampVelocityToInputSpeed=true
+JumpSkipsFriction=false
+EnableQuakeMovement=false
+EnableQuakeJump=false
+KtJump=0.0
+MovementPhysicsTickInterval=0.0
+MovementPhysicsTickEnabled=false
+TeamGlowUpHead=0.0
+TeamGlowUpBody=0.0
+EnemyGlowUpHead=0.0
+EnemyGlowUpBody=0.0
+EnemyGlowUpHeadOnHit=0.0
+EnemyGlowUpBodyOnHit=0.0
+EnemyGlowUpHeadOnLookAt=0.0
+EnemyGlowUpBodyOnLookAt=0.0
+PlaybackOptions.PlaybackMode=Input
+PlaybackOptions.OverrideRotation=true
+PlaybackOptions.OverrideAbilities=true
+PlaybackOptions.OverrideWeapons=true
+PlaybackOptions.OverrideMovement=true
+PlaybackOptions.OverrideDodgeTime=false
+PlaybackOptions.LoopUponCompletion=true
+PlaybackOptions.BreakToInputMode=false
+
+[Character Profile]
+Name=Apogee Little Dipper 3 Body
+MaxHealth=1.0
+WeaponProfileNames=;;;;;;;
+MinRespawnDelay=0.001
+MaxRespawnDelay=0.001
+StepUpHeight=0.0
+CrouchHeightModifier=1.0
+CrouchAnimationSpeed=1.0
+CameraOffset=X=0.000 Y=0.000 Z=0.000
+HeadshotOnly=false
+DamageKnockbackFactor=0.0
+MaxSpeed=0.0
+MaxCrouchSpeed=0.0
+Acceleration=0.0
+CrouchingAcceleration=0.0
+Friction=0.0
+BrakingFrictionFactor=0.0
+JumpVelocity=0.0
+Gravity=0.0
+AirControl=0.0
+CanCrouch=false
+CanPogoJump=false
+CanCrouchInAir=false
+CrouchInAirRaisesFeet=false
+CanJumpFromCrouch=false
+// Note: the color channel values are interpreted as 0.0 (0%) to 1.0 (100%) going over 1.0 will start to produce a glow effect when the user is in HDR mode (SceneColor is set to "Medium" or higher)
+EnemyBodyColor=X=255.000 Y=0.000 Z=0.000
+EnemyBodyColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyBodyColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColor=X=255.000 Y=255.000 Z=255.000
+EnemyHeadColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+TeamBodyColor=X=0.000 Y=0.000 Z=255.000
+TeamHeadColor=X=255.000 Y=255.000 Z=255.000
+MainBBType=Spheroid
+MainBBHeight=45.995252
+MainBBRadius=22.997626
+MainBBHasHead=false
+MainBBHeadRadius=0.1
+MainBBHeadOffset=0.0
+MainBBHide=false
+ProjBBType=Spheroid
+ProjBBHeight=128.0
+ProjBBRadius=60.0
+ProjBBHasHead=false
+ProjBBHeadRadius=0.1
+ProjBBHeadOffset=0.0
+ProjBBHide=true
+BlockSelfDamage=false
+InvinciblePlayer=false
+InvincibleBots=false
+BlockTeamDamage=false
+HasJetpack=false
+JetpackActivationDelay=0.2
+JetpackFullFuelTime=100000.0
+JetpackFuelIncPerSec=0.1
+JetpackFuelRegensInAir=true
+JetpackThrust=6000.0
+JetpackMaxZVelocity=400.0
+JetpackAirControlWithThrust=1.0
+AirJumpCount=0
+AirJumpVelocity=800.0
+AbilityProfileNames=;;;
+HideWeapon=true
+AerialFriction=0.0
+AerialVerticalTurningFriction=100000.0
+AerialVerticalBreakingFriction=0.0
+UseAerialVerticalFriction=false
+StrafeSpeedMult=1.0
+BackSpeedMult=1.0
+RespawnInvulnTime=0.0
+BlockedSpawnRadius=190.0
+BlockSpawnFOV=0.0
+BlockSpawnDistance=0.0
+RespawnAnimationDuration=0.0
+AllowBufferedJumps=false
+BounceOffWalls=false
+LeanAngle=0.0
+LeanDisplacement=0.0
+AirJumpExtraControl=0.0
+ForwardSpeedBias=1.0
+HealthRegainedonkill=0.0
+HealthRegenPerSec=0.0
+HealthRegenDelay=0.0
+JumpSpeedPenaltyDuration=0.0
+JumpSpeedPenaltyPercent=0.0
+ThirdPersonCamera=false
+TPSArmLength=300.0
+TPSOffset=X=0.000 Y=150.000 Z=150.000
+BrakingDeceleration=0.0
+TerminalVelocity=0.0
+CharacterModel=None
+CharacterSkin=Default
+MeshHitDetection=false
+SpawnOffsetMin=X=0.000 Y=-100.000 Z=-100.000
+SpawnOffsetMax=X=0.000 Y=100.000 Z=100.000
+InvertBlockedSpawn=false
+ViewBobTime=0.0
+ViewBobAngleAdjustment=0.0
+ViewBobCameraZOffset=0.0
+ViewBobAffectsShots=false
+IsFlyer=false
+FlightObeysPitch=false
+FlightVelocityUp=800.0
+FlightAccelUp=800.0
+FlightVelocityDown=800.0
+FlightAccelDown=800.0
+IsFlyUpOnJumpAndCrouch=false
+DisableCharacterCollision=false
+LifeStealPercent=0.0
+AbilityGlobalCooldown=0.0
+BlockAbilityOnStartDuration=0.0
+DragCoefficient=10.0
+AmmoRegainedOnKill=0
+ContinuousGroundFriction=0.0
+ContinuousAirFriction=0.0
+ScaledGroundAcceleration=0.0
+ScaledAirAcceleration=0.0
+MaxAirSpeed=0.0
+StopSpeed=0.0
+StopSpeedThreshold=0.0
+ClampVelocityToInputSpeed=true
+JumpSkipsFriction=false
+EnableQuakeMovement=false
+EnableQuakeJump=false
+KtJump=0.0
+MovementPhysicsTickInterval=0.0
+MovementPhysicsTickEnabled=false
+TeamGlowUpHead=0.0
+TeamGlowUpBody=0.0
+EnemyGlowUpHead=0.0
+EnemyGlowUpBody=0.0
+EnemyGlowUpHeadOnHit=0.0
+EnemyGlowUpBodyOnHit=0.0
+EnemyGlowUpHeadOnLookAt=0.0
+EnemyGlowUpBodyOnLookAt=0.0
+PlaybackOptions.PlaybackMode=Input
+PlaybackOptions.OverrideRotation=true
+PlaybackOptions.OverrideAbilities=true
+PlaybackOptions.OverrideWeapons=true
+PlaybackOptions.OverrideMovement=true
+PlaybackOptions.OverrideDodgeTime=false
+PlaybackOptions.LoopUponCompletion=true
+PlaybackOptions.BreakToInputMode=false
+
+[Character Profile]
+Name=Apogee Little Dipper 4 Body
+MaxHealth=1.0
+WeaponProfileNames=;;;;;;;
+MinRespawnDelay=0.001
+MaxRespawnDelay=0.001
+StepUpHeight=0.0
+CrouchHeightModifier=1.0
+CrouchAnimationSpeed=1.0
+CameraOffset=X=0.000 Y=0.000 Z=0.000
+HeadshotOnly=false
+DamageKnockbackFactor=0.0
+MaxSpeed=0.0
+MaxCrouchSpeed=0.0
+Acceleration=0.0
+CrouchingAcceleration=0.0
+Friction=0.0
+BrakingFrictionFactor=0.0
+JumpVelocity=0.0
+Gravity=0.0
+AirControl=0.0
+CanCrouch=false
+CanPogoJump=false
+CanCrouchInAir=false
+CrouchInAirRaisesFeet=false
+CanJumpFromCrouch=false
+// Note: the color channel values are interpreted as 0.0 (0%) to 1.0 (100%) going over 1.0 will start to produce a glow effect when the user is in HDR mode (SceneColor is set to "Medium" or higher)
+EnemyBodyColor=X=255.000 Y=0.000 Z=0.000
+EnemyBodyColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyBodyColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColor=X=255.000 Y=255.000 Z=255.000
+EnemyHeadColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+TeamBodyColor=X=0.000 Y=0.000 Z=255.000
+TeamHeadColor=X=255.000 Y=255.000 Z=255.000
+MainBBType=Spheroid
+MainBBHeight=45.995252
+MainBBRadius=22.997626
+MainBBHasHead=false
+MainBBHeadRadius=0.1
+MainBBHeadOffset=0.0
+MainBBHide=false
+ProjBBType=Spheroid
+ProjBBHeight=128.0
+ProjBBRadius=60.0
+ProjBBHasHead=false
+ProjBBHeadRadius=0.1
+ProjBBHeadOffset=0.0
+ProjBBHide=true
+BlockSelfDamage=false
+InvinciblePlayer=false
+InvincibleBots=false
+BlockTeamDamage=false
+HasJetpack=false
+JetpackActivationDelay=0.2
+JetpackFullFuelTime=100000.0
+JetpackFuelIncPerSec=0.1
+JetpackFuelRegensInAir=true
+JetpackThrust=6000.0
+JetpackMaxZVelocity=400.0
+JetpackAirControlWithThrust=1.0
+AirJumpCount=0
+AirJumpVelocity=800.0
+AbilityProfileNames=;;;
+HideWeapon=true
+AerialFriction=0.0
+AerialVerticalTurningFriction=100000.0
+AerialVerticalBreakingFriction=0.0
+UseAerialVerticalFriction=false
+StrafeSpeedMult=1.0
+BackSpeedMult=1.0
+RespawnInvulnTime=0.0
+BlockedSpawnRadius=190.0
+BlockSpawnFOV=0.0
+BlockSpawnDistance=0.0
+RespawnAnimationDuration=0.0
+AllowBufferedJumps=false
+BounceOffWalls=false
+LeanAngle=0.0
+LeanDisplacement=0.0
+AirJumpExtraControl=0.0
+ForwardSpeedBias=1.0
+HealthRegainedonkill=0.0
+HealthRegenPerSec=0.0
+HealthRegenDelay=0.0
+JumpSpeedPenaltyDuration=0.0
+JumpSpeedPenaltyPercent=0.0
+ThirdPersonCamera=false
+TPSArmLength=300.0
+TPSOffset=X=0.000 Y=150.000 Z=150.000
+BrakingDeceleration=0.0
+TerminalVelocity=0.0
+CharacterModel=None
+CharacterSkin=Default
+MeshHitDetection=false
+SpawnOffsetMin=X=0.000 Y=-100.000 Z=-100.000
+SpawnOffsetMax=X=0.000 Y=100.000 Z=100.000
+InvertBlockedSpawn=false
+ViewBobTime=0.0
+ViewBobAngleAdjustment=0.0
+ViewBobCameraZOffset=0.0
+ViewBobAffectsShots=false
+IsFlyer=false
+FlightObeysPitch=false
+FlightVelocityUp=800.0
+FlightAccelUp=800.0
+FlightVelocityDown=800.0
+FlightAccelDown=800.0
+IsFlyUpOnJumpAndCrouch=false
+DisableCharacterCollision=false
+LifeStealPercent=0.0
+AbilityGlobalCooldown=0.0
+BlockAbilityOnStartDuration=0.0
+DragCoefficient=10.0
+AmmoRegainedOnKill=0
+ContinuousGroundFriction=0.0
+ContinuousAirFriction=0.0
+ScaledGroundAcceleration=0.0
+ScaledAirAcceleration=0.0
+MaxAirSpeed=0.0
+StopSpeed=0.0
+StopSpeedThreshold=0.0
+ClampVelocityToInputSpeed=true
+JumpSkipsFriction=false
+EnableQuakeMovement=false
+EnableQuakeJump=false
+KtJump=0.0
+MovementPhysicsTickInterval=0.0
+MovementPhysicsTickEnabled=false
+TeamGlowUpHead=0.0
+TeamGlowUpBody=0.0
+EnemyGlowUpHead=0.0
+EnemyGlowUpBody=0.0
+EnemyGlowUpHeadOnHit=0.0
+EnemyGlowUpBodyOnHit=0.0
+EnemyGlowUpHeadOnLookAt=0.0
+EnemyGlowUpBodyOnLookAt=0.0
+PlaybackOptions.PlaybackMode=Input
+PlaybackOptions.OverrideRotation=true
+PlaybackOptions.OverrideAbilities=true
+PlaybackOptions.OverrideWeapons=true
+PlaybackOptions.OverrideMovement=true
+PlaybackOptions.OverrideDodgeTime=false
+PlaybackOptions.LoopUponCompletion=true
+PlaybackOptions.BreakToInputMode=false
+
+[Character Profile]
+Name=Apogee Little Dipper 5 Body
+MaxHealth=1.0
+WeaponProfileNames=;;;;;;;
+MinRespawnDelay=0.001
+MaxRespawnDelay=0.001
+StepUpHeight=0.0
+CrouchHeightModifier=1.0
+CrouchAnimationSpeed=1.0
+CameraOffset=X=0.000 Y=0.000 Z=0.000
+HeadshotOnly=false
+DamageKnockbackFactor=0.0
+MaxSpeed=0.0
+MaxCrouchSpeed=0.0
+Acceleration=0.0
+CrouchingAcceleration=0.0
+Friction=0.0
+BrakingFrictionFactor=0.0
+JumpVelocity=0.0
+Gravity=0.0
+AirControl=0.0
+CanCrouch=false
+CanPogoJump=false
+CanCrouchInAir=false
+CrouchInAirRaisesFeet=false
+CanJumpFromCrouch=false
+// Note: the color channel values are interpreted as 0.0 (0%) to 1.0 (100%) going over 1.0 will start to produce a glow effect when the user is in HDR mode (SceneColor is set to "Medium" or higher)
+EnemyBodyColor=X=255.000 Y=0.000 Z=0.000
+EnemyBodyColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyBodyColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColor=X=255.000 Y=255.000 Z=255.000
+EnemyHeadColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+TeamBodyColor=X=0.000 Y=0.000 Z=255.000
+TeamHeadColor=X=255.000 Y=255.000 Z=255.000
+MainBBType=Spheroid
+MainBBHeight=45.995252
+MainBBRadius=22.997626
+MainBBHasHead=false
+MainBBHeadRadius=0.1
+MainBBHeadOffset=0.0
+MainBBHide=false
+ProjBBType=Spheroid
+ProjBBHeight=128.0
+ProjBBRadius=60.0
+ProjBBHasHead=false
+ProjBBHeadRadius=0.1
+ProjBBHeadOffset=0.0
+ProjBBHide=true
+BlockSelfDamage=false
+InvinciblePlayer=false
+InvincibleBots=false
+BlockTeamDamage=false
+HasJetpack=false
+JetpackActivationDelay=0.2
+JetpackFullFuelTime=100000.0
+JetpackFuelIncPerSec=0.1
+JetpackFuelRegensInAir=true
+JetpackThrust=6000.0
+JetpackMaxZVelocity=400.0
+JetpackAirControlWithThrust=1.0
+AirJumpCount=0
+AirJumpVelocity=800.0
+AbilityProfileNames=;;;
+HideWeapon=true
+AerialFriction=0.0
+AerialVerticalTurningFriction=100000.0
+AerialVerticalBreakingFriction=0.0
+UseAerialVerticalFriction=false
+StrafeSpeedMult=1.0
+BackSpeedMult=1.0
+RespawnInvulnTime=0.0
+BlockedSpawnRadius=190.0
+BlockSpawnFOV=0.0
+BlockSpawnDistance=0.0
+RespawnAnimationDuration=0.0
+AllowBufferedJumps=false
+BounceOffWalls=false
+LeanAngle=0.0
+LeanDisplacement=0.0
+AirJumpExtraControl=0.0
+ForwardSpeedBias=1.0
+HealthRegainedonkill=0.0
+HealthRegenPerSec=0.0
+HealthRegenDelay=0.0
+JumpSpeedPenaltyDuration=0.0
+JumpSpeedPenaltyPercent=0.0
+ThirdPersonCamera=false
+TPSArmLength=300.0
+TPSOffset=X=0.000 Y=150.000 Z=150.000
+BrakingDeceleration=0.0
+TerminalVelocity=0.0
+CharacterModel=None
+CharacterSkin=Default
+MeshHitDetection=false
+SpawnOffsetMin=X=0.000 Y=-100.000 Z=-100.000
+SpawnOffsetMax=X=0.000 Y=100.000 Z=100.000
+InvertBlockedSpawn=false
+ViewBobTime=0.0
+ViewBobAngleAdjustment=0.0
+ViewBobCameraZOffset=0.0
+ViewBobAffectsShots=false
+IsFlyer=false
+FlightObeysPitch=false
+FlightVelocityUp=800.0
+FlightAccelUp=800.0
+FlightVelocityDown=800.0
+FlightAccelDown=800.0
+IsFlyUpOnJumpAndCrouch=false
+DisableCharacterCollision=false
+LifeStealPercent=0.0
+AbilityGlobalCooldown=0.0
+BlockAbilityOnStartDuration=0.0
+DragCoefficient=10.0
+AmmoRegainedOnKill=0
+ContinuousGroundFriction=0.0
+ContinuousAirFriction=0.0
+ScaledGroundAcceleration=0.0
+ScaledAirAcceleration=0.0
+MaxAirSpeed=0.0
+StopSpeed=0.0
+StopSpeedThreshold=0.0
+ClampVelocityToInputSpeed=true
+JumpSkipsFriction=false
+EnableQuakeMovement=false
+EnableQuakeJump=false
+KtJump=0.0
+MovementPhysicsTickInterval=0.0
+MovementPhysicsTickEnabled=false
+TeamGlowUpHead=0.0
+TeamGlowUpBody=0.0
+EnemyGlowUpHead=0.0
+EnemyGlowUpBody=0.0
+EnemyGlowUpHeadOnHit=0.0
+EnemyGlowUpBodyOnHit=0.0
+EnemyGlowUpHeadOnLookAt=0.0
+EnemyGlowUpBodyOnLookAt=0.0
+PlaybackOptions.PlaybackMode=Input
+PlaybackOptions.OverrideRotation=true
+PlaybackOptions.OverrideAbilities=true
+PlaybackOptions.OverrideWeapons=true
+PlaybackOptions.OverrideMovement=true
+PlaybackOptions.OverrideDodgeTime=false
+PlaybackOptions.LoopUponCompletion=true
+PlaybackOptions.BreakToInputMode=false
+
+[Character Profile]
+Name=Apogee Little Dipper 6 Body
+MaxHealth=1.0
+WeaponProfileNames=;;;;;;;
+MinRespawnDelay=0.001
+MaxRespawnDelay=0.001
+StepUpHeight=0.0
+CrouchHeightModifier=1.0
+CrouchAnimationSpeed=1.0
+CameraOffset=X=0.000 Y=0.000 Z=0.000
+HeadshotOnly=false
+DamageKnockbackFactor=0.0
+MaxSpeed=0.0
+MaxCrouchSpeed=0.0
+Acceleration=0.0
+CrouchingAcceleration=0.0
+Friction=0.0
+BrakingFrictionFactor=0.0
+JumpVelocity=0.0
+Gravity=0.0
+AirControl=0.0
+CanCrouch=false
+CanPogoJump=false
+CanCrouchInAir=false
+CrouchInAirRaisesFeet=false
+CanJumpFromCrouch=false
+// Note: the color channel values are interpreted as 0.0 (0%) to 1.0 (100%) going over 1.0 will start to produce a glow effect when the user is in HDR mode (SceneColor is set to "Medium" or higher)
+EnemyBodyColor=X=255.000 Y=0.000 Z=0.000
+EnemyBodyColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyBodyColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColor=X=255.000 Y=255.000 Z=255.000
+EnemyHeadColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+TeamBodyColor=X=0.000 Y=0.000 Z=255.000
+TeamHeadColor=X=255.000 Y=255.000 Z=255.000
+MainBBType=Spheroid
+MainBBHeight=45.995252
+MainBBRadius=22.997626
+MainBBHasHead=false
+MainBBHeadRadius=0.1
+MainBBHeadOffset=0.0
+MainBBHide=false
+ProjBBType=Spheroid
+ProjBBHeight=128.0
+ProjBBRadius=60.0
+ProjBBHasHead=false
+ProjBBHeadRadius=0.1
+ProjBBHeadOffset=0.0
+ProjBBHide=true
+BlockSelfDamage=false
+InvinciblePlayer=false
+InvincibleBots=false
+BlockTeamDamage=false
+HasJetpack=false
+JetpackActivationDelay=0.2
+JetpackFullFuelTime=100000.0
+JetpackFuelIncPerSec=0.1
+JetpackFuelRegensInAir=true
+JetpackThrust=6000.0
+JetpackMaxZVelocity=400.0
+JetpackAirControlWithThrust=1.0
+AirJumpCount=0
+AirJumpVelocity=800.0
+AbilityProfileNames=;;;
+HideWeapon=true
+AerialFriction=0.0
+AerialVerticalTurningFriction=100000.0
+AerialVerticalBreakingFriction=0.0
+UseAerialVerticalFriction=false
+StrafeSpeedMult=1.0
+BackSpeedMult=1.0
+RespawnInvulnTime=0.0
+BlockedSpawnRadius=190.0
+BlockSpawnFOV=0.0
+BlockSpawnDistance=0.0
+RespawnAnimationDuration=0.0
+AllowBufferedJumps=false
+BounceOffWalls=false
+LeanAngle=0.0
+LeanDisplacement=0.0
+AirJumpExtraControl=0.0
+ForwardSpeedBias=1.0
+HealthRegainedonkill=0.0
+HealthRegenPerSec=0.0
+HealthRegenDelay=0.0
+JumpSpeedPenaltyDuration=0.0
+JumpSpeedPenaltyPercent=0.0
+ThirdPersonCamera=false
+TPSArmLength=300.0
+TPSOffset=X=0.000 Y=150.000 Z=150.000
+BrakingDeceleration=0.0
+TerminalVelocity=0.0
+CharacterModel=None
+CharacterSkin=Default
+MeshHitDetection=false
+SpawnOffsetMin=X=0.000 Y=-100.000 Z=-100.000
+SpawnOffsetMax=X=0.000 Y=100.000 Z=100.000
+InvertBlockedSpawn=false
+ViewBobTime=0.0
+ViewBobAngleAdjustment=0.0
+ViewBobCameraZOffset=0.0
+ViewBobAffectsShots=false
+IsFlyer=false
+FlightObeysPitch=false
+FlightVelocityUp=800.0
+FlightAccelUp=800.0
+FlightVelocityDown=800.0
+FlightAccelDown=800.0
+IsFlyUpOnJumpAndCrouch=false
+DisableCharacterCollision=false
+LifeStealPercent=0.0
+AbilityGlobalCooldown=0.0
+BlockAbilityOnStartDuration=0.0
+DragCoefficient=10.0
+AmmoRegainedOnKill=0
+ContinuousGroundFriction=0.0
+ContinuousAirFriction=0.0
+ScaledGroundAcceleration=0.0
+ScaledAirAcceleration=0.0
+MaxAirSpeed=0.0
+StopSpeed=0.0
+StopSpeedThreshold=0.0
+ClampVelocityToInputSpeed=true
+JumpSkipsFriction=false
+EnableQuakeMovement=false
+EnableQuakeJump=false
+KtJump=0.0
+MovementPhysicsTickInterval=0.0
+MovementPhysicsTickEnabled=false
+TeamGlowUpHead=0.0
+TeamGlowUpBody=0.0
+EnemyGlowUpHead=0.0
+EnemyGlowUpBody=0.0
+EnemyGlowUpHeadOnHit=0.0
+EnemyGlowUpBodyOnHit=0.0
+EnemyGlowUpHeadOnLookAt=0.0
+EnemyGlowUpBodyOnLookAt=0.0
+PlaybackOptions.PlaybackMode=Input
+PlaybackOptions.OverrideRotation=true
+PlaybackOptions.OverrideAbilities=true
+PlaybackOptions.OverrideWeapons=true
+PlaybackOptions.OverrideMovement=true
+PlaybackOptions.OverrideDodgeTime=false
+PlaybackOptions.LoopUponCompletion=true
+PlaybackOptions.BreakToInputMode=false
+
+[Character Profile]
+Name=Apogee Little Dipper 7 Body
+MaxHealth=1.0
+WeaponProfileNames=;;;;;;;
+MinRespawnDelay=0.001
+MaxRespawnDelay=0.001
+StepUpHeight=0.0
+CrouchHeightModifier=1.0
+CrouchAnimationSpeed=1.0
+CameraOffset=X=0.000 Y=0.000 Z=0.000
+HeadshotOnly=false
+DamageKnockbackFactor=0.0
+MaxSpeed=0.0
+MaxCrouchSpeed=0.0
+Acceleration=0.0
+CrouchingAcceleration=0.0
+Friction=0.0
+BrakingFrictionFactor=0.0
+JumpVelocity=0.0
+Gravity=0.0
+AirControl=0.0
+CanCrouch=false
+CanPogoJump=false
+CanCrouchInAir=false
+CrouchInAirRaisesFeet=false
+CanJumpFromCrouch=false
+// Note: the color channel values are interpreted as 0.0 (0%) to 1.0 (100%) going over 1.0 will start to produce a glow effect when the user is in HDR mode (SceneColor is set to "Medium" or higher)
+EnemyBodyColor=X=255.000 Y=0.000 Z=0.000
+EnemyBodyColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyBodyColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColor=X=255.000 Y=255.000 Z=255.000
+EnemyHeadColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+TeamBodyColor=X=0.000 Y=0.000 Z=255.000
+TeamHeadColor=X=255.000 Y=255.000 Z=255.000
+MainBBType=Spheroid
+MainBBHeight=45.995252
+MainBBRadius=22.997626
+MainBBHasHead=false
+MainBBHeadRadius=0.1
+MainBBHeadOffset=0.0
+MainBBHide=false
+ProjBBType=Spheroid
+ProjBBHeight=128.0
+ProjBBRadius=60.0
+ProjBBHasHead=false
+ProjBBHeadRadius=0.1
+ProjBBHeadOffset=0.0
+ProjBBHide=true
+BlockSelfDamage=false
+InvinciblePlayer=false
+InvincibleBots=false
+BlockTeamDamage=false
+HasJetpack=false
+JetpackActivationDelay=0.2
+JetpackFullFuelTime=100000.0
+JetpackFuelIncPerSec=0.1
+JetpackFuelRegensInAir=true
+JetpackThrust=6000.0
+JetpackMaxZVelocity=400.0
+JetpackAirControlWithThrust=1.0
+AirJumpCount=0
+AirJumpVelocity=800.0
+AbilityProfileNames=;;;
+HideWeapon=true
+AerialFriction=0.0
+AerialVerticalTurningFriction=100000.0
+AerialVerticalBreakingFriction=0.0
+UseAerialVerticalFriction=false
+StrafeSpeedMult=1.0
+BackSpeedMult=1.0
+RespawnInvulnTime=0.0
+BlockedSpawnRadius=190.0
+BlockSpawnFOV=0.0
+BlockSpawnDistance=0.0
+RespawnAnimationDuration=0.0
+AllowBufferedJumps=false
+BounceOffWalls=false
+LeanAngle=0.0
+LeanDisplacement=0.0
+AirJumpExtraControl=0.0
+ForwardSpeedBias=1.0
+HealthRegainedonkill=0.0
+HealthRegenPerSec=0.0
+HealthRegenDelay=0.0
+JumpSpeedPenaltyDuration=0.0
+JumpSpeedPenaltyPercent=0.0
+ThirdPersonCamera=false
+TPSArmLength=300.0
+TPSOffset=X=0.000 Y=150.000 Z=150.000
+BrakingDeceleration=0.0
+TerminalVelocity=0.0
+CharacterModel=None
+CharacterSkin=Default
+MeshHitDetection=false
+SpawnOffsetMin=X=0.000 Y=-100.000 Z=-100.000
+SpawnOffsetMax=X=0.000 Y=100.000 Z=100.000
+InvertBlockedSpawn=false
+ViewBobTime=0.0
+ViewBobAngleAdjustment=0.0
+ViewBobCameraZOffset=0.0
+ViewBobAffectsShots=false
+IsFlyer=false
+FlightObeysPitch=false
+FlightVelocityUp=800.0
+FlightAccelUp=800.0
+FlightVelocityDown=800.0
+FlightAccelDown=800.0
+IsFlyUpOnJumpAndCrouch=false
+DisableCharacterCollision=false
+LifeStealPercent=0.0
+AbilityGlobalCooldown=0.0
+BlockAbilityOnStartDuration=0.0
+DragCoefficient=10.0
+AmmoRegainedOnKill=0
+ContinuousGroundFriction=0.0
+ContinuousAirFriction=0.0
+ScaledGroundAcceleration=0.0
+ScaledAirAcceleration=0.0
+MaxAirSpeed=0.0
+StopSpeed=0.0
+StopSpeedThreshold=0.0
+ClampVelocityToInputSpeed=true
+JumpSkipsFriction=false
+EnableQuakeMovement=false
+EnableQuakeJump=false
+KtJump=0.0
+MovementPhysicsTickInterval=0.0
+MovementPhysicsTickEnabled=false
+TeamGlowUpHead=0.0
+TeamGlowUpBody=0.0
+EnemyGlowUpHead=0.0
+EnemyGlowUpBody=0.0
+EnemyGlowUpHeadOnHit=0.0
+EnemyGlowUpBodyOnHit=0.0
+EnemyGlowUpHeadOnLookAt=0.0
+EnemyGlowUpBodyOnLookAt=0.0
+PlaybackOptions.PlaybackMode=Input
+PlaybackOptions.OverrideRotation=true
+PlaybackOptions.OverrideAbilities=true
+PlaybackOptions.OverrideWeapons=true
+PlaybackOptions.OverrideMovement=true
+PlaybackOptions.OverrideDodgeTime=false
+PlaybackOptions.LoopUponCompletion=true
+PlaybackOptions.BreakToInputMode=false
+
+[Character Profile]
+Name=Apogee Orion 1 Body
+MaxHealth=1.0
+WeaponProfileNames=;;;;;;;
+MinRespawnDelay=0.001
+MaxRespawnDelay=0.001
+StepUpHeight=0.0
+CrouchHeightModifier=1.0
+CrouchAnimationSpeed=1.0
+CameraOffset=X=0.000 Y=0.000 Z=0.000
+HeadshotOnly=false
+DamageKnockbackFactor=0.0
+MaxSpeed=0.0
+MaxCrouchSpeed=0.0
+Acceleration=0.0
+CrouchingAcceleration=0.0
+Friction=0.0
+BrakingFrictionFactor=0.0
+JumpVelocity=0.0
+Gravity=0.0
+AirControl=0.0
+CanCrouch=false
+CanPogoJump=false
+CanCrouchInAir=false
+CrouchInAirRaisesFeet=false
+CanJumpFromCrouch=false
+// Note: the color channel values are interpreted as 0.0 (0%) to 1.0 (100%) going over 1.0 will start to produce a glow effect when the user is in HDR mode (SceneColor is set to "Medium" or higher)
+EnemyBodyColor=X=255.000 Y=0.000 Z=0.000
+EnemyBodyColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyBodyColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColor=X=255.000 Y=255.000 Z=255.000
+EnemyHeadColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+TeamBodyColor=X=0.000 Y=0.000 Z=255.000
+TeamHeadColor=X=255.000 Y=255.000 Z=255.000
+MainBBType=Spheroid
+MainBBHeight=45.995252
+MainBBRadius=22.997626
+MainBBHasHead=false
+MainBBHeadRadius=0.1
+MainBBHeadOffset=0.0
+MainBBHide=false
+ProjBBType=Spheroid
+ProjBBHeight=128.0
+ProjBBRadius=60.0
+ProjBBHasHead=false
+ProjBBHeadRadius=0.1
+ProjBBHeadOffset=0.0
+ProjBBHide=true
+BlockSelfDamage=false
+InvinciblePlayer=false
+InvincibleBots=false
+BlockTeamDamage=false
+HasJetpack=false
+JetpackActivationDelay=0.2
+JetpackFullFuelTime=100000.0
+JetpackFuelIncPerSec=0.1
+JetpackFuelRegensInAir=true
+JetpackThrust=6000.0
+JetpackMaxZVelocity=400.0
+JetpackAirControlWithThrust=1.0
+AirJumpCount=0
+AirJumpVelocity=800.0
+AbilityProfileNames=;;;
+HideWeapon=true
+AerialFriction=0.0
+AerialVerticalTurningFriction=100000.0
+AerialVerticalBreakingFriction=0.0
+UseAerialVerticalFriction=false
+StrafeSpeedMult=1.0
+BackSpeedMult=1.0
+RespawnInvulnTime=0.0
+BlockedSpawnRadius=190.0
+BlockSpawnFOV=0.0
+BlockSpawnDistance=0.0
+RespawnAnimationDuration=0.0
+AllowBufferedJumps=false
+BounceOffWalls=false
+LeanAngle=0.0
+LeanDisplacement=0.0
+AirJumpExtraControl=0.0
+ForwardSpeedBias=1.0
+HealthRegainedonkill=0.0
+HealthRegenPerSec=0.0
+HealthRegenDelay=0.0
+JumpSpeedPenaltyDuration=0.0
+JumpSpeedPenaltyPercent=0.0
+ThirdPersonCamera=false
+TPSArmLength=300.0
+TPSOffset=X=0.000 Y=150.000 Z=150.000
+BrakingDeceleration=0.0
+TerminalVelocity=0.0
+CharacterModel=None
+CharacterSkin=Default
+MeshHitDetection=false
+SpawnOffsetMin=X=0.000 Y=-100.000 Z=-100.000
+SpawnOffsetMax=X=0.000 Y=100.000 Z=100.000
+InvertBlockedSpawn=false
+ViewBobTime=0.0
+ViewBobAngleAdjustment=0.0
+ViewBobCameraZOffset=0.0
+ViewBobAffectsShots=false
+IsFlyer=false
+FlightObeysPitch=false
+FlightVelocityUp=800.0
+FlightAccelUp=800.0
+FlightVelocityDown=800.0
+FlightAccelDown=800.0
+IsFlyUpOnJumpAndCrouch=false
+DisableCharacterCollision=false
+LifeStealPercent=0.0
+AbilityGlobalCooldown=0.0
+BlockAbilityOnStartDuration=0.0
+DragCoefficient=10.0
+AmmoRegainedOnKill=0
+ContinuousGroundFriction=0.0
+ContinuousAirFriction=0.0
+ScaledGroundAcceleration=0.0
+ScaledAirAcceleration=0.0
+MaxAirSpeed=0.0
+StopSpeed=0.0
+StopSpeedThreshold=0.0
+ClampVelocityToInputSpeed=true
+JumpSkipsFriction=false
+EnableQuakeMovement=false
+EnableQuakeJump=false
+KtJump=0.0
+MovementPhysicsTickInterval=0.0
+MovementPhysicsTickEnabled=false
+TeamGlowUpHead=0.0
+TeamGlowUpBody=0.0
+EnemyGlowUpHead=0.0
+EnemyGlowUpBody=0.0
+EnemyGlowUpHeadOnHit=0.0
+EnemyGlowUpBodyOnHit=0.0
+EnemyGlowUpHeadOnLookAt=0.0
+EnemyGlowUpBodyOnLookAt=0.0
+PlaybackOptions.PlaybackMode=Input
+PlaybackOptions.OverrideRotation=true
+PlaybackOptions.OverrideAbilities=true
+PlaybackOptions.OverrideWeapons=true
+PlaybackOptions.OverrideMovement=true
+PlaybackOptions.OverrideDodgeTime=false
+PlaybackOptions.LoopUponCompletion=true
+PlaybackOptions.BreakToInputMode=false
+
+[Character Profile]
+Name=Apogee Orion 2 Body
+MaxHealth=1.0
+WeaponProfileNames=;;;;;;;
+MinRespawnDelay=0.001
+MaxRespawnDelay=0.001
+StepUpHeight=0.0
+CrouchHeightModifier=1.0
+CrouchAnimationSpeed=1.0
+CameraOffset=X=0.000 Y=0.000 Z=0.000
+HeadshotOnly=false
+DamageKnockbackFactor=0.0
+MaxSpeed=0.0
+MaxCrouchSpeed=0.0
+Acceleration=0.0
+CrouchingAcceleration=0.0
+Friction=0.0
+BrakingFrictionFactor=0.0
+JumpVelocity=0.0
+Gravity=0.0
+AirControl=0.0
+CanCrouch=false
+CanPogoJump=false
+CanCrouchInAir=false
+CrouchInAirRaisesFeet=false
+CanJumpFromCrouch=false
+// Note: the color channel values are interpreted as 0.0 (0%) to 1.0 (100%) going over 1.0 will start to produce a glow effect when the user is in HDR mode (SceneColor is set to "Medium" or higher)
+EnemyBodyColor=X=255.000 Y=0.000 Z=0.000
+EnemyBodyColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyBodyColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColor=X=255.000 Y=255.000 Z=255.000
+EnemyHeadColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+TeamBodyColor=X=0.000 Y=0.000 Z=255.000
+TeamHeadColor=X=255.000 Y=255.000 Z=255.000
+MainBBType=Spheroid
+MainBBHeight=45.995252
+MainBBRadius=22.997626
+MainBBHasHead=false
+MainBBHeadRadius=0.1
+MainBBHeadOffset=0.0
+MainBBHide=false
+ProjBBType=Spheroid
+ProjBBHeight=128.0
+ProjBBRadius=60.0
+ProjBBHasHead=false
+ProjBBHeadRadius=0.1
+ProjBBHeadOffset=0.0
+ProjBBHide=true
+BlockSelfDamage=false
+InvinciblePlayer=false
+InvincibleBots=false
+BlockTeamDamage=false
+HasJetpack=false
+JetpackActivationDelay=0.2
+JetpackFullFuelTime=100000.0
+JetpackFuelIncPerSec=0.1
+JetpackFuelRegensInAir=true
+JetpackThrust=6000.0
+JetpackMaxZVelocity=400.0
+JetpackAirControlWithThrust=1.0
+AirJumpCount=0
+AirJumpVelocity=800.0
+AbilityProfileNames=;;;
+HideWeapon=true
+AerialFriction=0.0
+AerialVerticalTurningFriction=100000.0
+AerialVerticalBreakingFriction=0.0
+UseAerialVerticalFriction=false
+StrafeSpeedMult=1.0
+BackSpeedMult=1.0
+RespawnInvulnTime=0.0
+BlockedSpawnRadius=190.0
+BlockSpawnFOV=0.0
+BlockSpawnDistance=0.0
+RespawnAnimationDuration=0.0
+AllowBufferedJumps=false
+BounceOffWalls=false
+LeanAngle=0.0
+LeanDisplacement=0.0
+AirJumpExtraControl=0.0
+ForwardSpeedBias=1.0
+HealthRegainedonkill=0.0
+HealthRegenPerSec=0.0
+HealthRegenDelay=0.0
+JumpSpeedPenaltyDuration=0.0
+JumpSpeedPenaltyPercent=0.0
+ThirdPersonCamera=false
+TPSArmLength=300.0
+TPSOffset=X=0.000 Y=150.000 Z=150.000
+BrakingDeceleration=0.0
+TerminalVelocity=0.0
+CharacterModel=None
+CharacterSkin=Default
+MeshHitDetection=false
+SpawnOffsetMin=X=0.000 Y=-100.000 Z=-100.000
+SpawnOffsetMax=X=0.000 Y=100.000 Z=100.000
+InvertBlockedSpawn=false
+ViewBobTime=0.0
+ViewBobAngleAdjustment=0.0
+ViewBobCameraZOffset=0.0
+ViewBobAffectsShots=false
+IsFlyer=false
+FlightObeysPitch=false
+FlightVelocityUp=800.0
+FlightAccelUp=800.0
+FlightVelocityDown=800.0
+FlightAccelDown=800.0
+IsFlyUpOnJumpAndCrouch=false
+DisableCharacterCollision=false
+LifeStealPercent=0.0
+AbilityGlobalCooldown=0.0
+BlockAbilityOnStartDuration=0.0
+DragCoefficient=10.0
+AmmoRegainedOnKill=0
+ContinuousGroundFriction=0.0
+ContinuousAirFriction=0.0
+ScaledGroundAcceleration=0.0
+ScaledAirAcceleration=0.0
+MaxAirSpeed=0.0
+StopSpeed=0.0
+StopSpeedThreshold=0.0
+ClampVelocityToInputSpeed=true
+JumpSkipsFriction=false
+EnableQuakeMovement=false
+EnableQuakeJump=false
+KtJump=0.0
+MovementPhysicsTickInterval=0.0
+MovementPhysicsTickEnabled=false
+TeamGlowUpHead=0.0
+TeamGlowUpBody=0.0
+EnemyGlowUpHead=0.0
+EnemyGlowUpBody=0.0
+EnemyGlowUpHeadOnHit=0.0
+EnemyGlowUpBodyOnHit=0.0
+EnemyGlowUpHeadOnLookAt=0.0
+EnemyGlowUpBodyOnLookAt=0.0
+PlaybackOptions.PlaybackMode=Input
+PlaybackOptions.OverrideRotation=true
+PlaybackOptions.OverrideAbilities=true
+PlaybackOptions.OverrideWeapons=true
+PlaybackOptions.OverrideMovement=true
+PlaybackOptions.OverrideDodgeTime=false
+PlaybackOptions.LoopUponCompletion=true
+PlaybackOptions.BreakToInputMode=false
+
+[Character Profile]
+Name=Apogee Orion 3 Body
+MaxHealth=1.0
+WeaponProfileNames=;;;;;;;
+MinRespawnDelay=0.001
+MaxRespawnDelay=0.001
+StepUpHeight=0.0
+CrouchHeightModifier=1.0
+CrouchAnimationSpeed=1.0
+CameraOffset=X=0.000 Y=0.000 Z=0.000
+HeadshotOnly=false
+DamageKnockbackFactor=0.0
+MaxSpeed=0.0
+MaxCrouchSpeed=0.0
+Acceleration=0.0
+CrouchingAcceleration=0.0
+Friction=0.0
+BrakingFrictionFactor=0.0
+JumpVelocity=0.0
+Gravity=0.0
+AirControl=0.0
+CanCrouch=false
+CanPogoJump=false
+CanCrouchInAir=false
+CrouchInAirRaisesFeet=false
+CanJumpFromCrouch=false
+// Note: the color channel values are interpreted as 0.0 (0%) to 1.0 (100%) going over 1.0 will start to produce a glow effect when the user is in HDR mode (SceneColor is set to "Medium" or higher)
+EnemyBodyColor=X=255.000 Y=0.000 Z=0.000
+EnemyBodyColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyBodyColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColor=X=255.000 Y=255.000 Z=255.000
+EnemyHeadColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+TeamBodyColor=X=0.000 Y=0.000 Z=255.000
+TeamHeadColor=X=255.000 Y=255.000 Z=255.000
+MainBBType=Spheroid
+MainBBHeight=45.995252
+MainBBRadius=22.997626
+MainBBHasHead=false
+MainBBHeadRadius=0.1
+MainBBHeadOffset=0.0
+MainBBHide=false
+ProjBBType=Spheroid
+ProjBBHeight=128.0
+ProjBBRadius=60.0
+ProjBBHasHead=false
+ProjBBHeadRadius=0.1
+ProjBBHeadOffset=0.0
+ProjBBHide=true
+BlockSelfDamage=false
+InvinciblePlayer=false
+InvincibleBots=false
+BlockTeamDamage=false
+HasJetpack=false
+JetpackActivationDelay=0.2
+JetpackFullFuelTime=100000.0
+JetpackFuelIncPerSec=0.1
+JetpackFuelRegensInAir=true
+JetpackThrust=6000.0
+JetpackMaxZVelocity=400.0
+JetpackAirControlWithThrust=1.0
+AirJumpCount=0
+AirJumpVelocity=800.0
+AbilityProfileNames=;;;
+HideWeapon=true
+AerialFriction=0.0
+AerialVerticalTurningFriction=100000.0
+AerialVerticalBreakingFriction=0.0
+UseAerialVerticalFriction=false
+StrafeSpeedMult=1.0
+BackSpeedMult=1.0
+RespawnInvulnTime=0.0
+BlockedSpawnRadius=190.0
+BlockSpawnFOV=0.0
+BlockSpawnDistance=0.0
+RespawnAnimationDuration=0.0
+AllowBufferedJumps=false
+BounceOffWalls=false
+LeanAngle=0.0
+LeanDisplacement=0.0
+AirJumpExtraControl=0.0
+ForwardSpeedBias=1.0
+HealthRegainedonkill=0.0
+HealthRegenPerSec=0.0
+HealthRegenDelay=0.0
+JumpSpeedPenaltyDuration=0.0
+JumpSpeedPenaltyPercent=0.0
+ThirdPersonCamera=false
+TPSArmLength=300.0
+TPSOffset=X=0.000 Y=150.000 Z=150.000
+BrakingDeceleration=0.0
+TerminalVelocity=0.0
+CharacterModel=None
+CharacterSkin=Default
+MeshHitDetection=false
+SpawnOffsetMin=X=0.000 Y=-100.000 Z=-100.000
+SpawnOffsetMax=X=0.000 Y=100.000 Z=100.000
+InvertBlockedSpawn=false
+ViewBobTime=0.0
+ViewBobAngleAdjustment=0.0
+ViewBobCameraZOffset=0.0
+ViewBobAffectsShots=false
+IsFlyer=false
+FlightObeysPitch=false
+FlightVelocityUp=800.0
+FlightAccelUp=800.0
+FlightVelocityDown=800.0
+FlightAccelDown=800.0
+IsFlyUpOnJumpAndCrouch=false
+DisableCharacterCollision=false
+LifeStealPercent=0.0
+AbilityGlobalCooldown=0.0
+BlockAbilityOnStartDuration=0.0
+DragCoefficient=10.0
+AmmoRegainedOnKill=0
+ContinuousGroundFriction=0.0
+ContinuousAirFriction=0.0
+ScaledGroundAcceleration=0.0
+ScaledAirAcceleration=0.0
+MaxAirSpeed=0.0
+StopSpeed=0.0
+StopSpeedThreshold=0.0
+ClampVelocityToInputSpeed=true
+JumpSkipsFriction=false
+EnableQuakeMovement=false
+EnableQuakeJump=false
+KtJump=0.0
+MovementPhysicsTickInterval=0.0
+MovementPhysicsTickEnabled=false
+TeamGlowUpHead=0.0
+TeamGlowUpBody=0.0
+EnemyGlowUpHead=0.0
+EnemyGlowUpBody=0.0
+EnemyGlowUpHeadOnHit=0.0
+EnemyGlowUpBodyOnHit=0.0
+EnemyGlowUpHeadOnLookAt=0.0
+EnemyGlowUpBodyOnLookAt=0.0
+PlaybackOptions.PlaybackMode=Input
+PlaybackOptions.OverrideRotation=true
+PlaybackOptions.OverrideAbilities=true
+PlaybackOptions.OverrideWeapons=true
+PlaybackOptions.OverrideMovement=true
+PlaybackOptions.OverrideDodgeTime=false
+PlaybackOptions.LoopUponCompletion=true
+PlaybackOptions.BreakToInputMode=false
+
+[Character Profile]
+Name=Apogee Orion 4 Body
+MaxHealth=1.0
+WeaponProfileNames=;;;;;;;
+MinRespawnDelay=0.001
+MaxRespawnDelay=0.001
+StepUpHeight=0.0
+CrouchHeightModifier=1.0
+CrouchAnimationSpeed=1.0
+CameraOffset=X=0.000 Y=0.000 Z=0.000
+HeadshotOnly=false
+DamageKnockbackFactor=0.0
+MaxSpeed=0.0
+MaxCrouchSpeed=0.0
+Acceleration=0.0
+CrouchingAcceleration=0.0
+Friction=0.0
+BrakingFrictionFactor=0.0
+JumpVelocity=0.0
+Gravity=0.0
+AirControl=0.0
+CanCrouch=false
+CanPogoJump=false
+CanCrouchInAir=false
+CrouchInAirRaisesFeet=false
+CanJumpFromCrouch=false
+// Note: the color channel values are interpreted as 0.0 (0%) to 1.0 (100%) going over 1.0 will start to produce a glow effect when the user is in HDR mode (SceneColor is set to "Medium" or higher)
+EnemyBodyColor=X=255.000 Y=0.000 Z=0.000
+EnemyBodyColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyBodyColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColor=X=255.000 Y=255.000 Z=255.000
+EnemyHeadColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+TeamBodyColor=X=0.000 Y=0.000 Z=255.000
+TeamHeadColor=X=255.000 Y=255.000 Z=255.000
+MainBBType=Spheroid
+MainBBHeight=45.995252
+MainBBRadius=22.997626
+MainBBHasHead=false
+MainBBHeadRadius=0.1
+MainBBHeadOffset=0.0
+MainBBHide=false
+ProjBBType=Spheroid
+ProjBBHeight=128.0
+ProjBBRadius=60.0
+ProjBBHasHead=false
+ProjBBHeadRadius=0.1
+ProjBBHeadOffset=0.0
+ProjBBHide=true
+BlockSelfDamage=false
+InvinciblePlayer=false
+InvincibleBots=false
+BlockTeamDamage=false
+HasJetpack=false
+JetpackActivationDelay=0.2
+JetpackFullFuelTime=100000.0
+JetpackFuelIncPerSec=0.1
+JetpackFuelRegensInAir=true
+JetpackThrust=6000.0
+JetpackMaxZVelocity=400.0
+JetpackAirControlWithThrust=1.0
+AirJumpCount=0
+AirJumpVelocity=800.0
+AbilityProfileNames=;;;
+HideWeapon=true
+AerialFriction=0.0
+AerialVerticalTurningFriction=100000.0
+AerialVerticalBreakingFriction=0.0
+UseAerialVerticalFriction=false
+StrafeSpeedMult=1.0
+BackSpeedMult=1.0
+RespawnInvulnTime=0.0
+BlockedSpawnRadius=190.0
+BlockSpawnFOV=0.0
+BlockSpawnDistance=0.0
+RespawnAnimationDuration=0.0
+AllowBufferedJumps=false
+BounceOffWalls=false
+LeanAngle=0.0
+LeanDisplacement=0.0
+AirJumpExtraControl=0.0
+ForwardSpeedBias=1.0
+HealthRegainedonkill=0.0
+HealthRegenPerSec=0.0
+HealthRegenDelay=0.0
+JumpSpeedPenaltyDuration=0.0
+JumpSpeedPenaltyPercent=0.0
+ThirdPersonCamera=false
+TPSArmLength=300.0
+TPSOffset=X=0.000 Y=150.000 Z=150.000
+BrakingDeceleration=0.0
+TerminalVelocity=0.0
+CharacterModel=None
+CharacterSkin=Default
+MeshHitDetection=false
+SpawnOffsetMin=X=0.000 Y=-100.000 Z=-100.000
+SpawnOffsetMax=X=0.000 Y=100.000 Z=100.000
+InvertBlockedSpawn=false
+ViewBobTime=0.0
+ViewBobAngleAdjustment=0.0
+ViewBobCameraZOffset=0.0
+ViewBobAffectsShots=false
+IsFlyer=false
+FlightObeysPitch=false
+FlightVelocityUp=800.0
+FlightAccelUp=800.0
+FlightVelocityDown=800.0
+FlightAccelDown=800.0
+IsFlyUpOnJumpAndCrouch=false
+DisableCharacterCollision=false
+LifeStealPercent=0.0
+AbilityGlobalCooldown=0.0
+BlockAbilityOnStartDuration=0.0
+DragCoefficient=10.0
+AmmoRegainedOnKill=0
+ContinuousGroundFriction=0.0
+ContinuousAirFriction=0.0
+ScaledGroundAcceleration=0.0
+ScaledAirAcceleration=0.0
+MaxAirSpeed=0.0
+StopSpeed=0.0
+StopSpeedThreshold=0.0
+ClampVelocityToInputSpeed=true
+JumpSkipsFriction=false
+EnableQuakeMovement=false
+EnableQuakeJump=false
+KtJump=0.0
+MovementPhysicsTickInterval=0.0
+MovementPhysicsTickEnabled=false
+TeamGlowUpHead=0.0
+TeamGlowUpBody=0.0
+EnemyGlowUpHead=0.0
+EnemyGlowUpBody=0.0
+EnemyGlowUpHeadOnHit=0.0
+EnemyGlowUpBodyOnHit=0.0
+EnemyGlowUpHeadOnLookAt=0.0
+EnemyGlowUpBodyOnLookAt=0.0
+PlaybackOptions.PlaybackMode=Input
+PlaybackOptions.OverrideRotation=true
+PlaybackOptions.OverrideAbilities=true
+PlaybackOptions.OverrideWeapons=true
+PlaybackOptions.OverrideMovement=true
+PlaybackOptions.OverrideDodgeTime=false
+PlaybackOptions.LoopUponCompletion=true
+PlaybackOptions.BreakToInputMode=false
+
+[Character Profile]
+Name=Apogee Orion 5 Body
+MaxHealth=1.0
+WeaponProfileNames=;;;;;;;
+MinRespawnDelay=0.001
+MaxRespawnDelay=0.001
+StepUpHeight=0.0
+CrouchHeightModifier=1.0
+CrouchAnimationSpeed=1.0
+CameraOffset=X=0.000 Y=0.000 Z=0.000
+HeadshotOnly=false
+DamageKnockbackFactor=0.0
+MaxSpeed=0.0
+MaxCrouchSpeed=0.0
+Acceleration=0.0
+CrouchingAcceleration=0.0
+Friction=0.0
+BrakingFrictionFactor=0.0
+JumpVelocity=0.0
+Gravity=0.0
+AirControl=0.0
+CanCrouch=false
+CanPogoJump=false
+CanCrouchInAir=false
+CrouchInAirRaisesFeet=false
+CanJumpFromCrouch=false
+// Note: the color channel values are interpreted as 0.0 (0%) to 1.0 (100%) going over 1.0 will start to produce a glow effect when the user is in HDR mode (SceneColor is set to "Medium" or higher)
+EnemyBodyColor=X=255.000 Y=0.000 Z=0.000
+EnemyBodyColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyBodyColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColor=X=255.000 Y=255.000 Z=255.000
+EnemyHeadColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+TeamBodyColor=X=0.000 Y=0.000 Z=255.000
+TeamHeadColor=X=255.000 Y=255.000 Z=255.000
+MainBBType=Spheroid
+MainBBHeight=45.995252
+MainBBRadius=22.997626
+MainBBHasHead=false
+MainBBHeadRadius=0.1
+MainBBHeadOffset=0.0
+MainBBHide=false
+ProjBBType=Spheroid
+ProjBBHeight=128.0
+ProjBBRadius=60.0
+ProjBBHasHead=false
+ProjBBHeadRadius=0.1
+ProjBBHeadOffset=0.0
+ProjBBHide=true
+BlockSelfDamage=false
+InvinciblePlayer=false
+InvincibleBots=false
+BlockTeamDamage=false
+HasJetpack=false
+JetpackActivationDelay=0.2
+JetpackFullFuelTime=100000.0
+JetpackFuelIncPerSec=0.1
+JetpackFuelRegensInAir=true
+JetpackThrust=6000.0
+JetpackMaxZVelocity=400.0
+JetpackAirControlWithThrust=1.0
+AirJumpCount=0
+AirJumpVelocity=800.0
+AbilityProfileNames=;;;
+HideWeapon=true
+AerialFriction=0.0
+AerialVerticalTurningFriction=100000.0
+AerialVerticalBreakingFriction=0.0
+UseAerialVerticalFriction=false
+StrafeSpeedMult=1.0
+BackSpeedMult=1.0
+RespawnInvulnTime=0.0
+BlockedSpawnRadius=190.0
+BlockSpawnFOV=0.0
+BlockSpawnDistance=0.0
+RespawnAnimationDuration=0.0
+AllowBufferedJumps=false
+BounceOffWalls=false
+LeanAngle=0.0
+LeanDisplacement=0.0
+AirJumpExtraControl=0.0
+ForwardSpeedBias=1.0
+HealthRegainedonkill=0.0
+HealthRegenPerSec=0.0
+HealthRegenDelay=0.0
+JumpSpeedPenaltyDuration=0.0
+JumpSpeedPenaltyPercent=0.0
+ThirdPersonCamera=false
+TPSArmLength=300.0
+TPSOffset=X=0.000 Y=150.000 Z=150.000
+BrakingDeceleration=0.0
+TerminalVelocity=0.0
+CharacterModel=None
+CharacterSkin=Default
+MeshHitDetection=false
+SpawnOffsetMin=X=0.000 Y=-100.000 Z=-100.000
+SpawnOffsetMax=X=0.000 Y=100.000 Z=100.000
+InvertBlockedSpawn=false
+ViewBobTime=0.0
+ViewBobAngleAdjustment=0.0
+ViewBobCameraZOffset=0.0
+ViewBobAffectsShots=false
+IsFlyer=false
+FlightObeysPitch=false
+FlightVelocityUp=800.0
+FlightAccelUp=800.0
+FlightVelocityDown=800.0
+FlightAccelDown=800.0
+IsFlyUpOnJumpAndCrouch=false
+DisableCharacterCollision=false
+LifeStealPercent=0.0
+AbilityGlobalCooldown=0.0
+BlockAbilityOnStartDuration=0.0
+DragCoefficient=10.0
+AmmoRegainedOnKill=0
+ContinuousGroundFriction=0.0
+ContinuousAirFriction=0.0
+ScaledGroundAcceleration=0.0
+ScaledAirAcceleration=0.0
+MaxAirSpeed=0.0
+StopSpeed=0.0
+StopSpeedThreshold=0.0
+ClampVelocityToInputSpeed=true
+JumpSkipsFriction=false
+EnableQuakeMovement=false
+EnableQuakeJump=false
+KtJump=0.0
+MovementPhysicsTickInterval=0.0
+MovementPhysicsTickEnabled=false
+TeamGlowUpHead=0.0
+TeamGlowUpBody=0.0
+EnemyGlowUpHead=0.0
+EnemyGlowUpBody=0.0
+EnemyGlowUpHeadOnHit=0.0
+EnemyGlowUpBodyOnHit=0.0
+EnemyGlowUpHeadOnLookAt=0.0
+EnemyGlowUpBodyOnLookAt=0.0
+PlaybackOptions.PlaybackMode=Input
+PlaybackOptions.OverrideRotation=true
+PlaybackOptions.OverrideAbilities=true
+PlaybackOptions.OverrideWeapons=true
+PlaybackOptions.OverrideMovement=true
+PlaybackOptions.OverrideDodgeTime=false
+PlaybackOptions.LoopUponCompletion=true
+PlaybackOptions.BreakToInputMode=false
+
+[Character Profile]
+Name=Apogee Orion 6 Body
+MaxHealth=1.0
+WeaponProfileNames=;;;;;;;
+MinRespawnDelay=0.001
+MaxRespawnDelay=0.001
+StepUpHeight=0.0
+CrouchHeightModifier=1.0
+CrouchAnimationSpeed=1.0
+CameraOffset=X=0.000 Y=0.000 Z=0.000
+HeadshotOnly=false
+DamageKnockbackFactor=0.0
+MaxSpeed=0.0
+MaxCrouchSpeed=0.0
+Acceleration=0.0
+CrouchingAcceleration=0.0
+Friction=0.0
+BrakingFrictionFactor=0.0
+JumpVelocity=0.0
+Gravity=0.0
+AirControl=0.0
+CanCrouch=false
+CanPogoJump=false
+CanCrouchInAir=false
+CrouchInAirRaisesFeet=false
+CanJumpFromCrouch=false
+// Note: the color channel values are interpreted as 0.0 (0%) to 1.0 (100%) going over 1.0 will start to produce a glow effect when the user is in HDR mode (SceneColor is set to "Medium" or higher)
+EnemyBodyColor=X=255.000 Y=0.000 Z=0.000
+EnemyBodyColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyBodyColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColor=X=255.000 Y=255.000 Z=255.000
+EnemyHeadColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+TeamBodyColor=X=0.000 Y=0.000 Z=255.000
+TeamHeadColor=X=255.000 Y=255.000 Z=255.000
+MainBBType=Spheroid
+MainBBHeight=45.995252
+MainBBRadius=22.997626
+MainBBHasHead=false
+MainBBHeadRadius=0.1
+MainBBHeadOffset=0.0
+MainBBHide=false
+ProjBBType=Spheroid
+ProjBBHeight=128.0
+ProjBBRadius=60.0
+ProjBBHasHead=false
+ProjBBHeadRadius=0.1
+ProjBBHeadOffset=0.0
+ProjBBHide=true
+BlockSelfDamage=false
+InvinciblePlayer=false
+InvincibleBots=false
+BlockTeamDamage=false
+HasJetpack=false
+JetpackActivationDelay=0.2
+JetpackFullFuelTime=100000.0
+JetpackFuelIncPerSec=0.1
+JetpackFuelRegensInAir=true
+JetpackThrust=6000.0
+JetpackMaxZVelocity=400.0
+JetpackAirControlWithThrust=1.0
+AirJumpCount=0
+AirJumpVelocity=800.0
+AbilityProfileNames=;;;
+HideWeapon=true
+AerialFriction=0.0
+AerialVerticalTurningFriction=100000.0
+AerialVerticalBreakingFriction=0.0
+UseAerialVerticalFriction=false
+StrafeSpeedMult=1.0
+BackSpeedMult=1.0
+RespawnInvulnTime=0.0
+BlockedSpawnRadius=190.0
+BlockSpawnFOV=0.0
+BlockSpawnDistance=0.0
+RespawnAnimationDuration=0.0
+AllowBufferedJumps=false
+BounceOffWalls=false
+LeanAngle=0.0
+LeanDisplacement=0.0
+AirJumpExtraControl=0.0
+ForwardSpeedBias=1.0
+HealthRegainedonkill=0.0
+HealthRegenPerSec=0.0
+HealthRegenDelay=0.0
+JumpSpeedPenaltyDuration=0.0
+JumpSpeedPenaltyPercent=0.0
+ThirdPersonCamera=false
+TPSArmLength=300.0
+TPSOffset=X=0.000 Y=150.000 Z=150.000
+BrakingDeceleration=0.0
+TerminalVelocity=0.0
+CharacterModel=None
+CharacterSkin=Default
+MeshHitDetection=false
+SpawnOffsetMin=X=0.000 Y=-100.000 Z=-100.000
+SpawnOffsetMax=X=0.000 Y=100.000 Z=100.000
+InvertBlockedSpawn=false
+ViewBobTime=0.0
+ViewBobAngleAdjustment=0.0
+ViewBobCameraZOffset=0.0
+ViewBobAffectsShots=false
+IsFlyer=false
+FlightObeysPitch=false
+FlightVelocityUp=800.0
+FlightAccelUp=800.0
+FlightVelocityDown=800.0
+FlightAccelDown=800.0
+IsFlyUpOnJumpAndCrouch=false
+DisableCharacterCollision=false
+LifeStealPercent=0.0
+AbilityGlobalCooldown=0.0
+BlockAbilityOnStartDuration=0.0
+DragCoefficient=10.0
+AmmoRegainedOnKill=0
+ContinuousGroundFriction=0.0
+ContinuousAirFriction=0.0
+ScaledGroundAcceleration=0.0
+ScaledAirAcceleration=0.0
+MaxAirSpeed=0.0
+StopSpeed=0.0
+StopSpeedThreshold=0.0
+ClampVelocityToInputSpeed=true
+JumpSkipsFriction=false
+EnableQuakeMovement=false
+EnableQuakeJump=false
+KtJump=0.0
+MovementPhysicsTickInterval=0.0
+MovementPhysicsTickEnabled=false
+TeamGlowUpHead=0.0
+TeamGlowUpBody=0.0
+EnemyGlowUpHead=0.0
+EnemyGlowUpBody=0.0
+EnemyGlowUpHeadOnHit=0.0
+EnemyGlowUpBodyOnHit=0.0
+EnemyGlowUpHeadOnLookAt=0.0
+EnemyGlowUpBodyOnLookAt=0.0
+PlaybackOptions.PlaybackMode=Input
+PlaybackOptions.OverrideRotation=true
+PlaybackOptions.OverrideAbilities=true
+PlaybackOptions.OverrideWeapons=true
+PlaybackOptions.OverrideMovement=true
+PlaybackOptions.OverrideDodgeTime=false
+PlaybackOptions.LoopUponCompletion=true
+PlaybackOptions.BreakToInputMode=false
+
+[Character Profile]
+Name=Apogee Orion 7 Body
+MaxHealth=1.0
+WeaponProfileNames=;;;;;;;
+MinRespawnDelay=0.001
+MaxRespawnDelay=0.001
+StepUpHeight=0.0
+CrouchHeightModifier=1.0
+CrouchAnimationSpeed=1.0
+CameraOffset=X=0.000 Y=0.000 Z=0.000
+HeadshotOnly=false
+DamageKnockbackFactor=0.0
+MaxSpeed=0.0
+MaxCrouchSpeed=0.0
+Acceleration=0.0
+CrouchingAcceleration=0.0
+Friction=0.0
+BrakingFrictionFactor=0.0
+JumpVelocity=0.0
+Gravity=0.0
+AirControl=0.0
+CanCrouch=false
+CanPogoJump=false
+CanCrouchInAir=false
+CrouchInAirRaisesFeet=false
+CanJumpFromCrouch=false
+// Note: the color channel values are interpreted as 0.0 (0%) to 1.0 (100%) going over 1.0 will start to produce a glow effect when the user is in HDR mode (SceneColor is set to "Medium" or higher)
+EnemyBodyColor=X=255.000 Y=0.000 Z=0.000
+EnemyBodyColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyBodyColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColor=X=255.000 Y=255.000 Z=255.000
+EnemyHeadColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+TeamBodyColor=X=0.000 Y=0.000 Z=255.000
+TeamHeadColor=X=255.000 Y=255.000 Z=255.000
+MainBBType=Spheroid
+MainBBHeight=45.995252
+MainBBRadius=22.997626
+MainBBHasHead=false
+MainBBHeadRadius=0.1
+MainBBHeadOffset=0.0
+MainBBHide=false
+ProjBBType=Spheroid
+ProjBBHeight=128.0
+ProjBBRadius=60.0
+ProjBBHasHead=false
+ProjBBHeadRadius=0.1
+ProjBBHeadOffset=0.0
+ProjBBHide=true
+BlockSelfDamage=false
+InvinciblePlayer=false
+InvincibleBots=false
+BlockTeamDamage=false
+HasJetpack=false
+JetpackActivationDelay=0.2
+JetpackFullFuelTime=100000.0
+JetpackFuelIncPerSec=0.1
+JetpackFuelRegensInAir=true
+JetpackThrust=6000.0
+JetpackMaxZVelocity=400.0
+JetpackAirControlWithThrust=1.0
+AirJumpCount=0
+AirJumpVelocity=800.0
+AbilityProfileNames=;;;
+HideWeapon=true
+AerialFriction=0.0
+AerialVerticalTurningFriction=100000.0
+AerialVerticalBreakingFriction=0.0
+UseAerialVerticalFriction=false
+StrafeSpeedMult=1.0
+BackSpeedMult=1.0
+RespawnInvulnTime=0.0
+BlockedSpawnRadius=190.0
+BlockSpawnFOV=0.0
+BlockSpawnDistance=0.0
+RespawnAnimationDuration=0.0
+AllowBufferedJumps=false
+BounceOffWalls=false
+LeanAngle=0.0
+LeanDisplacement=0.0
+AirJumpExtraControl=0.0
+ForwardSpeedBias=1.0
+HealthRegainedonkill=0.0
+HealthRegenPerSec=0.0
+HealthRegenDelay=0.0
+JumpSpeedPenaltyDuration=0.0
+JumpSpeedPenaltyPercent=0.0
+ThirdPersonCamera=false
+TPSArmLength=300.0
+TPSOffset=X=0.000 Y=150.000 Z=150.000
+BrakingDeceleration=0.0
+TerminalVelocity=0.0
+CharacterModel=None
+CharacterSkin=Default
+MeshHitDetection=false
+SpawnOffsetMin=X=0.000 Y=-100.000 Z=-100.000
+SpawnOffsetMax=X=0.000 Y=100.000 Z=100.000
+InvertBlockedSpawn=false
+ViewBobTime=0.0
+ViewBobAngleAdjustment=0.0
+ViewBobCameraZOffset=0.0
+ViewBobAffectsShots=false
+IsFlyer=false
+FlightObeysPitch=false
+FlightVelocityUp=800.0
+FlightAccelUp=800.0
+FlightVelocityDown=800.0
+FlightAccelDown=800.0
+IsFlyUpOnJumpAndCrouch=false
+DisableCharacterCollision=false
+LifeStealPercent=0.0
+AbilityGlobalCooldown=0.0
+BlockAbilityOnStartDuration=0.0
+DragCoefficient=10.0
+AmmoRegainedOnKill=0
+ContinuousGroundFriction=0.0
+ContinuousAirFriction=0.0
+ScaledGroundAcceleration=0.0
+ScaledAirAcceleration=0.0
+MaxAirSpeed=0.0
+StopSpeed=0.0
+StopSpeedThreshold=0.0
+ClampVelocityToInputSpeed=true
+JumpSkipsFriction=false
+EnableQuakeMovement=false
+EnableQuakeJump=false
+KtJump=0.0
+MovementPhysicsTickInterval=0.0
+MovementPhysicsTickEnabled=false
+TeamGlowUpHead=0.0
+TeamGlowUpBody=0.0
+EnemyGlowUpHead=0.0
+EnemyGlowUpBody=0.0
+EnemyGlowUpHeadOnHit=0.0
+EnemyGlowUpBodyOnHit=0.0
+EnemyGlowUpHeadOnLookAt=0.0
+EnemyGlowUpBodyOnLookAt=0.0
+PlaybackOptions.PlaybackMode=Input
+PlaybackOptions.OverrideRotation=true
+PlaybackOptions.OverrideAbilities=true
+PlaybackOptions.OverrideWeapons=true
+PlaybackOptions.OverrideMovement=true
+PlaybackOptions.OverrideDodgeTime=false
+PlaybackOptions.LoopUponCompletion=true
+PlaybackOptions.BreakToInputMode=false
+
+[Character Profile]
+Name=Apogee Cassiopeia 1 Body
+MaxHealth=1.0
+WeaponProfileNames=;;;;;;;
+MinRespawnDelay=0.001
+MaxRespawnDelay=0.001
+StepUpHeight=0.0
+CrouchHeightModifier=1.0
+CrouchAnimationSpeed=1.0
+CameraOffset=X=0.000 Y=0.000 Z=0.000
+HeadshotOnly=false
+DamageKnockbackFactor=0.0
+MaxSpeed=0.0
+MaxCrouchSpeed=0.0
+Acceleration=0.0
+CrouchingAcceleration=0.0
+Friction=0.0
+BrakingFrictionFactor=0.0
+JumpVelocity=0.0
+Gravity=0.0
+AirControl=0.0
+CanCrouch=false
+CanPogoJump=false
+CanCrouchInAir=false
+CrouchInAirRaisesFeet=false
+CanJumpFromCrouch=false
+// Note: the color channel values are interpreted as 0.0 (0%) to 1.0 (100%) going over 1.0 will start to produce a glow effect when the user is in HDR mode (SceneColor is set to "Medium" or higher)
+EnemyBodyColor=X=255.000 Y=0.000 Z=0.000
+EnemyBodyColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyBodyColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColor=X=255.000 Y=255.000 Z=255.000
+EnemyHeadColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+TeamBodyColor=X=0.000 Y=0.000 Z=255.000
+TeamHeadColor=X=255.000 Y=255.000 Z=255.000
+MainBBType=Spheroid
+MainBBHeight=45.995252
+MainBBRadius=22.997626
+MainBBHasHead=false
+MainBBHeadRadius=0.1
+MainBBHeadOffset=0.0
+MainBBHide=false
+ProjBBType=Spheroid
+ProjBBHeight=128.0
+ProjBBRadius=60.0
+ProjBBHasHead=false
+ProjBBHeadRadius=0.1
+ProjBBHeadOffset=0.0
+ProjBBHide=true
+BlockSelfDamage=false
+InvinciblePlayer=false
+InvincibleBots=false
+BlockTeamDamage=false
+HasJetpack=false
+JetpackActivationDelay=0.2
+JetpackFullFuelTime=100000.0
+JetpackFuelIncPerSec=0.1
+JetpackFuelRegensInAir=true
+JetpackThrust=6000.0
+JetpackMaxZVelocity=400.0
+JetpackAirControlWithThrust=1.0
+AirJumpCount=0
+AirJumpVelocity=800.0
+AbilityProfileNames=;;;
+HideWeapon=true
+AerialFriction=0.0
+AerialVerticalTurningFriction=100000.0
+AerialVerticalBreakingFriction=0.0
+UseAerialVerticalFriction=false
+StrafeSpeedMult=1.0
+BackSpeedMult=1.0
+RespawnInvulnTime=0.0
+BlockedSpawnRadius=190.0
+BlockSpawnFOV=0.0
+BlockSpawnDistance=0.0
+RespawnAnimationDuration=0.0
+AllowBufferedJumps=false
+BounceOffWalls=false
+LeanAngle=0.0
+LeanDisplacement=0.0
+AirJumpExtraControl=0.0
+ForwardSpeedBias=1.0
+HealthRegainedonkill=0.0
+HealthRegenPerSec=0.0
+HealthRegenDelay=0.0
+JumpSpeedPenaltyDuration=0.0
+JumpSpeedPenaltyPercent=0.0
+ThirdPersonCamera=false
+TPSArmLength=300.0
+TPSOffset=X=0.000 Y=150.000 Z=150.000
+BrakingDeceleration=0.0
+TerminalVelocity=0.0
+CharacterModel=None
+CharacterSkin=Default
+MeshHitDetection=false
+SpawnOffsetMin=X=0.000 Y=-100.000 Z=-100.000
+SpawnOffsetMax=X=0.000 Y=100.000 Z=100.000
+InvertBlockedSpawn=false
+ViewBobTime=0.0
+ViewBobAngleAdjustment=0.0
+ViewBobCameraZOffset=0.0
+ViewBobAffectsShots=false
+IsFlyer=false
+FlightObeysPitch=false
+FlightVelocityUp=800.0
+FlightAccelUp=800.0
+FlightVelocityDown=800.0
+FlightAccelDown=800.0
+IsFlyUpOnJumpAndCrouch=false
+DisableCharacterCollision=false
+LifeStealPercent=0.0
+AbilityGlobalCooldown=0.0
+BlockAbilityOnStartDuration=0.0
+DragCoefficient=10.0
+AmmoRegainedOnKill=0
+ContinuousGroundFriction=0.0
+ContinuousAirFriction=0.0
+ScaledGroundAcceleration=0.0
+ScaledAirAcceleration=0.0
+MaxAirSpeed=0.0
+StopSpeed=0.0
+StopSpeedThreshold=0.0
+ClampVelocityToInputSpeed=true
+JumpSkipsFriction=false
+EnableQuakeMovement=false
+EnableQuakeJump=false
+KtJump=0.0
+MovementPhysicsTickInterval=0.0
+MovementPhysicsTickEnabled=false
+TeamGlowUpHead=0.0
+TeamGlowUpBody=0.0
+EnemyGlowUpHead=0.0
+EnemyGlowUpBody=0.0
+EnemyGlowUpHeadOnHit=0.0
+EnemyGlowUpBodyOnHit=0.0
+EnemyGlowUpHeadOnLookAt=0.0
+EnemyGlowUpBodyOnLookAt=0.0
+PlaybackOptions.PlaybackMode=Input
+PlaybackOptions.OverrideRotation=true
+PlaybackOptions.OverrideAbilities=true
+PlaybackOptions.OverrideWeapons=true
+PlaybackOptions.OverrideMovement=true
+PlaybackOptions.OverrideDodgeTime=false
+PlaybackOptions.LoopUponCompletion=true
+PlaybackOptions.BreakToInputMode=false
+
+[Character Profile]
+Name=Apogee Cassiopeia 2 Body
+MaxHealth=1.0
+WeaponProfileNames=;;;;;;;
+MinRespawnDelay=0.001
+MaxRespawnDelay=0.001
+StepUpHeight=0.0
+CrouchHeightModifier=1.0
+CrouchAnimationSpeed=1.0
+CameraOffset=X=0.000 Y=0.000 Z=0.000
+HeadshotOnly=false
+DamageKnockbackFactor=0.0
+MaxSpeed=0.0
+MaxCrouchSpeed=0.0
+Acceleration=0.0
+CrouchingAcceleration=0.0
+Friction=0.0
+BrakingFrictionFactor=0.0
+JumpVelocity=0.0
+Gravity=0.0
+AirControl=0.0
+CanCrouch=false
+CanPogoJump=false
+CanCrouchInAir=false
+CrouchInAirRaisesFeet=false
+CanJumpFromCrouch=false
+// Note: the color channel values are interpreted as 0.0 (0%) to 1.0 (100%) going over 1.0 will start to produce a glow effect when the user is in HDR mode (SceneColor is set to "Medium" or higher)
+EnemyBodyColor=X=255.000 Y=0.000 Z=0.000
+EnemyBodyColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyBodyColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColor=X=255.000 Y=255.000 Z=255.000
+EnemyHeadColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+TeamBodyColor=X=0.000 Y=0.000 Z=255.000
+TeamHeadColor=X=255.000 Y=255.000 Z=255.000
+MainBBType=Spheroid
+MainBBHeight=45.995252
+MainBBRadius=22.997626
+MainBBHasHead=false
+MainBBHeadRadius=0.1
+MainBBHeadOffset=0.0
+MainBBHide=false
+ProjBBType=Spheroid
+ProjBBHeight=128.0
+ProjBBRadius=60.0
+ProjBBHasHead=false
+ProjBBHeadRadius=0.1
+ProjBBHeadOffset=0.0
+ProjBBHide=true
+BlockSelfDamage=false
+InvinciblePlayer=false
+InvincibleBots=false
+BlockTeamDamage=false
+HasJetpack=false
+JetpackActivationDelay=0.2
+JetpackFullFuelTime=100000.0
+JetpackFuelIncPerSec=0.1
+JetpackFuelRegensInAir=true
+JetpackThrust=6000.0
+JetpackMaxZVelocity=400.0
+JetpackAirControlWithThrust=1.0
+AirJumpCount=0
+AirJumpVelocity=800.0
+AbilityProfileNames=;;;
+HideWeapon=true
+AerialFriction=0.0
+AerialVerticalTurningFriction=100000.0
+AerialVerticalBreakingFriction=0.0
+UseAerialVerticalFriction=false
+StrafeSpeedMult=1.0
+BackSpeedMult=1.0
+RespawnInvulnTime=0.0
+BlockedSpawnRadius=190.0
+BlockSpawnFOV=0.0
+BlockSpawnDistance=0.0
+RespawnAnimationDuration=0.0
+AllowBufferedJumps=false
+BounceOffWalls=false
+LeanAngle=0.0
+LeanDisplacement=0.0
+AirJumpExtraControl=0.0
+ForwardSpeedBias=1.0
+HealthRegainedonkill=0.0
+HealthRegenPerSec=0.0
+HealthRegenDelay=0.0
+JumpSpeedPenaltyDuration=0.0
+JumpSpeedPenaltyPercent=0.0
+ThirdPersonCamera=false
+TPSArmLength=300.0
+TPSOffset=X=0.000 Y=150.000 Z=150.000
+BrakingDeceleration=0.0
+TerminalVelocity=0.0
+CharacterModel=None
+CharacterSkin=Default
+MeshHitDetection=false
+SpawnOffsetMin=X=0.000 Y=-100.000 Z=-100.000
+SpawnOffsetMax=X=0.000 Y=100.000 Z=100.000
+InvertBlockedSpawn=false
+ViewBobTime=0.0
+ViewBobAngleAdjustment=0.0
+ViewBobCameraZOffset=0.0
+ViewBobAffectsShots=false
+IsFlyer=false
+FlightObeysPitch=false
+FlightVelocityUp=800.0
+FlightAccelUp=800.0
+FlightVelocityDown=800.0
+FlightAccelDown=800.0
+IsFlyUpOnJumpAndCrouch=false
+DisableCharacterCollision=false
+LifeStealPercent=0.0
+AbilityGlobalCooldown=0.0
+BlockAbilityOnStartDuration=0.0
+DragCoefficient=10.0
+AmmoRegainedOnKill=0
+ContinuousGroundFriction=0.0
+ContinuousAirFriction=0.0
+ScaledGroundAcceleration=0.0
+ScaledAirAcceleration=0.0
+MaxAirSpeed=0.0
+StopSpeed=0.0
+StopSpeedThreshold=0.0
+ClampVelocityToInputSpeed=true
+JumpSkipsFriction=false
+EnableQuakeMovement=false
+EnableQuakeJump=false
+KtJump=0.0
+MovementPhysicsTickInterval=0.0
+MovementPhysicsTickEnabled=false
+TeamGlowUpHead=0.0
+TeamGlowUpBody=0.0
+EnemyGlowUpHead=0.0
+EnemyGlowUpBody=0.0
+EnemyGlowUpHeadOnHit=0.0
+EnemyGlowUpBodyOnHit=0.0
+EnemyGlowUpHeadOnLookAt=0.0
+EnemyGlowUpBodyOnLookAt=0.0
+PlaybackOptions.PlaybackMode=Input
+PlaybackOptions.OverrideRotation=true
+PlaybackOptions.OverrideAbilities=true
+PlaybackOptions.OverrideWeapons=true
+PlaybackOptions.OverrideMovement=true
+PlaybackOptions.OverrideDodgeTime=false
+PlaybackOptions.LoopUponCompletion=true
+PlaybackOptions.BreakToInputMode=false
+
+[Character Profile]
+Name=Apogee Cassiopeia 3 Body
+MaxHealth=1.0
+WeaponProfileNames=;;;;;;;
+MinRespawnDelay=0.001
+MaxRespawnDelay=0.001
+StepUpHeight=0.0
+CrouchHeightModifier=1.0
+CrouchAnimationSpeed=1.0
+CameraOffset=X=0.000 Y=0.000 Z=0.000
+HeadshotOnly=false
+DamageKnockbackFactor=0.0
+MaxSpeed=0.0
+MaxCrouchSpeed=0.0
+Acceleration=0.0
+CrouchingAcceleration=0.0
+Friction=0.0
+BrakingFrictionFactor=0.0
+JumpVelocity=0.0
+Gravity=0.0
+AirControl=0.0
+CanCrouch=false
+CanPogoJump=false
+CanCrouchInAir=false
+CrouchInAirRaisesFeet=false
+CanJumpFromCrouch=false
+// Note: the color channel values are interpreted as 0.0 (0%) to 1.0 (100%) going over 1.0 will start to produce a glow effect when the user is in HDR mode (SceneColor is set to "Medium" or higher)
+EnemyBodyColor=X=255.000 Y=0.000 Z=0.000
+EnemyBodyColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyBodyColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColor=X=255.000 Y=255.000 Z=255.000
+EnemyHeadColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+TeamBodyColor=X=0.000 Y=0.000 Z=255.000
+TeamHeadColor=X=255.000 Y=255.000 Z=255.000
+MainBBType=Spheroid
+MainBBHeight=45.995252
+MainBBRadius=22.997626
+MainBBHasHead=false
+MainBBHeadRadius=0.1
+MainBBHeadOffset=0.0
+MainBBHide=false
+ProjBBType=Spheroid
+ProjBBHeight=128.0
+ProjBBRadius=60.0
+ProjBBHasHead=false
+ProjBBHeadRadius=0.1
+ProjBBHeadOffset=0.0
+ProjBBHide=true
+BlockSelfDamage=false
+InvinciblePlayer=false
+InvincibleBots=false
+BlockTeamDamage=false
+HasJetpack=false
+JetpackActivationDelay=0.2
+JetpackFullFuelTime=100000.0
+JetpackFuelIncPerSec=0.1
+JetpackFuelRegensInAir=true
+JetpackThrust=6000.0
+JetpackMaxZVelocity=400.0
+JetpackAirControlWithThrust=1.0
+AirJumpCount=0
+AirJumpVelocity=800.0
+AbilityProfileNames=;;;
+HideWeapon=true
+AerialFriction=0.0
+AerialVerticalTurningFriction=100000.0
+AerialVerticalBreakingFriction=0.0
+UseAerialVerticalFriction=false
+StrafeSpeedMult=1.0
+BackSpeedMult=1.0
+RespawnInvulnTime=0.0
+BlockedSpawnRadius=190.0
+BlockSpawnFOV=0.0
+BlockSpawnDistance=0.0
+RespawnAnimationDuration=0.0
+AllowBufferedJumps=false
+BounceOffWalls=false
+LeanAngle=0.0
+LeanDisplacement=0.0
+AirJumpExtraControl=0.0
+ForwardSpeedBias=1.0
+HealthRegainedonkill=0.0
+HealthRegenPerSec=0.0
+HealthRegenDelay=0.0
+JumpSpeedPenaltyDuration=0.0
+JumpSpeedPenaltyPercent=0.0
+ThirdPersonCamera=false
+TPSArmLength=300.0
+TPSOffset=X=0.000 Y=150.000 Z=150.000
+BrakingDeceleration=0.0
+TerminalVelocity=0.0
+CharacterModel=None
+CharacterSkin=Default
+MeshHitDetection=false
+SpawnOffsetMin=X=0.000 Y=-100.000 Z=-100.000
+SpawnOffsetMax=X=0.000 Y=100.000 Z=100.000
+InvertBlockedSpawn=false
+ViewBobTime=0.0
+ViewBobAngleAdjustment=0.0
+ViewBobCameraZOffset=0.0
+ViewBobAffectsShots=false
+IsFlyer=false
+FlightObeysPitch=false
+FlightVelocityUp=800.0
+FlightAccelUp=800.0
+FlightVelocityDown=800.0
+FlightAccelDown=800.0
+IsFlyUpOnJumpAndCrouch=false
+DisableCharacterCollision=false
+LifeStealPercent=0.0
+AbilityGlobalCooldown=0.0
+BlockAbilityOnStartDuration=0.0
+DragCoefficient=10.0
+AmmoRegainedOnKill=0
+ContinuousGroundFriction=0.0
+ContinuousAirFriction=0.0
+ScaledGroundAcceleration=0.0
+ScaledAirAcceleration=0.0
+MaxAirSpeed=0.0
+StopSpeed=0.0
+StopSpeedThreshold=0.0
+ClampVelocityToInputSpeed=true
+JumpSkipsFriction=false
+EnableQuakeMovement=false
+EnableQuakeJump=false
+KtJump=0.0
+MovementPhysicsTickInterval=0.0
+MovementPhysicsTickEnabled=false
+TeamGlowUpHead=0.0
+TeamGlowUpBody=0.0
+EnemyGlowUpHead=0.0
+EnemyGlowUpBody=0.0
+EnemyGlowUpHeadOnHit=0.0
+EnemyGlowUpBodyOnHit=0.0
+EnemyGlowUpHeadOnLookAt=0.0
+EnemyGlowUpBodyOnLookAt=0.0
+PlaybackOptions.PlaybackMode=Input
+PlaybackOptions.OverrideRotation=true
+PlaybackOptions.OverrideAbilities=true
+PlaybackOptions.OverrideWeapons=true
+PlaybackOptions.OverrideMovement=true
+PlaybackOptions.OverrideDodgeTime=false
+PlaybackOptions.LoopUponCompletion=true
+PlaybackOptions.BreakToInputMode=false
+
+[Character Profile]
+Name=Apogee Cassiopeia 4 Body
+MaxHealth=1.0
+WeaponProfileNames=;;;;;;;
+MinRespawnDelay=0.001
+MaxRespawnDelay=0.001
+StepUpHeight=0.0
+CrouchHeightModifier=1.0
+CrouchAnimationSpeed=1.0
+CameraOffset=X=0.000 Y=0.000 Z=0.000
+HeadshotOnly=false
+DamageKnockbackFactor=0.0
+MaxSpeed=0.0
+MaxCrouchSpeed=0.0
+Acceleration=0.0
+CrouchingAcceleration=0.0
+Friction=0.0
+BrakingFrictionFactor=0.0
+JumpVelocity=0.0
+Gravity=0.0
+AirControl=0.0
+CanCrouch=false
+CanPogoJump=false
+CanCrouchInAir=false
+CrouchInAirRaisesFeet=false
+CanJumpFromCrouch=false
+// Note: the color channel values are interpreted as 0.0 (0%) to 1.0 (100%) going over 1.0 will start to produce a glow effect when the user is in HDR mode (SceneColor is set to "Medium" or higher)
+EnemyBodyColor=X=255.000 Y=0.000 Z=0.000
+EnemyBodyColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyBodyColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColor=X=255.000 Y=255.000 Z=255.000
+EnemyHeadColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+TeamBodyColor=X=0.000 Y=0.000 Z=255.000
+TeamHeadColor=X=255.000 Y=255.000 Z=255.000
+MainBBType=Spheroid
+MainBBHeight=45.995252
+MainBBRadius=22.997626
+MainBBHasHead=false
+MainBBHeadRadius=0.1
+MainBBHeadOffset=0.0
+MainBBHide=false
+ProjBBType=Spheroid
+ProjBBHeight=128.0
+ProjBBRadius=60.0
+ProjBBHasHead=false
+ProjBBHeadRadius=0.1
+ProjBBHeadOffset=0.0
+ProjBBHide=true
+BlockSelfDamage=false
+InvinciblePlayer=false
+InvincibleBots=false
+BlockTeamDamage=false
+HasJetpack=false
+JetpackActivationDelay=0.2
+JetpackFullFuelTime=100000.0
+JetpackFuelIncPerSec=0.1
+JetpackFuelRegensInAir=true
+JetpackThrust=6000.0
+JetpackMaxZVelocity=400.0
+JetpackAirControlWithThrust=1.0
+AirJumpCount=0
+AirJumpVelocity=800.0
+AbilityProfileNames=;;;
+HideWeapon=true
+AerialFriction=0.0
+AerialVerticalTurningFriction=100000.0
+AerialVerticalBreakingFriction=0.0
+UseAerialVerticalFriction=false
+StrafeSpeedMult=1.0
+BackSpeedMult=1.0
+RespawnInvulnTime=0.0
+BlockedSpawnRadius=190.0
+BlockSpawnFOV=0.0
+BlockSpawnDistance=0.0
+RespawnAnimationDuration=0.0
+AllowBufferedJumps=false
+BounceOffWalls=false
+LeanAngle=0.0
+LeanDisplacement=0.0
+AirJumpExtraControl=0.0
+ForwardSpeedBias=1.0
+HealthRegainedonkill=0.0
+HealthRegenPerSec=0.0
+HealthRegenDelay=0.0
+JumpSpeedPenaltyDuration=0.0
+JumpSpeedPenaltyPercent=0.0
+ThirdPersonCamera=false
+TPSArmLength=300.0
+TPSOffset=X=0.000 Y=150.000 Z=150.000
+BrakingDeceleration=0.0
+TerminalVelocity=0.0
+CharacterModel=None
+CharacterSkin=Default
+MeshHitDetection=false
+SpawnOffsetMin=X=0.000 Y=-100.000 Z=-100.000
+SpawnOffsetMax=X=0.000 Y=100.000 Z=100.000
+InvertBlockedSpawn=false
+ViewBobTime=0.0
+ViewBobAngleAdjustment=0.0
+ViewBobCameraZOffset=0.0
+ViewBobAffectsShots=false
+IsFlyer=false
+FlightObeysPitch=false
+FlightVelocityUp=800.0
+FlightAccelUp=800.0
+FlightVelocityDown=800.0
+FlightAccelDown=800.0
+IsFlyUpOnJumpAndCrouch=false
+DisableCharacterCollision=false
+LifeStealPercent=0.0
+AbilityGlobalCooldown=0.0
+BlockAbilityOnStartDuration=0.0
+DragCoefficient=10.0
+AmmoRegainedOnKill=0
+ContinuousGroundFriction=0.0
+ContinuousAirFriction=0.0
+ScaledGroundAcceleration=0.0
+ScaledAirAcceleration=0.0
+MaxAirSpeed=0.0
+StopSpeed=0.0
+StopSpeedThreshold=0.0
+ClampVelocityToInputSpeed=true
+JumpSkipsFriction=false
+EnableQuakeMovement=false
+EnableQuakeJump=false
+KtJump=0.0
+MovementPhysicsTickInterval=0.0
+MovementPhysicsTickEnabled=false
+TeamGlowUpHead=0.0
+TeamGlowUpBody=0.0
+EnemyGlowUpHead=0.0
+EnemyGlowUpBody=0.0
+EnemyGlowUpHeadOnHit=0.0
+EnemyGlowUpBodyOnHit=0.0
+EnemyGlowUpHeadOnLookAt=0.0
+EnemyGlowUpBodyOnLookAt=0.0
+PlaybackOptions.PlaybackMode=Input
+PlaybackOptions.OverrideRotation=true
+PlaybackOptions.OverrideAbilities=true
+PlaybackOptions.OverrideWeapons=true
+PlaybackOptions.OverrideMovement=true
+PlaybackOptions.OverrideDodgeTime=false
+PlaybackOptions.LoopUponCompletion=true
+PlaybackOptions.BreakToInputMode=false
+
+[Character Profile]
+Name=Apogee Cassiopeia 5 Body
+MaxHealth=1.0
+WeaponProfileNames=;;;;;;;
+MinRespawnDelay=0.001
+MaxRespawnDelay=0.001
+StepUpHeight=0.0
+CrouchHeightModifier=1.0
+CrouchAnimationSpeed=1.0
+CameraOffset=X=0.000 Y=0.000 Z=0.000
+HeadshotOnly=false
+DamageKnockbackFactor=0.0
+MaxSpeed=0.0
+MaxCrouchSpeed=0.0
+Acceleration=0.0
+CrouchingAcceleration=0.0
+Friction=0.0
+BrakingFrictionFactor=0.0
+JumpVelocity=0.0
+Gravity=0.0
+AirControl=0.0
+CanCrouch=false
+CanPogoJump=false
+CanCrouchInAir=false
+CrouchInAirRaisesFeet=false
+CanJumpFromCrouch=false
+// Note: the color channel values are interpreted as 0.0 (0%) to 1.0 (100%) going over 1.0 will start to produce a glow effect when the user is in HDR mode (SceneColor is set to "Medium" or higher)
+EnemyBodyColor=X=255.000 Y=0.000 Z=0.000
+EnemyBodyColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyBodyColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColor=X=255.000 Y=255.000 Z=255.000
+EnemyHeadColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+TeamBodyColor=X=0.000 Y=0.000 Z=255.000
+TeamHeadColor=X=255.000 Y=255.000 Z=255.000
+MainBBType=Spheroid
+MainBBHeight=45.995252
+MainBBRadius=22.997626
+MainBBHasHead=false
+MainBBHeadRadius=0.1
+MainBBHeadOffset=0.0
+MainBBHide=false
+ProjBBType=Spheroid
+ProjBBHeight=128.0
+ProjBBRadius=60.0
+ProjBBHasHead=false
+ProjBBHeadRadius=0.1
+ProjBBHeadOffset=0.0
+ProjBBHide=true
+BlockSelfDamage=false
+InvinciblePlayer=false
+InvincibleBots=false
+BlockTeamDamage=false
+HasJetpack=false
+JetpackActivationDelay=0.2
+JetpackFullFuelTime=100000.0
+JetpackFuelIncPerSec=0.1
+JetpackFuelRegensInAir=true
+JetpackThrust=6000.0
+JetpackMaxZVelocity=400.0
+JetpackAirControlWithThrust=1.0
+AirJumpCount=0
+AirJumpVelocity=800.0
+AbilityProfileNames=;;;
+HideWeapon=true
+AerialFriction=0.0
+AerialVerticalTurningFriction=100000.0
+AerialVerticalBreakingFriction=0.0
+UseAerialVerticalFriction=false
+StrafeSpeedMult=1.0
+BackSpeedMult=1.0
+RespawnInvulnTime=0.0
+BlockedSpawnRadius=190.0
+BlockSpawnFOV=0.0
+BlockSpawnDistance=0.0
+RespawnAnimationDuration=0.0
+AllowBufferedJumps=false
+BounceOffWalls=false
+LeanAngle=0.0
+LeanDisplacement=0.0
+AirJumpExtraControl=0.0
+ForwardSpeedBias=1.0
+HealthRegainedonkill=0.0
+HealthRegenPerSec=0.0
+HealthRegenDelay=0.0
+JumpSpeedPenaltyDuration=0.0
+JumpSpeedPenaltyPercent=0.0
+ThirdPersonCamera=false
+TPSArmLength=300.0
+TPSOffset=X=0.000 Y=150.000 Z=150.000
+BrakingDeceleration=0.0
+TerminalVelocity=0.0
+CharacterModel=None
+CharacterSkin=Default
+MeshHitDetection=false
+SpawnOffsetMin=X=0.000 Y=-100.000 Z=-100.000
+SpawnOffsetMax=X=0.000 Y=100.000 Z=100.000
+InvertBlockedSpawn=false
+ViewBobTime=0.0
+ViewBobAngleAdjustment=0.0
+ViewBobCameraZOffset=0.0
+ViewBobAffectsShots=false
+IsFlyer=false
+FlightObeysPitch=false
+FlightVelocityUp=800.0
+FlightAccelUp=800.0
+FlightVelocityDown=800.0
+FlightAccelDown=800.0
+IsFlyUpOnJumpAndCrouch=false
+DisableCharacterCollision=false
+LifeStealPercent=0.0
+AbilityGlobalCooldown=0.0
+BlockAbilityOnStartDuration=0.0
+DragCoefficient=10.0
+AmmoRegainedOnKill=0
+ContinuousGroundFriction=0.0
+ContinuousAirFriction=0.0
+ScaledGroundAcceleration=0.0
+ScaledAirAcceleration=0.0
+MaxAirSpeed=0.0
+StopSpeed=0.0
+StopSpeedThreshold=0.0
+ClampVelocityToInputSpeed=true
+JumpSkipsFriction=false
+EnableQuakeMovement=false
+EnableQuakeJump=false
+KtJump=0.0
+MovementPhysicsTickInterval=0.0
+MovementPhysicsTickEnabled=false
+TeamGlowUpHead=0.0
+TeamGlowUpBody=0.0
+EnemyGlowUpHead=0.0
+EnemyGlowUpBody=0.0
+EnemyGlowUpHeadOnHit=0.0
+EnemyGlowUpBodyOnHit=0.0
+EnemyGlowUpHeadOnLookAt=0.0
+EnemyGlowUpBodyOnLookAt=0.0
+PlaybackOptions.PlaybackMode=Input
+PlaybackOptions.OverrideRotation=true
+PlaybackOptions.OverrideAbilities=true
+PlaybackOptions.OverrideWeapons=true
+PlaybackOptions.OverrideMovement=true
+PlaybackOptions.OverrideDodgeTime=false
+PlaybackOptions.LoopUponCompletion=true
+PlaybackOptions.BreakToInputMode=false
+
+[Character Profile]
+Name=Apogee Cassiopeia 6 Body
+MaxHealth=1.0
+WeaponProfileNames=;;;;;;;
+MinRespawnDelay=0.001
+MaxRespawnDelay=0.001
+StepUpHeight=0.0
+CrouchHeightModifier=1.0
+CrouchAnimationSpeed=1.0
+CameraOffset=X=0.000 Y=0.000 Z=0.000
+HeadshotOnly=false
+DamageKnockbackFactor=0.0
+MaxSpeed=0.0
+MaxCrouchSpeed=0.0
+Acceleration=0.0
+CrouchingAcceleration=0.0
+Friction=0.0
+BrakingFrictionFactor=0.0
+JumpVelocity=0.0
+Gravity=0.0
+AirControl=0.0
+CanCrouch=false
+CanPogoJump=false
+CanCrouchInAir=false
+CrouchInAirRaisesFeet=false
+CanJumpFromCrouch=false
+// Note: the color channel values are interpreted as 0.0 (0%) to 1.0 (100%) going over 1.0 will start to produce a glow effect when the user is in HDR mode (SceneColor is set to "Medium" or higher)
+EnemyBodyColor=X=255.000 Y=0.000 Z=0.000
+EnemyBodyColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyBodyColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColor=X=255.000 Y=255.000 Z=255.000
+EnemyHeadColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+TeamBodyColor=X=0.000 Y=0.000 Z=255.000
+TeamHeadColor=X=255.000 Y=255.000 Z=255.000
+MainBBType=Spheroid
+MainBBHeight=45.995252
+MainBBRadius=22.997626
+MainBBHasHead=false
+MainBBHeadRadius=0.1
+MainBBHeadOffset=0.0
+MainBBHide=false
+ProjBBType=Spheroid
+ProjBBHeight=128.0
+ProjBBRadius=60.0
+ProjBBHasHead=false
+ProjBBHeadRadius=0.1
+ProjBBHeadOffset=0.0
+ProjBBHide=true
+BlockSelfDamage=false
+InvinciblePlayer=false
+InvincibleBots=false
+BlockTeamDamage=false
+HasJetpack=false
+JetpackActivationDelay=0.2
+JetpackFullFuelTime=100000.0
+JetpackFuelIncPerSec=0.1
+JetpackFuelRegensInAir=true
+JetpackThrust=6000.0
+JetpackMaxZVelocity=400.0
+JetpackAirControlWithThrust=1.0
+AirJumpCount=0
+AirJumpVelocity=800.0
+AbilityProfileNames=;;;
+HideWeapon=true
+AerialFriction=0.0
+AerialVerticalTurningFriction=100000.0
+AerialVerticalBreakingFriction=0.0
+UseAerialVerticalFriction=false
+StrafeSpeedMult=1.0
+BackSpeedMult=1.0
+RespawnInvulnTime=0.0
+BlockedSpawnRadius=190.0
+BlockSpawnFOV=0.0
+BlockSpawnDistance=0.0
+RespawnAnimationDuration=0.0
+AllowBufferedJumps=false
+BounceOffWalls=false
+LeanAngle=0.0
+LeanDisplacement=0.0
+AirJumpExtraControl=0.0
+ForwardSpeedBias=1.0
+HealthRegainedonkill=0.0
+HealthRegenPerSec=0.0
+HealthRegenDelay=0.0
+JumpSpeedPenaltyDuration=0.0
+JumpSpeedPenaltyPercent=0.0
+ThirdPersonCamera=false
+TPSArmLength=300.0
+TPSOffset=X=0.000 Y=150.000 Z=150.000
+BrakingDeceleration=0.0
+TerminalVelocity=0.0
+CharacterModel=None
+CharacterSkin=Default
+MeshHitDetection=false
+SpawnOffsetMin=X=0.000 Y=-100.000 Z=-100.000
+SpawnOffsetMax=X=0.000 Y=100.000 Z=100.000
+InvertBlockedSpawn=false
+ViewBobTime=0.0
+ViewBobAngleAdjustment=0.0
+ViewBobCameraZOffset=0.0
+ViewBobAffectsShots=false
+IsFlyer=false
+FlightObeysPitch=false
+FlightVelocityUp=800.0
+FlightAccelUp=800.0
+FlightVelocityDown=800.0
+FlightAccelDown=800.0
+IsFlyUpOnJumpAndCrouch=false
+DisableCharacterCollision=false
+LifeStealPercent=0.0
+AbilityGlobalCooldown=0.0
+BlockAbilityOnStartDuration=0.0
+DragCoefficient=10.0
+AmmoRegainedOnKill=0
+ContinuousGroundFriction=0.0
+ContinuousAirFriction=0.0
+ScaledGroundAcceleration=0.0
+ScaledAirAcceleration=0.0
+MaxAirSpeed=0.0
+StopSpeed=0.0
+StopSpeedThreshold=0.0
+ClampVelocityToInputSpeed=true
+JumpSkipsFriction=false
+EnableQuakeMovement=false
+EnableQuakeJump=false
+KtJump=0.0
+MovementPhysicsTickInterval=0.0
+MovementPhysicsTickEnabled=false
+TeamGlowUpHead=0.0
+TeamGlowUpBody=0.0
+EnemyGlowUpHead=0.0
+EnemyGlowUpBody=0.0
+EnemyGlowUpHeadOnHit=0.0
+EnemyGlowUpBodyOnHit=0.0
+EnemyGlowUpHeadOnLookAt=0.0
+EnemyGlowUpBodyOnLookAt=0.0
+PlaybackOptions.PlaybackMode=Input
+PlaybackOptions.OverrideRotation=true
+PlaybackOptions.OverrideAbilities=true
+PlaybackOptions.OverrideWeapons=true
+PlaybackOptions.OverrideMovement=true
+PlaybackOptions.OverrideDodgeTime=false
+PlaybackOptions.LoopUponCompletion=true
+PlaybackOptions.BreakToInputMode=false
+
+[Character Profile]
+Name=Apogee Cassiopeia 7 Body
+MaxHealth=1.0
+WeaponProfileNames=;;;;;;;
+MinRespawnDelay=0.001
+MaxRespawnDelay=0.001
+StepUpHeight=0.0
+CrouchHeightModifier=1.0
+CrouchAnimationSpeed=1.0
+CameraOffset=X=0.000 Y=0.000 Z=0.000
+HeadshotOnly=false
+DamageKnockbackFactor=0.0
+MaxSpeed=0.0
+MaxCrouchSpeed=0.0
+Acceleration=0.0
+CrouchingAcceleration=0.0
+Friction=0.0
+BrakingFrictionFactor=0.0
+JumpVelocity=0.0
+Gravity=0.0
+AirControl=0.0
+CanCrouch=false
+CanPogoJump=false
+CanCrouchInAir=false
+CrouchInAirRaisesFeet=false
+CanJumpFromCrouch=false
+// Note: the color channel values are interpreted as 0.0 (0%) to 1.0 (100%) going over 1.0 will start to produce a glow effect when the user is in HDR mode (SceneColor is set to "Medium" or higher)
+EnemyBodyColor=X=255.000 Y=0.000 Z=0.000
+EnemyBodyColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyBodyColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColor=X=255.000 Y=255.000 Z=255.000
+EnemyHeadColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+TeamBodyColor=X=0.000 Y=0.000 Z=255.000
+TeamHeadColor=X=255.000 Y=255.000 Z=255.000
+MainBBType=Spheroid
+MainBBHeight=45.995252
+MainBBRadius=22.997626
+MainBBHasHead=false
+MainBBHeadRadius=0.1
+MainBBHeadOffset=0.0
+MainBBHide=false
+ProjBBType=Spheroid
+ProjBBHeight=128.0
+ProjBBRadius=60.0
+ProjBBHasHead=false
+ProjBBHeadRadius=0.1
+ProjBBHeadOffset=0.0
+ProjBBHide=true
+BlockSelfDamage=false
+InvinciblePlayer=false
+InvincibleBots=false
+BlockTeamDamage=false
+HasJetpack=false
+JetpackActivationDelay=0.2
+JetpackFullFuelTime=100000.0
+JetpackFuelIncPerSec=0.1
+JetpackFuelRegensInAir=true
+JetpackThrust=6000.0
+JetpackMaxZVelocity=400.0
+JetpackAirControlWithThrust=1.0
+AirJumpCount=0
+AirJumpVelocity=800.0
+AbilityProfileNames=;;;
+HideWeapon=true
+AerialFriction=0.0
+AerialVerticalTurningFriction=100000.0
+AerialVerticalBreakingFriction=0.0
+UseAerialVerticalFriction=false
+StrafeSpeedMult=1.0
+BackSpeedMult=1.0
+RespawnInvulnTime=0.0
+BlockedSpawnRadius=190.0
+BlockSpawnFOV=0.0
+BlockSpawnDistance=0.0
+RespawnAnimationDuration=0.0
+AllowBufferedJumps=false
+BounceOffWalls=false
+LeanAngle=0.0
+LeanDisplacement=0.0
+AirJumpExtraControl=0.0
+ForwardSpeedBias=1.0
+HealthRegainedonkill=0.0
+HealthRegenPerSec=0.0
+HealthRegenDelay=0.0
+JumpSpeedPenaltyDuration=0.0
+JumpSpeedPenaltyPercent=0.0
+ThirdPersonCamera=false
+TPSArmLength=300.0
+TPSOffset=X=0.000 Y=150.000 Z=150.000
+BrakingDeceleration=0.0
+TerminalVelocity=0.0
+CharacterModel=None
+CharacterSkin=Default
+MeshHitDetection=false
+SpawnOffsetMin=X=0.000 Y=-100.000 Z=-100.000
+SpawnOffsetMax=X=0.000 Y=100.000 Z=100.000
+InvertBlockedSpawn=false
+ViewBobTime=0.0
+ViewBobAngleAdjustment=0.0
+ViewBobCameraZOffset=0.0
+ViewBobAffectsShots=false
+IsFlyer=false
+FlightObeysPitch=false
+FlightVelocityUp=800.0
+FlightAccelUp=800.0
+FlightVelocityDown=800.0
+FlightAccelDown=800.0
+IsFlyUpOnJumpAndCrouch=false
+DisableCharacterCollision=false
+LifeStealPercent=0.0
+AbilityGlobalCooldown=0.0
+BlockAbilityOnStartDuration=0.0
+DragCoefficient=10.0
+AmmoRegainedOnKill=0
+ContinuousGroundFriction=0.0
+ContinuousAirFriction=0.0
+ScaledGroundAcceleration=0.0
+ScaledAirAcceleration=0.0
+MaxAirSpeed=0.0
+StopSpeed=0.0
+StopSpeedThreshold=0.0
+ClampVelocityToInputSpeed=true
+JumpSkipsFriction=false
+EnableQuakeMovement=false
+EnableQuakeJump=false
+KtJump=0.0
+MovementPhysicsTickInterval=0.0
+MovementPhysicsTickEnabled=false
+TeamGlowUpHead=0.0
+TeamGlowUpBody=0.0
+EnemyGlowUpHead=0.0
+EnemyGlowUpBody=0.0
+EnemyGlowUpHeadOnHit=0.0
+EnemyGlowUpBodyOnHit=0.0
+EnemyGlowUpHeadOnLookAt=0.0
+EnemyGlowUpBodyOnLookAt=0.0
+PlaybackOptions.PlaybackMode=Input
+PlaybackOptions.OverrideRotation=true
+PlaybackOptions.OverrideAbilities=true
+PlaybackOptions.OverrideWeapons=true
+PlaybackOptions.OverrideMovement=true
+PlaybackOptions.OverrideDodgeTime=false
+PlaybackOptions.LoopUponCompletion=true
+PlaybackOptions.BreakToInputMode=false
+
+[Character Profile]
+Name=Apogee Cygnus 1 Body
+MaxHealth=1.0
+WeaponProfileNames=;;;;;;;
+MinRespawnDelay=0.001
+MaxRespawnDelay=0.001
+StepUpHeight=0.0
+CrouchHeightModifier=1.0
+CrouchAnimationSpeed=1.0
+CameraOffset=X=0.000 Y=0.000 Z=0.000
+HeadshotOnly=false
+DamageKnockbackFactor=0.0
+MaxSpeed=0.0
+MaxCrouchSpeed=0.0
+Acceleration=0.0
+CrouchingAcceleration=0.0
+Friction=0.0
+BrakingFrictionFactor=0.0
+JumpVelocity=0.0
+Gravity=0.0
+AirControl=0.0
+CanCrouch=false
+CanPogoJump=false
+CanCrouchInAir=false
+CrouchInAirRaisesFeet=false
+CanJumpFromCrouch=false
+// Note: the color channel values are interpreted as 0.0 (0%) to 1.0 (100%) going over 1.0 will start to produce a glow effect when the user is in HDR mode (SceneColor is set to "Medium" or higher)
+EnemyBodyColor=X=255.000 Y=0.000 Z=0.000
+EnemyBodyColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyBodyColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColor=X=255.000 Y=255.000 Z=255.000
+EnemyHeadColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+TeamBodyColor=X=0.000 Y=0.000 Z=255.000
+TeamHeadColor=X=255.000 Y=255.000 Z=255.000
+MainBBType=Spheroid
+MainBBHeight=45.995252
+MainBBRadius=22.997626
+MainBBHasHead=false
+MainBBHeadRadius=0.1
+MainBBHeadOffset=0.0
+MainBBHide=false
+ProjBBType=Spheroid
+ProjBBHeight=128.0
+ProjBBRadius=60.0
+ProjBBHasHead=false
+ProjBBHeadRadius=0.1
+ProjBBHeadOffset=0.0
+ProjBBHide=true
+BlockSelfDamage=false
+InvinciblePlayer=false
+InvincibleBots=false
+BlockTeamDamage=false
+HasJetpack=false
+JetpackActivationDelay=0.2
+JetpackFullFuelTime=100000.0
+JetpackFuelIncPerSec=0.1
+JetpackFuelRegensInAir=true
+JetpackThrust=6000.0
+JetpackMaxZVelocity=400.0
+JetpackAirControlWithThrust=1.0
+AirJumpCount=0
+AirJumpVelocity=800.0
+AbilityProfileNames=;;;
+HideWeapon=true
+AerialFriction=0.0
+AerialVerticalTurningFriction=100000.0
+AerialVerticalBreakingFriction=0.0
+UseAerialVerticalFriction=false
+StrafeSpeedMult=1.0
+BackSpeedMult=1.0
+RespawnInvulnTime=0.0
+BlockedSpawnRadius=190.0
+BlockSpawnFOV=0.0
+BlockSpawnDistance=0.0
+RespawnAnimationDuration=0.0
+AllowBufferedJumps=false
+BounceOffWalls=false
+LeanAngle=0.0
+LeanDisplacement=0.0
+AirJumpExtraControl=0.0
+ForwardSpeedBias=1.0
+HealthRegainedonkill=0.0
+HealthRegenPerSec=0.0
+HealthRegenDelay=0.0
+JumpSpeedPenaltyDuration=0.0
+JumpSpeedPenaltyPercent=0.0
+ThirdPersonCamera=false
+TPSArmLength=300.0
+TPSOffset=X=0.000 Y=150.000 Z=150.000
+BrakingDeceleration=0.0
+TerminalVelocity=0.0
+CharacterModel=None
+CharacterSkin=Default
+MeshHitDetection=false
+SpawnOffsetMin=X=0.000 Y=-100.000 Z=-100.000
+SpawnOffsetMax=X=0.000 Y=100.000 Z=100.000
+InvertBlockedSpawn=false
+ViewBobTime=0.0
+ViewBobAngleAdjustment=0.0
+ViewBobCameraZOffset=0.0
+ViewBobAffectsShots=false
+IsFlyer=false
+FlightObeysPitch=false
+FlightVelocityUp=800.0
+FlightAccelUp=800.0
+FlightVelocityDown=800.0
+FlightAccelDown=800.0
+IsFlyUpOnJumpAndCrouch=false
+DisableCharacterCollision=false
+LifeStealPercent=0.0
+AbilityGlobalCooldown=0.0
+BlockAbilityOnStartDuration=0.0
+DragCoefficient=10.0
+AmmoRegainedOnKill=0
+ContinuousGroundFriction=0.0
+ContinuousAirFriction=0.0
+ScaledGroundAcceleration=0.0
+ScaledAirAcceleration=0.0
+MaxAirSpeed=0.0
+StopSpeed=0.0
+StopSpeedThreshold=0.0
+ClampVelocityToInputSpeed=true
+JumpSkipsFriction=false
+EnableQuakeMovement=false
+EnableQuakeJump=false
+KtJump=0.0
+MovementPhysicsTickInterval=0.0
+MovementPhysicsTickEnabled=false
+TeamGlowUpHead=0.0
+TeamGlowUpBody=0.0
+EnemyGlowUpHead=0.0
+EnemyGlowUpBody=0.0
+EnemyGlowUpHeadOnHit=0.0
+EnemyGlowUpBodyOnHit=0.0
+EnemyGlowUpHeadOnLookAt=0.0
+EnemyGlowUpBodyOnLookAt=0.0
+PlaybackOptions.PlaybackMode=Input
+PlaybackOptions.OverrideRotation=true
+PlaybackOptions.OverrideAbilities=true
+PlaybackOptions.OverrideWeapons=true
+PlaybackOptions.OverrideMovement=true
+PlaybackOptions.OverrideDodgeTime=false
+PlaybackOptions.LoopUponCompletion=true
+PlaybackOptions.BreakToInputMode=false
+
+[Character Profile]
+Name=Apogee Cygnus 2 Body
+MaxHealth=1.0
+WeaponProfileNames=;;;;;;;
+MinRespawnDelay=0.001
+MaxRespawnDelay=0.001
+StepUpHeight=0.0
+CrouchHeightModifier=1.0
+CrouchAnimationSpeed=1.0
+CameraOffset=X=0.000 Y=0.000 Z=0.000
+HeadshotOnly=false
+DamageKnockbackFactor=0.0
+MaxSpeed=0.0
+MaxCrouchSpeed=0.0
+Acceleration=0.0
+CrouchingAcceleration=0.0
+Friction=0.0
+BrakingFrictionFactor=0.0
+JumpVelocity=0.0
+Gravity=0.0
+AirControl=0.0
+CanCrouch=false
+CanPogoJump=false
+CanCrouchInAir=false
+CrouchInAirRaisesFeet=false
+CanJumpFromCrouch=false
+// Note: the color channel values are interpreted as 0.0 (0%) to 1.0 (100%) going over 1.0 will start to produce a glow effect when the user is in HDR mode (SceneColor is set to "Medium" or higher)
+EnemyBodyColor=X=255.000 Y=0.000 Z=0.000
+EnemyBodyColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyBodyColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColor=X=255.000 Y=255.000 Z=255.000
+EnemyHeadColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+TeamBodyColor=X=0.000 Y=0.000 Z=255.000
+TeamHeadColor=X=255.000 Y=255.000 Z=255.000
+MainBBType=Spheroid
+MainBBHeight=45.995252
+MainBBRadius=22.997626
+MainBBHasHead=false
+MainBBHeadRadius=0.1
+MainBBHeadOffset=0.0
+MainBBHide=false
+ProjBBType=Spheroid
+ProjBBHeight=128.0
+ProjBBRadius=60.0
+ProjBBHasHead=false
+ProjBBHeadRadius=0.1
+ProjBBHeadOffset=0.0
+ProjBBHide=true
+BlockSelfDamage=false
+InvinciblePlayer=false
+InvincibleBots=false
+BlockTeamDamage=false
+HasJetpack=false
+JetpackActivationDelay=0.2
+JetpackFullFuelTime=100000.0
+JetpackFuelIncPerSec=0.1
+JetpackFuelRegensInAir=true
+JetpackThrust=6000.0
+JetpackMaxZVelocity=400.0
+JetpackAirControlWithThrust=1.0
+AirJumpCount=0
+AirJumpVelocity=800.0
+AbilityProfileNames=;;;
+HideWeapon=true
+AerialFriction=0.0
+AerialVerticalTurningFriction=100000.0
+AerialVerticalBreakingFriction=0.0
+UseAerialVerticalFriction=false
+StrafeSpeedMult=1.0
+BackSpeedMult=1.0
+RespawnInvulnTime=0.0
+BlockedSpawnRadius=190.0
+BlockSpawnFOV=0.0
+BlockSpawnDistance=0.0
+RespawnAnimationDuration=0.0
+AllowBufferedJumps=false
+BounceOffWalls=false
+LeanAngle=0.0
+LeanDisplacement=0.0
+AirJumpExtraControl=0.0
+ForwardSpeedBias=1.0
+HealthRegainedonkill=0.0
+HealthRegenPerSec=0.0
+HealthRegenDelay=0.0
+JumpSpeedPenaltyDuration=0.0
+JumpSpeedPenaltyPercent=0.0
+ThirdPersonCamera=false
+TPSArmLength=300.0
+TPSOffset=X=0.000 Y=150.000 Z=150.000
+BrakingDeceleration=0.0
+TerminalVelocity=0.0
+CharacterModel=None
+CharacterSkin=Default
+MeshHitDetection=false
+SpawnOffsetMin=X=0.000 Y=-100.000 Z=-100.000
+SpawnOffsetMax=X=0.000 Y=100.000 Z=100.000
+InvertBlockedSpawn=false
+ViewBobTime=0.0
+ViewBobAngleAdjustment=0.0
+ViewBobCameraZOffset=0.0
+ViewBobAffectsShots=false
+IsFlyer=false
+FlightObeysPitch=false
+FlightVelocityUp=800.0
+FlightAccelUp=800.0
+FlightVelocityDown=800.0
+FlightAccelDown=800.0
+IsFlyUpOnJumpAndCrouch=false
+DisableCharacterCollision=false
+LifeStealPercent=0.0
+AbilityGlobalCooldown=0.0
+BlockAbilityOnStartDuration=0.0
+DragCoefficient=10.0
+AmmoRegainedOnKill=0
+ContinuousGroundFriction=0.0
+ContinuousAirFriction=0.0
+ScaledGroundAcceleration=0.0
+ScaledAirAcceleration=0.0
+MaxAirSpeed=0.0
+StopSpeed=0.0
+StopSpeedThreshold=0.0
+ClampVelocityToInputSpeed=true
+JumpSkipsFriction=false
+EnableQuakeMovement=false
+EnableQuakeJump=false
+KtJump=0.0
+MovementPhysicsTickInterval=0.0
+MovementPhysicsTickEnabled=false
+TeamGlowUpHead=0.0
+TeamGlowUpBody=0.0
+EnemyGlowUpHead=0.0
+EnemyGlowUpBody=0.0
+EnemyGlowUpHeadOnHit=0.0
+EnemyGlowUpBodyOnHit=0.0
+EnemyGlowUpHeadOnLookAt=0.0
+EnemyGlowUpBodyOnLookAt=0.0
+PlaybackOptions.PlaybackMode=Input
+PlaybackOptions.OverrideRotation=true
+PlaybackOptions.OverrideAbilities=true
+PlaybackOptions.OverrideWeapons=true
+PlaybackOptions.OverrideMovement=true
+PlaybackOptions.OverrideDodgeTime=false
+PlaybackOptions.LoopUponCompletion=true
+PlaybackOptions.BreakToInputMode=false
+
+[Character Profile]
+Name=Apogee Cygnus 3 Body
+MaxHealth=1.0
+WeaponProfileNames=;;;;;;;
+MinRespawnDelay=0.001
+MaxRespawnDelay=0.001
+StepUpHeight=0.0
+CrouchHeightModifier=1.0
+CrouchAnimationSpeed=1.0
+CameraOffset=X=0.000 Y=0.000 Z=0.000
+HeadshotOnly=false
+DamageKnockbackFactor=0.0
+MaxSpeed=0.0
+MaxCrouchSpeed=0.0
+Acceleration=0.0
+CrouchingAcceleration=0.0
+Friction=0.0
+BrakingFrictionFactor=0.0
+JumpVelocity=0.0
+Gravity=0.0
+AirControl=0.0
+CanCrouch=false
+CanPogoJump=false
+CanCrouchInAir=false
+CrouchInAirRaisesFeet=false
+CanJumpFromCrouch=false
+// Note: the color channel values are interpreted as 0.0 (0%) to 1.0 (100%) going over 1.0 will start to produce a glow effect when the user is in HDR mode (SceneColor is set to "Medium" or higher)
+EnemyBodyColor=X=255.000 Y=0.000 Z=0.000
+EnemyBodyColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyBodyColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColor=X=255.000 Y=255.000 Z=255.000
+EnemyHeadColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+TeamBodyColor=X=0.000 Y=0.000 Z=255.000
+TeamHeadColor=X=255.000 Y=255.000 Z=255.000
+MainBBType=Spheroid
+MainBBHeight=45.995252
+MainBBRadius=22.997626
+MainBBHasHead=false
+MainBBHeadRadius=0.1
+MainBBHeadOffset=0.0
+MainBBHide=false
+ProjBBType=Spheroid
+ProjBBHeight=128.0
+ProjBBRadius=60.0
+ProjBBHasHead=false
+ProjBBHeadRadius=0.1
+ProjBBHeadOffset=0.0
+ProjBBHide=true
+BlockSelfDamage=false
+InvinciblePlayer=false
+InvincibleBots=false
+BlockTeamDamage=false
+HasJetpack=false
+JetpackActivationDelay=0.2
+JetpackFullFuelTime=100000.0
+JetpackFuelIncPerSec=0.1
+JetpackFuelRegensInAir=true
+JetpackThrust=6000.0
+JetpackMaxZVelocity=400.0
+JetpackAirControlWithThrust=1.0
+AirJumpCount=0
+AirJumpVelocity=800.0
+AbilityProfileNames=;;;
+HideWeapon=true
+AerialFriction=0.0
+AerialVerticalTurningFriction=100000.0
+AerialVerticalBreakingFriction=0.0
+UseAerialVerticalFriction=false
+StrafeSpeedMult=1.0
+BackSpeedMult=1.0
+RespawnInvulnTime=0.0
+BlockedSpawnRadius=190.0
+BlockSpawnFOV=0.0
+BlockSpawnDistance=0.0
+RespawnAnimationDuration=0.0
+AllowBufferedJumps=false
+BounceOffWalls=false
+LeanAngle=0.0
+LeanDisplacement=0.0
+AirJumpExtraControl=0.0
+ForwardSpeedBias=1.0
+HealthRegainedonkill=0.0
+HealthRegenPerSec=0.0
+HealthRegenDelay=0.0
+JumpSpeedPenaltyDuration=0.0
+JumpSpeedPenaltyPercent=0.0
+ThirdPersonCamera=false
+TPSArmLength=300.0
+TPSOffset=X=0.000 Y=150.000 Z=150.000
+BrakingDeceleration=0.0
+TerminalVelocity=0.0
+CharacterModel=None
+CharacterSkin=Default
+MeshHitDetection=false
+SpawnOffsetMin=X=0.000 Y=-100.000 Z=-100.000
+SpawnOffsetMax=X=0.000 Y=100.000 Z=100.000
+InvertBlockedSpawn=false
+ViewBobTime=0.0
+ViewBobAngleAdjustment=0.0
+ViewBobCameraZOffset=0.0
+ViewBobAffectsShots=false
+IsFlyer=false
+FlightObeysPitch=false
+FlightVelocityUp=800.0
+FlightAccelUp=800.0
+FlightVelocityDown=800.0
+FlightAccelDown=800.0
+IsFlyUpOnJumpAndCrouch=false
+DisableCharacterCollision=false
+LifeStealPercent=0.0
+AbilityGlobalCooldown=0.0
+BlockAbilityOnStartDuration=0.0
+DragCoefficient=10.0
+AmmoRegainedOnKill=0
+ContinuousGroundFriction=0.0
+ContinuousAirFriction=0.0
+ScaledGroundAcceleration=0.0
+ScaledAirAcceleration=0.0
+MaxAirSpeed=0.0
+StopSpeed=0.0
+StopSpeedThreshold=0.0
+ClampVelocityToInputSpeed=true
+JumpSkipsFriction=false
+EnableQuakeMovement=false
+EnableQuakeJump=false
+KtJump=0.0
+MovementPhysicsTickInterval=0.0
+MovementPhysicsTickEnabled=false
+TeamGlowUpHead=0.0
+TeamGlowUpBody=0.0
+EnemyGlowUpHead=0.0
+EnemyGlowUpBody=0.0
+EnemyGlowUpHeadOnHit=0.0
+EnemyGlowUpBodyOnHit=0.0
+EnemyGlowUpHeadOnLookAt=0.0
+EnemyGlowUpBodyOnLookAt=0.0
+PlaybackOptions.PlaybackMode=Input
+PlaybackOptions.OverrideRotation=true
+PlaybackOptions.OverrideAbilities=true
+PlaybackOptions.OverrideWeapons=true
+PlaybackOptions.OverrideMovement=true
+PlaybackOptions.OverrideDodgeTime=false
+PlaybackOptions.LoopUponCompletion=true
+PlaybackOptions.BreakToInputMode=false
+
+[Character Profile]
+Name=Apogee Cygnus 4 Body
+MaxHealth=1.0
+WeaponProfileNames=;;;;;;;
+MinRespawnDelay=0.001
+MaxRespawnDelay=0.001
+StepUpHeight=0.0
+CrouchHeightModifier=1.0
+CrouchAnimationSpeed=1.0
+CameraOffset=X=0.000 Y=0.000 Z=0.000
+HeadshotOnly=false
+DamageKnockbackFactor=0.0
+MaxSpeed=0.0
+MaxCrouchSpeed=0.0
+Acceleration=0.0
+CrouchingAcceleration=0.0
+Friction=0.0
+BrakingFrictionFactor=0.0
+JumpVelocity=0.0
+Gravity=0.0
+AirControl=0.0
+CanCrouch=false
+CanPogoJump=false
+CanCrouchInAir=false
+CrouchInAirRaisesFeet=false
+CanJumpFromCrouch=false
+// Note: the color channel values are interpreted as 0.0 (0%) to 1.0 (100%) going over 1.0 will start to produce a glow effect when the user is in HDR mode (SceneColor is set to "Medium" or higher)
+EnemyBodyColor=X=255.000 Y=0.000 Z=0.000
+EnemyBodyColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyBodyColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColor=X=255.000 Y=255.000 Z=255.000
+EnemyHeadColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+TeamBodyColor=X=0.000 Y=0.000 Z=255.000
+TeamHeadColor=X=255.000 Y=255.000 Z=255.000
+MainBBType=Spheroid
+MainBBHeight=45.995252
+MainBBRadius=22.997626
+MainBBHasHead=false
+MainBBHeadRadius=0.1
+MainBBHeadOffset=0.0
+MainBBHide=false
+ProjBBType=Spheroid
+ProjBBHeight=128.0
+ProjBBRadius=60.0
+ProjBBHasHead=false
+ProjBBHeadRadius=0.1
+ProjBBHeadOffset=0.0
+ProjBBHide=true
+BlockSelfDamage=false
+InvinciblePlayer=false
+InvincibleBots=false
+BlockTeamDamage=false
+HasJetpack=false
+JetpackActivationDelay=0.2
+JetpackFullFuelTime=100000.0
+JetpackFuelIncPerSec=0.1
+JetpackFuelRegensInAir=true
+JetpackThrust=6000.0
+JetpackMaxZVelocity=400.0
+JetpackAirControlWithThrust=1.0
+AirJumpCount=0
+AirJumpVelocity=800.0
+AbilityProfileNames=;;;
+HideWeapon=true
+AerialFriction=0.0
+AerialVerticalTurningFriction=100000.0
+AerialVerticalBreakingFriction=0.0
+UseAerialVerticalFriction=false
+StrafeSpeedMult=1.0
+BackSpeedMult=1.0
+RespawnInvulnTime=0.0
+BlockedSpawnRadius=190.0
+BlockSpawnFOV=0.0
+BlockSpawnDistance=0.0
+RespawnAnimationDuration=0.0
+AllowBufferedJumps=false
+BounceOffWalls=false
+LeanAngle=0.0
+LeanDisplacement=0.0
+AirJumpExtraControl=0.0
+ForwardSpeedBias=1.0
+HealthRegainedonkill=0.0
+HealthRegenPerSec=0.0
+HealthRegenDelay=0.0
+JumpSpeedPenaltyDuration=0.0
+JumpSpeedPenaltyPercent=0.0
+ThirdPersonCamera=false
+TPSArmLength=300.0
+TPSOffset=X=0.000 Y=150.000 Z=150.000
+BrakingDeceleration=0.0
+TerminalVelocity=0.0
+CharacterModel=None
+CharacterSkin=Default
+MeshHitDetection=false
+SpawnOffsetMin=X=0.000 Y=-100.000 Z=-100.000
+SpawnOffsetMax=X=0.000 Y=100.000 Z=100.000
+InvertBlockedSpawn=false
+ViewBobTime=0.0
+ViewBobAngleAdjustment=0.0
+ViewBobCameraZOffset=0.0
+ViewBobAffectsShots=false
+IsFlyer=false
+FlightObeysPitch=false
+FlightVelocityUp=800.0
+FlightAccelUp=800.0
+FlightVelocityDown=800.0
+FlightAccelDown=800.0
+IsFlyUpOnJumpAndCrouch=false
+DisableCharacterCollision=false
+LifeStealPercent=0.0
+AbilityGlobalCooldown=0.0
+BlockAbilityOnStartDuration=0.0
+DragCoefficient=10.0
+AmmoRegainedOnKill=0
+ContinuousGroundFriction=0.0
+ContinuousAirFriction=0.0
+ScaledGroundAcceleration=0.0
+ScaledAirAcceleration=0.0
+MaxAirSpeed=0.0
+StopSpeed=0.0
+StopSpeedThreshold=0.0
+ClampVelocityToInputSpeed=true
+JumpSkipsFriction=false
+EnableQuakeMovement=false
+EnableQuakeJump=false
+KtJump=0.0
+MovementPhysicsTickInterval=0.0
+MovementPhysicsTickEnabled=false
+TeamGlowUpHead=0.0
+TeamGlowUpBody=0.0
+EnemyGlowUpHead=0.0
+EnemyGlowUpBody=0.0
+EnemyGlowUpHeadOnHit=0.0
+EnemyGlowUpBodyOnHit=0.0
+EnemyGlowUpHeadOnLookAt=0.0
+EnemyGlowUpBodyOnLookAt=0.0
+PlaybackOptions.PlaybackMode=Input
+PlaybackOptions.OverrideRotation=true
+PlaybackOptions.OverrideAbilities=true
+PlaybackOptions.OverrideWeapons=true
+PlaybackOptions.OverrideMovement=true
+PlaybackOptions.OverrideDodgeTime=false
+PlaybackOptions.LoopUponCompletion=true
+PlaybackOptions.BreakToInputMode=false
+
+[Character Profile]
+Name=Apogee Cygnus 5 Body
+MaxHealth=1.0
+WeaponProfileNames=;;;;;;;
+MinRespawnDelay=0.001
+MaxRespawnDelay=0.001
+StepUpHeight=0.0
+CrouchHeightModifier=1.0
+CrouchAnimationSpeed=1.0
+CameraOffset=X=0.000 Y=0.000 Z=0.000
+HeadshotOnly=false
+DamageKnockbackFactor=0.0
+MaxSpeed=0.0
+MaxCrouchSpeed=0.0
+Acceleration=0.0
+CrouchingAcceleration=0.0
+Friction=0.0
+BrakingFrictionFactor=0.0
+JumpVelocity=0.0
+Gravity=0.0
+AirControl=0.0
+CanCrouch=false
+CanPogoJump=false
+CanCrouchInAir=false
+CrouchInAirRaisesFeet=false
+CanJumpFromCrouch=false
+// Note: the color channel values are interpreted as 0.0 (0%) to 1.0 (100%) going over 1.0 will start to produce a glow effect when the user is in HDR mode (SceneColor is set to "Medium" or higher)
+EnemyBodyColor=X=255.000 Y=0.000 Z=0.000
+EnemyBodyColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyBodyColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColor=X=255.000 Y=255.000 Z=255.000
+EnemyHeadColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+TeamBodyColor=X=0.000 Y=0.000 Z=255.000
+TeamHeadColor=X=255.000 Y=255.000 Z=255.000
+MainBBType=Spheroid
+MainBBHeight=45.995252
+MainBBRadius=22.997626
+MainBBHasHead=false
+MainBBHeadRadius=0.1
+MainBBHeadOffset=0.0
+MainBBHide=false
+ProjBBType=Spheroid
+ProjBBHeight=128.0
+ProjBBRadius=60.0
+ProjBBHasHead=false
+ProjBBHeadRadius=0.1
+ProjBBHeadOffset=0.0
+ProjBBHide=true
+BlockSelfDamage=false
+InvinciblePlayer=false
+InvincibleBots=false
+BlockTeamDamage=false
+HasJetpack=false
+JetpackActivationDelay=0.2
+JetpackFullFuelTime=100000.0
+JetpackFuelIncPerSec=0.1
+JetpackFuelRegensInAir=true
+JetpackThrust=6000.0
+JetpackMaxZVelocity=400.0
+JetpackAirControlWithThrust=1.0
+AirJumpCount=0
+AirJumpVelocity=800.0
+AbilityProfileNames=;;;
+HideWeapon=true
+AerialFriction=0.0
+AerialVerticalTurningFriction=100000.0
+AerialVerticalBreakingFriction=0.0
+UseAerialVerticalFriction=false
+StrafeSpeedMult=1.0
+BackSpeedMult=1.0
+RespawnInvulnTime=0.0
+BlockedSpawnRadius=190.0
+BlockSpawnFOV=0.0
+BlockSpawnDistance=0.0
+RespawnAnimationDuration=0.0
+AllowBufferedJumps=false
+BounceOffWalls=false
+LeanAngle=0.0
+LeanDisplacement=0.0
+AirJumpExtraControl=0.0
+ForwardSpeedBias=1.0
+HealthRegainedonkill=0.0
+HealthRegenPerSec=0.0
+HealthRegenDelay=0.0
+JumpSpeedPenaltyDuration=0.0
+JumpSpeedPenaltyPercent=0.0
+ThirdPersonCamera=false
+TPSArmLength=300.0
+TPSOffset=X=0.000 Y=150.000 Z=150.000
+BrakingDeceleration=0.0
+TerminalVelocity=0.0
+CharacterModel=None
+CharacterSkin=Default
+MeshHitDetection=false
+SpawnOffsetMin=X=0.000 Y=-100.000 Z=-100.000
+SpawnOffsetMax=X=0.000 Y=100.000 Z=100.000
+InvertBlockedSpawn=false
+ViewBobTime=0.0
+ViewBobAngleAdjustment=0.0
+ViewBobCameraZOffset=0.0
+ViewBobAffectsShots=false
+IsFlyer=false
+FlightObeysPitch=false
+FlightVelocityUp=800.0
+FlightAccelUp=800.0
+FlightVelocityDown=800.0
+FlightAccelDown=800.0
+IsFlyUpOnJumpAndCrouch=false
+DisableCharacterCollision=false
+LifeStealPercent=0.0
+AbilityGlobalCooldown=0.0
+BlockAbilityOnStartDuration=0.0
+DragCoefficient=10.0
+AmmoRegainedOnKill=0
+ContinuousGroundFriction=0.0
+ContinuousAirFriction=0.0
+ScaledGroundAcceleration=0.0
+ScaledAirAcceleration=0.0
+MaxAirSpeed=0.0
+StopSpeed=0.0
+StopSpeedThreshold=0.0
+ClampVelocityToInputSpeed=true
+JumpSkipsFriction=false
+EnableQuakeMovement=false
+EnableQuakeJump=false
+KtJump=0.0
+MovementPhysicsTickInterval=0.0
+MovementPhysicsTickEnabled=false
+TeamGlowUpHead=0.0
+TeamGlowUpBody=0.0
+EnemyGlowUpHead=0.0
+EnemyGlowUpBody=0.0
+EnemyGlowUpHeadOnHit=0.0
+EnemyGlowUpBodyOnHit=0.0
+EnemyGlowUpHeadOnLookAt=0.0
+EnemyGlowUpBodyOnLookAt=0.0
+PlaybackOptions.PlaybackMode=Input
+PlaybackOptions.OverrideRotation=true
+PlaybackOptions.OverrideAbilities=true
+PlaybackOptions.OverrideWeapons=true
+PlaybackOptions.OverrideMovement=true
+PlaybackOptions.OverrideDodgeTime=false
+PlaybackOptions.LoopUponCompletion=true
+PlaybackOptions.BreakToInputMode=false
+
+[Character Profile]
+Name=Apogee Cygnus 6 Body
+MaxHealth=1.0
+WeaponProfileNames=;;;;;;;
+MinRespawnDelay=0.001
+MaxRespawnDelay=0.001
+StepUpHeight=0.0
+CrouchHeightModifier=1.0
+CrouchAnimationSpeed=1.0
+CameraOffset=X=0.000 Y=0.000 Z=0.000
+HeadshotOnly=false
+DamageKnockbackFactor=0.0
+MaxSpeed=0.0
+MaxCrouchSpeed=0.0
+Acceleration=0.0
+CrouchingAcceleration=0.0
+Friction=0.0
+BrakingFrictionFactor=0.0
+JumpVelocity=0.0
+Gravity=0.0
+AirControl=0.0
+CanCrouch=false
+CanPogoJump=false
+CanCrouchInAir=false
+CrouchInAirRaisesFeet=false
+CanJumpFromCrouch=false
+// Note: the color channel values are interpreted as 0.0 (0%) to 1.0 (100%) going over 1.0 will start to produce a glow effect when the user is in HDR mode (SceneColor is set to "Medium" or higher)
+EnemyBodyColor=X=255.000 Y=0.000 Z=0.000
+EnemyBodyColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyBodyColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColor=X=255.000 Y=255.000 Z=255.000
+EnemyHeadColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+TeamBodyColor=X=0.000 Y=0.000 Z=255.000
+TeamHeadColor=X=255.000 Y=255.000 Z=255.000
+MainBBType=Spheroid
+MainBBHeight=45.995252
+MainBBRadius=22.997626
+MainBBHasHead=false
+MainBBHeadRadius=0.1
+MainBBHeadOffset=0.0
+MainBBHide=false
+ProjBBType=Spheroid
+ProjBBHeight=128.0
+ProjBBRadius=60.0
+ProjBBHasHead=false
+ProjBBHeadRadius=0.1
+ProjBBHeadOffset=0.0
+ProjBBHide=true
+BlockSelfDamage=false
+InvinciblePlayer=false
+InvincibleBots=false
+BlockTeamDamage=false
+HasJetpack=false
+JetpackActivationDelay=0.2
+JetpackFullFuelTime=100000.0
+JetpackFuelIncPerSec=0.1
+JetpackFuelRegensInAir=true
+JetpackThrust=6000.0
+JetpackMaxZVelocity=400.0
+JetpackAirControlWithThrust=1.0
+AirJumpCount=0
+AirJumpVelocity=800.0
+AbilityProfileNames=;;;
+HideWeapon=true
+AerialFriction=0.0
+AerialVerticalTurningFriction=100000.0
+AerialVerticalBreakingFriction=0.0
+UseAerialVerticalFriction=false
+StrafeSpeedMult=1.0
+BackSpeedMult=1.0
+RespawnInvulnTime=0.0
+BlockedSpawnRadius=190.0
+BlockSpawnFOV=0.0
+BlockSpawnDistance=0.0
+RespawnAnimationDuration=0.0
+AllowBufferedJumps=false
+BounceOffWalls=false
+LeanAngle=0.0
+LeanDisplacement=0.0
+AirJumpExtraControl=0.0
+ForwardSpeedBias=1.0
+HealthRegainedonkill=0.0
+HealthRegenPerSec=0.0
+HealthRegenDelay=0.0
+JumpSpeedPenaltyDuration=0.0
+JumpSpeedPenaltyPercent=0.0
+ThirdPersonCamera=false
+TPSArmLength=300.0
+TPSOffset=X=0.000 Y=150.000 Z=150.000
+BrakingDeceleration=0.0
+TerminalVelocity=0.0
+CharacterModel=None
+CharacterSkin=Default
+MeshHitDetection=false
+SpawnOffsetMin=X=0.000 Y=-100.000 Z=-100.000
+SpawnOffsetMax=X=0.000 Y=100.000 Z=100.000
+InvertBlockedSpawn=false
+ViewBobTime=0.0
+ViewBobAngleAdjustment=0.0
+ViewBobCameraZOffset=0.0
+ViewBobAffectsShots=false
+IsFlyer=false
+FlightObeysPitch=false
+FlightVelocityUp=800.0
+FlightAccelUp=800.0
+FlightVelocityDown=800.0
+FlightAccelDown=800.0
+IsFlyUpOnJumpAndCrouch=false
+DisableCharacterCollision=false
+LifeStealPercent=0.0
+AbilityGlobalCooldown=0.0
+BlockAbilityOnStartDuration=0.0
+DragCoefficient=10.0
+AmmoRegainedOnKill=0
+ContinuousGroundFriction=0.0
+ContinuousAirFriction=0.0
+ScaledGroundAcceleration=0.0
+ScaledAirAcceleration=0.0
+MaxAirSpeed=0.0
+StopSpeed=0.0
+StopSpeedThreshold=0.0
+ClampVelocityToInputSpeed=true
+JumpSkipsFriction=false
+EnableQuakeMovement=false
+EnableQuakeJump=false
+KtJump=0.0
+MovementPhysicsTickInterval=0.0
+MovementPhysicsTickEnabled=false
+TeamGlowUpHead=0.0
+TeamGlowUpBody=0.0
+EnemyGlowUpHead=0.0
+EnemyGlowUpBody=0.0
+EnemyGlowUpHeadOnHit=0.0
+EnemyGlowUpBodyOnHit=0.0
+EnemyGlowUpHeadOnLookAt=0.0
+EnemyGlowUpBodyOnLookAt=0.0
+PlaybackOptions.PlaybackMode=Input
+PlaybackOptions.OverrideRotation=true
+PlaybackOptions.OverrideAbilities=true
+PlaybackOptions.OverrideWeapons=true
+PlaybackOptions.OverrideMovement=true
+PlaybackOptions.OverrideDodgeTime=false
+PlaybackOptions.LoopUponCompletion=true
+PlaybackOptions.BreakToInputMode=false
+
+[Character Profile]
+Name=Apogee Cygnus 7 Body
+MaxHealth=1.0
+WeaponProfileNames=;;;;;;;
+MinRespawnDelay=0.001
+MaxRespawnDelay=0.001
+StepUpHeight=0.0
+CrouchHeightModifier=1.0
+CrouchAnimationSpeed=1.0
+CameraOffset=X=0.000 Y=0.000 Z=0.000
+HeadshotOnly=false
+DamageKnockbackFactor=0.0
+MaxSpeed=0.0
+MaxCrouchSpeed=0.0
+Acceleration=0.0
+CrouchingAcceleration=0.0
+Friction=0.0
+BrakingFrictionFactor=0.0
+JumpVelocity=0.0
+Gravity=0.0
+AirControl=0.0
+CanCrouch=false
+CanPogoJump=false
+CanCrouchInAir=false
+CrouchInAirRaisesFeet=false
+CanJumpFromCrouch=false
+// Note: the color channel values are interpreted as 0.0 (0%) to 1.0 (100%) going over 1.0 will start to produce a glow effect when the user is in HDR mode (SceneColor is set to "Medium" or higher)
+EnemyBodyColor=X=255.000 Y=0.000 Z=0.000
+EnemyBodyColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyBodyColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColor=X=255.000 Y=255.000 Z=255.000
+EnemyHeadColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+TeamBodyColor=X=0.000 Y=0.000 Z=255.000
+TeamHeadColor=X=255.000 Y=255.000 Z=255.000
+MainBBType=Spheroid
+MainBBHeight=45.995252
+MainBBRadius=22.997626
+MainBBHasHead=false
+MainBBHeadRadius=0.1
+MainBBHeadOffset=0.0
+MainBBHide=false
+ProjBBType=Spheroid
+ProjBBHeight=128.0
+ProjBBRadius=60.0
+ProjBBHasHead=false
+ProjBBHeadRadius=0.1
+ProjBBHeadOffset=0.0
+ProjBBHide=true
+BlockSelfDamage=false
+InvinciblePlayer=false
+InvincibleBots=false
+BlockTeamDamage=false
+HasJetpack=false
+JetpackActivationDelay=0.2
+JetpackFullFuelTime=100000.0
+JetpackFuelIncPerSec=0.1
+JetpackFuelRegensInAir=true
+JetpackThrust=6000.0
+JetpackMaxZVelocity=400.0
+JetpackAirControlWithThrust=1.0
+AirJumpCount=0
+AirJumpVelocity=800.0
+AbilityProfileNames=;;;
+HideWeapon=true
+AerialFriction=0.0
+AerialVerticalTurningFriction=100000.0
+AerialVerticalBreakingFriction=0.0
+UseAerialVerticalFriction=false
+StrafeSpeedMult=1.0
+BackSpeedMult=1.0
+RespawnInvulnTime=0.0
+BlockedSpawnRadius=190.0
+BlockSpawnFOV=0.0
+BlockSpawnDistance=0.0
+RespawnAnimationDuration=0.0
+AllowBufferedJumps=false
+BounceOffWalls=false
+LeanAngle=0.0
+LeanDisplacement=0.0
+AirJumpExtraControl=0.0
+ForwardSpeedBias=1.0
+HealthRegainedonkill=0.0
+HealthRegenPerSec=0.0
+HealthRegenDelay=0.0
+JumpSpeedPenaltyDuration=0.0
+JumpSpeedPenaltyPercent=0.0
+ThirdPersonCamera=false
+TPSArmLength=300.0
+TPSOffset=X=0.000 Y=150.000 Z=150.000
+BrakingDeceleration=0.0
+TerminalVelocity=0.0
+CharacterModel=None
+CharacterSkin=Default
+MeshHitDetection=false
+SpawnOffsetMin=X=0.000 Y=-100.000 Z=-100.000
+SpawnOffsetMax=X=0.000 Y=100.000 Z=100.000
+InvertBlockedSpawn=false
+ViewBobTime=0.0
+ViewBobAngleAdjustment=0.0
+ViewBobCameraZOffset=0.0
+ViewBobAffectsShots=false
+IsFlyer=false
+FlightObeysPitch=false
+FlightVelocityUp=800.0
+FlightAccelUp=800.0
+FlightVelocityDown=800.0
+FlightAccelDown=800.0
+IsFlyUpOnJumpAndCrouch=false
+DisableCharacterCollision=false
+LifeStealPercent=0.0
+AbilityGlobalCooldown=0.0
+BlockAbilityOnStartDuration=0.0
+DragCoefficient=10.0
+AmmoRegainedOnKill=0
+ContinuousGroundFriction=0.0
+ContinuousAirFriction=0.0
+ScaledGroundAcceleration=0.0
+ScaledAirAcceleration=0.0
+MaxAirSpeed=0.0
+StopSpeed=0.0
+StopSpeedThreshold=0.0
+ClampVelocityToInputSpeed=true
+JumpSkipsFriction=false
+EnableQuakeMovement=false
+EnableQuakeJump=false
+KtJump=0.0
+MovementPhysicsTickInterval=0.0
+MovementPhysicsTickEnabled=false
+TeamGlowUpHead=0.0
+TeamGlowUpBody=0.0
+EnemyGlowUpHead=0.0
+EnemyGlowUpBody=0.0
+EnemyGlowUpHeadOnHit=0.0
+EnemyGlowUpBodyOnHit=0.0
+EnemyGlowUpHeadOnLookAt=0.0
+EnemyGlowUpBodyOnLookAt=0.0
+PlaybackOptions.PlaybackMode=Input
+PlaybackOptions.OverrideRotation=true
+PlaybackOptions.OverrideAbilities=true
+PlaybackOptions.OverrideWeapons=true
+PlaybackOptions.OverrideMovement=true
+PlaybackOptions.OverrideDodgeTime=false
+PlaybackOptions.LoopUponCompletion=true
+PlaybackOptions.BreakToInputMode=false
+
+[Character Profile]
+Name=Apogee Leo 1 Body
+MaxHealth=1.0
+WeaponProfileNames=;;;;;;;
+MinRespawnDelay=0.001
+MaxRespawnDelay=0.001
+StepUpHeight=0.0
+CrouchHeightModifier=1.0
+CrouchAnimationSpeed=1.0
+CameraOffset=X=0.000 Y=0.000 Z=0.000
+HeadshotOnly=false
+DamageKnockbackFactor=0.0
+MaxSpeed=0.0
+MaxCrouchSpeed=0.0
+Acceleration=0.0
+CrouchingAcceleration=0.0
+Friction=0.0
+BrakingFrictionFactor=0.0
+JumpVelocity=0.0
+Gravity=0.0
+AirControl=0.0
+CanCrouch=false
+CanPogoJump=false
+CanCrouchInAir=false
+CrouchInAirRaisesFeet=false
+CanJumpFromCrouch=false
+// Note: the color channel values are interpreted as 0.0 (0%) to 1.0 (100%) going over 1.0 will start to produce a glow effect when the user is in HDR mode (SceneColor is set to "Medium" or higher)
+EnemyBodyColor=X=255.000 Y=0.000 Z=0.000
+EnemyBodyColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyBodyColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColor=X=255.000 Y=255.000 Z=255.000
+EnemyHeadColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+TeamBodyColor=X=0.000 Y=0.000 Z=255.000
+TeamHeadColor=X=255.000 Y=255.000 Z=255.000
+MainBBType=Spheroid
+MainBBHeight=45.995252
+MainBBRadius=22.997626
+MainBBHasHead=false
+MainBBHeadRadius=0.1
+MainBBHeadOffset=0.0
+MainBBHide=false
+ProjBBType=Spheroid
+ProjBBHeight=128.0
+ProjBBRadius=60.0
+ProjBBHasHead=false
+ProjBBHeadRadius=0.1
+ProjBBHeadOffset=0.0
+ProjBBHide=true
+BlockSelfDamage=false
+InvinciblePlayer=false
+InvincibleBots=false
+BlockTeamDamage=false
+HasJetpack=false
+JetpackActivationDelay=0.2
+JetpackFullFuelTime=100000.0
+JetpackFuelIncPerSec=0.1
+JetpackFuelRegensInAir=true
+JetpackThrust=6000.0
+JetpackMaxZVelocity=400.0
+JetpackAirControlWithThrust=1.0
+AirJumpCount=0
+AirJumpVelocity=800.0
+AbilityProfileNames=;;;
+HideWeapon=true
+AerialFriction=0.0
+AerialVerticalTurningFriction=100000.0
+AerialVerticalBreakingFriction=0.0
+UseAerialVerticalFriction=false
+StrafeSpeedMult=1.0
+BackSpeedMult=1.0
+RespawnInvulnTime=0.0
+BlockedSpawnRadius=190.0
+BlockSpawnFOV=0.0
+BlockSpawnDistance=0.0
+RespawnAnimationDuration=0.0
+AllowBufferedJumps=false
+BounceOffWalls=false
+LeanAngle=0.0
+LeanDisplacement=0.0
+AirJumpExtraControl=0.0
+ForwardSpeedBias=1.0
+HealthRegainedonkill=0.0
+HealthRegenPerSec=0.0
+HealthRegenDelay=0.0
+JumpSpeedPenaltyDuration=0.0
+JumpSpeedPenaltyPercent=0.0
+ThirdPersonCamera=false
+TPSArmLength=300.0
+TPSOffset=X=0.000 Y=150.000 Z=150.000
+BrakingDeceleration=0.0
+TerminalVelocity=0.0
+CharacterModel=None
+CharacterSkin=Default
+MeshHitDetection=false
+SpawnOffsetMin=X=0.000 Y=-100.000 Z=-100.000
+SpawnOffsetMax=X=0.000 Y=100.000 Z=100.000
+InvertBlockedSpawn=false
+ViewBobTime=0.0
+ViewBobAngleAdjustment=0.0
+ViewBobCameraZOffset=0.0
+ViewBobAffectsShots=false
+IsFlyer=false
+FlightObeysPitch=false
+FlightVelocityUp=800.0
+FlightAccelUp=800.0
+FlightVelocityDown=800.0
+FlightAccelDown=800.0
+IsFlyUpOnJumpAndCrouch=false
+DisableCharacterCollision=false
+LifeStealPercent=0.0
+AbilityGlobalCooldown=0.0
+BlockAbilityOnStartDuration=0.0
+DragCoefficient=10.0
+AmmoRegainedOnKill=0
+ContinuousGroundFriction=0.0
+ContinuousAirFriction=0.0
+ScaledGroundAcceleration=0.0
+ScaledAirAcceleration=0.0
+MaxAirSpeed=0.0
+StopSpeed=0.0
+StopSpeedThreshold=0.0
+ClampVelocityToInputSpeed=true
+JumpSkipsFriction=false
+EnableQuakeMovement=false
+EnableQuakeJump=false
+KtJump=0.0
+MovementPhysicsTickInterval=0.0
+MovementPhysicsTickEnabled=false
+TeamGlowUpHead=0.0
+TeamGlowUpBody=0.0
+EnemyGlowUpHead=0.0
+EnemyGlowUpBody=0.0
+EnemyGlowUpHeadOnHit=0.0
+EnemyGlowUpBodyOnHit=0.0
+EnemyGlowUpHeadOnLookAt=0.0
+EnemyGlowUpBodyOnLookAt=0.0
+PlaybackOptions.PlaybackMode=Input
+PlaybackOptions.OverrideRotation=true
+PlaybackOptions.OverrideAbilities=true
+PlaybackOptions.OverrideWeapons=true
+PlaybackOptions.OverrideMovement=true
+PlaybackOptions.OverrideDodgeTime=false
+PlaybackOptions.LoopUponCompletion=true
+PlaybackOptions.BreakToInputMode=false
+
+[Character Profile]
+Name=Apogee Leo 2 Body
+MaxHealth=1.0
+WeaponProfileNames=;;;;;;;
+MinRespawnDelay=0.001
+MaxRespawnDelay=0.001
+StepUpHeight=0.0
+CrouchHeightModifier=1.0
+CrouchAnimationSpeed=1.0
+CameraOffset=X=0.000 Y=0.000 Z=0.000
+HeadshotOnly=false
+DamageKnockbackFactor=0.0
+MaxSpeed=0.0
+MaxCrouchSpeed=0.0
+Acceleration=0.0
+CrouchingAcceleration=0.0
+Friction=0.0
+BrakingFrictionFactor=0.0
+JumpVelocity=0.0
+Gravity=0.0
+AirControl=0.0
+CanCrouch=false
+CanPogoJump=false
+CanCrouchInAir=false
+CrouchInAirRaisesFeet=false
+CanJumpFromCrouch=false
+// Note: the color channel values are interpreted as 0.0 (0%) to 1.0 (100%) going over 1.0 will start to produce a glow effect when the user is in HDR mode (SceneColor is set to "Medium" or higher)
+EnemyBodyColor=X=255.000 Y=0.000 Z=0.000
+EnemyBodyColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyBodyColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColor=X=255.000 Y=255.000 Z=255.000
+EnemyHeadColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+TeamBodyColor=X=0.000 Y=0.000 Z=255.000
+TeamHeadColor=X=255.000 Y=255.000 Z=255.000
+MainBBType=Spheroid
+MainBBHeight=45.995252
+MainBBRadius=22.997626
+MainBBHasHead=false
+MainBBHeadRadius=0.1
+MainBBHeadOffset=0.0
+MainBBHide=false
+ProjBBType=Spheroid
+ProjBBHeight=128.0
+ProjBBRadius=60.0
+ProjBBHasHead=false
+ProjBBHeadRadius=0.1
+ProjBBHeadOffset=0.0
+ProjBBHide=true
+BlockSelfDamage=false
+InvinciblePlayer=false
+InvincibleBots=false
+BlockTeamDamage=false
+HasJetpack=false
+JetpackActivationDelay=0.2
+JetpackFullFuelTime=100000.0
+JetpackFuelIncPerSec=0.1
+JetpackFuelRegensInAir=true
+JetpackThrust=6000.0
+JetpackMaxZVelocity=400.0
+JetpackAirControlWithThrust=1.0
+AirJumpCount=0
+AirJumpVelocity=800.0
+AbilityProfileNames=;;;
+HideWeapon=true
+AerialFriction=0.0
+AerialVerticalTurningFriction=100000.0
+AerialVerticalBreakingFriction=0.0
+UseAerialVerticalFriction=false
+StrafeSpeedMult=1.0
+BackSpeedMult=1.0
+RespawnInvulnTime=0.0
+BlockedSpawnRadius=190.0
+BlockSpawnFOV=0.0
+BlockSpawnDistance=0.0
+RespawnAnimationDuration=0.0
+AllowBufferedJumps=false
+BounceOffWalls=false
+LeanAngle=0.0
+LeanDisplacement=0.0
+AirJumpExtraControl=0.0
+ForwardSpeedBias=1.0
+HealthRegainedonkill=0.0
+HealthRegenPerSec=0.0
+HealthRegenDelay=0.0
+JumpSpeedPenaltyDuration=0.0
+JumpSpeedPenaltyPercent=0.0
+ThirdPersonCamera=false
+TPSArmLength=300.0
+TPSOffset=X=0.000 Y=150.000 Z=150.000
+BrakingDeceleration=0.0
+TerminalVelocity=0.0
+CharacterModel=None
+CharacterSkin=Default
+MeshHitDetection=false
+SpawnOffsetMin=X=0.000 Y=-100.000 Z=-100.000
+SpawnOffsetMax=X=0.000 Y=100.000 Z=100.000
+InvertBlockedSpawn=false
+ViewBobTime=0.0
+ViewBobAngleAdjustment=0.0
+ViewBobCameraZOffset=0.0
+ViewBobAffectsShots=false
+IsFlyer=false
+FlightObeysPitch=false
+FlightVelocityUp=800.0
+FlightAccelUp=800.0
+FlightVelocityDown=800.0
+FlightAccelDown=800.0
+IsFlyUpOnJumpAndCrouch=false
+DisableCharacterCollision=false
+LifeStealPercent=0.0
+AbilityGlobalCooldown=0.0
+BlockAbilityOnStartDuration=0.0
+DragCoefficient=10.0
+AmmoRegainedOnKill=0
+ContinuousGroundFriction=0.0
+ContinuousAirFriction=0.0
+ScaledGroundAcceleration=0.0
+ScaledAirAcceleration=0.0
+MaxAirSpeed=0.0
+StopSpeed=0.0
+StopSpeedThreshold=0.0
+ClampVelocityToInputSpeed=true
+JumpSkipsFriction=false
+EnableQuakeMovement=false
+EnableQuakeJump=false
+KtJump=0.0
+MovementPhysicsTickInterval=0.0
+MovementPhysicsTickEnabled=false
+TeamGlowUpHead=0.0
+TeamGlowUpBody=0.0
+EnemyGlowUpHead=0.0
+EnemyGlowUpBody=0.0
+EnemyGlowUpHeadOnHit=0.0
+EnemyGlowUpBodyOnHit=0.0
+EnemyGlowUpHeadOnLookAt=0.0
+EnemyGlowUpBodyOnLookAt=0.0
+PlaybackOptions.PlaybackMode=Input
+PlaybackOptions.OverrideRotation=true
+PlaybackOptions.OverrideAbilities=true
+PlaybackOptions.OverrideWeapons=true
+PlaybackOptions.OverrideMovement=true
+PlaybackOptions.OverrideDodgeTime=false
+PlaybackOptions.LoopUponCompletion=true
+PlaybackOptions.BreakToInputMode=false
+
+[Character Profile]
+Name=Apogee Leo 3 Body
+MaxHealth=1.0
+WeaponProfileNames=;;;;;;;
+MinRespawnDelay=0.001
+MaxRespawnDelay=0.001
+StepUpHeight=0.0
+CrouchHeightModifier=1.0
+CrouchAnimationSpeed=1.0
+CameraOffset=X=0.000 Y=0.000 Z=0.000
+HeadshotOnly=false
+DamageKnockbackFactor=0.0
+MaxSpeed=0.0
+MaxCrouchSpeed=0.0
+Acceleration=0.0
+CrouchingAcceleration=0.0
+Friction=0.0
+BrakingFrictionFactor=0.0
+JumpVelocity=0.0
+Gravity=0.0
+AirControl=0.0
+CanCrouch=false
+CanPogoJump=false
+CanCrouchInAir=false
+CrouchInAirRaisesFeet=false
+CanJumpFromCrouch=false
+// Note: the color channel values are interpreted as 0.0 (0%) to 1.0 (100%) going over 1.0 will start to produce a glow effect when the user is in HDR mode (SceneColor is set to "Medium" or higher)
+EnemyBodyColor=X=255.000 Y=0.000 Z=0.000
+EnemyBodyColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyBodyColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColor=X=255.000 Y=255.000 Z=255.000
+EnemyHeadColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+TeamBodyColor=X=0.000 Y=0.000 Z=255.000
+TeamHeadColor=X=255.000 Y=255.000 Z=255.000
+MainBBType=Spheroid
+MainBBHeight=45.995252
+MainBBRadius=22.997626
+MainBBHasHead=false
+MainBBHeadRadius=0.1
+MainBBHeadOffset=0.0
+MainBBHide=false
+ProjBBType=Spheroid
+ProjBBHeight=128.0
+ProjBBRadius=60.0
+ProjBBHasHead=false
+ProjBBHeadRadius=0.1
+ProjBBHeadOffset=0.0
+ProjBBHide=true
+BlockSelfDamage=false
+InvinciblePlayer=false
+InvincibleBots=false
+BlockTeamDamage=false
+HasJetpack=false
+JetpackActivationDelay=0.2
+JetpackFullFuelTime=100000.0
+JetpackFuelIncPerSec=0.1
+JetpackFuelRegensInAir=true
+JetpackThrust=6000.0
+JetpackMaxZVelocity=400.0
+JetpackAirControlWithThrust=1.0
+AirJumpCount=0
+AirJumpVelocity=800.0
+AbilityProfileNames=;;;
+HideWeapon=true
+AerialFriction=0.0
+AerialVerticalTurningFriction=100000.0
+AerialVerticalBreakingFriction=0.0
+UseAerialVerticalFriction=false
+StrafeSpeedMult=1.0
+BackSpeedMult=1.0
+RespawnInvulnTime=0.0
+BlockedSpawnRadius=190.0
+BlockSpawnFOV=0.0
+BlockSpawnDistance=0.0
+RespawnAnimationDuration=0.0
+AllowBufferedJumps=false
+BounceOffWalls=false
+LeanAngle=0.0
+LeanDisplacement=0.0
+AirJumpExtraControl=0.0
+ForwardSpeedBias=1.0
+HealthRegainedonkill=0.0
+HealthRegenPerSec=0.0
+HealthRegenDelay=0.0
+JumpSpeedPenaltyDuration=0.0
+JumpSpeedPenaltyPercent=0.0
+ThirdPersonCamera=false
+TPSArmLength=300.0
+TPSOffset=X=0.000 Y=150.000 Z=150.000
+BrakingDeceleration=0.0
+TerminalVelocity=0.0
+CharacterModel=None
+CharacterSkin=Default
+MeshHitDetection=false
+SpawnOffsetMin=X=0.000 Y=-100.000 Z=-100.000
+SpawnOffsetMax=X=0.000 Y=100.000 Z=100.000
+InvertBlockedSpawn=false
+ViewBobTime=0.0
+ViewBobAngleAdjustment=0.0
+ViewBobCameraZOffset=0.0
+ViewBobAffectsShots=false
+IsFlyer=false
+FlightObeysPitch=false
+FlightVelocityUp=800.0
+FlightAccelUp=800.0
+FlightVelocityDown=800.0
+FlightAccelDown=800.0
+IsFlyUpOnJumpAndCrouch=false
+DisableCharacterCollision=false
+LifeStealPercent=0.0
+AbilityGlobalCooldown=0.0
+BlockAbilityOnStartDuration=0.0
+DragCoefficient=10.0
+AmmoRegainedOnKill=0
+ContinuousGroundFriction=0.0
+ContinuousAirFriction=0.0
+ScaledGroundAcceleration=0.0
+ScaledAirAcceleration=0.0
+MaxAirSpeed=0.0
+StopSpeed=0.0
+StopSpeedThreshold=0.0
+ClampVelocityToInputSpeed=true
+JumpSkipsFriction=false
+EnableQuakeMovement=false
+EnableQuakeJump=false
+KtJump=0.0
+MovementPhysicsTickInterval=0.0
+MovementPhysicsTickEnabled=false
+TeamGlowUpHead=0.0
+TeamGlowUpBody=0.0
+EnemyGlowUpHead=0.0
+EnemyGlowUpBody=0.0
+EnemyGlowUpHeadOnHit=0.0
+EnemyGlowUpBodyOnHit=0.0
+EnemyGlowUpHeadOnLookAt=0.0
+EnemyGlowUpBodyOnLookAt=0.0
+PlaybackOptions.PlaybackMode=Input
+PlaybackOptions.OverrideRotation=true
+PlaybackOptions.OverrideAbilities=true
+PlaybackOptions.OverrideWeapons=true
+PlaybackOptions.OverrideMovement=true
+PlaybackOptions.OverrideDodgeTime=false
+PlaybackOptions.LoopUponCompletion=true
+PlaybackOptions.BreakToInputMode=false
+
+[Character Profile]
+Name=Apogee Leo 4 Body
+MaxHealth=1.0
+WeaponProfileNames=;;;;;;;
+MinRespawnDelay=0.001
+MaxRespawnDelay=0.001
+StepUpHeight=0.0
+CrouchHeightModifier=1.0
+CrouchAnimationSpeed=1.0
+CameraOffset=X=0.000 Y=0.000 Z=0.000
+HeadshotOnly=false
+DamageKnockbackFactor=0.0
+MaxSpeed=0.0
+MaxCrouchSpeed=0.0
+Acceleration=0.0
+CrouchingAcceleration=0.0
+Friction=0.0
+BrakingFrictionFactor=0.0
+JumpVelocity=0.0
+Gravity=0.0
+AirControl=0.0
+CanCrouch=false
+CanPogoJump=false
+CanCrouchInAir=false
+CrouchInAirRaisesFeet=false
+CanJumpFromCrouch=false
+// Note: the color channel values are interpreted as 0.0 (0%) to 1.0 (100%) going over 1.0 will start to produce a glow effect when the user is in HDR mode (SceneColor is set to "Medium" or higher)
+EnemyBodyColor=X=255.000 Y=0.000 Z=0.000
+EnemyBodyColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyBodyColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColor=X=255.000 Y=255.000 Z=255.000
+EnemyHeadColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+TeamBodyColor=X=0.000 Y=0.000 Z=255.000
+TeamHeadColor=X=255.000 Y=255.000 Z=255.000
+MainBBType=Spheroid
+MainBBHeight=45.995252
+MainBBRadius=22.997626
+MainBBHasHead=false
+MainBBHeadRadius=0.1
+MainBBHeadOffset=0.0
+MainBBHide=false
+ProjBBType=Spheroid
+ProjBBHeight=128.0
+ProjBBRadius=60.0
+ProjBBHasHead=false
+ProjBBHeadRadius=0.1
+ProjBBHeadOffset=0.0
+ProjBBHide=true
+BlockSelfDamage=false
+InvinciblePlayer=false
+InvincibleBots=false
+BlockTeamDamage=false
+HasJetpack=false
+JetpackActivationDelay=0.2
+JetpackFullFuelTime=100000.0
+JetpackFuelIncPerSec=0.1
+JetpackFuelRegensInAir=true
+JetpackThrust=6000.0
+JetpackMaxZVelocity=400.0
+JetpackAirControlWithThrust=1.0
+AirJumpCount=0
+AirJumpVelocity=800.0
+AbilityProfileNames=;;;
+HideWeapon=true
+AerialFriction=0.0
+AerialVerticalTurningFriction=100000.0
+AerialVerticalBreakingFriction=0.0
+UseAerialVerticalFriction=false
+StrafeSpeedMult=1.0
+BackSpeedMult=1.0
+RespawnInvulnTime=0.0
+BlockedSpawnRadius=190.0
+BlockSpawnFOV=0.0
+BlockSpawnDistance=0.0
+RespawnAnimationDuration=0.0
+AllowBufferedJumps=false
+BounceOffWalls=false
+LeanAngle=0.0
+LeanDisplacement=0.0
+AirJumpExtraControl=0.0
+ForwardSpeedBias=1.0
+HealthRegainedonkill=0.0
+HealthRegenPerSec=0.0
+HealthRegenDelay=0.0
+JumpSpeedPenaltyDuration=0.0
+JumpSpeedPenaltyPercent=0.0
+ThirdPersonCamera=false
+TPSArmLength=300.0
+TPSOffset=X=0.000 Y=150.000 Z=150.000
+BrakingDeceleration=0.0
+TerminalVelocity=0.0
+CharacterModel=None
+CharacterSkin=Default
+MeshHitDetection=false
+SpawnOffsetMin=X=0.000 Y=-100.000 Z=-100.000
+SpawnOffsetMax=X=0.000 Y=100.000 Z=100.000
+InvertBlockedSpawn=false
+ViewBobTime=0.0
+ViewBobAngleAdjustment=0.0
+ViewBobCameraZOffset=0.0
+ViewBobAffectsShots=false
+IsFlyer=false
+FlightObeysPitch=false
+FlightVelocityUp=800.0
+FlightAccelUp=800.0
+FlightVelocityDown=800.0
+FlightAccelDown=800.0
+IsFlyUpOnJumpAndCrouch=false
+DisableCharacterCollision=false
+LifeStealPercent=0.0
+AbilityGlobalCooldown=0.0
+BlockAbilityOnStartDuration=0.0
+DragCoefficient=10.0
+AmmoRegainedOnKill=0
+ContinuousGroundFriction=0.0
+ContinuousAirFriction=0.0
+ScaledGroundAcceleration=0.0
+ScaledAirAcceleration=0.0
+MaxAirSpeed=0.0
+StopSpeed=0.0
+StopSpeedThreshold=0.0
+ClampVelocityToInputSpeed=true
+JumpSkipsFriction=false
+EnableQuakeMovement=false
+EnableQuakeJump=false
+KtJump=0.0
+MovementPhysicsTickInterval=0.0
+MovementPhysicsTickEnabled=false
+TeamGlowUpHead=0.0
+TeamGlowUpBody=0.0
+EnemyGlowUpHead=0.0
+EnemyGlowUpBody=0.0
+EnemyGlowUpHeadOnHit=0.0
+EnemyGlowUpBodyOnHit=0.0
+EnemyGlowUpHeadOnLookAt=0.0
+EnemyGlowUpBodyOnLookAt=0.0
+PlaybackOptions.PlaybackMode=Input
+PlaybackOptions.OverrideRotation=true
+PlaybackOptions.OverrideAbilities=true
+PlaybackOptions.OverrideWeapons=true
+PlaybackOptions.OverrideMovement=true
+PlaybackOptions.OverrideDodgeTime=false
+PlaybackOptions.LoopUponCompletion=true
+PlaybackOptions.BreakToInputMode=false
+
+[Character Profile]
+Name=Apogee Leo 5 Body
+MaxHealth=1.0
+WeaponProfileNames=;;;;;;;
+MinRespawnDelay=0.001
+MaxRespawnDelay=0.001
+StepUpHeight=0.0
+CrouchHeightModifier=1.0
+CrouchAnimationSpeed=1.0
+CameraOffset=X=0.000 Y=0.000 Z=0.000
+HeadshotOnly=false
+DamageKnockbackFactor=0.0
+MaxSpeed=0.0
+MaxCrouchSpeed=0.0
+Acceleration=0.0
+CrouchingAcceleration=0.0
+Friction=0.0
+BrakingFrictionFactor=0.0
+JumpVelocity=0.0
+Gravity=0.0
+AirControl=0.0
+CanCrouch=false
+CanPogoJump=false
+CanCrouchInAir=false
+CrouchInAirRaisesFeet=false
+CanJumpFromCrouch=false
+// Note: the color channel values are interpreted as 0.0 (0%) to 1.0 (100%) going over 1.0 will start to produce a glow effect when the user is in HDR mode (SceneColor is set to "Medium" or higher)
+EnemyBodyColor=X=255.000 Y=0.000 Z=0.000
+EnemyBodyColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyBodyColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColor=X=255.000 Y=255.000 Z=255.000
+EnemyHeadColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+TeamBodyColor=X=0.000 Y=0.000 Z=255.000
+TeamHeadColor=X=255.000 Y=255.000 Z=255.000
+MainBBType=Spheroid
+MainBBHeight=45.995252
+MainBBRadius=22.997626
+MainBBHasHead=false
+MainBBHeadRadius=0.1
+MainBBHeadOffset=0.0
+MainBBHide=false
+ProjBBType=Spheroid
+ProjBBHeight=128.0
+ProjBBRadius=60.0
+ProjBBHasHead=false
+ProjBBHeadRadius=0.1
+ProjBBHeadOffset=0.0
+ProjBBHide=true
+BlockSelfDamage=false
+InvinciblePlayer=false
+InvincibleBots=false
+BlockTeamDamage=false
+HasJetpack=false
+JetpackActivationDelay=0.2
+JetpackFullFuelTime=100000.0
+JetpackFuelIncPerSec=0.1
+JetpackFuelRegensInAir=true
+JetpackThrust=6000.0
+JetpackMaxZVelocity=400.0
+JetpackAirControlWithThrust=1.0
+AirJumpCount=0
+AirJumpVelocity=800.0
+AbilityProfileNames=;;;
+HideWeapon=true
+AerialFriction=0.0
+AerialVerticalTurningFriction=100000.0
+AerialVerticalBreakingFriction=0.0
+UseAerialVerticalFriction=false
+StrafeSpeedMult=1.0
+BackSpeedMult=1.0
+RespawnInvulnTime=0.0
+BlockedSpawnRadius=190.0
+BlockSpawnFOV=0.0
+BlockSpawnDistance=0.0
+RespawnAnimationDuration=0.0
+AllowBufferedJumps=false
+BounceOffWalls=false
+LeanAngle=0.0
+LeanDisplacement=0.0
+AirJumpExtraControl=0.0
+ForwardSpeedBias=1.0
+HealthRegainedonkill=0.0
+HealthRegenPerSec=0.0
+HealthRegenDelay=0.0
+JumpSpeedPenaltyDuration=0.0
+JumpSpeedPenaltyPercent=0.0
+ThirdPersonCamera=false
+TPSArmLength=300.0
+TPSOffset=X=0.000 Y=150.000 Z=150.000
+BrakingDeceleration=0.0
+TerminalVelocity=0.0
+CharacterModel=None
+CharacterSkin=Default
+MeshHitDetection=false
+SpawnOffsetMin=X=0.000 Y=-100.000 Z=-100.000
+SpawnOffsetMax=X=0.000 Y=100.000 Z=100.000
+InvertBlockedSpawn=false
+ViewBobTime=0.0
+ViewBobAngleAdjustment=0.0
+ViewBobCameraZOffset=0.0
+ViewBobAffectsShots=false
+IsFlyer=false
+FlightObeysPitch=false
+FlightVelocityUp=800.0
+FlightAccelUp=800.0
+FlightVelocityDown=800.0
+FlightAccelDown=800.0
+IsFlyUpOnJumpAndCrouch=false
+DisableCharacterCollision=false
+LifeStealPercent=0.0
+AbilityGlobalCooldown=0.0
+BlockAbilityOnStartDuration=0.0
+DragCoefficient=10.0
+AmmoRegainedOnKill=0
+ContinuousGroundFriction=0.0
+ContinuousAirFriction=0.0
+ScaledGroundAcceleration=0.0
+ScaledAirAcceleration=0.0
+MaxAirSpeed=0.0
+StopSpeed=0.0
+StopSpeedThreshold=0.0
+ClampVelocityToInputSpeed=true
+JumpSkipsFriction=false
+EnableQuakeMovement=false
+EnableQuakeJump=false
+KtJump=0.0
+MovementPhysicsTickInterval=0.0
+MovementPhysicsTickEnabled=false
+TeamGlowUpHead=0.0
+TeamGlowUpBody=0.0
+EnemyGlowUpHead=0.0
+EnemyGlowUpBody=0.0
+EnemyGlowUpHeadOnHit=0.0
+EnemyGlowUpBodyOnHit=0.0
+EnemyGlowUpHeadOnLookAt=0.0
+EnemyGlowUpBodyOnLookAt=0.0
+PlaybackOptions.PlaybackMode=Input
+PlaybackOptions.OverrideRotation=true
+PlaybackOptions.OverrideAbilities=true
+PlaybackOptions.OverrideWeapons=true
+PlaybackOptions.OverrideMovement=true
+PlaybackOptions.OverrideDodgeTime=false
+PlaybackOptions.LoopUponCompletion=true
+PlaybackOptions.BreakToInputMode=false
+
+[Character Profile]
+Name=Apogee Leo 6 Body
+MaxHealth=1.0
+WeaponProfileNames=;;;;;;;
+MinRespawnDelay=0.001
+MaxRespawnDelay=0.001
+StepUpHeight=0.0
+CrouchHeightModifier=1.0
+CrouchAnimationSpeed=1.0
+CameraOffset=X=0.000 Y=0.000 Z=0.000
+HeadshotOnly=false
+DamageKnockbackFactor=0.0
+MaxSpeed=0.0
+MaxCrouchSpeed=0.0
+Acceleration=0.0
+CrouchingAcceleration=0.0
+Friction=0.0
+BrakingFrictionFactor=0.0
+JumpVelocity=0.0
+Gravity=0.0
+AirControl=0.0
+CanCrouch=false
+CanPogoJump=false
+CanCrouchInAir=false
+CrouchInAirRaisesFeet=false
+CanJumpFromCrouch=false
+// Note: the color channel values are interpreted as 0.0 (0%) to 1.0 (100%) going over 1.0 will start to produce a glow effect when the user is in HDR mode (SceneColor is set to "Medium" or higher)
+EnemyBodyColor=X=255.000 Y=0.000 Z=0.000
+EnemyBodyColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyBodyColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColor=X=255.000 Y=255.000 Z=255.000
+EnemyHeadColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+TeamBodyColor=X=0.000 Y=0.000 Z=255.000
+TeamHeadColor=X=255.000 Y=255.000 Z=255.000
+MainBBType=Spheroid
+MainBBHeight=45.995252
+MainBBRadius=22.997626
+MainBBHasHead=false
+MainBBHeadRadius=0.1
+MainBBHeadOffset=0.0
+MainBBHide=false
+ProjBBType=Spheroid
+ProjBBHeight=128.0
+ProjBBRadius=60.0
+ProjBBHasHead=false
+ProjBBHeadRadius=0.1
+ProjBBHeadOffset=0.0
+ProjBBHide=true
+BlockSelfDamage=false
+InvinciblePlayer=false
+InvincibleBots=false
+BlockTeamDamage=false
+HasJetpack=false
+JetpackActivationDelay=0.2
+JetpackFullFuelTime=100000.0
+JetpackFuelIncPerSec=0.1
+JetpackFuelRegensInAir=true
+JetpackThrust=6000.0
+JetpackMaxZVelocity=400.0
+JetpackAirControlWithThrust=1.0
+AirJumpCount=0
+AirJumpVelocity=800.0
+AbilityProfileNames=;;;
+HideWeapon=true
+AerialFriction=0.0
+AerialVerticalTurningFriction=100000.0
+AerialVerticalBreakingFriction=0.0
+UseAerialVerticalFriction=false
+StrafeSpeedMult=1.0
+BackSpeedMult=1.0
+RespawnInvulnTime=0.0
+BlockedSpawnRadius=190.0
+BlockSpawnFOV=0.0
+BlockSpawnDistance=0.0
+RespawnAnimationDuration=0.0
+AllowBufferedJumps=false
+BounceOffWalls=false
+LeanAngle=0.0
+LeanDisplacement=0.0
+AirJumpExtraControl=0.0
+ForwardSpeedBias=1.0
+HealthRegainedonkill=0.0
+HealthRegenPerSec=0.0
+HealthRegenDelay=0.0
+JumpSpeedPenaltyDuration=0.0
+JumpSpeedPenaltyPercent=0.0
+ThirdPersonCamera=false
+TPSArmLength=300.0
+TPSOffset=X=0.000 Y=150.000 Z=150.000
+BrakingDeceleration=0.0
+TerminalVelocity=0.0
+CharacterModel=None
+CharacterSkin=Default
+MeshHitDetection=false
+SpawnOffsetMin=X=0.000 Y=-100.000 Z=-100.000
+SpawnOffsetMax=X=0.000 Y=100.000 Z=100.000
+InvertBlockedSpawn=false
+ViewBobTime=0.0
+ViewBobAngleAdjustment=0.0
+ViewBobCameraZOffset=0.0
+ViewBobAffectsShots=false
+IsFlyer=false
+FlightObeysPitch=false
+FlightVelocityUp=800.0
+FlightAccelUp=800.0
+FlightVelocityDown=800.0
+FlightAccelDown=800.0
+IsFlyUpOnJumpAndCrouch=false
+DisableCharacterCollision=false
+LifeStealPercent=0.0
+AbilityGlobalCooldown=0.0
+BlockAbilityOnStartDuration=0.0
+DragCoefficient=10.0
+AmmoRegainedOnKill=0
+ContinuousGroundFriction=0.0
+ContinuousAirFriction=0.0
+ScaledGroundAcceleration=0.0
+ScaledAirAcceleration=0.0
+MaxAirSpeed=0.0
+StopSpeed=0.0
+StopSpeedThreshold=0.0
+ClampVelocityToInputSpeed=true
+JumpSkipsFriction=false
+EnableQuakeMovement=false
+EnableQuakeJump=false
+KtJump=0.0
+MovementPhysicsTickInterval=0.0
+MovementPhysicsTickEnabled=false
+TeamGlowUpHead=0.0
+TeamGlowUpBody=0.0
+EnemyGlowUpHead=0.0
+EnemyGlowUpBody=0.0
+EnemyGlowUpHeadOnHit=0.0
+EnemyGlowUpBodyOnHit=0.0
+EnemyGlowUpHeadOnLookAt=0.0
+EnemyGlowUpBodyOnLookAt=0.0
+PlaybackOptions.PlaybackMode=Input
+PlaybackOptions.OverrideRotation=true
+PlaybackOptions.OverrideAbilities=true
+PlaybackOptions.OverrideWeapons=true
+PlaybackOptions.OverrideMovement=true
+PlaybackOptions.OverrideDodgeTime=false
+PlaybackOptions.LoopUponCompletion=true
+PlaybackOptions.BreakToInputMode=false
+
+[Character Profile]
+Name=Apogee Leo 7 Body
+MaxHealth=1.0
+WeaponProfileNames=;;;;;;;
+MinRespawnDelay=0.001
+MaxRespawnDelay=0.001
+StepUpHeight=0.0
+CrouchHeightModifier=1.0
+CrouchAnimationSpeed=1.0
+CameraOffset=X=0.000 Y=0.000 Z=0.000
+HeadshotOnly=false
+DamageKnockbackFactor=0.0
+MaxSpeed=0.0
+MaxCrouchSpeed=0.0
+Acceleration=0.0
+CrouchingAcceleration=0.0
+Friction=0.0
+BrakingFrictionFactor=0.0
+JumpVelocity=0.0
+Gravity=0.0
+AirControl=0.0
+CanCrouch=false
+CanPogoJump=false
+CanCrouchInAir=false
+CrouchInAirRaisesFeet=false
+CanJumpFromCrouch=false
+// Note: the color channel values are interpreted as 0.0 (0%) to 1.0 (100%) going over 1.0 will start to produce a glow effect when the user is in HDR mode (SceneColor is set to "Medium" or higher)
+EnemyBodyColor=X=255.000 Y=0.000 Z=0.000
+EnemyBodyColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyBodyColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColor=X=255.000 Y=255.000 Z=255.000
+EnemyHeadColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+TeamBodyColor=X=0.000 Y=0.000 Z=255.000
+TeamHeadColor=X=255.000 Y=255.000 Z=255.000
+MainBBType=Spheroid
+MainBBHeight=45.995252
+MainBBRadius=22.997626
 MainBBHasHead=false
 MainBBHeadRadius=0.1
 MainBBHeadOffset=0.0
@@ -643,6 +7900,55 @@ BaseChargeRecoilFactor=0.0
 AccelSpeedModifier=1.0
 MaxSpeedModifier=1.0
 
+[Bot Rotation Profile]
+Name=Apogee Constellation Slot 1
+ProfileNames=Apogee Big Dipper 1;Apogee Little Dipper 1;Apogee Orion 1;Apogee Cassiopeia 1;Apogee Cygnus 1;Apogee Leo 1
+ProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0
+Randomized=false
+AllowRepeatEntries=true
+
+[Bot Rotation Profile]
+Name=Apogee Constellation Slot 2
+ProfileNames=Apogee Big Dipper 2;Apogee Little Dipper 2;Apogee Orion 2;Apogee Cassiopeia 2;Apogee Cygnus 2;Apogee Leo 2
+ProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0
+Randomized=false
+AllowRepeatEntries=true
+
+[Bot Rotation Profile]
+Name=Apogee Constellation Slot 3
+ProfileNames=Apogee Big Dipper 3;Apogee Little Dipper 3;Apogee Orion 3;Apogee Cassiopeia 3;Apogee Cygnus 3;Apogee Leo 3
+ProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0
+Randomized=false
+AllowRepeatEntries=true
+
+[Bot Rotation Profile]
+Name=Apogee Constellation Slot 4
+ProfileNames=Apogee Big Dipper 4;Apogee Little Dipper 4;Apogee Orion 4;Apogee Cassiopeia 4;Apogee Cygnus 4;Apogee Leo 4
+ProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0
+Randomized=false
+AllowRepeatEntries=true
+
+[Bot Rotation Profile]
+Name=Apogee Constellation Slot 5
+ProfileNames=Apogee Big Dipper 5;Apogee Little Dipper 5;Apogee Orion 5;Apogee Cassiopeia 5;Apogee Cygnus 5;Apogee Leo 5
+ProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0
+Randomized=false
+AllowRepeatEntries=true
+
+[Bot Rotation Profile]
+Name=Apogee Constellation Slot 6
+ProfileNames=Apogee Big Dipper 6;Apogee Little Dipper 6;Apogee Orion 6;Apogee Cassiopeia 6;Apogee Cygnus 6;Apogee Leo 6
+ProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0
+Randomized=false
+AllowRepeatEntries=true
+
+[Bot Rotation Profile]
+Name=Apogee Constellation Slot 7
+ProfileNames=Apogee Big Dipper 7;Apogee Little Dipper 7;Apogee Orion 7;Apogee Cassiopeia 7;Apogee Cygnus 7;Apogee Leo 7
+ProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0
+Randomized=false
+AllowRepeatEntries=true
+
 [Map Data]
 {
     "materialSets": [
@@ -879,7 +8185,7 @@ MaxSpeedModifier=1.0
     ],
     "objects": [
         {
-            "location": "-1088.000000, -1263.114313, -1194.450786",
+            "location": "-1088.000000, -1279.339465, -1211.864011",
             "materialSets": [
                 {
                     "group": 0,
@@ -909,11 +8215,11 @@ MaxSpeedModifier=1.0
             "mesh": "Cube",
             "name": "Default",
             "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "26.880000, 10.240000, 23.889016",
+            "scale": "26.879769, 10.240000, 24.237280",
             "type": "brush"
         },
         {
-            "location": "-1088.000000, 239.114313, -1194.450786",
+            "location": "-1088.000000, 255.732134, -1211.864011",
             "materialSets": [
                 {
                     "group": 0,
@@ -943,11 +8249,11 @@ MaxSpeedModifier=1.0
             "mesh": "Cube",
             "name": "Default",
             "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "26.880000, 10.240000, 23.889016",
+            "scale": "26.879769, 10.240000, 24.237280",
             "type": "brush"
         },
         {
-            "location": "-1088.000000, -1263.114313, -1194.450786",
+            "location": "-1088.000000, -1279.339465, -1211.864011",
             "materialSets": [
                 {
                     "group": 0,
@@ -977,11 +8283,11 @@ MaxSpeedModifier=1.0
             "mesh": "Cube",
             "name": "Default",
             "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "10.240000, 25.262286, 23.889016",
+            "scale": "10.240000, 25.590716, 24.237280",
             "type": "brush"
         },
         {
-            "location": "576.000000, -1263.114313, -1194.450786",
+            "location": "575.976924, -1279.339465, -1211.864011",
             "materialSets": [
                 {
                     "group": 0,
@@ -1011,11 +8317,11 @@ MaxSpeedModifier=1.0
             "mesh": "Cube",
             "name": "Default",
             "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "10.240000, 25.262286, 23.889016",
+            "scale": "10.240000, 25.590716, 24.237280",
             "type": "brush"
         },
         {
-            "location": "-1088.000000, -1263.114313, -1194.450786",
+            "location": "-1088.000000, -1279.339465, -1211.864011",
             "materialSets": [
                 {
                     "group": 0,
@@ -1045,11 +8351,11 @@ MaxSpeedModifier=1.0
             "mesh": "Cube",
             "name": "Default",
             "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "26.880000, 25.262286, 10.240000",
+            "scale": "26.879769, 25.590716, 10.240000",
             "type": "brush"
         },
         {
-            "location": "-1088.000000, -1263.114313, 170.450786",
+            "location": "-1088.000000, -1279.339465, 187.864011",
             "materialSets": [
                 {
                     "group": 0,
@@ -1079,7 +8385,7 @@ MaxSpeedModifier=1.0
             "mesh": "Cube",
             "name": "Default",
             "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "26.880000, 25.262286, 10.240000",
+            "scale": "26.879769, 25.590716, 10.240000",
             "type": "brush"
         },
         {
@@ -1116,7 +8422,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "470.608938, -171.287645, -106.450786",
+            "location": "476.611112, 161.837091, 93.779549",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1137,7 +8443,7 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": ""
+                    "value": "Apogee Big Dipper 1 Body"
                 },
                 {
                     "name": "Weight",
@@ -1149,7 +8455,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "476.440370, -173.410113, -71.256628",
+            "location": "474.553685, 191.732134, 13.475502",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1170,7 +8476,7 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": ""
+                    "value": "Apogee Big Dipper 2 Body"
                 },
                 {
                     "name": "Weight",
@@ -1182,7 +8488,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "479.950631, -174.687744, -35.715315",
+            "location": "501.730242, 87.972844, -51.686971",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1203,7 +8509,7 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": ""
+                    "value": "Apogee Big Dipper 3 Body"
                 },
                 {
                     "name": "Weight",
@@ -1215,7 +8521,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "481.122622, -175.114313, 0.000000",
+            "location": "510.649330, 37.056361, -2.843839",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1236,7 +8542,7 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": ""
+                    "value": "Apogee Big Dipper 4 Body"
                 },
                 {
                     "name": "Weight",
@@ -1248,7 +8554,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "479.950631, -174.687744, 35.715315",
+            "location": "509.588797, -46.875987, -16.306428",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1269,7 +8575,7 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": ""
+                    "value": "Apogee Big Dipper 5 Body"
                 },
                 {
                     "name": "Weight",
@@ -1281,7 +8587,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "476.440370, -173.410113, 71.256628",
+            "location": "498.460214, -114.977706, -21.483538",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1302,7 +8608,7 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": ""
+                    "value": "Apogee Big Dipper 6 Body"
                 },
                 {
                     "name": "Weight",
@@ -1314,7 +8620,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "470.608938, -171.287645, 106.450786",
+            "location": "466.687101, -188.553828, -93.779549",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1335,7 +8641,7 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": ""
+                    "value": "Apogee Big Dipper 7 Body"
                 },
                 {
                     "name": "Weight",
@@ -1347,7 +8653,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "483.746831, -129.619573, -106.450786",
+            "location": "496.598278, -13.851248, 123.864011",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1368,7 +8674,7 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": ""
+                    "value": "Apogee Little Dipper 1 Body"
                 },
                 {
                     "name": "Weight",
@@ -1380,7 +8686,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "489.741057, -131.225721, -71.256628",
+            "location": "505.654450, -31.083080, 74.104110",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1401,7 +8707,7 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": ""
+                    "value": "Apogee Little Dipper 2 Body"
                 },
                 {
                     "name": "Weight",
@@ -1413,7 +8719,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "493.349314, -132.192550, -35.715315",
+            "location": "510.408055, -38.308273, 12.652807",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1434,7 +8740,7 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": ""
+                    "value": "Apogee Little Dipper 3 Body"
                 },
                 {
                     "name": "Weight",
@@ -1446,7 +8752,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "494.554023, -132.515351, 0.000000",
+            "location": "509.744540, -9.863262, -46.981059",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1467,7 +8773,7 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": ""
+                    "value": "Apogee Little Dipper 4 Body"
                 },
                 {
                     "name": "Weight",
@@ -1479,7 +8785,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "493.349314, -132.192550, 35.715315",
+            "location": "505.601292, -36.495003, -71.968380",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1500,7 +8806,7 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": ""
+                    "value": "Apogee Little Dipper 5 Body"
                 },
                 {
                     "name": "Weight",
@@ -1512,7 +8818,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "489.741057, -131.225721, 71.256628",
+            "location": "496.580541, 14.473179, -123.864011",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1533,7 +8839,7 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": ""
+                    "value": "Apogee Little Dipper 6 Body"
                 },
                 {
                     "name": "Weight",
@@ -1545,7 +8851,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "483.746831, -129.619573, 106.450786",
+            "location": "502.790228, 37.736523, -89.005289",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1566,7 +8872,7 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": ""
+                    "value": "Apogee Little Dipper 7 Body"
                 },
                 {
                     "name": "Weight",
@@ -1578,7 +8884,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "493.203118, -86.965017, -106.450786",
+            "location": "491.632558, -71.408229, 123.864011",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1599,7 +8905,7 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": ""
+                    "value": "Apogee Orion 1 Body"
                 },
                 {
                     "name": "Weight",
@@ -1611,7 +8917,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "499.314520, -88.042622, -71.256628",
+            "location": "499.213289, 34.593334, 108.320787",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1632,7 +8938,7 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": ""
+                    "value": "Apogee Orion 2 Body"
                 },
                 {
                     "name": "Weight",
@@ -1644,7 +8950,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "502.993311, -88.691292, -35.715315",
+            "location": "511.752700, 10.495804, 11.958762",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1665,7 +8971,7 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": ""
+                    "value": "Apogee Orion 3 Body"
                 },
                 {
                     "name": "Weight",
@@ -1677,7 +8983,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "504.221570, -88.907867, 0.000000",
+            "location": "511.976924, -4.735667, -1.096925",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1698,7 +9004,7 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": ""
+                    "value": "Apogee Orion 4 Body"
                 },
                 {
                     "name": "Weight",
@@ -1710,7 +9016,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "502.993311, -88.691292, 35.715315",
+            "location": "511.421531, -21.257163, -11.838535",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1731,7 +9037,7 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": ""
+                    "value": "Apogee Orion 5 Body"
                 },
                 {
                     "name": "Weight",
@@ -1743,7 +9049,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "499.314520, -88.042622, 71.256628",
+            "location": "494.731365, -45.194949, -123.864011",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1764,7 +9070,7 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": ""
+                    "value": "Apogee Orion 6 Body"
                 },
                 {
                     "name": "Weight",
@@ -1776,7 +9082,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "493.203118, -86.965017, 106.450786",
+            "location": "496.325050, 72.089800, -102.997599",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1797,7 +9103,7 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": ""
+                    "value": "Apogee Orion 7 Body"
                 },
                 {
                     "name": "Weight",
@@ -1809,7 +9115,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "498.905832, -43.648604, -106.450786",
+            "location": "474.014221, 191.514177, -27.871812",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1830,7 +9136,7 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": ""
+                    "value": "Apogee Cassiopeia 1 Body"
                 },
                 {
                     "name": "Weight",
@@ -1842,7 +9148,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "505.087897, -44.189465, -71.256628",
+            "location": "491.704957, 71.715640, -123.398147",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1863,7 +9169,7 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": ""
+                    "value": "Apogee Cassiopeia 2 Body"
                 },
                 {
                     "name": "Weight",
@@ -1875,7 +9181,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "508.809225, -44.515039, -35.715315",
+            "location": "511.940773, 4.549397, 6.320423",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1896,7 +9202,7 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": ""
+                    "value": "Apogee Cassiopeia 3 Body"
                 },
                 {
                     "name": "Weight",
@@ -1908,7 +9214,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "510.051685, -44.623740, 0.000000",
+            "location": "500.284357, -108.890822, -1.533304",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1929,7 +9235,7 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": ""
+                    "value": "Apogee Cassiopeia 4 Body"
                 },
                 {
                     "name": "Weight",
@@ -1941,7 +9247,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "508.809225, -44.515039, 35.715315",
+            "location": "460.724456, -186.144763, 123.398147",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1962,7 +9268,7 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": ""
+                    "value": "Apogee Cassiopeia 5 Body"
                 },
                 {
                     "name": "Weight",
@@ -1974,7 +9280,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "505.087897, -44.189465, 71.256628",
+            "location": "503.671976, 35.325606, -84.915502",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1995,7 +9301,7 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": ""
+                    "value": "Apogee Cassiopeia 6 Body"
                 },
                 {
                     "name": "Weight",
@@ -2007,7 +9313,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "498.905832, -43.648604, 106.450786",
+            "location": "497.962600, 88.981552, 79.117205",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -2028,7 +9334,7 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": ""
+                    "value": "Apogee Cassiopeia 7 Body"
                 },
                 {
                     "name": "Weight",
@@ -2040,7 +9346,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "500.811572, 0.000000, -106.450786",
+            "location": "494.421675, -49.962906, 123.267658",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -2061,7 +9367,7 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": ""
+                    "value": "Apogee Cygnus 1 Body"
                 },
                 {
                     "name": "Weight",
@@ -2073,7 +9379,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "507.017251, 0.000000, -71.256628",
+            "location": "509.726151, -2.056290, 48.156231",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -2094,7 +9400,7 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": ""
+                    "value": "Apogee Cygnus 2 Body"
                 },
                 {
                     "name": "Weight",
@@ -2106,7 +9412,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "510.752794, 0.000000, -35.715315",
+            "location": "504.722719, -75.434651, -41.335102",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -2127,7 +9433,7 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": ""
+                    "value": "Apogee Cygnus 3 Body"
                 },
                 {
                     "name": "Weight",
@@ -2139,7 +9445,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "512.000000, 0.000000, 0.000000",
+            "location": "488.123506, 92.396697, 123.864011",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -2160,7 +9466,7 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": ""
+                    "value": "Apogee Cygnus 4 Body"
                 },
                 {
                     "name": "Weight",
@@ -2172,7 +9478,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "510.752794, 0.000000, 35.715315",
+            "location": "470.690121, 158.910406, -123.864011",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -2193,7 +9499,7 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": ""
+                    "value": "Apogee Cygnus 5 Body"
                 },
                 {
                     "name": "Weight",
@@ -2205,7 +9511,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "507.017251, 0.000000, 71.256628",
+            "location": "505.841883, 74.870107, -25.738236",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -2226,7 +9532,7 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": ""
+                    "value": "Apogee Cygnus 6 Body"
                 },
                 {
                     "name": "Weight",
@@ -2238,7 +9544,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "500.811572, 0.000000, 106.450786",
+            "location": "477.783170, -161.305101, -88.588411",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -2259,7 +9565,7 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": ""
+                    "value": "Apogee Cygnus 7 Body"
                 },
                 {
                     "name": "Weight",
@@ -2271,7 +9577,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "498.905832, 43.648604, -106.450786",
+            "location": "488.831495, 129.845783, -79.547736",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -2292,7 +9598,7 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": ""
+                    "value": "Apogee Leo 1 Body"
                 },
                 {
                     "name": "Weight",
@@ -2304,7 +9610,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "505.087897, 44.189465, -71.256628",
+            "location": "494.298791, 132.449894, -16.423470",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -2325,7 +9631,7 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": ""
+                    "value": "Apogee Leo 2 Body"
                 },
                 {
                     "name": "Weight",
@@ -2337,7 +9643,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "508.809225, 44.515039, -35.715315",
+            "location": "502.979703, 92.882273, 22.984822",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -2358,7 +9664,7 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": ""
+                    "value": "Apogee Leo 3 Body"
                 },
                 {
                     "name": "Weight",
@@ -2370,7 +9676,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "510.051685, 44.623740, 0.000000",
+            "location": "497.033137, 101.021623, 69.976367",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -2391,7 +9697,7 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": ""
+                    "value": "Apogee Leo 4 Body"
                 },
                 {
                     "name": "Weight",
@@ -2403,7 +9709,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "508.809225, 44.515039, 35.715315",
+            "location": "468.953570, 189.469541, 79.547736",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -2424,7 +9730,7 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": ""
+                    "value": "Apogee Leo 5 Body"
                 },
                 {
                     "name": "Weight",
@@ -2436,7 +9742,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "505.087897, 44.189465, 71.256628",
+            "location": "505.471372, -73.221642, 35.795012",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -2457,7 +9763,7 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": ""
+                    "value": "Apogee Leo 6 Body"
                 },
                 {
                     "name": "Weight",
@@ -2469,7 +9775,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "498.905832, 43.648604, 106.450786",
+            "location": "473.581795, -191.339465, -35.404691",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -2490,700 +9796,7 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": ""
-                },
-                {
-                    "name": "Weight",
-                    "value": 1
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 180.000000",
-            "scale": "0.227273, 0.227273, 0.227273",
-            "type": "gameObject"
-        },
-        {
-            "location": "493.203118, 86.965017, -106.450786",
-            "name": "SpawnPoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": ""
-                },
-                {
-                    "name": "TeamMask",
-                    "value": 2
-                },
-                {
-                    "name": "Path",
-                    "value": ""
-                },
-                {
-                    "name": "LoopingPath",
-                    "value": false
-                },
-                {
-                    "name": "PermittedCharacterProfiles",
-                    "value": ""
-                },
-                {
-                    "name": "Weight",
-                    "value": 1
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 180.000000",
-            "scale": "0.227273, 0.227273, 0.227273",
-            "type": "gameObject"
-        },
-        {
-            "location": "499.314520, 88.042622, -71.256628",
-            "name": "SpawnPoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": ""
-                },
-                {
-                    "name": "TeamMask",
-                    "value": 2
-                },
-                {
-                    "name": "Path",
-                    "value": ""
-                },
-                {
-                    "name": "LoopingPath",
-                    "value": false
-                },
-                {
-                    "name": "PermittedCharacterProfiles",
-                    "value": ""
-                },
-                {
-                    "name": "Weight",
-                    "value": 1
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 180.000000",
-            "scale": "0.227273, 0.227273, 0.227273",
-            "type": "gameObject"
-        },
-        {
-            "location": "502.993311, 88.691292, -35.715315",
-            "name": "SpawnPoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": ""
-                },
-                {
-                    "name": "TeamMask",
-                    "value": 2
-                },
-                {
-                    "name": "Path",
-                    "value": ""
-                },
-                {
-                    "name": "LoopingPath",
-                    "value": false
-                },
-                {
-                    "name": "PermittedCharacterProfiles",
-                    "value": ""
-                },
-                {
-                    "name": "Weight",
-                    "value": 1
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 180.000000",
-            "scale": "0.227273, 0.227273, 0.227273",
-            "type": "gameObject"
-        },
-        {
-            "location": "504.221570, 88.907867, 0.000000",
-            "name": "SpawnPoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": ""
-                },
-                {
-                    "name": "TeamMask",
-                    "value": 2
-                },
-                {
-                    "name": "Path",
-                    "value": ""
-                },
-                {
-                    "name": "LoopingPath",
-                    "value": false
-                },
-                {
-                    "name": "PermittedCharacterProfiles",
-                    "value": ""
-                },
-                {
-                    "name": "Weight",
-                    "value": 1
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 180.000000",
-            "scale": "0.227273, 0.227273, 0.227273",
-            "type": "gameObject"
-        },
-        {
-            "location": "502.993311, 88.691292, 35.715315",
-            "name": "SpawnPoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": ""
-                },
-                {
-                    "name": "TeamMask",
-                    "value": 2
-                },
-                {
-                    "name": "Path",
-                    "value": ""
-                },
-                {
-                    "name": "LoopingPath",
-                    "value": false
-                },
-                {
-                    "name": "PermittedCharacterProfiles",
-                    "value": ""
-                },
-                {
-                    "name": "Weight",
-                    "value": 1
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 180.000000",
-            "scale": "0.227273, 0.227273, 0.227273",
-            "type": "gameObject"
-        },
-        {
-            "location": "499.314520, 88.042622, 71.256628",
-            "name": "SpawnPoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": ""
-                },
-                {
-                    "name": "TeamMask",
-                    "value": 2
-                },
-                {
-                    "name": "Path",
-                    "value": ""
-                },
-                {
-                    "name": "LoopingPath",
-                    "value": false
-                },
-                {
-                    "name": "PermittedCharacterProfiles",
-                    "value": ""
-                },
-                {
-                    "name": "Weight",
-                    "value": 1
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 180.000000",
-            "scale": "0.227273, 0.227273, 0.227273",
-            "type": "gameObject"
-        },
-        {
-            "location": "493.203118, 86.965017, 106.450786",
-            "name": "SpawnPoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": ""
-                },
-                {
-                    "name": "TeamMask",
-                    "value": 2
-                },
-                {
-                    "name": "Path",
-                    "value": ""
-                },
-                {
-                    "name": "LoopingPath",
-                    "value": false
-                },
-                {
-                    "name": "PermittedCharacterProfiles",
-                    "value": ""
-                },
-                {
-                    "name": "Weight",
-                    "value": 1
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 180.000000",
-            "scale": "0.227273, 0.227273, 0.227273",
-            "type": "gameObject"
-        },
-        {
-            "location": "483.746831, 129.619573, -106.450786",
-            "name": "SpawnPoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": ""
-                },
-                {
-                    "name": "TeamMask",
-                    "value": 2
-                },
-                {
-                    "name": "Path",
-                    "value": ""
-                },
-                {
-                    "name": "LoopingPath",
-                    "value": false
-                },
-                {
-                    "name": "PermittedCharacterProfiles",
-                    "value": ""
-                },
-                {
-                    "name": "Weight",
-                    "value": 1
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 180.000000",
-            "scale": "0.227273, 0.227273, 0.227273",
-            "type": "gameObject"
-        },
-        {
-            "location": "489.741057, 131.225721, -71.256628",
-            "name": "SpawnPoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": ""
-                },
-                {
-                    "name": "TeamMask",
-                    "value": 2
-                },
-                {
-                    "name": "Path",
-                    "value": ""
-                },
-                {
-                    "name": "LoopingPath",
-                    "value": false
-                },
-                {
-                    "name": "PermittedCharacterProfiles",
-                    "value": ""
-                },
-                {
-                    "name": "Weight",
-                    "value": 1
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 180.000000",
-            "scale": "0.227273, 0.227273, 0.227273",
-            "type": "gameObject"
-        },
-        {
-            "location": "493.349314, 132.192550, -35.715315",
-            "name": "SpawnPoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": ""
-                },
-                {
-                    "name": "TeamMask",
-                    "value": 2
-                },
-                {
-                    "name": "Path",
-                    "value": ""
-                },
-                {
-                    "name": "LoopingPath",
-                    "value": false
-                },
-                {
-                    "name": "PermittedCharacterProfiles",
-                    "value": ""
-                },
-                {
-                    "name": "Weight",
-                    "value": 1
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 180.000000",
-            "scale": "0.227273, 0.227273, 0.227273",
-            "type": "gameObject"
-        },
-        {
-            "location": "494.554023, 132.515351, 0.000000",
-            "name": "SpawnPoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": ""
-                },
-                {
-                    "name": "TeamMask",
-                    "value": 2
-                },
-                {
-                    "name": "Path",
-                    "value": ""
-                },
-                {
-                    "name": "LoopingPath",
-                    "value": false
-                },
-                {
-                    "name": "PermittedCharacterProfiles",
-                    "value": ""
-                },
-                {
-                    "name": "Weight",
-                    "value": 1
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 180.000000",
-            "scale": "0.227273, 0.227273, 0.227273",
-            "type": "gameObject"
-        },
-        {
-            "location": "493.349314, 132.192550, 35.715315",
-            "name": "SpawnPoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": ""
-                },
-                {
-                    "name": "TeamMask",
-                    "value": 2
-                },
-                {
-                    "name": "Path",
-                    "value": ""
-                },
-                {
-                    "name": "LoopingPath",
-                    "value": false
-                },
-                {
-                    "name": "PermittedCharacterProfiles",
-                    "value": ""
-                },
-                {
-                    "name": "Weight",
-                    "value": 1
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 180.000000",
-            "scale": "0.227273, 0.227273, 0.227273",
-            "type": "gameObject"
-        },
-        {
-            "location": "489.741057, 131.225721, 71.256628",
-            "name": "SpawnPoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": ""
-                },
-                {
-                    "name": "TeamMask",
-                    "value": 2
-                },
-                {
-                    "name": "Path",
-                    "value": ""
-                },
-                {
-                    "name": "LoopingPath",
-                    "value": false
-                },
-                {
-                    "name": "PermittedCharacterProfiles",
-                    "value": ""
-                },
-                {
-                    "name": "Weight",
-                    "value": 1
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 180.000000",
-            "scale": "0.227273, 0.227273, 0.227273",
-            "type": "gameObject"
-        },
-        {
-            "location": "483.746831, 129.619573, 106.450786",
-            "name": "SpawnPoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": ""
-                },
-                {
-                    "name": "TeamMask",
-                    "value": 2
-                },
-                {
-                    "name": "Path",
-                    "value": ""
-                },
-                {
-                    "name": "LoopingPath",
-                    "value": false
-                },
-                {
-                    "name": "PermittedCharacterProfiles",
-                    "value": ""
-                },
-                {
-                    "name": "Weight",
-                    "value": 1
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 180.000000",
-            "scale": "0.227273, 0.227273, 0.227273",
-            "type": "gameObject"
-        },
-        {
-            "location": "470.608938, 171.287645, -106.450786",
-            "name": "SpawnPoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": ""
-                },
-                {
-                    "name": "TeamMask",
-                    "value": 2
-                },
-                {
-                    "name": "Path",
-                    "value": ""
-                },
-                {
-                    "name": "LoopingPath",
-                    "value": false
-                },
-                {
-                    "name": "PermittedCharacterProfiles",
-                    "value": ""
-                },
-                {
-                    "name": "Weight",
-                    "value": 1
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 180.000000",
-            "scale": "0.227273, 0.227273, 0.227273",
-            "type": "gameObject"
-        },
-        {
-            "location": "476.440370, 173.410113, -71.256628",
-            "name": "SpawnPoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": ""
-                },
-                {
-                    "name": "TeamMask",
-                    "value": 2
-                },
-                {
-                    "name": "Path",
-                    "value": ""
-                },
-                {
-                    "name": "LoopingPath",
-                    "value": false
-                },
-                {
-                    "name": "PermittedCharacterProfiles",
-                    "value": ""
-                },
-                {
-                    "name": "Weight",
-                    "value": 1
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 180.000000",
-            "scale": "0.227273, 0.227273, 0.227273",
-            "type": "gameObject"
-        },
-        {
-            "location": "479.950631, 174.687744, -35.715315",
-            "name": "SpawnPoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": ""
-                },
-                {
-                    "name": "TeamMask",
-                    "value": 2
-                },
-                {
-                    "name": "Path",
-                    "value": ""
-                },
-                {
-                    "name": "LoopingPath",
-                    "value": false
-                },
-                {
-                    "name": "PermittedCharacterProfiles",
-                    "value": ""
-                },
-                {
-                    "name": "Weight",
-                    "value": 1
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 180.000000",
-            "scale": "0.227273, 0.227273, 0.227273",
-            "type": "gameObject"
-        },
-        {
-            "location": "481.122622, 175.114313, 0.000000",
-            "name": "SpawnPoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": ""
-                },
-                {
-                    "name": "TeamMask",
-                    "value": 2
-                },
-                {
-                    "name": "Path",
-                    "value": ""
-                },
-                {
-                    "name": "LoopingPath",
-                    "value": false
-                },
-                {
-                    "name": "PermittedCharacterProfiles",
-                    "value": ""
-                },
-                {
-                    "name": "Weight",
-                    "value": 1
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 180.000000",
-            "scale": "0.227273, 0.227273, 0.227273",
-            "type": "gameObject"
-        },
-        {
-            "location": "479.950631, 174.687744, 35.715315",
-            "name": "SpawnPoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": ""
-                },
-                {
-                    "name": "TeamMask",
-                    "value": 2
-                },
-                {
-                    "name": "Path",
-                    "value": ""
-                },
-                {
-                    "name": "LoopingPath",
-                    "value": false
-                },
-                {
-                    "name": "PermittedCharacterProfiles",
-                    "value": ""
-                },
-                {
-                    "name": "Weight",
-                    "value": 1
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 180.000000",
-            "scale": "0.227273, 0.227273, 0.227273",
-            "type": "gameObject"
-        },
-        {
-            "location": "476.440370, 173.410113, 71.256628",
-            "name": "SpawnPoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": ""
-                },
-                {
-                    "name": "TeamMask",
-                    "value": 2
-                },
-                {
-                    "name": "Path",
-                    "value": ""
-                },
-                {
-                    "name": "LoopingPath",
-                    "value": false
-                },
-                {
-                    "name": "PermittedCharacterProfiles",
-                    "value": ""
-                },
-                {
-                    "name": "Weight",
-                    "value": 1
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 180.000000",
-            "scale": "0.227273, 0.227273, 0.227273",
-            "type": "gameObject"
-        },
-        {
-            "location": "470.608938, 171.287645, 106.450786",
-            "name": "SpawnPoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": ""
-                },
-                {
-                    "name": "TeamMask",
-                    "value": 2
-                },
-                {
-                    "name": "Path",
-                    "value": ""
-                },
-                {
-                    "name": "LoopingPath",
-                    "value": false
-                },
-                {
-                    "name": "PermittedCharacterProfiles",
-                    "value": ""
+                    "value": "Apogee Leo 7 Body"
                 },
                 {
                     "name": "Weight",

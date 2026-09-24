@@ -1,7 +1,7 @@
 # Season 2
 
-A season of scenarios made for Apogee: 36 families, six per category, four bands each, 144
-scenarios. None existed before this. Season 1 is untouched; season 2 is a draft in
+A season of scenarios made for Apogee: 40 families, six to nine per category, four bands
+each, 160 scenarios. None existed before this. Season 1 is untouched; season 2 is a draft in
 `data/seasons/season-2.json`, and nothing reads it at runtime yet.
 
 Why each rule is what it is: [season-2-research.md](season-2-research.md). What the
@@ -12,12 +12,18 @@ scenario file format turned out to be, pitfalls included:
 
 | Category | Families |
 | --- | --- |
-| Static Clicking | Meridian (horizontal), Zenith (vertical), Pinpoint (micro), Horizon (wide), Constellation (five alive, tempo), Parallax (two depths) |
-| Dynamic Clicking | Drift (slow floaters), Pendulum (level swings), Hopper (bounces), Jitter (twitches), Comet (fast crossers), Triplet (three hits) |
-| Precise Tracking | Glide (smooth ground), Lift (vertical), Loop (curves), Thread (small and slow), Arc (floaty jumps), Orbit (close, wide) |
-| Reactive Tracking | Duel (close strafes), Skirmish (range changes), Stutter (stops before turns), Aerial (jumps), Wasp (3D flier), Feint (dodges when hit) |
-| Speed Switching | Relay (compact), Span (wide), Column (vertical), Cluster (six small), Drifters (slow movers), Finisher (long kills) |
-| Evasive Switching | Swarm (strafers), Skeet (arcs), Hive (fliers), Mender (regenerating), Scatter (fast and far), Brawl (close) |
+| Static Clicking | Galaga (five on one line), Zenith (vertical), Pinpoint (micro), Invaders (wide formation), Constellation (real constellations as waves), Parallax (two depths), Nebula (six up at once) |
+| Dynamic Clicking | Gravclick (slow floaters), Pendulum (level swings), Antigrav (bounces), Electric (twitches), Comet (fast crossers), Shooting Stars (straight lanes), Gravity Well (inward spirals), Meteor (straight runs off the walls), Satellite (circling fliers) |
+| Precise Tracking | Glide (smooth ground), Blastoff (vertical), Orbit (curves), Thread (small and slow), Arc (floaty jumps), AlienTrack (close, wide) |
+| Reactive Tracking | Pong (close strafes), Pong3D (range changes), Stutter (stops, sometimes for seconds), Hover (jumps), UFO (3D flier), Feint (dodges when hit) |
+| Speed Switching | DNA (compact), CockpiTS (wide), Column (vertical), Asteroids (six small), RockeTS (slow movers, quick kills), bruTeS (long kills) |
+| Evasive Switching | FleeTS (strafers), skeeTS (thrown clay pigeons), comeTS (curving fliers), Mender (regenerating), LosTS (one tough target that respawns), Brawl (close) |
+
+The second round of design came from Rylee's playtest of the first (2026-09-24): more
+variety in how many targets are up, Galaga and Invaders made distinct, Constellation turned
+into real constellations cleared as waves, four new linear dynamic families, skeeTS rebuilt
+on Skeet Tracking's own thrown-target mechanism, LosTS in place of Scatter, Triplet removed,
+Brawl moved out of an arena whose barrier trapped close targets, and the names.
 
 Each scenario is named `Apogee <Family> <Band>`. Every one, with its size, speed, reversal
 and kill time, predicted median and thresholds, is listed in
@@ -49,8 +55,9 @@ of its class ask (218 with 20,000 or more players), unless its family declares t
 with a reason and a precedent; and that every numeric profile value is inside the range that
 key takes across the 1,161 real scenario files.
 
-One exception is declared: Jitter reverses faster than any popular clicking scenario, on
-purpose, with cA 5ts vibrate and Microshot Avasive as precedent.
+Two exceptions are declared: Electric reverses faster than any popular clicking scenario, on
+purpose, with cA 5ts vibrate and Microshot Avasive as precedent; Meteor's strafe timer is
+Floating Heads Timing 400%'s ten seconds, set long so the walls turn its targets instead.
 
 ## Playing it
 
@@ -85,19 +92,25 @@ season is `npm run push:season`, which Rylee runs.
 
 ## Playtest before anything else
 
-The files have been generated and checked. Item 1 was confirmed in game on 2026-09-24: all
-seven load. The rest are still open. In order of risk:
+Confirmed in game on 2026-09-24: the first seven templates' scenarios load, generated rooms
+included. The mechanisms added since have not been played. `Apogee S2 Playtest` holds one of
+each, in this order:
 
-1. **Load one of each template in KovaaK's**: a static family (Meridian), a floater
-   (Drift), a bouncer (Hopper), a ground tracker (Glide), a flier (Lift), a still switch
-   target (Relay) and a moving one (Swarm). Each map is embedded under a new name; check that
-   the room and targets appear where expected.
-2. **Pendulum**: targets should keep their height and only move sideways.
-3. **Switching targets**: they should float at spawn height, not sink or bounce.
-4. **Tracking targets**: they should never die during a run.
-5. **Feint**: the dodge on being hit should feel like a reaction, not a teleport.
-6. **Flying tracking thresholds**: the model over-predicts Voltaic's Aether at every tier
-   (0.14 to 0.90 logit at the median), the template Lift, Loop and Wasp are built on, so
-   their thresholds are the likeliest to be set too high. Check them first when recutting.
-7. **Band steps in switching**: the model sees about 1% per band at the median; check that
-   Advanced and Expert feel harder than Novice.
+1. **Constellation**: all seven stars of one constellation up together; the next appears
+   only when the last falls. The wave mechanism is StrawberryClick's (`SpawnGroup` with
+   fixed-order rotations), inferred from its file and description, not seen.
+2. **Shooting Stars, Gravity Well**: targets walk their lanes and spirals (waypoint paths),
+   and stay on them.
+3. **Meteor**: straight runs that turn only at the walls.
+4. **Satellite**: fliers circling and rising and falling.
+5. **Stutter**: now and then stops dead for two to three seconds.
+6. **skeeTS**: targets thrown in arcs, as Skeet Tracking's are.
+7. **comeTS**: fliers sweeping in curves rather than zig-zags.
+8. **LosTS**: one target; it respawns somewhere new when killed.
+9. **Brawl**: close targets no longer stick in the middle.
+
+Still open from before: Pendulum's targets keep their height; switching targets float in
+place; tracking targets never die; Feint's dodge reads as a reaction; switching bands feel
+harder as they go; and the thresholds of Blastoff, Orbit and UFO, built on the template the
+model over-predicts (Voltaic's Aether, 0.14 to 0.90 logit at the median), are the likeliest
+to be set too high. Check them first when recutting.

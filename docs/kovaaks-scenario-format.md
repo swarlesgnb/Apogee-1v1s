@@ -25,6 +25,11 @@ it to the counts quoted.
   Ground.
 - **Per-bot head keys are positional.** `AddedBots`, `BotMaxLives` and `BotTeams` pair up
   by position, so all three change together.
+- **Whole-number keys stay whole.** `SpawnGroup=1`, `DifficultyTag=2`: the forge writes a
+  number in the form the template used, and validate:season2 fails a key every real file
+  writes as a whole number if it gains a decimal point.
+- **Older files tag differently**: 3.7 files carry `SearchTags`; a 3.1 file such as Skeet
+  Tracking carries `GameTag` and `AuthorsTag` instead.
 - **Line endings are CRLF**, and the repo keeps them (`*.sce -text` in `.gitattributes`).
 
 ## The map
@@ -48,6 +53,17 @@ it to the counts quoted.
   `validate:season2` now checks every spawn.
 - **Spawn volumes** (`SpawnVolume`) are boxes; whether `location` is their centre or corner
   is not settled by any template, so season 2 uses spawn points only.
+
+- **Waypoint paths**: a `Waypoint` object has a `Name` and pause times; a spawn point's
+  `Path` lists waypoint names in order (`1,2`) and `LoopingPath` repeats them. A bot follows
+  them when its dodge profile says `WaypointLogic=FollowAimAtTarget`; ZipTrack - THE FINALS
+  moves its targets this way, as fliers with instant acceleration and sideways and
+  forward/back dodging off. Read off that file; season 2's Shooting Stars and Gravity Well
+  use it, not yet seen in game.
+- **Waves**: every bot in `SpawnGroup` 1 respawns only when the whole group is dead, and a
+  slot whose bot is a fixed-order Bot Rotation Profile advances one member per wave. So far
+  inferred from Revosect's StrawberryClick, whose description ("after killing 3 big bots, 6
+  smaller bots will spawn") matches its file; Constellation relies on it.
 
 ## Targets
 

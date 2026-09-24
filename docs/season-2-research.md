@@ -73,9 +73,9 @@ states the same priorities from the author's side, and season 2 takes most of th
   benchmarking"; Pasu's targets are repelled from walls so boundaries do not decide a run.
   Season 2's arcs (every static target the same size) come from the same instinct.
 - **One knob per behaviour.** Targets share a jump velocity and differ in gravity, so jump
-  height and hang time vary together and predictably. Hopper's bands step gravity alone.
+  height and hang time vary together and predictably. Antigrav's bands step gravity alone.
 - **Kill time is a difficulty lever.** DotTS's longer time to kill separates it from
-  Pokeball's. Finisher and Mender use it the same way.
+  Pokeball's. bruTeS and Mender use it the same way.
 - **Accuracy pressure without an accuracy multiplier.** Voltaic uses square-root accuracy
   scoring where "every shot matters", and a reload economy (a miss on ww5t Intermediate costs
   30% of the magazine) where speed matters. Season 2 uses neither: in a match decided on a
@@ -166,7 +166,7 @@ the three flying families are built on, is over-predicted at every tier, by 0.14
 0.90 logit at the median for Novice, Intermediate and Advanced (`residualsAtMedian` in the
 model file). Flying targets as a group are not: across all 41 in the tracking class the
 mean miss is +0.12 with a spread of 0.66, and 21 are over-predicted, which is no more than
-chance (`fliers` in the model file). A flag for flying targets was tried and made the fit worse at the median. So nothing is corrected, and Lift, Loop and Wasp are named as the thresholds
+chance (`fliers` in the model file). A flag for flying targets was tried and made the fit worse at the median. So nothing is corrected, and Blastoff, Orbit and UFO are named as the thresholds
 likeliest to be set too high.
 
 Two findings shaped how the model is used.
@@ -182,7 +182,7 @@ Two findings shaped how the model is used.
 How sharply a target turns matters to tracking and is in the file: seconds to reach full
 speed, `MaxSpeed / Acceleration`. Without it tracking's error at the top 5% and the median is
 0.455 and 0.440; with it, 0.395 and 0.399. It is also what lets the model tell Glide's
-gentle reversals from Duel's sharp ones.
+gentle reversals from Pong's sharp ones.
 
 Which bot is "the target" is a judgement the reader makes, and it once made it wrongly:
 Revosect's Pasu fills its arena with small helper bots that push targets off the walls, as
@@ -218,7 +218,7 @@ moving families carry the wider error.
 ## What only playing can answer
 
 - **Feel.** Whether Glide's reversals read as smooth or sluggish, whether Feint's jukes feel
-  fair, whether Hopper's arcs are satisfying. The file cannot say, and neither can a board.
+  fair, whether Antigrav's arcs are satisfying. The file cannot say, and neither can a board.
 - **Band spacing.** The model sees only small differences between switching bands (about 1%
   per band at the median for still targets). Thresholds still rise across bands, because each
   band grades stricter percentiles, but whether an Advanced player feels the step needs play.

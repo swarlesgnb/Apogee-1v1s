@@ -1,5 +1,5 @@
 /**
- * Season 2: thirty-six authored families, six per category, four bands each.
+ * Season 2: forty authored families, six to nine per category, four bands each.
  *
  * Every family is one idea about what to train, stated in the units a player feels - how
  * big a target looks, how fast it crosses the view, how long before it turns, how long it
@@ -26,8 +26,11 @@
 
 import {
   cloneProfile,
+  importProfile,
   prune,
   renameCharacterInMap,
+  setAddedBots,
+  type BotSpawn,
   setBots,
   setHead,
   setProfile,
@@ -58,6 +61,8 @@ export const TEMPLATES = {
   airTrack: "VT Aether Novice S5",
   groundSwitch: "VT DriftTS Novice S5",
   airSwitch: "VT EddieTS Novice S5",
+  // The real thing for skeeTS: targets thrown by a movement ability, not walked.
+  skeet: "Skeet Tracking",
 } as const;
 export type TemplateKey = keyof typeof TEMPLATES;
 
@@ -81,8 +86,23 @@ export interface Family {
    * players already play it. Anything not declared here is held to the popular range.
    */
   exceeds?: Array<{ quantity: "target size (deg)" | "angular speed (deg/s)" | "reversal period (s)"; why: string }>;
-  build: (sce: Sce, band: Band) => void;
+  /**
+   * The board model's class when it is not the category's own. LosTS is evasive switching
+   * with one target alive at a time, which the model, reasonably, reads as tracking.
+   */
+  modelClass?: "click" | "track" | "switch";
+  /**
+   * A scenario with a real board whose physics this family shares closely enough that its
+   * board, moved by the model for what differs, predicts better than the pooled fit does.
+   * skeeTS is Skeet Tracking's mechanism; the pooled model misreads thrown targets (Skeet
+   * Tracking is among its worst switching misses), and the sibling board does not.
+   */
+  anchor?: string;
+  build: (sce: Sce, band: Band, lib: Library) => void;
 }
+
+/** The other templates, for a recipe that needs a profile its own template lacks. */
+export type Library = (template: TemplateKey) => Sce;
 
 // ---- units ------------------------------------------------------------------------------
 
@@ -111,7 +131,11 @@ function head(sce: Sce, f: Family, band: Band, extra: Values, description: strin
     ScoreMultAccuracy: false,
     MultSqrtAcc: false,
     ScorePerDamage: 0,
-    SearchTags: `Apogee, Apogee Season 2, ${f.category}, ${BANDS[band]}`,
+    // 3.7 files tag with SearchTags; older ones (Skeet Tracking, 3.1) with GameTag and
+    // AuthorsTag. Whichever the template carries.
+    ...(get(sce.head, "SearchTags") !== undefined
+      ? { SearchTags: `Apogee, Apogee Season 2, ${f.category}, ${BANDS[band]}` }
+      : { GameTag: `Apogee Season 2, ${f.category}, ${BANDS[band]}`, AuthorsTag: "Apogee" }),
     DifficultyTag: band + 1,
     Description: `${description}[nl][nl]Apogee Season 2, ${f.category}, ${BANDS[band]}. ${f.focus}`,
     ...extra,
@@ -126,7 +150,7 @@ export function scenarioName(f: Family, band: Band): string {
  * One bot the recipe owns, cloned from the template's first bot, its character and one
  * dodge profile, and renamed so nothing of the template's naming survives in the file.
  */
-function ownBot(sce: Sce, tag: string): { bot: string; character: string; dodge: string } {
+function ownBot(sce: Sce, tag: string, keepAbilities = false): { bot: string; character: string; dodge: string } {
   const firstBot = profile(sce, "Bot Profile", firstAddedBot(sce));
   if (!firstBot) throw new Error("template has no bot to clone");
   const fromBot = get(firstBot.lines, "Name")!;
@@ -140,7 +164,7 @@ function ownBot(sce: Sce, tag: string): { bot: string; character: string; dodge:
   // No abilities. Voltaic's Ground bots carry a blink - a teleport on a timer - which is
   // right for their reactive scenarios and wrong for most of these; the families that want
   // an interruption get it from their movement, where the file states it.
-  setProfile(sce, "Character Profile", character, { AbilityProfileNames: ";;;" });
+  if (!keepAbilities) setProfile(sce, "Character Profile", character, { AbilityProfileNames: ";;;" });
   // The template's map may admit only its own character at the bot spawns ("Head",
   // "Drifter"); the renamed one has to be admitted in its place.
   renameCharacterInMap(sce, fromChar, character);
@@ -224,8 +248,9 @@ function roomAround(spawns: Vec[], margin = 64) {
   };
 }
 
-function fixedTargets(sce: Sce, f: Family, band: Band, spawns: Vec[]): void {
-  setRoom(sce, { ...roomAround(spawns), spawns }, `Apogee ${f.name} ${BANDS[band]}.json`);
+function fixedTargets(sce: Sce, f: Family, band: Band, spawns: Array<Vec | BotSpawn>): void {
+  const points = spawns.map((x) => ("at" in x ? x.at : x));
+  setRoom(sce, { ...roomAround(points), spawns }, `Apogee ${f.name} ${BANDS[band]}.json`);
   setHead(sce, { MapScale: SCALE });
 }
 
@@ -276,6 +301,13 @@ interface MovingClickSpec {
   upDown?: [number, number] | null;
   hits?: number;
   range?: number;
+  /** Flies: no gravity, and rises and falls on its own toggle instead of hopping. */
+  flyer?: boolean;
+  /**
+   * Straight runs that turn only at the walls: instant acceleration, no gravity, no hops,
+   * no forward/back and no held distance, the way Floating Heads Timing 400% moves.
+   */
+  bounce?: boolean;
 }
 
 function movingClick(f: Family, spec: MovingClickSpec, description: string) {
@@ -308,9 +340,219 @@ function movingClick(f: Family, spec: MovingClickSpec, description: string) {
       dodgeValues.JumpFrequency = 0;
       setProfile(sce, "Character Profile", character, { Gravity: 0 });
     }
+    if (spec.flyer) {
+      setProfile(sce, "Character Profile", character, { IsFlyer: true, Gravity: 0, FlightVelocityUp: speedFor(speed, range) * 0.8, FlightVelocityDown: speedFor(speed, range) * 0.8 });
+      dodgeValues.JumpFrequency = 0;
+    }
+    if (spec.bounce) {
+      setProfile(sce, "Character Profile", character, { BounceOffWalls: true, Acceleration: 100000, Gravity: 0 });
+      Object.assign(dodgeValues, { ToggleForwardBack: false, JumpFrequency: 0, MinTargetDistance: 1, MaxTargetDistance: 100000 });
+    }
     setProfile(sce, "Dodge Profile", dodge, dodgeValues);
     setBots(sce, [{ bot, count: spec.alive }]);
     head(sce, f, band, { ScorePerKill: 10, ScorePerHit: 0, AimTypeTag: "Clicking", AimSubTypeTag: "Dynamic" }, description);
+    finish(sce);
+  };
+}
+
+// ---- clicking on paths -------------------------------------------------------------------------
+
+interface PathSpec {
+  deg: number;
+  speed: number;
+  range: number;
+  /** The routes, in degrees off the line of sight, for this band. */
+  routes: (band: Band) => Array<{ points: Array<[number, number]>; looping: boolean }>;
+  alive: number;
+}
+
+/**
+ * Targets that walk authored routes: straight lanes for Shooting Stars, inward spirals for
+ * Gravity Well. The route is a chain of waypoints in a generated room; the bot flies, turns
+ * instantly, and its dodge profile hands movement to the waypoints
+ * (`WaypointLogic=FollowAimAtTarget`) with sideways and forward/back dodging off - the
+ * set-up ZipTrack - THE FINALS moves its targets with.
+ */
+function pathClick(f: Family, spec: PathSpec, description: string) {
+  return (sce: Sce, band: Band) => {
+    const deg = step(spec.deg, SIZE, band);
+    const speed = step(spec.speed, SPEED, band);
+    const { bot, character, dodge } = ownBot(sce, f.name);
+    const maxSpeed = speedFor(speed, spec.range);
+    setProfile(sce, "Character Profile", character, {
+      MainBBRadius: radiusFor(deg, spec.range),
+      MainBBHeight: 2 * radiusFor(deg, spec.range),
+      MaxSpeed: maxSpeed,
+      Acceleration: 100000,
+      Friction: 100000,
+      Gravity: 0,
+      IsFlyer: true,
+      FlightVelocityUp: maxSpeed,
+      FlightVelocityDown: maxSpeed,
+      MaxHealth: 1,
+    });
+    setProfile(sce, "Dodge Profile", dodge, {
+      ToggleLeftRight: false,
+      ToggleForwardBack: false,
+      JumpFrequency: 0,
+      MinTargetDistance: 1,
+      MaxTargetDistance: 100000,
+      WaypointLogic: "FollowAimAtTarget",
+      WaypointTurnRate: 100000,
+    });
+    const waypoints: Array<{ name: string; at: Vec }> = [];
+    const spawns: BotSpawn[] = [];
+    spec.routes(band).forEach((route, r) => {
+      const names = route.points.map((_, i) => `${f.name} ${r + 1}-${i + 1}`);
+      route.points.forEach(([yaw, pitch], i) => waypoints.push({ name: names[i], at: arc(spec.range, [yaw], [pitch])[0] }));
+      spawns.push({ at: arc(spec.range, [route.points[0][0]], [route.points[0][1]])[0], path: names, looping: route.looping });
+    });
+    const all = [...spawns.map((x) => x.at), ...waypoints.map((w) => w.at)];
+    setRoom(sce, { ...roomAround(all), spawns, waypoints }, `Apogee ${f.name} ${BANDS[band]}.json`);
+    setHead(sce, { MapScale: SCALE });
+    setBots(sce, [{ bot, count: spec.alive }]);
+    head(sce, f, band, { ScorePerKill: 10, ScorePerHit: 0, AimTypeTag: "Clicking", AimSubTypeTag: "Dynamic" }, description);
+    finish(sce);
+  };
+}
+
+/** Straight lanes across the view, alternating direction, each with a little rise or fall. */
+function lanes(count: number, halfWidth: number, pitchSpan: number, slope: number) {
+  return () =>
+    span(-pitchSpan, pitchSpan, count).map((pitch, i) => {
+      const dir = i % 2 === 0 ? 1 : -1;
+      const rise = (i % 3 === 0 ? 1 : i % 3 === 1 ? -1 : 0.5) * slope;
+      // Every lane starts at its own height and rises or falls toward the far side: starting
+      // lanes off-centre by half their rise put two same-side starts 0.18 degrees apart.
+      return {
+        points: [[-halfWidth * dir, pitch], [halfWidth * dir, pitch + rise]] as Array<[number, number]>,
+        looping: true,
+      };
+    });
+}
+
+/** Spirals from a ring of radius `outer` degrees in to `inner`, one per start angle. */
+function spirals(count: number, outer: number, inner: number, turns: number, stepsPerTurn = 12) {
+  return () =>
+    Array.from({ length: count }, (_, k) => {
+      const start = (2 * Math.PI * k) / count;
+      const n = Math.round(turns * stepsPerTurn);
+      const points: Array<[number, number]> = [];
+      for (let j = 0; j <= n; j++) {
+        const t = j / n;
+        const r = outer + (inner - outer) * t;
+        const a = start + 2 * Math.PI * turns * t;
+        points.push([r * Math.cos(a), r * Math.sin(a)]);
+      }
+      return { points, looping: false };
+    });
+}
+
+// ---- constellations -------------------------------------------------------------------------------
+
+/**
+ * Seven stars of each, by right ascension (hours) and declination (degrees), J2000, to
+ * about an arcminute - near enough that the shape on screen is the shape in the sky. Every
+ * constellation has seven so every wave fills the same seven slots.
+ */
+const CONSTELLATIONS: Array<{ name: string; stars: Array<[number, number]> }> = [
+  { name: "Big Dipper", stars: [[11.062, 61.75], [11.031, 56.38], [11.897, 53.69], [12.257, 57.03], [12.9, 55.96], [13.399, 54.93], [13.792, 49.31]] },
+  { name: "Little Dipper", stars: [[2.53, 89.26], [17.537, 86.59], [16.766, 82.04], [15.734, 77.79], [16.292, 75.76], [15.345, 71.83], [14.845, 74.16]] },
+  { name: "Orion", stars: [[5.919, 7.41], [5.419, 6.35], [5.533, -0.3], [5.603, -1.2], [5.679, -1.94], [5.796, -9.67], [5.242, -8.2]] },
+  { name: "Cassiopeia", stars: [[0.153, 59.15], [0.675, 56.54], [0.945, 60.72], [1.43, 60.24], [1.907, 63.67], [0.818, 57.82], [0.55, 62.93]] },
+  { name: "Cygnus", stars: [[20.69, 45.28], [20.37, 40.26], [20.77, 33.97], [19.75, 45.13], [19.512, 27.96], [19.938, 35.08], [21.216, 30.23]] },
+  { name: "Leo", stars: [[10.139, 11.97], [10.122, 16.76], [10.333, 19.84], [10.278, 23.42], [9.764, 23.77], [11.235, 20.52], [11.818, 14.57]] },
+];
+
+/**
+ * Gnomonic projection about each constellation's centre, flipped so east is on the left
+ * as it is looking up, then scaled so the constellation fills a field `halfWidth` by
+ * `halfHeight` degrees. Returns [yaw, pitch] per star.
+ */
+export function projectConstellation(stars: Array<[number, number]>, halfWidth: number, halfHeight: number): Array<[number, number]> {
+  const v = stars.map(([h, d]) => {
+    const ra = (h * 15 * Math.PI) / 180, dec = (d * Math.PI) / 180;
+    return [Math.cos(dec) * Math.cos(ra), Math.cos(dec) * Math.sin(ra), Math.sin(dec)];
+  });
+  const c = [0, 1, 2].map((i) => v.reduce((a, x) => a + x[i], 0));
+  const len = Math.hypot(c[0], c[1], c[2]);
+  const ra0 = Math.atan2(c[1], c[0]), dec0 = Math.asin(c[2] / len);
+  const flat = stars.map(([h, d]) => {
+    const ra = (h * 15 * Math.PI) / 180, dec = (d * Math.PI) / 180;
+    const cosc = Math.sin(dec0) * Math.sin(dec) + Math.cos(dec0) * Math.cos(dec) * Math.cos(ra - ra0);
+    const x = (Math.cos(dec) * Math.sin(ra - ra0)) / cosc;
+    const y = (Math.cos(dec0) * Math.sin(dec) - Math.sin(dec0) * Math.cos(dec) * Math.cos(ra - ra0)) / cosc;
+    return [-x, y];
+  });
+  const cx = (Math.max(...flat.map((p) => p[0])) + Math.min(...flat.map((p) => p[0]))) / 2;
+  const cy = (Math.max(...flat.map((p) => p[1])) + Math.min(...flat.map((p) => p[1]))) / 2;
+  const w = Math.max(...flat.map((p) => Math.abs(p[0] - cx))) || 1;
+  const h = Math.max(...flat.map((p) => Math.abs(p[1] - cy))) || 1;
+  const k = Math.min(halfWidth / w, halfHeight / h);
+  return flat.map(([x, y]) => [(x - cx) * k, (y - cy) * k]);
+}
+
+interface ConstellationSpec {
+  deg: number;
+  halfWidth: number;
+  halfHeight: number;
+}
+
+/**
+ * Real constellations, one wave at a time: every star of one is up at once, and the next
+ * appears when the last star of this one falls.
+ *
+ * The mechanism is Revosect's StrawberryClick's, whose description says it outright
+ * ("after killing 3 big bots, 6 smaller bots will spawn"): every bot is in SpawnGroup 1,
+ * so the group respawns only when all of it is dead, and each of the seven slots is a
+ * fixed-order Bot Rotation Profile - star 1 of the Big Dipper, then star 1 of the Little
+ * Dipper, and so on - so the slots advance together. Each star's bot has its own character,
+ * admitted by only its own spawn point, which pins it to its place in the shape. A static
+ * template has no rotation profile, so one is imported from Voltaic's Ground.
+ */
+function constellation(f: Family, spec: ConstellationSpec, description: string) {
+  return (sce: Sce, band: Band, lib: Library) => {
+    const range = 2048;
+    const deg = step(spec.deg, SIZE, band);
+    const { bot, character } = ownBot(sce, f.name);
+    setProfile(sce, "Character Profile", character, { MainBBRadius: radiusFor(deg, range), MainBBHeight: 2 * radiusFor(deg, range), MaxHealth: 1, MaxSpeed: 0, Gravity: 0 });
+    setProfile(sce, "Bot Profile", bot, { SpawnGroup: 1, UseMinimumRespawnTime: true });
+    const slots = CONSTELLATIONS[0].stars.length;
+    const members: string[][] = Array.from({ length: slots }, () => []);
+    const spawns: BotSpawn[] = [];
+    for (const c of CONSTELLATIONS) {
+      const at = projectConstellation(c.stars, spec.halfWidth, spec.halfHeight);
+      at.forEach(([yaw, pitch], i) => {
+        const star = `Apogee ${c.name} ${i + 1}`;
+        cloneProfile(sce, "Character Profile", character, `${star} Body`);
+        cloneProfile(sce, "Bot Profile", bot, star);
+        setProfile(sce, "Bot Profile", star, { CharacterProfile: `${star} Body` });
+        members[i].push(star);
+        spawns.push({ at: arc(range, [yaw], [pitch])[0], admits: `${star} Body` });
+      });
+    }
+    const ground = lib("groundTrack");
+    const rot = (list(get(ground.head, "AddedBots"))[0] ?? "").replace(/\.rot$/i, "");
+    const entries: string[] = [];
+    members.forEach((names, i) => {
+      const slot = `Apogee ${f.name} Slot ${i + 1}`;
+      const section = importProfile(sce, ground, "Bot Rotation Profile", rot, slot);
+      const values: Record<string, string> = {
+        ProfileNames: names.join(";"),
+        ProfileWeights: names.map(() => "1.0").join(";"),
+        Randomized: "false",
+        AllowRepeatEntries: "true",
+      };
+      for (const [k, v] of Object.entries(values)) {
+        const line = section.lines.find((l) => l.key === k);
+        if (!line) throw new Error(`rotation profile has no ${k}`);
+        line.value = v;
+      }
+      entries.push(`${slot}.rot`);
+    });
+    fixedTargets(sce, f, band, spawns);
+    setAddedBots(sce, entries);
+    head(sce, f, band, { ScorePerKill: 10, ScorePerHit: 0, AimTypeTag: "Clicking", AimSubTypeTag: "Static" }, description);
     finish(sce);
   };
 }
@@ -360,6 +602,12 @@ interface TrackSpec {
   jump?: { frequency: number; velocity: number; gravity: number };
   /** The bot turns within this window after being hit, [min, max] seconds, ignoring the given share. */
   juke?: { delay: [number, number]; ignore: number };
+  /**
+   * Now and then, stop dead: a second dodge profile that barely moves and waits `pause`
+   * seconds between moves, switched to at random for `share` of the profile changes, which
+   * come every `every` seconds.
+   */
+  hold?: { pause: [number, number]; every: [number, number]; share: number };
 }
 
 function track(f: Family, spec: TrackSpec, description: string, sub: "Precise" | "Reactive") {
@@ -417,6 +665,23 @@ function track(f: Family, spec: TrackSpec, description: string, sub: "Precise" |
       d.DamageReactionCooldown = 0.6;
     }
     setProfile(sce, "Dodge Profile", dodge, d);
+    if (spec.hold) {
+      const hold = `Apogee ${f.name} Hold`;
+      cloneProfile(sce, "Dodge Profile", dodge, hold);
+      setProfile(sce, "Dodge Profile", hold, {
+        MinLRTimeChange: 0.02,
+        MaxLRTimeChange: 0.04,
+        StrafeSwapMinPause: spec.hold.pause[0],
+        StrafeSwapMaxPause: spec.hold.pause[1],
+      });
+      setProfile(sce, "Bot Profile", bot, {
+        DodgeProfileNames: `${dodge};${hold}`,
+        DodgeProfileWeights: `${(1 - spec.hold.share).toFixed(2)};${spec.hold.share.toFixed(2)}`,
+        DodgeProfileMinChangeTime: spec.hold.every[0],
+        DodgeProfileMaxChangeTime: spec.hold.every[1],
+        RandomizeDodgeProfiles: true,
+      });
+    }
     setBots(sce, [{ bot, count: 1 }]);
     head(sce, f, band, { ScorePerKill: 0, ScorePerHit: 1, AimTypeTag: "Tracking", AimSubTypeTag: sub }, description);
     finish(sce);
@@ -440,6 +705,14 @@ interface SwitchSpec {
   upDown?: [number, number];
   /** Health regained per second while not being hit, as a share of max health. */
   regen?: { perSecond: number; delay: number };
+  /** Seconds to full speed; longer turns reversals into curves. Default a quarter second. */
+  ramp?: number;
+  /**
+   * Move in a generated open room rather than the template's arena. DriftTS's arena has a
+   * solid box round the player about 1,150 units out, and targets held closer than that
+   * pressed against it and stuck - Brawl's did, at 900-1,100.
+   */
+  openRoom?: boolean;
 }
 
 function switching(f: Family, spec: SwitchSpec, description: string, sub: "Speed" | "Evasive") {
@@ -462,7 +735,7 @@ function switching(f: Family, spec: SwitchSpec, description: string, sub: "Speed
       HealthRegenPerSec: spec.regen ? health * spec.regen.perSecond : 0,
       HealthRegenDelay: spec.regen ? spec.regen.delay : 0,
     };
-    if (maxSpeed > 0) chr.Acceleration = maxSpeed * 4;
+    if (maxSpeed > 0) chr.Acceleration = maxSpeed / (spec.ramp ?? 0.25);
     // Without a jump the targets hold the height they spawned at: fixed targets must not
     // sink, and strafing ones should stay on the plane they were placed in.
     chr.Gravity = spec.jump ? spec.jump.gravity : 0;
@@ -487,9 +760,54 @@ function switching(f: Family, spec: SwitchSpec, description: string, sub: "Speed
     if (spec.speed === 0) {
       setProfile(sce, "Bot Profile", bot, { NoDodging: true });
       fixedTargets(sce, f, band, arc(spec.range, spec.field!.yaws, spec.field!.pitches));
+    } else if (spec.openRoom) {
+      // Spawns on a ring at the held range; a wide margin so strafing never reaches a wall.
+      const ringSpawns = arc(spec.range, span(-40, 40, 9), [-6, 0, 6]);
+      setRoom(sce, { ...roomAround(ringSpawns, 900), spawns: ringSpawns }, `Apogee ${f.name} ${BANDS[band]}.json`);
+      setHead(sce, { MapScale: SCALE });
     }
     setBots(sce, [{ bot, count: spec.alive }]);
     head(sce, f, band, { ScorePerKill: 0, ScorePerHit: 1, AimTypeTag: "Target Switching", AimSubTypeTag: sub }, description);
+    finish(sce);
+  };
+}
+
+// ---- skeet ------------------------------------------------------------------------------------
+
+interface SkeetSpec {
+  alive: number;
+  deg: number;
+  ttk: number;
+  /** Skeet Tracking's own field: its targets fly about 960 units out (validate:sce's reader). */
+  range: number;
+}
+
+/**
+ * Clay pigeons: Skeet Tracking's targets have no walking speed at all and are thrown by a
+ * movement ability - sideways along their strafe, and up - every couple of seconds, and
+ * gravity draws the arc. The ability is kept (it is the scenario); its throw grows by the
+ * speed step each band, and the kill time is set, as for every switching family, through
+ * health against a 100-shots-a-second gun.
+ */
+function skeet(f: Family, spec: SkeetSpec, description: string) {
+  return (sce: Sce, band: Band) => {
+    const deg = step(spec.deg, SIZE, band);
+    const { bot, character } = ownBot(sce, f.name, true);
+    const weapon = weaponOf(sce);
+    setProfile(sce, "Weapon Profile", weapon, { DamagePerShot: 1, TimeBetweenShots: 0.01 });
+    setProfile(sce, "Character Profile", character, {
+      MainBBRadius: radiusFor(deg, spec.range),
+      MainBBHeight: 2 * radiusFor(deg, spec.range),
+      MaxHealth: spec.ttk / 0.01,
+    });
+    const ability = list(get(profile(sce, "Character Profile", character)!.lines, "AbilityProfileNames"))[0]?.replace(/\.abil\w+$/i, "");
+    if (ability) {
+      const a = profile(sce, "Movement Ability Profile", ability)!;
+      const k = Math.pow(SPEED, band);
+      setProfile(sce, "Movement Ability Profile", ability, { MainVelocity: Number(get(a.lines, "MainVelocity")) * k, UpVelocity: Number(get(a.lines, "UpVelocity")) * k });
+    }
+    setBots(sce, [{ bot, count: spec.alive }]);
+    head(sce, f, band, { ScorePerKill: 0, ScorePerHit: 1, ScorePerDamage: 0, AimTypeTag: "Target Switching", AimSubTypeTag: "Evasive" }, description);
     finish(sce);
   };
 }
@@ -520,12 +838,12 @@ export const FAMILIES: Family[] = [
   // ---- Static Clicking
   family(
     {
-      name: "Meridian", category: "Static Clicking", subCategory: "Static Clicking", template: "staticClick", arm: "Wrist",
-      focus: "Flick sideways and stop dead; every target sits on one level.",
+      name: "Galaga", category: "Static Clicking", subCategory: "Static Clicking", template: "staticClick", arm: "Wrist",
+      focus: "Five targets on one level; flick sideways and stop dead.",
       why: "Horizontal flicks isolated. Wide Wall and 1w3ts mix both axes, so a player who over-travels sideways and one who under-travels vertically get the same score and no hint which they are.",
       learnsFrom: ["Wide Wall 3 Targets", "VT 1w3ts Intermediate S5"],
     },
-    (f) => staticClick(f, { alive: 3, deg: 1.6, yaws: ring(5, 30, 6), pitches: [-2, 0, 2] }, "Three targets on one horizontal band. One click each."),
+    (f) => staticClick(f, { alive: 5, deg: 1.6, yaws: ring(3, 32, 8), pitches: [-2, 0, 2] }, "Five targets on one horizontal band. One click each."),
   ),
   family(
     {
@@ -547,21 +865,21 @@ export const FAMILIES: Family[] = [
   ),
   family(
     {
-      name: "Horizon", category: "Static Clicking", subCategory: "Static Clicking", template: "staticClick", arm: "Arm",
-      focus: "Big flicks across the room; commit to the distance and stop on the target.",
-      why: "Large-amplitude flicks, which small-field scenarios never ask for. Targets are larger to keep the index of difficulty in the same range as the rest of the category.",
+      name: "Invaders", category: "Static Clicking", subCategory: "Static Clicking", template: "staticClick", arm: "Arm",
+      focus: "A wide formation; big flicks across it, in both directions.",
+      why: "Large-amplitude flicks over a wide two-dimensional formation, where Galaga keeps to one line. Targets are larger to keep the index of difficulty in the same range as the rest of the category.",
       learnsFrom: ["Odd-Angleshot Avasive", "ww6t Avasive Easier"],
     },
-    (f) => staticClick(f, { alive: 3, deg: 2.2, yaws: ring(18, 45, 6), pitches: span(-10, 10, 5) }, "Three targets spread wide across the room. One click each."),
+    (f) => staticClick(f, { alive: 4, deg: 2.2, yaws: span(-44, 44, 12), pitches: span(-12, 12, 4) }, "Four targets in a wide formation. One click each."),
   ),
   family(
     {
       name: "Constellation", category: "Static Clicking", subCategory: "Static Clicking", template: "staticClick", arm: "Wrist",
-      focus: "Five targets up at once; keep a rhythm and take the nearest one next.",
-      why: "The tempo of 1wall 6targets small and Tile Frenzy (1.29 million and 0.74 million players, data/fun_audit.json), on a field where every target is the same distance away.",
-      learnsFrom: ["1wall 6targets small", "Tile Frenzy", "1wall6targets TE"],
+      focus: "Clear the whole constellation; the next one appears when its last star falls.",
+      why: "Real star patterns as waves - the Big Dipper, the Little Dipper, Orion, Cassiopeia, Cygnus, Leo - seven stars each, so every wave is a route to plan as well as seven flicks to make.",
+      learnsFrom: ["StrawberryClick Revosect Int", "1wall 6targets small"],
     },
-    (f) => staticClick(f, { alive: 5, deg: 1.9, yaws: span(-20, 20, 9), pitches: span(-12, 12, 7) }, "Five targets alive at once in a medium field. One click each."),
+    (f) => constellation(f, { deg: 1.7, halfWidth: 22, halfHeight: 14 }, "Real constellations, seven stars at a time. Clear one and the next appears."),
   ),
   family(
     {
@@ -572,11 +890,20 @@ export const FAMILIES: Family[] = [
     },
     (f) => staticClick(f, { alive: 3, deg: 2.2, yaws: span(-22, 22, 8), pitches: span(-11, 11, 5), depthRing: 2, range: 1400 }, "Three targets on two rings, near and far. One click each."),
   ),
+  family(
+    {
+      name: "Nebula", category: "Static Clicking", subCategory: "Static Clicking", template: "staticClick", arm: "Wrist",
+      focus: "Six small targets up at once; take the nearest, keep the rhythm.",
+      why: "The 1wall 6targets shape - the most-played static scenario measured, 1.29 million players (data/fun_audit.json) - at every band, so the category always has a six-target scenario.",
+      learnsFrom: ["1wall 6targets small", "1wall6targets TE"],
+    },
+    (f) => staticClick(f, { alive: 6, deg: 1.5, yaws: span(-18, 18, 10), pitches: span(-11, 11, 7) }, "Six small targets alive at once. One click each."),
+  ),
 
   // ---- Dynamic Clicking
   family(
     {
-      name: "Drift", category: "Dynamic Clicking", subCategory: "Dynamic Clicking", template: "movingClick", arm: "Wrist",
+      name: "Gravclick", category: "Dynamic Clicking", subCategory: "Dynamic Clicking", template: "movingClick", arm: "Wrist",
       focus: "Slow floaters; match their drift for a moment, then click.",
       why: "The entry to moving targets: slow, long-lived paths that reward confirming the shot rather than guessing it. Floating Heads Timing 400% has the most players of any dynamic-clicking scenario in data/fun_audit.json (352,281).",
       learnsFrom: ["Floating Heads Timing 400%", "VT Floating Heads Novice S5"],
@@ -590,11 +917,11 @@ export const FAMILIES: Family[] = [
       why: "Pasu's long horizontal strafes with a predictable reversal, kept on one height so the skill is horizontal timing alone.",
       learnsFrom: ["1wall5targets_pasu", "VT Pasu Novice S5"],
     },
-    (f) => movingClick(f, { alive: 3, deg: 2.2, speed: 22, strafe: [1.4, 2.0], upDown: null }, "Three targets swinging side to side. One click each."),
+    (f) => movingClick(f, { alive: 4, deg: 2.2, speed: 22, strafe: [1.4, 2.0], upDown: null }, "Four targets swinging side to side. One click each."),
   ),
   family(
     {
-      name: "Hopper", category: "Dynamic Clicking", subCategory: "Dynamic Clicking", template: "bounceClick", arm: "Wrist",
+      name: "Antigrav", category: "Dynamic Clicking", subCategory: "Dynamic Clicking", template: "bounceClick", arm: "Wrist",
       focus: "Read the arc; the top of the bounce is the slowest moment.",
       why: "Gravity arcs. A bot under gravity is the one design feature that goes with both more replay and more reach (Spearman +0.10 and +0.13 over 614 catalogued scenarios): small, but the only positive signal on both.",
       learnsFrom: ["VT Popcorn Novice S5", "VT Bounceshot Intermediate"],
@@ -603,10 +930,10 @@ export const FAMILIES: Family[] = [
   ),
   family(
     {
-      name: "Jitter", category: "Dynamic Clicking", subCategory: "Dynamic Clicking", template: "movingClick", arm: "Fingertip",
+      name: "Electric", category: "Dynamic Clicking", subCategory: "Dynamic Clicking", template: "movingClick", arm: "Fingertip",
       exceeds: [{
         quantity: "reversal period (s)",
-        why: "Twitching is the idea: reversals faster than any clicking scenario with 20,000 players. It is not new ground - cA 5ts vibrate (11,339 players) reverses every 0.14 s at 1.9 degrees a second and Microshot Avasive (18,028) every 0.68 s at 3.8 - and Jitter moves a little faster than either, from 7.5 degrees a second at Novice.",
+        why: "Twitching is the idea: reversals faster than any clicking scenario with 20,000 players. It is not new ground - cA 5ts vibrate (11,339 players) reverses every 0.14 s at 1.9 degrees a second and Microshot Avasive (18,028) every 0.68 s at 3.8 - and Electric moves a little faster than either, from 7.5 degrees a second at Novice.",
       }],
       focus: "Short, erratic twitches; stay with the target instead of chasing its last position.",
       why: "Reactive micro-clicking: short strafes at low speed, so the target never travels far but never holds still either.",
@@ -621,16 +948,47 @@ export const FAMILIES: Family[] = [
       why: "High-speed dynamic clicks. Speed is the other axis of difficulty besides size: at the board median the fitted model prices a doubling of angular speed, 20 to 40 degrees a second, at about half a bit of Fitts difficulty (0.55).",
       learnsFrom: ["VT Pasu Intermediate S5", "Aimerz+ pipeClick Easy S1"],
     },
-    (f) => movingClick(f, { alive: 3, deg: 2.6, speed: 34, strafe: [2, 3], upDown: [2, 3] }, "Three fast targets crossing the view. One click each."),
+    (f) => movingClick(f, { alive: 2, deg: 2.6, speed: 34, strafe: [2, 3], upDown: [2, 3] }, "Two fast targets crossing the view. One click each."),
   ),
   family(
     {
-      name: "Triplet", category: "Dynamic Clicking", subCategory: "Dynamic Clicking", template: "movingClick", arm: "Wrist",
-      focus: "Three hits to kill; keep matching the movement between clicks.",
-      why: "Multi-click confirmation on a moving target, which one-hit scenarios never ask for: a miss on the second click is a lost rhythm, not a lost target.",
-      learnsFrom: ["VT Popcorn Intermediate S5", "Tamspeed 2bp Iron"],
+      name: "Shooting Stars", category: "Dynamic Clicking", subCategory: "Dynamic Clicking", template: "movingClick", arm: "Wrist",
+      focus: "Straight lines across the sky; lead nothing, match the line and click.",
+      why: "Linear motion, the Floating Heads idea made exact: every target runs a straight lane from one side of the view to the other and back, rising or falling a little on the way, so the path is readable at a glance and the only question is timing.",
+      learnsFrom: ["Floating Heads Timing 400%", "Star Clicking 30% Larger"],
     },
-    (f) => movingClick(f, { alive: 3, deg: 2.1, speed: 14, strafe: [1.2, 2.4], hits: 3 }, "Three moving targets, three hits each."),
+    (f) => pathClick(f, { alive: 6, deg: 2.0, speed: 20, range: 2048, routes: lanes(12, 36, 16, 6) }, "Six targets running straight lanes back and forth. One click each."),
+  ),
+  family(
+    {
+      name: "Gravity Well", category: "Dynamic Clicking", subCategory: "Dynamic Clicking", template: "movingClick", arm: "Wrist",
+      focus: "They spiral in from the rim; catch them before they reach the middle.",
+      why: "Curved linear motion: each target enters on a ring round the centre of the view and spirals slowly inward, so the path is known and the angle of travel turns steadily - a read no strafing target gives.",
+      learnsFrom: ["Floating Heads Timing 400%", "psalmTS angelic click"],
+    },
+    (f) => pathClick(f, { alive: 6, deg: 2.0, speed: 14, range: 2048, routes: spirals(12, 24, 3, 1.25) }, "Targets spiral in from a ring toward the centre. One click each."),
+  ),
+  family(
+    {
+      name: "Meteor", category: "Dynamic Clicking", subCategory: "Dynamic Clicking", template: "movingClick", arm: "Wrist",
+      exceeds: [{
+        quantity: "reversal period (s)",
+        why: "The ten-second strafe timer is Floating Heads Timing 400%'s own (352,281 players, data/fun_audit.json), which the clicking peer set leaves out only because it scores per damage. It is set long so that it never fires: the targets turn at the walls, not on the timer.",
+      }],
+      focus: "Straight runs that only turn at the walls; time the click on the run.",
+      why: "Floating Heads Timing 400%'s motion itself: long straight runs at constant speed that reverse only off the arena's walls.",
+      learnsFrom: ["Floating Heads Timing 400%", "Floating Heads Timing 400% FIXED"],
+    },
+    (f) => movingClick(f, { alive: 6, deg: 1.8, speed: 16, strafe: [10, 10], upDown: null, bounce: true }, "Six targets gliding in straight lines, bouncing off the walls. One click each."),
+  ),
+  family(
+    {
+      name: "Satellite", category: "Dynamic Clicking", subCategory: "Dynamic Clicking", template: "movingClick", arm: "Arm",
+      focus: "Fliers circling you as they rise and fall; follow the orbit and click.",
+      why: "psalmTS's motion as a clicking task: targets strafe round the player on long, even runs while climbing and dropping, linear in each axis and curved together.",
+      learnsFrom: ["psalmTS angelic click", "VT psalmTS Novice"],
+    },
+    (f) => movingClick(f, { alive: 3, deg: 2.2, speed: 22, strafe: [3, 4], upDown: [1.2, 2.0], flyer: true }, "Three flying targets circling while rising and falling. One click each."),
   ),
 
   // ---- Precise Tracking
@@ -645,7 +1003,7 @@ export const FAMILIES: Family[] = [
   ),
   family(
     {
-      name: "Lift", category: "Precise Tracking", subCategory: "Precise Tracking", template: "airTrack", arm: "Wrist",
+      name: "Blastoff", category: "Precise Tracking", subCategory: "Precise Tracking", template: "airTrack", arm: "Wrist",
       focus: "Mostly up and down; keep the crosshair level with it through each turn.",
       why: "Vertical smoothness, which ground tracking barely tests. The target flies, turns vertically about as often as it strafes, and strafes slowly.",
       learnsFrom: ["Centering II 180 Intermediate", "VT Aether Novice S5"],
@@ -654,7 +1012,7 @@ export const FAMILIES: Family[] = [
   ),
   family(
     {
-      name: "Loop", category: "Precise Tracking", subCategory: "Precise Tracking", template: "airTrack", arm: "Arm",
+      name: "Orbit", category: "Precise Tracking", subCategory: "Precise Tracking", template: "airTrack", arm: "Arm",
       focus: "Curves in both directions; follow the path, do not cut its corners.",
       why: "Two-axis smooth tracking: horizontal and vertical reversals on similar clocks draw curves rather than lines.",
       learnsFrom: ["PGTI Voltaic Easy", "Smoothsphere Viscose Easier"],
@@ -681,7 +1039,7 @@ export const FAMILIES: Family[] = [
   ),
   family(
     {
-      name: "Orbit", category: "Precise Tracking", subCategory: "Precise Tracking", template: "groundTrack", arm: "Arm",
+      name: "AlienTrack", category: "Precise Tracking", subCategory: "Precise Tracking", template: "groundTrack", arm: "Arm",
       focus: "A close target sweeping wide; track with your arm, not only your wrist.",
       why: "Close range means large angular speed at a modest real speed: the arm-tracking demand Smoothbot and Close Long Strafes are played for.",
       learnsFrom: ["Close Long Strafes Invincible", "SYW (Smooth Your Wrist) FIXED"],
@@ -692,7 +1050,7 @@ export const FAMILIES: Family[] = [
   // ---- Reactive Tracking
   family(
     {
-      name: "Duel", category: "Reactive Tracking", subCategory: "Reactive Tracking", template: "groundTrack", arm: "Arm",
+      name: "Pong", category: "Reactive Tracking", subCategory: "Reactive Tracking", template: "groundTrack", arm: "Arm",
       focus: "Close, snappy strafes; react to the turn, do not predict it.",
       why: "The close-range strafe duel of Close Fast Strafes (117,749 players, 22.4 plays each, data/fun_audit.json).",
       learnsFrom: ["Close Fast Strafes Invincible", "VT Ground Novice S5"],
@@ -701,7 +1059,7 @@ export const FAMILIES: Family[] = [
   ),
   family(
     {
-      name: "Skirmish", category: "Reactive Tracking", subCategory: "Reactive Tracking", template: "groundTrack", arm: "Wrist",
+      name: "Pong3D", category: "Reactive Tracking", subCategory: "Reactive Tracking", template: "groundTrack", arm: "Wrist",
       focus: "Strafes and range changes; the target shrinks and grows as it moves.",
       why: "Mid-range reactive tracking with forward and back movement, so size and speed change under the player during a strafe.",
       learnsFrom: ["Ground Plaza Sparky V3", "VT Ground Intermediate S5"],
@@ -711,15 +1069,15 @@ export const FAMILIES: Family[] = [
   family(
     {
       name: "Stutter", category: "Reactive Tracking", subCategory: "Reactive Tracking", template: "groundTrack", arm: "Wrist",
-      focus: "It stops before it turns; stop with it.",
-      why: "Stop-start movement: a pause before each reversal punishes the player who keeps moving on momentum, a common reactive-tracking fault.",
+      focus: "It stops before it turns, and now and then stops dead for seconds; stop with it.",
+      why: "Stop-start movement: a pause before each reversal, and every so often a full stop of two to three seconds, punish the player who keeps moving on momentum, a common reactive-tracking fault.",
       learnsFrom: ["Flicker Plaza rAim Easy Less Blinks", "Leapstrafes Control wobin Easier"],
     },
-    (f) => track(f, { deg: 4.8, speed: 58, strafe: [0.4, 0.9], pause: [0.1, 0.35], range: 1150, rampSeconds: 0.08 }, "One target that pauses before each change of direction.", "Reactive"),
+    (f) => track(f, { deg: 4.8, speed: 58, strafe: [0.4, 0.9], pause: [0.1, 0.35], range: 1150, rampSeconds: 0.08, hold: { pause: [2, 3], every: [2.5, 4], share: 0.3 } }, "One target that pauses before each change of direction, and sometimes stops dead.", "Reactive"),
   ),
   family(
     {
-      name: "Aerial", category: "Reactive Tracking", subCategory: "Reactive Tracking", template: "groundTrack", arm: "Blending",
+      name: "Hover", category: "Reactive Tracking", subCategory: "Reactive Tracking", template: "groundTrack", arm: "Blending",
       focus: "Jumps and short strafes together; follow it up as well as across.",
       why: "Reactive tracking through the air, the pattern of Air Angelic 4, which nine of evxl's listed benchmarks use.",
       learnsFrom: ["Air Angelic 4 Voltaic", "Air Pure Intermediate"],
@@ -728,7 +1086,7 @@ export const FAMILIES: Family[] = [
   ),
   family(
     {
-      name: "Wasp", category: "Reactive Tracking", subCategory: "Reactive Tracking", template: "airTrack", arm: "Wrist",
+      name: "UFO", category: "Reactive Tracking", subCategory: "Reactive Tracking", template: "airTrack", arm: "Wrist",
       focus: "A flier changing direction on both axes; react on whichever one moves.",
       why: "Three-dimensional reactive tracking: short horizontal and vertical reversals on independent clocks.",
       learnsFrom: ["VT Aether Novice S5", "Air CELESTIAL No UFO Easy"],
@@ -748,7 +1106,7 @@ export const FAMILIES: Family[] = [
   // ---- Speed Switching
   family(
     {
-      name: "Relay", category: "Speed Switching", subCategory: "Speed Switching", template: "groundSwitch", arm: "Wrist",
+      name: "DNA", category: "Speed Switching", subCategory: "Speed Switching", template: "groundSwitch", arm: "Wrist",
       focus: "Kill, then move straight to the next; no pause between targets.",
       why: "The core speed-switching loop on still targets in a compact field: the time between targets is what the score measures.",
       learnsFrom: ["VT skyTS Novice", "beanTS"],
@@ -757,7 +1115,7 @@ export const FAMILIES: Family[] = [
   ),
   family(
     {
-      name: "Span", category: "Speed Switching", subCategory: "Speed Switching", template: "groundSwitch", arm: "Arm",
+      name: "CockpiTS", category: "Speed Switching", subCategory: "Speed Switching", template: "groundSwitch", arm: "Arm",
       focus: "Wide switches; land the flick, then hold.",
       why: "Speed switching across a wide field, where the flick between targets is most of the time spent.",
       learnsFrom: ["voxTS Viscose Varied", "VT DotTS Novice S5"],
@@ -775,7 +1133,7 @@ export const FAMILIES: Family[] = [
   ),
   family(
     {
-      name: "Cluster", category: "Speed Switching", subCategory: "Speed Switching", template: "groundSwitch", arm: "Fingertip",
+      name: "Asteroids", category: "Speed Switching", subCategory: "Speed Switching", template: "groundSwitch", arm: "Fingertip",
       focus: "Six small targets packed tight; short, exact moves.",
       why: "Precision switching: small targets and small moves, the micro side of speed switching.",
       learnsFrom: ["Pokeball Frenzy Auto Small Wide", "patCircleSwitch NR"],
@@ -784,16 +1142,16 @@ export const FAMILIES: Family[] = [
   ),
   family(
     {
-      name: "Drifters", category: "Speed Switching", subCategory: "Speed Switching", template: "airSwitch", arm: "Wrist",
-      focus: "Slow floaters; the switch is the skill, the tracking only has to be clean.",
-      why: "Speed switching on slow movers, the bridge to evasive switching: EddieTS (185,895 players on its Novice cut) at a gentler pace.",
+      name: "RockeTS", category: "Speed Switching", subCategory: "Speed Switching", template: "airSwitch", arm: "Wrist",
+      focus: "Slow floaters that fall fast; the switch is the skill, the tracking only has to be clean.",
+      why: "Speed switching on slow movers, the bridge to evasive switching: EddieTS (185,895 players on its Novice cut) at a gentler pace, with short kills so the switch dominates.",
       learnsFrom: ["VT EddieTS Novice S5", "waldoTS"],
     },
-    (f) => switching(f, { alive: 4, deg: 2.6, ttk: 0.3, speed: 12, strafe: [2.5, 3.8], upDown: [1.2, 1.8], range: 2500 }, "Four slow floating targets. Hold fire to kill.", "Speed"),
+    (f) => switching(f, { alive: 4, deg: 2.6, ttk: 0.18, speed: 12, strafe: [2.5, 3.8], upDown: [1.2, 1.8], range: 2500 }, "Four slow floating targets that fall quickly. Hold fire to kill.", "Speed"),
   ),
   family(
     {
-      name: "Finisher", category: "Speed Switching", subCategory: "Speed Switching", template: "groundSwitch", arm: "Wrist",
+      name: "bruTeS", category: "Speed Switching", subCategory: "Speed Switching", template: "groundSwitch", arm: "Wrist",
       focus: "Each target takes a while; stay on it to the end, then switch.",
       why: "Longer kills on still targets: the discipline of finishing before leaving, which short-kill scenarios never test.",
       learnsFrom: ["VT ControlTS Novice S5", "patTargetSwitch easy"],
@@ -804,30 +1162,31 @@ export const FAMILIES: Family[] = [
   // ---- Evasive Switching
   family(
     {
-      name: "Swarm", category: "Evasive Switching", subCategory: "Evasive Switching", template: "groundSwitch", arm: "Wrist",
-      focus: "Three strafing targets; kill one without losing track of the others.",
+      name: "FleeTS", category: "Evasive Switching", subCategory: "Evasive Switching", template: "groundSwitch", arm: "Wrist",
+      focus: "Four strafing targets; kill one without losing track of the others.",
       why: "The standard evasive-switching problem, targets that move while you are on them and while you are not, at the pace of DriftTS.",
       learnsFrom: ["VT DriftTS Novice S5", "domiSwitch Easy"],
     },
-    (f) => switching(f, { alive: 3, deg: 2.9, ttk: 0.45, speed: 28, strafe: [0.7, 1.3], range: 1900 }, "Three targets strafing. Hold fire to kill.", "Evasive"),
+    (f) => switching(f, { alive: 4, deg: 2.9, ttk: 0.45, speed: 28, strafe: [0.7, 1.3], range: 1900 }, "Four targets strafing. Hold fire to kill.", "Evasive"),
   ),
   family(
     {
-      name: "Skeet", category: "Evasive Switching", subCategory: "Evasive Switching", template: "groundSwitch", arm: "Blending",
-      focus: "Targets thrown into the air; catch each one on its arc.",
-      why: "Airborne switching. Skeet Tracking has the most players of any evasive-switching scenario in data/fun_audit.json (385,771, 31.3 plays each).",
-      learnsFrom: ["Skeet Tracking", "B180T Voltaic Easy"],
+      name: "skeeTS", category: "Evasive Switching", subCategory: "Evasive Switching", template: "skeet", arm: "Blending",
+      anchor: "Skeet Tracking",
+      focus: "Clay pigeons thrown across the field; catch each one on its arc.",
+      why: "Skeet Tracking's own mechanism - targets with no walking speed, thrown sideways and up by a movement ability, falling under gravity. It has the most players of any evasive-switching scenario in data/fun_audit.json (385,771, 31.3 plays each).",
+      learnsFrom: ["Skeet Tracking", "Skeet Clicking"],
     },
-    (f) => switching(f, { alive: 3, deg: 2.9, ttk: 0.4, speed: 24, strafe: [1.2, 2.0], range: 1900, jump: { frequency: 1.0, velocity: 900, gravity: 0.8 } }, "Three targets jumping in arcs. Hold fire to kill.", "Evasive"),
+    (f) => skeet(f, { alive: 4, deg: 2.8, ttk: 0.5, range: 960 }, "Four clay pigeons thrown in arcs. Hold fire to kill."),
   ),
   family(
     {
-      name: "Hive", category: "Evasive Switching", subCategory: "Evasive Switching", template: "airSwitch", arm: "Wrist",
-      focus: "Fliers changing direction on every axis; pick the next one before this one dies.",
-      why: "Three-dimensional evasive switching: FlyTS's pattern with vertical reversals on their own clock.",
+      name: "comeTS", category: "Evasive Switching", subCategory: "Evasive Switching", template: "airSwitch", arm: "Wrist",
+      focus: "Fliers sweeping round in curves; pick the next one before this one dies.",
+      why: "Three-dimensional evasive switching on curved paths: horizontal and vertical reversals on matching clocks with slow acceleration, so each target sweeps round in an arc instead of zig-zagging.",
       learnsFrom: ["VT FlyTS Intermediate S5", "VT EddieTS Intermediate S5"],
     },
-    (f) => switching(f, { alive: 4, deg: 2.7, ttk: 0.4, speed: 22, strafe: [0.8, 1.4], upDown: [0.6, 1.1], range: 2200 }, "Four flying targets moving in every direction. Hold fire to kill.", "Evasive"),
+    (f) => switching(f, { alive: 4, deg: 2.7, ttk: 0.4, speed: 22, strafe: [1.2, 1.6], upDown: [1.2, 1.6], range: 2200, ramp: 0.7 }, "Four flying targets sweeping round in curves. Hold fire to kill.", "Evasive"),
   ),
   family(
     {
@@ -840,12 +1199,13 @@ export const FAMILIES: Family[] = [
   ),
   family(
     {
-      name: "Scatter", category: "Evasive Switching", subCategory: "Evasive Switching", template: "groundSwitch", arm: "Arm",
-      focus: "Fast targets far apart; big switches onto moving targets.",
-      why: "Evasive switching with speed and distance together: the largest angular demand in the category.",
-      learnsFrom: ["VT Penta Bounce Intermediate S5", "patTargetSwitch"],
+      name: "LosTS", category: "Evasive Switching", subCategory: "Evasive Switching", template: "groundSwitch", arm: "Wrist",
+      modelClass: "track",
+      focus: "One tough target; stay on it, and find it again the moment it respawns.",
+      why: "One evasive target with enough health to take a sustained effort, which respawns somewhere new when it dies: the kill-then-reacquire loop of switching with nothing else on screen to hide behind.",
+      learnsFrom: ["VT DriftTS Novice S5", "Close Fast Strafes Invincible"],
     },
-    (f) => switching(f, { alive: 3, deg: 3.2, ttk: 0.4, speed: 40, strafe: [0.9, 1.6], range: 1700 }, "Three fast targets spread apart. Hold fire to kill.", "Evasive"),
+    (f) => switching(f, { alive: 1, deg: 3.4, ttk: 1.5, speed: 34, strafe: [0.6, 1.2], range: 1700, openRoom: true }, "One strafing target with plenty of health that respawns elsewhere when it dies. Hold fire to kill.", "Evasive"),
   ),
   family(
     {
@@ -854,13 +1214,13 @@ export const FAMILIES: Family[] = [
       why: "Close-range evasive switching, where modest real speeds become large angular speeds and every switch is also a tracking catch-up.",
       learnsFrom: ["VT DriftTS Intermediate S5", "Close Fast Strafes Invincible"],
     },
-    (f) => switching(f, { alive: 3, deg: 5.0, ttk: 0.45, speed: 55, strafe: [0.7, 1.2], range: 1000 }, "Three close targets strafing fast. Hold fire to kill.", "Evasive"),
+    (f) => switching(f, { alive: 3, deg: 5.0, ttk: 0.45, speed: 55, strafe: [0.7, 1.2], range: 1000, openRoom: true }, "Three close targets strafing fast. Hold fire to kill.", "Evasive"),
   ),
 ];
 
-export function buildScenario(template: Sce, f: Family, band: Band): Sce {
+export function buildScenario(template: Sce, f: Family, band: Band, lib: Library): Sce {
   const sce: Sce = structuredClone(template);
-  f.build(sce, band);
+  f.build(sce, band, lib);
   return sce;
 }
 

@@ -2,7 +2,7 @@
  * Put season 2's scenarios into KovaaK's, so they can be played before they are shared.
  *
  * Copies every file in data/season-2/scenarios into the game's own scenario folder, writes
- * "Apogee S2 Playtest" (one scenario per template, the first playtest), and one playlist
+ * "Apogee S2 Playtest" (the families whose mechanism is new), and one playlist
  * per category and band - "Apogee S2 Static Clicking Novice", six
  * scenarios, one per family, in the season's family order - into its playlists folder.
  * They appear under the game's offline scenarios and playlists.
@@ -63,9 +63,10 @@ for (const category of season.categories) {
     });
   }
 }
-// The first playtest (docs/season-2.md): one Novice scenario per template, in the order the
-// list gives, so every kind of generated file is loaded once before anything else is judged.
-const PLAYTEST = ["Meridian", "Drift", "Hopper", "Glide", "Lift", "Relay", "Swarm"].map((f) => `Apogee ${f} Novice`);
+// The playtest (docs/season-2.md): the Novice cut of every family whose mechanism is new
+// since the first round - waves, paths, the stop-dead profile, thrown targets, the open room -
+// so each is seen working once before anything else is judged.
+const PLAYTEST = ["Constellation", "Shooting Stars", "Gravity Well", "Meteor", "Satellite", "Stutter", "skeeTS", "comeTS", "LosTS", "Brawl"].map((f) => `Apogee ${f} Novice`);
 if (PLAYTEST.every((n) => season.scenarios.some((s) => s.scenario === n))) {
   playlists.unshift({
     playlistName: `${PLAYLIST_PREFIX}Playtest`,
@@ -73,7 +74,7 @@ if (PLAYTEST.every((n) => season.scenarios.some((s) => s.scenario === n))) {
     authorSteamId: "",
     authorName: "",
     scenarioList: PLAYTEST.map((scenario_name) => ({ scenario_name, play_Count: 1 })),
-    description: "Apogee Season 2 first playtest: one scenario from each template. Check the room loads, the targets appear, and they move as described.",
+    description: "Apogee Season 2 playtest: every family whose mechanism is new. Check the targets appear, and move and respawn as described.",
     hasOfflineScenarios: true,
     hasEdited: true,
     shareCode: "",
@@ -85,17 +86,48 @@ if (PLAYTEST.every((n) => season.scenarios.some((s) => s.scenario === n))) {
 
 const playlistFile = (p: KovaaksPlaylist) => `${p.playlistName}.json`;
 
+/**
+ * Season-2 files an earlier install left behind that the season no longer names - a family
+ * renamed or dropped. Only files that prove they are ours: a scenario tagged "Apogee Season
+ * 2", or a playlist named with this tool's prefix. Anything else in the folders is not
+ * looked at.
+ */
+function stale(): { scenarios: string[]; playlists: string[] } {
+  const current = new Set(files);
+  const currentPlaylists = new Set(playlists.map(playlistFile));
+  const scenarios = existsSync(scenariosDir)
+    ? readdirSync(scenariosDir).filter((f) => {
+        if (!f.startsWith("Apogee ") || !f.endsWith(".sce") || current.has(f)) return false;
+        const head = readFileSync(join(scenariosDir, f), "utf8").slice(0, 20_000);
+        return /^(SearchTags|GameTag)=.*Apogee Season 2/m.test(head);
+      })
+    : [];
+  const lists = existsSync(playlistsDir)
+    ? readdirSync(playlistsDir).filter((f) => f.startsWith(PLAYLIST_PREFIX) && f.endsWith(".json") && !currentPlaylists.has(f))
+    : [];
+  return { scenarios, playlists: lists };
+}
+
 if (remove) {
   const ours = new Set(files);
   const ourPlaylists = new Set(playlists.map(playlistFile));
+  const old = stale();
   let n = 0;
   if (existsSync(scenariosDir)) for (const f of readdirSync(scenariosDir)) if (ours.has(f)) { rmSync(join(scenariosDir, f)); n++; }
+  for (const f of old.scenarios) { rmSync(join(scenariosDir, f)); n++; }
   let p = 0;
   if (existsSync(playlistsDir)) for (const f of readdirSync(playlistsDir)) if (ourPlaylists.has(f)) { rmSync(join(playlistsDir, f)); p++; }
+  for (const f of old.playlists) { rmSync(join(playlistsDir, f)); p++; }
   console.log(`removed ${n} scenario(s) and ${p} playlist(s)`);
   process.exit(0);
 }
 
+const old = stale();
+for (const f of old.scenarios) rmSync(join(scenariosDir, f));
+for (const f of old.playlists) rmSync(join(playlistsDir, f));
+if (old.scenarios.length || old.playlists.length) {
+  console.log(`removed ${old.scenarios.length} scenario(s) and ${old.playlists.length} playlist(s) the season no longer names`);
+}
 mkdirSync(scenariosDir, { recursive: true });
 mkdirSync(playlistsDir, { recursive: true });
 for (const f of files) copyFileSync(join(source, f), join(scenariosDir, f));

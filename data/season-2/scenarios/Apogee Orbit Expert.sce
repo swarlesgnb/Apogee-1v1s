@@ -10,7 +10,7 @@ PlayerMaxLives=0
 BotMaxLives=0
 PlayerTeam=1
 BotTeams=2
-ScoreToWin=1.0
+ScoreToWin=0.0
 ScorePerDamage=0.0
 ScorePerHit=1.0
 ScorePerKill=0.0
@@ -42,11 +42,11 @@ ScoreLossPerMiss=0.0
 ScoreLossPerReload=0.0
 MultSqrtAcc=false
 EnableOverDamage=false
-MapName=Flat Ring.json
+MapName=Aether Chamber.json
 MapScale=4.0
 BlockProjectilePredictors=true
 BlockCheats=true
-InvinciblePlayer=false
+InvinciblePlayer=true
 InvincibleBots=false
 Timescale=1.0
 BlockHealthbars=false
@@ -82,9 +82,9 @@ AimSubTypeTag=Precise
 AimTypeFlicking=false
 AimTypeProjectile=false
 AimTypePlayerMovement=false
-DifficultyTag=4.0
+DifficultyTag=4
 SearchTags=Apogee, Apogee Season 2, Precise Tracking, Expert
-Description=One close target sweeping across the view.[nl][nl]Apogee Season 2, Precise Tracking, Expert. A close target sweeping wide; track with your arm, not only your wrist.
+Description=One flying target moving in smooth curves.[nl][nl]Apogee Season 2, Precise Tracking, Expert. Curves in both directions; follow the path, do not cut its corners.
 GameVersion=3.7.0
 ScenarioVersion=Initial
 
@@ -131,17 +131,17 @@ AimingProfileNames=Default;Default;Default;Default;Default;Default;Default;Defau
 WeaponSwitchTime=3.0
 UseWeapons=false
 CharacterProfile=Apogee Orbit Body
-SeeThroughWalls=false
+SeeThroughWalls=true
 NoDodging=false
 StandStillUntilHurt=false
 NoAiming=false
 SpawnGroup=0
-AbilityUseTimer=0.1
-UseAbilityFrequency=0.12
-UseAbilityFreqMinTime=0.1
-UseAbilityFreqMaxTime=0.1
+AbilityUseTimer=1.0
+UseAbilityFrequency=0.0
+UseAbilityFreqMinTime=1.0
+UseAbilityFreqMaxTime=1.0
 ShowLaser=false
-LaserRgb=X=0.000 Y=0.000 Z=0.000
+LaserRgb=X=1.000 Y=0.300 Z=0.000
 LaserAlpha=1.0
 RandomizeDodgeProfiles=false
 RepeatDodgeProfileEntries=false
@@ -154,8 +154,8 @@ Untargetable=false
 Name=Player
 MaxHealth=1.0
 WeaponProfileNames=Track Master 100;;;;;;;
-MinRespawnDelay=0.01
-MaxRespawnDelay=0.01
+MinRespawnDelay=1.0
+MaxRespawnDelay=1.0
 StepUpHeight=0.0
 CrouchHeightModifier=1.0
 CrouchAnimationSpeed=1.0
@@ -189,15 +189,15 @@ MainBBType=Spheroid
 MainBBHeight=2.0
 MainBBRadius=1.0
 MainBBHasHead=false
-MainBBHeadRadius=0.01
+MainBBHeadRadius=45.0
 MainBBHeadOffset=0.0
 MainBBHide=false
 ProjBBType=Spheroid
-ProjBBHeight=0.02
+ProjBBHeight=0.01
 ProjBBRadius=0.01
 ProjBBHasHead=false
-ProjBBHeadRadius=0.01
-ProjBBHeadOffset=0.01
+ProjBBHeadRadius=45.0
+ProjBBHeadOffset=0.0
 ProjBBHide=true
 BlockSelfDamage=false
 InvinciblePlayer=false
@@ -308,17 +308,17 @@ CrouchAnimationSpeed=1.0
 CameraOffset=X=0.000 Y=0.000 Z=0.000
 HeadshotOnly=false
 DamageKnockbackFactor=0.0
-MaxSpeed=1207.977282
-MaxCrouchSpeed=0.0
-Acceleration=4026.59094
-CrouchingAcceleration=0.0
-Friction=1.0
+MaxSpeed=1393.819941
+MaxCrouchSpeed=1300.0
+Acceleration=3484.549852
+CrouchingAcceleration=8500.0
+Friction=0.0
 BrakingFrictionFactor=0.0
-JumpVelocity=0.0
-Gravity=1.0
-AirControl=0.0
-CanCrouch=false
-CanPogoJump=false
+JumpVelocity=600.0
+Gravity=0.0
+AirControl=1.0
+CanCrouch=true
+CanPogoJump=true
 CanCrouchInAir=false
 CrouchInAirRaisesFeet=false
 CanJumpFromCrouch=false
@@ -332,8 +332,8 @@ EnemyHeadColorOnLookAt=X=1.000 Y=1.000 Z=1.000
 TeamBodyColor=X=0.000 Y=0.000 Z=255.000
 TeamHeadColor=X=255.000 Y=255.000 Z=255.000
 MainBBType=Cylindrical
-MainBBHeight=145.764616
-MainBBRadius=28.031657
+MainBBHeight=62.071301
+MainBBRadius=31.03565
 MainBBHasHead=false
 MainBBHeadRadius=1.0
 MainBBHeadOffset=0.0
@@ -350,15 +350,15 @@ InvinciblePlayer=false
 InvincibleBots=false
 BlockTeamDamage=false
 HasJetpack=false
-JetpackActivationDelay=0.001
-JetpackFullFuelTime=999.0
-JetpackFuelIncPerSec=999.0
-JetpackFuelRegensInAir=false
-JetpackThrust=640.0
-JetpackMaxZVelocity=500.0
+JetpackActivationDelay=0.2
+JetpackFullFuelTime=5.0
+JetpackFuelIncPerSec=1.0
+JetpackFuelRegensInAir=true
+JetpackThrust=6000.0
+JetpackMaxZVelocity=350.0
 JetpackAirControlWithThrust=1.0
 AirJumpCount=0
-AirJumpVelocity=800.0
+AirJumpVelocity=400.0
 AbilityProfileNames=;;;
 HideWeapon=true
 AerialFriction=0.0
@@ -372,7 +372,7 @@ BlockedSpawnRadius=0.0
 BlockSpawnFOV=0.0
 BlockSpawnDistance=0.0
 RespawnAnimationDuration=0.0
-AllowBufferedJumps=false
+AllowBufferedJumps=true
 BounceOffWalls=false
 LeanAngle=0.0
 LeanDisplacement=0.0
@@ -387,28 +387,28 @@ ThirdPersonCamera=false
 TPSArmLength=300.0
 TPSOffset=X=0.000 Y=150.000 Z=150.000
 BrakingDeceleration=0.0
-TerminalVelocity=0.0
+TerminalVelocity=1250.0
 CharacterModel=None
 CharacterSkin=Default
 MeshHitDetection=false
-SpawnOffsetMin=X=0.000 Y=0.000 Z=-150.000
-SpawnOffsetMax=X=0.000 Y=0.000 Z=-150.000
+SpawnOffsetMin=X=-800.000 Y=0.000 Z=-132.250
+SpawnOffsetMax=X=-800.000 Y=0.000 Z=-132.250
 InvertBlockedSpawn=false
 ViewBobTime=0.0
 ViewBobAngleAdjustment=0.0
 ViewBobCameraZOffset=0.0
 ViewBobAffectsShots=false
-IsFlyer=false
+IsFlyer=true
 FlightObeysPitch=false
-FlightVelocityUp=700.0
-FlightAccelUp=3000.0
-FlightVelocityDown=750.0
-FlightAccelDown=3000.0
+FlightVelocityUp=1115.055953
+FlightAccelUp=1800.0
+FlightVelocityDown=1115.055953
+FlightAccelDown=1860.0
 IsFlyUpOnJumpAndCrouch=false
 DisableCharacterCollision=false
 LifeStealPercent=0.0
 AbilityGlobalCooldown=0.0
-BlockAbilityOnStartDuration=1.5
+BlockAbilityOnStartDuration=1.0
 DragCoefficient=1.0
 AmmoRegainedOnKill=0
 ContinuousGroundFriction=0.0
@@ -444,38 +444,38 @@ PlaybackOptions.BreakToInputMode=false
 
 [Dodge Profile]
 Name=Apogee Orbit Move
-MaxTargetDistance=747.5
-MinTargetDistance=552.5
+MaxTargetDistance=1725.0
+MinTargetDistance=1275.0
 ToggleLeftRight=true
-ToggleForwardBack=true
-MinLRTimeChange=0.856054
-MaxLRTimeChange=1.317006
-MinFBTimeChange=1.5
-MaxFBTimeChange=2.5
+ToggleForwardBack=false
+MinLRTimeChange=0.790204
+MaxLRTimeChange=1.185305
+MinFBTimeChange=1.2
+MaxFBTimeChange=2.0
 DamageReactionChangesDirection=false
-DamageReactionChanceToIgnore=0.5
-DamageReactionMinimumDelay=0.125
-DamageReactionMaximumDelay=0.25
-DamageReactionCooldown=1.0
-DamageReactionThreshold=0.0
-DamageReactionResetTimer=0.1
+DamageReactionChanceToIgnore=0.92
+DamageReactionMinimumDelay=0.0
+DamageReactionMaximumDelay=0.02
+DamageReactionCooldown=0.1
+DamageReactionThreshold=0.01
+DamageReactionResetTimer=0.5
 JumpFrequency=0.0
 CrouchInAirFrequency=0.0
 CrouchOnGroundFrequency=0.0
 TargetStrafeOverride=Ignore
 TargetStrafeMinDelay=0.125
 TargetStrafeMaxDelay=0.25
-MinProfileChangeTime=3.0
-MaxProfileChangeTime=5.0
+MinProfileChangeTime=0.0
+MaxProfileChangeTime=0.0
 MinCrouchTime=1.0
 MaxCrouchTime=1.0
-MinJumpTime=1.0
-MaxJumpTime=1.0
-AlterateJumpCrouchInput=false
-ToggleUpDownMinTime=0.2
-ToggleUpDownMaxTime=0.5
+MinJumpTime=0.1
+MaxJumpTime=0.3
+AlterateJumpCrouchInput=true
+ToggleUpDownMinTime=0.658503
+ToggleUpDownMaxTime=1.053605
 UpDownSwapPauseMinTime=0.0
-UpDownSwapPauseMaxTime=0.0
+UpDownSwapPauseMaxTime=0.6
 LeftStrafeTimeMult=1.0
 RightStrafeTimeMult=1.0
 StrafeSwapMinPause=0.0
@@ -503,19 +503,19 @@ LOSReactDurationMax=1.0
 LOSReactKillBot=false
 LOSReactKillBotTimerMin=0.5
 LOSReactKillBotTimerMax=0.75
-InitialForwardMovementState=Forward
+InitialForwardMovementState=Random
 InitialRightMovementState=Right
 CounterStrafeOnCollision=false
-InitialLeftRightStrafeResetBehavior=InitialSpawn
+InitialLeftRightStrafeResetBehavior=EverySpawn
 InitialForwardBackStrafeResetBehavior=InitialSpawn
-PlaybackOptions.PlaybackMode=AbsolutePosition
+PlaybackOptions.PlaybackMode=Input
 PlaybackOptions.OverrideRotation=true
 PlaybackOptions.OverrideAbilities=true
 PlaybackOptions.OverrideWeapons=true
 PlaybackOptions.OverrideMovement=true
 PlaybackOptions.OverrideDodgeTime=false
 PlaybackOptions.LoopUponCompletion=true
-PlaybackOptions.BreakToInputMode=true
+PlaybackOptions.BreakToInputMode=false
 
 [Weapon Profile]
 Name=Track Master 100
@@ -540,7 +540,7 @@ MaxTravelTime=5.0
 MaxHitscanRange=1000000.0
 GravityScale=1.0
 HeadshotCapable=false
-HeadshotMultiplier=1.0
+HeadshotMultiplier=2.0
 CooldownType=InfiniteUse
 MagazineMax=0
 ReloadTimeFromEmpty=0.5
@@ -549,7 +549,7 @@ CooldownTimer=0.8
 MaxCharges=3
 DamageFalloffStartDistance=100000.0
 DamageFalloffStopDistance=100000.0
-DamageAtMaxRange=1.0
+DamageAtMaxRange=25.0
 DelayBeforeShot=0.0
 ProjectileGraphic=Ball
 VisualLifetime=0.1
@@ -570,8 +570,8 @@ BounceOffWorld=false
 BounceFactor=0.5
 BounceCount=0
 HomingProjectileAcceleration=0.0
-SpreadSSA=1.0,1.0,-1.0,5.0
-SpreadSCA=1.0,1.0,-1.0,5.0
+SpreadSSA=0.0,0.0,0.0,0.0
+SpreadSCA=0.0,0.0,0.0,0.0
 SpreadMSA=1.0,1.0,-1.0,5.0
 SpreadMCA=1.0,1.0,-1.0,5.0
 SpreadSSH=0.0,0.1,0.0,0.0
@@ -680,7 +680,7 @@ ZoomBlockedInAir=false
 ADSCameraOffsetX=0.0
 ADSCameraOffsetY=0.0
 ADSCameraOffsetZ=0.0
-QuickSwitchTime=0.1
+QuickSwitchTime=0.0
 WeaponModel=Heavy Surge Rifle
 WeaponAnimation=Primary
 UseIncReload=false
@@ -766,7 +766,7 @@ MaxSpeedModifier=1.0
                     },
                     {
                         "name": "Metallic",
-                        "value": 1.0
+                        "value": 0.9953703880310059
                     },
                     {
                         "name": "FullBright",
@@ -810,7 +810,7 @@ MaxSpeedModifier=1.0
                     },
                     {
                         "name": "Scale",
-                        "value": 1.1364636421203613
+                        "value": 0.9516991376876831
                     },
                     {
                         "name": "Roughness",
@@ -954,12 +954,45 @@ MaxSpeedModifier=1.0
     ],
     "objects": [
         {
+            "location": "0.000000, 0.000000, 0.000000",
+            "name": "SpawnPoint",
+            "properties": [
+                {
+                    "name": "Name",
+                    "value": "SpawnPoint0"
+                },
+                {
+                    "name": "TeamMask",
+                    "value": 1
+                },
+                {
+                    "name": "Path",
+                    "value": ""
+                },
+                {
+                    "name": "LoopingPath",
+                    "value": false
+                },
+                {
+                    "name": "PermittedCharacterProfiles",
+                    "value": "Player"
+                },
+                {
+                    "name": "Weight",
+                    "value": 1.0
+                }
+            ],
+            "rotation": "0.000000, 0.000000, 0.000000",
+            "scale": "0.250000, 0.250000, 0.250000",
+            "type": "gameObject"
+        },
+        {
             "location": "512.000000, 0.000000, 0.000000",
             "name": "SpawnPoint",
             "properties": [
                 {
                     "name": "Name",
-                    "value": ""
+                    "value": "SpawnPoint0"
                 },
                 {
                     "name": "TeamMask",
@@ -983,56 +1016,19 @@ MaxSpeedModifier=1.0
                 }
             ],
             "rotation": "0.000000, 0.000000, -179.999954",
-            "scale": "0.200000, 0.200000, 0.200000",
+            "scale": "0.250000, 0.250000, 0.250000",
             "type": "gameObject"
         },
         {
-            "location": "0.000000, 0.000000, 60.000000",
-            "name": "SpawnPoint",
-            "properties": [
-                {
-                    "name": "Name",
-                    "value": ""
-                },
-                {
-                    "name": "TeamMask",
-                    "value": 1
-                },
-                {
-                    "name": "Path",
-                    "value": ""
-                },
-                {
-                    "name": "LoopingPath",
-                    "value": false
-                },
-                {
-                    "name": "PermittedCharacterProfiles",
-                    "value": ""
-                },
-                {
-                    "name": "Weight",
-                    "value": 1.0
-                }
-            ],
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "0.200000, 0.200000, 0.200000",
-            "type": "gameObject"
-        },
-        {
-            "location": "-1024.000122, -1023.999878, -1024.000000",
+            "location": "767.999939, 767.999451, -512.000000",
             "materialSets": [
                 {
                     "group": 0,
-                    "surface": "ceiling"
-                },
-                {
-                    "group": 0,
                     "surface": "wall"
                 },
                 {
                     "group": 0,
-                    "surface": "ground"
+                    "surface": "wall"
                 },
                 {
                     "group": 0,
@@ -1047,26 +1043,22 @@ MaxSpeedModifier=1.0
                     "surface": "wall"
                 }
             ],
-            "mesh": "Cube",
+            "mesh": "Concave",
             "name": "Default",
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "20.480000, 20.479998, 10.239999",
+            "rotation": "0.000000, 0.000000, 179.999939",
+            "scale": "7.679996, 7.679998, 10.240000",
             "type": "brush"
         },
         {
-            "location": "0.000000, 0.000000, -1024.000000",
+            "location": "767.999634, -768.000061, -512.000000",
             "materialSets": [
                 {
                     "group": 0,
-                    "surface": "ceiling"
-                },
-                {
-                    "group": 0,
                     "surface": "wall"
                 },
                 {
                     "group": 0,
-                    "surface": "ground"
+                    "surface": "wall"
                 },
                 {
                     "group": 0,
@@ -1081,14 +1073,74 @@ MaxSpeedModifier=1.0
                     "surface": "wall"
                 }
             ],
-            "mesh": "Tube",
+            "mesh": "Concave",
             "name": "Default",
-            "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "30.719999, 30.719997, 20.479998",
+            "rotation": "0.000000, 0.000000, 89.999939",
+            "scale": "7.679996, 7.679998, 10.240000",
             "type": "brush"
         },
         {
-            "location": "920.000000, -8.000000, 68.000000",
+            "location": "-768.000000, -767.999451, -512.000000",
+            "materialSets": [
+                {
+                    "group": 0,
+                    "surface": "wall"
+                },
+                {
+                    "group": 0,
+                    "surface": "wall"
+                },
+                {
+                    "group": 0,
+                    "surface": "wall"
+                },
+                {
+                    "group": 0,
+                    "surface": "wall"
+                },
+                {
+                    "group": 0,
+                    "surface": "wall"
+                }
+            ],
+            "mesh": "Concave",
+            "name": "Default",
+            "rotation": "0.000000, 0.000000, 0.000000",
+            "scale": "7.679996, 7.679998, 10.240000",
+            "type": "brush"
+        },
+        {
+            "location": "-767.999146, 768.000000, -512.000000",
+            "materialSets": [
+                {
+                    "group": 0,
+                    "surface": "wall"
+                },
+                {
+                    "group": 0,
+                    "surface": "wall"
+                },
+                {
+                    "group": 0,
+                    "surface": "wall"
+                },
+                {
+                    "group": 0,
+                    "surface": "wall"
+                },
+                {
+                    "group": 0,
+                    "surface": "wall"
+                }
+            ],
+            "mesh": "Concave",
+            "name": "Default",
+            "rotation": "0.000000, 0.000000, -90.000053",
+            "scale": "7.679996, 7.679998, 10.240000",
+            "type": "brush"
+        },
+        {
+            "location": "765.999939, -8.000000, -8.000000",
             "name": "CookieFloorSquaredTiles",
             "properties": [
                 {
@@ -1096,9 +1148,77 @@ MaxSpeedModifier=1.0
                     "value": false
                 }
             ],
-            "rotation": "0.000000, 90.000000, 0.000000",
+            "rotation": "0.000000, -90.000000, 0.000000",
             "scale": "0.061404, 0.061608, 0.175674",
             "type": "prop"
+        },
+        {
+            "location": "-0.000031, 0.000137, -287.999878",
+            "materialSets": [
+                {
+                    "group": 0,
+                    "surface": "ground"
+                },
+                {
+                    "group": 0,
+                    "surface": "ground"
+                },
+                {
+                    "group": 0,
+                    "surface": "ground"
+                },
+                {
+                    "group": 0,
+                    "surface": "ground"
+                }
+            ],
+            "mesh": "Cylinder",
+            "name": "Default",
+            "rotation": "-179.999954, 0.000000, -179.999954",
+            "scale": "30.719992, 30.720001, 2.560000",
+            "type": "brush"
+        },
+        {
+            "location": "0.000000, 0.000122, 288.000122",
+            "materialSets": [
+                {
+                    "group": 0,
+                    "surface": "ground"
+                },
+                {
+                    "group": 0,
+                    "surface": "ground"
+                },
+                {
+                    "group": 0,
+                    "surface": "ceiling"
+                },
+                {
+                    "group": 0,
+                    "surface": "ground"
+                }
+            ],
+            "mesh": "Cylinder",
+            "name": "Default",
+            "rotation": "0.000000, 0.000000, 0.000000",
+            "scale": "30.719992, 30.720001, 2.560000",
+            "type": "brush"
+        },
+        {
+            "location": "0.000000, 0.000000, -144.000000",
+            "mesh": "Cylinder",
+            "name": "Clip",
+            "rotation": "-179.999954, 0.000000, -179.999954",
+            "scale": "6.080000, 6.080000, 6.079999",
+            "type": "brush"
+        },
+        {
+            "location": "0.000000, -0.000042, 143.999939",
+            "mesh": "Cylinder",
+            "name": "Clip",
+            "rotation": "0.000055, 0.000000, 179.999954",
+            "scale": "6.080000, 6.080000, 6.079999",
+            "type": "brush"
         }
     ],
     "version": "1.0.0"

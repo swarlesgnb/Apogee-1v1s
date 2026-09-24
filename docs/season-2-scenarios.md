@@ -7,16 +7,16 @@ the thresholds are read off the same prediction (docs/season-2-research.md).
 
 ## Static Clicking
 
-### Meridian
+### Galaga
 
-Flick sideways and stop dead; every target sits on one level. Horizontal flicks isolated. Wide Wall and 1w3ts mix both axes, so a player who over-travels sideways and one who under-travels vertically get the same score and no hint which they are.
+Five targets on one level; flick sideways and stop dead. Horizontal flicks isolated. Wide Wall and 1w3ts mix both axes, so a player who over-travels sideways and one who under-travels vertically get the same score and no hint which they are.
 
 | Band | Size (deg) | Speed (deg/s) | Reversal (s) | Kill (s) | Predicted median | Thresholds |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
-| Novice | 1.60 | still | - | - | 1184 (1041-1348) | 913, 1088, 1190, 1267, 1331, 1393 |
-| Intermediate | 1.39 | still | - | - | 1126 (990-1281) | 1268, 1327, 1354, 1405, 1448, 1488 |
-| Advanced | 1.21 | still | - | - | 1070 (940-1217) | 1380, 1418, 1454, 1488, 1521, 1562 |
-| Expert | 1.05 | still | - | - | 1016 (893-1156) | 1450, 1490, 1515, 1548 |
+| Novice | 1.60 | still | - | - | 1396 (1227-1588) | 1097, 1290, 1402, 1488, 1560, 1629 |
+| Intermediate | 1.39 | still | - | - | 1330 (1169-1514) | 1489, 1556, 1587, 1644, 1693, 1738 |
+| Advanced | 1.21 | still | - | - | 1267 (1113-1441) | 1617, 1661, 1701, 1740, 1777, 1825 |
+| Expert | 1.05 | still | - | - | 1205 (1059-1371) | 1698, 1744, 1774, 1811 |
 
 ### Zenith
 
@@ -40,27 +40,27 @@ Small moves, smaller targets; settle the crosshair before you click. Micro-corre
 | Advanced | 0.72 | still | - | - | 1162 (1021-1322) | 1491, 1532, 1570, 1606, 1641, 1686 |
 | Expert | 0.63 | still | - | - | 1104 (971-1257) | 1566, 1609, 1636, 1671 |
 
-### Horizon
+### Invaders
 
-Big flicks across the room; commit to the distance and stop on the target. Large-amplitude flicks, which small-field scenarios never ask for. Targets are larger to keep the index of difficulty in the same range as the rest of the category.
+A wide formation; big flicks across it, in both directions. Large-amplitude flicks over a wide two-dimensional formation, where Galaga keeps to one line. Targets are larger to keep the index of difficulty in the same range as the rest of the category.
 
 | Band | Size (deg) | Speed (deg/s) | Reversal (s) | Kill (s) | Predicted median | Thresholds |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
-| Novice | 2.20 | still | - | - | 1114 (979-1268) | 852, 1021, 1120, 1193, 1255, 1314 |
-| Intermediate | 1.91 | still | - | - | 1059 (930-1204) | 1194, 1251, 1276, 1325, 1366, 1404 |
-| Advanced | 1.67 | still | - | - | 1005 (883-1144) | 1302, 1338, 1372, 1404, 1436, 1475 |
-| Expert | 1.45 | still | - | - | 954 (838-1085) | 1368, 1406, 1430, 1461 |
+| Novice | 2.20 | still | - | - | 1192 (1048-1356) | 919, 1095, 1198, 1275, 1339, 1401 |
+| Intermediate | 1.91 | still | - | - | 1133 (996-1290) | 1276, 1335, 1362, 1414, 1457, 1497 |
+| Advanced | 1.67 | still | - | - | 1077 (947-1225) | 1389, 1427, 1463, 1497, 1530, 1572 |
+| Expert | 1.45 | still | - | - | 1023 (899-1164) | 1459, 1499, 1525, 1557 |
 
 ### Constellation
 
-Five targets up at once; keep a rhythm and take the nearest one next. The tempo of 1wall 6targets small and Tile Frenzy (1.29 million and 0.74 million players, data/fun_audit.json), on a field where every target is the same distance away.
+Clear the whole constellation; the next one appears when its last star falls. Real star patterns as waves - the Big Dipper, the Little Dipper, Orion, Cassiopeia, Cygnus, Leo - seven stars each, so every wave is a route to plan as well as seven flicks to make.
 
 | Band | Size (deg) | Speed (deg/s) | Reversal (s) | Kill (s) | Predicted median | Thresholds |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
-| Novice | 1.90 | still | - | - | 1449 (1273-1648) | 1144, 1341, 1456, 1543, 1617, 1688 |
-| Intermediate | 1.65 | still | - | - | 1382 (1215-1572) | 1545, 1614, 1645, 1704, 1754, 1801 |
-| Advanced | 1.44 | still | - | - | 1317 (1157-1498) | 1677, 1722, 1764, 1803, 1842, 1892 |
-| Expert | 1.25 | still | - | - | 1254 (1102-1426) | 1760, 1808, 1839, 1878 |
+| Novice | 1.70 | still | - | - | 1454 (1278-1655) | 1149, 1346, 1461, 1549, 1623, 1694 |
+| Intermediate | 1.48 | still | - | - | 1387 (1219-1578) | 1551, 1619, 1651, 1710, 1760, 1808 |
+| Advanced | 1.29 | still | - | - | 1322 (1162-1504) | 1683, 1728, 1770, 1810, 1848, 1898 |
+| Expert | 1.12 | still | - | - | 1259 (1106-1432) | 1767, 1815, 1846, 1885 |
 
 ### Parallax
 
@@ -73,9 +73,20 @@ Targets at two distances; read the size before you decide how far to move. Depth
 | Advanced | 1.11 | still | - | - | 1045 (918-1188) | 1349, 1387, 1422, 1455, 1488, 1528 |
 | Expert | 0.97 | still | - | - | 992 (872-1128) | 1418, 1457, 1482, 1514 |
 
+### Nebula
+
+Six small targets up at once; take the nearest, keep the rhythm. The 1wall 6targets shape - the most-played static scenario measured, 1.29 million players (data/fun_audit.json) - at every band, so the category always has a six-target scenario.
+
+| Band | Size (deg) | Speed (deg/s) | Reversal (s) | Kill (s) | Predicted median | Thresholds |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Novice | 1.50 | still | - | - | 1432 (1259-1629) | 1129, 1324, 1439, 1526, 1599, 1669 |
+| Intermediate | 1.30 | still | - | - | 1366 (1200-1554) | 1527, 1595, 1627, 1685, 1735, 1781 |
+| Advanced | 1.14 | still | - | - | 1301 (1143-1480) | 1658, 1703, 1744, 1783, 1821, 1871 |
+| Expert | 0.99 | still | - | - | 1238 (1088-1409) | 1740, 1788, 1818, 1857 |
+
 ## Dynamic Clicking
 
-### Drift
+### Gravclick
 
 Slow floaters; match their drift for a moment, then click. The entry to moving targets: slow, long-lived paths that reward confirming the shot rather than guessing it. Floating Heads Timing 400% has the most players of any dynamic-clicking scenario in data/fun_audit.json (352,281).
 
@@ -92,12 +103,12 @@ Side-to-side swings; click on the swing, not only at the turn. Pasu's long horiz
 
 | Band | Size (deg) | Speed (deg/s) | Reversal (s) | Kill (s) | Predicted median | Thresholds |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
-| Novice | 2.20 | 22.0 | 1.70 | - | 509 (448-580) | 301, 429, 514, 576, 630, 680 |
-| Intermediate | 1.91 | 24.2 | 1.48 | - | 474 (416-539) | 589, 636, 656, 696, 729, 757 |
-| Advanced | 1.67 | 26.6 | 1.29 | - | 440 (387-501) | 683, 709, 734, 757, 780, 809 |
-| Expert | 1.45 | 29.3 | 1.12 | - | 409 (359-465) | 732, 759, 776, 798 |
+| Novice | 2.20 | 22.0 | 1.70 | - | 542 (476-616) | 322, 457, 547, 612, 668, 721 |
+| Intermediate | 1.91 | 24.2 | 1.48 | - | 504 (443-573) | 625, 675, 696, 738, 772, 802 |
+| Advanced | 1.67 | 26.6 | 1.29 | - | 469 (412-533) | 724, 752, 778, 802, 826, 856 |
+| Expert | 1.45 | 29.3 | 1.12 | - | 436 (383-496) | 775, 804, 823, 846 |
 
-### Hopper
+### Antigrav
 
 Read the arc; the top of the bounce is the slowest moment. Gravity arcs. A bot under gravity is the one design feature that goes with both more replay and more reach (Spearman +0.10 and +0.13 over 614 catalogued scenarios): small, but the only positive signal on both.
 
@@ -108,7 +119,7 @@ Read the arc; the top of the bounce is the slowest moment. Gravity arcs. A bot u
 | Advanced | 1.51 | 20.6 | 3.60 | - | 575 (505-654) | 868, 901, 931, 959, 986, 1022 |
 | Expert | 1.32 | 22.6 | 3.60 | - | 535 (471-609) | 927, 961, 983, 1010 |
 
-### Jitter
+### Electric
 
 Short, erratic twitches; stay with the target instead of chasing its last position. Reactive micro-clicking: short strafes at low speed, so the target never travels far but never holds still either.
 
@@ -125,21 +136,54 @@ Fast crossers; move with the target and click inside the motion. High-speed dyna
 
 | Band | Size (deg) | Speed (deg/s) | Reversal (s) | Kill (s) | Predicted median | Thresholds |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
-| Novice | 2.60 | 34.0 | 2.50 | - | 493 (433-561) | 283, 412, 498, 561, 616, 667 |
-| Intermediate | 2.26 | 37.4 | 2.17 | - | 458 (403-522) | 575, 624, 645, 685, 718, 747 |
-| Advanced | 1.97 | 41.1 | 1.89 | - | 426 (375-485) | 673, 700, 725, 749, 772, 801 |
-| Expert | 1.71 | 45.3 | 1.65 | - | 396 (348-451) | 724, 752, 770, 792 |
+| Novice | 2.60 | 34.0 | 2.50 | - | 456 (401-519) | 260, 380, 460, 520, 571, 619 |
+| Intermediate | 2.26 | 37.4 | 2.17 | - | 424 (372-482) | 533, 579, 598, 636, 667, 694 |
+| Advanced | 1.97 | 41.1 | 1.89 | - | 394 (346-448) | 625, 650, 673, 695, 717, 744 |
+| Expert | 1.71 | 45.3 | 1.65 | - | 365 (321-416) | 673, 698, 715, 736 |
 
-### Triplet
+### Shooting Stars
 
-Three hits to kill; keep matching the movement between clicks. Multi-click confirmation on a moving target, which one-hit scenarios never ask for: a miss on the second click is a lost rhythm, not a lost target.
+Straight lines across the sky; lead nothing, match the line and click. Linear motion, the Floating Heads idea made exact: every target runs a straight lane from one side of the view to the other and back, rising or falling a little on the way, so the path is readable at a glance and the only question is timing.
 
 | Band | Size (deg) | Speed (deg/s) | Reversal (s) | Kill (s) | Predicted median | Thresholds |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
-| Novice | 2.10 | 14.0 | 1.80 | - | 286 (251-325) | 203, 257, 288, 319, 336, 352 |
-| Intermediate | 1.83 | 15.4 | 1.57 | - | 266 (234-302) | 314, 329, 339, 352, 360, 371 |
-| Advanced | 1.59 | 16.9 | 1.36 | - | 247 (217-281) | 337, 348, 360, 365, 367, 378 |
-| Expert | 1.38 | 18.6 | 1.19 | - | 230 (202-261) | 344, 355, 362, 372 |
+| Novice | 2.00 | 20.0 | 1.00 | - | 759 (667-864) | 471, 650, 766, 852, 924, 993 |
+| Intermediate | 1.74 | 22.0 | 1.00 | - | 710 (624-808) | 868, 934, 962, 1016, 1061, 1100 |
+| Advanced | 1.51 | 24.2 | 1.00 | - | 663 (583-755) | 999, 1036, 1070, 1102, 1133, 1174 |
+| Expert | 1.32 | 26.6 | 1.00 | - | 619 (544-704) | 1068, 1107, 1132, 1164 |
+
+### Gravity Well
+
+They spiral in from the rim; catch them before they reach the middle. Curved linear motion: each target enters on a ring round the centre of the view and spirals slowly inward, so the path is known and the angle of travel turns steadily - a read no strafing target gives.
+
+| Band | Size (deg) | Speed (deg/s) | Reversal (s) | Kill (s) | Predicted median | Thresholds |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Novice | 2.00 | 14.0 | 1.00 | - | 685 (602-780) | 428, 588, 691, 767, 831, 892 |
+| Intermediate | 1.74 | 15.4 | 1.00 | - | 639 (562-727) | 779, 837, 861, 909, 949, 983 |
+| Advanced | 1.51 | 16.9 | 1.00 | - | 595 (523-677) | 891, 924, 954, 982, 1010, 1046 |
+| Expert | 1.32 | 18.6 | 1.00 | - | 554 (487-631) | 950, 984, 1005, 1033 |
+
+### Meteor
+
+Straight runs that only turn at the walls; time the click on the run. Floating Heads Timing 400%'s motion itself: long straight runs at constant speed that reverse only off the arena's walls.
+
+| Band | Size (deg) | Speed (deg/s) | Reversal (s) | Kill (s) | Predicted median | Thresholds |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Novice | 1.76 | 15.6 | 10.00 | - | 572 (502-650) | 347, 486, 577, 643, 699, 752 |
+| Intermediate | 1.53 | 17.2 | 8.70 | - | 532 (468-605) | 654, 704, 725, 767, 802, 832 |
+| Advanced | 1.33 | 18.9 | 7.57 | - | 495 (435-563) | 752, 780, 807, 831, 856, 886 |
+| Expert | 1.16 | 20.8 | 6.59 | - | 460 (404-523) | 803, 832, 851, 874 |
+
+### Satellite
+
+Fliers circling you as they rise and fall; follow the orbit and click. psalmTS's motion as a clicking task: targets strafe round the player on long, even runs while climbing and dropping, linear in each axis and curved together.
+
+| Band | Size (deg) | Speed (deg/s) | Reversal (s) | Kill (s) | Predicted median | Thresholds |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Novice | 2.20 | 22.0 | 3.50 | - | 509 (448-580) | 301, 429, 514, 576, 630, 680 |
+| Intermediate | 1.91 | 24.2 | 3.04 | - | 474 (416-539) | 589, 636, 656, 696, 729, 757 |
+| Advanced | 1.67 | 26.6 | 2.65 | - | 440 (387-501) | 683, 709, 734, 757, 780, 809 |
+| Expert | 1.45 | 29.3 | 2.30 | - | 409 (359-465) | 732, 759, 776, 798 |
 
 ## Precise Tracking
 
@@ -154,7 +198,7 @@ Long, smooth strafes; ease into each turn with the target. Smoothness on the gro
 | Advanced | 3.48 | 58.1 | 1.36 | - | 2714 (2139-3310) | 3845, 3963, 4068, 4169, 4268, 4378 |
 | Expert | 3.03 | 63.9 | 1.19 | - | 2496 (1940-3090) | 4025, 4140, 4213, 4296 |
 
-### Lift
+### Blastoff
 
 Mostly up and down; keep the crosshair level with it through each turn. Vertical smoothness, which ground tracking barely tests. The target flies, turns vertically about as often as it strafes, and strafes slowly.
 
@@ -165,7 +209,7 @@ Mostly up and down; keep the crosshair level with it through each turn. Vertical
 | Advanced | 3.03 | 36.3 | 2.35 | - | 3140 (2545-3725) | 4274, 4391, 4495, 4593, 4692, 4789 |
 | Expert | 2.63 | 39.9 | 2.04 | - | 2919 (2331-3513) | 4487, 4592, 4657, 4736 |
 
-### Loop
+### Orbit
 
 Curves in both directions; follow the path, do not cut its corners. Two-axis smooth tracking: horizontal and vertical reversals on similar clocks draw curves rather than lines.
 
@@ -198,7 +242,7 @@ Long jumps under low gravity; carry the crosshair along the arc. Smooth diagonal
 | Advanced | 3.03 | 43.6 | 1.74 | - | 2916 (2329-3510) | 4056, 4175, 4280, 4381, 4480, 4585 |
 | Expert | 2.63 | 47.9 | 1.51 | - | 2696 (2122-3293) | 4255, 4366, 4435, 4517 |
 
-### Orbit
+### AlienTrack
 
 A close target sweeping wide; track with your arm, not only your wrist. Close range means large angular speed at a modest real speed: the arm-tracking demand Smoothbot and Close Long Strafes are played for.
 
@@ -211,7 +255,7 @@ A close target sweeping wide; track with your arm, not only your wrist. Close ra
 
 ## Reactive Tracking
 
-### Duel
+### Pong
 
 Close, snappy strafes; react to the turn, do not predict it. The close-range strafe duel of Close Fast Strafes (117,749 players, 22.4 plays each, data/fun_audit.json).
 
@@ -222,7 +266,7 @@ Close, snappy strafes; react to the turn, do not predict it. The close-range str
 | Advanced | 4.54 | 87.1 | 0.44 | - | 1850 (1381-2395) | 2746, 2841, 2927, 3004, 3077, 3189 |
 | Expert | 3.95 | 95.8 | 0.38 | - | 1666 (1230-2186) | 2793, 2900, 2973, 3039 |
 
-### Skirmish
+### Pong3D
 
 Strafes and range changes; the target shrinks and grows as it moves. Mid-range reactive tracking with forward and back movement, so size and speed change under the player during a strafe.
 
@@ -235,7 +279,7 @@ Strafes and range changes; the target shrinks and grows as it moves. Mid-range r
 
 ### Stutter
 
-It stops before it turns; stop with it. Stop-start movement: a pause before each reversal punishes the player who keeps moving on momentum, a common reactive-tracking fault.
+It stops before it turns, and now and then stops dead for seconds; stop with it. Stop-start movement: a pause before each reversal, and every so often a full stop of two to three seconds, punish the player who keeps moving on momentum, a common reactive-tracking fault.
 
 | Band | Size (deg) | Speed (deg/s) | Reversal (s) | Kill (s) | Predicted median | Thresholds |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
@@ -244,7 +288,7 @@ It stops before it turns; stop with it. Stop-start movement: a pause before each
 | Advanced | 3.63 | 70.2 | 0.49 | - | 1873 (1401-2422) | 2780, 2876, 2964, 3042, 3117, 3230 |
 | Expert | 3.16 | 77.2 | 0.43 | - | 1689 (1248-2212) | 2832, 2941, 3016, 3084 |
 
-### Aerial
+### Hover
 
 Jumps and short strafes together; follow it up as well as across. Reactive tracking through the air, the pattern of Air Angelic 4, which nine of evxl's listed benchmarks use.
 
@@ -255,7 +299,7 @@ Jumps and short strafes together; follow it up as well as across. Reactive track
 | Advanced | 3.33 | 55.7 | 0.55 | - | 2070 (1566-2639) | 3041, 3145, 3240, 3326, 3410, 3525 |
 | Expert | 2.90 | 61.2 | 0.48 | - | 1874 (1401-2423) | 3128, 3241, 3316, 3389 |
 
-### Wasp
+### UFO
 
 A flier changing direction on both axes; react on whichever one moves. Three-dimensional reactive tracking: short horizontal and vertical reversals on independent clocks.
 
@@ -279,7 +323,7 @@ Being tracked makes it turn; stay on it through the dodge. Reactive dodging: the
 
 ## Speed Switching
 
-### Relay
+### DNA
 
 Kill, then move straight to the next; no pause between targets. The core speed-switching loop on still targets in a compact field: the time between targets is what the score measures.
 
@@ -290,7 +334,7 @@ Kill, then move straight to the next; no pause between targets. The core speed-s
 | Advanced | 1.82 | still | - | 0.24 | 2310 (2114-2513) | 2805, 2863, 2920, 2972, 3021, 3086 |
 | Expert | 1.58 | still | - | 0.24 | 2284 (2089-2486) | 2995, 3060, 3102, 3153 |
 
-### Span
+### CockpiTS
 
 Wide switches; land the flick, then hold. Speed switching across a wide field, where the flick between targets is most of the time spent.
 
@@ -312,7 +356,7 @@ Switch up and down; stop on each one before you fire. Vertical switching, the ax
 | Advanced | 1.82 | still | - | 0.24 | 2310 (2114-2513) | 2805, 2863, 2920, 2972, 3021, 3086 |
 | Expert | 1.58 | still | - | 0.24 | 2284 (2089-2486) | 2995, 3060, 3102, 3153 |
 
-### Cluster
+### Asteroids
 
 Six small targets packed tight; short, exact moves. Precision switching: small targets and small moves, the micro side of speed switching.
 
@@ -323,18 +367,18 @@ Six small targets packed tight; short, exact moves. Precision switching: small t
 | Advanced | 1.14 | still | - | 0.19 | 2120 (1931-2317) | 2591, 2644, 2696, 2743, 2788, 2849 |
 | Expert | 0.99 | still | - | 0.19 | 2095 (1907-2291) | 2762, 2823, 2862, 2912 |
 
-### Drifters
+### RockeTS
 
-Slow floaters; the switch is the skill, the tracking only has to be clean. Speed switching on slow movers, the bridge to evasive switching: EddieTS (185,895 players on its Novice cut) at a gentler pace.
+Slow floaters that fall fast; the switch is the skill, the tracking only has to be clean. Speed switching on slow movers, the bridge to evasive switching: EddieTS (185,895 players on its Novice cut) at a gentler pace, with short kills so the switch dominates.
 
 | Band | Size (deg) | Speed (deg/s) | Reversal (s) | Kill (s) | Predicted median | Thresholds |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
-| Novice | 2.60 | 12.0 | 3.15 | 0.29 | 2009 (1825-2201) | 1551, 1841, 2018, 2144, 2253, 2354 |
-| Intermediate | 2.26 | 13.2 | 2.74 | 0.29 | 1968 (1786-2158) | 2213, 2314, 2358, 2439, 2503, 2553 |
-| Advanced | 1.97 | 14.5 | 2.38 | 0.29 | 1927 (1748-2116) | 2463, 2512, 2562, 2608, 2653, 2722 |
-| Expert | 1.71 | 16.0 | 2.07 | 0.29 | 1887 (1710-2074) | 2610, 2678, 2724, 2778 |
+| Novice | 2.60 | 12.0 | 3.15 | 0.17 | 1788 (1616-1969) | 1402, 1647, 1796, 1909, 2005, 2091 |
+| Intermediate | 2.26 | 13.2 | 2.74 | 0.17 | 1749 (1580-1929) | 1968, 2053, 2089, 2156, 2211, 2254 |
+| Advanced | 1.97 | 14.5 | 2.38 | 0.17 | 1711 (1544-1889) | 2172, 2215, 2255, 2294, 2331, 2388 |
+| Expert | 1.71 | 16.0 | 2.07 | 0.17 | 1674 (1509-1849) | 2289, 2346, 2384, 2433 |
 
-### Finisher
+### bruTeS
 
 Each target takes a while; stay on it to the end, then switch. Longer kills on still targets: the discipline of finishing before leaving, which short-kill scenarios never test.
 
@@ -347,9 +391,9 @@ Each target takes a while; stay on it to the end, then switch. Longer kills on s
 
 ## Evasive Switching
 
-### Swarm
+### FleeTS
 
-Three strafing targets; kill one without losing track of the others. The standard evasive-switching problem, targets that move while you are on them and while you are not, at the pace of DriftTS.
+Four strafing targets; kill one without losing track of the others. The standard evasive-switching problem, targets that move while you are on them and while you are not, at the pace of DriftTS.
 
 | Band | Size (deg) | Speed (deg/s) | Reversal (s) | Kill (s) | Predicted median | Thresholds |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
@@ -358,27 +402,27 @@ Three strafing targets; kill one without losing track of the others. The standar
 | Advanced | 2.20 | 33.9 | 0.76 | 0.44 | 1975 (1793-2166) | 2569, 2621, 2674, 2724, 2773, 2850 |
 | Expert | 1.91 | 37.3 | 0.66 | 0.44 | 1935 (1755-2123) | 2729, 2806, 2858, 2916 |
 
-### Skeet
+### skeeTS
 
-Targets thrown into the air; catch each one on its arc. Airborne switching. Skeet Tracking has the most players of any evasive-switching scenario in data/fun_audit.json (385,771, 31.3 plays each).
-
-| Band | Size (deg) | Speed (deg/s) | Reversal (s) | Kill (s) | Predicted median | Thresholds |
-| --- | ---: | ---: | ---: | ---: | --- | --- |
-| Novice | 2.90 | 24.0 | 1.60 | 0.39 | 2033 (1848-2226) | 1542, 1852, 2043, 2177, 2295, 2403 |
-| Intermediate | 2.52 | 26.4 | 1.39 | 0.39 | 1992 (1809-2183) | 2254, 2363, 2412, 2501, 2568, 2620 |
-| Advanced | 2.20 | 29.0 | 1.21 | 0.39 | 1951 (1770-2141) | 2528, 2579, 2631, 2680, 2727, 2802 |
-| Expert | 1.91 | 31.9 | 1.05 | 0.39 | 1911 (1732-2098) | 2684, 2758, 2808, 2865 |
-
-### Hive
-
-Fliers changing direction on every axis; pick the next one before this one dies. Three-dimensional evasive switching: FlyTS's pattern with vertical reversals on their own clock.
+Clay pigeons thrown across the field; catch each one on its arc. Skeet Tracking's own mechanism - targets with no walking speed, thrown sideways and up by a movement ability, falling under gravity. It has the most players of any evasive-switching scenario in data/fun_audit.json (385,771, 31.3 plays each).
 
 | Band | Size (deg) | Speed (deg/s) | Reversal (s) | Kill (s) | Predicted median | Thresholds |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
-| Novice | 2.70 | 22.0 | 1.10 | 0.39 | 2035 (1851-2229) | 1545, 1855, 2046, 2180, 2297, 2406 |
-| Intermediate | 2.35 | 24.2 | 0.96 | 0.39 | 1994 (1812-2186) | 2257, 2366, 2415, 2504, 2571, 2623 |
-| Advanced | 2.04 | 26.6 | 0.83 | 0.39 | 1954 (1773-2143) | 2531, 2582, 2633, 2683, 2730, 2805 |
-| Expert | 1.78 | 29.3 | 0.72 | 0.39 | 1913 (1735-2101) | 2687, 2761, 2811, 2868 |
+| Novice | 2.80 | still | - | 0.49 | 1861 (1685-2046) | 1124, 1571, 1880, 2138, 2363, 2569 |
+| Intermediate | 2.43 | still | - | 0.49 | 1838 (1663-2022) | 2339, 2545, 2633, 2804, 2959, 3111 |
+| Advanced | 2.12 | still | - | 0.49 | 1814 (1641-1997) | 2934, 3086, 3228, 3357, 3480, 3636 |
+| Expert | 1.84 | still | - | 0.49 | 1791 (1620-1973) | 3454, 3611, 3712, 3820 |
+
+### comeTS
+
+Fliers sweeping round in curves; pick the next one before this one dies. Three-dimensional evasive switching on curved paths: horizontal and vertical reversals on matching clocks with slow acceleration, so each target sweeps round in an arc instead of zig-zagging.
+
+| Band | Size (deg) | Speed (deg/s) | Reversal (s) | Kill (s) | Predicted median | Thresholds |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Novice | 2.70 | 22.0 | 1.40 | 0.39 | 2035 (1851-2229) | 1545, 1855, 2046, 2180, 2297, 2406 |
+| Intermediate | 2.35 | 24.2 | 1.22 | 0.39 | 1994 (1812-2186) | 2257, 2366, 2415, 2504, 2571, 2623 |
+| Advanced | 2.04 | 26.6 | 1.06 | 0.39 | 1954 (1773-2143) | 2531, 2582, 2633, 2683, 2730, 2805 |
+| Expert | 1.78 | 29.3 | 0.92 | 0.39 | 1913 (1735-2101) | 2687, 2761, 2811, 2868 |
 
 ### Mender
 
@@ -391,16 +435,16 @@ Targets heal when left alone; finish every kill you start. Regeneration makes le
 | Advanced | 2.12 | 26.6 | 0.76 | 0.54 | 2099 (1912-2295) | 2721, 2776, 2833, 2887, 2939, 3019 |
 | Expert | 1.84 | 29.3 | 0.66 | 0.54 | 2058 (1872-2252) | 2895, 2976, 3030, 3089 |
 
-### Scatter
+### LosTS
 
-Fast targets far apart; big switches onto moving targets. Evasive switching with speed and distance together: the largest angular demand in the category.
+One tough target; stay on it, and find it again the moment it respawns. One evasive target with enough health to take a sustained effort, which respawns somewhere new when it dies: the kill-then-reacquire loop of switching with nothing else on screen to hide behind.
 
 | Band | Size (deg) | Speed (deg/s) | Reversal (s) | Kill (s) | Predicted median | Thresholds |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
-| Novice | 3.20 | 40.0 | 1.25 | 0.39 | 1961 (1780-2151) | 1477, 1781, 1971, 2106, 2224, 2333 |
-| Intermediate | 2.78 | 44.0 | 1.09 | 0.39 | 1920 (1741-2109) | 2184, 2293, 2342, 2431, 2497, 2548 |
-| Advanced | 2.42 | 48.4 | 0.95 | 0.39 | 1880 (1704-2067) | 2457, 2507, 2557, 2604, 2651, 2725 |
-| Expert | 2.11 | 53.2 | 0.82 | 0.39 | 1841 (1666-2025) | 2607, 2681, 2732, 2789 |
+| Novice | 3.40 | 34.0 | 0.90 | - | 2902 (2315-3496) | 1899, 2536, 2922, 3194, 3426, 3633 |
+| Intermediate | 2.96 | 37.4 | 0.78 | - | 2681 (2109-3278) | 3200, 3406, 3496, 3659, 3789, 3905 |
+| Advanced | 2.57 | 41.1 | 0.68 | - | 2464 (1911-3057) | 3551, 3665, 3767, 3864, 3960, 4071 |
+| Expert | 2.24 | 45.3 | 0.59 | - | 2253 (1724-2836) | 3697, 3811, 3884, 3961 |
 
 ### Brawl
 
