@@ -892,15 +892,16 @@ function pressureClick(f: Family, spec: PressureSpec, description: string) {
         .find((a) => a.toLowerCase() === "approach");
       if (!approach) throw new Error("the template's balloon has no Approach ability");
       setProfile(sce, "Movement Ability Profile", approach, { MainVelocity: spec.approach * Math.pow(1.2, band) });
-      // The burst fires only when the balloon checks its abilities while in range, and fuglaa
-      // checks every 0.3-0.6 s with a 7,000-10,000 window. At a slow dash that window is
-      // always caught; at 6,000 a second the balloon can cross all of it between two checks,
-      // pass the player and hang behind them - the playtest found exactly that. So the burst
-      // takes anything within 10,000, the self-only pop (which would now compete for the same
-      // distances) is put out of reach, and the balloon checks every 0.1 s, the rate Voltaic's
-      // Ground bots use.
-      setProfile(sce, "Weapon Ability Profile", "Damage Player and Self", { AIMinTargDist: 0 });
-      setProfile(sce, "Weapon Ability Profile", "Damage Self Only", { AIMinTargDist: 0, AIMaxTargDist: 1 });
+      // fuglaa's balloon bursts in two steps: "Damage Self Only" takes it to half health,
+      // which arms it, and "Mutual Annihilation" - a 10,000-radius blast that hurts both it
+      // and the player - fires only once it is armed. fuglaa arms at 4,000-7,000 and bursts
+      // at 7,000-10,000, which a slow drift crosses in order; a dash crosses both windows the
+      // wrong way round and hung behind the player. So it arms as soon as its spawn block
+      // lifts and bursts within 3,000, and it checks every 0.1 s - the rate Voltaic's Ground
+      // bots use - so even Expert's dash, about 1,040 units a check, cannot cross the window
+      // unseen, nor reach Depart's 1,000, which would throw it back out.
+      setProfile(sce, "Weapon Ability Profile", "Damage Self Only", { AIMinTargDist: 0, AIMaxTargDist: 1000000 });
+      setProfile(sce, "Weapon Ability Profile", "Damage Player and Self", { AIMinTargDist: 0, AIMaxTargDist: 3000 });
       setProfile(sce, "Bot Profile", bot, { UseAbilityFreqMinTime: 0.1, UseAbilityFreqMaxTime: 0.1 });
     }
     if (spec.magazine) setProfile(sce, "Weapon Profile", weaponOf(sce), { MagazineMax: spec.magazine });

@@ -125,7 +125,11 @@ for (const [name, { sce }] of sces) {
     for (const w of list(get(c?.lines ?? [], "WeaponProfileNames"))) need("Weapon Profile", w);
     for (const a of list(get(c?.lines ?? [], "AbilityProfileNames"))) {
       const bare = a.replace(/\.abil\w+$/i, "");
-      if (!sce.sections.some((x) => x.type.endsWith("Ability Profile") && get(x.lines, "Name")?.toLowerCase() === bare.toLowerCase())) missing.push(`ability ${a}`);
+      const ability = sce.sections.find((x) => x.type.endsWith("Ability Profile") && get(x.lines, "Name")?.toLowerCase() === bare.toLowerCase());
+      if (!ability) missing.push(`ability ${a}`);
+      // A weapon ability fires its own weapon; without it the ability does nothing, which is
+      // how Gravity Well's balloons came to arrive and never burst.
+      else need("Weapon Profile", get(ability.lines, "WeaponProfile"));
     }
   };
   character(get(sce.head, "PlayerProfile"));

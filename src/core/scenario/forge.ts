@@ -112,7 +112,12 @@ export function prune(sce: Sce): string[] {
     for (const a of list(get(c.lines, "AbilityProfileNames"))) {
       const bare = a.replace(/\.abil\w+$/i, "");
       for (const s of sce.sections) {
-        if (s.type.endsWith("Ability Profile") && get(s.lines, "Name")?.toLowerCase() === bare.toLowerCase()) keep.add(key(s.type, bare));
+        if (!s.type.endsWith("Ability Profile") || get(s.lines, "Name")?.toLowerCase() !== bare.toLowerCase()) continue;
+        keep.add(key(s.type, bare));
+        // A weapon ability fires a weapon of its own. Leaving it out left Gravity Well's
+        // balloons with a burst that pointed at nothing: they arrived and never went off.
+        const weapon = get(s.lines, "WeaponProfile");
+        if (weapon) keep.add(key("Weapon Profile", weapon));
       }
     }
   };
