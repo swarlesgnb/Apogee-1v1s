@@ -45,6 +45,7 @@ if (files.length === 0) fail("found no .sce files");
 
 let roundTrip = 0;
 let geometry = 0;
+const mapFormats = { json: 0, reflex: 0 };
 let agree = 0;
 let comparable = 0;
 for (const file of files) {
@@ -54,6 +55,8 @@ for (const file of files) {
   else console.log(`  does not round-trip: ${file}`);
   const f = scenarioFeatures(sce, mapsDir);
   if (f.geometry) geometry++;
+  if (f.geometry?.source === "embedded-json" || f.geometry?.source === "json-file") mapFormats.json++;
+  else if (f.geometry) mapFormats.reflex++;
 
   const embedded = sce.sections.find((s) => s.type === "Map Data")?.raw;
   const mapName = get(sce.head, "MapName") ?? "";
@@ -81,7 +84,7 @@ else if (rate >= 0.9) pass(`PlayerTeam split agrees with the smaller spawn group
 else fail(`PlayerTeam split agrees on only ${agree}/${comparable}`);
 
 const coverage = geometry / Math.max(1, files.length);
-if (coverage >= 0.95) pass(`geometry resolves for ${geometry}/${files.length}`);
+if (coverage >= 0.95) pass(`geometry resolves for ${geometry}/${files.length} (${mapFormats.json} JSON maps, ${mapFormats.reflex} Reflex)`);
 else fail(`geometry resolves for only ${geometry}/${files.length}`);
 
 const authored = dataFile("season-2", "scenarios");

@@ -4,7 +4,9 @@ A season of scenarios made for Apogee: 36 families, six per category, four bands
 scenarios. None existed before this. Season 1 is untouched; season 2 is a draft in
 `data/seasons/season-2.json`, and nothing reads it at runtime yet.
 
-Why each rule is what it is: [season-2-research.md](season-2-research.md).
+Why each rule is what it is: [season-2-research.md](season-2-research.md). What the
+scenario file format turned out to be, pitfalls included:
+[kovaaks-scenario-format.md](kovaaks-scenario-format.md).
 
 ## The families
 
