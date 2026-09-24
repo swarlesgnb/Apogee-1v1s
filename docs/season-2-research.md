@@ -147,9 +147,9 @@ Leave-one-out median error at the board median (`data/season-2/difficulty_model.
 
 | Class | Scenarios | Features | LOO median | LOO 90th pct |
 | --- | ---: | --- | ---: | ---: |
-| Clicking | 193 | nearest-flick Fitts ID, log angular speed, log shots to kill, accuracy multiplier, square-root accuracy multiplier | 0.130 (about 14% in time per kill) | 0.408 |
-| Tracking | 166 | log speed/size, log strafe period, log seconds to full speed | 0.375 logit (about 9 points of share mid-board) | 1.029 |
-| Switching | 85 | log speed/size, log time to kill | 0.132 logit | 0.391 |
+| Clicking | 201 | nearest-flick Fitts ID, log angular speed, log shots to kill, accuracy multiplier, square-root accuracy multiplier | 0.129 (about 14% in time per kill) | 0.412 |
+| Tracking | 174 | log speed/size, log strafe period, log seconds to full speed | 0.399 logit (about 10 points of share mid-board) | 0.999 |
+| Switching | 86 | log speed/size, log time to kill | 0.141 logit | 0.438 |
 
 Every feature earns its place: removing any one raises the leave-one-out error at both the
 top 5% and the median of the board (`ablation` in the model file). Three that were tried
@@ -162,12 +162,11 @@ board, which also means it predicted every unmultiplied scenario - all of season
 below its own.
 
 One bias the model keeps, narrower than it first looked: Voltaic's Aether, the template
-the three flying families are built on, is over-predicted at every tier, by 0.19, 0.34 and
-0.94 logit at the median for Novice, Intermediate and Advanced (`residualsAtMedian` in the
+the three flying families are built on, is over-predicted at every tier, by 0.14, 0.30 and
+0.90 logit at the median for Novice, Intermediate and Advanced (`residualsAtMedian` in the
 model file). Flying targets as a group are not: across all 41 in the tracking class the
-mean miss is +0.15 with a spread of 0.67, and 21 are over-predicted, which is no more than
-chance (`fliers` in the model file). A flag for flying targets was tried and made the fit worse (0.375 to 0.407 at the
-median). So nothing is corrected, and Lift, Loop and Wasp are named as the thresholds
+mean miss is +0.12 with a spread of 0.66, and 21 are over-predicted, which is no more than
+chance (`fliers` in the model file). A flag for flying targets was tried and made the fit worse at the median. So nothing is corrected, and Lift, Loop and Wasp are named as the thresholds
 likeliest to be set too high.
 
 Two findings shaped how the model is used.
@@ -176,13 +175,13 @@ Two findings shaped how the model is used.
   from Novice (598) to Intermediate (568), although the target shrinks and speeds up: a harder
   scenario draws a stronger crowd. A pooled model predicts the board of a typical crowd.
 - **A sibling's board was measured too.** Predicting a variant from another variant's board
-  is worse than the pooled fit for clicking (0.144 against 0.130) and switching (0.149
-  against 0.132), and better for tracking (0.284 against 0.375). No season-2 scenario
+  is worse than the pooled fit for clicking (0.144 against 0.129) and switching (0.152
+  against 0.141), and better for tracking (0.283 against 0.399). No season-2 scenario
   has a sibling with a board, so the pooled fit is the only option until one does.
 
 How sharply a target turns matters to tracking and is in the file: seconds to reach full
 speed, `MaxSpeed / Acceleration`. Without it tracking's error at the top 5% and the median is
-0.442 and 0.430; with it, 0.381 and 0.375. It is also what lets the model tell Glide's
+0.455 and 0.440; with it, 0.395 and 0.399. It is also what lets the model tell Glide's
 gentle reversals from Duel's sharp ones.
 
 Which bot is "the target" is a judgement the reader makes, and it once made it wrongly:

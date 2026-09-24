@@ -44,8 +44,13 @@ export function kovaaksRoot(): string | null {
 
 export function scenarioFiles(root: string): string[] {
   const files: string[] = [];
+  // Season 2's own files, once installed into the game folder, are not evidence about
+  // what real scenarios look like: counting them would let validate:season2 compare the
+  // season against itself. They are skipped by the file names the build writes.
+  const authoredDir = dataFile("season-2", "scenarios");
+  const authored = new Set(existsSync(authoredDir) ? readdirSync(authoredDir).filter((f) => f.endsWith(".sce")) : []);
   const own = join(root, "Saved", "SaveGames", "Scenarios");
-  if (existsSync(own)) for (const f of readdirSync(own)) if (f.endsWith(".sce")) files.push(join(own, f));
+  if (existsSync(own)) for (const f of readdirSync(own)) if (f.endsWith(".sce") && !authored.has(f)) files.push(join(own, f));
   // …/steamapps/common/FPSAimTrainer/FPSAimTrainer -> …/steamapps/workshop/content/824270
   const workshop = resolve(root, "..", "..", "..", "workshop", "content", "824270");
   if (existsSync(workshop)) {

@@ -97,7 +97,7 @@ seven load. The rest are still open. In order of risk:
 4. **Tracking targets**: they should never die during a run.
 5. **Feint**: the dodge on being hit should feel like a reaction, not a teleport.
 6. **Flying tracking thresholds**: the model over-predicts Voltaic's Aether at every tier
-   (0.19 to 0.94 logit at the median), the template Lift, Loop and Wasp are built on, so
+   (0.14 to 0.90 logit at the median), the template Lift, Loop and Wasp are built on, so
    their thresholds are the likeliest to be set too high. Check them first when recutting.
 7. **Band steps in switching**: the model sees about 1% per band at the median; check that
    Advanced and Expert feel harder than Novice.

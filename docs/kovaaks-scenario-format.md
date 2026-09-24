@@ -88,7 +88,7 @@ it to the counts quoted.
 - **Score is `ScorePerKill` x kills + `ScorePerHit` x hits + `ScorePerDamage` x damage**,
   times accuracy with `ScoreMultAccuracy`, or times its square root with `MultSqrtAcc` as
   well. The clicking model carries a flag for each; without the plain multiplier's, its
-  error at the top 5% of the board rises from 0.102 to 0.112 (`ablation` in the model file).
+  error at the top 5% of the board rises from 0.100 to 0.112 (`ablation` in the model file).
 - **`ScoreToWin` does not end a challenge.** Voltaic's 1w4ts carries `ScoreToWin=1000` and
   its median score is 1,063.
 - **A reload economy** (`MagazineMax` with `AmmoPerShot` above 1) is Voltaic's other way to

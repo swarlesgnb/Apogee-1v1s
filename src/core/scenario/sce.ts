@@ -37,17 +37,25 @@ export interface Sce {
   eol: "\r\n" | "\n";
   /** Whether the text ended with a terminator. */
   trailingEol: boolean;
+  /**
+   * Whether the text began with a UTF-8 byte-order mark. 103 of the workshop files do;
+   * left in, it becomes part of the first key, the scenario reads as having no Name, and
+   * the corpus used to drop every one of them without a word.
+   */
+  bom: boolean;
 }
 
 const SECTION = /^\[(.+)\]$/;
 
-export function parseSce(text: string): Sce {
+export function parseSce(input: string): Sce {
+  const bom = input.charCodeAt(0) === 0xfeff;
+  const text = bom ? input.slice(1) : input;
   const eol: "\r\n" | "\n" = text.includes("\r\n") ? "\r\n" : "\n";
   const trailingEol = text.endsWith(eol);
   const body = trailingEol ? text.slice(0, -eol.length) : text;
   const rows = body.split(eol);
 
-  const sce: Sce = { head: [], sections: [], eol, trailingEol };
+  const sce: Sce = { head: [], sections: [], eol, trailingEol, bom };
   let target = sce.head;
 
   for (let i = 0; i < rows.length; i++) {
@@ -84,7 +92,7 @@ export function serializeSce(sce: Sce): string {
     if (s.raw !== undefined) out.push(s.raw);
     else emit(s.lines);
   }
-  return out.join(sce.eol) + (sce.trailingEol ? sce.eol : "");
+  return (sce.bom ? "\uFEFF" : "") + out.join(sce.eol) + (sce.trailingEol ? sce.eol : "");
 }
 
 /** First value of a key, or undefined. */

@@ -116,7 +116,7 @@ export const FEATURE_NAMES: Record<DifficultyClass, string[]> = {
  * Each one is kept because removing it raises the leave-one-out error at both the top 5%
  * and the median of the board (the ablation in tools/fitDifficulty.ts, recorded in the
  * model file). Three that were in and did not, removed one at a time: switching's
- * nearest-flick Fitts ID (without it 0.126/0.159 became 0.123/0.132), tracking's "leaves
+ * nearest-flick Fitts ID (removing it lowered the class's error at both points), tracking's "leaves
  * the ground" flag, then tracking's log size, which once the flag was gone carried nothing
  * the speed-to-size ratio did not. Shots to kill for clicking earns only a little on a
  * corpus that is nearly all one-hit, and stays because it is the physics of a three-hit
