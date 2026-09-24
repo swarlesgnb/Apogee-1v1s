@@ -137,6 +137,10 @@ function ownBot(sce: Sce, tag: string): { bot: string; character: string; dodge:
   const dodge = `Apogee ${tag} Move`;
   cloneProfile(sce, "Bot Profile", fromBot, bot);
   cloneProfile(sce, "Character Profile", fromChar, character);
+  // No abilities. Voltaic's Ground bots carry a blink - a teleport on a timer - which is
+  // right for their reactive scenarios and wrong for most of these; the families that want
+  // an interruption get it from their movement, where the file states it.
+  setProfile(sce, "Character Profile", character, { AbilityProfileNames: ";;;" });
   const botValues: Values = {
     CharacterProfile: character,
     RandomizeDodgeProfiles: false,

@@ -4,6 +4,9 @@
  *   1. data/seasons/season-2.json passes `validateSeason`, and names exactly the scenario
  *      files in data/season-2/scenarios - none missing, none extra, each file's Name= its
  *      own file name, since that is the name KovaaK's lists and keys the board on.
+ *      Every profile a file names resolves inside it: player, bots, their characters,
+ *      dodge and aim profiles, weapons, abilities. A dangling name is a setting the game
+ *      silently drops, which is how a teleport ability once went missing unnoticed.
  *   2. The rules every family shares (tools/season2/design.ts): sixty seconds, no accuracy
  *      multiplier, an "Apogee " name, six families per category, four bands per family.
  *   3. Every threshold reproduces: each file is measured again and the committed model's
@@ -80,6 +83,37 @@ for (const f of files) {
   sces.set(f.replace(/\.sce$/, ""), { sce, text });
   if (get(sce.head, "Name") !== f.replace(/\.sce$/, "")) fail(`${f}: Name= is ${get(sce.head, "Name")}`);
 }
+
+let dangling = 0;
+for (const [name, { sce }] of sces) {
+  const missing: string[] = [];
+  const need = (type: string, ref: string | undefined) => {
+    const bare = (ref ?? "").replace(/\.(bot|rot|abil\w+)$/i, "");
+    if (bare && !profile(sce, type, bare)) missing.push(`${type} ${bare}`);
+  };
+  const character = (ref: string | undefined) => {
+    need("Character Profile", ref);
+    const c = profile(sce, "Character Profile", ref ?? "");
+    for (const w of list(get(c?.lines ?? [], "WeaponProfileNames"))) need("Weapon Profile", w);
+    for (const a of list(get(c?.lines ?? [], "AbilityProfileNames"))) {
+      const bare = a.replace(/\.abil\w+$/i, "");
+      if (!sce.sections.some((x) => x.type.endsWith("Ability Profile") && get(x.lines, "Name")?.toLowerCase() === bare.toLowerCase())) missing.push(`ability ${a}`);
+    }
+  };
+  character(get(sce.head, "PlayerProfile"));
+  for (const entry of list(get(sce.head, "AddedBots"))) {
+    need("Bot Profile", entry);
+    const bot = profile(sce, "Bot Profile", entry.replace(/\.bot$/i, ""));
+    character(get(bot?.lines ?? [], "CharacterProfile"));
+    for (const d of list(get(bot?.lines ?? [], "DodgeProfileNames"))) need("Dodge Profile", d);
+    for (const a of list(get(bot?.lines ?? [], "AimingProfileNames"))) need("Aim Profile", a);
+  }
+  if (missing.length) {
+    dangling++;
+    fail(`${name} names profiles it does not carry: ${[...new Set(missing)].join(", ")}`);
+  }
+}
+if (!dangling) pass("every profile a file names, it carries");
 
 // ---- 2. shared rules -------------------------------------------------------------------------
 

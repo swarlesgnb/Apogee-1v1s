@@ -74,8 +74,13 @@ export function prune(sce: Sce): string[] {
     if (!c || keep.has(key(c.type, name))) return;
     keep.add(key(c.type, name));
     for (const w of list(get(c.lines, "WeaponProfileNames"))) keep.add(key("Weapon Profile", w));
+    // A character names its abilities with the file extension the editor unpacks them to
+    // (`Ground 1 Blink.abilmov`); the profile's own Name has none.
     for (const a of list(get(c.lines, "AbilityProfileNames"))) {
-      for (const s of sce.sections) if (s.type.endsWith("Ability Profile") && get(s.lines, "Name") === a) keep.add(key(s.type, a));
+      const bare = a.replace(/\.abil\w+$/i, "");
+      for (const s of sce.sections) {
+        if (s.type.endsWith("Ability Profile") && get(s.lines, "Name")?.toLowerCase() === bare.toLowerCase()) keep.add(key(s.type, bare));
+      }
     }
   };
   visitCharacter(get(sce.head, "PlayerProfile") ?? "");
