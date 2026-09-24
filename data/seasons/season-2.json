@@ -40,12 +40,12 @@
         {
           "window": 0,
           "rankMaxes": [
-            17500,
-            35000,
-            52500,
-            70000,
-            87500,
-            105000
+            20000,
+            40000,
+            60000,
+            80000,
+            100000,
+            120000
           ],
           "rankNames": [
             "Blunderbuss",
@@ -67,12 +67,12 @@
         {
           "window": 1,
           "rankMaxes": [
-            17500,
-            35000,
-            52500,
-            70000,
-            87500,
-            105000
+            20000,
+            40000,
+            60000,
+            80000,
+            100000,
+            120000
           ],
           "rankNames": [
             "Crossbow",
@@ -94,12 +94,12 @@
         {
           "window": 2,
           "rankMaxes": [
-            17500,
-            35000,
-            52500,
-            70000,
-            87500,
-            105000
+            20000,
+            40000,
+            60000,
+            80000,
+            100000,
+            120000
           ],
           "rankNames": [
             "Carbine",
@@ -121,10 +121,10 @@
         {
           "window": 3,
           "rankMaxes": [
-            17500,
-            35000,
-            52500,
-            70000
+            20000,
+            40000,
+            60000,
+            80000
           ],
           "rankNames": [
             "Sniper",
@@ -146,22 +146,22 @@
         }
       ],
       "rankMaxes": [
-        17500,
-        35000,
-        52500,
-        70000,
-        87500,
-        105000,
-        122500,
+        20000,
+        40000,
+        60000,
+        80000,
+        100000,
+        120000,
         140000,
-        157500,
-        175000,
-        192500,
-        210000,
-        227500,
-        245000,
-        262500,
-        280000
+        160000,
+        180000,
+        200000,
+        220000,
+        240000,
+        260000,
+        280000,
+        300000,
+        320000
       ],
       "rankNames": [
         "Blunderbuss",
@@ -1050,7 +1050,7 @@
       "file": "data/season-2/difficulty_model.json"
     }
   },
-  "builtAt": "2026-09-24T20:22:25.551Z",
+  "builtAt": "2026-09-24T20:57:41.051Z",
   "scenarios": [
     {
       "scenario": "Apogee Galaga Novice",
@@ -1711,6 +1711,100 @@
       }
     },
     {
+      "scenario": "Apogee 1w6aliens Novice",
+      "category": "Static Clicking",
+      "family": "1w6aliens",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Static Clicking",
+      "window": 0,
+      "label": "1w6aliens",
+      "focus": "Six still targets on one wall; take the nearest, keep the rhythm.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        965,
+        1146,
+        1251,
+        1330,
+        1397,
+        1461
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
+      }
+    },
+    {
+      "scenario": "Apogee 1w6aliens Intermediate",
+      "category": "Static Clicking",
+      "family": "1w6aliens",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Static Clicking",
+      "window": 1,
+      "label": "1w6aliens",
+      "focus": "Six still targets on one wall; take the nearest, keep the rhythm.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        1331,
+        1393,
+        1420,
+        1473,
+        1518,
+        1559
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
+      }
+    },
+    {
+      "scenario": "Apogee 1w6aliens Advanced",
+      "category": "Static Clicking",
+      "family": "1w6aliens",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Static Clicking",
+      "window": 2,
+      "label": "1w6aliens",
+      "focus": "Six still targets on one wall; take the nearest, keep the rhythm.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        1448,
+        1487,
+        1525,
+        1560,
+        1594,
+        1638
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
+      }
+    },
+    {
+      "scenario": "Apogee 1w6aliens Expert",
+      "category": "Static Clicking",
+      "family": "1w6aliens",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Static Clicking",
+      "window": 3,
+      "label": "1w6aliens",
+      "focus": "Six still targets on one wall; take the nearest, keep the rhythm.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        1521,
+        1562,
+        1589,
+        1623
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
+      }
+    },
+    {
       "scenario": "Apogee Gravclick Novice",
       "category": "Dynamic Clicking",
       "family": "Gravclick",
@@ -2283,7 +2377,7 @@
       "subCategory": "Dynamic Clicking",
       "window": 0,
       "label": "Gravity Well",
-      "focus": "Pop them before they fire; every hit you take costs you.",
+      "focus": "Pop them before they reach you; every one that does costs you.",
       "leaderboardId": null,
       "rankMaxes": [
         28,
@@ -2307,7 +2401,7 @@
       "subCategory": "Dynamic Clicking",
       "window": 1,
       "label": "Gravity Well",
-      "focus": "Pop them before they fire; every hit you take costs you.",
+      "focus": "Pop them before they reach you; every one that does costs you.",
       "leaderboardId": null,
       "rankMaxes": [
         176,
@@ -2331,7 +2425,7 @@
       "subCategory": "Dynamic Clicking",
       "window": 2,
       "label": "Gravity Well",
-      "focus": "Pop them before they fire; every hit you take costs you.",
+      "focus": "Pop them before they reach you; every one that does costs you.",
       "leaderboardId": null,
       "rankMaxes": [
         203,
@@ -2355,7 +2449,7 @@
       "subCategory": "Dynamic Clicking",
       "window": 3,
       "label": "Gravity Well",
-      "focus": "Pop them before they fire; every hit you take costs you.",
+      "focus": "Pop them before they reach you; every one that does costs you.",
       "leaderboardId": null,
       "rankMaxes": [
         210,
@@ -2471,15 +2565,15 @@
       "subCategory": "Dynamic Clicking",
       "window": 0,
       "label": "Satellite",
-      "focus": "Fliers circling you as they rise and fall; follow the orbit and click.",
+      "focus": "Fliers in front of you drifting nearer and further as they rise and fall; follow them and click.",
       "leaderboardId": null,
       "rankMaxes": [
-        440,
-        604,
-        709,
-        786,
-        852,
-        914
+        391,
+        542,
+        639,
+        711,
+        772,
+        829
       ],
       "source": {
         "kind": "predicted",
@@ -2495,15 +2589,15 @@
       "subCategory": "Dynamic Clicking",
       "window": 1,
       "label": "Satellite",
-      "focus": "Fliers circling you as they rise and fall; follow the orbit and click.",
+      "focus": "Fliers in front of you drifting nearer and further as they rise and fall; follow them and click.",
       "leaderboardId": null,
       "rankMaxes": [
-        799,
-        858,
-        883,
-        932,
-        972,
-        1008
+        722,
+        777,
+        800,
+        845,
+        882,
+        915
       ],
       "source": {
         "kind": "predicted",
@@ -2519,15 +2613,15 @@
       "subCategory": "Dynamic Clicking",
       "window": 2,
       "label": "Satellite",
-      "focus": "Fliers circling you as they rise and fall; follow the orbit and click.",
+      "focus": "Fliers in front of you drifting nearer and further as they rise and fall; follow them and click.",
       "leaderboardId": null,
       "rankMaxes": [
-        913,
-        947,
-        978,
-        1007,
-        1035,
-        1072
+        828,
+        859,
+        888,
+        914,
+        940,
+        974
       ],
       "source": {
         "kind": "predicted",
@@ -2543,13 +2637,13 @@
       "subCategory": "Dynamic Clicking",
       "window": 3,
       "label": "Satellite",
-      "focus": "Fliers circling you as they rise and fall; follow the orbit and click.",
+      "focus": "Fliers in front of you drifting nearer and further as they rise and fall; follow them and click.",
       "leaderboardId": null,
       "rankMaxes": [
-        974,
-        1008,
-        1031,
-        1059
+        884,
+        915,
+        936,
+        961
       ],
       "source": {
         "kind": "predicted",

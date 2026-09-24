@@ -1,7 +1,7 @@
 # Season 2
 
-A season of scenarios made for Apogee: 40 families, six to nine per category, four bands
-each, 160 scenarios. None existed before this. Season 1 is untouched; season 2 is a draft in
+A season of scenarios made for Apogee: 41 families, six to nine per category, four bands
+each, 164 scenarios. None existed before this. Season 1 is untouched; season 2 is a draft in
 `data/seasons/season-2.json`, and nothing reads it at runtime yet.
 
 Why each rule is what it is: [season-2-research.md](season-2-research.md). What the
@@ -12,8 +12,8 @@ scenario file format turned out to be, pitfalls included:
 
 | Category | Families |
 | --- | --- |
-| Static Clicking | Galaga (five on one line), Zenith (vertical), Pinpoint (micro), Stars (wide field), Constellation (real constellations as waves), Parallax (two depths), Nebula (six up at once) |
-| Dynamic Clicking | Gravclick (slow floaters), Pendulum (slow wall-to-wall swings), Antigrav (bounces), Electric (straight runs, dead stops at turns, a charged buzz), Sun and Moon (two fast crossers, open room), Shooting Stars (straight lanes), Gravity Well (pressure: balloons that fire back, on fuglaa's design), Meteor (Voltaic's Floating Heads, large and slow), Satellite (circling fliers, open room) |
+| Static Clicking | Galaga (five on one line), Zenith (vertical), Pinpoint (micro), Stars (wide field), Constellation (real constellations as waves), Parallax (two depths), Nebula (six up at once), 1w6aliens (six still balloons on one wall) |
+| Dynamic Clicking | Gravclick (slow floaters), Pendulum (slow wall-to-wall swings), Antigrav (bounces), Electric (straight runs, dead stops at turns, a charged buzz), Sun and Moon (two fast crossers, open room), Shooting Stars (straight lanes), Gravity Well (pressure: balloons that dash at you, on fuglaa's design), Meteor (Voltaic's Floating Heads, large and slow), Satellite (fliers in front, drifting nearer and further) |
 | Precise Tracking | Glide (smooth ground), Blastoff (vertical), Orbit (curves), Thread (small and slow), Arc (floaty jumps), AlienTrack (close and wide, with Ground Plaza's blink) |
 | Reactive Tracking | Pong (close strafes), Pong3D (range changes), Stutter (stops, sometimes for a second or two), Hover (jumps), UFO (3D flier), Feint (dodges when hit) |
 | Speed Switching | DNA (compact), CockpiTS (wide), Column (vertical), Asteroids (six small), RockeTS (slow movers, quick kills), MartianTS (long kills) |
@@ -29,7 +29,11 @@ Pendulum on slow wall-to-wall runs, Meteor as Voltaic's Floating Heads made larg
 Electric's charged buzz, Satellite and Meteor easier at Novice, AlienTrack's blink, shorter
 stops for Stutter, six targets for FleeTS, and more names. The fourth: Gravity Well rebuilt
 as a straightforward pressure scenario on cA fuglaapressure, Pendulum easier, Electric
-stopping at its turns, Satellite in an open room, and more blinks for AlienTrack.
+stopping at its turns, Satellite in an open room, and more blinks for AlienTrack. The fifth:
+Gravity Well's balloons armed again (the attack is four abilities, which the generator had
+been stripping from every target), the unarmed version kept as 1w6aliens, Satellite back in
+front of the player with depth, AlienTrack's blinks twice as far, and vertical movement for
+every flier - which had never been switched on.
 
 Each scenario is named `Apogee <Family> <Band>`. Every one, with its size, speed, reversal
 and kill time, predicted median and thresholds, is listed in
@@ -94,21 +98,23 @@ season is `npm run push:season`, which Rylee runs.
 
 ## Playtest before anything else
 
-Confirmed in game on 2026-09-24, over three rounds: every template's scenarios load, and the
-second and third rounds' mechanisms work as meant (Constellation waves, waypoint paths,
-Stutter's stops, skeeTS, comeTS, LosTS, InvadersTS, Pendulum's wall-to-wall runs, Meteor,
-Sun and Moon, AlienTrack's blink). The fourth round's changes have not been played.
-`Apogee S2 Playtest` holds one of each:
+Confirmed in game on 2026-09-24, over four rounds: every template's scenarios load, and the
+mechanisms of the second to fourth rounds work as meant, except the two this round fixes.
+The fifth round's changes have not been played. `Apogee S2 Playtest` holds one of each:
 
-1. **Gravity Well**, now a pressure scenario on cA fuglaapressure: balloons that fire back,
-   each hit costing score. The game runs at 1.0x at Novice and 0.2x faster each band, the
-   limit set in game time so a run lasts sixty real seconds. Its thresholds come from cA
-   fuglaapressure's own board, moved for the bigger balloons and slower game; neither of
-   those shifts is measured on a pressure scenario, so recut it early.
-2. **Pendulum**: easier, larger and slower.
-3. **Electric**: stops dead at every change of direction, buzzing throughout.
-4. **Satellite**: in an open room.
-5. **AlienTrack**: blinks more often, every six seconds at Novice.
+1. **Gravity Well**: balloons dash at the player and burst on arrival, each hit costing
+   score; the first playtest found them standing still because their abilities had been
+   stripped. The dash is slow at Novice (1,500) and 1.2x each band. Its thresholds come from
+   cA fuglaapressure's board moved for size and game speed, not for the slower dash, so they
+   are likely low; recut early.
+2. **1w6aliens**: six still balloons, scored per kill.
+3. **Electric**: its vertical buzz, which never appeared before.
+4. **Satellite**: in front of the player again, drifting nearer and further.
+5. **AlienTrack**: blinks twice as far.
+6. **Blastoff, Orbit, UFO, comeTS, RockeTS**: every flier now moves up and down as designed.
+   Before, the generator set the input that drives a flier's vertical movement
+   (JumpFrequency) to zero, so these almost certainly only moved sideways. Their feel may
+   have changed a lot.
 
 Still open from before: tracking targets never die; Feint's dodge reads as a reaction;
 switching bands feel harder as they go; and the thresholds of Blastoff, Orbit and UFO, built

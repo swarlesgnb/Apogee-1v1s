@@ -85,6 +85,15 @@ it to the counts quoted.
 - **Strafes**: `MinLRTimeChange`/`MaxLRTimeChange` is the time between reversals,
   `StrafeSwapMinPause`/`MaxPause` a stop before reversing, `ToggleUpDown*` the same for
   fliers (`IsFlyer`, with `FlightVelocityUp`/`Down`).
+- **A flier's up and down needs its jump and crouch inputs.** Every flier that moves
+  vertically on the ToggleUpDown clock (Aether, EddieTS, the vibrate scenarios) carries
+  `JumpFrequency` around 0.5, EddieTS also `CrouchInAirFrequency` 0.5; with them at zero,
+  season 2's Electric showed no vertical buzz in game. Fliers that go where they aim
+  (`FlightObeysPitch`, cloverRawControl) do without.
+- **Abilities can be the scenario.** fuglaa's pressure balloons attack through four:
+  `Approach` (a dash at the player), `Depart`, `Damage Self Only` and `Damage Player and
+  Self` (a burst that hits both). Stripped, the balloons stand still - which is how season
+  2's first Gravity Well played.
 - **`DamageReactionChangesDirection`** makes a bot reverse after being hit, within
   `DamageReactionMinimumDelay`-`MaximumDelay`, ignoring a `DamageReactionChanceToIgnore`
   share of hits.
@@ -107,9 +116,9 @@ it to the counts quoted.
   error at the top 5% of the board rises from 0.100 to 0.112 (`ablation` in the model file).
 - **`Timelimit` is game time.** Under `Timescale` 1.8, cA fuglaapressure sets 108 for a
   sixty-second run; season 2's Gravity Well does the same at each band's speed.
-- **Pressure, fuglaa's way**: still targets carry a weapon and an aim profile with a short
-  shoot delay, and `ScoreLossPerDamageTaken` makes every hit on the player cost score - so a
-  target left alive is a loss, not only a delay. The player survives it (the head keeps
+- **Pressure, fuglaa's way**: the balloons dash at the player and burst on arrival (the
+  abilities above), and `ScoreLossPerDamageTaken` makes every hit on the player cost score -
+  so a target left alive is a loss, not only a delay. The player survives it (the head keeps
   `InvinciblePlayer=true`); only the score pays.
 - **`ScoreToWin` does not end a challenge.** Voltaic's 1w4ts carries `ScoreToWin=1000` and
   its median score is 1,063.

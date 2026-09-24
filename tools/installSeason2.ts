@@ -65,7 +65,7 @@ for (const category of season.categories) {
 }
 // The playtest (docs/season-2.md): the Novice cut of every family changed since the last
 // round was played, so each is seen working once before anything else is judged.
-const PLAYTEST = ["Gravity Well", "Pendulum", "Electric", "Satellite", "AlienTrack"].map((f) => `Apogee ${f} Novice`);
+const PLAYTEST = ["Gravity Well", "1w6aliens", "Electric", "Satellite", "AlienTrack", "Blastoff", "Orbit", "UFO", "comeTS", "RockeTS"].map((f) => `Apogee ${f} Novice`);
 if (PLAYTEST.every((n) => season.scenarios.some((s) => s.scenario === n))) {
   playlists.unshift({
     playlistName: `${PLAYLIST_PREFIX}Playtest`,

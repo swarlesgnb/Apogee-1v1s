@@ -86,6 +86,18 @@
    "arm": "Wrist"
   },
   {
+   "family": "1w6aliens",
+   "category": "Static Clicking",
+   "focus": "Six still targets on one wall; take the nearest, keep the rhythm.",
+   "why": "The first Gravity Well as it played: fuglaa's balloons on their own wall with their attack left out, so they stand still - six at a time, a 1wall 6targets on a different field.",
+   "learnsFrom": [
+    "cA fuglaapressure",
+    "1wall 6targets small"
+   ],
+   "template": "cA fuglaapressure",
+   "arm": "Wrist"
+  },
+  {
    "family": "Gravclick",
    "category": "Dynamic Clicking",
    "focus": "Slow floaters; match their drift for a moment, then click.",
@@ -160,8 +172,8 @@
   {
    "family": "Gravity Well",
    "category": "Dynamic Clicking",
-   "focus": "Pop them before they fire; every hit you take costs you.",
-   "why": "Speed clicking under pressure, on fuglaa's design: still balloons that aim at the player and shoot a moment later, so a target left alive costs score rather than only time. The game runs faster each band, and the balloons shoot sooner with it.",
+   "focus": "Pop them before they reach you; every one that does costs you.",
+   "why": "Speed clicking under pressure, on fuglaa's design: balloons that dash at the player and burst on arrival, so a target left alive costs score rather than only time. The dash is slow at Novice and 1.2x faster each band, and the game itself runs faster each band too.",
    "learnsFrom": [
     "cA fuglaapressure",
     "fuglaaPressure"
@@ -187,7 +199,7 @@
   {
    "family": "Satellite",
    "category": "Dynamic Clicking",
-   "focus": "Fliers circling you as they rise and fall; follow the orbit and click.",
+   "focus": "Fliers in front of you drifting nearer and further as they rise and fall; follow them and click.",
    "why": "psalmTS's motion as a clicking task: targets strafe round the player on long, even runs while climbing and dropping, linear in each axis and curved together.",
    "learnsFrom": [
     "psalmTS angelic click",
@@ -1119,6 +1131,96 @@
    ]
   },
   {
+   "scenario": "Apogee 1w6aliens Novice",
+   "family": "1w6aliens",
+   "band": "Novice",
+   "class": "click",
+   "targetDeg": 1.6,
+   "angularSpeed": 0,
+   "fittsIdNearest": 3.2,
+   "ttk": 0,
+   "median": 1245,
+   "medianRange": [
+    1094,
+    1416
+   ],
+   "rankMaxes": [
+    965,
+    1146,
+    1251,
+    1330,
+    1397,
+    1461
+   ]
+  },
+  {
+   "scenario": "Apogee 1w6aliens Intermediate",
+   "family": "1w6aliens",
+   "band": "Intermediate",
+   "class": "click",
+   "targetDeg": 1.392,
+   "angularSpeed": 0,
+   "fittsIdNearest": 3.381,
+   "ttk": 0,
+   "median": 1184,
+   "medianRange": [
+    1041,
+    1347
+   ],
+   "rankMaxes": [
+    1331,
+    1393,
+    1420,
+    1473,
+    1518,
+    1559
+   ]
+  },
+  {
+   "scenario": "Apogee 1w6aliens Advanced",
+   "family": "1w6aliens",
+   "band": "Advanced",
+   "class": "click",
+   "targetDeg": 1.211,
+   "angularSpeed": 0,
+   "fittsIdNearest": 3.564,
+   "ttk": 0,
+   "median": 1126,
+   "medianRange": [
+    990,
+    1281
+   ],
+   "rankMaxes": [
+    1448,
+    1487,
+    1525,
+    1560,
+    1594,
+    1638
+   ]
+  },
+  {
+   "scenario": "Apogee 1w6aliens Expert",
+   "family": "1w6aliens",
+   "band": "Expert",
+   "class": "click",
+   "targetDeg": 1.054,
+   "angularSpeed": 0,
+   "fittsIdNearest": 3.749,
+   "ttk": 0,
+   "median": 1070,
+   "medianRange": [
+    940,
+    1217
+   ],
+   "rankMaxes": [
+    1521,
+    1562,
+    1589,
+    1623
+   ]
+  },
+  {
    "scenario": "Apogee Gravclick Novice",
    "family": "Gravclick",
    "band": "Novice",
@@ -1843,22 +1945,22 @@
    "family": "Satellite",
    "band": "Novice",
    "class": "click",
-   "targetDeg": 3,
-   "angularSpeed": 14,
-   "fittsIdNearest": 3.053,
+   "targetDeg": 3.158,
+   "angularSpeed": 14.7,
+   "fittsIdNearest": 3.389,
    "ttk": 0,
-   "median": 703,
+   "median": 634,
    "medianRange": [
-    618,
-    800
+    557,
+    721
    ],
    "rankMaxes": [
-    440,
-    604,
-    709,
-    786,
-    852,
-    914
+    391,
+    542,
+    639,
+    711,
+    772,
+    829
    ]
   },
   {
@@ -1866,22 +1968,22 @@
    "family": "Satellite",
    "band": "Intermediate",
    "class": "click",
-   "targetDeg": 2.61,
-   "angularSpeed": 15.4,
-   "fittsIdNearest": 3.231,
+   "targetDeg": 2.747,
+   "angularSpeed": 16.2,
+   "fittsIdNearest": 3.572,
    "ttk": 0,
-   "median": 656,
+   "median": 590,
    "medianRange": [
-    577,
-    746
+    519,
+    672
    ],
    "rankMaxes": [
-    799,
-    858,
-    883,
-    932,
-    972,
-    1008
+    722,
+    777,
+    800,
+    845,
+    882,
+    915
    ]
   },
   {
@@ -1889,22 +1991,22 @@
    "family": "Satellite",
    "band": "Advanced",
    "class": "click",
-   "targetDeg": 2.271,
-   "angularSpeed": 16.9,
-   "fittsIdNearest": 3.412,
+   "targetDeg": 2.39,
+   "angularSpeed": 17.8,
+   "fittsIdNearest": 3.757,
    "ttk": 0,
-   "median": 611,
+   "median": 550,
    "medianRange": [
-    537,
-    696
+    483,
+    625
    ],
    "rankMaxes": [
-    913,
-    947,
-    978,
-    1007,
-    1035,
-    1072
+    828,
+    859,
+    888,
+    914,
+    940,
+    974
    ]
   },
   {
@@ -1912,20 +2014,20 @@
    "family": "Satellite",
    "band": "Expert",
    "class": "click",
-   "targetDeg": 1.976,
-   "angularSpeed": 18.6,
-   "fittsIdNearest": 3.595,
+   "targetDeg": 2.079,
+   "angularSpeed": 19.6,
+   "fittsIdNearest": 3.944,
    "ttk": 0,
-   "median": 570,
+   "median": 511,
    "medianRange": [
-    501,
-    648
+    449,
+    582
    ],
    "rankMaxes": [
-    974,
-    1008,
-    1031,
-    1059
+    884,
+    915,
+    936,
+    961
    ]
   },
   {

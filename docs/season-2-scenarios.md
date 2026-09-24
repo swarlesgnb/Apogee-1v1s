@@ -84,6 +84,17 @@ Six small targets up at once; take the nearest, keep the rhythm. The 1wall 6targ
 | Advanced | 1.14 | still | - | - | 1301 (1143-1480) | 1658, 1703, 1744, 1783, 1821, 1871 |
 | Expert | 0.99 | still | - | - | 1238 (1088-1409) | 1740, 1788, 1818, 1857 |
 
+### 1w6aliens
+
+Six still targets on one wall; take the nearest, keep the rhythm. The first Gravity Well as it played: fuglaa's balloons on their own wall with their attack left out, so they stand still - six at a time, a 1wall 6targets on a different field.
+
+| Band | Size (deg) | Speed (deg/s) | Reversal (s) | Kill (s) | Predicted median | Thresholds |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Novice | 1.60 | still | - | - | 1245 (1094-1416) | 965, 1146, 1251, 1330, 1397, 1461 |
+| Intermediate | 1.39 | still | - | - | 1184 (1041-1347) | 1331, 1393, 1420, 1473, 1518, 1559 |
+| Advanced | 1.21 | still | - | - | 1126 (990-1281) | 1448, 1487, 1525, 1560, 1594, 1638 |
+| Expert | 1.05 | still | - | - | 1070 (940-1217) | 1521, 1562, 1589, 1623 |
+
 ## Dynamic Clicking
 
 ### Gravclick
@@ -154,7 +165,7 @@ Straight lines across the sky; lead nothing, match the line and click. Linear mo
 
 ### Gravity Well
 
-Pop them before they fire; every hit you take costs you. Speed clicking under pressure, on fuglaa's design: still balloons that aim at the player and shoot a moment later, so a target left alive costs score rather than only time. The game runs faster each band, and the balloons shoot sooner with it.
+Pop them before they reach you; every one that does costs you. Speed clicking under pressure, on fuglaa's design: balloons that dash at the player and burst on arrival, so a target left alive costs score rather than only time. The dash is slow at Novice and 1.2x faster each band, and the game itself runs faster each band too.
 
 | Band | Size (deg) | Speed (deg/s) | Reversal (s) | Kill (s) | Predicted median | Thresholds |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
@@ -176,14 +187,14 @@ Floating heads: big, slow drifters; confirm the shot before you click. Voltaic's
 
 ### Satellite
 
-Fliers circling you as they rise and fall; follow the orbit and click. psalmTS's motion as a clicking task: targets strafe round the player on long, even runs while climbing and dropping, linear in each axis and curved together.
+Fliers in front of you drifting nearer and further as they rise and fall; follow them and click. psalmTS's motion as a clicking task: targets strafe round the player on long, even runs while climbing and dropping, linear in each axis and curved together.
 
 | Band | Size (deg) | Speed (deg/s) | Reversal (s) | Kill (s) | Predicted median | Thresholds |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
-| Novice | 3.00 | 14.0 | 3.50 | - | 703 (618-800) | 440, 604, 709, 786, 852, 914 |
-| Intermediate | 2.61 | 15.4 | 3.04 | - | 656 (577-746) | 799, 858, 883, 932, 972, 1008 |
-| Advanced | 2.27 | 16.9 | 2.65 | - | 611 (537-696) | 913, 947, 978, 1007, 1035, 1072 |
-| Expert | 1.98 | 18.6 | 2.30 | - | 570 (501-648) | 974, 1008, 1031, 1059 |
+| Novice | 3.16 | 14.7 | 3.50 | - | 634 (557-721) | 391, 542, 639, 711, 772, 829 |
+| Intermediate | 2.75 | 16.2 | 3.04 | - | 590 (519-672) | 722, 777, 800, 845, 882, 915 |
+| Advanced | 2.39 | 17.8 | 2.65 | - | 550 (483-625) | 828, 859, 888, 914, 940, 974 |
+| Expert | 2.08 | 19.6 | 2.30 | - | 511 (449-582) | 884, 915, 936, 961 |
 
 ## Precise Tracking
 
