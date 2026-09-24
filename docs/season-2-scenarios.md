@@ -103,10 +103,10 @@ Slow swings from wall to wall; click on the swing, not only at the turn. A pendu
 
 | Band | Size (deg) | Speed (deg/s) | Reversal (s) | Kill (s) | Predicted median | Thresholds |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
-| Novice | 2.34 | 9.8 | 6.75 | - | 658 (578-749) | 416, 567, 663, 734, 794, 850 |
-| Intermediate | 2.04 | 10.7 | 5.87 | - | 613 (539-698) | 743, 797, 819, 864, 901, 933 |
-| Advanced | 1.77 | 11.8 | 5.11 | - | 571 (502-649) | 845, 876, 904, 931, 957, 990 |
-| Expert | 1.54 | 13.0 | 4.44 | - | 531 (467-604) | 899, 930, 950, 976 |
+| Novice | 2.93 | 7.8 | 6.75 | - | 746 (656-849) | 484, 649, 752, 828, 893, 953 |
+| Intermediate | 2.55 | 8.6 | 5.87 | - | 696 (612-792) | 836, 894, 919, 967, 1007, 1042 |
+| Advanced | 2.22 | 9.5 | 5.11 | - | 649 (571-739) | 946, 979, 1010, 1039, 1067, 1104 |
+| Expert | 1.93 | 10.4 | 4.44 | - | 605 (531-688) | 1004, 1038, 1060, 1088 |
 
 ### Antigrav
 
@@ -121,14 +121,14 @@ Read the arc; the top of the bounce is the slowest moment. Gravity arcs. A bot u
 
 ### Electric
 
-Straight runs with a charged-up buzz; follow the line, not the shake. Linear motion with a vibration on top: the target runs straight from wall to wall while shaking up and down many times a second, so the player has to read the path through the noise - the reactive micro-adjustment cA 5ts vibrate is played for, on a moving target.
+Straight runs, a dead stop at every turn, and a charged-up buzz all the while. Linear motion with a vibration on top: the target runs straight, stops dead before it changes direction, and shakes up and down many times a second the whole time - so the stop is the moment to click, and the player reads it through the noise, the micro-adjustment cA 5ts vibrate is played for.
 
 | Band | Size (deg) | Speed (deg/s) | Reversal (s) | Kill (s) | Predicted median | Thresholds |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
-| Novice | 1.95 | 11.7 | 6.75 | - | 593 (521-674) | 367, 507, 598, 663, 720, 773 |
-| Intermediate | 1.70 | 12.9 | 5.87 | - | 552 (485-627) | 673, 723, 745, 786, 821, 851 |
-| Advanced | 1.48 | 14.2 | 5.11 | - | 513 (451-584) | 770, 798, 825, 850, 874, 905 |
-| Expert | 1.29 | 15.6 | 4.44 | - | 477 (419-543) | 820, 849, 868, 892 |
+| Novice | 2.00 | 12.0 | 2.00 | - | 595 (523-677) | 368, 509, 600, 666, 723, 776 |
+| Intermediate | 1.74 | 13.2 | 1.74 | - | 554 (487-630) | 676, 727, 748, 790, 825, 855 |
+| Advanced | 1.51 | 14.5 | 1.51 | - | 515 (453-586) | 773, 802, 829, 854, 878, 909 |
+| Expert | 1.32 | 16.0 | 1.32 | - | 479 (421-545) | 824, 854, 872, 896 |
 
 ### Sun and Moon
 
@@ -154,14 +154,14 @@ Straight lines across the sky; lead nothing, match the line and click. Linear mo
 
 ### Gravity Well
 
-They come in from the rim toward the middle; shoot every one before it gets there. Speed clicking under pressure: targets enter on a ring round the centre of the view and head straight for it, and one that reaches the middle is gone. The paths are known, so the skill is order and pace.
+Pop them before they fire; every hit you take costs you. Speed clicking under pressure, on fuglaa's design: still balloons that aim at the player and shoot a moment later, so a target left alive costs score rather than only time. The game runs faster each band, and the balloons shoot sooner with it.
 
 | Band | Size (deg) | Speed (deg/s) | Reversal (s) | Kill (s) | Predicted median | Thresholds |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
-| Novice | 2.20 | 7.5 | 1.00 | - | 862 (758-981) | 569, 753, 868, 953, 1025, 1092 |
-| Intermediate | 1.91 | 8.2 | 1.00 | - | 806 (708-917) | 962, 1027, 1055, 1108, 1153, 1193 |
-| Advanced | 1.67 | 9.1 | 1.00 | - | 753 (662-856) | 1085, 1123, 1158, 1190, 1222, 1263 |
-| Expert | 1.45 | 10.0 | 1.00 | - | 702 (617-799) | 1151, 1190, 1215, 1247 |
+| Novice | 1.60 | still | - | - | 126 (111-143) | 28, 80, 128, 161, 184, 201 |
+| Intermediate | 1.39 | still | - | - | 120 (105-136) | 176, 192, 196, 207, 213, 218 |
+| Advanced | 1.21 | still | - | - | 114 (100-129) | 203, 208, 212, 216, 220, 224 |
+| Expert | 1.05 | still | - | - | 108 (95-123) | 210, 214, 217, 221 |
 
 ### Meteor
 
@@ -180,10 +180,10 @@ Fliers circling you as they rise and fall; follow the orbit and click. psalmTS's
 
 | Band | Size (deg) | Speed (deg/s) | Reversal (s) | Kill (s) | Predicted median | Thresholds |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
-| Novice | 3.00 | 14.0 | 3.50 | - | 629 (553-716) | 389, 538, 634, 705, 765, 822 |
-| Intermediate | 2.61 | 15.4 | 3.04 | - | 586 (515-666) | 716, 770, 793, 837, 874, 907 |
-| Advanced | 2.27 | 16.9 | 2.65 | - | 545 (479-620) | 820, 851, 879, 906, 932, 965 |
-| Expert | 1.98 | 18.6 | 2.30 | - | 507 (446-577) | 875, 906, 926, 952 |
+| Novice | 3.00 | 14.0 | 3.50 | - | 703 (618-800) | 440, 604, 709, 786, 852, 914 |
+| Intermediate | 2.61 | 15.4 | 3.04 | - | 656 (577-746) | 799, 858, 883, 932, 972, 1008 |
+| Advanced | 2.27 | 16.9 | 2.65 | - | 611 (537-696) | 913, 947, 978, 1007, 1035, 1072 |
+| Expert | 1.98 | 18.6 | 2.30 | - | 570 (501-648) | 974, 1008, 1031, 1059 |
 
 ## Precise Tracking
 

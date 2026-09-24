@@ -105,6 +105,12 @@ it to the counts quoted.
   times accuracy with `ScoreMultAccuracy`, or times its square root with `MultSqrtAcc` as
   well. The clicking model carries a flag for each; without the plain multiplier's, its
   error at the top 5% of the board rises from 0.100 to 0.112 (`ablation` in the model file).
+- **`Timelimit` is game time.** Under `Timescale` 1.8, cA fuglaapressure sets 108 for a
+  sixty-second run; season 2's Gravity Well does the same at each band's speed.
+- **Pressure, fuglaa's way**: still targets carry a weapon and an aim profile with a short
+  shoot delay, and `ScoreLossPerDamageTaken` makes every hit on the player cost score - so a
+  target left alive is a loss, not only a delay. The player survives it (the head keeps
+  `InvinciblePlayer=true`); only the score pays.
 - **`ScoreToWin` does not end a challenge.** Voltaic's 1w4ts carries `ScoreToWin=1000` and
   its median score is 1,063.
 - **A reload economy** (`MagazineMax` with `AmmoPerShot` above 1) is Voltaic's other way to

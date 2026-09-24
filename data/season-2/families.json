@@ -124,8 +124,8 @@
   {
    "family": "Electric",
    "category": "Dynamic Clicking",
-   "focus": "Straight runs with a charged-up buzz; follow the line, not the shake.",
-   "why": "Linear motion with a vibration on top: the target runs straight from wall to wall while shaking up and down many times a second, so the player has to read the path through the noise - the reactive micro-adjustment cA 5ts vibrate is played for, on a moving target.",
+   "focus": "Straight runs, a dead stop at every turn, and a charged-up buzz all the while.",
+   "why": "Linear motion with a vibration on top: the target runs straight, stops dead before it changes direction, and shakes up and down many times a second the whole time - so the stop is the moment to click, and the player reads it through the noise, the micro-adjustment cA 5ts vibrate is played for.",
    "learnsFrom": [
     "cA 5ts vibrate",
     "VT Floating Heads Novice S5"
@@ -160,14 +160,16 @@
   {
    "family": "Gravity Well",
    "category": "Dynamic Clicking",
-   "focus": "They come in from the rim toward the middle; shoot every one before it gets there.",
-   "why": "Speed clicking under pressure: targets enter on a ring round the centre of the view and head straight for it, and one that reaches the middle is gone. The paths are known, so the skill is order and pace.",
+   "focus": "Pop them before they fire; every hit you take costs you.",
+   "why": "Speed clicking under pressure, on fuglaa's design: still balloons that aim at the player and shoot a moment later, so a target left alive costs score rather than only time. The game runs faster each band, and the balloons shoot sooner with it.",
    "learnsFrom": [
-    "Floating Heads Timing 400%",
-    "psalmTS angelic click"
+    "cA fuglaapressure",
+    "fuglaaPressure"
    ],
-   "template": "VT Floating Heads Novice S5",
+   "template": "cA fuglaapressure",
    "arm": "Wrist",
+   "modelClass": "click",
+   "anchor": "cA fuglaapressure",
    "pressure": true
   },
   {
@@ -1211,22 +1213,22 @@
    "family": "Pendulum",
    "band": "Novice",
    "class": "click",
-   "targetDeg": 2.344,
-   "angularSpeed": 9.8,
-   "fittsIdNearest": 3.563,
+   "targetDeg": 2.93,
+   "angularSpeed": 7.8,
+   "fittsIdNearest": 3.272,
    "ttk": 0,
-   "median": 658,
+   "median": 746,
    "medianRange": [
-    578,
-    749
+    656,
+    849
    ],
    "rankMaxes": [
-    416,
-    567,
-    663,
-    734,
-    794,
-    850
+    484,
+    649,
+    752,
+    828,
+    893,
+    953
    ]
   },
   {
@@ -1234,22 +1236,22 @@
    "family": "Pendulum",
    "band": "Intermediate",
    "class": "click",
-   "targetDeg": 2.039,
-   "angularSpeed": 10.7,
-   "fittsIdNearest": 3.748,
+   "targetDeg": 2.549,
+   "angularSpeed": 8.6,
+   "fittsIdNearest": 3.453,
    "ttk": 0,
-   "median": 613,
+   "median": 696,
    "medianRange": [
-    539,
-    698
+    612,
+    792
    ],
    "rankMaxes": [
-    743,
-    797,
-    819,
-    864,
-    901,
-    933
+    836,
+    894,
+    919,
+    967,
+    1007,
+    1042
    ]
   },
   {
@@ -1257,22 +1259,22 @@
    "family": "Pendulum",
    "band": "Advanced",
    "class": "click",
-   "targetDeg": 1.774,
-   "angularSpeed": 11.8,
-   "fittsIdNearest": 3.935,
+   "targetDeg": 2.217,
+   "angularSpeed": 9.5,
+   "fittsIdNearest": 3.637,
    "ttk": 0,
-   "median": 571,
+   "median": 649,
    "medianRange": [
-    502,
-    649
+    571,
+    739
    ],
    "rankMaxes": [
-    845,
-    876,
-    904,
-    931,
-    957,
-    990
+    946,
+    979,
+    1010,
+    1039,
+    1067,
+    1104
    ]
   },
   {
@@ -1280,20 +1282,20 @@
    "family": "Pendulum",
    "band": "Expert",
    "class": "click",
-   "targetDeg": 1.543,
-   "angularSpeed": 13,
-   "fittsIdNearest": 4.124,
+   "targetDeg": 1.929,
+   "angularSpeed": 10.4,
+   "fittsIdNearest": 3.822,
    "ttk": 0,
-   "median": 531,
+   "median": 605,
    "medianRange": [
-    467,
-    604
+    531,
+    688
    ],
    "rankMaxes": [
-    899,
-    930,
-    950,
-    976
+    1004,
+    1038,
+    1060,
+    1088
    ]
   },
   {
@@ -1391,22 +1393,22 @@
    "family": "Electric",
    "band": "Novice",
    "class": "click",
-   "targetDeg": 1.953,
-   "angularSpeed": 11.7,
-   "fittsIdNearest": 3.806,
+   "targetDeg": 2,
+   "angularSpeed": 12,
+   "fittsIdNearest": 3.774,
    "ttk": 0,
-   "median": 593,
+   "median": 595,
    "medianRange": [
-    521,
-    674
+    523,
+    677
    ],
    "rankMaxes": [
-    367,
-    507,
-    598,
-    663,
-    720,
-    773
+    368,
+    509,
+    600,
+    666,
+    723,
+    776
    ]
   },
   {
@@ -1414,22 +1416,22 @@
    "family": "Electric",
    "band": "Intermediate",
    "class": "click",
-   "targetDeg": 1.699,
-   "angularSpeed": 12.9,
-   "fittsIdNearest": 3.993,
+   "targetDeg": 1.74,
+   "angularSpeed": 13.2,
+   "fittsIdNearest": 3.961,
    "ttk": 0,
-   "median": 552,
+   "median": 554,
    "medianRange": [
-    485,
-    627
+    487,
+    630
    ],
    "rankMaxes": [
-    673,
-    723,
-    745,
-    786,
-    821,
-    851
+    676,
+    727,
+    748,
+    790,
+    825,
+    855
    ]
   },
   {
@@ -1437,22 +1439,22 @@
    "family": "Electric",
    "band": "Advanced",
    "class": "click",
-   "targetDeg": 1.478,
-   "angularSpeed": 14.2,
-   "fittsIdNearest": 4.182,
+   "targetDeg": 1.514,
+   "angularSpeed": 14.5,
+   "fittsIdNearest": 4.15,
    "ttk": 0,
-   "median": 513,
+   "median": 515,
    "medianRange": [
-    451,
-    584
+    453,
+    586
    ],
    "rankMaxes": [
-    770,
-    798,
-    825,
-    850,
-    874,
-    905
+    773,
+    802,
+    829,
+    854,
+    878,
+    909
    ]
   },
   {
@@ -1460,20 +1462,20 @@
    "family": "Electric",
    "band": "Expert",
    "class": "click",
-   "targetDeg": 1.286,
-   "angularSpeed": 15.6,
-   "fittsIdNearest": 4.373,
+   "targetDeg": 1.317,
+   "angularSpeed": 16,
+   "fittsIdNearest": 4.34,
    "ttk": 0,
-   "median": 477,
+   "median": 479,
    "medianRange": [
-    419,
-    543
+    421,
+    545
    ],
    "rankMaxes": [
-    820,
-    849,
-    868,
-    892
+    824,
+    854,
+    872,
+    896
    ]
   },
   {
@@ -1661,22 +1663,22 @@
    "family": "Gravity Well",
    "band": "Novice",
    "class": "click",
-   "targetDeg": 2.2,
-   "angularSpeed": 7.5,
-   "fittsIdNearest": 2.782,
+   "targetDeg": 1.6,
+   "angularSpeed": 0,
+   "fittsIdNearest": 3.372,
    "ttk": 0,
-   "median": 862,
+   "median": 126,
    "medianRange": [
-    758,
-    981
+    111,
+    143
    ],
    "rankMaxes": [
-    569,
-    753,
-    868,
-    953,
-    1025,
-    1092
+    28,
+    80,
+    128,
+    161,
+    184,
+    201
    ]
   },
   {
@@ -1684,22 +1686,22 @@
    "family": "Gravity Well",
    "band": "Intermediate",
    "class": "click",
-   "targetDeg": 1.914,
-   "angularSpeed": 8.2,
-   "fittsIdNearest": 2.955,
+   "targetDeg": 1.392,
+   "angularSpeed": 0,
+   "fittsIdNearest": 3.555,
    "ttk": 0,
-   "median": 806,
+   "median": 120,
    "medianRange": [
-    708,
-    917
+    105,
+    136
    ],
    "rankMaxes": [
-    962,
-    1027,
-    1055,
-    1108,
-    1153,
-    1193
+    176,
+    192,
+    196,
+    207,
+    213,
+    218
    ]
   },
   {
@@ -1707,22 +1709,22 @@
    "family": "Gravity Well",
    "band": "Advanced",
    "class": "click",
-   "targetDeg": 1.665,
-   "angularSpeed": 9.1,
-   "fittsIdNearest": 3.132,
+   "targetDeg": 1.211,
+   "angularSpeed": 0,
+   "fittsIdNearest": 3.74,
    "ttk": 0,
-   "median": 753,
+   "median": 114,
    "medianRange": [
-    662,
-    856
+    100,
+    129
    ],
    "rankMaxes": [
-    1085,
-    1123,
-    1158,
-    1190,
-    1222,
-    1263
+    203,
+    208,
+    212,
+    216,
+    220,
+    224
    ]
   },
   {
@@ -1730,20 +1732,20 @@
    "family": "Gravity Well",
    "band": "Expert",
    "class": "click",
-   "targetDeg": 1.449,
-   "angularSpeed": 10,
-   "fittsIdNearest": 3.311,
+   "targetDeg": 1.054,
+   "angularSpeed": 0,
+   "fittsIdNearest": 3.926,
    "ttk": 0,
-   "median": 702,
+   "median": 108,
    "medianRange": [
-    617,
-    799
+    95,
+    123
    ],
    "rankMaxes": [
-    1151,
-    1190,
-    1215,
-    1247
+    210,
+    214,
+    217,
+    221
    ]
   },
   {
@@ -1843,20 +1845,20 @@
    "class": "click",
    "targetDeg": 3,
    "angularSpeed": 14,
-   "fittsIdNearest": 3.456,
+   "fittsIdNearest": 3.053,
    "ttk": 0,
-   "median": 629,
+   "median": 703,
    "medianRange": [
-    553,
-    716
+    618,
+    800
    ],
    "rankMaxes": [
-    389,
-    538,
-    634,
-    705,
-    765,
-    822
+    440,
+    604,
+    709,
+    786,
+    852,
+    914
    ]
   },
   {
@@ -1866,20 +1868,20 @@
    "class": "click",
    "targetDeg": 2.61,
    "angularSpeed": 15.4,
-   "fittsIdNearest": 3.64,
+   "fittsIdNearest": 3.231,
    "ttk": 0,
-   "median": 586,
+   "median": 656,
    "medianRange": [
-    515,
-    666
+    577,
+    746
    ],
    "rankMaxes": [
-    716,
-    770,
-    793,
-    837,
-    874,
-    907
+    799,
+    858,
+    883,
+    932,
+    972,
+    1008
    ]
   },
   {
@@ -1889,20 +1891,20 @@
    "class": "click",
    "targetDeg": 2.271,
    "angularSpeed": 16.9,
-   "fittsIdNearest": 3.826,
+   "fittsIdNearest": 3.412,
    "ttk": 0,
-   "median": 545,
+   "median": 611,
    "medianRange": [
-    479,
-    620
+    537,
+    696
    ],
    "rankMaxes": [
-    820,
-    851,
-    879,
-    906,
-    932,
-    965
+    913,
+    947,
+    978,
+    1007,
+    1035,
+    1072
    ]
   },
   {
@@ -1912,18 +1914,18 @@
    "class": "click",
    "targetDeg": 1.976,
    "angularSpeed": 18.6,
-   "fittsIdNearest": 4.013,
+   "fittsIdNearest": 3.595,
    "ttk": 0,
-   "median": 507,
+   "median": 570,
    "medianRange": [
-    446,
-    577
+    501,
+    648
    ],
    "rankMaxes": [
-    875,
-    906,
-    926,
-    952
+    974,
+    1008,
+    1031,
+    1059
    ]
   },
   {

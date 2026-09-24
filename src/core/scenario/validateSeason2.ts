@@ -182,7 +182,10 @@ for (const [name, { sce }] of sces) {
     fail(`${name}: ${why}`);
   };
   if (!name.startsWith("Apogee ")) broke("name does not start with Apogee");
-  if (get(sce.head, "Timelimit") !== "60.0") broke(`Timelimit=${get(sce.head, "Timelimit")}`);
+  // Sixty real seconds: a file that runs its game faster (Timescale above 1) sets its
+  // limit in game time, as cA fuglaapressure does (108 at 1.8).
+  const real = num(sce.head, "Timelimit", 0) / (num(sce.head, "Timescale", 1) || 1);
+  if (Math.abs(real - 60) > 0.01) broke(`runs ${real.toFixed(2)} real seconds (Timelimit ${get(sce.head, "Timelimit")}, Timescale ${get(sce.head, "Timescale")})`);
   if (get(sce.head, "ScoreMultAccuracy") !== "false") broke("accuracy multiplier is on");
   if (!(get(sce.head, "SearchTags") ?? get(sce.head, "GameTag") ?? "").includes("Apogee Season 2")) broke("not tagged Apogee Season 2");
 }
@@ -201,7 +204,7 @@ for (const [cat, fams] of byCategory) {
   for (const [fam, windows] of fams) if (windows.size !== 4) fail(`${fam} has ${windows.size} bands, not 4`);
 }
 if (byCategory.size !== 6) fail(`${byCategory.size} categories, not 6`);
-if (!ruleBreaks) pass("60 seconds, no accuracy multiplier, Apogee names and tags on every file");
+if (!ruleBreaks) pass("60 real seconds, no accuracy multiplier, Apogee names and tags on every file");
 
 // ---- 3 and 4. thresholds and band order -------------------------------------------------------
 

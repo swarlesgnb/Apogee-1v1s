@@ -139,7 +139,7 @@ for (const family of FAMILIES) {
       problems.push(`${name}: its anchor ${family.anchor} has no board on this machine`);
       continue;
     }
-    if (anchor && classify(anchor.features) !== cls) {
+    if (anchor && classify(anchor.features, { pressure: family.pressure }) !== cls) {
       problems.push(`${name}: its anchor ${family.anchor} is not in the ${cls} class`);
       continue;
     }

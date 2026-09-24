@@ -1050,7 +1050,7 @@
       "file": "data/season-2/difficulty_model.json"
     }
   },
-  "builtAt": "2026-09-24T20:03:01.822Z",
+  "builtAt": "2026-09-24T20:22:25.551Z",
   "scenarios": [
     {
       "scenario": "Apogee Galaga Novice",
@@ -1816,12 +1816,12 @@
       "focus": "Slow swings from wall to wall; click on the swing, not only at the turn.",
       "leaderboardId": null,
       "rankMaxes": [
-        416,
-        567,
-        663,
-        734,
-        794,
-        850
+        484,
+        649,
+        752,
+        828,
+        893,
+        953
       ],
       "source": {
         "kind": "predicted",
@@ -1840,12 +1840,12 @@
       "focus": "Slow swings from wall to wall; click on the swing, not only at the turn.",
       "leaderboardId": null,
       "rankMaxes": [
-        743,
-        797,
-        819,
-        864,
-        901,
-        933
+        836,
+        894,
+        919,
+        967,
+        1007,
+        1042
       ],
       "source": {
         "kind": "predicted",
@@ -1864,12 +1864,12 @@
       "focus": "Slow swings from wall to wall; click on the swing, not only at the turn.",
       "leaderboardId": null,
       "rankMaxes": [
-        845,
-        876,
-        904,
-        931,
-        957,
-        990
+        946,
+        979,
+        1010,
+        1039,
+        1067,
+        1104
       ],
       "source": {
         "kind": "predicted",
@@ -1888,10 +1888,10 @@
       "focus": "Slow swings from wall to wall; click on the swing, not only at the turn.",
       "leaderboardId": null,
       "rankMaxes": [
-        899,
-        930,
-        950,
-        976
+        1004,
+        1038,
+        1060,
+        1088
       ],
       "source": {
         "kind": "predicted",
@@ -2001,15 +2001,15 @@
       "subCategory": "Dynamic Clicking",
       "window": 0,
       "label": "Electric",
-      "focus": "Straight runs with a charged-up buzz; follow the line, not the shake.",
+      "focus": "Straight runs, a dead stop at every turn, and a charged-up buzz all the while.",
       "leaderboardId": null,
       "rankMaxes": [
-        367,
-        507,
-        598,
-        663,
-        720,
-        773
+        368,
+        509,
+        600,
+        666,
+        723,
+        776
       ],
       "source": {
         "kind": "predicted",
@@ -2025,15 +2025,15 @@
       "subCategory": "Dynamic Clicking",
       "window": 1,
       "label": "Electric",
-      "focus": "Straight runs with a charged-up buzz; follow the line, not the shake.",
+      "focus": "Straight runs, a dead stop at every turn, and a charged-up buzz all the while.",
       "leaderboardId": null,
       "rankMaxes": [
-        673,
-        723,
-        745,
-        786,
-        821,
-        851
+        676,
+        727,
+        748,
+        790,
+        825,
+        855
       ],
       "source": {
         "kind": "predicted",
@@ -2049,15 +2049,15 @@
       "subCategory": "Dynamic Clicking",
       "window": 2,
       "label": "Electric",
-      "focus": "Straight runs with a charged-up buzz; follow the line, not the shake.",
+      "focus": "Straight runs, a dead stop at every turn, and a charged-up buzz all the while.",
       "leaderboardId": null,
       "rankMaxes": [
-        770,
-        798,
-        825,
-        850,
-        874,
-        905
+        773,
+        802,
+        829,
+        854,
+        878,
+        909
       ],
       "source": {
         "kind": "predicted",
@@ -2073,13 +2073,13 @@
       "subCategory": "Dynamic Clicking",
       "window": 3,
       "label": "Electric",
-      "focus": "Straight runs with a charged-up buzz; follow the line, not the shake.",
+      "focus": "Straight runs, a dead stop at every turn, and a charged-up buzz all the while.",
       "leaderboardId": null,
       "rankMaxes": [
-        820,
-        849,
-        868,
-        892
+        824,
+        854,
+        872,
+        896
       ],
       "source": {
         "kind": "predicted",
@@ -2283,15 +2283,15 @@
       "subCategory": "Dynamic Clicking",
       "window": 0,
       "label": "Gravity Well",
-      "focus": "They come in from the rim toward the middle; shoot every one before it gets there.",
+      "focus": "Pop them before they fire; every hit you take costs you.",
       "leaderboardId": null,
       "rankMaxes": [
-        569,
-        753,
-        868,
-        953,
-        1025,
-        1092
+        28,
+        80,
+        128,
+        161,
+        184,
+        201
       ],
       "source": {
         "kind": "predicted",
@@ -2307,15 +2307,15 @@
       "subCategory": "Dynamic Clicking",
       "window": 1,
       "label": "Gravity Well",
-      "focus": "They come in from the rim toward the middle; shoot every one before it gets there.",
+      "focus": "Pop them before they fire; every hit you take costs you.",
       "leaderboardId": null,
       "rankMaxes": [
-        962,
-        1027,
-        1055,
-        1108,
-        1153,
-        1193
+        176,
+        192,
+        196,
+        207,
+        213,
+        218
       ],
       "source": {
         "kind": "predicted",
@@ -2331,15 +2331,15 @@
       "subCategory": "Dynamic Clicking",
       "window": 2,
       "label": "Gravity Well",
-      "focus": "They come in from the rim toward the middle; shoot every one before it gets there.",
+      "focus": "Pop them before they fire; every hit you take costs you.",
       "leaderboardId": null,
       "rankMaxes": [
-        1085,
-        1123,
-        1158,
-        1190,
-        1222,
-        1263
+        203,
+        208,
+        212,
+        216,
+        220,
+        224
       ],
       "source": {
         "kind": "predicted",
@@ -2355,13 +2355,13 @@
       "subCategory": "Dynamic Clicking",
       "window": 3,
       "label": "Gravity Well",
-      "focus": "They come in from the rim toward the middle; shoot every one before it gets there.",
+      "focus": "Pop them before they fire; every hit you take costs you.",
       "leaderboardId": null,
       "rankMaxes": [
-        1151,
-        1190,
-        1215,
-        1247
+        210,
+        214,
+        217,
+        221
       ],
       "source": {
         "kind": "predicted",
@@ -2474,12 +2474,12 @@
       "focus": "Fliers circling you as they rise and fall; follow the orbit and click.",
       "leaderboardId": null,
       "rankMaxes": [
-        389,
-        538,
-        634,
-        705,
-        765,
-        822
+        440,
+        604,
+        709,
+        786,
+        852,
+        914
       ],
       "source": {
         "kind": "predicted",
@@ -2498,12 +2498,12 @@
       "focus": "Fliers circling you as they rise and fall; follow the orbit and click.",
       "leaderboardId": null,
       "rankMaxes": [
-        716,
-        770,
-        793,
-        837,
-        874,
-        907
+        799,
+        858,
+        883,
+        932,
+        972,
+        1008
       ],
       "source": {
         "kind": "predicted",
@@ -2522,12 +2522,12 @@
       "focus": "Fliers circling you as they rise and fall; follow the orbit and click.",
       "leaderboardId": null,
       "rankMaxes": [
-        820,
-        851,
-        879,
-        906,
-        932,
-        965
+        913,
+        947,
+        978,
+        1007,
+        1035,
+        1072
       ],
       "source": {
         "kind": "predicted",
@@ -2546,10 +2546,10 @@
       "focus": "Fliers circling you as they rise and fall; follow the orbit and click.",
       "leaderboardId": null,
       "rankMaxes": [
-        875,
-        906,
-        926,
-        952
+        974,
+        1008,
+        1031,
+        1059
       ],
       "source": {
         "kind": "predicted",

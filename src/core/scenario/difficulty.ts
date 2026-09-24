@@ -43,18 +43,24 @@ export const FRACTIONS = [
 /**
  * What a season family may ask of `classify` that the corpus fit never does.
  *
- * `pressure`: targets that expire (Gravity Well's reach the middle and vanish), scored per
- * hit on one-hit targets so an expiry can never score. The fit leaves pressure scenarios
- * out, because their boards measure how many were caught, and a family that is one is
- * predicted as if every target were caught - an upper bound its thresholds say so of.
+ * `pressure`: a pressure scenario - targets that punish being left, like fuglaa's balloons,
+ * which fire at the player and cost score when they hit - scored per hit or per damage on
+ * one-hit targets. The fit leaves pressure scenarios out, because their boards measure how
+ * much was lost as well as how fast targets fell; a family that is one is predicted from a
+ * pressure scenario's own board (`anchor`), moved by the clicking fit for what differs.
  */
 export interface ClassifyOptions {
   pressure?: boolean;
 }
 
-/** Points a kill is worth: per kill, or per hit on a one-hit target under `pressure`. */
+/**
+ * Points a kill is worth: per kill; or, under `pressure`, per hit on a one-hit target, or
+ * per point of damage times the target's health (fuglaa's balloons score per damage).
+ */
 function pointsPerKill(f: ScenarioFeatures): number {
-  return f.scoring.perKill > 0 ? f.scoring.perKill : f.scoring.perHit;
+  if (f.scoring.perKill > 0) return f.scoring.perKill;
+  if (f.scoring.perHit > 0) return f.scoring.perHit;
+  return f.scoring.perDamage * (f.targets[0]?.health ?? 1);
 }
 
 export function classify(f: ScenarioFeatures, options: ClassifyOptions = {}): DifficultyClass | null {
@@ -71,7 +77,7 @@ export function classify(f: ScenarioFeatures, options: ClassifyOptions = {}): Di
     if (expiring) return null;
     return f.derived.fittsIdNearest !== null && f.derived.targetDeg ? "click" : null;
   }
-  if (options.pressure && w.fullyAutomatic === false && s.perKill === 0 && s.perDamage === 0 && s.perHit > 0 && f.derived.shotsToKill === 1) {
+  if (options.pressure && w.fullyAutomatic === false && s.perKill === 0 && (s.perHit > 0) !== (s.perDamage > 0) && f.derived.shotsToKill === 1) {
     return f.derived.fittsIdNearest !== null && f.derived.targetDeg ? "click" : null;
   }
   if (w.fullyAutomatic && w.interval > 0 && w.interval <= 0.06 && s.perKill === 0 && (s.perHit > 0 || s.perDamage > 0)) {
@@ -322,11 +328,28 @@ export function predictLadder(model: ClassModel, f: ScenarioFeatures): Predictio
 export function predictFromAnchor(model: ClassModel, f: ScenarioFeatures, anchor: ScenarioFeatures, anchorLadder: Array<{ topFraction: number; score: number }>): Prediction {
   const x = featureVector(model.class, f);
   const xa = featureVector(model.class, anchor);
-  const points = model.fits.map((fit) => {
+  // A pressure board can fall to zero or below at its tail - more lost than won - where the
+  // metric has no value. Such a point takes the line through the two usable points before
+  // it; a board with fewer than two usable points is not an anchor.
+  const bases: Array<number | null> = model.fits.map((fit) => {
     const real = anchorLadder.find((p) => Math.abs(p.topFraction - fit.topFraction) < 1e-9);
-    const base = real ? toMetric(model.class, anchor, real.score) : null;
-    if (base === null) throw new Error(`the anchor's board has no usable score at ${fit.topFraction}`);
-    const m = base + x.reduce((acc, v, i) => acc + (v - xa[i]) * fit.coefficients[i + 1], 0);
+    return real ? toMetric(model.class, anchor, real.score) : null;
+  });
+  for (let i = 0; i < bases.length; i++) {
+    if (bases[i] !== null) continue;
+    const before = bases.slice(0, i).map((v, j) => [j, v] as const).filter(([, v]) => v !== null) as Array<readonly [number, number]>;
+    if (before.length < 2) throw new Error(`the anchor's board has no usable score at ${model.fits[i].topFraction}`);
+    const [[j1, v1], [j2, v2]] = before.slice(-2);
+    const f1 = model.fits[j1].topFraction, f2 = model.fits[j2].topFraction;
+    bases[i] = v2 + ((v2 - v1) / (f2 - f1)) * (model.fits[i].topFraction - f2);
+  }
+  const points = model.fits.map((fit, i) => {
+    const base = bases[i]!;
+    // Clicking's metric is seconds of game time per kill. A player clicks in real time, so a
+    // faster game (Timescale above 1) packs more game seconds into each kill: the anchor's
+    // rate is moved into this file's game time before anything else changes.
+    const pace = model.class === "click" ? Math.log(f.multipliers.time / anchor.multipliers.time) : 0;
+    const m = base + pace + x.reduce((acc, v, i) => acc + (v - xa[i]) * fit.coefficients[i + 1], 0);
     const sign = model.class === "click" ? -1 : 1;
     const a = fromMetric(model.class, f, m - sign * fit.looMedian);
     const b = fromMetric(model.class, f, m + sign * fit.looMedian);

@@ -13,7 +13,7 @@ scenario file format turned out to be, pitfalls included:
 | Category | Families |
 | --- | --- |
 | Static Clicking | Galaga (five on one line), Zenith (vertical), Pinpoint (micro), Stars (wide field), Constellation (real constellations as waves), Parallax (two depths), Nebula (six up at once) |
-| Dynamic Clicking | Gravclick (slow floaters), Pendulum (slow wall-to-wall swings), Antigrav (bounces), Electric (straight runs with a charged buzz), Sun and Moon (two fast crossers, open room), Shooting Stars (straight lanes), Gravity Well (close in on the centre; lost if they reach it), Meteor (Voltaic's Floating Heads, large and slow), Satellite (circling fliers) |
+| Dynamic Clicking | Gravclick (slow floaters), Pendulum (slow wall-to-wall swings), Antigrav (bounces), Electric (straight runs, dead stops at turns, a charged buzz), Sun and Moon (two fast crossers, open room), Shooting Stars (straight lanes), Gravity Well (pressure: balloons that fire back, on fuglaa's design), Meteor (Voltaic's Floating Heads, large and slow), Satellite (circling fliers, open room) |
 | Precise Tracking | Glide (smooth ground), Blastoff (vertical), Orbit (curves), Thread (small and slow), Arc (floaty jumps), AlienTrack (close and wide, with Ground Plaza's blink) |
 | Reactive Tracking | Pong (close strafes), Pong3D (range changes), Stutter (stops, sometimes for a second or two), Hover (jumps), UFO (3D flier), Feint (dodges when hit) |
 | Speed Switching | DNA (compact), CockpiTS (wide), Column (vertical), Asteroids (six small), RockeTS (slow movers, quick kills), MartianTS (long kills) |
@@ -27,7 +27,9 @@ InvadersTS moved out of an arena whose barrier trapped close targets, and the na
 third, from the playtest of the second: Gravity Well as speed clicking under pressure,
 Pendulum on slow wall-to-wall runs, Meteor as Voltaic's Floating Heads made large and slow,
 Electric's charged buzz, Satellite and Meteor easier at Novice, AlienTrack's blink, shorter
-stops for Stutter, six targets for FleeTS, and more names.
+stops for Stutter, six targets for FleeTS, and more names. The fourth: Gravity Well rebuilt
+as a straightforward pressure scenario on cA fuglaapressure, Pendulum easier, Electric
+stopping at its turns, Satellite in an open room, and more blinks for AlienTrack.
 
 Each scenario is named `Apogee <Family> <Band>`. Every one, with its size, speed, reversal
 and kill time, predicted median and thresholds, is listed in
@@ -92,22 +94,21 @@ season is `npm run push:season`, which Rylee runs.
 
 ## Playtest before anything else
 
-Confirmed in game on 2026-09-24: the first seven templates' scenarios load, generated rooms
-included, and so do the second round's (Constellation waves, waypoint paths, Stutter's stop,
-skeeTS, comeTS, LosTS, InvadersTS). The third round's changes have not been played.
-`Apogee S2 Playtest` holds one of each, in this order:
+Confirmed in game on 2026-09-24, over three rounds: every template's scenarios load, and the
+second and third rounds' mechanisms work as meant (Constellation waves, waypoint paths,
+Stutter's stops, skeeTS, comeTS, LosTS, InvadersTS, Pendulum's wall-to-wall runs, Meteor,
+Sun and Moon, AlienTrack's blink). The fourth round's changes have not been played.
+`Apogee S2 Playtest` holds one of each:
 
-1. **Gravity Well**: targets close in from the rim; one that reaches the middle vanishes
-   and scores nothing. Its thresholds are predicted as if every target were caught, so they
-   are an upper bound until a real board recuts them.
-2. **Pendulum**: slow, level runs from wall to wall.
-3. **Electric**: straight runs with a fast vertical buzz.
-4. **Meteor**: moves as Voltaic's Floating Heads do, larger and slower.
-5. **Sun and Moon**: two fast crossers in an open room.
-6. **Satellite**: easier at Novice than before.
-7. **AlienTrack**: blinks rarely at Novice, more often each band.
-8. **Stutter**: its full stops last a second or two.
-9. **FleeTS**: six targets.
+1. **Gravity Well**, now a pressure scenario on cA fuglaapressure: balloons that fire back,
+   each hit costing score. The game runs at 1.0x at Novice and 0.2x faster each band, the
+   limit set in game time so a run lasts sixty real seconds. Its thresholds come from cA
+   fuglaapressure's own board, moved for the bigger balloons and slower game; neither of
+   those shifts is measured on a pressure scenario, so recut it early.
+2. **Pendulum**: easier, larger and slower.
+3. **Electric**: stops dead at every change of direction, buzzing throughout.
+4. **Satellite**: in an open room.
+5. **AlienTrack**: blinks more often, every six seconds at Novice.
 
 Still open from before: tracking targets never die; Feint's dodge reads as a reaction;
 switching bands feel harder as they go; and the thresholds of Blastoff, Orbit and UFO, built

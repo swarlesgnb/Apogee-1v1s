@@ -63,6 +63,8 @@ export const TEMPLATES = {
   airSwitch: "VT EddieTS Novice S5",
   // The real thing for skeeTS: targets thrown by a movement ability, not walked.
   skeet: "Skeet Tracking",
+  // A pressure scenario with a board: balloons that fire back and cost score when they hit.
+  pressure: "cA fuglaapressure",
 } as const;
 export type TemplateKey = keyof typeof TEMPLATES;
 
@@ -99,9 +101,8 @@ export interface Family {
    */
   anchor?: string;
   /**
-   * Targets expire if not caught (Gravity Well's reach the middle and vanish). Scored per
-   * hit on one-hit targets, so an expiry can never score, and predicted as if every target
-   * were caught - see ClassifyOptions in core/scenario/difficulty.ts.
+   * A pressure scenario: targets punish being left (fuglaa's balloons fire at the player,
+   * and a hit costs score). See ClassifyOptions in core/scenario/difficulty.ts.
    */
   pressure?: boolean;
   build: (sce: Sce, band: Band, lib: Library) => void;
@@ -329,6 +330,8 @@ interface MovingClickSpec {
   openRoom?: boolean;
   /** Keep the template's dodge profiles exactly as they are; only size and speed change. */
   templateMovement?: boolean;
+  /** A dead stop of this many seconds, [min, max], at every change of direction. */
+  stopAtTurns?: [number, number];
 }
 
 function movingClick(f: Family, spec: MovingClickSpec, description: string) {
@@ -375,6 +378,11 @@ function movingClick(f: Family, spec: MovingClickSpec, description: string) {
       setProfile(sce, "Character Profile", character, { BounceOffWalls: true, Acceleration: 100000, Gravity: 0 });
       Object.assign(dodgeValues, { ToggleForwardBack: false, JumpFrequency: 0, MinTargetDistance: 1, MaxTargetDistance: 100000 });
     }
+    if (spec.stopAtTurns) {
+      // Instant stops and starts, so a turn reads as a full stop rather than a slow-down.
+      setProfile(sce, "Character Profile", character, { Acceleration: 100000 });
+      Object.assign(dodgeValues, { StrafeSwapMinPause: spec.stopAtTurns[0], StrafeSwapMaxPause: spec.stopAtTurns[1], ToggleForwardBack: false, JumpFrequency: 0 });
+    }
     if (spec.vibrate) {
       const buzz = speedFor(spec.vibrate.speed, range);
       setProfile(sce, "Character Profile", character, { FlightVelocityUp: buzz, FlightVelocityDown: buzz });
@@ -403,11 +411,6 @@ interface PathSpec {
   /** The routes, in degrees off the line of sight, for this band. */
   routes: (band: Band) => Array<{ points: Array<[number, number]>; looping: boolean }>;
   alive: number;
-  /**
-   * The target vanishes when it reaches the end of its route, if not shot first: its one
-   * point of health drains over exactly the time the route takes. Scored per hit.
-   */
-  expireAtEnd?: boolean;
 }
 
 /**
@@ -445,12 +448,6 @@ function pathClick(f: Family, spec: PathSpec, description: string) {
       WaypointTurnRate: 100000,
     });
     const routes = spec.routes(band);
-    if (spec.expireAtEnd) {
-      // Every route is the same length, so one drain rate fits all of them.
-      const [a, b] = [routes[0].points[0], routes[0].points[routes[0].points.length - 1]];
-      const seconds = Math.hypot(b[0] - a[0], b[1] - a[1]) / speed;
-      setProfile(sce, "Character Profile", character, { HealthRegenPerSec: -1 / seconds, HealthRegenDelay: 0 });
-    }
     const waypoints: Array<{ name: string; at: Vec }> = [];
     const spawns: BotSpawn[] = [];
     routes.forEach((route, r) => {
@@ -462,24 +459,9 @@ function pathClick(f: Family, spec: PathSpec, description: string) {
     setRoom(sce, { ...roomAround(all), spawns, waypoints }, `Apogee ${f.name} ${BANDS[band]}.json`);
     setHead(sce, { MapScale: SCALE });
     setBots(sce, [{ bot, count: spec.alive }]);
-    // An expiring target must never score by expiring, so those are scored per hit: a
-    // one-hit target's hit is its kill, and an expiry is no hit.
-    const scoring = spec.expireAtEnd ? { ScorePerKill: 0, ScorePerHit: 10 } : { ScorePerKill: 10, ScorePerHit: 0 };
-    head(sce, f, band, { ...scoring, AimTypeTag: "Clicking", AimSubTypeTag: "Dynamic" }, description);
+    head(sce, f, band, { ScorePerKill: 10, ScorePerHit: 0, AimTypeTag: "Clicking", AimSubTypeTag: "Dynamic" }, description);
     finish(sce);
   };
-}
-
-/** Straight spokes from a ring of radius `outer` degrees in toward the centre. */
-function spokes(count: number, outer: number, inner: number) {
-  return () =>
-    Array.from({ length: count }, (_, k) => {
-      const a = (2 * Math.PI * k) / count + Math.PI / count;
-      return {
-        points: [[outer * Math.cos(a), outer * Math.sin(a)], [inner * Math.cos(a), inner * Math.sin(a)]] as Array<[number, number]>,
-        looping: false,
-      };
-    });
 }
 
 /** Straight lanes across the view, alternating direction, each with a little rise or fall. */
@@ -837,6 +819,54 @@ function switching(f: Family, spec: SwitchSpec, description: string, sub: "Speed
   };
 }
 
+// ---- pressure -----------------------------------------------------------------------------------
+
+interface PressureSpec {
+  alive: number;
+  deg: number;
+  /** Game speed at Novice, and its step each band. */
+  timescale: number;
+  timescaleStep: number;
+  /** The template's own balloon distance: 100 units across at 0.631 degrees (validate:sce's reader). */
+  range: number;
+}
+
+/**
+ * A pressure scenario on cA fuglaapressure's own mechanism: still balloons that aim at the
+ * player and fire a moment later, every hit costing score, so a balloon left alive is a loss
+ * and not only a delay. The template's map is kept as it is - its author notes the pressure
+ * logic breaks if the map changes - and its scoring is kept too. What the bands change is the
+ * balloons' size and the game's speed: faster, the balloons fire sooner in real time. The
+ * limit is set in game time so every run lasts sixty real seconds, as cA fuglaapressure's
+ * 108 at timescale 1.8 does.
+ */
+function pressureClick(f: Family, spec: PressureSpec, description: string) {
+  return (sce: Sce, band: Band) => {
+    const deg = step(spec.deg, SIZE, band);
+    const { bot, character } = ownBot(sce, f.name);
+    setProfile(sce, "Character Profile", character, { MainBBRadius: radiusFor(deg, spec.range), MainBBHeight: 2 * radiusFor(deg, spec.range) });
+    const timescale = spec.timescale + spec.timescaleStep * band;
+    setBots(sce, [{ bot, count: spec.alive }]);
+    head(
+      sce,
+      f,
+      band,
+      {
+        Timescale: timescale,
+        Timelimit: 60 * timescale,
+        // The template's own scoring: half a point per damage, a point lost per damage taken.
+        ScorePerDamage: Number(get(sce.head, "ScorePerDamage")),
+        ScorePerKill: 0,
+        ScorePerHit: 0,
+        AimTypeTag: "Clicking",
+        AimSubTypeTag: "Static",
+      },
+      description,
+    );
+    finish(sce);
+  };
+}
+
 // ---- skeet ------------------------------------------------------------------------------------
 
 interface SkeetSpec {
@@ -982,7 +1012,7 @@ export const FAMILIES: Family[] = [
       why: "A pendulum: slow, straight, level runs that turn only at the walls, so the swing is long and even and the skill is horizontal timing alone. Its movement is Floating Heads Timing 400%'s, slowed down.",
       learnsFrom: ["1wall5targets_pasu", "VT Pasu Novice S5"],
     },
-    (f) => movingClick(f, { alive: 4, deg: 2.4, speed: 10, strafe: [6.5, 7], upDown: null, bounce: true }, "Four targets swinging slowly from wall to wall. One click each."),
+    (f) => movingClick(f, { alive: 4, deg: 3.0, speed: 8, strafe: [6.5, 7], upDown: null, bounce: true }, "Four targets swinging slowly from wall to wall. One click each."),
   ),
   family(
     {
@@ -996,11 +1026,11 @@ export const FAMILIES: Family[] = [
   family(
     {
       name: "Electric", category: "Dynamic Clicking", subCategory: "Dynamic Clicking", template: "movingClick", arm: "Fingertip",
-      focus: "Straight runs with a charged-up buzz; follow the line, not the shake.",
-      why: "Linear motion with a vibration on top: the target runs straight from wall to wall while shaking up and down many times a second, so the player has to read the path through the noise - the reactive micro-adjustment cA 5ts vibrate is played for, on a moving target.",
+      focus: "Straight runs, a dead stop at every turn, and a charged-up buzz all the while.",
+      why: "Linear motion with a vibration on top: the target runs straight, stops dead before it changes direction, and shakes up and down many times a second the whole time - so the stop is the moment to click, and the player reads it through the noise, the micro-adjustment cA 5ts vibrate is played for.",
       learnsFrom: ["cA 5ts vibrate", "VT Floating Heads Novice S5"],
     },
-    (f) => movingClick(f, { alive: 4, deg: 2.0, speed: 12, strafe: [6.5, 7], upDown: null, bounce: true, flyer: true, vibrate: { times: [0.04, 0.08], speed: 8 } }, "Four targets running straight lines while buzzing up and down. One click each."),
+    (f) => movingClick(f, { alive: 4, deg: 2.0, speed: 12, strafe: [1.5, 2.5], upDown: null, flyer: true, stopAtTurns: [0.35, 0.6], vibrate: { times: [0.04, 0.08], speed: 8 } }, "Four targets running straight, stopping dead at every turn, buzzing all the while. One click each."),
   ),
   family(
     {
@@ -1022,13 +1052,15 @@ export const FAMILIES: Family[] = [
   ),
   family(
     {
-      name: "Gravity Well", category: "Dynamic Clicking", subCategory: "Dynamic Clicking", template: "movingClick", arm: "Wrist",
+      name: "Gravity Well", category: "Dynamic Clicking", subCategory: "Dynamic Clicking", template: "pressure", arm: "Wrist",
       pressure: true,
-      focus: "They come in from the rim toward the middle; shoot every one before it gets there.",
-      why: "Speed clicking under pressure: targets enter on a ring round the centre of the view and head straight for it, and one that reaches the middle is gone. The paths are known, so the skill is order and pace.",
-      learnsFrom: ["Floating Heads Timing 400%", "psalmTS angelic click"],
+      anchor: "cA fuglaapressure",
+      modelClass: "click",
+      focus: "Pop them before they fire; every hit you take costs you.",
+      why: "Speed clicking under pressure, on fuglaa's design: still balloons that aim at the player and shoot a moment later, so a target left alive costs score rather than only time. The game runs faster each band, and the balloons shoot sooner with it.",
+      learnsFrom: ["cA fuglaapressure", "fuglaaPressure"],
     },
-    (f) => pathClick(f, { alive: 7, deg: 2.2, speed: 7.5, range: 2048, routes: spokes(16, 24, 1.5), expireAtEnd: true }, "Targets close in from a ring toward the centre; any that reach it are lost. One click each."),
+    (f) => pressureClick(f, { alive: 5, deg: 1.6, timescale: 1.0, timescaleStep: 0.2, range: 18160 }, "Balloons that fire back: pop each one before it hits you. Every hit costs score."),
   ),
   family(
     {
@@ -1046,7 +1078,7 @@ export const FAMILIES: Family[] = [
       why: "psalmTS's motion as a clicking task: targets strafe round the player on long, even runs while climbing and dropping, linear in each axis and curved together.",
       learnsFrom: ["psalmTS angelic click", "VT psalmTS Novice"],
     },
-    (f) => movingClick(f, { alive: 3, deg: 3.0, speed: 14, strafe: [3, 4], upDown: [1.2, 2.0], flyer: true }, "Three flying targets circling while rising and falling. One click each."),
+    (f) => movingClick(f, { alive: 3, deg: 3.0, speed: 14, strafe: [3, 4], upDown: [1.2, 2.0], flyer: true, openRoom: true }, "Three flying targets circling in an open room while rising and falling. One click each."),
   ),
 
   // ---- Precise Tracking
@@ -1102,7 +1134,7 @@ export const FAMILIES: Family[] = [
       why: "Close range means large angular speed at a modest real speed, the arm-tracking demand Smoothbot and Close Long Strafes are played for; and Ground Plaza's blink, a short teleport, rare at Novice and more frequent every band, so recovery joins smoothness.",
       learnsFrom: ["Close Long Strafes Invincible", "Ground Plaza Sparky V3"],
     },
-    (f) => track(f, { deg: 7.5, speed: 80, strafe: [1.3, 2.0], forwardBack: [1.5, 2.5], range: 650, rampSeconds: 0.3, blink: { every: 9, degrees: 16 } }, "One close target sweeping across the view, blinking now and then.", "Precise"),
+    (f) => track(f, { deg: 7.5, speed: 80, strafe: [1.3, 2.0], forwardBack: [1.5, 2.5], range: 650, rampSeconds: 0.3, blink: { every: 6, degrees: 16 } }, "One close target sweeping across the view, blinking now and then.", "Precise"),
   ),
 
   // ---- Reactive Tracking
