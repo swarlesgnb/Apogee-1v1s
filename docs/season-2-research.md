@@ -62,6 +62,29 @@ in one of them cannot tell which.
 machine with 10,000 or more players, 51 spread targets over a field wider than it is tall
 (`tools/scenarioScience.ts`). Vertical stopping gets the least practice of any flick.
 
+## What benchmark authors say
+
+Voltaic's own account of its Season 5 benchmarks
+([announcement](https://blog.voltaic.gg/announcing-the-voltaic-season-5-aiming-benchmarks-beta-for-kovaaks/))
+states the same priorities from the author's side, and season 2 takes most of them:
+
+- **Remove randomness that is not the skill.** "Unnecessary randomness … is suboptimal for
+  benchmarking"; Pasu's targets are repelled from walls so boundaries do not decide a run.
+  Season 2's arcs (every static target the same size) come from the same instinct.
+- **One knob per behaviour.** Targets share a jump velocity and differ in gravity, so jump
+  height and hang time vary together and predictably. Hopper's bands step gravity alone.
+- **Kill time is a difficulty lever.** DotTS's longer time to kill separates it from
+  Pokeball's. Finisher and Mender use it the same way.
+- **Accuracy pressure without an accuracy multiplier.** Voltaic uses square-root accuracy
+  scoring where "every shot matters", and a reload economy (a miss on ww5t Intermediate costs
+  30% of the magazine) where speed matters. Season 2 uses neither: in a match decided on a
+  delta, the multiplier's added noise (above) costs more than the precision pressure gains,
+  and the reload economy is a candidate worth measuring before adopting.
+- **Diamond spawn fields** "so that nearby spawns are more likely to be diagonally
+  oriented" were tried and not kept: with several targets alive the square grid already
+  spreads flicks close to uniformly, and the diamond traded away vertical flicks
+  (`tools/season2/design.ts`, `arc`).
+
 ## Fun, or at least replayed
 
 KovaaK's catalogue gives plays and players for every scenario. Plays per player (replay) is
