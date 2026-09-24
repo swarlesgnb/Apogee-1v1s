@@ -131,9 +131,18 @@ export function sections(sce: Sce, type: string): SceSection[] {
   return sce.sections.filter((s) => s.type === type);
 }
 
-/** A profile section by its `Name`. Names are how profiles refer to each other. */
+/**
+ * A profile section by its `Name`. Names are how profiles refer to each other.
+ *
+ * An exact match wins; failing that, one that differs only in case, because the game
+ * resolves them that way - Voltaic's Popcorn names its player character `player` and
+ * refers to it as `Player`, and KovaaK's plays it.
+ */
 export function profile(sce: Sce, type: string, name: string): SceSection | undefined {
-  return sce.sections.find((s) => s.type === type && get(s.lines, "Name") === name);
+  const exact = sce.sections.find((s) => s.type === type && get(s.lines, "Name") === name);
+  if (exact) return exact;
+  const lower = name.toLowerCase();
+  return sce.sections.find((s) => s.type === type && get(s.lines, "Name")?.toLowerCase() === lower);
 }
 
 /** `a;b;;c` lists, with KovaaK's empty trailing slots dropped. */

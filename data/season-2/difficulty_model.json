@@ -1,0 +1,1021 @@
+{
+ "$comment": "Written by tools/fitDifficulty.ts; do not hand-edit. One least-squares fit per class and board fraction; looMedian/loo90 are leave-one-out absolute errors in the class's metric (click: log seconds per kill, so 0.1 is about 10%; track and switch: logit of the share of the maximum score, where 0.4 is about 10 points of share near the middle). `sibling` is the rejected alternative, measured at the median.",
+ "fittedAt": "2026-09-24T04:42:46.337Z",
+ "scenarioFiles": 510,
+ "models": [
+  {
+   "class": "click",
+   "features": [
+    "fitts ID of the nearest flick",
+    "log(1 + angular speed)",
+    "log(shots to kill)"
+   ],
+   "fits": [
+    {
+     "topFraction": 0.001,
+     "coefficients": [
+      -1.608664759222119,
+      0.16428096046822432,
+      0.12292156953264582,
+      0.012716542899978108
+     ],
+     "n": 156,
+     "looMedian": 0.1371121692819418,
+     "loo90": 0.4884212556049034
+    },
+    {
+     "topFraction": 0.005,
+     "coefficients": [
+      -1.5435893399639542,
+      0.16791640524519497,
+      0.13740820421768,
+      0.0036184360875506187
+     ],
+     "n": 156,
+     "looMedian": 0.15959985799178933,
+     "loo90": 0.4674329325921977
+    },
+    {
+     "topFraction": 0.01,
+     "coefficients": [
+      -1.5040247595079064,
+      0.1683356806828403,
+      0.1406687748442599,
+      0.008695216177163045
+     ],
+     "n": 156,
+     "looMedian": 0.15656624955177,
+     "loo90": 0.46743263581962013
+    },
+    {
+     "topFraction": 0.02,
+     "coefficients": [
+      -1.4593397027926995,
+      0.1683319071058157,
+      0.14456886000103014,
+      0.010483893299754783
+     ],
+     "n": 156,
+     "looMedian": 0.16857714985941363,
+     "loo90": 0.4715432169588146
+    },
+    {
+     "topFraction": 0.035,
+     "coefficients": [
+      -1.4188922779272177,
+      0.16827124044428143,
+      0.1494895411486204,
+      0.010217467763711881
+     ],
+     "n": 156,
+     "looMedian": 0.16999014672676252,
+     "loo90": 0.4669117780699221
+    },
+    {
+     "topFraction": 0.05,
+     "coefficients": [
+      -1.3933118934734205,
+      0.16887417962012077,
+      0.15209138414191414,
+      0.010552947588845016
+     ],
+     "n": 156,
+     "looMedian": 0.1698405895910697,
+     "loo90": 0.4755173268616378
+    },
+    {
+     "topFraction": 0.075,
+     "coefficients": [
+      -1.3609718394770898,
+      0.16919943789846062,
+      0.15604559919719074,
+      0.011052092931601563
+     ],
+     "n": 156,
+     "looMedian": 0.17055392884144277,
+     "loo90": 0.4731700563754412
+    },
+    {
+     "topFraction": 0.1,
+     "coefficients": [
+      -1.334647535902575,
+      0.1692626089398058,
+      0.15960754595372,
+      0.014983634821020404
+     ],
+     "n": 156,
+     "looMedian": 0.16945384826052354,
+     "loo90": 0.47879950836751933
+    },
+    {
+     "topFraction": 0.15,
+     "coefficients": [
+      -1.29932671130428,
+      0.17149944541616968,
+      0.1665489365528147,
+      0.018794541532047848
+     ],
+     "n": 156,
+     "looMedian": 0.1720849050227728,
+     "loo90": 0.4908464759063107
+    },
+    {
+     "topFraction": 0.2,
+     "coefficients": [
+      -1.2662558150394867,
+      0.17170277052127988,
+      0.1719479002124639,
+      0.023158601263442408
+     ],
+     "n": 156,
+     "looMedian": 0.1714981323909011,
+     "loo90": 0.49832006747694557
+    },
+    {
+     "topFraction": 0.3,
+     "coefficients": [
+      -1.2174571016203959,
+      0.1741059077366204,
+      0.18388983328715047,
+      0.0296392543411914
+     ],
+     "n": 156,
+     "looMedian": 0.18545583226532958,
+     "loo90": 0.4908543511208597
+    },
+    {
+     "topFraction": 0.4,
+     "coefficients": [
+      -1.1743497729339019,
+      0.1758792536861213,
+      0.19604953054338745,
+      0.033832808946370224
+     ],
+     "n": 156,
+     "looMedian": 0.19537162411962702,
+     "loo90": 0.49330018058734904
+    },
+    {
+     "topFraction": 0.5,
+     "coefficients": [
+      -1.1301255947212718,
+      0.17757439673243475,
+      0.20875825639766676,
+      0.037381750228286374
+     ],
+     "n": 156,
+     "looMedian": 0.1983512856496345,
+     "loo90": 0.4828408055225023
+    },
+    {
+     "topFraction": 0.65,
+     "coefficients": [
+      -1.0614056594816104,
+      0.18154765190253186,
+      0.23341154603690242,
+      0.04439846956598228
+     ],
+     "n": 156,
+     "looMedian": 0.2116807584759543,
+     "loo90": 0.497280858038067
+    },
+    {
+     "topFraction": 0.8,
+     "coefficients": [
+      -0.9699654710649283,
+      0.1877424781306977,
+      0.2641617539586692,
+      0.05342586661540849
+     ],
+     "n": 156,
+     "looMedian": 0.23326265120900197,
+     "loo90": 0.5349023330989331
+    },
+    {
+     "topFraction": 0.95,
+     "coefficients": [
+      -0.8200769837737144,
+      0.20873792569080377,
+      0.34198614682671047,
+      0.057693971180369036
+     ],
+     "n": 155,
+     "looMedian": 0.26419259290408115,
+     "loo90": 0.6364829387008459
+    }
+   ],
+   "scenarios": [
+    "     CB EvoClick Easy",
+    "10 Sphere Hipfire Extra Small",
+    "1w2t smallflicks small 60s ",
+    "1w2ts Perfected",
+    "1w2ts Perfected Easier",
+    "1w2ts reload",
+    "1w2ts reload smallflicks",
+    "1w2ts reload smallflicks Entry",
+    "1w2ts reload smallflicks larger",
+    "1w2ts reload smallflicks slightly larger",
+    "1w3ts reload",
+    "1w4t Pasu Raspberry Grandmaster",
+    "1w4t Pasu Raspberry Master 6mag",
+    "1w4t Pressure Revosect Entry",
+    "1w4t Pressure Revosect Int",
+    "1w4ts Voltaic",
+    "1w5ts reload",
+    "1w5ts vbr Revosect Int",
+    "1w6ts reload Easier",
+    "1w6ts reload v2",
+    "1w6ts reload v2 20% bigger",
+    "1wall 6targets extra small",
+    "1wall 6targets small",
+    "1wall5targets_pasu",
+    "1wall5targets_pasu Reload",
+    "1wall5targets_pasu slow",
+    "1wall6targets TE",
+    "1wall6targets TE Horizontalish",
+    "1wall9000targets",
+    "2 Tile Jumbo Tile Frenzy",
+    "5 Sphere Hipfire",
+    "5 Sphere Hipfire Extra Small",
+    "5 Sphere Hipfire Small",
+    "6 Sphere Hipfire 200% Size",
+    "6 Sphere Hipfire Voltaic",
+    "6 Sphere Hipfire Voltaic 30% smaller",
+    "Aimerz+ 1w3ts Med S1",
+    "Aimerz+ hopClick Easy S1",
+    "Aimerz+ hopClick Med S1",
+    "Aimerz+ ww2t Easy S1",
+    "Aimerz+ ww2t Hard S1 20% Smaller",
+    "B180 Voltaic",
+    "B180 Voltaic Easy 92%",
+    "Bounce 180 Sparky",
+    "Bounce 180 Sparky Easy",
+    "Bounce 180 rAim",
+    "Cartoon's Micro RawMouseControlReact 30s",
+    "CatClick",
+    "CatClick Easier",
+    "CatClick Medium",
+    "ClickTrack 3t",
+    "ClickTrack 3t Long",
+    "ClickTrack 3t Short",
+    "ClickTrack 5t",
+    "ClickTrack 5t Long",
+    "ClickTrack 5t Short",
+    "ClickTrack AntiDiagonal 2t",
+    "ClickTrack AntiDiagonal 2t Long",
+    "ClickTrack AntiDiagonal 2t Short",
+    "ClickTrack AntiDiagonal 3t",
+    "ClickTrack AntiDiagonal 3t Short",
+    "ClickTrack Diagonal 2t",
+    "ClickTrack Diagonal 2t Long",
+    "ClickTrack Diagonal 2t Short",
+    "ClickTrack Diagonal 3t",
+    "ClickTrack Diagonal 3t Long",
+    "ClickTrack Diagonal 3t Short",
+    "ClickTrack Horizontal 2t",
+    "ClickTrack Horizontal 2t Long",
+    "ClickTrack Horizontal 2t Short",
+    "ClickTrack Horizontal 3t",
+    "ClickTrack Horizontal 3t Long",
+    "ClickTrack Horizontal 3t Short",
+    "ClickTrack Vertical 2t",
+    "ClickTrack Vertical 2t Long",
+    "ClickTrack Vertical 2t Short",
+    "ClickTrack Vertical 3t",
+    "ClickTrack Vertical 3t Long",
+    "ClickTrack Vertical 3t Short",
+    "Controlsphere Click",
+    "Controlsphere Click Easy",
+    "EvoClick Revosect Entry",
+    "EvoClick Revosect Int",
+    "Jumbo 1wall6targets TE",
+    "Jumbo Tile Frenzy",
+    "Jumbo1wall9000targets",
+    "Leapcorn Pure",
+    "No23 ca micropressure supereasy",
+    "Pasu Angelic 20% Larger",
+    "Pasu Reload Goated",
+    "Pasu Revosect Int",
+    "Pasu Voltaic",
+    "Pasu Voltaic Easy",
+    "Pasu Voltaic Reload",
+    "Pasu Voltaic Reload Easier",
+    "Pasu Voltaic Reload Easy",
+    "Popcorn Goated rAim",
+    "Popcorn MV Easier",
+    "Popcorn MV Intermediate",
+    "Popcorn Sparky",
+    "Popcorn Voltaic",
+    "Popcorn Voltaic Easy",
+    "RawMouseControl Reload",
+    "RawMouseControlClicking3",
+    "SnowClick Revosect Int",
+    "StrawberryClick Revosect Int",
+    "Tamspeed 2bp Silver",
+    "Tamspeed 2bpes",
+    "Tile Frenzy",
+    "Tile Frenzy Mini",
+    "VT 1w2ts Advanced S5",
+    "VT 1w3ts Intermediate S5",
+    "VT 1w4ts Novice S5",
+    "VT AngleStrafe Intermediate",
+    "VT ArcStrafe Intermediate",
+    "VT Bounceshot Advanced",
+    "VT Bounceshot Intermediate",
+    "VT Bounceshot Novice",
+    "VT Bounceshot Viscose Easier",
+    "VT Bounceshot Viscose Medium",
+    "VT Floating Heads Advanced S5",
+    "VT Floating Heads Intermediate S5",
+    "VT Floating Heads Intermediate S5 Hard",
+    "VT Floating Heads Novice S5",
+    "VT Floating Heads Viscose Easier",
+    "VT Floating Heads Viscose Hard",
+    "VT Floating Heads Viscose Medium",
+    "VT Frogtagon Advanced S5",
+    "VT Frogtagon Intermediate S5",
+    "VT Frogtagon Novice S5",
+    "VT Multiclick 120 Intermediate",
+    "VT Multiclick 180 Advanced",
+    "VT Pasu Advanced S5",
+    "VT Pasu Intermediate S5",
+    "VT Pasu Novice S5",
+    "Wide Wall 3 Targets",
+    "Wide Wall 3 Targets TE",
+    "Wide Wall 4 Targets",
+    "Wide Wall 4 Targets Small",
+    "cA 1ts ruohong",
+    "cA 2ts wideflick",
+    "cA 3ts precise",
+    "cA 4ts horizontal",
+    "cA 5ts vibrate",
+    "cA 7ts pressure",
+    "cA 900targets",
+    "cA micropressure",
+    "cA sixshot",
+    "cA x-axis flick",
+    "cA y-axis flick",
+    "pasu nqs reload",
+    "pasu small reload",
+    "shimPressure Micro",
+    "ww3t Voltaic",
+    "ww4t Voltaic",
+    "ww6t reload"
+   ]
+  },
+  {
+   "class": "track",
+   "features": [
+    "log(angular speed / size)",
+    "log(size)",
+    "log(strafe period)",
+    "leaves the ground"
+   ],
+   "fits": [
+    {
+     "topFraction": 0.001,
+     "coefficients": [
+      2.3303295426297708,
+      -0.44541686941131564,
+      0.2190384609405283,
+      0.25952548278383425,
+      -0.22894648761558015
+     ],
+     "n": 126,
+     "looMedian": 0.5840803881611448,
+     "loo90": 1.508863177308275
+    },
+    {
+     "topFraction": 0.005,
+     "coefficients": [
+      1.8022286667803828,
+      -0.3606278074975236,
+      0.21016928613956729,
+      0.18892451513222733,
+      -0.23764719649231678
+     ],
+     "n": 127,
+     "looMedian": 0.41584053138170873,
+     "loo90": 1.211405713849538
+    },
+    {
+     "topFraction": 0.01,
+     "coefficients": [
+      1.6126843713759487,
+      -0.35433026532885137,
+      0.23055178126434941,
+      0.1782467856053162,
+      -0.19653293413435965
+     ],
+     "n": 128,
+     "looMedian": 0.4283852643664956,
+     "loo90": 1.1774006882790204
+    },
+    {
+     "topFraction": 0.02,
+     "coefficients": [
+      1.5391215388412587,
+      -0.37219900343606604,
+      0.23983274183854475,
+      0.17136552222699494,
+      -0.24562529103790387
+     ],
+     "n": 129,
+     "looMedian": 0.4118569541754122,
+     "loo90": 1.2069339481573895
+    },
+    {
+     "topFraction": 0.035,
+     "coefficients": [
+      1.3492043499280708,
+      -0.34744684380446594,
+      0.22729286791189815,
+      0.16044786950381865,
+      -0.24596090103941037
+     ],
+     "n": 129,
+     "looMedian": 0.3931299180886041,
+     "loo90": 1.1609398248958647
+    },
+    {
+     "topFraction": 0.05,
+     "coefficients": [
+      1.2341054150789688,
+      -0.3349825412885211,
+      0.22473947506771805,
+      0.15393996794089995,
+      -0.2482945318490428
+     ],
+     "n": 129,
+     "looMedian": 0.4055454317921007,
+     "loo90": 1.1265035049800067
+    },
+    {
+     "topFraction": 0.075,
+     "coefficients": [
+      1.1133728726633976,
+      -0.3249830472611806,
+      0.21965228425263505,
+      0.14634045929487177,
+      -0.25626774988099293
+     ],
+     "n": 129,
+     "looMedian": 0.3855583725860719,
+     "loo90": 1.0190948238405417
+    },
+    {
+     "topFraction": 0.1,
+     "coefficients": [
+      1.0170669427818675,
+      -0.3140305958369447,
+      0.21569178673138367,
+      0.14053084861818838,
+      -0.27041923350985125
+     ],
+     "n": 129,
+     "looMedian": 0.3961740200042505,
+     "loo90": 0.9992295002824342
+    },
+    {
+     "topFraction": 0.15,
+     "coefficients": [
+      0.8842685297756369,
+      -0.30948085534337205,
+      0.2118398189015136,
+      0.1344389143088348,
+      -0.2781183780381628
+     ],
+     "n": 129,
+     "looMedian": 0.4143923514828739,
+     "loo90": 0.9856333364653936
+    },
+    {
+     "topFraction": 0.2,
+     "coefficients": [
+      0.7697499805203216,
+      -0.3033000890408064,
+      0.20917288884681423,
+      0.13271493872014947,
+      -0.2840420164168393
+     ],
+     "n": 129,
+     "looMedian": 0.4230019864572334,
+     "loo90": 0.9817091926134636
+    },
+    {
+     "topFraction": 0.3,
+     "coefficients": [
+      0.5965289400861312,
+      -0.29740488537299875,
+      0.20965992476882284,
+      0.1298177346242419,
+      -0.30228502599095874
+     ],
+     "n": 129,
+     "looMedian": 0.4286411279967113,
+     "loo90": 0.9871874651279229
+    },
+    {
+     "topFraction": 0.4,
+     "coefficients": [
+      0.45825497735758447,
+      -0.296565833150166,
+      0.2089861794736424,
+      0.12906484157016915,
+      -0.32018429607162024
+     ],
+     "n": 129,
+     "looMedian": 0.4181483489014738,
+     "loo90": 0.9662008155494024
+    },
+    {
+     "topFraction": 0.5,
+     "coefficients": [
+      0.344913666446834,
+      -0.2990238191626269,
+      0.20789680135173624,
+      0.1281145126752089,
+      -0.3430346926935401
+     ],
+     "n": 129,
+     "looMedian": 0.4026507600455567,
+     "loo90": 0.9811308730648892
+    },
+    {
+     "topFraction": 0.65,
+     "coefficients": [
+      0.1501807428257079,
+      -0.3032188461859175,
+      0.20836710824202137,
+      0.12898742726121823,
+      -0.36287206903252656
+     ],
+     "n": 129,
+     "looMedian": 0.3997709803523345,
+     "loo90": 0.9857079424977986
+    },
+    {
+     "topFraction": 0.8,
+     "coefficients": [
+      -0.09268647886066579,
+      -0.30612267289576245,
+      0.20856538455076998,
+      0.1275514819734435,
+      -0.3856467002066531
+     ],
+     "n": 129,
+     "looMedian": 0.4156640074543812,
+     "loo90": 1.0152501654884631
+    },
+    {
+     "topFraction": 0.95,
+     "coefficients": [
+      -0.5797216946543766,
+      -0.2996249221272875,
+      0.21447867513005286,
+      0.1194589188279095,
+      -0.4379821528311681
+     ],
+     "n": 129,
+     "looMedian": 0.3895433225385605,
+     "loo90": 1.0338326751220699
+    }
+   ],
+   "scenarios": [
+    "     CB StrafeTrack Easy",
+    "Aimerz+ PTI Med S1",
+    "Aimerz+ PreciseTrack Med S1",
+    "Aimerz+ PreciseTrack S1 Modified",
+    "Air Angelic 4 Voltaic",
+    "Air Angelic 4 Voltaic 90%",
+    "Air Angelic 4 Voltaic Easy",
+    "Air Angelic 4 Voltaic Easy 70%",
+    "Air Angelic 4 Voltaic Easy 90%",
+    "Air Angelic 4 Voltaic Smaller",
+    "Air Angelic Invincible 2 80%",
+    "Air Voltaic Easy Invincible 4 80%",
+    "Air Voltaic Invincible 4",
+    "Air Voltaic Invincible 4 Easier",
+    "Air Voltaic Invincible 4 Entry",
+    "Air Voltaic Invincible 4 Medium",
+    "Air Voltaic Invincible 7 Easy",
+    "Avasive bukeTrack Hard",
+    "Centering II 180 Entry",
+    "Centering II 180 Fixed Larger",
+    "Centering II 180 Intermediate",
+    "Centering II 180 Novice",
+    "Close Fast Strafes Easy Invincible - Thin",
+    "Close Fast Strafes Invincible",
+    "Close Fast Strafes Invincible - Thin",
+    "Controlsphere",
+    "Controlsphere Far",
+    "Controlsphere Far Larger",
+    "Controlsphere OW",
+    "Controlsphere OW 150%",
+    "Controlsphere Viscose Entry",
+    "Controlsphere rAim",
+    "Controlsphere rAim Easy",
+    "Controlsphere rAim Easy 90%",
+    "Deceptive Tracking XYZ",
+    "Deceptive Tracking XYZ Easy",
+    "Extra Controlsphere",
+    "FloodTrack Revosect Int",
+    "Kindaclose long stop strafes",
+    "Leapstrafes Control wobin",
+    "Leapstrafes Control wobin Easier",
+    "Leapstrafes Control wobin Hard",
+    "Leapstrafes Revosect Int",
+    "Leaptrack Goated 75% Slightly Larger",
+    "MFSI v3 Raspberry",
+    "MSS Insanity Raspberry",
+    "MSS Raspberry v2",
+    "PTeS eeSmall TE",
+    "Pasu Track Extrasmooth Small TE",
+    "Pasu Track Extrasmooth TE",
+    "Pasu Track Wide React",
+    "Plink Plaza",
+    "Polarized Hell Easy 20% Slower",
+    "ReactiveSphere",
+    "SYW (Smooth Your Wrist) FIXED",
+    "SYW (Smooth Your Wrist) FIXED Extra thin",
+    "SYW Easy",
+    "Smooth Thin Strafes Raspberry",
+    "Smooth Thin Strafes Raspberry Easy",
+    "Smooth Your Vertical Altered POV Easy v2",
+    "Smooth Your Vertical Altered POV Entry",
+    "Smooth Your Vertical Altered POV Intermediate",
+    "SmoothBot Invincible Goated",
+    "SmoothBot Invincible Goated 75%",
+    "SmoothBot Invincible Goated Smaller",
+    "Smoothbot Invincible Goated Easy",
+    "Smoothbot Pauer",
+    "Smoothbot Pauer Easy",
+    "Smoothbot Pauer Glider",
+    "Smoothbot Pauer Glider 60% Larger",
+    "Smoothbot Voltaic",
+    "Smoothbot Voltaic Easy",
+    "Smoothness Training 60",
+    "Smoothsphere",
+    "Smoothsphere Diamond",
+    "Smoothsphere Viscose",
+    "Smoothsphere Viscose Easier",
+    "Smoothsphere Viscose Hard",
+    "Smoothsphere Viscose Horizontal Entry",
+    "Swing Tracking",
+    "TSK - 360 Turn",
+    "TSK - Box Tracking",
+    "TSK - Centering 180 Speed 2",
+    "TSK - Centering 180 Speed 3",
+    "TSK - Centering 45 Speed 2 Stop",
+    "TSK - Centering 90 Speed 2",
+    "TSK - DVD Tracking",
+    "TSK - DVD Tracking Big",
+    "TSK - DVD Tracking Close",
+    "TSK - DVD Tracking MASSIVE",
+    "TSK - DVD Tracking Small",
+    "TSK - Hewchy's VAI 110",
+    "TSK - Hewchy's VAI 160",
+    "TSK - Hewchy's VAI 20",
+    "TSK - ST60",
+    "TSK - ST60 Thick",
+    "TSK - SYW",
+    "TSK - SYW Thin",
+    "TSK - Varied Centering 90 Trio",
+    "TSK - Wavy Tracking",
+    "VT Aether Advanced S5",
+    "VT Aether Entry S5 Precision Focus",
+    "VT Aether Intermediate S5",
+    "VT Aether Intermediate S5 Bot 2",
+    "VT Aether Novice S5",
+    "VT Aether Novice S5 Bot 2",
+    "VT Air Angelic Intermediate S5",
+    "VT AirStrafe Advanced",
+    "VT Ground Advanced S5",
+    "VT Ground Intermediate S5",
+    "VT Ground Novice S5",
+    "VT Ground Novice S5 Hard",
+    "VT PGT Advanced S5",
+    "VT PGT Intermediate S5",
+    "VT PGT Novice S5",
+    "VT PatStrafe Intermediate",
+    "VT Smoothbot Intermediate",
+    "VT Smoothbot Novice",
+    "VT Snake Track Advanced S5",
+    "VT Snake Track Intermediate S5",
+    "VT Snake Track Novice S5",
+    "VTP Revosect Int",
+    "Whisphere Med 60s",
+    "Whisphere Small & Slow 55%",
+    "Whisphere Small & Slow 75%",
+    "odb MFSI",
+    "rA S4 GLIDERTRACK EASY",
+    "tamAngleSmoothness",
+    "tamAngleSmoothness Easier"
+   ]
+  },
+  {
+   "class": "switch",
+   "features": [
+    "log(angular speed / size)",
+    "fitts ID of the nearest flick",
+    "log(time to kill)"
+   ],
+   "fits": [
+    {
+     "topFraction": 0.001,
+     "coefficients": [
+      0.49737237506296067,
+      -0.1136796816939426,
+      0.09201535781485601,
+      0.4188202203676134
+     ],
+     "n": 74,
+     "looMedian": 0.17948132487784174,
+     "loo90": 0.6474260140859137
+    },
+    {
+     "topFraction": 0.005,
+     "coefficients": [
+      0.44510406292125515,
+      -0.12873498760706742,
+      0.0746467551269641,
+      0.41963823309578985
+     ],
+     "n": 74,
+     "looMedian": 0.17533339623071797,
+     "loo90": 0.6148126580491023
+    },
+    {
+     "topFraction": 0.01,
+     "coefficients": [
+      0.39599371993280147,
+      -0.13128775122550615,
+      0.07151573741357943,
+      0.42332023715326944
+     ],
+     "n": 74,
+     "looMedian": 0.16143531949503462,
+     "loo90": 0.5775159890979564
+    },
+    {
+     "topFraction": 0.02,
+     "coefficients": [
+      0.31597271751607475,
+      -0.1354471404691559,
+      0.07160594130925763,
+      0.41278577815514966
+     ],
+     "n": 74,
+     "looMedian": 0.13436187627135676,
+     "loo90": 0.5609185706349084
+    },
+    {
+     "topFraction": 0.035,
+     "coefficients": [
+      0.25584636688476725,
+      -0.1345221991294585,
+      0.07090541043081762,
+      0.40845393990786627
+     ],
+     "n": 74,
+     "looMedian": 0.12819998790280246,
+     "loo90": 0.5438174772391816
+    },
+    {
+     "topFraction": 0.05,
+     "coefficients": [
+      0.2150104884646342,
+      -0.131671413092412,
+      0.06799517281048492,
+      0.40234217997224936
+     ],
+     "n": 74,
+     "looMedian": 0.12479832592012428,
+     "loo90": 0.5293601012632333
+    },
+    {
+     "topFraction": 0.075,
+     "coefficients": [
+      0.17624863637908514,
+      -0.12994576896861035,
+      0.06511936423167425,
+      0.3998169100439
+     ],
+     "n": 74,
+     "looMedian": 0.12634936832615665,
+     "loo90": 0.5166356380484876
+    },
+    {
+     "topFraction": 0.1,
+     "coefficients": [
+      0.1420851368889659,
+      -0.13108561442114658,
+      0.06449419159549145,
+      0.3983592974878532
+     ],
+     "n": 74,
+     "looMedian": 0.13138442396395528,
+     "loo90": 0.49671123292739705
+    },
+    {
+     "topFraction": 0.15,
+     "coefficients": [
+      0.07842976739969214,
+      -0.13336544546599666,
+      0.06310972342708142,
+      0.39003431725309656
+     ],
+     "n": 74,
+     "looMedian": 0.14202827756721317,
+     "loo90": 0.48085780271375406
+    },
+    {
+     "topFraction": 0.2,
+     "coefficients": [
+      0.021832114725360712,
+      -0.1367088013598535,
+      0.06343447263807153,
+      0.38127301560721494
+     ],
+     "n": 74,
+     "looMedian": 0.14165867022394327,
+     "loo90": 0.4830152595361516
+    },
+    {
+     "topFraction": 0.3,
+     "coefficients": [
+      -0.06345647147530563,
+      -0.1412065501689824,
+      0.0634510488952814,
+      0.3740791870865774
+     ],
+     "n": 74,
+     "looMedian": 0.14146691087724136,
+     "loo90": 0.4795263178682089
+    },
+    {
+     "topFraction": 0.4,
+     "coefficients": [
+      -0.1250113746725803,
+      -0.14825984377698628,
+      0.06392434307396248,
+      0.3752625981121929
+     ],
+     "n": 74,
+     "looMedian": 0.14928757241699786,
+     "loo90": 0.4678496382567898
+    },
+    {
+     "topFraction": 0.5,
+     "coefficients": [
+      -0.1842473803015432,
+      -0.15386195418816867,
+      0.06589142278688155,
+      0.37976479754277676
+     ],
+     "n": 74,
+     "looMedian": 0.15816658223128485,
+     "loo90": 0.48831263079239173
+    },
+    {
+     "topFraction": 0.65,
+     "coefficients": [
+      -0.3058455366971019,
+      -0.16161878353955283,
+      0.06857056164470421,
+      0.37158764832523156
+     ],
+     "n": 74,
+     "looMedian": 0.16051500849035222,
+     "loo90": 0.49835297365633213
+    },
+    {
+     "topFraction": 0.8,
+     "coefficients": [
+      -0.4482315181413507,
+      -0.1707080978316423,
+      0.07242578013580685,
+      0.3663096268546727
+     ],
+     "n": 74,
+     "looMedian": 0.16538998661311288,
+     "loo90": 0.4792714682535047
+    },
+    {
+     "topFraction": 0.95,
+     "coefficients": [
+      -0.744901207975571,
+      -0.18594912521873466,
+      0.08240566968991257,
+      0.3476843124200094
+     ],
+     "n": 74,
+     "looMedian": 0.19955839156963312,
+     "loo90": 0.5008798359746831
+    }
+   ],
+   "scenarios": [
+    "     CB JumpSwitch Easy",
+    "     CB SmoothSwitch Easy",
+    "360 Static TS",
+    "Aimerz+ goaTS Med S1",
+    "Aimerz+ hopTS Med S1",
+    "Aimerz+ nuTS Med S1",
+    "Aimerz+ pivoTS Easy S1",
+    "AngleSwitch Revosect Int",
+    "B180T Voltaic",
+    "B180T Voltaic Easy",
+    "B180T Voltaic Easy Slower",
+    "DotTS",
+    "DotTS 30% Larger",
+    "DotTS Entry",
+    "Floatswitch Advanced",
+    "Floatswitch Entry",
+    "Floatswitch Intermediate",
+    "NovaSwitch Revosect Int",
+    "Pasu Switch Pure",
+    "PasuTS Revosect Int",
+    "SmoothTS Revosect Int",
+    "Smoothbot TS Voltaic",
+    "Smoothbot TS Voltaic Easy",
+    "SpringTS Revosect Int",
+    "StaticSwitchingVox",
+    "StaticSwitchingVox Jumbo",
+    "StaticSwitchingVox Small",
+    "StaticSwitchingVox xSmall",
+    "StaticSwitchingVox xxSmall",
+    "Target Switching 360",
+    "VT ControlTS Advanced S5",
+    "VT ControlTS Entry S5 Speed",
+    "VT ControlTS Intermediate S5",
+    "VT ControlTS Novice S5",
+    "VT DriftTS Advanced S5",
+    "VT DriftTS Entry S5 Speed",
+    "VT DriftTS Intermediate S5",
+    "VT DriftTS Novice S5",
+    "VT EddieTS Advanced S5",
+    "VT EddieTS Intermediate S5",
+    "VT EddieTS Novice S5",
+    "VT PasuTS Advanced S5",
+    "VT PasuTS Entry S5",
+    "VT PasuTS Intermediate S5",
+    "VT bounceTS Intermediate",
+    "VT bounceTS Novice",
+    "VT evaTS Intermediate",
+    "VT evaTS Novice",
+    "VT psalmTS Intermediate",
+    "VT psalmTS Novice",
+    "VT skyTS Intermediate",
+    "VT skyTS Novice",
+    "WaveSwitch Revosect Int",
+    "WhisphereTS Revosect Int",
+    "beanTS",
+    "beanTS 30% Smaller",
+    "beanTS Larger",
+    "devTS Goated Easy",
+    "devTS Goated NR",
+    "devTS Goated NR Static 5Bot",
+    "kinTS Voltaic",
+    "kinTS Voltaic Easy",
+    "patCircleSwitch NR",
+    "patTargetSwitch 90 LowTTK",
+    "voxTS Viscose Varied",
+    "voxTargetSwitch",
+    "voxTargetSwitch 2",
+    "voxTargetSwitch 2 10% Smaller",
+    "voxTargetSwitch 2 20% Smaller",
+    "voxTargetSwitch 2 Large",
+    "voxTargetSwitch Jumbo",
+    "waldoTS",
+    "waldoTS Intermediate",
+    "waldoTS Novice"
+   ]
+  }
+ ],
+ "sibling": [
+  {
+   "class": "click",
+   "sibling": {
+    "pairs": 94,
+    "median": 0.16078192236531635,
+    "pooledMedian": 0.1983512856496345
+   }
+  },
+  {
+   "class": "track",
+   "sibling": {
+    "pairs": 106,
+    "median": 0.44114081350052725,
+    "pooledMedian": 0.4026507600455567
+   }
+  },
+  {
+   "class": "switch",
+   "sibling": {
+    "pairs": 60,
+    "median": 0.12511085870120836,
+    "pooledMedian": 0.15816658223128485
+   }
+  }
+ ]
+}

@@ -1,0 +1,111 @@
+/**
+ * Fit the difficulty model and write the evidence behind it.
+ *
+ * Reads every scenario file on this machine through `scenarioCorpus`, keeps the ones with a
+ * sampled board, fits `core/scenario/difficulty.ts` per class, and writes
+ * `data/season-2/difficulty_model.json`: coefficients, leave-one-out error at every board
+ * fraction, and the names of the scenarios each class learned from.
+ *
+ * It also re-measures the alternative that was rejected - predicting a variant from a
+ * sibling's board, scaled by the same physics - so the reason for pooling stays a number
+ * anyone can regenerate rather than a sentence.
+ *
+ *   npx tsx tools/fitDifficulty.ts
+ */
+
+import { mkdirSync, writeFileSync } from "node:fs";
+import { dirname } from "node:path";
+
+import { dataFile } from "../src/core/dataDir.ts";
+import { buildCorpus, kovaaksRoot } from "./scenarioCorpus.ts";
+import {
+  classify,
+  featureVector,
+  fitClass,
+  toMetric,
+  type ClassModel,
+  type DifficultyClass,
+  type Sample,
+} from "../src/core/scenario/difficulty.ts";
+
+const root = kovaaksRoot();
+if (!root) {
+  console.error("No KovaaK's install found; the model is fitted from the scenario files it holds.");
+  process.exit(1);
+}
+
+const samples: Sample[] = buildCorpus(root)
+  .filter((r) => r.ladder && r.ladder.total >= 500)
+  .map((r) => ({ name: r.name, features: r, ladder: r.ladder!.points }));
+
+const classes: DifficultyClass[] = ["click", "track", "switch"];
+const models: ClassModel[] = classes.map((c) => fitClass(c, samples));
+
+/**
+ * The rejected alternative. Variants are grouped by the name with difficulty words and
+ * size percentages removed, and each is predicted from each sibling: the sibling's own
+ * metric at the median, moved by the pooled slope times the feature difference.
+ */
+const DIFFICULTY_WORDS =
+  /\b(easy|easier|entry|novice|int|intermediate|adv|advanced|hard|harder|medium|small|smaller|larger|bigger|slightly|extra|elite|goated|slow|slower|fast|faster|\d+%|v\d+|s\d+)\b/gi;
+function siblingTest(model: ClassModel): { pairs: number; median: number; pooledMedian: number } {
+  const median = model.fits.find((f) => f.topFraction === 0.5)!;
+  const groups = new Map<string, Sample[]>();
+  for (const s of samples) {
+    if (classify(s.features) !== model.class) continue;
+    const stem = s.name.toLowerCase().replace(DIFFICULTY_WORDS, " ").replace(/\s+/g, " ").trim();
+    groups.set(stem, [...(groups.get(stem) ?? []), s]);
+  }
+  const errors: number[] = [];
+  const metricAt = (s: Sample) => {
+    const p = s.ladder.find((q) => q.topFraction === 0.5);
+    return p ? toMetric(model.class, s.features, p.score) : null;
+  };
+  for (const group of groups.values()) {
+    for (const a of group) {
+      for (const b of group) {
+        if (a === b) continue;
+        const ma = metricAt(a);
+        const mb = metricAt(b);
+        if (ma === null || mb === null) continue;
+        const xa = featureVector(model.class, a.features);
+        const xb = featureVector(model.class, b.features);
+        const shift = xb.reduce((s, v, i) => s + (v - xa[i]) * median.coefficients[i + 1], 0);
+        errors.push(Math.abs(ma + shift - mb));
+      }
+    }
+  }
+  errors.sort((p, q) => p - q);
+  return { pairs: errors.length, median: errors[Math.floor(errors.length / 2)] ?? NaN, pooledMedian: median.looMedian };
+}
+
+const evidence = models.map((m) => ({ class: m.class, sibling: siblingTest(m) }));
+
+const out = dataFile("season-2", "difficulty_model.json");
+mkdirSync(dirname(out), { recursive: true });
+writeFileSync(
+  out,
+  JSON.stringify(
+    {
+      $comment:
+        "Written by tools/fitDifficulty.ts; do not hand-edit. One least-squares fit per class and board fraction; looMedian/loo90 are leave-one-out absolute errors in the class's metric (click: log seconds per kill, so 0.1 is about 10%; track and switch: logit of the share of the maximum score, where 0.4 is about 10 points of share near the middle). `sibling` is the rejected alternative, measured at the median.",
+      fittedAt: new Date().toISOString(),
+      scenarioFiles: samples.length,
+      models,
+      sibling: evidence,
+    },
+    null,
+    1,
+  ) + "\n",
+);
+
+for (const m of models) {
+  const at = (q: number) => m.fits.find((f) => f.topFraction === q)!;
+  const s = evidence.find((e) => e.class === m.class)!.sibling;
+  console.log(
+    `${m.class.padEnd(6)} n=${at(0.5).n}  LOO median error at top 5%: ${at(0.05).looMedian.toFixed(3)}, ` +
+      `20%: ${at(0.2).looMedian.toFixed(3)}, 50%: ${at(0.5).looMedian.toFixed(3)}  ` +
+      `| sibling transfer ${s.median.toFixed(3)} over ${s.pairs} pairs`,
+  );
+}
+console.log(`-> ${out}`);

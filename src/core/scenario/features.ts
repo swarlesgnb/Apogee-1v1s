@@ -51,7 +51,7 @@ export interface TargetFeatures {
 }
 
 export interface GeometryFeatures {
-  source: "embedded" | "reflex-file" | "json-file";
+  source: "embedded" | "embedded-json" | "reflex-file" | "json-file";
   playerSpawns: number;
   botSpawns: number;
   /** Median distance from the player's spawn to a bot spawn, world units. */
@@ -70,6 +70,11 @@ export interface GeometryFeatures {
    * closest target makes; equal to a random pair's angle when only two are alive.
    */
   nearestDeg: number;
+  /**
+   * The distance the main target is actually shot at: its dodge profile's held range when
+   * it moves and has one, otherwise `distance`.
+   */
+  engagement?: number;
 }
 
 export interface ScenarioFeatures {
@@ -81,6 +86,8 @@ export interface ScenarioFeatures {
     perTime: number;
     toWin: number;
     accuracyMult: boolean;
+    /** With accuracyMult, the score is multiplied by the square root of accuracy instead. */
+    sqrtAccuracy: boolean;
     timeRefilledByKill: number;
     lossPerDamageTaken: number;
     perHit: number;
@@ -98,7 +105,11 @@ export interface ScenarioFeatures {
     hitscan: boolean;
     damage: number;
     interval: number;
-    /** Absent in older files, which is why this can be null. */
+    /**
+     * Fires while held. Read from `Category` (SemiAuto / FullyAuto), not `FullyAutomatic`:
+     * the Voltaic S5 tracking gun fires while held and still carries FullyAutomatic=false.
+     * Null in older files that have neither.
+     */
     fullyAutomatic: boolean | null;
     magazine: number;
   } | null;
@@ -205,6 +216,16 @@ function mapSpawns(sce: Sce, mapsDir: string | null): { spawns: Spawn[]; source:
   const embedded = sce.sections.find((s) => s.type === "Map Data")?.raw;
   if (embedded && /type PlayerSpawn/.test(embedded)) {
     return { spawns: reflexSpawns(embedded.replace(/\r\n/g, "\n")), source: "embedded" };
+  }
+  // Files saved by a 3.x build carry the Map Creator's JSON map verbatim in the same
+  // section, which is how a shared scenario takes its map with it.
+  if (embedded && embedded.trimStart().startsWith("{")) {
+    try {
+      const spawns = jsonSpawns(embedded);
+      if (spawns.length) return { spawns, source: "embedded-json" };
+    } catch {
+      /* fall through to the named map file */
+    }
   }
   const name = get(sce.head, "MapName");
   if (!name || !mapsDir) return null;
@@ -322,7 +343,8 @@ function target(sce: Sce, bot: string, count: number): TargetFeatures | null {
     regenPerSec: num(chr, "HealthRegenPerSec", 0),
     speed: noDodging ? 0 : num(chr, "MaxSpeed", 0),
     gravity: num(chr, "Gravity", 0),
-    jumpVelocity: num(chr, "JumpVelocity", 0),
+    // Newer characters carry a range instead of one value.
+    jumpVelocity: num(chr, "JumpVelocity", num(chr, "JumpVelocityMax", 0)),
     flyer: bool(chr, "IsFlyer"),
     strafeMin: orNull(d("MinLRTimeChange")),
     strafeMax: orNull(d("MaxLRTimeChange")),
@@ -367,7 +389,9 @@ export function scenarioFeatures(sce: Sce, mapsDir: string | null = null): Scena
         hitscan: (get(weaponLines, "Type") ?? "Hitscan") === "Hitscan",
         damage: num(weaponLines, "DamagePerShot", 0) * (num(weaponLines, "ShotsPerClick", 1) || 1),
         interval: num(weaponLines, "TimeBetweenShots", 0),
-        fullyAutomatic: get(weaponLines, "FullyAutomatic") === undefined ? null : bool(weaponLines, "FullyAutomatic"),
+        fullyAutomatic: get(weaponLines, "Category") !== undefined
+          ? get(weaponLines, "Category") === "FullyAuto"
+          : get(weaponLines, "FullyAutomatic") === undefined ? null : bool(weaponLines, "FullyAutomatic"),
         magazine: num(weaponLines, "MagazineMax", 0),
       }
     : null;
@@ -380,8 +404,15 @@ export function scenarioFeatures(sce: Sce, mapsDir: string | null = null): Scena
   };
   const geo = geometry(sce, mapsDir, scale, concurrent);
   const main = targets[0];
-  const targetDeg = main && geo && geo.distance > 0 ? 2 * Math.atan((main.radius * multipliers.size) / geo.distance) * RAD : null;
-  const angularSpeed = main && geo && geo.distance > 0 ? ((main.speed * multipliers.time) / geo.distance) * RAD : null;
+  // A moving bot holds a distance band from the player set by its dodge profile, and that,
+  // not its spawn, is the range it is shot at: Voltaic's Ground bots spawn on the far side
+  // of the arena and close to 900-1100 units. 100,000 is the editor's "no limit".
+  const range = main && main.speed > 0 && main.keepMin !== null && main.keepMax !== null && main.keepMax < 50_000
+    ? (main.keepMin + main.keepMax) / 2
+    : geo?.distance ?? 0;
+  if (geo) geo.engagement = range;
+  const targetDeg = main && geo && range > 0 ? 2 * Math.atan((main.radius * multipliers.size) / range) * RAD : null;
+  const angularSpeed = main && geo && range > 0 ? ((main.speed * multipliers.time) / range) * RAD : null;
   const fittsId = targetDeg && geo && geo.spreadDeg > 0 ? Math.log2(geo.spreadDeg / targetDeg + 1) : null;
   const fittsIdNearest = targetDeg && geo && geo.nearestDeg > 0 ? Math.log2(geo.nearestDeg / targetDeg + 1) : null;
   const shotsToKill = main && weapon && weapon.damage > 0 && main.health > 0 ? Math.ceil(main.health / weapon.damage - 1e-9) : null;
@@ -397,6 +428,7 @@ export function scenarioFeatures(sce: Sce, mapsDir: string | null = null): Scena
       perTime: num(h, "ScorePerTime", 0),
       toWin: num(h, "ScoreToWin", 0),
       accuracyMult: bool(h, "ScoreMultAccuracy"),
+      sqrtAccuracy: bool(h, "MultSqrtAcc"),
       timeRefilledByKill: num(h, "TimeRefilledByKill", 0),
       lossPerDamageTaken: num(h, "ScoreLossPerDamageTaken", 0),
       perHit: num(h, "ScorePerHit", 0),
