@@ -189,6 +189,15 @@ function finish(sce: Sce): void {
 /**
  * Spawn points on a sphere of radius `range` (world units) around the player, at every
  * yaw/pitch pair given, in map units for a MapScale of SCALE.
+ *
+ * A square grid, deliberately. Voltaic lays its 1wXts fields out in a diamond "so that
+ * nearby spawns are more likely to be diagonally oriented", and that was tried here: every
+ * other row shifted half a step. Simulating the flick a player actually makes - from a
+ * target to the nearest other live one - showed the square grid already spreads flicks
+ * about as evenly as random directions would (Constellation: 33% near-horizontal, 42%
+ * diagonal, 25% near-vertical, against 25/50/25 for uniform), because with several targets
+ * alive the nearest one is rarely the adjacent spawn. The diamond pushed that to 26/55/19,
+ * trading vertical flicks, which this season sets out to train more, for diagonal ones.
  */
 function arc(range: number, yaws: number[], pitches: number[]): Vec[] {
   const r = range / SCALE;
