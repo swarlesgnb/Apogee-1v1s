@@ -3,7 +3,7 @@
  *
  * Reads every scenario file on this machine through `scenarioCorpus`, keeps the ones with a
  * sampled board, fits `core/scenario/difficulty.ts` per class, and writes
- * `data/season-2/difficulty_model.json`: coefficients, leave-one-out error at every board
+ * `data/season-1/difficulty_model.json`: coefficients, leave-one-out error at every board
  * fraction, and the names of the scenarios each class learned from.
  *
  * It also re-measures the alternative that was rejected - predicting a variant from a
@@ -114,7 +114,7 @@ const fliers = {
   overPredicted: flierMisses.filter((v) => v > 0).length,
 };
 
-const out = dataFile("season-2", "difficulty_model.json");
+const out = dataFile("season-1", "difficulty_model.json");
 mkdirSync(dirname(out), { recursive: true });
 writeFileSync(
   out,

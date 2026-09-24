@@ -4,7 +4,7 @@
  * `leaderboard_percentiles.json` only covers scenarios that were once in the pool, which
  * is a narrow and skewed sample to learn difficulty from: every scenario in it was picked
  * for being a good benchmark. The workshop folder holds hundreds more that have boards.
- * This fills `data/season-2/corpus_ladders.json` with them, resuming where a previous run
+ * This fills `data/season-1/corpus_ladders.json` with them, resuming where a previous run
  * stopped, because a full pass is a few thousand requests at the sampler's polite pace.
  *
  * Boards under MIN_ENTRIES are skipped: a percentile of forty people is a statement about
@@ -22,8 +22,8 @@ import type { Distribution } from "../src/core/season/percentiles.ts";
 
 const MIN_ENTRIES = 500;
 
-const corpusPath = process.argv[2] ?? dataFile("season-2", "corpus.json");
-const out = dataFile("season-2", "corpus_ladders.json");
+const corpusPath = process.argv[2] ?? dataFile("season-1", "corpus.json");
+const out = dataFile("season-1", "corpus_ladders.json");
 const corpus = JSON.parse(readFileSync(corpusPath, "utf8")) as {
   rows: Array<{ name: string; catalogue: { leaderboardId: number; entries: number } | null; ladder: unknown }>;
 };

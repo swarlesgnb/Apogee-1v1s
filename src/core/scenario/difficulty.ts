@@ -1,7 +1,7 @@
 /**
  * Predict a scenario's leaderboard from its file.
  *
- * Season 2's scenarios are new, so no board exists to cut their thresholds from. What
+ * Season 1's scenarios are new, so no board exists to cut their thresholds from. What
  * does exist is some five hundred scenarios with both a file and a sampled board, and on
  * those the physics of a scenario explains a useful share of where its board lands. This
  * learns that relation and applies it: a prediction of what the board of an unplayed
@@ -28,7 +28,7 @@
  * crowds, so their boards sit higher than their physics alone predicts. Predicting a
  * variant from a sibling's board, which would carry the crowd with it, was measured as
  * well (`tools/fitDifficulty.ts` records it beside the pooled error): it is about as good,
- * not clearly better, and a season-2 scenario has no sibling with a board anyway.
+ * not clearly better, and a Season 1 scenario has no sibling with a board anyway.
  */
 
 import type { ScenarioFeatures } from "./features.ts";

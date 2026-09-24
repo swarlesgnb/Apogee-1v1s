@@ -40,7 +40,7 @@
     "1w2ts Pasu Perfected 30% Smaller": {
       "leaderboardId": 28243,
       "aimType": "Clicking",
-      "subCategory": "Static Clicking"
+      "subCategory": "Micro Clicking"
     },
     "1w2ts Pasu Perfected Easy": {
       "leaderboardId": 57757,
@@ -115,22 +115,22 @@
     "1w3ts Pasu Perfected Micro Goated": {
       "leaderboardId": 65396,
       "aimType": "Clicking",
-      "subCategory": "Static Clicking"
+      "subCategory": "Micro Clicking"
     },
     "1w3ts Pasu Perfected Micro Goated 10% small": {
       "leaderboardId": 172862,
       "aimType": "Clicking",
-      "subCategory": "Static Clicking"
+      "subCategory": "Micro Clicking"
     },
     "1w3ts Pasu Perfected Micro Goated Larger": {
       "leaderboardId": 125923,
       "aimType": "Clicking",
-      "subCategory": "Static Clicking"
+      "subCategory": "Micro Clicking"
     },
     "1w3ts Pasu Perfected Micro Goated Larger 80%": {
       "leaderboardId": 128920,
       "aimType": "Clicking",
-      "subCategory": "Static Clicking"
+      "subCategory": "Micro Clicking"
     },
     "1w3ts reload": {
       "leaderboardId": 215,
@@ -187,11 +187,6 @@
       "aimType": "Clicking",
       "subCategory": "Static Clicking"
     },
-    "1w4ts 30% larger": {
-      "leaderboardId": 830,
-      "aimType": "Clicking",
-      "subCategory": "Static Clicking"
-    },
     "1w4ts Avasive Easier": {
       "leaderboardId": 203399,
       "aimType": "Clicking",
@@ -204,11 +199,6 @@
     },
     "1w4ts reload": {
       "leaderboardId": 387,
-      "aimType": "Clicking",
-      "subCategory": "Static Clicking"
-    },
-    "1w4ts reload 30% smaller": {
-      "leaderboardId": 92,
       "aimType": "Clicking",
       "subCategory": "Static Clicking"
     },
@@ -287,20 +277,10 @@
       "aimType": "Clicking",
       "subCategory": "Micro Clicking"
     },
-    "1wall 6targets extra small": {
-      "leaderboardId": 169,
-      "aimType": "Clicking",
-      "subCategory": "Static Clicking"
-    },
     "1wall 6targets small": {
       "leaderboardId": 2,
       "aimType": "Clicking",
       "subCategory": "Static Clicking"
-    },
-    "1wall5targets_pasu": {
-      "leaderboardId": 16,
-      "aimType": "Clicking",
-      "subCategory": "Dynamic Clicking"
     },
     "1wall5targets_pasu Reload": {
       "leaderboardId": 43,
@@ -311,36 +291,6 @@
       "leaderboardId": 544,
       "aimType": "Clicking",
       "subCategory": "Dynamic Clicking"
-    },
-    "1wall5targets_pasu_small": {
-      "leaderboardId": 244,
-      "aimType": "Clicking",
-      "subCategory": "Dynamic Clicking"
-    },
-    "1wall5targets_pasu_small_reactive": {
-      "leaderboardId": 26439,
-      "aimType": "Clicking",
-      "subCategory": "Dynamic Clicking"
-    },
-    "1wall6targets TE": {
-      "leaderboardId": 10420,
-      "aimType": "Clicking",
-      "subCategory": "Static Clicking"
-    },
-    "1wall6targets TE Horizontalish": {
-      "leaderboardId": 2561,
-      "aimType": "Clicking",
-      "subCategory": "Static Clicking"
-    },
-    "1wall9000targets": {
-      "leaderboardId": 470,
-      "aimType": "Clicking",
-      "subCategory": "Static Clicking"
-    },
-    "2 Tile Jumbo Tile Frenzy": {
-      "leaderboardId": 1469,
-      "aimType": "Clicking",
-      "subCategory": "Static Clicking"
     },
     "3 Dots xyzAdjust SuperbAim": {
       "leaderboardId": 35907,
@@ -377,33 +327,13 @@
       "aimType": "Clicking",
       "subCategory": "Static Clicking"
     },
-    "5 Sphere Hipfire": {
-      "leaderboardId": 786,
-      "aimType": "Clicking",
-      "subCategory": "Static Clicking"
-    },
-    "5 Sphere Hipfire Extra Extra Small": {
-      "leaderboardId": 11973,
-      "aimType": "Clicking",
-      "subCategory": "Static Clicking"
-    },
-    "5 Sphere Hipfire Extra Small": {
-      "leaderboardId": 94,
-      "aimType": "Clicking",
-      "subCategory": "Static Clicking"
-    },
     "5 Sphere Hipfire Small": {
       "leaderboardId": 125,
       "aimType": "Clicking",
-      "subCategory": "Static Clicking"
+      "subCategory": "Micro Clicking"
     },
     "6 Dots SuperbAim Easy": {
       "leaderboardId": 35921,
-      "aimType": "Clicking",
-      "subCategory": "Static Clicking"
-    },
-    "6 Sphere Hipfire 200% Size": {
-      "leaderboardId": 3982,
       "aimType": "Clicking",
       "subCategory": "Static Clicking"
     },
@@ -695,7 +625,7 @@
     "Aimerz+ pipeClick Easy S1": {
       "leaderboardId": 68431,
       "aimType": "Clicking",
-      "subCategory": "Dynamic Clicking"
+      "subCategory": null
     },
     "Aimerz+ pipeClick Hard S1": {
       "leaderboardId": 68391,
@@ -755,7 +685,7 @@
     "Air Angelic 4 Voltaic": {
       "leaderboardId": 30,
       "aimType": "Tracking",
-      "subCategory": "Reactive Tracking"
+      "subCategory": "Reading Tracking"
     },
     "Air Angelic 4 Voltaic 90%": {
       "leaderboardId": 2537,
@@ -765,7 +695,7 @@
     "Air Angelic 4 Voltaic Easy": {
       "leaderboardId": 42,
       "aimType": "Tracking",
-      "subCategory": "Reactive Tracking"
+      "subCategory": "Reading Tracking"
     },
     "Air Angelic 4 Voltaic Easy 70%": {
       "leaderboardId": 14155,
@@ -775,7 +705,7 @@
     "Air Angelic 4 Voltaic Easy 80% (Good Version)": {
       "leaderboardId": 13681,
       "aimType": "Tracking",
-      "subCategory": "Reactive Tracking"
+      "subCategory": null
     },
     "Air Angelic 4 Voltaic Easy 90%": {
       "leaderboardId": 13692,
@@ -786,11 +716,6 @@
       "leaderboardId": 184839,
       "aimType": "Tracking",
       "subCategory": null
-    },
-    "Air Angelic 4 Voltaic Smaller": {
-      "leaderboardId": 518,
-      "aimType": "Tracking",
-      "subCategory": "Reactive Tracking"
     },
     "Air Angelic Easier": {
       "leaderboardId": 189778,
@@ -835,7 +760,7 @@
     "Air CELESTIAL Harder": {
       "leaderboardId": 185225,
       "aimType": "Tracking",
-      "subCategory": "Reactive Tracking"
+      "subCategory": "Reading Tracking"
     },
     "Air CELESTIAL No UFO": {
       "leaderboardId": 70970,
@@ -905,7 +830,7 @@
     "Air Pure Hard": {
       "leaderboardId": 185019,
       "aimType": "Tracking",
-      "subCategory": "Reactive Tracking"
+      "subCategory": "Reading Tracking"
     },
     "Air Pure Intermediate": {
       "leaderboardId": 126338,
@@ -970,22 +895,22 @@
     "Air Spectral": {
       "leaderboardId": 142893,
       "aimType": "Tracking",
-      "subCategory": "Reactive Tracking"
+      "subCategory": "Reading Tracking"
     },
     "Air Spectral Easy": {
       "leaderboardId": 143228,
       "aimType": "Tracking",
-      "subCategory": "Reactive Tracking"
+      "subCategory": "Reading Tracking"
     },
     "Air Spectral Easy 85%": {
       "leaderboardId": 185693,
       "aimType": "Tracking",
-      "subCategory": "Reactive Tracking"
+      "subCategory": "Control Tracking"
     },
     "Air Spectral Harder": {
       "leaderboardId": 185018,
       "aimType": "Tracking",
-      "subCategory": "Reactive Tracking"
+      "subCategory": "Control Tracking"
     },
     "Air Voltaic": {
       "leaderboardId": 29,
@@ -1009,23 +934,23 @@
     },
     "Air Voltaic Invincible 4": {
       "leaderboardId": 1092,
-      "aimType": "Tracking",
-      "subCategory": "Reactive Tracking"
+      "aimType": null,
+      "subCategory": null
     },
     "Air Voltaic Invincible 4 Easier": {
       "leaderboardId": 185406,
       "aimType": "Tracking",
-      "subCategory": "Reactive Tracking"
+      "subCategory": "Reading Tracking"
     },
     "Air Voltaic Invincible 4 Entry": {
       "leaderboardId": 143160,
       "aimType": "Tracking",
-      "subCategory": "Reactive Tracking"
+      "subCategory": null
     },
     "Air Voltaic Invincible 4 Medium": {
       "leaderboardId": 184775,
       "aimType": "Tracking",
-      "subCategory": "Reactive Tracking"
+      "subCategory": "Reading Tracking"
     },
     "Air Voltaic Invincible 4 Slightly Slower": {
       "leaderboardId": 185402,
@@ -1196,6 +1121,826 @@
       "leaderboardId": 128527,
       "aimType": "Clicking",
       "subCategory": "Micro Clicking"
+    },
+    "Apogee 1w6aliens Advanced": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Static Clicking"
+    },
+    "Apogee 1w6aliens Expert": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Static Clicking"
+    },
+    "Apogee 1w6aliens Intermediate": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Static Clicking"
+    },
+    "Apogee 1w6aliens Novice": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Static Clicking"
+    },
+    "Apogee AlienTrack Advanced": {
+      "leaderboardId": null,
+      "aimType": "Tracking",
+      "subCategory": "Precise Tracking"
+    },
+    "Apogee AlienTrack Expert": {
+      "leaderboardId": null,
+      "aimType": "Tracking",
+      "subCategory": "Precise Tracking"
+    },
+    "Apogee AlienTrack Intermediate": {
+      "leaderboardId": null,
+      "aimType": "Tracking",
+      "subCategory": "Precise Tracking"
+    },
+    "Apogee AlienTrack Novice": {
+      "leaderboardId": null,
+      "aimType": "Tracking",
+      "subCategory": "Precise Tracking"
+    },
+    "Apogee Antigrav Advanced": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Dynamic Clicking"
+    },
+    "Apogee Antigrav Expert": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Dynamic Clicking"
+    },
+    "Apogee Antigrav Intermediate": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Dynamic Clicking"
+    },
+    "Apogee Antigrav Novice": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Dynamic Clicking"
+    },
+    "Apogee Arc Advanced": {
+      "leaderboardId": null,
+      "aimType": "Tracking",
+      "subCategory": "Precise Tracking"
+    },
+    "Apogee Arc Expert": {
+      "leaderboardId": null,
+      "aimType": "Tracking",
+      "subCategory": "Precise Tracking"
+    },
+    "Apogee Arc Intermediate": {
+      "leaderboardId": null,
+      "aimType": "Tracking",
+      "subCategory": "Precise Tracking"
+    },
+    "Apogee Arc Novice": {
+      "leaderboardId": null,
+      "aimType": "Tracking",
+      "subCategory": "Precise Tracking"
+    },
+    "Apogee Asteroids Advanced": {
+      "leaderboardId": null,
+      "aimType": "Switching",
+      "subCategory": "Speed Switching"
+    },
+    "Apogee Asteroids Expert": {
+      "leaderboardId": null,
+      "aimType": "Switching",
+      "subCategory": "Speed Switching"
+    },
+    "Apogee Asteroids Intermediate": {
+      "leaderboardId": null,
+      "aimType": "Switching",
+      "subCategory": "Speed Switching"
+    },
+    "Apogee Asteroids Novice": {
+      "leaderboardId": null,
+      "aimType": "Switching",
+      "subCategory": "Speed Switching"
+    },
+    "Apogee Blastoff Advanced": {
+      "leaderboardId": null,
+      "aimType": "Tracking",
+      "subCategory": "Precise Tracking"
+    },
+    "Apogee Blastoff Expert": {
+      "leaderboardId": null,
+      "aimType": "Tracking",
+      "subCategory": "Precise Tracking"
+    },
+    "Apogee Blastoff Intermediate": {
+      "leaderboardId": null,
+      "aimType": "Tracking",
+      "subCategory": "Precise Tracking"
+    },
+    "Apogee Blastoff Novice": {
+      "leaderboardId": null,
+      "aimType": "Tracking",
+      "subCategory": "Precise Tracking"
+    },
+    "Apogee CockpiTS Advanced": {
+      "leaderboardId": null,
+      "aimType": "Switching",
+      "subCategory": "Speed Switching"
+    },
+    "Apogee CockpiTS Expert": {
+      "leaderboardId": null,
+      "aimType": "Switching",
+      "subCategory": "Speed Switching"
+    },
+    "Apogee CockpiTS Intermediate": {
+      "leaderboardId": null,
+      "aimType": "Switching",
+      "subCategory": "Speed Switching"
+    },
+    "Apogee CockpiTS Novice": {
+      "leaderboardId": null,
+      "aimType": "Switching",
+      "subCategory": "Speed Switching"
+    },
+    "Apogee Column Advanced": {
+      "leaderboardId": null,
+      "aimType": "Switching",
+      "subCategory": "Speed Switching"
+    },
+    "Apogee Column Expert": {
+      "leaderboardId": null,
+      "aimType": "Switching",
+      "subCategory": "Speed Switching"
+    },
+    "Apogee Column Intermediate": {
+      "leaderboardId": null,
+      "aimType": "Switching",
+      "subCategory": "Speed Switching"
+    },
+    "Apogee Column Novice": {
+      "leaderboardId": null,
+      "aimType": "Switching",
+      "subCategory": "Speed Switching"
+    },
+    "Apogee Constellation Advanced": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Static Clicking"
+    },
+    "Apogee Constellation Expert": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Static Clicking"
+    },
+    "Apogee Constellation Intermediate": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Static Clicking"
+    },
+    "Apogee Constellation Novice": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Static Clicking"
+    },
+    "Apogee DNA Advanced": {
+      "leaderboardId": null,
+      "aimType": "Switching",
+      "subCategory": "Speed Switching"
+    },
+    "Apogee DNA Expert": {
+      "leaderboardId": null,
+      "aimType": "Switching",
+      "subCategory": "Speed Switching"
+    },
+    "Apogee DNA Intermediate": {
+      "leaderboardId": null,
+      "aimType": "Switching",
+      "subCategory": "Speed Switching"
+    },
+    "Apogee DNA Novice": {
+      "leaderboardId": null,
+      "aimType": "Switching",
+      "subCategory": "Speed Switching"
+    },
+    "Apogee Electric Advanced": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Dynamic Clicking"
+    },
+    "Apogee Electric Expert": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Dynamic Clicking"
+    },
+    "Apogee Electric Intermediate": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Dynamic Clicking"
+    },
+    "Apogee Electric Novice": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Dynamic Clicking"
+    },
+    "Apogee Feint Advanced": {
+      "leaderboardId": null,
+      "aimType": "Tracking",
+      "subCategory": "Reactive Tracking"
+    },
+    "Apogee Feint Expert": {
+      "leaderboardId": null,
+      "aimType": "Tracking",
+      "subCategory": "Reactive Tracking"
+    },
+    "Apogee Feint Intermediate": {
+      "leaderboardId": null,
+      "aimType": "Tracking",
+      "subCategory": "Reactive Tracking"
+    },
+    "Apogee Feint Novice": {
+      "leaderboardId": null,
+      "aimType": "Tracking",
+      "subCategory": "Reactive Tracking"
+    },
+    "Apogee FleeTS Advanced": {
+      "leaderboardId": null,
+      "aimType": "Switching",
+      "subCategory": "Evasive Switching"
+    },
+    "Apogee FleeTS Expert": {
+      "leaderboardId": null,
+      "aimType": "Switching",
+      "subCategory": "Evasive Switching"
+    },
+    "Apogee FleeTS Intermediate": {
+      "leaderboardId": null,
+      "aimType": "Switching",
+      "subCategory": "Evasive Switching"
+    },
+    "Apogee FleeTS Novice": {
+      "leaderboardId": null,
+      "aimType": "Switching",
+      "subCategory": "Evasive Switching"
+    },
+    "Apogee Galaga Advanced": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Static Clicking"
+    },
+    "Apogee Galaga Expert": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Static Clicking"
+    },
+    "Apogee Galaga Intermediate": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Static Clicking"
+    },
+    "Apogee Galaga Novice": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Static Clicking"
+    },
+    "Apogee Glide Advanced": {
+      "leaderboardId": null,
+      "aimType": "Tracking",
+      "subCategory": "Precise Tracking"
+    },
+    "Apogee Glide Expert": {
+      "leaderboardId": null,
+      "aimType": "Tracking",
+      "subCategory": "Precise Tracking"
+    },
+    "Apogee Glide Intermediate": {
+      "leaderboardId": null,
+      "aimType": "Tracking",
+      "subCategory": "Precise Tracking"
+    },
+    "Apogee Glide Novice": {
+      "leaderboardId": null,
+      "aimType": "Tracking",
+      "subCategory": "Precise Tracking"
+    },
+    "Apogee Gravclick Advanced": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Dynamic Clicking"
+    },
+    "Apogee Gravclick Expert": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Dynamic Clicking"
+    },
+    "Apogee Gravclick Intermediate": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Dynamic Clicking"
+    },
+    "Apogee Gravclick Novice": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Dynamic Clicking"
+    },
+    "Apogee Gravity Well Advanced": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Dynamic Clicking"
+    },
+    "Apogee Gravity Well Expert": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Dynamic Clicking"
+    },
+    "Apogee Gravity Well Intermediate": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Dynamic Clicking"
+    },
+    "Apogee Gravity Well Novice": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Dynamic Clicking"
+    },
+    "Apogee Hover Advanced": {
+      "leaderboardId": null,
+      "aimType": "Tracking",
+      "subCategory": "Reactive Tracking"
+    },
+    "Apogee Hover Expert": {
+      "leaderboardId": null,
+      "aimType": "Tracking",
+      "subCategory": "Reactive Tracking"
+    },
+    "Apogee Hover Intermediate": {
+      "leaderboardId": null,
+      "aimType": "Tracking",
+      "subCategory": "Reactive Tracking"
+    },
+    "Apogee Hover Novice": {
+      "leaderboardId": null,
+      "aimType": "Tracking",
+      "subCategory": "Reactive Tracking"
+    },
+    "Apogee InvadersTS Advanced": {
+      "leaderboardId": null,
+      "aimType": "Switching",
+      "subCategory": "Evasive Switching"
+    },
+    "Apogee InvadersTS Expert": {
+      "leaderboardId": null,
+      "aimType": "Switching",
+      "subCategory": "Evasive Switching"
+    },
+    "Apogee InvadersTS Intermediate": {
+      "leaderboardId": null,
+      "aimType": "Switching",
+      "subCategory": "Evasive Switching"
+    },
+    "Apogee InvadersTS Novice": {
+      "leaderboardId": null,
+      "aimType": "Switching",
+      "subCategory": "Evasive Switching"
+    },
+    "Apogee LosTS Advanced": {
+      "leaderboardId": null,
+      "aimType": "Switching",
+      "subCategory": "Evasive Switching"
+    },
+    "Apogee LosTS Expert": {
+      "leaderboardId": null,
+      "aimType": "Switching",
+      "subCategory": "Evasive Switching"
+    },
+    "Apogee LosTS Intermediate": {
+      "leaderboardId": null,
+      "aimType": "Switching",
+      "subCategory": "Evasive Switching"
+    },
+    "Apogee LosTS Novice": {
+      "leaderboardId": null,
+      "aimType": "Switching",
+      "subCategory": "Evasive Switching"
+    },
+    "Apogee MartianTS Advanced": {
+      "leaderboardId": null,
+      "aimType": "Switching",
+      "subCategory": "Speed Switching"
+    },
+    "Apogee MartianTS Expert": {
+      "leaderboardId": null,
+      "aimType": "Switching",
+      "subCategory": "Speed Switching"
+    },
+    "Apogee MartianTS Intermediate": {
+      "leaderboardId": null,
+      "aimType": "Switching",
+      "subCategory": "Speed Switching"
+    },
+    "Apogee MartianTS Novice": {
+      "leaderboardId": null,
+      "aimType": "Switching",
+      "subCategory": "Speed Switching"
+    },
+    "Apogee Meteor Advanced": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Dynamic Clicking"
+    },
+    "Apogee Meteor Expert": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Dynamic Clicking"
+    },
+    "Apogee Meteor Intermediate": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Dynamic Clicking"
+    },
+    "Apogee Meteor Novice": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Dynamic Clicking"
+    },
+    "Apogee Nebula Advanced": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Static Clicking"
+    },
+    "Apogee Nebula Expert": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Static Clicking"
+    },
+    "Apogee Nebula Intermediate": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Static Clicking"
+    },
+    "Apogee Nebula Novice": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Static Clicking"
+    },
+    "Apogee Orbit Advanced": {
+      "leaderboardId": null,
+      "aimType": "Tracking",
+      "subCategory": "Precise Tracking"
+    },
+    "Apogee Orbit Expert": {
+      "leaderboardId": null,
+      "aimType": "Tracking",
+      "subCategory": "Precise Tracking"
+    },
+    "Apogee Orbit Intermediate": {
+      "leaderboardId": null,
+      "aimType": "Tracking",
+      "subCategory": "Precise Tracking"
+    },
+    "Apogee Orbit Novice": {
+      "leaderboardId": null,
+      "aimType": "Tracking",
+      "subCategory": "Precise Tracking"
+    },
+    "Apogee Parallax Advanced": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Static Clicking"
+    },
+    "Apogee Parallax Expert": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Static Clicking"
+    },
+    "Apogee Parallax Intermediate": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Static Clicking"
+    },
+    "Apogee Parallax Novice": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Static Clicking"
+    },
+    "Apogee Pendulum Advanced": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Dynamic Clicking"
+    },
+    "Apogee Pendulum Expert": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Dynamic Clicking"
+    },
+    "Apogee Pendulum Intermediate": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Dynamic Clicking"
+    },
+    "Apogee Pendulum Novice": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Dynamic Clicking"
+    },
+    "Apogee Pinpoint Advanced": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Static Clicking"
+    },
+    "Apogee Pinpoint Expert": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Static Clicking"
+    },
+    "Apogee Pinpoint Intermediate": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Static Clicking"
+    },
+    "Apogee Pinpoint Novice": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Static Clicking"
+    },
+    "Apogee Pong Advanced": {
+      "leaderboardId": null,
+      "aimType": "Tracking",
+      "subCategory": "Reactive Tracking"
+    },
+    "Apogee Pong Expert": {
+      "leaderboardId": null,
+      "aimType": "Tracking",
+      "subCategory": "Reactive Tracking"
+    },
+    "Apogee Pong Intermediate": {
+      "leaderboardId": null,
+      "aimType": "Tracking",
+      "subCategory": "Reactive Tracking"
+    },
+    "Apogee Pong Novice": {
+      "leaderboardId": null,
+      "aimType": "Tracking",
+      "subCategory": "Reactive Tracking"
+    },
+    "Apogee Pong3D Advanced": {
+      "leaderboardId": null,
+      "aimType": "Tracking",
+      "subCategory": "Reactive Tracking"
+    },
+    "Apogee Pong3D Expert": {
+      "leaderboardId": null,
+      "aimType": "Tracking",
+      "subCategory": "Reactive Tracking"
+    },
+    "Apogee Pong3D Intermediate": {
+      "leaderboardId": null,
+      "aimType": "Tracking",
+      "subCategory": "Reactive Tracking"
+    },
+    "Apogee Pong3D Novice": {
+      "leaderboardId": null,
+      "aimType": "Tracking",
+      "subCategory": "Reactive Tracking"
+    },
+    "Apogee QuantumTS Advanced": {
+      "leaderboardId": null,
+      "aimType": "Switching",
+      "subCategory": "Evasive Switching"
+    },
+    "Apogee QuantumTS Expert": {
+      "leaderboardId": null,
+      "aimType": "Switching",
+      "subCategory": "Evasive Switching"
+    },
+    "Apogee QuantumTS Intermediate": {
+      "leaderboardId": null,
+      "aimType": "Switching",
+      "subCategory": "Evasive Switching"
+    },
+    "Apogee QuantumTS Novice": {
+      "leaderboardId": null,
+      "aimType": "Switching",
+      "subCategory": "Evasive Switching"
+    },
+    "Apogee RockeTS Advanced": {
+      "leaderboardId": null,
+      "aimType": "Switching",
+      "subCategory": "Speed Switching"
+    },
+    "Apogee RockeTS Expert": {
+      "leaderboardId": null,
+      "aimType": "Switching",
+      "subCategory": "Speed Switching"
+    },
+    "Apogee RockeTS Intermediate": {
+      "leaderboardId": null,
+      "aimType": "Switching",
+      "subCategory": "Speed Switching"
+    },
+    "Apogee RockeTS Novice": {
+      "leaderboardId": null,
+      "aimType": "Switching",
+      "subCategory": "Speed Switching"
+    },
+    "Apogee Satellite Advanced": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Dynamic Clicking"
+    },
+    "Apogee Satellite Expert": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Dynamic Clicking"
+    },
+    "Apogee Satellite Intermediate": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Dynamic Clicking"
+    },
+    "Apogee Satellite Novice": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Dynamic Clicking"
+    },
+    "Apogee Shooting Stars Advanced": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Dynamic Clicking"
+    },
+    "Apogee Shooting Stars Expert": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Dynamic Clicking"
+    },
+    "Apogee Shooting Stars Intermediate": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Dynamic Clicking"
+    },
+    "Apogee Shooting Stars Novice": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Dynamic Clicking"
+    },
+    "Apogee Stars Advanced": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Static Clicking"
+    },
+    "Apogee Stars Expert": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Static Clicking"
+    },
+    "Apogee Stars Intermediate": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Static Clicking"
+    },
+    "Apogee Stars Novice": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Static Clicking"
+    },
+    "Apogee Stutter Advanced": {
+      "leaderboardId": null,
+      "aimType": "Tracking",
+      "subCategory": "Reactive Tracking"
+    },
+    "Apogee Stutter Expert": {
+      "leaderboardId": null,
+      "aimType": "Tracking",
+      "subCategory": "Reactive Tracking"
+    },
+    "Apogee Stutter Intermediate": {
+      "leaderboardId": null,
+      "aimType": "Tracking",
+      "subCategory": "Reactive Tracking"
+    },
+    "Apogee Stutter Novice": {
+      "leaderboardId": null,
+      "aimType": "Tracking",
+      "subCategory": "Reactive Tracking"
+    },
+    "Apogee Sun and Moon Advanced": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Dynamic Clicking"
+    },
+    "Apogee Sun and Moon Expert": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Dynamic Clicking"
+    },
+    "Apogee Sun and Moon Intermediate": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Dynamic Clicking"
+    },
+    "Apogee Sun and Moon Novice": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Dynamic Clicking"
+    },
+    "Apogee Thread Advanced": {
+      "leaderboardId": null,
+      "aimType": "Tracking",
+      "subCategory": "Precise Tracking"
+    },
+    "Apogee Thread Expert": {
+      "leaderboardId": null,
+      "aimType": "Tracking",
+      "subCategory": "Precise Tracking"
+    },
+    "Apogee Thread Intermediate": {
+      "leaderboardId": null,
+      "aimType": "Tracking",
+      "subCategory": "Precise Tracking"
+    },
+    "Apogee Thread Novice": {
+      "leaderboardId": null,
+      "aimType": "Tracking",
+      "subCategory": "Precise Tracking"
+    },
+    "Apogee UFO Advanced": {
+      "leaderboardId": null,
+      "aimType": "Tracking",
+      "subCategory": "Reactive Tracking"
+    },
+    "Apogee UFO Expert": {
+      "leaderboardId": null,
+      "aimType": "Tracking",
+      "subCategory": "Reactive Tracking"
+    },
+    "Apogee UFO Intermediate": {
+      "leaderboardId": null,
+      "aimType": "Tracking",
+      "subCategory": "Reactive Tracking"
+    },
+    "Apogee UFO Novice": {
+      "leaderboardId": null,
+      "aimType": "Tracking",
+      "subCategory": "Reactive Tracking"
+    },
+    "Apogee Zenith Advanced": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Static Clicking"
+    },
+    "Apogee Zenith Expert": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Static Clicking"
+    },
+    "Apogee Zenith Intermediate": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Static Clicking"
+    },
+    "Apogee Zenith Novice": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Static Clicking"
+    },
+    "Apogee comeTS Advanced": {
+      "leaderboardId": null,
+      "aimType": "Switching",
+      "subCategory": "Evasive Switching"
+    },
+    "Apogee comeTS Expert": {
+      "leaderboardId": null,
+      "aimType": "Switching",
+      "subCategory": "Evasive Switching"
+    },
+    "Apogee comeTS Intermediate": {
+      "leaderboardId": null,
+      "aimType": "Switching",
+      "subCategory": "Evasive Switching"
+    },
+    "Apogee comeTS Novice": {
+      "leaderboardId": null,
+      "aimType": "Switching",
+      "subCategory": "Evasive Switching"
+    },
+    "Apogee skeeTS Advanced": {
+      "leaderboardId": null,
+      "aimType": "Switching",
+      "subCategory": "Evasive Switching"
+    },
+    "Apogee skeeTS Expert": {
+      "leaderboardId": null,
+      "aimType": "Switching",
+      "subCategory": "Evasive Switching"
+    },
+    "Apogee skeeTS Intermediate": {
+      "leaderboardId": null,
+      "aimType": "Switching",
+      "subCategory": "Evasive Switching"
+    },
+    "Apogee skeeTS Novice": {
+      "leaderboardId": null,
+      "aimType": "Switching",
+      "subCategory": "Evasive Switching"
     },
     "Ascended Tracking 90 Smooth": {
       "leaderboardId": 374,
@@ -1390,7 +2135,7 @@
     "B180T Voltaic": {
       "leaderboardId": 947,
       "aimType": "Switching",
-      "subCategory": "Evasive Switching"
+      "subCategory": "Stability Switching"
     },
     "B180T Voltaic 15% Smaller": {
       "leaderboardId": 16045,
@@ -1400,17 +2145,12 @@
     "B180T Voltaic Easy": {
       "leaderboardId": 543,
       "aimType": "Switching",
-      "subCategory": "Evasive Switching"
+      "subCategory": "Stability Switching"
     },
     "B180T Voltaic Easy Slower": {
       "leaderboardId": 185571,
       "aimType": "Switching",
-      "subCategory": "Evasive Switching"
-    },
-    "B180T Voltaic Regen": {
-      "leaderboardId": 2153,
-      "aimType": "Switching",
-      "subCategory": "Evasive Switching"
+      "subCategory": null
     },
     "B180T rAim Easy": {
       "leaderboardId": 740,
@@ -1435,7 +2175,7 @@
     "Bounce 180 Sparky": {
       "leaderboardId": 762,
       "aimType": "Clicking",
-      "subCategory": "Dynamic Clicking"
+      "subCategory": null
     },
     "Bounce 180 Tracking": {
       "leaderboardId": 122,
@@ -1822,18 +2562,8 @@
       "aimType": null,
       "subCategory": null
     },
-    "Centering II 180 Entry": {
-      "leaderboardId": 111447,
-      "aimType": "Tracking",
-      "subCategory": "Precise Tracking"
-    },
     "Centering II 180 Fixed Larger": {
       "leaderboardId": 84930,
-      "aimType": "Tracking",
-      "subCategory": "Precise Tracking"
-    },
-    "Centering II 180 Intermediate": {
-      "leaderboardId": 111448,
       "aimType": "Tracking",
       "subCategory": "Precise Tracking"
     },
@@ -1841,16 +2571,6 @@
       "leaderboardId": 33902,
       "aimType": "Tracking",
       "subCategory": null
-    },
-    "Centering II 180 Novice": {
-      "leaderboardId": 111445,
-      "aimType": "Tracking",
-      "subCategory": "Precise Tracking"
-    },
-    "Centering II 180 no strafes": {
-      "leaderboardId": 423,
-      "aimType": "Tracking",
-      "subCategory": "Precise Tracking"
     },
     "Centering II 90 No Strafes Fixed": {
       "leaderboardId": 33903,
@@ -1870,22 +2590,22 @@
     "ClickTrack 3t": {
       "leaderboardId": 102616,
       "aimType": "Clicking",
-      "subCategory": "Static Clicking"
+      "subCategory": null
     },
     "ClickTrack 3t Long": {
       "leaderboardId": 115474,
       "aimType": "Clicking",
-      "subCategory": "Static Clicking"
+      "subCategory": null
     },
     "ClickTrack 3t Short": {
       "leaderboardId": 115370,
       "aimType": "Clicking",
-      "subCategory": "Static Clicking"
+      "subCategory": null
     },
     "ClickTrack 5t": {
       "leaderboardId": 102615,
       "aimType": "Clicking",
-      "subCategory": "Static Clicking"
+      "subCategory": null
     },
     "ClickTrack 5t Long": {
       "leaderboardId": 115513,
@@ -2020,7 +2740,7 @@
     "Close Fast Strafes Easy Invincible - Thin": {
       "leaderboardId": 154186,
       "aimType": "Tracking",
-      "subCategory": "Reactive Tracking"
+      "subCategory": "Reading Tracking"
     },
     "Close Fast Strafes Invincible": {
       "leaderboardId": 494,
@@ -2029,13 +2749,13 @@
     },
     "Close Fast Strafes Invincible - Thin": {
       "leaderboardId": 814,
-      "aimType": "Tracking",
-      "subCategory": "Reactive Tracking"
+      "aimType": null,
+      "subCategory": null
     },
     "Close Fast Strafes Invincible Precise+": {
       "leaderboardId": 1343,
       "aimType": "Tracking",
-      "subCategory": "Reactive Tracking"
+      "subCategory": "Reading Tracking"
     },
     "Close Fast Strafes Invincible Precise+ Easy": {
       "leaderboardId": 154541,
@@ -2044,8 +2764,8 @@
     },
     "Close Long Strafes Invincible": {
       "leaderboardId": 117,
-      "aimType": "Tracking",
-      "subCategory": "Reactive Tracking"
+      "aimType": null,
+      "subCategory": null
     },
     "Close Needle Thin Easy": {
       "leaderboardId": 141929,
@@ -2056,11 +2776,6 @@
       "leaderboardId": 154181,
       "aimType": "Tracking",
       "subCategory": "Reading Tracking"
-    },
-    "Close long strafes invincible very thin": {
-      "leaderboardId": 2244,
-      "aimType": "Tracking",
-      "subCategory": "Reactive Tracking"
     },
     "Clustershot Avasive": {
       "leaderboardId": 203338,
@@ -2195,12 +2910,12 @@
     "Controlsphere Viscose Entry": {
       "leaderboardId": 190002,
       "aimType": "Tracking",
-      "subCategory": "Precise Tracking"
+      "subCategory": null
     },
     "Controlsphere rAim": {
       "leaderboardId": 5102,
       "aimType": "Tracking",
-      "subCategory": "Precise Tracking"
+      "subCategory": "Control Tracking"
     },
     "Controlsphere rAim Easy": {
       "leaderboardId": 5137,
@@ -2210,7 +2925,7 @@
     "Controlsphere rAim Easy 90%": {
       "leaderboardId": 83485,
       "aimType": "Tracking",
-      "subCategory": "Precise Tracking"
+      "subCategory": null
     },
     "Controlswitch Click": {
       "leaderboardId": 200238,
@@ -2280,7 +2995,7 @@
     "DotTS Entry": {
       "leaderboardId": 111232,
       "aimType": "Switching",
-      "subCategory": "Speed Switching"
+      "subCategory": null
     },
     "EvoClick Revosect": {
       "leaderboardId": 141058,
@@ -2316,11 +3031,6 @@
       "leaderboardId": 104954,
       "aimType": "Tracking",
       "subCategory": "Control Tracking"
-    },
-    "Extra mini Tile Frenzy": {
-      "leaderboardId": 5078,
-      "aimType": "Clicking",
-      "subCategory": "Static Clicking"
     },
     "Far Angle Smoothness": {
       "leaderboardId": 6914,
@@ -2377,25 +3087,15 @@
       "aimType": "Clicking",
       "subCategory": "Dynamic Clicking"
     },
-    "Floating Heads Timing 400%": {
-      "leaderboardId": 341,
-      "aimType": "Clicking",
-      "subCategory": "Dynamic Clicking"
-    },
     "Floating Heads Timing 400% FIXED": {
       "leaderboardId": 1730,
       "aimType": "Clicking",
-      "subCategory": "Dynamic Clicking"
+      "subCategory": "Linear Clicking"
     },
     "Floating Heads Timing 400% Larger": {
       "leaderboardId": 1607,
       "aimType": "Clicking",
-      "subCategory": "Dynamic Clicking"
-    },
-    "Floating Heads Timing Extra Small Speed": {
-      "leaderboardId": 31494,
-      "aimType": "Clicking",
-      "subCategory": "Dynamic Clicking"
+      "subCategory": "Linear Clicking"
     },
     "FloatingClick SuperbAim": {
       "leaderboardId": 35936,
@@ -2550,12 +3250,12 @@
     "Ground Plaza Sparky V3": {
       "leaderboardId": 517,
       "aimType": "Tracking",
-      "subCategory": "Reactive Tracking"
+      "subCategory": "Control Tracking"
     },
     "Ground Plaza Sparky V3 Thin": {
       "leaderboardId": 1408,
-      "aimType": "Tracking",
-      "subCategory": "Reactive Tracking"
+      "aimType": null,
+      "subCategory": null
     },
     "Ground Plaza Sparky V3 Viscose Hard": {
       "leaderboardId": 184795,
@@ -2657,30 +3357,15 @@
       "aimType": "Clicking",
       "subCategory": "Dynamic Clicking"
     },
-    "Jumbo 1wall6targets TE": {
-      "leaderboardId": 44,
-      "aimType": "Clicking",
-      "subCategory": "Static Clicking"
-    },
-    "Jumbo Tile Frenzy": {
-      "leaderboardId": 196,
-      "aimType": "Clicking",
-      "subCategory": "Static Clicking"
-    },
-    "Jumbo1wall9000targets": {
-      "leaderboardId": 1912,
-      "aimType": "Clicking",
-      "subCategory": "Static Clicking"
-    },
     "Kindaclose long stop strafes": {
       "leaderboardId": 15877,
       "aimType": "Tracking",
-      "subCategory": "Reactive Tracking"
+      "subCategory": null
     },
     "Kindafar Long Strafes": {
       "leaderboardId": 2152,
-      "aimType": "Tracking",
-      "subCategory": "Reactive Tracking"
+      "aimType": null,
+      "subCategory": null
     },
     "LDDH Fixed": {
       "leaderboardId": 80,
@@ -2745,7 +3430,7 @@
     "Leapstrafes Control Medium": {
       "leaderboardId": 63065,
       "aimType": "Tracking",
-      "subCategory": "Reactive Tracking"
+      "subCategory": "Precise Tracking"
     },
     "Leapstrafes Control Phantasy 30% Smaller": {
       "leaderboardId": 55631,
@@ -2755,12 +3440,12 @@
     "Leapstrafes Control wobin": {
       "leaderboardId": 184561,
       "aimType": "Tracking",
-      "subCategory": "Reactive Tracking"
+      "subCategory": null
     },
     "Leapstrafes Control wobin Easier": {
       "leaderboardId": 185344,
       "aimType": "Tracking",
-      "subCategory": "Reactive Tracking"
+      "subCategory": null
     },
     "Leapstrafes Control wobin Expert": {
       "leaderboardId": 185014,
@@ -2770,7 +3455,7 @@
     "Leapstrafes Control wobin Hard": {
       "leaderboardId": 184845,
       "aimType": "Tracking",
-      "subCategory": "Reactive Tracking"
+      "subCategory": null
     },
     "Leapstrafes Revosect": {
       "leaderboardId": 142725,
@@ -2892,11 +3577,6 @@
       "aimType": null,
       "subCategory": null
     },
-    "Midrange Long Strafes Invincible": {
-      "leaderboardId": 147,
-      "aimType": "Tracking",
-      "subCategory": "Reactive Tracking"
-    },
     "Midrange Short Strafes Invincible Raspberry": {
       "leaderboardId": 1484,
       "aimType": null,
@@ -2909,11 +3589,6 @@
     },
     "Multiclick Hard MIRA": {
       "leaderboardId": 63925,
-      "aimType": "Clicking",
-      "subCategory": "Static Clicking"
-    },
-    "No23 ca micropressure supereasy": {
-      "leaderboardId": 114049,
       "aimType": "Clicking",
       "subCategory": "Static Clicking"
     },
@@ -2974,8 +3649,8 @@
     },
     "PGTI Voltaic Easy 80%": {
       "leaderboardId": 2107,
-      "aimType": "Tracking",
-      "subCategory": "Precise Tracking"
+      "aimType": null,
+      "subCategory": null
     },
     "PGTI Voltaic Easy Smoother": {
       "leaderboardId": 184878,
@@ -2984,8 +3659,8 @@
     },
     "PGTI Voltaic Slower - 80%": {
       "leaderboardId": 509,
-      "aimType": "Tracking",
-      "subCategory": "Precise Tracking"
+      "aimType": null,
+      "subCategory": null
     },
     "PGTI rAim": {
       "leaderboardId": 4686,
@@ -3282,11 +3957,6 @@
       "aimType": "Tracking",
       "subCategory": "Reading Tracking"
     },
-    "PatCircleSwitch Speed": {
-      "leaderboardId": 36090,
-      "aimType": "Switching",
-      "subCategory": "Speed Switching"
-    },
     "PatCircleSwitch rAim": {
       "leaderboardId": 15485,
       "aimType": "Switching",
@@ -3420,12 +4090,12 @@
     "Pokeball 1w4ts 30%": {
       "leaderboardId": 456,
       "aimType": "Switching",
-      "subCategory": "Speed Switching"
+      "subCategory": "Stability Switching"
     },
     "Pokeball 1w4ts 30% Easy": {
       "leaderboardId": 178814,
       "aimType": "Switching",
-      "subCategory": "Speed Switching"
+      "subCategory": "Stability Switching"
     },
     "Pokeball Auto 1w2ts smallflicks": {
       "leaderboardId": 685,
@@ -3440,7 +4110,7 @@
     "Pokeball Frenzy Auto Small Wide": {
       "leaderboardId": 106,
       "aimType": "Switching",
-      "subCategory": "Speed Switching"
+      "subCategory": null
     },
     "Pokeball Frenzy Auto TE 60s": {
       "leaderboardId": 1944,
@@ -3575,7 +4245,7 @@
     "Popcorn Sparky": {
       "leaderboardId": 502,
       "aimType": "Clicking",
-      "subCategory": "Dynamic Clicking"
+      "subCategory": null
     },
     "Popcorn Voltaic": {
       "leaderboardId": 8,
@@ -3777,26 +4447,6 @@
       "aimType": "Tracking",
       "subCategory": null
     },
-    "RawMouseControl Reload": {
-      "leaderboardId": 17318,
-      "aimType": "Clicking",
-      "subCategory": "Static Clicking"
-    },
-    "RawMouseControl Reload Easy": {
-      "leaderboardId": 42155,
-      "aimType": "Clicking",
-      "subCategory": "Static Clicking"
-    },
-    "RawMouseControlClicking3": {
-      "leaderboardId": 5144,
-      "aimType": "Clicking",
-      "subCategory": "Static Clicking"
-    },
-    "RawMouseControlClicking3 30% smaller": {
-      "leaderboardId": 24395,
-      "aimType": "Clicking",
-      "subCategory": "Static Clicking"
-    },
     "RawMousima": {
       "leaderboardId": 128525,
       "aimType": "Clicking",
@@ -3827,21 +4477,6 @@
       "aimType": "Tracking",
       "subCategory": null
     },
-    "SYW (Smooth Your Wrist)": {
-      "leaderboardId": 185,
-      "aimType": "Tracking",
-      "subCategory": "Precise Tracking"
-    },
-    "SYW (Smooth Your Wrist) FIXED": {
-      "leaderboardId": 1189,
-      "aimType": "Tracking",
-      "subCategory": "Precise Tracking"
-    },
-    "SYW (Smooth Your Wrist) FIXED Extra thin": {
-      "leaderboardId": 1552,
-      "aimType": "Tracking",
-      "subCategory": "Precise Tracking"
-    },
     "SYW (Smooth Your Wrist) Truly FIXED": {
       "leaderboardId": 13150,
       "aimType": "Tracking",
@@ -3851,11 +4486,6 @@
       "leaderboardId": 32981,
       "aimType": "Tracking",
       "subCategory": null
-    },
-    "SYW Easy": {
-      "leaderboardId": 2182,
-      "aimType": "Tracking",
-      "subCategory": "Precise Tracking"
     },
     "SYW Truly FIXED Extra Thin": {
       "leaderboardId": 45252,
@@ -3877,30 +4507,15 @@
       "aimType": "Switching",
       "subCategory": "Stability Switching"
     },
-    "Skeet Tracking": {
-      "leaderboardId": 145,
-      "aimType": "Switching",
-      "subCategory": "Evasive Switching"
-    },
-    "Skeet Tracking 85% Speed": {
-      "leaderboardId": 86918,
-      "aimType": "Switching",
-      "subCategory": "Evasive Switching"
-    },
     "Skeet Tracking Goated": {
       "leaderboardId": 977,
       "aimType": "Switching",
-      "subCategory": "Evasive Switching"
+      "subCategory": null
     },
     "Skeet Tracking Goated Easy": {
       "leaderboardId": 178766,
       "aimType": "Switching",
       "subCategory": null
-    },
-    "Skeet Tracking Goated Small": {
-      "leaderboardId": 504,
-      "aimType": "Switching",
-      "subCategory": "Evasive Switching"
     },
     "Skeet Tracking Goated Small v2": {
       "leaderboardId": 178968,
@@ -3985,12 +4600,12 @@
     "SmoothBot Invincible Goated 75%": {
       "leaderboardId": 75962,
       "aimType": "Tracking",
-      "subCategory": "Precise Tracking"
+      "subCategory": null
     },
     "SmoothBot Invincible Goated Smaller": {
       "leaderboardId": 815,
-      "aimType": "Tracking",
-      "subCategory": "Precise Tracking"
+      "aimType": null,
+      "subCategory": null
     },
     "SmoothBot Perfected": {
       "leaderboardId": 184298,
@@ -4205,12 +4820,12 @@
     "Smoothsphere Viscose": {
       "leaderboardId": 184106,
       "aimType": "Tracking",
-      "subCategory": "Precise Tracking"
+      "subCategory": null
     },
     "Smoothsphere Viscose Easier": {
       "leaderboardId": 185342,
       "aimType": "Tracking",
-      "subCategory": "Precise Tracking"
+      "subCategory": null
     },
     "Smoothsphere Viscose Expert": {
       "leaderboardId": 184830,
@@ -4220,12 +4835,12 @@
     "Smoothsphere Viscose Hard": {
       "leaderboardId": 184518,
       "aimType": "Tracking",
-      "subCategory": "Precise Tracking"
+      "subCategory": null
     },
     "Smoothsphere Viscose Horizontal Entry": {
       "leaderboardId": 189903,
       "aimType": "Tracking",
-      "subCategory": "Precise Tracking"
+      "subCategory": null
     },
     "Smoothsphere weaker UFO": {
       "leaderboardId": 1392,
@@ -4345,7 +4960,7 @@
     "StaticSwitchingVox": {
       "leaderboardId": 15659,
       "aimType": "Switching",
-      "subCategory": "Speed Switching"
+      "subCategory": "Stability Switching"
     },
     "StaticSwitchingVox Entry": {
       "leaderboardId": 190275,
@@ -4455,12 +5070,12 @@
     "TSK - DVD Tracking": {
       "leaderboardId": 123669,
       "aimType": "Tracking",
-      "subCategory": "Precise Tracking"
+      "subCategory": null
     },
     "TSK - DVD Tracking Big": {
       "leaderboardId": 123665,
       "aimType": "Tracking",
-      "subCategory": "Precise Tracking"
+      "subCategory": null
     },
     "TSK - DVD Tracking Close": {
       "leaderboardId": 123715,
@@ -4470,12 +5085,12 @@
     "TSK - DVD Tracking MASSIVE": {
       "leaderboardId": 132420,
       "aimType": "Tracking",
-      "subCategory": "Precise Tracking"
+      "subCategory": null
     },
     "TSK - DVD Tracking Small": {
       "leaderboardId": 123668,
       "aimType": "Tracking",
-      "subCategory": "Precise Tracking"
+      "subCategory": null
     },
     "TSK - Hewchy's VAI 110": {
       "leaderboardId": 125974,
@@ -4632,26 +5247,6 @@
       "aimType": "Tracking",
       "subCategory": null
     },
-    "Tamspeed 2bp Gold": {
-      "leaderboardId": 8056,
-      "aimType": "Clicking",
-      "subCategory": "Dynamic Clicking"
-    },
-    "Tamspeed 2bp Iron": {
-      "leaderboardId": 11607,
-      "aimType": "Clicking",
-      "subCategory": "Dynamic Clicking"
-    },
-    "Tamspeed 2bp Platinum": {
-      "leaderboardId": 11958,
-      "aimType": "Clicking",
-      "subCategory": "Dynamic Clicking"
-    },
-    "Tamspeed 2bp Silver": {
-      "leaderboardId": 7792,
-      "aimType": "Clicking",
-      "subCategory": "Dynamic Clicking"
-    },
     "Tamspeed 2bpes": {
       "leaderboardId": 340,
       "aimType": "Clicking",
@@ -4701,16 +5296,6 @@
       "leaderboardId": 203377,
       "aimType": "Tracking",
       "subCategory": "Reactive Tracking"
-    },
-    "Tile Frenzy": {
-      "leaderboardId": 11,
-      "aimType": "Clicking",
-      "subCategory": "Static Clicking"
-    },
-    "Tile Frenzy Mini": {
-      "leaderboardId": 67,
-      "aimType": "Clicking",
-      "subCategory": "Static Clicking"
     },
     "ToonsClick rAim": {
       "leaderboardId": 5053,
@@ -5032,11 +5617,6 @@
       "aimType": "Clicking",
       "subCategory": "Dynamic Clicking"
     },
-    "VT Bounceshot Advanced 20% smaller": {
-      "leaderboardId": 31509,
-      "aimType": "Clicking",
-      "subCategory": "Dynamic Clicking"
-    },
     "VT Bounceshot Elite": {
       "leaderboardId": 86805,
       "aimType": "Clicking",
@@ -5080,22 +5660,17 @@
     "VT ControlTS Advanced S5": {
       "leaderboardId": 104833,
       "aimType": "Switching",
-      "subCategory": "Evasive Switching"
+      "subCategory": "Stability Switching"
     },
     "VT ControlTS Elite S5": {
       "leaderboardId": 106693,
       "aimType": "Switching",
-      "subCategory": "Evasive Switching"
-    },
-    "VT ControlTS Entry S5 Speed": {
-      "leaderboardId": 106720,
-      "aimType": "Switching",
-      "subCategory": "Evasive Switching"
+      "subCategory": "Stability Switching"
     },
     "VT ControlTS Intermediate S5": {
       "leaderboardId": 104890,
       "aimType": "Switching",
-      "subCategory": "Evasive Switching"
+      "subCategory": "Stability Switching"
     },
     "VT ControlTS Intermediate S5 30% Smaller": {
       "leaderboardId": 115804,
@@ -5212,11 +5787,6 @@
       "aimType": "Switching",
       "subCategory": "Evasive Switching"
     },
-    "VT DriftTS Entry S5 Speed": {
-      "leaderboardId": 104861,
-      "aimType": "Switching",
-      "subCategory": "Evasive Switching"
-    },
     "VT DriftTS Intermediate S5": {
       "leaderboardId": 104863,
       "aimType": "Switching",
@@ -5314,11 +5884,6 @@
     },
     "VT FlyTS Elite S5": {
       "leaderboardId": 106747,
-      "aimType": "Switching",
-      "subCategory": "Evasive Switching"
-    },
-    "VT FlyTS Entry S5 Speed": {
-      "leaderboardId": 106708,
       "aimType": "Switching",
       "subCategory": "Evasive Switching"
     },
@@ -5482,26 +6047,6 @@
       "aimType": "Clicking",
       "subCategory": "Dynamic Clicking"
     },
-    "VT PasuTS Advanced S5": {
-      "leaderboardId": 106331,
-      "aimType": "Switching",
-      "subCategory": "Evasive Switching"
-    },
-    "VT PasuTS Elite S5": {
-      "leaderboardId": 106754,
-      "aimType": "Switching",
-      "subCategory": "Evasive Switching"
-    },
-    "VT PasuTS Entry S5": {
-      "leaderboardId": 106755,
-      "aimType": "Switching",
-      "subCategory": "Evasive Switching"
-    },
-    "VT PasuTS Intermediate S5": {
-      "leaderboardId": 106756,
-      "aimType": "Switching",
-      "subCategory": "Evasive Switching"
-    },
     "VT PatStrafe Advanced": {
       "leaderboardId": 26262,
       "aimType": "Tracking",
@@ -5520,22 +6065,17 @@
     "VT Penta Bounce Advanced S5": {
       "leaderboardId": 98619,
       "aimType": "Switching",
-      "subCategory": "Evasive Switching"
+      "subCategory": "Stability Switching"
     },
     "VT Penta Bounce Elite S5": {
       "leaderboardId": 104669,
       "aimType": "Switching",
-      "subCategory": "Evasive Switching"
-    },
-    "VT Penta Bounce Entry S5 Speed": {
-      "leaderboardId": 107639,
-      "aimType": "Switching",
-      "subCategory": "Evasive Switching"
+      "subCategory": "Stability Switching"
     },
     "VT Penta Bounce Intermediate S5": {
       "leaderboardId": 103261,
       "aimType": "Switching",
-      "subCategory": "Evasive Switching"
+      "subCategory": "Stability Switching"
     },
     "VT Penta Bounce Novice S5": {
       "leaderboardId": 103262,
@@ -5870,7 +6410,7 @@
     "VoxTS Click Easier": {
       "leaderboardId": 136076,
       "aimType": "Clicking",
-      "subCategory": "Static Clicking"
+      "subCategory": "Dynamic Clicking"
     },
     "VoxTS Click Entry": {
       "leaderboardId": 192530,
@@ -5935,7 +6475,7 @@
     "Whisphere Extra Small & Slow": {
       "leaderboardId": 34968,
       "aimType": "Tracking",
-      "subCategory": "Precise Tracking"
+      "subCategory": null
     },
     "Whisphere Med 60s": {
       "leaderboardId": 84929,
@@ -5950,12 +6490,12 @@
     "Whisphere Small & Slow 55%": {
       "leaderboardId": 128693,
       "aimType": "Tracking",
-      "subCategory": "Precise Tracking"
+      "subCategory": null
     },
     "Whisphere Small & Slow 75%": {
       "leaderboardId": 77068,
       "aimType": "Tracking",
-      "subCategory": "Precise Tracking"
+      "subCategory": null
     },
     "Whisphere Small & Slow Easy": {
       "leaderboardId": 77069,
@@ -6027,16 +6567,6 @@
       "aimType": "Clicking",
       "subCategory": "Static Clicking"
     },
-    "Wide Wall 4 Targets Small": {
-      "leaderboardId": 339,
-      "aimType": "Clicking",
-      "subCategory": "Static Clicking"
-    },
-    "Wide Wall 6Targets": {
-      "leaderboardId": 235,
-      "aimType": "Clicking",
-      "subCategory": "Static Clicking"
-    },
     "aimerz+ 1w3ts Hard": {
       "leaderboardId": 44330,
       "aimType": "Clicking",
@@ -6100,12 +6630,12 @@
     "aimerz+ PipeClick Hard": {
       "leaderboardId": 44342,
       "aimType": "Clicking",
-      "subCategory": "Dynamic Clicking"
+      "subCategory": null
     },
     "aimerz+ PipeClick Normal": {
       "leaderboardId": 44344,
       "aimType": "Clicking",
-      "subCategory": "Dynamic Clicking"
+      "subCategory": null
     },
     "aimerz+ PipeTrack Hard": {
       "leaderboardId": 44356,
@@ -6274,8 +6804,8 @@
     },
     "beanTS": {
       "leaderboardId": 2648,
-      "aimType": "Switching",
-      "subCategory": "Speed Switching"
+      "aimType": null,
+      "subCategory": null
     },
     "beanTS 200%": {
       "leaderboardId": 58888,
@@ -6289,13 +6819,13 @@
     },
     "beanTS 30% Smaller": {
       "leaderboardId": 6779,
-      "aimType": "Switching",
-      "subCategory": "Speed Switching"
+      "aimType": null,
+      "subCategory": null
     },
     "beanTS Larger": {
       "leaderboardId": 129353,
       "aimType": "Switching",
-      "subCategory": "Speed Switching"
+      "subCategory": "Stability Switching"
     },
     "cA 1ts ruohong": {
       "leaderboardId": 94276,
@@ -6410,7 +6940,7 @@
     "cA fuglaapressure": {
       "leaderboardId": 94284,
       "aimType": "Clicking",
-      "subCategory": "Static Clicking"
+      "subCategory": null
     },
     "cA micropressure": {
       "leaderboardId": 94271,
@@ -6515,7 +7045,7 @@
     "cloverRawControl Viscose Hard 50cm": {
       "leaderboardId": 184568,
       "aimType": "Tracking",
-      "subCategory": "Precise Tracking"
+      "subCategory": null
     },
     "controlstrafes midrange": {
       "leaderboardId": 154389,
@@ -6650,7 +7180,7 @@
     "domiSwitch Easier": {
       "leaderboardId": 185428,
       "aimType": "Switching",
-      "subCategory": "Evasive Switching"
+      "subCategory": null
     },
     "domiSwitch Easy": {
       "leaderboardId": 83043,
@@ -6661,11 +7191,6 @@
       "leaderboardId": 128818,
       "aimType": "Clicking",
       "subCategory": "Linear Clicking"
-    },
-    "domiSwitch Hard": {
-      "leaderboardId": 83042,
-      "aimType": "Switching",
-      "subCategory": "Evasive Switching"
     },
     "domiSwitch Harder": {
       "leaderboardId": 185226,
@@ -6927,11 +7452,6 @@
       "aimType": "Switching",
       "subCategory": "Speed Switching"
     },
-    "patCircleSwitch small NR": {
-      "leaderboardId": 946,
-      "aimType": "Switching",
-      "subCategory": "Speed Switching"
-    },
     "patTS NR": {
       "leaderboardId": 403,
       "aimType": "Switching",
@@ -6947,11 +7467,6 @@
       "aimType": "Switching",
       "subCategory": null
     },
-    "patTargetSwitch": {
-      "leaderboardId": 116,
-      "aimType": "Switching",
-      "subCategory": "Evasive Switching"
-    },
     "patTargetSwitch 90 LowTTK": {
       "leaderboardId": 75617,
       "aimType": "Switching",
@@ -6962,25 +7477,10 @@
       "aimType": "Switching",
       "subCategory": "Speed Switching"
     },
-    "patTargetSwitch Dodge 360": {
-      "leaderboardId": 1563,
-      "aimType": "Switching",
-      "subCategory": "Evasive Switching"
-    },
     "patTargetSwitch Dodge 360 v2": {
       "leaderboardId": 984,
       "aimType": null,
       "subCategory": null
-    },
-    "patTargetSwitch Small": {
-      "leaderboardId": 172,
-      "aimType": "Switching",
-      "subCategory": "Evasive Switching"
-    },
-    "patTargetSwitch easy": {
-      "leaderboardId": 600,
-      "aimType": "Switching",
-      "subCategory": "Evasive Switching"
     },
     "psalmTS Avasive": {
       "leaderboardId": 203349,
@@ -7025,7 +7525,7 @@
     "psalmTS Voltaic": {
       "leaderboardId": 1114,
       "aimType": "Switching",
-      "subCategory": "Speed Switching"
+      "subCategory": null
     },
     "psalmTS Voltaic Easy": {
       "leaderboardId": 960,
@@ -7232,11 +7732,6 @@
       "aimType": "Switching",
       "subCategory": "Stability Switching"
     },
-    "shimPressure Micro": {
-      "leaderboardId": 84026,
-      "aimType": "Clicking",
-      "subCategory": "Static Clicking"
-    },
     "shimmicro": {
       "leaderboardId": 84415,
       "aimType": "Clicking",
@@ -7245,22 +7740,22 @@
     "skyClick Goated Easier": {
       "leaderboardId": 185490,
       "aimType": "Clicking",
-      "subCategory": "Dynamic Clicking"
+      "subCategory": "Micro Clicking"
     },
     "skyClick Goated Expert": {
       "leaderboardId": 185489,
       "aimType": "Clicking",
-      "subCategory": "Dynamic Clicking"
+      "subCategory": "Micro Clicking"
     },
     "skyClick Goated Hard": {
       "leaderboardId": 185492,
       "aimType": "Clicking",
-      "subCategory": "Dynamic Clicking"
+      "subCategory": "Micro Clicking"
     },
     "skyClick Goated Medium": {
       "leaderboardId": 185491,
       "aimType": "Clicking",
-      "subCategory": "Dynamic Clicking"
+      "subCategory": "Micro Clicking"
     },
     "snakSwitch": {
       "leaderboardId": 192578,
@@ -7287,16 +7782,6 @@
       "aimType": "Tracking",
       "subCategory": "Precise Tracking"
     },
-    "tamTargetSwitch Control": {
-      "leaderboardId": 57,
-      "aimType": "Switching",
-      "subCategory": "Evasive Switching"
-    },
-    "tamTargetSwitch Control Entry": {
-      "leaderboardId": 110651,
-      "aimType": "Switching",
-      "subCategory": "Evasive Switching"
-    },
     "tamTargetSwitch Control Hard": {
       "leaderboardId": 757,
       "aimType": "Switching",
@@ -7304,11 +7789,6 @@
     },
     "tamTargetSwitch Control Hard 30% Larger": {
       "leaderboardId": 92614,
-      "aimType": "Switching",
-      "subCategory": "Evasive Switching"
-    },
-    "tamTargetSwitch Control Intermediate": {
-      "leaderboardId": 110123,
       "aimType": "Switching",
       "subCategory": "Evasive Switching"
     },
@@ -7322,16 +7802,6 @@
       "aimType": "Switching",
       "subCategory": "Evasive Switching"
     },
-    "tamTargetSwitch Smooth Elite": {
-      "leaderboardId": 111685,
-      "aimType": "Switching",
-      "subCategory": "Evasive Switching"
-    },
-    "tamTargetSwitch Smooth Entry": {
-      "leaderboardId": 111266,
-      "aimType": "Switching",
-      "subCategory": "Evasive Switching"
-    },
     "tamTargetSwitch Smooth Hard": {
       "leaderboardId": 727,
       "aimType": "Switching",
@@ -7339,16 +7809,6 @@
     },
     "tamTargetSwitch Smooth Hard 30% Larger": {
       "leaderboardId": 96201,
-      "aimType": "Switching",
-      "subCategory": "Evasive Switching"
-    },
-    "tamTargetSwitch Smooth Intermediate": {
-      "leaderboardId": 113137,
-      "aimType": "Switching",
-      "subCategory": "Evasive Switching"
-    },
-    "tamTargetSwitch Smooth Novice": {
-      "leaderboardId": 111343,
       "aimType": "Switching",
       "subCategory": "Evasive Switching"
     },

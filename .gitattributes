@@ -12,5 +12,5 @@
 package-lock.json linguist-generated
 data/*.json linguist-generated
 data/benchmarks/*.json linguist-generated
-data/season-2/** linguist-generated
+data/season-1/** linguist-generated
 tools/apogee-ui-preview.html linguist-generated

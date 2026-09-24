@@ -1061,6 +1061,1154 @@
       "agreement": 0
     },
     {
+      "scenario": "Apogee 1w6aliens Advanced",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee 1w6aliens Expert",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee 1w6aliens Intermediate",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee 1w6aliens Novice",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee AlienTrack Advanced",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee AlienTrack Expert",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee AlienTrack Intermediate",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee AlienTrack Novice",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Antigrav Advanced",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Antigrav Expert",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Antigrav Intermediate",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Antigrav Novice",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Arc Advanced",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Arc Expert",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Arc Intermediate",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Arc Novice",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Asteroids Advanced",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Asteroids Expert",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Asteroids Intermediate",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Asteroids Novice",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Blastoff Advanced",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Blastoff Expert",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Blastoff Intermediate",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Blastoff Novice",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee CockpiTS Advanced",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee CockpiTS Expert",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee CockpiTS Intermediate",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee CockpiTS Novice",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Column Advanced",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Column Expert",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Column Intermediate",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Column Novice",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee comeTS Advanced",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee comeTS Expert",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee comeTS Intermediate",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee comeTS Novice",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Constellation Advanced",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Constellation Expert",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Constellation Intermediate",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Constellation Novice",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee DNA Advanced",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee DNA Expert",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee DNA Intermediate",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee DNA Novice",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Electric Advanced",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Electric Expert",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Electric Intermediate",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Electric Novice",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Feint Advanced",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Feint Expert",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Feint Intermediate",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Feint Novice",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee FleeTS Advanced",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee FleeTS Expert",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee FleeTS Intermediate",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee FleeTS Novice",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Galaga Advanced",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Galaga Expert",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Galaga Intermediate",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Galaga Novice",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Glide Advanced",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Glide Expert",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Glide Intermediate",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Glide Novice",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Gravclick Advanced",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Gravclick Expert",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Gravclick Intermediate",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Gravclick Novice",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Gravity Well Advanced",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Gravity Well Expert",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Gravity Well Intermediate",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Gravity Well Novice",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Hover Advanced",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Hover Expert",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Hover Intermediate",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Hover Novice",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee InvadersTS Advanced",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee InvadersTS Expert",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee InvadersTS Intermediate",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee InvadersTS Novice",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee LosTS Advanced",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee LosTS Expert",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee LosTS Intermediate",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee LosTS Novice",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee MartianTS Advanced",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee MartianTS Expert",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee MartianTS Intermediate",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee MartianTS Novice",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Meteor Advanced",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Meteor Expert",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Meteor Intermediate",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Meteor Novice",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Nebula Advanced",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Nebula Expert",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Nebula Intermediate",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Nebula Novice",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Orbit Advanced",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Orbit Expert",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Orbit Intermediate",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Orbit Novice",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Parallax Advanced",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Parallax Expert",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Parallax Intermediate",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Parallax Novice",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Pendulum Advanced",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Pendulum Expert",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Pendulum Intermediate",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Pendulum Novice",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Pinpoint Advanced",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Pinpoint Expert",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Pinpoint Intermediate",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Pinpoint Novice",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Pong Advanced",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Pong Expert",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Pong Intermediate",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Pong Novice",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Pong3D Advanced",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Pong3D Expert",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Pong3D Intermediate",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Pong3D Novice",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee QuantumTS Advanced",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee QuantumTS Expert",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee QuantumTS Intermediate",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee QuantumTS Novice",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee RockeTS Advanced",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee RockeTS Expert",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee RockeTS Intermediate",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee RockeTS Novice",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Satellite Advanced",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Satellite Expert",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Satellite Intermediate",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Satellite Novice",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Shooting Stars Advanced",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Shooting Stars Expert",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Shooting Stars Intermediate",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Shooting Stars Novice",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee skeeTS Advanced",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee skeeTS Expert",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee skeeTS Intermediate",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee skeeTS Novice",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Stars Advanced",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Stars Expert",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Stars Intermediate",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Stars Novice",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Stutter Advanced",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Stutter Expert",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Stutter Intermediate",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Stutter Novice",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Sun and Moon Advanced",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Sun and Moon Expert",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Sun and Moon Intermediate",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Sun and Moon Novice",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Thread Advanced",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Thread Expert",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Thread Intermediate",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Thread Novice",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee UFO Advanced",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee UFO Expert",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee UFO Intermediate",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee UFO Novice",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Zenith Advanced",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Zenith Expert",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Zenith Intermediate",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
+      "scenario": "Apogee Zenith Novice",
+      "seconds": 60,
+      "runs": 0,
+      "agreement": 1,
+      "from": "file"
+    },
+    {
       "scenario": "Ascended Tracking v3",
       "seconds": 89,
       "runs": 5,

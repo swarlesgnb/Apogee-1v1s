@@ -19,7 +19,7 @@ export interface Destination {
   pool?: ExpeditionScenario[][];
 }
 export interface ExpeditionDefinition {
-  version: 1 | 2 | 3 | 4;
+  version: 1 | 2 | 3 | 4 | 5;
   id: string;
   name: string;
   sourceSeason: string;
@@ -78,7 +78,7 @@ export interface Reward {
   requirement: string;
 }
 export interface ExpeditionState {
-  version: 1 | 2 | 3 | 4;
+  version: 1 | 2 | 3 | 4 | 5;
   definitionId: string;
   enrolledAt: number;
   band: number;

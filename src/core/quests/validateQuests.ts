@@ -18,6 +18,7 @@
  *   npx tsx src/core/quests/validateQuests.ts [statsFolder]
  */
 
+import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 
 import { scanStatsFolder, type ScenarioHistory } from "../history/history.ts";
@@ -198,6 +199,26 @@ const ctxAt = (h: Map<string, ScenarioHistory>, when: Date, ranked = true): Boar
   ranked,
 });
 
+// The simulations below replay weeks of real history, and that history was played on the
+// first draft's pool of borrowed scenarios, not on Apogee's own that replaced it: against
+// the new pool it reads as a player who has barely started, so the scenario-specific kinds
+// are never issued and one floor quest fills the board - a fact about the data, not the
+// issuer. So the weeks are replayed against the pool the history actually played, read
+// from the last commit that had it; today's board above stays on the season as it is.
+const FIRST_DRAFT = "7b212c0";
+const played = JSON.parse(
+  execFileSync("git", ["show", `${FIRST_DRAFT}:data/seasons/season-1.json`], { encoding: "utf8", maxBuffer: 64 << 20 }),
+) as ReturnType<typeof loadSeason>;
+const playedDifficulty = seasonAsDifficulty(played);
+const playedLabels = seasonLabels(played);
+const simAt = (h: Map<string, ScenarioHistory>, when: Date, ranked = true): BoardContext => ({
+  difficulty: playedDifficulty,
+  history: h,
+  now: when,
+  labelFor: (s) => playedLabels.get(s) ?? s,
+  ranked,
+});
+
 console.log("\n── today's board from real history ──────────────");
 
 if (history.size === 0) {
@@ -311,23 +332,24 @@ if (history.size === 0) {
 
   // Every kind on today's board and the reserve, plus the boards of the last four weeks,
   // so every kind the issuer can produce is exercised against a real standing.
-  const seen = new Map<string, IssuedQuest>();
-  const consider = (q: IssuedQuest) => { if (!seen.has(q.kind)) seen.set(q.kind, q); };
-  all.forEach(consider);
+  // Each quest is measured against the pool it was issued from.
+  const seen = new Map<string, { q: IssuedQuest; at: typeof ctxAt }>();
+  const consider = (at: typeof ctxAt) => (q: IssuedQuest) => { if (!seen.has(q.kind)) seen.set(q.kind, { q, at }); };
+  all.forEach(consider(ctxAt));
   for (let d = 0; d < 28; d++) {
     const day = new Date(startOfDay(now).getTime() - d * DAY_MS);
-    const { daily, reserve } = issueDaily(ctxAt(history, day), day, []);
-    daily.forEach(consider);
+    const { daily, reserve } = issueDaily(simAt(history, day), day, []);
+    daily.forEach(consider(simAt));
     const since = startOfDay(day);
-    reserve.forEach((q: Quest) => consider({ ...q, since: since.toISOString(), until: new Date(since.getTime() + DAY_MS).toISOString(), progress: 0, completedAt: null }));
-    const weekly = issueWeekly(ctxAt(history, day), day, null);
-    if (weekly) consider(weekly);
+    reserve.forEach((q: Quest) => consider(simAt)({ ...q, since: since.toISOString(), until: new Date(since.getTime() + DAY_MS).toISOString(), progress: 0, completedAt: null }));
+    const weekly = issueWeekly(simAt(history, day), day, null);
+    if (weekly) consider(simAt)(weekly);
   }
 
-  for (const q of seen.values()) {
+  for (const { q, at } of seen.values()) {
     const done = satisfy(q);
     if (!done) { check(`${q.kind} has a way to be satisfied`, false); continue; }
-    const progress = measure(q, ctxAt(done.h, now), done.matches);
+    const progress = measure(q, at(done.h, now), done.matches);
     check(`${q.kind.padEnd(16)} completes when done`, progress >= q.target, `${progress}/${q.target}  ${q.title}`);
   }
   console.log(`       ${seen.size} of 12 kinds exercised`);
@@ -357,7 +379,7 @@ if (history.size === 0) {
   let repeats = 0;
   for (let d = DAYS - 1; d >= 0; d--) {
     const day = new Date(startOfDay(now).getTime() - d * DAY_MS);
-    const { daily } = issueDaily(ctxAt(history, day), day, recent);
+    const { daily } = issueDaily(simAt(history, day), day, recent);
     const subjects = daily.map((q) => q.params.scenario ?? q.params.category ?? q.kind);
     repeats += subjects.filter((s) => recent.includes(s)).length;
     recent = subjects;
@@ -419,7 +441,7 @@ if (history.size === 0) {
     const day = new Date(startOfDay(now).getTime() - d * DAY_MS);
     if ((runsOnDay.get(dayKey(day)) ?? 0) < 10) continue;
     judged++;
-    const ctx = ctxAt(history, day, false);
+    const ctx = simAt(history, day, false);
     const { daily, reserve } = issueDaily(ctx, day, []);
     const since = startOfDay(day);
     const asIssued = (q: Quest): IssuedQuest =>
@@ -428,8 +450,8 @@ if (history.size === 0) {
   }
   for (let w = 1; w <= 12; w++) {
     const day = new Date(startOfWeek(now).getTime() - w * 7 * DAY_MS + DAY_MS);
-    const weekly = issueWeekly(ctxAt(history, day, false), day, null);
-    if (weekly) note(weekly.kind, true, measure(weekly, ctxAt(history, day, false), []) >= weekly.target);
+    const weekly = issueWeekly(simAt(history, day, false), day, null);
+    if (weekly) note(weekly.kind, true, measure(weekly, simAt(history, day, false), []) >= weekly.target);
   }
 
   console.log(`       ${judged} days with 10+ runs in the last 120\n`);

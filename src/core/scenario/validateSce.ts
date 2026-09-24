@@ -9,7 +9,7 @@
  *      that held less often than that would not be a convention.
  *   3. Geometry resolves for at least 95% of files, so a regression in either map format
  *      shows up as a number dropping rather than as quietly thinner model fits.
- *   4. Every authored season-2 scenario parses, round-trips, and resolves geometry.
+ *   4. Every authored Season 1 scenario parses, round-trips, and resolves geometry.
  *
  * A check that finds no files is a failure, not a pass: a machine with no KovaaK's
  * install has measured nothing.
@@ -87,10 +87,10 @@ const coverage = geometry / Math.max(1, files.length);
 if (coverage >= 0.95) pass(`geometry resolves for ${geometry}/${files.length} (${mapFormats.json} JSON maps, ${mapFormats.reflex} Reflex)`);
 else fail(`geometry resolves for only ${geometry}/${files.length}`);
 
-const authored = dataFile("season-2", "scenarios");
+const authored = dataFile("season-1", "scenarios");
 if (existsSync(authored)) {
   const own = readdirSync(authored).filter((f) => f.endsWith(".sce"));
-  if (own.length === 0) fail("data/season-2/scenarios holds no .sce files");
+  if (own.length === 0) fail("data/season-1/scenarios holds no .sce files");
   for (const f of own) {
     const text = readFileSync(join(authored, f), "utf8");
     const sce = parseSce(text);
@@ -98,7 +98,7 @@ if (existsSync(authored)) {
     if (get(sce.head, "Name") !== f.replace(/\.sce$/, "")) fail(`${f}: Name= does not match the file name, so KovaaK's would list it under another name`);
     if (!scenarioFeatures(sce, mapsDir).geometry) fail(`${f}: geometry does not resolve`);
   }
-  pass(`${own.length} authored season-2 scenarios checked`);
+  pass(`${own.length} authored Season 1 scenarios checked`);
 }
 
 if (failures) {

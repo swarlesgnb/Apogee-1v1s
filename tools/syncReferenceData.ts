@@ -12,7 +12,8 @@
  *   npx tsx tools/syncReferenceData.ts [--dry-run]
  */
 
-import { readFileSync } from "node:fs";
+import { createHash } from "node:crypto";
+import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -237,6 +238,17 @@ async function main(): Promise<void> {
   // upsert of a row nothing points at is inert; a missing one breaks a match.
   const known = new Set([...live, ...Object.keys(identity)]);
 
+  // The hash KovaaK's writes into a stats file is the MD5 of the scenario file, and for
+  // Apogee's own scenarios submit-run refuses any other (consistency.ts, hash_known). Only
+  // those carry one: the committed file is the only version there is. Every other scenario
+  // is sent a null, which is what it has always had - nothing else sets the column.
+  const ownDir = join(root, "data", "season-1", "scenarios");
+  const ownHashes = new Map(
+    readdirSync(ownDir)
+      .filter((f) => f.endsWith(".sce"))
+      .map((f) => [f.slice(0, -".sce".length), createHash("md5").update(readFileSync(join(ownDir, f))).digest("hex")]),
+  );
+
   // Two batches, not one, because they carry different columns.
   //
   // A bulk upsert sends one shape, and a null in it is an UPDATE to null rather than
@@ -276,6 +288,7 @@ async function main(): Promise<void> {
             leaderboard_id: ident.leaderboardId,
             aim_type: ident.aimType,
             sub_category: ident.subCategory,
+            known_hash: ownHashes.get(name) ?? null,
           }
         : {}),
       score_model_stat: model?.stat ?? null,
@@ -311,6 +324,7 @@ async function main(): Promise<void> {
     `  with a weapon model: ${rows.filter((r) => r.weapon_score_per_damage != null).length}`,
   );
   console.log(`  with a world record: ${rows.filter((r) => r.world_record != null).length}`);
+  console.log(`  with a known hash  : ${rows.filter((r) => r.known_hash != null).length}`);
   console.log(`  with a duration    : ${rows.filter((r) => r.duration_seconds != null).length}`);
   console.log(`  with a shot rate   : ${rows.filter((r) => r.shots_per_second != null).length}`);
 

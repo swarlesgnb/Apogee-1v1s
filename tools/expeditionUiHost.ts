@@ -15,7 +15,7 @@ app.setPath("userData", join(isolated, "electron"));
 const stats = join(isolated, "stats"); mkdirSync(stats);
 let dir: string | null = null, service = new ExpeditionService(isolated);
 const def = loadExpedition();
-const store = new ExpeditionStore(join(isolated, "expedition-first-light-v4.json"), def);
+const store = new ExpeditionStore(join(isolated, "expedition-first-light-v5.json"), def);
 const realNow = Date.now;
 let time = realNow(), serial = 0;
 const sessionStartedAt = time;

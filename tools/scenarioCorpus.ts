@@ -1,7 +1,7 @@
 /**
  * Measure every scenario file on this machine and join it to what its leaderboard says.
  *
- * Season 2's scenarios are authored rather than chosen, so nobody has played them and
+ * Season 1's scenarios are authored rather than chosen, so nobody has played them and
  * nothing about their difficulty can be read off a board. What can be done is to learn,
  * from scenarios that *have* been played, how the numbers in a file turn into scores -
  * and this is where that learning starts: one row per scenario, the geometry from
@@ -44,10 +44,10 @@ export function kovaaksRoot(): string | null {
 
 export function scenarioFiles(root: string): string[] {
   const files: string[] = [];
-  // Season 2's own files, once installed into the game folder, are not evidence about
-  // what real scenarios look like: counting them would let validate:season2 compare the
+  // Season 1's own files, once installed into the game folder, are not evidence about
+  // what real scenarios look like: counting them would let validate:season-files compare the
   // season against itself. They are skipped by the file names the build writes.
-  const authoredDir = dataFile("season-2", "scenarios");
+  const authoredDir = dataFile("season-1", "scenarios");
   const authored = new Set(existsSync(authoredDir) ? readdirSync(authoredDir).filter((f) => f.endsWith(".sce")) : []);
   const own = join(root, "Saved", "SaveGames", "Scenarios");
   if (existsSync(own)) for (const f of readdirSync(own)) if (f.endsWith(".sce") && !authored.has(f)) files.push(join(own, f));
@@ -74,8 +74,8 @@ export function buildCorpus(root: string): CorpusRow[] {
   const taxonomy = readJson<{ scenarios: Array<{ name: string; leaderboardId: number; aimType: string | null; difficulty: string | null; plays: number; entries: number; topScore: number | null }> }>("scenario_taxonomy.json");
   const byName = new Map(taxonomy.scenarios.map((s) => [s.name.trim().toLowerCase(), s]));
   const percentiles = readJson<{ distributions: Array<{ scenario: string; total: number; points: Array<{ topFraction: number; score: number }> }> }>("leaderboard_percentiles.json");
-  const extra = existsSync(dataFile("season-2", "corpus_ladders.json"))
-    ? readJson<{ distributions: typeof percentiles.distributions }>(join("season-2", "corpus_ladders.json")).distributions
+  const extra = existsSync(dataFile("season-1", "corpus_ladders.json"))
+    ? readJson<{ distributions: typeof percentiles.distributions }>(join("season-1", "corpus_ladders.json")).distributions
     : [];
   const ladders = new Map([...percentiles.distributions, ...extra].map((d) => [d.scenario.trim().toLowerCase(), d]));
 
@@ -115,7 +115,7 @@ if (import.meta.url === `file:///${process.argv[1]?.replace(/\\/g, "/")}` || pro
   }
   const rows = buildCorpus(root);
   const outArg = process.argv.indexOf("--out");
-  const out = outArg > 0 ? process.argv[outArg + 1] : dataFile("season-2", "corpus.json");
+  const out = outArg > 0 ? process.argv[outArg + 1] : dataFile("season-1", "corpus.json");
   mkdirSync(dirname(out), { recursive: true });
   writeFileSync(out, JSON.stringify({ builtAt: new Date().toISOString(), scenarios: rows.length, rows }, null, 1) + "\n");
   const geo = rows.filter((r) => r.geometry).length;

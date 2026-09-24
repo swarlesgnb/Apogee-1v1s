@@ -373,8 +373,13 @@ check(
   shared.map(([name, families]) => `${name} in ${families.join(" and ")}`).join("; "),
 );
 
-const noId = variants.filter((v) => typeof v.leaderboardId !== "number" || v.leaderboardId <= 0);
-check("every scenario carries a leaderboard id", noId.length === 0, noId.map((v) => v.scenario).join(", "));
+// Apogee's own scenarios are the committed files in data/season-1/scenarios. They have no
+// KovaaK's board until they are shared in game, and no benchmark publishes them - the
+// reason each is here is its family's, in data/season-1/families.json - so the two
+// borrowed-scenario rules below hold for the rest and these are counted instead.
+const authored = (scenario: string) => existsSync(dataFile("season-1", "scenarios", `${scenario}.sce`));
+const noId = variants.filter((v) => !authored(v.scenario) && (typeof v.leaderboardId !== "number" || v.leaderboardId <= 0));
+check("every borrowed scenario carries a leaderboard id", noId.length === 0, noId.map((v) => v.scenario).join(", "));
 
 const perCategory = pool.categories.map(
   (c) => `${c} ${pool.families.filter((f) => f.category === c).length}`,
@@ -558,6 +563,7 @@ const shortWhy: string[] = [];
 const admitted: string[] = [];
 
 for (const v of variants) {
+  if (authored(v.scenario)) continue;
   const benchmarks = fromBenchmarks.get(v.scenario)?.benchmarks ?? new Set<string>();
   if ([...benchmarks].some((b) => sources.has(b))) continue;
 
@@ -578,7 +584,7 @@ for (const v of variants) {
 }
 
 check(
-  "every scenario is published by a benchmark the pool names, or says why it is here",
+  "every borrowed scenario is published by a benchmark the pool names, or says why it is here",
   offPool.length === 0,
   offPool.join("; "),
 );

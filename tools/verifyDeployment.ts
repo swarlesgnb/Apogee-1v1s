@@ -13,7 +13,8 @@
  *   npx tsx tools/verifyDeployment.ts
  */
 
-import { readFileSync } from "node:fs";
+import { createHash } from "node:crypto";
+import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -235,6 +236,30 @@ async function main(): Promise<void> {
     preciseNames.length
       ? `${preciseNames.length} live vs ${expected.length} expected`
       : `none live, ${expected.length} expected - has sync:reference run?`,
+  );
+
+  // Apogee's own scenarios are held to the hash of the committed file (submit-run,
+  // hash_known), so a project that has not been synced since a file changed refuses every
+  // honest run on it. Read-only: the hashes are compared, nothing is written.
+  const ownDir = join(root, "data", "season-1", "scenarios");
+  const ownHashes = new Map(
+    readdirSync(ownDir)
+      .filter((f) => f.endsWith(".sce"))
+      .map((f) => [f.slice(0, -".sce".length), createHash("md5").update(readFileSync(join(ownDir, f))).digest("hex")]),
+  );
+  const hashed = await rest(`scenarios?select=name,known_hash&name=like.${encodeURIComponent("Apogee *")}&limit=1000`, ANON!);
+  const liveHashes = new Map(
+    (JSON.parse(hashed.body || "[]") as { name: string; known_hash: string | null }[]).map((r) => [r.name, r.known_hash]),
+  );
+  const wrongHash = [...ownHashes].filter(([name, md5]) => liveHashes.get(name) !== md5).map(([name]) => name);
+  check(
+    "every Apogee scenario's live hash is the committed file's",
+    hashed.status === 200 && wrongHash.length === 0,
+    hashed.status !== 200
+      ? `HTTP ${hashed.status}`
+      : wrongHash.length
+        ? `${wrongHash.length} of ${ownHashes.size} differ or are missing - run npm run sync:reference; e.g. ${wrongHash.slice(0, 2).join(", ")}`
+        : `${ownHashes.size} scenarios`,
   );
 
   // ---- the security model ------------------------------------------------------

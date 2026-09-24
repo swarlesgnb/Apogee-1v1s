@@ -1,7 +1,7 @@
 /**
  * Build a scenario by editing a real one.
  *
- * Every season-2 scenario starts as a file KovaaK's itself wrote - a template - and is
+ * Every Season 1 scenario starts as a file KovaaK's itself wrote - a template - and is
  * changed only through the operations here. Writing one from nothing would mean knowing
  * the full key set a current build expects, which nothing publishes; editing a file the
  * game already loads means the only keys that change are the ones a recipe names, and

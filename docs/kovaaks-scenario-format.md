@@ -1,6 +1,6 @@
 # The KovaaK's scenario file, as the files show it
 
-What building season 2 established about `.sce` files, for anyone authoring or reading one
+What building season 1 established about `.sce` files, for anyone authoring or reading one
 here. KovaaK's documents the editor, not the file
 ([wiki](https://wiki.kovaaks.com/en/home/KovaaK's/ScenarioCreation/Intro)), so every point
 below says how it was established: counted across the 1,161 scenario files in the local
@@ -26,7 +26,7 @@ it to the counts quoted.
 - **Per-bot head keys are positional.** `AddedBots`, `BotMaxLives` and `BotTeams` pair up
   by position, so all three change together.
 - **Whole-number keys stay whole.** `SpawnGroup=1`, `DifficultyTag=2`: the forge writes a
-  number in the form the template used, and validate:season2 fails a key every real file
+  number in the form the template used, and validate:season-files fails a key every real file
   writes as a whole number if it gains a decimal point.
 - **Older files tag differently**: 3.7 files carry `SearchTags`; a 3.1 file such as Skeet
   Tracking carries `GameTag` and `AuthorsTag` instead.
@@ -49,16 +49,16 @@ it to the counts quoted.
 - **A spawn can admit only named characters.** `PermittedCharacterProfiles` is a
   comma-separated list; a bot whose character is not on it cannot spawn there. Voltaic's
   maps use it (`Head`, `Drifter`, `Player`), so renaming a character means renaming it in
-  the map. Found by season 2 leaving sixty scenarios' targets with nowhere to spawn;
-  `validate:season2` now checks every spawn.
+  the map. Found by season 1 leaving sixty scenarios' targets with nowhere to spawn;
+  `validate:season-files` now checks every spawn.
 - **Spawn volumes** (`SpawnVolume`) are boxes; whether `location` is their centre or corner
-  is not settled by any template, so season 2 uses spawn points only.
+  is not settled by any template, so season 1 uses spawn points only.
 
 - **Waypoint paths**: a `Waypoint` object has a `Name` and pause times; a spawn point's
   `Path` lists waypoint names in order (`1,2`) and `LoopingPath` repeats them. A bot follows
   them when its dodge profile says `WaypointLogic=FollowAimAtTarget`; ZipTrack - THE FINALS
   moves its targets this way, as fliers with instant acceleration and sideways and
-  forward/back dodging off. Read off that file; season 2's Shooting Stars and Gravity Well
+  forward/back dodging off. Read off that file; season 1's Shooting Stars and Gravity Well
   use it, not yet seen in game.
 - **Waves**: every bot in `SpawnGroup` 1 respawns only when the whole group is dead, and a
   slot whose bot is a fixed-order Bot Rotation Profile advances one member per wave. So far
@@ -75,7 +75,7 @@ it to the counts quoted.
   player during a run; no fixed geometry describes those, and the model leaves them out.
 - **Acceleration decides how a target turns.** `MaxSpeed / Acceleration` is the seconds to
   full speed: a third of a second reverses in a curve, a hundredth in a corner. It is one of
-  the three features the tracking model keeps (`data/season-2/difficulty_model.json`).
+  the three features the tracking model keeps (`data/season-1/difficulty_model.json`).
 - **Jump height has two forms**: `JumpVelocity`, or `JumpVelocityMin`/`JumpVelocityMax` in
   newer characters. Voltaic gives all targets one jump velocity and varies height with
   `Gravity`, so hang time and height change together.
@@ -88,7 +88,7 @@ it to the counts quoted.
 - **A flier's up and down needs its jump and crouch inputs.** Every flier that moves
   vertically on the ToggleUpDown clock (Aether, EddieTS, the vibrate scenarios) carries
   `JumpFrequency` around 0.5, EddieTS also `CrouchInAirFrequency` 0.5; with them at zero,
-  season 2's Electric showed no vertical buzz in game. Fliers that go where they aim
+  season 1's Electric showed no vertical buzz in game. Fliers that go where they aim
   (`FlightObeysPitch`, cloverRawControl) do without.
 - **Abilities can be the scenario.** fuglaa's pressure balloons attack through four:
   `Approach` (a dash at the player), `Depart`, `Damage Self Only` and `Damage Player and
@@ -115,7 +115,7 @@ it to the counts quoted.
   well. The clicking model carries a flag for each; without the plain multiplier's, its
   error at the top 5% of the board rises from 0.100 to 0.112 (`ablation` in the model file).
 - **`Timelimit` is game time.** Under `Timescale` 1.8, cA fuglaapressure sets 108 for a
-  sixty-second run; season 2's Gravity Well does the same at each band's speed.
+  sixty-second run; season 1's Gravity Well does the same at each band's speed.
 - **Pressure, fuglaa's way**: the balloons dash at the player and burst on arrival (the
   abilities above), and `ScoreLossPerDamageTaken` makes every hit on the player cost score -
   so a target left alive is a loss, not only a delay. The player survives it (the head keeps
@@ -128,11 +128,11 @@ it to the counts quoted.
 ## Settled in game
 
 - **An embedded JSON map under a new `MapName` loads** for a scenario placed in the local
-  scenario folder, including rooms generated from scratch: all seven season-2 templates'
+  scenario folder, including rooms generated from scratch: all seven Season 1 templates'
   scenarios loaded, 2026-09-24.
 
 ## Not settled
 
 Played in game, none of the following has been checked, and each is in the playtest list in
-docs/season-2.md: that a target with gravity and hops both off holds its height; that a
+docs/season-1.md: that a target with gravity and hops both off holds its height; that a
 never-dying tracking target at 5,000 health never dies.

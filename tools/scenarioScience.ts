@@ -1,10 +1,10 @@
 /**
- * Re-derive the measurements season 2's design rules rest on.
+ * Re-derive the measurements season 1's design rules rest on.
  *
- * `tools/season2/design.ts` and docs/season-2-research.md state a handful of numbers -
+ * `tools/season/design.ts` and docs/season-1-research.md state a handful of numbers -
  * that longer scenarios are steadier, that an accuracy multiplier adds noise, which design
  * features go with replay. Each is computed here, from the scenario files on this machine
- * and the local stats folder, and written to data/season-2/science.json, so a claim in a
+ * and the local stats folder, and written to data/season-1/science.json, so a claim in a
  * comment is a line in a file this script regenerates.
  *
  *   NOISE    for every scenario with at least 8 local runs: the median absolute change
@@ -210,7 +210,7 @@ const fieldShape = {
   widerThanTall: staticPopular.filter((r) => r.geometry!.yawExtentDeg > r.geometry!.pitchExtentDeg).length,
 };
 
-const out = dataFile("season-2", "science.json");
+const out = dataFile("season-1", "science.json");
 writeFileSync(
   out,
   JSON.stringify({ $comment: "Written by tools/scenarioScience.ts; do not hand-edit.", measuredAt: new Date().toISOString(), noise, popularity, fieldShape }, null, 1) + "\n",

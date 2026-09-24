@@ -1,0 +1,3644 @@
+{
+  "version": 5,
+  "id": "first-light-v5",
+  "name": "First Light",
+  "sourceSeason": "Season 1",
+  "bands": [
+    "Novice",
+    "Intermediate",
+    "Advanced",
+    "Expert"
+  ],
+  "destinations": [
+    {
+      "id": "destination-1",
+      "name": "Glass Meridian",
+      "category": "Static Clicking",
+      "color": "#8de8ff",
+      "description": "Quiet structures catch the light. Find the shortest path between them.",
+      "bands": [
+        [
+          {
+            "name": "Apogee Galaga Novice",
+            "family": "Galaga",
+            "focus": "Five targets on one level; flick sideways and stop dead.",
+            "target": 1402,
+            "finalTarget": 1488,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Zenith Novice",
+            "family": "Zenith",
+            "focus": "Flick up and down; the sideways movement is only ever a correction.",
+            "target": 1302,
+            "finalTarget": 1383,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Pinpoint Novice",
+            "family": "Pinpoint",
+            "focus": "Small moves, smaller targets; settle the crosshair before you click.",
+            "target": 1290,
+            "finalTarget": 1371,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee Galaga Intermediate",
+            "family": "Galaga",
+            "focus": "Five targets on one level; flick sideways and stop dead.",
+            "target": 1587,
+            "finalTarget": 1644,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Zenith Intermediate",
+            "family": "Zenith",
+            "focus": "Flick up and down; the sideways movement is only ever a correction.",
+            "target": 1476,
+            "finalTarget": 1530,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Pinpoint Intermediate",
+            "family": "Pinpoint",
+            "focus": "Small moves, smaller targets; settle the crosshair before you click.",
+            "target": 1463,
+            "finalTarget": 1517,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee Galaga Advanced",
+            "family": "Galaga",
+            "focus": "Five targets on one level; flick sideways and stop dead.",
+            "target": 1701,
+            "finalTarget": 1740,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Zenith Advanced",
+            "family": "Zenith",
+            "focus": "Flick up and down; the sideways movement is only ever a correction.",
+            "target": 1584,
+            "finalTarget": 1620,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Pinpoint Advanced",
+            "family": "Pinpoint",
+            "focus": "Small moves, smaller targets; settle the crosshair before you click.",
+            "target": 1570,
+            "finalTarget": 1606,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee Galaga Expert",
+            "family": "Galaga",
+            "focus": "Five targets on one level; flick sideways and stop dead.",
+            "target": 1774,
+            "finalTarget": 1811,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Zenith Expert",
+            "family": "Zenith",
+            "focus": "Flick up and down; the sideways movement is only ever a correction.",
+            "target": 1651,
+            "finalTarget": 1686,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Pinpoint Expert",
+            "family": "Pinpoint",
+            "focus": "Small moves, smaller targets; settle the crosshair before you click.",
+            "target": 1636,
+            "finalTarget": 1671,
+            "precision": 0
+          }
+        ]
+      ],
+      "discovery": [
+        [
+          {
+            "name": "Apogee Stars Novice",
+            "family": "Stars",
+            "focus": "A wide formation; big flicks across it, in both directions.",
+            "target": 1198,
+            "finalTarget": 1275,
+            "routeTarget": 1095,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Constellation Novice",
+            "family": "Constellation",
+            "focus": "Clear the whole constellation; the next one appears when its last star falls.",
+            "target": 1461,
+            "finalTarget": 1549,
+            "routeTarget": 1346,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Parallax Novice",
+            "family": "Parallax",
+            "focus": "Targets at two distances; read the size before you decide how far to move.",
+            "target": 1163,
+            "finalTarget": 1238,
+            "routeTarget": 1062,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee Stars Intermediate",
+            "family": "Stars",
+            "focus": "A wide formation; big flicks across it, in both directions.",
+            "target": 1362,
+            "finalTarget": 1414,
+            "routeTarget": 1335,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Constellation Intermediate",
+            "family": "Constellation",
+            "focus": "Clear the whole constellation; the next one appears when its last star falls.",
+            "target": 1651,
+            "finalTarget": 1710,
+            "routeTarget": 1619,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Parallax Intermediate",
+            "family": "Parallax",
+            "focus": "Targets at two distances; read the size before you decide how far to move.",
+            "target": 1324,
+            "finalTarget": 1374,
+            "routeTarget": 1297,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee Stars Advanced",
+            "family": "Stars",
+            "focus": "A wide formation; big flicks across it, in both directions.",
+            "target": 1463,
+            "finalTarget": 1497,
+            "routeTarget": 1427,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Constellation Advanced",
+            "family": "Constellation",
+            "focus": "Clear the whole constellation; the next one appears when its last star falls.",
+            "target": 1770,
+            "finalTarget": 1810,
+            "routeTarget": 1728,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Parallax Advanced",
+            "family": "Parallax",
+            "focus": "Targets at two distances; read the size before you decide how far to move.",
+            "target": 1422,
+            "finalTarget": 1455,
+            "routeTarget": 1387,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee Stars Expert",
+            "family": "Stars",
+            "focus": "A wide formation; big flicks across it, in both directions.",
+            "target": 1525,
+            "finalTarget": 1557,
+            "routeTarget": 1499,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Constellation Expert",
+            "family": "Constellation",
+            "focus": "Clear the whole constellation; the next one appears when its last star falls.",
+            "target": 1846,
+            "finalTarget": 1885,
+            "routeTarget": 1815,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Parallax Expert",
+            "family": "Parallax",
+            "focus": "Targets at two distances; read the size before you decide how far to move.",
+            "target": 1482,
+            "finalTarget": 1514,
+            "routeTarget": 1457,
+            "precision": 0
+          }
+        ]
+      ],
+      "circuits": [
+        [
+          {
+            "name": "Apogee Galaga Novice",
+            "family": "Galaga",
+            "focus": "Five targets on one level; flick sideways and stop dead.",
+            "target": 1402,
+            "finalTarget": 1488,
+            "routeTarget": 1290,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Zenith Novice",
+            "family": "Zenith",
+            "focus": "Flick up and down; the sideways movement is only ever a correction.",
+            "target": 1302,
+            "finalTarget": 1383,
+            "routeTarget": 1194,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Pinpoint Novice",
+            "family": "Pinpoint",
+            "focus": "Small moves, smaller targets; settle the crosshair before you click.",
+            "target": 1290,
+            "finalTarget": 1371,
+            "routeTarget": 1183,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee Galaga Intermediate",
+            "family": "Galaga",
+            "focus": "Five targets on one level; flick sideways and stop dead.",
+            "target": 1587,
+            "finalTarget": 1644,
+            "routeTarget": 1556,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Zenith Intermediate",
+            "family": "Zenith",
+            "focus": "Flick up and down; the sideways movement is only ever a correction.",
+            "target": 1476,
+            "finalTarget": 1530,
+            "routeTarget": 1447,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Pinpoint Intermediate",
+            "family": "Pinpoint",
+            "focus": "Small moves, smaller targets; settle the crosshair before you click.",
+            "target": 1463,
+            "finalTarget": 1517,
+            "routeTarget": 1435,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee Galaga Advanced",
+            "family": "Galaga",
+            "focus": "Five targets on one level; flick sideways and stop dead.",
+            "target": 1701,
+            "finalTarget": 1740,
+            "routeTarget": 1661,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Zenith Advanced",
+            "family": "Zenith",
+            "focus": "Flick up and down; the sideways movement is only ever a correction.",
+            "target": 1584,
+            "finalTarget": 1620,
+            "routeTarget": 1545,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Pinpoint Advanced",
+            "family": "Pinpoint",
+            "focus": "Small moves, smaller targets; settle the crosshair before you click.",
+            "target": 1570,
+            "finalTarget": 1606,
+            "routeTarget": 1532,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee Galaga Expert",
+            "family": "Galaga",
+            "focus": "Five targets on one level; flick sideways and stop dead.",
+            "target": 1774,
+            "finalTarget": 1811,
+            "routeTarget": 1744,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Zenith Expert",
+            "family": "Zenith",
+            "focus": "Flick up and down; the sideways movement is only ever a correction.",
+            "target": 1651,
+            "finalTarget": 1686,
+            "routeTarget": 1623,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Pinpoint Expert",
+            "family": "Pinpoint",
+            "focus": "Small moves, smaller targets; settle the crosshair before you click.",
+            "target": 1636,
+            "finalTarget": 1671,
+            "routeTarget": 1609,
+            "precision": 0
+          }
+        ]
+      ],
+      "pool": [
+        [
+          {
+            "name": "Apogee Galaga Novice",
+            "family": "Galaga",
+            "focus": "Five targets on one level; flick sideways and stop dead.",
+            "target": 1402,
+            "finalTarget": 1488,
+            "routeTarget": 1290,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Zenith Novice",
+            "family": "Zenith",
+            "focus": "Flick up and down; the sideways movement is only ever a correction.",
+            "target": 1302,
+            "finalTarget": 1383,
+            "routeTarget": 1194,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Pinpoint Novice",
+            "family": "Pinpoint",
+            "focus": "Small moves, smaller targets; settle the crosshair before you click.",
+            "target": 1290,
+            "finalTarget": 1371,
+            "routeTarget": 1183,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Stars Novice",
+            "family": "Stars",
+            "focus": "A wide formation; big flicks across it, in both directions.",
+            "target": 1198,
+            "finalTarget": 1275,
+            "routeTarget": 1095,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Constellation Novice",
+            "family": "Constellation",
+            "focus": "Clear the whole constellation; the next one appears when its last star falls.",
+            "target": 1461,
+            "finalTarget": 1549,
+            "routeTarget": 1346,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Parallax Novice",
+            "family": "Parallax",
+            "focus": "Targets at two distances; read the size before you decide how far to move.",
+            "target": 1163,
+            "finalTarget": 1238,
+            "routeTarget": 1062,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Nebula Novice",
+            "family": "Nebula",
+            "focus": "Six small targets up at once; take the nearest, keep the rhythm.",
+            "target": 1439,
+            "finalTarget": 1526,
+            "routeTarget": 1324,
+            "precision": 0
+          },
+          {
+            "name": "Apogee 1w6aliens Novice",
+            "family": "1w6aliens",
+            "focus": "Six still targets on one wall; take the nearest, keep the rhythm.",
+            "target": 1251,
+            "finalTarget": 1330,
+            "routeTarget": 1146,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee Galaga Intermediate",
+            "family": "Galaga",
+            "focus": "Five targets on one level; flick sideways and stop dead.",
+            "target": 1587,
+            "finalTarget": 1644,
+            "routeTarget": 1556,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Zenith Intermediate",
+            "family": "Zenith",
+            "focus": "Flick up and down; the sideways movement is only ever a correction.",
+            "target": 1476,
+            "finalTarget": 1530,
+            "routeTarget": 1447,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Pinpoint Intermediate",
+            "family": "Pinpoint",
+            "focus": "Small moves, smaller targets; settle the crosshair before you click.",
+            "target": 1463,
+            "finalTarget": 1517,
+            "routeTarget": 1435,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Stars Intermediate",
+            "family": "Stars",
+            "focus": "A wide formation; big flicks across it, in both directions.",
+            "target": 1362,
+            "finalTarget": 1414,
+            "routeTarget": 1335,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Constellation Intermediate",
+            "family": "Constellation",
+            "focus": "Clear the whole constellation; the next one appears when its last star falls.",
+            "target": 1651,
+            "finalTarget": 1710,
+            "routeTarget": 1619,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Parallax Intermediate",
+            "family": "Parallax",
+            "focus": "Targets at two distances; read the size before you decide how far to move.",
+            "target": 1324,
+            "finalTarget": 1374,
+            "routeTarget": 1297,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Nebula Intermediate",
+            "family": "Nebula",
+            "focus": "Six small targets up at once; take the nearest, keep the rhythm.",
+            "target": 1627,
+            "finalTarget": 1685,
+            "routeTarget": 1595,
+            "precision": 0
+          },
+          {
+            "name": "Apogee 1w6aliens Intermediate",
+            "family": "1w6aliens",
+            "focus": "Six still targets on one wall; take the nearest, keep the rhythm.",
+            "target": 1420,
+            "finalTarget": 1473,
+            "routeTarget": 1393,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee Galaga Advanced",
+            "family": "Galaga",
+            "focus": "Five targets on one level; flick sideways and stop dead.",
+            "target": 1701,
+            "finalTarget": 1740,
+            "routeTarget": 1661,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Zenith Advanced",
+            "family": "Zenith",
+            "focus": "Flick up and down; the sideways movement is only ever a correction.",
+            "target": 1584,
+            "finalTarget": 1620,
+            "routeTarget": 1545,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Pinpoint Advanced",
+            "family": "Pinpoint",
+            "focus": "Small moves, smaller targets; settle the crosshair before you click.",
+            "target": 1570,
+            "finalTarget": 1606,
+            "routeTarget": 1532,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Stars Advanced",
+            "family": "Stars",
+            "focus": "A wide formation; big flicks across it, in both directions.",
+            "target": 1463,
+            "finalTarget": 1497,
+            "routeTarget": 1427,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Constellation Advanced",
+            "family": "Constellation",
+            "focus": "Clear the whole constellation; the next one appears when its last star falls.",
+            "target": 1770,
+            "finalTarget": 1810,
+            "routeTarget": 1728,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Parallax Advanced",
+            "family": "Parallax",
+            "focus": "Targets at two distances; read the size before you decide how far to move.",
+            "target": 1422,
+            "finalTarget": 1455,
+            "routeTarget": 1387,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Nebula Advanced",
+            "family": "Nebula",
+            "focus": "Six small targets up at once; take the nearest, keep the rhythm.",
+            "target": 1744,
+            "finalTarget": 1783,
+            "routeTarget": 1703,
+            "precision": 0
+          },
+          {
+            "name": "Apogee 1w6aliens Advanced",
+            "family": "1w6aliens",
+            "focus": "Six still targets on one wall; take the nearest, keep the rhythm.",
+            "target": 1525,
+            "finalTarget": 1560,
+            "routeTarget": 1487,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee Galaga Expert",
+            "family": "Galaga",
+            "focus": "Five targets on one level; flick sideways and stop dead.",
+            "target": 1774,
+            "finalTarget": 1811,
+            "routeTarget": 1744,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Zenith Expert",
+            "family": "Zenith",
+            "focus": "Flick up and down; the sideways movement is only ever a correction.",
+            "target": 1651,
+            "finalTarget": 1686,
+            "routeTarget": 1623,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Pinpoint Expert",
+            "family": "Pinpoint",
+            "focus": "Small moves, smaller targets; settle the crosshair before you click.",
+            "target": 1636,
+            "finalTarget": 1671,
+            "routeTarget": 1609,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Stars Expert",
+            "family": "Stars",
+            "focus": "A wide formation; big flicks across it, in both directions.",
+            "target": 1525,
+            "finalTarget": 1557,
+            "routeTarget": 1499,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Constellation Expert",
+            "family": "Constellation",
+            "focus": "Clear the whole constellation; the next one appears when its last star falls.",
+            "target": 1846,
+            "finalTarget": 1885,
+            "routeTarget": 1815,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Parallax Expert",
+            "family": "Parallax",
+            "focus": "Targets at two distances; read the size before you decide how far to move.",
+            "target": 1482,
+            "finalTarget": 1514,
+            "routeTarget": 1457,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Nebula Expert",
+            "family": "Nebula",
+            "focus": "Six small targets up at once; take the nearest, keep the rhythm.",
+            "target": 1818,
+            "finalTarget": 1857,
+            "routeTarget": 1788,
+            "precision": 0
+          },
+          {
+            "name": "Apogee 1w6aliens Expert",
+            "family": "1w6aliens",
+            "focus": "Six still targets on one wall; take the nearest, keep the rhythm.",
+            "target": 1589,
+            "finalTarget": 1623,
+            "routeTarget": 1562,
+            "precision": 0
+          }
+        ]
+      ]
+    },
+    {
+      "id": "destination-2",
+      "name": "Ember Reach",
+      "category": "Dynamic Clicking",
+      "color": "#ffab79",
+      "description": "Fragments move through a copper sky. Catch their rhythm before they disappear.",
+      "bands": [
+        [
+          {
+            "name": "Apogee Gravclick Novice",
+            "family": "Gravclick",
+            "focus": "Slow floaters; match their drift for a moment, then click.",
+            "target": 610,
+            "finalTarget": 678,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Pendulum Novice",
+            "family": "Pendulum",
+            "focus": "Slow swings from wall to wall; click on the swing, not only at the turn.",
+            "target": 752,
+            "finalTarget": 828,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Antigrav Novice",
+            "family": "Antigrav",
+            "focus": "Read the arc; the top of the bounce is the slowest moment.",
+            "target": 668,
+            "finalTarget": 743,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee Gravclick Intermediate",
+            "family": "Gravclick",
+            "focus": "Slow floaters; match their drift for a moment, then click.",
+            "target": 761,
+            "finalTarget": 803,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Pendulum Intermediate",
+            "family": "Pendulum",
+            "focus": "Slow swings from wall to wall; click on the swing, not only at the turn.",
+            "target": 919,
+            "finalTarget": 967,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Antigrav Intermediate",
+            "family": "Antigrav",
+            "focus": "Read the arc; the top of the bounce is the slowest moment.",
+            "target": 838,
+            "finalTarget": 885,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee Gravclick Advanced",
+            "family": "Gravclick",
+            "focus": "Slow floaters; match their drift for a moment, then click.",
+            "target": 842,
+            "finalTarget": 868,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Pendulum Advanced",
+            "family": "Pendulum",
+            "focus": "Slow swings from wall to wall; click on the swing, not only at the turn.",
+            "target": 1010,
+            "finalTarget": 1039,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Antigrav Advanced",
+            "family": "Antigrav",
+            "focus": "Read the arc; the top of the bounce is the slowest moment.",
+            "target": 931,
+            "finalTarget": 959,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee Gravclick Expert",
+            "family": "Gravclick",
+            "focus": "Slow floaters; match their drift for a moment, then click.",
+            "target": 887,
+            "finalTarget": 911,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Pendulum Expert",
+            "family": "Pendulum",
+            "focus": "Slow swings from wall to wall; click on the swing, not only at the turn.",
+            "target": 1060,
+            "finalTarget": 1088,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Antigrav Expert",
+            "family": "Antigrav",
+            "focus": "Read the arc; the top of the bounce is the slowest moment.",
+            "target": 983,
+            "finalTarget": 1010,
+            "precision": 0
+          }
+        ]
+      ],
+      "discovery": [
+        [
+          {
+            "name": "Apogee Electric Novice",
+            "family": "Electric",
+            "focus": "Straight runs, a dead stop at every turn, and a charged-up buzz all the while.",
+            "target": 600,
+            "finalTarget": 666,
+            "routeTarget": 509,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Sun and Moon Novice",
+            "family": "Sun and Moon",
+            "focus": "Two fast crossers in an open sky; move with the target and click inside the motion.",
+            "target": 478,
+            "finalTarget": 539,
+            "routeTarget": 395,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Shooting Stars Novice",
+            "family": "Shooting Stars",
+            "focus": "Straight lines across the sky; lead nothing, match the line and click.",
+            "target": 766,
+            "finalTarget": 852,
+            "routeTarget": 650,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee Electric Intermediate",
+            "family": "Electric",
+            "focus": "Straight runs, a dead stop at every turn, and a charged-up buzz all the while.",
+            "target": 748,
+            "finalTarget": 790,
+            "routeTarget": 727,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Sun and Moon Intermediate",
+            "family": "Sun and Moon",
+            "focus": "Two fast crossers in an open sky; move with the target and click inside the motion.",
+            "target": 620,
+            "finalTarget": 659,
+            "routeTarget": 600,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Shooting Stars Intermediate",
+            "family": "Shooting Stars",
+            "focus": "Straight lines across the sky; lead nothing, match the line and click.",
+            "target": 962,
+            "finalTarget": 1016,
+            "routeTarget": 934,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee Electric Advanced",
+            "family": "Electric",
+            "focus": "Straight runs, a dead stop at every turn, and a charged-up buzz all the while.",
+            "target": 829,
+            "finalTarget": 854,
+            "routeTarget": 802,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Sun and Moon Advanced",
+            "family": "Sun and Moon",
+            "focus": "Two fast crossers in an open sky; move with the target and click inside the motion.",
+            "target": 698,
+            "finalTarget": 721,
+            "routeTarget": 674,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Shooting Stars Advanced",
+            "family": "Shooting Stars",
+            "focus": "Straight lines across the sky; lead nothing, match the line and click.",
+            "target": 1070,
+            "finalTarget": 1102,
+            "routeTarget": 1036,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee Electric Expert",
+            "family": "Electric",
+            "focus": "Straight runs, a dead stop at every turn, and a charged-up buzz all the while.",
+            "target": 872,
+            "finalTarget": 896,
+            "routeTarget": 854,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Sun and Moon Expert",
+            "family": "Sun and Moon",
+            "focus": "Two fast crossers in an open sky; move with the target and click inside the motion.",
+            "target": 741,
+            "finalTarget": 762,
+            "routeTarget": 724,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Shooting Stars Expert",
+            "family": "Shooting Stars",
+            "focus": "Straight lines across the sky; lead nothing, match the line and click.",
+            "target": 1132,
+            "finalTarget": 1164,
+            "routeTarget": 1107,
+            "precision": 0
+          }
+        ]
+      ],
+      "circuits": [
+        [
+          {
+            "name": "Apogee Gravity Well Novice",
+            "family": "Gravity Well",
+            "focus": "Pop them before they reach you; every one that does costs you.",
+            "target": 128,
+            "finalTarget": 161,
+            "routeTarget": 80,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Meteor Novice",
+            "family": "Meteor",
+            "focus": "Floating heads: big, slow drifters; confirm the shot before you click.",
+            "target": 729,
+            "finalTarget": 806,
+            "routeTarget": 626,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Satellite Novice",
+            "family": "Satellite",
+            "focus": "Fliers in front of you drifting nearer and further as they rise and fall; follow them and click.",
+            "target": 639,
+            "finalTarget": 711,
+            "routeTarget": 542,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee Gravity Well Intermediate",
+            "family": "Gravity Well",
+            "focus": "Pop them before they reach you; every one that does costs you.",
+            "target": 196,
+            "finalTarget": 207,
+            "routeTarget": 192,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Meteor Intermediate",
+            "family": "Meteor",
+            "focus": "Floating heads: big, slow drifters; confirm the shot before you click.",
+            "target": 899,
+            "finalTarget": 946,
+            "routeTarget": 874,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Satellite Intermediate",
+            "family": "Satellite",
+            "focus": "Fliers in front of you drifting nearer and further as they rise and fall; follow them and click.",
+            "target": 800,
+            "finalTarget": 845,
+            "routeTarget": 777,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee Gravity Well Advanced",
+            "family": "Gravity Well",
+            "focus": "Pop them before they reach you; every one that does costs you.",
+            "target": 212,
+            "finalTarget": 216,
+            "routeTarget": 208,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Meteor Advanced",
+            "family": "Meteor",
+            "focus": "Floating heads: big, slow drifters; confirm the shot before you click.",
+            "target": 991,
+            "finalTarget": 1020,
+            "routeTarget": 960,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Satellite Advanced",
+            "family": "Satellite",
+            "focus": "Fliers in front of you drifting nearer and further as they rise and fall; follow them and click.",
+            "target": 888,
+            "finalTarget": 914,
+            "routeTarget": 859,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee Gravity Well Expert",
+            "family": "Gravity Well",
+            "focus": "Pop them before they reach you; every one that does costs you.",
+            "target": 217,
+            "finalTarget": 221,
+            "routeTarget": 214,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Meteor Expert",
+            "family": "Meteor",
+            "focus": "Floating heads: big, slow drifters; confirm the shot before you click.",
+            "target": 1041,
+            "finalTarget": 1069,
+            "routeTarget": 1019,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Satellite Expert",
+            "family": "Satellite",
+            "focus": "Fliers in front of you drifting nearer and further as they rise and fall; follow them and click.",
+            "target": 936,
+            "finalTarget": 961,
+            "routeTarget": 915,
+            "precision": 0
+          }
+        ]
+      ],
+      "pool": [
+        [
+          {
+            "name": "Apogee Gravclick Novice",
+            "family": "Gravclick",
+            "focus": "Slow floaters; match their drift for a moment, then click.",
+            "target": 610,
+            "finalTarget": 678,
+            "routeTarget": 519,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Pendulum Novice",
+            "family": "Pendulum",
+            "focus": "Slow swings from wall to wall; click on the swing, not only at the turn.",
+            "target": 752,
+            "finalTarget": 828,
+            "routeTarget": 649,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Antigrav Novice",
+            "family": "Antigrav",
+            "focus": "Read the arc; the top of the bounce is the slowest moment.",
+            "target": 668,
+            "finalTarget": 743,
+            "routeTarget": 566,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Electric Novice",
+            "family": "Electric",
+            "focus": "Straight runs, a dead stop at every turn, and a charged-up buzz all the while.",
+            "target": 600,
+            "finalTarget": 666,
+            "routeTarget": 509,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Sun and Moon Novice",
+            "family": "Sun and Moon",
+            "focus": "Two fast crossers in an open sky; move with the target and click inside the motion.",
+            "target": 478,
+            "finalTarget": 539,
+            "routeTarget": 395,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Shooting Stars Novice",
+            "family": "Shooting Stars",
+            "focus": "Straight lines across the sky; lead nothing, match the line and click.",
+            "target": 766,
+            "finalTarget": 852,
+            "routeTarget": 650,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Gravity Well Novice",
+            "family": "Gravity Well",
+            "focus": "Pop them before they reach you; every one that does costs you.",
+            "target": 128,
+            "finalTarget": 161,
+            "routeTarget": 80,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Meteor Novice",
+            "family": "Meteor",
+            "focus": "Floating heads: big, slow drifters; confirm the shot before you click.",
+            "target": 729,
+            "finalTarget": 806,
+            "routeTarget": 626,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Satellite Novice",
+            "family": "Satellite",
+            "focus": "Fliers in front of you drifting nearer and further as they rise and fall; follow them and click.",
+            "target": 639,
+            "finalTarget": 711,
+            "routeTarget": 542,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee Gravclick Intermediate",
+            "family": "Gravclick",
+            "focus": "Slow floaters; match their drift for a moment, then click.",
+            "target": 761,
+            "finalTarget": 803,
+            "routeTarget": 739,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Pendulum Intermediate",
+            "family": "Pendulum",
+            "focus": "Slow swings from wall to wall; click on the swing, not only at the turn.",
+            "target": 919,
+            "finalTarget": 967,
+            "routeTarget": 894,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Antigrav Intermediate",
+            "family": "Antigrav",
+            "focus": "Read the arc; the top of the bounce is the slowest moment.",
+            "target": 838,
+            "finalTarget": 885,
+            "routeTarget": 813,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Electric Intermediate",
+            "family": "Electric",
+            "focus": "Straight runs, a dead stop at every turn, and a charged-up buzz all the while.",
+            "target": 748,
+            "finalTarget": 790,
+            "routeTarget": 727,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Sun and Moon Intermediate",
+            "family": "Sun and Moon",
+            "focus": "Two fast crossers in an open sky; move with the target and click inside the motion.",
+            "target": 620,
+            "finalTarget": 659,
+            "routeTarget": 600,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Shooting Stars Intermediate",
+            "family": "Shooting Stars",
+            "focus": "Straight lines across the sky; lead nothing, match the line and click.",
+            "target": 962,
+            "finalTarget": 1016,
+            "routeTarget": 934,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Gravity Well Intermediate",
+            "family": "Gravity Well",
+            "focus": "Pop them before they reach you; every one that does costs you.",
+            "target": 196,
+            "finalTarget": 207,
+            "routeTarget": 192,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Meteor Intermediate",
+            "family": "Meteor",
+            "focus": "Floating heads: big, slow drifters; confirm the shot before you click.",
+            "target": 899,
+            "finalTarget": 946,
+            "routeTarget": 874,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Satellite Intermediate",
+            "family": "Satellite",
+            "focus": "Fliers in front of you drifting nearer and further as they rise and fall; follow them and click.",
+            "target": 800,
+            "finalTarget": 845,
+            "routeTarget": 777,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee Gravclick Advanced",
+            "family": "Gravclick",
+            "focus": "Slow floaters; match their drift for a moment, then click.",
+            "target": 842,
+            "finalTarget": 868,
+            "routeTarget": 815,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Pendulum Advanced",
+            "family": "Pendulum",
+            "focus": "Slow swings from wall to wall; click on the swing, not only at the turn.",
+            "target": 1010,
+            "finalTarget": 1039,
+            "routeTarget": 979,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Antigrav Advanced",
+            "family": "Antigrav",
+            "focus": "Read the arc; the top of the bounce is the slowest moment.",
+            "target": 931,
+            "finalTarget": 959,
+            "routeTarget": 901,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Electric Advanced",
+            "family": "Electric",
+            "focus": "Straight runs, a dead stop at every turn, and a charged-up buzz all the while.",
+            "target": 829,
+            "finalTarget": 854,
+            "routeTarget": 802,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Sun and Moon Advanced",
+            "family": "Sun and Moon",
+            "focus": "Two fast crossers in an open sky; move with the target and click inside the motion.",
+            "target": 698,
+            "finalTarget": 721,
+            "routeTarget": 674,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Shooting Stars Advanced",
+            "family": "Shooting Stars",
+            "focus": "Straight lines across the sky; lead nothing, match the line and click.",
+            "target": 1070,
+            "finalTarget": 1102,
+            "routeTarget": 1036,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Gravity Well Advanced",
+            "family": "Gravity Well",
+            "focus": "Pop them before they reach you; every one that does costs you.",
+            "target": 212,
+            "finalTarget": 216,
+            "routeTarget": 208,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Meteor Advanced",
+            "family": "Meteor",
+            "focus": "Floating heads: big, slow drifters; confirm the shot before you click.",
+            "target": 991,
+            "finalTarget": 1020,
+            "routeTarget": 960,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Satellite Advanced",
+            "family": "Satellite",
+            "focus": "Fliers in front of you drifting nearer and further as they rise and fall; follow them and click.",
+            "target": 888,
+            "finalTarget": 914,
+            "routeTarget": 859,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee Gravclick Expert",
+            "family": "Gravclick",
+            "focus": "Slow floaters; match their drift for a moment, then click.",
+            "target": 887,
+            "finalTarget": 911,
+            "routeTarget": 868,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Pendulum Expert",
+            "family": "Pendulum",
+            "focus": "Slow swings from wall to wall; click on the swing, not only at the turn.",
+            "target": 1060,
+            "finalTarget": 1088,
+            "routeTarget": 1038,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Antigrav Expert",
+            "family": "Antigrav",
+            "focus": "Read the arc; the top of the bounce is the slowest moment.",
+            "target": 983,
+            "finalTarget": 1010,
+            "routeTarget": 961,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Electric Expert",
+            "family": "Electric",
+            "focus": "Straight runs, a dead stop at every turn, and a charged-up buzz all the while.",
+            "target": 872,
+            "finalTarget": 896,
+            "routeTarget": 854,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Sun and Moon Expert",
+            "family": "Sun and Moon",
+            "focus": "Two fast crossers in an open sky; move with the target and click inside the motion.",
+            "target": 741,
+            "finalTarget": 762,
+            "routeTarget": 724,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Shooting Stars Expert",
+            "family": "Shooting Stars",
+            "focus": "Straight lines across the sky; lead nothing, match the line and click.",
+            "target": 1132,
+            "finalTarget": 1164,
+            "routeTarget": 1107,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Gravity Well Expert",
+            "family": "Gravity Well",
+            "focus": "Pop them before they reach you; every one that does costs you.",
+            "target": 217,
+            "finalTarget": 221,
+            "routeTarget": 214,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Meteor Expert",
+            "family": "Meteor",
+            "focus": "Floating heads: big, slow drifters; confirm the shot before you click.",
+            "target": 1041,
+            "finalTarget": 1069,
+            "routeTarget": 1019,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Satellite Expert",
+            "family": "Satellite",
+            "focus": "Fliers in front of you drifting nearer and further as they rise and fall; follow them and click.",
+            "target": 936,
+            "finalTarget": 961,
+            "routeTarget": 915,
+            "precision": 0
+          }
+        ]
+      ]
+    },
+    {
+      "id": "destination-3",
+      "name": "Tidal Archive",
+      "category": "Precise Tracking",
+      "color": "#86efc4",
+      "description": "Follow the current through a sea of old signals. Keep your movement steady.",
+      "bands": [
+        [
+          {
+            "name": "Apogee Glide Novice",
+            "family": "Glide",
+            "focus": "Long, smooth strafes; ease into each turn with the target.",
+            "target": 3177,
+            "finalTarget": 3455,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Blastoff Novice",
+            "family": "Blastoff",
+            "focus": "Mostly up and down; keep the crosshair level with it through each turn.",
+            "target": 3597,
+            "finalTarget": 3868,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Orbit Novice",
+            "family": "Orbit",
+            "focus": "Curves in both directions; follow the path, do not cut its corners.",
+            "target": 3147,
+            "finalTarget": 3428,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee Glide Intermediate",
+            "family": "Glide",
+            "focus": "Long, smooth strafes; ease into each turn with the target.",
+            "target": 3769,
+            "finalTarget": 3936,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Blastoff Intermediate",
+            "family": "Blastoff",
+            "focus": "Mostly up and down; keep the crosshair level with it through each turn.",
+            "target": 4181,
+            "finalTarget": 4341,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Orbit Intermediate",
+            "family": "Orbit",
+            "focus": "Curves in both directions; follow the path, do not cut its corners.",
+            "target": 3745,
+            "finalTarget": 3912,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee Glide Advanced",
+            "family": "Glide",
+            "focus": "Long, smooth strafes; ease into each turn with the target.",
+            "target": 4068,
+            "finalTarget": 4169,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Blastoff Advanced",
+            "family": "Blastoff",
+            "focus": "Mostly up and down; keep the crosshair level with it through each turn.",
+            "target": 4495,
+            "finalTarget": 4593,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Orbit Advanced",
+            "family": "Orbit",
+            "focus": "Curves in both directions; follow the path, do not cut its corners.",
+            "target": 4040,
+            "finalTarget": 4140,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee Glide Expert",
+            "family": "Glide",
+            "focus": "Long, smooth strafes; ease into each turn with the target.",
+            "target": 4213,
+            "finalTarget": 4296,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Blastoff Expert",
+            "family": "Blastoff",
+            "focus": "Mostly up and down; keep the crosshair level with it through each turn.",
+            "target": 4657,
+            "finalTarget": 4736,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Orbit Expert",
+            "family": "Orbit",
+            "focus": "Curves in both directions; follow the path, do not cut its corners.",
+            "target": 4180,
+            "finalTarget": 4262,
+            "precision": 0
+          }
+        ]
+      ],
+      "discovery": [
+        [
+          {
+            "name": "Apogee Thread Novice",
+            "family": "Thread",
+            "focus": "A small, slow target; precision over speed.",
+            "target": 3347,
+            "finalTarget": 3623,
+            "routeTarget": 2936,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Arc Novice",
+            "family": "Arc",
+            "focus": "Long jumps under low gravity; carry the crosshair along the arc.",
+            "target": 3379,
+            "finalTarget": 3655,
+            "routeTarget": 2967,
+            "precision": 0
+          },
+          {
+            "name": "Apogee AlienTrack Novice",
+            "family": "AlienTrack",
+            "focus": "A close target sweeping wide that blinks now and then; track it, and find it again after the jump.",
+            "target": 3102,
+            "finalTarget": 3379,
+            "routeTarget": 2702,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee Thread Intermediate",
+            "family": "Thread",
+            "focus": "A small, slow target; precision over speed.",
+            "target": 3939,
+            "finalTarget": 4104,
+            "routeTarget": 3850,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Arc Intermediate",
+            "family": "Arc",
+            "focus": "Long jumps under low gravity; carry the crosshair along the arc.",
+            "target": 3971,
+            "finalTarget": 4136,
+            "routeTarget": 3882,
+            "precision": 0
+          },
+          {
+            "name": "Apogee AlienTrack Intermediate",
+            "family": "AlienTrack",
+            "focus": "A close target sweeping wide that blinks now and then; track it, and find it again after the jump.",
+            "target": 3690,
+            "finalTarget": 3857,
+            "routeTarget": 3600,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee Thread Advanced",
+            "family": "Thread",
+            "focus": "A small, slow target; precision over speed.",
+            "target": 4246,
+            "finalTarget": 4347,
+            "routeTarget": 4141,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Arc Advanced",
+            "family": "Arc",
+            "focus": "Long jumps under low gravity; carry the crosshair along the arc.",
+            "target": 4280,
+            "finalTarget": 4381,
+            "routeTarget": 4175,
+            "precision": 0
+          },
+          {
+            "name": "Apogee AlienTrack Advanced",
+            "family": "AlienTrack",
+            "focus": "A close target sweeping wide that blinks now and then; track it, and find it again after the jump.",
+            "target": 3984,
+            "finalTarget": 4084,
+            "routeTarget": 3879,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee Thread Expert",
+            "family": "Thread",
+            "focus": "A small, slow target; precision over speed.",
+            "target": 4399,
+            "finalTarget": 4480,
+            "routeTarget": 4330,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Arc Expert",
+            "family": "Arc",
+            "focus": "Long jumps under low gravity; carry the crosshair along the arc.",
+            "target": 4435,
+            "finalTarget": 4517,
+            "routeTarget": 4366,
+            "precision": 0
+          },
+          {
+            "name": "Apogee AlienTrack Expert",
+            "family": "AlienTrack",
+            "focus": "A close target sweeping wide that blinks now and then; track it, and find it again after the jump.",
+            "target": 4124,
+            "finalTarget": 4207,
+            "routeTarget": 4050,
+            "precision": 0
+          }
+        ]
+      ],
+      "circuits": [
+        [
+          {
+            "name": "Apogee Glide Novice",
+            "family": "Glide",
+            "focus": "Long, smooth strafes; ease into each turn with the target.",
+            "target": 3177,
+            "finalTarget": 3455,
+            "routeTarget": 2771,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Blastoff Novice",
+            "family": "Blastoff",
+            "focus": "Mostly up and down; keep the crosshair level with it through each turn.",
+            "target": 3597,
+            "finalTarget": 3868,
+            "routeTarget": 3185,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Orbit Novice",
+            "family": "Orbit",
+            "focus": "Curves in both directions; follow the path, do not cut its corners.",
+            "target": 3147,
+            "finalTarget": 3428,
+            "routeTarget": 2736,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee Glide Intermediate",
+            "family": "Glide",
+            "focus": "Long, smooth strafes; ease into each turn with the target.",
+            "target": 3769,
+            "finalTarget": 3936,
+            "routeTarget": 3679,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Blastoff Intermediate",
+            "family": "Blastoff",
+            "focus": "Mostly up and down; keep the crosshair level with it through each turn.",
+            "target": 4181,
+            "finalTarget": 4341,
+            "routeTarget": 4094,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Orbit Intermediate",
+            "family": "Orbit",
+            "focus": "Curves in both directions; follow the path, do not cut its corners.",
+            "target": 3745,
+            "finalTarget": 3912,
+            "routeTarget": 3654,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee Glide Advanced",
+            "family": "Glide",
+            "focus": "Long, smooth strafes; ease into each turn with the target.",
+            "target": 4068,
+            "finalTarget": 4169,
+            "routeTarget": 3963,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Blastoff Advanced",
+            "family": "Blastoff",
+            "focus": "Mostly up and down; keep the crosshair level with it through each turn.",
+            "target": 4495,
+            "finalTarget": 4593,
+            "routeTarget": 4391,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Orbit Advanced",
+            "family": "Orbit",
+            "focus": "Curves in both directions; follow the path, do not cut its corners.",
+            "target": 4040,
+            "finalTarget": 4140,
+            "routeTarget": 3935,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee Glide Expert",
+            "family": "Glide",
+            "focus": "Long, smooth strafes; ease into each turn with the target.",
+            "target": 4213,
+            "finalTarget": 4296,
+            "routeTarget": 4140,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Blastoff Expert",
+            "family": "Blastoff",
+            "focus": "Mostly up and down; keep the crosshair level with it through each turn.",
+            "target": 4657,
+            "finalTarget": 4736,
+            "routeTarget": 4592,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Orbit Expert",
+            "family": "Orbit",
+            "focus": "Curves in both directions; follow the path, do not cut its corners.",
+            "target": 4180,
+            "finalTarget": 4262,
+            "routeTarget": 4108,
+            "precision": 0
+          }
+        ]
+      ],
+      "pool": [
+        [
+          {
+            "name": "Apogee Glide Novice",
+            "family": "Glide",
+            "focus": "Long, smooth strafes; ease into each turn with the target.",
+            "target": 3177,
+            "finalTarget": 3455,
+            "routeTarget": 2771,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Blastoff Novice",
+            "family": "Blastoff",
+            "focus": "Mostly up and down; keep the crosshair level with it through each turn.",
+            "target": 3597,
+            "finalTarget": 3868,
+            "routeTarget": 3185,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Orbit Novice",
+            "family": "Orbit",
+            "focus": "Curves in both directions; follow the path, do not cut its corners.",
+            "target": 3147,
+            "finalTarget": 3428,
+            "routeTarget": 2736,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Thread Novice",
+            "family": "Thread",
+            "focus": "A small, slow target; precision over speed.",
+            "target": 3347,
+            "finalTarget": 3623,
+            "routeTarget": 2936,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Arc Novice",
+            "family": "Arc",
+            "focus": "Long jumps under low gravity; carry the crosshair along the arc.",
+            "target": 3379,
+            "finalTarget": 3655,
+            "routeTarget": 2967,
+            "precision": 0
+          },
+          {
+            "name": "Apogee AlienTrack Novice",
+            "family": "AlienTrack",
+            "focus": "A close target sweeping wide that blinks now and then; track it, and find it again after the jump.",
+            "target": 3102,
+            "finalTarget": 3379,
+            "routeTarget": 2702,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee Glide Intermediate",
+            "family": "Glide",
+            "focus": "Long, smooth strafes; ease into each turn with the target.",
+            "target": 3769,
+            "finalTarget": 3936,
+            "routeTarget": 3679,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Blastoff Intermediate",
+            "family": "Blastoff",
+            "focus": "Mostly up and down; keep the crosshair level with it through each turn.",
+            "target": 4181,
+            "finalTarget": 4341,
+            "routeTarget": 4094,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Orbit Intermediate",
+            "family": "Orbit",
+            "focus": "Curves in both directions; follow the path, do not cut its corners.",
+            "target": 3745,
+            "finalTarget": 3912,
+            "routeTarget": 3654,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Thread Intermediate",
+            "family": "Thread",
+            "focus": "A small, slow target; precision over speed.",
+            "target": 3939,
+            "finalTarget": 4104,
+            "routeTarget": 3850,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Arc Intermediate",
+            "family": "Arc",
+            "focus": "Long jumps under low gravity; carry the crosshair along the arc.",
+            "target": 3971,
+            "finalTarget": 4136,
+            "routeTarget": 3882,
+            "precision": 0
+          },
+          {
+            "name": "Apogee AlienTrack Intermediate",
+            "family": "AlienTrack",
+            "focus": "A close target sweeping wide that blinks now and then; track it, and find it again after the jump.",
+            "target": 3690,
+            "finalTarget": 3857,
+            "routeTarget": 3600,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee Glide Advanced",
+            "family": "Glide",
+            "focus": "Long, smooth strafes; ease into each turn with the target.",
+            "target": 4068,
+            "finalTarget": 4169,
+            "routeTarget": 3963,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Blastoff Advanced",
+            "family": "Blastoff",
+            "focus": "Mostly up and down; keep the crosshair level with it through each turn.",
+            "target": 4495,
+            "finalTarget": 4593,
+            "routeTarget": 4391,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Orbit Advanced",
+            "family": "Orbit",
+            "focus": "Curves in both directions; follow the path, do not cut its corners.",
+            "target": 4040,
+            "finalTarget": 4140,
+            "routeTarget": 3935,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Thread Advanced",
+            "family": "Thread",
+            "focus": "A small, slow target; precision over speed.",
+            "target": 4246,
+            "finalTarget": 4347,
+            "routeTarget": 4141,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Arc Advanced",
+            "family": "Arc",
+            "focus": "Long jumps under low gravity; carry the crosshair along the arc.",
+            "target": 4280,
+            "finalTarget": 4381,
+            "routeTarget": 4175,
+            "precision": 0
+          },
+          {
+            "name": "Apogee AlienTrack Advanced",
+            "family": "AlienTrack",
+            "focus": "A close target sweeping wide that blinks now and then; track it, and find it again after the jump.",
+            "target": 3984,
+            "finalTarget": 4084,
+            "routeTarget": 3879,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee Glide Expert",
+            "family": "Glide",
+            "focus": "Long, smooth strafes; ease into each turn with the target.",
+            "target": 4213,
+            "finalTarget": 4296,
+            "routeTarget": 4140,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Blastoff Expert",
+            "family": "Blastoff",
+            "focus": "Mostly up and down; keep the crosshair level with it through each turn.",
+            "target": 4657,
+            "finalTarget": 4736,
+            "routeTarget": 4592,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Orbit Expert",
+            "family": "Orbit",
+            "focus": "Curves in both directions; follow the path, do not cut its corners.",
+            "target": 4180,
+            "finalTarget": 4262,
+            "routeTarget": 4108,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Thread Expert",
+            "family": "Thread",
+            "focus": "A small, slow target; precision over speed.",
+            "target": 4399,
+            "finalTarget": 4480,
+            "routeTarget": 4330,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Arc Expert",
+            "family": "Arc",
+            "focus": "Long jumps under low gravity; carry the crosshair along the arc.",
+            "target": 4435,
+            "finalTarget": 4517,
+            "routeTarget": 4366,
+            "precision": 0
+          },
+          {
+            "name": "Apogee AlienTrack Expert",
+            "family": "AlienTrack",
+            "focus": "A close target sweeping wide that blinks now and then; track it, and find it again after the jump.",
+            "target": 4124,
+            "finalTarget": 4207,
+            "routeTarget": 4050,
+            "precision": 0
+          }
+        ]
+      ]
+    },
+    {
+      "id": "destination-4",
+      "name": "Ion Wilds",
+      "category": "Reactive Tracking",
+      "color": "#c0a3ff",
+      "description": "Nothing holds its course here. Read each turn and stay with it.",
+      "bands": [
+        [
+          {
+            "name": "Apogee Pong Novice",
+            "family": "Pong",
+            "focus": "Close, snappy strafes; react to the turn, do not predict it.",
+            "target": 2265,
+            "finalTarget": 2500,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Pong3D Novice",
+            "family": "Pong3D",
+            "focus": "Strafes and range changes; the target shrinks and grows as it moves.",
+            "target": 2403,
+            "finalTarget": 2648,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Stutter Novice",
+            "family": "Stutter",
+            "focus": "It stops before it turns, and now and then stops dead for a second or two; stop with it.",
+            "target": 2291,
+            "finalTarget": 2528,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee Pong Intermediate",
+            "family": "Pong",
+            "focus": "Close, snappy strafes; react to the turn, do not predict it.",
+            "target": 2740,
+            "finalTarget": 2885,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Pong3D Intermediate",
+            "family": "Pong3D",
+            "focus": "Strafes and range changes; the target shrinks and grows as it moves.",
+            "target": 2904,
+            "finalTarget": 3057,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Stutter Intermediate",
+            "family": "Stutter",
+            "focus": "It stops before it turns, and now and then stops dead for a second or two; stop with it.",
+            "target": 2770,
+            "finalTarget": 2917,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee Pong Advanced",
+            "family": "Pong",
+            "focus": "Close, snappy strafes; react to the turn, do not predict it.",
+            "target": 2927,
+            "finalTarget": 3004,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Pong3D Advanced",
+            "family": "Pong3D",
+            "focus": "Strafes and range changes; the target shrinks and grows as it moves.",
+            "target": 3118,
+            "finalTarget": 3202,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Stutter Advanced",
+            "family": "Stutter",
+            "focus": "It stops before it turns, and now and then stops dead for a second or two; stop with it.",
+            "target": 2964,
+            "finalTarget": 3042,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee Pong Expert",
+            "family": "Pong",
+            "focus": "Close, snappy strafes; react to the turn, do not predict it.",
+            "target": 2973,
+            "finalTarget": 3039,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Pong3D Expert",
+            "family": "Pong3D",
+            "focus": "Strafes and range changes; the target shrinks and grows as it moves.",
+            "target": 3187,
+            "finalTarget": 3260,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Stutter Expert",
+            "family": "Stutter",
+            "focus": "It stops before it turns, and now and then stops dead for a second or two; stop with it.",
+            "target": 3016,
+            "finalTarget": 3084,
+            "precision": 0
+          }
+        ]
+      ],
+      "discovery": [
+        [
+          {
+            "name": "Apogee Hover Novice",
+            "family": "Hover",
+            "focus": "Jumps and short strafes together; follow it up as well as across.",
+            "target": 2505,
+            "finalTarget": 2754,
+            "routeTarget": 2172,
+            "precision": 0
+          },
+          {
+            "name": "Apogee UFO Novice",
+            "family": "UFO",
+            "focus": "A flier changing direction on both axes; react on whichever one moves.",
+            "target": 2396,
+            "finalTarget": 2643,
+            "routeTarget": 2067,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Feint Novice",
+            "family": "Feint",
+            "focus": "Being tracked makes it turn; stay on it through the dodge.",
+            "target": 2395,
+            "finalTarget": 2636,
+            "routeTarget": 2077,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee Hover Intermediate",
+            "family": "Hover",
+            "focus": "Jumps and short strafes together; follow it up as well as across.",
+            "target": 3016,
+            "finalTarget": 3170,
+            "routeTarget": 2932,
+            "precision": 0
+          },
+          {
+            "name": "Apogee UFO Intermediate",
+            "family": "UFO",
+            "focus": "A flier changing direction on both axes; react on whichever one moves.",
+            "target": 2901,
+            "finalTarget": 3051,
+            "routeTarget": 2818,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Feint Intermediate",
+            "family": "Feint",
+            "focus": "Being tracked makes it turn; stay on it through the dodge.",
+            "target": 2888,
+            "finalTarget": 3041,
+            "routeTarget": 2807,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee Hover Advanced",
+            "family": "Hover",
+            "focus": "Jumps and short strafes together; follow it up as well as across.",
+            "target": 3240,
+            "finalTarget": 3326,
+            "routeTarget": 3145,
+            "precision": 0
+          },
+          {
+            "name": "Apogee UFO Advanced",
+            "family": "UFO",
+            "focus": "A flier changing direction on both axes; react on whichever one moves.",
+            "target": 3107,
+            "finalTarget": 3189,
+            "routeTarget": 3016,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Feint Advanced",
+            "family": "Feint",
+            "focus": "Being tracked makes it turn; stay on it through the dodge.",
+            "target": 3103,
+            "finalTarget": 3187,
+            "routeTarget": 3010,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee Hover Expert",
+            "family": "Hover",
+            "focus": "Jumps and short strafes together; follow it up as well as across.",
+            "target": 3316,
+            "finalTarget": 3389,
+            "routeTarget": 3241,
+            "precision": 0
+          },
+          {
+            "name": "Apogee UFO Expert",
+            "family": "UFO",
+            "focus": "A flier changing direction on both axes; react on whichever one moves.",
+            "target": 3166,
+            "finalTarget": 3234,
+            "routeTarget": 3093,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Feint Expert",
+            "family": "Feint",
+            "focus": "Being tracked makes it turn; stay on it through the dodge.",
+            "target": 3175,
+            "finalTarget": 3250,
+            "routeTarget": 3097,
+            "precision": 0
+          }
+        ]
+      ],
+      "circuits": [
+        [
+          {
+            "name": "Apogee Pong Novice",
+            "family": "Pong",
+            "focus": "Close, snappy strafes; react to the turn, do not predict it.",
+            "target": 2265,
+            "finalTarget": 2500,
+            "routeTarget": 1958,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Pong3D Novice",
+            "family": "Pong3D",
+            "focus": "Strafes and range changes; the target shrinks and grows as it moves.",
+            "target": 2403,
+            "finalTarget": 2648,
+            "routeTarget": 2078,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Stutter Novice",
+            "family": "Stutter",
+            "focus": "It stops before it turns, and now and then stops dead for a second or two; stop with it.",
+            "target": 2291,
+            "finalTarget": 2528,
+            "routeTarget": 1982,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee Pong Intermediate",
+            "family": "Pong",
+            "focus": "Close, snappy strafes; react to the turn, do not predict it.",
+            "target": 2740,
+            "finalTarget": 2885,
+            "routeTarget": 2661,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Pong3D Intermediate",
+            "family": "Pong3D",
+            "focus": "Strafes and range changes; the target shrinks and grows as it moves.",
+            "target": 2904,
+            "finalTarget": 3057,
+            "routeTarget": 2822,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Stutter Intermediate",
+            "family": "Stutter",
+            "focus": "It stops before it turns, and now and then stops dead for a second or two; stop with it.",
+            "target": 2770,
+            "finalTarget": 2917,
+            "routeTarget": 2690,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee Pong Advanced",
+            "family": "Pong",
+            "focus": "Close, snappy strafes; react to the turn, do not predict it.",
+            "target": 2927,
+            "finalTarget": 3004,
+            "routeTarget": 2841,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Pong3D Advanced",
+            "family": "Pong3D",
+            "focus": "Strafes and range changes; the target shrinks and grows as it moves.",
+            "target": 3118,
+            "finalTarget": 3202,
+            "routeTarget": 3026,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Stutter Advanced",
+            "family": "Stutter",
+            "focus": "It stops before it turns, and now and then stops dead for a second or two; stop with it.",
+            "target": 2964,
+            "finalTarget": 3042,
+            "routeTarget": 2876,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee Pong Expert",
+            "family": "Pong",
+            "focus": "Close, snappy strafes; react to the turn, do not predict it.",
+            "target": 2973,
+            "finalTarget": 3039,
+            "routeTarget": 2900,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Pong3D Expert",
+            "family": "Pong3D",
+            "focus": "Strafes and range changes; the target shrinks and grows as it moves.",
+            "target": 3187,
+            "finalTarget": 3260,
+            "routeTarget": 3111,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Stutter Expert",
+            "family": "Stutter",
+            "focus": "It stops before it turns, and now and then stops dead for a second or two; stop with it.",
+            "target": 3016,
+            "finalTarget": 3084,
+            "routeTarget": 2941,
+            "precision": 0
+          }
+        ]
+      ],
+      "pool": [
+        [
+          {
+            "name": "Apogee Pong Novice",
+            "family": "Pong",
+            "focus": "Close, snappy strafes; react to the turn, do not predict it.",
+            "target": 2265,
+            "finalTarget": 2500,
+            "routeTarget": 1958,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Pong3D Novice",
+            "family": "Pong3D",
+            "focus": "Strafes and range changes; the target shrinks and grows as it moves.",
+            "target": 2403,
+            "finalTarget": 2648,
+            "routeTarget": 2078,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Stutter Novice",
+            "family": "Stutter",
+            "focus": "It stops before it turns, and now and then stops dead for a second or two; stop with it.",
+            "target": 2291,
+            "finalTarget": 2528,
+            "routeTarget": 1982,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Hover Novice",
+            "family": "Hover",
+            "focus": "Jumps and short strafes together; follow it up as well as across.",
+            "target": 2505,
+            "finalTarget": 2754,
+            "routeTarget": 2172,
+            "precision": 0
+          },
+          {
+            "name": "Apogee UFO Novice",
+            "family": "UFO",
+            "focus": "A flier changing direction on both axes; react on whichever one moves.",
+            "target": 2396,
+            "finalTarget": 2643,
+            "routeTarget": 2067,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Feint Novice",
+            "family": "Feint",
+            "focus": "Being tracked makes it turn; stay on it through the dodge.",
+            "target": 2395,
+            "finalTarget": 2636,
+            "routeTarget": 2077,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee Pong Intermediate",
+            "family": "Pong",
+            "focus": "Close, snappy strafes; react to the turn, do not predict it.",
+            "target": 2740,
+            "finalTarget": 2885,
+            "routeTarget": 2661,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Pong3D Intermediate",
+            "family": "Pong3D",
+            "focus": "Strafes and range changes; the target shrinks and grows as it moves.",
+            "target": 2904,
+            "finalTarget": 3057,
+            "routeTarget": 2822,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Stutter Intermediate",
+            "family": "Stutter",
+            "focus": "It stops before it turns, and now and then stops dead for a second or two; stop with it.",
+            "target": 2770,
+            "finalTarget": 2917,
+            "routeTarget": 2690,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Hover Intermediate",
+            "family": "Hover",
+            "focus": "Jumps and short strafes together; follow it up as well as across.",
+            "target": 3016,
+            "finalTarget": 3170,
+            "routeTarget": 2932,
+            "precision": 0
+          },
+          {
+            "name": "Apogee UFO Intermediate",
+            "family": "UFO",
+            "focus": "A flier changing direction on both axes; react on whichever one moves.",
+            "target": 2901,
+            "finalTarget": 3051,
+            "routeTarget": 2818,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Feint Intermediate",
+            "family": "Feint",
+            "focus": "Being tracked makes it turn; stay on it through the dodge.",
+            "target": 2888,
+            "finalTarget": 3041,
+            "routeTarget": 2807,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee Pong Advanced",
+            "family": "Pong",
+            "focus": "Close, snappy strafes; react to the turn, do not predict it.",
+            "target": 2927,
+            "finalTarget": 3004,
+            "routeTarget": 2841,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Pong3D Advanced",
+            "family": "Pong3D",
+            "focus": "Strafes and range changes; the target shrinks and grows as it moves.",
+            "target": 3118,
+            "finalTarget": 3202,
+            "routeTarget": 3026,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Stutter Advanced",
+            "family": "Stutter",
+            "focus": "It stops before it turns, and now and then stops dead for a second or two; stop with it.",
+            "target": 2964,
+            "finalTarget": 3042,
+            "routeTarget": 2876,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Hover Advanced",
+            "family": "Hover",
+            "focus": "Jumps and short strafes together; follow it up as well as across.",
+            "target": 3240,
+            "finalTarget": 3326,
+            "routeTarget": 3145,
+            "precision": 0
+          },
+          {
+            "name": "Apogee UFO Advanced",
+            "family": "UFO",
+            "focus": "A flier changing direction on both axes; react on whichever one moves.",
+            "target": 3107,
+            "finalTarget": 3189,
+            "routeTarget": 3016,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Feint Advanced",
+            "family": "Feint",
+            "focus": "Being tracked makes it turn; stay on it through the dodge.",
+            "target": 3103,
+            "finalTarget": 3187,
+            "routeTarget": 3010,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee Pong Expert",
+            "family": "Pong",
+            "focus": "Close, snappy strafes; react to the turn, do not predict it.",
+            "target": 2973,
+            "finalTarget": 3039,
+            "routeTarget": 2900,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Pong3D Expert",
+            "family": "Pong3D",
+            "focus": "Strafes and range changes; the target shrinks and grows as it moves.",
+            "target": 3187,
+            "finalTarget": 3260,
+            "routeTarget": 3111,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Stutter Expert",
+            "family": "Stutter",
+            "focus": "It stops before it turns, and now and then stops dead for a second or two; stop with it.",
+            "target": 3016,
+            "finalTarget": 3084,
+            "routeTarget": 2941,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Hover Expert",
+            "family": "Hover",
+            "focus": "Jumps and short strafes together; follow it up as well as across.",
+            "target": 3316,
+            "finalTarget": 3389,
+            "routeTarget": 3241,
+            "precision": 0
+          },
+          {
+            "name": "Apogee UFO Expert",
+            "family": "UFO",
+            "focus": "A flier changing direction on both axes; react on whichever one moves.",
+            "target": 3166,
+            "finalTarget": 3234,
+            "routeTarget": 3093,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Feint Expert",
+            "family": "Feint",
+            "focus": "Being tracked makes it turn; stay on it through the dodge.",
+            "target": 3175,
+            "finalTarget": 3250,
+            "routeTarget": 3097,
+            "precision": 0
+          }
+        ]
+      ]
+    },
+    {
+      "id": "destination-5",
+      "name": "Prism Crossing",
+      "category": "Speed Switching",
+      "color": "#f1e386",
+      "description": "Light splits across the crossing. Move decisively from one signal to the next.",
+      "bands": [
+        [
+          {
+            "name": "Apogee DNA Novice",
+            "family": "DNA",
+            "focus": "Kill, then move straight to the next; no pause between targets.",
+            "target": 2371,
+            "finalTarget": 2485,
+            "precision": 0
+          },
+          {
+            "name": "Apogee CockpiTS Novice",
+            "family": "CockpiTS",
+            "focus": "Wide switches; land the flick, then hold.",
+            "target": 2400,
+            "finalTarget": 2513,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Column Novice",
+            "family": "Column",
+            "focus": "Switch up and down; stop on each one before you fire.",
+            "target": 2371,
+            "finalTarget": 2485,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee DNA Intermediate",
+            "family": "DNA",
+            "focus": "Kill, then move straight to the next; no pause between targets.",
+            "target": 2690,
+            "finalTarget": 2766,
+            "precision": 0
+          },
+          {
+            "name": "Apogee CockpiTS Intermediate",
+            "family": "CockpiTS",
+            "focus": "Wide switches; land the flick, then hold.",
+            "target": 2717,
+            "finalTarget": 2793,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Column Intermediate",
+            "family": "Column",
+            "focus": "Switch up and down; stop on each one before you fire.",
+            "target": 2690,
+            "finalTarget": 2766,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee DNA Advanced",
+            "family": "DNA",
+            "focus": "Kill, then move straight to the next; no pause between targets.",
+            "target": 2920,
+            "finalTarget": 2972,
+            "precision": 0
+          },
+          {
+            "name": "Apogee CockpiTS Advanced",
+            "family": "CockpiTS",
+            "focus": "Wide switches; land the flick, then hold.",
+            "target": 2949,
+            "finalTarget": 3001,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Column Advanced",
+            "family": "Column",
+            "focus": "Switch up and down; stop on each one before you fire.",
+            "target": 2920,
+            "finalTarget": 2972,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee DNA Expert",
+            "family": "DNA",
+            "focus": "Kill, then move straight to the next; no pause between targets.",
+            "target": 3102,
+            "finalTarget": 3153,
+            "precision": 0
+          },
+          {
+            "name": "Apogee CockpiTS Expert",
+            "family": "CockpiTS",
+            "focus": "Wide switches; land the flick, then hold.",
+            "target": 3131,
+            "finalTarget": 3181,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Column Expert",
+            "family": "Column",
+            "focus": "Switch up and down; stop on each one before you fire.",
+            "target": 3102,
+            "finalTarget": 3153,
+            "precision": 0
+          }
+        ]
+      ],
+      "discovery": [
+        [
+          {
+            "name": "Apogee Asteroids Novice",
+            "family": "Asteroids",
+            "focus": "Six small targets packed tight; short, exact moves.",
+            "target": 2179,
+            "finalTarget": 2290,
+            "routeTarget": 2020,
+            "precision": 0
+          },
+          {
+            "name": "Apogee RockeTS Novice",
+            "family": "RockeTS",
+            "focus": "Slow floaters that fall fast; the switch is the skill, the tracking only has to be clean.",
+            "target": 1796,
+            "finalTarget": 1909,
+            "routeTarget": 1647,
+            "precision": 0
+          },
+          {
+            "name": "Apogee MartianTS Novice",
+            "family": "MartianTS",
+            "focus": "Each target takes a while; stay on it to the end, then switch.",
+            "target": 2697,
+            "finalTarget": 2823,
+            "routeTarget": 2492,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee Asteroids Intermediate",
+            "family": "Asteroids",
+            "focus": "Six small targets packed tight; short, exact moves.",
+            "target": 2485,
+            "finalTarget": 2555,
+            "routeTarget": 2448,
+            "precision": 0
+          },
+          {
+            "name": "Apogee RockeTS Intermediate",
+            "family": "RockeTS",
+            "focus": "Slow floaters that fall fast; the switch is the skill, the tracking only has to be clean.",
+            "target": 2089,
+            "finalTarget": 2156,
+            "routeTarget": 2053,
+            "precision": 0
+          },
+          {
+            "name": "Apogee MartianTS Intermediate",
+            "family": "MartianTS",
+            "focus": "Each target takes a while; stay on it to the end, then switch.",
+            "target": 3067,
+            "finalTarget": 3158,
+            "routeTarget": 3018,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee Asteroids Advanced",
+            "family": "Asteroids",
+            "focus": "Six small targets packed tight; short, exact moves.",
+            "target": 2696,
+            "finalTarget": 2743,
+            "routeTarget": 2644,
+            "precision": 0
+          },
+          {
+            "name": "Apogee RockeTS Advanced",
+            "family": "RockeTS",
+            "focus": "Slow floaters that fall fast; the switch is the skill, the tracking only has to be clean.",
+            "target": 2255,
+            "finalTarget": 2294,
+            "routeTarget": 2215,
+            "precision": 0
+          },
+          {
+            "name": "Apogee MartianTS Advanced",
+            "family": "MartianTS",
+            "focus": "Each target takes a while; stay on it to the end, then switch.",
+            "target": 3338,
+            "finalTarget": 3398,
+            "routeTarget": 3271,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee Asteroids Expert",
+            "family": "Asteroids",
+            "focus": "Six small targets packed tight; short, exact moves.",
+            "target": 2862,
+            "finalTarget": 2912,
+            "routeTarget": 2823,
+            "precision": 0
+          },
+          {
+            "name": "Apogee RockeTS Expert",
+            "family": "RockeTS",
+            "focus": "Slow floaters that fall fast; the switch is the skill, the tracking only has to be clean.",
+            "target": 2384,
+            "finalTarget": 2433,
+            "routeTarget": 2346,
+            "precision": 0
+          },
+          {
+            "name": "Apogee MartianTS Expert",
+            "family": "MartianTS",
+            "focus": "Each target takes a while; stay on it to the end, then switch.",
+            "target": 3554,
+            "finalTarget": 3607,
+            "routeTarget": 3504,
+            "precision": 0
+          }
+        ]
+      ],
+      "circuits": [
+        [
+          {
+            "name": "Apogee DNA Novice",
+            "family": "DNA",
+            "focus": "Kill, then move straight to the next; no pause between targets.",
+            "target": 2371,
+            "finalTarget": 2485,
+            "routeTarget": 2201,
+            "precision": 0
+          },
+          {
+            "name": "Apogee CockpiTS Novice",
+            "family": "CockpiTS",
+            "focus": "Wide switches; land the flick, then hold.",
+            "target": 2400,
+            "finalTarget": 2513,
+            "routeTarget": 2230,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Column Novice",
+            "family": "Column",
+            "focus": "Switch up and down; stop on each one before you fire.",
+            "target": 2371,
+            "finalTarget": 2485,
+            "routeTarget": 2201,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee DNA Intermediate",
+            "family": "DNA",
+            "focus": "Kill, then move straight to the next; no pause between targets.",
+            "target": 2690,
+            "finalTarget": 2766,
+            "routeTarget": 2651,
+            "precision": 0
+          },
+          {
+            "name": "Apogee CockpiTS Intermediate",
+            "family": "CockpiTS",
+            "focus": "Wide switches; land the flick, then hold.",
+            "target": 2717,
+            "finalTarget": 2793,
+            "routeTarget": 2678,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Column Intermediate",
+            "family": "Column",
+            "focus": "Switch up and down; stop on each one before you fire.",
+            "target": 2690,
+            "finalTarget": 2766,
+            "routeTarget": 2651,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee DNA Advanced",
+            "family": "DNA",
+            "focus": "Kill, then move straight to the next; no pause between targets.",
+            "target": 2920,
+            "finalTarget": 2972,
+            "routeTarget": 2863,
+            "precision": 0
+          },
+          {
+            "name": "Apogee CockpiTS Advanced",
+            "family": "CockpiTS",
+            "focus": "Wide switches; land the flick, then hold.",
+            "target": 2949,
+            "finalTarget": 3001,
+            "routeTarget": 2890,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Column Advanced",
+            "family": "Column",
+            "focus": "Switch up and down; stop on each one before you fire.",
+            "target": 2920,
+            "finalTarget": 2972,
+            "routeTarget": 2863,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee DNA Expert",
+            "family": "DNA",
+            "focus": "Kill, then move straight to the next; no pause between targets.",
+            "target": 3102,
+            "finalTarget": 3153,
+            "routeTarget": 3060,
+            "precision": 0
+          },
+          {
+            "name": "Apogee CockpiTS Expert",
+            "family": "CockpiTS",
+            "focus": "Wide switches; land the flick, then hold.",
+            "target": 3131,
+            "finalTarget": 3181,
+            "routeTarget": 3089,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Column Expert",
+            "family": "Column",
+            "focus": "Switch up and down; stop on each one before you fire.",
+            "target": 3102,
+            "finalTarget": 3153,
+            "routeTarget": 3060,
+            "precision": 0
+          }
+        ]
+      ],
+      "pool": [
+        [
+          {
+            "name": "Apogee DNA Novice",
+            "family": "DNA",
+            "focus": "Kill, then move straight to the next; no pause between targets.",
+            "target": 2371,
+            "finalTarget": 2485,
+            "routeTarget": 2201,
+            "precision": 0
+          },
+          {
+            "name": "Apogee CockpiTS Novice",
+            "family": "CockpiTS",
+            "focus": "Wide switches; land the flick, then hold.",
+            "target": 2400,
+            "finalTarget": 2513,
+            "routeTarget": 2230,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Column Novice",
+            "family": "Column",
+            "focus": "Switch up and down; stop on each one before you fire.",
+            "target": 2371,
+            "finalTarget": 2485,
+            "routeTarget": 2201,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Asteroids Novice",
+            "family": "Asteroids",
+            "focus": "Six small targets packed tight; short, exact moves.",
+            "target": 2179,
+            "finalTarget": 2290,
+            "routeTarget": 2020,
+            "precision": 0
+          },
+          {
+            "name": "Apogee RockeTS Novice",
+            "family": "RockeTS",
+            "focus": "Slow floaters that fall fast; the switch is the skill, the tracking only has to be clean.",
+            "target": 1796,
+            "finalTarget": 1909,
+            "routeTarget": 1647,
+            "precision": 0
+          },
+          {
+            "name": "Apogee MartianTS Novice",
+            "family": "MartianTS",
+            "focus": "Each target takes a while; stay on it to the end, then switch.",
+            "target": 2697,
+            "finalTarget": 2823,
+            "routeTarget": 2492,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee DNA Intermediate",
+            "family": "DNA",
+            "focus": "Kill, then move straight to the next; no pause between targets.",
+            "target": 2690,
+            "finalTarget": 2766,
+            "routeTarget": 2651,
+            "precision": 0
+          },
+          {
+            "name": "Apogee CockpiTS Intermediate",
+            "family": "CockpiTS",
+            "focus": "Wide switches; land the flick, then hold.",
+            "target": 2717,
+            "finalTarget": 2793,
+            "routeTarget": 2678,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Column Intermediate",
+            "family": "Column",
+            "focus": "Switch up and down; stop on each one before you fire.",
+            "target": 2690,
+            "finalTarget": 2766,
+            "routeTarget": 2651,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Asteroids Intermediate",
+            "family": "Asteroids",
+            "focus": "Six small targets packed tight; short, exact moves.",
+            "target": 2485,
+            "finalTarget": 2555,
+            "routeTarget": 2448,
+            "precision": 0
+          },
+          {
+            "name": "Apogee RockeTS Intermediate",
+            "family": "RockeTS",
+            "focus": "Slow floaters that fall fast; the switch is the skill, the tracking only has to be clean.",
+            "target": 2089,
+            "finalTarget": 2156,
+            "routeTarget": 2053,
+            "precision": 0
+          },
+          {
+            "name": "Apogee MartianTS Intermediate",
+            "family": "MartianTS",
+            "focus": "Each target takes a while; stay on it to the end, then switch.",
+            "target": 3067,
+            "finalTarget": 3158,
+            "routeTarget": 3018,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee DNA Advanced",
+            "family": "DNA",
+            "focus": "Kill, then move straight to the next; no pause between targets.",
+            "target": 2920,
+            "finalTarget": 2972,
+            "routeTarget": 2863,
+            "precision": 0
+          },
+          {
+            "name": "Apogee CockpiTS Advanced",
+            "family": "CockpiTS",
+            "focus": "Wide switches; land the flick, then hold.",
+            "target": 2949,
+            "finalTarget": 3001,
+            "routeTarget": 2890,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Column Advanced",
+            "family": "Column",
+            "focus": "Switch up and down; stop on each one before you fire.",
+            "target": 2920,
+            "finalTarget": 2972,
+            "routeTarget": 2863,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Asteroids Advanced",
+            "family": "Asteroids",
+            "focus": "Six small targets packed tight; short, exact moves.",
+            "target": 2696,
+            "finalTarget": 2743,
+            "routeTarget": 2644,
+            "precision": 0
+          },
+          {
+            "name": "Apogee RockeTS Advanced",
+            "family": "RockeTS",
+            "focus": "Slow floaters that fall fast; the switch is the skill, the tracking only has to be clean.",
+            "target": 2255,
+            "finalTarget": 2294,
+            "routeTarget": 2215,
+            "precision": 0
+          },
+          {
+            "name": "Apogee MartianTS Advanced",
+            "family": "MartianTS",
+            "focus": "Each target takes a while; stay on it to the end, then switch.",
+            "target": 3338,
+            "finalTarget": 3398,
+            "routeTarget": 3271,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee DNA Expert",
+            "family": "DNA",
+            "focus": "Kill, then move straight to the next; no pause between targets.",
+            "target": 3102,
+            "finalTarget": 3153,
+            "routeTarget": 3060,
+            "precision": 0
+          },
+          {
+            "name": "Apogee CockpiTS Expert",
+            "family": "CockpiTS",
+            "focus": "Wide switches; land the flick, then hold.",
+            "target": 3131,
+            "finalTarget": 3181,
+            "routeTarget": 3089,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Column Expert",
+            "family": "Column",
+            "focus": "Switch up and down; stop on each one before you fire.",
+            "target": 3102,
+            "finalTarget": 3153,
+            "routeTarget": 3060,
+            "precision": 0
+          },
+          {
+            "name": "Apogee Asteroids Expert",
+            "family": "Asteroids",
+            "focus": "Six small targets packed tight; short, exact moves.",
+            "target": 2862,
+            "finalTarget": 2912,
+            "routeTarget": 2823,
+            "precision": 0
+          },
+          {
+            "name": "Apogee RockeTS Expert",
+            "family": "RockeTS",
+            "focus": "Slow floaters that fall fast; the switch is the skill, the tracking only has to be clean.",
+            "target": 2384,
+            "finalTarget": 2433,
+            "routeTarget": 2346,
+            "precision": 0
+          },
+          {
+            "name": "Apogee MartianTS Expert",
+            "family": "MartianTS",
+            "focus": "Each target takes a while; stay on it to the end, then switch.",
+            "target": 3554,
+            "finalTarget": 3607,
+            "routeTarget": 3504,
+            "precision": 0
+          }
+        ]
+      ]
+    },
+    {
+      "id": "destination-6",
+      "name": "Cinder Veil",
+      "category": "Evasive Switching",
+      "color": "#ff8dbb",
+      "description": "Signals slip behind the veil. Find them again without losing your pace.",
+      "bands": [
+        [
+          {
+            "name": "Apogee FleeTS Novice",
+            "family": "FleeTS",
+            "focus": "Six strafing targets; kill one without losing track of the others.",
+            "target": 2068,
+            "finalTarget": 2206,
+            "precision": 0
+          },
+          {
+            "name": "Apogee skeeTS Novice",
+            "family": "skeeTS",
+            "focus": "Clay pigeons thrown across the field; catch each one on its arc.",
+            "target": 1880,
+            "finalTarget": 2138,
+            "precision": 0
+          },
+          {
+            "name": "Apogee comeTS Novice",
+            "family": "comeTS",
+            "focus": "Fliers sweeping round in curves; pick the next one before this one dies.",
+            "target": 2046,
+            "finalTarget": 2180,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee FleeTS Intermediate",
+            "family": "FleeTS",
+            "focus": "Six strafing targets; kill one without losing track of the others.",
+            "target": 2449,
+            "finalTarget": 2541,
+            "precision": 0
+          },
+          {
+            "name": "Apogee skeeTS Intermediate",
+            "family": "skeeTS",
+            "focus": "Clay pigeons thrown across the field; catch each one on its arc.",
+            "target": 2633,
+            "finalTarget": 2804,
+            "precision": 0
+          },
+          {
+            "name": "Apogee comeTS Intermediate",
+            "family": "comeTS",
+            "focus": "Fliers sweeping round in curves; pick the next one before this one dies.",
+            "target": 2415,
+            "finalTarget": 2504,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee FleeTS Advanced",
+            "family": "FleeTS",
+            "focus": "Six strafing targets; kill one without losing track of the others.",
+            "target": 2674,
+            "finalTarget": 2724,
+            "precision": 0
+          },
+          {
+            "name": "Apogee skeeTS Advanced",
+            "family": "skeeTS",
+            "focus": "Clay pigeons thrown across the field; catch each one on its arc.",
+            "target": 3228,
+            "finalTarget": 3357,
+            "precision": 0
+          },
+          {
+            "name": "Apogee comeTS Advanced",
+            "family": "comeTS",
+            "focus": "Fliers sweeping round in curves; pick the next one before this one dies.",
+            "target": 2633,
+            "finalTarget": 2683,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee FleeTS Expert",
+            "family": "FleeTS",
+            "focus": "Six strafing targets; kill one without losing track of the others.",
+            "target": 2858,
+            "finalTarget": 2916,
+            "precision": 0
+          },
+          {
+            "name": "Apogee skeeTS Expert",
+            "family": "skeeTS",
+            "focus": "Clay pigeons thrown across the field; catch each one on its arc.",
+            "target": 3712,
+            "finalTarget": 3820,
+            "precision": 0
+          },
+          {
+            "name": "Apogee comeTS Expert",
+            "family": "comeTS",
+            "focus": "Fliers sweeping round in curves; pick the next one before this one dies.",
+            "target": 2811,
+            "finalTarget": 2868,
+            "precision": 0
+          }
+        ]
+      ],
+      "discovery": [
+        [
+          {
+            "name": "Apogee QuantumTS Novice",
+            "family": "QuantumTS",
+            "focus": "Targets heal when left alone; finish every kill you start.",
+            "target": 2195,
+            "finalTarget": 2337,
+            "routeTarget": 1986,
+            "precision": 0
+          },
+          {
+            "name": "Apogee LosTS Novice",
+            "family": "LosTS",
+            "focus": "One tough target; stay on it, and find it again the moment it respawns.",
+            "target": 2922,
+            "finalTarget": 3194,
+            "routeTarget": 2536,
+            "precision": 0
+          },
+          {
+            "name": "Apogee InvadersTS Novice",
+            "family": "InvadersTS",
+            "focus": "Close targets moving fast across the view; stay with them, then turn to the next.",
+            "target": 2045,
+            "finalTarget": 2183,
+            "routeTarget": 1848,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee QuantumTS Intermediate",
+            "family": "QuantumTS",
+            "focus": "Targets heal when left alone; finish every kill you start.",
+            "target": 2592,
+            "finalTarget": 2689,
+            "routeTarget": 2538,
+            "precision": 0
+          },
+          {
+            "name": "Apogee LosTS Intermediate",
+            "family": "LosTS",
+            "focus": "One tough target; stay on it, and find it again the moment it respawns.",
+            "target": 3496,
+            "finalTarget": 3659,
+            "routeTarget": 3406,
+            "precision": 0
+          },
+          {
+            "name": "Apogee InvadersTS Intermediate",
+            "family": "InvadersTS",
+            "focus": "Close targets moving fast across the view; stay with them, then turn to the next.",
+            "target": 2426,
+            "finalTarget": 2518,
+            "routeTarget": 2375,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee QuantumTS Advanced",
+            "family": "QuantumTS",
+            "focus": "Targets heal when left alone; finish every kill you start.",
+            "target": 2833,
+            "finalTarget": 2887,
+            "routeTarget": 2776,
+            "precision": 0
+          },
+          {
+            "name": "Apogee LosTS Advanced",
+            "family": "LosTS",
+            "focus": "One tough target; stay on it, and find it again the moment it respawns.",
+            "target": 3767,
+            "finalTarget": 3864,
+            "routeTarget": 3665,
+            "precision": 0
+          },
+          {
+            "name": "Apogee InvadersTS Advanced",
+            "family": "InvadersTS",
+            "focus": "Close targets moving fast across the view; stay with them, then turn to the next.",
+            "target": 2650,
+            "finalTarget": 2700,
+            "routeTarget": 2598,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee QuantumTS Expert",
+            "family": "QuantumTS",
+            "focus": "Targets heal when left alone; finish every kill you start.",
+            "target": 3030,
+            "finalTarget": 3089,
+            "routeTarget": 2976,
+            "precision": 0
+          },
+          {
+            "name": "Apogee LosTS Expert",
+            "family": "LosTS",
+            "focus": "One tough target; stay on it, and find it again the moment it respawns.",
+            "target": 3884,
+            "finalTarget": 3961,
+            "routeTarget": 3811,
+            "precision": 0
+          },
+          {
+            "name": "Apogee InvadersTS Expert",
+            "family": "InvadersTS",
+            "focus": "Close targets moving fast across the view; stay with them, then turn to the next.",
+            "target": 2834,
+            "finalTarget": 2891,
+            "routeTarget": 2782,
+            "precision": 0
+          }
+        ]
+      ],
+      "circuits": [
+        [
+          {
+            "name": "Apogee FleeTS Novice",
+            "family": "FleeTS",
+            "focus": "Six strafing targets; kill one without losing track of the others.",
+            "target": 2068,
+            "finalTarget": 2206,
+            "routeTarget": 1871,
+            "precision": 0
+          },
+          {
+            "name": "Apogee skeeTS Novice",
+            "family": "skeeTS",
+            "focus": "Clay pigeons thrown across the field; catch each one on its arc.",
+            "target": 1880,
+            "finalTarget": 2138,
+            "routeTarget": 1571,
+            "precision": 0
+          },
+          {
+            "name": "Apogee comeTS Novice",
+            "family": "comeTS",
+            "focus": "Fliers sweeping round in curves; pick the next one before this one dies.",
+            "target": 2046,
+            "finalTarget": 2180,
+            "routeTarget": 1855,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee FleeTS Intermediate",
+            "family": "FleeTS",
+            "focus": "Six strafing targets; kill one without losing track of the others.",
+            "target": 2449,
+            "finalTarget": 2541,
+            "routeTarget": 2398,
+            "precision": 0
+          },
+          {
+            "name": "Apogee skeeTS Intermediate",
+            "family": "skeeTS",
+            "focus": "Clay pigeons thrown across the field; catch each one on its arc.",
+            "target": 2633,
+            "finalTarget": 2804,
+            "routeTarget": 2545,
+            "precision": 0
+          },
+          {
+            "name": "Apogee comeTS Intermediate",
+            "family": "comeTS",
+            "focus": "Fliers sweeping round in curves; pick the next one before this one dies.",
+            "target": 2415,
+            "finalTarget": 2504,
+            "routeTarget": 2366,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee FleeTS Advanced",
+            "family": "FleeTS",
+            "focus": "Six strafing targets; kill one without losing track of the others.",
+            "target": 2674,
+            "finalTarget": 2724,
+            "routeTarget": 2621,
+            "precision": 0
+          },
+          {
+            "name": "Apogee skeeTS Advanced",
+            "family": "skeeTS",
+            "focus": "Clay pigeons thrown across the field; catch each one on its arc.",
+            "target": 3228,
+            "finalTarget": 3357,
+            "routeTarget": 3086,
+            "precision": 0
+          },
+          {
+            "name": "Apogee comeTS Advanced",
+            "family": "comeTS",
+            "focus": "Fliers sweeping round in curves; pick the next one before this one dies.",
+            "target": 2633,
+            "finalTarget": 2683,
+            "routeTarget": 2582,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee FleeTS Expert",
+            "family": "FleeTS",
+            "focus": "Six strafing targets; kill one without losing track of the others.",
+            "target": 2858,
+            "finalTarget": 2916,
+            "routeTarget": 2806,
+            "precision": 0
+          },
+          {
+            "name": "Apogee skeeTS Expert",
+            "family": "skeeTS",
+            "focus": "Clay pigeons thrown across the field; catch each one on its arc.",
+            "target": 3712,
+            "finalTarget": 3820,
+            "routeTarget": 3611,
+            "precision": 0
+          },
+          {
+            "name": "Apogee comeTS Expert",
+            "family": "comeTS",
+            "focus": "Fliers sweeping round in curves; pick the next one before this one dies.",
+            "target": 2811,
+            "finalTarget": 2868,
+            "routeTarget": 2761,
+            "precision": 0
+          }
+        ]
+      ],
+      "pool": [
+        [
+          {
+            "name": "Apogee FleeTS Novice",
+            "family": "FleeTS",
+            "focus": "Six strafing targets; kill one without losing track of the others.",
+            "target": 2068,
+            "finalTarget": 2206,
+            "routeTarget": 1871,
+            "precision": 0
+          },
+          {
+            "name": "Apogee skeeTS Novice",
+            "family": "skeeTS",
+            "focus": "Clay pigeons thrown across the field; catch each one on its arc.",
+            "target": 1880,
+            "finalTarget": 2138,
+            "routeTarget": 1571,
+            "precision": 0
+          },
+          {
+            "name": "Apogee comeTS Novice",
+            "family": "comeTS",
+            "focus": "Fliers sweeping round in curves; pick the next one before this one dies.",
+            "target": 2046,
+            "finalTarget": 2180,
+            "routeTarget": 1855,
+            "precision": 0
+          },
+          {
+            "name": "Apogee QuantumTS Novice",
+            "family": "QuantumTS",
+            "focus": "Targets heal when left alone; finish every kill you start.",
+            "target": 2195,
+            "finalTarget": 2337,
+            "routeTarget": 1986,
+            "precision": 0
+          },
+          {
+            "name": "Apogee LosTS Novice",
+            "family": "LosTS",
+            "focus": "One tough target; stay on it, and find it again the moment it respawns.",
+            "target": 2922,
+            "finalTarget": 3194,
+            "routeTarget": 2536,
+            "precision": 0
+          },
+          {
+            "name": "Apogee InvadersTS Novice",
+            "family": "InvadersTS",
+            "focus": "Close targets moving fast across the view; stay with them, then turn to the next.",
+            "target": 2045,
+            "finalTarget": 2183,
+            "routeTarget": 1848,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee FleeTS Intermediate",
+            "family": "FleeTS",
+            "focus": "Six strafing targets; kill one without losing track of the others.",
+            "target": 2449,
+            "finalTarget": 2541,
+            "routeTarget": 2398,
+            "precision": 0
+          },
+          {
+            "name": "Apogee skeeTS Intermediate",
+            "family": "skeeTS",
+            "focus": "Clay pigeons thrown across the field; catch each one on its arc.",
+            "target": 2633,
+            "finalTarget": 2804,
+            "routeTarget": 2545,
+            "precision": 0
+          },
+          {
+            "name": "Apogee comeTS Intermediate",
+            "family": "comeTS",
+            "focus": "Fliers sweeping round in curves; pick the next one before this one dies.",
+            "target": 2415,
+            "finalTarget": 2504,
+            "routeTarget": 2366,
+            "precision": 0
+          },
+          {
+            "name": "Apogee QuantumTS Intermediate",
+            "family": "QuantumTS",
+            "focus": "Targets heal when left alone; finish every kill you start.",
+            "target": 2592,
+            "finalTarget": 2689,
+            "routeTarget": 2538,
+            "precision": 0
+          },
+          {
+            "name": "Apogee LosTS Intermediate",
+            "family": "LosTS",
+            "focus": "One tough target; stay on it, and find it again the moment it respawns.",
+            "target": 3496,
+            "finalTarget": 3659,
+            "routeTarget": 3406,
+            "precision": 0
+          },
+          {
+            "name": "Apogee InvadersTS Intermediate",
+            "family": "InvadersTS",
+            "focus": "Close targets moving fast across the view; stay with them, then turn to the next.",
+            "target": 2426,
+            "finalTarget": 2518,
+            "routeTarget": 2375,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee FleeTS Advanced",
+            "family": "FleeTS",
+            "focus": "Six strafing targets; kill one without losing track of the others.",
+            "target": 2674,
+            "finalTarget": 2724,
+            "routeTarget": 2621,
+            "precision": 0
+          },
+          {
+            "name": "Apogee skeeTS Advanced",
+            "family": "skeeTS",
+            "focus": "Clay pigeons thrown across the field; catch each one on its arc.",
+            "target": 3228,
+            "finalTarget": 3357,
+            "routeTarget": 3086,
+            "precision": 0
+          },
+          {
+            "name": "Apogee comeTS Advanced",
+            "family": "comeTS",
+            "focus": "Fliers sweeping round in curves; pick the next one before this one dies.",
+            "target": 2633,
+            "finalTarget": 2683,
+            "routeTarget": 2582,
+            "precision": 0
+          },
+          {
+            "name": "Apogee QuantumTS Advanced",
+            "family": "QuantumTS",
+            "focus": "Targets heal when left alone; finish every kill you start.",
+            "target": 2833,
+            "finalTarget": 2887,
+            "routeTarget": 2776,
+            "precision": 0
+          },
+          {
+            "name": "Apogee LosTS Advanced",
+            "family": "LosTS",
+            "focus": "One tough target; stay on it, and find it again the moment it respawns.",
+            "target": 3767,
+            "finalTarget": 3864,
+            "routeTarget": 3665,
+            "precision": 0
+          },
+          {
+            "name": "Apogee InvadersTS Advanced",
+            "family": "InvadersTS",
+            "focus": "Close targets moving fast across the view; stay with them, then turn to the next.",
+            "target": 2650,
+            "finalTarget": 2700,
+            "routeTarget": 2598,
+            "precision": 0
+          }
+        ],
+        [
+          {
+            "name": "Apogee FleeTS Expert",
+            "family": "FleeTS",
+            "focus": "Six strafing targets; kill one without losing track of the others.",
+            "target": 2858,
+            "finalTarget": 2916,
+            "routeTarget": 2806,
+            "precision": 0
+          },
+          {
+            "name": "Apogee skeeTS Expert",
+            "family": "skeeTS",
+            "focus": "Clay pigeons thrown across the field; catch each one on its arc.",
+            "target": 3712,
+            "finalTarget": 3820,
+            "routeTarget": 3611,
+            "precision": 0
+          },
+          {
+            "name": "Apogee comeTS Expert",
+            "family": "comeTS",
+            "focus": "Fliers sweeping round in curves; pick the next one before this one dies.",
+            "target": 2811,
+            "finalTarget": 2868,
+            "routeTarget": 2761,
+            "precision": 0
+          },
+          {
+            "name": "Apogee QuantumTS Expert",
+            "family": "QuantumTS",
+            "focus": "Targets heal when left alone; finish every kill you start.",
+            "target": 3030,
+            "finalTarget": 3089,
+            "routeTarget": 2976,
+            "precision": 0
+          },
+          {
+            "name": "Apogee LosTS Expert",
+            "family": "LosTS",
+            "focus": "One tough target; stay on it, and find it again the moment it respawns.",
+            "target": 3884,
+            "finalTarget": 3961,
+            "routeTarget": 3811,
+            "precision": 0
+          },
+          {
+            "name": "Apogee InvadersTS Expert",
+            "family": "InvadersTS",
+            "focus": "Close targets moving fast across the view; stay with them, then turn to the next.",
+            "target": 2834,
+            "finalTarget": 2891,
+            "routeTarget": 2782,
+            "precision": 0
+          }
+        ]
+      ]
+    }
+  ]
+}

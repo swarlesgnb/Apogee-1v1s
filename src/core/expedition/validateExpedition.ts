@@ -11,13 +11,13 @@ import { ExpeditionRunReader } from "./runs.ts";
 import { ExpeditionService } from "../../app/expedition.ts";
 import type { ExpeditionRun, ExpeditionState } from "./types.ts";
 
-// The engine checks below run on v2, whose rules they were written for. What ships is v4,
+// The engine checks below run on v2, whose rules they were written for. What ships is v5,
 // so the season it names has to be the season that ships: every finale and route scenario
-// exists in the live season with the targets v4 froze. v2 is history, checked against v1.
-const def = loadExpedition(2), current = loadExpedition(4), season = loadSeason(), catalog = rewardCatalog(def);
+// exists in the live season with the targets v5 froze. v2 is history, checked against v1.
+const def = loadExpedition(2), current = loadExpedition(5), season = loadSeason(), catalog = rewardCatalog(def);
 assert.equal(current.destinations.length, 6); assert.deepEqual(current.bands, season.windows);
 assert.equal(catalog.length, 115); assert.equal(new Set(catalog.map(r => r.id)).size, catalog.length);
-assert.deepEqual(rewardCatalog(current).map(r => r.id), rewardCatalog(loadExpedition(3)).map(r => r.id), "v4 keeps every v3 reward");
+assert.deepEqual(rewardCatalog(current).map(r => r.id), rewardCatalog(loadExpedition(3)).map(r => r.id), "v5 keeps every v3 reward");
 for (const d of current.destinations) {
   assert.equal(d.bands.length, 4);
   for (const [b, scenarios] of d.bands.entries()) {
@@ -31,10 +31,16 @@ for (const d of current.destinations) {
 }
 for (const destination of current.destinations) for (let band = 0; band < 4; band++) {
   const groups = [destination.discovery![band], destination.circuits![band], destination.bands[band]];
-  assert.equal(new Set(groups.flat().map(s => s.family)).size, 9, "v4: discovery, circuit and finale have different families");
-  assert.ok(destination.pool![band].length >= 10);
+  // Six families is the least any category holds, so Discovery never shares one with the
+  // finale; the Mixed circuit gets three of its own only where a category has nine.
+  const [discovery, circuit, finale] = groups.map(g => new Set(g.map(s => s.family)));
+  const pool = destination.pool![band];
+  assert.ok(pool.length >= 6);
+  assert.ok([...discovery].every(f => !finale.has(f)), "v5: Discovery and the finale have different families");
+  assert.ok([...circuit].every(f => !discovery.has(f)), "v5: the Mixed circuit and Discovery have different families");
+  assert.equal([...circuit].some(f => finale.has(f)), pool.length < 9, "v5: the circuit shares the finale's families exactly when there are fewer than nine");
 }
-console.log("PASS: v4 finales, routes and pools are the live season's scenarios and targets; 115 v2 rewards, every v3 reward kept");
+console.log("PASS: v5 finales, routes and pools are the live season's scenarios and targets; 115 v2 rewards, every v3 reward kept");
 const epoch = new Date("2026-09-20T12:00:00Z").getTime(); let clock = epoch, serial = 0;
 const tick = () => clock += 1000;
 const run = (scenario: string, score = 100, at = tick()): ExpeditionRun => ({ id: `run-${++serial}`, scenario, score, at });
@@ -199,9 +205,9 @@ const migrationFolder=join(folder,"migration");mkdirSync(migrationFolder);
 const legacyStore=new ExpeditionStore(join(migrationFolder,"expedition-first-light-v1.json"),legacy);
 legacyStore.save(legacyState);const original=readFileSync(legacyStore.path,"utf8");
 const upgraded=new ExpeditionService(migrationFolder).view(null);
-assert.equal(upgraded.error,null);assert.equal(upgraded.state?.version,4);assert.equal(readFileSync(legacyStore.path,"utf8"),original);
+assert.equal(upgraded.error,null);assert.equal(upgraded.state?.version,5);assert.equal(readFileSync(legacyStore.path,"utf8"),original);
 assert.deepEqual(new ExpeditionService(migrationFolder).view(null).state,upgraded.state);
-console.log("PASS: service migration leaves original save untouched and reloads v4 independently");
+console.log("PASS: service migration leaves original save untouched and reloads v5 independently");
 const service = new ExpeditionService(join(folder, "service"));
 assert.equal(service.view(null).state, null); assert.throws(() => service.action({ type: "enroll" }, null), /stats folder/);
 const enrolled = service.action({ type: "enroll" }, stats); assert.ok(enrolled.state);

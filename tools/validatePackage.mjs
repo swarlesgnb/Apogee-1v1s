@@ -1,7 +1,7 @@
 /** Check the actual desktop archive, including exclusions and copied source files. */
 import { extractFile, listPackage, statFile } from '@electron/asar';
 import { createHash } from 'node:crypto';
-import { existsSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join, normalize, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -26,7 +26,9 @@ check('Application metadata points to the bundled main process', metadata.name =
 const copies = [
   ['dist/app/preload.cjs', 'src/app/preload.cjs'],
   ...['index.html', 'expedition.js', 'expedition.css', 'arcade.css'].map(name => [`dist/app/renderer/${name}`, `src/app/renderer/${name}`]),
-  ...['first-light-v1.json', 'first-light-v2.json', 'first-light-v4.json'].map(name => [`dist/data/expeditions/${name}`, `data/expeditions/${name}`]),
+  ...['first-light-v1.json', 'first-light-v2.json', 'first-light-v4.json', 'first-light-v5.json'].map(name => [`dist/data/expeditions/${name}`, `data/expeditions/${name}`]),
+  // Byte for byte: submit-run refuses a run whose scenario hash is not the committed file's.
+  ...readdirSync(join(root, 'data/season-1/scenarios')).filter(name => name.endsWith('.sce')).map(name => [`dist/data/season-1/scenarios/${name}`, `data/season-1/scenarios/${name}`]),
 ];
 for (const [shipped, source] of copies) {
   check(`${shipped} matches source`, hash(readArchive(shipped)) === hash(readFileSync(join(root, source))));

@@ -95,6 +95,7 @@ import {
   practiceRows,
   writePracticePlaylists,
 } from "../core/season/practice.ts";
+import { installSeasonScenarios, scenariosFolderFor } from "../core/season/installScenarios.ts";
 
 /**
  * Bundled to dist/app/main.cjs, so `__dirname` is dist/app and the reference data
@@ -311,7 +312,30 @@ function startWatching(dir: string): void {
   });
 
   rebuild("initial scan");
+  installScenarioFiles(dir);
   refreshInstalledPlaylists(dir);
+}
+
+/**
+ * Put the season's scenario files into KovaaK's, rewriting any that differ.
+ *
+ * Every Season 1 scenario is Apogee's own and exists nowhere but in this app, and a ranked
+ * run on one is refused unless KovaaK's hashed exactly the shipped file - so a missing file
+ * is a scenario the player cannot open, and a stale one is a scenario whose runs cannot
+ * count. See core/season/installScenarios.ts.
+ */
+function installScenarioFiles(statsDir: string): void {
+  try {
+    const { written, removed } = installSeasonScenarios(scenariosFolderFor(statsDir));
+    if (written.length > 0 || removed.length > 0) {
+      log(`scenario files: ${written.length} written, ${removed.length} removed`);
+      broadcast("apogee:notice",
+        `Installed ${written.length} Apogee scenario${written.length === 1 ? "" : "s"}. ` +
+        "If KovaaK's is open, restart it to load them.");
+    }
+  } catch (err) {
+    console.warn("could not install the season's scenarios:", friendlyError(err));
+  }
 }
 
 /**

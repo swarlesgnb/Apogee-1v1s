@@ -304,7 +304,14 @@ export function buildSnapshot(options: SnapshotOptions): Snapshot | null {
           progressToNextRank: played === 0 ? null : (stood?.progressToNextRank ?? null),
           played,
           total: scenarios.length,
-          positional: played === 0 ? null : (stood?.positional ?? null),
+          // What the top rank is belongs to the ladder, played or not; only whether the
+          // player is eligible for it waits on play. Nulling the whole thing for an
+          // unplayed band left its top rung with no cost at all, where it should say
+          // "top 3 on the board" - which every band did for a player who had played them
+          // all, and none did for one starting a season.
+          positional: stood?.positional
+            ? { ...stood.positional, eligible: played === 0 ? false : stood.positional.eligible }
+            : null,
         };
       }),
     ]),
