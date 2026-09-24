@@ -74,13 +74,13 @@ on launch and rewrites any that differ from what it ships
 From a checkout, for playtesting:
 
 ```
-npm run install:season                the scenarios, plus 25 authoring playlists
+npm run install:season                the scenarios, plus the Apogee S1 Playtest playlist
 npm run install:season -- --remove    take exactly those out again
 ```
 
-The playlists are `Apogee S1 Playtest` and `Apogee S1 <Category> <Band>`, one scenario per
-family. Both remove what the playtest builds left behind, tagged `Apogee Season 2` and
-prefixed `Apogee S2`.
+The per-category playlists are the app's own. Both remove what earlier builds left
+behind: scenarios tagged `Apogee Season 2`, and playlists prefixed `Apogee S2` or, other
+than the playtest, `Apogee S1`.
 
 ## How a run on it is verified
 

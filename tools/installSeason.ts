@@ -1,11 +1,10 @@
 /**
  * Put the season's scenarios into KovaaK's from a checkout, for playtesting.
  *
- * The app does the scenario half of this itself on every launch
- * (`core/season/installScenarios.ts`, which this shares), so a player never runs it. This
- * adds the authoring playlists: "Apogee S1 Playtest" (the families whose mechanism is new)
- * and one per category and band - "Apogee S1 Static Clicking Novice", one scenario per
- * family, in the season's family order.
+ * The app does all of this itself on every launch - the scenarios through
+ * `core/season/installScenarios.ts`, which this shares, and the practice playlists - so a
+ * player never runs it. This adds only "Apogee S1 Playtest", the families whose mechanism
+ * is new.
  *
  * `--remove` takes them out again, and removes only what it can prove it put there: a
  * scenario file the season names or tagged as an Apogee season, and a playlist named with
@@ -39,26 +38,9 @@ const PLAYLIST_PREFIX = "Apogee S1 ";
 /** The playtest builds' prefix, from when the season was drafted as Season 2. */
 const EARLIER_PREFIXES = ["Apogee S2 "];
 const playlists: KovaaksPlaylist[] = [];
-for (const category of season.categories) {
-  for (const [band, bandName] of (season.windows ?? []).entries()) {
-    const scenarios = season.scenarios.filter((s) => s.category === category.name && s.window === band).map((s) => s.scenario);
-    if (!scenarios.length) continue;
-    playlists.push({
-      playlistName: `${PLAYLIST_PREFIX}${category.name} ${bandName}`,
-      playlistId: 0,
-      authorSteamId: "",
-      authorName: "",
-      scenarioList: scenarios.map((scenario_name) => ({ scenario_name, play_Count: 1 })),
-      description: `Apogee Season 1, ${category.name}, ${bandName}: one scenario from each family, once each.`,
-      hasOfflineScenarios: true,
-      hasEdited: true,
-      shareCode: "",
-      version: PLAYLIST_FORMAT_VERSION,
-      updated: Math.floor(Date.now() / 1000),
-      isPrivate: false,
-    });
-  }
-}
+// No per-category playlists: the app writes those itself ("Apogee Static Clicking Novice",
+// "Apogee All Novice"; core/season/practice.ts), and a second copy here under another name
+// put every one in the game's list twice. The ones earlier installs wrote are removed below.
 // The playtest (docs/season-1.md): the Novice cut of every family changed since the last
 // round was played, so each is seen working once before anything else is judged.
 const PLAYTEST = ["Gravity Well", "1w6aliens", "Electric", "Satellite", "AlienTrack", "Blastoff", "Orbit", "UFO", "comeTS", "RockeTS"].map((f) => `Apogee ${f} Novice`);
