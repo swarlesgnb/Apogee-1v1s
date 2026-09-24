@@ -1181,7 +1181,7 @@ MaxSpeedModifier=0.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": "Player"
+                    "value": ""
                 },
                 {
                     "name": "Weight",
@@ -1214,7 +1214,7 @@ MaxSpeedModifier=0.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": "Player"
+                    "value": ""
                 },
                 {
                     "name": "Weight",
@@ -1247,7 +1247,7 @@ MaxSpeedModifier=0.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": "Player"
+                    "value": ""
                 },
                 {
                     "name": "Weight",
@@ -1280,7 +1280,7 @@ MaxSpeedModifier=0.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": "Player"
+                    "value": ""
                 },
                 {
                     "name": "Weight",
@@ -1313,7 +1313,7 @@ MaxSpeedModifier=0.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": "Player"
+                    "value": ""
                 },
                 {
                     "name": "Weight",
@@ -1346,7 +1346,7 @@ MaxSpeedModifier=0.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": "Player"
+                    "value": ""
                 },
                 {
                     "name": "Weight",
@@ -1379,7 +1379,7 @@ MaxSpeedModifier=0.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": "Player"
+                    "value": ""
                 },
                 {
                     "name": "Weight",
@@ -1412,7 +1412,7 @@ MaxSpeedModifier=0.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": "Player"
+                    "value": ""
                 },
                 {
                     "name": "Weight",
@@ -1445,7 +1445,7 @@ MaxSpeedModifier=0.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": "Player"
+                    "value": ""
                 },
                 {
                     "name": "Weight",
@@ -1478,7 +1478,7 @@ MaxSpeedModifier=0.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": "Player"
+                    "value": ""
                 },
                 {
                     "name": "Weight",
@@ -1511,7 +1511,7 @@ MaxSpeedModifier=0.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": "Player"
+                    "value": ""
                 },
                 {
                     "name": "Weight",
@@ -1544,7 +1544,7 @@ MaxSpeedModifier=0.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": "Player"
+                    "value": ""
                 },
                 {
                     "name": "Weight",
@@ -1577,7 +1577,7 @@ MaxSpeedModifier=0.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": "Player"
+                    "value": ""
                 },
                 {
                     "name": "Weight",
@@ -1610,7 +1610,7 @@ MaxSpeedModifier=0.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": "Player"
+                    "value": ""
                 },
                 {
                     "name": "Weight",
@@ -1643,7 +1643,7 @@ MaxSpeedModifier=0.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": "Player"
+                    "value": ""
                 },
                 {
                     "name": "Weight",
@@ -1676,7 +1676,7 @@ MaxSpeedModifier=0.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": "Player"
+                    "value": ""
                 },
                 {
                     "name": "Weight",
@@ -1709,7 +1709,7 @@ MaxSpeedModifier=0.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": "Player"
+                    "value": ""
                 },
                 {
                     "name": "Weight",
@@ -1742,7 +1742,7 @@ MaxSpeedModifier=0.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": "Player"
+                    "value": ""
                 },
                 {
                     "name": "Weight",
@@ -1775,7 +1775,7 @@ MaxSpeedModifier=0.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": "Player"
+                    "value": ""
                 },
                 {
                     "name": "Weight",
@@ -1808,7 +1808,7 @@ MaxSpeedModifier=0.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": "Player"
+                    "value": ""
                 },
                 {
                     "name": "Weight",
@@ -1841,7 +1841,7 @@ MaxSpeedModifier=0.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": "Player"
+                    "value": ""
                 },
                 {
                     "name": "Weight",
@@ -1874,7 +1874,7 @@ MaxSpeedModifier=0.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": "Player"
+                    "value": ""
                 },
                 {
                     "name": "Weight",
@@ -1907,7 +1907,7 @@ MaxSpeedModifier=0.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": "Player"
+                    "value": ""
                 },
                 {
                     "name": "Weight",
@@ -1940,7 +1940,7 @@ MaxSpeedModifier=0.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": "Player"
+                    "value": ""
                 },
                 {
                     "name": "Weight",
@@ -1973,7 +1973,7 @@ MaxSpeedModifier=0.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": "Player"
+                    "value": ""
                 },
                 {
                     "name": "Weight",
@@ -2006,7 +2006,7 @@ MaxSpeedModifier=0.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": "Player"
+                    "value": ""
                 },
                 {
                     "name": "Weight",
@@ -2039,7 +2039,7 @@ MaxSpeedModifier=0.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": "Player"
+                    "value": ""
                 },
                 {
                     "name": "Weight",
@@ -2072,7 +2072,7 @@ MaxSpeedModifier=0.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": "Player"
+                    "value": ""
                 },
                 {
                     "name": "Weight",
@@ -2105,7 +2105,7 @@ MaxSpeedModifier=0.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": "Player"
+                    "value": ""
                 },
                 {
                     "name": "Weight",
@@ -2138,7 +2138,7 @@ MaxSpeedModifier=0.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": "Player"
+                    "value": ""
                 },
                 {
                     "name": "Weight",
@@ -2171,7 +2171,7 @@ MaxSpeedModifier=0.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": "Player"
+                    "value": ""
                 },
                 {
                     "name": "Weight",
@@ -2204,7 +2204,7 @@ MaxSpeedModifier=0.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": "Player"
+                    "value": ""
                 },
                 {
                     "name": "Weight",
@@ -2237,7 +2237,7 @@ MaxSpeedModifier=0.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": "Player"
+                    "value": ""
                 },
                 {
                     "name": "Weight",
@@ -2270,7 +2270,7 @@ MaxSpeedModifier=0.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": "Player"
+                    "value": ""
                 },
                 {
                     "name": "Weight",
@@ -2303,7 +2303,7 @@ MaxSpeedModifier=0.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": "Player"
+                    "value": ""
                 },
                 {
                     "name": "Weight",
@@ -2336,7 +2336,7 @@ MaxSpeedModifier=0.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": "Player"
+                    "value": ""
                 },
                 {
                     "name": "Weight",
@@ -2369,7 +2369,7 @@ MaxSpeedModifier=0.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": "Player"
+                    "value": ""
                 },
                 {
                     "name": "Weight",

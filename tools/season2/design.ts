@@ -28,6 +28,7 @@ import {
   atAngle,
   cloneProfile,
   prune,
+  renameCharacterInMap,
   setBots,
   setHead,
   setProfile,
@@ -141,6 +142,9 @@ function ownBot(sce: Sce, tag: string): { bot: string; character: string; dodge:
   // right for their reactive scenarios and wrong for most of these; the families that want
   // an interruption get it from their movement, where the file states it.
   setProfile(sce, "Character Profile", character, { AbilityProfileNames: ";;;" });
+  // The template's map may admit only its own character at the bot spawns ("Head",
+  // "Drifter"); the renamed one has to be admitted in its place.
+  renameCharacterInMap(sce, fromChar, character);
   const botValues: Values = {
     CharacterProfile: character,
     RandomizeDodgeProfiles: false,

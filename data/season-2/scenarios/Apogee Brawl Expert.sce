@@ -734,15 +734,15 @@ MaxSpeedModifier=0.0
                     },
                     {
                         "name": "Scale",
-                        "value": 1.0
+                        "value": 1
                     },
                     {
                         "name": "Roughness",
-                        "value": 1.0
+                        "value": 1
                     },
                     {
                         "name": "Metallic",
-                        "value": 1.0
+                        "value": 1
                     },
                     {
                         "name": "FullBright",
@@ -760,15 +760,15 @@ MaxSpeedModifier=0.0
                     },
                     {
                         "name": "Scale",
-                        "value": 1.0
+                        "value": 1
                     },
                     {
                         "name": "Roughness",
-                        "value": 1.0
+                        "value": 1
                     },
                     {
                         "name": "Metallic",
-                        "value": 1.0
+                        "value": 1
                     },
                     {
                         "name": "FullBright",
@@ -786,15 +786,15 @@ MaxSpeedModifier=0.0
                     },
                     {
                         "name": "Scale",
-                        "value": 1.0
+                        "value": 1
                     },
                     {
                         "name": "Roughness",
-                        "value": 1.0
+                        "value": 1
                     },
                     {
                         "name": "Metallic",
-                        "value": 1.0
+                        "value": 1
                     },
                     {
                         "name": "FullBright",
@@ -812,15 +812,15 @@ MaxSpeedModifier=0.0
                     },
                     {
                         "name": "Scale",
-                        "value": 1.0
+                        "value": 1
                     },
                     {
                         "name": "Roughness",
-                        "value": 1.0
+                        "value": 1
                     },
                     {
                         "name": "Metallic",
-                        "value": 1.0
+                        "value": 1
                     },
                     {
                         "name": "FullBright",
@@ -840,19 +840,19 @@ MaxSpeedModifier=0.0
                     },
                     {
                         "name": "Scale",
-                        "value": 1.0
+                        "value": 1
                     },
                     {
                         "name": "Roughness",
-                        "value": 0.0
+                        "value": 0
                     },
                     {
                         "name": "Metallic",
-                        "value": 0.0
+                        "value": 0
                     },
                     {
                         "name": "FullBright",
-                        "value": 0.0
+                        "value": 0
                     }
                 ]
             },
@@ -866,19 +866,19 @@ MaxSpeedModifier=0.0
                     },
                     {
                         "name": "Scale",
-                        "value": 1.0
+                        "value": 1
                     },
                     {
                         "name": "Roughness",
-                        "value": 0.0
+                        "value": 0
                     },
                     {
                         "name": "Metallic",
-                        "value": 0.0
+                        "value": 0
                     },
                     {
                         "name": "FullBright",
-                        "value": 0.0
+                        "value": 0
                     }
                 ]
             },
@@ -892,7 +892,7 @@ MaxSpeedModifier=0.0
                     },
                     {
                         "name": "Scale",
-                        "value": 1.0
+                        "value": 1
                     },
                     {
                         "name": "Roughness",
@@ -904,7 +904,7 @@ MaxSpeedModifier=0.0
                     },
                     {
                         "name": "FullBright",
-                        "value": 0.0
+                        "value": 0
                     }
                 ]
             },
@@ -918,19 +918,19 @@ MaxSpeedModifier=0.0
                     },
                     {
                         "name": "Scale",
-                        "value": 1.0
+                        "value": 1
                     },
                     {
                         "name": "Roughness",
-                        "value": 0.0
+                        "value": 0
                     },
                     {
                         "name": "Metallic",
-                        "value": 0.0
+                        "value": 0
                     },
                     {
                         "name": "FullBright",
-                        "value": 0.0
+                        "value": 0
                     }
                 ]
             }
@@ -1107,7 +1107,7 @@ MaxSpeedModifier=0.0
                 },
                 {
                     "name": "Weight",
-                    "value": 1.0
+                    "value": 1
                 }
             ],
             "rotation": "0.000000, 0.000000, 0.000000",
@@ -1254,11 +1254,11 @@ MaxSpeedModifier=0.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": "Drifter"
+                    "value": "Apogee Brawl Body"
                 },
                 {
                     "name": "Weight",
-                    "value": 1.0
+                    "value": 1
                 }
             ],
             "rotation": "0.000000, -9.526672, -179.999954",
@@ -1287,11 +1287,11 @@ MaxSpeedModifier=0.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": "Drifter"
+                    "value": "Apogee Brawl Body"
                 },
                 {
                     "name": "Weight",
-                    "value": 1.0
+                    "value": 1
                 }
             ],
             "rotation": "-2.609436, -9.183073, -164.800629",
@@ -1320,11 +1320,11 @@ MaxSpeedModifier=0.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": "Drifter"
+                    "value": "Apogee Brawl Body"
                 },
                 {
                     "name": "Weight",
-                    "value": 1.0
+                    "value": 1
                 }
             ],
             "rotation": "2.609411, -9.183073, 164.801041",
@@ -1353,11 +1353,11 @@ MaxSpeedModifier=0.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": "Drifter"
+                    "value": "Apogee Brawl Body"
                 },
                 {
                     "name": "Weight",
-                    "value": 1.0
+                    "value": 1
                 }
             ],
             "rotation": "-3.975800, 14.949651, 164.461594",
@@ -1386,11 +1386,11 @@ MaxSpeedModifier=0.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": "Drifter"
+                    "value": "Apogee Brawl Body"
                 },
                 {
                     "name": "Weight",
-                    "value": 1.0
+                    "value": 1
                 }
             ],
             "rotation": "0.000012, 15.473267, -179.999954",
@@ -1419,11 +1419,11 @@ MaxSpeedModifier=0.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": "Drifter"
+                    "value": "Apogee Brawl Body"
                 },
                 {
                     "name": "Weight",
-                    "value": 1.0
+                    "value": 1
                 }
             ],
             "rotation": "3.975818, 14.949685, -164.461487",

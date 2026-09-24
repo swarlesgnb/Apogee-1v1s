@@ -108,12 +108,31 @@ for (const [name, { sce }] of sces) {
     for (const d of list(get(bot?.lines ?? [], "DodgeProfileNames"))) need("Dodge Profile", d);
     for (const a of list(get(bot?.lines ?? [], "AimingProfileNames"))) need("Aim Profile", a);
   }
+  // A Map Creator spawn point can admit only named characters. Every spawn a team uses must
+  // admit that team's characters, or they have nowhere to appear: renaming a template's bot
+  // character once left fifteen families' targets with no spawn that would take them.
+  const raw = sce.sections.find((x) => x.type === "Map Data")?.raw ?? "";
+  if (raw.trimStart().startsWith("{")) {
+    const map = JSON.parse(raw) as { objects: Array<{ name?: string; properties?: Array<{ name: string; value: unknown }> }> };
+    const botChars = list(get(sce.head, "AddedBots")).map((b) => get(profile(sce, "Bot Profile", b.replace(/\.bot$/i, ""))?.lines ?? [], "CharacterProfile") ?? "");
+    const playerChar = get(sce.head, "PlayerProfile") ?? "";
+    for (const o of map.objects) {
+      if (o.name !== "SpawnPoint" && o.name !== "SpawnVolume") continue;
+      const prop = (k: string) => o.properties?.find((p) => p.name === k)?.value;
+      const admits = String(prop("PermittedCharacterProfiles") ?? "").split(",").map((n) => n.trim().toLowerCase()).filter(Boolean);
+      if (!admits.length) continue;
+      const mask = Number(prop("TeamMask") ?? 3);
+      const wanted = [...(mask & 1 ? [playerChar] : []), ...(mask & 2 ? botChars : [])];
+      const shut = wanted.filter((c) => !admits.includes(c.toLowerCase()));
+      if (shut.length) missing.push(`a spawn that admits only ${admits.join(", ")}, shutting out ${[...new Set(shut)].join(", ")}`);
+    }
+  }
   if (missing.length) {
     dangling++;
-    fail(`${name} names profiles it does not carry: ${[...new Set(missing)].join(", ")}`);
+    fail(`${name}: ${[...new Set(missing)].join("; ")}`);
   }
 }
-if (!dangling) pass("every profile a file names, it carries");
+if (!dangling) pass("every profile a file names, it carries, and every spawn admits the characters that use it");
 
 // ---- 2. shared rules -------------------------------------------------------------------------
 

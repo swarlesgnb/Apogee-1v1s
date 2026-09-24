@@ -177,8 +177,11 @@ export function setRoom(sce: Sce, room: Room, mapName: string): void {
     const o = structuredClone(spawn) as JsonObject;
     o.location = triple(at);
     o.rotation = triple({ x: 0, y: 0, z: rotationZ });
+    // The team mask is what separates player from bots here. The copied spawn's own
+    // character list is dropped: the prototype is often the template's player spawn, which
+    // admits only `Player`, and a bot spawn that admits only the player spawns no bots.
     o.properties = (o.properties as Array<{ name: string; value: unknown }>).map((p) =>
-      p.name === "TeamMask" ? { ...p, value: mask } : { ...p },
+      p.name === "TeamMask" ? { ...p, value: mask } : p.name === "PermittedCharacterProfiles" ? { ...p, value: "" } : { ...p },
     );
     return o;
   };
@@ -188,6 +191,32 @@ export function setRoom(sce: Sce, room: Room, mapName: string): void {
   map.objects = objects;
   section.raw = JSON.stringify(map, null, 4).replace(/\n/g, sce.eol);
   set(sce.head, "MapName", mapName);
+}
+
+/**
+ * Rename a character in the spawn points of an embedded JSON map.
+ *
+ * A Map Creator spawn point can admit only named character profiles
+ * (`PermittedCharacterProfiles`, comma-separated). A template's map names the template's
+ * characters, so a recipe that renames a character has to rename it here too, or the
+ * renamed bots have nowhere they are allowed to spawn. Returns how many spawns changed.
+ */
+export function renameCharacterInMap(sce: Sce, from: string, to: string): number {
+  const section = sce.sections.find((s) => s.type === "Map Data");
+  if (!section?.raw || !section.raw.trimStart().startsWith("{")) return 0;
+  const map = JSON.parse(section.raw) as { objects: JsonObject[] };
+  let changed = 0;
+  for (const o of map.objects) {
+    for (const p of (o.properties as Array<{ name: string; value: unknown }> | undefined) ?? []) {
+      if (p.name !== "PermittedCharacterProfiles" || typeof p.value !== "string" || !p.value) continue;
+      const names = p.value.split(",").map((n) => n.trim());
+      if (!names.some((n) => n.toLowerCase() === from.toLowerCase())) continue;
+      p.value = names.map((n) => (n.toLowerCase() === from.toLowerCase() ? to : n)).join(",");
+      changed++;
+    }
+  }
+  if (changed) section.raw = JSON.stringify(map, null, 4).replace(/\n/g, sce.eol);
+  return changed;
 }
 
 /** Points on a grid, inclusive of both ends, at depth `x`. */

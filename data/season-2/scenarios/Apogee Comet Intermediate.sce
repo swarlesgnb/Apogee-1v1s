@@ -732,15 +732,15 @@ MaxSpeedModifier=1.0
                     },
                     {
                         "name": "Scale",
-                        "value": 1.0
+                        "value": 1
                     },
                     {
                         "name": "Roughness",
-                        "value": 1.0
+                        "value": 1
                     },
                     {
                         "name": "Metallic",
-                        "value": 1.0
+                        "value": 1
                     },
                     {
                         "name": "FullBright",
@@ -758,15 +758,15 @@ MaxSpeedModifier=1.0
                     },
                     {
                         "name": "Scale",
-                        "value": 1.0
+                        "value": 1
                     },
                     {
                         "name": "Roughness",
-                        "value": 1.0
+                        "value": 1
                     },
                     {
                         "name": "Metallic",
-                        "value": 1.0
+                        "value": 1
                     },
                     {
                         "name": "FullBright",
@@ -784,15 +784,15 @@ MaxSpeedModifier=1.0
                     },
                     {
                         "name": "Scale",
-                        "value": 1.0
+                        "value": 1
                     },
                     {
                         "name": "Roughness",
-                        "value": 1.0
+                        "value": 1
                     },
                     {
                         "name": "Metallic",
-                        "value": 1.0
+                        "value": 1
                     },
                     {
                         "name": "FullBright",
@@ -810,15 +810,15 @@ MaxSpeedModifier=1.0
                     },
                     {
                         "name": "Scale",
-                        "value": 1.0
+                        "value": 1
                     },
                     {
                         "name": "Roughness",
-                        "value": 1.0
+                        "value": 1
                     },
                     {
                         "name": "Metallic",
-                        "value": 1.0
+                        "value": 1
                     },
                     {
                         "name": "FullBright",
@@ -838,19 +838,19 @@ MaxSpeedModifier=1.0
                     },
                     {
                         "name": "Scale",
-                        "value": 1.0
+                        "value": 1
                     },
                     {
                         "name": "Roughness",
-                        "value": 0.0
+                        "value": 0
                     },
                     {
                         "name": "Metallic",
-                        "value": 0.0
+                        "value": 0
                     },
                     {
                         "name": "FullBright",
-                        "value": 0.0
+                        "value": 0
                     }
                 ]
             },
@@ -864,19 +864,19 @@ MaxSpeedModifier=1.0
                     },
                     {
                         "name": "Scale",
-                        "value": 1.0
+                        "value": 1
                     },
                     {
                         "name": "Roughness",
-                        "value": 0.0
+                        "value": 0
                     },
                     {
                         "name": "Metallic",
-                        "value": 0.0
+                        "value": 0
                     },
                     {
                         "name": "FullBright",
-                        "value": 0.0
+                        "value": 0
                     }
                 ]
             },
@@ -890,7 +890,7 @@ MaxSpeedModifier=1.0
                     },
                     {
                         "name": "Scale",
-                        "value": 1.0
+                        "value": 1
                     },
                     {
                         "name": "Roughness",
@@ -902,7 +902,7 @@ MaxSpeedModifier=1.0
                     },
                     {
                         "name": "FullBright",
-                        "value": 0.0
+                        "value": 0
                     }
                 ]
             },
@@ -916,19 +916,19 @@ MaxSpeedModifier=1.0
                     },
                     {
                         "name": "Scale",
-                        "value": 1.0
+                        "value": 1
                     },
                     {
                         "name": "Roughness",
-                        "value": 0.0
+                        "value": 0
                     },
                     {
                         "name": "Metallic",
-                        "value": 0.0
+                        "value": 0
                     },
                     {
                         "name": "FullBright",
-                        "value": 0.0
+                        "value": 0
                     }
                 ]
             }
@@ -975,11 +975,11 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": "Head"
+                    "value": "Apogee Comet Body"
                 },
                 {
                     "name": "Weight",
-                    "value": 1.0
+                    "value": 1
                 }
             ],
             "rotation": "0.000000, 0.000000, 155.000214",
@@ -1008,11 +1008,11 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": "Head"
+                    "value": "Apogee Comet Body"
                 },
                 {
                     "name": "Weight",
-                    "value": 1.0
+                    "value": 1
                 }
             ],
             "rotation": "-0.000031, -20.993187, -179.999954",
@@ -1041,11 +1041,11 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": "Head"
+                    "value": "Apogee Comet Body"
                 },
                 {
                     "name": "Weight",
-                    "value": 1.0
+                    "value": 1
                 }
             ],
             "rotation": "0.000000, 0.000000, -154.999985",
@@ -1108,11 +1108,11 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": "Head"
+                    "value": "Apogee Comet Body"
                 },
                 {
                     "name": "Weight",
-                    "value": 1.0
+                    "value": 1
                 }
             ],
             "rotation": "-9.211803, -18.946766, -153.459778",
@@ -1175,11 +1175,11 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": "Head"
+                    "value": "Apogee Comet Body"
                 },
                 {
                     "name": "Weight",
-                    "value": 1.0
+                    "value": 1
                 }
             ],
             "rotation": "9.211769, -18.946766, 153.459808",
@@ -1208,11 +1208,11 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": "Head"
+                    "value": "Apogee Comet Body"
                 },
                 {
                     "name": "Weight",
-                    "value": 1.0
+                    "value": 1
                 }
             ],
             "rotation": "0.000000, 0.000000, -179.999954",
@@ -1275,11 +1275,11 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": "Head"
+                    "value": "Apogee Comet Body"
                 },
                 {
                     "name": "Weight",
-                    "value": 1.0
+                    "value": 1
                 }
             ],
             "rotation": "0.000016, 20.851139, -179.999954",
@@ -1376,11 +1376,11 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": "Head"
+                    "value": "Apogee Comet Body"
                 },
                 {
                     "name": "Weight",
-                    "value": 1.0
+                    "value": 1
                 }
             ],
             "rotation": "9.144704, 18.819841, -153.481567",
@@ -1417,11 +1417,11 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "PermittedCharacterProfiles",
-                    "value": "Head"
+                    "value": "Apogee Comet Body"
                 },
                 {
                     "name": "Weight",
-                    "value": 1.0
+                    "value": 1
                 }
             ],
             "rotation": "-9.144634, 18.819841, 153.481598",
@@ -1586,7 +1586,7 @@ MaxSpeedModifier=1.0
                 },
                 {
                     "name": "Weight",
-                    "value": 1.0
+                    "value": 1
                 }
             ],
             "rotation": "0.000000, 0.000000, 0.000000",
