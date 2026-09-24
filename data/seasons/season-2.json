@@ -1046,11 +1046,11 @@
     "owner": "tools/buildSeason2.ts",
     "note": "Every threshold in this season is predicted, not sampled: no scenario in it has a KovaaK's board yet. Each was read off the board the difficulty model predicts from the scenario file, at the same ladder percentiles season 1 cuts from real boards. They are seeds to be recut from Apogee's own runs, and every one says so in its source.",
     "model": {
-      "fittedAt": "2026-09-24T05:17:25.392Z",
+      "fittedAt": "2026-09-24T05:19:37.789Z",
       "file": "data/season-2/difficulty_model.json"
     }
   },
-  "builtAt": "2026-09-24T05:18:05.459Z",
+  "builtAt": "2026-09-24T05:19:51.867Z",
   "scenarios": [
     {
       "scenario": "Apogee Meridian Novice",
@@ -2192,16 +2192,16 @@
       "focus": "Long, smooth strafes; ease into each turn with the target.",
       "leaderboardId": null,
       "rankMaxes": [
-        2721,
-        3356,
-        3713,
-        3943,
-        4136,
-        4309
+        2120,
+        2820,
+        3230,
+        3510,
+        3744,
+        3953
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.399 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -2216,16 +2216,16 @@
       "focus": "Long, smooth strafes; ease into each turn with the target.",
       "leaderboardId": null,
       "rankMaxes": [
-        3877,
-        4058,
-        4139,
-        4286,
-        4400,
-        4504
+        3523,
+        3733,
+        3824,
+        3991,
+        4125,
+        4242
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.399 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -2240,16 +2240,16 @@
       "focus": "Long, smooth strafes; ease into each turn with the target.",
       "leaderboardId": null,
       "rankMaxes": [
-        4143,
-        4250,
-        4348,
-        4440,
-        4531,
-        4592
+        3897,
+        4015,
+        4121,
+        4221,
+        4320,
+        4428
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.399 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -2264,14 +2264,14 @@
       "focus": "Long, smooth strafes; ease into each turn with the target.",
       "leaderboardId": null,
       "rankMaxes": [
-        4256,
-        4325,
-        4361,
-        4439
+        4074,
+        4187,
+        4259,
+        4341
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.399 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -2286,16 +2286,16 @@
       "focus": "Mostly up and down; keep the crosshair level with it through each turn.",
       "leaderboardId": null,
       "rankMaxes": [
-        2547,
-        3308,
-        3719,
-        3987,
-        4207,
-        4401
+        2471,
+        3231,
+        3647,
+        3920,
+        4145,
+        4343
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.399 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -2310,16 +2310,16 @@
       "focus": "Mostly up and down; keep the crosshair level with it through each turn.",
       "leaderboardId": null,
       "rankMaxes": [
-        3953,
-        4158,
-        4246,
-        4406,
-        4536,
-        4648
+        3941,
+        4146,
+        4234,
+        4394,
+        4524,
+        4637
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.399 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -2334,16 +2334,16 @@
       "focus": "Mostly up and down; keep the crosshair level with it through each turn.",
       "leaderboardId": null,
       "rankMaxes": [
-        4293,
-        4411,
-        4515,
-        4615,
-        4714,
-        4818
+        4326,
+        4442,
+        4545,
+        4643,
+        4740,
+        4836
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.399 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -2358,14 +2358,14 @@
       "focus": "Mostly up and down; keep the crosshair level with it through each turn.",
       "leaderboardId": null,
       "rankMaxes": [
-        4461,
-        4581,
-        4655,
-        4737
+        4535,
+        4639,
+        4702,
+        4780
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.399 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -2380,16 +2380,16 @@
       "focus": "Curves in both directions; follow the path, do not cut its corners.",
       "leaderboardId": null,
       "rankMaxes": [
-        2049,
-        2757,
-        3176,
-        3462,
-        3702,
-        3914
+        2086,
+        2787,
+        3202,
+        3484,
+        3720,
+        3930
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.399 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -2404,16 +2404,16 @@
       "focus": "Curves in both directions; follow the path, do not cut its corners.",
       "leaderboardId": null,
       "rankMaxes": [
-        3420,
-        3637,
-        3730,
-        3901,
-        4038,
-        4157
+        3498,
+        3710,
+        3800,
+        3967,
+        4101,
+        4217
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.399 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -2428,16 +2428,16 @@
       "focus": "Curves in both directions; follow the path, do not cut its corners.",
       "leaderboardId": null,
       "rankMaxes": [
-        3752,
-        3873,
-        3980,
-        4082,
-        4184,
-        4311
+        3871,
+        3988,
+        4093,
+        4192,
+        4291,
+        4399
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.399 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -2452,14 +2452,14 @@
       "focus": "Curves in both directions; follow the path, do not cut its corners.",
       "leaderboardId": null,
       "rankMaxes": [
-        3875,
-        4014,
-        4105,
-        4194
+        4042,
+        4155,
+        4226,
+        4307
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.399 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -2474,16 +2474,16 @@
       "focus": "A small, slow target; precision over speed.",
       "leaderboardId": null,
       "rankMaxes": [
-        2630,
-        3284,
-        3655,
-        3894,
-        4096,
-        4277
+        2257,
+        2984,
+        3400,
+        3678,
+        3910,
+        4116
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.399 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -2498,16 +2498,16 @@
       "focus": "A small, slow target; precision over speed.",
       "leaderboardId": null,
       "rankMaxes": [
-        3834,
-        4024,
-        4107,
-        4261,
-        4381,
-        4490
+        3695,
+        3905,
+        3995,
+        4159,
+        4293,
+        4409
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.399 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -2522,16 +2522,16 @@
       "focus": "A small, slow target; precision over speed.",
       "leaderboardId": null,
       "rankMaxes": [
-        4121,
-        4235,
-        4337,
-        4433,
-        4528,
-        4596
+        4076,
+        4194,
+        4299,
+        4399,
+        4498,
+        4602
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.399 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -2546,14 +2546,14 @@
       "focus": "A small, slow target; precision over speed.",
       "leaderboardId": null,
       "rankMaxes": [
-        4252,
-        4329,
-        4372,
-        4461
+        4267,
+        4378,
+        4446,
+        4526
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.399 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -2568,16 +2568,16 @@
       "focus": "Long jumps under low gravity; carry the crosshair along the arc.",
       "leaderboardId": null,
       "rankMaxes": [
-        2321,
-        3060,
-        3476,
-        3753,
-        3983,
-        4186
+        2283,
+        3015,
+        3431,
+        3709,
+        3940,
+        4145
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.399 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -2592,16 +2592,16 @@
       "focus": "Long jumps under low gravity; carry the crosshair along the arc.",
       "leaderboardId": null,
       "rankMaxes": [
-        3714,
-        3926,
-        4016,
-        4182,
-        4317,
-        4434
+        3727,
+        3936,
+        4025,
+        4190,
+        4323,
+        4439
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.399 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -2616,16 +2616,16 @@
       "focus": "Long jumps under low gravity; carry the crosshair along the arc.",
       "leaderboardId": null,
       "rankMaxes": [
-        4052,
-        4173,
-        4280,
-        4382,
-        4483,
-        4599
+        4109,
+        4226,
+        4332,
+        4432,
+        4531,
+        4634
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.399 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -2640,14 +2640,14 @@
       "focus": "Long jumps under low gravity; carry the crosshair along the arc.",
       "leaderboardId": null,
       "rankMaxes": [
-        4203,
-        4333,
-        4416,
-        4501
+        4303,
+        4413,
+        4481,
+        4562
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.399 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -2662,16 +2662,16 @@
       "focus": "A close target sweeping wide; track with your arm, not only your wrist.",
       "leaderboardId": null,
       "rankMaxes": [
-        2821,
-        3443,
-        3788,
-        4010,
-        4196,
-        4361
+        2065,
+        2751,
+        3155,
+        3434,
+        3669,
+        3877
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.399 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -2686,16 +2686,16 @@
       "focus": "A close target sweeping wide; track with your arm, not only your wrist.",
       "leaderboardId": null,
       "rankMaxes": [
-        3941,
-        4115,
-        4194,
-        4336,
-        4446,
-        4545
+        3445,
+        3655,
+        3745,
+        3913,
+        4046,
+        4164
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.399 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -2710,16 +2710,16 @@
       "focus": "A close target sweeping wide; track with your arm, not only your wrist.",
       "leaderboardId": null,
       "rankMaxes": [
-        4193,
-        4296,
-        4390,
-        4480,
-        4569,
-        4624
+        3814,
+        3932,
+        4037,
+        4137,
+        4236,
+        4346
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.399 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -2734,14 +2734,14 @@
       "focus": "A close target sweeping wide; track with your arm, not only your wrist.",
       "leaderboardId": null,
       "rankMaxes": [
-        4299,
-        4361,
-        4392,
-        4462
+        3983,
+        4098,
+        4171,
+        4253
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.399 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -2756,16 +2756,16 @@
       "focus": "Close, snappy strafes; react to the turn, do not predict it.",
       "leaderboardId": null,
       "rankMaxes": [
-        1943,
-        2436,
-        2737,
-        2958,
-        3148,
-        3323
+        1509,
+        2005,
+        2317,
+        2556,
+        2764,
+        2955
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.399 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -2780,16 +2780,16 @@
       "focus": "Close, snappy strafes; react to the turn, do not predict it.",
       "leaderboardId": null,
       "rankMaxes": [
-        2856,
-        3027,
-        3105,
-        3246,
-        3351,
-        3451
+        2535,
+        2717,
+        2797,
+        2944,
+        3057,
+        3161
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.399 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -2804,16 +2804,16 @@
       "focus": "Close, snappy strafes; react to the turn, do not predict it.",
       "leaderboardId": null,
       "rankMaxes": [
-        3038,
-        3132,
-        3219,
-        3297,
-        3371,
-        3441
+        2801,
+        2896,
+        2984,
+        3062,
+        3137,
+        3248
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.399 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -2828,14 +2828,14 @@
       "focus": "Close, snappy strafes; react to the turn, do not predict it.",
       "leaderboardId": null,
       "rankMaxes": [
-        3022,
-        3093,
-        3138,
-        3200
+        2844,
+        2951,
+        3024,
+        3090
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.399 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -2850,16 +2850,16 @@
       "focus": "Strafes and range changes; the target shrinks and grows as it moves.",
       "leaderboardId": null,
       "rankMaxes": [
-        1965,
-        2479,
-        2794,
-        3021,
-        3218,
-        3398
+        1595,
+        2124,
+        2455,
+        2703,
+        2918,
+        3115
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.399 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -2874,16 +2874,16 @@
       "focus": "Strafes and range changes; the target shrinks and grows as it moves.",
       "leaderboardId": null,
       "rankMaxes": [
-        2926,
-        3104,
-        3184,
-        3331,
-        3441,
-        3546
+        2687,
+        2877,
+        2960,
+        3114,
+        3233,
+        3343
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.399 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -2898,16 +2898,16 @@
       "focus": "Strafes and range changes; the target shrinks and grows as it moves.",
       "leaderboardId": null,
       "rankMaxes": [
-        3130,
-        3229,
-        3322,
-        3405,
-        3484,
-        3559
+        2977,
+        3079,
+        3172,
+        3257,
+        3338,
+        3454
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.399 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -2922,14 +2922,14 @@
       "focus": "Strafes and range changes; the target shrinks and grows as it moves.",
       "leaderboardId": null,
       "rankMaxes": [
-        3137,
-        3215,
-        3264,
-        3338
+        3046,
+        3159,
+        3235,
+        3308
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.399 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -2944,16 +2944,16 @@
       "focus": "It stops before it turns; stop with it.",
       "leaderboardId": null,
       "rankMaxes": [
-        1903,
-        2396,
-        2699,
-        2920,
-        3113,
-        3289
+        1527,
+        2028,
+        2343,
+        2583,
+        2792,
+        2984
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.399 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -2968,16 +2968,16 @@
       "focus": "It stops before it turns; stop with it.",
       "leaderboardId": null,
       "rankMaxes": [
-        2821,
-        2993,
-        3071,
-        3215,
-        3321,
-        3422
+        2563,
+        2746,
+        2826,
+        2975,
+        3090,
+        3195
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.399 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -2992,16 +2992,16 @@
       "focus": "It stops before it turns; stop with it.",
       "leaderboardId": null,
       "rankMaxes": [
-        3008,
-        3103,
-        3191,
-        3270,
-        3345,
-        3419
+        2833,
+        2930,
+        3019,
+        3099,
+        3175,
+        3288
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.399 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -3016,14 +3016,14 @@
       "focus": "It stops before it turns; stop with it.",
       "leaderboardId": null,
       "rankMaxes": [
-        2995,
-        3070,
-        3118,
-        3186
+        2882,
+        2991,
+        3065,
+        3133
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.399 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -3038,16 +3038,16 @@
       "focus": "Jumps and short strafes together; follow it up as well as across.",
       "leaderboardId": null,
       "rankMaxes": [
-        1586,
-        2144,
-        2490,
-        2751,
-        2976,
-        3180
+        1673,
+        2221,
+        2560,
+        2812,
+        3031,
+        3230
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.399 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -3062,16 +3062,16 @@
       "focus": "Jumps and short strafes together; follow it up as well as across.",
       "leaderboardId": null,
       "rankMaxes": [
-        2684,
-        2883,
-        2970,
-        3129,
-        3256,
-        3370
+        2799,
+        2992,
+        3077,
+        3232,
+        3355,
+        3466
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.399 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -3086,16 +3086,16 @@
       "focus": "Jumps and short strafes together; follow it up as well as across.",
       "leaderboardId": null,
       "rankMaxes": [
-        2943,
-        3050,
-        3147,
-        3236,
-        3322,
-        3467
+        3099,
+        3204,
+        3300,
+        3388,
+        3473,
+        3588
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.399 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -3110,14 +3110,14 @@
       "focus": "Jumps and short strafes together; follow it up as well as across.",
       "leaderboardId": null,
       "rankMaxes": [
-        2972,
-        3120,
-        3224,
-        3301
+        3184,
+        3296,
+        3372,
+        3444
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.399 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -3132,16 +3132,16 @@
       "focus": "A flier changing direction on both axes; react on whichever one moves.",
       "leaderboardId": null,
       "rankMaxes": [
-        1530,
-        2076,
-        2419,
-        2678,
-        2901,
-        3102
+        1585,
+        2117,
+        2452,
+        2702,
+        2919,
+        3116
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.399 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -3156,16 +3156,16 @@
       "focus": "A flier changing direction on both axes; react on whichever one moves.",
       "leaderboardId": null,
       "rankMaxes": [
-        2610,
-        2806,
-        2891,
-        3046,
-        3169,
-        3279
+        2688,
+        2877,
+        2961,
+        3113,
+        3231,
+        3339
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.399 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -3180,16 +3180,16 @@
       "focus": "A flier changing direction on both axes; react on whichever one moves.",
       "leaderboardId": null,
       "rankMaxes": [
-        2856,
-        2957,
-        3050,
-        3134,
-        3215,
-        3356
+        2975,
+        3075,
+        3166,
+        3249,
+        3330,
+        3441
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.399 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -3204,14 +3204,14 @@
       "focus": "A flier changing direction on both axes; react on whichever one moves.",
       "leaderboardId": null,
       "rankMaxes": [
-        2865,
-        3008,
-        3108,
-        3178
+        3038,
+        3147,
+        3220,
+        3287
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.399 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -3226,16 +3226,16 @@
       "focus": "Being tracked makes it turn; stay on it through the dodge.",
       "leaderboardId": null,
       "rankMaxes": [
-        2029,
-        2541,
-        2849,
-        3072,
-        3266,
-        3444
+        1599,
+        2121,
+        2444,
+        2689,
+        2902,
+        3098
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.399 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -3250,16 +3250,16 @@
       "focus": "Being tracked makes it turn; stay on it through the dodge.",
       "leaderboardId": null,
       "rankMaxes": [
-        2974,
-        3150,
-        3229,
-        3376,
-        3486,
-        3591
+        2672,
+        2859,
+        2942,
+        3096,
+        3216,
+        3326
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.399 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -3274,16 +3274,16 @@
       "focus": "Being tracked makes it turn; stay on it through the dodge.",
       "leaderboardId": null,
       "rankMaxes": [
-        3176,
-        3276,
-        3369,
-        3453,
-        3532,
-        3608
+        2959,
+        3062,
+        3156,
+        3241,
+        3322,
+        3439
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.399 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -3298,14 +3298,14 @@
       "focus": "Being tracked makes it turn; stay on it through the dodge.",
       "leaderboardId": null,
       "rankMaxes": [
-        3186,
-        3265,
-        3313,
-        3386
+        3030,
+        3144,
+        3222,
+        3297
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.399 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -3320,16 +3320,16 @@
       "focus": "Kill, then move straight to the next; no pause between targets.",
       "leaderboardId": null,
       "rankMaxes": [
-        2003,
-        2283,
-        2443,
-        2545,
-        2634,
-        2719
+        1998,
+        2278,
+        2438,
+        2541,
+        2629,
+        2714
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.159 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -3344,16 +3344,16 @@
       "focus": "Kill, then move straight to the next; no pause between targets.",
       "leaderboardId": null,
       "rankMaxes": [
-        2616,
-        2702,
-        2739,
-        2810,
-        2868,
-        2920
+        2602,
+        2687,
+        2724,
+        2794,
+        2852,
+        2904
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.159 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -3368,16 +3368,16 @@
       "focus": "Kill, then move straight to the next; no pause between targets.",
       "leaderboardId": null,
       "rankMaxes": [
-        2853,
-        2905,
-        2959,
-        3007,
-        3052,
-        3111
+        2827,
+        2878,
+        2930,
+        2978,
+        3022,
+        3081
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.159 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -3392,14 +3392,14 @@
       "focus": "Kill, then move straight to the next; no pause between targets.",
       "leaderboardId": null,
       "rankMaxes": [
-        3038,
-        3098,
-        3137,
-        3184
+        2996,
+        3055,
+        3094,
+        3140
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.159 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -3414,16 +3414,16 @@
       "focus": "Wide switches; land the flick, then hold.",
       "leaderboardId": null,
       "rankMaxes": [
-        2089,
-        2370,
-        2530,
-        2631,
-        2719,
-        2805
+        2033,
+        2312,
+        2471,
+        2572,
+        2659,
+        2744
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.159 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -3438,16 +3438,16 @@
       "focus": "Wide switches; land the flick, then hold.",
       "leaderboardId": null,
       "rankMaxes": [
-        2702,
-        2788,
-        2825,
-        2898,
-        2957,
-        3012
+        2632,
+        2717,
+        2753,
+        2823,
+        2881,
+        2932
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.159 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -3462,16 +3462,16 @@
       "focus": "Wide switches; land the flick, then hold.",
       "leaderboardId": null,
       "rankMaxes": [
-        2943,
-        2998,
-        3055,
-        3105,
-        3151,
-        3210
+        2855,
+        2907,
+        2959,
+        3007,
+        3051,
+        3109
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.159 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -3486,14 +3486,14 @@
       "focus": "Wide switches; land the flick, then hold.",
       "leaderboardId": null,
       "rankMaxes": [
-        3138,
-        3198,
-        3236,
-        3285
+        3025,
+        3084,
+        3122,
+        3168
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.159 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -3508,16 +3508,16 @@
       "focus": "Switch up and down; stop on each one before you fire.",
       "leaderboardId": null,
       "rankMaxes": [
-        2004,
-        2284,
-        2444,
-        2547,
-        2635,
-        2721
+        1998,
+        2278,
+        2438,
+        2541,
+        2629,
+        2714
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.159 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -3532,16 +3532,16 @@
       "focus": "Switch up and down; stop on each one before you fire.",
       "leaderboardId": null,
       "rankMaxes": [
-        2618,
-        2704,
-        2741,
-        2811,
-        2870,
-        2922
+        2602,
+        2687,
+        2724,
+        2794,
+        2852,
+        2904
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.159 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -3556,16 +3556,16 @@
       "focus": "Switch up and down; stop on each one before you fire.",
       "leaderboardId": null,
       "rankMaxes": [
-        2855,
-        2907,
-        2961,
-        3009,
-        3054,
-        3113
+        2827,
+        2878,
+        2930,
+        2978,
+        3022,
+        3081
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.159 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -3580,14 +3580,14 @@
       "focus": "Switch up and down; stop on each one before you fire.",
       "leaderboardId": null,
       "rankMaxes": [
-        3040,
-        3100,
-        3139,
-        3186
+        2996,
+        3055,
+        3094,
+        3140
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.159 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -3602,16 +3602,16 @@
       "focus": "Six small targets packed tight; short, exact moves.",
       "leaderboardId": null,
       "rankMaxes": [
-        1753,
-        2015,
-        2167,
-        2272,
-        2361,
-        2443
+        1797,
+        2061,
+        2215,
+        2320,
+        2410,
+        2493
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.159 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -3626,16 +3626,16 @@
       "focus": "Six small targets packed tight; short, exact moves.",
       "leaderboardId": null,
       "rankMaxes": [
-        2342,
-        2425,
-        2460,
-        2525,
-        2581,
-        2629
+        2383,
+        2467,
+        2502,
+        2570,
+        2627,
+        2677
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.159 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -3650,16 +3650,16 @@
       "focus": "Six small targets packed tight; short, exact moves.",
       "leaderboardId": null,
       "rankMaxes": [
-        2565,
-        2613,
-        2661,
-        2705,
+        2602,
+        2651,
+        2701,
         2746,
-        2804
+        2788,
+        2846
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.159 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -3674,14 +3674,14 @@
       "focus": "Six small targets packed tight; short, exact moves.",
       "leaderboardId": null,
       "rankMaxes": [
-        2731,
-        2789,
-        2827,
-        2873
+        2762,
+        2820,
+        2858,
+        2906
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.159 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -3696,16 +3696,16 @@
       "focus": "Slow floaters; the switch is the skill, the tracking only has to be clean.",
       "leaderboardId": null,
       "rankMaxes": [
-        1529,
-        1812,
-        1984,
-        2106,
-        2211,
-        2307
+        1577,
+        1864,
+        2039,
+        2162,
+        2268,
+        2366
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.159 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -3720,16 +3720,16 @@
       "focus": "Slow floaters; the switch is the skill, the tracking only has to be clean.",
       "leaderboardId": null,
       "rankMaxes": [
-        2174,
-        2271,
-        2313,
-        2391,
-        2451,
-        2498
+        2224,
+        2323,
+        2366,
+        2446,
+        2508,
+        2557
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.159 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -3744,16 +3744,16 @@
       "focus": "Slow floaters; the switch is the skill, the tracking only has to be clean.",
       "leaderboardId": null,
       "rankMaxes": [
-        2417,
-        2463,
-        2509,
-        2554,
-        2597,
-        2663
+        2466,
+        2515,
+        2563,
+        2609,
+        2653,
+        2721
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.159 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -3768,14 +3768,14 @@
       "focus": "Slow floaters; the switch is the skill, the tracking only has to be clean.",
       "leaderboardId": null,
       "rankMaxes": [
-        2562,
-        2630,
-        2675,
-        2727
+        2610,
+        2678,
+        2724,
+        2777
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.159 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -3790,16 +3790,16 @@
       "focus": "Each target takes a while; stay on it to the end, then switch.",
       "leaderboardId": null,
       "rankMaxes": [
-        2321,
-        2646,
-        2829,
-        2934,
-        3027,
-        3121
+        2313,
+        2639,
+        2822,
+        2926,
+        3019,
+        3114
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.159 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -3814,16 +3814,16 @@
       "focus": "Each target takes a while; stay on it to the end, then switch.",
       "leaderboardId": null,
       "rankMaxes": [
-        3009,
-        3104,
-        3148,
-        3229,
-        3291,
-        3345
+        2991,
+        3087,
+        3130,
+        3210,
+        3272,
+        3325
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.159 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -3838,16 +3838,16 @@
       "focus": "Each target takes a while; stay on it to the end, then switch.",
       "leaderboardId": null,
       "rankMaxes": [
-        3276,
-        3330,
-        3388,
-        3440,
-        3488,
-        3553
+        3247,
+        3300,
+        3357,
+        3408,
+        3455,
+        3520
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.159 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -3862,14 +3862,14 @@
       "focus": "Each target takes a while; stay on it to the end, then switch.",
       "leaderboardId": null,
       "rankMaxes": [
-        3475,
-        3540,
-        3583,
-        3629
+        3430,
+        3495,
+        3538,
+        3584
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.159 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -3884,16 +3884,16 @@
       "focus": "Three strafing targets; kill one without losing track of the others.",
       "leaderboardId": null,
       "rankMaxes": [
-        1553,
-        1863,
-        2053,
-        2185,
-        2299,
-        2406
+        1595,
+        1909,
+        2102,
+        2234,
+        2350,
+        2458
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.159 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -3908,16 +3908,16 @@
       "focus": "Three strafing targets; kill one without losing track of the others.",
       "leaderboardId": null,
       "rankMaxes": [
-        2263,
-        2370,
-        2419,
-        2506,
-        2571,
-        2619
+        2306,
+        2415,
+        2464,
+        2554,
+        2620,
+        2670
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.159 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -3932,16 +3932,16 @@
       "focus": "Three strafing targets; kill one without losing track of the others.",
       "leaderboardId": null,
       "rankMaxes": [
-        2537,
-        2585,
-        2634,
-        2681,
+        2577,
+        2627,
+        2678,
         2727,
-        2801
+        2773,
+        2848
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.159 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -3956,14 +3956,14 @@
       "focus": "Three strafing targets; kill one without losing track of the others.",
       "leaderboardId": null,
       "rankMaxes": [
-        2693,
-        2768,
-        2818,
-        2873
+        2730,
+        2805,
+        2855,
+        2912
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.159 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -3978,16 +3978,16 @@
       "focus": "Targets thrown into the air; catch each one on its arc.",
       "leaderboardId": null,
       "rankMaxes": [
-        1541,
-        1843,
-        2028,
-        2157,
-        2270,
-        2374
+        1579,
+        1884,
+        2071,
+        2201,
+        2315,
+        2420
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.159 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -4002,16 +4002,16 @@
       "focus": "Targets thrown into the air; catch each one on its arc.",
       "leaderboardId": null,
       "rankMaxes": [
-        2233,
-        2338,
-        2385,
-        2470,
-        2534,
-        2582
+        2271,
+        2377,
+        2425,
+        2512,
+        2577,
+        2626
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.159 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -4026,16 +4026,16 @@
       "focus": "Targets thrown into the air; catch each one on its arc.",
       "leaderboardId": null,
       "rankMaxes": [
-        2500,
-        2548,
-        2596,
-        2643,
-        2688,
-        2760
+        2534,
+        2584,
+        2634,
+        2681,
+        2728,
+        2800
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.159 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -4050,14 +4050,14 @@
       "focus": "Targets thrown into the air; catch each one on its arc.",
       "leaderboardId": null,
       "rankMaxes": [
-        2654,
-        2727,
-        2776,
-        2831
+        2684,
+        2757,
+        2806,
+        2862
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.159 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -4072,16 +4072,16 @@
       "focus": "Fliers changing direction on every axis; pick the next one before this one dies.",
       "leaderboardId": null,
       "rankMaxes": [
-        1516,
-        1816,
-        2000,
-        2128,
-        2240,
-        2343
+        1582,
+        1887,
+        2074,
+        2204,
+        2318,
+        2423
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.159 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -4096,16 +4096,16 @@
       "focus": "Fliers changing direction on every axis; pick the next one before this one dies.",
       "leaderboardId": null,
       "rankMaxes": [
-        2202,
-        2306,
-        2353,
-        2436,
-        2499,
-        2545
+        2274,
+        2380,
+        2428,
+        2515,
+        2580,
+        2629
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.159 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -4120,16 +4120,16 @@
       "focus": "Fliers changing direction on every axis; pick the next one before this one dies.",
       "leaderboardId": null,
       "rankMaxes": [
-        2465,
-        2511,
-        2557,
-        2602,
-        2647,
-        2718
+        2537,
+        2586,
+        2637,
+        2684,
+        2730,
+        2803
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.159 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -4144,14 +4144,14 @@
       "focus": "Fliers changing direction on every axis; pick the next one before this one dies.",
       "leaderboardId": null,
       "rankMaxes": [
-        2612,
-        2684,
-        2733,
-        2787
+        2687,
+        2760,
+        2809,
+        2865
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.159 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -4166,16 +4166,16 @@
       "focus": "Targets heal when left alone; finish every kill you start.",
       "leaderboardId": null,
       "rankMaxes": [
-        1678,
-        2006,
-        2206,
-        2338,
-        2455,
-        2565
+        1717,
+        2049,
+        2250,
+        2383,
+        2501,
+        2612
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.159 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -4190,16 +4190,16 @@
       "focus": "Targets heal when left alone; finish every kill you start.",
       "leaderboardId": null,
       "rankMaxes": [
-        2417,
-        2528,
-        2579,
-        2670,
-        2737,
-        2786
+        2455,
+        2567,
+        2619,
+        2712,
+        2779,
+        2831
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.159 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -4214,16 +4214,16 @@
       "focus": "Targets heal when left alone; finish every kill you start.",
       "leaderboardId": null,
       "rankMaxes": [
-        2702,
-        2752,
-        2803,
-        2853,
-        2901,
-        2976
+        2736,
+        2787,
+        2840,
+        2891,
+        2939,
+        3016
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.159 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -4238,14 +4238,14 @@
       "focus": "Targets heal when left alone; finish every kill you start.",
       "leaderboardId": null,
       "rankMaxes": [
-        2866,
-        2943,
-        2995,
-        3050
+        2895,
+        2972,
+        3024,
+        3080
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.159 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -4260,16 +4260,16 @@
       "focus": "Fast targets far apart; big switches onto moving targets.",
       "leaderboardId": null,
       "rankMaxes": [
-        1449,
-        1746,
-        1930,
-        2060,
-        2174,
-        2279
+        1501,
+        1802,
+        1989,
+        2122,
+        2237,
+        2344
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.159 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -4284,16 +4284,16 @@
       "focus": "Fast targets far apart; big switches onto moving targets.",
       "leaderboardId": null,
       "rankMaxes": [
-        2138,
-        2243,
-        2291,
-        2375,
-        2439,
-        2485
+        2194,
+        2301,
+        2349,
+        2437,
+        2502,
+        2551
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.159 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -4308,16 +4308,16 @@
       "focus": "Fast targets far apart; big switches onto moving targets.",
       "leaderboardId": null,
       "rankMaxes": [
-        2405,
-        2451,
-        2498,
-        2543,
-        2587,
-        2660
+        2460,
+        2509,
+        2558,
+        2605,
+        2651,
+        2724
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.159 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -4332,14 +4332,14 @@
       "focus": "Fast targets far apart; big switches onto moving targets.",
       "leaderboardId": null,
       "rankMaxes": [
-        2554,
-        2626,
-        2676,
-        2731
+        2607,
+        2681,
+        2731,
+        2788
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.159 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -4354,16 +4354,16 @@
       "focus": "Close targets moving fast across the view; stay with them, then turn to the next.",
       "leaderboardId": null,
       "rankMaxes": [
-        1486,
-        1792,
-        1979,
-        2110,
-        2224,
-        2330
+        1570,
+        1883,
+        2075,
+        2209,
+        2325,
+        2434
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.159 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -4378,16 +4378,16 @@
       "focus": "Close targets moving fast across the view; stay with them, then turn to the next.",
       "leaderboardId": null,
       "rankMaxes": [
-        2187,
-        2293,
-        2341,
-        2426,
-        2490,
-        2535
+        2281,
+        2390,
+        2440,
+        2530,
+        2596,
+        2646
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.159 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -4402,16 +4402,16 @@
       "focus": "Close targets moving fast across the view; stay with them, then turn to the next.",
       "leaderboardId": null,
       "rankMaxes": [
-        2455,
-        2500,
-        2545,
-        2590,
-        2635,
-        2708
+        2554,
+        2603,
+        2654,
+        2702,
+        2749,
+        2824
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.159 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     },
     {
@@ -4426,14 +4426,14 @@
       "focus": "Close targets moving fast across the view; stay with them, then turn to the next.",
       "leaderboardId": null,
       "rankMaxes": [
-        2600,
-        2674,
-        2724,
-        2777
+        2705,
+        2780,
+        2831,
+        2888
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.159 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
       }
     }
   ]

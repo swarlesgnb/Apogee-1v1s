@@ -148,8 +148,14 @@ Leave-one-out median error at the board median (`data/season-2/difficulty_model.
 | Class | Scenarios | Features | LOO median | LOO 90th pct |
 | --- | ---: | --- | ---: | ---: |
 | Clicking | 193 | nearest-flick Fitts ID, log angular speed, log shots to kill | 0.143 (about 15% in time per kill) | 0.404 |
-| Tracking | 166 | log speed/size, log size, log strafe period, airborne, log seconds to full speed | 0.399 logit (about 10 points of share mid-board) | 0.907 |
-| Switching | 85 | log speed/size, nearest-flick Fitts ID, log time to kill | 0.159 logit | 0.437 |
+| Tracking | 166 | log speed/size, log strafe period, log seconds to full speed | 0.375 logit (about 9 points of share mid-board) | 1.029 |
+| Switching | 85 | log speed/size, log time to kill | 0.132 logit | 0.391 |
+
+Every feature earns its place: removing any one raises the leave-one-out error at both the
+top 5% and the median of the board (`ablation` in the model file). Three that were tried
+did not, and were removed one at a time: switching's Fitts ID, tracking's "leaves the
+ground" flag, and then tracking's log size, which carried nothing the speed-to-size ratio
+did not once the flag was gone.
 
 Two findings shaped how the model is used.
 
@@ -157,14 +163,14 @@ Two findings shaped how the model is used.
   from Novice (598) to Intermediate (568), although the target shrinks and speeds up: a harder
   scenario draws a stronger crowd. A pooled model predicts the board of a typical crowd.
 - **A sibling's board was measured too.** Predicting a variant from another variant's board
-  (0.142, 0.231, 0.145) is as good as or better than the pooled fit, clearly so for tracking.
-  No season-2 scenario has a sibling with a board, so the pooled fit is the only option until
-  one does.
+  is about as good as the pooled fit for clicking (0.142 against 0.143), better for tracking
+  (0.284 against 0.375) and worse for switching (0.149 against 0.132). No season-2 scenario
+  has a sibling with a board, so the pooled fit is the only option until one does.
 
 How sharply a target turns matters to tracking and is in the file: seconds to reach full
-speed, `MaxSpeed / Acceleration`. Adding it moved tracking's leave-one-out error at the top 5%
-of the board from 0.432 to 0.391, and lets the model tell Glide's gentle reversals from
-Duel's sharp ones, which it otherwise could not.
+speed, `MaxSpeed / Acceleration`. Without it tracking's error at the top 5% and the median is
+0.442 and 0.430; with it, 0.381 and 0.375. It is also what lets the model tell Glide's
+gentle reversals from Duel's sharp ones.
 
 Which bot is "the target" is a judgement the reader makes, and it once made it wrongly:
 Revosect's Pasu fills its arena with small helper bots that push targets off the walls, as

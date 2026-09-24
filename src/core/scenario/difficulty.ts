@@ -57,6 +57,9 @@ export function classify(f: ScenarioFeatures): DifficultyClass | null {
   if (w.fullyAutomatic && w.interval > 0 && w.interval <= 0.06 && s.perKill === 0 && (s.perHit > 0 || s.perDamage > 0)) {
     if (!f.derived.targetDeg) return null;
     if (f.concurrent <= 1.01) return "track";
+    // Not a regressor any more (see featureVector), but still the test that the spawn
+    // field was measured: letting in the 36 switching scenarios without one took the
+    // class's error at the median from 0.13 to 0.31.
     return f.derived.fittsIdNearest !== null ? "switch" : null;
   }
   return null;
@@ -103,11 +106,22 @@ export function fromMetric(cls: DifficultyClass, f: ScenarioFeatures, metric: nu
 
 export const FEATURE_NAMES: Record<DifficultyClass, string[]> = {
   click: ["fitts ID of the nearest flick", "log(1 + angular speed)", "log(shots to kill)"],
-  track: ["log(angular speed / size)", "log(size)", "log(strafe period)", "leaves the ground", "log(seconds to full speed)"],
-  switch: ["log(angular speed / size)", "fitts ID of the nearest flick", "log(time to kill)"],
+  track: ["log(angular speed / size)", "log(strafe period)", "log(seconds to full speed)"],
+  switch: ["log(angular speed / size)", "log(time to kill)"],
 };
 
-/** The regressors, in FEATURE_NAMES order. */
+/**
+ * The regressors, in FEATURE_NAMES order.
+ *
+ * Each one is kept because removing it raises the leave-one-out error at both the top 5%
+ * and the median of the board (the ablation in tools/fitDifficulty.ts, recorded in the
+ * model file). Three that were in and did not, removed one at a time: switching's
+ * nearest-flick Fitts ID (without it 0.126/0.159 became 0.123/0.132), tracking's "leaves
+ * the ground" flag, then tracking's log size, which once the flag was gone carried nothing
+ * the speed-to-size ratio did not. Shots to kill for clicking earns only a little on a
+ * corpus that is nearly all one-hit, and stays because it is the physics of a three-hit
+ * target.
+ */
 export function featureVector(cls: DifficultyClass, f: ScenarioFeatures): number[] {
   const d = f.derived;
   const main = f.targets[0];
@@ -116,14 +130,13 @@ export function featureVector(cls: DifficultyClass, f: ScenarioFeatures): number
     return [d.fittsIdNearest ?? 0, Math.log1p(d.angularSpeed ?? 0), Math.log(Math.max(1, d.shotsToKill ?? 1))];
   }
   if (cls === "track") {
-    const airborne = main.flyer || ((main.jumpFrequency ?? 0) > 0 && main.jumpVelocity > 0) ? 1 : 0;
     // How sharply it turns: a target that takes a third of a second to reach speed reverses
     // in a curve a player can follow, one that takes a hundredth reverses in a corner.
     // Clamped because a zero acceleration in a file means "instant" to some templates.
     const ramp = main.acceleration > 0 ? main.speed / main.acceleration : 0.01;
-    return [Math.log(speed / d.targetDeg!), Math.log(d.targetDeg!), Math.log(d.strafePeriod ?? 1), airborne, Math.log(Math.min(5, Math.max(0.01, ramp)))];
+    return [Math.log(speed / d.targetDeg!), Math.log(d.strafePeriod ?? 1), Math.log(Math.min(5, Math.max(0.01, ramp)))];
   }
-  return [Math.log(speed / d.targetDeg!), d.fittsIdNearest ?? 0, Math.log(Math.max(d.ttk ?? 0, 0.02))];
+  return [Math.log(speed / d.targetDeg!), Math.log(Math.max(d.ttk ?? 0, 0.02))];
 }
 
 // ---- least squares ------------------------------------------------------------------------
@@ -197,11 +210,19 @@ function quantile(values: number[], q: number): number {
   return s[lo] + (s[Math.min(s.length - 1, lo + 1)] - s[lo]) * (i - lo);
 }
 
-export function fitClass(cls: DifficultyClass, samples: Sample[]): ClassModel {
+/**
+ * Fit one class. `drop` removes one feature by index, for the ablation that shows each
+ * feature earns its place; `fractions` narrows the board fractions fitted.
+ */
+export function fitClass(cls: DifficultyClass, samples: Sample[], drop: number | null = null, fractions: number[] = FRACTIONS): ClassModel {
   const mine = samples.filter((s) => classify(s.features) === cls);
   const fits: FractionFit[] = [];
   let worstMisses: ClassModel["worstMisses"] = [];
-  for (const topFraction of FRACTIONS) {
+  const vector = (f: ScenarioFeatures) => {
+    const v = featureVector(cls, f);
+    return drop === null ? v : v.filter((_, i) => i !== drop);
+  };
+  for (const topFraction of fractions) {
     const X: number[][] = [];
     const y: number[] = [];
     const names: string[] = [];
@@ -209,7 +230,7 @@ export function fitClass(cls: DifficultyClass, samples: Sample[]): ClassModel {
       const point = s.ladder.find((p) => Math.abs(p.topFraction - topFraction) < 1e-9);
       const m = point ? toMetric(cls, s.features, point.score) : null;
       if (m === null || !Number.isFinite(m)) continue;
-      X.push(withIntercept(featureVector(cls, s.features)));
+      X.push(withIntercept(vector(s.features)));
       y.push(m);
       names.push(s.name);
     }

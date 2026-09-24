@@ -79,6 +79,22 @@ function siblingTest(model: ClassModel): { pairs: number; median: number; pooled
   return { pairs: errors.length, median: errors[Math.floor(errors.length / 2)] ?? NaN, pooledMedian: median.looMedian };
 }
 
+/**
+ * Ablation: each feature removed in turn, leave-one-out error at the top 5% and the median.
+ * A feature whose removal does not raise the error is not earning its place.
+ */
+const ablation = models.map((m) => {
+  const at = (model: ClassModel, q: number) => model.fits.find((f) => f.topFraction === q)!.looMedian;
+  return {
+    class: m.class,
+    full: { top5: at(m, 0.05), median: at(m, 0.5) },
+    without: m.features.map((feature, i) => {
+      const reduced = fitClass(m.class, samples, i, [0.05, 0.5]);
+      return { feature, top5: at(reduced, 0.05), median: at(reduced, 0.5) };
+    }),
+  };
+});
+
 const evidence = models.map((m) => ({ class: m.class, sibling: siblingTest(m) }));
 
 const out = dataFile("season-2", "difficulty_model.json");
@@ -93,6 +109,7 @@ writeFileSync(
       scenarioFiles: samples.length,
       models,
       sibling: evidence,
+      ablation,
     },
     null,
     1,
@@ -107,5 +124,9 @@ for (const m of models) {
       `20%: ${at(0.2).looMedian.toFixed(3)}, 50%: ${at(0.5).looMedian.toFixed(3)}  ` +
       `| sibling transfer ${s.median.toFixed(3)} over ${s.pairs} pairs`,
   );
+}
+for (const a of ablation) {
+  console.log(`${a.class} ablation (LOO median error at top 5% / median; full ${a.full.top5.toFixed(3)} / ${a.full.median.toFixed(3)}):`);
+  for (const w of a.without) console.log(`   without ${w.feature.padEnd(32)} ${w.top5.toFixed(3)} / ${w.median.toFixed(3)}`);
 }
 console.log(`-> ${out}`);
