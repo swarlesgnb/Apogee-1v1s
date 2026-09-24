@@ -895,6 +895,24 @@ scenarios[]           the pool
         earlier claim — that nothing here depends on Voltaic any more — literally true
         rather than nearly true.
       </p>
+
+      <h3>Where season 2's numbers come from</h3>
+      <p>
+        Season 2's scenarios are Apogee's own, so there are no boards to read either. Each is
+        built by editing a real KovaaK's file (<code>src/core/scenario/forge.ts</code>), and its
+        board is <em>predicted</em>: a model fitted on every local scenario that has both a file
+        and a sampled board turns what the file says — target size and speed as angles, the
+        Fitts difficulty of the flick, time to kill — into the board it expects, and the
+        thresholds are read off that at the same percentiles season 1 uses. Every threshold
+        carries the model's error in its source, and every one is a seed: once Apogee players
+        have played a scenario, its thresholds should come from them.
+      </p>
+      <p>
+        <span class="src">npm run build:season-2</span> builds the files and the season;
+        <span class="src">npm run validate:season2</span> holds it to its rules, including
+        that every spawn admits its targets and every value lies within what real scenario
+        files use. The research behind the design is <code>docs/season-2-research.md</code>.
+      </p>
     </section>
 
     <section id="apex">
