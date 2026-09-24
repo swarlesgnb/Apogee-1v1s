@@ -241,6 +241,7 @@ writeFileSync(
         learnsFrom: f.learnsFrom,
         template: TEMPLATES[f.template],
         arm: f.arm,
+        ...(f.exceeds ? { exceeds: f.exceeds } : {}),
       })),
       scenarios: summary,
     },

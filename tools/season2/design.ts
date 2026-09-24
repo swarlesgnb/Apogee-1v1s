@@ -75,6 +75,12 @@ export interface Family {
   learnsFrom: string[];
   /** Arm, Wrist, Fingertip or Blending, in Viscose's four words; the season's own call. */
   arm: "Arm" | "Wrist" | "Fingertip" | "Blending";
+  /**
+   * A design quantity this family deliberately takes past what popular scenarios of its
+   * class ask (validate:season2, check 6), with the reason and the scenario that shows
+   * players already play it. Anything not declared here is held to the popular range.
+   */
+  exceeds?: Array<{ quantity: "target size (deg)" | "angular speed (deg/s)" | "reversal period (s)"; why: string }>;
   build: (sce: Sce, band: Band) => void;
 }
 
@@ -582,11 +588,15 @@ export const FAMILIES: Family[] = [
   family(
     {
       name: "Jitter", category: "Dynamic Clicking", subCategory: "Dynamic Clicking", template: "movingClick", arm: "Fingertip",
+      exceeds: [{
+        quantity: "reversal period (s)",
+        why: "Twitching is the idea: reversals faster than any clicking scenario with 20,000 players. It is not new ground - cA 5ts vibrate (11,339 players) reverses every 0.14 s at 1.9 degrees a second and Microshot Avasive (18,028) every 0.68 s at 3.8 - and Jitter moves a little faster than either, from 7.5 degrees a second at Novice.",
+      }],
       focus: "Short, erratic twitches; stay with the target instead of chasing its last position.",
       why: "Reactive micro-clicking: short strafes at low speed, so the target never travels far but never holds still either.",
       learnsFrom: ["cA 5ts vibrate", "VT Floating Heads Novice S5"],
     },
-    (f) => movingClick(f, { alive: 4, deg: 1.8, speed: 10, strafe: [0.25, 0.5], upDown: [0.3, 0.6] }, "Four targets twitching in short bursts. One click each."),
+    (f) => movingClick(f, { alive: 4, deg: 1.8, speed: 7.5, strafe: [0.25, 0.5], upDown: [0.3, 0.6] }, "Four targets twitching in short bursts. One click each."),
   ),
   family(
     {
@@ -783,7 +793,7 @@ export const FAMILIES: Family[] = [
       why: "The standard evasive-switching problem, targets that move while you are on them and while you are not, at the pace of DriftTS.",
       learnsFrom: ["VT DriftTS Novice S5", "domiSwitch Easy"],
     },
-    (f) => switching(f, { alive: 3, deg: 2.9, ttk: 0.45, speed: 28, strafe: [0.6, 1.1], range: 1900 }, "Three targets strafing. Hold fire to kill.", "Evasive"),
+    (f) => switching(f, { alive: 3, deg: 2.9, ttk: 0.45, speed: 28, strafe: [0.7, 1.3], range: 1900 }, "Three targets strafing. Hold fire to kill.", "Evasive"),
   ),
   family(
     {
@@ -828,7 +838,7 @@ export const FAMILIES: Family[] = [
       why: "Close-range evasive switching, where modest real speeds become large angular speeds and every switch is also a tracking catch-up.",
       learnsFrom: ["VT DriftTS Intermediate S5", "Close Fast Strafes Invincible"],
     },
-    (f) => switching(f, { alive: 3, deg: 5.0, ttk: 0.45, speed: 55, strafe: [0.5, 1.0], range: 1000 }, "Three close targets strafing fast. Hold fire to kill.", "Evasive"),
+    (f) => switching(f, { alive: 3, deg: 5.0, ttk: 0.45, speed: 55, strafe: [0.7, 1.2], range: 1000 }, "Three close targets strafing fast. Hold fire to kill.", "Evasive"),
   ),
 ];
 

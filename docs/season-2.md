@@ -38,8 +38,15 @@ with fewer subscriptions fits a thinner model.
 `validate:season2` checks that the season file is valid and names exactly the files on disk;
 that every file keeps the shared rules (60 s, no accuracy multiplier, Apogee name and tag, six
 families of four bands per category); that every threshold reproduces from the committed
-model; that every family's bands are strictly harder; and that every numeric profile value is
-inside the range that key takes across the 1,161 real scenario files.
+model; that every family's bands are strictly harder; that no generated spawn sits more than
+45 degrees off centre and no two are close enough for live targets to overlap; that every
+scenario's target size, angular speed and reversal period lie within what popular scenarios
+of its class ask (218 with 20,000 or more players), unless its family declares the exception
+with a reason and a precedent; and that every numeric profile value is inside the range that
+key takes across the 1,161 real scenario files.
+
+One exception is declared: Jitter reverses faster than any popular clicking scenario, on
+purpose, with cA 5ts vibrate and Microshot Avasive as precedent.
 
 ## Playing it
 

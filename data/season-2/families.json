@@ -120,7 +120,13 @@
     "VT Floating Heads Novice S5"
    ],
    "template": "VT Floating Heads Novice S5",
-   "arm": "Fingertip"
+   "arm": "Fingertip",
+   "exceeds": [
+    {
+     "quantity": "reversal period (s)",
+     "why": "Twitching is the idea: reversals faster than any clicking scenario with 20,000 players. It is not new ground - cA 5ts vibrate (11,339 players) reverses every 0.14 s at 1.9 degrees a second and Microshot Avasive (18,028) every 0.68 s at 3.8 - and Jitter moves a little faster than either, from 7.5 degrees a second at Novice."
+    }
+   ]
   },
   {
    "family": "Comet",
@@ -1252,21 +1258,21 @@
    "band": "Novice",
    "class": "click",
    "targetDeg": 1.8,
-   "angularSpeed": 10,
+   "angularSpeed": 7.5,
    "fittsIdNearest": 3.541,
    "ttk": 0,
-   "median": 622,
+   "median": 655,
    "medianRange": [
-    509,
-    759
+    536,
+    799
    ],
    "rankMaxes": [
-    393,
-    536,
-    627,
-    693,
-    749,
-    802
+    422,
+    568,
+    660,
+    726,
+    783,
+    837
    ]
   },
   {
@@ -1275,21 +1281,21 @@
    "band": "Intermediate",
    "class": "click",
    "targetDeg": 1.566,
-   "angularSpeed": 11,
+   "angularSpeed": 8.3,
    "fittsIdNearest": 3.726,
    "ttk": 0,
-   "median": 590,
+   "median": 622,
    "medianRange": [
-    483,
-    721
+    509,
+    759
    ],
    "rankMaxes": [
-    714,
-    765,
-    786,
-    829,
+    747,
+    798,
+    820,
     863,
-    893
+    898,
+    928
    ]
   },
   {
@@ -1298,21 +1304,21 @@
    "band": "Advanced",
    "class": "click",
    "targetDeg": 1.362,
-   "angularSpeed": 12.1,
+   "angularSpeed": 9.1,
    "fittsIdNearest": 3.913,
    "ttk": 0,
-   "median": 560,
+   "median": 590,
    "medianRange": [
-    459,
-    684
+    483,
+    721
    ],
    "rankMaxes": [
-    824,
-    853,
-    879,
-    904,
-    929,
-    961
+    857,
+    886,
+    914,
+    939,
+    964,
+    996
    ]
   },
   {
@@ -1321,19 +1327,19 @@
    "band": "Expert",
    "class": "click",
    "targetDeg": 1.185,
-   "angularSpeed": 13.3,
+   "angularSpeed": 10,
    "fittsIdNearest": 4.101,
    "ttk": 0,
-   "median": 531,
+   "median": 560,
    "medianRange": [
-    435,
-    649
+    459,
+    684
    ],
    "rankMaxes": [
-    887,
-    918,
-    938,
-    963
+    921,
+    952,
+    973,
+    998
    ]
   },
   {

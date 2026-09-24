@@ -12,7 +12,11 @@
  *   5. Generated spawn fields keep two limits: nothing more than 45 degrees off centre (the
  *      edge of a 103-degree view is 51.5), and no two spawn points close enough for live
  *      targets on them to overlap.
- *   6. Nothing a recipe set is outside what real scenarios use. For every numeric key in an
+ *   6. What a player feels - target size, angular speed, reversal period - lies within the
+ *      range popular scenarios of the same class span (20,000 players or more). Checked on
+ *      the extremes, not the typical, because a season's Expert band is meant to sit near
+ *      the hard end; past the end is past anything a player has been asked to do.
+ *   7. Nothing a recipe set is outside what real scenarios use. For every numeric key in an
  *      authored file's profiles, the value must lie within the range that key takes across
  *      the scenario files on this machine. No scenario here has been played in game, so the
  *      one thing that can be checked is that the game has loaded values like these before.
@@ -34,7 +38,7 @@ import { classify, predictLadder, toMetric, type ClassModel } from "./difficulty
 import { thresholdsFrom } from "../season/percentiles.ts";
 import { windowRankIndices } from "../season/windows.ts";
 import { validateSeason, type Season } from "../season/season.ts";
-import { kovaaksRoot, scenarioFiles } from "../../../tools/scenarioCorpus.ts";
+import { buildCorpus, kovaaksRoot, scenarioFiles } from "../../../tools/scenarioCorpus.ts";
 
 let failures = 0;
 const fail = (msg: string) => {
@@ -189,7 +193,50 @@ for (const [name, { sce }] of sces) {
 if (fields === 0) fail("no generated spawn field found to check");
 else if (!fieldProblems) pass(`${fields} generated spawn fields: all within 45 degrees, no overlapping spawns`);
 
-// ---- 6. values within what real files use ------------------------------------------------------
+// ---- 6. design quantities within what popular scenarios ask -----------------------------------------
+
+const popular = buildCorpus(root).filter((r) => r.catalogue && r.catalogue.entries >= 20_000 && classify(r));
+const QUANTITIES: Record<string, (f: ReturnType<typeof scenarioFeatures>) => number | null> = {
+  "target size (deg)": (f) => f.derived.targetDeg,
+  "angular speed (deg/s)": (f) => ((f.derived.angularSpeed ?? 0) > 1 ? f.derived.angularSpeed : null),
+  "reversal period (s)": (f) => ((f.derived.angularSpeed ?? 0) > 1 && (f.derived.strafePeriod ?? 99) < 30 ? f.derived.strafePeriod : null),
+};
+// A family may declare a quantity it deliberately takes past the popular range, with its
+// reason and precedent (tools/season2/design.ts, `exceeds`). Declared is allowed and listed;
+// undeclared fails.
+const declared = new Map<string, Set<string>>();
+const familiesFile = JSON.parse(readFileSync(dataFile("season-2", "families.json"), "utf8")) as { families: Array<{ family: string; exceeds?: Array<{ quantity: string; why: string }> }> };
+for (const f of familiesFile.families) for (const e of f.exceeds ?? []) {
+  if (!e.why || e.why.length < 40) fail(`${f.family}: an exception needs its reason written out`);
+  declared.set(f.family, (declared.get(f.family) ?? new Set()).add(e.quantity));
+}
+const allowed: string[] = [];
+let beyond = 0;
+for (const s of season.scenarios) {
+  const entry = sces.get(s.scenario);
+  if (!entry) continue;
+  const f = scenarioFeatures(entry.sce, mapsDir);
+  const cls = classify(f);
+  const peers = popular.filter((r) => classify(r) === cls);
+  for (const [label, measure] of Object.entries(QUANTITIES)) {
+    const v = measure(f);
+    if (v === null) continue;
+    const range = peers.map(measure).filter((x): x is number => x !== null && Number.isFinite(x));
+    const lo = Math.min(...range), hi = Math.max(...range);
+    if (v < lo || v > hi) {
+      if (declared.get(s.family!)?.has(label)) {
+        allowed.push(`${s.scenario} (${label} ${v.toFixed(2)})`);
+        continue;
+      }
+      beyond++;
+      fail(`${s.scenario}: ${label} ${v.toFixed(2)} is outside ${lo.toFixed(2)}..${hi.toFixed(2)} across ${range.length} popular ${cls} scenarios`);
+    }
+  }
+}
+if (!beyond) pass(`every scenario's size, speed and reversal period lie within what ${popular.length} popular scenarios of its class ask, or declare why not`);
+if (allowed.length) console.log(`       declared exceptions: ${allowed.join(", ")}`);
+
+// ---- 7. values within what real files use ------------------------------------------------------
 
 const PROFILE_TYPES = new Set(["Character Profile", "Bot Profile", "Dodge Profile", "Weapon Profile"]);
 const ranges = new Map<string, { min: number; max: number }>();

@@ -1050,7 +1050,7 @@
       "file": "data/season-2/difficulty_model.json"
     }
   },
-  "builtAt": "2026-09-24T05:03:16.171Z",
+  "builtAt": "2026-09-24T05:05:44.611Z",
   "scenarios": [
     {
       "scenario": "Apogee Meridian Novice",
@@ -1910,12 +1910,12 @@
       "focus": "Short, erratic twitches; stay with the target instead of chasing its last position.",
       "leaderboardId": null,
       "rankMaxes": [
-        393,
-        536,
-        627,
-        693,
-        749,
-        802
+        422,
+        568,
+        660,
+        726,
+        783,
+        837
       ],
       "source": {
         "kind": "predicted",
@@ -1934,12 +1934,12 @@
       "focus": "Short, erratic twitches; stay with the target instead of chasing its last position.",
       "leaderboardId": null,
       "rankMaxes": [
-        714,
-        765,
-        786,
-        829,
+        747,
+        798,
+        820,
         863,
-        893
+        898,
+        928
       ],
       "source": {
         "kind": "predicted",
@@ -1958,12 +1958,12 @@
       "focus": "Short, erratic twitches; stay with the target instead of chasing its last position.",
       "leaderboardId": null,
       "rankMaxes": [
-        824,
-        853,
-        879,
-        904,
-        929,
-        961
+        857,
+        886,
+        914,
+        939,
+        964,
+        996
       ],
       "source": {
         "kind": "predicted",
@@ -1982,10 +1982,10 @@
       "focus": "Short, erratic twitches; stay with the target instead of chasing its last position.",
       "leaderboardId": null,
       "rankMaxes": [
-        887,
-        918,
-        938,
-        963
+        921,
+        952,
+        973,
+        998
       ],
       "source": {
         "kind": "predicted",
