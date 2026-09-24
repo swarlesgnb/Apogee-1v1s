@@ -619,7 +619,7 @@ export const FAMILIES: Family[] = [
     {
       name: "Comet", category: "Dynamic Clicking", subCategory: "Dynamic Clicking", template: "movingClick", arm: "Arm",
       focus: "Fast crossers; move with the target and click inside the motion.",
-      why: "High-speed dynamic clicks. Speed is the other axis of difficulty besides size: at the board median the fitted model prices a doubling of angular speed, 20 to 40 degrees a second, at about half a bit of Fitts difficulty (0.55).",
+      why: "High-speed dynamic clicks. Speed is the other axis of difficulty besides size: at the board median the fitted model prices a doubling of angular speed, 20 to 40 degrees a second, at about half a bit of Fitts difficulty (0.54).",
       learnsFrom: ["VT Pasu Intermediate S5", "Aimerz+ pipeClick Easy S1"],
     },
     (f) => movingClick(f, { alive: 3, deg: 2.6, speed: 34, strafe: [2, 3], upDown: [2, 3] }, "Three fast targets crossing the view. One click each."),

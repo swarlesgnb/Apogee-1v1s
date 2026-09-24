@@ -46,7 +46,7 @@ ID = log2(D/W + 1), for distance D and target width W
 5.50 bits and measured typical completion times of 0.4 to 0.8 s, with an optimal sensitivity
 zone of 20 to 80 cm/360. Across KovaaK's static clicking scenarios the same law holds on
 scores: the logarithm of seconds per kill rises with the Fitts ID of the flick to the nearest
-live target, by 0.269 per bit at the board median, so each bit costs about 31% more time per
+live target, by 0.277 per bit at the board median, so each bit costs about 32% more time per
 kill (`tools/fitDifficulty.ts`, clicking class). Size and distance are therefore not
 two knobs but one, their ratio, and a band ladder can step it deliberately.
 
@@ -147,7 +147,7 @@ Leave-one-out median error at the board median (`data/season-2/difficulty_model.
 
 | Class | Scenarios | Features | LOO median | LOO 90th pct |
 | --- | ---: | --- | ---: | ---: |
-| Clicking | 193 | nearest-flick Fitts ID, log angular speed, log shots to kill | 0.143 (about 15% in time per kill) | 0.404 |
+| Clicking | 193 | nearest-flick Fitts ID, log angular speed, log shots to kill, accuracy multiplier, square-root accuracy multiplier | 0.130 (about 14% in time per kill) | 0.408 |
 | Tracking | 166 | log speed/size, log strafe period, log seconds to full speed | 0.375 logit (about 9 points of share mid-board) | 1.029 |
 | Switching | 85 | log speed/size, log time to kill | 0.132 logit | 0.391 |
 
@@ -155,7 +155,17 @@ Every feature earns its place: removing any one raises the leave-one-out error a
 top 5% and the median of the board (`ablation` in the model file). Three that were tried
 did not, and were removed one at a time: switching's Fitts ID, tracking's "leaves the
 ground" flag, and then tracking's log size, which carried nothing the speed-to-size ratio
-did not once the flag was gone.
+did not once the flag was gone. Two that were added: whether a clicking score is multiplied
+by accuracy or by its square root. Without them the fit averaged that penalty into every
+scenario, and predicted Voltaic's 1w4ts, scored on square-root accuracy, 15-25% above its
+board, which also means it predicted every unmultiplied scenario - all of season 2's -
+below its own.
+
+One bias the model keeps: it predicts flying tracking targets as easier than their boards
+say. Voltaic's Aether is over-predicted by 0.2 to 0.5 logit with itself left out. A flag for
+flying targets was tried and made the fit worse overall (0.375 to 0.407 at the median), so
+the bias is documented instead: Lift, Loop and Wasp, the three families that fly, are
+likely to have thresholds set too high.
 
 Two findings shaped how the model is used.
 
@@ -163,8 +173,8 @@ Two findings shaped how the model is used.
   from Novice (598) to Intermediate (568), although the target shrinks and speeds up: a harder
   scenario draws a stronger crowd. A pooled model predicts the board of a typical crowd.
 - **A sibling's board was measured too.** Predicting a variant from another variant's board
-  is about as good as the pooled fit for clicking (0.142 against 0.143), better for tracking
-  (0.284 against 0.375) and worse for switching (0.149 against 0.132). No season-2 scenario
+  is worse than the pooled fit for clicking (0.144 against 0.130) and switching (0.149
+  against 0.132), and better for tracking (0.284 against 0.375). No season-2 scenario
   has a sibling with a board, so the pooled fit is the only option until one does.
 
 How sharply a target turns matters to tracking and is in the file: seconds to reach full

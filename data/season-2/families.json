@@ -132,7 +132,7 @@
    "family": "Comet",
    "category": "Dynamic Clicking",
    "focus": "Fast crossers; move with the target and click inside the motion.",
-   "why": "High-speed dynamic clicks. Speed is the other axis of difficulty besides size: at the board median the fitted model prices a doubling of angular speed, 20 to 40 degrees a second, at about half a bit of Fitts difficulty (0.55).",
+   "why": "High-speed dynamic clicks. Speed is the other axis of difficulty besides size: at the board median the fitted model prices a doubling of angular speed, 20 to 40 degrees a second, at about half a bit of Fitts difficulty (0.54).",
    "learnsFrom": [
     "VT Pasu Intermediate S5",
     "Aimerz+ pipeClick Easy S1"
@@ -451,18 +451,18 @@
    "angularSpeed": 0,
    "fittsIdNearest": 3.38,
    "ttk": 0,
-   "median": 1186,
+   "median": 1194,
    "medianRange": [
-    1027,
-    1369
+    1048,
+    1360
    ],
    "rankMaxes": [
-    917,
-    1090,
-    1192,
-    1267,
-    1332,
-    1394
+    919,
+    1096,
+    1200,
+    1277,
+    1341,
+    1403
    ]
   },
   {
@@ -474,18 +474,18 @@
    "angularSpeed": 0,
    "fittsIdNearest": 3.563,
    "ttk": 0,
-   "median": 1129,
+   "median": 1135,
    "medianRange": [
-    978,
-    1303
+    996,
+    1293
    ],
    "rankMaxes": [
-    1270,
-    1329,
-    1356,
-    1407,
-    1450,
-    1489
+    1277,
+    1337,
+    1363,
+    1414,
+    1457,
+    1496
    ]
   },
   {
@@ -497,18 +497,18 @@
    "angularSpeed": 0,
    "fittsIdNearest": 3.748,
    "ttk": 0,
-   "median": 1074,
+   "median": 1078,
    "medianRange": [
-    931,
-    1240
+    946,
+    1228
    ],
    "rankMaxes": [
-    1383,
-    1420,
-    1456,
-    1489,
-    1521,
-    1563
+    1389,
+    1426,
+    1462,
+    1496,
+    1529,
+    1570
    ]
   },
   {
@@ -520,16 +520,16 @@
    "angularSpeed": 0,
    "fittsIdNearest": 3.935,
    "ttk": 0,
-   "median": 1022,
+   "median": 1024,
    "medianRange": [
-    885,
-    1179
+    898,
+    1166
    ],
    "rankMaxes": [
-    1452,
-    1492,
-    1518,
-    1550
+    1458,
+    1497,
+    1523,
+    1555
    ]
   },
   {
@@ -541,18 +541,18 @@
    "angularSpeed": 0,
    "fittsIdNearest": 3.057,
    "ttk": 0,
-   "median": 1294,
+   "median": 1306,
    "medianRange": [
-    1121,
-    1493
+    1146,
+    1488
    ],
    "rankMaxes": [
-    1010,
-    1193,
-    1300,
-    1381,
-    1449,
-    1515
+    1017,
+    1203,
+    1312,
+    1394,
+    1463,
+    1528
    ]
   },
   {
@@ -564,18 +564,18 @@
    "angularSpeed": 0,
    "fittsIdNearest": 3.235,
    "ttk": 0,
-   "median": 1233,
+   "median": 1243,
    "medianRange": [
-    1068,
-    1423
+    1091,
+    1416
    ],
    "rankMaxes": [
-    1383,
-    1447,
-    1476,
-    1530,
-    1576,
-    1618
+    1395,
+    1458,
+    1487,
+    1541,
+    1587,
+    1629
    ]
   },
   {
@@ -587,18 +587,18 @@
    "angularSpeed": 0,
    "fittsIdNearest": 3.416,
    "ttk": 0,
-   "median": 1175,
+   "median": 1182,
    "medianRange": [
-    1018,
-    1356
+    1038,
+    1347
    ],
    "rankMaxes": [
-    1505,
-    1545,
-    1584,
-    1619,
-    1653,
-    1699
+    1514,
+    1554,
+    1593,
+    1629,
+    1664,
+    1709
    ]
   },
   {
@@ -610,16 +610,16 @@
    "angularSpeed": 0,
    "fittsIdNearest": 3.599,
    "ttk": 0,
-   "median": 1118,
+   "median": 1124,
    "medianRange": [
-    969,
-    1291
+    986,
+    1280
    ],
    "rankMaxes": [
-    1579,
-    1623,
-    1651,
-    1686
+    1588,
+    1631,
+    1659,
+    1694
    ]
   },
   {
@@ -631,18 +631,18 @@
    "angularSpeed": 0,
    "fittsIdNearest": 3.089,
    "ttk": 0,
-   "median": 1282,
+   "median": 1294,
    "medianRange": [
-    1111,
-    1480
+    1136,
+    1474
    ],
    "rankMaxes": [
-    1000,
-    1182,
-    1288,
-    1369,
-    1437,
-    1502
+    1006,
+    1192,
+    1300,
+    1382,
+    1450,
+    1515
    ]
   },
   {
@@ -654,18 +654,18 @@
    "angularSpeed": 0,
    "fittsIdNearest": 3.268,
    "ttk": 0,
-   "median": 1222,
+   "median": 1232,
    "medianRange": [
-    1059,
-    1411
+    1081,
+    1403
    ],
    "rankMaxes": [
-    1372,
-    1435,
-    1463,
-    1517,
-    1563,
-    1604
+    1382,
+    1445,
+    1474,
+    1528,
+    1573,
+    1615
    ]
   },
   {
@@ -677,18 +677,18 @@
    "angularSpeed": 0,
    "fittsIdNearest": 3.449,
    "ttk": 0,
-   "median": 1164,
+   "median": 1171,
    "medianRange": [
-    1008,
-    1344
+    1028,
+    1334
    ],
    "rankMaxes": [
-    1493,
-    1532,
-    1570,
-    1605,
-    1639,
-    1685
+    1501,
+    1541,
+    1579,
+    1615,
+    1650,
+    1694
    ]
   },
   {
@@ -700,16 +700,16 @@
    "angularSpeed": 0,
    "fittsIdNearest": 3.633,
    "ttk": 0,
-   "median": 1108,
+   "median": 1113,
    "medianRange": [
-    960,
-    1279
+    977,
+    1268
    ],
    "rankMaxes": [
-    1566,
-    1609,
-    1637,
-    1672
+    1574,
+    1617,
+    1644,
+    1679
    ]
   },
   {
@@ -721,18 +721,18 @@
    "angularSpeed": 0,
    "fittsIdNearest": 3.6,
    "ttk": 0,
-   "median": 1118,
+   "median": 1123,
    "medianRange": [
-    968,
-    1290
+    986,
+    1280
    ],
    "rankMaxes": [
-    859,
-    1026,
-    1123,
-    1196,
-    1258,
-    1317
+    858,
+    1029,
+    1129,
+    1202,
+    1265,
+    1324
    ]
   },
   {
@@ -744,18 +744,18 @@
    "angularSpeed": 0,
    "fittsIdNearest": 3.786,
    "ttk": 0,
-   "median": 1063,
+   "median": 1067,
    "medianRange": [
-    921,
-    1227
+    936,
+    1215
    ],
    "rankMaxes": [
-    1198,
-    1255,
-    1280,
-    1329,
-    1370,
-    1407
+    1203,
+    1260,
+    1286,
+    1335,
+    1375,
+    1413
    ]
   },
   {
@@ -767,18 +767,18 @@
    "angularSpeed": 0,
    "fittsIdNearest": 3.973,
    "ttk": 0,
-   "median": 1011,
+   "median": 1013,
    "medianRange": [
-    876,
-    1167
+    889,
+    1154
    ],
    "rankMaxes": [
-    1307,
-    1342,
-    1376,
-    1407,
-    1438,
-    1478
+    1310,
+    1346,
+    1380,
+    1412,
+    1444,
+    1483
    ]
   },
   {
@@ -792,14 +792,14 @@
    "ttk": 0,
    "median": 961,
    "medianRange": [
-    833,
-    1109
+    844,
+    1095
    ],
    "rankMaxes": [
-    1371,
-    1409,
-    1434,
-    1465
+    1376,
+    1413,
+    1437,
+    1468
    ]
   },
   {
@@ -811,18 +811,18 @@
    "angularSpeed": 0,
    "fittsIdNearest": 2.653,
    "ttk": 0,
-   "median": 1442,
+   "median": 1461,
    "medianRange": [
-    1249,
+    1282,
     1664
    ],
    "rankMaxes": [
-    1140,
-    1335,
-    1449,
-    1536,
-    1610,
-    1682
+    1153,
+    1351,
+    1468,
+    1556,
+    1630,
+    1701
    ]
   },
   {
@@ -834,18 +834,18 @@
    "angularSpeed": 0,
    "fittsIdNearest": 2.823,
    "ttk": 0,
-   "median": 1377,
+   "median": 1393,
    "medianRange": [
-    1193,
-    1590
+    1223,
+    1587
    ],
    "rankMaxes": [
-    1540,
-    1609,
-    1641,
-    1699,
-    1750,
-    1796
+    1557,
+    1626,
+    1657,
+    1716,
+    1765,
+    1812
    ]
   },
   {
@@ -857,18 +857,18 @@
    "angularSpeed": 0,
    "fittsIdNearest": 2.998,
    "ttk": 0,
-   "median": 1314,
+   "median": 1327,
    "medianRange": [
-    1139,
-    1517
+    1165,
+    1512
    ],
    "rankMaxes": [
-    1674,
-    1718,
-    1760,
-    1798,
-    1836,
-    1886
+    1687,
+    1732,
+    1773,
+    1812,
+    1851,
+    1901
    ]
   },
   {
@@ -880,16 +880,16 @@
    "angularSpeed": 0,
    "fittsIdNearest": 3.175,
    "ttk": 0,
-   "median": 1253,
+   "median": 1264,
    "medianRange": [
-    1086,
-    1446
+    1109,
+    1440
    ],
    "rankMaxes": [
-    1756,
-    1804,
-    1836,
-    1875
+    1769,
+    1817,
+    1847,
+    1887
    ]
   },
   {
@@ -901,18 +901,18 @@
    "angularSpeed": 0,
    "fittsIdNearest": 3.464,
    "ttk": 0,
-   "median": 1159,
+   "median": 1166,
    "medianRange": [
-    1004,
-    1338
+    1024,
+    1329
    ],
    "rankMaxes": [
-    894,
-    1065,
-    1165,
-    1240,
-    1303,
-    1364
+    895,
+    1070,
+    1172,
+    1248,
+    1311,
+    1372
    ]
   },
   {
@@ -924,18 +924,18 @@
    "angularSpeed": 0,
    "fittsIdNearest": 3.648,
    "ttk": 0,
-   "median": 1103,
+   "median": 1108,
    "medianRange": [
-    956,
-    1274
+    973,
+    1263
    ],
    "rankMaxes": [
-    1242,
-    1300,
-    1326,
-    1377,
-    1419,
-    1457
+    1249,
+    1307,
+    1333,
+    1383,
+    1425,
+    1464
    ]
   },
   {
@@ -947,18 +947,18 @@
    "angularSpeed": 0,
    "fittsIdNearest": 3.834,
    "ttk": 0,
-   "median": 1050,
+   "median": 1053,
    "medianRange": [
-    909,
-    1212
+    924,
+    1199
    ],
    "rankMaxes": [
-    1354,
-    1390,
-    1425,
-    1457,
-    1489,
-    1530
+    1358,
+    1395,
+    1430,
+    1463,
+    1496,
+    1536
    ]
   },
   {
@@ -970,16 +970,16 @@
    "angularSpeed": 0,
    "fittsIdNearest": 4.022,
    "ttk": 0,
-   "median": 998,
+   "median": 999,
    "medianRange": [
-    865,
-    1152
+    877,
+    1138
    ],
    "rankMaxes": [
-    1420,
-    1460,
-    1485,
-    1517
+    1426,
+    1465,
+    1489,
+    1521
    ]
   },
   {
@@ -991,18 +991,18 @@
    "angularSpeed": 12,
    "fittsIdNearest": 3.711,
    "ttk": 0,
-   "median": 616,
+   "median": 611,
    "medianRange": [
-    534,
-    711
+    536,
+    696
    ],
    "rankMaxes": [
-    386,
-    530,
-    621,
-    688,
-    745,
-    799
+    379,
+    523,
+    616,
+    683,
+    741,
+    795
    ]
   },
   {
@@ -1014,18 +1014,18 @@
    "angularSpeed": 13.2,
    "fittsIdNearest": 3.897,
    "ttk": 0,
-   "median": 575,
+   "median": 569,
    "medianRange": [
-    498,
-    664
+    499,
+    648
    ],
    "rankMaxes": [
-    698,
-    749,
-    770,
-    812,
-    847,
-    877
+    693,
+    744,
+    765,
+    808,
+    842,
+    872
    ]
   },
   {
@@ -1037,18 +1037,18 @@
    "angularSpeed": 14.5,
    "fittsIdNearest": 4.086,
    "ttk": 0,
-   "median": 536,
+   "median": 529,
    "medianRange": [
     464,
-    619
+    603
    ],
    "rankMaxes": [
-    795,
-    824,
-    850,
-    874,
-    899,
-    930
+    790,
+    818,
+    845,
+    870,
+    895,
+    926
    ]
   },
   {
@@ -1060,16 +1060,16 @@
    "angularSpeed": 16,
    "fittsIdNearest": 4.276,
    "ttk": 0,
-   "median": 499,
+   "median": 492,
    "medianRange": [
-    433,
-    576
+    432,
+    560
    ],
    "rankMaxes": [
-    845,
-    875,
-    894,
-    918
+    840,
+    870,
+    889,
+    913
    ]
   },
   {
@@ -1081,18 +1081,18 @@
    "angularSpeed": 22,
    "fittsIdNearest": 3.868,
    "ttk": 0,
-   "median": 521,
+   "median": 514,
    "medianRange": [
     451,
-    601
+    586
    ],
    "rankMaxes": [
-    311,
-    441,
-    526,
-    588,
-    641,
-    691
+    304,
+    433,
+    519,
+    581,
+    635,
+    685
    ]
   },
   {
@@ -1104,18 +1104,18 @@
    "angularSpeed": 24.2,
    "fittsIdNearest": 4.056,
    "ttk": 0,
-   "median": 485,
+   "median": 478,
    "medianRange": [
-    421,
-    560
+    420,
+    545
    ],
    "rankMaxes": [
-    599,
-    647,
-    667,
-    706,
-    738,
-    765
+    593,
+    641,
+    660,
+    699,
+    732,
+    759
    ]
   },
   {
@@ -1127,18 +1127,18 @@
    "angularSpeed": 26.6,
    "fittsIdNearest": 4.246,
    "ttk": 0,
-   "median": 452,
+   "median": 444,
    "medianRange": [
-    392,
-    522
+    390,
+    506
    ],
    "rankMaxes": [
-    692,
-    718,
-    742,
-    765,
-    787,
-    816
+    686,
+    712,
+    736,
+    759,
+    781,
+    810
    ]
   },
   {
@@ -1150,16 +1150,16 @@
    "angularSpeed": 29.3,
    "fittsIdNearest": 4.437,
    "ttk": 0,
-   "median": 421,
+   "median": 413,
    "medianRange": [
-    365,
-    486
+    362,
+    470
    ],
    "rankMaxes": [
-    739,
-    766,
-    784,
-    806
+    733,
+    760,
+    778,
+    800
    ]
   },
   {
@@ -1171,18 +1171,18 @@
    "angularSpeed": 17,
    "fittsIdNearest": 3.122,
    "ttk": 0,
-   "median": 672,
+   "median": 668,
    "medianRange": [
-    582,
-    776
+    586,
+    761
    ],
    "rankMaxes": [
-    418,
-    576,
-    678,
-    752,
-    816,
-    876
+    412,
+    571,
+    674,
+    749,
+    813,
+    873
    ]
   },
   {
@@ -1194,18 +1194,18 @@
    "angularSpeed": 18.7,
    "fittsIdNearest": 3.302,
    "ttk": 0,
-   "median": 628,
+   "median": 623,
    "medianRange": [
-    544,
-    725
+    547,
+    710
    ],
    "rankMaxes": [
-    765,
-    822,
-    847,
-    893,
-    932,
-    965
+    762,
+    819,
+    843,
+    890,
+    929,
+    962
    ]
   },
   {
@@ -1217,18 +1217,18 @@
    "angularSpeed": 20.6,
    "fittsIdNearest": 3.483,
    "ttk": 0,
-   "median": 586,
+   "median": 580,
    "medianRange": [
-    508,
-    676
+    509,
+    661
    ],
    "rankMaxes": [
-    876,
-    908,
-    937,
-    964,
-    991,
-    1026
+    872,
+    904,
+    933,
+    961,
+    988,
+    1023
    ]
   },
   {
@@ -1240,16 +1240,16 @@
    "angularSpeed": 22.6,
    "fittsIdNearest": 3.668,
    "ttk": 0,
-   "median": 547,
+   "median": 540,
    "medianRange": [
     474,
-    631
+    616
    ],
    "rankMaxes": [
-    933,
-    966,
-    988,
-    1015
+    929,
+    962,
+    984,
+    1011
    ]
   },
   {
@@ -1261,18 +1261,18 @@
    "angularSpeed": 7.5,
    "fittsIdNearest": 3.916,
    "ttk": 0,
-   "median": 641,
+   "median": 635,
    "medianRange": [
-    555,
-    740
+    557,
+    724
    ],
    "rankMaxes": [
-    412,
-    555,
-    646,
-    711,
-    767,
-    819
+    405,
+    549,
+    640,
+    706,
+    762,
+    815
    ]
   },
   {
@@ -1284,18 +1284,18 @@
    "angularSpeed": 8.3,
    "fittsIdNearest": 4.104,
    "ttk": 0,
-   "median": 598,
+   "median": 591,
    "medianRange": [
-    518,
-    690
+    519,
+    674
    ],
    "rankMaxes": [
-    718,
-    768,
-    789,
-    831,
-    865,
-    894
+    713,
+    763,
+    784,
+    826,
+    860,
+    890
    ]
   },
   {
@@ -1307,18 +1307,18 @@
    "angularSpeed": 9.1,
    "fittsIdNearest": 4.294,
    "ttk": 0,
-   "median": 557,
+   "median": 550,
    "medianRange": [
     483,
-    643
+    627
    ],
    "rankMaxes": [
-    812,
-    840,
-    866,
-    891,
-    915,
-    946
+    807,
+    835,
+    861,
+    886,
+    911,
+    941
    ]
   },
   {
@@ -1330,16 +1330,16 @@
    "angularSpeed": 10,
    "fittsIdNearest": 4.485,
    "ttk": 0,
-   "median": 520,
+   "median": 512,
    "medianRange": [
-    450,
-    600
+    449,
+    583
    ],
    "rankMaxes": [
-    860,
-    889,
-    908,
-    932
+    855,
+    884,
+    903,
+    927
    ]
   },
   {
@@ -1351,18 +1351,18 @@
    "angularSpeed": 34,
    "fittsIdNearest": 3.645,
    "ttk": 0,
-   "median": 504,
+   "median": 498,
    "medianRange": [
     437,
-    582
+    567
    ],
    "rankMaxes": [
-    294,
-    423,
-    509,
-    572,
-    626,
-    677
+    286,
+    416,
+    502,
+    566,
+    620,
+    671
    ]
   },
   {
@@ -1374,18 +1374,18 @@
    "angularSpeed": 37.4,
    "fittsIdNearest": 3.831,
    "ttk": 0,
-   "median": 470,
+   "median": 463,
    "medianRange": [
-    407,
-    543
+    406,
+    527
    ],
    "rankMaxes": [
-    586,
-    635,
-    655,
-    694,
-    727,
-    755
+    580,
+    628,
+    648,
+    688,
+    721,
+    749
    ]
   },
   {
@@ -1397,18 +1397,18 @@
    "angularSpeed": 41.1,
    "fittsIdNearest": 4.019,
    "ttk": 0,
-   "median": 438,
+   "median": 430,
    "medianRange": [
-    379,
-    505
+    378,
+    490
    ],
    "rankMaxes": [
-    682,
-    709,
-    733,
-    756,
-    778,
-    807
+    676,
+    702,
+    727,
+    750,
+    773,
+    802
    ]
   },
   {
@@ -1420,16 +1420,16 @@
    "angularSpeed": 45.3,
    "fittsIdNearest": 4.208,
    "ttk": 0,
-   "median": 408,
+   "median": 400,
    "medianRange": [
-    353,
-    471
+    351,
+    455
    ],
    "rankMaxes": [
-    731,
-    759,
-    777,
-    799
+    725,
+    753,
+    770,
+    793
    ]
   },
   {
@@ -1441,18 +1441,18 @@
    "angularSpeed": 14,
    "fittsIdNearest": 3.931,
    "ttk": 0.2,
-   "median": 286,
+   "median": 285,
    "medianRange": [
-    247,
-    330
+    250,
+    325
    ],
    "rankMaxes": [
     203,
     257,
     288,
-    319,
-    335,
-    352
+    318,
+    334,
+    350
    ]
   },
   {
@@ -1464,18 +1464,18 @@
    "angularSpeed": 15.4,
    "fittsIdNearest": 4.119,
    "ttk": 0.2,
-   "median": 266,
+   "median": 265,
    "medianRange": [
-    231,
-    307
+    233,
+    302
    ],
    "rankMaxes": [
-    314,
-    329,
-    339,
-    352,
-    359,
-    371
+    312,
+    328,
+    337,
+    350,
+    358,
+    369
    ]
   },
   {
@@ -1487,18 +1487,18 @@
    "angularSpeed": 16.9,
    "fittsIdNearest": 4.31,
    "ttk": 0.2,
-   "median": 248,
+   "median": 246,
    "medianRange": [
-    215,
-    286
+    216,
+    281
    ],
    "rankMaxes": [
-    337,
-    348,
-    360,
+    335,
+    346,
+    358,
+    363,
     365,
-    367,
-    377
+    375
    ]
   },
   {
@@ -1510,16 +1510,16 @@
    "angularSpeed": 18.6,
    "fittsIdNearest": 4.501,
    "ttk": 0.2,
-   "median": 231,
+   "median": 229,
    "medianRange": [
-    200,
-    267
+    201,
+    261
    ],
    "rankMaxes": [
-    345,
-    355,
-    362,
-    372
+    342,
+    352,
+    360,
+    370
    ]
   },
   {

@@ -105,7 +105,7 @@ export function fromMetric(cls: DifficultyClass, f: ScenarioFeatures, metric: nu
 }
 
 export const FEATURE_NAMES: Record<DifficultyClass, string[]> = {
-  click: ["fitts ID of the nearest flick", "log(1 + angular speed)", "log(shots to kill)"],
+  click: ["fitts ID of the nearest flick", "log(1 + angular speed)", "log(shots to kill)", "accuracy multiplier", "square-root accuracy multiplier"],
   track: ["log(angular speed / size)", "log(strafe period)", "log(seconds to full speed)"],
   switch: ["log(angular speed / size)", "log(time to kill)"],
 };
@@ -127,7 +127,12 @@ export function featureVector(cls: DifficultyClass, f: ScenarioFeatures): number
   const main = f.targets[0];
   const speed = Math.max(d.angularSpeed ?? 0, 1);
   if (cls === "click") {
-    return [d.fittsIdNearest ?? 0, Math.log1p(d.angularSpeed ?? 0), Math.log(Math.max(1, d.shotsToKill ?? 1))];
+    // A kill-scored board is kills times points, times accuracy or its square root where the
+    // file says so. The two flags let the fit learn that penalty instead of averaging it into
+    // everything: without them, Voltaic's 1w4ts, scored on square-root accuracy, was predicted
+    // 15-25% above its board, and every unmultiplied scenario was predicted below its own.
+    const acc = f.scoring.accuracyMult;
+    return [d.fittsIdNearest ?? 0, Math.log1p(d.angularSpeed ?? 0), Math.log(Math.max(1, d.shotsToKill ?? 1)), acc && !f.scoring.sqrtAccuracy ? 1 : 0, acc && f.scoring.sqrtAccuracy ? 1 : 0];
   }
   if (cls === "track") {
     // How sharply it turns: a target that takes a third of a second to reach speed reverses
