@@ -94,9 +94,14 @@ it to the counts quoted.
 - **A reload economy** (`MagazineMax` with `AmmoPerShot` above 1) is Voltaic's other way to
   make misses cost; `EndChallengeAfterKills` ends a run early.
 
+## Settled in game
+
+- **An embedded JSON map under a new `MapName` loads** for a scenario placed in the local
+  scenario folder, including rooms generated from scratch: all seven season-2 templates'
+  scenarios loaded, 2026-09-24.
+
 ## Not settled
 
 Played in game, none of the following has been checked, and each is in the playtest list in
-docs/season-2.md: that an embedded map under a new `MapName` loads for a scenario placed in
-the local folder; that a target with gravity and hops both off holds its height; that a
+docs/season-2.md: that a target with gravity and hops both off holds its height; that a
 never-dying tracking target at 5,000 health never dies.

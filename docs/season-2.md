@@ -85,7 +85,8 @@ season is `npm run push:season`, which Rylee runs.
 
 ## Playtest before anything else
 
-The files have been generated and checked, not played. In order of risk:
+The files have been generated and checked. Item 1 was confirmed in game on 2026-09-24: all
+seven load. The rest are still open. In order of risk:
 
 1. **Load one of each template in KovaaK's**: a static family (Meridian), a floater
    (Drift), a bouncer (Hopper), a ground tracker (Glide), a flier (Lift), a still switch
