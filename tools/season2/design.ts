@@ -1108,10 +1108,10 @@ export const FAMILIES: Family[] = [
       anchor: "cA fuglaapressure",
       modelClass: "click",
       focus: "Pop them before they reach you; every one that does costs you.",
-      why: "Speed clicking under pressure, on fuglaa's design: balloons that dash at the player and burst on arrival, so a target left alive costs score rather than only time. The dash is slow at Novice and 1.2x faster each band, and the game itself runs faster each band too.",
+      why: "Speed clicking under pressure, on fuglaa's design: balloons that dash at the player and burst on arrival, so a target left alive costs score rather than only time. The dash takes about 2.7 seconds to arrive at Novice and is 1.2x faster each band, and the game itself runs faster each band too.",
       learnsFrom: ["cA fuglaapressure", "fuglaaPressure"],
     },
-    (f) => pressureClick(f, { alive: 5, deg: 1.6, timescale: 1.0, timescaleStep: 0.2, range: 18160, approach: 1500 }, "Balloons that come for you: pop each one before it reaches you. Every hit costs score."),
+    (f) => pressureClick(f, { alive: 5, deg: 1.6, timescale: 1.0, timescaleStep: 0.2, range: 18160, approach: 3000 }, "Balloons that come for you: pop each one before it reaches you. Every hit costs score."),
   ),
   family(
     {
