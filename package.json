@@ -95,7 +95,8 @@
     "validate:rebuild": "tsx tools/validateFunRebuild.ts",
     "science:scenarios": "tsx tools/scenarioScience.ts",
     "build:season-2": "tsx tools/buildSeason2.ts",
-    "fit:difficulty": "tsx tools/fitDifficulty.ts"
+    "fit:difficulty": "tsx tools/fitDifficulty.ts",
+    "validate:season2": "tsx src/core/scenario/validateSeason2.ts"
   },
   "devDependencies": {
     "@electric-sql/pglite": "^0.5.5",

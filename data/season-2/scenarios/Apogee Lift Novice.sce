@@ -298,7 +298,7 @@ PlaybackOptions.BreakToInputMode=false
 
 [Character Profile]
 Name=Apogee Lift Body
-MaxHealth=1000000.0
+MaxHealth=5000.0
 WeaponProfileNames=;;;;;;;
 MinRespawnDelay=1.45
 MaxRespawnDelay=1.45

@@ -279,10 +279,12 @@ function movingClick(f: Family, spec: MovingClickSpec, description: string) {
       dodgeValues.ToggleUpDownMinTime = spec.upDown[0] * k;
       dodgeValues.ToggleUpDownMaxTime = spec.upDown[1] * k;
     } else if (spec.upDown === null) {
-      // One height band: no vertical toggles and no hops.
-      dodgeValues.ToggleUpDownMinTime = 30;
-      dodgeValues.ToggleUpDownMaxTime = 30;
+      // One height band. The template's heads stay aloft by hopping against a little
+      // gravity; with neither, each keeps the height it spawned at and only moves sideways.
+      // (A longer vertical toggle was the first attempt; 30 s is past anything the corpus
+      // uses, and it would not have stopped the hops anyway.)
       dodgeValues.JumpFrequency = 0;
+      setProfile(sce, "Character Profile", character, { Gravity: 0 });
     }
     setProfile(sce, "Dodge Profile", dodge, dodgeValues);
     setBots(sce, [{ bot, count: spec.alive }]);
@@ -350,8 +352,10 @@ function track(f: Family, spec: TrackSpec, description: string, sub: "Precise" |
       MaxSpeed: maxSpeed,
       Acceleration: maxSpeed / spec.rampSeconds,
       // A target that never dies and never decays: tracking is scored on time on target,
-      // and a respawn gap would be a pause nobody chose.
-      MaxHealth: 1_000_000,
+      // and a respawn gap would be a pause nobody chose. The templates' tracking guns do
+      // 0.1 damage a second, so 5,000 outlasts any run; a million, the first choice, is
+      // past the largest health any scenario on record uses (10,000).
+      MaxHealth: 5000,
       HealthRegenPerSec: 0,
     };
     if (f.template === "groundTrack") chr.MainBBHeight = 2 * radiusFor(deg, spec.range) * 2.6;
