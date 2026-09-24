@@ -219,25 +219,10 @@ export function renameCharacterInMap(sce: Sce, from: string, to: string): number
   return changed;
 }
 
-/** Points on a grid, inclusive of both ends, at depth `x`. */
-export function grid(x: number, ys: number[], zs: number[]): Vec[] {
-  const out: Vec[] = [];
-  for (const y of ys) for (const z of zs) out.push({ x, y, z });
-  return out;
-}
-
 /** `n` evenly spaced values from `lo` to `hi` inclusive. */
 export function span(lo: number, hi: number, n: number): number[] {
   if (n === 1) return [(lo + hi) / 2];
   return Array.from({ length: n }, (_, i) => lo + ((hi - lo) * i) / (n - 1));
-}
-
-/**
- * Map-unit offset for an angle at a depth: the lateral distance at which a point `depth`
- * units ahead sits `deg` degrees off the player's line of sight.
- */
-export function atAngle(depth: number, deg: number): number {
-  return depth * Math.tan((deg * Math.PI) / 180);
 }
 
 export type { SceLine };

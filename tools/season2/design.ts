@@ -25,7 +25,6 @@
  */
 
 import {
-  atAngle,
   cloneProfile,
   prune,
   renameCharacterInMap,
@@ -865,4 +864,3 @@ export function buildScenario(template: Sce, f: Family, band: Band): Sce {
   return sce;
 }
 
-export { atAngle };

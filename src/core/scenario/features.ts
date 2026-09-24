@@ -18,7 +18,7 @@
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
-import { bool, get, list, num, parseSce, profile, sections, type Sce, type SceLine } from "./sce.ts";
+import { bool, get, list, num, parseSce, profile, type Sce, type SceLine } from "./sce.ts";
 
 export interface Vec3 {
   x: number;
@@ -465,4 +465,3 @@ export function readScenario(path: string): Sce {
   return parseSce(readFileSync(path, "utf8"));
 }
 
-export { sections };

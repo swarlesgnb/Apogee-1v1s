@@ -25,7 +25,7 @@ import { join } from "node:path";
 
 import { dataFile } from "../src/core/dataDir.ts";
 import { ENERGY_PER_RANK } from "../src/core/benchmarks/energy.ts";
-import { parseSce, serializeSce, get, type Sce } from "../src/core/scenario/sce.ts";
+import { parseSce, serializeSce, type Sce } from "../src/core/scenario/sce.ts";
 import { scenarioFeatures, type ScenarioFeatures } from "../src/core/scenario/features.ts";
 import { classify, predictLadder, toMetric, type ClassModel, type DifficultyClass } from "../src/core/scenario/difficulty.ts";
 import { thresholdsFrom } from "../src/core/season/percentiles.ts";
@@ -303,4 +303,3 @@ for (const category of [...new Set(FAMILIES.map((f) => f.category))]) {
 writeFileSync(join(dataFile(".."), "docs", "season-2-scenarios.md"), lines.join("\n"));
 
 console.log(`${built.length} scenarios, ${FAMILIES.length} families -> data/season-2/scenarios, data/seasons/season-2.json, docs/season-2-scenarios.md`);
-void get;
