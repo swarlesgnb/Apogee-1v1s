@@ -30,6 +30,8 @@
     "build:subskills": "tsx tools/deriveSubskills.ts",
     "validate:duration": "tsx src/core/stats/validateDuration.ts",
     "validate:season": "tsx src/core/season/validateSeasonEdits.ts",
+    "validate:sce": "tsx src/core/scenario/validateSce.ts",
+    "corpus:scenarios": "tsx tools/scenarioCorpus.ts",
     "validate:season-ui": "tsx tools/buildUiPreview.ts && electron tools/seasonEditorUi.cjs",
     "validate:reference-ui": "tsx tools/buildUiPreview.ts && electron tools/referencePolishUi.cjs",
     "validate:mixtape": "node tools/validateMixtape.mjs",
