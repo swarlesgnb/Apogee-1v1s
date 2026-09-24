@@ -114,6 +114,8 @@ export interface ScenarioFeatures {
      */
     fullyAutomatic: boolean | null;
     magazine: number;
+    /** Rounds a shot costs. Above one with a magazine is a reload economy: misses cost time. */
+    ammoPerShot: number;
   } | null;
   /** Bots alive at once. */
   concurrent: number;
@@ -396,6 +398,7 @@ export function scenarioFeatures(sce: Sce, mapsDir: string | null = null): Scena
           ? get(weaponLines, "Category") === "FullyAuto"
           : get(weaponLines, "FullyAutomatic") === undefined ? null : bool(weaponLines, "FullyAutomatic"),
         magazine: num(weaponLines, "MagazineMax", 0),
+        ammoPerShot: num(weaponLines, "AmmoPerShot", 1),
       }
     : null;
 

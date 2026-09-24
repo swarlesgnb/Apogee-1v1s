@@ -177,6 +177,11 @@ const noise = {
     with: Math.round(median(noisy.filter((n) => n.row.scoring.accuracyMult).map((n) => n.noise)) * 1000) / 1000,
     without: Math.round(median(noisy.filter((n) => !n.row.scoring.accuracyMult).map((n) => n.noise)) * 1000) / 1000,
   },
+  // Voltaic's other way to make misses cost: a magazine and more than one round a shot.
+  reloadEconomy: (() => {
+    const economy = noisy.filter((n) => (n.row.weapon?.magazine ?? 0) > 0 && (n.row.weapon?.ammoPerShot ?? 1) > 1);
+    return { scenarios: economy.length, medianNoise: economy.length ? Math.round(median(economy.map((n) => n.noise)) * 1000) / 1000 : null };
+  })(),
 };
 
 // ---- replay and reach ----------------------------------------------------------------------
@@ -213,7 +218,7 @@ writeFileSync(
 
 const line = (name: string, c: { n: number; rho: number; p: number }) =>
   `  ${name.padEnd(20)} rho ${c.rho >= 0 ? "+" : ""}${c.rho.toFixed(2)}  p ${c.p.toFixed(3)}  n ${c.n}`;
-console.log(`noise: ${noise.scenarios} scenarios, median ${noise.medianNoise}; accuracy multiplier ${noise.accuracyMultiplier.with} with, ${noise.accuracyMultiplier.without} without`);
+console.log(`noise: ${noise.scenarios} scenarios, median ${noise.medianNoise}; accuracy multiplier ${noise.accuracyMultiplier.with} with, ${noise.accuracyMultiplier.without} without; reload economy ${noise.reloadEconomy.medianNoise} over ${noise.reloadEconomy.scenarios}`);
 for (const [k, c] of Object.entries(noise.correlations)) console.log(line(k, c));
 console.log(`replay (plays per player), ${popularity.scenarios} scenarios; strongest |rho| ${popularity.strongestReplayCorrelation}`);
 for (const [k, c] of Object.entries(popularity.replay)) console.log(line(k, c));

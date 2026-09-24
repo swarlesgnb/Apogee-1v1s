@@ -1,6 +1,6 @@
 {
  "$comment": "Written by tools/scenarioScience.ts; do not hand-edit.",
- "measuredAt": "2026-09-24T04:56:56.493Z",
+ "measuredAt": "2026-09-24T05:14:08.102Z",
  "noise": {
   "scenarios": 296,
   "medianNoise": 0.051,
@@ -54,6 +54,10 @@
   "accuracyMultiplier": {
    "with": 0.058,
    "without": 0.048
+  },
+  "reloadEconomy": {
+   "scenarios": 3,
+   "medianNoise": 0.059
   }
  },
  "popularity": {
