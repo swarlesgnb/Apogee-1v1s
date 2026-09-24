@@ -865,6 +865,8 @@ interface PressureSpec {
    * band. Without them the balloons are still targets and nothing more - 1w6aliens.
    */
   approach?: number;
+  /** Rounds in the player's magazine before a reload; fuglaa's is 2. */
+  magazine?: number;
 }
 
 /**
@@ -891,6 +893,7 @@ function pressureClick(f: Family, spec: PressureSpec, description: string) {
       if (!approach) throw new Error("the template's balloon has no Approach ability");
       setProfile(sce, "Movement Ability Profile", approach, { MainVelocity: spec.approach * Math.pow(1.2, band) });
     }
+    if (spec.magazine) setProfile(sce, "Weapon Profile", weaponOf(sce), { MagazineMax: spec.magazine });
     const timescale = spec.timescale + spec.timescaleStep * band;
     setBots(sce, [{ bot, count: spec.alive }]);
     // Armed, the template's own scoring: half a point per damage, a point lost per damage
@@ -1108,10 +1111,10 @@ export const FAMILIES: Family[] = [
       anchor: "cA fuglaapressure",
       modelClass: "click",
       focus: "Pop them before they reach you; every one that does costs you.",
-      why: "Speed clicking under pressure, on fuglaa's design: balloons that dash at the player and burst on arrival, so a target left alive costs score rather than only time. The dash takes about 2.7 seconds to arrive at Novice and is 1.2x faster each band, and the game itself runs faster each band too.",
+      why: "Speed clicking under pressure, on fuglaa's design: balloons that dash at the player and burst on arrival, so a target left alive costs score rather than only time. The dash takes about 1.4 seconds to arrive at Novice and is 1.2x faster each band, and the player has three rounds before a reload, and the game itself runs faster each band too.",
       learnsFrom: ["cA fuglaapressure", "fuglaaPressure"],
     },
-    (f) => pressureClick(f, { alive: 5, deg: 1.6, timescale: 1.0, timescaleStep: 0.2, range: 18160, approach: 3000 }, "Balloons that come for you: pop each one before it reaches you. Every hit costs score."),
+    (f) => pressureClick(f, { alive: 5, deg: 1.6, timescale: 1.0, timescaleStep: 0.2, range: 18160, approach: 6000, magazine: 3 }, "Balloons that come for you: pop each one before it reaches you. Every hit costs score."),
   ),
   family(
     {

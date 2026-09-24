@@ -165,7 +165,7 @@ Straight lines across the sky; lead nothing, match the line and click. Linear mo
 
 ### Gravity Well
 
-Pop them before they reach you; every one that does costs you. Speed clicking under pressure, on fuglaa's design: balloons that dash at the player and burst on arrival, so a target left alive costs score rather than only time. The dash takes about 2.7 seconds to arrive at Novice and is 1.2x faster each band, and the game itself runs faster each band too.
+Pop them before they reach you; every one that does costs you. Speed clicking under pressure, on fuglaa's design: balloons that dash at the player and burst on arrival, so a target left alive costs score rather than only time. The dash takes about 1.4 seconds to arrive at Novice and is 1.2x faster each band, and the player has three rounds before a reload, and the game itself runs faster each band too.
 
 | Band | Size (deg) | Speed (deg/s) | Reversal (s) | Kill (s) | Predicted median | Thresholds |
 | --- | ---: | ---: | ---: | ---: | --- | --- |

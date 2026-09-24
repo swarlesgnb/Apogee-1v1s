@@ -104,7 +104,7 @@ The fifth round's changes have not been played. `Apogee S2 Playtest` holds one o
 
 1. **Gravity Well**: balloons dash at the player and burst on arrival, each hit costing
    score; the first playtest found them standing still because their abilities had been
-   stripped. The dash reaches the player in about 2.7 seconds at Novice (3,000; 1,500 was never fast enough to land) and is 1.2x faster each band. Its thresholds come from
+   stripped. The dash reaches the player in about 1.4 seconds at Novice (6,000; 1,500 and then 3,000 were too slow for any to land) and is 1.2x faster each band. The player's gun holds three rounds before a reload (fuglaa's holds two). Its thresholds come from
    cA fuglaapressure's board moved for size and game speed, not for the slower dash, so they
    are likely low; recut early.
 2. **1w6aliens**: six still balloons, scored per kill.
