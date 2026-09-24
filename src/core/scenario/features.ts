@@ -269,17 +269,24 @@ function mulberry32(seed: number): () => number {
   };
 }
 
+/**
+ * Live targets occupy distinct spawns, so they are drawn without replacement. Drawing with
+ * replacement, as this first did, let a flick land on the spawn it started from - a zero
+ * degree flick - and on a map with as many targets as spawns (Popcorn: five and five)
+ * that happened on most draws and pulled the index of difficulty toward nothing.
+ */
 function nearestFlick(points: Vec3[], alive: number): number {
-  const n = Math.max(2, Math.round(alive));
   if (points.length < 2) return 0;
+  const n = Math.min(points.length, Math.max(2, Math.round(alive)));
   const rand = mulberry32(points.length * 7919 + n);
-  const pick = () => points[Math.floor(rand() * points.length)];
   let total = 0;
   const trials = 400;
   for (let t = 0; t < trials; t++) {
-    const from = pick();
+    const chosen = new Set<number>();
+    while (chosen.size < n) chosen.add(Math.floor(rand() * points.length));
+    const [first, ...others] = [...chosen];
     let best = Infinity;
-    for (let k = 1; k < n; k++) best = Math.min(best, angleBetween(from, pick()));
+    for (const i of others) best = Math.min(best, angleBetween(points[first], points[i]));
     total += best;
   }
   return total / trials;

@@ -46,7 +46,8 @@ ID = log2(D/W + 1), for distance D and target width W
 5.50 bits and measured typical completion times of 0.4 to 0.8 s, with an optimal sensitivity
 zone of 20 to 80 cm/360. Across KovaaK's static clicking scenarios the same law holds on
 scores: the logarithm of seconds per kill rises with the Fitts ID of the flick to the nearest
-live target (`tools/fitDifficulty.ts`, clicking class). Size and distance are therefore not
+live target, by 0.269 per bit at the board median, so each bit costs about 31% more time per
+kill (`tools/fitDifficulty.ts`, clicking class). Size and distance are therefore not
 two knobs but one, their ratio, and a band ladder can step it deliberately.
 
 **Isolate what is being trained.** Voltaic's taxonomy splits clicking into static and
@@ -146,9 +147,9 @@ Leave-one-out median error at the board median (`data/season-2/difficulty_model.
 
 | Class | Scenarios | Features | LOO median | LOO 90th pct |
 | --- | ---: | --- | ---: | ---: |
-| Clicking | 193 | nearest-flick Fitts ID, log angular speed, log shots to kill | 0.199 (about 22% in time per kill) | 0.517 |
+| Clicking | 193 | nearest-flick Fitts ID, log angular speed, log shots to kill | 0.143 (about 15% in time per kill) | 0.404 |
 | Tracking | 166 | log speed/size, log size, log strafe period, airborne, log seconds to full speed | 0.399 logit (about 10 points of share mid-board) | 0.907 |
-| Switching | 85 | log speed/size, nearest-flick Fitts ID, log time to kill | 0.158 logit | 0.434 |
+| Switching | 85 | log speed/size, nearest-flick Fitts ID, log time to kill | 0.159 logit | 0.437 |
 
 Two findings shaped how the model is used.
 
@@ -156,7 +157,7 @@ Two findings shaped how the model is used.
   from Novice (598) to Intermediate (568), although the target shrinks and speeds up: a harder
   scenario draws a stronger crowd. A pooled model predicts the board of a typical crowd.
 - **A sibling's board was measured too.** Predicting a variant from another variant's board
-  (0.153, 0.231, 0.144) is as good as or better than the pooled fit, clearly so for tracking.
+  (0.142, 0.231, 0.145) is as good as or better than the pooled fit, clearly so for tracking.
   No season-2 scenario has a sibling with a board, so the pooled fit is the only option until
   one does.
 
@@ -171,8 +172,14 @@ many of one kind as there are targets, and the reader took a helper for the targ
 scenario sat 13x off the model until ties went to the larger bot. The file has no flag
 that separates the two: `Untargetable=true` is on Voltaic's real targets as well.
 
+The flick itself was once mis-measured too. The nearest-flick estimate drew the other live
+targets with replacement, so a flick could land on the spawn it started from; on a map with
+as many targets as spawns that happened on most draws. Drawing without replacement moved the
+clicking fit's error at the median from 0.199 to 0.143 and the Fitts slope from 0.19 to 0.27
+per bit.
+
 The model is weakest where the file says least: moving targets whose paths the dodge profile
-only sketches (Popcorn's variants are four of its five worst clicking misses, listed as
+only sketches (Popcorn's variants are two of its five worst clicking misses, listed as
 `worstMisses` in the model file), and path-spawning or pressure scenarios
 (excluded from its classes). Season 2's static families sit squarely in its domain; its
 moving families carry the wider error.
