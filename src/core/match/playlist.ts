@@ -100,6 +100,20 @@ export interface KovaaksPlaylist {
   isPrivate: boolean;
 }
 
+/**
+ * Whether a playlist must tell KovaaK's its scenarios are local files.
+ *
+ * `hasOfflineScenarios: false` has KovaaK's resolve every scenario from the workshop,
+ * which was right while the season was borrowed scenarios. Apogee's own exist only as the
+ * files the app installs, and a playlist naming one with the flag off starts, finds
+ * nothing online, and drops the player back into the last scenario they played - which is
+ * what every practice playlist did on the first launch of the new season. Every scenario
+ * the app ships is named "Apogee <Family> <Band>" (validate:season-files holds them to it).
+ */
+export function hasOfflineScenarios(scenarios: readonly string[]): boolean {
+  return scenarios.some((name) => name.startsWith("Apogee "));
+}
+
 export interface MatchPlaylistOptions {
   scenarios: string[];
   /** Shown inside KovaaK's, and the only trace of which match this belonged to. */
@@ -127,7 +141,7 @@ export function buildMatchPlaylist(options: MatchPlaylistOptions): KovaaksPlayli
     description:
       `Apogee ranked match${against}${ref}. ` +
       `Play each scenario once, in order. Only your first run on each counts.`,
-    hasOfflineScenarios: false,
+    hasOfflineScenarios: hasOfflineScenarios(scenarios),
     hasEdited: true,
     shareCode: "",
     version: PLAYLIST_FORMAT_VERSION,

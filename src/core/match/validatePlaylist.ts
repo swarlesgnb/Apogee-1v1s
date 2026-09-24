@@ -15,8 +15,12 @@
  *   npx tsx src/core/match/validatePlaylist.ts [kovaaksPlaylistsFolder]
  */
 
-import { existsSync, readdirSync, readFileSync } from "node:fs";
+import { existsSync, mkdtempSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { join } from "node:path";
+
+import { loadSeason } from "../season/season.ts";
+import { practicePlaylists, stalePlaylistNames, writePracticePlaylists } from "../season/practice.ts";
 
 import {
   buildMatchPlaylist,
@@ -27,6 +31,36 @@ import {
   playlistFileName,
   serializePlaylist,
 } from "./playlist.ts";
+
+/**
+ * The season's scenarios are local files, and a playlist that does not say so starts and
+ * then loads nothing: KovaaK's looks for them on the workshop and drops the player back
+ * into their last scenario. Found in the game's own log on the first launch of Apogee's
+ * season - every playtest playlist written with the flag on started its scenarios, every
+ * app playlist written with it off did not.
+ */
+function localScenarios(): void {
+  console.log("\n── the season's scenarios are local files ───────");
+  const season = loadSeason();
+  const names = season.scenarios.map((s) => s.scenario);
+  check("a match playlist of season scenarios says they are local", buildMatchPlaylist({ scenarios: names.slice(0, 3) }).hasOfflineScenarios);
+  check("a match playlist of workshop scenarios does not", !buildMatchPlaylist({ scenarios: ["VT Pasu Novice S5"] }).hasOfflineScenarios);
+
+  const dir = mkdtempSync(join(tmpdir(), "apogee-playlists-"));
+  writePracticePlaylists(season, dir);
+  const written = readdirSync(dir).map((f) => JSON.parse(readFileSync(join(dir, f), "utf8")));
+  check(
+    "every practice playlist says its scenarios are local",
+    written.length === practicePlaylists(season).length && written.every((p) => p.hasOfflineScenarios === true),
+    `${written.filter((p) => p.hasOfflineScenarios === true).length} of ${written.length}`,
+  );
+
+  // A playlist written before this, with the right scenarios and the flag off, is out of date.
+  const first = readdirSync(dir)[0];
+  const body = JSON.parse(readFileSync(join(dir, first), "utf8"));
+  writeFileSync(join(dir, first), JSON.stringify({ ...body, hasOfflineScenarios: false }));
+  check("an installed playlist with the flag off is refreshed", stalePlaylistNames(season, dir).length === 1);
+}
 
 const DEFAULT_PLAYLISTS_DIR =
   "E:\\Steam\\steamapps\\common\\FPSAimTrainer\\FPSAimTrainer\\Saved\\SaveGames\\Playlists";
@@ -175,6 +209,7 @@ function againstRealFiles(dir: string): void {
 
 function main(): void {
   shape();
+  localScenarios();
   againstRealFiles(process.argv[2] ?? DEFAULT_PLAYLISTS_DIR);
 
   console.log(failures === 0 ? "\nOK: playlist format validated" : `\n${failures} check(s) failed`);
