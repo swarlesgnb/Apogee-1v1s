@@ -1,7 +1,7 @@
 {
  "$comment": "Written by tools/fitDifficulty.ts; do not hand-edit. One least-squares fit per class and board fraction; looMedian/loo90 are leave-one-out absolute errors in the class's metric (click: log seconds per kill, so 0.1 is about 10%; track and switch: logit of the share of the maximum score, where 0.4 is about 10 points of share near the middle). `sibling` is the rejected alternative, measured at the median.",
- "fittedAt": "2026-09-24T04:42:46.337Z",
- "scenarioFiles": 510,
+ "fittedAt": "2026-09-24T04:56:40.382Z",
+ "scenarioFiles": 608,
  "models": [
   {
    "class": "click",
@@ -14,194 +14,194 @@
     {
      "topFraction": 0.001,
      "coefficients": [
-      -1.608664759222119,
-      0.16428096046822432,
-      0.12292156953264582,
-      0.012716542899978108
+      -1.6368585793312358,
+      0.1700656040356987,
+      0.12110423304134332,
+      0.029421990719279808
      ],
-     "n": 156,
-     "looMedian": 0.1371121692819418,
-     "loo90": 0.4884212556049034
+     "n": 193,
+     "looMedian": 0.14331057915927747,
+     "loo90": 0.4604132395155166
     },
     {
      "topFraction": 0.005,
      "coefficients": [
-      -1.5435893399639542,
-      0.16791640524519497,
-      0.13740820421768,
-      0.0036184360875506187
+      -1.5770971975136907,
+      0.17535616961983658,
+      0.13310579587562044,
+      0.017818170463746997
      ],
-     "n": 156,
-     "looMedian": 0.15959985799178933,
-     "loo90": 0.4674329325921977
+     "n": 193,
+     "looMedian": 0.1485314576569533,
+     "loo90": 0.4783378935668766
     },
     {
      "topFraction": 0.01,
      "coefficients": [
-      -1.5040247595079064,
-      0.1683356806828403,
-      0.1406687748442599,
-      0.008695216177163045
+      -1.5364763669496502,
+      0.17569145224270805,
+      0.1368020821957558,
+      0.022610752448290652
      ],
-     "n": 156,
-     "looMedian": 0.15656624955177,
-     "loo90": 0.46743263581962013
+     "n": 193,
+     "looMedian": 0.15100687886611175,
+     "loo90": 0.458292282457464
     },
     {
      "topFraction": 0.02,
      "coefficients": [
-      -1.4593397027926995,
-      0.1683319071058157,
-      0.14456886000103014,
-      0.010483893299754783
+      -1.4921853556457236,
+      0.17543146933777287,
+      0.14083581858453934,
+      0.02472913535449707
      ],
-     "n": 156,
-     "looMedian": 0.16857714985941363,
-     "loo90": 0.4715432169588146
+     "n": 193,
+     "looMedian": 0.15762259981291915,
+     "loo90": 0.4634940384528422
     },
     {
      "topFraction": 0.035,
      "coefficients": [
-      -1.4188922779272177,
-      0.16827124044428143,
-      0.1494895411486204,
-      0.010217467763711881
+      -1.454069404796112,
+      0.17584707418800133,
+      0.1448873302308759,
+      0.02358875292637543
      ],
-     "n": 156,
-     "looMedian": 0.16999014672676252,
-     "loo90": 0.4669117780699221
+     "n": 193,
+     "looMedian": 0.16074593788824298,
+     "loo90": 0.4696319143290968
     },
     {
      "topFraction": 0.05,
      "coefficients": [
-      -1.3933118934734205,
-      0.16887417962012077,
-      0.15209138414191414,
-      0.010552947588845016
+      -1.4291266632185027,
+      0.17658691082882239,
+      0.14707635571408145,
+      0.02393308305210856
      ],
-     "n": 156,
-     "looMedian": 0.1698405895910697,
-     "loo90": 0.4755173268616378
+     "n": 193,
+     "looMedian": 0.16578400665930015,
+     "loo90": 0.47078754243766574
     },
     {
      "topFraction": 0.075,
      "coefficients": [
-      -1.3609718394770898,
-      0.16919943789846062,
-      0.15604559919719074,
-      0.011052092931601563
+      -1.397133265926948,
+      0.1768212818822614,
+      0.15080724856546254,
+      0.02452569332466405
      ],
-     "n": 156,
-     "looMedian": 0.17055392884144277,
-     "loo90": 0.4731700563754412
+     "n": 193,
+     "looMedian": 0.16645670525455258,
+     "loo90": 0.4684996934619874
     },
     {
      "topFraction": 0.1,
      "coefficients": [
-      -1.334647535902575,
-      0.1692626089398058,
-      0.15960754595372,
-      0.014983634821020404
+      -1.3715554232190956,
+      0.1769599167923346,
+      0.15439635241600827,
+      0.028104364030065016
      ],
-     "n": 156,
-     "looMedian": 0.16945384826052354,
-     "loo90": 0.47879950836751933
+     "n": 193,
+     "looMedian": 0.16442910532227034,
+     "loo90": 0.47861743319113487
     },
     {
      "topFraction": 0.15,
      "coefficients": [
-      -1.29932671130428,
-      0.17149944541616968,
-      0.1665489365528147,
-      0.018794541532047848
+      -1.3367940555956077,
+      0.17904968417639955,
+      0.16060291631833662,
+      0.0317158104023576
      ],
-     "n": 156,
-     "looMedian": 0.1720849050227728,
-     "loo90": 0.4908464759063107
+     "n": 193,
+     "looMedian": 0.16491254445525308,
+     "loo90": 0.4868726804119047
     },
     {
      "topFraction": 0.2,
      "coefficients": [
-      -1.2662558150394867,
-      0.17170277052127988,
-      0.1719479002124639,
-      0.023158601263442408
+      -1.3052220750308836,
+      0.17956374094422287,
+      0.16591087006575697,
+      0.03591326220924476
      ],
-     "n": 156,
-     "looMedian": 0.1714981323909011,
-     "loo90": 0.49832006747694557
+     "n": 193,
+     "looMedian": 0.16456414609051362,
+     "loo90": 0.49336237374312486
     },
     {
      "topFraction": 0.3,
      "coefficients": [
-      -1.2174571016203959,
-      0.1741059077366204,
-      0.18388983328715047,
-      0.0296392543411914
+      -1.2589050412678393,
+      0.18232128674003428,
+      0.17745569920885176,
+      0.04155302874319726
      ],
-     "n": 156,
-     "looMedian": 0.18545583226532958,
-     "loo90": 0.4908543511208597
+     "n": 193,
+     "looMedian": 0.1814698924502236,
+     "loo90": 0.5055810957667674
     },
     {
      "topFraction": 0.4,
      "coefficients": [
-      -1.1743497729339019,
-      0.1758792536861213,
-      0.19604953054338745,
-      0.033832808946370224
+      -1.218488911199821,
+      0.18461836555607816,
+      0.18821356637604936,
+      0.04510219780112114
      ],
-     "n": 156,
-     "looMedian": 0.19537162411962702,
-     "loo90": 0.49330018058734904
+     "n": 193,
+     "looMedian": 0.1835023453246638,
+     "loo90": 0.5137545954216537
     },
     {
      "topFraction": 0.5,
      "coefficients": [
-      -1.1301255947212718,
-      0.17757439673243475,
-      0.20875825639766676,
-      0.037381750228286374
+      -1.1768876618337614,
+      0.18687773114035147,
+      0.19994090748460452,
+      0.04857814495466877
      ],
-     "n": 156,
-     "looMedian": 0.1983512856496345,
-     "loo90": 0.4828408055225023
+     "n": 193,
+     "looMedian": 0.1997393468678625,
+     "loo90": 0.523791733797416
     },
     {
      "topFraction": 0.65,
      "coefficients": [
-      -1.0614056594816104,
-      0.18154765190253186,
-      0.23341154603690242,
-      0.04439846956598228
+      -1.1144208447115547,
+      0.19231414216868334,
+      0.22310127563180046,
+      0.054105459035297225
      ],
-     "n": 156,
-     "looMedian": 0.2116807584759543,
-     "loo90": 0.497280858038067
+     "n": 193,
+     "looMedian": 0.20981271052097417,
+     "loo90": 0.5701448963880438
     },
     {
      "topFraction": 0.8,
      "coefficients": [
-      -0.9699654710649283,
-      0.1877424781306977,
-      0.2641617539586692,
-      0.05342586661540849
+      -1.0293549601530063,
+      0.19960290645623988,
+      0.2519281160682681,
+      0.06186846585489941
      ],
-     "n": 156,
-     "looMedian": 0.23326265120900197,
-     "loo90": 0.5349023330989331
+     "n": 193,
+     "looMedian": 0.23315809549998015,
+     "loo90": 0.5911188175155478
     },
     {
      "topFraction": 0.95,
      "coefficients": [
-      -0.8200769837737144,
-      0.20873792569080377,
-      0.34198614682671047,
-      0.057693971180369036
+      -0.8937149937019705,
+      0.22332243353447642,
+      0.3274149322300739,
+      0.06323810501511751
      ],
-     "n": 155,
-     "looMedian": 0.26419259290408115,
-     "loo90": 0.6364829387008459
+     "n": 192,
+     "looMedian": 0.28146520796394436,
+     "loo90": 0.6631994359995904
     }
    ],
    "scenarios": [
@@ -210,17 +210,23 @@
     "1w2t smallflicks small 60s ",
     "1w2ts Perfected",
     "1w2ts Perfected Easier",
+    "1w2ts Vertical Flicks easy",
     "1w2ts reload",
+    "1w2ts reload Easier",
     "1w2ts reload smallflicks",
+    "1w2ts reload smallflicks Easier",
     "1w2ts reload smallflicks Entry",
     "1w2ts reload smallflicks larger",
     "1w2ts reload smallflicks slightly larger",
     "1w3ts reload",
+    "1w3ts reload Easier",
+    "1w3ts reload Larger",
     "1w4t Pasu Raspberry Grandmaster",
     "1w4t Pasu Raspberry Master 6mag",
     "1w4t Pressure Revosect Entry",
     "1w4t Pressure Revosect Int",
     "1w4ts Voltaic",
+    "1w4ts reload Easier",
     "1w5ts reload",
     "1w5ts vbr Revosect Int",
     "1w6ts reload Easier",
@@ -239,6 +245,7 @@
     "5 Sphere Hipfire Extra Small",
     "5 Sphere Hipfire Small",
     "6 Sphere Hipfire 200% Size",
+    "6 Sphere Hipfire Small Easy",
     "6 Sphere Hipfire Voltaic",
     "6 Sphere Hipfire Voltaic 30% smaller",
     "Aimerz+ 1w3ts Med S1",
@@ -246,8 +253,11 @@
     "Aimerz+ hopClick Med S1",
     "Aimerz+ ww2t Easy S1",
     "Aimerz+ ww2t Hard S1 20% Smaller",
+    "Anima WavyClick",
+    "Animicro Dash",
     "B180 Voltaic",
     "B180 Voltaic Easy 92%",
+    "BeanClick Wide 8 Bots Easy",
     "Bounce 180 Sparky",
     "Bounce 180 Sparky Easy",
     "Bounce 180 rAim",
@@ -284,18 +294,27 @@
     "ClickTrack Vertical 3t",
     "ClickTrack Vertical 3t Long",
     "ClickTrack Vertical 3t Short",
+    "CombinedClick Easy",
     "Controlsphere Click",
     "Controlsphere Click Easy",
+    "Controlswitch Click Easy",
     "EvoClick Revosect Entry",
     "EvoClick Revosect Int",
+    "Flow Easy",
     "Jumbo 1wall6targets TE",
     "Jumbo Tile Frenzy",
     "Jumbo1wall9000targets",
+    "Leap 180 Avasive Easy",
     "Leapcorn Pure",
+    "Microshot Avasive",
     "No23 ca micropressure supereasy",
     "Pasu Angelic 20% Larger",
+    "Pasu Angelic 20% Larger 80% Speed",
+    "Pasu Palace Easy",
     "Pasu Reload Goated",
     "Pasu Revosect Int",
+    "Pasu VP Easy",
+    "Pasu Viscose Entry Small",
     "Pasu Voltaic",
     "Pasu Voltaic Easy",
     "Pasu Voltaic Reload",
@@ -303,18 +322,24 @@
     "Pasu Voltaic Reload Easy",
     "Popcorn Goated rAim",
     "Popcorn MV Easier",
+    "Popcorn MV Hard",
     "Popcorn MV Intermediate",
+    "Popcorn MV Medium",
+    "Popcorn Palace Easier",
+    "Popcorn Palace Easy",
     "Popcorn Sparky",
     "Popcorn Voltaic",
     "Popcorn Voltaic Easy",
     "RawMouseControl Reload",
     "RawMouseControlClicking3",
+    "RawMousima",
     "SnowClick Revosect Int",
     "StrawberryClick Revosect Int",
     "Tamspeed 2bp Silver",
     "Tamspeed 2bpes",
     "Tile Frenzy",
     "Tile Frenzy Mini",
+    "ToonsClick rAim Easy",
     "VT 1w2ts Advanced S5",
     "VT 1w3ts Intermediate S5",
     "VT 1w4ts Novice S5",
@@ -324,6 +349,7 @@
     "VT Bounceshot Intermediate",
     "VT Bounceshot Novice",
     "VT Bounceshot Viscose Easier",
+    "VT Bounceshot Viscose Hard",
     "VT Bounceshot Viscose Medium",
     "VT Floating Heads Advanced S5",
     "VT Floating Heads Intermediate S5",
@@ -340,10 +366,19 @@
     "VT Pasu Advanced S5",
     "VT Pasu Intermediate S5",
     "VT Pasu Novice S5",
+    "VT Popcorn Advanced S5",
+    "VT Popcorn Intermediate S5",
+    "VT Popcorn Novice S5",
+    "VT domiClick Advanced S5",
+    "VT domiClick Intermediate S5",
+    "VT ww5t Advanced S5",
+    "VT ww5t Intermediate S5",
+    "VT ww5t Novice S5",
     "Wide Wall 3 Targets",
     "Wide Wall 3 Targets TE",
     "Wide Wall 4 Targets",
     "Wide Wall 4 Targets Small",
+    "beanClick Euphoric Novice",
     "cA 1ts ruohong",
     "cA 2ts wideflick",
     "cA 3ts precise",
@@ -358,8 +393,10 @@
     "pasu nqs reload",
     "pasu small reload",
     "shimPressure Micro",
+    "shimmicro",
     "ww3t Voltaic",
     "ww4t Voltaic",
+    "ww5t Voltaic Slightly Larger",
     "ww6t reload"
    ]
   },
@@ -375,214 +412,215 @@
     {
      "topFraction": 0.001,
      "coefficients": [
-      2.3303295426297708,
-      -0.44541686941131564,
-      0.2190384609405283,
-      0.25952548278383425,
-      -0.22894648761558015
+      2.3585270359985047,
+      -0.45362074722336726,
+      0.2053044392142876,
+      0.2924436145902011,
+      -0.1003144328077899
      ],
-     "n": 126,
-     "looMedian": 0.5840803881611448,
-     "loo90": 1.508863177308275
+     "n": 161,
+     "looMedian": 0.5572661359432423,
+     "loo90": 1.4021752755138541
     },
     {
      "topFraction": 0.005,
      "coefficients": [
-      1.8022286667803828,
-      -0.3606278074975236,
-      0.21016928613956729,
-      0.18892451513222733,
-      -0.23764719649231678
+      1.7450571610969376,
+      -0.3795974147172127,
+      0.19425215375177732,
+      0.23355827128007237,
+      0.07465740124487794
      ],
-     "n": 127,
-     "looMedian": 0.41584053138170873,
-     "loo90": 1.211405713849538
+     "n": 164,
+     "looMedian": 0.4997156209258212,
+     "loo90": 1.230003460569411
     },
     {
      "topFraction": 0.01,
      "coefficients": [
-      1.6126843713759487,
-      -0.35433026532885137,
-      0.23055178126434941,
-      0.1782467856053162,
-      -0.19653293413435965
+      1.523932010239182,
+      -0.35753526865236035,
+      0.21327948370678207,
+      0.212092520537948,
+      0.08545889504843257
      ],
-     "n": 128,
-     "looMedian": 0.4283852643664956,
-     "loo90": 1.1774006882790204
+     "n": 165,
+     "looMedian": 0.4487507621389655,
+     "loo90": 1.1661905867057163
     },
     {
      "topFraction": 0.02,
      "coefficients": [
-      1.5391215388412587,
-      -0.37219900343606604,
-      0.23983274183854475,
-      0.17136552222699494,
-      -0.24562529103790387
+      1.4538890539702158,
+      -0.3659597832194577,
+      0.23451726940517886,
+      0.20284411141656272,
+      -0.015437102373597624
      ],
-     "n": 129,
-     "looMedian": 0.4118569541754122,
-     "loo90": 1.2069339481573895
+     "n": 166,
+     "looMedian": 0.459633111353201,
+     "loo90": 1.1400950082646883
     },
     {
      "topFraction": 0.035,
      "coefficients": [
-      1.3492043499280708,
-      -0.34744684380446594,
-      0.22729286791189815,
-      0.16044786950381865,
-      -0.24596090103941037
+      1.2691059401505895,
+      -0.3408437974684393,
+      0.2266654669882201,
+      0.18932791908119556,
+      -0.028428780184887197
      ],
-     "n": 129,
-     "looMedian": 0.3931299180886041,
-     "loo90": 1.1609398248958647
+     "n": 166,
+     "looMedian": 0.45132823227631297,
+     "loo90": 1.1182026654559385
     },
     {
      "topFraction": 0.05,
      "coefficients": [
-      1.2341054150789688,
-      -0.3349825412885211,
-      0.22473947506771805,
-      0.15393996794089995,
-      -0.2482945318490428
+      1.159481220871211,
+      -0.32906431673636,
+      0.22546206899619803,
+      0.1813179058564781,
+      -0.03260701577516786
      ],
-     "n": 129,
-     "looMedian": 0.4055454317921007,
-     "loo90": 1.1265035049800067
+     "n": 166,
+     "looMedian": 0.4324140409565918,
+     "loo90": 1.049593793723707
     },
     {
      "topFraction": 0.075,
      "coefficients": [
-      1.1133728726633976,
-      -0.3249830472611806,
-      0.21965228425263505,
-      0.14634045929487177,
-      -0.25626774988099293
+      1.026369954488148,
+      -0.3155756320555186,
+      0.2258140991721966,
+      0.172775928466678,
+      -0.041203521667693525
      ],
-     "n": 129,
-     "looMedian": 0.3855583725860719,
-     "loo90": 1.0190948238405417
+     "n": 166,
+     "looMedian": 0.4452087779569225,
+     "loo90": 1.0605172105037464
     },
     {
      "topFraction": 0.1,
      "coefficients": [
-      1.0170669427818675,
-      -0.3140305958369447,
-      0.21569178673138367,
-      0.14053084861818838,
-      -0.27041923350985125
+      0.9328998155357602,
+      -0.3057992426794356,
+      0.2250289686191711,
+      0.1670056169487204,
+      -0.053354334286807324
      ],
-     "n": 129,
-     "looMedian": 0.3961740200042505,
-     "loo90": 0.9992295002824342
+     "n": 166,
+     "looMedian": 0.4097282809846169,
+     "loo90": 1.066832161317496
     },
     {
      "topFraction": 0.15,
      "coefficients": [
-      0.8842685297756369,
-      -0.30948085534337205,
-      0.2118398189015136,
-      0.1344389143088348,
-      -0.2781183780381628
+      0.8041830579006015,
+      -0.30120415543928947,
+      0.22570351158108945,
+      0.16021452134408057,
+      -0.06499502599735281
      ],
-     "n": 129,
-     "looMedian": 0.4143923514828739,
-     "loo90": 0.9856333364653936
+     "n": 166,
+     "looMedian": 0.4018206578467399,
+     "loo90": 1.0593154827309759
     },
     {
      "topFraction": 0.2,
      "coefficients": [
-      0.7697499805203216,
-      -0.3033000890408064,
-      0.20917288884681423,
-      0.13271493872014947,
-      -0.2840420164168393
+      0.6990576153041063,
+      -0.29636132302401796,
+      0.2256604118397579,
+      0.15806778859312423,
+      -0.07446257177978888
      ],
-     "n": 129,
-     "looMedian": 0.4230019864572334,
-     "loo90": 0.9817091926134636
+     "n": 166,
+     "looMedian": 0.3984651161871441,
+     "loo90": 1.0544626558796704
     },
     {
      "topFraction": 0.3,
      "coefficients": [
-      0.5965289400861312,
-      -0.29740488537299875,
-      0.20965992476882284,
-      0.1298177346242419,
-      -0.30228502599095874
+      0.5442624120792061,
+      -0.2941363090994169,
+      0.2311610584153561,
+      0.1557535727447754,
+      -0.09957451322605033
      ],
-     "n": 129,
-     "looMedian": 0.4286411279967113,
-     "loo90": 0.9871874651279229
+     "n": 166,
+     "looMedian": 0.4161436463717978,
+     "loo90": 1.0070635920230684
     },
     {
      "topFraction": 0.4,
      "coefficients": [
-      0.45825497735758447,
-      -0.296565833150166,
-      0.2089861794736424,
-      0.12906484157016915,
-      -0.32018429607162024
+      0.4194496444077559,
+      -0.29650361614836296,
+      0.2344529629581174,
+      0.15635441578527617,
+      -0.12145311441404084
      ],
-     "n": 129,
-     "looMedian": 0.4181483489014738,
-     "loo90": 0.9662008155494024
+     "n": 166,
+     "looMedian": 0.41639029043743975,
+     "loo90": 0.9801382990467231
     },
     {
      "topFraction": 0.5,
      "coefficients": [
-      0.344913666446834,
-      -0.2990238191626269,
-      0.20789680135173624,
-      0.1281145126752089,
-      -0.3430346926935401
+      0.3148035701750877,
+      -0.3015213564800954,
+      0.23772479541468464,
+      0.1575984265998911,
+      -0.14596933165355597
      ],
-     "n": 129,
-     "looMedian": 0.4026507600455567,
-     "loo90": 0.9811308730648892
+     "n": 166,
+     "looMedian": 0.4099106667584057,
+     "loo90": 1.0005608888766186
     },
     {
      "topFraction": 0.65,
      "coefficients": [
-      0.1501807428257079,
-      -0.3032188461859175,
-      0.20836710824202137,
-      0.12898742726121823,
-      -0.36287206903252656
+      0.1467753674163201,
+      -0.31169908663971635,
+      0.24237115352829908,
+      0.16113419611690077,
+      -0.18311034464853396
      ],
-     "n": 129,
-     "looMedian": 0.3997709803523345,
-     "loo90": 0.9857079424977986
+     "n": 166,
+     "looMedian": 0.4054964174054323,
+     "loo90": 0.999732100226076
     },
     {
      "topFraction": 0.8,
      "coefficients": [
-      -0.09268647886066579,
-      -0.30612267289576245,
-      0.20856538455076998,
-      0.1275514819734435,
-      -0.3856467002066531
+      -0.06488848149657554,
+      -0.3201557793510517,
+      0.24716974624103463,
+      0.16161724592979498,
+      -0.23309978366727008
      ],
-     "n": 129,
-     "looMedian": 0.4156640074543812,
-     "loo90": 1.0152501654884631
+     "n": 166,
+     "looMedian": 0.40178031861388397,
+     "loo90": 1.0280600410177385
     },
     {
      "topFraction": 0.95,
      "coefficients": [
-      -0.5797216946543766,
-      -0.2996249221272875,
-      0.21447867513005286,
-      0.1194589188279095,
-      -0.4379821528311681
+      -0.4882021245613683,
+      -0.3241729483686434,
+      0.2592515361705695,
+      0.1564490104418755,
+      -0.34546157332765076
      ],
-     "n": 129,
-     "looMedian": 0.3895433225385605,
-     "loo90": 1.0338326751220699
+     "n": 166,
+     "looMedian": 0.39109906551795603,
+     "loo90": 0.9431699292141236
     }
    ],
    "scenarios": [
     "     CB StrafeTrack Easy",
+    "AA4V OW Easy",
     "Aimerz+ PTI Med S1",
     "Aimerz+ PreciseTrack Med S1",
     "Aimerz+ PreciseTrack S1 Modified",
@@ -592,13 +630,17 @@
     "Air Angelic 4 Voltaic Easy 70%",
     "Air Angelic 4 Voltaic Easy 90%",
     "Air Angelic 4 Voltaic Smaller",
+    "Air Angelic Invincible 2",
     "Air Angelic Invincible 2 80%",
     "Air Voltaic Easy Invincible 4 80%",
     "Air Voltaic Invincible 4",
     "Air Voltaic Invincible 4 Easier",
     "Air Voltaic Invincible 4 Entry",
     "Air Voltaic Invincible 4 Medium",
+    "Air Voltaic Invincible 4 Slightly Slower",
     "Air Voltaic Invincible 7 Easy",
+    "Air Voltaic Invincible 7 Easy 80%",
+    "Avasive bukeTrack Easy",
     "Avasive bukeTrack Hard",
     "Centering II 180 Entry",
     "Centering II 180 Fixed Larger",
@@ -612,12 +654,16 @@
     "Controlsphere Far Larger",
     "Controlsphere OW",
     "Controlsphere OW 150%",
+    "Controlsphere SuperbAim Viscose",
+    "Controlsphere SuperbAim Viscose Easier",
+    "Controlsphere SuperbAim Viscose Hard",
     "Controlsphere Viscose Entry",
     "Controlsphere rAim",
     "Controlsphere rAim Easy",
     "Controlsphere rAim Easy 90%",
     "Deceptive Tracking XYZ",
     "Deceptive Tracking XYZ Easy",
+    "DomiSphere Micro",
     "Extra Controlsphere",
     "FloodTrack Revosect Int",
     "Kindaclose long stop strafes",
@@ -625,7 +671,9 @@
     "Leapstrafes Control wobin Easier",
     "Leapstrafes Control wobin Hard",
     "Leapstrafes Revosect Int",
+    "Leaptrack Goated 60% Larger",
     "Leaptrack Goated 75% Slightly Larger",
+    "MFSI rAim Easy",
     "MFSI v3 Raspberry",
     "MSS Insanity Raspberry",
     "MSS Raspberry v2",
@@ -633,6 +681,9 @@
     "Pasu Track Extrasmooth Small TE",
     "Pasu Track Extrasmooth TE",
     "Pasu Track Wide React",
+    "Plink Palace",
+    "Plink Palace Easy",
+    "Plink Palace Easy Less Blinks",
     "Plink Plaza",
     "Polarized Hell Easy 20% Slower",
     "ReactiveSphere",
@@ -647,6 +698,9 @@
     "SmoothBot Invincible Goated",
     "SmoothBot Invincible Goated 75%",
     "SmoothBot Invincible Goated Smaller",
+    "SmoothBot Perfected",
+    "SmoothBot Perfected Easier",
+    "SmoothBot Perfected Hard",
     "Smoothbot Invincible Goated Easy",
     "Smoothbot Pauer",
     "Smoothbot Pauer Easy",
@@ -663,11 +717,13 @@
     "Smoothsphere Viscose Horizontal Entry",
     "Swing Tracking",
     "TSK - 360 Turn",
+    "TSK - 360 Turn MASSIVE",
     "TSK - Box Tracking",
     "TSK - Centering 180 Speed 2",
     "TSK - Centering 180 Speed 3",
     "TSK - Centering 45 Speed 2 Stop",
     "TSK - Centering 90 Speed 2",
+    "TSK - Centering 90 Speed 2 MASSIVE",
     "TSK - DVD Tracking",
     "TSK - DVD Tracking Big",
     "TSK - DVD Tracking Close",
@@ -675,19 +731,32 @@
     "TSK - DVD Tracking Small",
     "TSK - Hewchy's VAI 110",
     "TSK - Hewchy's VAI 160",
+    "TSK - Hewchy's VAI 160 MASSIVE",
     "TSK - Hewchy's VAI 20",
+    "TSK - Hewchy's VAI 20 MASSIVE",
+    "TSK - Hewchy's VAI 70",
     "TSK - ST60",
     "TSK - ST60 Thick",
+    "TSK - SYV",
+    "TSK - SYV Big",
+    "TSK - SYV MASSIVE",
     "TSK - SYW",
     "TSK - SYW Thin",
+    "TSK - VSTP Soft",
+    "TSK - VSTP Soft Big",
+    "TSK - VSTP Soft MASSIVE",
     "TSK - Varied Centering 90 Trio",
     "TSK - Wavy Tracking",
     "VT Aether Advanced S5",
+    "VT Aether Bot 1 Easier",
     "VT Aether Entry S5 Precision Focus",
     "VT Aether Intermediate S5",
     "VT Aether Intermediate S5 Bot 2",
+    "VT Aether Intermediate S5 Hard Bot 1",
     "VT Aether Novice S5",
     "VT Aether Novice S5 Bot 2",
+    "VT Aether Novice S5 Hard Bot 1",
+    "VT Aether Novice S5 Hard Bot 1 90%",
     "VT Air Angelic Intermediate S5",
     "VT AirStrafe Advanced",
     "VT Ground Advanced S5",
@@ -707,6 +776,11 @@
     "Whisphere Med 60s",
     "Whisphere Small & Slow 55%",
     "Whisphere Small & Slow 75%",
+    "Whisphere Viscose",
+    "Whisphere Viscose Easier",
+    "Whisphere Viscose Hard",
+    "hizkuAirPalace Easy",
+    "hizkuRawGround Easy",
     "odb MFSI",
     "rA S4 GLIDERTRACK EASY",
     "tamAngleSmoothness",
@@ -724,194 +798,194 @@
     {
      "topFraction": 0.001,
      "coefficients": [
-      0.49737237506296067,
-      -0.1136796816939426,
-      0.09201535781485601,
-      0.4188202203676134
+      0.5365711485917424,
+      -0.12740972273185933,
+      0.08753018976834119,
+      0.4193938143794205
      ],
-     "n": 74,
-     "looMedian": 0.17948132487784174,
-     "loo90": 0.6474260140859137
+     "n": 85,
+     "looMedian": 0.1708479235806401,
+     "loo90": 0.5479005762773124
     },
     {
      "topFraction": 0.005,
      "coefficients": [
-      0.44510406292125515,
-      -0.12873498760706742,
-      0.0746467551269641,
-      0.41963823309578985
+      0.4787354987504514,
+      -0.13934319528817296,
+      0.07049097957173284,
+      0.42160179693018224
      ],
-     "n": 74,
-     "looMedian": 0.17533339623071797,
-     "loo90": 0.6148126580491023
+     "n": 85,
+     "looMedian": 0.16132499726318278,
+     "loo90": 0.5572270710745704
     },
     {
      "topFraction": 0.01,
      "coefficients": [
-      0.39599371993280147,
-      -0.13128775122550615,
-      0.07151573741357943,
-      0.42332023715326944
+      0.42902317046143273,
+      -0.14188539435702968,
+      0.0666084385588246,
+      0.42316756877830114
      ],
-     "n": 74,
-     "looMedian": 0.16143531949503462,
-     "loo90": 0.5775159890979564
+     "n": 85,
+     "looMedian": 0.1484636146964241,
+     "loo90": 0.5461521670237706
     },
     {
      "topFraction": 0.02,
      "coefficients": [
-      0.31597271751607475,
-      -0.1354471404691559,
-      0.07160594130925763,
-      0.41278577815514966
+      0.34710872995922126,
+      -0.14538050005749364,
+      0.06596040248494213,
+      0.4109022394755555
      ],
-     "n": 74,
-     "looMedian": 0.13436187627135676,
-     "loo90": 0.5609185706349084
+     "n": 85,
+     "looMedian": 0.1332093030782608,
+     "loo90": 0.5172103356946043
     },
     {
      "topFraction": 0.035,
      "coefficients": [
-      0.25584636688476725,
-      -0.1345221991294585,
-      0.07090541043081762,
-      0.40845393990786627
+      0.28738613008834474,
+      -0.14472469067308652,
+      0.06408531353297672,
+      0.4038897794577412
      ],
-     "n": 74,
-     "looMedian": 0.12819998790280246,
-     "loo90": 0.5438174772391816
+     "n": 85,
+     "looMedian": 0.12460823178530672,
+     "loo90": 0.502449919807845
     },
     {
      "topFraction": 0.05,
      "coefficients": [
-      0.2150104884646342,
-      -0.131671413092412,
-      0.06799517281048492,
-      0.40234217997224936
+      0.2484309219794656,
+      -0.1424616851105205,
+      0.0610468518242195,
+      0.39771433993639976
      ],
-     "n": 74,
-     "looMedian": 0.12479832592012428,
-     "loo90": 0.5293601012632333
+     "n": 85,
+     "looMedian": 0.12218126956537911,
+     "loo90": 0.48672766617083524
     },
     {
      "topFraction": 0.075,
      "coefficients": [
-      0.17624863637908514,
-      -0.12994576896861035,
-      0.06511936423167425,
-      0.3998169100439
+      0.21005415542008862,
+      -0.14102310034691723,
+      0.05847987539649594,
+      0.39560540843844577
      ],
-     "n": 74,
-     "looMedian": 0.12634936832615665,
-     "loo90": 0.5166356380484876
+     "n": 85,
+     "looMedian": 0.12115418022767349,
+     "loo90": 0.46787951798987093
     },
     {
      "topFraction": 0.1,
      "coefficients": [
-      0.1420851368889659,
-      -0.13108561442114658,
-      0.06449419159549145,
-      0.3983592974878532
+      0.1742426079010038,
+      -0.1415982935115819,
+      0.0576127328293817,
+      0.3929252064840249
      ],
-     "n": 74,
-     "looMedian": 0.13138442396395528,
-     "loo90": 0.49671123292739705
+     "n": 85,
+     "looMedian": 0.1281800378340638,
+     "loo90": 0.45099392161161744
     },
     {
      "topFraction": 0.15,
      "coefficients": [
-      0.07842976739969214,
-      -0.13336544546599666,
-      0.06310972342708142,
-      0.39003431725309656
+      0.11390999925781359,
+      -0.14373745276121463,
+      0.05476385879385913,
+      0.38322433898150826
      ],
-     "n": 74,
-     "looMedian": 0.14202827756721317,
-     "loo90": 0.48085780271375406
+     "n": 85,
+     "looMedian": 0.14072757105087763,
+     "loo90": 0.4381843941534945
     },
     {
      "topFraction": 0.2,
      "coefficients": [
-      0.021832114725360712,
-      -0.1367088013598535,
-      0.06343447263807153,
-      0.38127301560721494
+      0.05936406166557951,
+      -0.14651963283170605,
+      0.05363194529560037,
+      0.37318516714477545
      ],
-     "n": 74,
-     "looMedian": 0.14165867022394327,
-     "loo90": 0.4830152595361516
+     "n": 85,
+     "looMedian": 0.1547682849719948,
+     "loo90": 0.4172973548387449
     },
     {
      "topFraction": 0.3,
      "coefficients": [
-      -0.06345647147530563,
-      -0.1412065501689824,
-      0.0634510488952814,
-      0.3740791870865774
+      -0.019712668992811364,
+      -0.15107673942842212,
+      0.05279580411947425,
+      0.36740081821786996
      ],
-     "n": 74,
-     "looMedian": 0.14146691087724136,
-     "loo90": 0.4795263178682089
+     "n": 85,
+     "looMedian": 0.1410227740521307,
+     "loo90": 0.40202367025482366
     },
     {
      "topFraction": 0.4,
      "coefficients": [
-      -0.1250113746725803,
-      -0.14825984377698628,
-      0.06392434307396248,
-      0.3752625981121929
+      -0.07814530762602068,
+      -0.15849219638036363,
+      0.051978303086076164,
+      0.36749731441012917
      ],
-     "n": 74,
-     "looMedian": 0.14928757241699786,
-     "loo90": 0.4678496382567898
+     "n": 85,
+     "looMedian": 0.15742931974487917,
+     "loo90": 0.41068296206264326
     },
     {
      "topFraction": 0.5,
      "coefficients": [
-      -0.1842473803015432,
-      -0.15386195418816867,
-      0.06589142278688155,
-      0.37976479754277676
+      -0.13571641809273088,
+      -0.16430599016846134,
+      0.05201013008376588,
+      0.36860461039276354
      ],
-     "n": 74,
-     "looMedian": 0.15816658223128485,
-     "loo90": 0.48831263079239173
+     "n": 85,
+     "looMedian": 0.15764858388583813,
+     "loo90": 0.4338319779208163
     },
     {
      "topFraction": 0.65,
      "coefficients": [
-      -0.3058455366971019,
-      -0.16161878353955283,
-      0.06857056164470421,
-      0.37158764832523156
+      -0.2586866751968338,
+      -0.17056624360781897,
+      0.05146324904299952,
+      0.3541458487550322
      ],
-     "n": 74,
-     "looMedian": 0.16051500849035222,
-     "loo90": 0.49835297365633213
+     "n": 85,
+     "looMedian": 0.15207242384635267,
+     "loo90": 0.46089968604670406
     },
     {
      "topFraction": 0.8,
      "coefficients": [
-      -0.4482315181413507,
-      -0.1707080978316423,
-      0.07242578013580685,
-      0.3663096268546727
+      -0.404696294499892,
+      -0.17775227848169958,
+      0.05132199087863309,
+      0.33987320887751266
      ],
-     "n": 74,
-     "looMedian": 0.16538998661311288,
-     "loo90": 0.4792714682535047
+     "n": 85,
+     "looMedian": 0.1559435060438341,
+     "loo90": 0.4504712998110349
     },
     {
      "topFraction": 0.95,
      "coefficients": [
-      -0.744901207975571,
-      -0.18594912521873466,
-      0.08240566968991257,
-      0.3476843124200094
+      -0.7055254765178798,
+      -0.18986915989490333,
+      0.053134089940561444,
+      0.3042116149958942
      ],
-     "n": 74,
-     "looMedian": 0.19955839156963312,
-     "loo90": 0.5008798359746831
+     "n": 85,
+     "looMedian": 0.18943254529887432,
+     "loo90": 0.46874287863186753
     }
    ],
    "scenarios": [
@@ -945,10 +1019,14 @@
     "StaticSwitchingVox xSmall",
     "StaticSwitchingVox xxSmall",
     "Target Switching 360",
+    "VT AvasiveTS Intermediate S5",
     "VT ControlTS Advanced S5",
     "VT ControlTS Entry S5 Speed",
     "VT ControlTS Intermediate S5",
     "VT ControlTS Novice S5",
+    "VT DotTS Advanced S5",
+    "VT DotTS Intermediate S5",
+    "VT DotTS Novice S5",
     "VT DriftTS Advanced S5",
     "VT DriftTS Entry S5 Speed",
     "VT DriftTS Intermediate S5",
@@ -959,6 +1037,10 @@
     "VT PasuTS Advanced S5",
     "VT PasuTS Entry S5",
     "VT PasuTS Intermediate S5",
+    "VT Penta Bounce Advanced S5",
+    "VT Penta Bounce Entry S5 Speed",
+    "VT Penta Bounce Intermediate S5",
+    "VT Penta Bounce Novice S5",
     "VT bounceTS Intermediate",
     "VT bounceTS Novice",
     "VT evaTS Intermediate",
@@ -967,6 +1049,7 @@
     "VT psalmTS Novice",
     "VT skyTS Intermediate",
     "VT skyTS Novice",
+    "VT voxTS Intermediate S5",
     "WaveSwitch Revosect Int",
     "WhisphereTS Revosect Int",
     "beanTS",
@@ -977,9 +1060,11 @@
     "devTS Goated NR Static 5Bot",
     "kinTS Voltaic",
     "kinTS Voltaic Easy",
+    "kinTS Voltaic Easy 85%",
     "patCircleSwitch NR",
     "patTargetSwitch 90 LowTTK",
     "voxTS Viscose Varied",
+    "voxTS rAim Easy",
     "voxTargetSwitch",
     "voxTargetSwitch 2",
     "voxTargetSwitch 2 10% Smaller",
@@ -996,25 +1081,25 @@
   {
    "class": "click",
    "sibling": {
-    "pairs": 94,
-    "median": 0.16078192236531635,
-    "pooledMedian": 0.1983512856496345
+    "pairs": 140,
+    "median": 0.1528206205849315,
+    "pooledMedian": 0.1997393468678625
    }
   },
   {
    "class": "track",
    "sibling": {
-    "pairs": 106,
-    "median": 0.44114081350052725,
-    "pooledMedian": 0.4026507600455567
+    "pairs": 142,
+    "median": 0.3269535566498718,
+    "pooledMedian": 0.4099106667584057
    }
   },
   {
    "class": "switch",
    "sibling": {
-    "pairs": 60,
-    "median": 0.12511085870120836,
-    "pooledMedian": 0.15816658223128485
+    "pairs": 72,
+    "median": 0.1435404447127938,
+    "pooledMedian": 0.15764858388583813
    }
   }
  ]

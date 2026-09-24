@@ -11376,6 +11376,3246 @@
     }
    ],
    "sampledAt": "2026-09-24T04:50:32.864Z"
+  },
+  {
+   "scenario": "aimerz+ Static Switching 5 Bot",
+   "leaderboardId": 184753,
+   "total": 2295,
+   "points": [
+    {
+     "topFraction": 0.001,
+     "score": 173
+    },
+    {
+     "topFraction": 0.005,
+     "score": 165
+    },
+    {
+     "topFraction": 0.01,
+     "score": 163
+    },
+    {
+     "topFraction": 0.02,
+     "score": 159
+    },
+    {
+     "topFraction": 0.035,
+     "score": 156
+    },
+    {
+     "topFraction": 0.05,
+     "score": 153
+    },
+    {
+     "topFraction": 0.075,
+     "score": 150
+    },
+    {
+     "topFraction": 0.1,
+     "score": 148
+    },
+    {
+     "topFraction": 0.15,
+     "score": 145
+    },
+    {
+     "topFraction": 0.2,
+     "score": 141
+    },
+    {
+     "topFraction": 0.3,
+     "score": 136
+    },
+    {
+     "topFraction": 0.4,
+     "score": 132
+    },
+    {
+     "topFraction": 0.5,
+     "score": 129
+    },
+    {
+     "topFraction": 0.65,
+     "score": 121
+    },
+    {
+     "topFraction": 0.8,
+     "score": 112
+    },
+    {
+     "topFraction": 0.95,
+     "score": 95
+    }
+   ],
+   "sampledAt": "2026-09-24T04:50:40.196Z"
+  },
+  {
+   "scenario": "VT Aether Novice S5 Hard Bot 1 90%",
+   "leaderboardId": 184784,
+   "total": 15632,
+   "points": [
+    {
+     "topFraction": 0.001,
+     "score": 4268
+    },
+    {
+     "topFraction": 0.005,
+     "score": 4122
+    },
+    {
+     "topFraction": 0.01,
+     "score": 4080
+    },
+    {
+     "topFraction": 0.02,
+     "score": 4032
+    },
+    {
+     "topFraction": 0.035,
+     "score": 3892
+    },
+    {
+     "topFraction": 0.05,
+     "score": 3835
+    },
+    {
+     "topFraction": 0.075,
+     "score": 3702
+    },
+    {
+     "topFraction": 0.1,
+     "score": 3638
+    },
+    {
+     "topFraction": 0.15,
+     "score": 3526
+    },
+    {
+     "topFraction": 0.2,
+     "score": 3406
+    },
+    {
+     "topFraction": 0.3,
+     "score": 3212
+    },
+    {
+     "topFraction": 0.4,
+     "score": 3074
+    },
+    {
+     "topFraction": 0.5,
+     "score": 2902
+    },
+    {
+     "topFraction": 0.65,
+     "score": 2625
+    },
+    {
+     "topFraction": 0.8,
+     "score": 2241
+    },
+    {
+     "topFraction": 0.95,
+     "score": 1580
+    }
+   ],
+   "sampledAt": "2026-09-24T04:50:47.880Z"
+  },
+  {
+   "scenario": "Air Pure Medium",
+   "leaderboardId": 184766,
+   "total": 14566,
+   "points": [
+    {
+     "topFraction": 0.001,
+     "score": 934.57
+    },
+    {
+     "topFraction": 0.005,
+     "score": 931.97
+    },
+    {
+     "topFraction": 0.01,
+     "score": 931.17
+    },
+    {
+     "topFraction": 0.02,
+     "score": 930.17
+    },
+    {
+     "topFraction": 0.035,
+     "score": 927.41
+    },
+    {
+     "topFraction": 0.05,
+     "score": 926.12
+    },
+    {
+     "topFraction": 0.075,
+     "score": 923.56
+    },
+    {
+     "topFraction": 0.1,
+     "score": 922.05
+    },
+    {
+     "topFraction": 0.15,
+     "score": 919.61
+    },
+    {
+     "topFraction": 0.2,
+     "score": 917.3
+    },
+    {
+     "topFraction": 0.3,
+     "score": 913.71
+    },
+    {
+     "topFraction": 0.4,
+     "score": 910.54
+    },
+    {
+     "topFraction": 0.5,
+     "score": 906.57
+    },
+    {
+     "topFraction": 0.65,
+     "score": 900.9
+    },
+    {
+     "topFraction": 0.8,
+     "score": 891.26
+    },
+    {
+     "topFraction": 0.95,
+     "score": 868.5
+    }
+   ],
+   "sampledAt": "2026-09-24T04:50:55.251Z"
+  },
+  {
+   "scenario": "Popcorn MV Medium",
+   "leaderboardId": 184781,
+   "total": 22892,
+   "points": [
+    {
+     "topFraction": 0.001,
+     "score": 610
+    },
+    {
+     "topFraction": 0.005,
+     "score": 560
+    },
+    {
+     "topFraction": 0.01,
+     "score": 540
+    },
+    {
+     "topFraction": 0.02,
+     "score": 510
+    },
+    {
+     "topFraction": 0.035,
+     "score": 480
+    },
+    {
+     "topFraction": 0.05,
+     "score": 460
+    },
+    {
+     "topFraction": 0.075,
+     "score": 440
+    },
+    {
+     "topFraction": 0.1,
+     "score": 410
+    },
+    {
+     "topFraction": 0.15,
+     "score": 390
+    },
+    {
+     "topFraction": 0.2,
+     "score": 360
+    },
+    {
+     "topFraction": 0.3,
+     "score": 320
+    },
+    {
+     "topFraction": 0.4,
+     "score": 290
+    },
+    {
+     "topFraction": 0.5,
+     "score": 260
+    },
+    {
+     "topFraction": 0.65,
+     "score": 200
+    },
+    {
+     "topFraction": 0.8,
+     "score": 150
+    },
+    {
+     "topFraction": 0.95,
+     "score": 80
+    }
+   ],
+   "sampledAt": "2026-09-24T04:51:03.246Z"
+  },
+  {
+   "scenario": "Ground Plaza Sparky V3 Viscose Hard",
+   "leaderboardId": 184795,
+   "total": 2100,
+   "points": [
+    {
+     "topFraction": 0.001,
+     "score": 915.22
+    },
+    {
+     "topFraction": 0.005,
+     "score": 913.1
+    },
+    {
+     "topFraction": 0.01,
+     "score": 911.87
+    },
+    {
+     "topFraction": 0.02,
+     "score": 909.49
+    },
+    {
+     "topFraction": 0.035,
+     "score": 906.95
+    },
+    {
+     "topFraction": 0.05,
+     "score": 905.04
+    },
+    {
+     "topFraction": 0.075,
+     "score": 903.34
+    },
+    {
+     "topFraction": 0.1,
+     "score": 901.69
+    },
+    {
+     "topFraction": 0.15,
+     "score": 899.12
+    },
+    {
+     "topFraction": 0.2,
+     "score": 897.05
+    },
+    {
+     "topFraction": 0.3,
+     "score": 893.35
+    },
+    {
+     "topFraction": 0.4,
+     "score": 890.05
+    },
+    {
+     "topFraction": 0.5,
+     "score": 885.39
+    },
+    {
+     "topFraction": 0.65,
+     "score": 876.38
+    },
+    {
+     "topFraction": 0.8,
+     "score": 863.21
+    },
+    {
+     "topFraction": 0.95,
+     "score": 826.76
+    }
+   ],
+   "sampledAt": "2026-09-24T04:51:10.461Z"
+  },
+  {
+   "scenario": "PGTI Voltaic Easy Smoother",
+   "leaderboardId": 184878,
+   "total": 27630,
+   "points": [
+    {
+     "topFraction": 0.001,
+     "score": 4236
+    },
+    {
+     "topFraction": 0.005,
+     "score": 3803
+    },
+    {
+     "topFraction": 0.01,
+     "score": 3579
+    },
+    {
+     "topFraction": 0.02,
+     "score": 3326
+    },
+    {
+     "topFraction": 0.035,
+     "score": 3116
+    },
+    {
+     "topFraction": 0.05,
+     "score": 2978
+    },
+    {
+     "topFraction": 0.075,
+     "score": 2818
+    },
+    {
+     "topFraction": 0.1,
+     "score": 2731
+    },
+    {
+     "topFraction": 0.15,
+     "score": 2620
+    },
+    {
+     "topFraction": 0.2,
+     "score": 2560
+    },
+    {
+     "topFraction": 0.3,
+     "score": 2357
+    },
+    {
+     "topFraction": 0.4,
+     "score": 2075
+    },
+    {
+     "topFraction": 0.5,
+     "score": 1852
+    },
+    {
+     "topFraction": 0.65,
+     "score": 1512
+    },
+    {
+     "topFraction": 0.8,
+     "score": 1186
+    },
+    {
+     "topFraction": 0.95,
+     "score": 704
+    }
+   ],
+   "sampledAt": "2026-09-24T04:51:23.227Z"
+  },
+  {
+   "scenario": "VoxTS Click Medium 10% Smaller",
+   "leaderboardId": 185015,
+   "total": 1745,
+   "points": [
+    {
+     "topFraction": 0.001,
+     "score": 162
+    },
+    {
+     "topFraction": 0.005,
+     "score": 144
+    },
+    {
+     "topFraction": 0.01,
+     "score": 141
+    },
+    {
+     "topFraction": 0.02,
+     "score": 132
+    },
+    {
+     "topFraction": 0.035,
+     "score": 128
+    },
+    {
+     "topFraction": 0.05,
+     "score": 125
+    },
+    {
+     "topFraction": 0.075,
+     "score": 123
+    },
+    {
+     "topFraction": 0.1,
+     "score": 120
+    },
+    {
+     "topFraction": 0.15,
+     "score": 116
+    },
+    {
+     "topFraction": 0.2,
+     "score": 113
+    },
+    {
+     "topFraction": 0.3,
+     "score": 107
+    },
+    {
+     "topFraction": 0.4,
+     "score": 102
+    },
+    {
+     "topFraction": 0.5,
+     "score": 98
+    },
+    {
+     "topFraction": 0.65,
+     "score": 88
+    },
+    {
+     "topFraction": 0.8,
+     "score": 77
+    },
+    {
+     "topFraction": 0.95,
+     "score": 58
+    }
+   ],
+   "sampledAt": "2026-09-24T04:51:30.703Z"
+  },
+  {
+   "scenario": "eth Pasu Micro Hard",
+   "leaderboardId": 185017,
+   "total": 2119,
+   "points": [
+    {
+     "topFraction": 0.001,
+     "score": 1920
+    },
+    {
+     "topFraction": 0.005,
+     "score": 1802
+    },
+    {
+     "topFraction": 0.01,
+     "score": 1774
+    },
+    {
+     "topFraction": 0.02,
+     "score": 1712
+    },
+    {
+     "topFraction": 0.035,
+     "score": 1656
+    },
+    {
+     "topFraction": 0.05,
+     "score": 1624
+    },
+    {
+     "topFraction": 0.075,
+     "score": 1584
+    },
+    {
+     "topFraction": 0.1,
+     "score": 1542
+    },
+    {
+     "topFraction": 0.15,
+     "score": 1482
+    },
+    {
+     "topFraction": 0.2,
+     "score": 1432
+    },
+    {
+     "topFraction": 0.3,
+     "score": 1358
+    },
+    {
+     "topFraction": 0.4,
+     "score": 1296
+    },
+    {
+     "topFraction": 0.5,
+     "score": 1248
+    },
+    {
+     "topFraction": 0.65,
+     "score": 1136
+    },
+    {
+     "topFraction": 0.8,
+     "score": 1016
+    },
+    {
+     "topFraction": 0.95,
+     "score": 814
+    }
+   ],
+   "sampledAt": "2026-09-24T04:51:37.886Z"
+  },
+  {
+   "scenario": "Leisphere Easy",
+   "leaderboardId": 185129,
+   "total": 2652,
+   "points": [
+    {
+     "topFraction": 0.001,
+     "score": 5090
+    },
+    {
+     "topFraction": 0.005,
+     "score": 4834
+    },
+    {
+     "topFraction": 0.01,
+     "score": 4718
+    },
+    {
+     "topFraction": 0.02,
+     "score": 4647
+    },
+    {
+     "topFraction": 0.035,
+     "score": 4610
+    },
+    {
+     "topFraction": 0.05,
+     "score": 4559
+    },
+    {
+     "topFraction": 0.075,
+     "score": 4504
+    },
+    {
+     "topFraction": 0.1,
+     "score": 4419
+    },
+    {
+     "topFraction": 0.15,
+     "score": 4313
+    },
+    {
+     "topFraction": 0.2,
+     "score": 4220
+    },
+    {
+     "topFraction": 0.3,
+     "score": 4094
+    },
+    {
+     "topFraction": 0.4,
+     "score": 4000
+    },
+    {
+     "topFraction": 0.5,
+     "score": 3836
+    },
+    {
+     "topFraction": 0.65,
+     "score": 3619
+    },
+    {
+     "topFraction": 0.8,
+     "score": 3336
+    },
+    {
+     "topFraction": 0.95,
+     "score": 2711
+    }
+   ],
+   "sampledAt": "2026-09-24T04:51:45.080Z"
+  },
+  {
+   "scenario": "Popcorn MV Hard",
+   "leaderboardId": 185400,
+   "total": 1435,
+   "points": [
+    {
+     "topFraction": 0.001,
+     "score": 750
+    },
+    {
+     "topFraction": 0.005,
+     "score": 620
+    },
+    {
+     "topFraction": 0.01,
+     "score": 580
+    },
+    {
+     "topFraction": 0.02,
+     "score": 560
+    },
+    {
+     "topFraction": 0.035,
+     "score": 520
+    },
+    {
+     "topFraction": 0.05,
+     "score": 500
+    },
+    {
+     "topFraction": 0.075,
+     "score": 480
+    },
+    {
+     "topFraction": 0.1,
+     "score": 460
+    },
+    {
+     "topFraction": 0.15,
+     "score": 440
+    },
+    {
+     "topFraction": 0.2,
+     "score": 420
+    },
+    {
+     "topFraction": 0.3,
+     "score": 380
+    },
+    {
+     "topFraction": 0.4,
+     "score": 360
+    },
+    {
+     "topFraction": 0.5,
+     "score": 330
+    },
+    {
+     "topFraction": 0.65,
+     "score": 270
+    },
+    {
+     "topFraction": 0.8,
+     "score": 210
+    },
+    {
+     "topFraction": 0.95,
+     "score": 110
+    }
+   ],
+   "sampledAt": "2026-09-24T04:51:52.566Z"
+  },
+  {
+   "scenario": "VT Bounceshot Viscose Hard",
+   "leaderboardId": 185230,
+   "total": 1616,
+   "points": [
+    {
+     "topFraction": 0.001,
+     "score": 1440
+    },
+    {
+     "topFraction": 0.005,
+     "score": 1210
+    },
+    {
+     "topFraction": 0.01,
+     "score": 1140
+    },
+    {
+     "topFraction": 0.02,
+     "score": 1080
+    },
+    {
+     "topFraction": 0.035,
+     "score": 1040
+    },
+    {
+     "topFraction": 0.05,
+     "score": 1010
+    },
+    {
+     "topFraction": 0.075,
+     "score": 970
+    },
+    {
+     "topFraction": 0.1,
+     "score": 940
+    },
+    {
+     "topFraction": 0.15,
+     "score": 900
+    },
+    {
+     "topFraction": 0.2,
+     "score": 860
+    },
+    {
+     "topFraction": 0.3,
+     "score": 800
+    },
+    {
+     "topFraction": 0.4,
+     "score": 750
+    },
+    {
+     "topFraction": 0.5,
+     "score": 710
+    },
+    {
+     "topFraction": 0.65,
+     "score": 610
+    },
+    {
+     "topFraction": 0.8,
+     "score": 500
+    },
+    {
+     "topFraction": 0.95,
+     "score": 300
+    }
+   ],
+   "sampledAt": "2026-09-24T04:51:59.643Z"
+  },
+  {
+   "scenario": "Whisphere Viscose Hard",
+   "leaderboardId": 185238,
+   "total": 3381,
+   "points": [
+    {
+     "topFraction": 0.001,
+     "score": 23500
+    },
+    {
+     "topFraction": 0.005,
+     "score": 22460
+    },
+    {
+     "topFraction": 0.01,
+     "score": 21740
+    },
+    {
+     "topFraction": 0.02,
+     "score": 20950
+    },
+    {
+     "topFraction": 0.035,
+     "score": 20050
+    },
+    {
+     "topFraction": 0.05,
+     "score": 19550
+    },
+    {
+     "topFraction": 0.075,
+     "score": 18880
+    },
+    {
+     "topFraction": 0.1,
+     "score": 18390
+    },
+    {
+     "topFraction": 0.15,
+     "score": 17580
+    },
+    {
+     "topFraction": 0.2,
+     "score": 16900
+    },
+    {
+     "topFraction": 0.3,
+     "score": 15870
+    },
+    {
+     "topFraction": 0.4,
+     "score": 14940
+    },
+    {
+     "topFraction": 0.5,
+     "score": 13690
+    },
+    {
+     "topFraction": 0.65,
+     "score": 11720
+    },
+    {
+     "topFraction": 0.8,
+     "score": 9420
+    },
+    {
+     "topFraction": 0.95,
+     "score": 5950
+    }
+   ],
+   "sampledAt": "2026-09-24T04:52:07.230Z"
+  },
+  {
+   "scenario": "Controlsphere SuperbAim Viscose Easier",
+   "leaderboardId": 185345,
+   "total": 33196,
+   "points": [
+    {
+     "topFraction": 0.001,
+     "score": 16047
+    },
+    {
+     "topFraction": 0.005,
+     "score": 15225
+    },
+    {
+     "topFraction": 0.01,
+     "score": 14766
+    },
+    {
+     "topFraction": 0.02,
+     "score": 14160
+    },
+    {
+     "topFraction": 0.035,
+     "score": 13632
+    },
+    {
+     "topFraction": 0.05,
+     "score": 13236
+    },
+    {
+     "topFraction": 0.075,
+     "score": 12780
+    },
+    {
+     "topFraction": 0.1,
+     "score": 12522
+    },
+    {
+     "topFraction": 0.15,
+     "score": 12204
+    },
+    {
+     "topFraction": 0.2,
+     "score": 11991
+    },
+    {
+     "topFraction": 0.3,
+     "score": 11478
+    },
+    {
+     "topFraction": 0.4,
+     "score": 10602
+    },
+    {
+     "topFraction": 0.5,
+     "score": 9879
+    },
+    {
+     "topFraction": 0.65,
+     "score": 8616
+    },
+    {
+     "topFraction": 0.8,
+     "score": 7203
+    },
+    {
+     "topFraction": 0.95,
+     "score": 4935
+    }
+   ],
+   "sampledAt": "2026-09-24T04:52:15.176Z"
+  },
+  {
+   "scenario": "Whisphere Viscose Easier",
+   "leaderboardId": 185346,
+   "total": 34909,
+   "points": [
+    {
+     "topFraction": 0.001,
+     "score": 26200
+    },
+    {
+     "topFraction": 0.005,
+     "score": 24700
+    },
+    {
+     "topFraction": 0.01,
+     "score": 23850
+    },
+    {
+     "topFraction": 0.02,
+     "score": 22860
+    },
+    {
+     "topFraction": 0.035,
+     "score": 21860
+    },
+    {
+     "topFraction": 0.05,
+     "score": 21160
+    },
+    {
+     "topFraction": 0.075,
+     "score": 20400
+    },
+    {
+     "topFraction": 0.1,
+     "score": 19870
+    },
+    {
+     "topFraction": 0.15,
+     "score": 19240
+    },
+    {
+     "topFraction": 0.2,
+     "score": 18870
+    },
+    {
+     "topFraction": 0.3,
+     "score": 17890
+    },
+    {
+     "topFraction": 0.4,
+     "score": 16520
+    },
+    {
+     "topFraction": 0.5,
+     "score": 15200
+    },
+    {
+     "topFraction": 0.65,
+     "score": 13260
+    },
+    {
+     "topFraction": 0.8,
+     "score": 11080
+    },
+    {
+     "topFraction": 0.95,
+     "score": 7740
+    }
+   ],
+   "sampledAt": "2026-09-24T04:52:22.887Z"
+  },
+  {
+   "scenario": "cloverRawControl Viscose Easier 50cm",
+   "leaderboardId": 185349,
+   "total": 31037,
+   "points": [
+    {
+     "topFraction": 0.001,
+     "score": 16197
+    },
+    {
+     "topFraction": 0.005,
+     "score": 15105
+    },
+    {
+     "topFraction": 0.01,
+     "score": 14514
+    },
+    {
+     "topFraction": 0.02,
+     "score": 14019
+    },
+    {
+     "topFraction": 0.035,
+     "score": 13485
+    },
+    {
+     "topFraction": 0.05,
+     "score": 13131
+    },
+    {
+     "topFraction": 0.075,
+     "score": 12735
+    },
+    {
+     "topFraction": 0.1,
+     "score": 12447
+    },
+    {
+     "topFraction": 0.15,
+     "score": 12066
+    },
+    {
+     "topFraction": 0.2,
+     "score": 11820
+    },
+    {
+     "topFraction": 0.3,
+     "score": 11421
+    },
+    {
+     "topFraction": 0.4,
+     "score": 10569
+    },
+    {
+     "topFraction": 0.5,
+     "score": 9885
+    },
+    {
+     "topFraction": 0.65,
+     "score": 8553
+    },
+    {
+     "topFraction": 0.8,
+     "score": 7131
+    },
+    {
+     "topFraction": 0.95,
+     "score": 4755
+    }
+   ],
+   "sampledAt": "2026-09-24T04:52:30.029Z"
+  },
+  {
+   "scenario": "Air Pure Easier No UFO",
+   "leaderboardId": 185405,
+   "total": 23790,
+   "points": [
+    {
+     "topFraction": 0.001,
+     "score": 952.66
+    },
+    {
+     "topFraction": 0.005,
+     "score": 950.54
+    },
+    {
+     "topFraction": 0.01,
+     "score": 949.24
+    },
+    {
+     "topFraction": 0.02,
+     "score": 947.59
+    },
+    {
+     "topFraction": 0.035,
+     "score": 945.99
+    },
+    {
+     "topFraction": 0.05,
+     "score": 944.92
+    },
+    {
+     "topFraction": 0.075,
+     "score": 943.71
+    },
+    {
+     "topFraction": 0.1,
+     "score": 942.92
+    },
+    {
+     "topFraction": 0.15,
+     "score": 941.81
+    },
+    {
+     "topFraction": 0.2,
+     "score": 941.04
+    },
+    {
+     "topFraction": 0.3,
+     "score": 939.83
+    },
+    {
+     "topFraction": 0.4,
+     "score": 936.23
+    },
+    {
+     "topFraction": 0.5,
+     "score": 933.42
+    },
+    {
+     "topFraction": 0.65,
+     "score": 928.22
+    },
+    {
+     "topFraction": 0.8,
+     "score": 921.04
+    },
+    {
+     "topFraction": 0.95,
+     "score": 902.04
+    }
+   ],
+   "sampledAt": "2026-09-24T04:52:37.742Z"
+  },
+  {
+   "scenario": "ww5t Voltaic Slightly Larger",
+   "leaderboardId": 185378,
+   "total": 29702,
+   "points": [
+    {
+     "topFraction": 0.001,
+     "score": 180
+    },
+    {
+     "topFraction": 0.005,
+     "score": 164
+    },
+    {
+     "topFraction": 0.01,
+     "score": 157
+    },
+    {
+     "topFraction": 0.02,
+     "score": 150
+    },
+    {
+     "topFraction": 0.035,
+     "score": 144
+    },
+    {
+     "topFraction": 0.05,
+     "score": 141
+    },
+    {
+     "topFraction": 0.075,
+     "score": 136
+    },
+    {
+     "topFraction": 0.1,
+     "score": 134
+    },
+    {
+     "topFraction": 0.15,
+     "score": 130
+    },
+    {
+     "topFraction": 0.2,
+     "score": 128
+    },
+    {
+     "topFraction": 0.3,
+     "score": 125
+    },
+    {
+     "topFraction": 0.4,
+     "score": 120
+    },
+    {
+     "topFraction": 0.5,
+     "score": 116
+    },
+    {
+     "topFraction": 0.65,
+     "score": 109
+    },
+    {
+     "topFraction": 0.8,
+     "score": 101
+    },
+    {
+     "topFraction": 0.95,
+     "score": 85
+    }
+   ],
+   "sampledAt": "2026-09-24T04:52:45.220Z"
+  },
+  {
+   "scenario": "kinTS Voltaic Easy 85%",
+   "leaderboardId": 185408,
+   "total": 24237,
+   "points": [
+    {
+     "topFraction": 0.001,
+     "score": 94.59
+    },
+    {
+     "topFraction": 0.005,
+     "score": 87.88
+    },
+    {
+     "topFraction": 0.01,
+     "score": 84.68
+    },
+    {
+     "topFraction": 0.02,
+     "score": 81.78
+    },
+    {
+     "topFraction": 0.035,
+     "score": 79.17
+    },
+    {
+     "topFraction": 0.05,
+     "score": 77.97
+    },
+    {
+     "topFraction": 0.075,
+     "score": 76.17
+    },
+    {
+     "topFraction": 0.1,
+     "score": 75.17
+    },
+    {
+     "topFraction": 0.15,
+     "score": 74.07
+    },
+    {
+     "topFraction": 0.2,
+     "score": 73.07
+    },
+    {
+     "topFraction": 0.3,
+     "score": 70.87
+    },
+    {
+     "topFraction": 0.4,
+     "score": 67.06
+    },
+    {
+     "topFraction": 0.5,
+     "score": 64.06
+    },
+    {
+     "topFraction": 0.65,
+     "score": 60.06
+    },
+    {
+     "topFraction": 0.8,
+     "score": 55.05
+    },
+    {
+     "topFraction": 0.95,
+     "score": 46.74
+    }
+   ],
+   "sampledAt": "2026-09-24T04:52:53.918Z"
+  },
+  {
+   "scenario": "Air Voltaic Invincible 4 Slightly Slower",
+   "leaderboardId": 185402,
+   "total": 1655,
+   "points": [
+    {
+     "topFraction": 0.001,
+     "score": 4793
+    },
+    {
+     "topFraction": 0.005,
+     "score": 4386
+    },
+    {
+     "topFraction": 0.01,
+     "score": 4303
+    },
+    {
+     "topFraction": 0.02,
+     "score": 4161
+    },
+    {
+     "topFraction": 0.035,
+     "score": 4036
+    },
+    {
+     "topFraction": 0.05,
+     "score": 3942
+    },
+    {
+     "topFraction": 0.075,
+     "score": 3851
+    },
+    {
+     "topFraction": 0.1,
+     "score": 3743
+    },
+    {
+     "topFraction": 0.15,
+     "score": 3622
+    },
+    {
+     "topFraction": 0.2,
+     "score": 3503
+    },
+    {
+     "topFraction": 0.3,
+     "score": 3320
+    },
+    {
+     "topFraction": 0.4,
+     "score": 3186
+    },
+    {
+     "topFraction": 0.5,
+     "score": 3051
+    },
+    {
+     "topFraction": 0.65,
+     "score": 2720
+    },
+    {
+     "topFraction": 0.8,
+     "score": 2358
+    },
+    {
+     "topFraction": 0.95,
+     "score": 1677
+    }
+   ],
+   "sampledAt": "2026-09-24T04:53:00.991Z"
+  },
+  {
+   "scenario": "psalmTS Viscose Click Easier",
+   "leaderboardId": 185609,
+   "total": 22138,
+   "points": [
+    {
+     "topFraction": 0.001,
+     "score": 119
+    },
+    {
+     "topFraction": 0.005,
+     "score": 109
+    },
+    {
+     "topFraction": 0.01,
+     "score": 104
+    },
+    {
+     "topFraction": 0.02,
+     "score": 99
+    },
+    {
+     "topFraction": 0.035,
+     "score": 94
+    },
+    {
+     "topFraction": 0.05,
+     "score": 91
+    },
+    {
+     "topFraction": 0.075,
+     "score": 89
+    },
+    {
+     "topFraction": 0.1,
+     "score": 86
+    },
+    {
+     "topFraction": 0.15,
+     "score": 84
+    },
+    {
+     "topFraction": 0.2,
+     "score": 82
+    },
+    {
+     "topFraction": 0.3,
+     "score": 80
+    },
+    {
+     "topFraction": 0.4,
+     "score": 74
+    },
+    {
+     "topFraction": 0.5,
+     "score": 70
+    },
+    {
+     "topFraction": 0.65,
+     "score": 63
+    },
+    {
+     "topFraction": 0.8,
+     "score": 55
+    },
+    {
+     "topFraction": 0.95,
+     "score": 41
+    }
+   ],
+   "sampledAt": "2026-09-24T04:53:08.115Z"
+  },
+  {
+   "scenario": "psalmTS Viscose Click",
+   "leaderboardId": 185603,
+   "total": 23428,
+   "points": [
+    {
+     "topFraction": 0.001,
+     "score": 116
+    },
+    {
+     "topFraction": 0.005,
+     "score": 108
+    },
+    {
+     "topFraction": 0.01,
+     "score": 105
+    },
+    {
+     "topFraction": 0.02,
+     "score": 99
+    },
+    {
+     "topFraction": 0.035,
+     "score": 94
+    },
+    {
+     "topFraction": 0.05,
+     "score": 91
+    },
+    {
+     "topFraction": 0.075,
+     "score": 88
+    },
+    {
+     "topFraction": 0.1,
+     "score": 85
+    },
+    {
+     "topFraction": 0.15,
+     "score": 81
+    },
+    {
+     "topFraction": 0.2,
+     "score": 77
+    },
+    {
+     "topFraction": 0.3,
+     "score": 72
+    },
+    {
+     "topFraction": 0.4,
+     "score": 67
+    },
+    {
+     "topFraction": 0.5,
+     "score": 63
+    },
+    {
+     "topFraction": 0.65,
+     "score": 56
+    },
+    {
+     "topFraction": 0.8,
+     "score": 48
+    },
+    {
+     "topFraction": 0.95,
+     "score": 34
+    }
+   ],
+   "sampledAt": "2026-09-24T04:53:15.272Z"
+  },
+  {
+   "scenario": "psalmTS Viscose Click Hard",
+   "leaderboardId": 185604,
+   "total": 1477,
+   "points": [
+    {
+     "topFraction": 0.001,
+     "score": 137
+    },
+    {
+     "topFraction": 0.005,
+     "score": 120
+    },
+    {
+     "topFraction": 0.01,
+     "score": 113
+    },
+    {
+     "topFraction": 0.02,
+     "score": 105
+    },
+    {
+     "topFraction": 0.035,
+     "score": 100
+    },
+    {
+     "topFraction": 0.05,
+     "score": 97
+    },
+    {
+     "topFraction": 0.075,
+     "score": 93
+    },
+    {
+     "topFraction": 0.1,
+     "score": 90
+    },
+    {
+     "topFraction": 0.15,
+     "score": 87
+    },
+    {
+     "topFraction": 0.2,
+     "score": 85
+    },
+    {
+     "topFraction": 0.3,
+     "score": 79
+    },
+    {
+     "topFraction": 0.4,
+     "score": 75
+    },
+    {
+     "topFraction": 0.5,
+     "score": 71
+    },
+    {
+     "topFraction": 0.65,
+     "score": 62
+    },
+    {
+     "topFraction": 0.8,
+     "score": 53
+    },
+    {
+     "topFraction": 0.95,
+     "score": 38
+    }
+   ],
+   "sampledAt": "2026-09-24T04:53:22.435Z"
+  },
+  {
+   "scenario": "Air CELESTIAL No UFO Easier",
+   "leaderboardId": 185640,
+   "total": 25856,
+   "points": [
+    {
+     "topFraction": 0.001,
+     "score": 920.33
+    },
+    {
+     "topFraction": 0.005,
+     "score": 916.44
+    },
+    {
+     "topFraction": 0.01,
+     "score": 914.23
+    },
+    {
+     "topFraction": 0.02,
+     "score": 911.1
+    },
+    {
+     "topFraction": 0.035,
+     "score": 908.03
+    },
+    {
+     "topFraction": 0.05,
+     "score": 905.87
+    },
+    {
+     "topFraction": 0.075,
+     "score": 903.16
+    },
+    {
+     "topFraction": 0.1,
+     "score": 901.26
+    },
+    {
+     "topFraction": 0.15,
+     "score": 899.02
+    },
+    {
+     "topFraction": 0.2,
+     "score": 897.56
+    },
+    {
+     "topFraction": 0.3,
+     "score": 894.36
+    },
+    {
+     "topFraction": 0.4,
+     "score": 887.61
+    },
+    {
+     "topFraction": 0.5,
+     "score": 881.84
+    },
+    {
+     "topFraction": 0.65,
+     "score": 870.74
+    },
+    {
+     "topFraction": 0.8,
+     "score": 855.8
+    },
+    {
+     "topFraction": 0.95,
+     "score": 818.12
+    }
+   ],
+   "sampledAt": "2026-09-24T04:53:29.651Z"
+  },
+  {
+   "scenario": "VT Aether Bot 1 Easier",
+   "leaderboardId": 186530,
+   "total": 25166,
+   "points": [
+    {
+     "topFraction": 0.001,
+     "score": 4865
+    },
+    {
+     "topFraction": 0.005,
+     "score": 4619
+    },
+    {
+     "topFraction": 0.01,
+     "score": 4465
+    },
+    {
+     "topFraction": 0.02,
+     "score": 4279
+    },
+    {
+     "topFraction": 0.035,
+     "score": 4119
+    },
+    {
+     "topFraction": 0.05,
+     "score": 3995
+    },
+    {
+     "topFraction": 0.075,
+     "score": 3856
+    },
+    {
+     "topFraction": 0.1,
+     "score": 3765
+    },
+    {
+     "topFraction": 0.15,
+     "score": 3654
+    },
+    {
+     "topFraction": 0.2,
+     "score": 3584
+    },
+    {
+     "topFraction": 0.3,
+     "score": 3476
+    },
+    {
+     "topFraction": 0.4,
+     "score": 3187
+    },
+    {
+     "topFraction": 0.5,
+     "score": 2978
+    },
+    {
+     "topFraction": 0.65,
+     "score": 2589
+    },
+    {
+     "topFraction": 0.8,
+     "score": 2173
+    },
+    {
+     "topFraction": 0.95,
+     "score": 1533
+    }
+   ],
+   "sampledAt": "2026-09-24T04:53:36.981Z"
+  },
+  {
+   "scenario": "AA4V OW Easy",
+   "leaderboardId": 189519,
+   "total": 1398,
+   "points": [
+    {
+     "topFraction": 0.001,
+     "score": 5154
+    },
+    {
+     "topFraction": 0.005,
+     "score": 4991
+    },
+    {
+     "topFraction": 0.01,
+     "score": 4812
+    },
+    {
+     "topFraction": 0.02,
+     "score": 4727
+    },
+    {
+     "topFraction": 0.035,
+     "score": 4642
+    },
+    {
+     "topFraction": 0.05,
+     "score": 4580
+    },
+    {
+     "topFraction": 0.075,
+     "score": 4516
+    },
+    {
+     "topFraction": 0.1,
+     "score": 4477
+    },
+    {
+     "topFraction": 0.15,
+     "score": 4355
+    },
+    {
+     "topFraction": 0.2,
+     "score": 4267
+    },
+    {
+     "topFraction": 0.3,
+     "score": 4100
+    },
+    {
+     "topFraction": 0.4,
+     "score": 3958
+    },
+    {
+     "topFraction": 0.5,
+     "score": 3785
+    },
+    {
+     "topFraction": 0.65,
+     "score": 3563
+    },
+    {
+     "topFraction": 0.8,
+     "score": 3244
+    },
+    {
+     "topFraction": 0.95,
+     "score": 2453
+    }
+   ],
+   "sampledAt": "2026-09-24T04:53:44.787Z"
+  },
+  {
+   "scenario": "Pasutrack RCT Evo Easy",
+   "leaderboardId": 189580,
+   "total": 1246,
+   "points": [
+    {
+     "topFraction": 0.001,
+     "score": 4684
+    },
+    {
+     "topFraction": 0.005,
+     "score": 4387
+    },
+    {
+     "topFraction": 0.01,
+     "score": 4320
+    },
+    {
+     "topFraction": 0.02,
+     "score": 4274
+    },
+    {
+     "topFraction": 0.035,
+     "score": 4234
+    },
+    {
+     "topFraction": 0.05,
+     "score": 4204
+    },
+    {
+     "topFraction": 0.075,
+     "score": 4159
+    },
+    {
+     "topFraction": 0.1,
+     "score": 4102
+    },
+    {
+     "topFraction": 0.15,
+     "score": 3970
+    },
+    {
+     "topFraction": 0.2,
+     "score": 3921
+    },
+    {
+     "topFraction": 0.3,
+     "score": 3756
+    },
+    {
+     "topFraction": 0.4,
+     "score": 3635
+    },
+    {
+     "topFraction": 0.5,
+     "score": 3497
+    },
+    {
+     "topFraction": 0.65,
+     "score": 3286
+    },
+    {
+     "topFraction": 0.8,
+     "score": 3047
+    },
+    {
+     "topFraction": 0.95,
+     "score": 2437
+    }
+   ],
+   "sampledAt": "2026-09-24T04:53:51.907Z"
+  },
+  {
+   "scenario": "Air Pure Perfected Easy",
+   "leaderboardId": 189586,
+   "total": 1817,
+   "points": [
+    {
+     "topFraction": 0.001,
+     "score": 925.89
+    },
+    {
+     "topFraction": 0.005,
+     "score": 922.49
+    },
+    {
+     "topFraction": 0.01,
+     "score": 921.33
+    },
+    {
+     "topFraction": 0.02,
+     "score": 920.54
+    },
+    {
+     "topFraction": 0.035,
+     "score": 919.04
+    },
+    {
+     "topFraction": 0.05,
+     "score": 917.58
+    },
+    {
+     "topFraction": 0.075,
+     "score": 916.31
+    },
+    {
+     "topFraction": 0.1,
+     "score": 914.59
+    },
+    {
+     "topFraction": 0.15,
+     "score": 912.17
+    },
+    {
+     "topFraction": 0.2,
+     "score": 910.61
+    },
+    {
+     "topFraction": 0.3,
+     "score": 906.42
+    },
+    {
+     "topFraction": 0.4,
+     "score": 902.3
+    },
+    {
+     "topFraction": 0.5,
+     "score": 898.53
+    },
+    {
+     "topFraction": 0.65,
+     "score": 890.88
+    },
+    {
+     "topFraction": 0.8,
+     "score": 880.73
+    },
+    {
+     "topFraction": 0.95,
+     "score": 853.16
+    }
+   ],
+   "sampledAt": "2026-09-24T04:53:59.253Z"
+  },
+  {
+   "scenario": "Air Palace Advanced",
+   "leaderboardId": 189605,
+   "total": 304,
+   "points": [
+    {
+     "topFraction": 0.001,
+     "score": 913.43
+    },
+    {
+     "topFraction": 0.005,
+     "score": 913.43
+    },
+    {
+     "topFraction": 0.01,
+     "score": 909.61
+    },
+    {
+     "topFraction": 0.02,
+     "score": 907.37
+    },
+    {
+     "topFraction": 0.035,
+     "score": 904.85
+    },
+    {
+     "topFraction": 0.05,
+     "score": 903.67
+    },
+    {
+     "topFraction": 0.075,
+     "score": 902.02
+    },
+    {
+     "topFraction": 0.1,
+     "score": 900.08
+    },
+    {
+     "topFraction": 0.15,
+     "score": 896.16
+    },
+    {
+     "topFraction": 0.2,
+     "score": 894.09
+    },
+    {
+     "topFraction": 0.3,
+     "score": 890.24
+    },
+    {
+     "topFraction": 0.4,
+     "score": 886.47
+    },
+    {
+     "topFraction": 0.5,
+     "score": 881.44
+    },
+    {
+     "topFraction": 0.65,
+     "score": 869.12
+    },
+    {
+     "topFraction": 0.8,
+     "score": 846.52
+    },
+    {
+     "topFraction": 0.95,
+     "score": 791.69
+    }
+   ],
+   "sampledAt": "2026-09-24T04:54:06.708Z"
+  },
+  {
+   "scenario": "hizkuAirPalace Easy",
+   "leaderboardId": 189773,
+   "total": 1440,
+   "points": [
+    {
+     "topFraction": 0.001,
+     "score": 4296
+    },
+    {
+     "topFraction": 0.005,
+     "score": 4073
+    },
+    {
+     "topFraction": 0.01,
+     "score": 4019
+    },
+    {
+     "topFraction": 0.02,
+     "score": 3946
+    },
+    {
+     "topFraction": 0.035,
+     "score": 3906
+    },
+    {
+     "topFraction": 0.05,
+     "score": 3827
+    },
+    {
+     "topFraction": 0.075,
+     "score": 3745
+    },
+    {
+     "topFraction": 0.1,
+     "score": 3702
+    },
+    {
+     "topFraction": 0.15,
+     "score": 3623
+    },
+    {
+     "topFraction": 0.2,
+     "score": 3539
+    },
+    {
+     "topFraction": 0.3,
+     "score": 3387
+    },
+    {
+     "topFraction": 0.4,
+     "score": 3282
+    },
+    {
+     "topFraction": 0.5,
+     "score": 3157
+    },
+    {
+     "topFraction": 0.65,
+     "score": 2979
+    },
+    {
+     "topFraction": 0.8,
+     "score": 2765
+    },
+    {
+     "topFraction": 0.95,
+     "score": 2138
+    }
+   ],
+   "sampledAt": "2026-09-24T04:54:13.881Z"
+  },
+  {
+   "scenario": "Pasu Viscose Entry Small",
+   "leaderboardId": 192536,
+   "total": 704,
+   "points": [
+    {
+     "topFraction": 0.001,
+     "score": 2082.02
+    },
+    {
+     "topFraction": 0.005,
+     "score": 2039.63
+    },
+    {
+     "topFraction": 0.01,
+     "score": 1875.2
+    },
+    {
+     "topFraction": 0.02,
+     "score": 1753.79
+    },
+    {
+     "topFraction": 0.035,
+     "score": 1690.43
+    },
+    {
+     "topFraction": 0.05,
+     "score": 1632.89
+    },
+    {
+     "topFraction": 0.075,
+     "score": 1562.21
+    },
+    {
+     "topFraction": 0.1,
+     "score": 1539.86
+    },
+    {
+     "topFraction": 0.15,
+     "score": 1482.68
+    },
+    {
+     "topFraction": 0.2,
+     "score": 1450.47
+    },
+    {
+     "topFraction": 0.3,
+     "score": 1404.6
+    },
+    {
+     "topFraction": 0.4,
+     "score": 1345.13
+    },
+    {
+     "topFraction": 0.5,
+     "score": 1258.15
+    },
+    {
+     "topFraction": 0.65,
+     "score": 1111.21
+    },
+    {
+     "topFraction": 0.8,
+     "score": 980.95
+    },
+    {
+     "topFraction": 0.95,
+     "score": 711.43
+    }
+   ],
+   "sampledAt": "2026-09-24T04:54:21.099Z"
+  },
+  {
+   "scenario": "Flow Easy",
+   "leaderboardId": 192630,
+   "total": 599,
+   "points": [
+    {
+     "topFraction": 0.001,
+     "score": 1600
+    },
+    {
+     "topFraction": 0.005,
+     "score": 1520
+    },
+    {
+     "topFraction": 0.01,
+     "score": 1440
+    },
+    {
+     "topFraction": 0.02,
+     "score": 1390
+    },
+    {
+     "topFraction": 0.035,
+     "score": 1360
+    },
+    {
+     "topFraction": 0.05,
+     "score": 1340
+    },
+    {
+     "topFraction": 0.075,
+     "score": 1290
+    },
+    {
+     "topFraction": 0.1,
+     "score": 1240
+    },
+    {
+     "topFraction": 0.15,
+     "score": 1190
+    },
+    {
+     "topFraction": 0.2,
+     "score": 1130
+    },
+    {
+     "topFraction": 0.3,
+     "score": 1060
+    },
+    {
+     "topFraction": 0.4,
+     "score": 1010
+    },
+    {
+     "topFraction": 0.5,
+     "score": 970
+    },
+    {
+     "topFraction": 0.65,
+     "score": 880
+    },
+    {
+     "topFraction": 0.8,
+     "score": 780
+    },
+    {
+     "topFraction": 0.95,
+     "score": 600
+    }
+   ],
+   "sampledAt": "2026-09-24T04:54:28.340Z"
+  },
+  {
+   "scenario": "BeanClick Wide 8 Bots Easy",
+   "leaderboardId": 192660,
+   "total": 707,
+   "points": [
+    {
+     "topFraction": 0.001,
+     "score": 238
+    },
+    {
+     "topFraction": 0.005,
+     "score": 222
+    },
+    {
+     "topFraction": 0.01,
+     "score": 203
+    },
+    {
+     "topFraction": 0.02,
+     "score": 196
+    },
+    {
+     "topFraction": 0.035,
+     "score": 192
+    },
+    {
+     "topFraction": 0.05,
+     "score": 188
+    },
+    {
+     "topFraction": 0.075,
+     "score": 184
+    },
+    {
+     "topFraction": 0.1,
+     "score": 178
+    },
+    {
+     "topFraction": 0.15,
+     "score": 173
+    },
+    {
+     "topFraction": 0.2,
+     "score": 167
+    },
+    {
+     "topFraction": 0.3,
+     "score": 157
+    },
+    {
+     "topFraction": 0.4,
+     "score": 151
+    },
+    {
+     "topFraction": 0.5,
+     "score": 145
+    },
+    {
+     "topFraction": 0.65,
+     "score": 137
+    },
+    {
+     "topFraction": 0.8,
+     "score": 123
+    },
+    {
+     "topFraction": 0.95,
+     "score": 98
+    }
+   ],
+   "sampledAt": "2026-09-24T04:54:40.720Z"
+  },
+  {
+   "scenario": "Popcorn Palace Easy",
+   "leaderboardId": 193482,
+   "total": 640,
+   "points": [
+    {
+     "topFraction": 0.001,
+     "score": 1260
+    },
+    {
+     "topFraction": 0.005,
+     "score": 1170
+    },
+    {
+     "topFraction": 0.01,
+     "score": 1150
+    },
+    {
+     "topFraction": 0.02,
+     "score": 1110
+    },
+    {
+     "topFraction": 0.035,
+     "score": 1070
+    },
+    {
+     "topFraction": 0.05,
+     "score": 1020
+    },
+    {
+     "topFraction": 0.075,
+     "score": 980
+    },
+    {
+     "topFraction": 0.1,
+     "score": 940
+    },
+    {
+     "topFraction": 0.15,
+     "score": 900
+    },
+    {
+     "topFraction": 0.2,
+     "score": 860
+    },
+    {
+     "topFraction": 0.3,
+     "score": 780
+    },
+    {
+     "topFraction": 0.4,
+     "score": 740
+    },
+    {
+     "topFraction": 0.5,
+     "score": 690
+    },
+    {
+     "topFraction": 0.65,
+     "score": 620
+    },
+    {
+     "topFraction": 0.8,
+     "score": 560
+    },
+    {
+     "topFraction": 0.95,
+     "score": 390
+    }
+   ],
+   "sampledAt": "2026-09-24T04:54:48.874Z"
+  },
+  {
+   "scenario": "Pasu Palace Easy",
+   "leaderboardId": 193483,
+   "total": 1160,
+   "points": [
+    {
+     "topFraction": 0.001,
+     "score": 152.58
+    },
+    {
+     "topFraction": 0.005,
+     "score": 144.03
+    },
+    {
+     "topFraction": 0.01,
+     "score": 140.66
+    },
+    {
+     "topFraction": 0.02,
+     "score": 136.92
+    },
+    {
+     "topFraction": 0.035,
+     "score": 134.31
+    },
+    {
+     "topFraction": 0.05,
+     "score": 129.94
+    },
+    {
+     "topFraction": 0.075,
+     "score": 125.77
+    },
+    {
+     "topFraction": 0.1,
+     "score": 122.8
+    },
+    {
+     "topFraction": 0.15,
+     "score": 116.09
+    },
+    {
+     "topFraction": 0.2,
+     "score": 113.03
+    },
+    {
+     "topFraction": 0.3,
+     "score": 105.72
+    },
+    {
+     "topFraction": 0.4,
+     "score": 101.33
+    },
+    {
+     "topFraction": 0.5,
+     "score": 95.92
+    },
+    {
+     "topFraction": 0.65,
+     "score": 89.4
+    },
+    {
+     "topFraction": 0.8,
+     "score": 78.3
+    },
+    {
+     "topFraction": 0.95,
+     "score": 60.91
+    }
+   ],
+   "sampledAt": "2026-09-24T04:54:56.436Z"
+  },
+  {
+   "scenario": "Pasu VP Easy",
+   "leaderboardId": 196553,
+   "total": 746,
+   "points": [
+    {
+     "topFraction": 0.001,
+     "score": 1519.66
+    },
+    {
+     "topFraction": 0.005,
+     "score": 1464.12
+    },
+    {
+     "topFraction": 0.01,
+     "score": 1377.55
+    },
+    {
+     "topFraction": 0.02,
+     "score": 1291.54
+    },
+    {
+     "topFraction": 0.035,
+     "score": 1261.23
+    },
+    {
+     "topFraction": 0.05,
+     "score": 1232.52
+    },
+    {
+     "topFraction": 0.075,
+     "score": 1187.86
+    },
+    {
+     "topFraction": 0.1,
+     "score": 1145.54
+    },
+    {
+     "topFraction": 0.15,
+     "score": 1099.25
+    },
+    {
+     "topFraction": 0.2,
+     "score": 1050.09
+    },
+    {
+     "topFraction": 0.3,
+     "score": 985.66
+    },
+    {
+     "topFraction": 0.4,
+     "score": 937.44
+    },
+    {
+     "topFraction": 0.5,
+     "score": 893.25
+    },
+    {
+     "topFraction": 0.65,
+     "score": 805.4
+    },
+    {
+     "topFraction": 0.8,
+     "score": 714.5
+    },
+    {
+     "topFraction": 0.95,
+     "score": 500.63
+    }
+   ],
+   "sampledAt": "2026-09-24T04:55:03.869Z"
+  },
+  {
+   "scenario": "beanClick Euphoric Novice",
+   "leaderboardId": 197636,
+   "total": 567,
+   "points": [
+    {
+     "topFraction": 0.001,
+     "score": 226
+    },
+    {
+     "topFraction": 0.005,
+     "score": 225
+    },
+    {
+     "topFraction": 0.01,
+     "score": 196
+    },
+    {
+     "topFraction": 0.02,
+     "score": 191
+    },
+    {
+     "topFraction": 0.035,
+     "score": 185
+    },
+    {
+     "topFraction": 0.05,
+     "score": 183
+    },
+    {
+     "topFraction": 0.075,
+     "score": 181
+    },
+    {
+     "topFraction": 0.1,
+     "score": 175
+    },
+    {
+     "topFraction": 0.15,
+     "score": 168
+    },
+    {
+     "topFraction": 0.2,
+     "score": 160
+    },
+    {
+     "topFraction": 0.3,
+     "score": 149
+    },
+    {
+     "topFraction": 0.4,
+     "score": 142
+    },
+    {
+     "topFraction": 0.5,
+     "score": 135
+    },
+    {
+     "topFraction": 0.65,
+     "score": 126
+    },
+    {
+     "topFraction": 0.8,
+     "score": 111
+    },
+    {
+     "topFraction": 0.95,
+     "score": 89
+    }
+   ],
+   "sampledAt": "2026-09-24T04:55:10.994Z"
+  },
+  {
+   "scenario": "Controlswitch Click Easy",
+   "leaderboardId": 200239,
+   "total": 666,
+   "points": [
+    {
+     "topFraction": 0.001,
+     "score": 124
+    },
+    {
+     "topFraction": 0.005,
+     "score": 122
+    },
+    {
+     "topFraction": 0.01,
+     "score": 118
+    },
+    {
+     "topFraction": 0.02,
+     "score": 115
+    },
+    {
+     "topFraction": 0.035,
+     "score": 111
+    },
+    {
+     "topFraction": 0.05,
+     "score": 108
+    },
+    {
+     "topFraction": 0.075,
+     "score": 105
+    },
+    {
+     "topFraction": 0.1,
+     "score": 102
+    },
+    {
+     "topFraction": 0.15,
+     "score": 97
+    },
+    {
+     "topFraction": 0.2,
+     "score": 92
+    },
+    {
+     "topFraction": 0.3,
+     "score": 86
+    },
+    {
+     "topFraction": 0.4,
+     "score": 82
+    },
+    {
+     "topFraction": 0.5,
+     "score": 78
+    },
+    {
+     "topFraction": 0.65,
+     "score": 71
+    },
+    {
+     "topFraction": 0.8,
+     "score": 62
+    },
+    {
+     "topFraction": 0.95,
+     "score": 49
+    }
+   ],
+   "sampledAt": "2026-09-24T04:55:19.217Z"
+  },
+  {
+   "scenario": "1w4t Pasu Raspberry Jade",
+   "leaderboardId": 200712,
+   "total": 486,
+   "points": [
+    {
+     "topFraction": 0.001,
+     "score": 167
+    },
+    {
+     "topFraction": 0.005,
+     "score": 154
+    },
+    {
+     "topFraction": 0.01,
+     "score": 146
+    },
+    {
+     "topFraction": 0.02,
+     "score": 143
+    },
+    {
+     "topFraction": 0.035,
+     "score": 132
+    },
+    {
+     "topFraction": 0.05,
+     "score": 130
+    },
+    {
+     "topFraction": 0.075,
+     "score": 126
+    },
+    {
+     "topFraction": 0.1,
+     "score": 123
+    },
+    {
+     "topFraction": 0.15,
+     "score": 116
+    },
+    {
+     "topFraction": 0.2,
+     "score": 110
+    },
+    {
+     "topFraction": 0.3,
+     "score": 100
+    },
+    {
+     "topFraction": 0.4,
+     "score": 94
+    },
+    {
+     "topFraction": 0.5,
+     "score": 88
+    },
+    {
+     "topFraction": 0.65,
+     "score": 79
+    },
+    {
+     "topFraction": 0.8,
+     "score": 70
+    },
+    {
+     "topFraction": 0.95,
+     "score": 48
+    }
+   ],
+   "sampledAt": "2026-09-24T04:55:26.916Z"
+  },
+  {
+   "scenario": "VT domiClick Advanced S5",
+   "leaderboardId": 200664,
+   "total": 837,
+   "points": [
+    {
+     "topFraction": 0.001,
+     "score": 1434.36
+    },
+    {
+     "topFraction": 0.005,
+     "score": 1187.86
+    },
+    {
+     "topFraction": 0.01,
+     "score": 1089.41
+    },
+    {
+     "topFraction": 0.02,
+     "score": 1014.04
+    },
+    {
+     "topFraction": 0.035,
+     "score": 984.06
+    },
+    {
+     "topFraction": 0.05,
+     "score": 941.87
+    },
+    {
+     "topFraction": 0.075,
+     "score": 911.53
+    },
+    {
+     "topFraction": 0.1,
+     "score": 886.91
+    },
+    {
+     "topFraction": 0.15,
+     "score": 856.03
+    },
+    {
+     "topFraction": 0.2,
+     "score": 821.64
+    },
+    {
+     "topFraction": 0.3,
+     "score": 768.44
+    },
+    {
+     "topFraction": 0.4,
+     "score": 714.5
+    },
+    {
+     "topFraction": 0.5,
+     "score": 673.51
+    },
+    {
+     "topFraction": 0.65,
+     "score": 602.96
+    },
+    {
+     "topFraction": 0.8,
+     "score": 514.59
+    },
+    {
+     "topFraction": 0.95,
+     "score": 339.41
+    }
+   ],
+   "sampledAt": "2026-09-24T04:55:34.889Z"
+  },
+  {
+   "scenario": "CombinedClick Easy",
+   "leaderboardId": 201116,
+   "total": 648,
+   "points": [
+    {
+     "topFraction": 0.001,
+     "score": 129
+    },
+    {
+     "topFraction": 0.005,
+     "score": 125
+    },
+    {
+     "topFraction": 0.01,
+     "score": 122
+    },
+    {
+     "topFraction": 0.02,
+     "score": 119
+    },
+    {
+     "topFraction": 0.035,
+     "score": 115
+    },
+    {
+     "topFraction": 0.05,
+     "score": 111
+    },
+    {
+     "topFraction": 0.075,
+     "score": 106
+    },
+    {
+     "topFraction": 0.1,
+     "score": 102
+    },
+    {
+     "topFraction": 0.15,
+     "score": 98
+    },
+    {
+     "topFraction": 0.2,
+     "score": 94
+    },
+    {
+     "topFraction": 0.3,
+     "score": 87
+    },
+    {
+     "topFraction": 0.4,
+     "score": 81
+    },
+    {
+     "topFraction": 0.5,
+     "score": 77
+    },
+    {
+     "topFraction": 0.65,
+     "score": 70
+    },
+    {
+     "topFraction": 0.8,
+     "score": 61
+    },
+    {
+     "topFraction": 0.95,
+     "score": 47
+    }
+   ],
+   "sampledAt": "2026-09-24T04:55:41.995Z"
+  },
+  {
+   "scenario": "Popcorn Palace Easier",
+   "leaderboardId": 201876,
+   "total": 554,
+   "points": [
+    {
+     "topFraction": 0.001,
+     "score": 1310
+    },
+    {
+     "topFraction": 0.005,
+     "score": 1210
+    },
+    {
+     "topFraction": 0.01,
+     "score": 1140
+    },
+    {
+     "topFraction": 0.02,
+     "score": 1040
+    },
+    {
+     "topFraction": 0.035,
+     "score": 1000
+    },
+    {
+     "topFraction": 0.05,
+     "score": 980
+    },
+    {
+     "topFraction": 0.075,
+     "score": 950
+    },
+    {
+     "topFraction": 0.1,
+     "score": 930
+    },
+    {
+     "topFraction": 0.15,
+     "score": 910
+    },
+    {
+     "topFraction": 0.2,
+     "score": 900
+    },
+    {
+     "topFraction": 0.3,
+     "score": 870
+    },
+    {
+     "topFraction": 0.4,
+     "score": 820
+    },
+    {
+     "topFraction": 0.5,
+     "score": 770
+    },
+    {
+     "topFraction": 0.65,
+     "score": 700
+    },
+    {
+     "topFraction": 0.8,
+     "score": 630
+    },
+    {
+     "topFraction": 0.95,
+     "score": 460
+    }
+   ],
+   "sampledAt": "2026-09-24T04:55:49.018Z"
+  },
+  {
+   "scenario": "Leap 180 Avasive Easy",
+   "leaderboardId": 202791,
+   "total": 535,
+   "points": [
+    {
+     "topFraction": 0.001,
+     "score": 134
+    },
+    {
+     "topFraction": 0.005,
+     "score": 133
+    },
+    {
+     "topFraction": 0.01,
+     "score": 125
+    },
+    {
+     "topFraction": 0.02,
+     "score": 119
+    },
+    {
+     "topFraction": 0.035,
+     "score": 114
+    },
+    {
+     "topFraction": 0.05,
+     "score": 112
+    },
+    {
+     "topFraction": 0.075,
+     "score": 106
+    },
+    {
+     "topFraction": 0.1,
+     "score": 103
+    },
+    {
+     "topFraction": 0.15,
+     "score": 98
+    },
+    {
+     "topFraction": 0.2,
+     "score": 94
+    },
+    {
+     "topFraction": 0.3,
+     "score": 87
+    },
+    {
+     "topFraction": 0.4,
+     "score": 80
+    },
+    {
+     "topFraction": 0.5,
+     "score": 75
+    },
+    {
+     "topFraction": 0.65,
+     "score": 70
+    },
+    {
+     "topFraction": 0.8,
+     "score": 61
+    },
+    {
+     "topFraction": 0.95,
+     "score": 47
+    }
+   ],
+   "sampledAt": "2026-09-24T04:55:56.322Z"
+  },
+  {
+   "scenario": "VT voxTS Intermediate S5",
+   "leaderboardId": 202886,
+   "total": 2597,
+   "points": [
+    {
+     "topFraction": 0.001,
+     "score": 1580.5
+    },
+    {
+     "topFraction": 0.005,
+     "score": 1440
+    },
+    {
+     "topFraction": 0.01,
+     "score": 1390
+    },
+    {
+     "topFraction": 0.02,
+     "score": 1331.5
+    },
+    {
+     "topFraction": 0.035,
+     "score": 1309.5
+    },
+    {
+     "topFraction": 0.05,
+     "score": 1287
+    },
+    {
+     "topFraction": 0.075,
+     "score": 1269
+    },
+    {
+     "topFraction": 0.1,
+     "score": 1259
+    },
+    {
+     "topFraction": 0.15,
+     "score": 1240
+    },
+    {
+     "topFraction": 0.2,
+     "score": 1212.5
+    },
+    {
+     "topFraction": 0.3,
+     "score": 1170
+    },
+    {
+     "topFraction": 0.4,
+     "score": 1130
+    },
+    {
+     "topFraction": 0.5,
+     "score": 1100
+    },
+    {
+     "topFraction": 0.65,
+     "score": 1050
+    },
+    {
+     "topFraction": 0.8,
+     "score": 1000
+    },
+    {
+     "topFraction": 0.95,
+     "score": 880
+    }
+   ],
+   "sampledAt": "2026-09-24T04:56:03.894Z"
+  },
+  {
+   "scenario": "VT domiClick Intermediate S5",
+   "leaderboardId": 202890,
+   "total": 3181,
+   "points": [
+    {
+     "topFraction": 0.001,
+     "score": 1510.12
+    },
+    {
+     "topFraction": 0.005,
+     "score": 1295.59
+    },
+    {
+     "topFraction": 0.01,
+     "score": 1212.59
+    },
+    {
+     "topFraction": 0.02,
+     "score": 1141.08
+    },
+    {
+     "topFraction": 0.035,
+     "score": 1091.29
+    },
+    {
+     "topFraction": 0.05,
+     "score": 1065.35
+    },
+    {
+     "topFraction": 0.075,
+     "score": 1036.13
+    },
+    {
+     "topFraction": 0.1,
+     "score": 1020.14
+    },
+    {
+     "topFraction": 0.15,
+     "score": 966.21
+    },
+    {
+     "topFraction": 0.2,
+     "score": 928.47
+    },
+    {
+     "topFraction": 0.3,
+     "score": 864.48
+    },
+    {
+     "topFraction": 0.4,
+     "score": 818.24
+    },
+    {
+     "topFraction": 0.5,
+     "score": 775.94
+    },
+    {
+     "topFraction": 0.65,
+     "score": 712.94
+    },
+    {
+     "topFraction": 0.8,
+     "score": 639.77
+    },
+    {
+     "topFraction": 0.95,
+     "score": 498.27
+    }
+   ],
+   "sampledAt": "2026-09-24T04:56:11.012Z"
+  },
+  {
+   "scenario": "VT AvasiveTS Intermediate S5",
+   "leaderboardId": 202892,
+   "total": 2569,
+   "points": [
+    {
+     "topFraction": 0.001,
+     "score": 740
+    },
+    {
+     "topFraction": 0.005,
+     "score": 709.5
+    },
+    {
+     "topFraction": 0.01,
+     "score": 686.5
+    },
+    {
+     "topFraction": 0.02,
+     "score": 650.5
+    },
+    {
+     "topFraction": 0.035,
+     "score": 631.75
+    },
+    {
+     "topFraction": 0.05,
+     "score": 620.5
+    },
+    {
+     "topFraction": 0.075,
+     "score": 602
+    },
+    {
+     "topFraction": 0.1,
+     "score": 590.25
+    },
+    {
+     "topFraction": 0.15,
+     "score": 580
+    },
+    {
+     "topFraction": 0.2,
+     "score": 570.25
+    },
+    {
+     "topFraction": 0.3,
+     "score": 560
+    },
+    {
+     "topFraction": 0.4,
+     "score": 536.25
+    },
+    {
+     "topFraction": 0.5,
+     "score": 513.25
+    },
+    {
+     "topFraction": 0.65,
+     "score": 484.5
+    },
+    {
+     "topFraction": 0.8,
+     "score": 450
+    },
+    {
+     "topFraction": 0.95,
+     "score": 390
+    }
+   ],
+   "sampledAt": "2026-09-24T04:56:18.484Z"
   }
  ]
 }
