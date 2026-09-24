@@ -79,7 +79,9 @@ states the same priorities from the author's side, and season 2 takes most of th
   scoring where "every shot matters", and a reload economy (a miss on ww5t Intermediate costs
   30% of the magazine) where speed matters. Season 2 uses neither: in a match decided on a
   delta, the multiplier's added noise (above) costs more than the precision pressure gains,
-  and the reload economy is a candidate worth measuring before adopting.
+  and the reload economy is unmeasured: only three reload-economy scenarios have eight or more
+  runs in the local history (median noise 5.9%, against 4.8% for plain scoring), too few to
+  say whether it shares the multiplier's cost.
 - **Diamond spawn fields** "so that nearby spawns are more likely to be diagonally
   oriented" were tried and not kept: with several targets alive the square grid already
   spreads flicks close to uniformly, and the diamond traded away vertical flicks
