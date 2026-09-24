@@ -1,8 +1,9 @@
 /**
  * Put season 2's scenarios into KovaaK's, so they can be played before they are shared.
  *
- * Copies every file in data/season-2/scenarios into the game's own scenario folder and
- * writes one playlist per category and band - "Apogee S2 Static Clicking Novice", six
+ * Copies every file in data/season-2/scenarios into the game's own scenario folder, writes
+ * "Apogee S2 Playtest" (one scenario per template, the first playtest), and one playlist
+ * per category and band - "Apogee S2 Static Clicking Novice", six
  * scenarios, one per family, in the season's family order - into its playlists folder.
  * They appear under the game's offline scenarios and playlists.
  *
@@ -62,6 +63,26 @@ for (const category of season.categories) {
     });
   }
 }
+// The first playtest (docs/season-2.md): one Novice scenario per template, in the order the
+// list gives, so every kind of generated file is loaded once before anything else is judged.
+const PLAYTEST = ["Meridian", "Drift", "Hopper", "Glide", "Lift", "Relay", "Swarm"].map((f) => `Apogee ${f} Novice`);
+if (PLAYTEST.every((n) => season.scenarios.some((s) => s.scenario === n))) {
+  playlists.unshift({
+    playlistName: `${PLAYLIST_PREFIX}Playtest`,
+    playlistId: 0,
+    authorSteamId: "",
+    authorName: "",
+    scenarioList: PLAYTEST.map((scenario_name) => ({ scenario_name, play_Count: 1 })),
+    description: "Apogee Season 2 first playtest: one scenario from each template. Check the room loads, the targets appear, and they move as described.",
+    hasOfflineScenarios: true,
+    hasEdited: true,
+    shareCode: "",
+    version: PLAYLIST_FORMAT_VERSION,
+    updated: Math.floor(Date.now() / 1000),
+    isPrivate: false,
+  });
+}
+
 const playlistFile = (p: KovaaksPlaylist) => `${p.playlistName}.json`;
 
 if (remove) {

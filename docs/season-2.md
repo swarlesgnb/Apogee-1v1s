@@ -59,7 +59,8 @@ npm run install:season-2            copy the scenarios and 24 playlists into Kov
 npm run install:season-2 -- --remove    take exactly those out again
 ```
 
-The playlists are `Apogee S2 <Category> <Band>`, one scenario per family.
+The playlists are `Apogee S2 Playtest`, the seven scenarios of the first check below, and
+`Apogee S2 <Category> <Band>`, one scenario per family.
 
 ## Making it rankable
 
