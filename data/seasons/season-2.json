@@ -1,0 +1,4440 @@
+{
+  "name": "Season 2",
+  "status": "draft",
+  "rankNames": [
+    "Stargazer",
+    "Astrologist",
+    "Cosmonaut",
+    "Lunar",
+    "Odyssey",
+    "Arecibo",
+    "Quasar",
+    "Supernova"
+  ],
+  "rankColors": {
+    "Stargazer": "#00EAEA",
+    "Astrologist": "#ff7300",
+    "Cosmonaut": "#fff700",
+    "Lunar": "#29008a",
+    "Odyssey": "#FF46FF",
+    "Arecibo": "#00FF00",
+    "Quasar": "#00FFFF",
+    "Supernova": "#ff0000"
+  },
+  "windowSize": 4,
+  "windowOverlap": 2,
+  "windows": [
+    "Novice",
+    "Intermediate",
+    "Advanced",
+    "Expert"
+  ],
+  "matchPool": {
+    "window": 1
+  },
+  "categories": [
+    {
+      "name": "Static Clicking",
+      "description": "Your score is how little time passes between kills, so flick straight at each target, fix it with one small correction if you need to, and be looking at the next target before you click.",
+      "bands": [
+        {
+          "window": 0,
+          "rankMaxes": [
+            15000,
+            30000,
+            45000,
+            60000,
+            75000,
+            90000
+          ],
+          "rankNames": [
+            "Blunderbuss",
+            "Slingshot",
+            "Dart",
+            "Longbow",
+            "Crossbow",
+            "Musket"
+          ],
+          "rankColors": {
+            "Blunderbuss": "#916822",
+            "Slingshot": "#ffe8b8",
+            "Dart": "#fff700",
+            "Longbow": "#005751",
+            "Crossbow": "#04ff00",
+            "Musket": "#a8a8a8"
+          }
+        },
+        {
+          "window": 1,
+          "rankMaxes": [
+            15000,
+            30000,
+            45000,
+            60000,
+            75000,
+            90000
+          ],
+          "rankNames": [
+            "Crossbow",
+            "Musket",
+            "Flintlock",
+            "Revolver",
+            "Carbine",
+            "Rifle"
+          ],
+          "rankColors": {
+            "Crossbow": "#04ff00",
+            "Musket": "#a8a8a8",
+            "Flintlock": "#ff6600",
+            "Revolver": "#0400ff",
+            "Carbine": "#588ffd",
+            "Rifle": "#4d1f00"
+          }
+        },
+        {
+          "window": 2,
+          "rankMaxes": [
+            15000,
+            30000,
+            45000,
+            60000,
+            75000,
+            90000
+          ],
+          "rankNames": [
+            "Carbine",
+            "Rifle",
+            "Marksman",
+            "Match Rifle",
+            "Sniper",
+            "Railgun"
+          ],
+          "rankColors": {
+            "Carbine": "#588ffd",
+            "Rifle": "#4d1f00",
+            "Marksman": "#ffffff",
+            "Match Rifle": "#757575",
+            "Sniper": "#ff0000",
+            "Railgun": "#ee00ff"
+          }
+        },
+        {
+          "window": 3,
+          "rankMaxes": [
+            15000,
+            30000,
+            45000,
+            60000
+          ],
+          "rankNames": [
+            "Sniper",
+            "Railgun",
+            "Gauss Cannon",
+            "Photon Lance",
+            "Deadeye"
+          ],
+          "rankColors": {
+            "Sniper": "#ff0000",
+            "Railgun": "#ee00ff",
+            "Gauss Cannon": "#000000",
+            "Photon Lance": "#1100ff",
+            "Deadeye": "#e8b13a"
+          },
+          "positional": {
+            "topN": 3
+          }
+        }
+      ],
+      "rankMaxes": [
+        15000,
+        30000,
+        45000,
+        60000,
+        75000,
+        90000,
+        105000,
+        120000,
+        135000,
+        150000,
+        165000,
+        180000,
+        195000,
+        210000,
+        225000,
+        240000
+      ],
+      "rankNames": [
+        "Blunderbuss",
+        "Slingshot",
+        "Dart",
+        "Longbow",
+        "Crossbow",
+        "Musket",
+        "Flintlock",
+        "Revolver",
+        "Carbine",
+        "Rifle",
+        "Marksman",
+        "Match Rifle",
+        "Sniper",
+        "Railgun",
+        "Gauss Cannon",
+        "Photon Lance"
+      ],
+      "rankColors": {
+        "Blunderbuss": "#916822",
+        "Slingshot": "#ffe8b8",
+        "Dart": "#fff700",
+        "Longbow": "#005751",
+        "Crossbow": "#04ff00",
+        "Musket": "#a8a8a8",
+        "Flintlock": "#ff6600",
+        "Revolver": "#0400ff",
+        "Carbine": "#588ffd",
+        "Rifle": "#4d1f00",
+        "Marksman": "#ffffff",
+        "Match Rifle": "#757575",
+        "Sniper": "#ff0000",
+        "Railgun": "#ee00ff",
+        "Gauss Cannon": "#000000",
+        "Photon Lance": "#1100ff"
+      },
+      "derivable": true
+    },
+    {
+      "name": "Dynamic Clicking",
+      "description": "The targets are moving, so stay on each one for a split second until you're sure you're on it before you click, and don't let a sudden change of direction drag your crosshair with it. On targets that take several hits, move with them until the last click.",
+      "bands": [
+        {
+          "window": 0,
+          "rankMaxes": [
+            15000,
+            30000,
+            45000,
+            60000,
+            75000,
+            90000
+          ],
+          "rankNames": [
+            "Tardigrade",
+            "Mosquito",
+            "Bee",
+            "Hornet",
+            "Hummingbird",
+            "Falcon"
+          ],
+          "rankColors": {
+            "Tardigrade": "#94abf0",
+            "Mosquito": "#4d2400",
+            "Bee": "#ffea00",
+            "Hornet": "#ff7300",
+            "Hummingbird": "#008a87",
+            "Falcon": "#ff0000"
+          }
+        },
+        {
+          "window": 1,
+          "rankMaxes": [
+            15000,
+            30000,
+            45000,
+            60000,
+            75000,
+            90000
+          ],
+          "rankNames": [
+            "Hummingbird",
+            "Falcon",
+            "Lynx",
+            "Wolverine",
+            "Lionesse",
+            "Grizzly Bear"
+          ],
+          "rankColors": {
+            "Hummingbird": "#008a87",
+            "Falcon": "#ff0000",
+            "Lynx": "#fb00ff",
+            "Wolverine": "#0e5700",
+            "Lionesse": "#c28400",
+            "Grizzly Bear": "#6e6b5e"
+          }
+        },
+        {
+          "window": 2,
+          "rankMaxes": [
+            15000,
+            30000,
+            45000,
+            60000,
+            75000,
+            90000
+          ],
+          "rankNames": [
+            "Lionesse",
+            "Grizzly Bear",
+            "Sabretooth",
+            "White Rhino",
+            "Mammoth",
+            "Giant Squid"
+          ],
+          "rankColors": {
+            "Lionesse": "#c28400",
+            "Grizzly Bear": "#6e6b5e",
+            "Sabretooth": "#ff8080",
+            "White Rhino": "#00ffe1",
+            "Mammoth": "#e4ed89",
+            "Giant Squid": "#0040ff"
+          }
+        },
+        {
+          "window": 3,
+          "rankMaxes": [
+            15000,
+            30000,
+            45000,
+            60000
+          ],
+          "rankNames": [
+            "Mammoth",
+            "Giant Squid",
+            "Sperm Whale",
+            "Megalodon",
+            "Leviathan"
+          ],
+          "rankColors": {
+            "Mammoth": "#e4ed89",
+            "Giant Squid": "#0040ff",
+            "Sperm Whale": "#ffffff",
+            "Megalodon": "#04ff00",
+            "Leviathan": "#2fa8b8"
+          },
+          "positional": {
+            "topN": 3
+          }
+        }
+      ],
+      "rankMaxes": [
+        15000,
+        30000,
+        45000,
+        60000,
+        75000,
+        90000,
+        105000,
+        120000,
+        135000,
+        150000,
+        165000,
+        180000,
+        195000,
+        210000,
+        225000,
+        240000
+      ],
+      "rankNames": [
+        "Tardigrade",
+        "Mosquito",
+        "Bee",
+        "Hornet",
+        "Hummingbird",
+        "Falcon",
+        "Lynx",
+        "Wolverine",
+        "Lionesse",
+        "Grizzly Bear",
+        "Sabretooth",
+        "White Rhino",
+        "Mammoth",
+        "Giant Squid",
+        "Sperm Whale",
+        "Megalodon"
+      ],
+      "rankColors": {
+        "Tardigrade": "#94abf0",
+        "Mosquito": "#4d2400",
+        "Bee": "#ffea00",
+        "Hornet": "#ff7300",
+        "Hummingbird": "#008a87",
+        "Falcon": "#ff0000",
+        "Lynx": "#fb00ff",
+        "Wolverine": "#0e5700",
+        "Lionesse": "#c28400",
+        "Grizzly Bear": "#6e6b5e",
+        "Sabretooth": "#ff8080",
+        "White Rhino": "#00ffe1",
+        "Mammoth": "#e4ed89",
+        "Giant Squid": "#0040ff",
+        "Sperm Whale": "#ffffff",
+        "Megalodon": "#04ff00"
+      },
+      "derivable": true
+    },
+    {
+      "name": "Precise Tracking",
+      "description": "Stay smooth and keep your crosshair in the middle of the target the whole time, moving with it in one steady motion and using your arm on long strafes. If your aim gets shaky or you keep losing the target, drop to an easier version.",
+      "bands": [
+        {
+          "window": 0,
+          "rankMaxes": [
+            15000,
+            30000,
+            45000,
+            60000,
+            75000,
+            90000
+          ],
+          "rankNames": [
+            "Amoeba",
+            "Multicellular",
+            "Trilobite",
+            "Amphibian",
+            "Reptile",
+            "Mammal"
+          ],
+          "rankColors": {
+            "Amoeba": "#ffd1ea",
+            "Multicellular": "#550160",
+            "Trilobite": "#eeff00",
+            "Amphibian": "#006eff",
+            "Reptile": "#2bff00",
+            "Mammal": "#610000"
+          }
+        },
+        {
+          "window": 1,
+          "rankMaxes": [
+            15000,
+            30000,
+            45000,
+            60000,
+            75000,
+            90000
+          ],
+          "rankNames": [
+            "Reptile",
+            "Mammal",
+            "Primate",
+            "Chimp",
+            "Hominid",
+            "Homoerectus"
+          ],
+          "rankColors": {
+            "Reptile": "#2bff00",
+            "Mammal": "#610000",
+            "Primate": "#331400",
+            "Chimp": "#9a783c",
+            "Hominid": "#7866ff",
+            "Homoerectus": "#95b300"
+          }
+        },
+        {
+          "window": 2,
+          "rankMaxes": [
+            15000,
+            30000,
+            45000,
+            60000,
+            75000,
+            90000
+          ],
+          "rankNames": [
+            "Hominid",
+            "Homoerectus",
+            "Neanderthal",
+            "Homosapien",
+            "Neolithic",
+            "Robosapien"
+          ],
+          "rankColors": {
+            "Hominid": "#7866ff",
+            "Homoerectus": "#95b300",
+            "Neanderthal": "#e100ff",
+            "Homosapien": "#ff0000",
+            "Neolithic": "#ff6600",
+            "Robosapien": "#00fbff"
+          }
+        },
+        {
+          "window": 3,
+          "rankMaxes": [
+            15000,
+            30000,
+            45000,
+            60000
+          ],
+          "rankNames": [
+            "Neolithic",
+            "Robosapien",
+            "HAL 9000",
+            "Singularity",
+            "Omega"
+          ],
+          "rankColors": {
+            "Neolithic": "#ff6600",
+            "Robosapien": "#00fbff",
+            "HAL 9000": "#ffffff",
+            "Singularity": "#000000",
+            "Omega": "#b48cff"
+          },
+          "positional": {
+            "topN": 3
+          }
+        }
+      ],
+      "rankMaxes": [
+        15000,
+        30000,
+        45000,
+        60000,
+        75000,
+        90000,
+        105000,
+        120000,
+        135000,
+        150000,
+        165000,
+        180000,
+        195000,
+        210000,
+        225000,
+        240000
+      ],
+      "rankNames": [
+        "Amoeba",
+        "Multicellular",
+        "Trilobite",
+        "Amphibian",
+        "Reptile",
+        "Mammal",
+        "Primate",
+        "Chimp",
+        "Hominid",
+        "Homoerectus",
+        "Neanderthal",
+        "Homosapien",
+        "Neolithic",
+        "Robosapien",
+        "HAL 9000",
+        "Singularity"
+      ],
+      "rankColors": {
+        "Amoeba": "#ffd1ea",
+        "Multicellular": "#550160",
+        "Trilobite": "#eeff00",
+        "Amphibian": "#006eff",
+        "Reptile": "#2bff00",
+        "Mammal": "#610000",
+        "Primate": "#331400",
+        "Chimp": "#9a783c",
+        "Hominid": "#7866ff",
+        "Homoerectus": "#95b300",
+        "Neanderthal": "#e100ff",
+        "Homosapien": "#ff0000",
+        "Neolithic": "#ff6600",
+        "Robosapien": "#00fbff",
+        "HAL 9000": "#ffffff",
+        "Singularity": "#000000"
+      },
+      "derivable": true
+    },
+    {
+      "name": "Reactive Tracking",
+      "description": "React to where the target goes instead of guessing, and sit slightly on the side it's moving away from so you have room when it turns. Stay relaxed, because jittery aim usually means you're tensing up, and if you catch yourself predicting, play an easier version for a while.",
+      "bands": [
+        {
+          "window": 0,
+          "rankMaxes": [
+            15000,
+            30000,
+            45000,
+            60000,
+            75000,
+            90000
+          ],
+          "rankNames": [
+            "Absolute Zero",
+            "Nitrogen",
+            "Dry Ice",
+            "Permafrost",
+            "Lukewarm",
+            "Sweaty"
+          ],
+          "rankColors": {
+            "Absolute Zero": "#005248",
+            "Nitrogen": "#4f008f",
+            "Dry Ice": "#00fffb",
+            "Permafrost": "#ff00a2",
+            "Lukewarm": "#ffbb00",
+            "Sweaty": "#00ff04"
+          }
+        },
+        {
+          "window": 1,
+          "rankMaxes": [
+            15000,
+            30000,
+            45000,
+            60000,
+            75000,
+            90000
+          ],
+          "rankNames": [
+            "Lukewarm",
+            "Sweaty",
+            "Scalding",
+            "Bonfire",
+            "Blowtorch",
+            "Magma"
+          ],
+          "rankColors": {
+            "Lukewarm": "#ffbb00",
+            "Sweaty": "#00ff04",
+            "Scalding": "#883f3f",
+            "Bonfire": "#ff7b00",
+            "Blowtorch": "#9c9afe",
+            "Magma": "#c27070"
+          }
+        },
+        {
+          "window": 2,
+          "rankMaxes": [
+            15000,
+            30000,
+            45000,
+            60000,
+            75000,
+            90000
+          ],
+          "rankNames": [
+            "Blowtorch",
+            "Magma",
+            "Acetylene",
+            "Thermite",
+            "Cyanogen",
+            "Subnitride"
+          ],
+          "rankColors": {
+            "Blowtorch": "#9c9afe",
+            "Magma": "#c27070",
+            "Acetylene": "#ff4d00",
+            "Thermite": "#404040",
+            "Cyanogen": "#007d80",
+            "Subnitride": "#ae00ff"
+          }
+        },
+        {
+          "window": 3,
+          "rankMaxes": [
+            15000,
+            30000,
+            45000,
+            60000
+          ],
+          "rankNames": [
+            "Cyanogen",
+            "Subnitride",
+            "Sol",
+            "Planck",
+            "Big Bang"
+          ],
+          "rankColors": {
+            "Cyanogen": "#007d80",
+            "Subnitride": "#ae00ff",
+            "Sol": "#fbff00",
+            "Planck": "#ffffff",
+            "Big Bang": "#ff7a33"
+          },
+          "positional": {
+            "topN": 3
+          }
+        }
+      ],
+      "rankMaxes": [
+        15000,
+        30000,
+        45000,
+        60000,
+        75000,
+        90000,
+        105000,
+        120000,
+        135000,
+        150000,
+        165000,
+        180000,
+        195000,
+        210000,
+        225000,
+        240000
+      ],
+      "rankNames": [
+        "Absolute Zero",
+        "Nitrogen",
+        "Dry Ice",
+        "Permafrost",
+        "Lukewarm",
+        "Sweaty",
+        "Scalding",
+        "Bonfire",
+        "Blowtorch",
+        "Magma",
+        "Acetylene",
+        "Thermite",
+        "Cyanogen",
+        "Subnitride",
+        "Sol",
+        "Planck"
+      ],
+      "rankColors": {
+        "Absolute Zero": "#005248",
+        "Nitrogen": "#4f008f",
+        "Dry Ice": "#00fffb",
+        "Permafrost": "#ff00a2",
+        "Lukewarm": "#ffbb00",
+        "Sweaty": "#00ff04",
+        "Scalding": "#883f3f",
+        "Bonfire": "#ff7b00",
+        "Blowtorch": "#9c9afe",
+        "Magma": "#c27070",
+        "Acetylene": "#ff4d00",
+        "Thermite": "#404040",
+        "Cyanogen": "#007d80",
+        "Subnitride": "#ae00ff",
+        "Sol": "#fbff00",
+        "Planck": "#ffffff"
+      },
+      "derivable": true
+    },
+    {
+      "name": "Speed Switching",
+      "description": "Hold fire and get to the next target as fast as you can in a straight line, without flicking past it. Kill each target fully before you move, and start finding the next one while you finish the current one.",
+      "bands": [
+        {
+          "window": 0,
+          "rankMaxes": [
+            15000,
+            30000,
+            45000,
+            60000,
+            75000,
+            90000
+          ],
+          "rankNames": [
+            "Banana Slug",
+            "Sloth",
+            "Galapagos Turtle",
+            "Manatee",
+            "Koala",
+            "Slow Loris"
+          ],
+          "rankColors": {
+            "Banana Slug": "#fbff00",
+            "Sloth": "#4f4f4f",
+            "Galapagos Turtle": "#005c02",
+            "Manatee": "#3328cc",
+            "Koala": "#e6baf3",
+            "Slow Loris": "#ff9d2e"
+          }
+        },
+        {
+          "window": 1,
+          "rankMaxes": [
+            15000,
+            30000,
+            45000,
+            60000,
+            75000,
+            90000
+          ],
+          "rankNames": [
+            "Koala",
+            "Slow Loris",
+            "Housecat",
+            "Ferret",
+            "Greyhound",
+            "Roadrunner"
+          ],
+          "rankColors": {
+            "Koala": "#e6baf3",
+            "Slow Loris": "#ff9d2e",
+            "Housecat": "#d900ff",
+            "Ferret": "#ff0000",
+            "Greyhound": "#800000",
+            "Roadrunner": "#00fbff"
+          }
+        },
+        {
+          "window": 2,
+          "rankMaxes": [
+            15000,
+            30000,
+            45000,
+            60000,
+            75000,
+            90000
+          ],
+          "rankNames": [
+            "Greyhound",
+            "Roadrunner",
+            "Jackrabbit",
+            "Hare",
+            "Pronghorn",
+            "Cheetah"
+          ],
+          "rankColors": {
+            "Greyhound": "#800000",
+            "Roadrunner": "#00fbff",
+            "Jackrabbit": "#00ffbf",
+            "Hare": "#ffffff",
+            "Pronghorn": "#421e00",
+            "Cheetah": "#ff7300"
+          }
+        },
+        {
+          "window": 3,
+          "rankMaxes": [
+            15000,
+            30000,
+            45000,
+            60000
+          ],
+          "rankNames": [
+            "Pronghorn",
+            "Cheetah",
+            "Golden Eagle",
+            "Peregrine",
+            "Terminal Velocity"
+          ],
+          "rankColors": {
+            "Pronghorn": "#421e00",
+            "Cheetah": "#ff7300",
+            "Golden Eagle": "#9e7c00",
+            "Peregrine": "#8000ff",
+            "Terminal Velocity": "#5ce1ff"
+          },
+          "positional": {
+            "topN": 3
+          }
+        }
+      ],
+      "rankMaxes": [
+        15000,
+        30000,
+        45000,
+        60000,
+        75000,
+        90000,
+        105000,
+        120000,
+        135000,
+        150000,
+        165000,
+        180000,
+        195000,
+        210000,
+        225000,
+        240000
+      ],
+      "rankNames": [
+        "Banana Slug",
+        "Sloth",
+        "Galapagos Turtle",
+        "Manatee",
+        "Koala",
+        "Slow Loris",
+        "Housecat",
+        "Ferret",
+        "Greyhound",
+        "Roadrunner",
+        "Jackrabbit",
+        "Hare",
+        "Pronghorn",
+        "Cheetah",
+        "Golden Eagle",
+        "Peregrine"
+      ],
+      "rankColors": {
+        "Banana Slug": "#fbff00",
+        "Sloth": "#4f4f4f",
+        "Galapagos Turtle": "#005c02",
+        "Manatee": "#3328cc",
+        "Koala": "#e6baf3",
+        "Slow Loris": "#ff9d2e",
+        "Housecat": "#d900ff",
+        "Ferret": "#ff0000",
+        "Greyhound": "#800000",
+        "Roadrunner": "#00fbff",
+        "Jackrabbit": "#00ffbf",
+        "Hare": "#ffffff",
+        "Pronghorn": "#421e00",
+        "Cheetah": "#ff7300",
+        "Golden Eagle": "#9e7c00",
+        "Peregrine": "#8000ff"
+      },
+      "derivable": true
+    },
+    {
+      "name": "Evasive Switching",
+      "description": "Focus on movement reading, sustained contact and clean transfers. Start with larger and slower targets, then add tighter movement, more distance and regeneration.",
+      "bands": [
+        {
+          "window": 0,
+          "rankMaxes": [
+            15000,
+            30000,
+            45000,
+            60000,
+            75000,
+            90000
+          ],
+          "rankNames": [
+            "Plankton",
+            "Tadpole",
+            "Minnow",
+            "Prarie Dog",
+            "Toad",
+            "Viper"
+          ],
+          "rankColors": {
+            "Plankton": "#857829",
+            "Tadpole": "#7affb4",
+            "Minnow": "#707aff",
+            "Prarie Dog": "#6b5400",
+            "Toad": "#00e604",
+            "Viper": "#fbff00"
+          }
+        },
+        {
+          "window": 1,
+          "rankMaxes": [
+            15000,
+            30000,
+            45000,
+            60000,
+            75000,
+            90000
+          ],
+          "rankNames": [
+            "Toad",
+            "Viper",
+            "Hawk",
+            "Honey Badger",
+            "Hyena",
+            "Jaguar"
+          ],
+          "rankColors": {
+            "Toad": "#00e604",
+            "Viper": "#fbff00",
+            "Hawk": "#ff0000",
+            "Honey Badger": "#787878",
+            "Hyena": "#a600ff",
+            "Jaguar": "#ffbb00"
+          }
+        },
+        {
+          "window": 2,
+          "rankMaxes": [
+            15000,
+            30000,
+            45000,
+            60000,
+            75000,
+            90000
+          ],
+          "rankNames": [
+            "Hyena",
+            "Jaguar",
+            "Siberian Tiger",
+            "Crocodile",
+            "African Elephant",
+            "Polar Bear"
+          ],
+          "rankColors": {
+            "Hyena": "#a600ff",
+            "Jaguar": "#ffbb00",
+            "Siberian Tiger": "#b86200",
+            "Crocodile": "#005c2c",
+            "African Elephant": "#575757",
+            "Polar Bear": "#ffffff"
+          }
+        },
+        {
+          "window": 3,
+          "rankMaxes": [
+            15000,
+            30000,
+            45000,
+            60000
+          ],
+          "rankNames": [
+            "African Elephant",
+            "Polar Bear",
+            "Orca",
+            "Apex",
+            "Extinction"
+          ],
+          "rankColors": {
+            "African Elephant": "#575757",
+            "Polar Bear": "#ffffff",
+            "Orca": "#000000",
+            "Apex": "#ffb3fc",
+            "Extinction": "#d43b52"
+          },
+          "positional": {
+            "topN": 3
+          }
+        }
+      ],
+      "rankMaxes": [
+        15000,
+        30000,
+        45000,
+        60000,
+        75000,
+        90000,
+        105000,
+        120000,
+        135000,
+        150000,
+        165000,
+        180000,
+        195000,
+        210000,
+        225000,
+        240000
+      ],
+      "rankNames": [
+        "Plankton",
+        "Tadpole",
+        "Minnow",
+        "Prarie Dog",
+        "Toad",
+        "Viper",
+        "Hawk",
+        "Honey Badger",
+        "Hyena",
+        "Jaguar",
+        "Siberian Tiger",
+        "Crocodile",
+        "African Elephant",
+        "Polar Bear",
+        "Orca",
+        "Apex"
+      ],
+      "rankColors": {
+        "Plankton": "#857829",
+        "Tadpole": "#7affb4",
+        "Minnow": "#707aff",
+        "Prarie Dog": "#6b5400",
+        "Toad": "#00e604",
+        "Viper": "#fbff00",
+        "Hawk": "#ff0000",
+        "Honey Badger": "#787878",
+        "Hyena": "#a600ff",
+        "Jaguar": "#ffbb00",
+        "Siberian Tiger": "#b86200",
+        "Crocodile": "#005c2c",
+        "African Elephant": "#575757",
+        "Polar Bear": "#ffffff",
+        "Orca": "#000000",
+        "Apex": "#ffb3fc"
+      },
+      "derivable": true
+    }
+  ],
+  "thresholds": {
+    "owner": "tools/buildSeason2.ts",
+    "note": "Every threshold in this season is predicted, not sampled: no scenario in it has a KovaaK's board yet. Each was read off the board the difficulty model predicts from the scenario file, at the same ladder percentiles season 1 cuts from real boards. They are seeds to be recut from Apogee's own runs, and every one says so in its source.",
+    "model": {
+      "fittedAt": "2026-09-24T04:42:46.337Z",
+      "file": "data/season-2/difficulty_model.json"
+    }
+  },
+  "builtAt": "2026-09-24T04:49:23.894Z",
+  "scenarios": [
+    {
+      "scenario": "Apogee Meridian Novice",
+      "category": "Static Clicking",
+      "family": "Meridian",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Static Clicking",
+      "window": 0,
+      "label": "Meridian",
+      "focus": "Flick sideways and stop dead; every target sits on one level.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        790,
+        951,
+        1045,
+        1115,
+        1174,
+        1231
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.198 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Meridian Intermediate",
+      "category": "Static Clicking",
+      "family": "Meridian",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Static Clicking",
+      "window": 1,
+      "label": "Meridian",
+      "focus": "Flick sideways and stop dead; every target sits on one level.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        1138,
+        1193,
+        1218,
+        1266,
+        1305,
+        1341
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.198 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Meridian Advanced",
+      "category": "Static Clicking",
+      "family": "Meridian",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Static Clicking",
+      "window": 2,
+      "label": "Meridian",
+      "focus": "Flick sideways and stop dead; every target sits on one level.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        1265,
+        1300,
+        1333,
+        1364,
+        1393,
+        1433
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.198 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Meridian Expert",
+      "category": "Static Clicking",
+      "family": "Meridian",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Static Clicking",
+      "window": 3,
+      "label": "Meridian",
+      "focus": "Flick sideways and stop dead; every target sits on one level.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        1350,
+        1389,
+        1413,
+        1443
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.198 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Zenith Novice",
+      "category": "Static Clicking",
+      "family": "Zenith",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Static Clicking",
+      "window": 0,
+      "label": "Zenith",
+      "focus": "Flick up and down; the sideways movement is only ever a correction.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        840,
+        1008,
+        1106,
+        1179,
+        1241,
+        1300
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.198 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Zenith Intermediate",
+      "category": "Static Clicking",
+      "family": "Zenith",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Static Clicking",
+      "window": 1,
+      "label": "Zenith",
+      "focus": "Flick up and down; the sideways movement is only ever a correction.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        1203,
+        1261,
+        1287,
+        1337,
+        1379,
+        1416
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.198 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Zenith Advanced",
+      "category": "Static Clicking",
+      "family": "Zenith",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Static Clicking",
+      "window": 2,
+      "label": "Zenith",
+      "focus": "Flick up and down; the sideways movement is only ever a correction.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        1338,
+        1374,
+        1409,
+        1441,
+        1472,
+        1514
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.198 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Zenith Expert",
+      "category": "Static Clicking",
+      "family": "Zenith",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Static Clicking",
+      "window": 3,
+      "label": "Zenith",
+      "focus": "Flick up and down; the sideways movement is only ever a correction.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        1428,
+        1468,
+        1494,
+        1526
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.198 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Pinpoint Novice",
+      "category": "Static Clicking",
+      "family": "Pinpoint",
+      "arm": "Fingertip",
+      "armFrom": "Apogee",
+      "subCategory": "Static Clicking",
+      "window": 0,
+      "label": "Pinpoint",
+      "focus": "Small moves, smaller targets; settle the crosshair before you click.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        814,
+        979,
+        1075,
+        1146,
+        1207,
+        1265
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.198 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Pinpoint Intermediate",
+      "category": "Static Clicking",
+      "family": "Pinpoint",
+      "arm": "Fingertip",
+      "armFrom": "Apogee",
+      "subCategory": "Static Clicking",
+      "window": 1,
+      "label": "Pinpoint",
+      "focus": "Small moves, smaller targets; settle the crosshair before you click.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        1170,
+        1226,
+        1251,
+        1300,
+        1341,
+        1377
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.198 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Pinpoint Advanced",
+      "category": "Static Clicking",
+      "family": "Pinpoint",
+      "arm": "Fingertip",
+      "armFrom": "Apogee",
+      "subCategory": "Static Clicking",
+      "window": 2,
+      "label": "Pinpoint",
+      "focus": "Small moves, smaller targets; settle the crosshair before you click.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        1300,
+        1336,
+        1370,
+        1401,
+        1432,
+        1472
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.198 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Pinpoint Expert",
+      "category": "Static Clicking",
+      "family": "Pinpoint",
+      "arm": "Fingertip",
+      "armFrom": "Apogee",
+      "subCategory": "Static Clicking",
+      "window": 3,
+      "label": "Pinpoint",
+      "focus": "Small moves, smaller targets; settle the crosshair before you click.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        1388,
+        1427,
+        1453,
+        1484
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.198 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Horizon Novice",
+      "category": "Static Clicking",
+      "family": "Horizon",
+      "arm": "Arm",
+      "armFrom": "Apogee",
+      "subCategory": "Static Clicking",
+      "window": 0,
+      "label": "Horizon",
+      "focus": "Big flicks across the room; commit to the distance and stop on the target.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        698,
+        848,
+        934,
+        998,
+        1053,
+        1105
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.198 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Horizon Intermediate",
+      "category": "Static Clicking",
+      "family": "Horizon",
+      "arm": "Arm",
+      "armFrom": "Apogee",
+      "subCategory": "Static Clicking",
+      "window": 1,
+      "label": "Horizon",
+      "focus": "Big flicks across the room; commit to the distance and stop on the target.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        1019,
+        1069,
+        1091,
+        1136,
+        1172,
+        1204
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.198 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Horizon Advanced",
+      "category": "Static Clicking",
+      "family": "Horizon",
+      "arm": "Arm",
+      "armFrom": "Apogee",
+      "subCategory": "Static Clicking",
+      "window": 2,
+      "label": "Horizon",
+      "focus": "Big flicks across the room; commit to the distance and stop on the target.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        1135,
+        1166,
+        1196,
+        1224,
+        1250,
+        1285
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.198 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Horizon Expert",
+      "category": "Static Clicking",
+      "family": "Horizon",
+      "arm": "Arm",
+      "armFrom": "Apogee",
+      "subCategory": "Static Clicking",
+      "window": 3,
+      "label": "Horizon",
+      "focus": "Big flicks across the room; commit to the distance and stop on the target.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        1210,
+        1245,
+        1267,
+        1294
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.198 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Constellation Novice",
+      "category": "Static Clicking",
+      "family": "Constellation",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Static Clicking",
+      "window": 0,
+      "label": "Constellation",
+      "focus": "Five targets up at once; keep a rhythm and take the nearest one next.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        890,
+        1063,
+        1165,
+        1241,
+        1305,
+        1367
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.198 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Constellation Intermediate",
+      "category": "Static Clicking",
+      "family": "Constellation",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Static Clicking",
+      "window": 1,
+      "label": "Constellation",
+      "focus": "Five targets up at once; keep a rhythm and take the nearest one next.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        1267,
+        1328,
+        1355,
+        1406,
+        1450,
+        1489
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.198 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Constellation Advanced",
+      "category": "Static Clicking",
+      "family": "Constellation",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Static Clicking",
+      "window": 2,
+      "label": "Constellation",
+      "focus": "Five targets up at once; keep a rhythm and take the nearest one next.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        1408,
+        1446,
+        1483,
+        1517,
+        1549,
+        1593
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.198 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Constellation Expert",
+      "category": "Static Clicking",
+      "family": "Constellation",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Static Clicking",
+      "window": 3,
+      "label": "Constellation",
+      "focus": "Five targets up at once; keep a rhythm and take the nearest one next.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        1504,
+        1546,
+        1574,
+        1607
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.198 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Parallax Novice",
+      "category": "Static Clicking",
+      "family": "Parallax",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Static Clicking",
+      "window": 0,
+      "label": "Parallax",
+      "focus": "Targets at two distances; read the size before you decide how far to move.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        767,
+        926,
+        1018,
+        1086,
+        1145,
+        1200
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.198 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Parallax Intermediate",
+      "category": "Static Clicking",
+      "family": "Parallax",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Static Clicking",
+      "window": 1,
+      "label": "Parallax",
+      "focus": "Targets at two distances; read the size before you decide how far to move.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        1109,
+        1163,
+        1187,
+        1234,
+        1273,
+        1307
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.198 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Parallax Advanced",
+      "category": "Static Clicking",
+      "family": "Parallax",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Static Clicking",
+      "window": 2,
+      "label": "Parallax",
+      "focus": "Targets at two distances; read the size before you decide how far to move.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        1233,
+        1267,
+        1300,
+        1329,
+        1358,
+        1397
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.198 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Parallax Expert",
+      "category": "Static Clicking",
+      "family": "Parallax",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Static Clicking",
+      "window": 3,
+      "label": "Parallax",
+      "focus": "Targets at two distances; read the size before you decide how far to move.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        1316,
+        1353,
+        1377,
+        1407
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.198 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Drift Novice",
+      "category": "Dynamic Clicking",
+      "family": "Drift",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Dynamic Clicking",
+      "window": 0,
+      "label": "Drift",
+      "focus": "Slow floaters; match their drift for a moment, then click.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        378,
+        523,
+        617,
+        686,
+        746,
+        800
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.198 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Drift Intermediate",
+      "category": "Dynamic Clicking",
+      "family": "Drift",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Dynamic Clicking",
+      "window": 1,
+      "label": "Drift",
+      "focus": "Slow floaters; match their drift for a moment, then click.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        711,
+        764,
+        787,
+        831,
+        867,
+        898
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.198 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Drift Advanced",
+      "category": "Dynamic Clicking",
+      "family": "Drift",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Dynamic Clicking",
+      "window": 2,
+      "label": "Drift",
+      "focus": "Slow floaters; match their drift for a moment, then click.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        829,
+        859,
+        887,
+        914,
+        940,
+        974
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.198 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Drift Expert",
+      "category": "Dynamic Clicking",
+      "family": "Drift",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Dynamic Clicking",
+      "window": 3,
+      "label": "Drift",
+      "focus": "Slow floaters; match their drift for a moment, then click.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        900,
+        932,
+        953,
+        978
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.198 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Pendulum Novice",
+      "category": "Dynamic Clicking",
+      "family": "Pendulum",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Dynamic Clicking",
+      "window": 0,
+      "label": "Pendulum",
+      "focus": "Side-to-side swings; click on the swing, not only at the turn.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        305,
+        437,
+        524,
+        589,
+        645,
+        696
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.198 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Pendulum Intermediate",
+      "category": "Dynamic Clicking",
+      "family": "Pendulum",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Dynamic Clicking",
+      "window": 1,
+      "label": "Pendulum",
+      "focus": "Side-to-side swings; click on the swing, not only at the turn.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        614,
+        664,
+        684,
+        726,
+        759,
+        788
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.198 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Pendulum Advanced",
+      "category": "Dynamic Clicking",
+      "family": "Pendulum",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Dynamic Clicking",
+      "window": 2,
+      "label": "Pendulum",
+      "focus": "Side-to-side swings; click on the swing, not only at the turn.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        725,
+        753,
+        779,
+        803,
+        828,
+        859
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.198 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Pendulum Expert",
+      "category": "Dynamic Clicking",
+      "family": "Pendulum",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Dynamic Clicking",
+      "window": 3,
+      "label": "Pendulum",
+      "focus": "Side-to-side swings; click on the swing, not only at the turn.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        791,
+        821,
+        840,
+        863
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.198 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Hopper Novice",
+      "category": "Dynamic Clicking",
+      "family": "Hopper",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Dynamic Clicking",
+      "window": 0,
+      "label": "Hopper",
+      "focus": "Read the arc; the top of the bounce is the slowest moment.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        417,
+        580,
+        687,
+        767,
+        835,
+        898
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.198 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Hopper Intermediate",
+      "category": "Dynamic Clicking",
+      "family": "Hopper",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Dynamic Clicking",
+      "window": 1,
+      "label": "Hopper",
+      "focus": "Read the arc; the top of the bounce is the slowest moment.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        799,
+        860,
+        886,
+        936,
+        977,
+        1013
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.198 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Hopper Advanced",
+      "category": "Dynamic Clicking",
+      "family": "Hopper",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Dynamic Clicking",
+      "window": 2,
+      "label": "Hopper",
+      "focus": "Read the arc; the top of the bounce is the slowest moment.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        937,
+        972,
+        1004,
+        1035,
+        1066,
+        1105
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.198 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Hopper Expert",
+      "category": "Dynamic Clicking",
+      "family": "Hopper",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Dynamic Clicking",
+      "window": 3,
+      "label": "Hopper",
+      "focus": "Read the arc; the top of the bounce is the slowest moment.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        1022,
+        1060,
+        1084,
+        1113
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.198 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Jitter Novice",
+      "category": "Dynamic Clicking",
+      "family": "Jitter",
+      "arm": "Fingertip",
+      "armFrom": "Apogee",
+      "subCategory": "Dynamic Clicking",
+      "window": 0,
+      "label": "Jitter",
+      "focus": "Short, erratic twitches; stay with the target instead of chasing its last position.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        374,
+        515,
+        605,
+        672,
+        729,
+        782
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.198 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Jitter Intermediate",
+      "category": "Dynamic Clicking",
+      "family": "Jitter",
+      "arm": "Fingertip",
+      "armFrom": "Apogee",
+      "subCategory": "Dynamic Clicking",
+      "window": 1,
+      "label": "Jitter",
+      "focus": "Short, erratic twitches; stay with the target instead of chasing its last position.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        695,
+        746,
+        768,
+        811,
+        845,
+        875
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.198 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Jitter Advanced",
+      "category": "Dynamic Clicking",
+      "family": "Jitter",
+      "arm": "Fingertip",
+      "armFrom": "Apogee",
+      "subCategory": "Dynamic Clicking",
+      "window": 2,
+      "label": "Jitter",
+      "focus": "Short, erratic twitches; stay with the target instead of chasing its last position.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        808,
+        837,
+        864,
+        890,
+        915,
+        947
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.198 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Jitter Expert",
+      "category": "Dynamic Clicking",
+      "family": "Jitter",
+      "arm": "Fingertip",
+      "armFrom": "Apogee",
+      "subCategory": "Dynamic Clicking",
+      "window": 3,
+      "label": "Jitter",
+      "focus": "Short, erratic twitches; stay with the target instead of chasing its last position.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        875,
+        906,
+        926,
+        950
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.198 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Comet Novice",
+      "category": "Dynamic Clicking",
+      "family": "Comet",
+      "arm": "Arm",
+      "armFrom": "Apogee",
+      "subCategory": "Dynamic Clicking",
+      "window": 0,
+      "label": "Comet",
+      "focus": "Fast crossers; move with the target and click inside the motion.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        282,
+        412,
+        499,
+        565,
+        621,
+        673
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.198 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Comet Intermediate",
+      "category": "Dynamic Clicking",
+      "family": "Comet",
+      "arm": "Arm",
+      "armFrom": "Apogee",
+      "subCategory": "Dynamic Clicking",
+      "window": 1,
+      "label": "Comet",
+      "focus": "Fast crossers; move with the target and click inside the motion.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        592,
+        642,
+        662,
+        705,
+        738,
+        767
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.198 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Comet Advanced",
+      "category": "Dynamic Clicking",
+      "family": "Comet",
+      "arm": "Arm",
+      "armFrom": "Apogee",
+      "subCategory": "Dynamic Clicking",
+      "window": 2,
+      "label": "Comet",
+      "focus": "Fast crossers; move with the target and click inside the motion.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        705,
+        733,
+        759,
+        784,
+        808,
+        839
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.198 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Comet Expert",
+      "category": "Dynamic Clicking",
+      "family": "Comet",
+      "arm": "Arm",
+      "armFrom": "Apogee",
+      "subCategory": "Dynamic Clicking",
+      "window": 3,
+      "label": "Comet",
+      "focus": "Fast crossers; move with the target and click inside the motion.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        773,
+        803,
+        822,
+        845
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.198 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Triplet Novice",
+      "category": "Dynamic Clicking",
+      "family": "Triplet",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Dynamic Clicking",
+      "window": 0,
+      "label": "Triplet",
+      "focus": "Three hits to kill; keep matching the movement between clicks.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        321,
+        455,
+        544,
+        610,
+        668,
+        723
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.198 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Triplet Intermediate",
+      "category": "Dynamic Clicking",
+      "family": "Triplet",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Dynamic Clicking",
+      "window": 1,
+      "label": "Triplet",
+      "focus": "Three hits to kill; keep matching the movement between clicks.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        637,
+        690,
+        712,
+        757,
+        794,
+        823
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.198 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Triplet Advanced",
+      "category": "Dynamic Clicking",
+      "family": "Triplet",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Dynamic Clicking",
+      "window": 2,
+      "label": "Triplet",
+      "focus": "Three hits to kill; keep matching the movement between clicks.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        758,
+        787,
+        813,
+        838,
+        862,
+        894
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.198 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Triplet Expert",
+      "category": "Dynamic Clicking",
+      "family": "Triplet",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Dynamic Clicking",
+      "window": 3,
+      "label": "Triplet",
+      "focus": "Three hits to kill; keep matching the movement between clicks.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        824,
+        855,
+        875,
+        901
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.198 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Glide Novice",
+      "category": "Precise Tracking",
+      "family": "Glide",
+      "arm": "Arm",
+      "armFrom": "Apogee",
+      "subCategory": "Precise Tracking",
+      "window": 0,
+      "label": "Glide",
+      "focus": "Long, smooth strafes; ease into each turn with the target.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        2131,
+        2725,
+        3072,
+        3317,
+        3533,
+        3731
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.403 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Glide Intermediate",
+      "category": "Precise Tracking",
+      "family": "Glide",
+      "arm": "Arm",
+      "armFrom": "Apogee",
+      "subCategory": "Precise Tracking",
+      "window": 1,
+      "label": "Glide",
+      "focus": "Long, smooth strafes; ease into each turn with the target.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        3360,
+        3560,
+        3650,
+        3813,
+        3936,
+        4048
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.403 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Glide Advanced",
+      "category": "Precise Tracking",
+      "family": "Glide",
+      "arm": "Arm",
+      "armFrom": "Apogee",
+      "subCategory": "Precise Tracking",
+      "window": 2,
+      "label": "Glide",
+      "focus": "Long, smooth strafes; ease into each turn with the target.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        3760,
+        3872,
+        3977,
+        4075,
+        4172,
+        4266
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.403 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Glide Expert",
+      "category": "Precise Tracking",
+      "family": "Glide",
+      "arm": "Arm",
+      "armFrom": "Apogee",
+      "subCategory": "Precise Tracking",
+      "window": 3,
+      "label": "Glide",
+      "focus": "Long, smooth strafes; ease into each turn with the target.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        3985,
+        4086,
+        4148,
+        4237
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.403 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Lift Novice",
+      "category": "Precise Tracking",
+      "family": "Lift",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Precise Tracking",
+      "window": 0,
+      "label": "Lift",
+      "focus": "Mostly up and down; keep the crosshair level with it through each turn.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        1786,
+        2399,
+        2771,
+        3058,
+        3306,
+        3534
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.403 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Lift Intermediate",
+      "category": "Precise Tracking",
+      "family": "Lift",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Precise Tracking",
+      "window": 1,
+      "label": "Lift",
+      "focus": "Mostly up and down; keep the crosshair level with it through each turn.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        3131,
+        3359,
+        3458,
+        3641,
+        3798,
+        3930
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.403 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Lift Advanced",
+      "category": "Precise Tracking",
+      "family": "Lift",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Precise Tracking",
+      "window": 2,
+      "label": "Lift",
+      "focus": "Mostly up and down; keep the crosshair level with it through each turn.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        3618,
+        3750,
+        3870,
+        3981,
+        4088,
+        4217
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.403 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Lift Expert",
+      "category": "Precise Tracking",
+      "family": "Lift",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Precise Tracking",
+      "window": 3,
+      "label": "Lift",
+      "focus": "Mostly up and down; keep the crosshair level with it through each turn.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        3897,
+        4034,
+        4122,
+        4204
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.403 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Loop Novice",
+      "category": "Precise Tracking",
+      "family": "Loop",
+      "arm": "Arm",
+      "armFrom": "Apogee",
+      "subCategory": "Precise Tracking",
+      "window": 0,
+      "label": "Loop",
+      "focus": "Curves in both directions; follow the path, do not cut its corners.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        1512,
+        2070,
+        2429,
+        2710,
+        2956,
+        3181
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.403 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Loop Intermediate",
+      "category": "Precise Tracking",
+      "family": "Loop",
+      "arm": "Arm",
+      "armFrom": "Apogee",
+      "subCategory": "Precise Tracking",
+      "window": 1,
+      "label": "Loop",
+      "focus": "Curves in both directions; follow the path, do not cut its corners.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        2780,
+        3002,
+        3099,
+        3280,
+        3429,
+        3557
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.403 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Loop Advanced",
+      "category": "Precise Tracking",
+      "family": "Loop",
+      "arm": "Arm",
+      "armFrom": "Apogee",
+      "subCategory": "Precise Tracking",
+      "window": 2,
+      "label": "Loop",
+      "focus": "Curves in both directions; follow the path, do not cut its corners.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        3241,
+        3366,
+        3481,
+        3586,
+        3688,
+        3828
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.403 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Loop Expert",
+      "category": "Precise Tracking",
+      "family": "Loop",
+      "arm": "Arm",
+      "armFrom": "Apogee",
+      "subCategory": "Precise Tracking",
+      "window": 3,
+      "label": "Loop",
+      "focus": "Curves in both directions; follow the path, do not cut its corners.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        3481,
+        3627,
+        3725,
+        3811
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.403 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Thread Novice",
+      "category": "Precise Tracking",
+      "family": "Thread",
+      "arm": "Fingertip",
+      "armFrom": "Apogee",
+      "subCategory": "Precise Tracking",
+      "window": 0,
+      "label": "Thread",
+      "focus": "A small, slow target; precision over speed.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        2005,
+        2589,
+        2934,
+        3178,
+        3397,
+        3599
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.403 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Thread Intermediate",
+      "category": "Precise Tracking",
+      "family": "Thread",
+      "arm": "Fingertip",
+      "armFrom": "Apogee",
+      "subCategory": "Precise Tracking",
+      "window": 1,
+      "label": "Thread",
+      "focus": "A small, slow target; precision over speed.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        3222,
+        3426,
+        3516,
+        3681,
+        3806,
+        3920
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.403 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Thread Advanced",
+      "category": "Precise Tracking",
+      "family": "Thread",
+      "arm": "Fingertip",
+      "armFrom": "Apogee",
+      "subCategory": "Precise Tracking",
+      "window": 2,
+      "label": "Thread",
+      "focus": "A small, slow target; precision over speed.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        3626,
+        3739,
+        3847,
+        3947,
+        4044,
+        4145
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.403 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Thread Expert",
+      "category": "Precise Tracking",
+      "family": "Thread",
+      "arm": "Fingertip",
+      "armFrom": "Apogee",
+      "subCategory": "Precise Tracking",
+      "window": 3,
+      "label": "Thread",
+      "focus": "A small, slow target; precision over speed.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        3851,
+        3958,
+        4025,
+        4127
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.403 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Arc Novice",
+      "category": "Precise Tracking",
+      "family": "Arc",
+      "arm": "Blending",
+      "armFrom": "Apogee",
+      "subCategory": "Precise Tracking",
+      "window": 0,
+      "label": "Arc",
+      "focus": "Long jumps under low gravity; carry the crosshair along the arc.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        1673,
+        2265,
+        2633,
+        2919,
+        3167,
+        3394
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.403 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Arc Intermediate",
+      "category": "Precise Tracking",
+      "family": "Arc",
+      "arm": "Blending",
+      "armFrom": "Apogee",
+      "subCategory": "Precise Tracking",
+      "window": 1,
+      "label": "Arc",
+      "focus": "Long jumps under low gravity; carry the crosshair along the arc.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        2991,
+        3217,
+        3315,
+        3499,
+        3653,
+        3784
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.403 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Arc Advanced",
+      "category": "Precise Tracking",
+      "family": "Arc",
+      "arm": "Blending",
+      "armFrom": "Apogee",
+      "subCategory": "Precise Tracking",
+      "window": 2,
+      "label": "Arc",
+      "focus": "Long jumps under low gravity; carry the crosshair along the arc.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        3469,
+        3598,
+        3717,
+        3826,
+        3931,
+        4065
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.403 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Arc Expert",
+      "category": "Precise Tracking",
+      "family": "Arc",
+      "arm": "Blending",
+      "armFrom": "Apogee",
+      "subCategory": "Precise Tracking",
+      "window": 3,
+      "label": "Arc",
+      "focus": "Long jumps under low gravity; carry the crosshair along the arc.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        3733,
+        3874,
+        3967,
+        4050
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.403 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Orbit Novice",
+      "category": "Precise Tracking",
+      "family": "Orbit",
+      "arm": "Arm",
+      "armFrom": "Apogee",
+      "subCategory": "Precise Tracking",
+      "window": 0,
+      "label": "Orbit",
+      "focus": "A close target sweeping wide; track with your arm, not only your wrist.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        2248,
+        2851,
+        3198,
+        3442,
+        3654,
+        3849
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.403 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Orbit Intermediate",
+      "category": "Precise Tracking",
+      "family": "Orbit",
+      "arm": "Arm",
+      "armFrom": "Apogee",
+      "subCategory": "Precise Tracking",
+      "window": 1,
+      "label": "Orbit",
+      "focus": "A close target sweeping wide; track with your arm, not only your wrist.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        3484,
+        3681,
+        3770,
+        3931,
+        4052,
+        4163
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.403 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Orbit Advanced",
+      "category": "Precise Tracking",
+      "family": "Orbit",
+      "arm": "Arm",
+      "armFrom": "Apogee",
+      "subCategory": "Precise Tracking",
+      "window": 2,
+      "label": "Orbit",
+      "focus": "A close target sweeping wide; track with your arm, not only your wrist.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        3882,
+        3993,
+        4095,
+        4192,
+        4288,
+        4377
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.403 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Orbit Expert",
+      "category": "Precise Tracking",
+      "family": "Orbit",
+      "arm": "Arm",
+      "armFrom": "Apogee",
+      "subCategory": "Precise Tracking",
+      "window": 3,
+      "label": "Orbit",
+      "focus": "A close target sweeping wide; track with your arm, not only your wrist.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        4108,
+        4203,
+        4261,
+        4341
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.403 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Duel Novice",
+      "category": "Reactive Tracking",
+      "family": "Duel",
+      "arm": "Arm",
+      "armFrom": "Apogee",
+      "subCategory": "Reactive Tracking",
+      "window": 0,
+      "label": "Duel",
+      "focus": "Close, snappy strafes; react to the turn, do not predict it.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        1959,
+        2528,
+        2873,
+        3118,
+        3334,
+        3532
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.403 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Duel Intermediate",
+      "category": "Reactive Tracking",
+      "family": "Duel",
+      "arm": "Arm",
+      "armFrom": "Apogee",
+      "subCategory": "Reactive Tracking",
+      "window": 1,
+      "label": "Duel",
+      "focus": "Close, snappy strafes; react to the turn, do not predict it.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        3159,
+        3357,
+        3446,
+        3606,
+        3722,
+        3830
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.403 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Duel Advanced",
+      "category": "Reactive Tracking",
+      "family": "Duel",
+      "arm": "Arm",
+      "armFrom": "Apogee",
+      "subCategory": "Reactive Tracking",
+      "window": 2,
+      "label": "Duel",
+      "focus": "Close, snappy strafes; react to the turn, do not predict it.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        3540,
+        3647,
+        3745,
+        3840,
+        3932,
+        4026
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.403 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Duel Expert",
+      "category": "Reactive Tracking",
+      "family": "Duel",
+      "arm": "Arm",
+      "armFrom": "Apogee",
+      "subCategory": "Reactive Tracking",
+      "window": 3,
+      "label": "Duel",
+      "focus": "Close, snappy strafes; react to the turn, do not predict it.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        3734,
+        3833,
+        3895,
+        3980
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.403 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Skirmish Novice",
+      "category": "Reactive Tracking",
+      "family": "Skirmish",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Reactive Tracking",
+      "window": 0,
+      "label": "Skirmish",
+      "focus": "Strafes and range changes; the target shrinks and grows as it moves.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        1903,
+        2468,
+        2812,
+        3057,
+        3273,
+        3473
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.403 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Skirmish Intermediate",
+      "category": "Reactive Tracking",
+      "family": "Skirmish",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Reactive Tracking",
+      "window": 1,
+      "label": "Skirmish",
+      "focus": "Strafes and range changes; the target shrinks and grows as it moves.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        3098,
+        3297,
+        3386,
+        3548,
+        3665,
+        3775
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.403 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Skirmish Advanced",
+      "category": "Reactive Tracking",
+      "family": "Skirmish",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Reactive Tracking",
+      "window": 2,
+      "label": "Skirmish",
+      "focus": "Strafes and range changes; the target shrinks and grows as it moves.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        3482,
+        3589,
+        3690,
+        3785,
+        3877,
+        3976
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.403 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Skirmish Expert",
+      "category": "Reactive Tracking",
+      "family": "Skirmish",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Reactive Tracking",
+      "window": 3,
+      "label": "Skirmish",
+      "focus": "Strafes and range changes; the target shrinks and grows as it moves.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        3677,
+        3781,
+        3847,
+        3939
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.403 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Stutter Novice",
+      "category": "Reactive Tracking",
+      "family": "Stutter",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Reactive Tracking",
+      "window": 0,
+      "label": "Stutter",
+      "focus": "It stops before it turns; stop with it.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        1916,
+        2480,
+        2824,
+        3069,
+        3285,
+        3484
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.403 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Stutter Intermediate",
+      "category": "Reactive Tracking",
+      "family": "Stutter",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Reactive Tracking",
+      "window": 1,
+      "label": "Stutter",
+      "focus": "It stops before it turns; stop with it.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        3110,
+        3308,
+        3398,
+        3559,
+        3675,
+        3784
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.403 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Stutter Advanced",
+      "category": "Reactive Tracking",
+      "family": "Stutter",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Reactive Tracking",
+      "window": 2,
+      "label": "Stutter",
+      "focus": "It stops before it turns; stop with it.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        3492,
+        3598,
+        3698,
+        3792,
+        3885,
+        3981
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.403 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Stutter Expert",
+      "category": "Reactive Tracking",
+      "family": "Stutter",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Reactive Tracking",
+      "window": 3,
+      "label": "Stutter",
+      "focus": "It stops before it turns; stop with it.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        3685,
+        3787,
+        3850,
+        3940
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.403 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Aerial Novice",
+      "category": "Reactive Tracking",
+      "family": "Aerial",
+      "arm": "Blending",
+      "armFrom": "Apogee",
+      "subCategory": "Reactive Tracking",
+      "window": 0,
+      "label": "Aerial",
+      "focus": "Jumps and short strafes together; follow it up as well as across.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        1479,
+        2025,
+        2381,
+        2660,
+        2903,
+        3127
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.403 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Aerial Intermediate",
+      "category": "Reactive Tracking",
+      "family": "Aerial",
+      "arm": "Blending",
+      "armFrom": "Apogee",
+      "subCategory": "Reactive Tracking",
+      "window": 1,
+      "label": "Aerial",
+      "focus": "Jumps and short strafes together; follow it up as well as across.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        2728,
+        2948,
+        3044,
+        3221,
+        3366,
+        3491
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.403 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Aerial Advanced",
+      "category": "Reactive Tracking",
+      "family": "Aerial",
+      "arm": "Blending",
+      "armFrom": "Apogee",
+      "subCategory": "Reactive Tracking",
+      "window": 2,
+      "label": "Aerial",
+      "focus": "Jumps and short strafes together; follow it up as well as across.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        3177,
+        3299,
+        3409,
+        3512,
+        3612,
+        3748
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.403 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Aerial Expert",
+      "category": "Reactive Tracking",
+      "family": "Aerial",
+      "arm": "Blending",
+      "armFrom": "Apogee",
+      "subCategory": "Reactive Tracking",
+      "window": 3,
+      "label": "Aerial",
+      "focus": "Jumps and short strafes together; follow it up as well as across.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        3403,
+        3544,
+        3638,
+        3718
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.403 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Wasp Novice",
+      "category": "Reactive Tracking",
+      "family": "Wasp",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Reactive Tracking",
+      "window": 0,
+      "label": "Wasp",
+      "focus": "A flier changing direction on both axes; react on whichever one moves.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        1436,
+        1971,
+        2324,
+        2601,
+        2843,
+        3064
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.403 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Wasp Intermediate",
+      "category": "Reactive Tracking",
+      "family": "Wasp",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Reactive Tracking",
+      "window": 1,
+      "label": "Wasp",
+      "focus": "A flier changing direction on both axes; react on whichever one moves.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        2668,
+        2885,
+        2981,
+        3155,
+        3298,
+        3420
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.403 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Wasp Advanced",
+      "category": "Reactive Tracking",
+      "family": "Wasp",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Reactive Tracking",
+      "window": 2,
+      "label": "Wasp",
+      "focus": "A flier changing direction on both axes; react on whichever one moves.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        3108,
+        3227,
+        3334,
+        3434,
+        3531,
+        3667
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.403 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Wasp Expert",
+      "category": "Reactive Tracking",
+      "family": "Wasp",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Reactive Tracking",
+      "window": 3,
+      "label": "Wasp",
+      "focus": "A flier changing direction on both axes; react on whichever one moves.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        3321,
+        3462,
+        3556,
+        3633
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.403 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Feint Novice",
+      "category": "Reactive Tracking",
+      "family": "Feint",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Reactive Tracking",
+      "window": 0,
+      "label": "Feint",
+      "focus": "Being tracked makes it turn; stay on it through the dodge.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        1991,
+        2567,
+        2913,
+        3159,
+        3374,
+        3573
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.403 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Feint Intermediate",
+      "category": "Reactive Tracking",
+      "family": "Feint",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Reactive Tracking",
+      "window": 1,
+      "label": "Feint",
+      "focus": "Being tracked makes it turn; stay on it through the dodge.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        3200,
+        3399,
+        3488,
+        3651,
+        3769,
+        3880
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.403 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Feint Advanced",
+      "category": "Reactive Tracking",
+      "family": "Feint",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Reactive Tracking",
+      "window": 2,
+      "label": "Feint",
+      "focus": "Being tracked makes it turn; stay on it through the dodge.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        3588,
+        3697,
+        3799,
+        3895,
+        3989,
+        4085
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.403 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Feint Expert",
+      "category": "Reactive Tracking",
+      "family": "Feint",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Reactive Tracking",
+      "window": 3,
+      "label": "Feint",
+      "focus": "Being tracked makes it turn; stay on it through the dodge.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        3793,
+        3895,
+        3958,
+        4048
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.403 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Relay Novice",
+      "category": "Speed Switching",
+      "family": "Relay",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Speed Switching",
+      "window": 0,
+      "label": "Relay",
+      "focus": "Kill, then move straight to the next; no pause between targets.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        1966,
+        2237,
+        2392,
+        2497,
+        2588,
+        2674
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.158 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Relay Intermediate",
+      "category": "Speed Switching",
+      "family": "Relay",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Speed Switching",
+      "window": 1,
+      "label": "Relay",
+      "focus": "Kill, then move straight to the next; no pause between targets.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        2575,
+        2662,
+        2699,
+        2771,
+        2828,
+        2882
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.158 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Relay Advanced",
+      "category": "Speed Switching",
+      "family": "Relay",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Speed Switching",
+      "window": 2,
+      "label": "Relay",
+      "focus": "Kill, then move straight to the next; no pause between targets.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        2818,
+        2872,
+        2928,
+        2977,
+        3023,
+        3081
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.158 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Relay Expert",
+      "category": "Speed Switching",
+      "family": "Relay",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Speed Switching",
+      "window": 3,
+      "label": "Relay",
+      "focus": "Kill, then move straight to the next; no pause between targets.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        3013,
+        3072,
+        3109,
+        3157
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.158 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Span Novice",
+      "category": "Speed Switching",
+      "family": "Span",
+      "arm": "Arm",
+      "armFrom": "Apogee",
+      "subCategory": "Speed Switching",
+      "window": 0,
+      "label": "Span",
+      "focus": "Wide switches; land the flick, then hold.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        2067,
+        2334,
+        2487,
+        2589,
+        2679,
+        2765
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.158 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Span Intermediate",
+      "category": "Speed Switching",
+      "family": "Span",
+      "arm": "Arm",
+      "armFrom": "Apogee",
+      "subCategory": "Speed Switching",
+      "window": 1,
+      "label": "Span",
+      "focus": "Wide switches; land the flick, then hold.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        2667,
+        2754,
+        2790,
+        2863,
+        2921,
+        2977
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.158 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Span Advanced",
+      "category": "Speed Switching",
+      "family": "Span",
+      "arm": "Arm",
+      "armFrom": "Apogee",
+      "subCategory": "Speed Switching",
+      "window": 2,
+      "label": "Span",
+      "focus": "Wide switches; land the flick, then hold.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        2912,
+        2969,
+        3028,
+        3079,
+        3124,
+        3182
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.158 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Span Expert",
+      "category": "Speed Switching",
+      "family": "Span",
+      "arm": "Arm",
+      "armFrom": "Apogee",
+      "subCategory": "Speed Switching",
+      "window": 3,
+      "label": "Span",
+      "focus": "Wide switches; land the flick, then hold.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        3116,
+        3174,
+        3211,
+        3259
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.158 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Column Novice",
+      "category": "Speed Switching",
+      "family": "Column",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Speed Switching",
+      "window": 0,
+      "label": "Column",
+      "focus": "Switch up and down; stop on each one before you fire.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        1960,
+        2232,
+        2387,
+        2492,
+        2583,
+        2670
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.158 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Column Intermediate",
+      "category": "Speed Switching",
+      "family": "Column",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Speed Switching",
+      "window": 1,
+      "label": "Column",
+      "focus": "Switch up and down; stop on each one before you fire.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        2570,
+        2657,
+        2694,
+        2766,
+        2823,
+        2876
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.158 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Column Advanced",
+      "category": "Speed Switching",
+      "family": "Column",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Speed Switching",
+      "window": 2,
+      "label": "Column",
+      "focus": "Switch up and down; stop on each one before you fire.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        2813,
+        2866,
+        2922,
+        2972,
+        3017,
+        3075
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.158 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Column Expert",
+      "category": "Speed Switching",
+      "family": "Column",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Speed Switching",
+      "window": 3,
+      "label": "Column",
+      "focus": "Switch up and down; stop on each one before you fire.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        3008,
+        3066,
+        3104,
+        3151
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.158 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Cluster Novice",
+      "category": "Speed Switching",
+      "family": "Cluster",
+      "arm": "Fingertip",
+      "armFrom": "Apogee",
+      "subCategory": "Speed Switching",
+      "window": 0,
+      "label": "Cluster",
+      "focus": "Six small targets packed tight; short, exact moves.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        1687,
+        1950,
+        2102,
+        2210,
+        2301,
+        2385
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.158 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Cluster Intermediate",
+      "category": "Speed Switching",
+      "family": "Cluster",
+      "arm": "Fingertip",
+      "armFrom": "Apogee",
+      "subCategory": "Speed Switching",
+      "window": 1,
+      "label": "Cluster",
+      "focus": "Six small targets packed tight; short, exact moves.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        2287,
+        2372,
+        2407,
+        2475,
+        2530,
+        2578
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.158 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Cluster Advanced",
+      "category": "Speed Switching",
+      "family": "Cluster",
+      "arm": "Fingertip",
+      "armFrom": "Apogee",
+      "subCategory": "Speed Switching",
+      "window": 2,
+      "label": "Cluster",
+      "focus": "Six small targets packed tight; short, exact moves.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        2519,
+        2567,
+        2616,
+        2662,
+        2705,
+        2762
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.158 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Cluster Expert",
+      "category": "Speed Switching",
+      "family": "Cluster",
+      "arm": "Fingertip",
+      "armFrom": "Apogee",
+      "subCategory": "Speed Switching",
+      "window": 3,
+      "label": "Cluster",
+      "focus": "Six small targets packed tight; short, exact moves.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        2694,
+        2751,
+        2788,
+        2835
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.158 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Drifters Novice",
+      "category": "Speed Switching",
+      "family": "Drifters",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Speed Switching",
+      "window": 0,
+      "label": "Drifters",
+      "focus": "Slow floaters; the switch is the skill, the tracking only has to be clean.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        1519,
+        1801,
+        1972,
+        2094,
+        2200,
+        2298
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.158 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Drifters Intermediate",
+      "category": "Speed Switching",
+      "family": "Drifters",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Speed Switching",
+      "window": 1,
+      "label": "Drifters",
+      "focus": "Slow floaters; the switch is the skill, the tracking only has to be clean.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        2170,
+        2269,
+        2312,
+        2390,
+        2451,
+        2498
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.158 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Drifters Advanced",
+      "category": "Speed Switching",
+      "family": "Drifters",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Speed Switching",
+      "window": 2,
+      "label": "Drifters",
+      "focus": "Slow floaters; the switch is the skill, the tracking only has to be clean.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        2423,
+        2470,
+        2517,
+        2562,
+        2605,
+        2671
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.158 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Drifters Expert",
+      "category": "Speed Switching",
+      "family": "Drifters",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Speed Switching",
+      "window": 3,
+      "label": "Drifters",
+      "focus": "Slow floaters; the switch is the skill, the tracking only has to be clean.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        2576,
+        2643,
+        2688,
+        2741
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.158 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Finisher Novice",
+      "category": "Speed Switching",
+      "family": "Finisher",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Speed Switching",
+      "window": 0,
+      "label": "Finisher",
+      "focus": "Each target takes a while; stay on it to the end, then switch.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        2321,
+        2623,
+        2794,
+        2897,
+        2993,
+        3089
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.158 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Finisher Intermediate",
+      "category": "Speed Switching",
+      "family": "Finisher",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Speed Switching",
+      "window": 1,
+      "label": "Finisher",
+      "focus": "Each target takes a while; stay on it to the end, then switch.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        2980,
+        3078,
+        3120,
+        3201,
+        3261,
+        3316
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.158 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Finisher Advanced",
+      "category": "Speed Switching",
+      "family": "Finisher",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Speed Switching",
+      "window": 2,
+      "label": "Finisher",
+      "focus": "Each target takes a while; stay on it to the end, then switch.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        3251,
+        3307,
+        3368,
+        3420,
+        3467,
+        3529
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.158 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Finisher Expert",
+      "category": "Speed Switching",
+      "family": "Finisher",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Speed Switching",
+      "window": 3,
+      "label": "Finisher",
+      "focus": "Each target takes a while; stay on it to the end, then switch.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        3458,
+        3521,
+        3562,
+        3607
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.158 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Swarm Novice",
+      "category": "Evasive Switching",
+      "family": "Swarm",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Evasive Switching",
+      "window": 0,
+      "label": "Swarm",
+      "focus": "Three strafing targets; kill one without losing track of the others.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        1546,
+        1850,
+        2036,
+        2165,
+        2280,
+        2389
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.158 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Swarm Intermediate",
+      "category": "Evasive Switching",
+      "family": "Swarm",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Evasive Switching",
+      "window": 1,
+      "label": "Swarm",
+      "focus": "Three strafing targets; kill one without losing track of the others.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        2249,
+        2359,
+        2408,
+        2494,
+        2559,
+        2606
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.158 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Swarm Advanced",
+      "category": "Evasive Switching",
+      "family": "Swarm",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Evasive Switching",
+      "window": 2,
+      "label": "Swarm",
+      "focus": "Three strafing targets; kill one without losing track of the others.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        2531,
+        2578,
+        2626,
+        2672,
+        2716,
+        2789
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.158 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Swarm Expert",
+      "category": "Evasive Switching",
+      "family": "Swarm",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Evasive Switching",
+      "window": 3,
+      "label": "Swarm",
+      "focus": "Three strafing targets; kill one without losing track of the others.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        2688,
+        2761,
+        2811,
+        2865
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.158 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Skeet Novice",
+      "category": "Evasive Switching",
+      "family": "Skeet",
+      "arm": "Blending",
+      "armFrom": "Apogee",
+      "subCategory": "Evasive Switching",
+      "window": 0,
+      "label": "Skeet",
+      "focus": "Targets thrown into the air; catch each one on its arc.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        1527,
+        1824,
+        2007,
+        2134,
+        2247,
+        2352
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.158 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Skeet Intermediate",
+      "category": "Evasive Switching",
+      "family": "Skeet",
+      "arm": "Blending",
+      "armFrom": "Apogee",
+      "subCategory": "Evasive Switching",
+      "window": 1,
+      "label": "Skeet",
+      "focus": "Targets thrown into the air; catch each one on its arc.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        2216,
+        2322,
+        2369,
+        2454,
+        2518,
+        2565
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.158 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Skeet Advanced",
+      "category": "Evasive Switching",
+      "family": "Skeet",
+      "arm": "Blending",
+      "armFrom": "Apogee",
+      "subCategory": "Evasive Switching",
+      "window": 2,
+      "label": "Skeet",
+      "focus": "Targets thrown into the air; catch each one on its arc.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        2489,
+        2537,
+        2584,
+        2629,
+        2673,
+        2744
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.158 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Skeet Expert",
+      "category": "Evasive Switching",
+      "family": "Skeet",
+      "arm": "Blending",
+      "armFrom": "Apogee",
+      "subCategory": "Evasive Switching",
+      "window": 3,
+      "label": "Skeet",
+      "focus": "Targets thrown into the air; catch each one on its arc.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        2645,
+        2717,
+        2765,
+        2819
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.158 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Hive Novice",
+      "category": "Evasive Switching",
+      "family": "Hive",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Evasive Switching",
+      "window": 0,
+      "label": "Hive",
+      "focus": "Fliers changing direction on every axis; pick the next one before this one dies.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        1523,
+        1820,
+        2002,
+        2129,
+        2242,
+        2347
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.158 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Hive Intermediate",
+      "category": "Evasive Switching",
+      "family": "Hive",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Evasive Switching",
+      "window": 1,
+      "label": "Hive",
+      "focus": "Fliers changing direction on every axis; pick the next one before this one dies.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        2211,
+        2317,
+        2364,
+        2448,
+        2512,
+        2559
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.158 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Hive Advanced",
+      "category": "Evasive Switching",
+      "family": "Hive",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Evasive Switching",
+      "window": 2,
+      "label": "Hive",
+      "focus": "Fliers changing direction on every axis; pick the next one before this one dies.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        2483,
+        2530,
+        2577,
+        2623,
+        2666,
+        2737
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.158 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Hive Expert",
+      "category": "Evasive Switching",
+      "family": "Hive",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Evasive Switching",
+      "window": 3,
+      "label": "Hive",
+      "focus": "Fliers changing direction on every axis; pick the next one before this one dies.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        2638,
+        2709,
+        2758,
+        2811
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.158 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Mender Novice",
+      "category": "Evasive Switching",
+      "family": "Mender",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Evasive Switching",
+      "window": 0,
+      "label": "Mender",
+      "focus": "Targets heal when left alone; finish every kill you start.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        1679,
+        1996,
+        2190,
+        2319,
+        2436,
+        2548
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.158 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Mender Intermediate",
+      "category": "Evasive Switching",
+      "family": "Mender",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Evasive Switching",
+      "window": 1,
+      "label": "Mender",
+      "focus": "Targets heal when left alone; finish every kill you start.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        2404,
+        2517,
+        2568,
+        2658,
+        2724,
+        2773
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.158 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Mender Advanced",
+      "category": "Evasive Switching",
+      "family": "Mender",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Evasive Switching",
+      "window": 2,
+      "label": "Mender",
+      "focus": "Targets heal when left alone; finish every kill you start.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        2695,
+        2744,
+        2795,
+        2843,
+        2889,
+        2963
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.158 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Mender Expert",
+      "category": "Evasive Switching",
+      "family": "Mender",
+      "arm": "Wrist",
+      "armFrom": "Apogee",
+      "subCategory": "Evasive Switching",
+      "window": 3,
+      "label": "Mender",
+      "focus": "Targets heal when left alone; finish every kill you start.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        2860,
+        2935,
+        2986,
+        3039
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.158 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Scatter Novice",
+      "category": "Evasive Switching",
+      "family": "Scatter",
+      "arm": "Arm",
+      "armFrom": "Apogee",
+      "subCategory": "Evasive Switching",
+      "window": 0,
+      "label": "Scatter",
+      "focus": "Fast targets far apart; big switches onto moving targets.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        1437,
+        1731,
+        1913,
+        2042,
+        2156,
+        2262
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.158 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Scatter Intermediate",
+      "category": "Evasive Switching",
+      "family": "Scatter",
+      "arm": "Arm",
+      "armFrom": "Apogee",
+      "subCategory": "Evasive Switching",
+      "window": 1,
+      "label": "Scatter",
+      "focus": "Fast targets far apart; big switches onto moving targets.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        2126,
+        2233,
+        2280,
+        2365,
+        2428,
+        2474
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.158 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Scatter Advanced",
+      "category": "Evasive Switching",
+      "family": "Scatter",
+      "arm": "Arm",
+      "armFrom": "Apogee",
+      "subCategory": "Evasive Switching",
+      "window": 2,
+      "label": "Scatter",
+      "focus": "Fast targets far apart; big switches onto moving targets.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        2400,
+        2446,
+        2491,
+        2535,
+        2578,
+        2650
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.158 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Scatter Expert",
+      "category": "Evasive Switching",
+      "family": "Scatter",
+      "arm": "Arm",
+      "armFrom": "Apogee",
+      "subCategory": "Evasive Switching",
+      "window": 3,
+      "label": "Scatter",
+      "focus": "Fast targets far apart; big switches onto moving targets.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        2550,
+        2622,
+        2671,
+        2725
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.158 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Brawl Novice",
+      "category": "Evasive Switching",
+      "family": "Brawl",
+      "arm": "Arm",
+      "armFrom": "Apogee",
+      "subCategory": "Evasive Switching",
+      "window": 0,
+      "label": "Brawl",
+      "focus": "Close targets moving fast across the view; stay with them, then turn to the next.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        1467,
+        1769,
+        1955,
+        2085,
+        2199,
+        2307
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.158 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Brawl Intermediate",
+      "category": "Evasive Switching",
+      "family": "Brawl",
+      "arm": "Arm",
+      "armFrom": "Apogee",
+      "subCategory": "Evasive Switching",
+      "window": 1,
+      "label": "Brawl",
+      "focus": "Close targets moving fast across the view; stay with them, then turn to the next.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        2167,
+        2276,
+        2325,
+        2410,
+        2473,
+        2518
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.158 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Brawl Advanced",
+      "category": "Evasive Switching",
+      "family": "Brawl",
+      "arm": "Arm",
+      "armFrom": "Apogee",
+      "subCategory": "Evasive Switching",
+      "window": 2,
+      "label": "Brawl",
+      "focus": "Close targets moving fast across the view; stay with them, then turn to the next.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        2444,
+        2488,
+        2533,
+        2577,
+        2620,
+        2693
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.158 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    },
+    {
+      "scenario": "Apogee Brawl Expert",
+      "category": "Evasive Switching",
+      "family": "Brawl",
+      "arm": "Arm",
+      "armFrom": "Apogee",
+      "subCategory": "Evasive Switching",
+      "window": 3,
+      "label": "Brawl",
+      "focus": "Close targets moving fast across the view; stay with them, then turn to the next.",
+      "leaderboardId": null,
+      "rankMaxes": [
+        2591,
+        2664,
+        2714,
+        2767
+      ],
+      "source": {
+        "kind": "predicted",
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.158 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+      }
+    }
+  ]
+}

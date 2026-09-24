@@ -16,7 +16,7 @@
 
 import { build } from "esbuild";
 import { cpSync, existsSync, mkdirSync, readFileSync, rmSync } from "node:fs";
-import { dirname, join, resolve } from "node:path";
+import { dirname, join, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -99,8 +99,14 @@ export function copyStatic() {
   cpSync(join(root, "src", "app", "renderer"), join(outDir, "renderer"), { recursive: true });
   cpSync(join(root, "src", "app", "preload.cjs"), join(outDir, "preload.cjs"));
 
-  // Reference data the main process reads at runtime.
-  cpSync(join(root, "data"), join(root, "dist", "data"), { recursive: true });
+  // Reference data the main process reads at runtime. data/season-2 is authoring material
+  // - generated scenario files, the scenario corpus and the difficulty model, 8.5 MB - that
+  // nothing at runtime reads; the season itself is data/seasons/season-2.json.
+  const authoring = join(root, "data", "season-2");
+  cpSync(join(root, "data"), join(root, "dist", "data"), {
+    recursive: true,
+    filter: (src) => src !== authoring && !src.startsWith(authoring + sep),
+  });
 }
 
 export function cleanDist() {

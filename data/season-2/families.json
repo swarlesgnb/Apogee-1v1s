@@ -1,0 +1,3680 @@
+{
+ "$comment": "Written by tools/buildSeason2.ts from tools/season2/design.ts; do not hand-edit.",
+ "families": [
+  {
+   "family": "Meridian",
+   "category": "Static Clicking",
+   "focus": "Flick sideways and stop dead; every target sits on one level.",
+   "why": "Horizontal flicks isolated. Wide Wall and 1w3ts mix both axes, so a player who over-travels sideways and one who under-travels vertically get the same score and no hint which they are.",
+   "learnsFrom": [
+    "Wide Wall 3 Targets",
+    "VT 1w3ts Intermediate S5"
+   ],
+   "template": "VT 1w4ts Novice S5",
+   "arm": "Wrist"
+  },
+  {
+   "family": "Zenith",
+   "category": "Static Clicking",
+   "focus": "Flick up and down; the sideways movement is only ever a correction.",
+   "why": "Vertical flicks isolated. Almost every popular static scenario is wider than it is tall, so vertical stopping is the least-practised flick in the pool it replaces.",
+   "learnsFrom": [
+    "cA y-axis flick",
+    "1wall6targets TE"
+   ],
+   "template": "VT 1w4ts Novice S5",
+   "arm": "Wrist"
+  },
+  {
+   "family": "Pinpoint",
+   "category": "Static Clicking",
+   "focus": "Small moves, smaller targets; settle the crosshair before you click.",
+   "why": "Micro-correction at close spacing, the skill behind 1w2ts and Raw Mouse Control, two of the most-replayed static scenarios measured (51.6 plays per player for Raw Mouse Control 3).",
+   "learnsFrom": [
+    "1w2ts Perfected",
+    "RawMouseControlClicking3"
+   ],
+   "template": "VT 1w4ts Novice S5",
+   "arm": "Fingertip"
+  },
+  {
+   "family": "Horizon",
+   "category": "Static Clicking",
+   "focus": "Big flicks across the room; commit to the distance and stop on the target.",
+   "why": "Large-amplitude flicks, which small-field scenarios never ask for. Targets are larger to keep the index of difficulty in the same range as the rest of the category.",
+   "learnsFrom": [
+    "Odd-Angleshot Avasive",
+    "ww6t Avasive Easier"
+   ],
+   "template": "VT 1w4ts Novice S5",
+   "arm": "Arm"
+  },
+  {
+   "family": "Constellation",
+   "category": "Static Clicking",
+   "focus": "Five targets up at once; keep a rhythm and take the nearest one next.",
+   "why": "The tempo of 1wall 6targets small and Tile Frenzy, the two most-played static scenarios measured (1.29 million and 0.74 million players), on a field where every target is the same distance away.",
+   "learnsFrom": [
+    "1wall 6targets small",
+    "Tile Frenzy",
+    "1wall6targets TE"
+   ],
+   "template": "VT 1w4ts Novice S5",
+   "arm": "Wrist"
+  },
+  {
+   "family": "Parallax",
+   "category": "Static Clicking",
+   "focus": "Targets at two distances; read the size before you decide how far to move.",
+   "why": "Depth. The far ring is half the angular size of the near one, so the same flick distance asks for two different stopping precisions within one run.",
+   "learnsFrom": [
+    "5 Sphere Hipfire",
+    "Pokeball Frenzy Auto TE Wide"
+   ],
+   "template": "VT 1w4ts Novice S5",
+   "arm": "Wrist"
+  },
+  {
+   "family": "Drift",
+   "category": "Dynamic Clicking",
+   "focus": "Slow floaters; match their drift for a moment, then click.",
+   "why": "The entry to moving targets: slow, long-lived paths that reward confirming the shot rather than guessing it. Floating Heads Timing is the most-played dynamic clicking family measured.",
+   "learnsFrom": [
+    "Floating Heads Timing 400%",
+    "VT Floating Heads Novice S5"
+   ],
+   "template": "VT Floating Heads Novice S5",
+   "arm": "Wrist"
+  },
+  {
+   "family": "Pendulum",
+   "category": "Dynamic Clicking",
+   "focus": "Side-to-side swings; click on the swing, not only at the turn.",
+   "why": "Pasu's long horizontal strafes with a predictable reversal, kept on one height so the skill is horizontal timing alone.",
+   "learnsFrom": [
+    "1wall5targets_pasu",
+    "VT Pasu Novice S5"
+   ],
+   "template": "VT Floating Heads Novice S5",
+   "arm": "Wrist"
+  },
+  {
+   "family": "Hopper",
+   "category": "Dynamic Clicking",
+   "focus": "Read the arc; the top of the bounce is the slowest moment.",
+   "why": "Gravity arcs. Bouncing targets were the one design feature measured with more replay and more reach (Spearman +0.12 and +0.15 for bots under gravity).",
+   "learnsFrom": [
+    "VT Popcorn Novice S5",
+    "VT Bounceshot Intermediate"
+   ],
+   "template": "VT Popcorn Novice S5",
+   "arm": "Wrist"
+  },
+  {
+   "family": "Jitter",
+   "category": "Dynamic Clicking",
+   "focus": "Short, erratic twitches; stay with the target instead of chasing its last position.",
+   "why": "Reactive micro-clicking: short strafes at low speed, so the target never travels far but never holds still either.",
+   "learnsFrom": [
+    "cA 5ts vibrate",
+    "VT Floating Heads Novice S5"
+   ],
+   "template": "VT Floating Heads Novice S5",
+   "arm": "Fingertip"
+  },
+  {
+   "family": "Comet",
+   "category": "Dynamic Clicking",
+   "focus": "Fast crossers; move with the target and click inside the motion.",
+   "why": "High-speed dynamic clicks. Speed is the other axis of difficulty besides size, and in the fitted model it costs about as much time per kill as a third of a bit of Fitts difficulty per doubling.",
+   "learnsFrom": [
+    "VT Pasu Intermediate S5",
+    "Aimerz+ pipeClick Easy S1"
+   ],
+   "template": "VT Floating Heads Novice S5",
+   "arm": "Arm"
+  },
+  {
+   "family": "Triplet",
+   "category": "Dynamic Clicking",
+   "focus": "Three hits to kill; keep matching the movement between clicks.",
+   "why": "Multi-click confirmation on a moving target, which one-hit scenarios never ask for: a miss on the second click is a lost rhythm, not a lost target.",
+   "learnsFrom": [
+    "VT Popcorn Intermediate S5",
+    "Tamspeed 2bp Iron"
+   ],
+   "template": "VT Floating Heads Novice S5",
+   "arm": "Wrist"
+  },
+  {
+   "family": "Glide",
+   "category": "Precise Tracking",
+   "focus": "Long, smooth strafes; ease into each turn with the target.",
+   "why": "Smoothness on the ground. The target accelerates over a third of a second, so its reversals are gentle and following them cleanly is the whole skill.",
+   "learnsFrom": [
+    "SmoothBot Invincible Goated",
+    "VT PGT Novice S5"
+   ],
+   "template": "VT Ground Novice S5",
+   "arm": "Arm"
+  },
+  {
+   "family": "Lift",
+   "category": "Precise Tracking",
+   "focus": "Mostly up and down; keep the crosshair level with it through each turn.",
+   "why": "Vertical smoothness, which ground tracking barely tests. The target flies, turns vertically about as often as it strafes, and strafes slowly.",
+   "learnsFrom": [
+    "Centering II 180 Intermediate",
+    "VT Aether Novice S5"
+   ],
+   "template": "VT Aether Novice S5",
+   "arm": "Wrist"
+  },
+  {
+   "family": "Loop",
+   "category": "Precise Tracking",
+   "focus": "Curves in both directions; follow the path, do not cut its corners.",
+   "why": "Two-axis smooth tracking: horizontal and vertical reversals on similar clocks draw curves rather than lines.",
+   "learnsFrom": [
+    "PGTI Voltaic Easy",
+    "Smoothsphere Viscose Easier"
+   ],
+   "template": "VT Aether Novice S5",
+   "arm": "Arm"
+  },
+  {
+   "family": "Thread",
+   "category": "Precise Tracking",
+   "focus": "A small, slow target; precision over speed.",
+   "why": "Fine control: at this size the tolerance for drift is under a degree, and at this speed there is no excuse for it.",
+   "learnsFrom": [
+    "Controlsphere rAim Easy",
+    "Whisphere Small & Slow 55%"
+   ],
+   "template": "VT Ground Novice S5",
+   "arm": "Fingertip"
+  },
+  {
+   "family": "Arc",
+   "category": "Precise Tracking",
+   "focus": "Long jumps under low gravity; carry the crosshair along the arc.",
+   "why": "Smooth diagonal tracking: slow strafes combined with floaty jumps, so the path is an arc rather than a line or a zig-zag.",
+   "learnsFrom": [
+    "VT PGT Novice S5",
+    "Air Angelic 4 Voltaic Easy"
+   ],
+   "template": "VT Ground Novice S5",
+   "arm": "Blending"
+  },
+  {
+   "family": "Orbit",
+   "category": "Precise Tracking",
+   "focus": "A close target sweeping wide; track with your arm, not only your wrist.",
+   "why": "Close range means large angular speed at a modest real speed: the arm-tracking demand Smoothbot and Close Long Strafes are played for.",
+   "learnsFrom": [
+    "Close Long Strafes Invincible",
+    "SYW (Smooth Your Wrist) FIXED"
+   ],
+   "template": "VT Ground Novice S5",
+   "arm": "Arm"
+  },
+  {
+   "family": "Duel",
+   "category": "Reactive Tracking",
+   "focus": "Close, snappy strafes; react to the turn, do not predict it.",
+   "why": "The close-range strafe duel of Close Fast Strafes, which players replay more than any other reactive family on the ground (22.4 plays per player).",
+   "learnsFrom": [
+    "Close Fast Strafes Invincible",
+    "VT Ground Novice S5"
+   ],
+   "template": "VT Ground Novice S5",
+   "arm": "Arm"
+  },
+  {
+   "family": "Skirmish",
+   "category": "Reactive Tracking",
+   "focus": "Strafes and range changes; the target shrinks and grows as it moves.",
+   "why": "Mid-range reactive tracking with forward and back movement, so size and speed change under the player during a strafe.",
+   "learnsFrom": [
+    "Ground Plaza Sparky V3",
+    "VT Ground Intermediate S5"
+   ],
+   "template": "VT Ground Novice S5",
+   "arm": "Wrist"
+  },
+  {
+   "family": "Stutter",
+   "category": "Reactive Tracking",
+   "focus": "It stops before it turns; stop with it.",
+   "why": "Stop-start movement: a pause before each reversal punishes the player who keeps moving on momentum, the most common reactive-tracking fault.",
+   "learnsFrom": [
+    "Flicker Plaza rAim Easy Less Blinks",
+    "Leapstrafes Control wobin Easier"
+   ],
+   "template": "VT Ground Novice S5",
+   "arm": "Wrist"
+  },
+  {
+   "family": "Aerial",
+   "category": "Reactive Tracking",
+   "focus": "Jumps and short strafes together; follow it up as well as across.",
+   "why": "Reactive tracking through the air, the pattern of Air Angelic, the most benchmarked reactive family measured (nine benchmarks).",
+   "learnsFrom": [
+    "Air Angelic 4 Voltaic",
+    "Air Pure Intermediate"
+   ],
+   "template": "VT Ground Novice S5",
+   "arm": "Blending"
+  },
+  {
+   "family": "Wasp",
+   "category": "Reactive Tracking",
+   "focus": "A flier changing direction on both axes; react on whichever one moves.",
+   "why": "Three-dimensional reactive tracking: short horizontal and vertical reversals on independent clocks.",
+   "learnsFrom": [
+    "VT Aether Novice S5",
+    "Air CELESTIAL No UFO Easy"
+   ],
+   "template": "VT Aether Novice S5",
+   "arm": "Wrist"
+  },
+  {
+   "family": "Feint",
+   "category": "Reactive Tracking",
+   "focus": "Being tracked makes it turn; stay on it through the dodge.",
+   "why": "Reactive dodging: the target reverses shortly after it is hit, so the longer a player holds on, the more it tests the recovery rather than the lock.",
+   "learnsFrom": [
+    "1wall 6targets small",
+    "Close Fast Strafes Invincible"
+   ],
+   "template": "VT Ground Novice S5",
+   "arm": "Wrist"
+  },
+  {
+   "family": "Relay",
+   "category": "Speed Switching",
+   "focus": "Kill, then move straight to the next; no pause between targets.",
+   "why": "The core speed-switching loop on still targets in a compact field: the time between targets is what the score measures.",
+   "learnsFrom": [
+    "VT skyTS Novice",
+    "beanTS"
+   ],
+   "template": "VT DriftTS Novice S5",
+   "arm": "Wrist"
+  },
+  {
+   "family": "Span",
+   "category": "Speed Switching",
+   "focus": "Wide switches; land the flick, then hold.",
+   "why": "Speed switching across a wide field, where the flick between targets is most of the time spent.",
+   "learnsFrom": [
+    "voxTS Viscose Varied",
+    "VT DotTS Novice S5"
+   ],
+   "template": "VT DriftTS Novice S5",
+   "arm": "Arm"
+  },
+  {
+   "family": "Column",
+   "category": "Speed Switching",
+   "focus": "Switch up and down; stop on each one before you fire.",
+   "why": "Vertical switching, the axis the rest of the category barely uses.",
+   "learnsFrom": [
+    "VT psalmTS Novice",
+    "Pokeball 1w4ts 30%"
+   ],
+   "template": "VT DriftTS Novice S5",
+   "arm": "Wrist"
+  },
+  {
+   "family": "Cluster",
+   "category": "Speed Switching",
+   "focus": "Six small targets packed tight; short, exact moves.",
+   "why": "Precision switching: small targets and small moves, the micro side of speed switching.",
+   "learnsFrom": [
+    "Pokeball Frenzy Auto Small Wide",
+    "patCircleSwitch NR"
+   ],
+   "template": "VT DriftTS Novice S5",
+   "arm": "Fingertip"
+  },
+  {
+   "family": "Drifters",
+   "category": "Speed Switching",
+   "focus": "Slow floaters; the switch is the skill, the tracking only has to be clean.",
+   "why": "Speed switching on slow movers, the bridge to evasive switching: EddieTS, one of the most-played switching scenarios measured, at a gentler pace.",
+   "learnsFrom": [
+    "VT EddieTS Novice S5",
+    "waldoTS"
+   ],
+   "template": "VT EddieTS Novice S5",
+   "arm": "Wrist"
+  },
+  {
+   "family": "Finisher",
+   "category": "Speed Switching",
+   "focus": "Each target takes a while; stay on it to the end, then switch.",
+   "why": "Longer kills on still targets: the discipline of finishing before leaving, which short-kill scenarios never test.",
+   "learnsFrom": [
+    "VT ControlTS Novice S5",
+    "patTargetSwitch easy"
+   ],
+   "template": "VT DriftTS Novice S5",
+   "arm": "Wrist"
+  },
+  {
+   "family": "Swarm",
+   "category": "Evasive Switching",
+   "focus": "Three strafing targets; kill one without losing track of the others.",
+   "why": "The standard evasive-switching problem, targets that move while you are on them and while you are not, at the pace of DriftTS.",
+   "learnsFrom": [
+    "VT DriftTS Novice S5",
+    "domiSwitch Easy"
+   ],
+   "template": "VT DriftTS Novice S5",
+   "arm": "Wrist"
+  },
+  {
+   "family": "Skeet",
+   "category": "Evasive Switching",
+   "focus": "Targets thrown into the air; catch each one on its arc.",
+   "why": "Airborne switching. Skeet Tracking is the most-played evasive family measured (386 thousand players, 31 plays each), and its arcs are what players return for.",
+   "learnsFrom": [
+    "Skeet Tracking",
+    "B180T Voltaic Easy"
+   ],
+   "template": "VT DriftTS Novice S5",
+   "arm": "Blending"
+  },
+  {
+   "family": "Hive",
+   "category": "Evasive Switching",
+   "focus": "Fliers changing direction on every axis; pick the next one before this one dies.",
+   "why": "Three-dimensional evasive switching: FlyTS's pattern with vertical reversals on their own clock.",
+   "learnsFrom": [
+    "VT FlyTS Intermediate S5",
+    "VT EddieTS Intermediate S5"
+   ],
+   "template": "VT EddieTS Novice S5",
+   "arm": "Wrist"
+  },
+  {
+   "family": "Mender",
+   "category": "Evasive Switching",
+   "focus": "Targets heal when left alone; finish every kill you start.",
+   "why": "Regeneration makes leaving early costly: a half-killed target is back to full a second later. Regen Control and tamTargetSwitch are played for exactly this.",
+   "learnsFrom": [
+    "tamTargetSwitch Control Hard",
+    "VT ControlTS Intermediate S5"
+   ],
+   "template": "VT DriftTS Novice S5",
+   "arm": "Wrist"
+  },
+  {
+   "family": "Scatter",
+   "category": "Evasive Switching",
+   "focus": "Fast targets far apart; big switches onto moving targets.",
+   "why": "Evasive switching with speed and distance together: the largest angular demand in the category.",
+   "learnsFrom": [
+    "VT Penta Bounce Intermediate S5",
+    "patTargetSwitch"
+   ],
+   "template": "VT DriftTS Novice S5",
+   "arm": "Arm"
+  },
+  {
+   "family": "Brawl",
+   "category": "Evasive Switching",
+   "focus": "Close targets moving fast across the view; stay with them, then turn to the next.",
+   "why": "Close-range evasive switching, where modest real speeds become large angular speeds and every switch is also a tracking catch-up.",
+   "learnsFrom": [
+    "VT DriftTS Intermediate S5",
+    "Close Fast Strafes Invincible"
+   ],
+   "template": "VT DriftTS Novice S5",
+   "arm": "Arm"
+  }
+ ],
+ "scenarios": [
+  {
+   "scenario": "Apogee Meridian Novice",
+   "family": "Meridian",
+   "band": "Novice",
+   "class": "click",
+   "targetDeg": 1.6,
+   "angularSpeed": 0,
+   "fittsIdNearest": 3.268,
+   "ttk": 0,
+   "median": 1040,
+   "medianRange": [
+    853,
+    1268
+   ],
+   "rankMaxes": [
+    790,
+    951,
+    1045,
+    1115,
+    1174,
+    1231
+   ]
+  },
+  {
+   "scenario": "Apogee Meridian Intermediate",
+   "family": "Meridian",
+   "band": "Intermediate",
+   "class": "click",
+   "targetDeg": 1.392,
+   "angularSpeed": 0,
+   "fittsIdNearest": 3.449,
+   "ttk": 0,
+   "median": 1007,
+   "medianRange": [
+    826,
+    1228
+   ],
+   "rankMaxes": [
+    1138,
+    1193,
+    1218,
+    1266,
+    1305,
+    1341
+   ]
+  },
+  {
+   "scenario": "Apogee Meridian Advanced",
+   "family": "Meridian",
+   "band": "Advanced",
+   "class": "click",
+   "targetDeg": 1.211,
+   "angularSpeed": 0,
+   "fittsIdNearest": 3.633,
+   "ttk": 0,
+   "median": 974,
+   "medianRange": [
+    799,
+    1188
+   ],
+   "rankMaxes": [
+    1265,
+    1300,
+    1333,
+    1364,
+    1393,
+    1433
+   ]
+  },
+  {
+   "scenario": "Apogee Meridian Expert",
+   "family": "Meridian",
+   "band": "Expert",
+   "class": "click",
+   "targetDeg": 1.054,
+   "angularSpeed": 0,
+   "fittsIdNearest": 3.819,
+   "ttk": 0,
+   "median": 943,
+   "medianRange": [
+    773,
+    1150
+   ],
+   "rankMaxes": [
+    1350,
+    1389,
+    1413,
+    1443
+   ]
+  },
+  {
+   "scenario": "Apogee Zenith Novice",
+   "family": "Zenith",
+   "band": "Novice",
+   "class": "click",
+   "targetDeg": 1.6,
+   "angularSpeed": 0,
+   "fittsIdNearest": 2.95,
+   "ttk": 0,
+   "median": 1100,
+   "medianRange": [
+    902,
+    1342
+   ],
+   "rankMaxes": [
+    840,
+    1008,
+    1106,
+    1179,
+    1241,
+    1300
+   ]
+  },
+  {
+   "scenario": "Apogee Zenith Intermediate",
+   "family": "Zenith",
+   "band": "Intermediate",
+   "class": "click",
+   "targetDeg": 1.392,
+   "angularSpeed": 0,
+   "fittsIdNearest": 3.126,
+   "ttk": 0,
+   "median": 1066,
+   "medianRange": [
+    874,
+    1300
+   ],
+   "rankMaxes": [
+    1203,
+    1261,
+    1287,
+    1337,
+    1379,
+    1416
+   ]
+  },
+  {
+   "scenario": "Apogee Zenith Advanced",
+   "family": "Zenith",
+   "band": "Advanced",
+   "class": "click",
+   "targetDeg": 1.211,
+   "angularSpeed": 0,
+   "fittsIdNearest": 3.306,
+   "ttk": 0,
+   "median": 1033,
+   "medianRange": [
+    847,
+    1259
+   ],
+   "rankMaxes": [
+    1338,
+    1374,
+    1409,
+    1441,
+    1472,
+    1514
+   ]
+  },
+  {
+   "scenario": "Apogee Zenith Expert",
+   "family": "Zenith",
+   "band": "Expert",
+   "class": "click",
+   "targetDeg": 1.054,
+   "angularSpeed": 0,
+   "fittsIdNearest": 3.487,
+   "ttk": 0,
+   "median": 1000,
+   "medianRange": [
+    820,
+    1219
+   ],
+   "rankMaxes": [
+    1428,
+    1468,
+    1494,
+    1526
+   ]
+  },
+  {
+   "scenario": "Apogee Pinpoint Novice",
+   "family": "Pinpoint",
+   "band": "Novice",
+   "class": "click",
+   "targetDeg": 0.95,
+   "angularSpeed": 0,
+   "fittsIdNearest": 3.111,
+   "ttk": 0,
+   "median": 1069,
+   "medianRange": [
+    877,
+    1304
+   ],
+   "rankMaxes": [
+    814,
+    979,
+    1075,
+    1146,
+    1207,
+    1265
+   ]
+  },
+  {
+   "scenario": "Apogee Pinpoint Intermediate",
+   "family": "Pinpoint",
+   "band": "Intermediate",
+   "class": "click",
+   "targetDeg": 0.827,
+   "angularSpeed": 0,
+   "fittsIdNearest": 3.29,
+   "ttk": 0,
+   "median": 1036,
+   "medianRange": [
+    849,
+    1263
+   ],
+   "rankMaxes": [
+    1170,
+    1226,
+    1251,
+    1300,
+    1341,
+    1377
+   ]
+  },
+  {
+   "scenario": "Apogee Pinpoint Advanced",
+   "family": "Pinpoint",
+   "band": "Advanced",
+   "class": "click",
+   "targetDeg": 0.719,
+   "angularSpeed": 0,
+   "fittsIdNearest": 3.472,
+   "ttk": 0,
+   "median": 1003,
+   "medianRange": [
+    822,
+    1223
+   ],
+   "rankMaxes": [
+    1300,
+    1336,
+    1370,
+    1401,
+    1432,
+    1472
+   ]
+  },
+  {
+   "scenario": "Apogee Pinpoint Expert",
+   "family": "Pinpoint",
+   "band": "Expert",
+   "class": "click",
+   "targetDeg": 0.626,
+   "angularSpeed": 0,
+   "fittsIdNearest": 3.656,
+   "ttk": 0,
+   "median": 971,
+   "medianRange": [
+    796,
+    1184
+   ],
+   "rankMaxes": [
+    1388,
+    1427,
+    1453,
+    1484
+   ]
+  },
+  {
+   "scenario": "Apogee Horizon Novice",
+   "family": "Horizon",
+   "band": "Novice",
+   "class": "click",
+   "targetDeg": 2.2,
+   "angularSpeed": 0,
+   "fittsIdNearest": 3.9,
+   "ttk": 0,
+   "median": 929,
+   "medianRange": [
+    762,
+    1133
+   ],
+   "rankMaxes": [
+    698,
+    848,
+    934,
+    998,
+    1053,
+    1105
+   ]
+  },
+  {
+   "scenario": "Apogee Horizon Intermediate",
+   "family": "Horizon",
+   "band": "Intermediate",
+   "class": "click",
+   "targetDeg": 1.914,
+   "angularSpeed": 0,
+   "fittsIdNearest": 4.088,
+   "ttk": 0,
+   "median": 899,
+   "medianRange": [
+    737,
+    1096
+   ],
+   "rankMaxes": [
+    1019,
+    1069,
+    1091,
+    1136,
+    1172,
+    1204
+   ]
+  },
+  {
+   "scenario": "Apogee Horizon Advanced",
+   "family": "Horizon",
+   "band": "Advanced",
+   "class": "click",
+   "targetDeg": 1.665,
+   "angularSpeed": 0,
+   "fittsIdNearest": 4.278,
+   "ttk": 0,
+   "median": 869,
+   "medianRange": [
+    713,
+    1060
+   ],
+   "rankMaxes": [
+    1135,
+    1166,
+    1196,
+    1224,
+    1250,
+    1285
+   ]
+  },
+  {
+   "scenario": "Apogee Horizon Expert",
+   "family": "Horizon",
+   "band": "Expert",
+   "class": "click",
+   "targetDeg": 1.449,
+   "angularSpeed": 0,
+   "fittsIdNearest": 4.469,
+   "ttk": 0,
+   "median": 840,
+   "medianRange": [
+    689,
+    1024
+   ],
+   "rankMaxes": [
+    1210,
+    1245,
+    1267,
+    1294
+   ]
+  },
+  {
+   "scenario": "Apogee Constellation Novice",
+   "family": "Constellation",
+   "band": "Novice",
+   "class": "click",
+   "targetDeg": 1.9,
+   "angularSpeed": 0,
+   "fittsIdNearest": 2.657,
+   "ttk": 0,
+   "median": 1159,
+   "medianRange": [
+    950,
+    1413
+   ],
+   "rankMaxes": [
+    890,
+    1063,
+    1165,
+    1241,
+    1305,
+    1367
+   ]
+  },
+  {
+   "scenario": "Apogee Constellation Intermediate",
+   "family": "Constellation",
+   "band": "Intermediate",
+   "class": "click",
+   "targetDeg": 1.653,
+   "angularSpeed": 0,
+   "fittsIdNearest": 2.828,
+   "ttk": 0,
+   "median": 1124,
+   "medianRange": [
+    922,
+    1371
+   ],
+   "rankMaxes": [
+    1267,
+    1328,
+    1355,
+    1406,
+    1450,
+    1489
+   ]
+  },
+  {
+   "scenario": "Apogee Constellation Advanced",
+   "family": "Constellation",
+   "band": "Advanced",
+   "class": "click",
+   "targetDeg": 1.438,
+   "angularSpeed": 0,
+   "fittsIdNearest": 3.002,
+   "ttk": 0,
+   "median": 1090,
+   "medianRange": [
+    894,
+    1329
+   ],
+   "rankMaxes": [
+    1408,
+    1446,
+    1483,
+    1517,
+    1549,
+    1593
+   ]
+  },
+  {
+   "scenario": "Apogee Constellation Expert",
+   "family": "Constellation",
+   "band": "Expert",
+   "class": "click",
+   "targetDeg": 1.251,
+   "angularSpeed": 0,
+   "fittsIdNearest": 3.18,
+   "ttk": 0,
+   "median": 1056,
+   "medianRange": [
+    866,
+    1288
+   ],
+   "rankMaxes": [
+    1504,
+    1546,
+    1574,
+    1607
+   ]
+  },
+  {
+   "scenario": "Apogee Parallax Novice",
+   "family": "Parallax",
+   "band": "Novice",
+   "class": "click",
+   "targetDeg": 1.467,
+   "angularSpeed": 0,
+   "fittsIdNearest": 3.416,
+   "ttk": 0,
+   "median": 1013,
+   "medianRange": [
+    831,
+    1235
+   ],
+   "rankMaxes": [
+    767,
+    926,
+    1018,
+    1086,
+    1145,
+    1200
+   ]
+  },
+  {
+   "scenario": "Apogee Parallax Intermediate",
+   "family": "Parallax",
+   "band": "Intermediate",
+   "class": "click",
+   "targetDeg": 1.276,
+   "angularSpeed": 0,
+   "fittsIdNearest": 3.599,
+   "ttk": 0,
+   "median": 980,
+   "medianRange": [
+    804,
+    1195
+   ],
+   "rankMaxes": [
+    1109,
+    1163,
+    1187,
+    1234,
+    1273,
+    1307
+   ]
+  },
+  {
+   "scenario": "Apogee Parallax Advanced",
+   "family": "Parallax",
+   "band": "Advanced",
+   "class": "click",
+   "targetDeg": 1.11,
+   "angularSpeed": 0,
+   "fittsIdNearest": 3.785,
+   "ttk": 0,
+   "median": 949,
+   "medianRange": [
+    778,
+    1157
+   ],
+   "rankMaxes": [
+    1233,
+    1267,
+    1300,
+    1329,
+    1358,
+    1397
+   ]
+  },
+  {
+   "scenario": "Apogee Parallax Expert",
+   "family": "Parallax",
+   "band": "Expert",
+   "class": "click",
+   "targetDeg": 0.966,
+   "angularSpeed": 0,
+   "fittsIdNearest": 3.972,
+   "ttk": 0,
+   "median": 918,
+   "medianRange": [
+    752,
+    1119
+   ],
+   "rankMaxes": [
+    1316,
+    1353,
+    1377,
+    1407
+   ]
+  },
+  {
+   "scenario": "Apogee Drift Novice",
+   "family": "Drift",
+   "band": "Novice",
+   "class": "click",
+   "targetDeg": 1.9,
+   "angularSpeed": 12,
+   "fittsIdNearest": 3.24,
+   "ttk": 0,
+   "median": 612,
+   "medianRange": [
+    502,
+    746
+   ],
+   "rankMaxes": [
+    378,
+    523,
+    617,
+    686,
+    746,
+    800
+   ]
+  },
+  {
+   "scenario": "Apogee Drift Intermediate",
+   "family": "Drift",
+   "band": "Intermediate",
+   "class": "click",
+   "targetDeg": 1.653,
+   "angularSpeed": 13.2,
+   "fittsIdNearest": 3.421,
+   "ttk": 0,
+   "median": 582,
+   "medianRange": [
+    477,
+    709
+   ],
+   "rankMaxes": [
+    711,
+    764,
+    787,
+    831,
+    867,
+    898
+   ]
+  },
+  {
+   "scenario": "Apogee Drift Advanced",
+   "family": "Drift",
+   "band": "Advanced",
+   "class": "click",
+   "targetDeg": 1.438,
+   "angularSpeed": 14.5,
+   "fittsIdNearest": 3.604,
+   "ttk": 0,
+   "median": 553,
+   "medianRange": [
+    453,
+    674
+   ],
+   "rankMaxes": [
+    829,
+    859,
+    887,
+    914,
+    940,
+    974
+   ]
+  },
+  {
+   "scenario": "Apogee Drift Expert",
+   "family": "Drift",
+   "band": "Expert",
+   "class": "click",
+   "targetDeg": 1.251,
+   "angularSpeed": 16,
+   "fittsIdNearest": 3.79,
+   "ttk": 0,
+   "median": 525,
+   "medianRange": [
+    430,
+    640
+   ],
+   "rankMaxes": [
+    900,
+    932,
+    953,
+    978
+   ]
+  },
+  {
+   "scenario": "Apogee Pendulum Novice",
+   "family": "Pendulum",
+   "band": "Novice",
+   "class": "click",
+   "targetDeg": 2.2,
+   "angularSpeed": 22,
+   "fittsIdNearest": 3.493,
+   "ttk": 0,
+   "median": 519,
+   "medianRange": [
+    426,
+    633
+   ],
+   "rankMaxes": [
+    305,
+    437,
+    524,
+    589,
+    645,
+    696
+   ]
+  },
+  {
+   "scenario": "Apogee Pendulum Intermediate",
+   "family": "Pendulum",
+   "band": "Intermediate",
+   "class": "click",
+   "targetDeg": 1.914,
+   "angularSpeed": 24.2,
+   "fittsIdNearest": 3.677,
+   "ttk": 0,
+   "median": 493,
+   "medianRange": [
+    404,
+    601
+   ],
+   "rankMaxes": [
+    614,
+    664,
+    684,
+    726,
+    759,
+    788
+   ]
+  },
+  {
+   "scenario": "Apogee Pendulum Advanced",
+   "family": "Pendulum",
+   "band": "Advanced",
+   "class": "click",
+   "targetDeg": 1.665,
+   "angularSpeed": 26.6,
+   "fittsIdNearest": 3.863,
+   "ttk": 0,
+   "median": 468,
+   "medianRange": [
+    384,
+    571
+   ],
+   "rankMaxes": [
+    725,
+    753,
+    779,
+    803,
+    828,
+    859
+   ]
+  },
+  {
+   "scenario": "Apogee Pendulum Expert",
+   "family": "Pendulum",
+   "band": "Expert",
+   "class": "click",
+   "targetDeg": 1.449,
+   "angularSpeed": 29.3,
+   "fittsIdNearest": 4.051,
+   "ttk": 0,
+   "median": 444,
+   "medianRange": [
+    364,
+    541
+   ],
+   "rankMaxes": [
+    791,
+    821,
+    840,
+    863
+   ]
+  },
+  {
+   "scenario": "Apogee Hopper Novice",
+   "family": "Hopper",
+   "band": "Novice",
+   "class": "click",
+   "targetDeg": 2,
+   "angularSpeed": 17,
+   "fittsIdNearest": 2.251,
+   "ttk": 0,
+   "median": 681,
+   "medianRange": [
+    559,
+    831
+   ],
+   "rankMaxes": [
+    417,
+    580,
+    687,
+    767,
+    835,
+    898
+   ]
+  },
+  {
+   "scenario": "Apogee Hopper Intermediate",
+   "family": "Hopper",
+   "band": "Intermediate",
+   "class": "click",
+   "targetDeg": 1.74,
+   "angularSpeed": 18.7,
+   "fittsIdNearest": 2.412,
+   "ttk": 0,
+   "median": 650,
+   "medianRange": [
+    533,
+    792
+   ],
+   "rankMaxes": [
+    799,
+    860,
+    886,
+    936,
+    977,
+    1013
+   ]
+  },
+  {
+   "scenario": "Apogee Hopper Advanced",
+   "family": "Hopper",
+   "band": "Advanced",
+   "class": "click",
+   "targetDeg": 1.514,
+   "angularSpeed": 20.6,
+   "fittsIdNearest": 2.577,
+   "ttk": 0,
+   "median": 619,
+   "medianRange": [
+    508,
+    755
+   ],
+   "rankMaxes": [
+    937,
+    972,
+    1004,
+    1035,
+    1066,
+    1105
+   ]
+  },
+  {
+   "scenario": "Apogee Hopper Expert",
+   "family": "Hopper",
+   "band": "Expert",
+   "class": "click",
+   "targetDeg": 1.317,
+   "angularSpeed": 22.6,
+   "fittsIdNearest": 2.746,
+   "ttk": 0,
+   "median": 589,
+   "medianRange": [
+    483,
+    719
+   ],
+   "rankMaxes": [
+    1022,
+    1060,
+    1084,
+    1113
+   ]
+  },
+  {
+   "scenario": "Apogee Jitter Novice",
+   "family": "Jitter",
+   "band": "Novice",
+   "class": "click",
+   "targetDeg": 1.8,
+   "angularSpeed": 10,
+   "fittsIdNearest": 3.541,
+   "ttk": 0,
+   "median": 600,
+   "medianRange": [
+    492,
+    732
+   ],
+   "rankMaxes": [
+    374,
+    515,
+    605,
+    672,
+    729,
+    782
+   ]
+  },
+  {
+   "scenario": "Apogee Jitter Intermediate",
+   "family": "Jitter",
+   "band": "Intermediate",
+   "class": "click",
+   "targetDeg": 1.566,
+   "angularSpeed": 11,
+   "fittsIdNearest": 3.726,
+   "ttk": 0,
+   "median": 571,
+   "medianRange": [
+    468,
+    696
+   ],
+   "rankMaxes": [
+    695,
+    746,
+    768,
+    811,
+    845,
+    875
+   ]
+  },
+  {
+   "scenario": "Apogee Jitter Advanced",
+   "family": "Jitter",
+   "band": "Advanced",
+   "class": "click",
+   "targetDeg": 1.362,
+   "angularSpeed": 12.1,
+   "fittsIdNearest": 3.913,
+   "ttk": 0,
+   "median": 542,
+   "medianRange": [
+    444,
+    661
+   ],
+   "rankMaxes": [
+    808,
+    837,
+    864,
+    890,
+    915,
+    947
+   ]
+  },
+  {
+   "scenario": "Apogee Jitter Expert",
+   "family": "Jitter",
+   "band": "Expert",
+   "class": "click",
+   "targetDeg": 1.185,
+   "angularSpeed": 13.3,
+   "fittsIdNearest": 4.101,
+   "ttk": 0,
+   "median": 515,
+   "medianRange": [
+    422,
+    627
+   ],
+   "rankMaxes": [
+    875,
+    906,
+    926,
+    950
+   ]
+  },
+  {
+   "scenario": "Apogee Comet Novice",
+   "family": "Comet",
+   "band": "Novice",
+   "class": "click",
+   "targetDeg": 2.6,
+   "angularSpeed": 34,
+   "fittsIdNearest": 3.275,
+   "ttk": 0,
+   "median": 494,
+   "medianRange": [
+    405,
+    603
+   ],
+   "rankMaxes": [
+    282,
+    412,
+    499,
+    565,
+    621,
+    673
+   ]
+  },
+  {
+   "scenario": "Apogee Comet Intermediate",
+   "family": "Comet",
+   "band": "Intermediate",
+   "class": "click",
+   "targetDeg": 2.262,
+   "angularSpeed": 37.4,
+   "fittsIdNearest": 3.456,
+   "ttk": 0,
+   "median": 470,
+   "medianRange": [
+    385,
+    573
+   ],
+   "rankMaxes": [
+    592,
+    642,
+    662,
+    705,
+    738,
+    767
+   ]
+  },
+  {
+   "scenario": "Apogee Comet Advanced",
+   "family": "Comet",
+   "band": "Advanced",
+   "class": "click",
+   "targetDeg": 1.968,
+   "angularSpeed": 41.1,
+   "fittsIdNearest": 3.64,
+   "ttk": 0,
+   "median": 446,
+   "medianRange": [
+    366,
+    544
+   ],
+   "rankMaxes": [
+    705,
+    733,
+    759,
+    784,
+    808,
+    839
+   ]
+  },
+  {
+   "scenario": "Apogee Comet Expert",
+   "family": "Comet",
+   "band": "Expert",
+   "class": "click",
+   "targetDeg": 1.712,
+   "angularSpeed": 45.3,
+   "fittsIdNearest": 3.826,
+   "ttk": 0,
+   "median": 423,
+   "medianRange": [
+    347,
+    516
+   ],
+   "rankMaxes": [
+    773,
+    803,
+    822,
+    845
+   ]
+  },
+  {
+   "scenario": "Apogee Triplet Novice",
+   "family": "Triplet",
+   "band": "Novice",
+   "class": "click",
+   "targetDeg": 2.1,
+   "angularSpeed": 14,
+   "fittsIdNearest": 3.554,
+   "ttk": 0.2,
+   "median": 539,
+   "medianRange": [
+    442,
+    657
+   ],
+   "rankMaxes": [
+    321,
+    455,
+    544,
+    610,
+    668,
+    723
+   ]
+  },
+  {
+   "scenario": "Apogee Triplet Intermediate",
+   "family": "Triplet",
+   "band": "Intermediate",
+   "class": "click",
+   "targetDeg": 1.827,
+   "angularSpeed": 15.4,
+   "fittsIdNearest": 3.739,
+   "ttk": 0.2,
+   "median": 512,
+   "medianRange": [
+    420,
+    624
+   ],
+   "rankMaxes": [
+    637,
+    690,
+    712,
+    757,
+    794,
+    823
+   ]
+  },
+  {
+   "scenario": "Apogee Triplet Advanced",
+   "family": "Triplet",
+   "band": "Advanced",
+   "class": "click",
+   "targetDeg": 1.589,
+   "angularSpeed": 16.9,
+   "fittsIdNearest": 3.926,
+   "ttk": 0.2,
+   "median": 486,
+   "medianRange": [
+    399,
+    593
+   ],
+   "rankMaxes": [
+    758,
+    787,
+    813,
+    838,
+    862,
+    894
+   ]
+  },
+  {
+   "scenario": "Apogee Triplet Expert",
+   "family": "Triplet",
+   "band": "Expert",
+   "class": "click",
+   "targetDeg": 1.383,
+   "angularSpeed": 18.6,
+   "fittsIdNearest": 4.114,
+   "ttk": 0.2,
+   "median": 461,
+   "medianRange": [
+    378,
+    562
+   ],
+   "rankMaxes": [
+    824,
+    855,
+    875,
+    901
+   ]
+  },
+  {
+   "scenario": "Apogee Glide Novice",
+   "family": "Glide",
+   "band": "Novice",
+   "class": "track",
+   "targetDeg": 4.6,
+   "angularSpeed": 48,
+   "fittsIdNearest": null,
+   "ttk": 9999999.99,
+   "median": 3054,
+   "medianRange": [
+    2456,
+    3648
+   ],
+   "rankMaxes": [
+    2131,
+    2725,
+    3072,
+    3317,
+    3533,
+    3731
+   ]
+  },
+  {
+   "scenario": "Apogee Glide Intermediate",
+   "family": "Glide",
+   "band": "Intermediate",
+   "class": "track",
+   "targetDeg": 4.002,
+   "angularSpeed": 52.8,
+   "fittsIdNearest": null,
+   "ttk": 9999999.99,
+   "median": 2879,
+   "medianRange": [
+    2289,
+    3479
+   ],
+   "rankMaxes": [
+    3360,
+    3560,
+    3650,
+    3813,
+    3936,
+    4048
+   ]
+  },
+  {
+   "scenario": "Apogee Glide Advanced",
+   "family": "Glide",
+   "band": "Advanced",
+   "class": "track",
+   "targetDeg": 3.482,
+   "angularSpeed": 58.1,
+   "fittsIdNearest": null,
+   "ttk": 9999999.99,
+   "median": 2704,
+   "medianRange": [
+    2126,
+    3306
+   ],
+   "rankMaxes": [
+    3760,
+    3872,
+    3977,
+    4075,
+    4172,
+    4266
+   ]
+  },
+  {
+   "scenario": "Apogee Glide Expert",
+   "family": "Glide",
+   "band": "Expert",
+   "class": "track",
+   "targetDeg": 3.029,
+   "angularSpeed": 63.9,
+   "fittsIdNearest": null,
+   "ttk": 9999999.99,
+   "median": 2532,
+   "medianRange": [
+    1968,
+    3132
+   ],
+   "rankMaxes": [
+    3985,
+    4086,
+    4148,
+    4237
+   ]
+  },
+  {
+   "scenario": "Apogee Lift Novice",
+   "family": "Lift",
+   "band": "Novice",
+   "class": "track",
+   "targetDeg": 4,
+   "angularSpeed": 30,
+   "fittsIdNearest": null,
+   "ttk": 9999999.99,
+   "median": 2749,
+   "medianRange": [
+    2167,
+    3351
+   ],
+   "rankMaxes": [
+    1786,
+    2399,
+    2771,
+    3058,
+    3306,
+    3534
+   ]
+  },
+  {
+   "scenario": "Apogee Lift Intermediate",
+   "family": "Lift",
+   "band": "Intermediate",
+   "class": "track",
+   "targetDeg": 3.48,
+   "angularSpeed": 33,
+   "fittsIdNearest": null,
+   "ttk": 9999999.99,
+   "median": 2576,
+   "medianRange": [
+    2008,
+    3177
+   ],
+   "rankMaxes": [
+    3131,
+    3359,
+    3458,
+    3641,
+    3798,
+    3930
+   ]
+  },
+  {
+   "scenario": "Apogee Lift Advanced",
+   "family": "Lift",
+   "band": "Advanced",
+   "class": "track",
+   "targetDeg": 3.028,
+   "angularSpeed": 36.3,
+   "fittsIdNearest": null,
+   "ttk": 9999999.99,
+   "median": 2406,
+   "medianRange": [
+    1855,
+    3002
+   ],
+   "rankMaxes": [
+    3618,
+    3750,
+    3870,
+    3981,
+    4088,
+    4217
+   ]
+  },
+  {
+   "scenario": "Apogee Lift Expert",
+   "family": "Lift",
+   "band": "Expert",
+   "class": "track",
+   "targetDeg": 2.634,
+   "angularSpeed": 39.9,
+   "fittsIdNearest": null,
+   "ttk": 9999999.99,
+   "median": 2240,
+   "medianRange": [
+    1709,
+    2827
+   ],
+   "rankMaxes": [
+    3897,
+    4034,
+    4122,
+    4204
+   ]
+  },
+  {
+   "scenario": "Apogee Loop Novice",
+   "family": "Loop",
+   "band": "Novice",
+   "class": "track",
+   "targetDeg": 3.6,
+   "angularSpeed": 40,
+   "fittsIdNearest": null,
+   "ttk": 9999999.99,
+   "median": 2408,
+   "medianRange": [
+    1857,
+    3004
+   ],
+   "rankMaxes": [
+    1512,
+    2070,
+    2429,
+    2710,
+    2956,
+    3181
+   ]
+  },
+  {
+   "scenario": "Apogee Loop Intermediate",
+   "family": "Loop",
+   "band": "Intermediate",
+   "class": "track",
+   "targetDeg": 3.132,
+   "angularSpeed": 44,
+   "fittsIdNearest": null,
+   "ttk": 9999999.99,
+   "median": 2242,
+   "medianRange": [
+    1710,
+    2829
+   ],
+   "rankMaxes": [
+    2780,
+    3002,
+    3099,
+    3280,
+    3429,
+    3557
+   ]
+  },
+  {
+   "scenario": "Apogee Loop Advanced",
+   "family": "Loop",
+   "band": "Advanced",
+   "class": "track",
+   "targetDeg": 2.725,
+   "angularSpeed": 48.4,
+   "fittsIdNearest": null,
+   "ttk": 9999999.99,
+   "median": 2080,
+   "medianRange": [
+    1571,
+    2655
+   ],
+   "rankMaxes": [
+    3241,
+    3366,
+    3481,
+    3586,
+    3688,
+    3828
+   ]
+  },
+  {
+   "scenario": "Apogee Loop Expert",
+   "family": "Loop",
+   "band": "Expert",
+   "class": "track",
+   "targetDeg": 2.371,
+   "angularSpeed": 53.2,
+   "fittsIdNearest": null,
+   "ttk": 9999999.99,
+   "median": 1924,
+   "medianRange": [
+    1439,
+    2483
+   ],
+   "rankMaxes": [
+    3481,
+    3627,
+    3725,
+    3811
+   ]
+  },
+  {
+   "scenario": "Apogee Thread Novice",
+   "family": "Thread",
+   "band": "Novice",
+   "class": "track",
+   "targetDeg": 2.2,
+   "angularSpeed": 20,
+   "fittsIdNearest": null,
+   "ttk": 9999999.99,
+   "median": 2916,
+   "medianRange": [
+    2324,
+    3515
+   ],
+   "rankMaxes": [
+    2005,
+    2589,
+    2934,
+    3178,
+    3397,
+    3599
+   ]
+  },
+  {
+   "scenario": "Apogee Thread Intermediate",
+   "family": "Thread",
+   "band": "Intermediate",
+   "class": "track",
+   "targetDeg": 1.914,
+   "angularSpeed": 22,
+   "fittsIdNearest": null,
+   "ttk": 9999999.99,
+   "median": 2741,
+   "medianRange": [
+    2159,
+    3343
+   ],
+   "rankMaxes": [
+    3222,
+    3426,
+    3516,
+    3681,
+    3806,
+    3920
+   ]
+  },
+  {
+   "scenario": "Apogee Thread Advanced",
+   "family": "Thread",
+   "band": "Advanced",
+   "class": "track",
+   "targetDeg": 1.665,
+   "angularSpeed": 24.2,
+   "fittsIdNearest": null,
+   "ttk": 9999999.99,
+   "median": 2568,
+   "medianRange": [
+    2001,
+    3169
+   ],
+   "rankMaxes": [
+    3626,
+    3739,
+    3847,
+    3947,
+    4044,
+    4145
+   ]
+  },
+  {
+   "scenario": "Apogee Thread Expert",
+   "family": "Thread",
+   "band": "Expert",
+   "class": "track",
+   "targetDeg": 1.449,
+   "angularSpeed": 26.6,
+   "fittsIdNearest": null,
+   "ttk": 9999999.99,
+   "median": 2398,
+   "medianRange": [
+    1848,
+    2994
+   ],
+   "rankMaxes": [
+    3851,
+    3958,
+    4025,
+    4127
+   ]
+  },
+  {
+   "scenario": "Apogee Arc Novice",
+   "family": "Arc",
+   "band": "Novice",
+   "class": "track",
+   "targetDeg": 4,
+   "angularSpeed": 36,
+   "fittsIdNearest": null,
+   "ttk": 9999999.99,
+   "median": 2612,
+   "medianRange": [
+    2041,
+    3213
+   ],
+   "rankMaxes": [
+    1673,
+    2265,
+    2633,
+    2919,
+    3167,
+    3394
+   ]
+  },
+  {
+   "scenario": "Apogee Arc Intermediate",
+   "family": "Arc",
+   "band": "Intermediate",
+   "class": "track",
+   "targetDeg": 3.48,
+   "angularSpeed": 39.6,
+   "fittsIdNearest": null,
+   "ttk": 9999999.99,
+   "median": 2441,
+   "medianRange": [
+    1886,
+    3038
+   ],
+   "rankMaxes": [
+    2991,
+    3217,
+    3315,
+    3499,
+    3653,
+    3784
+   ]
+  },
+  {
+   "scenario": "Apogee Arc Advanced",
+   "family": "Arc",
+   "band": "Advanced",
+   "class": "track",
+   "targetDeg": 3.028,
+   "angularSpeed": 43.6,
+   "fittsIdNearest": null,
+   "ttk": 9999999.99,
+   "median": 2274,
+   "medianRange": [
+    1738,
+    2863
+   ],
+   "rankMaxes": [
+    3469,
+    3598,
+    3717,
+    3826,
+    3931,
+    4065
+   ]
+  },
+  {
+   "scenario": "Apogee Arc Expert",
+   "family": "Arc",
+   "band": "Expert",
+   "class": "track",
+   "targetDeg": 2.634,
+   "angularSpeed": 47.9,
+   "fittsIdNearest": null,
+   "ttk": 9999999.99,
+   "median": 2111,
+   "medianRange": [
+    1598,
+    2689
+   ],
+   "rankMaxes": [
+    3733,
+    3874,
+    3967,
+    4050
+   ]
+  },
+  {
+   "scenario": "Apogee Orbit Novice",
+   "family": "Orbit",
+   "band": "Novice",
+   "class": "track",
+   "targetDeg": 7.5,
+   "angularSpeed": 80,
+   "fittsIdNearest": null,
+   "ttk": 9999999.99,
+   "median": 3180,
+   "medianRange": [
+    2579,
+    3767
+   ],
+   "rankMaxes": [
+    2248,
+    2851,
+    3198,
+    3442,
+    3654,
+    3849
+   ]
+  },
+  {
+   "scenario": "Apogee Orbit Intermediate",
+   "family": "Orbit",
+   "band": "Intermediate",
+   "class": "track",
+   "targetDeg": 6.525,
+   "angularSpeed": 88,
+   "fittsIdNearest": null,
+   "ttk": 9999999.99,
+   "median": 3005,
+   "medianRange": [
+    2409,
+    3601
+   ],
+   "rankMaxes": [
+    3484,
+    3681,
+    3770,
+    3931,
+    4052,
+    4163
+   ]
+  },
+  {
+   "scenario": "Apogee Orbit Advanced",
+   "family": "Orbit",
+   "band": "Advanced",
+   "class": "track",
+   "targetDeg": 5.677,
+   "angularSpeed": 96.8,
+   "fittsIdNearest": null,
+   "ttk": 9999999.99,
+   "median": 2830,
+   "medianRange": [
+    2242,
+    3430
+   ],
+   "rankMaxes": [
+    3882,
+    3993,
+    4095,
+    4192,
+    4288,
+    4377
+   ]
+  },
+  {
+   "scenario": "Apogee Orbit Expert",
+   "family": "Orbit",
+   "band": "Expert",
+   "class": "track",
+   "targetDeg": 4.939,
+   "angularSpeed": 106.5,
+   "fittsIdNearest": null,
+   "ttk": 9999999.99,
+   "median": 2656,
+   "medianRange": [
+    2081,
+    3257
+   ],
+   "rankMaxes": [
+    4108,
+    4203,
+    4261,
+    4341
+   ]
+  },
+  {
+   "scenario": "Apogee Duel Novice",
+   "family": "Duel",
+   "band": "Novice",
+   "class": "track",
+   "targetDeg": 6,
+   "angularSpeed": 72,
+   "fittsIdNearest": null,
+   "ttk": 9999999.99,
+   "median": 2855,
+   "medianRange": [
+    2266,
+    3456
+   ],
+   "rankMaxes": [
+    1959,
+    2528,
+    2873,
+    3118,
+    3334,
+    3532
+   ]
+  },
+  {
+   "scenario": "Apogee Duel Intermediate",
+   "family": "Duel",
+   "band": "Intermediate",
+   "class": "track",
+   "targetDeg": 5.22,
+   "angularSpeed": 79.2,
+   "fittsIdNearest": null,
+   "ttk": 9999999.99,
+   "median": 2681,
+   "medianRange": [
+    2104,
+    3283
+   ],
+   "rankMaxes": [
+    3159,
+    3357,
+    3446,
+    3606,
+    3722,
+    3830
+   ]
+  },
+  {
+   "scenario": "Apogee Duel Advanced",
+   "family": "Duel",
+   "band": "Advanced",
+   "class": "track",
+   "targetDeg": 4.541,
+   "angularSpeed": 87.1,
+   "fittsIdNearest": null,
+   "ttk": 9999999.99,
+   "median": 2509,
+   "medianRange": [
+    1947,
+    3108
+   ],
+   "rankMaxes": [
+    3540,
+    3647,
+    3745,
+    3840,
+    3932,
+    4026
+   ]
+  },
+  {
+   "scenario": "Apogee Duel Expert",
+   "family": "Duel",
+   "band": "Expert",
+   "class": "track",
+   "targetDeg": 3.951,
+   "angularSpeed": 95.8,
+   "fittsIdNearest": null,
+   "ttk": 9999999.99,
+   "median": 2340,
+   "medianRange": [
+    1797,
+    2933
+   ],
+   "rankMaxes": [
+    3734,
+    3833,
+    3895,
+    3980
+   ]
+  },
+  {
+   "scenario": "Apogee Skirmish Novice",
+   "family": "Skirmish",
+   "band": "Novice",
+   "class": "track",
+   "targetDeg": 4.2,
+   "angularSpeed": 52,
+   "fittsIdNearest": null,
+   "ttk": 9999999.99,
+   "median": 2794,
+   "medianRange": [
+    2209,
+    3395
+   ],
+   "rankMaxes": [
+    1903,
+    2468,
+    2812,
+    3057,
+    3273,
+    3473
+   ]
+  },
+  {
+   "scenario": "Apogee Skirmish Intermediate",
+   "family": "Skirmish",
+   "band": "Intermediate",
+   "class": "track",
+   "targetDeg": 3.654,
+   "angularSpeed": 57.2,
+   "fittsIdNearest": null,
+   "ttk": 9999999.99,
+   "median": 2620,
+   "medianRange": [
+    2048,
+    3222
+   ],
+   "rankMaxes": [
+    3098,
+    3297,
+    3386,
+    3548,
+    3665,
+    3775
+   ]
+  },
+  {
+   "scenario": "Apogee Skirmish Advanced",
+   "family": "Skirmish",
+   "band": "Advanced",
+   "class": "track",
+   "targetDeg": 3.179,
+   "angularSpeed": 62.9,
+   "fittsIdNearest": null,
+   "ttk": 9999999.99,
+   "median": 2449,
+   "medianRange": [
+    1893,
+    3047
+   ],
+   "rankMaxes": [
+    3482,
+    3589,
+    3690,
+    3785,
+    3877,
+    3976
+   ]
+  },
+  {
+   "scenario": "Apogee Skirmish Expert",
+   "family": "Skirmish",
+   "band": "Expert",
+   "class": "track",
+   "targetDeg": 2.766,
+   "angularSpeed": 69.2,
+   "fittsIdNearest": null,
+   "ttk": 9999999.99,
+   "median": 2281,
+   "medianRange": [
+    1745,
+    2871
+   ],
+   "rankMaxes": [
+    3677,
+    3781,
+    3847,
+    3939
+   ]
+  },
+  {
+   "scenario": "Apogee Stutter Novice",
+   "family": "Stutter",
+   "band": "Novice",
+   "class": "track",
+   "targetDeg": 4.8,
+   "angularSpeed": 58,
+   "fittsIdNearest": null,
+   "ttk": 9999999.99,
+   "median": 2806,
+   "medianRange": [
+    2220,
+    3408
+   ],
+   "rankMaxes": [
+    1916,
+    2480,
+    2824,
+    3069,
+    3285,
+    3484
+   ]
+  },
+  {
+   "scenario": "Apogee Stutter Intermediate",
+   "family": "Stutter",
+   "band": "Intermediate",
+   "class": "track",
+   "targetDeg": 4.176,
+   "angularSpeed": 63.8,
+   "fittsIdNearest": null,
+   "ttk": 9999999.99,
+   "median": 2633,
+   "medianRange": [
+    2059,
+    3234
+   ],
+   "rankMaxes": [
+    3110,
+    3308,
+    3398,
+    3559,
+    3675,
+    3784
+   ]
+  },
+  {
+   "scenario": "Apogee Stutter Advanced",
+   "family": "Stutter",
+   "band": "Advanced",
+   "class": "track",
+   "targetDeg": 3.633,
+   "angularSpeed": 70.2,
+   "fittsIdNearest": null,
+   "ttk": 9999999.99,
+   "median": 2461,
+   "medianRange": [
+    1904,
+    3059
+   ],
+   "rankMaxes": [
+    3492,
+    3598,
+    3698,
+    3792,
+    3885,
+    3981
+   ]
+  },
+  {
+   "scenario": "Apogee Stutter Expert",
+   "family": "Stutter",
+   "band": "Expert",
+   "class": "track",
+   "targetDeg": 3.161,
+   "angularSpeed": 77.2,
+   "fittsIdNearest": null,
+   "ttk": 9999999.99,
+   "median": 2293,
+   "medianRange": [
+    1756,
+    2884
+   ],
+   "rankMaxes": [
+    3685,
+    3787,
+    3850,
+    3940
+   ]
+  },
+  {
+   "scenario": "Apogee Aerial Novice",
+   "family": "Aerial",
+   "band": "Novice",
+   "class": "track",
+   "targetDeg": 4.4,
+   "angularSpeed": 46,
+   "fittsIdNearest": null,
+   "ttk": 9999999.99,
+   "median": 2360,
+   "medianRange": [
+    1815,
+    2954
+   ],
+   "rankMaxes": [
+    1479,
+    2025,
+    2381,
+    2660,
+    2903,
+    3127
+   ]
+  },
+  {
+   "scenario": "Apogee Aerial Intermediate",
+   "family": "Aerial",
+   "band": "Intermediate",
+   "class": "track",
+   "targetDeg": 3.828,
+   "angularSpeed": 50.6,
+   "fittsIdNearest": null,
+   "ttk": 9999999.99,
+   "median": 2195,
+   "medianRange": [
+    1670,
+    2779
+   ],
+   "rankMaxes": [
+    2728,
+    2948,
+    3044,
+    3221,
+    3366,
+    3491
+   ]
+  },
+  {
+   "scenario": "Apogee Aerial Advanced",
+   "family": "Aerial",
+   "band": "Advanced",
+   "class": "track",
+   "targetDeg": 3.33,
+   "angularSpeed": 55.7,
+   "fittsIdNearest": null,
+   "ttk": 9999999.99,
+   "median": 2035,
+   "medianRange": [
+    1533,
+    2606
+   ],
+   "rankMaxes": [
+    3177,
+    3299,
+    3409,
+    3512,
+    3612,
+    3748
+   ]
+  },
+  {
+   "scenario": "Apogee Aerial Expert",
+   "family": "Aerial",
+   "band": "Expert",
+   "class": "track",
+   "targetDeg": 2.897,
+   "angularSpeed": 61.2,
+   "fittsIdNearest": null,
+   "ttk": 9999999.99,
+   "median": 1881,
+   "medianRange": [
+    1403,
+    2435
+   ],
+   "rankMaxes": [
+    3403,
+    3544,
+    3638,
+    3718
+   ]
+  },
+  {
+   "scenario": "Apogee Wasp Novice",
+   "family": "Wasp",
+   "band": "Novice",
+   "class": "track",
+   "targetDeg": 5.2,
+   "angularSpeed": 62,
+   "fittsIdNearest": null,
+   "ttk": 9999999.99,
+   "median": 2303,
+   "medianRange": [
+    1764,
+    2894
+   ],
+   "rankMaxes": [
+    1436,
+    1971,
+    2324,
+    2601,
+    2843,
+    3064
+   ]
+  },
+  {
+   "scenario": "Apogee Wasp Intermediate",
+   "family": "Wasp",
+   "band": "Intermediate",
+   "class": "track",
+   "targetDeg": 4.524,
+   "angularSpeed": 68.2,
+   "fittsIdNearest": null,
+   "ttk": 9999999.99,
+   "median": 2140,
+   "medianRange": [
+    1622,
+    2720
+   ],
+   "rankMaxes": [
+    2668,
+    2885,
+    2981,
+    3155,
+    3298,
+    3420
+   ]
+  },
+  {
+   "scenario": "Apogee Wasp Advanced",
+   "family": "Wasp",
+   "band": "Advanced",
+   "class": "track",
+   "targetDeg": 3.936,
+   "angularSpeed": 75,
+   "fittsIdNearest": null,
+   "ttk": 9999999.99,
+   "median": 1982,
+   "medianRange": [
+    1488,
+    2547
+   ],
+   "rankMaxes": [
+    3108,
+    3227,
+    3334,
+    3434,
+    3531,
+    3667
+   ]
+  },
+  {
+   "scenario": "Apogee Wasp Expert",
+   "family": "Wasp",
+   "band": "Expert",
+   "class": "track",
+   "targetDeg": 3.424,
+   "angularSpeed": 82.5,
+   "fittsIdNearest": null,
+   "ttk": 9999999.99,
+   "median": 1830,
+   "medianRange": [
+    1361,
+    2377
+   ],
+   "rankMaxes": [
+    3321,
+    3462,
+    3556,
+    3633
+   ]
+  },
+  {
+   "scenario": "Apogee Feint Novice",
+   "family": "Feint",
+   "band": "Novice",
+   "class": "track",
+   "targetDeg": 5,
+   "angularSpeed": 60,
+   "fittsIdNearest": null,
+   "ttk": 9999999.99,
+   "median": 2895,
+   "medianRange": [
+    2304,
+    3494
+   ],
+   "rankMaxes": [
+    1991,
+    2567,
+    2913,
+    3159,
+    3374,
+    3573
+   ]
+  },
+  {
+   "scenario": "Apogee Feint Intermediate",
+   "family": "Feint",
+   "band": "Intermediate",
+   "class": "track",
+   "targetDeg": 4.35,
+   "angularSpeed": 66,
+   "fittsIdNearest": null,
+   "ttk": 9999999.99,
+   "median": 2720,
+   "medianRange": [
+    2140,
+    3322
+   ],
+   "rankMaxes": [
+    3200,
+    3399,
+    3488,
+    3651,
+    3769,
+    3880
+   ]
+  },
+  {
+   "scenario": "Apogee Feint Advanced",
+   "family": "Feint",
+   "band": "Advanced",
+   "class": "track",
+   "targetDeg": 3.784,
+   "angularSpeed": 72.6,
+   "fittsIdNearest": null,
+   "ttk": 9999999.99,
+   "median": 2548,
+   "medianRange": [
+    1982,
+    3148
+   ],
+   "rankMaxes": [
+    3588,
+    3697,
+    3799,
+    3895,
+    3989,
+    4085
+   ]
+  },
+  {
+   "scenario": "Apogee Feint Expert",
+   "family": "Feint",
+   "band": "Expert",
+   "class": "track",
+   "targetDeg": 3.293,
+   "angularSpeed": 79.9,
+   "fittsIdNearest": null,
+   "ttk": 9999999.99,
+   "median": 2378,
+   "medianRange": [
+    1830,
+    2973
+   ],
+   "rankMaxes": [
+    3793,
+    3895,
+    3958,
+    4048
+   ]
+  },
+  {
+   "scenario": "Apogee Relay Novice",
+   "family": "Relay",
+   "band": "Novice",
+   "class": "switch",
+   "targetDeg": 2.4,
+   "angularSpeed": 0,
+   "fittsIdNearest": 2.655,
+   "ttk": 0.24,
+   "median": 2384,
+   "medianRange": [
+    2161,
+    2615
+   ],
+   "rankMaxes": [
+    1966,
+    2237,
+    2392,
+    2497,
+    2588,
+    2674
+   ]
+  },
+  {
+   "scenario": "Apogee Relay Intermediate",
+   "family": "Relay",
+   "band": "Intermediate",
+   "class": "switch",
+   "targetDeg": 2.088,
+   "angularSpeed": 0,
+   "fittsIdNearest": 2.826,
+   "ttk": 0.24,
+   "median": 2369,
+   "medianRange": [
+    2147,
+    2600
+   ],
+   "rankMaxes": [
+    2575,
+    2662,
+    2699,
+    2771,
+    2828,
+    2882
+   ]
+  },
+  {
+   "scenario": "Apogee Relay Advanced",
+   "family": "Relay",
+   "band": "Advanced",
+   "class": "switch",
+   "targetDeg": 1.817,
+   "angularSpeed": 0,
+   "fittsIdNearest": 3,
+   "ttk": 0.24,
+   "median": 2355,
+   "medianRange": [
+    2133,
+    2585
+   ],
+   "rankMaxes": [
+    2818,
+    2872,
+    2928,
+    2977,
+    3023,
+    3081
+   ]
+  },
+  {
+   "scenario": "Apogee Relay Expert",
+   "family": "Relay",
+   "band": "Expert",
+   "class": "switch",
+   "targetDeg": 1.58,
+   "angularSpeed": 0,
+   "fittsIdNearest": 3.178,
+   "ttk": 0.24,
+   "median": 2341,
+   "medianRange": [
+    2120,
+    2571
+   ],
+   "rankMaxes": [
+    3013,
+    3072,
+    3109,
+    3157
+   ]
+  },
+  {
+   "scenario": "Apogee Span Novice",
+   "family": "Span",
+   "band": "Novice",
+   "class": "switch",
+   "targetDeg": 2.8,
+   "angularSpeed": 0,
+   "fittsIdNearest": 3.292,
+   "ttk": 0.24,
+   "median": 2479,
+   "medianRange": [
+    2252,
+    2712
+   ],
+   "rankMaxes": [
+    2067,
+    2334,
+    2487,
+    2589,
+    2679,
+    2765
+   ]
+  },
+  {
+   "scenario": "Apogee Span Intermediate",
+   "family": "Span",
+   "band": "Intermediate",
+   "class": "switch",
+   "targetDeg": 2.436,
+   "angularSpeed": 0,
+   "fittsIdNearest": 3.474,
+   "ttk": 0.24,
+   "median": 2465,
+   "medianRange": [
+    2239,
+    2698
+   ],
+   "rankMaxes": [
+    2667,
+    2754,
+    2790,
+    2863,
+    2921,
+    2977
+   ]
+  },
+  {
+   "scenario": "Apogee Span Advanced",
+   "family": "Span",
+   "band": "Advanced",
+   "class": "switch",
+   "targetDeg": 2.119,
+   "angularSpeed": 0,
+   "fittsIdNearest": 3.658,
+   "ttk": 0.24,
+   "median": 2452,
+   "medianRange": [
+    2226,
+    2684
+   ],
+   "rankMaxes": [
+    2912,
+    2969,
+    3028,
+    3079,
+    3124,
+    3182
+   ]
+  },
+  {
+   "scenario": "Apogee Span Expert",
+   "family": "Span",
+   "band": "Expert",
+   "class": "switch",
+   "targetDeg": 1.844,
+   "angularSpeed": 0,
+   "fittsIdNearest": 3.844,
+   "ttk": 0.24,
+   "median": 2438,
+   "medianRange": [
+    2213,
+    2670
+   ],
+   "rankMaxes": [
+    3116,
+    3174,
+    3211,
+    3259
+   ]
+  },
+  {
+   "scenario": "Apogee Column Novice",
+   "family": "Column",
+   "band": "Novice",
+   "class": "switch",
+   "targetDeg": 2.4,
+   "angularSpeed": 0,
+   "fittsIdNearest": 2.605,
+   "ttk": 0.24,
+   "median": 2379,
+   "medianRange": [
+    2156,
+    2610
+   ],
+   "rankMaxes": [
+    1960,
+    2232,
+    2387,
+    2492,
+    2583,
+    2670
+   ]
+  },
+  {
+   "scenario": "Apogee Column Intermediate",
+   "family": "Column",
+   "band": "Intermediate",
+   "class": "switch",
+   "targetDeg": 2.088,
+   "angularSpeed": 0,
+   "fittsIdNearest": 2.774,
+   "ttk": 0.24,
+   "median": 2365,
+   "medianRange": [
+    2142,
+    2595
+   ],
+   "rankMaxes": [
+    2570,
+    2657,
+    2694,
+    2766,
+    2823,
+    2876
+   ]
+  },
+  {
+   "scenario": "Apogee Column Advanced",
+   "family": "Column",
+   "band": "Advanced",
+   "class": "switch",
+   "targetDeg": 1.817,
+   "angularSpeed": 0,
+   "fittsIdNearest": 2.948,
+   "ttk": 0.24,
+   "median": 2350,
+   "medianRange": [
+    2128,
+    2580
+   ],
+   "rankMaxes": [
+    2813,
+    2866,
+    2922,
+    2972,
+    3017,
+    3075
+   ]
+  },
+  {
+   "scenario": "Apogee Column Expert",
+   "family": "Column",
+   "band": "Expert",
+   "class": "switch",
+   "targetDeg": 1.58,
+   "angularSpeed": 0,
+   "fittsIdNearest": 3.124,
+   "ttk": 0.24,
+   "median": 2336,
+   "medianRange": [
+    2115,
+    2565
+   ],
+   "rankMaxes": [
+    3008,
+    3066,
+    3104,
+    3151
+   ]
+  },
+  {
+   "scenario": "Apogee Cluster Novice",
+   "family": "Cluster",
+   "band": "Novice",
+   "class": "switch",
+   "targetDeg": 1.5,
+   "angularSpeed": 0,
+   "fittsIdNearest": 1.957,
+   "ttk": 0.19,
+   "median": 2094,
+   "medianRange": [
+    1884,
+    2314
+   ],
+   "rankMaxes": [
+    1687,
+    1950,
+    2102,
+    2210,
+    2301,
+    2385
+   ]
+  },
+  {
+   "scenario": "Apogee Cluster Intermediate",
+   "family": "Cluster",
+   "band": "Intermediate",
+   "class": "switch",
+   "targetDeg": 1.305,
+   "angularSpeed": 0,
+   "fittsIdNearest": 2.108,
+   "ttk": 0.19,
+   "median": 2078,
+   "medianRange": [
+    1869,
+    2298
+   ],
+   "rankMaxes": [
+    2287,
+    2372,
+    2407,
+    2475,
+    2530,
+    2578
+   ]
+  },
+  {
+   "scenario": "Apogee Cluster Advanced",
+   "family": "Cluster",
+   "band": "Advanced",
+   "class": "switch",
+   "targetDeg": 1.135,
+   "angularSpeed": 0,
+   "fittsIdNearest": 2.265,
+   "ttk": 0.19,
+   "median": 2063,
+   "medianRange": [
+    1855,
+    2282
+   ],
+   "rankMaxes": [
+    2519,
+    2567,
+    2616,
+    2662,
+    2705,
+    2762
+   ]
+  },
+  {
+   "scenario": "Apogee Cluster Expert",
+   "family": "Cluster",
+   "band": "Expert",
+   "class": "switch",
+   "targetDeg": 0.988,
+   "angularSpeed": 0,
+   "fittsIdNearest": 2.427,
+   "ttk": 0.19,
+   "median": 2049,
+   "medianRange": [
+    1841,
+    2267
+   ],
+   "rankMaxes": [
+    2694,
+    2751,
+    2788,
+    2835
+   ]
+  },
+  {
+   "scenario": "Apogee Drifters Novice",
+   "family": "Drifters",
+   "band": "Novice",
+   "class": "switch",
+   "targetDeg": 2.6,
+   "angularSpeed": 12,
+   "fittsIdNearest": 2.562,
+   "ttk": 0.29,
+   "median": 1963,
+   "medianRange": [
+    1760,
+    2178
+   ],
+   "rankMaxes": [
+    1519,
+    1801,
+    1972,
+    2094,
+    2200,
+    2298
+   ]
+  },
+  {
+   "scenario": "Apogee Drifters Intermediate",
+   "family": "Drifters",
+   "band": "Intermediate",
+   "class": "switch",
+   "targetDeg": 2.262,
+   "angularSpeed": 13.2,
+   "fittsIdNearest": 2.731,
+   "ttk": 0.29,
+   "median": 1930,
+   "medianRange": [
+    1729,
+    2143
+   ],
+   "rankMaxes": [
+    2170,
+    2269,
+    2312,
+    2390,
+    2451,
+    2498
+   ]
+  },
+  {
+   "scenario": "Apogee Drifters Advanced",
+   "family": "Drifters",
+   "band": "Advanced",
+   "class": "switch",
+   "targetDeg": 1.968,
+   "angularSpeed": 14.5,
+   "fittsIdNearest": 2.903,
+   "ttk": 0.29,
+   "median": 1898,
+   "medianRange": [
+    1699,
+    2109
+   ],
+   "rankMaxes": [
+    2423,
+    2470,
+    2517,
+    2562,
+    2605,
+    2671
+   ]
+  },
+  {
+   "scenario": "Apogee Drifters Expert",
+   "family": "Drifters",
+   "band": "Expert",
+   "class": "switch",
+   "targetDeg": 1.712,
+   "angularSpeed": 16,
+   "fittsIdNearest": 3.079,
+   "ttk": 0.29,
+   "median": 1866,
+   "medianRange": [
+    1669,
+    2076
+   ],
+   "rankMaxes": [
+    2576,
+    2643,
+    2688,
+    2741
+   ]
+  },
+  {
+   "scenario": "Apogee Finisher Novice",
+   "family": "Finisher",
+   "band": "Novice",
+   "class": "switch",
+   "targetDeg": 2.3,
+   "angularSpeed": 0,
+   "fittsIdNearest": 2.794,
+   "ttk": 0.49,
+   "median": 2786,
+   "medianRange": [
+    2552,
+    3023
+   ],
+   "rankMaxes": [
+    2321,
+    2623,
+    2794,
+    2897,
+    2993,
+    3089
+   ]
+  },
+  {
+   "scenario": "Apogee Finisher Intermediate",
+   "family": "Finisher",
+   "band": "Intermediate",
+   "class": "switch",
+   "targetDeg": 2.001,
+   "angularSpeed": 0,
+   "fittsIdNearest": 2.968,
+   "ttk": 0.49,
+   "median": 2771,
+   "medianRange": [
+    2537,
+    3008
+   ],
+   "rankMaxes": [
+    2980,
+    3078,
+    3120,
+    3201,
+    3261,
+    3316
+   ]
+  },
+  {
+   "scenario": "Apogee Finisher Advanced",
+   "family": "Finisher",
+   "band": "Advanced",
+   "class": "switch",
+   "targetDeg": 1.741,
+   "angularSpeed": 0,
+   "fittsIdNearest": 3.145,
+   "ttk": 0.49,
+   "median": 2757,
+   "medianRange": [
+    2523,
+    2993
+   ],
+   "rankMaxes": [
+    3251,
+    3307,
+    3368,
+    3420,
+    3467,
+    3529
+   ]
+  },
+  {
+   "scenario": "Apogee Finisher Expert",
+   "family": "Finisher",
+   "band": "Expert",
+   "class": "switch",
+   "targetDeg": 1.515,
+   "angularSpeed": 0,
+   "fittsIdNearest": 3.324,
+   "ttk": 0.49,
+   "median": 2742,
+   "medianRange": [
+    2509,
+    2979
+   ],
+   "rankMaxes": [
+    3458,
+    3521,
+    3562,
+    3607
+   ]
+  },
+  {
+   "scenario": "Apogee Swarm Novice",
+   "family": "Swarm",
+   "band": "Novice",
+   "class": "switch",
+   "targetDeg": 2.9,
+   "angularSpeed": 28,
+   "fittsIdNearest": 2.607,
+   "ttk": 0.44,
+   "median": 2027,
+   "medianRange": [
+    1820,
+    2244
+   ],
+   "rankMaxes": [
+    1546,
+    1850,
+    2036,
+    2165,
+    2280,
+    2389
+   ]
+  },
+  {
+   "scenario": "Apogee Swarm Intermediate",
+   "family": "Swarm",
+   "band": "Intermediate",
+   "class": "switch",
+   "targetDeg": 2.523,
+   "angularSpeed": 30.8,
+   "fittsIdNearest": 2.777,
+   "ttk": 0.44,
+   "median": 1994,
+   "medianRange": [
+    1789,
+    2209
+   ],
+   "rankMaxes": [
+    2249,
+    2359,
+    2408,
+    2494,
+    2559,
+    2606
+   ]
+  },
+  {
+   "scenario": "Apogee Swarm Advanced",
+   "family": "Swarm",
+   "band": "Advanced",
+   "class": "switch",
+   "targetDeg": 2.195,
+   "angularSpeed": 33.9,
+   "fittsIdNearest": 2.95,
+   "ttk": 0.44,
+   "median": 1961,
+   "medianRange": [
+    1758,
+    2175
+   ],
+   "rankMaxes": [
+    2531,
+    2578,
+    2626,
+    2672,
+    2716,
+    2789
+   ]
+  },
+  {
+   "scenario": "Apogee Swarm Expert",
+   "family": "Swarm",
+   "band": "Expert",
+   "class": "switch",
+   "targetDeg": 1.91,
+   "angularSpeed": 37.3,
+   "fittsIdNearest": 3.127,
+   "ttk": 0.44,
+   "median": 1929,
+   "medianRange": [
+    1728,
+    2141
+   ],
+   "rankMaxes": [
+    2688,
+    2761,
+    2811,
+    2865
+   ]
+  },
+  {
+   "scenario": "Apogee Skeet Novice",
+   "family": "Skeet",
+   "band": "Novice",
+   "class": "switch",
+   "targetDeg": 2.9,
+   "angularSpeed": 24,
+   "fittsIdNearest": 2.607,
+   "ttk": 0.39,
+   "median": 1997,
+   "medianRange": [
+    1792,
+    2213
+   ],
+   "rankMaxes": [
+    1527,
+    1824,
+    2007,
+    2134,
+    2247,
+    2352
+   ]
+  },
+  {
+   "scenario": "Apogee Skeet Intermediate",
+   "family": "Skeet",
+   "band": "Intermediate",
+   "class": "switch",
+   "targetDeg": 2.523,
+   "angularSpeed": 26.4,
+   "fittsIdNearest": 2.777,
+   "ttk": 0.39,
+   "median": 1964,
+   "medianRange": [
+    1761,
+    2179
+   ],
+   "rankMaxes": [
+    2216,
+    2322,
+    2369,
+    2454,
+    2518,
+    2565
+   ]
+  },
+  {
+   "scenario": "Apogee Skeet Advanced",
+   "family": "Skeet",
+   "band": "Advanced",
+   "class": "switch",
+   "targetDeg": 2.195,
+   "angularSpeed": 29,
+   "fittsIdNearest": 2.95,
+   "ttk": 0.39,
+   "median": 1932,
+   "medianRange": [
+    1731,
+    2144
+   ],
+   "rankMaxes": [
+    2489,
+    2537,
+    2584,
+    2629,
+    2673,
+    2744
+   ]
+  },
+  {
+   "scenario": "Apogee Skeet Expert",
+   "family": "Skeet",
+   "band": "Expert",
+   "class": "switch",
+   "targetDeg": 1.91,
+   "angularSpeed": 31.9,
+   "fittsIdNearest": 3.127,
+   "ttk": 0.39,
+   "median": 1900,
+   "medianRange": [
+    1701,
+    2111
+   ],
+   "rankMaxes": [
+    2645,
+    2717,
+    2765,
+    2819
+   ]
+  },
+  {
+   "scenario": "Apogee Hive Novice",
+   "family": "Hive",
+   "band": "Novice",
+   "class": "switch",
+   "targetDeg": 2.7,
+   "angularSpeed": 22,
+   "fittsIdNearest": 2.517,
+   "ttk": 0.39,
+   "median": 1993,
+   "medianRange": [
+    1788,
+    2208
+   ],
+   "rankMaxes": [
+    1523,
+    1820,
+    2002,
+    2129,
+    2242,
+    2347
+   ]
+  },
+  {
+   "scenario": "Apogee Hive Intermediate",
+   "family": "Hive",
+   "band": "Intermediate",
+   "class": "switch",
+   "targetDeg": 2.349,
+   "angularSpeed": 24.2,
+   "fittsIdNearest": 2.685,
+   "ttk": 0.39,
+   "median": 1959,
+   "medianRange": [
+    1757,
+    2173
+   ],
+   "rankMaxes": [
+    2211,
+    2317,
+    2364,
+    2448,
+    2512,
+    2559
+   ]
+  },
+  {
+   "scenario": "Apogee Hive Advanced",
+   "family": "Hive",
+   "band": "Advanced",
+   "class": "switch",
+   "targetDeg": 2.044,
+   "angularSpeed": 26.6,
+   "fittsIdNearest": 2.856,
+   "ttk": 0.39,
+   "median": 1927,
+   "medianRange": [
+    1726,
+    2139
+   ],
+   "rankMaxes": [
+    2483,
+    2530,
+    2577,
+    2623,
+    2666,
+    2737
+   ]
+  },
+  {
+   "scenario": "Apogee Hive Expert",
+   "family": "Hive",
+   "band": "Expert",
+   "class": "switch",
+   "targetDeg": 1.778,
+   "angularSpeed": 29.3,
+   "fittsIdNearest": 3.031,
+   "ttk": 0.39,
+   "median": 1895,
+   "medianRange": [
+    1696,
+    2106
+   ],
+   "rankMaxes": [
+    2638,
+    2709,
+    2758,
+    2811
+   ]
+  },
+  {
+   "scenario": "Apogee Mender Novice",
+   "family": "Mender",
+   "band": "Novice",
+   "class": "switch",
+   "targetDeg": 2.8,
+   "angularSpeed": 22,
+   "fittsIdNearest": 2.65,
+   "ttk": 0.54,
+   "median": 2180,
+   "medianRange": [
+    1966,
+    2404
+   ],
+   "rankMaxes": [
+    1679,
+    1996,
+    2190,
+    2319,
+    2436,
+    2548
+   ]
+  },
+  {
+   "scenario": "Apogee Mender Intermediate",
+   "family": "Mender",
+   "band": "Intermediate",
+   "class": "switch",
+   "targetDeg": 2.436,
+   "angularSpeed": 24.2,
+   "fittsIdNearest": 2.82,
+   "ttk": 0.54,
+   "median": 2146,
+   "medianRange": [
+    1933,
+    2368
+   ],
+   "rankMaxes": [
+    2404,
+    2517,
+    2568,
+    2658,
+    2724,
+    2773
+   ]
+  },
+  {
+   "scenario": "Apogee Mender Advanced",
+   "family": "Mender",
+   "band": "Advanced",
+   "class": "switch",
+   "targetDeg": 2.119,
+   "angularSpeed": 26.6,
+   "fittsIdNearest": 2.995,
+   "ttk": 0.54,
+   "median": 2112,
+   "medianRange": [
+    1901,
+    2333
+   ],
+   "rankMaxes": [
+    2695,
+    2744,
+    2795,
+    2843,
+    2889,
+    2963
+   ]
+  },
+  {
+   "scenario": "Apogee Mender Expert",
+   "family": "Mender",
+   "band": "Expert",
+   "class": "switch",
+   "targetDeg": 1.844,
+   "angularSpeed": 29.3,
+   "fittsIdNearest": 3.172,
+   "ttk": 0.54,
+   "median": 2079,
+   "medianRange": [
+    1869,
+    2298
+   ],
+   "rankMaxes": [
+    2860,
+    2935,
+    2986,
+    3039
+   ]
+  },
+  {
+   "scenario": "Apogee Scatter Novice",
+   "family": "Scatter",
+   "band": "Novice",
+   "class": "switch",
+   "targetDeg": 3.2,
+   "angularSpeed": 40,
+   "fittsIdNearest": 2.49,
+   "ttk": 0.39,
+   "median": 1904,
+   "medianRange": [
+    1704,
+    2115
+   ],
+   "rankMaxes": [
+    1437,
+    1731,
+    1913,
+    2042,
+    2156,
+    2262
+   ]
+  },
+  {
+   "scenario": "Apogee Scatter Intermediate",
+   "family": "Scatter",
+   "band": "Intermediate",
+   "class": "switch",
+   "targetDeg": 2.784,
+   "angularSpeed": 44,
+   "fittsIdNearest": 2.657,
+   "ttk": 0.39,
+   "median": 1871,
+   "medianRange": [
+    1674,
+    2081
+   ],
+   "rankMaxes": [
+    2126,
+    2233,
+    2280,
+    2365,
+    2428,
+    2474
+   ]
+  },
+  {
+   "scenario": "Apogee Scatter Advanced",
+   "family": "Scatter",
+   "band": "Advanced",
+   "class": "switch",
+   "targetDeg": 2.422,
+   "angularSpeed": 48.4,
+   "fittsIdNearest": 2.828,
+   "ttk": 0.39,
+   "median": 1839,
+   "medianRange": [
+    1644,
+    2047
+   ],
+   "rankMaxes": [
+    2400,
+    2446,
+    2491,
+    2535,
+    2578,
+    2650
+   ]
+  },
+  {
+   "scenario": "Apogee Scatter Expert",
+   "family": "Scatter",
+   "band": "Expert",
+   "class": "switch",
+   "targetDeg": 2.107,
+   "angularSpeed": 53.2,
+   "fittsIdNearest": 3.002,
+   "ttk": 0.39,
+   "median": 1808,
+   "medianRange": [
+    1615,
+    2014
+   ],
+   "rankMaxes": [
+    2550,
+    2622,
+    2671,
+    2725
+   ]
+  },
+  {
+   "scenario": "Apogee Brawl Novice",
+   "family": "Brawl",
+   "band": "Novice",
+   "class": "switch",
+   "targetDeg": 5,
+   "angularSpeed": 55,
+   "fittsIdNearest": 1.983,
+   "ttk": 0.44,
+   "median": 1946,
+   "medianRange": [
+    1744,
+    2159
+   ],
+   "rankMaxes": [
+    1467,
+    1769,
+    1955,
+    2085,
+    2199,
+    2307
+   ]
+  },
+  {
+   "scenario": "Apogee Brawl Intermediate",
+   "family": "Brawl",
+   "band": "Intermediate",
+   "class": "switch",
+   "targetDeg": 4.35,
+   "angularSpeed": 60.5,
+   "fittsIdNearest": 2.136,
+   "ttk": 0.44,
+   "median": 1911,
+   "medianRange": [
+    1712,
+    2123
+   ],
+   "rankMaxes": [
+    2167,
+    2276,
+    2325,
+    2410,
+    2473,
+    2518
+   ]
+  },
+  {
+   "scenario": "Apogee Brawl Advanced",
+   "family": "Brawl",
+   "band": "Advanced",
+   "class": "switch",
+   "targetDeg": 3.784,
+   "angularSpeed": 66.5,
+   "fittsIdNearest": 2.294,
+   "ttk": 0.44,
+   "median": 1878,
+   "medianRange": [
+    1680,
+    2088
+   ],
+   "rankMaxes": [
+    2444,
+    2488,
+    2533,
+    2577,
+    2620,
+    2693
+   ]
+  },
+  {
+   "scenario": "Apogee Brawl Expert",
+   "family": "Brawl",
+   "band": "Expert",
+   "class": "switch",
+   "targetDeg": 3.293,
+   "angularSpeed": 73.2,
+   "fittsIdNearest": 2.456,
+   "ttk": 0.44,
+   "median": 1846,
+   "medianRange": [
+    1650,
+    2054
+   ],
+   "rankMaxes": [
+    2591,
+    2664,
+    2714,
+    2767
+   ]
+  }
+ ]
+}
