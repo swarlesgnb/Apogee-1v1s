@@ -92,7 +92,10 @@
     "validate:theory": "tsx tools/validateBenchmarkTheory.ts",
     "build:cosmic": "node tools/buildCosmic.mjs",
     "audit:fun": "tsx tools/funAudit.ts",
-    "validate:rebuild": "tsx tools/validateFunRebuild.ts"
+    "validate:rebuild": "tsx tools/validateFunRebuild.ts",
+    "science:scenarios": "tsx tools/scenarioScience.ts",
+    "build:season-2": "tsx tools/buildSeason2.ts",
+    "fit:difficulty": "tsx tools/fitDifficulty.ts"
   },
   "devDependencies": {
     "@electric-sql/pglite": "^0.5.5",

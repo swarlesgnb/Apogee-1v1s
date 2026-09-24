@@ -4,13 +4,14 @@
  * Every family is one idea about what to train, stated in the units a player feels - how
  * big a target looks, how fast it crosses the view, how long before it turns, how long it
  * takes to kill - and converted to engine units only at the end. The reasons behind each
- * number are in docs/season-2-research.md; the short version, all measured:
+ * number are in docs/season-2-research.md; the short version, all measured and all
+ * re-derived by tools/scenarioScience.ts into data/season-2/science.json:
  *
  *   - Sixty seconds everywhere. Run-to-run noise falls with length (Spearman -0.36 across
- *     294 scenarios in the local stats folder), and a ranked match is decided on the change
+ *     296 scenarios in the local stats folder), and a ranked match is decided on the change
  *     from a baseline, so noise is unfairness.
- *   - No accuracy multiplier. Median noise 6.0% with one, 4.8% without, and scenarios with
- *     one reach fewer players and are replayed less.
+ *   - No accuracy multiplier. Median noise 5.8% with one, 4.8% without, and scenarios with
+ *     one reach fewer players and are replayed less (Spearman -0.16 and -0.11).
  *   - Static targets sit on arcs at one distance. On a flat wall a target at 40 degrees is
  *     further away, so smaller, than one straight ahead, and which one spawns becomes luck.
  *   - Band steps follow the progression Voltaic S5 uses across its own families: about
@@ -492,7 +493,7 @@ export const FAMILIES: Family[] = [
     {
       name: "Zenith", category: "Static Clicking", subCategory: "Static Clicking", template: "staticClick", arm: "Wrist",
       focus: "Flick up and down; the sideways movement is only ever a correction.",
-      why: "Vertical flicks isolated. Almost every popular static scenario is wider than it is tall, so vertical stopping is the least-practised flick in the pool it replaces.",
+      why: "Vertical flicks isolated. Of the 58 static clicking scenarios measured with 10,000 or more players, 51 spawn targets over a field wider than it is tall (data/season-2/science.json), so vertical stopping gets the least practice.",
       learnsFrom: ["cA y-axis flick", "1wall6targets TE"],
     },
     (f) => staticClick(f, { alive: 3, deg: 1.6, yaws: [-1.5, 0, 1.5], pitches: ring(4, 22, 6) }, "Three targets on one vertical band. One click each."),
@@ -501,7 +502,7 @@ export const FAMILIES: Family[] = [
     {
       name: "Pinpoint", category: "Static Clicking", subCategory: "Static Clicking", template: "staticClick", arm: "Fingertip",
       focus: "Small moves, smaller targets; settle the crosshair before you click.",
-      why: "Micro-correction at close spacing, the skill behind 1w2ts and Raw Mouse Control, two of the most-replayed static scenarios measured (51.6 plays per player for Raw Mouse Control 3).",
+      why: "Micro-correction at close spacing, the skill behind 1w2ts and Raw Mouse Control; RawMouseControlClicking3 is replayed 51.6 times per player (data/fun_audit.json).",
       learnsFrom: ["1w2ts Perfected", "RawMouseControlClicking3"],
     },
     (f) => staticClick(f, { alive: 2, deg: 0.95, yaws: span(-7, 7, 8), pitches: span(-4.5, 4.5, 6) }, "Two small targets close together. One click each."),
@@ -519,7 +520,7 @@ export const FAMILIES: Family[] = [
     {
       name: "Constellation", category: "Static Clicking", subCategory: "Static Clicking", template: "staticClick", arm: "Wrist",
       focus: "Five targets up at once; keep a rhythm and take the nearest one next.",
-      why: "The tempo of 1wall 6targets small and Tile Frenzy, the two most-played static scenarios measured (1.29 million and 0.74 million players), on a field where every target is the same distance away.",
+      why: "The tempo of 1wall 6targets small and Tile Frenzy (1.29 million and 0.74 million players, data/fun_audit.json), on a field where every target is the same distance away.",
       learnsFrom: ["1wall 6targets small", "Tile Frenzy", "1wall6targets TE"],
     },
     (f) => staticClick(f, { alive: 5, deg: 1.9, yaws: span(-20, 20, 9), pitches: span(-12, 12, 7) }, "Five targets alive at once in a medium field. One click each."),
@@ -539,7 +540,7 @@ export const FAMILIES: Family[] = [
     {
       name: "Drift", category: "Dynamic Clicking", subCategory: "Dynamic Clicking", template: "movingClick", arm: "Wrist",
       focus: "Slow floaters; match their drift for a moment, then click.",
-      why: "The entry to moving targets: slow, long-lived paths that reward confirming the shot rather than guessing it. Floating Heads Timing is the most-played dynamic clicking family measured.",
+      why: "The entry to moving targets: slow, long-lived paths that reward confirming the shot rather than guessing it. Floating Heads Timing 400% has the most players of any dynamic-clicking scenario in data/fun_audit.json (352,281).",
       learnsFrom: ["Floating Heads Timing 400%", "VT Floating Heads Novice S5"],
     },
     (f) => movingClick(f, { alive: 5, deg: 1.9, speed: 12, strafe: [4, 8] }, "Five targets floating slowly. One click each."),
@@ -557,7 +558,7 @@ export const FAMILIES: Family[] = [
     {
       name: "Hopper", category: "Dynamic Clicking", subCategory: "Dynamic Clicking", template: "bounceClick", arm: "Wrist",
       focus: "Read the arc; the top of the bounce is the slowest moment.",
-      why: "Gravity arcs. Bouncing targets were the one design feature measured with more replay and more reach (Spearman +0.12 and +0.15 for bots under gravity).",
+      why: "Gravity arcs. A bot under gravity is the one design feature that goes with both more replay and more reach (Spearman +0.10 and +0.13 over 614 catalogued scenarios): small, but the only positive signal on both.",
       learnsFrom: ["VT Popcorn Novice S5", "VT Bounceshot Intermediate"],
     },
     (f) => bounceClick(f, { alive: 5, deg: 2.0, speed: 17, gravity: 1.0 }, "Five targets bouncing around the room. One click each."),
@@ -575,7 +576,7 @@ export const FAMILIES: Family[] = [
     {
       name: "Comet", category: "Dynamic Clicking", subCategory: "Dynamic Clicking", template: "movingClick", arm: "Arm",
       focus: "Fast crossers; move with the target and click inside the motion.",
-      why: "High-speed dynamic clicks. Speed is the other axis of difficulty besides size, and in the fitted model it costs about as much time per kill as a third of a bit of Fitts difficulty per doubling.",
+      why: "High-speed dynamic clicks. Speed is the other axis of difficulty besides size: at the board median the fitted model prices a doubling of angular speed, 20 to 40 degrees a second, at about 0.8 bits of Fitts difficulty.",
       learnsFrom: ["VT Pasu Intermediate S5", "Aimerz+ pipeClick Easy S1"],
     },
     (f) => movingClick(f, { alive: 3, deg: 2.6, speed: 34, strafe: [2, 3], upDown: [2, 3] }, "Three fast targets crossing the view. One click each."),
@@ -651,7 +652,7 @@ export const FAMILIES: Family[] = [
     {
       name: "Duel", category: "Reactive Tracking", subCategory: "Reactive Tracking", template: "groundTrack", arm: "Arm",
       focus: "Close, snappy strafes; react to the turn, do not predict it.",
-      why: "The close-range strafe duel of Close Fast Strafes, which players replay more than any other reactive family on the ground (22.4 plays per player).",
+      why: "The close-range strafe duel of Close Fast Strafes (117,749 players, 22.4 plays each, data/fun_audit.json).",
       learnsFrom: ["Close Fast Strafes Invincible", "VT Ground Novice S5"],
     },
     (f) => track(f, { deg: 6.0, speed: 72, strafe: [0.35, 0.8], range: 1000, rampSeconds: 0.08 }, "One target close by, strafing sharply.", "Reactive"),
@@ -669,7 +670,7 @@ export const FAMILIES: Family[] = [
     {
       name: "Stutter", category: "Reactive Tracking", subCategory: "Reactive Tracking", template: "groundTrack", arm: "Wrist",
       focus: "It stops before it turns; stop with it.",
-      why: "Stop-start movement: a pause before each reversal punishes the player who keeps moving on momentum, the most common reactive-tracking fault.",
+      why: "Stop-start movement: a pause before each reversal punishes the player who keeps moving on momentum, a common reactive-tracking fault.",
       learnsFrom: ["Flicker Plaza rAim Easy Less Blinks", "Leapstrafes Control wobin Easier"],
     },
     (f) => track(f, { deg: 4.8, speed: 58, strafe: [0.4, 0.9], pause: [0.1, 0.35], range: 1150, rampSeconds: 0.08 }, "One target that pauses before each change of direction.", "Reactive"),
@@ -678,7 +679,7 @@ export const FAMILIES: Family[] = [
     {
       name: "Aerial", category: "Reactive Tracking", subCategory: "Reactive Tracking", template: "groundTrack", arm: "Blending",
       focus: "Jumps and short strafes together; follow it up as well as across.",
-      why: "Reactive tracking through the air, the pattern of Air Angelic, the most benchmarked reactive family measured (nine benchmarks).",
+      why: "Reactive tracking through the air, the pattern of Air Angelic 4, which nine of evxl's listed benchmarks use.",
       learnsFrom: ["Air Angelic 4 Voltaic", "Air Pure Intermediate"],
     },
     (f) => track(f, { deg: 4.4, speed: 46, strafe: [0.45, 1.0], range: 1300, rampSeconds: 0.1, jump: { frequency: 0.7, velocity: 650, gravity: 1.0 } }, "One target jumping and strafing.", "Reactive"),
@@ -743,7 +744,7 @@ export const FAMILIES: Family[] = [
     {
       name: "Drifters", category: "Speed Switching", subCategory: "Speed Switching", template: "airSwitch", arm: "Wrist",
       focus: "Slow floaters; the switch is the skill, the tracking only has to be clean.",
-      why: "Speed switching on slow movers, the bridge to evasive switching: EddieTS, one of the most-played switching scenarios measured, at a gentler pace.",
+      why: "Speed switching on slow movers, the bridge to evasive switching: EddieTS (185,895 players on its Novice cut) at a gentler pace.",
       learnsFrom: ["VT EddieTS Novice S5", "waldoTS"],
     },
     (f) => switching(f, { alive: 4, deg: 2.6, ttk: 0.3, speed: 12, strafe: [2.5, 3.8], upDown: [1.2, 1.8], range: 2500 }, "Four slow floating targets. Hold fire to kill.", "Speed"),
@@ -772,7 +773,7 @@ export const FAMILIES: Family[] = [
     {
       name: "Skeet", category: "Evasive Switching", subCategory: "Evasive Switching", template: "groundSwitch", arm: "Blending",
       focus: "Targets thrown into the air; catch each one on its arc.",
-      why: "Airborne switching. Skeet Tracking is the most-played evasive family measured (386 thousand players, 31 plays each), and its arcs are what players return for.",
+      why: "Airborne switching. Skeet Tracking has the most players of any evasive-switching scenario in data/fun_audit.json (385,771, 31.3 plays each).",
       learnsFrom: ["Skeet Tracking", "B180T Voltaic Easy"],
     },
     (f) => switching(f, { alive: 3, deg: 2.9, ttk: 0.4, speed: 24, strafe: [1.2, 2.0], range: 1900, jump: { frequency: 1.0, velocity: 900, gravity: 0.8 } }, "Three targets jumping in arcs. Hold fire to kill.", "Evasive"),

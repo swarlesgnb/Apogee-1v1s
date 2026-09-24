@@ -17,7 +17,7 @@
    "family": "Zenith",
    "category": "Static Clicking",
    "focus": "Flick up and down; the sideways movement is only ever a correction.",
-   "why": "Vertical flicks isolated. Almost every popular static scenario is wider than it is tall, so vertical stopping is the least-practised flick in the pool it replaces.",
+   "why": "Vertical flicks isolated. Of the 58 static clicking scenarios measured with 10,000 or more players, 51 spawn targets over a field wider than it is tall (data/season-2/science.json), so vertical stopping gets the least practice.",
    "learnsFrom": [
     "cA y-axis flick",
     "1wall6targets TE"
@@ -29,7 +29,7 @@
    "family": "Pinpoint",
    "category": "Static Clicking",
    "focus": "Small moves, smaller targets; settle the crosshair before you click.",
-   "why": "Micro-correction at close spacing, the skill behind 1w2ts and Raw Mouse Control, two of the most-replayed static scenarios measured (51.6 plays per player for Raw Mouse Control 3).",
+   "why": "Micro-correction at close spacing, the skill behind 1w2ts and Raw Mouse Control; RawMouseControlClicking3 is replayed 51.6 times per player (data/fun_audit.json).",
    "learnsFrom": [
     "1w2ts Perfected",
     "RawMouseControlClicking3"
@@ -53,7 +53,7 @@
    "family": "Constellation",
    "category": "Static Clicking",
    "focus": "Five targets up at once; keep a rhythm and take the nearest one next.",
-   "why": "The tempo of 1wall 6targets small and Tile Frenzy, the two most-played static scenarios measured (1.29 million and 0.74 million players), on a field where every target is the same distance away.",
+   "why": "The tempo of 1wall 6targets small and Tile Frenzy (1.29 million and 0.74 million players, data/fun_audit.json), on a field where every target is the same distance away.",
    "learnsFrom": [
     "1wall 6targets small",
     "Tile Frenzy",
@@ -78,7 +78,7 @@
    "family": "Drift",
    "category": "Dynamic Clicking",
    "focus": "Slow floaters; match their drift for a moment, then click.",
-   "why": "The entry to moving targets: slow, long-lived paths that reward confirming the shot rather than guessing it. Floating Heads Timing is the most-played dynamic clicking family measured.",
+   "why": "The entry to moving targets: slow, long-lived paths that reward confirming the shot rather than guessing it. Floating Heads Timing 400% has the most players of any dynamic-clicking scenario in data/fun_audit.json (352,281).",
    "learnsFrom": [
     "Floating Heads Timing 400%",
     "VT Floating Heads Novice S5"
@@ -102,7 +102,7 @@
    "family": "Hopper",
    "category": "Dynamic Clicking",
    "focus": "Read the arc; the top of the bounce is the slowest moment.",
-   "why": "Gravity arcs. Bouncing targets were the one design feature measured with more replay and more reach (Spearman +0.12 and +0.15 for bots under gravity).",
+   "why": "Gravity arcs. A bot under gravity is the one design feature that goes with both more replay and more reach (Spearman +0.10 and +0.13 over 614 catalogued scenarios): small, but the only positive signal on both.",
    "learnsFrom": [
     "VT Popcorn Novice S5",
     "VT Bounceshot Intermediate"
@@ -126,7 +126,7 @@
    "family": "Comet",
    "category": "Dynamic Clicking",
    "focus": "Fast crossers; move with the target and click inside the motion.",
-   "why": "High-speed dynamic clicks. Speed is the other axis of difficulty besides size, and in the fitted model it costs about as much time per kill as a third of a bit of Fitts difficulty per doubling.",
+   "why": "High-speed dynamic clicks. Speed is the other axis of difficulty besides size: at the board median the fitted model prices a doubling of angular speed, 20 to 40 degrees a second, at about 0.8 bits of Fitts difficulty.",
    "learnsFrom": [
     "VT Pasu Intermediate S5",
     "Aimerz+ pipeClick Easy S1"
@@ -222,7 +222,7 @@
    "family": "Duel",
    "category": "Reactive Tracking",
    "focus": "Close, snappy strafes; react to the turn, do not predict it.",
-   "why": "The close-range strafe duel of Close Fast Strafes, which players replay more than any other reactive family on the ground (22.4 plays per player).",
+   "why": "The close-range strafe duel of Close Fast Strafes (117,749 players, 22.4 plays each, data/fun_audit.json).",
    "learnsFrom": [
     "Close Fast Strafes Invincible",
     "VT Ground Novice S5"
@@ -246,7 +246,7 @@
    "family": "Stutter",
    "category": "Reactive Tracking",
    "focus": "It stops before it turns; stop with it.",
-   "why": "Stop-start movement: a pause before each reversal punishes the player who keeps moving on momentum, the most common reactive-tracking fault.",
+   "why": "Stop-start movement: a pause before each reversal punishes the player who keeps moving on momentum, a common reactive-tracking fault.",
    "learnsFrom": [
     "Flicker Plaza rAim Easy Less Blinks",
     "Leapstrafes Control wobin Easier"
@@ -258,7 +258,7 @@
    "family": "Aerial",
    "category": "Reactive Tracking",
    "focus": "Jumps and short strafes together; follow it up as well as across.",
-   "why": "Reactive tracking through the air, the pattern of Air Angelic, the most benchmarked reactive family measured (nine benchmarks).",
+   "why": "Reactive tracking through the air, the pattern of Air Angelic 4, which nine of evxl's listed benchmarks use.",
    "learnsFrom": [
     "Air Angelic 4 Voltaic",
     "Air Pure Intermediate"
@@ -342,7 +342,7 @@
    "family": "Drifters",
    "category": "Speed Switching",
    "focus": "Slow floaters; the switch is the skill, the tracking only has to be clean.",
-   "why": "Speed switching on slow movers, the bridge to evasive switching: EddieTS, one of the most-played switching scenarios measured, at a gentler pace.",
+   "why": "Speed switching on slow movers, the bridge to evasive switching: EddieTS (185,895 players on its Novice cut) at a gentler pace.",
    "learnsFrom": [
     "VT EddieTS Novice S5",
     "waldoTS"
@@ -378,7 +378,7 @@
    "family": "Skeet",
    "category": "Evasive Switching",
    "focus": "Targets thrown into the air; catch each one on its arc.",
-   "why": "Airborne switching. Skeet Tracking is the most-played evasive family measured (386 thousand players, 31 plays each), and its arcs are what players return for.",
+   "why": "Airborne switching. Skeet Tracking has the most players of any evasive-switching scenario in data/fun_audit.json (385,771, 31.3 plays each).",
    "learnsFrom": [
     "Skeet Tracking",
     "B180T Voltaic Easy"

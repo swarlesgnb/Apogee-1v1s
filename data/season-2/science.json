@@ -1,0 +1,161 @@
+{
+ "$comment": "Written by tools/scenarioScience.ts; do not hand-edit.",
+ "measuredAt": "2026-09-24T04:53:48.833Z",
+ "noise": {
+  "scenarios": 296,
+  "medianNoise": 0.051,
+  "correlations": {
+   "timelimit": {
+    "n": 296,
+    "rho": -0.359,
+    "p": 0
+   },
+   "accuracyMultiplier": {
+    "n": 296,
+    "rho": 0.159,
+    "p": 0.0062
+   },
+   "aliveAtOnce": {
+    "n": 296,
+    "rho": 0.128,
+    "p": 0.0271
+   },
+   "targetDeg": {
+    "n": 295,
+    "rho": -0.203,
+    "p": 0.0005
+   },
+   "angularSpeed": {
+    "n": 295,
+    "rho": 0.087,
+    "p": 0.1379
+   },
+   "shotsToKill": {
+    "n": 296,
+    "rho": -0.131,
+    "p": 0.0242
+   },
+   "strafePeriod": {
+    "n": 270,
+    "rho": 0.102,
+    "p": 0.0942
+   },
+   "botUnderGravity": {
+    "n": 296,
+    "rho": 0.083,
+    "p": 0.1533
+   },
+   "regeneratingTarget": {
+    "n": 296,
+    "rho": -0.119,
+    "p": 0.0414
+   }
+  },
+  "accuracyMultiplier": {
+   "with": 0.058,
+   "without": 0.048
+  }
+ },
+ "popularity": {
+  "scenarios": 614,
+  "replay": {
+   "timelimit": {
+    "n": 614,
+    "rho": -0.056,
+    "p": 0.1641
+   },
+   "accuracyMultiplier": {
+    "n": 614,
+    "rho": -0.107,
+    "p": 0.0078
+   },
+   "aliveAtOnce": {
+    "n": 614,
+    "rho": -0.114,
+    "p": 0.0048
+   },
+   "targetDeg": {
+    "n": 610,
+    "rho": -0.067,
+    "p": 0.0985
+   },
+   "angularSpeed": {
+    "n": 610,
+    "rho": 0.043,
+    "p": 0.286
+   },
+   "shotsToKill": {
+    "n": 614,
+    "rho": -0.002,
+    "p": 0.9668
+   },
+   "strafePeriod": {
+    "n": 567,
+    "rho": 0.07,
+    "p": 0.0971
+   },
+   "botUnderGravity": {
+    "n": 614,
+    "rho": 0.104,
+    "p": 0.0097
+   },
+   "regeneratingTarget": {
+    "n": 614,
+    "rho": -0.014,
+    "p": 0.7362
+   }
+  },
+  "reach": {
+   "timelimit": {
+    "n": 614,
+    "rho": 0.145,
+    "p": 0.0003
+   },
+   "accuracyMultiplier": {
+    "n": 614,
+    "rho": -0.158,
+    "p": 0.0001
+   },
+   "aliveAtOnce": {
+    "n": 614,
+    "rho": -0.004,
+    "p": 0.919
+   },
+   "targetDeg": {
+    "n": 610,
+    "rho": 0.16,
+    "p": 0.0001
+   },
+   "angularSpeed": {
+    "n": 610,
+    "rho": -0.006,
+    "p": 0.8747
+   },
+   "shotsToKill": {
+    "n": 614,
+    "rho": -0.021,
+    "p": 0.6051
+   },
+   "strafePeriod": {
+    "n": 567,
+    "rho": 0.014,
+    "p": 0.7383
+   },
+   "botUnderGravity": {
+    "n": 614,
+    "rho": 0.133,
+    "p": 0.001
+   },
+   "regeneratingTarget": {
+    "n": 614,
+    "rho": 0.019,
+    "p": 0.6317
+   }
+  },
+  "strongestReplayCorrelation": 0.114
+ },
+ "fieldShape": {
+  "staticScenarios": 58,
+  "widerThanTall": 51
+ }
+}
