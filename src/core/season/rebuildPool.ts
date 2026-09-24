@@ -172,7 +172,9 @@ export function rebuildPool(
       // Except a fresh cut. The grid cuts a replacement's thresholds from its own board and
       // says so on the scenario; that is a percentile source validateThresholds can
       // re-derive to the digit, and calling it unexplained would be the less true label.
-      source: edited && scen.source?.kind === "percentile"
+      // And a prediction: build:season writes it with the model's reason on it, and a
+      // rebuilt prediction is the model speaking again, not somebody's unexplained edit.
+      source: edited && (scen.source?.kind === "percentile" || scen.source?.kind === "predicted")
         ? scen.source
         : edited && scen.source?.kind === "authored" && typeof scen.source.why === "string"
         ? scen.source

@@ -57,8 +57,20 @@ export interface ClassifyOptions {
  * Points a kill is worth: per kill; or, under `pressure`, per hit on a one-hit target, or
  * per point of damage times the target's health (fuglaa's balloons score per damage).
  */
+/**
+ * Misses a kill costs, on a moving target that dies in one hit.
+ *
+ * A board records score, not kills, so a scenario that charges for a miss reads as fewer
+ * kills than were made unless the misses are taken back out. The median over the moving
+ * one-hit clicking scenarios with at least five local runs (tools/scenarioScience.ts,
+ * data/season-1/science.json; validate:season-files holds this to it). One player's
+ * history, played without a penalty, so it likely overstates what players miss once a miss
+ * costs; the thresholds it sets are seeds like every other.
+ */
+export const MISSES_PER_KILL = 0.38;
+
 function pointsPerKill(f: ScenarioFeatures): number {
-  if (f.scoring.perKill > 0) return f.scoring.perKill;
+  if (f.scoring.perKill > 0) return f.scoring.perKill - f.scoring.lossPerMiss * MISSES_PER_KILL;
   if (f.scoring.perHit > 0) return f.scoring.perHit;
   return f.scoring.perDamage * (f.targets[0]?.health ?? 1);
 }

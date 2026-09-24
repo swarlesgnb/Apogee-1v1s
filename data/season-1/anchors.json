@@ -14,7 +14,8 @@
      "sqrtAccuracy": false,
      "timeRefilledByKill": 0,
      "lossPerDamageTaken": 0,
-     "perHit": 0
+     "perHit": 0,
+     "lossPerMiss": 0
     },
     "multipliers": {
      "size": 1,
@@ -231,7 +232,8 @@
      "sqrtAccuracy": false,
      "timeRefilledByKill": 0,
      "lossPerDamageTaken": 1,
-     "perHit": 0
+     "perHit": 0,
+     "lossPerMiss": 0
     },
     "multipliers": {
      "size": 1,

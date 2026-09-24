@@ -7,8 +7,8 @@
  * number are in docs/season-1-research.md; the short version, all measured and all
  * re-derived by tools/scenarioScience.ts into data/season-1/science.json:
  *
- *   - Sixty seconds everywhere. Run-to-run noise falls with length (Spearman -0.36 across
- *     296 scenarios in the local stats folder), and a ranked match is decided on the change
+ *   - Sixty seconds everywhere. Run-to-run noise falls with length (Spearman -0.35 across
+ *     319 scenarios in the local stats folder), and a ranked match is decided on the change
  *     from a baseline, so noise is unfairness.
  *   - No accuracy multiplier. Median noise 5.8% with one, 4.8% without, and scenarios with
  *     one reach fewer players and are replayed less (Spearman -0.16 and -0.11).
@@ -1373,9 +1373,26 @@ export const FAMILIES: Family[] = [
   ),
 ];
 
+/**
+ * Points a miss costs in a dynamic clicking scenario with no reload.
+ *
+ * With an endless magazine nothing stops a player firing at a moving target until it
+ * happens to be under the crosshair, and the playtest found exactly that. Voltaic makes a
+ * miss cost with a magazine and a reload; where a family has none, it costs score instead.
+ * 2 against 10 a kill is the median of the 13 clicking scenarios on this machine that
+ * charge for a miss (0.2 of a kill; the Pasu Micro lineage), and the model reads it through
+ * MISSES_PER_KILL (core/scenario/difficulty.ts).
+ */
+export const MISS_PENALTY = 2;
+
 export function buildScenario(template: Sce, f: Family, band: Band, lib: Library): Sce {
   const sce: Sce = structuredClone(template);
   f.build(sce, band, lib);
+  const weapon = profile(sce, "Weapon Profile", weaponOf(sce));
+  const endless = Number(get(weapon?.lines ?? [], "MagazineMax") ?? 0) === 0;
+  if (f.category === "Dynamic Clicking" && endless && Number(get(sce.head, "ScorePerKill") ?? 0) > 0) {
+    setHead(sce, { ScoreLossPerMiss: MISS_PENALTY });
+  }
   return sce;
 }
 

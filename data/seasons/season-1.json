@@ -1046,11 +1046,11 @@
     "owner": "tools/buildSeason.ts",
     "note": "Every threshold in this season is predicted, not sampled: no scenario in it has a KovaaK's board yet. Each was read off the board the difficulty model predicts from the scenario file, at the same ladder percentiles a season cuts from real boards (data/pool.json). They are seeds to be recut from Apogee's own runs, and every one says so in its source.",
     "model": {
-      "fittedAt": "2026-09-24T15:08:38.231Z",
+      "fittedAt": "2026-09-24T23:33:36.770Z",
       "file": "data/season-1/difficulty_model.json"
     }
   },
-  "builtAt": "2026-09-24T22:00:55.153Z",
+  "builtAt": "2026-09-24T23:36:36.289Z",
   "scenarios": [
     {
       "scenario": "Apogee Galaga Novice",
@@ -1064,16 +1064,16 @@
       "focus": "Five targets on one level; flick sideways and stop dead.",
       "leaderboardId": null,
       "rankMaxes": [
-        1097,
-        1290,
-        1402,
-        1488,
-        1560,
-        1629
+        1117,
+        1313,
+        1428,
+        1515,
+        1588,
+        1659
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -1088,16 +1088,16 @@
       "focus": "Five targets on one level; flick sideways and stop dead.",
       "leaderboardId": null,
       "rankMaxes": [
-        1489,
-        1556,
-        1587,
-        1644,
-        1693,
-        1738
+        1515,
+        1583,
+        1614,
+        1672,
+        1722,
+        1768
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -1112,16 +1112,16 @@
       "focus": "Five targets on one level; flick sideways and stop dead.",
       "leaderboardId": null,
       "rankMaxes": [
-        1617,
-        1661,
-        1701,
-        1740,
-        1777,
-        1825
+        1643,
+        1687,
+        1729,
+        1768,
+        1806,
+        1855
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -1136,14 +1136,14 @@
       "focus": "Five targets on one level; flick sideways and stop dead.",
       "leaderboardId": null,
       "rankMaxes": [
-        1698,
-        1744,
-        1774,
-        1811
+        1723,
+        1770,
+        1800,
+        1839
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -1158,16 +1158,16 @@
       "focus": "Flick up and down; the sideways movement is only ever a correction.",
       "leaderboardId": null,
       "rankMaxes": [
-        1009,
-        1194,
-        1302,
-        1383,
-        1451,
-        1517
+        1026,
+        1214,
+        1323,
+        1406,
+        1475,
+        1542
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -1182,16 +1182,16 @@
       "focus": "Flick up and down; the sideways movement is only ever a correction.",
       "leaderboardId": null,
       "rankMaxes": [
-        1384,
-        1447,
-        1476,
-        1530,
-        1576,
-        1619
+        1405,
+        1470,
+        1499,
+        1554,
+        1601,
+        1645
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -1206,16 +1206,16 @@
       "focus": "Flick up and down; the sideways movement is only ever a correction.",
       "leaderboardId": null,
       "rankMaxes": [
-        1504,
-        1545,
-        1584,
-        1620,
-        1655,
-        1700
+        1526,
+        1568,
+        1607,
+        1643,
+        1679,
+        1725
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -1230,14 +1230,14 @@
       "focus": "Flick up and down; the sideways movement is only ever a correction.",
       "leaderboardId": null,
       "rankMaxes": [
-        1580,
-        1623,
-        1651,
-        1686
+        1601,
+        1645,
+        1673,
+        1708
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -1252,16 +1252,16 @@
       "focus": "Small moves, smaller targets; settle the crosshair before you click.",
       "leaderboardId": null,
       "rankMaxes": [
-        999,
-        1183,
-        1290,
-        1371,
-        1439,
-        1504
+        1015,
+        1202,
+        1311,
+        1393,
+        1462,
+        1529
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -1276,16 +1276,16 @@
       "focus": "Small moves, smaller targets; settle the crosshair before you click.",
       "leaderboardId": null,
       "rankMaxes": [
-        1372,
-        1435,
-        1463,
-        1517,
-        1563,
-        1606
+        1393,
+        1457,
+        1486,
+        1540,
+        1587,
+        1630
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -1300,16 +1300,16 @@
       "focus": "Small moves, smaller targets; settle the crosshair before you click.",
       "leaderboardId": null,
       "rankMaxes": [
-        1491,
-        1532,
-        1570,
-        1606,
-        1641,
-        1686
+        1512,
+        1554,
+        1593,
+        1629,
+        1665,
+        1710
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -1324,14 +1324,14 @@
       "focus": "Small moves, smaller targets; settle the crosshair before you click.",
       "leaderboardId": null,
       "rankMaxes": [
-        1566,
-        1609,
-        1636,
-        1671
+        1587,
+        1630,
+        1658,
+        1693
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -1346,16 +1346,16 @@
       "focus": "A wide formation; big flicks across it, in both directions.",
       "leaderboardId": null,
       "rankMaxes": [
-        919,
-        1095,
-        1198,
-        1275,
-        1339,
-        1401
+        933,
+        1111,
+        1216,
+        1294,
+        1359,
+        1422
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -1370,16 +1370,16 @@
       "focus": "A wide formation; big flicks across it, in both directions.",
       "leaderboardId": null,
       "rankMaxes": [
-        1276,
-        1335,
-        1362,
-        1414,
-        1457,
-        1497
+        1293,
+        1354,
+        1381,
+        1433,
+        1477,
+        1517
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -1394,16 +1394,16 @@
       "focus": "A wide formation; big flicks across it, in both directions.",
       "leaderboardId": null,
       "rankMaxes": [
-        1389,
-        1427,
-        1463,
-        1497,
-        1530,
-        1572
+        1406,
+        1445,
+        1482,
+        1516,
+        1550,
+        1592
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -1418,14 +1418,14 @@
       "focus": "A wide formation; big flicks across it, in both directions.",
       "leaderboardId": null,
       "rankMaxes": [
-        1459,
-        1499,
-        1525,
-        1557
+        1476,
+        1516,
+        1542,
+        1575
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -1440,16 +1440,16 @@
       "focus": "Clear the whole constellation; the next one appears when its last star falls.",
       "leaderboardId": null,
       "rankMaxes": [
-        1149,
-        1346,
-        1461,
-        1549,
-        1623,
-        1694
+        1170,
+        1371,
+        1489,
+        1578,
+        1654,
+        1726
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -1464,16 +1464,16 @@
       "focus": "Clear the whole constellation; the next one appears when its last star falls.",
       "leaderboardId": null,
       "rankMaxes": [
-        1551,
-        1619,
-        1651,
-        1710,
-        1760,
-        1808
+        1578,
+        1649,
+        1681,
+        1741,
+        1792,
+        1840
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -1488,16 +1488,16 @@
       "focus": "Clear the whole constellation; the next one appears when its last star falls.",
       "leaderboardId": null,
       "rankMaxes": [
-        1683,
-        1728,
-        1770,
-        1810,
-        1848,
-        1898
+        1711,
+        1758,
+        1800,
+        1840,
+        1880,
+        1931
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -1512,14 +1512,14 @@
       "focus": "Clear the whole constellation; the next one appears when its last star falls.",
       "leaderboardId": null,
       "rankMaxes": [
-        1767,
-        1815,
-        1846,
-        1885
+        1795,
+        1844,
+        1875,
+        1915
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -1534,16 +1534,16 @@
       "focus": "Targets at two distances; read the size before you decide how far to move.",
       "leaderboardId": null,
       "rankMaxes": [
-        889,
-        1062,
-        1163,
-        1238,
-        1301,
-        1362
+        902,
+        1077,
+        1179,
+        1255,
+        1320,
+        1381
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -1558,16 +1558,16 @@
       "focus": "Targets at two distances; read the size before you decide how far to move.",
       "leaderboardId": null,
       "rankMaxes": [
-        1239,
-        1297,
-        1324,
-        1374,
-        1416,
-        1455
+        1255,
+        1314,
+        1341,
+        1392,
+        1435,
+        1474
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -1582,16 +1582,16 @@
       "focus": "Targets at two distances; read the size before you decide how far to move.",
       "leaderboardId": null,
       "rankMaxes": [
-        1349,
-        1387,
-        1422,
-        1455,
-        1488,
-        1528
+        1366,
+        1403,
+        1439,
+        1473,
+        1506,
+        1547
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -1606,14 +1606,14 @@
       "focus": "Targets at two distances; read the size before you decide how far to move.",
       "leaderboardId": null,
       "rankMaxes": [
-        1418,
-        1457,
-        1482,
-        1514
+        1434,
+        1473,
+        1498,
+        1530
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -1628,16 +1628,16 @@
       "focus": "Six small targets up at once; take the nearest, keep the rhythm.",
       "leaderboardId": null,
       "rankMaxes": [
-        1129,
-        1324,
-        1439,
-        1526,
-        1599,
-        1669
+        1150,
+        1349,
+        1466,
+        1554,
+        1629,
+        1701
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -1652,16 +1652,16 @@
       "focus": "Six small targets up at once; take the nearest, keep the rhythm.",
       "leaderboardId": null,
       "rankMaxes": [
-        1527,
-        1595,
-        1627,
-        1685,
-        1735,
-        1781
+        1554,
+        1624,
+        1656,
+        1715,
+        1765,
+        1813
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -1676,16 +1676,16 @@
       "focus": "Six small targets up at once; take the nearest, keep the rhythm.",
       "leaderboardId": null,
       "rankMaxes": [
-        1658,
-        1703,
-        1744,
-        1783,
-        1821,
-        1871
+        1685,
+        1731,
+        1773,
+        1813,
+        1852,
+        1902
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -1700,14 +1700,14 @@
       "focus": "Six small targets up at once; take the nearest, keep the rhythm.",
       "leaderboardId": null,
       "rankMaxes": [
-        1740,
-        1788,
-        1818,
-        1857
+        1768,
+        1816,
+        1847,
+        1886
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -1722,16 +1722,16 @@
       "focus": "Six still targets on one wall; take the nearest, keep the rhythm.",
       "leaderboardId": null,
       "rankMaxes": [
-        965,
-        1146,
-        1251,
-        1330,
-        1397,
-        1461
+        980,
+        1164,
+        1271,
+        1351,
+        1419,
+        1483
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -1746,16 +1746,16 @@
       "focus": "Six still targets on one wall; take the nearest, keep the rhythm.",
       "leaderboardId": null,
       "rankMaxes": [
-        1331,
-        1393,
-        1420,
-        1473,
-        1518,
-        1559
+        1350,
+        1413,
+        1441,
+        1495,
+        1540,
+        1582
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -1770,16 +1770,16 @@
       "focus": "Six still targets on one wall; take the nearest, keep the rhythm.",
       "leaderboardId": null,
       "rankMaxes": [
-        1448,
-        1487,
-        1525,
-        1560,
-        1594,
-        1638
+        1467,
+        1508,
+        1545,
+        1581,
+        1616,
+        1660
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -1794,14 +1794,14 @@
       "focus": "Six still targets on one wall; take the nearest, keep the rhythm.",
       "leaderboardId": null,
       "rankMaxes": [
-        1521,
-        1562,
-        1589,
-        1623
+        1540,
+        1582,
+        1609,
+        1643
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -1816,16 +1816,16 @@
       "focus": "Slow floaters; match their drift for a moment, then click.",
       "leaderboardId": null,
       "rankMaxes": [
-        375,
-        519,
-        610,
-        678,
-        735,
-        789
+        348,
+        481,
+        567,
+        629,
+        683,
+        733
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -1840,16 +1840,16 @@
       "focus": "Slow floaters; match their drift for a moment, then click.",
       "leaderboardId": null,
       "rankMaxes": [
-        687,
-        739,
-        761,
-        803,
-        838,
-        869
+        637,
+        685,
+        705,
+        745,
+        777,
+        806
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -1864,16 +1864,16 @@
       "focus": "Slow floaters; match their drift for a moment, then click.",
       "leaderboardId": null,
       "rankMaxes": [
-        786,
-        815,
-        842,
-        868,
-        893,
-        924
+        728,
+        755,
+        780,
+        803,
+        826,
+        855
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -1888,14 +1888,14 @@
       "focus": "Slow floaters; match their drift for a moment, then click.",
       "leaderboardId": null,
       "rankMaxes": [
-        838,
-        868,
-        887,
-        911
+        775,
+        802,
+        820,
+        842
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -1910,16 +1910,16 @@
       "focus": "Slow swings from wall to wall; click on the swing, not only at the turn.",
       "leaderboardId": null,
       "rankMaxes": [
-        484,
-        649,
-        752,
-        828,
-        893,
-        953
+        451,
+        605,
+        701,
+        772,
+        832,
+        888
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -1934,16 +1934,16 @@
       "focus": "Slow swings from wall to wall; click on the swing, not only at the turn.",
       "leaderboardId": null,
       "rankMaxes": [
-        836,
-        894,
-        919,
-        967,
-        1007,
-        1042
+        778,
+        832,
+        855,
+        900,
+        937,
+        970
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -1958,16 +1958,16 @@
       "focus": "Slow swings from wall to wall; click on the swing, not only at the turn.",
       "leaderboardId": null,
       "rankMaxes": [
-        946,
-        979,
-        1010,
-        1039,
-        1067,
-        1104
+        879,
+        910,
+        939,
+        966,
+        992,
+        1026
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -1982,14 +1982,14 @@
       "focus": "Slow swings from wall to wall; click on the swing, not only at the turn.",
       "leaderboardId": null,
       "rankMaxes": [
-        1004,
-        1038,
-        1060,
-        1088
+        932,
+        964,
+        984,
+        1010
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -2004,16 +2004,16 @@
       "focus": "Read the arc; the top of the bounce is the slowest moment.",
       "leaderboardId": null,
       "rankMaxes": [
-        407,
-        566,
-        668,
-        743,
-        807,
-        868
+        410,
+        570,
+        672,
+        748,
+        813,
+        874
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -2028,16 +2028,16 @@
       "focus": "Read the arc; the top of the bounce is the slowest moment.",
       "leaderboardId": null,
       "rankMaxes": [
-        756,
-        813,
-        838,
-        885,
-        925,
-        959
+        760,
+        818,
+        843,
+        890,
+        930,
+        965
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -2052,16 +2052,16 @@
       "focus": "Read the arc; the top of the bounce is the slowest moment.",
       "leaderboardId": null,
       "rankMaxes": [
-        868,
-        901,
-        931,
-        959,
-        986,
-        1022
+        872,
+        905,
+        935,
+        963,
+        991,
+        1026
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -2076,14 +2076,14 @@
       "focus": "Read the arc; the top of the bounce is the slowest moment.",
       "leaderboardId": null,
       "rankMaxes": [
-        927,
-        961,
-        983,
-        1010
+        930,
+        964,
+        986,
+        1013
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -2098,16 +2098,16 @@
       "focus": "Straight runs, a dead stop at every turn, and a charged-up buzz all the while.",
       "leaderboardId": null,
       "rankMaxes": [
-        368,
-        509,
-        600,
-        666,
-        723,
-        776
+        342,
+        473,
+        557,
+        618,
+        671,
+        720
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -2122,16 +2122,16 @@
       "focus": "Straight runs, a dead stop at every turn, and a charged-up buzz all the while.",
       "leaderboardId": null,
       "rankMaxes": [
-        676,
-        727,
-        748,
-        790,
-        825,
-        855
+        626,
+        673,
+        693,
+        732,
+        764,
+        792
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -2146,16 +2146,16 @@
       "focus": "Straight runs, a dead stop at every turn, and a charged-up buzz all the while.",
       "leaderboardId": null,
       "rankMaxes": [
-        773,
-        802,
-        829,
-        854,
-        878,
-        909
+        716,
+        742,
+        767,
+        790,
+        813,
+        841
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -2170,14 +2170,14 @@
       "focus": "Straight runs, a dead stop at every turn, and a charged-up buzz all the while.",
       "leaderboardId": null,
       "rankMaxes": [
-        824,
-        854,
-        872,
-        896
+        762,
+        789,
+        806,
+        828
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -2192,16 +2192,16 @@
       "focus": "Two fast crossers in an open sky; move with the target and click inside the motion.",
       "leaderboardId": null,
       "rankMaxes": [
-        271,
-        395,
-        478,
-        539,
-        592,
-        642
+        251,
+        365,
+        442,
+        499,
+        548,
+        594
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -2216,16 +2216,16 @@
       "focus": "Two fast crossers in an open sky; move with the target and click inside the motion.",
       "leaderboardId": null,
       "rankMaxes": [
-        553,
-        600,
-        620,
-        659,
-        691,
-        719
+        511,
+        555,
+        573,
+        609,
+        639,
+        664
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -2240,16 +2240,16 @@
       "focus": "Two fast crossers in an open sky; move with the target and click inside the motion.",
       "leaderboardId": null,
       "rankMaxes": [
-        648,
-        674,
-        698,
-        721,
-        743,
-        771
+        597,
+        622,
+        644,
+        665,
+        685,
+        711
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -2264,14 +2264,14 @@
       "focus": "Two fast crossers in an open sky; move with the target and click inside the motion.",
       "leaderboardId": null,
       "rankMaxes": [
-        697,
-        724,
-        741,
-        762
+        642,
+        667,
+        683,
+        702
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -2286,16 +2286,16 @@
       "focus": "Straight lines across the sky; lead nothing, match the line and click.",
       "leaderboardId": null,
       "rankMaxes": [
-        471,
-        650,
-        766,
-        852,
-        924,
-        993
+        439,
+        607,
+        715,
+        795,
+        863,
+        927
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -2310,16 +2310,16 @@
       "focus": "Straight lines across the sky; lead nothing, match the line and click.",
       "leaderboardId": null,
       "rankMaxes": [
-        868,
-        934,
-        962,
-        1016,
-        1061,
-        1100
+        810,
+        871,
+        897,
+        947,
+        989,
+        1026
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -2334,16 +2334,16 @@
       "focus": "Straight lines across the sky; lead nothing, match the line and click.",
       "leaderboardId": null,
       "rankMaxes": [
-        999,
-        1036,
-        1070,
-        1102,
-        1133,
-        1174
+        930,
+        965,
+        997,
+        1026,
+        1055,
+        1093
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -2358,14 +2358,14 @@
       "focus": "Straight lines across the sky; lead nothing, match the line and click.",
       "leaderboardId": null,
       "rankMaxes": [
-        1068,
-        1107,
-        1132,
-        1164
+        993,
+        1029,
+        1053,
+        1082
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -2380,16 +2380,16 @@
       "focus": "Pop them before they reach you; every one that does costs you.",
       "leaderboardId": null,
       "rankMaxes": [
-        28,
-        80,
-        128,
-        161,
-        184,
-        201
+        29,
+        81,
+        129,
+        162,
+        186,
+        203
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -2404,16 +2404,16 @@
       "focus": "Pop them before they reach you; every one that does costs you.",
       "leaderboardId": null,
       "rankMaxes": [
-        176,
-        192,
-        196,
-        207,
-        213,
-        218
+        177,
+        193,
+        198,
+        208,
+        214,
+        219
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -2428,16 +2428,16 @@
       "focus": "Pop them before they reach you; every one that does costs you.",
       "leaderboardId": null,
       "rankMaxes": [
-        203,
-        208,
-        212,
-        216,
-        220,
-        224
+        204,
+        209,
+        213,
+        217,
+        221,
+        226
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -2453,13 +2453,13 @@
       "leaderboardId": null,
       "rankMaxes": [
         210,
-        214,
-        217,
-        221
+        215,
+        218,
+        222
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -2474,16 +2474,16 @@
       "focus": "Floating heads: big, slow drifters; confirm the shot before you click.",
       "leaderboardId": null,
       "rankMaxes": [
-        462,
-        626,
-        729,
-        806,
-        870,
-        931
+        430,
+        583,
+        680,
+        750,
+        811,
+        868
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -2498,16 +2498,16 @@
       "focus": "Floating heads: big, slow drifters; confirm the shot before you click.",
       "leaderboardId": null,
       "rankMaxes": [
-        815,
-        874,
-        899,
-        946,
-        986,
-        1022
+        759,
+        813,
+        836,
+        881,
+        918,
+        950
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -2522,16 +2522,16 @@
       "focus": "Floating heads: big, slow drifters; confirm the shot before you click.",
       "leaderboardId": null,
       "rankMaxes": [
-        927,
-        960,
-        991,
-        1020,
-        1048,
-        1084
+        861,
+        892,
+        921,
+        947,
+        973,
+        1007
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -2546,14 +2546,14 @@
       "focus": "Floating heads: big, slow drifters; confirm the shot before you click.",
       "leaderboardId": null,
       "rankMaxes": [
-        985,
-        1019,
-        1041,
-        1069
+        914,
+        946,
+        966,
+        992
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -2568,16 +2568,16 @@
       "focus": "Fliers in front of you drifting nearer and further as they rise and fall; follow them and click.",
       "leaderboardId": null,
       "rankMaxes": [
-        391,
-        542,
-        639,
-        711,
-        772,
-        829
+        363,
+        504,
+        594,
+        661,
+        717,
+        771
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -2592,16 +2592,16 @@
       "focus": "Fliers in front of you drifting nearer and further as they rise and fall; follow them and click.",
       "leaderboardId": null,
       "rankMaxes": [
-        722,
-        777,
-        800,
-        845,
-        882,
-        915
+        670,
+        721,
+        743,
+        784,
+        819,
+        849
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -2616,16 +2616,16 @@
       "focus": "Fliers in front of you drifting nearer and further as they rise and fall; follow them and click.",
       "leaderboardId": null,
       "rankMaxes": [
-        828,
-        859,
-        888,
-        914,
-        940,
-        974
+        768,
+        796,
+        823,
+        848,
+        872,
+        903
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {
@@ -2640,14 +2640,14 @@
       "focus": "Fliers in front of you drifting nearer and further as they rise and fall; follow them and click.",
       "leaderboardId": null,
       "rankMaxes": [
-        884,
-        915,
-        936,
-        961
+        818,
+        847,
+        866,
+        890
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.129 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.122 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
       }
     },
     {

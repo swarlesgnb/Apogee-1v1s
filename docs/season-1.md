@@ -34,7 +34,10 @@ stopping at its turns, Satellite in an open room, and more blinks for AlienTrack
 Gravity Well's balloons armed again (the attack is four abilities, which the generator had
 been stripping from every target), the unarmed version kept as 1w6aliens, Satellite back in
 front of the player with depth, AlienTrack's blinks twice as far, and vertical movement for
-every flier - which had never been switched on.
+every flier - which had never been switched on. From the season playtest: the seven dynamic
+families with no reload (Gravclick, Pendulum, Electric, Sun and Moon, Shooting Stars, Meteor,
+Satellite) lose 2 points a miss, so firing until a moving target drifts under the crosshair
+no longer pays; Antigrav and Gravity Well already cost a miss through their reloads.
 
 Each scenario is named `Apogee <Family> <Band>`. Every one, with its size, speed, reversal
 and kill time, predicted median and thresholds, is listed in
@@ -57,8 +60,9 @@ from the workshop folder, and the model learns from every scenario file there. A
 with fewer subscriptions fits a thinner model.
 
 `validate:season-files` checks that the season file is valid and names exactly the files on disk;
-that every file keeps the shared rules (60 s, no accuracy multiplier, Apogee name and tag, six
-families of four bands per category); that every threshold reproduces from the committed
+that every file keeps the shared rules (60 s, no accuracy multiplier, Apogee name and tag, a
+miss penalty on exactly the dynamic families with no reload, six families of four bands per
+category); that every threshold reproduces from the committed
 model; that every family's bands are strictly harder; that no generated spawn sits more than
 45 degrees off centre and no two are close enough for live targets to overlap; that every
 scenario's target size, angular speed and reversal period lie within what popular scenarios

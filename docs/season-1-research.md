@@ -119,18 +119,18 @@ noise is its unfairness: on a noisy scenario, luck picks the winner. KovaaK's sc
 reliable measurements between sessions. A pilot of four scenarios with ten players found
 test-retest ICCs of 0.947 to 0.995
 ([Frontiers in Sports and Active Living, 2024](https://www.frontiersin.org/journals/sports-and-active-living/articles/10.3389/fspor.2024.1309991/full)).
-Within a player, though, the noise differs a lot by design. Over 296 scenarios with at least
+Within a player, though, the noise differs a lot by design. Over 319 scenarios with at least
 eight runs in the local stats folder, median run-to-run change as a share of the median score
 (`tools/scenarioScience.ts`):
 
 | Feature | Noise (Spearman) |
 | --- | ---: |
-| Time limit | **-0.36** |
-| Target size | -0.20 |
+| Time limit | **-0.35** |
+| Target size | -0.19 |
 | Accuracy multiplier | +0.16 |
-| Targets alive at once | +0.13 |
 | Shots to kill | -0.13 |
-| Regenerating target | -0.12 |
+| Targets alive at once | +0.11 |
+| Regenerating target | -0.08 (p 0.15, not significant) |
 
 Longer runs are steadier, which is expected: more events per run average out more luck. The
 accuracy multiplier adds noise, 5.8% median against 4.8% without. It compounds the miss rate
@@ -147,7 +147,7 @@ Leave-one-out median error at the board median (`data/season-1/difficulty_model.
 
 | Class | Scenarios | Features | LOO median | LOO 90th pct |
 | --- | ---: | --- | ---: | ---: |
-| Clicking | 201 | nearest-flick Fitts ID, log angular speed, log shots to kill, accuracy multiplier, square-root accuracy multiplier | 0.129 (about 14% in time per kill) | 0.412 |
+| Clicking | 201 | nearest-flick Fitts ID, log angular speed, log shots to kill, accuracy multiplier, square-root accuracy multiplier | 0.122 (about 13% in time per kill) | 0.412 |
 | Tracking | 174 | log speed/size, log strafe period, log seconds to full speed | 0.399 logit (about 10 points of share mid-board) | 0.999 |
 | Switching | 86 | log speed/size, log time to kill | 0.141 logit | 0.438 |
 
@@ -175,7 +175,7 @@ Two findings shaped how the model is used.
   from Novice (598) to Intermediate (568), although the target shrinks and speeds up: a harder
   scenario draws a stronger crowd. A pooled model predicts the board of a typical crowd.
 - **A sibling's board was measured too.** Predicting a variant from another variant's board
-  is worse than the pooled fit for clicking (0.144 against 0.129) and switching (0.152
+  is worse than the pooled fit for clicking (0.146 against 0.122) and switching (0.152
   against 0.141), and better for tracking (0.283 against 0.399). No Season 1 scenario
   has a sibling with a board, so the pooled fit is the only option until one does.
 
@@ -196,6 +196,14 @@ as many targets as spawns that happened on most draws. Drawing without replaceme
 clicking fit's error at the median from 0.199 to 0.143 and the Fitts slope from 0.19 to 0.27
 per bit.
 
+A board that charges for a miss records fewer kills than were made. Seven of the clicking
+fit's scenarios do (RawMouseControl, cA 900targets and others), and reading their boards as
+kills alone put them off the line; taking out 0.38 misses a kill at each one's penalty - the
+median over 54 moving one-hit clicking scenarios in the local stats folder - moved the error
+at the median from 0.129 to 0.122. The same rate sets the thresholds of the dynamic families
+that charge 2 a miss, so it is a seed like everything else: measured without a penalty, it
+likely overstates what players miss once a miss costs.
+
 The model is weakest where the file says least: moving targets whose paths the dodge profile
 only sketches (Popcorn's variants are two of its five worst clicking misses, listed as
 `worstMisses` in the model file), and path-spawning or pressure scenarios
@@ -206,7 +214,7 @@ moving families carry the wider error.
 
 | Rule | Reason |
 | --- | --- |
-| 60 seconds for every scenario | Noise falls with length (-0.36); 60 s is the length of the popular benchmarks it replaces. |
+| 60 seconds for every scenario | Noise falls with length (-0.35); 60 s is the length of the popular benchmarks it replaces. |
 | No accuracy multiplier | More noise (5.8% vs 4.8%), less replay (-0.11) and less reach (-0.16). |
 | One skill per family, both axes covered | Isolating a skill makes a score diagnostic; the popular pool under-trains vertical movement. |
 | Static targets on an arc, not a wall | On a flat wall a target far to the side is further away and smaller, so where it spawns becomes luck. |

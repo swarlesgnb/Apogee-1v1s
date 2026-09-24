@@ -93,6 +93,7 @@ export interface ScenarioFeatures {
     timeRefilledByKill: number;
     lossPerDamageTaken: number;
     perHit: number;
+    lossPerMiss: number;
   };
   /**
    * Scenario-wide multipliers newer files carry. `size` scales every target (a "30% smaller"
@@ -450,6 +451,7 @@ export function scenarioFeatures(sce: Sce, mapsDir: string | null = null): Scena
       timeRefilledByKill: num(h, "TimeRefilledByKill", 0),
       lossPerDamageTaken: num(h, "ScoreLossPerDamageTaken", 0),
       perHit: num(h, "ScorePerHit", 0),
+      lossPerMiss: num(h, "ScoreLossPerMiss", 0),
     },
     multipliers,
     weapon,

@@ -31,6 +31,7 @@ import { classify, predictFromAnchor, predictLadder, toMetric, type ClassModel, 
 import { thresholdsFrom } from "../src/core/season/percentiles.ts";
 import { windowRankCount, windowRankIndices } from "../src/core/season/windows.ts";
 import { validateSeason, type Season, type SeasonScenario } from "../src/core/season/season.ts";
+import { rebuildPool, type RebuildSeason } from "../src/core/season/rebuildPool.ts";
 import { buildCorpus, kovaaksRoot, scenarioFiles } from "./scenarioCorpus.ts";
 import { BANDS, FAMILIES, TEMPLATES, buildScenario, scenarioName, type Band, type Category, type TemplateKey } from "./season/design.ts";
 
@@ -282,6 +283,12 @@ if (existsSync(outDir)) {
 mkdirSync(outDir, { recursive: true });
 for (const b of built) writeFileSync(join(outDir, `${b.name}.sce`), b.text);
 writeFileSync(dataFile("seasons", "season-1.json"), JSON.stringify(season, null, 2) + "\n");
+// data/pool.json carries every variant's thresholds for the season editor, which rebuilds
+// the season from it; left behind, the editor's next save would put the old ones back.
+writeFileSync(
+  dataFile("pool.json"),
+  JSON.stringify(rebuildPool(JSON.parse(readFileSync(dataFile("pool.json"), "utf8")), season as unknown as RebuildSeason, {}), null, 2) + "\n",
+);
 writeFileSync(
   dataFile("season-1", "anchors.json"),
   JSON.stringify({ $comment: "Written by tools/buildSeason.ts: the real boards and features of the scenarios families predict from.", anchors: Object.fromEntries(anchors) }, null, 1) + "\n",
