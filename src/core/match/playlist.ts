@@ -23,7 +23,7 @@
  */
 
 /** Fixed format version KovaaK's writes on every playlist file. */
-const PLAYLIST_FORMAT_VERSION = 31;
+export const PLAYLIST_FORMAT_VERSION = 31;
 
 /**
  * KovaaK's deep link.
