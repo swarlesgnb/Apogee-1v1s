@@ -165,6 +165,12 @@ if (!ruleBreaks) pass("60 seconds, no accuracy multiplier, Apogee names and tags
 const model = JSON.parse(readFileSync(dataFile("season-2", "difficulty_model.json"), "utf8")) as { models: ClassModel[] };
 const pool = JSON.parse(readFileSync(dataFile("pool.json"), "utf8")) as { ladder: { ranks: number[]; overlap: number }; windowSize: number };
 const mapsDir = join(root, "maps");
+const recutBoards = new Map(
+  (existsSync(dataFile("season-2", "boards.json"))
+    ? (JSON.parse(readFileSync(dataFile("season-2", "boards.json"), "utf8")) as { distributions: Array<{ scenario: string; leaderboardId: number; total: number; sampledAt: string; points: Array<{ topFraction: number; score: number }> }> }).distributions
+    : []
+  ).map((d) => [d.scenario, d]),
+);
 const metrics = new Map<string, { band: number; metric: number; click: boolean }[]>();
 let reproduced = 0;
 for (const s of season.scenarios) {
@@ -178,17 +184,21 @@ for (const s of season.scenarios) {
     continue;
   }
   const prediction = predictLadder(m, features);
-  const dist = { scenario: s.scenario, leaderboardId: 0, total: 0, sampledAt: "", points: prediction.points.map((p) => ({ topFraction: p.topFraction, score: p.score })) };
+  // A row recut from its own board (tools/recutSeason2.ts) reproduces from that board.
+  const kind = (s as unknown as { source?: { kind?: string } }).source?.kind;
+  const real = kind === "percentile" ? recutBoards.get(s.scenario) : undefined;
+  if (kind === "percentile" && !real) fail(`${s.scenario}: says it was recut from a board, and no sampled board is on record`);
+  const dist = real ?? { scenario: s.scenario, leaderboardId: 0, total: 0, sampledAt: "", points: prediction.points.map((p) => ({ topFraction: p.topFraction, score: p.score })) };
   const ranks = windowRankIndices(s.window!, pool.windowSize, pool.ladder.ranks.length, pool.ladder.overlap).map((i) => pool.ladder.ranks[i]);
   const expected = thresholdsFrom(dist, ranks);
   if (JSON.stringify(expected) === JSON.stringify(s.rankMaxes)) reproduced++;
-  else fail(`${s.scenario}: thresholds ${s.rankMaxes.join(" ")} but the model gives ${expected?.join(" ")}`);
+  else fail(`${s.scenario}: thresholds ${s.rankMaxes.join(" ")} but ${real ? "its sampled board" : "the model"} gives ${expected?.join(" ")}`);
   const median = prediction.points.find((p) => p.topFraction === 0.5)!.score;
   const list = metrics.get(s.family!) ?? [];
   list.push({ band: s.window!, metric: toMetric(cls, features, median) ?? NaN, click: cls === "click" });
   metrics.set(s.family!, list);
 }
-if (reproduced === season.scenarios.length) pass(`all ${reproduced} threshold rows reproduce from the committed model`);
+if (reproduced === season.scenarios.length) pass(`all ${reproduced} threshold rows reproduce, from the committed model or their own sampled board (${recutBoards.size} recut)`);
 
 let disordered = 0;
 for (const [family, list] of metrics) {

@@ -155,6 +155,21 @@ const categories = season1.categories.map((c) => {
   };
 });
 
+// Carried from the season as it stands: a board id once the scenario has been shared, and
+// thresholds tools/recutSeason2.ts has already read off a real board. A rebuild must not
+// put a prediction back where a board has spoken.
+const previous = existsSync(dataFile("seasons", "season-2.json"))
+  ? new Map((JSON.parse(readFileSync(dataFile("seasons", "season-2.json"), "utf8")) as { scenarios: Array<SeasonScenario & { source?: { kind?: string } }> }).scenarios.map((s) => [s.scenario, s]))
+  : new Map<string, SeasonScenario & { source?: { kind?: string } }>();
+for (const b of built) {
+  const before = previous.get(b.name);
+  if (!before?.leaderboardId) continue;
+  const onDisk = join(dataFile("season-2", "scenarios"), `${b.name}.sce`);
+  if (existsSync(onDisk) && readFileSync(onDisk, "utf8") !== b.text) {
+    console.warn(`warning: ${b.name} has a KovaaK's board (${before.leaderboardId}) and its file has changed; sharing it again under the same name puts two scenarios on one board`);
+  }
+}
+
 const round = (v: number, places = 3) => Math.round(v * 10 ** places) / 10 ** places;
 const scenarios: Array<SeasonScenario & Record<string, unknown>> = built.map((b) => ({
   scenario: b.name,
@@ -167,13 +182,18 @@ const scenarios: Array<SeasonScenario & Record<string, unknown>> = built.map((b)
   label: b.family.name,
   focus: b.family.focus,
   // No board exists until the scenario is shared in game; see docs/season-2.md.
-  leaderboardId: null,
-  rankMaxes: b.rankMaxes,
-  source: {
-    kind: "predicted",
-    why: `Read off the board ${b.cls === "click" ? "the clicking" : b.cls === "track" ? "the tracking" : "the switching"} model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is ${round(models.get(b.cls)!.fits.find((f) => f.topFraction === 0.5)!.looMedian)} in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough.`,
-  },
+  leaderboardId: previous.get(b.name)?.leaderboardId ?? null,
+  ...(previous.get(b.name)?.source?.kind === "percentile"
+    ? { rankMaxes: previous.get(b.name)!.rankMaxes, source: previous.get(b.name)!.source }
+    : { rankMaxes: b.rankMaxes, source: predictedSource(b) }),
 }));
+
+function predictedSource(b: Built) {
+  return {
+    kind: "predicted",
+    why: `Read off the board ${b.cls === "click" ? "the clicking" : b.cls === "track" ? "the tracking" : "the switching"} model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is ${round(models.get(b.cls)!.fits.find((f) => f.topFraction === 0.5)!.looMedian)} in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one.`,
+  };
+}
 
 const season: Season & Record<string, unknown> = {
   name: "Season 2",
@@ -270,8 +290,11 @@ for (const category of [...new Set(FAMILIES.map((f) => f.category))]) {
       const d = b.features.derived;
       const moving = (d.angularSpeed ?? 0) > 1;
       const p = b.prediction.points.find((q) => q.topFraction === 0.5)!;
+      // What the season holds, which is the prediction until a real board has recut it.
+      const row = scenarios.find((x) => x.scenario === b.name)!;
+      const recut = (row.source as { kind?: string } | undefined)?.kind === "percentile";
       lines.push(
-        `| ${BANDS[b.band]} | ${fmt(d.targetDeg, 2)} | ${moving ? fmt(d.angularSpeed) : "still"} | ${moving && (d.strafePeriod ?? 99) < 30 ? fmt(d.strafePeriod, 2) : "-"} | ${b.cls === "switch" ? fmt(d.ttk, 2) : "-"} | ${Math.round(p.score)} (${Math.round(p.low)}-${Math.round(p.high)}) | ${b.rankMaxes.join(", ")} |`,
+        `| ${BANDS[b.band]} | ${fmt(d.targetDeg, 2)} | ${moving ? fmt(d.angularSpeed) : "still"} | ${moving && (d.strafePeriod ?? 99) < 30 ? fmt(d.strafePeriod, 2) : "-"} | ${b.cls === "switch" ? fmt(d.ttk, 2) : "-"} | ${Math.round(p.score)} (${Math.round(p.low)}-${Math.round(p.high)}) | ${row.rankMaxes.join(", ")}${recut ? " (from its board)" : ""} |`,
       );
     }
     lines.push("");

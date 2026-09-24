@@ -66,11 +66,15 @@ Three steps, in order. None has been done.
 1. **Share every scenario from inside KovaaK's.** A ranked run is verified against KovaaK's
    own servers (PLAN.md §5), and a scenario only has a board there once it has been shared.
    Until then the season's `leaderboardId`s are `null` and no run on it can be verified.
-2. **Sample the new boards and record their ids.** The same sampler season 1 uses; the ids
-   go into `data/seasons/season-2.json`.
-3. **Recut thresholds from real play.** Every threshold is a prediction (`source.kind:
-   "predicted"`, with the model's error in its `why`). Once Apogee players have played a
-   scenario enough, its thresholds should come from their runs, not the model.
+2. **Record the boards and recut from them.** `npm run recut:season-2` finds each scenario's
+   board by its exact name and writes its `leaderboardId`. Where a board has 500 entries or
+   more, it samples it and replaces that row's predicted thresholds with ones read off the
+   board, at the same percentiles (`source.kind: "percentile"`). Rows on thinner boards keep
+   their prediction. It can be re-run as boards grow; `build:season-2` keeps what it wrote,
+   and warns if a scenario with a board is changed, because KovaaK's keys a board on the
+   name and a changed file shared under the same name puts two scenarios on one board.
+3. **Recut from Apogee's own population** once there is one. A KovaaK's board is everyone
+   who played the scenario; Apogee's is the people it ranks.
 
 Publishing the season itself follows season 1's path: the season file the app loads is
 `seasons/season-1.json` (`SEASON_FILE` in `src/core/season/season.ts`), and pushing a

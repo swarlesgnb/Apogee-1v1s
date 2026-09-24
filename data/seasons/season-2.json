@@ -1050,7 +1050,7 @@
       "file": "data/season-2/difficulty_model.json"
     }
   },
-  "builtAt": "2026-09-24T05:23:54.328Z",
+  "builtAt": "2026-09-24T05:28:38.604Z",
   "scenarios": [
     {
       "scenario": "Apogee Meridian Novice",
@@ -1073,7 +1073,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -1097,7 +1097,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -1121,7 +1121,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -1143,7 +1143,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -1167,7 +1167,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -1191,7 +1191,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -1215,7 +1215,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -1237,7 +1237,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -1261,7 +1261,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -1285,7 +1285,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -1309,7 +1309,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -1331,7 +1331,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -1355,7 +1355,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -1379,7 +1379,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -1403,7 +1403,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -1425,7 +1425,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -1449,7 +1449,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -1473,7 +1473,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -1497,7 +1497,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -1519,7 +1519,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -1543,7 +1543,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -1567,7 +1567,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -1591,7 +1591,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -1613,7 +1613,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -1637,7 +1637,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -1661,7 +1661,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -1685,7 +1685,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -1707,7 +1707,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -1731,7 +1731,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -1755,7 +1755,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -1779,7 +1779,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -1801,7 +1801,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -1825,7 +1825,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -1849,7 +1849,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -1873,7 +1873,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -1895,7 +1895,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -1919,7 +1919,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -1943,7 +1943,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -1967,7 +1967,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -1989,7 +1989,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -2013,7 +2013,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -2037,7 +2037,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -2061,7 +2061,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -2083,7 +2083,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -2107,7 +2107,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -2131,7 +2131,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -2155,7 +2155,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -2177,7 +2177,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.13 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -2201,7 +2201,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -2225,7 +2225,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -2249,7 +2249,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -2271,7 +2271,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -2295,7 +2295,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -2319,7 +2319,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -2343,7 +2343,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -2365,7 +2365,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -2389,7 +2389,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -2413,7 +2413,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -2437,7 +2437,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -2459,7 +2459,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -2483,7 +2483,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -2507,7 +2507,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -2531,7 +2531,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -2553,7 +2553,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -2577,7 +2577,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -2601,7 +2601,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -2625,7 +2625,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -2647,7 +2647,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -2671,7 +2671,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -2695,7 +2695,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -2719,7 +2719,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -2741,7 +2741,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -2765,7 +2765,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -2789,7 +2789,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -2813,7 +2813,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -2835,7 +2835,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -2859,7 +2859,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -2883,7 +2883,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -2907,7 +2907,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -2929,7 +2929,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -2953,7 +2953,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -2977,7 +2977,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -3001,7 +3001,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -3023,7 +3023,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -3047,7 +3047,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -3071,7 +3071,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -3095,7 +3095,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -3117,7 +3117,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -3141,7 +3141,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -3165,7 +3165,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -3189,7 +3189,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -3211,7 +3211,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -3235,7 +3235,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -3259,7 +3259,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -3283,7 +3283,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -3305,7 +3305,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the tracking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.375 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -3329,7 +3329,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -3353,7 +3353,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -3377,7 +3377,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -3399,7 +3399,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -3423,7 +3423,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -3447,7 +3447,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -3471,7 +3471,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -3493,7 +3493,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -3517,7 +3517,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -3541,7 +3541,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -3565,7 +3565,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -3587,7 +3587,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -3611,7 +3611,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -3635,7 +3635,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -3659,7 +3659,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -3681,7 +3681,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -3705,7 +3705,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -3729,7 +3729,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -3753,7 +3753,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -3775,7 +3775,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -3799,7 +3799,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -3823,7 +3823,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -3847,7 +3847,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -3869,7 +3869,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -3893,7 +3893,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -3917,7 +3917,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -3941,7 +3941,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -3963,7 +3963,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -3987,7 +3987,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -4011,7 +4011,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -4035,7 +4035,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -4057,7 +4057,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -4081,7 +4081,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -4105,7 +4105,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -4129,7 +4129,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -4151,7 +4151,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -4175,7 +4175,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -4199,7 +4199,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -4223,7 +4223,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -4245,7 +4245,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -4269,7 +4269,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -4293,7 +4293,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -4317,7 +4317,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -4339,7 +4339,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -4363,7 +4363,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -4387,7 +4387,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -4411,7 +4411,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     },
     {
@@ -4433,7 +4433,7 @@
       ],
       "source": {
         "kind": "predicted",
-        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from Apogee's own runs once there are enough."
+        "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.132 in its own units; see data/season-2/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason2.ts once there is one."
       }
     }
   ]

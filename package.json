@@ -97,7 +97,8 @@
     "build:season-2": "tsx tools/buildSeason2.ts",
     "fit:difficulty": "tsx tools/fitDifficulty.ts",
     "validate:season2": "tsx src/core/scenario/validateSeason2.ts",
-    "install:season-2": "tsx tools/installSeason2.ts"
+    "install:season-2": "tsx tools/installSeason2.ts",
+    "recut:season-2": "tsx tools/recutSeason2.ts"
   },
   "devDependencies": {
     "@electric-sql/pglite": "^0.5.5",
