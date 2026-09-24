@@ -121,7 +121,7 @@ Leave-one-out median error at the board median (`data/season-2/difficulty_model.
 | Class | Scenarios | Features | LOO median | LOO 90th pct |
 | --- | ---: | --- | ---: | ---: |
 | Clicking | 193 | nearest-flick Fitts ID, log angular speed, log shots to kill | 0.200 (about 22% in time per kill) | 0.524 |
-| Tracking | 166 | log speed/size, log size, log strafe period, airborne | 0.410 logit (about 10 points of share mid-board) | 1.001 |
+| Tracking | 166 | log speed/size, log size, log strafe period, airborne, log seconds to full speed | 0.404 logit (about 10 points of share mid-board) | 0.916 |
 | Switching | 85 | log speed/size, nearest-flick Fitts ID, log time to kill | 0.158 logit | 0.434 |
 
 Two findings shaped how the model is used.
@@ -130,9 +130,14 @@ Two findings shaped how the model is used.
   from Novice (598) to Intermediate (568), although the target shrinks and speeds up: a harder
   scenario draws a stronger crowd. A pooled model predicts the board of a typical crowd.
 - **A sibling's board was measured too.** Predicting a variant from another variant's board
-  (0.153, 0.327, 0.144) is as good as or better than the pooled fit, clearly so for tracking.
+  (0.153, 0.232, 0.144) is as good as or better than the pooled fit, clearly so for tracking.
   No season-2 scenario has a sibling with a board, so the pooled fit is the only option until
   one does.
+
+How sharply a target turns matters to tracking and is in the file: seconds to reach full
+speed, `MaxSpeed / Acceleration`. Adding it moved tracking's leave-one-out error at the top 5%
+of the board from 0.432 to 0.391, and lets the model tell Glide's gentle reversals from
+Duel's sharp ones, which it otherwise could not.
 
 The model is weakest where the file says least: moving targets whose paths the dodge profile
 only sketches (Popcorn is its worst clicking miss), and path-spawning or pressure scenarios

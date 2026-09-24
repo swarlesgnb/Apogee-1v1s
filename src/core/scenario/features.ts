@@ -38,6 +38,8 @@ export interface TargetFeatures {
   regenPerSec: number;
   /** Top ground speed, world units per second. Zero for a target that never moves. */
   speed: number;
+  /** World units per second squared: how sharply it starts, stops and reverses. */
+  acceleration: number;
   gravity: number;
   jumpVelocity: number;
   flyer: boolean;
@@ -342,6 +344,7 @@ function target(sce: Sce, bot: string, count: number): TargetFeatures | null {
     health: num(chr, "MaxHealth", 0),
     regenPerSec: num(chr, "HealthRegenPerSec", 0),
     speed: noDodging ? 0 : num(chr, "MaxSpeed", 0),
+    acceleration: num(chr, "Acceleration", 0),
     gravity: num(chr, "Gravity", 0),
     // Newer characters carry a range instead of one value.
     jumpVelocity: num(chr, "JumpVelocity", num(chr, "JumpVelocityMax", 0)),

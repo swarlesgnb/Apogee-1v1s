@@ -103,7 +103,7 @@ export function fromMetric(cls: DifficultyClass, f: ScenarioFeatures, metric: nu
 
 export const FEATURE_NAMES: Record<DifficultyClass, string[]> = {
   click: ["fitts ID of the nearest flick", "log(1 + angular speed)", "log(shots to kill)"],
-  track: ["log(angular speed / size)", "log(size)", "log(strafe period)", "leaves the ground"],
+  track: ["log(angular speed / size)", "log(size)", "log(strafe period)", "leaves the ground", "log(seconds to full speed)"],
   switch: ["log(angular speed / size)", "fitts ID of the nearest flick", "log(time to kill)"],
 };
 
@@ -117,7 +117,11 @@ export function featureVector(cls: DifficultyClass, f: ScenarioFeatures): number
   }
   if (cls === "track") {
     const airborne = main.flyer || ((main.jumpFrequency ?? 0) > 0 && main.jumpVelocity > 0) ? 1 : 0;
-    return [Math.log(speed / d.targetDeg!), Math.log(d.targetDeg!), Math.log(d.strafePeriod ?? 1), airborne];
+    // How sharply it turns: a target that takes a third of a second to reach speed reverses
+    // in a curve a player can follow, one that takes a hundredth reverses in a corner.
+    // Clamped because a zero acceleration in a file means "instant" to some templates.
+    const ramp = main.acceleration > 0 ? main.speed / main.acceleration : 0.01;
+    return [Math.log(speed / d.targetDeg!), Math.log(d.targetDeg!), Math.log(d.strafePeriod ?? 1), airborne, Math.log(Math.min(5, Math.max(0.01, ramp)))];
   }
   return [Math.log(speed / d.targetDeg!), d.fittsIdNearest ?? 0, Math.log(Math.max(d.ttk ?? 0, 0.02))];
 }
