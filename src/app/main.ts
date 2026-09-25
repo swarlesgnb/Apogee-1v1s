@@ -2585,7 +2585,7 @@ ipcMain.handle("apogee:getStanding", async () => {
 /**
  * Whether this account may queue yet, and how far off it is if not.
  *
- * Signed out, the answer is null rather than a refusal: "you need 100 runs" is a
+ * Signed out, the answer is null rather than a refusal: "you need 50 runs" is a
  * confusing thing to tell somebody whose actual problem is that they have not signed in.
  */
 async function currentEligibility(): Promise<QueueEligibility | null> {

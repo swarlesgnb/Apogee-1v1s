@@ -66,7 +66,7 @@ network is up does not sign you out: the app says it is retrying and carries on.
 ## 4. Your history uploads itself
 
 A match is scored against your own recent runs, so those runs have to be on the server
-before the first match means anything. Ranked needs 100 uploaded runs. If your PC holds
+before the first match means anything. Ranked needs 50 uploaded runs. If your PC holds
 enough, Apogee starts the upload the first time you sign in and says so; several thousand
 runs takes a minute or two, with a progress bar. If it does not start, the note under the
 queue button has an **Upload my runs** button, and so does the **Your history** panel.

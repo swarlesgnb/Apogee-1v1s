@@ -1,6 +1,6 @@
 {
   "name": "apogee",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": true,
   "description": "Ranked 1v1 for KovaaK's",
   "author": "Rylee",
@@ -67,7 +67,7 @@
     "audit:look": "node tools/auditLook.mjs",
     "verify:deployment": "tsx tools/verifyDeployment.ts",
     "grant:admin": "tsx tools/grantAdmin.ts",
-        "cut:thresholds": "tsx tools/cutThresholds.ts",
+    "cut:thresholds": "tsx tools/cutThresholds.ts",
     "propose:families": "tsx tools/proposeFamilies.ts",
     "docs:ranks": "tsx tools/buildRankSheet.ts",
     "push:season": "tsx tools/pushSeason.ts",
