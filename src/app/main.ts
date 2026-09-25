@@ -334,7 +334,7 @@ function installScenarioFiles(statsDir: string): void {
     const { written, removed } = installSeasonScenarios(scenariosFolderFor(statsDir));
     if (written.length > 0 || removed.length > 0) {
       log(`scenario files: ${written.length} written, ${removed.length} removed`);
-      broadcast("apogee:notice",
+      notify(
         `Installed ${written.length} Apogee scenario${written.length === 1 ? "" : "s"}. ` +
         "If KovaaK's is open, restart it to load them.");
     }
@@ -352,7 +352,7 @@ function refreshInstalledPlaylists(statsDir: string): void {
   try {
     const refreshed = refreshStalePlaylists(loadSeason(), playlistsFolderFor(statsDir));
     if (refreshed.length > 0) {
-      broadcast("apogee:notice",
+      notify(
         `Updated ${refreshed.length} Apogee playlist${refreshed.length === 1 ? "" : "s"} to this season's scenarios. ` +
         "If KovaaK's is open, restart it to load them.");
     }
@@ -1189,6 +1189,7 @@ function runSmokeTest(): void {
         datedBoards: /boards as of/.test(
           document.getElementById("apexNote")?.textContent ?? "",
         ),
+        note: document.getElementById("apexNote")?.textContent ?? "",
         boardPanel: document.getElementById("apexBoardBody") !== null,
         boardNote: (
           document.getElementById("apexBoardNote")?.textContent ?? ""
@@ -1196,8 +1197,13 @@ function runSmokeTest(): void {
       };
     })()`);
 
+    // No season scenario has a KovaaK's board until they are shared in-game: that is a
+    // state to say, not a failure, and the check is that the screen says it.
+    const unsampled = apex.err === APEX_UNSAMPLED;
     if (!apex.tab) problems.push("the Apex tab is not in the DOM");
-    if (apex.err) problems.push(`the apex board failed: ${apex.err}`);
+    if (unsampled) {
+      if (!apex.note.includes("No KovaaK's leaderboard")) problems.push("the apex board does not say its boards are unsampled");
+    } else if (apex.err) problems.push(`the apex board failed: ${apex.err}`);
     else if (apex.categories <= 0) problems.push("the apex board has no categories");
     else if (apex.panels === 0) problems.push("the apex board painted no categories");
     else if (apex.rows !== apex.families) {
@@ -1216,8 +1222,8 @@ function runSmokeTest(): void {
     }
 
     if (!apex.boardPanel) problems.push("the Apex screen has nowhere to list the leaderboard");
-    // One per category plus the derived overall.
-    else if (apex.tabs !== apex.categories + 1) {
+    // One per category plus the derived overall; unsampled, there are no categories to tab.
+    else if (!unsampled && apex.tabs !== apex.categories + 1) {
       problems.push("the leaderboard does not offer a tab per category");
     } else if (apex.boardNote === 0) {
       // Signed out this is the line telling somebody why the board is empty. Blank
@@ -1227,7 +1233,9 @@ function runSmokeTest(): void {
 
     console.log(
       `apex board   : ${
-        apex.err
+        unsampled
+          ? "no season scenario has a sampled board yet, and the screen says so"
+          : apex.err
           ? `FAILED (${apex.err})`
           : `${apex.points.toFixed(2)} points, ${apex.graded}/${apex.families} families ` +
             `scored, ${apex.placed} placed, ${apex.targets} with a next target, ` +
@@ -3713,6 +3721,10 @@ ipcMain.handle("apogee:launchScenario", async (_e, { scenario } = {} as any) => 
  * somebody would forge a score onto. The two agree for an honest player, and where they
  * do not, the server's is the one that counts.
  */
+const APEX_UNSAMPLED =
+  "No KovaaK's leaderboard for this season's scenarios yet, so there is nothing to place " +
+  "you against. Apex points start once the boards are sampled.";
+
 ipcMain.handle("apogee:apex", () => {
   let season;
   try {
@@ -3735,6 +3747,13 @@ ipcMain.handle("apogee:apex", () => {
     // Absent rather than fatal: a build without the sampled boards still runs, it just
     // cannot show this panel. Saying so beats an empty board that reads as a bad score.
     return { error: "no sampled leaderboards in this build - run npm run sample:apex" };
+  }
+
+  // Apogee's own scenarios have no KovaaK's board until they are shared in-game (see
+  // docs/season-1.md). Without one every family grades as 0.00 points and "41 of 41
+  // scored", which reads as a bad score rather than as nothing to measure against.
+  if (!season.scenarios.some((sc) => sources.boards.has(sc.scenario))) {
+    return { error: APEX_UNSAMPLED };
   }
 
   const history = state.statsDir
@@ -3795,6 +3814,16 @@ ipcMain.handle("apogee:apex", () => {
  */
 ipcMain.handle("apogee:apexBoard", async (_e, { category } = {} as any) => {
   if (!state.session) return { error: "sign in to see the board" };
+
+  // The server builds this board from the same sampled boards (refresh-apex answers 503
+  // without them), so an unsampled season is said plainly rather than shown as empty.
+  try {
+    const sampled = JSON.parse(readFileSync(dataFile("leaderboard_apex.json"), "utf8")) as { boards?: { scenario: string }[] };
+    const names = new Set((sampled.boards ?? []).map((b) => b.scenario));
+    if (!loadSeason().scenarios.some((sc) => names.has(sc.scenario))) return { error: APEX_UNSAMPLED };
+  } catch {
+    // Unreadable locally is not a reason to hide the server's board; ask it anyway.
+  }
 
   let refreshed = true;
   try {

@@ -966,6 +966,26 @@ function makeCopyable(el, name) {
 }
 
 /** The same banner, for something that worked. `quiet` for news nobody just asked for. */
+/**
+ * A found folder with no runs in it is a new KovaaK's install, not a missing folder. The
+ * first-run panel kept saying "Find your stats folder" beside a status bar reading
+ * "Watching", and pointed every locked tab at the folder chooser.
+ */
+function paintFolderFound() {
+  const banner = $("banner");
+  if (current || !currentPath || (banner.classList.contains("on") && !banner.classList.contains("notice"))) return;
+  $("emptyText").textContent =
+    "Found your stats folder. Play any scenario in KovaaK's and it shows up here the moment the run is saved.";
+  const first = document.querySelector("#empty .empty-step");
+  if (first) {
+    first.classList.add("done");
+    first.querySelector("h3").textContent = "Stats folder found";
+    first.querySelector("p").textContent = currentPath;
+  }
+  const choose = $("emptyChoose");
+  if (choose) { choose.textContent = "Use a different folder…"; choose.classList.add("secondary"); }
+}
+
 function showNotice(message, quiet = false) {
   const banner = $("banner");
   banner.textContent = message;
@@ -1053,6 +1073,10 @@ function render(data) {
   $("whoami").hidden = false;
 
   const me = data.player.apogee;
+  // No season run yet: the snapshot still derives a tier from percentile 0, which named the
+  // player the lowest rank while "next rank" named the same one. Unplaced is the fact.
+  const placed = !!data.player.benchmarkRank;
+  const tierName = placed ? me.tier.name : "Unplaced";
 
   // The whole chrome takes the player's rank colour: the selected tab's number, focus
   // rings, the badge, the one tile on the pool screen that is an instruction. The
@@ -1061,14 +1085,14 @@ function render(data) {
   document.documentElement.style.setProperty("--accent", me.tier.color);
 
   $("myBadge").innerHTML = badge(me.tier, "me");
-  $("myTier").textContent = me.tier.name;
+  $("myTier").textContent = tierName;
   $("myTier").style.color = legibleOnDark(me.tier.color, RANK_TEXT_CONTRAST);
   paintRating();
   $("myStreak").textContent = data.player.streak + "-day streak";
 
   $("heroBadge").innerHTML = badge(me.tier, "hero");
   document.querySelector(".rank-showcase").dataset.material = String(me.tier.id || "tier-1");
-  $("heroName").textContent = me.tier.name;
+  $("heroName").textContent = tierName;
   $("heroName").style.color = legibleOnDark(me.tier.color, RANK_TEXT_CONTRAST);
 
   // Three separate facts, so they read as three. Run together on one line they were a
@@ -1078,7 +1102,14 @@ function render(data) {
   // thing, not by travelling to a new value.
   paintRating();
   // "Top 100.0%" is a placement nobody has; below the lowest rung it is simply unplaced.
-  countTo($("heroPercentile"), Math.min(99.9, 100 - me.percentile), (v) => "top " + v.toFixed(1) + "%");
+  if (placed) countTo($("heroPercentile"), Math.min(99.9, 100 - me.percentile), (v) => "top " + v.toFixed(1) + "%");
+  else {
+    const el = $("heroPercentile");
+    if (el._countRaf) cancelAnimationFrame(el._countRaf);
+    el._countRaf = 0;
+    el._countValue = undefined;
+    el.textContent = "not placed yet";
+  }
   countTo($("heroRuns"), data.player.totalRuns, num);
   countTo(
     $("heroScenarios"),
@@ -7017,8 +7048,10 @@ function renderRanks(data) {
 
   // Highest tier first: a ladder reads top-down, and the top is what people are
   // climbing toward.
+  // Unplaced marks no rung: the lowest tier is where percentile 0 falls, not a placement.
+  const placed = !!data.player.benchmarkRank;
   [...tiers].reverse().forEach((tier) => {
-    const here = tier.id === me.tier.id;
+    const here = placed && tier.id === me.tier.id;
     const li = document.createElement("li");
     li.className = here ? "here" : "";
     li.style.setProperty("--tier", tier.color);
@@ -11947,6 +11980,7 @@ if (HOST === "electron") {
 
   api.onScanning(({ scanning }) => {
     setStatus(scanning ? "scanning" : "ok", scanning ? "Scanning…" : "Watching", currentPath);
+    if (!scanning) paintFolderFound();
   });
 
   api.onError((message) => {
@@ -11977,7 +12011,7 @@ if (HOST === "electron") {
       if (state.lastError) {
         showError(state.lastError);
         $("emptyText").textContent = state.lastError;
-      }
+      } else if (!state.scanning) paintFolderFound();
     }
   });
 } else {
