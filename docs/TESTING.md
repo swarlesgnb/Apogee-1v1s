@@ -21,7 +21,7 @@ timestamps and your Steam id. Not your files, not your inputs, not your screen.
 
 ## 1. Install
 
-Download `Apogee-0.4.0-rc.3-setup.exe` and run it.
+Download `Apogee-0.4.0-setup.exe` from the release page and run it.
 
 Windows will show a blue **Windows protected your PC** box, because the installer is not
 code-signed. Click **More info**, then **Run anyway**. A signing certificate is a few
@@ -49,6 +49,10 @@ is remembered after that.
 
 A fresh KovaaK's install with no runs yet is fine too; Apogee says the folder was found
 and picks up your first run as it lands.
+
+On first launch Apogee also installs Season 1's 164 scenarios into KovaaK's. They exist
+nowhere else, and KovaaK's only reads scenarios when it starts, so if the game was open,
+restart it before looking for them.
 
 The status bar shows how many runs it found. If that number is zero and you have played
 KovaaK's, the folder is wrong.
