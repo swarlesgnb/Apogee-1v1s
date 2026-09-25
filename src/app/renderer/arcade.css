@@ -235,15 +235,24 @@ body[data-queue="working"] .queue-stage { border-top-color: var(--brand); }
    So every rule here holds the box still. The mark is drawn, not written, and reserves
    the same space empty as filled; no state changes a font, a padding or a width. What
    changes on click is colour, and colour cannot reflow a row. */
+/* 12px, not 9: at 9px a 1.5px ring left a 6px hole, which read as a filled dot, so an
+   empty chip and an installed one looked the same. The installed mark carries a tick as
+   well as a fill, so the two differ in shape and not only in colour. */
 .pool-chip .mark {
-  flex: none; width: 9px; height: 9px; border-radius: 50%;
-  border: 1.5px solid var(--rule-3); background: transparent;
+  flex: none; width: 12px; height: 12px; border-radius: 50%; position: relative;
+  border: 1.5px dashed var(--rule-2); background: transparent; box-sizing: border-box;
 }
 .pool-chip .lbl { white-space: nowrap; }
 .pool-chip.is-installed {
   color: var(--ink); border-color: var(--brand-line); background: var(--brand-well);
 }
-.pool-chip.is-installed .mark { border-color: var(--brand); background: var(--brand); }
+.pool-chip.is-installed .mark { border: 1.5px solid var(--brand); background: var(--brand); }
+.pool-chip.is-installed .mark::after {
+  content: ""; position: absolute; left: 3px; top: 1px; width: 3px; height: 6px;
+  border: solid var(--brand-ink); border-width: 0 1.5px 1.5px 0; transform: rotate(45deg);
+}
+/* The confirmation of a click: an outline, which takes no layout space, so the row holds. */
+.pool-chip.just-written { outline: 2px solid var(--brand); outline-offset: 1px; }
 .pool-chip.is-installed:hover { border-color: var(--brand); background: var(--brand-well); }
 /* Busy, not disabled: :disabled dims the whole chip, which reads as "not available"
    rather than "working", and the chip is available - it is being acted on.
@@ -363,3 +372,77 @@ body[data-queue="working"] .queue-stage { border-top-color: var(--brand); }
   .queue-selection { padding-top: 14px; }
   .queue-stage .commit { min-height: 61px; padding: 11px 16px; }
 }
+
+/* ---- Season and Scenarios, compacted ----
+   Both screens read as claustrophobic at the 1280x880 window most players run: every
+   tile stacked six lines (name, its circuit number alone on a line, aim tag, benchmark
+   marks, score, ranks, and in the app a full-width Play button), so a band's 64 tiles ran
+   to about 32 rows of two. Scoped to the two screens by id, so none of it reaches the
+   season editor. */
+
+/* The Season pool is `.pool-grid`, which the season editor also uses for its scrolling
+   grid, with `overflow: auto` and a right border. Inherited here, that border ran flush
+   against the tiles and the overflow clipped the category rank at the right edge: the
+   missing padding. */
+#screen-seasonview #svPool { overflow: visible; border-right: 0; gap: 24px; }
+
+#screen-seasonview .sv-stats { gap: 10px 36px; }
+#screen-seasonview .sv-stat .v { font-size: 24px; }
+#screen-seasonview .pool-bands { margin-bottom: var(--s4); }
+#screen-seasonview .pool-band { padding: var(--s2); }
+#screen-seasonview .pool-layout { gap: var(--s4); }
+#screen-seasonview .pool-nav-item { padding: 6px var(--s3); }
+#screen-seasonview .pool-cat { gap: 10px; }
+#screen-seasonview .pool-circuit-intro { padding: 0 0 4px; }
+#screen-seasonview .pool-circuit-intro p { margin: 4px 0 6px; line-height: 1.55; }
+#screen-seasonview .pool-sub + .pool-sub { margin-top: 16px; }
+
+/* Three across at 1280, four at 1440, instead of two. */
+#screen-seasonview .pool-sub .pool-tiles {
+  gap: 6px; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+
+/* The tile, in three lines: number and name; aim tag and benchmark marks; score beside
+   Play, then ranks. The Play button moves up beside the score rather than taking a
+   full-width line of its own, and stays in the same place in every tile. */
+#screen-seasonview .pool-row {
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 5px 8px; padding: 9px 10px 10px;
+}
+#screen-seasonview .pool-row .nm { grid-column: 1 / -1; gap: 4px 6px; }
+#screen-seasonview .pool-row .pool-focus {
+  order: -1; display: inline; flex-basis: auto; margin: 0;
+  font-family: var(--mono); font-size: var(--t-2xs); color: var(--ink-dim);
+}
+/* Wide enough that the tags always start their own line, and never beside the name. */
+#screen-seasonview .pool-row .nm > .nm-text { flex: 1 0 calc(100% - 26px); }
+#screen-seasonview .pool-row .pool-from { width: auto; margin-top: 0; }
+#screen-seasonview .pool-row .pool-num { grid-column: 1; grid-row: 2; align-self: center; }
+#screen-seasonview .pool-row .pool-rk { grid-column: 1 / -1; grid-row: 3; }
+#screen-seasonview .pool-row .scen-play {
+  grid-column: 2; grid-row: 2; width: auto; padding: 2px 10px; align-self: center;
+}
+
+/* Scenarios: the filters were two rows of full-height buttons and the table's rows were
+   padded like a document, so the table began below the middle of the window. */
+#screen-scenarios .sc-search { margin-bottom: 8px; padding: 6px 10px; }
+#screen-scenarios .pool-bands.sc-filter { margin-bottom: 6px; padding: 2px; gap: 2px; }
+#screen-scenarios .pool-bands.sc-filter .pool-band { padding: 5px var(--s1); }
+#screen-scenarios table.scen td { padding-block: 5px; }
+#screen-scenarios table.scen th { padding-block: 8px; }
+/* One line per scenario: a name that wrapped under its band tag made rows of two
+   heights, and a list you scan by row reads badly when the rows are uneven. */
+#screen-scenarios table.scen td:first-child { white-space: nowrap; }
+/* The room for it comes from the Category column, which the filter above already
+   answers, below the width where the table holds every column and the Play button. At
+   1280 the preview's table fit with no room to spare and the app adds a Play column. */
+@media (max-width: 1400px) {
+  #screen-scenarios table.scen th:nth-child(2), #screen-scenarios table.scen td:nth-child(2) { display: none; }
+}
+@media (max-width: 1100px) {
+  #screen-scenarios table.scen td:first-child { white-space: normal; }
+}
+#screen-scenarios .pool-bands.sc-filter .pool-band { letter-spacing: .05em; white-space: nowrap; }
+#screen-scenarios table.scen td, #screen-scenarios table.scen th { padding-inline: 10px; }
+#screen-seasonview .pool-sub-head[hidden] { display: none; }
+#screen-seasonview .pbody > .rank-lede { max-width: 96ch; margin-block: 0 8px; }

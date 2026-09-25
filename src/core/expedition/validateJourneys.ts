@@ -6,6 +6,7 @@ import { loadExpedition, rewardCatalog } from './definition.ts';
 import { enroll, acceptChallenge, startTrial, syncExpedition, abandonTrial, canStartTrial, preparationReady, savedCheckpoints, trialSteps, challengeOffers } from './engine.ts';
 import { migrateExpedition } from './migrate.ts';
 import { journeyView } from './journey.ts';
+import { bandFit, recommendBand, scenarioIntel } from './intel.ts';
 import { ExpeditionStore, validState } from './store.ts';
 import { ExpeditionService } from '../../app/expedition.ts';
 import type { ChallengeKind, ExpeditionState } from './types.ts';
@@ -184,4 +185,23 @@ console.log('PASS: all four complete journeys, every final passage, 122 reachabl
 assert.ok(!preparationReady(enroll(def, tick()), def, 'final', 2));
 const broken = structuredClone(campaign); broken.trials[0].mode = 'prepared';
 assert.ok(!validState(broken, def), 'invalid mode/band combinations rejected');
+
+// The deck quotes these numbers beside every target and in the difficulty suggestion.
+const nov = def.destinations.flatMap(x => x.bands[0]), inter = def.destinations.flatMap(x => x.bands[1]);
+assert.equal(recommendBand(def, bandFit(def, scenarioIntel(def, []))).band, 0, 'no history suggests the gentlest band');
+const scout = [run(nov[0].name, nov[0].target * .5), run(nov[0].name, nov[0].target * 1.1), run(nov[0].name, nov[0].target * .9), run('Unrelated scenario', 1e9)];
+const intel = scenarioIntel(def, [...scout, scout[0]]);
+assert.deepEqual(Object.keys(intel), [nov[0].name], 'only expedition scenarios, duplicates counted once');
+assert.equal(intel[nov[0].name].runs, 3); assert.equal(intel[nov[0].name].best, nov[0].target * 1.1);
+assert.equal(intel[nov[0].name].last, nov[0].target * .9); assert.equal(intel[nov[0].name].median, nov[0].target * .9);
+const beating = (rows: typeof nov, n: number, factor: number) => rows.slice(0, n).map(s => run(s.name, s.target * factor));
+let fit = bandFit(def, scenarioIntel(def, [...beating(nov, 4, 1.05), ...beating(inter, 4, .8)]));
+assert.deepEqual(fit[0], { played: 4, met: 4, total: 18 }); assert.deepEqual(fit[1], { played: 4, met: 0, total: 18 });
+assert.equal(recommendBand(def, fit).band, 0, 'a band met at half or better, with too few plays to step up, is suggested itself');
+fit = bandFit(def, scenarioIntel(def, beating(nov, 10, 1.05)));
+const step = recommendBand(def, fit);
+assert.equal(step.band, 1, 'a band met almost everywhere points one higher'); assert.match(step.reason, /10 of 10/);
+fit = bandFit(def, scenarioIntel(def, [...beating(nov, 10, 1.05), ...beating(inter, 4, 1.05)]));
+assert.equal(recommendBand(def, fit).band, 1, 'the highest band that is a real test wins');
+console.log('PASS: scenario intel dedupes and ignores unrelated runs; band fit counts played and met targets; suggestion rule');
 console.log('Journey validation passed.');

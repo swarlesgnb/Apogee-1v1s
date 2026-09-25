@@ -212,6 +212,7 @@ function rebuild(reason: string): void {
 
   state.scanning = true;
   broadcast("apogee:scanning", { scanning: true, reason });
+  const startedAt = performance.now();
 
   try {
     // Its own try: the solo Expedition failing to load must not cost the player their
@@ -258,6 +259,10 @@ function rebuild(reason: string): void {
   } finally {
     state.scanning = false;
     broadcast("apogee:scanning", { scanning: false, reason });
+    // Timed into the log so a stutter in KovaaK's can be laid against what Apogee was
+    // doing at that minute. A warm rebuild measured 44-144ms on a 13,861-run folder and a
+    // cold one 54s, so a line here past a second is the thing worth asking about.
+    log(`rebuild (${reason}) ${Math.round(performance.now() - startedAt)}ms`);
   }
 }
 

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-23T20:36:42.020Z",
+  "generatedAt": "2026-09-23T22:41:49.680Z",
   "coverage": [
     {
       "category": "Dynamic Clicking",
@@ -1879,7 +1879,7 @@
       "windowName": "Novice",
       "total": 13,
       "measured": 9,
-      "runs": 130,
+      "runs": 131,
       "matchable": true,
       "complete": false,
       "scenarios": [
@@ -1940,18 +1940,18 @@
           "needs": 0
         },
         {
-          "scenario": "2 Tile Jumbo Tile Frenzy",
-          "label": "2 Tile Jumbo Tile Frenzy",
-          "family": "2Guys",
+          "scenario": "Jumbo Tile Frenzy",
+          "label": "Jumbo Tile Frenzy",
+          "family": "Tile Frenzy",
           "runs": 13,
           "measured": true,
           "needs": 0
         },
         {
-          "scenario": "Jumbo Tile Frenzy",
-          "label": "Jumbo Tile Frenzy",
-          "family": "Tile Frenzy",
-          "runs": 13,
+          "scenario": "2 Tile Jumbo Tile Frenzy",
+          "label": "2 Tile Jumbo Tile Frenzy",
+          "family": "2Guys",
+          "runs": 14,
           "measured": true,
           "needs": 0
         },
@@ -1995,7 +1995,7 @@
       "windowName": "Intermediate",
       "total": 13,
       "measured": 9,
-      "runs": 292,
+      "runs": 293,
       "matchable": true,
       "complete": false,
       "scenarios": [
@@ -2040,14 +2040,6 @@
           "needs": 0
         },
         {
-          "scenario": "ClickTrack 3t",
-          "label": "ClickTrack 3t",
-          "family": "Triangle",
-          "runs": 20,
-          "measured": true,
-          "needs": 0
-        },
-        {
           "scenario": "1w2ts Perfected Easier",
           "label": "1w2ts Perfected Easier",
           "family": "2Guys",
@@ -2059,6 +2051,14 @@
           "scenario": "1wall6targets TE",
           "label": "1wall6targets TE",
           "family": "Six Targets",
+          "runs": 21,
+          "measured": true,
+          "needs": 0
+        },
+        {
+          "scenario": "ClickTrack 3t",
+          "label": "ClickTrack 3t",
+          "family": "Triangle",
           "runs": 21,
           "measured": true,
           "needs": 0
@@ -2374,7 +2374,7 @@
     "windowSize": 4
   },
   "player": {
-    "totalRuns": 13837,
+    "totalRuns": 13839,
     "scenarioCount": 1017,
     "streak": 12,
     "benchmarkRank": "Lunar",
@@ -2810,7 +2810,7 @@
           "nextRankWindowName": "Intermediate",
           "nextRankIsNewScenario": false,
           "gap": 0.4590910000000008,
-          "runs": 20
+          "runs": 21
         },
         {
           "name": "1w4ts Voltaic",
@@ -5122,7 +5122,7 @@
         "label": "2 Tile Jumbo Tile Frenzy nov",
         "ceiling": 150,
         "floor": 122,
-        "median": 137,
+        "median": 136.5,
         "gap": 0.18666666666666668
       },
       {
@@ -5817,8 +5817,8 @@
         "xp": 350,
         "target": 5,
         "unit": "runs",
-        "progress": 0,
-        "fraction": 0,
+        "progress": 1,
+        "fraction": 0.2,
         "complete": false,
         "scenario": "2 Tile Jumbo Tile Frenzy"
       },

@@ -30,12 +30,21 @@ app.whenReady().then(async()=>{
   await click('[data-mix="mood"][data-value="push"]');await click('[data-mix="count"][data-value="3"]');
   assert.equal(await run(`document.querySelectorAll('.mix-track').length`),3);
   await run(`document.querySelector('[data-mix="band"]').value='1';document.querySelector('[data-mix="band"]').dispatchEvent(new Event('change',{bubbles:true}))`);await settle();
+  assert.ok(await run(`document.querySelectorAll('.mix-why').length===3`),'Every planned track says why it is in the set');
   await click('[data-mix="start"]');assert.equal(await run(`JSON.parse(localStorage.getItem('apogee.mixtape.v1')).active.band`),1);
-  await click('[data-mix="launch"]');assert.equal(await run(`window.__mixLaunches.length`),1);assert.equal(await run(`JSON.parse(localStorage.getItem('apogee.mixtape.v1')).active.index`),0,'Launch does not count a run');
+  assert.equal(await run(`window.__mixLaunches.length`),1,'Starting opens track 1');
+  assert.ok(await run(`document.querySelector('.mix-listening').textContent.includes('Listening for your run')`),'The set says it is listening');
+  await click('[data-mix="launch"]');assert.equal(await run(`window.__mixLaunches.length`),2);assert.equal(await run(`JSON.parse(localStorage.getItem('apogee.mixtape.v1')).active.index`),0,'Launch does not count a run');
   await run(`window.__mixHandlers[0]({scenario:'unrelated',score:10,playedAt:new Date().toISOString(),file:'wrong'})`);
   assert.equal(await run(`JSON.parse(localStorage.getItem('apogee.mixtape.v1')).active.index`),0);
   const receive=`(()=>{const s=JSON.parse(localStorage.getItem('apogee.mixtape.v1')).active;window.__mixHandlers[0]({scenario:s.tracks[s.index].scenario,score:(s.tracks[s.index].reference||0)+25,playedAt:new Date().toISOString(),file:'receipt-'+s.index})})()`;
   await run(receive);await settle();assert.equal(await run(`JSON.parse(localStorage.getItem('apogee.mixtape.v1')).active.index`),1);
+  assert.ok(await run(`/RUN RECEIVED/.test(document.querySelector('.mix-signal').textContent)&&/Up next/.test(document.querySelector('.mix-signal').textContent)`),'A landed run gets a verdict and names the next track');
+  assert.equal(await run(`!!document.querySelector('.mix-listening')`),false,'A landed run ends the listening state');
+  writeFileSync(join(output,'playing.png'),(await win.webContents.capturePage()).toPNG());
+  await run(`(()=>{const s=JSON.parse(localStorage.getItem('apogee.mixtape.v1')).active;window.__mixHandlers[0]({scenario:s.tracks[2].scenario,score:1,playedAt:new Date().toISOString(),file:'early'})})()`);await settle();
+  assert.ok(await run(`document.querySelector('.mix-signal').textContent.includes('That was track 3')`),'A later track played early is explained, not ignored');
+  assert.equal(await run(`JSON.parse(localStorage.getItem('apogee.mixtape.v1')).active.index`),1,'and does not count');
   await win.reload();await settle();assert.equal(await run(`JSON.parse(localStorage.getItem('apogee.mixtape.v1')).active.index`),1,'Resume after reload');
   await click('[data-mix="skip"]');await run(receive);await settle();
   assert.equal(await run(`JSON.parse(localStorage.getItem('apogee.mixtape.v1')).active`),null);
@@ -43,7 +52,11 @@ app.whenReady().then(async()=>{
   assert.equal(await run(`document.querySelectorAll('.mix-recap .mix-track.played').length`),2);
   assert.equal(await run(`document.querySelectorAll('.mix-recap .mix-track.skipped').length`),1);
   writeFileSync(join(output,'recap.png'),(await win.webContents.capturePage()).toPNG());
-  await click('[data-mix="new"]');await click('[data-mix="history"]');assert.equal(await run(`!!document.querySelector('.mix-recap')`),true,'History opens saved recap');
+  const played=await run(`JSON.parse(localStorage.getItem('apogee.mixtape.v1')).history[0].tracks.map(t=>t.scenario)`);
+  await click('[data-mix="again"]');
+  assert.deepEqual(await run(`JSON.parse(localStorage.getItem('apogee.mixtape.v1')).active.tracks.map(t=>t.scenario)`),played,'Run it back replays the same tracks in order');
+  await click('[data-mix="end"]');
+  await click('[data-mix="history"]');assert.equal(await run(`!!document.querySelector('.mix-recap')`),true,'History opens saved recap');
   await click('[data-mix="new"]');await click('[data-mix="start"]');
   await run(`window.apogee.launchScenario=async()=>({error:'Test launch unavailable'});true`);await click('[data-mix="launch"]');
   assert.ok(await run(`document.querySelector('.mix-message').textContent.includes('Test launch unavailable')`),'Launch failure is visible');
@@ -63,6 +76,12 @@ app.whenReady().then(async()=>{
   await run(`window.dispatchEvent(new CustomEvent('apogee:practice-ready',{detail:window.__APOGEE_PRACTICE__}));true`);await settle();
   assert.ok(await run(`document.querySelector('.mix-message').textContent.includes('left the season pool')`),'A retired scenario is skipped with the reason');
   assert.equal(await run(`JSON.parse(localStorage.getItem('apogee.mixtape.v1')).active.tracks[0].status`),'skipped','The retired track is skipped, not played');
+  // A set saved by the build before tracks carried best and threshold reads as a real best, never NaN.
+  await run(`(()=>{const s=JSON.parse(localStorage.getItem('apogee.mixtape.v1'));for(const t of s.active.tracks){delete t.best;delete t.threshold;delete t.thresholdIndex;t.reference=1234;t.referenceLabel='Personal best';t.target=1500}localStorage.setItem('apogee.mixtape.v1',JSON.stringify(s));return true})()`);
+  await win.reload();await settle();
+  await run(`window.dispatchEvent(new CustomEvent('apogee:practice-ready',{detail:window.__APOGEE_PRACTICE__}));true`);await settle();
+  assert.ok(!(await run(`document.body.innerText.includes('NaN')`)),'An older saved set renders without NaN');
+  assert.ok(await run(`document.body.innerText.includes('1,234')`),'and shows its saved best');
   // Auto-open: a recorded run opens the next track without a trip back to Apogee.
   await run(`window.__opened=[];window.apogee.launchScenario=async(s)=>{window.__opened.push(s);return {ok:true}};true`);
   await click('[data-mix="auto"]');

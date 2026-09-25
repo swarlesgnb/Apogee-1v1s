@@ -6474,7 +6474,11 @@ function renderSeasonView(data) {
       copy.textContent = guide.description;
       const route = document.createElement("span");
       route.className = "pool-circuit-route";
-      route.textContent = inCategory.length + " scenarios · play in order";
+      const playedHere = inCategory.filter((r) => r.runs > 0).length;
+      route.textContent =
+        inCategory.length + " scenarios · " +
+        (playedHere === inCategory.length ? "all played" : playedHere + " played") +
+        " · play in order";
       intro.append(copy, route);
       block.append(intro);
     }
@@ -6493,6 +6497,10 @@ function renderSeasonView(data) {
 
       const subHead = document.createElement("div");
       subHead.className = "pool-sub-head";
+      // A category that is one sub-skill named after itself printed its name twice, a
+      // heading and then the same words as a sub-heading directly under it. The played
+      // count it carried is on the intro's route line instead.
+      if (subs.length === 1 && sub === category.name && guide?.description) subHead.hidden = true;
       const maxed = inSub.filter((r) => r.nextRankScore === null).length;
       subHead.innerHTML =
         '<span class="pool-sub-name">' + esc(sub) + "</span>" +
@@ -6707,6 +6715,8 @@ function renderSeasonView(data) {
  * to be discovered: a playlist that is genuinely on disk and genuinely not in the menu
  * looks exactly like the app having failed.
  */
+/** The chip last written, so the redraw that follows a click can confirm it. */
+let lastWritten = null;
 function renderPlaylists() {
   const host = $("svPlaylists");
   if (!host) return;
@@ -6764,6 +6774,10 @@ function renderPlaylists() {
         note.dataset.done = "1";
         note.textContent = r.dir + " · " + r.note;
       }
+      // Said out loud, because rewriting a playlist that was already installed changes
+      // nothing a chip can show: the mark was filled before the click and is filled after
+      // it, so the click read as ignored and got pressed again.
+      lastWritten = { label: btn.dataset.label, band, at: Date.now() };
       renderPlaylists();
     } finally {
       delete btn.dataset.busy;
@@ -6785,6 +6799,11 @@ function renderPlaylists() {
     // The state is on the button itself, so it reaches a screen reader without the
     // stylesheet and without a second label to keep in step.
     chip.setAttribute("aria-pressed", isIn ? "true" : "false");
+    chip.dataset.label = label;
+    if (lastWritten && lastWritten.band === band && lastWritten.label === label && Date.now() - lastWritten.at < 1500) {
+      chip.classList.add("just-written");
+      setTimeout(() => chip.classList.remove("just-written"), 1200);
+    }
     return chip;
   };
 
@@ -6813,9 +6832,13 @@ function renderPlaylists() {
   const legend = $("svChipLegend");
   if (legend) {
     const n = every.filter((p) => installed.has(p.name)).length;
-    legend.textContent = n === 0
-      ? "None installed yet. A filled mark means the playlist is already in KovaaK's."
-      : n + " of " + every.length + " installed. A filled mark means it is already in KovaaK's.";
+    const status = n === 0
+      ? "None installed yet. A ticked mark means the playlist is already in KovaaK's."
+      : n + " of " + every.length + " installed. A ticked mark means it is already in KovaaK's.";
+    legend.textContent = lastWritten && lastWritten.band === band
+      ? "Wrote " + (lastWritten.label === "All bands" ? "every playlist" : lastWritten.label + " · " + (bands[band] || "")) +
+        ". Restart KovaaK's to load it. " + status
+      : status;
   }
 }
 

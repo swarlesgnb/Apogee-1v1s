@@ -1,3 +1,5 @@
+import type { BandFit, Recommendation, ScenarioIntel } from "./intel.ts";
+
 export interface ExpeditionScenario {
   name: string;
   family: string;
@@ -101,6 +103,10 @@ export interface ExpeditionView {
   offers?: ChallengeOffer[];
   journey?: JourneyView;
   journeys?: Pick<JourneyView, "title" | "description" | "rules">[];
+  /** The player's own history on expedition scenarios, for context beside each target. */
+  intel?: Record<string, ScenarioIntel>;
+  fit?: BandFit[];
+  recommendation?: Recommendation;
 }
 export interface JourneyView {
   title: string;

@@ -3,6 +3,7 @@ import { join } from "node:path";
 import { loadExpedition, rewardCatalog } from "../core/expedition/definition.ts";
 import { abandonTrial, acceptChallenge, challengeOffers, destinationFor, enroll, startTrial, syncExpedition } from "../core/expedition/engine.ts";
 import { migrateExpedition } from "../core/expedition/migrate.ts";
+import { bandFit, recommendBand, scenarioIntel } from "../core/expedition/intel.ts";
 import { journeys, journeyView } from "../core/expedition/journey.ts";
 import { ExpeditionRunReader } from "../core/expedition/runs.ts";
 import { ExpeditionStore } from "../core/expedition/store.ts";
@@ -52,8 +53,9 @@ export class ExpeditionService {
   view(dir: string | null, sync = false): ExpeditionView {
     try {
       this.load();
+      // History is read before enrolment too: the difficulty suggestion depends on it.
+      if (sync && dir) this.history = this.reader.read(dir);
       if (sync && dir && this.state) {
-        this.history = this.reader.read(dir);
         const next = syncExpedition(this.state, this.definition, this.history, Date.now());
         if (JSON.stringify(next) !== JSON.stringify(this.state)) this.commit(next);
       }
@@ -65,7 +67,9 @@ export class ExpeditionService {
       const accepted = this.state?.routes[`${id}:${band}`]?.challenges.find(c => c.kind === offer.kind);
       if (accepted?.steps) offer.steps = accepted.steps;
     }
-    return { definition: this.definition, state: this.state, rewards: this.rewards, error: this.error, warning: this.warning, canPlay: !!dir, sessionStartedAt: this.sessionStartedAt, offers, journeys, journey: journeyView(this.state, this.definition) };
+    const intel = scenarioIntel(this.definition, [...this.history, ...(this.state?.runs ?? [])]), fit = bandFit(this.definition, intel);
+    return { definition: this.definition, state: this.state, rewards: this.rewards, error: this.error, warning: this.warning, canPlay: !!dir, sessionStartedAt: this.sessionStartedAt, offers, journeys, journey: journeyView(this.state, this.definition),
+      intel, fit, recommendation: recommendBand(this.definition, fit) };
   }
   action(raw: unknown, dir: string | null): ExpeditionView {
     this.load();
@@ -142,6 +146,7 @@ export class ExpeditionService {
     });
     const folder = playlistsFolderFor(dir); mkdirSync(folder, { recursive: true });
     writeFileSync(join(folder, playlist.playlistName + ".json"), serializePlaylist(playlist), "utf8");
-    return { scenario: scenarios[0], note: `Opening ${scenarios[0]} in KovaaK's. Come back here and press Play for each next step.` };
+    // The watcher picks the run up on its own; nothing needs pressing on the way back.
+    return { scenario: scenarios[0], note: `Opening ${scenarios[0]} in KovaaK's. Play one run; the result appears here by itself.` };
   }
 }

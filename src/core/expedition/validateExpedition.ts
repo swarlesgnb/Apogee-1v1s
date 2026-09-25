@@ -214,7 +214,7 @@ const enrolled = service.action({ type: "enroll" }, stats); assert.ok(enrolled.s
 assert.throws(() => service.action({ type: "equip", reward: catalog[0].id }, stats), /earned/);
 assert.throws(() => service.action({ type: "select", destination: "nonsense" }, stats), /destination/);
 service.action({ type: "accept" }, stats);
-const playlist = service.playlist(stats); assert.ok(playlist.scenario); assert.ok(playlist.note.includes(playlist.scenario) && /Come back here/.test(playlist.note), "launch note names the scenario and the next step");
+const playlist = service.playlist(stats); assert.ok(playlist.scenario); assert.ok(playlist.note.includes(playlist.scenario) && /appears here by itself/.test(playlist.note), "launch note names the scenario and says the result comes back on its own");
 assert.ok(readdirSync(join(folder, "Saved", "SaveGames", "Playlists")).includes("Apogee Expedition First Light.json"));
 const recovered = new ExpeditionService(join(folder, "service")); assert.ok(recovered.view(stats).state?.routes);
 console.log("PASS: service actions, missing folder, unearned cosmetics, playlist namespace, restart");
