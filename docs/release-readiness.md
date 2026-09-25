@@ -3,7 +3,16 @@
 What still stands between the local candidate and a public release, and how to re-check
 it. The solo campaign rules are in [the solo guide](solo-expedition.md).
 
-## Last local candidate, 2026-09-25
+## 0.4.0, 2026-09-25
+
+- Installer: `release/0.4.0/Apogee-0.4.0-setup.exe`
+- SHA-256: `57d542cf2774bed3e5476fba880aec8ace6025edbbd8ac8e53366a08544c168f`
+- rc.4 with the queue opened at 50 uploaded runs, and `package.json` at 0.4.0.
+  `validatePackage` passed 179 of 179 and the unpacked build booted in `--smoke` from a
+  temporary directory. Unsigned. The bar is enforced by `find-match` too, so it holds only
+  once the functions are redeployed.
+
+## rc.4, 2026-09-25
 
 - Installer: `release/candidate-2026-09-25-rc4/Apogee-0.4.0-rc.4-setup.exe`
 - SHA-256: `ec3f105fa22b441beed7747806d1a69af58d05e333fe014301150e0cb60d9445`
