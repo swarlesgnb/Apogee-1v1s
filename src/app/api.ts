@@ -61,6 +61,9 @@ export function friendlyError(err: unknown): string {
   const name = (err as { name?: string })?.name;
   if (name === "TimeoutError" || name === "AbortError") return "The Apogee server did not answer in time. Try again.";
   if (err instanceof TypeError) return OFFLINE_MESSAGE;
+  // supabase-js wraps its own fetch failures (verifyOtp, refresh) instead of letting the
+  // TypeError through, so offline sign-in surfaced as a bare "fetch failed".
+  if (name === "AuthRetryableFetchError") return OFFLINE_MESSAGE;
   return err instanceof Error ? err.message : String(err);
 }
 

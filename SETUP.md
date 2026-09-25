@@ -271,7 +271,7 @@ their own.
   Run `npm run deploy:functions`.
 - Columns exist but are null after a deploy: the seed was skipped. Run
   `npm run sync:reference`.
-- Steam sign-in returns "Steam rejected the assertion": `STEAM_AUTH_FUNCTION_URL`
+- Steam sign-in fails with "Steam could not confirm this sign-in": `STEAM_AUTH_FUNCTION_URL`
   does not exactly match the deployed function's URL. Steam checks that the return
   address matches the realm it was given.
 - Everything 401s: the anon key was pasted where the service role key belongs, or

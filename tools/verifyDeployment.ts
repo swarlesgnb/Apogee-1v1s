@@ -527,11 +527,18 @@ async function main(): Promise<void> {
       `&openid.mode=id_res&openid.sig=forged`,
     { redirect: "manual" },
   );
+  // It is sent back to the app's loopback as an error, so the app can say so instead of
+  // waiting out its timeout. What must hold is that the redirect carries an error and no
+  // token: a token_hash here would be a session for any SteamID a caller names.
+  // The 400 accepted too is the build before that change, still live until redeployed.
+  const forgedAt = forged.headers.get("location") ?? "";
   const forgedBody = await forged.text();
+  const forgedParams = forgedAt ? new URL(forgedAt).searchParams : new URLSearchParams();
   check(
     "a forged Steam assertion is rejected",
-    forged.status === 400 && /rejected the assertion/i.test(forgedBody),
-    `HTTP ${forged.status} ${forgedBody.slice(0, 80)}`,
+    (forged.status === 302 && forgedParams.has("error") && !forgedParams.has("token_hash")) ||
+      (forged.status === 400 && /rejected the assertion/i.test(forgedBody)),
+    `HTTP ${forged.status} ${forgedParams.get("error") ?? forgedBody.slice(0, 80)}`,
   );
 
   // ---- the match engine ---------------------------------------------------------

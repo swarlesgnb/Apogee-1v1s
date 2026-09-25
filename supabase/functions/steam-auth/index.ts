@@ -238,17 +238,20 @@ async function handleCallback(req: Request): Promise<Response> {
   const state = params.get("state") ?? "";
   if (!state) return badRequest("missing state");
 
-  const claimedId = params.get("openid.claimed_id") ?? "";
-  const match = CLAIMED_ID_RE.exec(claimedId);
-  if (!match) return badRequest("unrecognised Steam identity");
-  const steamId = match[1];
-
-  if (!(await verifyWithSteam(params))) {
-    return badRequest("Steam rejected the assertion");
-  }
-
   let redirect: string;
   try {
+    // Inside the try, so these reach the waiting app as an error it can show. Returned as
+    // a bare 400 they left the browser on a JSON page and the app on "Waiting for Steam"
+    // until its three-minute timeout.
+    const claimedId = params.get("openid.claimed_id") ?? "";
+    const match = CLAIMED_ID_RE.exec(claimedId);
+    if (!match) throw new Error("Steam did not return a recognisable identity. Try signing in again.");
+    const steamId = match[1];
+
+    if (!(await verifyWithSteam(params))) {
+      throw new Error("Steam could not confirm this sign-in. Try signing in again.");
+    }
+
     const profile = await fetchSteamProfile(steamId);
     await getOrCreatePlayer(steamId, profile);
 
