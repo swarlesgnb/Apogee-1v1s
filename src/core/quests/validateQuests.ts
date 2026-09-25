@@ -264,8 +264,10 @@ if (history.size === 0) {
   console.log("\n── doing what a quest asks completes it ─────────");
 
   // Runs that satisfy exactly what the quest names, played inside its window. Returned
-  // as a new history plus any matches, so the real one is never touched.
-  function satisfy(q: IssuedQuest, base = history): { h: Map<string, ScenarioHistory>; matches: typeof board.matches } | null {
+  // as a new history plus any matches, so the real one is never touched. Played on the
+  // pool the quest was issued from: a variety quest issued on the replayed first draft
+  // counts only that draft's scenarios, and four of today's pool would leave it at 0/4.
+  function satisfy(q: IssuedQuest, base = history, diff = difficulty): { h: Map<string, ScenarioHistory>; matches: typeof board.matches } | null {
     const h = new Map(base);
     const start = new Date(q.since).getTime() + 60_000;
     let minute = 0;
@@ -274,8 +276,8 @@ if (history.size === 0) {
       const run = { score, playedAt: new Date(start + minute++ * 60_000) };
       h.set(scenario, { ...prior, runs: [...prior.runs, run], best: Math.max(prior.best, score), lastPlayed: run.playedAt });
     };
-    const firstIn = (category: string) => difficulty.categories.find((c) => c.name === category)?.scenarios[0]?.name;
-    const pool = [...poolNames];
+    const firstIn = (category: string) => diff.categories.find((c) => c.name === category)?.scenarios[0]?.name;
+    const pool = diff.categories.flatMap((c) => c.scenarios.map((s) => s.name));
     let matches = [] as typeof board.matches;
 
     switch (q.kind) {
@@ -347,7 +349,7 @@ if (history.size === 0) {
   }
 
   for (const { q, at } of seen.values()) {
-    const done = satisfy(q);
+    const done = satisfy(q, history, at(history, now).difficulty);
     if (!done) { check(`${q.kind} has a way to be satisfied`, false); continue; }
     const progress = measure(q, at(done.h, now), done.matches);
     check(`${q.kind.padEnd(16)} completes when done`, progress >= q.target, `${progress}/${q.target}  ${q.title}`);
