@@ -58,19 +58,22 @@ export interface ClassifyOptions {
  * per point of damage times the target's health (fuglaa's balloons score per damage).
  */
 /**
- * Misses a kill costs, on a moving target that dies in one hit.
+ * Misses a kill costs, on a target that dies in one hit: moving, and still.
  *
  * A board records score, not kills, so a scenario that charges for a miss reads as fewer
- * kills than were made unless the misses are taken back out. The median over the moving
- * one-hit clicking scenarios with at least five local runs (tools/scenarioScience.ts,
- * data/season-1/science.json; validate:season-files holds this to it). One player's
- * history, played without a penalty, so it likely overstates what players miss once a miss
- * costs; the thresholds it sets are seeds like every other.
+ * kills than were made unless the misses are taken back out. Each is the median over the
+ * one-hit clicking scenarios with at least five local runs, moving (5 degrees a second or
+ * more) or still (under 1) (tools/scenarioScience.ts, data/season-1/science.json;
+ * validate:season-files holds these to it). One player's history, played without a
+ * penalty, so they likely overstate what players miss once a miss costs; the thresholds
+ * they set are seeds like every other.
  */
 export const MISSES_PER_KILL = 0.38;
+export const STILL_MISSES_PER_KILL = 0.09;
 
 function pointsPerKill(f: ScenarioFeatures): number {
-  if (f.scoring.perKill > 0) return f.scoring.perKill - f.scoring.lossPerMiss * MISSES_PER_KILL;
+  const misses = (f.derived.angularSpeed ?? 0) < 1 ? STILL_MISSES_PER_KILL : MISSES_PER_KILL;
+  if (f.scoring.perKill > 0) return f.scoring.perKill - f.scoring.lossPerMiss * misses;
   if (f.scoring.perHit > 0) return f.scoring.perHit;
   return f.scoring.perDamage * (f.targets[0]?.health ?? 1);
 }

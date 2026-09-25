@@ -37,7 +37,7 @@ import { join } from "node:path";
 import { dataFile } from "../dataDir.ts";
 import { get, num, parseSce, profile, list, type Sce } from "./sce.ts";
 import { jsonSpawns, scenarioFeatures } from "./features.ts";
-import { classify, MISSES_PER_KILL, predictFromAnchor, predictLadder, toMetric, type ClassModel } from "./difficulty.ts";
+import { classify, MISSES_PER_KILL, STILL_MISSES_PER_KILL, predictFromAnchor, predictLadder, toMetric, type ClassModel } from "./difficulty.ts";
 import { thresholdsFrom } from "../season/percentiles.ts";
 import { windowRankIndices } from "../season/windows.ts";
 import { validateSeason, type Season } from "../season/season.ts";
@@ -192,7 +192,7 @@ for (const [name, { sce }] of sces) {
   if (Math.abs(real - 60) > 0.01) broke(`runs ${real.toFixed(2)} real seconds (Timelimit ${get(sce.head, "Timelimit")}, Timescale ${get(sce.head, "Timescale")})`);
   if (get(sce.head, "ScoreMultAccuracy") !== "false") broke("accuracy multiplier is on");
   if (!(get(sce.head, "SearchTags") ?? get(sce.head, "GameTag") ?? "").includes("Apogee Season 1")) broke("not tagged Apogee Season 1");
-  // A dynamic clicking scenario with no reload charges for a miss, and only one does
+  // A clicking scenario with no reload charges for a miss, and only one does
   // (MISS_PENALTY in tools/season/design.ts): an endless magazine otherwise rewards firing
   // until the target happens to be under the crosshair.
   const row = season.scenarios.find((s) => s.scenario === name);
@@ -200,14 +200,18 @@ for (const [name, { sce }] of sces) {
   const weapon = profile(sce, "Weapon Profile", list(get(player?.lines ?? [], "WeaponProfileNames"))[0] ?? "");
   const endless = num(weapon?.lines ?? [], "MagazineMax", 0) === 0;
   const charges = num(sce.head, "ScoreLossPerMiss", 0) > 0;
-  const shouldCharge = row?.category === "Dynamic Clicking" && endless && num(sce.head, "ScorePerKill", 0) > 0;
-  if (charges !== shouldCharge) broke(shouldCharge ? "a dynamic clicking scenario with no reload does not charge for a miss" : "charges for a miss without being a dynamic clicking scenario with no reload");
+  const shouldCharge = !!row?.category.endsWith("Clicking") && endless && num(sce.head, "ScorePerKill", 0) > 0;
+  if (charges !== shouldCharge) broke(shouldCharge ? "a clicking scenario with no reload does not charge for a miss" : "charges for a miss without being a clicking scenario with no reload");
 }
 {
   // The model takes misses back out of a board at the rate measured, not a guessed one.
-  const science = JSON.parse(readFileSync(dataFile("season-1", "science.json"), "utf8")) as { misses?: { medianMissesPerKill: number; scenarios: number } };
-  if (science.misses?.medianMissesPerKill !== MISSES_PER_KILL) fail(`MISSES_PER_KILL is ${MISSES_PER_KILL}; science.json measures ${science.misses?.medianMissesPerKill} (npm run science:scenarios)`);
-  else pass(`a miss is charged against ${MISSES_PER_KILL} misses a kill, as measured over ${science.misses.scenarios} scenarios`);
+  const science = JSON.parse(readFileSync(dataFile("season-1", "science.json"), "utf8")) as {
+    misses?: { medianMissesPerKill: number; scenarios: number; still?: { medianMissesPerKill: number; scenarios: number } };
+  };
+  const m = science.misses;
+  if (m?.medianMissesPerKill !== MISSES_PER_KILL || m?.still?.medianMissesPerKill !== STILL_MISSES_PER_KILL) {
+    fail(`misses a kill are ${MISSES_PER_KILL} moving and ${STILL_MISSES_PER_KILL} still; science.json measures ${m?.medianMissesPerKill} and ${m?.still?.medianMissesPerKill} (npm run science:scenarios)`);
+  } else pass(`a miss is charged against ${MISSES_PER_KILL} misses a kill on moving targets and ${STILL_MISSES_PER_KILL} on still ones, as measured over ${m.scenarios} and ${m.still!.scenarios} scenarios`);
 }
 const byCategory = new Map<string, Map<string, Set<number>>>();
 for (const s of season.scenarios) {
@@ -224,7 +228,7 @@ for (const [cat, fams] of byCategory) {
   for (const [fam, windows] of fams) if (windows.size !== 4) fail(`${fam} has ${windows.size} bands, not 4`);
 }
 if (byCategory.size !== 6) fail(`${byCategory.size} categories, not 6`);
-if (!ruleBreaks) pass("60 real seconds, no accuracy multiplier, Apogee names and tags, and a miss charged exactly where there is no reload, on every file");
+if (!ruleBreaks) pass("60 real seconds, no accuracy multiplier, Apogee names and tags, and a miss charged in exactly the clicking scenarios with no reload, on every file");
 
 // ---- 3 and 4. thresholds and band order -------------------------------------------------------
 

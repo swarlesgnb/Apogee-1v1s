@@ -1,6 +1,6 @@
 {
  "$comment": "Written by tools/scenarioScience.ts; do not hand-edit.",
- "measuredAt": "2026-09-24T23:32:08.327Z",
+ "measuredAt": "2026-09-25T00:26:53.331Z",
  "noise": {
   "scenarios": 319,
   "medianNoise": 0.05,
@@ -164,6 +164,10 @@
  },
  "misses": {
   "scenarios": 54,
-  "medianMissesPerKill": 0.38
+  "medianMissesPerKill": 0.38,
+  "still": {
+   "scenarios": 109,
+   "medianMissesPerKill": 0.09
+  }
  }
 }

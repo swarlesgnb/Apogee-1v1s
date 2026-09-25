@@ -289,24 +289,34 @@ interface StaticSpec {
   /** Second ring further out, as a multiple of the first; 0 for none. */
   depthRing?: number;
   range?: number;
+  /**
+   * Targets of several sizes, as multiples of `deg`: one bot per size, `alive` shared
+   * between them. The ring already varies how big a target looks; this varies how big it is.
+   */
+  sizes?: number[];
 }
 
 function staticClick(f: Family, spec: StaticSpec, description: string) {
   return (sce: Sce, band: Band) => {
     const range = spec.range ?? 2048;
     const deg = step(spec.deg, SIZE, band);
-    const { bot, character } = ownBot(sce, f.name);
-    setProfile(sce, "Character Profile", character, {
-      MainBBRadius: radiusFor(deg, range),
-      MainBBHeight: 2 * radiusFor(deg, range),
-      MaxHealth: 1,
-      MaxSpeed: 0,
-      Gravity: 0,
+    const sizes = spec.sizes ?? [1];
+    if (spec.alive % sizes.length !== 0) throw new Error(`${f.name}: ${spec.alive} targets do not split evenly over ${sizes.length} sizes`);
+    const bots = sizes.map((m, i) => {
+      const { bot, character } = ownBot(sce, sizes.length > 1 ? `${f.name} ${i + 1}` : f.name);
+      setProfile(sce, "Character Profile", character, {
+        MainBBRadius: radiusFor(deg * m, range),
+        MainBBHeight: 2 * radiusFor(deg * m, range),
+        MaxHealth: 1,
+        MaxSpeed: 0,
+        Gravity: 0,
+      });
+      return { bot, count: spec.alive / sizes.length };
     });
     let spawns = arc(range, spec.yaws, spec.pitches);
     if (spec.depthRing) spawns = [...spawns, ...arc(range * spec.depthRing, spec.yaws, spec.pitches)];
     fixedTargets(sce, f, band, spawns);
-    setBots(sce, [{ bot, count: spec.alive }]);
+    setBots(sce, bots);
     head(sce, f, band, { ScorePerKill: 10, ScorePerHit: 0, AimTypeTag: "Clicking", AimSubTypeTag: "Static" }, description);
     finish(sce);
   };
@@ -348,6 +358,10 @@ interface MovingClickSpec {
    * forward/back reverses every `every` seconds.
    */
   depth?: { near: number; far: number; every: [number, number] };
+  /** A flier's vertical speed as a share of its sideways speed. Default 0.8. */
+  vertical?: number;
+  /** No pause at a reversal: the target is always moving. */
+  neverStop?: boolean;
 }
 
 function movingClick(f: Family, spec: MovingClickSpec, description: string) {
@@ -387,7 +401,8 @@ function movingClick(f: Family, spec: MovingClickSpec, description: string) {
       setProfile(sce, "Character Profile", character, { Gravity: 0 });
     }
     if (spec.flyer) {
-      setProfile(sce, "Character Profile", character, { IsFlyer: true, Gravity: 0, FlightVelocityUp: speedFor(speed, range) * 0.8, FlightVelocityDown: speedFor(speed, range) * 0.8 });
+      const climb = speedFor(speed, range) * (spec.vertical ?? 0.8);
+      setProfile(sce, "Character Profile", character, { IsFlyer: true, Gravity: 0, FlightVelocityUp: climb, FlightVelocityDown: climb });
       Object.assign(dodgeValues, spec.upDown || spec.vibrate ? FLY_UP_AND_DOWN : { JumpFrequency: 0 });
     }
     if (spec.depth) {
@@ -403,6 +418,7 @@ function movingClick(f: Family, spec: MovingClickSpec, description: string) {
       setProfile(sce, "Character Profile", character, { BounceOffWalls: true, Acceleration: 100000, Gravity: 0 });
       Object.assign(dodgeValues, { ToggleForwardBack: false, JumpFrequency: 0, MinTargetDistance: 1, MaxTargetDistance: 100000 });
     }
+    if (spec.neverStop) Object.assign(dodgeValues, { StrafeSwapMinPause: 0, StrafeSwapMaxPause: 0 });
     if (spec.stopAtTurns) {
       // Instant stops and starts, so a turn reads as a full stop rather than a slow-down.
       setProfile(sce, "Character Profile", character, { Acceleration: 100000 });
@@ -465,6 +481,9 @@ function pathClick(f: Family, spec: PathSpec, description: string) {
       FlightVelocityUp: maxSpeed,
       FlightVelocityDown: maxSpeed,
       MaxHealth: 1,
+      // A target that reaches the room's edge comes back off it rather than pressing into
+      // it: the playtest found Shooting Stars' targets pinned to the ceiling.
+      BounceOffWalls: true,
     });
     setProfile(sce, "Dodge Profile", dodge, {
       ToggleLeftRight: false,
@@ -1036,10 +1055,10 @@ export const FAMILIES: Family[] = [
     {
       name: "Parallax", category: "Static Clicking", subCategory: "Static Clicking", template: "staticClick", arm: "Wrist",
       focus: "Targets at two distances; read the size before you decide how far to move.",
-      why: "Depth. The far ring is half the angular size of the near one, so the same flick distance asks for two different stopping precisions within one run.",
+      why: "Depth. The far ring is half the angular size of the near one, so the same flick distance asks for two different stopping precisions within one run - and the three targets are three sizes too (0.75x, 1x, 1.35x), so how big a target looks is never only its distance.",
       learnsFrom: ["5 Sphere Hipfire", "Pokeball Frenzy Auto TE Wide"],
     },
-    (f) => staticClick(f, { alive: 3, deg: 2.2, yaws: span(-22, 22, 8), pitches: span(-11, 11, 5), depthRing: 2, range: 1400 }, "Three targets on two rings, near and far. One click each."),
+    (f) => staticClick(f, { alive: 3, deg: 2.2, yaws: span(-22, 22, 8), pitches: span(-11, 11, 5), depthRing: 2, range: 1400, sizes: [0.75, 1, 1.35] }, "Three targets of three sizes on two rings, near and far. One click each."),
   ),
   family(
     {
@@ -1048,7 +1067,7 @@ export const FAMILIES: Family[] = [
       why: "The 1wall 6targets shape - the most-played static scenario measured, 1.29 million players (data/fun_audit.json) - at every band, so the category always has a six-target scenario.",
       learnsFrom: ["1wall 6targets small", "1wall6targets TE"],
     },
-    (f) => staticClick(f, { alive: 6, deg: 1.5, yaws: span(-18, 18, 10), pitches: span(-11, 11, 7) }, "Six small targets alive at once. One click each."),
+    (f) => staticClick(f, { alive: 6, deg: 1.8, yaws: span(-18, 18, 10), pitches: span(-11, 11, 7) }, "Six small targets alive at once. One click each."),
   ),
   family(
     {
@@ -1095,7 +1114,7 @@ export const FAMILIES: Family[] = [
       why: "Linear motion with a vibration on top: the target runs straight, stops dead before it changes direction, and shakes up and down many times a second the whole time - so the stop is the moment to click, and the player reads it through the noise, the micro-adjustment cA 5ts vibrate is played for.",
       learnsFrom: ["cA 5ts vibrate", "VT Floating Heads Novice S5"],
     },
-    (f) => movingClick(f, { alive: 4, deg: 2.0, speed: 12, strafe: [1.5, 2.5], upDown: null, flyer: true, stopAtTurns: [0.35, 0.6], vibrate: { times: [0.04, 0.08], speed: 14 } }, "Four targets running straight, stopping dead at every turn, buzzing all the while. One click each."),
+    (f) => movingClick(f, { alive: 4, deg: 2.8, speed: 9, strafe: [1.5, 2.5], upDown: null, flyer: true, stopAtTurns: [0.35, 0.6], vibrate: { times: [0.04, 0.08], speed: 10 } }, "Four targets running straight, stopping dead at every turn, buzzing all the while. One click each."),
   ),
   family(
     {
@@ -1104,16 +1123,16 @@ export const FAMILIES: Family[] = [
       why: "High-speed dynamic clicks. Speed is the other axis of difficulty besides size: at the board median the fitted model prices a doubling of angular speed, 20 to 40 degrees a second, at about half a bit of Fitts difficulty (0.55).",
       learnsFrom: ["VT Pasu Intermediate S5", "Aimerz+ pipeClick Easy S1"],
     },
-    (f) => movingClick(f, { alive: 2, deg: 2.6, speed: 34, strafe: [2, 3], upDown: [2, 3], flyer: true, openRoom: true }, "Two fast targets crossing an open room. One click each."),
+    (f) => movingClick(f, { alive: 2, deg: 2.6, speed: 34, strafe: [2, 3], upDown: [2, 3], flyer: true, openRoom: true, vertical: 0.4, neverStop: true }, "Two fast targets crossing an open room, never still. One click each."),
   ),
   family(
     {
       name: "Shooting Stars", category: "Dynamic Clicking", subCategory: "Dynamic Clicking", template: "movingClick", arm: "Wrist",
       focus: "Straight lines across the sky; lead nothing, match the line and click.",
-      why: "Linear motion, the Floating Heads idea made exact: every target runs a straight lane from one side of the view to the other and back, rising or falling a little on the way, so the path is readable at a glance and the only question is timing.",
+      why: "Linear motion, the Floating Heads idea made exact: every target runs a straight lane from one side of the view to the other and back, level (lanes that rose and fell left the targets pinned to the ceiling in the playtest), so the path is readable at a glance and the only question is timing.",
       learnsFrom: ["Floating Heads Timing 400%", "Star Clicking 30% Larger"],
     },
-    (f) => pathClick(f, { alive: 6, deg: 2.0, speed: 20, range: 2048, routes: lanes(12, 36, 16, 6) }, "Six targets running straight lanes back and forth. One click each."),
+    (f) => pathClick(f, { alive: 6, deg: 2.4, speed: 16, range: 2048, routes: lanes(12, 36, 16, 0) }, "Six targets running straight lanes back and forth. One click each."),
   ),
   family(
     {
@@ -1122,10 +1141,10 @@ export const FAMILIES: Family[] = [
       anchor: "cA fuglaapressure",
       modelClass: "click",
       focus: "Pop them before they reach you; every one that does costs you.",
-      why: "Speed clicking under pressure, on fuglaa's design: balloons that dash at the player and burst on arrival, so a target left alive costs score rather than only time. The dash takes about 1.4 seconds to arrive at Novice and is 1.2x faster each band, and the player has three rounds before a reload, and the game itself runs faster each band too.",
+      why: "Speed clicking under pressure, on fuglaa's design: balloons that dash at the player and burst on arrival, so a target left alive costs score rather than only time. The dash takes about 1.7 seconds to arrive at Novice and is 1.2x faster each band, and the player has three rounds before a reload, and the game itself runs faster each band too.",
       learnsFrom: ["cA fuglaapressure", "fuglaaPressure"],
     },
-    (f) => pressureClick(f, { alive: 5, deg: 1.6, timescale: 1.0, timescaleStep: 0.2, range: 18160, approach: 6000, magazine: 3 }, "Balloons that come for you: pop each one before it reaches you. Every hit costs score."),
+    (f) => pressureClick(f, { alive: 5, deg: 1.6, timescale: 1.0, timescaleStep: 0.2, range: 18160, approach: 5000, magazine: 3 }, "Balloons that come for you: pop each one before it reaches you. Every hit costs score."),
   ),
   family(
     {
@@ -1134,7 +1153,7 @@ export const FAMILIES: Family[] = [
       why: "Voltaic's Floating Heads movement exactly - its own two dodge profiles, untouched - with larger, slower targets, so the most-played floating movement is in the season at a Novice anyone can start on.",
       learnsFrom: ["VT Floating Heads Novice S5", "VT Floating Heads Viscose Easier"],
     },
-    (f) => movingClick(f, { alive: 5, deg: 2.8, speed: 10, strafe: [1, 2], templateMovement: true }, "Five large targets floating as Voltaic's Floating Heads do. One click each."),
+    (f) => movingClick(f, { alive: 5, deg: 2.8, speed: 12.5, strafe: [1, 2], templateMovement: true }, "Five large targets floating as Voltaic's Floating Heads do. One click each."),
   ),
   family(
     {
@@ -1143,7 +1162,7 @@ export const FAMILIES: Family[] = [
       why: "psalmTS's motion as a clicking task: targets strafe round the player on long, even runs while climbing and dropping, linear in each axis and curved together.",
       learnsFrom: ["psalmTS angelic click", "VT psalmTS Novice"],
     },
-    (f) => movingClick(f, { alive: 3, deg: 3.0, speed: 14, strafe: [3, 4], upDown: [1.2, 2.0], flyer: true, depth: { near: 0.6, far: 1.3, every: [1.5, 2.5] } }, "Three flying targets in front of you, drifting nearer and further while rising and falling. One click each."),
+    (f) => movingClick(f, { alive: 5, deg: 3.0, speed: 14, strafe: [3, 4], upDown: [1.2, 2.0], flyer: true, depth: { near: 0.6, far: 1.3, every: [1.5, 2.5] } }, "Five flying targets in front of you, drifting nearer and further while rising and falling. One click each."),
   ),
 
   // ---- Precise Tracking
@@ -1360,7 +1379,7 @@ export const FAMILIES: Family[] = [
       why: "One evasive target with enough health to take a sustained effort, which respawns somewhere new when it dies: the kill-then-reacquire loop of switching with nothing else on screen to hide behind.",
       learnsFrom: ["VT DriftTS Novice S5", "Close Fast Strafes Invincible"],
     },
-    (f) => switching(f, { alive: 1, deg: 3.4, ttk: 1.5, speed: 34, strafe: [0.6, 1.2], range: 1700, openRoom: true }, "One strafing target with plenty of health that respawns elsewhere when it dies. Hold fire to kill.", "Evasive"),
+    (f) => switching(f, { alive: 1, deg: 3.4, ttk: 1.5, speed: 31, strafe: [0.6, 1.2], range: 1700, openRoom: true }, "One strafing target with plenty of health that respawns elsewhere when it dies. Hold fire to kill.", "Evasive"),
   ),
   family(
     {
@@ -1369,16 +1388,17 @@ export const FAMILIES: Family[] = [
       why: "Close-range evasive switching, where modest real speeds become large angular speeds and every switch is also a tracking catch-up.",
       learnsFrom: ["VT DriftTS Intermediate S5", "Close Fast Strafes Invincible"],
     },
-    (f) => switching(f, { alive: 3, deg: 5.0, ttk: 0.45, speed: 55, strafe: [0.7, 1.2], range: 1000, openRoom: true }, "Three close targets strafing fast. Hold fire to kill.", "Evasive"),
+    (f) => switching(f, { alive: 3, deg: 5.0, ttk: 0.45, speed: 50, strafe: [0.7, 1.2], range: 1000, openRoom: true }, "Three close targets strafing fast. Hold fire to kill.", "Evasive"),
   ),
 ];
 
 /**
- * Points a miss costs in a dynamic clicking scenario with no reload.
+ * Points a miss costs in a clicking scenario with no reload.
  *
- * With an endless magazine nothing stops a player firing at a moving target until it
- * happens to be under the crosshair, and the playtest found exactly that. Voltaic makes a
- * miss cost with a magazine and a reload; where a family has none, it costs score instead.
+ * With an endless magazine nothing stops a player firing at a target until it happens to
+ * be under the crosshair, and the playtest found exactly that - on moving targets first,
+ * then on still ones. Voltaic makes a miss cost with a magazine and a reload; where a
+ * family has none, it costs score instead.
  * 2 against 10 a kill is the median of the 13 clicking scenarios on this machine that
  * charge for a miss (0.2 of a kill; the Pasu Micro lineage), and the model reads it through
  * MISSES_PER_KILL (core/scenario/difficulty.ts).
@@ -1390,7 +1410,7 @@ export function buildScenario(template: Sce, f: Family, band: Band, lib: Library
   f.build(sce, band, lib);
   const weapon = profile(sce, "Weapon Profile", weaponOf(sce));
   const endless = Number(get(weapon?.lines ?? [], "MagazineMax") ?? 0) === 0;
-  if (f.category === "Dynamic Clicking" && endless && Number(get(sce.head, "ScorePerKill") ?? 0) > 0) {
+  if (f.category.endsWith("Clicking") && endless && Number(get(sce.head, "ScorePerKill") ?? 0) > 0) {
     setHead(sce, { ScoreLossPerMiss: MISS_PENALTY });
   }
   return sce;

@@ -308,7 +308,7 @@ CrouchAnimationSpeed=2.0
 CameraOffset=X=0.000 Y=0.000 Z=0.000
 HeadshotOnly=false
 DamageKnockbackFactor=0.0
-MaxSpeed=865.013103
+MaxSpeed=692.010482
 MaxCrouchSpeed=500.0
 Acceleration=100000.0
 CrouchingAcceleration=800.0
@@ -332,8 +332,8 @@ EnemyHeadColorOnLookAt=X=1.000 Y=1.000 Z=1.000
 TeamBodyColor=X=1.000 Y=0.888 Z=0.000
 TeamHeadColor=X=1.000 Y=1.000 Z=1.000
 MainBBType=Spheroid
-MainBBHeight=54.112934
-MainBBRadius=27.056467
+MainBBHeight=64.937184
+MainBBRadius=32.468592
 MainBBHasHead=false
 MainBBHeadRadius=1.0
 MainBBHeadOffset=0.0
@@ -373,7 +373,7 @@ BlockSpawnFOV=0.0
 BlockSpawnDistance=0.0
 RespawnAnimationDuration=0.0
 AllowBufferedJumps=false
-BounceOffWalls=false
+BounceOffWalls=true
 LeanAngle=0.0
 LeanDisplacement=0.0
 AirJumpExtraControl=0.0
@@ -400,9 +400,9 @@ ViewBobCameraZOffset=0.0
 ViewBobAffectsShots=false
 IsFlyer=true
 FlightObeysPitch=false
-FlightVelocityUp=865.013103
+FlightVelocityUp=692.010482
 FlightAccelUp=800.0
-FlightVelocityDown=865.013103
+FlightVelocityDown=692.010482
 FlightAccelDown=800.0
 IsFlyUpOnJumpAndCrouch=false
 DisableCharacterCollision=true
@@ -954,7 +954,7 @@ MaxSpeedModifier=1.0
     ],
     "objects": [
         {
-            "location": "-1088.000000, -1388.871804, -1255.458797",
+            "location": "-1088.000000, -1388.849078, -1229.126326",
             "materialSets": [
                 {
                     "group": 0,
@@ -984,11 +984,11 @@ MaxSpeedModifier=1.0
             "mesh": "Cube",
             "name": "Default",
             "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "25.901145, 10.240000, 25.101497",
+            "scale": "25.900832, 10.240000, 24.582527",
             "type": "brush"
         },
         {
-            "location": "-1088.000000, 364.849078, -1255.458797",
+            "location": "-1088.000000, 364.849078, -1229.126326",
             "materialSets": [
                 {
                     "group": 0,
@@ -1018,11 +1018,11 @@ MaxSpeedModifier=1.0
             "mesh": "Cube",
             "name": "Default",
             "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "25.901145, 10.240000, 25.101497",
+            "scale": "25.900832, 10.240000, 24.582527",
             "type": "brush"
         },
         {
-            "location": "-1088.000000, -1388.871804, -1255.458797",
+            "location": "-1088.000000, -1388.849078, -1229.126326",
             "materialSets": [
                 {
                     "group": 0,
@@ -1052,11 +1052,11 @@ MaxSpeedModifier=1.0
             "mesh": "Cube",
             "name": "Default",
             "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "10.240000, 27.777209, 25.101497",
+            "scale": "10.240000, 27.776982, 24.582527",
             "type": "brush"
         },
         {
-            "location": "478.114512, -1388.871804, -1255.458797",
+            "location": "478.083231, -1388.849078, -1229.126326",
             "materialSets": [
                 {
                     "group": 0,
@@ -1086,11 +1086,11 @@ MaxSpeedModifier=1.0
             "mesh": "Cube",
             "name": "Default",
             "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "10.240000, 27.777209, 25.101497",
+            "scale": "10.240000, 27.776982, 24.582527",
             "type": "brush"
         },
         {
-            "location": "-1088.000000, -1388.871804, -1255.458797",
+            "location": "-1088.000000, -1388.849078, -1229.126326",
             "materialSets": [
                 {
                     "group": 0,
@@ -1120,11 +1120,11 @@ MaxSpeedModifier=1.0
             "mesh": "Cube",
             "name": "Default",
             "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "25.901145, 27.777209, 10.240000",
+            "scale": "25.900832, 27.776982, 10.240000",
             "type": "brush"
         },
         {
-            "location": "-1088.000000, -1388.871804, 230.690895",
+            "location": "-1088.000000, -1388.849078, 205.126326",
             "materialSets": [
                 {
                     "group": 0,
@@ -1154,7 +1154,7 @@ MaxSpeedModifier=1.0
             "mesh": "Cube",
             "name": "Default",
             "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "25.901145, 27.777209, 10.240000",
+            "scale": "25.900832, 27.776982, 10.240000",
             "type": "brush"
         },
         {
@@ -1608,7 +1608,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "407.923819, 296.374002, -88.907867",
+            "location": "398.170649, 289.287910, -141.126326",
             "name": "Waypoint",
             "properties": [
                 {
@@ -1650,7 +1650,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "391.435122, -284.394263, -167.458797",
+            "location": "403.452003, -293.125038, -115.966345",
             "name": "Waypoint",
             "properties": [
                 {
@@ -1692,7 +1692,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "410.966932, 298.584954, -64.009419",
+            "location": "407.693514, 296.206677, -90.507476",
             "name": "Waypoint",
             "properties": [
                 {
@@ -1734,7 +1734,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "414.114512, -300.871804, -11.372265",
+            "location": "410.884250, -298.524882, -64.815336",
             "name": "Waypoint",
             "properties": [
                 {
@@ -1776,7 +1776,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "407.459104, 296.036368, -92.106174",
+            "location": "413.015987, 300.073680, -38.956144",
             "name": "Waypoint",
             "properties": [
                 {
@@ -1818,7 +1818,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "414.066027, -300.836578, 13.808640",
+            "location": "414.083231, -300.849078, -12.996547",
             "name": "Waypoint",
             "properties": [
                 {
@@ -1860,7 +1860,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "410.715783, 298.402483, 66.426679",
+            "location": "414.083231, 300.849078, 12.996547",
             "name": "Waypoint",
             "properties": [
                 {
@@ -1902,7 +1902,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "414.047781, -300.823321, -14.620698",
+            "location": "413.015987, -300.073680, 38.956144",
             "name": "Waypoint",
             "properties": [
                 {
@@ -1944,7 +1944,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "407.576822, 296.121895, 91.306940",
+            "location": "410.884250, 298.524882, 64.815336",
             "name": "Waypoint",
             "properties": [
                 {
@@ -1986,7 +1986,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "397.806334, -289.023220, 142.687416",
+            "location": "407.693514, -296.206677, 90.507476",
             "name": "Waypoint",
             "properties": [
                 {
@@ -2028,7 +2028,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "411.048580, 298.644274, 63.203341",
+            "location": "403.452003, 293.125038, 115.966345",
             "name": "Waypoint",
             "properties": [
                 {
@@ -2070,7 +2070,7 @@ MaxSpeedModifier=1.0
             "type": "gameObject"
         },
         {
-            "location": "391.649585, -284.550080, 166.690895",
+            "location": "398.170649, -289.287910, 141.126326",
             "name": "Waypoint",
             "properties": [
                 {

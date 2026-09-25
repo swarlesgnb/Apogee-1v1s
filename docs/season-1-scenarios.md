@@ -13,10 +13,10 @@ Five targets on one level; flick sideways and stop dead. Horizontal flicks isola
 
 | Band | Size (deg) | Speed (deg/s) | Reversal (s) | Kill (s) | Predicted median | Thresholds |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
-| Novice | 1.60 | still | - | - | 1421 (1258-1605) | 1117, 1313, 1428, 1515, 1588, 1659 |
-| Intermediate | 1.39 | still | - | - | 1353 (1198-1528) | 1515, 1583, 1614, 1672, 1722, 1768 |
-| Advanced | 1.21 | still | - | - | 1287 (1140-1454) | 1643, 1687, 1729, 1768, 1806, 1855 |
-| Expert | 1.05 | still | - | - | 1224 (1083-1382) | 1723, 1770, 1800, 1839 |
+| Novice | 1.60 | still | - | - | 1378 (1215-1564) | 1083, 1273, 1385, 1469, 1540, 1608 |
+| Intermediate | 1.39 | still | - | - | 1313 (1157-1490) | 1470, 1536, 1566, 1622, 1671, 1716 |
+| Advanced | 1.21 | still | - | - | 1250 (1102-1418) | 1595, 1639, 1679, 1717, 1754, 1801 |
+| Expert | 1.05 | still | - | - | 1189 (1048-1349) | 1675, 1720, 1749, 1787 |
 
 ### Zenith
 
@@ -24,10 +24,10 @@ Flick up and down; the sideways movement is only ever a correction. Vertical fli
 
 | Band | Size (deg) | Speed (deg/s) | Reversal (s) | Kill (s) | Predicted median | Thresholds |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
-| Novice | 1.60 | still | - | - | 1317 (1166-1487) | 1026, 1214, 1323, 1406, 1475, 1542 |
-| Intermediate | 1.39 | still | - | - | 1252 (1109-1414) | 1405, 1470, 1499, 1554, 1601, 1645 |
-| Advanced | 1.21 | still | - | - | 1190 (1054-1344) | 1526, 1568, 1607, 1643, 1679, 1725 |
-| Expert | 1.05 | still | - | - | 1130 (1000-1276) | 1601, 1645, 1673, 1708 |
+| Novice | 1.60 | still | - | - | 1278 (1127-1451) | 996, 1178, 1285, 1365, 1432, 1497 |
+| Intermediate | 1.39 | still | - | - | 1217 (1072-1380) | 1365, 1428, 1456, 1510, 1555, 1598 |
+| Advanced | 1.21 | still | - | - | 1157 (1019-1312) | 1483, 1524, 1562, 1598, 1633, 1677 |
+| Expert | 1.05 | still | - | - | 1099 (969-1247) | 1558, 1600, 1627, 1662 |
 
 ### Pinpoint
 
@@ -35,10 +35,10 @@ Small moves, smaller targets; settle the crosshair before you click. Micro-corre
 
 | Band | Size (deg) | Speed (deg/s) | Reversal (s) | Kill (s) | Predicted median | Thresholds |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
-| Novice | 0.95 | still | - | - | 1305 (1155-1474) | 1015, 1202, 1311, 1393, 1462, 1529 |
-| Intermediate | 0.83 | still | - | - | 1241 (1099-1401) | 1393, 1457, 1486, 1540, 1587, 1630 |
-| Advanced | 0.72 | still | - | - | 1179 (1044-1331) | 1512, 1554, 1593, 1629, 1665, 1710 |
-| Expert | 0.63 | still | - | - | 1119 (991-1264) | 1587, 1630, 1658, 1693 |
+| Novice | 0.95 | still | - | - | 1267 (1117-1437) | 986, 1167, 1273, 1353, 1420, 1484 |
+| Intermediate | 0.83 | still | - | - | 1205 (1062-1368) | 1353, 1415, 1444, 1497, 1542, 1584 |
+| Advanced | 0.72 | still | - | - | 1146 (1010-1300) | 1471, 1511, 1548, 1584, 1619, 1663 |
+| Expert | 0.63 | still | - | - | 1089 (960-1235) | 1544, 1586, 1613, 1648 |
 
 ### Stars
 
@@ -46,10 +46,10 @@ A wide formation; big flicks across it, in both directions. Large-amplitude flic
 
 | Band | Size (deg) | Speed (deg/s) | Reversal (s) | Kill (s) | Predicted median | Thresholds |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
-| Novice | 2.20 | still | - | - | 1210 (1071-1366) | 933, 1111, 1216, 1294, 1359, 1422 |
-| Intermediate | 1.91 | still | - | - | 1149 (1017-1298) | 1293, 1354, 1381, 1433, 1477, 1517 |
-| Advanced | 1.67 | still | - | - | 1091 (966-1232) | 1406, 1445, 1482, 1516, 1550, 1592 |
-| Expert | 1.45 | still | - | - | 1035 (916-1168) | 1476, 1516, 1542, 1575 |
+| Novice | 2.20 | still | - | - | 1176 (1036-1334) | 907, 1080, 1182, 1257, 1321, 1382 |
+| Intermediate | 1.91 | still | - | - | 1118 (985-1268) | 1258, 1317, 1343, 1394, 1436, 1476 |
+| Advanced | 1.67 | still | - | - | 1062 (936-1204) | 1369, 1406, 1442, 1476, 1508, 1550 |
+| Expert | 1.45 | still | - | - | 1008 (888-1143) | 1438, 1477, 1502, 1534 |
 
 ### Constellation
 
@@ -57,21 +57,21 @@ Clear the whole constellation; the next one appears when its last star falls. Re
 
 | Band | Size (deg) | Speed (deg/s) | Reversal (s) | Kill (s) | Predicted median | Thresholds |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
-| Novice | 1.70 | still | - | - | 1482 (1312-1674) | 1170, 1371, 1489, 1578, 1654, 1726 |
-| Intermediate | 1.48 | still | - | - | 1412 (1250-1595) | 1578, 1649, 1681, 1741, 1792, 1840 |
-| Advanced | 1.29 | still | - | - | 1344 (1190-1518) | 1711, 1758, 1800, 1840, 1880, 1931 |
-| Expert | 1.12 | still | - | - | 1279 (1132-1444) | 1795, 1844, 1875, 1915 |
+| Novice | 1.70 | still | - | - | 1436 (1266-1629) | 1134, 1329, 1443, 1530, 1603, 1673 |
+| Intermediate | 1.48 | still | - | - | 1370 (1207-1554) | 1531, 1599, 1630, 1688, 1738, 1785 |
+| Advanced | 1.29 | still | - | - | 1305 (1150-1480) | 1661, 1706, 1747, 1786, 1824, 1874 |
+| Expert | 1.12 | still | - | - | 1242 (1095-1409) | 1743, 1790, 1821, 1860 |
 
 ### Parallax
 
-Targets at two distances; read the size before you decide how far to move. Depth. The far ring is half the angular size of the near one, so the same flick distance asks for two different stopping precisions within one run.
+Targets at two distances; read the size before you decide how far to move. Depth. The far ring is half the angular size of the near one, so the same flick distance asks for two different stopping precisions within one run - and the three targets are three sizes too (0.75x, 1x, 1.35x), so how big a target looks is never only its distance.
 
 | Band | Size (deg) | Speed (deg/s) | Reversal (s) | Kill (s) | Predicted median | Thresholds |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
-| Novice | 1.47 | still | - | - | 1174 (1039-1325) | 902, 1077, 1179, 1255, 1320, 1381 |
-| Intermediate | 1.28 | still | - | - | 1114 (987-1258) | 1255, 1314, 1341, 1392, 1435, 1474 |
-| Advanced | 1.11 | still | - | - | 1057 (936-1194) | 1366, 1403, 1439, 1473, 1506, 1547 |
-| Expert | 0.97 | still | - | - | 1003 (888-1132) | 1434, 1473, 1498, 1530 |
+| Novice | 1.98 | still | - | - | 1271 (1121-1443) | 990, 1171, 1278, 1357, 1425, 1489 |
+| Intermediate | 1.72 | still | - | - | 1210 (1066-1373) | 1358, 1420, 1449, 1502, 1547, 1589 |
+| Advanced | 1.50 | still | - | - | 1150 (1014-1305) | 1476, 1516, 1554, 1589, 1624, 1668 |
+| Expert | 1.30 | still | - | - | 1093 (963-1240) | 1549, 1592, 1619, 1653 |
 
 ### Nebula
 
@@ -79,10 +79,10 @@ Six small targets up at once; take the nearest, keep the rhythm. The 1wall 6targ
 
 | Band | Size (deg) | Speed (deg/s) | Reversal (s) | Kill (s) | Predicted median | Thresholds |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
-| Novice | 1.50 | still | - | - | 1459 (1292-1647) | 1150, 1349, 1466, 1554, 1629, 1701 |
-| Intermediate | 1.30 | still | - | - | 1390 (1230-1569) | 1554, 1624, 1656, 1715, 1765, 1813 |
-| Advanced | 1.14 | still | - | - | 1323 (1171-1494) | 1685, 1731, 1773, 1813, 1852, 1902 |
-| Expert | 0.99 | still | - | - | 1258 (1114-1420) | 1768, 1816, 1847, 1886 |
+| Novice | 1.80 | still | - | - | 1503 (1325-1705) | 1194, 1393, 1510, 1600, 1675, 1747 |
+| Intermediate | 1.57 | still | - | - | 1435 (1265-1628) | 1601, 1672, 1704, 1764, 1816, 1864 |
+| Advanced | 1.36 | still | - | - | 1368 (1206-1552) | 1736, 1783, 1826, 1866, 1906, 1958 |
+| Expert | 1.19 | still | - | - | 1304 (1149-1479) | 1823, 1872, 1904, 1945 |
 
 ### 1w6aliens
 
@@ -90,10 +90,10 @@ Six still targets on one wall; take the nearest, keep the rhythm. The first Grav
 
 | Band | Size (deg) | Speed (deg/s) | Reversal (s) | Kill (s) | Predicted median | Thresholds |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
-| Novice | 1.60 | still | - | - | 1265 (1120-1428) | 980, 1164, 1271, 1351, 1419, 1483 |
-| Intermediate | 1.39 | still | - | - | 1202 (1064-1357) | 1350, 1413, 1441, 1495, 1540, 1582 |
-| Advanced | 1.21 | still | - | - | 1141 (1010-1289) | 1467, 1508, 1545, 1581, 1616, 1660 |
-| Expert | 1.05 | still | - | - | 1083 (959-1223) | 1540, 1582, 1609, 1643 |
+| Novice | 1.60 | still | - | - | 1251 (1102-1419) | 970, 1151, 1257, 1336, 1403, 1467 |
+| Intermediate | 1.39 | still | - | - | 1189 (1048-1350) | 1337, 1399, 1427, 1480, 1524, 1566 |
+| Advanced | 1.21 | still | - | - | 1130 (996-1283) | 1453, 1493, 1531, 1566, 1601, 1644 |
+| Expert | 1.05 | still | - | - | 1074 (946-1218) | 1526, 1568, 1595, 1629 |
 
 ## Dynamic Clicking
 
@@ -103,10 +103,10 @@ Slow floaters; match their drift for a moment, then click. The entry to moving t
 
 | Band | Size (deg) | Speed (deg/s) | Reversal (s) | Kill (s) | Predicted median | Thresholds |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
-| Novice | 1.90 | 12.0 | 6.00 | - | 562 (498-635) | 348, 481, 567, 629, 683, 733 |
-| Intermediate | 1.65 | 13.2 | 5.22 | - | 522 (463-590) | 637, 685, 705, 745, 777, 806 |
-| Advanced | 1.44 | 14.5 | 4.54 | - | 485 (430-548) | 728, 755, 780, 803, 826, 855 |
-| Expert | 1.25 | 16.0 | 3.95 | - | 451 (399-509) | 775, 802, 820, 842 |
+| Novice | 1.90 | 12.0 | 6.00 | - | 561 (494-636) | 348, 480, 566, 628, 681, 731 |
+| Intermediate | 1.65 | 13.2 | 5.22 | - | 522 (460-592) | 637, 684, 705, 744, 777, 805 |
+| Advanced | 1.44 | 14.5 | 4.54 | - | 485 (428-551) | 728, 755, 780, 804, 826, 855 |
+| Expert | 1.25 | 16.0 | 3.95 | - | 451 (398-512) | 776, 803, 821, 843 |
 
 ### Pendulum
 
@@ -114,10 +114,10 @@ Slow swings from wall to wall; click on the swing, not only at the turn. A pendu
 
 | Band | Size (deg) | Speed (deg/s) | Reversal (s) | Kill (s) | Predicted median | Thresholds |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
-| Novice | 2.93 | 7.8 | 6.75 | - | 696 (616-786) | 451, 605, 701, 772, 832, 888 |
-| Intermediate | 2.55 | 8.6 | 5.87 | - | 648 (574-732) | 778, 832, 855, 900, 937, 970 |
-| Advanced | 2.22 | 9.5 | 5.11 | - | 603 (534-681) | 879, 910, 939, 966, 992, 1026 |
-| Expert | 1.93 | 10.4 | 4.44 | - | 561 (497-634) | 932, 964, 984, 1010 |
+| Novice | 2.93 | 7.8 | 6.75 | - | 692 (610-786) | 449, 602, 698, 768, 828, 884 |
+| Intermediate | 2.55 | 8.6 | 5.87 | - | 646 (569-733) | 775, 829, 852, 897, 934, 966 |
+| Advanced | 2.22 | 9.5 | 5.11 | - | 602 (530-683) | 877, 908, 936, 963, 989, 1023 |
+| Expert | 1.93 | 10.4 | 4.44 | - | 560 (494-636) | 930, 962, 982, 1008 |
 
 ### Antigrav
 
@@ -125,10 +125,10 @@ Read the arc; the top of the bounce is the slowest moment. Gravity arcs. A bot u
 
 | Band | Size (deg) | Speed (deg/s) | Reversal (s) | Kill (s) | Predicted median | Thresholds |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
-| Novice | 2.00 | 17.0 | 3.60 | - | 667 (590-753) | 410, 570, 672, 748, 813, 874 |
-| Intermediate | 1.74 | 18.7 | 3.60 | - | 621 (550-701) | 760, 818, 843, 890, 930, 965 |
-| Advanced | 1.51 | 20.6 | 3.60 | - | 578 (511-652) | 872, 905, 935, 963, 991, 1026 |
-| Expert | 1.32 | 22.6 | 3.60 | - | 537 (475-606) | 930, 964, 986, 1013 |
+| Novice | 2.00 | 17.0 | 3.60 | - | 664 (586-754) | 409, 568, 670, 746, 810, 871 |
+| Intermediate | 1.74 | 18.7 | 3.60 | - | 619 (546-703) | 758, 816, 841, 888, 928, 962 |
+| Advanced | 1.51 | 20.6 | 3.60 | - | 577 (508-654) | 871, 904, 934, 962, 989, 1025 |
+| Expert | 1.32 | 22.6 | 3.60 | - | 537 (473-609) | 930, 964, 985, 1013 |
 
 ### Electric
 
@@ -136,10 +136,10 @@ Straight runs, a dead stop at every turn, and a charged-up buzz all the while. L
 
 | Band | Size (deg) | Speed (deg/s) | Reversal (s) | Kill (s) | Predicted median | Thresholds |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
-| Novice | 2.00 | 12.0 | 2.00 | - | 552 (489-623) | 342, 473, 557, 618, 671, 720 |
-| Intermediate | 1.74 | 13.2 | 1.74 | - | 513 (454-580) | 626, 673, 693, 732, 764, 792 |
-| Advanced | 1.51 | 14.5 | 1.51 | - | 477 (422-538) | 716, 742, 767, 790, 813, 841 |
-| Expert | 1.32 | 16.0 | 1.32 | - | 443 (392-500) | 762, 789, 806, 828 |
+| Novice | 2.80 | 9.0 | 2.00 | - | 662 (583-751) | 424, 573, 667, 736, 795, 850 |
+| Intermediate | 2.44 | 9.9 | 1.74 | - | 617 (544-700) | 744, 797, 819, 863, 899, 931 |
+| Advanced | 2.12 | 10.9 | 1.51 | - | 575 (506-652) | 844, 874, 902, 928, 954, 987 |
+| Expert | 1.84 | 12.0 | 1.32 | - | 535 (471-607) | 896, 927, 947, 972 |
 
 ### Sun and Moon
 
@@ -147,32 +147,32 @@ Two fast crossers in an open sky; move with the target and click inside the moti
 
 | Band | Size (deg) | Speed (deg/s) | Reversal (s) | Kill (s) | Predicted median | Thresholds |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
-| Novice | 2.60 | 34.0 | 2.50 | - | 438 (388-495) | 251, 365, 442, 499, 548, 594 |
-| Intermediate | 2.26 | 37.4 | 2.17 | - | 407 (360-459) | 511, 555, 573, 609, 639, 664 |
-| Advanced | 1.97 | 41.1 | 1.89 | - | 377 (334-426) | 597, 622, 644, 665, 685, 711 |
-| Expert | 1.71 | 45.3 | 1.65 | - | 350 (310-395) | 642, 667, 683, 702 |
+| Novice | 2.60 | 34.0 | 2.50 | - | 438 (386-497) | 251, 366, 443, 499, 549, 594 |
+| Intermediate | 2.26 | 37.4 | 2.17 | - | 407 (359-462) | 512, 556, 574, 610, 640, 665 |
+| Advanced | 1.97 | 41.1 | 1.89 | - | 379 (334-429) | 599, 624, 646, 667, 688, 714 |
+| Expert | 1.71 | 45.3 | 1.65 | - | 351 (310-399) | 645, 670, 685, 705 |
 
 ### Shooting Stars
 
-Straight lines across the sky; lead nothing, match the line and click. Linear motion, the Floating Heads idea made exact: every target runs a straight lane from one side of the view to the other and back, rising or falling a little on the way, so the path is readable at a glance and the only question is timing.
+Straight lines across the sky; lead nothing, match the line and click. Linear motion, the Floating Heads idea made exact: every target runs a straight lane from one side of the view to the other and back, level (lanes that rose and fell left the targets pinned to the ceiling in the playtest), so the path is readable at a glance and the only question is timing.
 
 | Band | Size (deg) | Speed (deg/s) | Reversal (s) | Kill (s) | Predicted median | Thresholds |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
-| Novice | 2.00 | 20.0 | 1.00 | - | 709 (627-800) | 439, 607, 715, 795, 863, 927 |
-| Intermediate | 1.74 | 22.0 | 1.00 | - | 662 (586-748) | 810, 871, 897, 947, 989, 1026 |
-| Advanced | 1.51 | 24.2 | 1.00 | - | 618 (547-698) | 930, 965, 997, 1026, 1055, 1093 |
-| Expert | 1.32 | 26.6 | 1.00 | - | 576 (510-650) | 993, 1029, 1053, 1082 |
+| Novice | 2.40 | 16.0 | 1.00 | - | 785 (692-890) | 498, 677, 791, 876, 948, 1015 |
+| Intermediate | 2.09 | 17.6 | 1.00 | - | 735 (648-834) | 891, 956, 984, 1037, 1081, 1121 |
+| Advanced | 1.82 | 19.4 | 1.00 | - | 687 (606-780) | 1019, 1057, 1091, 1122, 1153, 1194 |
+| Expert | 1.58 | 21.3 | 1.00 | - | 642 (566-729) | 1088, 1126, 1152, 1183 |
 
 ### Gravity Well
 
-Pop them before they reach you; every one that does costs you. Speed clicking under pressure, on fuglaa's design: balloons that dash at the player and burst on arrival, so a target left alive costs score rather than only time. The dash takes about 1.4 seconds to arrive at Novice and is 1.2x faster each band, and the player has three rounds before a reload, and the game itself runs faster each band too.
+Pop them before they reach you; every one that does costs you. Speed clicking under pressure, on fuglaa's design: balloons that dash at the player and burst on arrival, so a target left alive costs score rather than only time. The dash takes about 1.7 seconds to arrive at Novice and is 1.2x faster each band, and the player has three rounds before a reload, and the game itself runs faster each band too.
 
 | Band | Size (deg) | Speed (deg/s) | Reversal (s) | Kill (s) | Predicted median | Thresholds |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
-| Novice | 1.60 | still | - | - | 127 (112-143) | 29, 81, 129, 162, 186, 203 |
-| Intermediate | 1.39 | still | - | - | 121 (107-136) | 177, 193, 198, 208, 214, 219 |
-| Advanced | 1.21 | still | - | - | 114 (101-129) | 204, 209, 213, 217, 221, 226 |
-| Expert | 1.05 | still | - | - | 109 (96-123) | 210, 215, 218, 222 |
+| Novice | 1.60 | still | - | - | 126 (111-143) | 28, 80, 129, 161, 185, 202 |
+| Intermediate | 1.39 | still | - | - | 120 (106-136) | 176, 192, 197, 207, 213, 218 |
+| Advanced | 1.21 | still | - | - | 114 (100-129) | 203, 208, 212, 216, 220, 225 |
+| Expert | 1.05 | still | - | - | 108 (95-123) | 210, 214, 217, 221 |
 
 ### Meteor
 
@@ -180,10 +180,10 @@ Floating heads: big, slow drifters; confirm the shot before you click. Voltaic's
 
 | Band | Size (deg) | Speed (deg/s) | Reversal (s) | Kill (s) | Predicted median | Thresholds |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
-| Novice | 2.80 | 10.0 | 1.00 | - | 674 (597-761) | 430, 583, 680, 750, 811, 868 |
-| Intermediate | 2.44 | 11.0 | 1.00 | - | 628 (556-709) | 759, 813, 836, 881, 918, 950 |
-| Advanced | 2.12 | 12.1 | 1.00 | - | 584 (518-660) | 861, 892, 921, 947, 973, 1007 |
-| Expert | 1.84 | 13.3 | 1.00 | - | 544 (481-614) | 914, 946, 966, 992 |
+| Novice | 2.80 | 12.5 | 1.00 | - | 641 (565-727) | 402, 551, 646, 716, 775, 831 |
+| Intermediate | 2.44 | 13.7 | 1.00 | - | 597 (526-678) | 726, 779, 802, 846, 883, 915 |
+| Advanced | 2.12 | 15.1 | 1.00 | - | 556 (490-631) | 828, 859, 887, 913, 939, 972 |
+| Expert | 1.84 | 16.6 | 1.00 | - | 518 (456-587) | 882, 913, 933, 959 |
 
 ### Satellite
 
@@ -191,10 +191,10 @@ Fliers in front of you drifting nearer and further as they rise and fall; follow
 
 | Band | Size (deg) | Speed (deg/s) | Reversal (s) | Kill (s) | Predicted median | Thresholds |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
-| Novice | 3.16 | 14.7 | 3.50 | - | 589 (522-665) | 363, 504, 594, 661, 717, 771 |
-| Intermediate | 2.75 | 16.2 | 3.04 | - | 548 (485-619) | 670, 721, 743, 784, 819, 849 |
-| Advanced | 2.39 | 17.8 | 2.65 | - | 510 (451-576) | 768, 796, 823, 848, 872, 903 |
-| Expert | 2.08 | 19.6 | 2.30 | - | 473 (419-535) | 818, 847, 866, 890 |
+| Novice | 3.16 | 14.7 | 3.50 | - | 646 (569-733) | 403, 554, 651, 723, 784, 841 |
+| Intermediate | 2.75 | 16.2 | 3.04 | - | 602 (531-683) | 734, 789, 813, 857, 895, 928 |
+| Advanced | 2.39 | 17.8 | 2.65 | - | 561 (495-637) | 840, 872, 900, 927, 953, 987 |
+| Expert | 2.08 | 19.6 | 2.30 | - | 523 (461-593) | 896, 928, 949, 975 |
 
 ## Precise Tracking
 
@@ -452,10 +452,10 @@ One tough target; stay on it, and find it again the moment it respawns. One evas
 
 | Band | Size (deg) | Speed (deg/s) | Reversal (s) | Kill (s) | Predicted median | Thresholds |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
-| Novice | 3.40 | 34.0 | 0.90 | - | 2902 (2315-3496) | 1899, 2536, 2922, 3194, 3426, 3633 |
-| Intermediate | 2.96 | 37.4 | 0.78 | - | 2681 (2109-3278) | 3200, 3406, 3496, 3659, 3789, 3905 |
-| Advanced | 2.57 | 41.1 | 0.68 | - | 2464 (1911-3057) | 3551, 3665, 3767, 3864, 3960, 4071 |
-| Expert | 2.24 | 45.3 | 0.59 | - | 2253 (1724-2836) | 3697, 3811, 3884, 3961 |
+| Novice | 3.40 | 31.0 | 0.90 | - | 2974 (2384-3566) | 1956, 2605, 2994, 3267, 3498, 3705 |
+| Intermediate | 2.96 | 34.1 | 0.78 | - | 2753 (2175-3350) | 3274, 3481, 3570, 3733, 3864, 3981 |
+| Advanced | 2.57 | 37.5 | 0.68 | - | 2534 (1975-3129) | 3629, 3744, 3846, 3944, 4041, 4151 |
+| Expert | 2.24 | 41.3 | 0.59 | - | 2321 (1784-2908) | 3783, 3895, 3967, 4045 |
 
 ### InvadersTS
 
@@ -463,7 +463,7 @@ Close targets moving fast across the view; stay with them, then turn to the next
 
 | Band | Size (deg) | Speed (deg/s) | Reversal (s) | Kill (s) | Predicted median | Thresholds |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
-| Novice | 5.00 | 55.0 | 0.95 | 0.44 | 2034 (1850-2228) | 1531, 1848, 2045, 2183, 2304, 2416 |
-| Intermediate | 4.35 | 60.5 | 0.83 | 0.44 | 1993 (1810-2185) | 2263, 2375, 2426, 2518, 2587, 2639 |
-| Advanced | 3.78 | 66.5 | 0.72 | 0.44 | 1952 (1772-2142) | 2546, 2598, 2650, 2700, 2749, 2826 |
-| Expert | 3.29 | 73.2 | 0.63 | 0.44 | 1912 (1734-2100) | 2705, 2782, 2834, 2891 |
+| Novice | 5.00 | 50.0 | 0.95 | 0.44 | 2051 (1866-2245) | 1547, 1865, 2061, 2199, 2320, 2432 |
+| Intermediate | 4.35 | 55.0 | 0.83 | 0.44 | 2010 (1826-2202) | 2280, 2392, 2443, 2535, 2603, 2656 |
+| Advanced | 3.78 | 60.5 | 0.72 | 0.44 | 1969 (1787-2159) | 2563, 2615, 2668, 2718, 2767, 2843 |
+| Expert | 3.29 | 66.5 | 0.63 | 0.44 | 1929 (1749-2117) | 2723, 2800, 2851, 2909 |

@@ -309,9 +309,9 @@ CrouchAnimationSpeed=1.0
 CameraOffset=X=0.000 Y=0.000 Z=0.000
 HeadshotOnly=false
 DamageKnockbackFactor=0.0
-MaxSpeed=1008.800308
+MaxSpeed=919.788516
 MaxCrouchSpeed=0.0
-Acceleration=4035.201231
+Acceleration=3679.154063
 CrouchingAcceleration=2400.0
 Friction=1.0
 BrakingFrictionFactor=0.0

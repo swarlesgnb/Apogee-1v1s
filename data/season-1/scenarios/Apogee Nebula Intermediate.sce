@@ -38,7 +38,7 @@ MaxDistanceTraveledScore=0.0
 MaxMBSScore=0.0
 DistanceScoreCondition=None
 DistScoreCondAcceptTime=0.2
-ScoreLossPerMiss=0.0
+ScoreLossPerMiss=2.0
 ScoreLossPerReload=0.0
 MultSqrtAcc=false
 EnableOverDamage=false
@@ -332,8 +332,8 @@ EnemyHeadColorOnLookAt=X=1.000 Y=1.000 Z=1.000
 TeamBodyColor=X=0.000 Y=0.000 Z=255.000
 TeamHeadColor=X=255.000 Y=255.000 Z=255.000
 MainBBType=Spheroid
-MainBBHeight=46.648384
-MainBBRadius=23.324192
+MainBBHeight=55.979126
+MainBBRadius=27.989563
 MainBBHasHead=false
 MainBBHeadRadius=0.1
 MainBBHeadOffset=0.0

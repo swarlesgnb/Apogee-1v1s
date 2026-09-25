@@ -147,7 +147,7 @@ Leave-one-out median error at the board median (`data/season-1/difficulty_model.
 
 | Class | Scenarios | Features | LOO median | LOO 90th pct |
 | --- | ---: | --- | ---: | ---: |
-| Clicking | 201 | nearest-flick Fitts ID, log angular speed, log shots to kill, accuracy multiplier, square-root accuracy multiplier | 0.122 (about 13% in time per kill) | 0.412 |
+| Clicking | 201 | nearest-flick Fitts ID, log angular speed, log shots to kill, accuracy multiplier, square-root accuracy multiplier | 0.126 (about 13% in time per kill) | 0.411 |
 | Tracking | 174 | log speed/size, log strafe period, log seconds to full speed | 0.399 logit (about 10 points of share mid-board) | 0.999 |
 | Switching | 86 | log speed/size, log time to kill | 0.141 logit | 0.438 |
 
@@ -175,7 +175,7 @@ Two findings shaped how the model is used.
   from Novice (598) to Intermediate (568), although the target shrinks and speeds up: a harder
   scenario draws a stronger crowd. A pooled model predicts the board of a typical crowd.
 - **A sibling's board was measured too.** Predicting a variant from another variant's board
-  is worse than the pooled fit for clicking (0.146 against 0.122) and switching (0.152
+  is worse than the pooled fit for clicking (0.145 against 0.126) and switching (0.152
   against 0.141), and better for tracking (0.283 against 0.399). No Season 1 scenario
   has a sibling with a board, so the pooled fit is the only option until one does.
 
@@ -198,11 +198,14 @@ per bit.
 
 A board that charges for a miss records fewer kills than were made. Seven of the clicking
 fit's scenarios do (RawMouseControl, cA 900targets and others), and reading their boards as
-kills alone put them off the line; taking out 0.38 misses a kill at each one's penalty - the
-median over 54 moving one-hit clicking scenarios in the local stats folder - moved the error
-at the median from 0.129 to 0.122. The same rate sets the thresholds of the dynamic families
-that charge 2 a miss, so it is a seed like everything else: measured without a penalty, it
-likely overstates what players miss once a miss costs.
+kills alone put them off the line. Misses a kill are taken back out at each one's penalty -
+0.38 on moving targets and 0.09 on still ones, the medians over 54 and 109 one-hit clicking
+scenarios in the local stats folder - which moved the error at the median from 0.129 to
+0.126. (One rate for both, 0.38, measured 0.122: it fits RawMouseControl and the other still
+scenarios better by overstating their misses, which is not a reason to keep it.) The same
+rates set the thresholds of every clicking family that charges 2 a miss, so they are seeds
+like everything else: measured without a penalty, they likely overstate what players miss
+once a miss costs.
 
 The model is weakest where the file says least: moving targets whose paths the dodge profile
 only sketches (Popcorn's variants are two of its five worst clicking misses, listed as

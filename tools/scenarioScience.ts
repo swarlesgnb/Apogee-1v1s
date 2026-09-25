@@ -214,24 +214,32 @@ const fieldShape = {
 // ---- misses a kill costs -------------------------------------------------------------------
 
 // What a miss penalty takes out of a kill's worth (MISSES_PER_KILL in difficulty.ts): on
-// every moving one-hit clicking scenario with at least five local runs, each run's misses
-// over its kills, the median per scenario, and the median of those.
+// every one-hit clicking scenario with at least five local runs, each run's misses over its
+// kills, the median per scenario, and the median of those - separately for moving targets
+// (5 degrees a second or more) and still ones (under 1), because a still target is missed
+// far less.
 const missRatios = new Map<string, number[]>();
+const stillRatios = new Map<string, number[]>();
 for (const file of readdirSync(stats)) {
   if (!file.endsWith("Stats.csv")) continue;
   const parsed = parseStatsFile(file, readFileSync(join(stats, file), "utf8"));
   if (!parsed.ok || parsed.run.kills == null || !(parsed.run.kills > 0) || parsed.run.missCount == null) continue;
   const row = byName.get(parsed.run.scenario.trim().toLowerCase());
   if (!row || row.name.startsWith("Apogee ")) continue;
-  const moving = (row.derived.angularSpeed ?? 0) >= 5 && row.derived.shotsToKill === 1 &&
-    row.scoring.perKill > 0 && row.scoring.perDamage === 0 && row.weapon && !row.weapon.fullyAutomatic;
-  if (!moving) continue;
+  const oneHitClick = row.derived.shotsToKill === 1 && row.scoring.perKill > 0 && row.scoring.perDamage === 0 &&
+    row.weapon && !row.weapon.fullyAutomatic;
+  if (!oneHitClick) continue;
+  const speed = row.derived.angularSpeed ?? 0;
+  if (speed < 1) stillRatios.set(row.name, [...(stillRatios.get(row.name) ?? []), parsed.run.missCount / parsed.run.kills!]);
+  if (speed < 5) continue;
   missRatios.set(row.name, [...(missRatios.get(row.name) ?? []), parsed.run.missCount / parsed.run.kills!]);
 }
 const perScenario = [...missRatios.values()].filter((v) => v.length >= 5).map(median);
+const perStill = [...stillRatios.values()].filter((v) => v.length >= 5).map(median);
 const misses = {
   scenarios: perScenario.length,
   medianMissesPerKill: Math.round(median(perScenario) * 100) / 100,
+  still: { scenarios: perStill.length, medianMissesPerKill: Math.round(median(perStill) * 100) / 100 },
 };
 
 const out = dataFile("season-1", "science.json");
@@ -249,5 +257,5 @@ for (const [k, c] of Object.entries(popularity.replay)) console.log(line(k, c));
 console.log("reach (log players)");
 for (const [k, c] of Object.entries(popularity.reach)) console.log(line(k, c));
 console.log(`static fields: ${fieldShape.widerThanTall} of ${fieldShape.staticScenarios} popular static scenarios are wider than tall`);
-console.log(`misses: ${misses.medianMissesPerKill} a kill, median over ${misses.scenarios} moving one-hit clicking scenarios`);
+console.log(`misses: ${misses.medianMissesPerKill} a kill over ${misses.scenarios} moving one-hit clicking scenarios, ${misses.still.medianMissesPerKill} over ${misses.still.scenarios} still ones`);
 console.log(`-> ${out}`);

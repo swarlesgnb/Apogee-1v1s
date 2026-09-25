@@ -1,11 +1,11 @@
 Name=Apogee Parallax Novice
 PlayerCharacters=Player
-BotCharacters=Apogee Parallax.bot
+BotCharacters=Apogee Parallax 1.bot;Apogee Parallax 2.bot;Apogee Parallax 3.bot
 IsChallenge=true
 OvershotProtectionTimer=0.0
 Timelimit=60.0
 PlayerProfile=Player
-AddedBots=Apogee Parallax.bot;Apogee Parallax.bot;Apogee Parallax.bot
+AddedBots=Apogee Parallax 1.bot;Apogee Parallax 2.bot;Apogee Parallax 3.bot
 PlayerMaxLives=0
 BotMaxLives=0;0;0
 PlayerTeam=1
@@ -38,7 +38,7 @@ MaxDistanceTraveledScore=0.0
 MaxMBSScore=0.0
 DistanceScoreCondition=None
 DistScoreCondAcceptTime=0.2
-ScoreLossPerMiss=0.0
+ScoreLossPerMiss=2.0
 ScoreLossPerReload=0.0
 MultSqrtAcc=false
 EnableOverDamage=false
@@ -84,7 +84,7 @@ AimTypeProjectile=false
 AimTypePlayerMovement=false
 DifficultyTag=1
 SearchTags=Apogee, Apogee Season 1, Static Clicking, Novice
-Description=Three targets on two rings, near and far. One click each.[nl][nl]Apogee Season 1, Static Clicking, Novice. Targets at two distances; read the size before you decide how far to move.
+Description=Three targets of three sizes on two rings, near and far. One click each.[nl][nl]Apogee Season 1, Static Clicking, Novice. Targets at two distances; read the size before you decide how far to move.
 GameVersion=3.7.0
 ScenarioVersion=Initial
 
@@ -120,7 +120,7 @@ MinShootDelay=0.3
 MaxShootDelay=0.6
 
 [Bot Profile]
-Name=Apogee Parallax
+Name=Apogee Parallax 1
 DodgeProfileNames=
 DodgeProfileWeights=
 DodgeProfileMaxChangeTime=5.0
@@ -130,7 +130,69 @@ WeaponProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0;1.0;1.0
 AimingProfileNames=Default;Default;Default;Default;Default;Default;Default;Default
 WeaponSwitchTime=3.0
 UseWeapons=false
-CharacterProfile=Apogee Parallax Body
+CharacterProfile=Apogee Parallax 1 Body
+SeeThroughWalls=false
+NoDodging=true
+StandStillUntilHurt=false
+NoAiming=true
+SpawnGroup=0
+AbilityUseTimer=1.0
+UseAbilityFrequency=0.0
+UseAbilityFreqMinTime=1.0
+UseAbilityFreqMaxTime=1.0
+ShowLaser=false
+LaserRgb=X=1.000 Y=0.300 Z=0.000
+LaserAlpha=1.0
+RandomizeDodgeProfiles=false
+RepeatDodgeProfileEntries=true
+UseMinimumRespawnTime=true
+DisableScoring=false
+RestartDodgeProfileTimerOnRespawn=false
+Untargetable=false
+
+[Bot Profile]
+Name=Apogee Parallax 2
+DodgeProfileNames=
+DodgeProfileWeights=
+DodgeProfileMaxChangeTime=5.0
+DodgeProfileMinChangeTime=1.0
+WeaponsProfileNames=;;;;;;;
+WeaponProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0;1.0;1.0
+AimingProfileNames=Default;Default;Default;Default;Default;Default;Default;Default
+WeaponSwitchTime=3.0
+UseWeapons=false
+CharacterProfile=Apogee Parallax 2 Body
+SeeThroughWalls=false
+NoDodging=true
+StandStillUntilHurt=false
+NoAiming=true
+SpawnGroup=0
+AbilityUseTimer=1.0
+UseAbilityFrequency=0.0
+UseAbilityFreqMinTime=1.0
+UseAbilityFreqMaxTime=1.0
+ShowLaser=false
+LaserRgb=X=1.000 Y=0.300 Z=0.000
+LaserAlpha=1.0
+RandomizeDodgeProfiles=false
+RepeatDodgeProfileEntries=true
+UseMinimumRespawnTime=true
+DisableScoring=false
+RestartDodgeProfileTimerOnRespawn=false
+Untargetable=false
+
+[Bot Profile]
+Name=Apogee Parallax 3
+DodgeProfileNames=
+DodgeProfileWeights=
+DodgeProfileMaxChangeTime=5.0
+DodgeProfileMinChangeTime=1.0
+WeaponsProfileNames=;;;;;;;
+WeaponProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0;1.0;1.0
+AimingProfileNames=Default;Default;Default;Default;Default;Default;Default;Default
+WeaponSwitchTime=3.0
+UseWeapons=false
+CharacterProfile=Apogee Parallax 3 Body
 SeeThroughWalls=false
 NoDodging=true
 StandStillUntilHurt=false
@@ -297,7 +359,153 @@ PlaybackOptions.LoopUponCompletion=true
 PlaybackOptions.BreakToInputMode=false
 
 [Character Profile]
-Name=Apogee Parallax Body
+Name=Apogee Parallax 1 Body
+MaxHealth=1.0
+WeaponProfileNames=;;;;;;;
+MinRespawnDelay=0.001
+MaxRespawnDelay=0.001
+StepUpHeight=0.0
+CrouchHeightModifier=1.0
+CrouchAnimationSpeed=1.0
+CameraOffset=X=0.000 Y=0.000 Z=0.000
+HeadshotOnly=false
+DamageKnockbackFactor=0.0
+MaxSpeed=0.0
+MaxCrouchSpeed=0.0
+Acceleration=0.0
+CrouchingAcceleration=0.0
+Friction=0.0
+BrakingFrictionFactor=0.0
+JumpVelocity=0.0
+Gravity=0.0
+AirControl=0.0
+CanCrouch=false
+CanPogoJump=false
+CanCrouchInAir=false
+CrouchInAirRaisesFeet=false
+CanJumpFromCrouch=false
+// Note: the color channel values are interpreted as 0.0 (0%) to 1.0 (100%) going over 1.0 will start to produce a glow effect when the user is in HDR mode (SceneColor is set to "Medium" or higher)
+EnemyBodyColor=X=255.000 Y=0.000 Z=0.000
+EnemyBodyColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyBodyColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColor=X=255.000 Y=255.000 Z=255.000
+EnemyHeadColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+TeamBodyColor=X=0.000 Y=0.000 Z=255.000
+TeamHeadColor=X=255.000 Y=255.000 Z=255.000
+MainBBType=Spheroid
+MainBBHeight=40.319892
+MainBBRadius=20.159946
+MainBBHasHead=false
+MainBBHeadRadius=0.1
+MainBBHeadOffset=0.0
+MainBBHide=false
+ProjBBType=Spheroid
+ProjBBHeight=128.0
+ProjBBRadius=60.0
+ProjBBHasHead=false
+ProjBBHeadRadius=0.1
+ProjBBHeadOffset=0.0
+ProjBBHide=true
+BlockSelfDamage=false
+InvinciblePlayer=false
+InvincibleBots=false
+BlockTeamDamage=false
+HasJetpack=false
+JetpackActivationDelay=0.2
+JetpackFullFuelTime=100000.0
+JetpackFuelIncPerSec=0.1
+JetpackFuelRegensInAir=true
+JetpackThrust=6000.0
+JetpackMaxZVelocity=400.0
+JetpackAirControlWithThrust=1.0
+AirJumpCount=0
+AirJumpVelocity=800.0
+AbilityProfileNames=;;;
+HideWeapon=true
+AerialFriction=0.0
+AerialVerticalTurningFriction=100000.0
+AerialVerticalBreakingFriction=0.0
+UseAerialVerticalFriction=false
+StrafeSpeedMult=1.0
+BackSpeedMult=1.0
+RespawnInvulnTime=0.0
+BlockedSpawnRadius=190.0
+BlockSpawnFOV=0.0
+BlockSpawnDistance=0.0
+RespawnAnimationDuration=0.0
+AllowBufferedJumps=false
+BounceOffWalls=false
+LeanAngle=0.0
+LeanDisplacement=0.0
+AirJumpExtraControl=0.0
+ForwardSpeedBias=1.0
+HealthRegainedonkill=0.0
+HealthRegenPerSec=0.0
+HealthRegenDelay=0.0
+JumpSpeedPenaltyDuration=0.0
+JumpSpeedPenaltyPercent=0.0
+ThirdPersonCamera=false
+TPSArmLength=300.0
+TPSOffset=X=0.000 Y=150.000 Z=150.000
+BrakingDeceleration=0.0
+TerminalVelocity=0.0
+CharacterModel=None
+CharacterSkin=Default
+MeshHitDetection=false
+SpawnOffsetMin=X=0.000 Y=-100.000 Z=-100.000
+SpawnOffsetMax=X=0.000 Y=100.000 Z=100.000
+InvertBlockedSpawn=false
+ViewBobTime=0.0
+ViewBobAngleAdjustment=0.0
+ViewBobCameraZOffset=0.0
+ViewBobAffectsShots=false
+IsFlyer=false
+FlightObeysPitch=false
+FlightVelocityUp=800.0
+FlightAccelUp=800.0
+FlightVelocityDown=800.0
+FlightAccelDown=800.0
+IsFlyUpOnJumpAndCrouch=false
+DisableCharacterCollision=false
+LifeStealPercent=0.0
+AbilityGlobalCooldown=0.0
+BlockAbilityOnStartDuration=0.0
+DragCoefficient=10.0
+AmmoRegainedOnKill=0
+ContinuousGroundFriction=0.0
+ContinuousAirFriction=0.0
+ScaledGroundAcceleration=0.0
+ScaledAirAcceleration=0.0
+MaxAirSpeed=0.0
+StopSpeed=0.0
+StopSpeedThreshold=0.0
+ClampVelocityToInputSpeed=true
+JumpSkipsFriction=false
+EnableQuakeMovement=false
+EnableQuakeJump=false
+KtJump=0.0
+MovementPhysicsTickInterval=0.0
+MovementPhysicsTickEnabled=false
+TeamGlowUpHead=0.0
+TeamGlowUpBody=0.0
+EnemyGlowUpHead=0.0
+EnemyGlowUpBody=0.0
+EnemyGlowUpHeadOnHit=0.0
+EnemyGlowUpBodyOnHit=0.0
+EnemyGlowUpHeadOnLookAt=0.0
+EnemyGlowUpBodyOnLookAt=0.0
+PlaybackOptions.PlaybackMode=Input
+PlaybackOptions.OverrideRotation=true
+PlaybackOptions.OverrideAbilities=true
+PlaybackOptions.OverrideWeapons=true
+PlaybackOptions.OverrideMovement=true
+PlaybackOptions.OverrideDodgeTime=false
+PlaybackOptions.LoopUponCompletion=true
+PlaybackOptions.BreakToInputMode=false
+
+[Character Profile]
+Name=Apogee Parallax 2 Body
 MaxHealth=1.0
 WeaponProfileNames=;;;;;;;
 MinRespawnDelay=0.001
@@ -334,6 +542,152 @@ TeamHeadColor=X=255.000 Y=255.000 Z=255.000
 MainBBType=Spheroid
 MainBBHeight=53.762747
 MainBBRadius=26.881373
+MainBBHasHead=false
+MainBBHeadRadius=0.1
+MainBBHeadOffset=0.0
+MainBBHide=false
+ProjBBType=Spheroid
+ProjBBHeight=128.0
+ProjBBRadius=60.0
+ProjBBHasHead=false
+ProjBBHeadRadius=0.1
+ProjBBHeadOffset=0.0
+ProjBBHide=true
+BlockSelfDamage=false
+InvinciblePlayer=false
+InvincibleBots=false
+BlockTeamDamage=false
+HasJetpack=false
+JetpackActivationDelay=0.2
+JetpackFullFuelTime=100000.0
+JetpackFuelIncPerSec=0.1
+JetpackFuelRegensInAir=true
+JetpackThrust=6000.0
+JetpackMaxZVelocity=400.0
+JetpackAirControlWithThrust=1.0
+AirJumpCount=0
+AirJumpVelocity=800.0
+AbilityProfileNames=;;;
+HideWeapon=true
+AerialFriction=0.0
+AerialVerticalTurningFriction=100000.0
+AerialVerticalBreakingFriction=0.0
+UseAerialVerticalFriction=false
+StrafeSpeedMult=1.0
+BackSpeedMult=1.0
+RespawnInvulnTime=0.0
+BlockedSpawnRadius=190.0
+BlockSpawnFOV=0.0
+BlockSpawnDistance=0.0
+RespawnAnimationDuration=0.0
+AllowBufferedJumps=false
+BounceOffWalls=false
+LeanAngle=0.0
+LeanDisplacement=0.0
+AirJumpExtraControl=0.0
+ForwardSpeedBias=1.0
+HealthRegainedonkill=0.0
+HealthRegenPerSec=0.0
+HealthRegenDelay=0.0
+JumpSpeedPenaltyDuration=0.0
+JumpSpeedPenaltyPercent=0.0
+ThirdPersonCamera=false
+TPSArmLength=300.0
+TPSOffset=X=0.000 Y=150.000 Z=150.000
+BrakingDeceleration=0.0
+TerminalVelocity=0.0
+CharacterModel=None
+CharacterSkin=Default
+MeshHitDetection=false
+SpawnOffsetMin=X=0.000 Y=-100.000 Z=-100.000
+SpawnOffsetMax=X=0.000 Y=100.000 Z=100.000
+InvertBlockedSpawn=false
+ViewBobTime=0.0
+ViewBobAngleAdjustment=0.0
+ViewBobCameraZOffset=0.0
+ViewBobAffectsShots=false
+IsFlyer=false
+FlightObeysPitch=false
+FlightVelocityUp=800.0
+FlightAccelUp=800.0
+FlightVelocityDown=800.0
+FlightAccelDown=800.0
+IsFlyUpOnJumpAndCrouch=false
+DisableCharacterCollision=false
+LifeStealPercent=0.0
+AbilityGlobalCooldown=0.0
+BlockAbilityOnStartDuration=0.0
+DragCoefficient=10.0
+AmmoRegainedOnKill=0
+ContinuousGroundFriction=0.0
+ContinuousAirFriction=0.0
+ScaledGroundAcceleration=0.0
+ScaledAirAcceleration=0.0
+MaxAirSpeed=0.0
+StopSpeed=0.0
+StopSpeedThreshold=0.0
+ClampVelocityToInputSpeed=true
+JumpSkipsFriction=false
+EnableQuakeMovement=false
+EnableQuakeJump=false
+KtJump=0.0
+MovementPhysicsTickInterval=0.0
+MovementPhysicsTickEnabled=false
+TeamGlowUpHead=0.0
+TeamGlowUpBody=0.0
+EnemyGlowUpHead=0.0
+EnemyGlowUpBody=0.0
+EnemyGlowUpHeadOnHit=0.0
+EnemyGlowUpBodyOnHit=0.0
+EnemyGlowUpHeadOnLookAt=0.0
+EnemyGlowUpBodyOnLookAt=0.0
+PlaybackOptions.PlaybackMode=Input
+PlaybackOptions.OverrideRotation=true
+PlaybackOptions.OverrideAbilities=true
+PlaybackOptions.OverrideWeapons=true
+PlaybackOptions.OverrideMovement=true
+PlaybackOptions.OverrideDodgeTime=false
+PlaybackOptions.LoopUponCompletion=true
+PlaybackOptions.BreakToInputMode=false
+
+[Character Profile]
+Name=Apogee Parallax 3 Body
+MaxHealth=1.0
+WeaponProfileNames=;;;;;;;
+MinRespawnDelay=0.001
+MaxRespawnDelay=0.001
+StepUpHeight=0.0
+CrouchHeightModifier=1.0
+CrouchAnimationSpeed=1.0
+CameraOffset=X=0.000 Y=0.000 Z=0.000
+HeadshotOnly=false
+DamageKnockbackFactor=0.0
+MaxSpeed=0.0
+MaxCrouchSpeed=0.0
+Acceleration=0.0
+CrouchingAcceleration=0.0
+Friction=0.0
+BrakingFrictionFactor=0.0
+JumpVelocity=0.0
+Gravity=0.0
+AirControl=0.0
+CanCrouch=false
+CanPogoJump=false
+CanCrouchInAir=false
+CrouchInAirRaisesFeet=false
+CanJumpFromCrouch=false
+// Note: the color channel values are interpreted as 0.0 (0%) to 1.0 (100%) going over 1.0 will start to produce a glow effect when the user is in HDR mode (SceneColor is set to "Medium" or higher)
+EnemyBodyColor=X=255.000 Y=0.000 Z=0.000
+EnemyBodyColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyBodyColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColor=X=255.000 Y=255.000 Z=255.000
+EnemyHeadColorOnHit=X=1.000 Y=1.000 Z=1.000
+EnemyHeadColorOnLookAt=X=1.000 Y=1.000 Z=1.000
+TeamBodyColor=X=0.000 Y=0.000 Z=255.000
+TeamHeadColor=X=255.000 Y=255.000 Z=255.000
+MainBBType=Spheroid
+MainBBHeight=72.587044
+MainBBRadius=36.293522
 MainBBHasHead=false
 MainBBHeadRadius=0.1
 MainBBHeadOffset=0.0
