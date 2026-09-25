@@ -796,6 +796,12 @@ interface SwitchSpec {
   range: number;
   /** Fixed targets: where they may appear. */
   field?: { yaws: number[]; pitches: number[] };
+  /**
+   * Fixed targets on Voltaic's 1w4ts wall instead of a generated field: its map copied
+   * whole, spawns and all - a curved wall about 2,100 units out, 95 spawn points over 41
+   * degrees across and 31 high. Set `range` to match.
+   */
+  wall?: boolean;
   jump?: { frequency: number; velocity: number; gravity: number };
   upDown?: [number, number];
   /** Health regained per second while not being hit, as a share of max health. */
@@ -811,7 +817,7 @@ interface SwitchSpec {
 }
 
 function switching(f: Family, spec: SwitchSpec, description: string, sub: "Speed" | "Evasive") {
-  return (sce: Sce, band: Band) => {
+  return (sce: Sce, band: Band, lib: Library) => {
     const deg = step(spec.deg, SIZE, band);
     const speed = step(spec.speed, SPEED, band);
     const k = Math.pow(PERIOD, band);
@@ -853,7 +859,13 @@ function switching(f: Family, spec: SwitchSpec, description: string, sub: "Speed
       }
       setProfile(sce, "Dodge Profile", dodge, d);
     }
-    if (spec.speed === 0) {
+    if (spec.speed === 0 && spec.wall) {
+      setProfile(sce, "Bot Profile", bot, { NoDodging: true });
+      const wall = lib("staticClick");
+      const map = sce.sections.find((s) => s.type === "Map Data")!;
+      map.raw = wall.sections.find((s) => s.type === "Map Data")!.raw;
+      setHead(sce, { MapName: get(wall.head, "MapName")!, MapScale: Number(get(wall.head, "MapScale")) });
+    } else if (spec.speed === 0) {
       setProfile(sce, "Bot Profile", bot, { NoDodging: true });
       fixedTargets(sce, f, band, arc(spec.range, spec.field!.yaws, spec.field!.pitches));
     } else if (spec.openRoom) {
@@ -1290,11 +1302,11 @@ export const FAMILIES: Family[] = [
   family(
     {
       name: "CockpiTS", category: "Speed Switching", subCategory: "Speed Switching", template: "groundSwitch", arm: "Arm",
-      focus: "Wide switches; land the flick, then hold.",
-      why: "Speed switching across a wide field, where the flick between targets is most of the time spent.",
-      learnsFrom: ["voxTS Viscose Varied", "VT DotTS Novice S5"],
+      focus: "Switches across a curved wall; land the flick, then hold.",
+      why: "Speed switching on the curved wall Voltaic's 1w4ts is played on, its map copied whole, where the flick between targets is most of the time spent.",
+      learnsFrom: ["voxTS Viscose Varied", "VT DotTS Novice S5", "VT 1w4ts Novice S5"],
     },
-    (f) => switching(f, { alive: 3, deg: 2.8, ttk: 0.25, speed: 0, range: 2000, field: { yaws: ring(10, 45, 6), pitches: span(-9, 9, 4) } }, "Three still targets spread wide. Hold fire to kill.", "Speed"),
+    (f) => switching(f, { alive: 3, deg: 2.8, ttk: 0.25, speed: 0, range: 2100, wall: true }, "Three still targets on a curved wall. Hold fire to kill.", "Speed"),
   ),
   family(
     {

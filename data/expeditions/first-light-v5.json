@@ -2509,7 +2509,7 @@
           {
             "name": "Apogee CockpiTS Novice",
             "family": "CockpiTS",
-            "focus": "Wide switches; land the flick, then hold.",
+            "focus": "Switches across a curved wall; land the flick, then hold.",
             "target": 2400,
             "finalTarget": 2513,
             "precision": 0
@@ -2535,7 +2535,7 @@
           {
             "name": "Apogee CockpiTS Intermediate",
             "family": "CockpiTS",
-            "focus": "Wide switches; land the flick, then hold.",
+            "focus": "Switches across a curved wall; land the flick, then hold.",
             "target": 2717,
             "finalTarget": 2793,
             "precision": 0
@@ -2561,7 +2561,7 @@
           {
             "name": "Apogee CockpiTS Advanced",
             "family": "CockpiTS",
-            "focus": "Wide switches; land the flick, then hold.",
+            "focus": "Switches across a curved wall; land the flick, then hold.",
             "target": 2949,
             "finalTarget": 3001,
             "precision": 0
@@ -2587,7 +2587,7 @@
           {
             "name": "Apogee CockpiTS Expert",
             "family": "CockpiTS",
-            "focus": "Wide switches; land the flick, then hold.",
+            "focus": "Switches across a curved wall; land the flick, then hold.",
             "target": 3131,
             "finalTarget": 3181,
             "precision": 0
@@ -2734,7 +2734,7 @@
           {
             "name": "Apogee CockpiTS Novice",
             "family": "CockpiTS",
-            "focus": "Wide switches; land the flick, then hold.",
+            "focus": "Switches across a curved wall; land the flick, then hold.",
             "target": 2400,
             "finalTarget": 2513,
             "routeTarget": 2230,
@@ -2763,7 +2763,7 @@
           {
             "name": "Apogee CockpiTS Intermediate",
             "family": "CockpiTS",
-            "focus": "Wide switches; land the flick, then hold.",
+            "focus": "Switches across a curved wall; land the flick, then hold.",
             "target": 2717,
             "finalTarget": 2793,
             "routeTarget": 2678,
@@ -2792,10 +2792,10 @@
           {
             "name": "Apogee CockpiTS Advanced",
             "family": "CockpiTS",
-            "focus": "Wide switches; land the flick, then hold.",
+            "focus": "Switches across a curved wall; land the flick, then hold.",
             "target": 2949,
             "finalTarget": 3001,
-            "routeTarget": 2890,
+            "routeTarget": 2891,
             "precision": 0
           },
           {
@@ -2821,7 +2821,7 @@
           {
             "name": "Apogee CockpiTS Expert",
             "family": "CockpiTS",
-            "focus": "Wide switches; land the flick, then hold.",
+            "focus": "Switches across a curved wall; land the flick, then hold.",
             "target": 3131,
             "finalTarget": 3181,
             "routeTarget": 3089,
@@ -2852,7 +2852,7 @@
           {
             "name": "Apogee CockpiTS Novice",
             "family": "CockpiTS",
-            "focus": "Wide switches; land the flick, then hold.",
+            "focus": "Switches across a curved wall; land the flick, then hold.",
             "target": 2400,
             "finalTarget": 2513,
             "routeTarget": 2230,
@@ -2908,7 +2908,7 @@
           {
             "name": "Apogee CockpiTS Intermediate",
             "family": "CockpiTS",
-            "focus": "Wide switches; land the flick, then hold.",
+            "focus": "Switches across a curved wall; land the flick, then hold.",
             "target": 2717,
             "finalTarget": 2793,
             "routeTarget": 2678,
@@ -2964,10 +2964,10 @@
           {
             "name": "Apogee CockpiTS Advanced",
             "family": "CockpiTS",
-            "focus": "Wide switches; land the flick, then hold.",
+            "focus": "Switches across a curved wall; land the flick, then hold.",
             "target": 2949,
             "finalTarget": 3001,
-            "routeTarget": 2890,
+            "routeTarget": 2891,
             "precision": 0
           },
           {
@@ -3020,7 +3020,7 @@
           {
             "name": "Apogee CockpiTS Expert",
             "family": "CockpiTS",
-            "focus": "Wide switches; land the flick, then hold.",
+            "focus": "Switches across a curved wall; land the flick, then hold.",
             "target": 3131,
             "finalTarget": 3181,
             "routeTarget": 3089,

@@ -2645,7 +2645,7 @@
           "label": "CockpiTS",
           "leaderboardId": null,
           "rankMaxes": [
-            1934,
+            1935,
             2230,
             2400,
             2513,
@@ -2670,7 +2670,7 @@
             2717,
             2793,
             2857,
-            2915
+            2916
           ],
           "source": {
             "kind": "predicted",
@@ -2685,8 +2685,8 @@
           "label": "CockpiTS",
           "leaderboardId": null,
           "rankMaxes": [
-            2832,
-            2890,
+            2833,
+            2891,
             2949,
             3001,
             3050,
@@ -2718,7 +2718,7 @@
           "armFrom": "Apogee"
         }
       ],
-      "focus": "Wide switches; land the flick, then hold."
+      "focus": "Switches across a curved wall; land the flick, then hold."
     },
     {
       "family": "Column",

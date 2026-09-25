@@ -347,14 +347,14 @@ Kill, then move straight to the next; no pause between targets. The core speed-s
 
 ### CockpiTS
 
-Wide switches; land the flick, then hold. Speed switching across a wide field, where the flick between targets is most of the time spent.
+Switches across a curved wall; land the flick, then hold. Speed switching on the curved wall Voltaic's 1w4ts is played on, its map copied whole, where the flick between targets is most of the time spent.
 
 | Band | Size (deg) | Speed (deg/s) | Reversal (s) | Kill (s) | Predicted median | Thresholds |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
-| Novice | 2.80 | still | - | 0.24 | 2391 (2192-2596) | 1934, 2230, 2400, 2513, 2610, 2703 |
-| Intermediate | 2.44 | still | - | 0.24 | 2365 (2167-2569) | 2585, 2678, 2717, 2793, 2857, 2915 |
-| Advanced | 2.12 | still | - | 0.24 | 2339 (2141-2543) | 2832, 2890, 2949, 3001, 3050, 3115 |
-| Expert | 1.84 | still | - | 0.24 | 2313 (2116-2516) | 3024, 3089, 3131, 3181 |
+| Novice | 2.80 | still | - | 0.24 | 2391 (2192-2596) | 1935, 2230, 2400, 2513, 2610, 2703 |
+| Intermediate | 2.44 | still | - | 0.24 | 2365 (2167-2570) | 2585, 2678, 2717, 2793, 2857, 2916 |
+| Advanced | 2.12 | still | - | 0.24 | 2339 (2142-2543) | 2833, 2891, 2949, 3001, 3050, 3115 |
+| Expert | 1.85 | still | - | 0.24 | 2313 (2117-2516) | 3024, 3089, 3131, 3181 |
 
 ### Column
 

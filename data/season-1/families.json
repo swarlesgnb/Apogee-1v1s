@@ -367,11 +367,12 @@
   {
    "family": "CockpiTS",
    "category": "Speed Switching",
-   "focus": "Wide switches; land the flick, then hold.",
-   "why": "Speed switching across a wide field, where the flick between targets is most of the time spent.",
+   "focus": "Switches across a curved wall; land the flick, then hold.",
+   "why": "Speed switching on the curved wall Voltaic's 1w4ts is played on, its map copied whole, where the flick between targets is most of the time spent.",
    "learnsFrom": [
     "voxTS Viscose Varied",
-    "VT DotTS Novice S5"
+    "VT DotTS Novice S5",
+    "VT 1w4ts Novice S5"
    ],
    "template": "VT DriftTS Novice S5",
    "arm": "Arm"
@@ -3205,9 +3206,9 @@
    "family": "CockpiTS",
    "band": "Novice",
    "class": "switch",
-   "targetDeg": 2.8,
+   "targetDeg": 2.803,
    "angularSpeed": 0,
-   "fittsIdNearest": 3.338,
+   "fittsIdNearest": 2.423,
    "ttk": 0.24,
    "median": 2391,
    "medianRange": [
@@ -3215,7 +3216,7 @@
     2596
    ],
    "rankMaxes": [
-    1934,
+    1935,
     2230,
     2400,
     2513,
@@ -3228,14 +3229,14 @@
    "family": "CockpiTS",
    "band": "Intermediate",
    "class": "switch",
-   "targetDeg": 2.436,
+   "targetDeg": 2.439,
    "angularSpeed": 0,
-   "fittsIdNearest": 3.52,
+   "fittsIdNearest": 2.588,
    "ttk": 0.24,
    "median": 2365,
    "medianRange": [
     2167,
-    2569
+    2570
    ],
    "rankMaxes": [
     2585,
@@ -3243,7 +3244,7 @@
     2717,
     2793,
     2857,
-    2915
+    2916
    ]
   },
   {
@@ -3251,18 +3252,18 @@
    "family": "CockpiTS",
    "band": "Advanced",
    "class": "switch",
-   "targetDeg": 2.119,
+   "targetDeg": 2.122,
    "angularSpeed": 0,
-   "fittsIdNearest": 3.704,
+   "fittsIdNearest": 2.758,
    "ttk": 0.24,
    "median": 2339,
    "medianRange": [
-    2141,
+    2142,
     2543
    ],
    "rankMaxes": [
-    2832,
-    2890,
+    2833,
+    2891,
     2949,
     3001,
     3050,
@@ -3274,13 +3275,13 @@
    "family": "CockpiTS",
    "band": "Expert",
    "class": "switch",
-   "targetDeg": 1.844,
+   "targetDeg": 1.846,
    "angularSpeed": 0,
-   "fittsIdNearest": 3.891,
+   "fittsIdNearest": 2.931,
    "ttk": 0.24,
    "median": 2313,
    "medianRange": [
-    2116,
+    2117,
     2516
    ],
    "rankMaxes": [

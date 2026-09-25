@@ -1050,7 +1050,7 @@
       "file": "data/season-1/difficulty_model.json"
     }
   },
-  "builtAt": "2026-09-25T00:27:31.023Z",
+  "builtAt": "2026-09-25T00:52:51.165Z",
   "scenarios": [
     {
       "scenario": "Apogee Galaga Novice",
@@ -3881,10 +3881,10 @@
       "subCategory": "Speed Switching",
       "window": 0,
       "label": "CockpiTS",
-      "focus": "Wide switches; land the flick, then hold.",
+      "focus": "Switches across a curved wall; land the flick, then hold.",
       "leaderboardId": null,
       "rankMaxes": [
-        1934,
+        1935,
         2230,
         2400,
         2513,
@@ -3905,7 +3905,7 @@
       "subCategory": "Speed Switching",
       "window": 1,
       "label": "CockpiTS",
-      "focus": "Wide switches; land the flick, then hold.",
+      "focus": "Switches across a curved wall; land the flick, then hold.",
       "leaderboardId": null,
       "rankMaxes": [
         2585,
@@ -3913,7 +3913,7 @@
         2717,
         2793,
         2857,
-        2915
+        2916
       ],
       "source": {
         "kind": "predicted",
@@ -3929,11 +3929,11 @@
       "subCategory": "Speed Switching",
       "window": 2,
       "label": "CockpiTS",
-      "focus": "Wide switches; land the flick, then hold.",
+      "focus": "Switches across a curved wall; land the flick, then hold.",
       "leaderboardId": null,
       "rankMaxes": [
-        2832,
-        2890,
+        2833,
+        2891,
         2949,
         3001,
         3050,
@@ -3953,7 +3953,7 @@
       "subCategory": "Speed Switching",
       "window": 3,
       "label": "CockpiTS",
-      "focus": "Wide switches; land the flick, then hold.",
+      "focus": "Switches across a curved wall; land the flick, then hold.",
       "leaderboardId": null,
       "rankMaxes": [
         3024,
