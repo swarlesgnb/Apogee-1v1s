@@ -1040,6 +1040,7 @@ let pendingMatchId = null;
  */
 let standing = null;
 function paintRating() {
+  renderSetup();
   const me = current?.player?.apogee;
   const rated = HOST !== "electron" ? me : standing && standing.matchesPlayed > 0 ? standing : null;
   $("myRating").textContent = rated ? Math.round(rated.rating) + " \u00b1" + Math.round(rated.rd) : "unrated";
@@ -1067,6 +1068,7 @@ let signedIn = false;
 function render(data) {
   lastSnapshot = data;
   current = data;
+  renderSetup();
   $("app").hidden = false;
   $("empty").hidden = true;
   document.body.classList.remove("awaiting-data");
@@ -8167,6 +8169,7 @@ let eligibility = null;
  * server checks again regardless: this is a courtesy, not a control.
  */
 function renderEligibility() {
+  renderSetup();
   const gate = $("queueGate");
   const btn = $("queueBtn");
   if (!gate || !btn) return;
@@ -8228,6 +8231,186 @@ function refreshEligibility() {
     // this cannot become a stream of banners.
     reportFailure("Could not check whether you can queue", err);
   });
+}
+
+/* ------------------------------------------------------------------ getting started */
+
+/**
+ * The checklist on the Arena screen, for the steps a new player cannot see from here.
+ *
+ * Every step is read off state the app already holds, so it cannot disagree with the
+ * screen: the stats folder from the snapshot, sign-in from the session, the run count
+ * from the same eligibility the queue gate uses, a match from the server's rating or a
+ * settle seen here, a duel from the board. The last two are remembered once seen, because
+ * the board only keeps a sent duel for a week and a finished step must not come undone.
+ *
+ * Desktop only. The standalone preview has no session and nothing to press.
+ */
+const SETUP_KEY = "apogee.setup";
+
+function setupFlags() {
+  try {
+    return JSON.parse(localStorage.getItem(SETUP_KEY) || "{}") || {};
+  } catch {
+    return {};
+  }
+}
+
+function setSetupFlag(key) {
+  const flags = setupFlags();
+  if (flags[key]) return;
+  flags[key] = true;
+  try {
+    localStorage.setItem(SETUP_KEY, JSON.stringify(flags));
+  } catch {
+    /* storage unavailable: the step is still read live */
+  }
+}
+
+const SETUP_CHECK =
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg>';
+
+function setupSteps() {
+  const local = current && current.player ? current.player.totalRuns : 0;
+  const required = eligibility ? eligibility.required : null;
+  const uploaded = eligibility ? eligibility.uploaded : 0;
+
+  if (standing && standing.matchesPlayed > 0) setSetupFlag("match");
+  if (duelBoard && duelBoard.outgoing && duelBoard.outgoing.length > 0) setSetupFlag("duel");
+  const flags = setupFlags();
+  const steamPrivate = duelBoard && duelBoard.steamFriends === "private";
+
+  return [
+    {
+      title: "Find your KovaaK's stats",
+      detail: "Apogee reads your scores from the stats folder KovaaK's writes after every run. Nothing is typed in.",
+      done: local > 0,
+      action: "Choose folder",
+      run: () => $("btnChoose").click(),
+    },
+    {
+      title: "Sign in with Steam",
+      detail: "Ranked and duels need an account. Apogee reads your Steam name, avatar and friends list, and nothing else.",
+      done: signedIn,
+      action: "Sign in",
+      run: () => $("btnSignIn").click(),
+    },
+    {
+      title: required ? "Upload " + num(required) + " runs" : "Upload your runs",
+      detail: !signedIn
+        ? "Ranked opens once enough of your runs are uploaded. It starts after you sign in."
+        : local > uploaded
+          ? num(uploaded) + " uploaded, " + num(local) + " on this PC. Your history counts" +
+            (required && local >= required ? ", and it is enough to open ranked." : ".")
+          : num(uploaded) + " uploaded. Every run you finish in KovaaK's adds one.",
+      progress: required ? Math.min(1, uploaded / required) : null,
+      done: Boolean(eligibility && eligibility.eligible),
+      action: signedIn && local > uploaded ? "Upload now" : null,
+      run: () => $("uploadBtn").click(),
+    },
+    {
+      title: "Play your first match",
+      detail: "Pick a category below and press Find opponent. If nobody is around you still get your three scenarios, and the next player is matched against them.",
+      done: Boolean(flags.match),
+      action: "Go to the queue",
+      run: () => {
+        const stage = document.querySelector(".queue-stage");
+        if (stage) stage.scrollIntoView({ behavior: "smooth", block: "start" });
+        $("queueBtn").focus({ preventScroll: true });
+      },
+    },
+    {
+      title: "Duel a friend",
+      detail:
+        "Press Send a duel and pick them. You play your three first, then they have a week to answer. " +
+        (steamPrivate
+          ? "Your Steam friends list is private, so a friend only shows up once they have played a match. Setting it to Public in Steam lists them from their first sign-in."
+          : "Your Steam friends show up as soon as they sign in to Apogee."),
+      done: Boolean(flags.duel),
+      action: "Send a duel",
+      run: () => {
+        const panel = $("duels");
+        if (!panel || panel.hidden) return;
+        panel.scrollIntoView({ behavior: "smooth", block: "start" });
+        if ($("duelRoster").hidden) $("duelPickBtn").click();
+      },
+    },
+  ];
+}
+
+/**
+ * Called from render(), the session handler and every state change below, so it must
+ * never throw into them: a checklist is not worth a first-run screen that never advances.
+ */
+function renderSetup() {
+  try {
+    paintSetup();
+  } catch (err) {
+    console.warn("getting started:", err);
+  }
+}
+
+function paintSetup() {
+  const panel = $("setupPanel");
+  const list = $("setupList");
+  if (!panel || !list) return;
+  if (HOST !== "electron" || setupFlags().hidden) {
+    panel.hidden = true;
+    return;
+  }
+
+  const steps = setupSteps();
+  const done = steps.filter((s) => s.done).length;
+  if (done === steps.length) {
+    // Finished is finished: the panel does not come back if a step later reads as undone,
+    // say after signing out.
+    setSetupFlag("hidden");
+    panel.hidden = true;
+    return;
+  }
+
+  const next = steps.findIndex((s) => !s.done);
+  list.textContent = "";
+  steps.forEach((step, i) => {
+    const li = document.createElement("li");
+    li.className = "setup-step" + (step.done ? " done" : "") + (i === next ? " next" : "");
+
+    const mark = document.createElement("span");
+    mark.className = "setup-mark";
+    if (step.done) mark.innerHTML = SETUP_CHECK;
+    else mark.textContent = String(i + 1);
+
+    const body = document.createElement("div");
+    const title = document.createElement("div");
+    title.className = "setup-title";
+    title.textContent = step.title;
+    const detail = document.createElement("p");
+    detail.className = "setup-detail";
+    detail.textContent = step.detail;
+    body.append(title, detail);
+    if (!step.done && step.progress != null) {
+      const bar = document.createElement("span");
+      bar.className = "setup-bar";
+      const fill = document.createElement("i");
+      fill.style.width = Math.round(step.progress * 100) + "%";
+      bar.append(fill);
+      body.append(bar);
+    }
+
+    li.append(mark, body);
+    if (!step.done && step.action) {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "go";
+      btn.textContent = step.action;
+      btn.addEventListener("click", step.run);
+      li.append(btn);
+    }
+    list.append(li);
+  });
+
+  $("setupNote").textContent = done + " of " + steps.length + " done";
+  panel.hidden = false;
 }
 
 /* ------------------------------------------------------------------ toast */
@@ -9614,6 +9797,7 @@ function renderSession(session, configured) {
   $("whoami").hidden = false;
 
   signedIn = Boolean(session);
+  renderSetup();
   if (!activeMatch) resetCommit(current);
   if (session) refreshStanding();
   else {
@@ -10248,6 +10432,7 @@ async function onRowAction(button, working, run) {
 
 function renderDuels(board) {
   duelBoard = board;
+  renderSetup();
   const panel = $("duels");
   const list = $("duelList");
   if (!panel || !list) return;
@@ -10395,6 +10580,16 @@ function renderRoster() {
   });
 
   host.textContent = "";
+  // Steam only shares a friends list set to public. Without it a friend who has not
+  // finished a match yet is not on this list at all, and nothing else would say why.
+  if (duelBoard.steamFriends === "private") {
+    const hint = document.createElement("p");
+    hint.className = "roster-empty";
+    hint.textContent =
+      "Your Steam friends list is private, so friends who haven't played a match yet can't be listed. " +
+      "Set Friends List to Public in Steam's privacy settings, or ask them to finish one match.";
+    host.append(hint);
+  }
   if (people.length === 0) {
     const empty = document.createElement("p");
     empty.className = "roster-empty";
@@ -10419,9 +10614,10 @@ function rosterRow(person, isFriend) {
   name.textContent = person.displayName;
   const sub = document.createElement("span");
   sub.className = "duel-sub";
-  sub.textContent = person.lastPlayedAt
+  const played = person.lastPlayedAt
     ? "last played " + new Date(person.lastPlayedAt).toLocaleDateString()
     : "no matches yet";
+  sub.textContent = person.steamFriend ? "Steam friend · " + played : played;
   who.append(name, sub);
 
   const rating = document.createElement("span");
@@ -11652,6 +11848,10 @@ if (HOST === "electron") {
   });
 
   api.onMatchSettled((settled) => {
+    // Any settled match, an unopposed one included: that is what puts a player in
+    // other people's duel lists, which is the point of the step.
+    setSetupFlag("match");
+    renderSetup();
     activeMatch = null;
     pendingMatchId = null;
     delete $("queueBtn").dataset.held;
@@ -11890,6 +12090,11 @@ if (HOST === "electron") {
   });
 
   $("rosterFilter").addEventListener("input", renderRoster);
+
+  $("setupHide").addEventListener("click", () => {
+    setSetupFlag("hidden");
+    renderSetup();
+  });
 
   $("duelLive").addEventListener("click", () => {
     const tab = document.querySelector('.tab[data-screen="queue"]');

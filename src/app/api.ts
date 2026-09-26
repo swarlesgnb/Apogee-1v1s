@@ -330,6 +330,8 @@ export interface Person {
   provisional: boolean;
   lastPlayedAt: string | null;
   friend: boolean;
+  /** On your Steam friends list. Absent from a list-duels deployed before Steam friends. */
+  steamFriend?: boolean;
 }
 
 export interface IncomingDuel {
@@ -361,9 +363,11 @@ export interface OutgoingDuel {
 export interface DuelBoard {
   incoming: IncomingDuel[];
   outgoing: OutgoingDuel[];
-  /** Everyone who has actually played, most recent first. */
+  /** Your Steam friends who have signed in, then everyone who has played, most recent first. */
   roster: Person[];
   friends: Person[];
+  /** Whether Steam shared your friends list. Absent from a list-duels deployed before it. */
+  steamFriends?: "public" | "private" | "unavailable";
 }
 
 /** The inbox, what you sent, who else plays, and your shortlist. */

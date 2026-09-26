@@ -32,7 +32,9 @@
  *
  * The roster is gated on having actually played - a side with a score - so it is a list
  * of participants rather than a list of accounts, and signing in alone never puts anybody
- * on it.
+ * on it. The one exception is the caller's own Steam friends (steamFriendIds below), who
+ * are listed from their first sign-in: the caller's Steam account already knows them, so
+ * listing them tells the caller nothing new about anybody.
  */
 
 import {
@@ -51,6 +53,12 @@ const ROSTER_LIMIT = 200;
 /** How long a resolved duel stays in the sent list, so the sender learns what happened. */
 const RESOLVED_WINDOW_MS = 7 * 24 * 60 * 60 * 1000;
 
+const STEAM_API_KEY = Deno.env.get("STEAM_WEB_API_KEY") ?? "";
+/** The board is read on sign-in and after every duel action; Steam must not hold it up. */
+const STEAM_TIMEOUT_MS = 2500;
+/** `.in()` goes into the query string, and a big friends list would outgrow it. */
+const IN_CHUNK = 150;
+
 interface Person {
   playerId: string;
   displayName: string;
@@ -58,6 +66,72 @@ interface Person {
   provisional: boolean;
   lastPlayedAt: string | null;
   friend: boolean;
+  /** On the caller's Steam friends list. */
+  steamFriend: boolean;
+}
+
+/**
+ * Whether Steam would say who the caller's friends are. "private" is the common case
+ * that is nobody's fault: Steam only answers for a friends list set to public.
+ */
+type SteamFriendsState = "public" | "private" | "unavailable";
+
+/**
+ * The caller's Steam friends who have signed in to Apogee.
+ *
+ * WHY STEAM AND NOT A FRIENDS SYSTEM OF OUR OWN
+ *
+ * The roster below only lists people who have finished a match, so a friend who has just
+ * installed is invisible, and the shortlist can only star somebody already visible. The
+ * people a player wants to duel first are, overwhelmingly, the ones on their Steam list,
+ * and steam-auth already holds the Web API key that can read it: no requests, no codes,
+ * nothing to accept.
+ *
+ * WHAT IT HANDS OUT
+ *
+ * Nothing the roster did not already: a player id, a name and a rating, for somebody the
+ * caller's own Steam account already names as a friend. Steam ids never leave the server.
+ *
+ * It never fails the board. A private list is a 401 from Steam, a missing key or a slow
+ * Steam is "unavailable", and either way the roster is what it was before this existed.
+ */
+async function steamFriendIds(
+  admin: any,
+  callerId: string,
+): Promise<{ ids: Set<string>; state: SteamFriendsState }> {
+  const none = (state: SteamFriendsState) => ({ ids: new Set<string>(), state });
+  if (!STEAM_API_KEY) return none("unavailable");
+
+  const { data: me } = await admin.from("players").select("steam_id").eq("id", callerId).maybeSingle();
+  if (!me?.steam_id) return none("unavailable");
+
+  let steamIds: string[];
+  try {
+    const res = await fetch(
+      "https://api.steampowered.com/ISteamUser/GetFriendList/v1/" +
+        `?key=${STEAM_API_KEY}&steamid=${me.steam_id}&relationship=friend`,
+      { signal: AbortSignal.timeout(STEAM_TIMEOUT_MS) },
+    );
+    if (res.status === 401 || res.status === 403) return none("private");
+    if (!res.ok) return none("unavailable");
+    const body = await res.json();
+    steamIds = (body?.friendslist?.friends ?? [])
+      .map((f: { steamid?: string }) => f.steamid)
+      .filter((s: unknown): s is string => typeof s === "string" && /^7656\d{13}$/.test(s));
+  } catch {
+    return none("unavailable");
+  }
+
+  const ids = new Set<string>();
+  for (let i = 0; i < steamIds.length; i += IN_CHUNK) {
+    const { data } = await admin
+      .from("players")
+      .select("id")
+      .in("steam_id", steamIds.slice(i, i + IN_CHUNK));
+    for (const p of (data ?? []) as { id: string }[]) ids.add(p.id);
+  }
+  ids.delete(callerId);
+  return { ids, state: "public" };
 }
 
 Deno.serve(handler(async (req, admin) => {
@@ -137,7 +211,9 @@ Deno.serve(handler(async (req, admin) => {
 
   const friendIds = new Set((friendRows ?? []).map((f: any) => f.friend_id));
 
-  const everyone = new Set<string>([...lastPlayed.keys(), ...partnerIds, ...friendIds]);
+  const steam = await steamFriendIds(admin, caller.playerId);
+
+  const everyone = new Set<string>([...lastPlayed.keys(), ...partnerIds, ...friendIds, ...steam.ids]);
   everyone.delete(caller.playerId);
 
   const ids = [...everyone];
@@ -162,6 +238,7 @@ Deno.serve(handler(async (req, admin) => {
       provisional: Number(r?.rd ?? 350) > 150,
       lastPlayedAt: lastPlayed.get(id) ?? null,
       friend: friendIds.has(id),
+      steamFriend: steam.ids.has(id),
     };
   };
 
@@ -211,9 +288,16 @@ Deno.serve(handler(async (req, admin) => {
       played: scoreByMatchAndPlayer.get(`${d.match_id}:${caller.playerId}`) != null,
     }));
 
-  const roster = [...lastPlayed.keys()]
+  // Steam friends first, whether or not they have played: they are who the roster was
+  // missing. In `roster` rather than a list of their own so a client from before this
+  // shows them too, as ordinary rows.
+  const roster = [...new Set([...steam.ids, ...lastPlayed.keys()])]
     .map(person)
-    .sort((a, b) => (b.lastPlayedAt ?? "").localeCompare(a.lastPlayedAt ?? ""))
+    .sort(
+      (a, b) =>
+        Number(b.steamFriend) - Number(a.steamFriend) ||
+        (b.lastPlayedAt ?? "").localeCompare(a.lastPlayedAt ?? ""),
+    )
     .slice(0, ROSTER_LIMIT);
 
   return json({
@@ -221,5 +305,6 @@ Deno.serve(handler(async (req, admin) => {
     outgoing,
     roster,
     friends: [...friendIds].map(person),
+    steamFriends: steam.state,
   });
 }));

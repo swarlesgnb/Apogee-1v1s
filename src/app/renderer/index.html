@@ -448,6 +448,47 @@
   }
   .duel-foot button:hover { color: var(--ink); border-color: var(--rule-3); }
 
+  /* ------------------------------------------------------------------
+     Getting started
+     A numbered list, each step one line of what and one of why, with the
+     control that does it on the right. Done steps keep their place and go
+     quiet, so the list reads as progress rather than rearranging itself.
+     ------------------------------------------------------------------ */
+  .setup .phead { align-items: center; }
+  .setup-hide {
+    margin-left: var(--s3); background: none; border: 0; padding: var(--s1) var(--s2);
+    color: var(--ink-dim); font-size: var(--t-xs); cursor: pointer;
+  }
+  .setup-hide:hover { color: var(--ink); }
+  .setup-list { list-style: none; margin: 0; padding: 0; display: grid; }
+  .setup-step {
+    display: grid; grid-template-columns: 28px 1fr auto; gap: var(--s3); align-items: start;
+    padding: var(--s3) 0; border-top: 1px solid var(--rule);
+  }
+  .setup-list > .setup-step:first-child { border-top: 0; padding-top: 0; }
+  .setup-mark {
+    width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center;
+    font: 600 var(--t-xs)/1 var(--mono); color: var(--ink-mid);
+    border: 1px solid var(--rule-2); background: var(--well);
+  }
+  .setup-step.next .setup-mark { color: var(--brand, var(--ink)); border-color: var(--brand-line, var(--rule-3)); }
+  .setup-step.done .setup-mark { color: var(--ground); background: var(--up); border-color: var(--up); }
+  .setup-step.done .setup-mark svg { width: 13px; height: 13px; }
+  .setup-title { font-size: var(--t); font-weight: 600; color: var(--ink); line-height: 24px; }
+  .setup-step.done .setup-title { color: var(--ink-dim); font-weight: 500; }
+  .setup-detail { margin: 2px 0 0; font-size: var(--t-sm); color: var(--ink-mid); line-height: 1.5; max-width: 62ch; }
+  .setup-step.done .setup-detail { display: none; }
+  .setup-bar { display: block; height: 4px; margin-top: var(--s2); max-width: 260px; background: var(--well); border-radius: 2px; overflow: hidden; }
+  .setup-bar i { display: block; height: 100%; background: var(--brand, var(--up)); border-radius: 2px; }
+  .setup-step button.go {
+    font-family: var(--mono); font-size: var(--t-xs); font-weight: 600; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--ink); background: var(--control);
+    border: 1px solid var(--rule-2); padding: var(--s2) var(--s3); cursor: pointer; white-space: nowrap;
+  }
+  .setup-step.next button.go { color: var(--brand-ink, var(--ground)); background: var(--brand, var(--ink)); border-color: var(--brand, var(--ink)); }
+  .setup-step button.go:hover { border-color: var(--rule-3); }
+  .setup-step.next button.go:hover { filter: brightness(1.06); }
+
   .roster { margin-top: var(--s4); padding-top: var(--s4); border-top: 1px solid var(--rule-2); }
   .roster-top { display: grid; gap: var(--s3); margin-bottom: var(--s3); }
   .roster-list { display: grid; max-height: 320px; overflow-y: auto; }
@@ -3291,6 +3332,20 @@
               <div class="arcade-hero-links"><button type="button" class="exp-home" id="expeditionHome" data-arcade-route="expedition"><span class="exp-home-symbol" aria-hidden="true">✦</span><span><small>SOLO PRACTICE</small><strong id="expeditionHomeTitle">First Light expedition</strong><span id="expeditionHomeDetail">Complete six destinations to earn ships and open the final challenge.</span></span><b>Continue →</b></button><button type="button" class="mixtape-entry" data-arcade-route="mixtape">Make a mixtape <span aria-hidden="true">↗</span></button><button type="button" data-arcade-route="tournaments">Tournaments <span aria-hidden="true">→</span></button></div>
             </div>
 
+            <!-- Getting started. Above everything on the screen it gates, and gone for good
+                 once every step is done or it is hidden: a finished checklist is noise. The
+                 steps are the ones a new player cannot see from here - the run requirement,
+                 and a friend who is not in the duel list until they have signed in. -->
+            <div class="panel setup" id="setupPanel" hidden>
+              <div class="phead">
+                <h2>Getting started</h2>
+                <span class="note" id="setupNote"></span>
+                <button type="button" class="setup-hide" id="setupHide">Hide</button>
+              </div>
+              <div class="pbody">
+                <ol class="setup-list" id="setupList"></ol>
+              </div>
+            </div>
 
             <div class="panel rank-showcase">
               <div class="hero">
