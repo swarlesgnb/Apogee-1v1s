@@ -192,12 +192,12 @@ export function renderSite(inputs: SiteInputs): string {
       </section>`;
   };
 
-  const predicted = season.scenarios.filter(
-    // `source` is written by the season tools and read by validateThresholds from the
-    // raw JSON; SeasonScenario does not carry it, so it is read the same way here.
-    // A calibrated row is still a prediction, corrected by a handful of playtest runs.
-    (s) => ["predicted", "calibrated"].includes((s as { source?: { kind?: string } }).source?.kind ?? ""),
-  ).length;
+  // `source` is written by the season tools and read by validateThresholds from the raw
+  // JSON; SeasonScenario does not carry it, so it is read the same way here. The note's
+  // wording follows the kinds actually present, so it cannot outlive the thresholds.
+  const kindOf = (s: SeasonScenario) => (s as { source?: { kind?: string } }).source?.kind ?? "";
+  const predicted = season.scenarios.filter((s) => ["predicted", "calibrated"].includes(kindOf(s))).length;
+  const calibrated = season.scenarios.filter((s) => kindOf(s) === "calibrated").length;
   const provisional =
     predicted === 0
       ? ""
@@ -206,8 +206,13 @@ export function renderSite(inputs: SiteInputs): string {
             ? "Every threshold this season"
             : `${predicted} of the ${season.scenarios.length} thresholds`
         } was predicted from the scenario file, because the scenarios are new and there are
-        not enough real scores to cut ranks from yet. They get recut from real runs, and ranks
-        can move when they do.</aside>`;
+        not enough real scores to cut ranks from yet.${
+          calibrated
+            ? ` ${calibrated === predicted ? "All of them were" : `${calibrated} were`} then adjusted
+        against playtest runs, and against the same players' scores on real KovaaK's
+        leaderboards.`
+            : ""
+        } They get recut from real runs, and ranks can move when they do.</aside>`;
 
   const tabs = windows
     .map(
