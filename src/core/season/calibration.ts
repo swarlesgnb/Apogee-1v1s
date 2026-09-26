@@ -50,7 +50,14 @@ export interface CalibrationInput {
 }
 
 export interface FamilyCalibration {
+  /** What build:season applies: `relative` times the category's anchor, clamped to COMBINED. */
   factor: number;
+  /** This family against the rest of its category, after shrinkage, clamp and deadband. */
+  relative?: number;
+  /** The category's absolute anchor. */
+  category?: number;
+  /** Set when `relative` was set by hand rather than measured, with the reason. */
+  override?: string;
   /** Before shrinkage, clamp and deadband. */
   raw: number;
   runs: number;
@@ -60,9 +67,13 @@ export interface FamilyCalibration {
 export interface Calibration {
   about: string;
   builtAt: string;
-  rules: { minFamilies: number; clamp: [number, number]; deadband: number };
+  rules: { minFamilies: number; clamp: [number, number]; deadband: number; anchorClamp?: [number, number]; combinedClamp?: [number, number] };
+  categories?: Record<string, CategoryAnchor>;
   families: Record<string, FamilyCalibration>;
 }
+
+/** The limit on a family's combined factor: neither half alone should move it this far. */
+export const COMBINED_CLAMP: [number, number] = [0.5, 2];
 
 /**
  * Where a score sits on a ladder, continuously: 0 at the first threshold, 1 at the second,
@@ -136,6 +147,100 @@ export function calibrate(inputs: CalibrationInput[]): Record<string, FamilyCali
     out[family] = { factor: round(factor, 4), raw: round(Math.exp(logRaw), 4), runs, evidence };
   }
   return out;
+}
+
+// ---- the absolute anchor ---------------------------------------------------------------------
+//
+// Everything above corrects families against each other. Where the ladder sits comes from
+// the same player's standing on real KovaaK's boards: the season's thresholds are cut at
+// top fractions of a predicted board, so a player who is top 7% on the real Static boards
+// they play should read as top 7% on Apogee's Static ones. The first comparison had one
+// player at top 6.8% on 31 real Static boards and top 26% on Apogee's, and at top 12% on
+// real Precise boards and top 5% on Apogee's: the model's error per category, not per
+// family.
+//
+// A best on a real board comes from dozens of runs and one on Apogee from a handful, so the
+// Apogee best is projected by the player's own practice gain: eventual best over the best of
+// the first two runs, on scenarios first played recently enough that the gain is getting
+// used to a scenario and not a year of getting better.
+
+export const ANCHOR_MIN_SCENARIOS = 5;
+export const ANCHOR_MIN_BOARDS = 5;
+export const ANCHOR_CLAMP: [number, number] = [0.75, 4 / 3];
+export const PRACTICE_MIN_SCENARIOS = 5;
+
+export interface AnchorInput {
+  category: string;
+  /** Top fraction on real boards, run-weighted geometric mean, and the boards behind it. */
+  realTopFraction: number;
+  boards: number;
+  /** Eventual best over first-two best, and how many scenarios measured it. */
+  practice: number;
+  practiceScenarios: number;
+  practiceFrom: "category" | "pooled";
+  scenarios: Array<{ scenario: string; best: number; predicted: number[]; topFractions: number[] }>;
+}
+
+export interface CategoryAnchor {
+  factor: number;
+  raw: number;
+  realTopFraction: number;
+  boards: number;
+  practice: number;
+  practiceScenarios: number;
+  practiceFrom: "category" | "pooled";
+  scenarios: number;
+  /** Why the factor is 1, when it is. */
+  held?: string;
+}
+
+/** Top fraction of a score on a sampled board, log-linear in the fraction between points. */
+export function topFractionOn(points: Array<{ topFraction: number; score: number }>, score: number): number {
+  const p = [...points].sort((a, b) => a.topFraction - b.topFraction);
+  if (score >= p[0].score) return p[0].topFraction;
+  for (let i = 0; i < p.length - 1; i++) {
+    const a = p[i];
+    const b = p[i + 1];
+    if (score <= a.score && score >= b.score) {
+      const t = a.score === b.score ? 0 : (a.score - score) / (a.score - b.score);
+      return Math.exp(Math.log(a.topFraction) + t * (Math.log(b.topFraction) - Math.log(a.topFraction)));
+    }
+  }
+  return p[p.length - 1].topFraction;
+}
+
+/**
+ * The score at a top fraction on a scenario's predicted board, read off its uncalibrated
+ * thresholds at the fractions they were cut at: linear in score against log fraction, and
+ * extended along the nearest segment past either end.
+ */
+export function scoreAtTopFraction(predicted: number[], topFractions: number[], tf: number): number {
+  const pts = predicted.map((score, i) => ({ t: Math.log(topFractions[i]), score }));
+  const x = Math.log(tf);
+  let i = pts.findIndex((p, j) => j < pts.length - 1 && x <= p.t && x >= pts[j + 1].t);
+  if (i < 0) i = x > pts[0].t ? 0 : pts.length - 2;
+  const a = pts[i];
+  const b = pts[i + 1];
+  return a.score + ((x - a.t) / (b.t - a.t)) * (b.score - a.score);
+}
+
+export function anchor(input: AnchorInput): CategoryAnchor {
+  const base = {
+    realTopFraction: round(input.realTopFraction, 5),
+    boards: input.boards,
+    practice: round(input.practice, 4),
+    practiceScenarios: input.practiceScenarios,
+    practiceFrom: input.practiceFrom,
+    scenarios: input.scenarios.length,
+  };
+  if (input.scenarios.length < ANCHOR_MIN_SCENARIOS) return { factor: 1, raw: 1, ...base, held: `fewer than ${ANCHOR_MIN_SCENARIOS} Apogee scenarios with runs on the current files` };
+  if (input.boards < ANCHOR_MIN_BOARDS) return { factor: 1, raw: 1, ...base, held: `fewer than ${ANCHOR_MIN_BOARDS} real boards played` };
+  const logs = input.scenarios.map((s) =>
+    Math.log((s.best * input.practice) / scoreAtTopFraction(s.predicted, s.topFractions, input.realTopFraction)),
+  );
+  const raw = Math.exp(logs.reduce((a, b) => a + b, 0) / logs.length);
+  const factor = Math.min(ANCHOR_CLAMP[1], Math.max(ANCHOR_CLAMP[0], raw));
+  return { factor: round(factor, 4), raw: round(raw, 4), ...base };
 }
 
 /** A predicted board with every score multiplied by `factor`. */

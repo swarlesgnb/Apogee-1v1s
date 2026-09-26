@@ -1392,7 +1392,7 @@ export const FAMILIES: Family[] = [
       why: "Speed switching on the curved wall Voltaic's 1w4ts is played on, its map copied whole, where the flick between targets is most of the time spent.",
       learnsFrom: ["voxTS Viscose Varied", "VT DotTS Novice S5", "VT 1w4ts Novice S5"],
     },
-    (f) => switching(f, { alive: 3, deg: 2.8, ttk: 0.25, speed: 0, range: 2100, wall: true }, "Three still targets on a curved wall. Hold fire to kill.", "Speed"),
+    (f) => switching(f, { alive: 5, deg: 2.8, ttk: 0.25, speed: 0, range: 2100, wall: true }, "Five still targets on a curved wall. Hold fire to kill.", "Speed"),
   ),
   family(
     {

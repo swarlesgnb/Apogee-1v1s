@@ -3220,7 +3220,7 @@
    "class": "switch",
    "targetDeg": 2.803,
    "angularSpeed": 0,
-   "fittsIdNearest": 2.423,
+   "fittsIdNearest": 2.067,
    "ttk": 0.24,
    "median": 2391,
    "medianRange": [
@@ -3243,7 +3243,7 @@
    "class": "switch",
    "targetDeg": 2.439,
    "angularSpeed": 0,
-   "fittsIdNearest": 2.588,
+   "fittsIdNearest": 2.223,
    "ttk": 0.24,
    "median": 2365,
    "medianRange": [
@@ -3266,7 +3266,7 @@
    "class": "switch",
    "targetDeg": 2.122,
    "angularSpeed": 0,
-   "fittsIdNearest": 2.758,
+   "fittsIdNearest": 2.383,
    "ttk": 0.24,
    "median": 2339,
    "medianRange": [
@@ -3289,7 +3289,7 @@
    "class": "switch",
    "targetDeg": 1.846,
    "angularSpeed": 0,
-   "fittsIdNearest": 2.931,
+   "fittsIdNearest": 2.547,
    "ttk": 0.24,
    "median": 2313,
    "medianRange": [
