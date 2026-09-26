@@ -14,7 +14,7 @@
  * that nothing uses, and none of its template's names unless a recipe kept them.
  */
 
-import { get, list, profile, set, type Sce, type SceLine, type SceSection } from "./sce.ts";
+import { formatValue, get, list, profile, set, type Sce, type SceLine, type SceSection } from "./sce.ts";
 
 export type Values = Record<string, string | number | boolean>;
 
@@ -26,6 +26,25 @@ export function setProfile(sce: Sce, type: string, name: string, values: Values)
   const p = profile(sce, type, name);
   if (!p) throw new Error(`no ${type} called ${name}`);
   for (const [k, v] of Object.entries(values)) set(p.lines, k, v);
+}
+
+/**
+ * Set a key a template may predate, adding it right after `after` where the file has no
+ * line for it. Older templates were saved before KovaaK's wrote some keys at all
+ * (Skeet Tracking has no DisableCharacterCollision), and `set` rightly refuses to invent
+ * a key; this is the one place that does, and only next to the key it follows in files
+ * that have it.
+ */
+export function setOrAddToProfile(sce: Sce, type: string, name: string, key: string, value: string | number | boolean, after: string): void {
+  const p = profile(sce, type, name);
+  if (!p) throw new Error(`no ${type} called ${name}`);
+  if (p.lines.some((l) => l.key === key)) {
+    set(p.lines, key, value);
+    return;
+  }
+  const at = p.lines.findIndex((l) => l.key === after);
+  if (at < 0) throw new Error(`${type} ${name} has neither ${key} nor ${after} to place it after`);
+  p.lines.splice(at + 1, 0, { key, value: formatValue(value) });
 }
 
 /**

@@ -375,6 +375,7 @@ FlightAccelUp=800.0
 FlightVelocityDown=800.0
 FlightAccelDown=800.0
 IsFlyUpOnJumpAndCrouch=false
+DisableCharacterCollision=true
 LifeStealPercent=0.0
 AbilityGlobalCooldown=0.0
 BlockAbilityOnStartDuration=0.0

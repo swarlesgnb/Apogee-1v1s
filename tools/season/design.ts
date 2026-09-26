@@ -34,6 +34,7 @@ import {
   setBots,
   setHead,
   setProfile,
+  setOrAddToProfile,
   setRoom,
   span,
   type Values,
@@ -1060,6 +1061,9 @@ function skeet(f: Family, spec: SkeetSpec, description: string) {
       MainBBHeight: 2 * radiusFor(deg, spec.range),
       MaxHealth: spec.ttk / 0.01,
     });
+    // Pigeons pass through each other. With collision on, two thrown into the same air
+    // struck and bounced backwards, and a throw the player had read went somewhere else.
+    setOrAddToProfile(sce, "Character Profile", character, "DisableCharacterCollision", true, "IsFlyUpOnJumpAndCrouch");
     const ability = list(get(profile(sce, "Character Profile", character)!.lines, "AbilityProfileNames"))[0]?.replace(/\.abil\w+$/i, "");
     if (ability) {
       const a = profile(sce, "Movement Ability Profile", ability)!;
