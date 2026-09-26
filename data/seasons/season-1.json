@@ -247,7 +247,7 @@
             "Falcon",
             "Lynx",
             "Wolverine",
-            "Lionesse",
+            "Lioness",
             "Grizzly Bear"
           ],
           "rankColors": {
@@ -255,7 +255,7 @@
             "Falcon": "#ff0000",
             "Lynx": "#fb00ff",
             "Wolverine": "#0e5700",
-            "Lionesse": "#c28400",
+            "Lioness": "#c28400",
             "Grizzly Bear": "#6e6b5e"
           }
         },
@@ -270,7 +270,7 @@
             135000
           ],
           "rankNames": [
-            "Lionesse",
+            "Lioness",
             "Grizzly Bear",
             "Sabretooth",
             "White Rhino",
@@ -278,7 +278,7 @@
             "Giant Squid"
           ],
           "rankColors": {
-            "Lionesse": "#c28400",
+            "Lioness": "#c28400",
             "Grizzly Bear": "#6e6b5e",
             "Sabretooth": "#ff8080",
             "White Rhino": "#00ffe1",
@@ -340,7 +340,7 @@
         "Falcon",
         "Lynx",
         "Wolverine",
-        "Lionesse",
+        "Lioness",
         "Grizzly Bear",
         "Sabretooth",
         "White Rhino",
@@ -358,7 +358,7 @@
         "Falcon": "#ff0000",
         "Lynx": "#fb00ff",
         "Wolverine": "#0e5700",
-        "Lionesse": "#c28400",
+        "Lioness": "#c28400",
         "Grizzly Bear": "#6e6b5e",
         "Sabretooth": "#ff8080",
         "White Rhino": "#00ffe1",
@@ -416,7 +416,7 @@
             "Primate",
             "Chimp",
             "Hominid",
-            "Homoerectus"
+            "Homo Erectus"
           ],
           "rankColors": {
             "Reptile": "#2bff00",
@@ -424,7 +424,7 @@
             "Primate": "#331400",
             "Chimp": "#9a783c",
             "Hominid": "#7866ff",
-            "Homoerectus": "#95b300"
+            "Homo Erectus": "#95b300"
           }
         },
         {
@@ -439,17 +439,17 @@
           ],
           "rankNames": [
             "Hominid",
-            "Homoerectus",
+            "Homo Erectus",
             "Neanderthal",
-            "Homosapien",
+            "Homo Sapiens",
             "Neolithic",
             "Robosapien"
           ],
           "rankColors": {
             "Hominid": "#7866ff",
-            "Homoerectus": "#95b300",
+            "Homo Erectus": "#95b300",
             "Neanderthal": "#e100ff",
-            "Homosapien": "#ff0000",
+            "Homo Sapiens": "#ff0000",
             "Neolithic": "#ff6600",
             "Robosapien": "#00fbff"
           }
@@ -509,9 +509,9 @@
         "Primate",
         "Chimp",
         "Hominid",
-        "Homoerectus",
+        "Homo Erectus",
         "Neanderthal",
-        "Homosapien",
+        "Homo Sapiens",
         "Neolithic",
         "Robosapien",
         "HAL 9000",
@@ -527,9 +527,9 @@
         "Primate": "#331400",
         "Chimp": "#9a783c",
         "Hominid": "#7866ff",
-        "Homoerectus": "#95b300",
+        "Homo Erectus": "#95b300",
         "Neanderthal": "#e100ff",
-        "Homosapien": "#ff0000",
+        "Homo Sapiens": "#ff0000",
         "Neolithic": "#ff6600",
         "Robosapien": "#00fbff",
         "HAL 9000": "#ffffff",
@@ -891,7 +891,7 @@
             "Plankton",
             "Tadpole",
             "Minnow",
-            "Prarie Dog",
+            "Prairie Dog",
             "Toad",
             "Viper"
           ],
@@ -899,7 +899,7 @@
             "Plankton": "#857829",
             "Tadpole": "#7affb4",
             "Minnow": "#707aff",
-            "Prarie Dog": "#6b5400",
+            "Prairie Dog": "#6b5400",
             "Toad": "#00e604",
             "Viper": "#fbff00"
           }
@@ -1007,7 +1007,7 @@
         "Plankton",
         "Tadpole",
         "Minnow",
-        "Prarie Dog",
+        "Prairie Dog",
         "Toad",
         "Viper",
         "Hawk",
@@ -1025,7 +1025,7 @@
         "Plankton": "#857829",
         "Tadpole": "#7affb4",
         "Minnow": "#707aff",
-        "Prarie Dog": "#6b5400",
+        "Prairie Dog": "#6b5400",
         "Toad": "#00e604",
         "Viper": "#fbff00",
         "Hawk": "#ff0000",
