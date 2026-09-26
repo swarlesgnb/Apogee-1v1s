@@ -6113,7 +6113,10 @@ function renderScenarioRanks() {
     tr.innerHTML =
       "<td>" + esc(r.label) + ' <span class="win">' + esc(r.windowName) + "</span></td>" +
       "<td>" + esc(r.category) + "</td>" +
-      '<td class="sc-rank">' + esc(held ?? "unranked") + "</td>" +
+      // A played score short of its band's first rank names that rank. Above Novice a
+      // band opens where Novice's fifth rank sits, and "unranked" there read to the
+      // playtest as a broken ladder rather than a rung not reached yet.
+      '<td class="sc-rank">' + esc(held ?? (r.runs > 0 && next ? "below " + next : "unranked")) + "</td>" +
       "<td>" + (r.best === null ? '<span class="base">unplayed</span>' : pts(r.best)) + "</td>" +
       '<td class="sc-rank">' + (maxedHere ? "maxed" : esc(next ?? "")) + "</td>" +
       "<td>" + (maxedHere ? "" : tgt(r.nextRankScore)) + "</td>" +
@@ -6920,7 +6923,7 @@ function renderBand() {
   $("bandNote").textContent =
     band.played === 0
       ? "not played yet"
-      : (band.rankName ? band.rankName : "below the first rank") +
+      : (band.rankName ? bandRankLabel(band) : "below the first rank") +
         " · " + num(band.energy) + " energy";
 
   // ---- the ladder ----
@@ -7164,7 +7167,9 @@ function renderRanks(data) {
       name.className = "band-rank";
       name.textContent = unplayed
         ? "not played"
-        : (b.rankName ?? "below " + (b.rankNames[0] ?? "rank 1"));
+        : b.rankName
+          ? bandRankLabel(b)
+          : "below " + (b.rankNames[0] ?? "rank 1");
       card.append(name);
 
       // One pip per rank in this band, and only this band. The pip the player holds is
@@ -7286,7 +7291,9 @@ function renderRanks(data) {
 
     tr.innerHTML =
       "<td>" + esc(s.label) + (s.windowName ? ' <span class="win">' + esc(s.windowName) + "</span>" : "") + "</td>" +
-      '<td style="color:' + esc(ink) + '">' + esc(s.rankName || "unranked") + "</td>" +
+      '<td style="color:' + esc(ink) + '">' +
+        esc(s.rankName || (s.runs > 0 && s.nextRankName && !s.nextRankIsNewScenario ? "below " + s.nextRankName : "unranked")) +
+        "</td>" +
       '<td class="c-best"></td>' +
       '<td style="color:' + esc(nextInk) + '">' + esc(s.nextRankName) + "</td>" +
       "<td>" + tgt(s.nextRankScore) + target + "</td>" +
@@ -8231,6 +8238,15 @@ function refreshEligibility() {
     // this cannot become a stream of banners.
     reportFailure("Could not check whether you can queue", err);
   });
+}
+
+/**
+ * A band's rank as a player reads it: "Diamond complete" once every scenario in the band
+ * has reached Diamond on its own score, the way evxl labels a benchmark, and plain
+ * "Diamond" while the rank is energy carrying a scenario that is still below it.
+ */
+function bandRankLabel(band) {
+  return band.complete ? band.rankName + " complete" : band.rankName;
 }
 
 /* ------------------------------------------------------------------ getting started */

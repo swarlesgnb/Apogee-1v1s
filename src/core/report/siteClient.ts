@@ -164,8 +164,14 @@ function paint(row: HTMLTableRowElement, score: number | null, source: Source): 
   const idx = rankIndex(score, s.rankMaxes);
   cells.forEach((c, i) => c.classList.toggle("met", i <= idx));
 
-  let html = idx >= 0 ? chip(band, band.names[idx]) : `<span class="unranked">Unranked</span>`;
-  if (idx + 1 < s.rankMaxes.length) {
+  // Short of the first rank names it and the distance: above Novice a band opens where
+  // Novice's fifth rank sits, and "Unranked" there reads as a broken ladder rather than a
+  // rung not reached yet.
+  let html =
+    idx >= 0
+      ? chip(band, band.names[idx])
+      : `<span class="unranked">${num.format(s.rankMaxes[0] - score)} short of ${chip(band, band.names[0])}</span>`;
+  if (idx >= 0 && idx + 1 < s.rankMaxes.length) {
     html += `<span class="gap">${num.format(s.rankMaxes[idx + 1] - score)} to ${chip(band, band.names[idx + 1])}</span>`;
   } else if (band.topN) {
     html += `<span class="gap">${chip(band, band.names[s.rankMaxes.length])} is the top ${band.topN} on the board</span>`;

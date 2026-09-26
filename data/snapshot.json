@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-26T15:50:49.937Z",
+  "generatedAt": "2026-09-26T16:43:30.264Z",
   "coverage": [
     {
       "category": "Dynamic Clicking",
@@ -91,26 +91,10 @@
       "windowName": "Intermediate",
       "total": 9,
       "measured": 0,
-      "runs": 0,
+      "runs": 5,
       "matchable": false,
       "complete": false,
       "scenarios": [
-        {
-          "scenario": "Apogee Gravclick Intermediate",
-          "label": "Gravclick",
-          "family": "Gravclick",
-          "runs": 0,
-          "measured": false,
-          "needs": 5
-        },
-        {
-          "scenario": "Apogee Pendulum Intermediate",
-          "label": "Pendulum",
-          "family": "Pendulum",
-          "runs": 0,
-          "measured": false,
-          "needs": 5
-        },
         {
           "scenario": "Apogee Antigrav Intermediate",
           "label": "Antigrav",
@@ -144,28 +128,44 @@
           "needs": 5
         },
         {
-          "scenario": "Apogee Gravity Well Intermediate",
-          "label": "Gravity Well",
-          "family": "Gravity Well",
-          "runs": 0,
-          "measured": false,
-          "needs": 5
-        },
-        {
-          "scenario": "Apogee Meteor Intermediate",
-          "label": "Meteor",
-          "family": "Meteor",
-          "runs": 0,
-          "measured": false,
-          "needs": 5
-        },
-        {
           "scenario": "Apogee Satellite Intermediate",
           "label": "Satellite",
           "family": "Satellite",
           "runs": 0,
           "measured": false,
           "needs": 5
+        },
+        {
+          "scenario": "Apogee Pendulum Intermediate",
+          "label": "Pendulum",
+          "family": "Pendulum",
+          "runs": 1,
+          "measured": false,
+          "needs": 4
+        },
+        {
+          "scenario": "Apogee Gravity Well Intermediate",
+          "label": "Gravity Well",
+          "family": "Gravity Well",
+          "runs": 1,
+          "measured": false,
+          "needs": 4
+        },
+        {
+          "scenario": "Apogee Meteor Intermediate",
+          "label": "Meteor",
+          "family": "Meteor",
+          "runs": 1,
+          "measured": false,
+          "needs": 4
+        },
+        {
+          "scenario": "Apogee Gravclick Intermediate",
+          "label": "Gravclick",
+          "family": "Gravclick",
+          "runs": 2,
+          "measured": false,
+          "needs": 3
         }
       ]
     },
@@ -643,7 +643,7 @@
       "windowName": "Intermediate",
       "total": 6,
       "measured": 0,
-      "runs": 0,
+      "runs": 4,
       "matchable": false,
       "complete": false,
       "scenarios": [
@@ -651,30 +651,6 @@
           "scenario": "Apogee Glide Intermediate",
           "label": "Glide",
           "family": "Glide",
-          "runs": 0,
-          "measured": false,
-          "needs": 5
-        },
-        {
-          "scenario": "Apogee Blastoff Intermediate",
-          "label": "Blastoff",
-          "family": "Blastoff",
-          "runs": 0,
-          "measured": false,
-          "needs": 5
-        },
-        {
-          "scenario": "Apogee Orbit Intermediate",
-          "label": "Orbit",
-          "family": "Orbit",
-          "runs": 0,
-          "measured": false,
-          "needs": 5
-        },
-        {
-          "scenario": "Apogee Thread Intermediate",
-          "label": "Thread",
-          "family": "Thread",
           "runs": 0,
           "measured": false,
           "needs": 5
@@ -688,12 +664,36 @@
           "needs": 5
         },
         {
+          "scenario": "Apogee Blastoff Intermediate",
+          "label": "Blastoff",
+          "family": "Blastoff",
+          "runs": 1,
+          "measured": false,
+          "needs": 4
+        },
+        {
+          "scenario": "Apogee Orbit Intermediate",
+          "label": "Orbit",
+          "family": "Orbit",
+          "runs": 1,
+          "measured": false,
+          "needs": 4
+        },
+        {
+          "scenario": "Apogee Thread Intermediate",
+          "label": "Thread",
+          "family": "Thread",
+          "runs": 1,
+          "measured": false,
+          "needs": 4
+        },
+        {
           "scenario": "Apogee AlienTrack Intermediate",
           "label": "AlienTrack",
           "family": "AlienTrack",
-          "runs": 0,
+          "runs": 1,
           "measured": false,
-          "needs": 5
+          "needs": 4
         }
       ]
     },
@@ -1123,7 +1123,7 @@
       "windowName": "Intermediate",
       "total": 6,
       "measured": 0,
-      "runs": 0,
+      "runs": 6,
       "matchable": false,
       "complete": false,
       "scenarios": [
@@ -1131,49 +1131,49 @@
           "scenario": "Apogee DNA Intermediate",
           "label": "DNA",
           "family": "DNA",
-          "runs": 0,
+          "runs": 1,
           "measured": false,
-          "needs": 5
+          "needs": 4
         },
         {
           "scenario": "Apogee CockpiTS Intermediate",
           "label": "CockpiTS",
           "family": "CockpiTS",
-          "runs": 0,
+          "runs": 1,
           "measured": false,
-          "needs": 5
+          "needs": 4
         },
         {
           "scenario": "Apogee Column Intermediate",
           "label": "Column",
           "family": "Column",
-          "runs": 0,
+          "runs": 1,
           "measured": false,
-          "needs": 5
+          "needs": 4
         },
         {
           "scenario": "Apogee Asteroids Intermediate",
           "label": "Asteroids",
           "family": "Asteroids",
-          "runs": 0,
+          "runs": 1,
           "measured": false,
-          "needs": 5
+          "needs": 4
         },
         {
           "scenario": "Apogee RockeTS Intermediate",
           "label": "RockeTS",
           "family": "RockeTS",
-          "runs": 0,
+          "runs": 1,
           "measured": false,
-          "needs": 5
+          "needs": 4
         },
         {
           "scenario": "Apogee MartianTS Intermediate",
           "label": "MartianTS",
           "family": "MartianTS",
-          "runs": 0,
+          "runs": 1,
           "measured": false,
-          "needs": 5
+          "needs": 4
         }
       ]
     },
@@ -1379,18 +1379,10 @@
       "windowName": "Intermediate",
       "total": 8,
       "measured": 0,
-      "runs": 10,
+      "runs": 12,
       "matchable": false,
       "complete": false,
       "scenarios": [
-        {
-          "scenario": "Apogee Pinpoint Intermediate",
-          "label": "Pinpoint",
-          "family": "Pinpoint",
-          "runs": 1,
-          "measured": false,
-          "needs": 4
-        },
         {
           "scenario": "Apogee Stars Intermediate",
           "label": "Stars",
@@ -1424,14 +1416,6 @@
           "needs": 4
         },
         {
-          "scenario": "Apogee 1w6aliens Intermediate",
-          "label": "1w6aliens",
-          "family": "1w6aliens",
-          "runs": 1,
-          "measured": false,
-          "needs": 4
-        },
-        {
           "scenario": "Apogee Galaga Intermediate",
           "label": "Galaga",
           "family": "Galaga",
@@ -1443,6 +1427,22 @@
           "scenario": "Apogee Zenith Intermediate",
           "label": "Zenith",
           "family": "Zenith",
+          "runs": 2,
+          "measured": false,
+          "needs": 3
+        },
+        {
+          "scenario": "Apogee Pinpoint Intermediate",
+          "label": "Pinpoint",
+          "family": "Pinpoint",
+          "runs": 2,
+          "measured": false,
+          "needs": 3
+        },
+        {
+          "scenario": "Apogee 1w6aliens Intermediate",
+          "label": "1w6aliens",
+          "family": "1w6aliens",
           "runs": 2,
           "measured": false,
           "needs": 3
@@ -1638,17 +1638,17 @@
     "windowSize": 4
   },
   "player": {
-    "totalRuns": 13967,
-    "scenarioCount": 1079,
+    "totalRuns": 13984,
+    "scenarioCount": 1093,
     "streak": 15,
-    "benchmarkRank": "Cosmonaut",
-    "benchmarkEnergy": 558762,
-    "progressToNextRank": 0.7196922462138615,
-    "nextRankName": "Lunar",
+    "benchmarkRank": "Lunar",
+    "benchmarkEnergy": 649000,
+    "progressToNextRank": 0.22242441942240854,
+    "nextRankName": "Odyssey",
     "apogee": {
       "rating": 1617,
       "rd": 105,
-      "percentile": 41.3,
+      "percentile": 46.9,
       "tier": {
         "id": "tier-4",
         "name": "Lunar",
@@ -1737,7 +1737,7 @@
   "categories": [
     {
       "name": "Static Clicking",
-      "energy": 112574,
+      "energy": 103995,
       "rankName": "Crossbow",
       "rankNames": [
         "Blunderbuss",
@@ -1794,7 +1794,7 @@
         320000
       ],
       "rankCount": 16,
-      "progressToNextRank": 0.6286907997726877,
+      "progressToNextRank": 0.1997329106468882,
       "bands": [
         {
           "window": 0,
@@ -1825,11 +1825,12 @@
             100000,
             120000
           ],
-          "energy": 105699,
+          "energy": 103995,
           "rankCount": 6,
-          "progressToNextRank": 0.28494079977268777,
+          "progressToNextRank": 0.1997329106468882,
           "played": 8,
           "total": 8,
+          "complete": false,
           "positional": null
         },
         {
@@ -1861,11 +1862,12 @@
             100000,
             120000
           ],
-          "energy": 31745,
+          "energy": 20871,
           "rankCount": 6,
-          "progressToNextRank": 0.5872427208101101,
+          "progressToNextRank": 0.04356802338325851,
           "played": 8,
           "total": 8,
+          "complete": false,
           "positional": null
         },
         {
@@ -1902,6 +1904,7 @@
           "progressToNextRank": null,
           "played": 0,
           "total": 8,
+          "complete": false,
           "positional": null
         },
         {
@@ -1934,6 +1937,7 @@
           "progressToNextRank": null,
           "played": 0,
           "total": 8,
+          "complete": false,
           "positional": {
             "rankName": "Deadeye",
             "topN": 3,
@@ -1941,7 +1945,7 @@
           }
         }
       ],
-      "perScenario": 14072,
+      "perScenario": 12999,
       "scenarios": [
         {
           "name": "Apogee Galaga Novice",
@@ -2001,23 +2005,23 @@
           "runs": 3
         },
         {
-          "name": "Apogee Stars Intermediate",
+          "name": "Apogee Stars Novice",
           "label": "Stars",
           "family": "Stars",
-          "window": 1,
-          "windowName": "Intermediate",
+          "window": 0,
+          "windowName": "Novice",
           "subCategory": "Static Clicking",
-          "score": 1394,
-          "rankName": "Revolver",
-          "energy": 20000,
-          "nextRankName": "Carbine",
-          "nextRankScore": 1436,
-          "nextRankScenario": "Apogee Stars Intermediate",
+          "score": 1492,
+          "rankName": "Crossbow",
+          "energy": 14403,
+          "nextRankName": "Musket",
+          "nextRankScore": 1508,
+          "nextRankScenario": "Apogee Stars Novice",
           "nextRankLabel": "Stars",
-          "nextRankWindowName": "Intermediate",
+          "nextRankWindowName": "Novice",
           "nextRankIsNewScenario": false,
-          "gap": 42,
-          "runs": 1
+          "gap": 16,
+          "runs": 2
         },
         {
           "name": "Apogee Constellation Novice",
@@ -2077,29 +2081,29 @@
           "runs": 2
         },
         {
-          "name": "Apogee 1w6aliens Intermediate",
+          "name": "Apogee 1w6aliens Novice",
           "label": "1w6aliens",
           "family": "1w6aliens",
-          "window": 1,
-          "windowName": "Intermediate",
+          "window": 0,
+          "windowName": "Novice",
           "subCategory": "Static Clicking",
-          "score": 1420,
-          "rankName": "Musket",
-          "energy": 16875,
-          "nextRankName": "Flintlock",
-          "nextRankScore": 1427,
-          "nextRankScenario": "Apogee 1w6aliens Intermediate",
+          "score": 1560,
+          "rankName": "Crossbow",
+          "energy": 13893,
+          "nextRankName": "Musket",
+          "nextRankScore": 1591,
+          "nextRankScenario": "Apogee 1w6aliens Novice",
           "nextRankLabel": "1w6aliens",
-          "nextRankWindowName": "Intermediate",
+          "nextRankWindowName": "Novice",
           "nextRankIsNewScenario": false,
-          "gap": 7,
-          "runs": 1
+          "gap": 31,
+          "runs": 3
         }
       ]
     },
     {
       "name": "Dynamic Clicking",
-      "energy": 123222,
+      "energy": 128895,
       "rankName": "Hummingbird",
       "rankNames": [
         "Tardigrade",
@@ -2156,7 +2160,7 @@
         360000
       ],
       "rankCount": 16,
-      "progressToNextRank": 0.47653619528619523,
+      "progressToNextRank": 0.7286588464375017,
       "bands": [
         {
           "window": 0,
@@ -2187,11 +2191,12 @@
             112500,
             135000
           ],
-          "energy": 123222,
+          "energy": 118895,
           "rankCount": 6,
-          "progressToNextRank": 0.47653619528619523,
+          "progressToNextRank": 0.2842144019930572,
           "played": 9,
           "total": 9,
+          "complete": false,
           "positional": null
         },
         {
@@ -2223,11 +2228,12 @@
             112500,
             135000
           ],
-          "energy": 0,
+          "energy": 21424,
           "rankCount": 6,
-          "progressToNextRank": null,
-          "played": 0,
+          "progressToNextRank": 0.9521708599173387,
+          "played": 4,
           "total": 9,
+          "complete": false,
           "positional": null
         },
         {
@@ -2264,6 +2270,7 @@
           "progressToNextRank": null,
           "played": 0,
           "total": 9,
+          "complete": false,
           "positional": null
         },
         {
@@ -2296,6 +2303,7 @@
           "progressToNextRank": null,
           "played": 0,
           "total": 9,
+          "complete": false,
           "positional": {
             "rankName": "Leviathan",
             "topN": 3,
@@ -2303,7 +2311,7 @@
           }
         }
       ],
-      "perScenario": 13691,
+      "perScenario": 14322,
       "scenarios": [
         {
           "name": "Apogee Gravclick Novice",
@@ -2316,12 +2324,12 @@
           "rankName": "Falcon",
           "energy": 15000,
           "nextRankName": "Lynx",
-          "nextRankScore": 705,
+          "nextRankScore": 773,
           "nextRankScenario": "Apogee Gravclick Intermediate",
           "nextRankLabel": "Gravclick",
           "nextRankWindowName": "Intermediate",
           "nextRankIsNewScenario": true,
-          "gap": 705,
+          "gap": 131,
           "runs": 2
         },
         {
@@ -2332,15 +2340,15 @@
           "windowName": "Novice",
           "subCategory": "Dynamic Clicking",
           "score": 808,
-          "rankName": "Hornet",
-          "energy": 11667,
-          "nextRankName": "Hummingbird",
-          "nextRankScore": 828,
+          "rankName": "Bee",
+          "energy": 9613,
+          "nextRankName": "Hornet",
+          "nextRankScore": 819,
           "nextRankScenario": "Apogee Pendulum Novice",
           "nextRankLabel": "Pendulum",
           "nextRankWindowName": "Novice",
           "nextRankIsNewScenario": false,
-          "gap": 20,
+          "gap": 11,
           "runs": 1
         },
         {
@@ -2354,12 +2362,12 @@
           "rankName": "Falcon",
           "energy": 15000,
           "nextRankName": "Lynx",
-          "nextRankScore": 841,
+          "nextRankScore": 868,
           "nextRankScenario": "Apogee Antigrav Intermediate",
           "nextRankLabel": "Antigrav",
           "nextRankWindowName": "Intermediate",
           "nextRankIsNewScenario": true,
-          "gap": 841,
+          "gap": 868,
           "runs": 1
         },
         {
@@ -2370,15 +2378,15 @@
           "windowName": "Novice",
           "subCategory": "Dynamic Clicking",
           "score": 800,
-          "rankName": "Hummingbird",
-          "energy": 12727,
-          "nextRankName": "Falcon",
-          "nextRankScore": 850,
+          "rankName": "Hornet",
+          "energy": 10583,
+          "nextRankName": "Hummingbird",
+          "nextRankScore": 846,
           "nextRankScenario": "Apogee Electric Novice",
           "nextRankLabel": "Electric",
           "nextRankWindowName": "Novice",
           "nextRankIsNewScenario": false,
-          "gap": 50,
+          "gap": 46,
           "runs": 1
         },
         {
@@ -2392,12 +2400,12 @@
           "rankName": "Falcon",
           "energy": 15000,
           "nextRankName": "Lynx",
-          "nextRankScore": 574,
+          "nextRankScore": 594,
           "nextRankScenario": "Apogee Sun and Moon Intermediate",
           "nextRankLabel": "Sun and Moon",
           "nextRankWindowName": "Intermediate",
           "nextRankIsNewScenario": true,
-          "gap": 574,
+          "gap": 594,
           "runs": 1
         },
         {
@@ -2411,12 +2419,12 @@
           "rankName": "Falcon",
           "energy": 15000,
           "nextRankName": "Lynx",
-          "nextRankScore": 984,
+          "nextRankScore": 1014,
           "nextRankScenario": "Apogee Shooting Stars Intermediate",
           "nextRankLabel": "Shooting Stars",
           "nextRankWindowName": "Intermediate",
           "nextRankIsNewScenario": true,
-          "gap": 984,
+          "gap": 1014,
           "runs": 2
         },
         {
@@ -2439,22 +2447,22 @@
           "runs": 2
         },
         {
-          "name": "Apogee Meteor Novice",
+          "name": "Apogee Meteor Intermediate",
           "label": "Meteor",
           "family": "Meteor",
-          "window": 0,
-          "windowName": "Novice",
+          "window": 1,
+          "windowName": "Intermediate",
           "subCategory": "Dynamic Clicking",
-          "score": 1310,
-          "rankName": "Falcon",
-          "energy": 15000,
-          "nextRankName": "Lynx",
-          "nextRankScore": 802,
-          "nextRankScenario": "Apogee Meteor Intermediate",
+          "score": 1034,
+          "rankName": "Grizzly Bear",
+          "energy": 25000,
+          "nextRankName": "Sabretooth",
+          "nextRankScore": 887,
+          "nextRankScenario": "Apogee Meteor Advanced",
           "nextRankLabel": "Meteor",
-          "nextRankWindowName": "Intermediate",
+          "nextRankWindowName": "Advanced",
           "nextRankIsNewScenario": true,
-          "gap": 802,
+          "gap": 887,
           "runs": 1
         },
         {
@@ -2465,23 +2473,23 @@
           "windowName": "Novice",
           "subCategory": "Dynamic Clicking",
           "score": 892,
-          "rankName": "Falcon",
-          "energy": 15000,
-          "nextRankName": "Lynx",
-          "nextRankScore": 813,
-          "nextRankScenario": "Apogee Satellite Intermediate",
+          "rankName": "Hummingbird",
+          "energy": 14871,
+          "nextRankName": "Falcon",
+          "nextRankScore": 895,
+          "nextRankScenario": "Apogee Satellite Novice",
           "nextRankLabel": "Satellite",
-          "nextRankWindowName": "Intermediate",
-          "nextRankIsNewScenario": true,
-          "gap": 813,
+          "nextRankWindowName": "Novice",
+          "nextRankIsNewScenario": false,
+          "gap": 3,
           "runs": 1
         }
       ]
     },
     {
       "name": "Precise Tracking",
-      "energy": 90000,
-      "rankName": "Mammal",
+      "energy": 117242,
+      "rankName": "Primate",
       "rankNames": [
         "Amoeba",
         "Multicellular",
@@ -2537,7 +2545,7 @@
         240000
       ],
       "rankCount": 16,
-      "progressToNextRank": 0,
+      "progressToNextRank": 0.8161359400404481,
       "bands": [
         {
           "window": 0,
@@ -2573,13 +2581,14 @@
           "progressToNextRank": null,
           "played": 6,
           "total": 6,
+          "complete": true,
           "positional": null
         },
         {
           "window": 1,
           "windowName": "Intermediate",
-          "rankName": null,
-          "rankIndex": -1,
+          "rankName": "Primate",
+          "rankIndex": 2,
           "rankNames": [
             "Reptile",
             "Mammal",
@@ -2604,11 +2613,12 @@
             75000,
             90000
           ],
-          "energy": 0,
+          "energy": 47242,
           "rankCount": 6,
-          "progressToNextRank": null,
-          "played": 0,
+          "progressToNextRank": 0.14946927337378196,
+          "played": 4,
           "total": 6,
+          "complete": false,
           "positional": null
         },
         {
@@ -2645,6 +2655,7 @@
           "progressToNextRank": null,
           "played": 0,
           "total": 6,
+          "complete": false,
           "positional": null
         },
         {
@@ -2677,6 +2688,7 @@
           "progressToNextRank": null,
           "played": 0,
           "total": 6,
+          "complete": false,
           "positional": {
             "rankName": "Omega",
             "topN": 3,
@@ -2684,7 +2696,7 @@
           }
         }
       ],
-      "perScenario": 15000,
+      "perScenario": 19540,
       "scenarios": [
         {
           "name": "Apogee Glide Novice",
@@ -2706,61 +2718,61 @@
           "runs": 2
         },
         {
-          "name": "Apogee Blastoff Novice",
+          "name": "Apogee Blastoff Intermediate",
           "label": "Blastoff",
           "family": "Blastoff",
-          "window": 0,
-          "windowName": "Novice",
+          "window": 1,
+          "windowName": "Intermediate",
           "subCategory": "Precise Tracking",
-          "score": 4360,
-          "rankName": "Mammal",
-          "energy": 15000,
-          "nextRankName": "Primate",
-          "nextRankScore": 4181,
-          "nextRankScenario": "Apogee Blastoff Intermediate",
+          "score": 4298,
+          "rankName": "Homo Erectus",
+          "energy": 25000,
+          "nextRankName": "Neanderthal",
+          "nextRankScore": 4130,
+          "nextRankScenario": "Apogee Blastoff Advanced",
           "nextRankLabel": "Blastoff",
-          "nextRankWindowName": "Intermediate",
+          "nextRankWindowName": "Advanced",
           "nextRankIsNewScenario": true,
-          "gap": 4181,
-          "runs": 2
+          "gap": 4130,
+          "runs": 1
         },
         {
-          "name": "Apogee Orbit Novice",
+          "name": "Apogee Orbit Intermediate",
           "label": "Orbit",
           "family": "Orbit",
-          "window": 0,
-          "windowName": "Novice",
+          "window": 1,
+          "windowName": "Intermediate",
           "subCategory": "Precise Tracking",
-          "score": 4106,
-          "rankName": "Mammal",
-          "energy": 15000,
-          "nextRankName": "Primate",
-          "nextRankScore": 3745,
+          "score": 3429,
+          "rankName": "Primate",
+          "energy": 18245,
+          "nextRankName": "Chimp",
+          "nextRankScore": 3535,
           "nextRankScenario": "Apogee Orbit Intermediate",
           "nextRankLabel": "Orbit",
           "nextRankWindowName": "Intermediate",
-          "nextRankIsNewScenario": true,
-          "gap": 3745,
-          "runs": 2
+          "nextRankIsNewScenario": false,
+          "gap": 106,
+          "runs": 1
         },
         {
-          "name": "Apogee Thread Novice",
+          "name": "Apogee Thread Intermediate",
           "label": "Thread",
           "family": "Thread",
-          "window": 0,
-          "windowName": "Novice",
+          "window": 1,
+          "windowName": "Intermediate",
           "subCategory": "Precise Tracking",
-          "score": 5326,
-          "rankName": "Mammal",
-          "energy": 15000,
-          "nextRankName": "Primate",
-          "nextRankScore": 3939,
-          "nextRankScenario": "Apogee Thread Intermediate",
+          "score": 5005,
+          "rankName": "Homo Erectus",
+          "energy": 25000,
+          "nextRankName": "Neanderthal",
+          "nextRankScore": 4652,
+          "nextRankScenario": "Apogee Thread Advanced",
           "nextRankLabel": "Thread",
-          "nextRankWindowName": "Intermediate",
+          "nextRankWindowName": "Advanced",
           "nextRankIsNewScenario": true,
-          "gap": 3939,
-          "runs": 2
+          "gap": 4652,
+          "runs": 1
         },
         {
           "name": "Apogee Arc Novice",
@@ -2782,29 +2794,29 @@
           "runs": 1
         },
         {
-          "name": "Apogee AlienTrack Novice",
+          "name": "Apogee AlienTrack Intermediate",
           "label": "AlienTrack",
           "family": "AlienTrack",
-          "window": 0,
-          "windowName": "Novice",
+          "window": 1,
+          "windowName": "Intermediate",
           "subCategory": "Precise Tracking",
-          "score": 4343,
-          "rankName": "Mammal",
-          "energy": 15000,
-          "nextRankName": "Primate",
-          "nextRankScore": 3690,
+          "score": 3790,
+          "rankName": "Primate",
+          "energy": 18997,
+          "nextRankName": "Chimp",
+          "nextRankScore": 3857,
           "nextRankScenario": "Apogee AlienTrack Intermediate",
           "nextRankLabel": "AlienTrack",
           "nextRankWindowName": "Intermediate",
-          "nextRankIsNewScenario": true,
-          "gap": 3690,
+          "nextRankIsNewScenario": false,
+          "gap": 67,
           "runs": 1
         }
       ]
     },
     {
       "name": "Reactive Tracking",
-      "energy": 75690,
+      "energy": 81812,
       "rankName": "Lukewarm",
       "rankNames": [
         "Absolute Zero",
@@ -2861,7 +2873,7 @@
         240000
       ],
       "rankCount": 16,
-      "progressToNextRank": 0.04600106284044062,
+      "progressToNextRank": 0.4541484716157206,
       "bands": [
         {
           "window": 0,
@@ -2892,11 +2904,12 @@
             75000,
             90000
           ],
-          "energy": 75690,
+          "energy": 81812,
           "rankCount": 6,
-          "progressToNextRank": 0.04600106284044062,
+          "progressToNextRank": 0.4541484716157206,
           "played": 6,
           "total": 6,
+          "complete": false,
           "positional": null
         },
         {
@@ -2933,6 +2946,7 @@
           "progressToNextRank": null,
           "played": 0,
           "total": 6,
+          "complete": false,
           "positional": null
         },
         {
@@ -2969,6 +2983,7 @@
           "progressToNextRank": null,
           "played": 0,
           "total": 6,
+          "complete": false,
           "positional": null
         },
         {
@@ -3001,6 +3016,7 @@
           "progressToNextRank": null,
           "played": 0,
           "total": 6,
+          "complete": false,
           "positional": {
             "rankName": "Big Bang",
             "topN": 3,
@@ -3008,7 +3024,7 @@
           }
         }
       ],
-      "perScenario": 12615,
+      "perScenario": 13635,
       "scenarios": [
         {
           "name": "Apogee Pong Novice",
@@ -3059,12 +3075,12 @@
           "rankName": "Sweaty",
           "energy": 15000,
           "nextRankName": "Scalding",
-          "nextRankScore": 2770,
+          "nextRankScore": 3294,
           "nextRankScenario": "Apogee Stutter Intermediate",
           "nextRankLabel": "Stutter",
           "nextRankWindowName": "Intermediate",
           "nextRankIsNewScenario": true,
-          "gap": 2770,
+          "gap": 3294,
           "runs": 1
         },
         {
@@ -3078,12 +3094,12 @@
           "rankName": "Sweaty",
           "energy": 15000,
           "nextRankName": "Scalding",
-          "nextRankScore": 3016,
+          "nextRankScore": 3239,
           "nextRankScenario": "Apogee Hover Intermediate",
           "nextRankLabel": "Hover",
           "nextRankWindowName": "Intermediate",
           "nextRankIsNewScenario": true,
-          "gap": 3016,
+          "gap": 3239,
           "runs": 1
         },
         {
@@ -3094,15 +3110,15 @@
           "windowName": "Novice",
           "subCategory": "Reactive Tracking",
           "score": 1607,
-          "rankName": "Absolute Zero",
-          "energy": 2788,
-          "nextRankName": "Nitrogen",
-          "nextRankScore": 2067,
+          "rankName": "Nitrogen",
+          "energy": 6812,
+          "nextRankName": "Dry Ice",
+          "nextRankScore": 1670,
           "nextRankScenario": "Apogee UFO Novice",
           "nextRankLabel": "UFO",
           "nextRankWindowName": "Novice",
           "nextRankIsNewScenario": false,
-          "gap": 460,
+          "gap": 63,
           "runs": 1
         },
         {
@@ -3113,23 +3129,23 @@
           "windowName": "Novice",
           "subCategory": "Reactive Tracking",
           "score": 2878,
-          "rankName": "Lukewarm",
-          "energy": 12902,
-          "nextRankName": "Sweaty",
-          "nextRankScore": 3040,
-          "nextRankScenario": "Apogee Feint Novice",
+          "rankName": "Sweaty",
+          "energy": 15000,
+          "nextRankName": "Scalding",
+          "nextRankScore": 2701,
+          "nextRankScenario": "Apogee Feint Intermediate",
           "nextRankLabel": "Feint",
-          "nextRankWindowName": "Novice",
-          "nextRankIsNewScenario": false,
-          "gap": 162,
+          "nextRankWindowName": "Intermediate",
+          "nextRankIsNewScenario": true,
+          "gap": 2701,
           "runs": 1
         }
       ]
     },
     {
       "name": "Speed Switching",
-      "energy": 83916,
-      "rankName": "Koala",
+      "energy": 138319,
+      "rankName": "Greyhound",
       "rankNames": [
         "Banana Slug",
         "Sloth",
@@ -3185,13 +3201,13 @@
         240000
       ],
       "rankCount": 16,
-      "progressToNextRank": 0.5943952802359883,
+      "progressToNextRank": 0.22126436781609277,
       "bands": [
         {
           "window": 0,
           "windowName": "Novice",
-          "rankName": "Koala",
-          "rankIndex": 4,
+          "rankName": "Slow Loris",
+          "rankIndex": 5,
           "rankNames": [
             "Banana Slug",
             "Sloth",
@@ -3216,18 +3232,19 @@
             75000,
             90000
           ],
-          "energy": 83916,
+          "energy": 90000,
           "rankCount": 6,
-          "progressToNextRank": 0.5943952802359883,
+          "progressToNextRank": null,
           "played": 6,
           "total": 6,
+          "complete": true,
           "positional": null
         },
         {
           "window": 1,
           "windowName": "Intermediate",
-          "rankName": null,
-          "rankIndex": -1,
+          "rankName": "Greyhound",
+          "rankIndex": 4,
           "rankNames": [
             "Koala",
             "Slow Loris",
@@ -3252,11 +3269,12 @@
             75000,
             90000
           ],
-          "energy": 0,
+          "energy": 75775,
           "rankCount": 6,
-          "progressToNextRank": null,
-          "played": 0,
+          "progressToNextRank": 0.05167372454123785,
+          "played": 6,
           "total": 6,
+          "complete": false,
           "positional": null
         },
         {
@@ -3293,6 +3311,7 @@
           "progressToNextRank": null,
           "played": 0,
           "total": 6,
+          "complete": false,
           "positional": null
         },
         {
@@ -3325,6 +3344,7 @@
           "progressToNextRank": null,
           "played": 0,
           "total": 6,
+          "complete": false,
           "positional": {
             "rankName": "Terminal Velocity",
             "topN": 3,
@@ -3332,82 +3352,82 @@
           }
         }
       ],
-      "perScenario": 13986,
+      "perScenario": 23053,
       "scenarios": [
         {
-          "name": "Apogee DNA Novice",
+          "name": "Apogee DNA Intermediate",
           "label": "DNA",
           "family": "DNA",
-          "window": 0,
-          "windowName": "Novice",
+          "window": 1,
+          "windowName": "Intermediate",
           "subCategory": "Speed Switching",
-          "score": 3026,
-          "rankName": "Slow Loris",
-          "energy": 15000,
-          "nextRankName": "Housecat",
-          "nextRankScore": 2690,
-          "nextRankScenario": "Apogee DNA Intermediate",
+          "score": 2950,
+          "rankName": "Roadrunner",
+          "energy": 25000,
+          "nextRankName": "Jackrabbit",
+          "nextRankScore": 2920,
+          "nextRankScenario": "Apogee DNA Advanced",
           "nextRankLabel": "DNA",
-          "nextRankWindowName": "Intermediate",
+          "nextRankWindowName": "Advanced",
           "nextRankIsNewScenario": true,
-          "gap": 2690,
-          "runs": 2
+          "gap": 2920,
+          "runs": 1
         },
         {
-          "name": "Apogee CockpiTS Novice",
+          "name": "Apogee CockpiTS Intermediate",
           "label": "CockpiTS",
           "family": "CockpiTS",
-          "window": 0,
-          "windowName": "Novice",
+          "window": 1,
+          "windowName": "Intermediate",
           "subCategory": "Speed Switching",
-          "score": 2784,
-          "rankName": "Slow Loris",
-          "energy": 15000,
-          "nextRankName": "Housecat",
-          "nextRankScore": 2717,
-          "nextRankScenario": "Apogee CockpiTS Intermediate",
+          "score": 3238,
+          "rankName": "Roadrunner",
+          "energy": 25000,
+          "nextRankName": "Jackrabbit",
+          "nextRankScore": 2949,
+          "nextRankScenario": "Apogee CockpiTS Advanced",
           "nextRankLabel": "CockpiTS",
-          "nextRankWindowName": "Intermediate",
+          "nextRankWindowName": "Advanced",
           "nextRankIsNewScenario": true,
-          "gap": 2717,
-          "runs": 2
+          "gap": 2949,
+          "runs": 1
         },
         {
-          "name": "Apogee Column Novice",
+          "name": "Apogee Column Intermediate",
           "label": "Column",
           "family": "Column",
-          "window": 0,
-          "windowName": "Novice",
+          "window": 1,
+          "windowName": "Intermediate",
           "subCategory": "Speed Switching",
-          "score": 2875,
-          "rankName": "Slow Loris",
-          "energy": 15000,
-          "nextRankName": "Housecat",
-          "nextRankScore": 2690,
+          "score": 2849,
+          "rankName": "Greyhound",
+          "energy": 23319,
+          "nextRankName": "Roadrunner",
+          "nextRankScore": 2888,
           "nextRankScenario": "Apogee Column Intermediate",
           "nextRankLabel": "Column",
           "nextRankWindowName": "Intermediate",
-          "nextRankIsNewScenario": true,
-          "gap": 2690,
-          "runs": 2
+          "nextRankIsNewScenario": false,
+          "gap": 39,
+          "runs": 1
         },
         {
-          "name": "Apogee Asteroids Novice",
+          "name": "Apogee Asteroids Intermediate",
           "label": "Asteroids",
           "family": "Asteroids",
-          "window": 0,
-          "windowName": "Novice",
+          "window": 1,
+          "windowName": "Intermediate",
           "subCategory": "Speed Switching",
-          "score": 2860,
-          "rankName": "Slow Loris",
-          "energy": 15000,
-          "nextRankName": "Housecat",
-          "nextRankScore": 2485,
-          "nextRankScenario": "Apogee Asteroids Intermediate",
+          "score": 2777,
+          "rankName": "Roadrunner",
+          "energy": 25000,
+          "nextRankName": "Jackrabbit",
+          "nextRankScore": 2696,
+          "nextRankScenario": "Apogee Asteroids Advanced",
           "nextRankLabel": "Asteroids",
-          "nextRankWindowName": "Intermediate",
+          "nextRankWindowName": "Advanced",
           "nextRankIsNewScenario": true,
-          "gap": 2485,
+          "gap": 2696,
           "runs": 1
         },
         {
@@ -3418,42 +3438,42 @@
           "windowName": "Novice",
           "subCategory": "Speed Switching",
           "score": 1860,
-          "rankName": "Galapagos Turtle",
-          "energy": 8916,
-          "nextRankName": "Manatee",
-          "nextRankScore": 1909,
-          "nextRankScenario": "Apogee RockeTS Novice",
-          "nextRankLabel": "RockeTS",
-          "nextRankWindowName": "Novice",
-          "nextRankIsNewScenario": false,
-          "gap": 49,
-          "runs": 4
-        },
-        {
-          "name": "Apogee MartianTS Novice",
-          "label": "MartianTS",
-          "family": "MartianTS",
-          "window": 0,
-          "windowName": "Novice",
-          "subCategory": "Speed Switching",
-          "score": 3729,
           "rankName": "Slow Loris",
           "energy": 15000,
           "nextRankName": "Housecat",
-          "nextRankScore": 3067,
-          "nextRankScenario": "Apogee MartianTS Intermediate",
-          "nextRankLabel": "MartianTS",
+          "nextRankScore": 1633,
+          "nextRankScenario": "Apogee RockeTS Intermediate",
+          "nextRankLabel": "RockeTS",
           "nextRankWindowName": "Intermediate",
           "nextRankIsNewScenario": true,
-          "gap": 3067,
+          "gap": 121,
+          "runs": 4
+        },
+        {
+          "name": "Apogee MartianTS Intermediate",
+          "label": "MartianTS",
+          "family": "MartianTS",
+          "window": 1,
+          "windowName": "Intermediate",
+          "subCategory": "Speed Switching",
+          "score": 3695,
+          "rankName": "Roadrunner",
+          "energy": 25000,
+          "nextRankName": "Jackrabbit",
+          "nextRankScore": 3535,
+          "nextRankScenario": "Apogee MartianTS Advanced",
+          "nextRankLabel": "MartianTS",
+          "nextRankWindowName": "Advanced",
+          "nextRankIsNewScenario": true,
+          "gap": 3535,
           "runs": 1
         }
       ]
     },
     {
       "name": "Evasive Switching",
-      "energy": 73360,
-      "rankName": "Prairie Dog",
+      "energy": 78737,
+      "rankName": "Toad",
       "rankNames": [
         "Plankton",
         "Tadpole",
@@ -3509,13 +3529,13 @@
         240000
       ],
       "rankCount": 16,
-      "progressToNextRank": 0.8906836164310235,
+      "progressToNextRank": 0.2491524965122536,
       "bands": [
         {
           "window": 0,
           "windowName": "Novice",
-          "rankName": "Prairie Dog",
-          "rankIndex": 3,
+          "rankName": "Toad",
+          "rankIndex": 4,
           "rankNames": [
             "Plankton",
             "Tadpole",
@@ -3540,11 +3560,12 @@
             75000,
             90000
           ],
-          "energy": 73360,
+          "energy": 78737,
           "rankCount": 6,
-          "progressToNextRank": 0.8906836164310235,
+          "progressToNextRank": 0.2491524965122536,
           "played": 6,
           "total": 6,
+          "complete": false,
           "positional": null
         },
         {
@@ -3581,6 +3602,7 @@
           "progressToNextRank": null,
           "played": 0,
           "total": 6,
+          "complete": false,
           "positional": null
         },
         {
@@ -3617,6 +3639,7 @@
           "progressToNextRank": null,
           "played": 0,
           "total": 6,
+          "complete": false,
           "positional": null
         },
         {
@@ -3649,6 +3672,7 @@
           "progressToNextRank": null,
           "played": 0,
           "total": 6,
+          "complete": false,
           "positional": {
             "rankName": "Extinction",
             "topN": 3,
@@ -3656,7 +3680,7 @@
           }
         }
       ],
-      "perScenario": 12227,
+      "perScenario": 13123,
       "scenarios": [
         {
           "name": "Apogee FleeTS Novice",
@@ -3726,12 +3750,12 @@
           "rankName": "Viper",
           "energy": 15000,
           "nextRankName": "Hawk",
-          "nextRankScore": 2592,
+          "nextRankScore": 2757,
           "nextRankScenario": "Apogee QuantumTS Intermediate",
           "nextRankLabel": "QuantumTS",
           "nextRankWindowName": "Intermediate",
           "nextRankIsNewScenario": true,
-          "gap": 2592,
+          "gap": 2757,
           "runs": 1
         },
         {
@@ -3742,15 +3766,15 @@
           "windowName": "Novice",
           "subCategory": "Evasive Switching",
           "score": 3480,
-          "rankName": "Prairie Dog",
-          "energy": 12305,
-          "nextRankName": "Toad",
-          "nextRankScore": 3498,
+          "rankName": "Toad",
+          "energy": 14949,
+          "nextRankName": "Viper",
+          "nextRankScore": 3484,
           "nextRankScenario": "Apogee LosTS Novice",
           "nextRankLabel": "LosTS",
           "nextRankWindowName": "Novice",
           "nextRankIsNewScenario": false,
-          "gap": 18,
+          "gap": 4,
           "runs": 3
         },
         {
@@ -3761,15 +3785,15 @@
           "windowName": "Novice",
           "subCategory": "Evasive Switching",
           "score": 2295,
-          "rankName": "Prairie Dog",
-          "energy": 11983,
-          "nextRankName": "Toad",
-          "nextRankScore": 2320,
+          "rankName": "Toad",
+          "energy": 14717,
+          "nextRankName": "Viper",
+          "nextRankScore": 2307,
           "nextRankScenario": "Apogee InvadersTS Novice",
           "nextRankLabel": "InvadersTS",
           "nextRankWindowName": "Novice",
           "nextRankIsNewScenario": false,
-          "gap": 25,
+          "gap": 12,
           "runs": 2
         }
       ]
@@ -3778,10 +3802,10 @@
   "weakest": "Evasive Switching",
   "consistency": {
     "method": "worstOfLast5",
-    "ceilingRank": "Cosmonaut",
-    "ceilingEnergy": 558762,
-    "floorRank": "Cosmonaut",
-    "floorEnergy": 523924,
+    "ceilingRank": "Lunar",
+    "ceilingEnergy": 649000,
+    "floorRank": "Lunar",
+    "floorEnergy": 613445,
     "gap": 0.0736196319018405,
     "scenarios": [
       {
@@ -3836,17 +3860,17 @@
         "scenario": "Apogee Pinpoint Novice"
       },
       {
-        "id": "category_volume:Evasive Switching#floor",
+        "id": "category_volume:Speed Switching#floor",
         "slot": "floor",
         "kind": "category_volume",
-        "title": "Put eight runs into Evasive Switching",
-        "detail": "Evasive Switching sits at Prairie Dog. Any of its 6 families count, at any difficulty.",
+        "title": "Put eight runs into Speed Switching",
+        "detail": "Speed Switching sits at Koala. Any of its 6 families count, at any difficulty.",
         "xp": 150,
         "target": 8,
         "unit": "runs",
-        "progress": 3,
-        "fraction": 0.375,
-        "complete": false,
+        "progress": 8,
+        "fraction": 1,
+        "complete": true,
         "scenario": null
       },
       {

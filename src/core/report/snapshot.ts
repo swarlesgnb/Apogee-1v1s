@@ -54,6 +54,14 @@ export interface BandStanding {
   played: number;
   total: number;
   /**
+   * Every scenario in the band has reached the held rank on its own score.
+   *
+   * The band's rank is read off energy, the sum across its scenarios, so one strong
+   * scenario can carry a weak one to it. "Complete" is the stricter claim evxl makes for
+   * a benchmark: no scenario is below the rank being claimed.
+   */
+  complete: boolean;
+  /**
    * The band's positional top rank, when it has one.
    *
    * `eligible` means the player holds the highest rank a score can prove. It is never a
@@ -304,6 +312,10 @@ export function buildSnapshot(options: SnapshotOptions): Snapshot | null {
           progressToNextRank: played === 0 ? null : (stood?.progressToNextRank ?? null),
           played,
           total: scenarios.length,
+          complete:
+            played === scenarios.length &&
+            (stood?.rankIndex ?? -1) >= 0 &&
+            scenarios.every((sc) => (scores.get(sc.name) ?? -Infinity) >= sc.rankMaxes[stood!.rankIndex]),
           // What the top rank is belongs to the ladder, played or not; only whether the
           // player is eligible for it waits on play. Nulling the whole thing for an
           // unplayed band left its top rung with no cost at all, where it should say
