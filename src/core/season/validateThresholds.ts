@@ -148,7 +148,7 @@ for (const v of variants) {
     continue;
   }
   if (source.kind === "seeded") continue;
-  if (source.kind === "predicted") {
+  if (source.kind === "predicted" || source.kind === "calibrated") {
     if (!source.why || source.why.trim().length < 60) unreasoned.push(v.scenario);
     continue;
   }

@@ -195,7 +195,8 @@ export function renderSite(inputs: SiteInputs): string {
   const predicted = season.scenarios.filter(
     // `source` is written by the season tools and read by validateThresholds from the
     // raw JSON; SeasonScenario does not carry it, so it is read the same way here.
-    (s) => (s as { source?: { kind?: string } }).source?.kind === "predicted",
+    // A calibrated row is still a prediction, corrected by a handful of playtest runs.
+    (s) => ["predicted", "calibrated"].includes((s as { source?: { kind?: string } }).source?.kind ?? ""),
   ).length;
   const provisional =
     predicted === 0

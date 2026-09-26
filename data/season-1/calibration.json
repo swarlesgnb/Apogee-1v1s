@@ -1,0 +1,615 @@
+{
+  "about": "Per-family corrections to the predicted thresholds, measured by npm run calibrate:season on one player's runs and applied by build:season. See src/core/season/calibration.ts.",
+  "builtAt": "2026-09-26T16:39:27.606Z",
+  "rules": {
+    "minFamilies": 3,
+    "clamp": [
+      0.6,
+      1.5
+    ],
+    "deadband": 0.05
+  },
+  "families": {
+    "Galaga": {
+      "factor": 1,
+      "raw": 1.0404,
+      "runs": 4,
+      "evidence": [
+        {
+          "scenario": "Apogee Galaga Novice",
+          "runs": 2,
+          "best": 1584,
+          "position": 4.647,
+          "target": 4.125,
+          "k": 1.0229
+        },
+        {
+          "scenario": "Apogee Galaga Intermediate",
+          "runs": 2,
+          "best": 1494,
+          "position": 0.364,
+          "target": -1.184,
+          "k": 1.0583
+        }
+      ]
+    },
+    "Zenith": {
+      "factor": 1,
+      "raw": 0.9631,
+      "runs": 4,
+      "evidence": [
+        {
+          "scenario": "Apogee Zenith Novice",
+          "runs": 2,
+          "best": 1402,
+          "position": 3.552,
+          "target": 4.125,
+          "k": 0.9735
+        },
+        {
+          "scenario": "Apogee Zenith Intermediate",
+          "runs": 2,
+          "best": 1248,
+          "position": -2.511,
+          "target": -1.184,
+          "k": 0.9528
+        }
+      ]
+    },
+    "Pinpoint": {
+      "factor": 1,
+      "raw": 0.9492,
+      "runs": 3,
+      "evidence": [
+        {
+          "scenario": "Apogee Pinpoint Novice",
+          "runs": 1,
+          "best": 1406,
+          "position": 3.791,
+          "target": 4.125,
+          "k": 0.9846
+        },
+        {
+          "scenario": "Apogee Pinpoint Intermediate",
+          "runs": 2,
+          "best": 1210,
+          "position": -3.095,
+          "target": -1.184,
+          "k": 0.932
+        }
+      ]
+    },
+    "Stars": {
+      "factor": 1.0907,
+      "raw": 1.1391,
+      "runs": 2,
+      "evidence": [
+        {
+          "scenario": "Apogee Stars Novice",
+          "runs": 1,
+          "best": 1492,
+          "position": 6.158,
+          "target": 4.125,
+          "k": 1.123
+        },
+        {
+          "scenario": "Apogee Stars Intermediate",
+          "runs": 1,
+          "best": 1394,
+          "position": 3,
+          "target": -1.184,
+          "k": 1.1555
+        }
+      ]
+    },
+    "Constellation": {
+      "factor": 1,
+      "raw": 0.9499,
+      "runs": 3,
+      "evidence": [
+        {
+          "scenario": "Apogee Constellation Novice",
+          "runs": 2,
+          "best": 1524,
+          "position": 2.931,
+          "target": 4.125,
+          "k": 0.9456
+        },
+        {
+          "scenario": "Apogee Constellation Intermediate",
+          "runs": 1,
+          "best": 1410,
+          "position": -2.382,
+          "target": -1.184,
+          "k": 0.9586
+        }
+      ]
+    },
+    "Parallax": {
+      "factor": 1,
+      "raw": 0.949,
+      "runs": 2,
+      "evidence": [
+        {
+          "scenario": "Apogee Parallax Novice",
+          "runs": 1,
+          "best": 1350,
+          "position": 2.911,
+          "target": 4.125,
+          "k": 0.9421
+        },
+        {
+          "scenario": "Apogee Parallax Intermediate",
+          "runs": 1,
+          "best": 1246,
+          "position": -2.424,
+          "target": -1.184,
+          "k": 0.956
+        }
+      ]
+    },
+    "Nebula": {
+      "factor": 1,
+      "raw": 1.0276,
+      "runs": 2,
+      "evidence": [
+        {
+          "scenario": "Apogee Nebula Novice",
+          "runs": 1,
+          "best": 1708,
+          "position": 4.458,
+          "target": 4.125,
+          "k": 1.0143
+        },
+        {
+          "scenario": "Apogee Nebula Intermediate",
+          "runs": 1,
+          "best": 1602,
+          "position": 0.014,
+          "target": -1.184,
+          "k": 1.0411
+        }
+      ]
+    },
+    "1w6aliens": {
+      "factor": 1.0842,
+      "raw": 1.1063,
+      "runs": 4,
+      "evidence": [
+        {
+          "scenario": "Apogee 1w6aliens Novice",
+          "runs": 2,
+          "best": 1560,
+          "position": 5.936,
+          "target": 4.125,
+          "k": 1.1056
+        },
+        {
+          "scenario": "Apogee 1w6aliens Intermediate",
+          "runs": 2,
+          "best": 1420,
+          "position": 1.75,
+          "target": -1.184,
+          "k": 1.107
+        }
+      ]
+    },
+    "Glide": {
+      "factor": 1,
+      "raw": 1.0722,
+      "runs": 1,
+      "evidence": [
+        {
+          "scenario": "Apogee Glide Novice",
+          "runs": 1,
+          "best": 5103,
+          "position": 8.32,
+          "target": 7.375,
+          "k": 1.0722
+        }
+      ]
+    },
+    "Blastoff": {
+      "factor": 0.9188,
+      "raw": 0.8933,
+      "runs": 3,
+      "evidence": [
+        {
+          "scenario": "Apogee Blastoff Novice",
+          "runs": 2,
+          "best": 4360,
+          "position": 5.189,
+          "target": 7.375,
+          "k": 0.8432
+        },
+        {
+          "scenario": "Apogee Blastoff Intermediate",
+          "runs": 1,
+          "best": 4298,
+          "position": 2.731,
+          "target": 2.665,
+          "k": 1.0025
+        }
+      ]
+    },
+    "Orbit": {
+      "factor": 0.9037,
+      "raw": 0.8737,
+      "runs": 3,
+      "evidence": [
+        {
+          "scenario": "Apogee Orbit Novice",
+          "runs": 2,
+          "best": 4106,
+          "position": 5.638,
+          "target": 7.375,
+          "k": 0.8661
+        },
+        {
+          "scenario": "Apogee Orbit Intermediate",
+          "runs": 1,
+          "best": 3429,
+          "position": -0.097,
+          "target": 2.665,
+          "k": 0.8892
+        }
+      ]
+    },
+    "Thread": {
+      "factor": 1.0955,
+      "raw": 1.1293,
+      "runs": 3,
+      "evidence": [
+        {
+          "scenario": "Apogee Thread Novice",
+          "runs": 2,
+          "best": 5326,
+          "position": 8.438,
+          "target": 7.375,
+          "k": 1.0794
+        },
+        {
+          "scenario": "Apogee Thread Intermediate",
+          "runs": 1,
+          "best": 5005,
+          "position": 9.559,
+          "target": 2.665,
+          "k": 1.2362
+        }
+      ]
+    },
+    "Arc": {
+      "factor": 1,
+      "raw": 1.0683,
+      "runs": 1,
+      "evidence": [
+        {
+          "scenario": "Apogee Arc Novice",
+          "runs": 1,
+          "best": 5305,
+          "position": 8.294,
+          "target": 7.375,
+          "k": 1.0683
+        }
+      ]
+    },
+    "AlienTrack": {
+      "factor": 1,
+      "raw": 0.9627,
+      "runs": 2,
+      "evidence": [
+        {
+          "scenario": "Apogee AlienTrack Novice",
+          "runs": 1,
+          "best": 4343,
+          "position": 6.455,
+          "target": 7.375,
+          "k": 0.9294
+        },
+        {
+          "scenario": "Apogee AlienTrack Intermediate",
+          "runs": 1,
+          "best": 3790,
+          "position": 2.599,
+          "target": 2.665,
+          "k": 0.9971
+        }
+      ]
+    },
+    "Pong": {
+      "factor": 1,
+      "raw": 0.9372,
+      "runs": 1,
+      "evidence": [
+        {
+          "scenario": "Apogee Pong Novice",
+          "runs": 1,
+          "best": 2936,
+          "position": 5.152,
+          "target": 5.844,
+          "k": 0.9372
+        }
+      ]
+    },
+    "Pong3D": {
+      "factor": 1,
+      "raw": 1.0627,
+      "runs": 2,
+      "evidence": [
+        {
+          "scenario": "Apogee Pong3D Novice",
+          "runs": 2,
+          "best": 3516,
+          "position": 6.537,
+          "target": 5.844,
+          "k": 1.0627
+        }
+      ]
+    },
+    "Stutter": {
+      "factor": 1.189,
+      "raw": 1.4137,
+      "runs": 1,
+      "evidence": [
+        {
+          "scenario": "Apogee Stutter Novice",
+          "runs": 1,
+          "best": 4474,
+          "position": 10.419,
+          "target": 5.844,
+          "k": 1.4137
+        }
+      ]
+    },
+    "Hover": {
+      "factor": 1.0739,
+      "raw": 1.1532,
+      "runs": 1,
+      "evidence": [
+        {
+          "scenario": "Apogee Hover Novice",
+          "runs": 1,
+          "best": 3949,
+          "position": 7.559,
+          "target": 5.844,
+          "k": 1.1532
+        }
+      ]
+    },
+    "UFO": {
+      "factor": 0.6972,
+      "raw": 0.4861,
+      "runs": 1,
+      "evidence": [
+        {
+          "scenario": "Apogee UFO Novice",
+          "runs": 1,
+          "best": 1607,
+          "position": 0.115,
+          "target": 5.844,
+          "k": 0.4861
+        }
+      ]
+    },
+    "Feint": {
+      "factor": 0.9354,
+      "raw": 0.875,
+      "runs": 1,
+      "evidence": [
+        {
+          "scenario": "Apogee Feint Novice",
+          "runs": 1,
+          "best": 2878,
+          "position": 4.161,
+          "target": 5.844,
+          "k": 0.875
+        }
+      ]
+    },
+    "DNA": {
+      "factor": 1,
+      "raw": 0.9954,
+      "runs": 2,
+      "evidence": [
+        {
+          "scenario": "Apogee DNA Novice",
+          "runs": 1,
+          "best": 2987,
+          "position": 7.029,
+          "target": 7.029,
+          "k": 1
+        },
+        {
+          "scenario": "Apogee DNA Intermediate",
+          "runs": 1,
+          "best": 2950,
+          "position": 5.939,
+          "target": 6.354,
+          "k": 0.9908
+        }
+      ]
+    },
+    "Column": {
+      "factor": 1,
+      "raw": 0.9597,
+      "runs": 2,
+      "evidence": [
+        {
+          "scenario": "Apogee Column Novice",
+          "runs": 1,
+          "best": 2875,
+          "position": 6.3,
+          "target": 7.029,
+          "k": 0.9625
+        },
+        {
+          "scenario": "Apogee Column Intermediate",
+          "runs": 1,
+          "best": 2849,
+          "position": 4.328,
+          "target": 6.354,
+          "k": 0.9569
+        }
+      ]
+    },
+    "Asteroids": {
+      "factor": 1,
+      "raw": 1.0216,
+      "runs": 2,
+      "evidence": [
+        {
+          "scenario": "Apogee Asteroids Novice",
+          "runs": 1,
+          "best": 2860,
+          "position": 7.68,
+          "target": 7.029,
+          "k": 1.0341
+        },
+        {
+          "scenario": "Apogee Asteroids Intermediate",
+          "runs": 1,
+          "best": 2777,
+          "position": 6.769,
+          "target": 6.354,
+          "k": 1.0093
+        }
+      ]
+    },
+    "RockeTS": {
+      "factor": 0.782,
+      "raw": 0.7204,
+      "runs": 3,
+      "evidence": [
+        {
+          "scenario": "Apogee RockeTS Novice",
+          "runs": 2,
+          "best": 1800,
+          "position": 2.035,
+          "target": 7.029,
+          "k": 0.7593
+        },
+        {
+          "scenario": "Apogee RockeTS Intermediate",
+          "runs": 1,
+          "best": 1512,
+          "position": -7.972,
+          "target": 6.354,
+          "k": 0.6485
+        }
+      ]
+    },
+    "MartianTS": {
+      "factor": 1.0591,
+      "raw": 1.0899,
+      "runs": 2,
+      "evidence": [
+        {
+          "scenario": "Apogee MartianTS Novice",
+          "runs": 1,
+          "best": 3729,
+          "position": 8.786,
+          "target": 7.029,
+          "k": 1.0934
+        },
+        {
+          "scenario": "Apogee MartianTS Intermediate",
+          "runs": 1,
+          "best": 3695,
+          "position": 10.155,
+          "target": 6.354,
+          "k": 1.0865
+        }
+      ]
+    },
+    "CockpiTS": {
+      "factor": 1,
+      "raw": 1.0773,
+      "runs": 1,
+      "evidence": [
+        {
+          "scenario": "Apogee CockpiTS Intermediate",
+          "runs": 1,
+          "best": 3238,
+          "position": 9.864,
+          "target": 6.354,
+          "k": 1.0773
+        }
+      ]
+    },
+    "FleeTS": {
+      "factor": 1,
+      "raw": 1.0398,
+      "runs": 1,
+      "evidence": [
+        {
+          "scenario": "Apogee FleeTS Novice",
+          "runs": 1,
+          "best": 2657,
+          "position": 6.236,
+          "target": 5.662,
+          "k": 1.0398
+        }
+      ]
+    },
+    "comeTS": {
+      "factor": 1,
+      "raw": 1,
+      "runs": 1,
+      "evidence": [
+        {
+          "scenario": "Apogee comeTS Novice",
+          "runs": 1,
+          "best": 2520,
+          "position": 5.662,
+          "target": 5.662,
+          "k": 1
+        }
+      ]
+    },
+    "QuantumTS": {
+      "factor": 1.0637,
+      "raw": 1.1315,
+      "runs": 1,
+      "evidence": [
+        {
+          "scenario": "Apogee QuantumTS Novice",
+          "runs": 1,
+          "best": 3058,
+          "position": 7.567,
+          "target": 5.662,
+          "k": 1.1315
+        }
+      ]
+    },
+    "LosTS": {
+      "factor": 0.9402,
+      "raw": 0.884,
+      "runs": 1,
+      "evidence": [
+        {
+          "scenario": "Apogee LosTS Novice",
+          "runs": 1,
+          "best": 3480,
+          "position": 3.922,
+          "target": 5.662,
+          "k": 0.884
+        }
+      ]
+    },
+    "InvadersTS": {
+      "factor": 0.9488,
+      "raw": 0.9003,
+      "runs": 1,
+      "evidence": [
+        {
+          "scenario": "Apogee InvadersTS Novice",
+          "runs": 1,
+          "best": 2295,
+          "position": 3.793,
+          "target": 5.662,
+          "k": 0.9003
+        }
+      ]
+    }
+  }
+}

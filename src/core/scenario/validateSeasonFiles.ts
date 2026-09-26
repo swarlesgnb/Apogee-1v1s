@@ -39,6 +39,7 @@ import { get, num, parseSce, profile, list, type Sce } from "./sce.ts";
 import { jsonSpawns, scenarioFeatures } from "./features.ts";
 import { classify, MISSES_PER_KILL, STILL_MISSES_PER_KILL, predictFromAnchor, predictLadder, toMetric, type ClassModel } from "./difficulty.ts";
 import { thresholdsFrom } from "../season/percentiles.ts";
+import { scalePoints, type Calibration } from "../season/calibration.ts";
 import { windowRankIndices } from "../season/windows.ts";
 import { validateSeason, type Season } from "../season/season.ts";
 import { buildCorpus, kovaaksRoot, scenarioFiles } from "../../../tools/scenarioCorpus.ts";
@@ -244,6 +245,9 @@ const recutBoards = new Map(
 const anchors = (existsSync(dataFile("season-1", "anchors.json"))
   ? (JSON.parse(readFileSync(dataFile("season-1", "anchors.json"), "utf8")) as { anchors: Record<string, { features: ReturnType<typeof scenarioFeatures>; ladder: Array<{ topFraction: number; score: number }> }> }).anchors
   : {}) as Record<string, { features: ReturnType<typeof scenarioFeatures>; ladder: Array<{ topFraction: number; score: number }> }>;
+const calibration = existsSync(dataFile("season-1", "calibration.json"))
+  ? (JSON.parse(readFileSync(dataFile("season-1", "calibration.json"), "utf8")) as Calibration)
+  : null;
 const metrics = new Map<string, { band: number; metric: number; click: boolean }[]>();
 let reproduced = 0;
 for (const s of season.scenarios) {
@@ -264,11 +268,21 @@ for (const s of season.scenarios) {
   const kind = (s as unknown as { source?: { kind?: string } }).source?.kind;
   const real = kind === "percentile" ? recutBoards.get(s.scenario) : undefined;
   if (kind === "percentile" && !real) fail(`${s.scenario}: says it was recut from a board, and no sampled board is on record`);
-  const dist = real ?? { scenario: s.scenario, leaderboardId: 0, total: 0, sampledAt: "", points: prediction.points.map((p) => ({ topFraction: p.topFraction, score: p.score })) };
+  const predictedPoints = prediction.points.map((p) => ({ topFraction: p.topFraction, score: p.score }));
   const ranks = windowRankIndices(s.window!, pool.windowSize, pool.ladder.ranks.length, pool.ladder.overlap).map((i) => pool.ladder.ranks[i]);
+  // A calibrated row is the same board scaled by its family's measured factor, and the
+  // factor has to be the one data/season-1/calibration.json holds for that family.
+  const cal = kind === "calibrated" ? (s as unknown as { source: { factor: number; predicted: number[] } }).source : undefined;
+  if (cal) {
+    const recorded = calibration?.families[s.family!]?.factor;
+    if (recorded !== cal.factor) fail(`${s.scenario}: calibrated by ${cal.factor}, but calibration.json has ${recorded ?? "nothing"} for ${s.family}`);
+    const unscaled = thresholdsFrom({ scenario: s.scenario, leaderboardId: 0, total: 0, sampledAt: "", points: predictedPoints }, ranks);
+    if (JSON.stringify(unscaled) !== JSON.stringify(cal.predicted)) fail(`${s.scenario}: its recorded prediction ${cal.predicted.join(" ")} is not what the model gives, ${unscaled?.join(" ")}`);
+  }
+  const dist = real ?? { scenario: s.scenario, leaderboardId: 0, total: 0, sampledAt: "", points: cal ? scalePoints(predictedPoints, cal.factor) : predictedPoints };
   const expected = thresholdsFrom(dist, ranks);
   if (JSON.stringify(expected) === JSON.stringify(s.rankMaxes)) reproduced++;
-  else fail(`${s.scenario}: thresholds ${s.rankMaxes.join(" ")} but ${real ? "its sampled board" : "the model"} gives ${expected?.join(" ")}`);
+  else fail(`${s.scenario}: thresholds ${s.rankMaxes.join(" ")} but ${real ? "its sampled board" : cal ? "the calibrated model" : "the model"} gives ${expected?.join(" ")}`);
   const median = prediction.points.find((p) => p.topFraction === 0.5)!.score;
   const list = metrics.get(s.family!) ?? [];
   list.push({ band: s.window!, metric: toMetric(cls, features, median) ?? NaN, click: cls === "click" });

@@ -32,6 +32,7 @@ import { thresholdsFrom } from "../src/core/season/percentiles.ts";
 import { windowRankCount, windowRankIndices } from "../src/core/season/windows.ts";
 import { validateSeason, type Season, type SeasonScenario } from "../src/core/season/season.ts";
 import { rebuildPool, type RebuildSeason } from "../src/core/season/rebuildPool.ts";
+import { scalePoints, type Calibration } from "../src/core/season/calibration.ts";
 import { buildCorpus, kovaaksRoot, scenarioFiles } from "./scenarioCorpus.ts";
 import { BANDS, FAMILIES, TEMPLATES, buildScenario, scenarioName, type Band, type Category, type TemplateKey } from "./season/design.ts";
 
@@ -206,6 +207,33 @@ for (const b of built) {
 }
 
 const round = (v: number, places = 3) => Math.round(v * 10 ** places) / 10 ** places;
+
+// Per-family corrections measured by npm run calibrate:season. A family it has not moved,
+// or no file at all, leaves the prediction exactly as it was.
+const calibrationFile = dataFile("season-1", "calibration.json");
+const calibration: Calibration | null = existsSync(calibrationFile)
+  ? (JSON.parse(readFileSync(calibrationFile, "utf8")) as Calibration)
+  : null;
+
+function thresholdsFor(b: Built): { rankMaxes: number[]; source: Record<string, unknown> } {
+  const factor = calibration?.families[b.family.name]?.factor ?? 1;
+  if (factor === 1) return { rankMaxes: b.rankMaxes, source: predictedSource(b) };
+  const ranks = windowRankIndices(b.band, windowSize, totalRanks, overlap).map((i) => ladder[i]);
+  const dist = { scenario: b.name, leaderboardId: 0, total: 0, sampledAt: "", points: scalePoints(b.prediction.points, factor) };
+  const rankMaxes = thresholdsFrom(dist, ranks);
+  if (!rankMaxes) throw new Error(`${b.name}: the calibrated board does not reach every rank's percentile`);
+  const f = calibration!.families[b.family.name];
+  return {
+    rankMaxes,
+    source: {
+      kind: "calibrated",
+      factor,
+      predicted: b.rankMaxes,
+      why: `The model's prediction (see predicted), with every score on its board multiplied by ${factor}: the family's correction from ${f.runs} playtest run(s) on the current files, which put this family ${factor < 1 ? "harder" : "easier"} than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts.`,
+    },
+  };
+}
+
 const scenarios: Array<SeasonScenario & Record<string, unknown>> = built.map((b) => ({
   scenario: b.name,
   category: b.family.category,
@@ -220,7 +248,7 @@ const scenarios: Array<SeasonScenario & Record<string, unknown>> = built.map((b)
   leaderboardId: previous.get(b.name)?.leaderboardId ?? null,
   ...(previous.get(b.name)?.source?.kind === "percentile"
     ? { rankMaxes: previous.get(b.name)!.rankMaxes, source: previous.get(b.name)!.source }
-    : { rankMaxes: b.rankMaxes, source: predictedSource(b) }),
+    : thresholdsFor(b)),
 }));
 
 function predictedSource(b: Built) {

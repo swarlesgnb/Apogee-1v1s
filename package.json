@@ -92,7 +92,8 @@
     "fit:difficulty": "tsx tools/fitDifficulty.ts",
     "validate:season-files": "tsx src/core/scenario/validateSeasonFiles.ts",
     "install:season": "tsx tools/installSeason.ts",
-    "recut:season": "tsx tools/recutSeason.ts"
+    "recut:season": "tsx tools/recutSeason.ts",
+    "calibrate:season": "tsx tools/calibrateSeason.ts"
   },
   "devDependencies": {
     "@electric-sql/pglite": "^0.5.5",
