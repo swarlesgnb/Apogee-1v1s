@@ -105,6 +105,8 @@ export interface Family {
    * and a hit costs score). See ClassifyOptions in core/scenario/difficulty.ts.
    */
   pressure?: boolean;
+  /** Keep the shared per-band steps in a category that otherwise takes gentler ones. */
+  fullSteps?: boolean;
   build: (sce: Sce, band: Band, lib: Library) => void;
 }
 
@@ -124,6 +126,41 @@ const step = (v: number, k: number, b: Band) => v * Math.pow(k, b);
 const SIZE = 0.87;
 const SPEED = 1.1;
 const PERIOD = 0.87;
+
+/** How much harder each band gets. The recipe-specific steps sit beside the shared three. */
+interface Steps {
+  size: number;
+  speed: number;
+  /** Seconds between reversals. */
+  period: number;
+  /** Bounce gravity: heavier makes the arcs shorter. */
+  gravity: number;
+  /** A pressure balloon's dash toward the player. */
+  approach: number;
+  /** A multiplier on a pressure family's own timescale step. */
+  timescale: number;
+}
+
+const STEPS: Steps = { size: SIZE, speed: SPEED, period: PERIOD, gravity: 1.12, approach: 1.2, timescale: 1 };
+
+/**
+ * Dynamic Clicking steps half as far per band, in log terms: the square root of every
+ * shared step. On the full steps a moving target got smaller, faster and quicker to turn
+ * all at once, and the playtest found Intermediate a wall rather than a rung. Novice is
+ * unchanged, and each band is still strictly harder than the one below (buildSeason
+ * refuses otherwise).
+ */
+const DYNAMIC_STEPS: Steps = {
+  size: Math.sqrt(SIZE),
+  speed: Math.sqrt(SPEED),
+  period: Math.sqrt(PERIOD),
+  gravity: Math.sqrt(1.12),
+  approach: Math.sqrt(1.2),
+  timescale: 0.5,
+};
+
+const stepsFor = (f: Family): Steps =>
+  f.category === "Dynamic Clicking" && !f.fullSteps ? DYNAMIC_STEPS : STEPS;
 
 /** MapScale every generated room uses; a room's map units are world units over this. */
 const SCALE = 4;
@@ -367,9 +404,10 @@ interface MovingClickSpec {
 function movingClick(f: Family, spec: MovingClickSpec, description: string) {
   return (sce: Sce, band: Band) => {
     const range = spec.range ?? 2000;
-    const deg = step(spec.deg, SIZE, band);
-    const speed = step(spec.speed, SPEED, band);
-    const k = Math.pow(PERIOD, band);
+    const s = stepsFor(f);
+    const deg = step(spec.deg, s.size, band);
+    const speed = step(spec.speed, s.speed, band);
+    const k = Math.pow(s.period, band);
     const { bot, character, dodge } = ownBot(sce, f.name, { keepDodges: spec.templateMovement });
     setProfile(sce, "Character Profile", character, {
       MainBBRadius: radiusFor(deg, range),
@@ -466,8 +504,9 @@ interface PathSpec {
  */
 function pathClick(f: Family, spec: PathSpec, description: string) {
   return (sce: Sce, band: Band) => {
-    const deg = step(spec.deg, SIZE, band);
-    const speed = step(spec.speed, SPEED, band);
+    const s = stepsFor(f);
+    const deg = step(spec.deg, s.size, band);
+    const speed = step(spec.speed, s.speed, band);
     const { bot, character, dodge } = ownBot(sce, f.name);
     const maxSpeed = speedFor(speed, spec.range);
     setProfile(sce, "Character Profile", character, {
@@ -646,15 +685,16 @@ interface BounceSpec {
 function bounceClick(f: Family, spec: BounceSpec, description: string) {
   return (sce: Sce, band: Band) => {
     const range = spec.range ?? 2150;
-    const deg = step(spec.deg, SIZE, band);
-    const speed = step(spec.speed, SPEED, band);
+    const s = stepsFor(f);
+    const deg = step(spec.deg, s.size, band);
+    const speed = step(spec.speed, s.speed, band);
     const { bot, character, dodge } = ownBot(sce, f.name);
     setProfile(sce, "Character Profile", character, {
       MainBBRadius: radiusFor(deg, range),
       MainBBHeight: 2 * radiusFor(deg, range),
       MaxSpeed: speedFor(speed, range),
       // Heavier with each band, so the arcs get shorter and the window to click narrows.
-      Gravity: spec.gravity * Math.pow(1.12, band),
+      Gravity: spec.gravity * Math.pow(s.gravity, band),
       MaxHealth: 1,
     });
     setProfile(sce, "Dodge Profile", dodge, { MinTargetDistance: range * 0.93, MaxTargetDistance: range * 1.07 });
@@ -892,8 +932,9 @@ interface PressureSpec {
   range: number;
   /**
    * The balloons attack: their four abilities kept (Approach, Depart, Damage Self Only,
-   * Damage Player and Self), with the Approach dash at this speed at Novice and 1.2x each
-   * band. Without them the balloons are still targets and nothing more - 1w6aliens.
+   * Damage Player and Self), with the Approach dash at this speed at Novice and stepping up
+   * each band by the family's approach step. Without them the balloons are still targets
+   * and nothing more - 1w6aliens.
    */
   approach?: number;
   /** Rounds in the player's magazine before a reload; fuglaa's is 2. */
@@ -911,7 +952,8 @@ interface PressureSpec {
  */
 function pressureClick(f: Family, spec: PressureSpec, description: string) {
   return (sce: Sce, band: Band) => {
-    const deg = step(spec.deg, SIZE, band);
+    const s = stepsFor(f);
+    const deg = step(spec.deg, s.size, band);
     // The balloons attack through their abilities, so an armed family keeps them; stripping
     // them, as every other family does, is what left the first Gravity Well's balloons
     // standing still.
@@ -922,21 +964,22 @@ function pressureClick(f: Family, spec: PressureSpec, description: string) {
         .map((a) => a.replace(/\.abil\w+$/i, ""))
         .find((a) => a.toLowerCase() === "approach");
       if (!approach) throw new Error("the template's balloon has no Approach ability");
-      setProfile(sce, "Movement Ability Profile", approach, { MainVelocity: spec.approach * Math.pow(1.2, band) });
+      setProfile(sce, "Movement Ability Profile", approach, { MainVelocity: spec.approach * Math.pow(s.approach, band) });
       // fuglaa's balloon bursts in two steps: "Damage Self Only" takes it to half health,
       // which arms it, and "Mutual Annihilation" - a 10,000-radius blast that hurts both it
       // and the player - fires only once it is armed. fuglaa arms at 4,000-7,000 and bursts
       // at 7,000-10,000, which a slow drift crosses in order; a dash crosses both windows the
       // wrong way round and hung behind the player. So it arms as soon as its spawn block
       // lifts and bursts within 3,000, and it checks every 0.1 s - the rate Voltaic's Ground
-      // bots use - so even Expert's dash, about 1,040 units a check, cannot cross the window
-      // unseen, nor reach Depart's 1,000, which would throw it back out.
+      // bots use - so even Expert's dash (about 1,040 units a check on the full steps, and less
+      // on Dynamic Clicking's gentler ones) cannot cross the window unseen, nor reach Depart's
+      // 1,000, which would throw it back out.
       setProfile(sce, "Weapon Ability Profile", "Damage Self Only", { AIMinTargDist: 0, AIMaxTargDist: 1000000 });
       setProfile(sce, "Weapon Ability Profile", "Damage Player and Self", { AIMinTargDist: 0, AIMaxTargDist: 3000 });
       setProfile(sce, "Bot Profile", bot, { UseAbilityFreqMinTime: 0.1, UseAbilityFreqMaxTime: 0.1 });
     }
     if (spec.magazine) setProfile(sce, "Weapon Profile", weaponOf(sce), { MagazineMax: spec.magazine });
-    const timescale = spec.timescale + spec.timescaleStep * band;
+    const timescale = spec.timescale + spec.timescaleStep * s.timescale * band;
     setBots(sce, [{ bot, count: spec.alive }]);
     // Armed, the template's own scoring: half a point per damage, a point lost per damage
     // taken. Unarmed, nothing can be lost, so it is scored per kill like any static family.
@@ -1153,7 +1196,7 @@ export const FAMILIES: Family[] = [
       anchor: "cA fuglaapressure",
       modelClass: "click",
       focus: "Pop them before they reach you; every one that does costs you.",
-      why: "Speed clicking under pressure, on fuglaa's design: balloons that dash at the player and burst on arrival, so a target left alive costs score rather than only time. The dash takes about 1.7 seconds to arrive at Novice and is 1.2x faster each band, and the player has three rounds before a reload, and the game itself runs faster each band too.",
+      why: "Speed clicking under pressure, on fuglaa's design: balloons that dash at the player and burst on arrival, so a target left alive costs score rather than only time. The dash takes about 1.7 seconds to arrive at Novice and gets about 1.1x faster each band, and the player has three rounds before a reload, and the game itself runs faster each band too, its timescale up 0.1 a band.",
       learnsFrom: ["cA fuglaapressure", "fuglaaPressure"],
     },
     (f) => pressureClick(f, { alive: 5, deg: 1.6, timescale: 1.0, timescaleStep: 0.2, range: 18160, approach: 5000, magazine: 3 }, "Balloons that come for you: pop each one before it reaches you. Every hit costs score."),
@@ -1161,6 +1204,8 @@ export const FAMILIES: Family[] = [
   family(
     {
       name: "Meteor", category: "Dynamic Clicking", subCategory: "Dynamic Clicking", template: "movingClick", arm: "Wrist",
+      // Big, slow floaters already; the playtest found it too easy, so it keeps the full steps.
+      fullSteps: true,
       focus: "Floating heads: big, slow drifters; confirm the shot before you click.",
       why: "Voltaic's Floating Heads movement exactly - its own two dodge profiles, untouched - with larger, slower targets, so the most-played floating movement is in the season at a Novice anyone can start on.",
       learnsFrom: ["VT Floating Heads Novice S5", "VT Floating Heads Viscose Easier"],

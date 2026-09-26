@@ -173,7 +173,7 @@
    "family": "Gravity Well",
    "category": "Dynamic Clicking",
    "focus": "Pop them before they reach you; every one that does costs you.",
-   "why": "Speed clicking under pressure, on fuglaa's design: balloons that dash at the player and burst on arrival, so a target left alive costs score rather than only time. The dash takes about 1.7 seconds to arrive at Novice and is 1.2x faster each band, and the player has three rounds before a reload, and the game itself runs faster each band too.",
+   "why": "Speed clicking under pressure, on fuglaa's design: balloons that dash at the player and burst on arrival, so a target left alive costs score rather than only time. The dash takes about 1.7 seconds to arrive at Novice and gets about 1.1x faster each band, and the player has three rounds before a reload, and the game itself runs faster each band too, its timescale up 0.1 a band.",
    "learnsFrom": [
     "cA fuglaapressure",
     "fuglaaPressure"
@@ -1249,6 +1249,29 @@
    "family": "Gravclick",
    "band": "Intermediate",
    "class": "click",
+   "targetDeg": 1.772,
+   "angularSpeed": 12.6,
+   "fittsIdNearest": 3.804,
+   "ttk": 0,
+   "median": 541,
+   "medianRange": [
+    477,
+    614
+   ],
+   "rankMaxes": [
+    659,
+    708,
+    728,
+    769,
+    802,
+    831
+   ]
+  },
+  {
+   "scenario": "Apogee Gravclick Advanced",
+   "family": "Gravclick",
+   "band": "Advanced",
+   "class": "click",
    "targetDeg": 1.653,
    "angularSpeed": 13.2,
    "fittsIdNearest": 3.897,
@@ -1259,35 +1282,12 @@
     592
    ],
    "rankMaxes": [
-    637,
-    684,
-    705,
-    744,
     777,
-    805
-   ]
-  },
-  {
-   "scenario": "Apogee Gravclick Advanced",
-   "family": "Gravclick",
-   "band": "Advanced",
-   "class": "click",
-   "targetDeg": 1.438,
-   "angularSpeed": 14.5,
-   "fittsIdNearest": 4.086,
-   "ttk": 0,
-   "median": 485,
-   "medianRange": [
-    428,
-    551
-   ],
-   "rankMaxes": [
-    728,
-    755,
-    780,
-    804,
-    826,
-    855
+    805,
+    831,
+    856,
+    880,
+    911
    ]
   },
   {
@@ -1295,20 +1295,20 @@
    "family": "Gravclick",
    "band": "Expert",
    "class": "click",
-   "targetDeg": 1.251,
-   "angularSpeed": 16,
-   "fittsIdNearest": 4.276,
+   "targetDeg": 1.542,
+   "angularSpeed": 13.8,
+   "fittsIdNearest": 3.991,
    "ttk": 0,
-   "median": 451,
+   "median": 503,
    "medianRange": [
-    398,
-    512
+    444,
+    571
    ],
    "rankMaxes": [
-    776,
-    803,
-    821,
-    843
+    853,
+    883,
+    902,
+    926
    ]
   },
   {
@@ -1339,6 +1339,29 @@
    "family": "Pendulum",
    "band": "Intermediate",
    "class": "click",
+   "targetDeg": 2.733,
+   "angularSpeed": 8.2,
+   "fittsIdNearest": 3.362,
+   "ttk": 0,
+   "median": 669,
+   "medianRange": [
+    589,
+    759
+   ],
+   "rankMaxes": [
+    801,
+    856,
+    880,
+    925,
+    963,
+    997
+   ]
+  },
+  {
+   "scenario": "Apogee Pendulum Advanced",
+   "family": "Pendulum",
+   "band": "Advanced",
+   "class": "click",
    "targetDeg": 2.549,
    "angularSpeed": 8.6,
    "fittsIdNearest": 3.453,
@@ -1349,35 +1372,12 @@
     733
    ],
    "rankMaxes": [
-    775,
-    829,
-    852,
-    897,
     934,
-    966
-   ]
-  },
-  {
-   "scenario": "Apogee Pendulum Advanced",
-   "family": "Pendulum",
-   "band": "Advanced",
-   "class": "click",
-   "targetDeg": 2.217,
-   "angularSpeed": 9.5,
-   "fittsIdNearest": 3.637,
-   "ttk": 0,
-   "median": 602,
-   "medianRange": [
-    530,
-    683
-   ],
-   "rankMaxes": [
-    877,
-    908,
-    936,
-    963,
-    989,
-    1023
+    966,
+    996,
+    1024,
+    1052,
+    1087
    ]
   },
   {
@@ -1385,20 +1385,20 @@
    "family": "Pendulum",
    "band": "Expert",
    "class": "click",
-   "targetDeg": 1.929,
-   "angularSpeed": 10.4,
-   "fittsIdNearest": 3.822,
+   "targetDeg": 2.377,
+   "angularSpeed": 9,
+   "fittsIdNearest": 3.545,
    "ttk": 0,
-   "median": 560,
+   "median": 623,
    "medianRange": [
-    494,
-    636
+    549,
+    707
    ],
    "rankMaxes": [
-    930,
-    962,
-    982,
-    1008
+    1020,
+    1055,
+    1077,
+    1105
    ]
   },
   {
@@ -1429,6 +1429,29 @@
    "family": "Antigrav",
    "band": "Intermediate",
    "class": "click",
+   "targetDeg": 1.865,
+   "angularSpeed": 17.8,
+   "fittsIdNearest": 3.212,
+   "ttk": 0,
+   "median": 642,
+   "medianRange": [
+    565,
+    728
+   ],
+   "rankMaxes": [
+    784,
+    843,
+    868,
+    917,
+    957,
+    993
+   ]
+  },
+  {
+   "scenario": "Apogee Antigrav Advanced",
+   "family": "Antigrav",
+   "band": "Advanced",
+   "class": "click",
    "targetDeg": 1.74,
    "angularSpeed": 18.7,
    "fittsIdNearest": 3.302,
@@ -1439,35 +1462,12 @@
     703
    ],
    "rankMaxes": [
-    758,
-    816,
-    841,
-    888,
     928,
-    962
-   ]
-  },
-  {
-   "scenario": "Apogee Antigrav Advanced",
-   "family": "Antigrav",
-   "band": "Advanced",
-   "class": "click",
-   "targetDeg": 1.514,
-   "angularSpeed": 20.6,
-   "fittsIdNearest": 3.483,
-   "ttk": 0,
-   "median": 577,
-   "medianRange": [
-    508,
-    654
-   ],
-   "rankMaxes": [
-    871,
-    904,
-    934,
     962,
-    989,
-    1025
+    994,
+    1023,
+    1052,
+    1090
    ]
   },
   {
@@ -1475,20 +1475,20 @@
    "family": "Antigrav",
    "band": "Expert",
    "class": "click",
-   "targetDeg": 1.317,
-   "angularSpeed": 22.6,
-   "fittsIdNearest": 3.668,
+   "targetDeg": 1.623,
+   "angularSpeed": 19.6,
+   "fittsIdNearest": 3.392,
    "ttk": 0,
-   "median": 537,
+   "median": 598,
    "medianRange": [
-    473,
-    609
+    527,
+    678
    ],
    "rankMaxes": [
-    930,
-    964,
-    985,
-    1013
+    1020,
+    1057,
+    1080,
+    1110
    ]
   },
   {
@@ -1519,6 +1519,29 @@
    "family": "Electric",
    "band": "Intermediate",
    "class": "click",
+   "targetDeg": 2.612,
+   "angularSpeed": 9.4,
+   "fittsIdNearest": 3.421,
+   "ttk": 0,
+   "median": 639,
+   "medianRange": [
+    563,
+    725
+   ],
+   "rankMaxes": [
+    769,
+    823,
+    846,
+    891,
+    928,
+    960
+   ]
+  },
+  {
+   "scenario": "Apogee Electric Advanced",
+   "family": "Electric",
+   "band": "Advanced",
+   "class": "click",
    "targetDeg": 2.436,
    "angularSpeed": 9.9,
    "fittsIdNearest": 3.512,
@@ -1529,35 +1552,12 @@
     700
    ],
    "rankMaxes": [
-    744,
-    797,
-    819,
-    863,
     899,
-    931
-   ]
-  },
-  {
-   "scenario": "Apogee Electric Advanced",
-   "family": "Electric",
-   "band": "Advanced",
-   "class": "click",
-   "targetDeg": 2.119,
-   "angularSpeed": 10.9,
-   "fittsIdNearest": 3.697,
-   "ttk": 0,
-   "median": 575,
-   "medianRange": [
-    506,
-    652
-   ],
-   "rankMaxes": [
-    844,
-    874,
-    902,
-    928,
-    954,
-    987
+    931,
+    960,
+    988,
+    1014,
+    1049
    ]
   },
   {
@@ -1565,20 +1565,20 @@
    "family": "Electric",
    "band": "Expert",
    "class": "click",
-   "targetDeg": 1.844,
-   "angularSpeed": 12,
-   "fittsIdNearest": 3.883,
+   "targetDeg": 2.272,
+   "angularSpeed": 10.4,
+   "fittsIdNearest": 3.604,
    "ttk": 0,
-   "median": 535,
+   "median": 596,
    "medianRange": [
-    471,
-    607
+    525,
+    676
    ],
    "rankMaxes": [
-    896,
-    927,
-    947,
-    972
+    984,
+    1017,
+    1039,
+    1066
    ]
   },
   {
@@ -1609,6 +1609,29 @@
    "family": "Sun and Moon",
    "band": "Intermediate",
    "class": "click",
+   "targetDeg": 2.425,
+   "angularSpeed": 35.7,
+   "fittsIdNearest": 3.884,
+   "ttk": 0,
+   "median": 423,
+   "medianRange": [
+    373,
+    480
+   ],
+   "rankMaxes": [
+    530,
+    575,
+    594,
+    630,
+    661,
+    687
+   ]
+  },
+  {
+   "scenario": "Apogee Sun and Moon Advanced",
+   "family": "Sun and Moon",
+   "band": "Advanced",
+   "class": "click",
    "targetDeg": 2.262,
    "angularSpeed": 37.4,
    "fittsIdNearest": 3.978,
@@ -1619,35 +1642,12 @@
     462
    ],
    "rankMaxes": [
-    512,
-    556,
-    574,
-    610,
     640,
-    665
-   ]
-  },
-  {
-   "scenario": "Apogee Sun and Moon Advanced",
-   "family": "Sun and Moon",
-   "band": "Advanced",
-   "class": "click",
-   "targetDeg": 1.968,
-   "angularSpeed": 41.1,
-   "fittsIdNearest": 4.167,
-   "ttk": 0,
-   "median": 379,
-   "medianRange": [
-    334,
-    429
-   ],
-   "rankMaxes": [
-    599,
-    624,
-    646,
-    667,
-    688,
-    714
+    665,
+    689,
+    711,
+    733,
+    760
    ]
   },
   {
@@ -1655,20 +1655,20 @@
    "family": "Sun and Moon",
    "band": "Expert",
    "class": "click",
-   "targetDeg": 1.712,
-   "angularSpeed": 45.3,
-   "fittsIdNearest": 4.358,
+   "targetDeg": 2.11,
+   "angularSpeed": 39.2,
+   "fittsIdNearest": 4.073,
    "ttk": 0,
-   "median": 351,
+   "median": 393,
    "medianRange": [
-    310,
-    399
+    346,
+    446
    ],
    "rankMaxes": [
-    645,
-    670,
-    685,
-    705
+    710,
+    737,
+    754,
+    776
    ]
   },
   {
@@ -1699,6 +1699,29 @@
    "family": "Shooting Stars",
    "band": "Intermediate",
    "class": "click",
+   "targetDeg": 2.239,
+   "angularSpeed": 16.8,
+   "fittsIdNearest": 2.369,
+   "ttk": 0,
+   "median": 759,
+   "medianRange": [
+    669,
+    862
+   ],
+   "rankMaxes": [
+    919,
+    985,
+    1014,
+    1068,
+    1113,
+    1154
+   ]
+  },
+  {
+   "scenario": "Apogee Shooting Stars Advanced",
+   "family": "Shooting Stars",
+   "band": "Advanced",
+   "class": "click",
    "targetDeg": 2.088,
    "angularSpeed": 17.6,
    "fittsIdNearest": 2.451,
@@ -1709,35 +1732,12 @@
     834
    ],
    "rankMaxes": [
-    891,
-    956,
-    984,
-    1037,
     1081,
-    1121
-   ]
-  },
-  {
-   "scenario": "Apogee Shooting Stars Advanced",
-   "family": "Shooting Stars",
-   "band": "Advanced",
-   "class": "click",
-   "targetDeg": 1.817,
-   "angularSpeed": 19.4,
-   "fittsIdNearest": 2.617,
-   "ttk": 0,
-   "median": 687,
-   "medianRange": [
-    606,
-    780
-   ],
-   "rankMaxes": [
-    1019,
-    1057,
-    1091,
-    1122,
-    1153,
-    1194
+    1121,
+    1156,
+    1189,
+    1221,
+    1264
    ]
   },
   {
@@ -1745,20 +1745,20 @@
    "family": "Shooting Stars",
    "band": "Expert",
    "class": "click",
-   "targetDeg": 1.58,
-   "angularSpeed": 21.3,
-   "fittsIdNearest": 2.787,
+   "targetDeg": 1.948,
+   "angularSpeed": 18.5,
+   "fittsIdNearest": 2.533,
    "ttk": 0,
-   "median": 642,
+   "median": 711,
    "medianRange": [
-    566,
-    729
+    627,
+    807
    ],
    "rankMaxes": [
-    1088,
-    1126,
-    1152,
-    1183
+    1187,
+    1229,
+    1256,
+    1290
    ]
   },
   {
@@ -1789,6 +1789,29 @@
    "family": "Gravity Well",
    "band": "Intermediate",
    "class": "click",
+   "targetDeg": 1.492,
+   "angularSpeed": 0,
+   "fittsIdNearest": 3.463,
+   "ttk": 0,
+   "median": 123,
+   "medianRange": [
+    109,
+    140
+   ],
+   "rankMaxes": [
+    180,
+    197,
+    202,
+    212,
+    218,
+    223
+   ]
+  },
+  {
+   "scenario": "Apogee Gravity Well Advanced",
+   "family": "Gravity Well",
+   "band": "Advanced",
+   "class": "click",
    "targetDeg": 1.392,
    "angularSpeed": 0,
    "fittsIdNearest": 3.555,
@@ -1799,35 +1822,12 @@
     136
    ],
    "rankMaxes": [
-    176,
-    192,
-    197,
-    207,
     213,
-    218
-   ]
-  },
-  {
-   "scenario": "Apogee Gravity Well Advanced",
-   "family": "Gravity Well",
-   "band": "Advanced",
-   "class": "click",
-   "targetDeg": 1.211,
-   "angularSpeed": 0,
-   "fittsIdNearest": 3.74,
-   "ttk": 0,
-   "median": 114,
-   "medianRange": [
-    100,
-    129
-   ],
-   "rankMaxes": [
-    203,
-    208,
-    212,
-    216,
-    220,
-    225
+    218,
+    223,
+    227,
+    231,
+    236
    ]
   },
   {
@@ -1835,20 +1835,20 @@
    "family": "Gravity Well",
    "band": "Expert",
    "class": "click",
-   "targetDeg": 1.054,
+   "targetDeg": 1.298,
    "angularSpeed": 0,
-   "fittsIdNearest": 3.926,
+   "fittsIdNearest": 3.647,
    "ttk": 0,
-   "median": 108,
+   "median": 117,
    "medianRange": [
-    95,
-    123
+    103,
+    133
    ],
    "rankMaxes": [
-    210,
-    214,
-    217,
-    221
+    225,
+    230,
+    233,
+    238
    ]
   },
   {
@@ -1969,6 +1969,29 @@
    "family": "Satellite",
    "band": "Intermediate",
    "class": "click",
+   "targetDeg": 2.945,
+   "angularSpeed": 15.5,
+   "fittsIdNearest": 3.138,
+   "ttk": 0,
+   "median": 624,
+   "medianRange": [
+    550,
+    708
+   ],
+   "rankMaxes": [
+    759,
+    815,
+    839,
+    885,
+    923,
+    957
+   ]
+  },
+  {
+   "scenario": "Apogee Satellite Advanced",
+   "family": "Satellite",
+   "band": "Advanced",
+   "class": "click",
    "targetDeg": 2.747,
    "angularSpeed": 16.2,
    "fittsIdNearest": 3.227,
@@ -1979,35 +2002,12 @@
     683
    ],
    "rankMaxes": [
-    734,
-    789,
-    813,
-    857,
     895,
-    928
-   ]
-  },
-  {
-   "scenario": "Apogee Satellite Advanced",
-   "family": "Satellite",
-   "band": "Advanced",
-   "class": "click",
-   "targetDeg": 2.39,
-   "angularSpeed": 17.8,
-   "fittsIdNearest": 3.408,
-   "ttk": 0,
-   "median": 561,
-   "medianRange": [
-    495,
-    637
-   ],
-   "rankMaxes": [
-    840,
-    872,
-    900,
-    927,
-    953,
-    987
+    928,
+    958,
+    986,
+    1013,
+    1049
    ]
   },
   {
@@ -2015,20 +2015,20 @@
    "family": "Satellite",
    "band": "Expert",
    "class": "click",
-   "targetDeg": 2.079,
-   "angularSpeed": 19.6,
-   "fittsIdNearest": 3.591,
+   "targetDeg": 2.563,
+   "angularSpeed": 17,
+   "fittsIdNearest": 3.317,
    "ttk": 0,
-   "median": 523,
+   "median": 582,
    "medianRange": [
-    461,
-    593
+    513,
+    660
    ],
    "rankMaxes": [
-    896,
-    928,
-    949,
-    975
+    983,
+    1017,
+    1040,
+    1068
    ]
   },
   {

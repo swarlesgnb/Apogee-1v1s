@@ -3,7 +3,7 @@ PlayerCharacters=Balloon Shooter
 BotCharacters=Apogee Gravity Well.bot
 IsChallenge=true
 OvershotProtectionTimer=0.25
-Timelimit=72.0
+Timelimit=66.0
 PlayerProfile=Balloon Shooter
 AddedBots=Apogee Gravity Well.bot;Apogee Gravity Well.bot;Apogee Gravity Well.bot;Apogee Gravity Well.bot;Apogee Gravity Well.bot
 PlayerMaxLives=0
@@ -48,7 +48,7 @@ BlockProjectilePredictors=true
 BlockCheats=true
 InvinciblePlayer=true
 InvincibleBots=false
-Timescale=1.2
+Timescale=1.1
 BlockHealthbars=true
 TimeRefilledByKill=0.0
 BlockHitMarkers=false
@@ -347,8 +347,8 @@ EnemyHeadColorOnLookAt=X=1.000 Y=1.000 Z=1.000
 TeamBodyColor=X=0.000 Y=0.000 Z=255.000
 TeamHeadColor=X=255.000 Y=255.000 Z=255.000
 MainBBType=Spheroid
-MainBBHeight=441.218597
-MainBBRadius=220.609299
+MainBBHeight=473.039466
+MainBBRadius=236.519733
 MainBBHasHead=false
 MainBBHeadRadius=45.0
 MainBBHeadOffset=0.0
@@ -1164,7 +1164,7 @@ AIDamageReactionResetTimer=0.1
 AbilityDuration=1.0
 LockDirectionForDuration=false
 NegateGravityForDuration=true
-MainVelocity=6000.0
+MainVelocity=5477.225575
 MainVelocityCanGoVertical=true
 MainVelocitySetToMovementKeys=false
 UpVelocity=0.0

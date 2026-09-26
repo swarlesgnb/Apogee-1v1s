@@ -1050,7 +1050,7 @@
       "file": "data/season-1/difficulty_model.json"
     }
   },
-  "builtAt": "2026-09-25T00:52:51.165Z",
+  "builtAt": "2026-09-26T16:07:11.995Z",
   "scenarios": [
     {
       "scenario": "Apogee Galaga Novice",
@@ -1840,12 +1840,12 @@
       "focus": "Slow floaters; match their drift for a moment, then click.",
       "leaderboardId": null,
       "rankMaxes": [
-        637,
-        684,
-        705,
-        744,
-        777,
-        805
+        659,
+        708,
+        728,
+        769,
+        802,
+        831
       ],
       "source": {
         "kind": "predicted",
@@ -1864,12 +1864,12 @@
       "focus": "Slow floaters; match their drift for a moment, then click.",
       "leaderboardId": null,
       "rankMaxes": [
-        728,
-        755,
-        780,
-        804,
-        826,
-        855
+        777,
+        805,
+        831,
+        856,
+        880,
+        911
       ],
       "source": {
         "kind": "predicted",
@@ -1888,10 +1888,10 @@
       "focus": "Slow floaters; match their drift for a moment, then click.",
       "leaderboardId": null,
       "rankMaxes": [
-        776,
-        803,
-        821,
-        843
+        853,
+        883,
+        902,
+        926
       ],
       "source": {
         "kind": "predicted",
@@ -1934,12 +1934,12 @@
       "focus": "Slow swings from wall to wall; click on the swing, not only at the turn.",
       "leaderboardId": null,
       "rankMaxes": [
-        775,
-        829,
-        852,
-        897,
-        934,
-        966
+        801,
+        856,
+        880,
+        925,
+        963,
+        997
       ],
       "source": {
         "kind": "predicted",
@@ -1958,12 +1958,12 @@
       "focus": "Slow swings from wall to wall; click on the swing, not only at the turn.",
       "leaderboardId": null,
       "rankMaxes": [
-        877,
-        908,
-        936,
-        963,
-        989,
-        1023
+        934,
+        966,
+        996,
+        1024,
+        1052,
+        1087
       ],
       "source": {
         "kind": "predicted",
@@ -1982,10 +1982,10 @@
       "focus": "Slow swings from wall to wall; click on the swing, not only at the turn.",
       "leaderboardId": null,
       "rankMaxes": [
-        930,
-        962,
-        982,
-        1008
+        1020,
+        1055,
+        1077,
+        1105
       ],
       "source": {
         "kind": "predicted",
@@ -2028,12 +2028,12 @@
       "focus": "Read the arc; the top of the bounce is the slowest moment.",
       "leaderboardId": null,
       "rankMaxes": [
-        758,
-        816,
-        841,
-        888,
-        928,
-        962
+        784,
+        843,
+        868,
+        917,
+        957,
+        993
       ],
       "source": {
         "kind": "predicted",
@@ -2052,12 +2052,12 @@
       "focus": "Read the arc; the top of the bounce is the slowest moment.",
       "leaderboardId": null,
       "rankMaxes": [
-        871,
-        904,
-        934,
+        928,
         962,
-        989,
-        1025
+        994,
+        1023,
+        1052,
+        1090
       ],
       "source": {
         "kind": "predicted",
@@ -2076,10 +2076,10 @@
       "focus": "Read the arc; the top of the bounce is the slowest moment.",
       "leaderboardId": null,
       "rankMaxes": [
-        930,
-        964,
-        985,
-        1013
+        1020,
+        1057,
+        1080,
+        1110
       ],
       "source": {
         "kind": "predicted",
@@ -2122,12 +2122,12 @@
       "focus": "Straight runs, a dead stop at every turn, and a charged-up buzz all the while.",
       "leaderboardId": null,
       "rankMaxes": [
-        744,
-        797,
-        819,
-        863,
-        899,
-        931
+        769,
+        823,
+        846,
+        891,
+        928,
+        960
       ],
       "source": {
         "kind": "predicted",
@@ -2146,12 +2146,12 @@
       "focus": "Straight runs, a dead stop at every turn, and a charged-up buzz all the while.",
       "leaderboardId": null,
       "rankMaxes": [
-        844,
-        874,
-        902,
-        928,
-        954,
-        987
+        899,
+        931,
+        960,
+        988,
+        1014,
+        1049
       ],
       "source": {
         "kind": "predicted",
@@ -2170,10 +2170,10 @@
       "focus": "Straight runs, a dead stop at every turn, and a charged-up buzz all the while.",
       "leaderboardId": null,
       "rankMaxes": [
-        896,
-        927,
-        947,
-        972
+        984,
+        1017,
+        1039,
+        1066
       ],
       "source": {
         "kind": "predicted",
@@ -2216,12 +2216,12 @@
       "focus": "Two fast crossers in an open sky; move with the target and click inside the motion.",
       "leaderboardId": null,
       "rankMaxes": [
-        512,
-        556,
-        574,
-        610,
-        640,
-        665
+        530,
+        575,
+        594,
+        630,
+        661,
+        687
       ],
       "source": {
         "kind": "predicted",
@@ -2240,12 +2240,12 @@
       "focus": "Two fast crossers in an open sky; move with the target and click inside the motion.",
       "leaderboardId": null,
       "rankMaxes": [
-        599,
-        624,
-        646,
-        667,
-        688,
-        714
+        640,
+        665,
+        689,
+        711,
+        733,
+        760
       ],
       "source": {
         "kind": "predicted",
@@ -2264,10 +2264,10 @@
       "focus": "Two fast crossers in an open sky; move with the target and click inside the motion.",
       "leaderboardId": null,
       "rankMaxes": [
-        645,
-        670,
-        685,
-        705
+        710,
+        737,
+        754,
+        776
       ],
       "source": {
         "kind": "predicted",
@@ -2310,12 +2310,12 @@
       "focus": "Straight lines across the sky; lead nothing, match the line and click.",
       "leaderboardId": null,
       "rankMaxes": [
-        891,
-        956,
-        984,
-        1037,
-        1081,
-        1121
+        919,
+        985,
+        1014,
+        1068,
+        1113,
+        1154
       ],
       "source": {
         "kind": "predicted",
@@ -2334,12 +2334,12 @@
       "focus": "Straight lines across the sky; lead nothing, match the line and click.",
       "leaderboardId": null,
       "rankMaxes": [
-        1019,
-        1057,
-        1091,
-        1122,
-        1153,
-        1194
+        1081,
+        1121,
+        1156,
+        1189,
+        1221,
+        1264
       ],
       "source": {
         "kind": "predicted",
@@ -2358,10 +2358,10 @@
       "focus": "Straight lines across the sky; lead nothing, match the line and click.",
       "leaderboardId": null,
       "rankMaxes": [
-        1088,
-        1126,
-        1152,
-        1183
+        1187,
+        1229,
+        1256,
+        1290
       ],
       "source": {
         "kind": "predicted",
@@ -2404,12 +2404,12 @@
       "focus": "Pop them before they reach you; every one that does costs you.",
       "leaderboardId": null,
       "rankMaxes": [
-        176,
-        192,
+        180,
         197,
-        207,
-        213,
-        218
+        202,
+        212,
+        218,
+        223
       ],
       "source": {
         "kind": "predicted",
@@ -2428,12 +2428,12 @@
       "focus": "Pop them before they reach you; every one that does costs you.",
       "leaderboardId": null,
       "rankMaxes": [
-        203,
-        208,
-        212,
-        216,
-        220,
-        225
+        213,
+        218,
+        223,
+        227,
+        231,
+        236
       ],
       "source": {
         "kind": "predicted",
@@ -2452,10 +2452,10 @@
       "focus": "Pop them before they reach you; every one that does costs you.",
       "leaderboardId": null,
       "rankMaxes": [
-        210,
-        214,
-        217,
-        221
+        225,
+        230,
+        233,
+        238
       ],
       "source": {
         "kind": "predicted",
@@ -2592,12 +2592,12 @@
       "focus": "Fliers in front of you drifting nearer and further as they rise and fall; follow them and click.",
       "leaderboardId": null,
       "rankMaxes": [
-        734,
-        789,
-        813,
-        857,
-        895,
-        928
+        759,
+        815,
+        839,
+        885,
+        923,
+        957
       ],
       "source": {
         "kind": "predicted",
@@ -2616,12 +2616,12 @@
       "focus": "Fliers in front of you drifting nearer and further as they rise and fall; follow them and click.",
       "leaderboardId": null,
       "rankMaxes": [
-        840,
-        872,
-        900,
-        927,
-        953,
-        987
+        895,
+        928,
+        958,
+        986,
+        1013,
+        1049
       ],
       "source": {
         "kind": "predicted",
@@ -2640,10 +2640,10 @@
       "focus": "Fliers in front of you drifting nearer and further as they rise and fall; follow them and click.",
       "leaderboardId": null,
       "rankMaxes": [
-        896,
-        928,
-        949,
-        975
+        983,
+        1017,
+        1040,
+        1068
       ],
       "source": {
         "kind": "predicted",

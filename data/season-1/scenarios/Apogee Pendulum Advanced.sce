@@ -308,7 +308,7 @@ CrouchAnimationSpeed=2.0
 CameraOffset=X=0.000 Y=0.000 Z=0.000
 HeadshotOnly=false
 DamageKnockbackFactor=0.0
-MaxSpeed=337.895743
+MaxSpeed=307.177948
 MaxCrouchSpeed=500.0
 Acceleration=100000.0
 CrouchingAcceleration=800.0
@@ -332,8 +332,8 @@ EnemyHeadColorOnLookAt=X=1.000 Y=1.000 Z=1.000
 TeamBodyColor=X=1.000 Y=0.888 Z=0.000
 TeamHeadColor=X=1.000 Y=1.000 Z=1.000
 MainBBType=Spheroid
-MainBBHeight=79.272759
-MainBBRadius=39.636379
+MainBBHeight=91.121945
+MainBBRadius=45.560972
 MainBBHasHead=false
 MainBBHeadRadius=1.0
 MainBBHeadOffset=0.0
@@ -448,8 +448,8 @@ MaxTargetDistance=100000.0
 MinTargetDistance=1.0
 ToggleLeftRight=true
 ToggleForwardBack=false
-MinLRTimeChange=4.91985
-MaxLRTimeChange=5.2983
+MinLRTimeChange=5.655
+MaxLRTimeChange=6.09
 MinFBTimeChange=2.0
 MaxFBTimeChange=3.0
 DamageReactionChangesDirection=false
