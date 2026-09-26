@@ -399,6 +399,11 @@ interface MovingClickSpec {
   vertical?: number;
   /** No pause at a reversal: the target is always moving. */
   neverStop?: boolean;
+  /**
+   * Travel up and down instead of side to side, with `stopAtTurns` at each vertical turn
+   * and the `vibrate` buzz moved onto the side-to-side axis. Needs `flyer`.
+   */
+  upright?: boolean;
 }
 
 function movingClick(f: Family, spec: MovingClickSpec, description: string) {
@@ -469,6 +474,36 @@ function movingClick(f: Family, spec: MovingClickSpec, description: string) {
       const buzz = speedFor(spec.vibrate.speed, range);
       setProfile(sce, "Character Profile", character, { FlightVelocityUp: buzz, FlightVelocityDown: buzz, Friction: 64 });
       Object.assign(dodgeValues, { ToggleUpDownMinTime: spec.vibrate.times[0], ToggleUpDownMaxTime: spec.vibrate.times[1] });
+    }
+    if (spec.upright) {
+      // The same target turned on its side. Travel is flight, which KovaaK's drives with
+      // the up/down toggle and its own swap pause; the buzz is the side-to-side strafe at a
+      // walking speed of its own, reversing with no pause. Walls turn it back rather than
+      // holding it, the fix Shooting Stars needed for targets pinned to the ceiling.
+      const travel = speedFor(speed, range);
+      const buzz = spec.vibrate ? speedFor(spec.vibrate.speed, range) : 0;
+      setProfile(sce, "Character Profile", character, {
+        IsFlyer: true,
+        Gravity: 0,
+        FlightVelocityUp: travel,
+        FlightVelocityDown: travel,
+        MaxSpeed: buzz,
+        Acceleration: 100000,
+        Friction: 64,
+        BounceOffWalls: true,
+      });
+      Object.assign(dodgeValues, FLY_UP_AND_DOWN, {
+        ToggleUpDownMinTime: spec.strafe[0] * k,
+        ToggleUpDownMaxTime: spec.strafe[1] * k,
+        UpDownSwapPauseMinTime: spec.stopAtTurns?.[0] ?? 0,
+        UpDownSwapPauseMaxTime: spec.stopAtTurns?.[1] ?? 0,
+        ToggleLeftRight: buzz > 0,
+        MinLRTimeChange: spec.vibrate?.times[0] ?? 0,
+        MaxLRTimeChange: spec.vibrate?.times[1] ?? 0,
+        StrafeSwapMinPause: 0,
+        StrafeSwapMaxPause: 0,
+        ToggleForwardBack: false,
+      });
     }
     setProfile(sce, "Dodge Profile", dodge, dodgeValues);
     if (spec.openRoom) {
@@ -1170,12 +1205,12 @@ export const FAMILIES: Family[] = [
   family(
     {
       name: "Electric", category: "Dynamic Clicking", subCategory: "Dynamic Clicking", template: "movingClick", arm: "Fingertip",
-      exceeds: [{ quantity: "angular speed (deg/s)", why: "Slower than the slowest of 54 popular dynamic-clicking scenarios (7.45 deg/s) on purpose: the playtest found it too fast from Intermediate up, and asked for it slowed down a lot. Its thresholds are the model reading below the speeds it was fitted on, so they are the first to recut from real runs." }],
-      focus: "Straight runs, a dead stop at every turn, and a charged-up buzz all the while.",
-      why: "Linear motion with a vibration on top: the target runs straight, stops dead before it changes direction, and shakes up and down many times a second the whole time - so the stop is the moment to click, and the player reads it through the noise, the micro-adjustment cA 5ts vibrate is played for.",
+      exceeds: [{ quantity: "reversal period (s)", why: "The side-to-side reversal is the buzz, every 0.04 to 0.08 s as cA 5ts vibrate shakes, not a strafe; no popular click scenario vibrates sideways, so none reverses that fast. The travel itself turns every 1.5 to 2.5 s at Novice." }],
+      focus: "Straight runs up and down, a dead stop at every turn, and a charged-up buzz all the while.",
+      why: "Linear motion with a vibration on top: the target runs straight up and down, stops dead before it changes direction, and shakes side to side many times a second the whole time - so the stop is the moment to click, and the player reads it through the noise, the micro-adjustment cA 5ts vibrate is played for. Vertical since the playtest: every other moving family already travels sideways. The difficulty model reads a target's speed from its walking speed, which here is the buzz, so it prices every band at the buzz's 10 deg/s and sees only the targets shrinking; calibration from real runs is what corrects that.",
       learnsFrom: ["cA 5ts vibrate", "VT Floating Heads Novice S5"],
     },
-    (f) => movingClick(f, { alive: 4, deg: 2.8, speed: 6.3, strafe: [1.5, 2.5], upDown: null, flyer: true, stopAtTurns: [0.35, 0.6], vibrate: { times: [0.04, 0.08], speed: 10 } }, "Four targets running straight, stopping dead at every turn, buzzing all the while. One click each."),
+    (f) => movingClick(f, { alive: 4, deg: 2.8, speed: 6.3, strafe: [1.5, 2.5], upDown: null, flyer: true, stopAtTurns: [0.35, 0.6], vibrate: { times: [0.04, 0.08], speed: 10 }, upright: true }, "Four targets running straight up and down, stopping dead at every turn, buzzing all the while. One click each."),
   ),
   family(
     {

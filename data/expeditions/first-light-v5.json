@@ -774,10 +774,10 @@
           {
             "name": "Apogee Electric Novice",
             "family": "Electric",
-            "focus": "Straight runs, a dead stop at every turn, and a charged-up buzz all the while.",
-            "target": 716,
-            "finalTarget": 786,
-            "routeTarget": 620,
+            "focus": "Straight runs up and down, a dead stop at every turn, and a charged-up buzz all the while.",
+            "target": 653,
+            "finalTarget": 722,
+            "routeTarget": 559,
             "precision": 0
           },
           {
@@ -803,10 +803,10 @@
           {
             "name": "Apogee Electric Intermediate",
             "family": "Electric",
-            "focus": "Straight runs, a dead stop at every turn, and a charged-up buzz all the while.",
-            "target": 897,
-            "finalTarget": 942,
-            "routeTarget": 874,
+            "focus": "Straight runs up and down, a dead stop at every turn, and a charged-up buzz all the while.",
+            "target": 838,
+            "finalTarget": 882,
+            "routeTarget": 815,
             "precision": 0
           },
           {
@@ -832,10 +832,10 @@
           {
             "name": "Apogee Electric Advanced",
             "family": "Electric",
-            "focus": "Straight runs, a dead stop at every turn, and a charged-up buzz all the while.",
-            "target": 1013,
-            "finalTarget": 1041,
-            "routeTarget": 983,
+            "focus": "Straight runs up and down, a dead stop at every turn, and a charged-up buzz all the while.",
+            "target": 959,
+            "finalTarget": 986,
+            "routeTarget": 930,
             "precision": 0
           },
           {
@@ -861,10 +861,10 @@
           {
             "name": "Apogee Electric Expert",
             "family": "Electric",
-            "focus": "Straight runs, a dead stop at every turn, and a charged-up buzz all the while.",
-            "target": 1093,
-            "finalTarget": 1121,
-            "routeTarget": 1071,
+            "focus": "Straight runs up and down, a dead stop at every turn, and a charged-up buzz all the while.",
+            "target": 1045,
+            "finalTarget": 1072,
+            "routeTarget": 1023,
             "precision": 0
           },
           {
@@ -1037,10 +1037,10 @@
           {
             "name": "Apogee Electric Novice",
             "family": "Electric",
-            "focus": "Straight runs, a dead stop at every turn, and a charged-up buzz all the while.",
-            "target": 716,
-            "finalTarget": 786,
-            "routeTarget": 620,
+            "focus": "Straight runs up and down, a dead stop at every turn, and a charged-up buzz all the while.",
+            "target": 653,
+            "finalTarget": 722,
+            "routeTarget": 559,
             "precision": 0
           },
           {
@@ -1120,10 +1120,10 @@
           {
             "name": "Apogee Electric Intermediate",
             "family": "Electric",
-            "focus": "Straight runs, a dead stop at every turn, and a charged-up buzz all the while.",
-            "target": 897,
-            "finalTarget": 942,
-            "routeTarget": 874,
+            "focus": "Straight runs up and down, a dead stop at every turn, and a charged-up buzz all the while.",
+            "target": 838,
+            "finalTarget": 882,
+            "routeTarget": 815,
             "precision": 0
           },
           {
@@ -1203,10 +1203,10 @@
           {
             "name": "Apogee Electric Advanced",
             "family": "Electric",
-            "focus": "Straight runs, a dead stop at every turn, and a charged-up buzz all the while.",
-            "target": 1013,
-            "finalTarget": 1041,
-            "routeTarget": 983,
+            "focus": "Straight runs up and down, a dead stop at every turn, and a charged-up buzz all the while.",
+            "target": 959,
+            "finalTarget": 986,
+            "routeTarget": 930,
             "precision": 0
           },
           {
@@ -1286,10 +1286,10 @@
           {
             "name": "Apogee Electric Expert",
             "family": "Electric",
-            "focus": "Straight runs, a dead stop at every turn, and a charged-up buzz all the while.",
-            "target": 1093,
-            "finalTarget": 1121,
-            "routeTarget": 1071,
+            "focus": "Straight runs up and down, a dead stop at every turn, and a charged-up buzz all the while.",
+            "target": 1045,
+            "finalTarget": 1072,
+            "routeTarget": 1023,
             "precision": 0
           },
           {

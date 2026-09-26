@@ -142,8 +142,8 @@
   {
    "family": "Electric",
    "category": "Dynamic Clicking",
-   "focus": "Straight runs, a dead stop at every turn, and a charged-up buzz all the while.",
-   "why": "Linear motion with a vibration on top: the target runs straight, stops dead before it changes direction, and shakes up and down many times a second the whole time - so the stop is the moment to click, and the player reads it through the noise, the micro-adjustment cA 5ts vibrate is played for.",
+   "focus": "Straight runs up and down, a dead stop at every turn, and a charged-up buzz all the while.",
+   "why": "Linear motion with a vibration on top: the target runs straight up and down, stops dead before it changes direction, and shakes side to side many times a second the whole time - so the stop is the moment to click, and the player reads it through the noise, the micro-adjustment cA 5ts vibrate is played for. Vertical since the playtest: every other moving family already travels sideways. The difficulty model reads a target's speed from its walking speed, which here is the buzz, so it prices every band at the buzz's 10 deg/s and sees only the targets shrinking; calibration from real runs is what corrects that.",
    "learnsFrom": [
     "cA 5ts vibrate",
     "VT Floating Heads Novice S5"
@@ -152,8 +152,8 @@
    "arm": "Fingertip",
    "exceeds": [
     {
-     "quantity": "angular speed (deg/s)",
-     "why": "Slower than the slowest of 54 popular dynamic-clicking scenarios (7.45 deg/s) on purpose: the playtest found it too fast from Intermediate up, and asked for it slowed down a lot. Its thresholds are the model reading below the speeds it was fitted on, so they are the first to recut from real runs."
+     "quantity": "reversal period (s)",
+     "why": "The side-to-side reversal is the buzz, every 0.04 to 0.08 s as cA 5ts vibrate shakes, not a strafe; no popular click scenario vibrates sideways, so none reverses that fast. The travel itself turns every 1.5 to 2.5 s at Novice."
     }
    ]
   },
@@ -1509,21 +1509,21 @@
    "band": "Novice",
    "class": "click",
    "targetDeg": 2.8,
-   "angularSpeed": 6.3,
+   "angularSpeed": 10,
    "fittsIdNearest": 3.33,
    "ttk": 0,
-   "median": 711,
+   "median": 648,
    "medianRange": [
-    626,
-    806
+    571,
+    735
    ],
    "rankMaxes": [
-    467,
-    620,
-    716,
-    786,
-    846,
-    902
+    412,
+    559,
+    653,
+    722,
+    780,
+    835
    ]
   },
   {
@@ -1532,21 +1532,21 @@
    "band": "Intermediate",
    "class": "click",
    "targetDeg": 2.612,
-   "angularSpeed": 6.6,
+   "angularSpeed": 10,
    "fittsIdNearest": 3.421,
    "ttk": 0,
-   "median": 687,
+   "median": 632,
    "medianRange": [
-    605,
-    779
+    557,
+    717
    ],
    "rankMaxes": [
-    819,
-    874,
-    897,
-    942,
-    980,
-    1014
+    761,
+    815,
+    838,
+    882,
+    919,
+    952
    ]
   },
   {
@@ -1555,21 +1555,21 @@
    "band": "Advanced",
    "class": "click",
    "targetDeg": 2.436,
-   "angularSpeed": 6.9,
+   "angularSpeed": 10,
    "fittsIdNearest": 3.512,
    "ttk": 0,
-   "median": 663,
+   "median": 616,
    "medianRange": [
-    584,
-    752
+    543,
+    699
    ],
    "rankMaxes": [
-    950,
-    983,
+    898,
+    930,
+    959,
+    986,
     1013,
-    1041,
-    1069,
-    1104
+    1047
    ]
   },
   {
@@ -1578,19 +1578,19 @@
    "band": "Expert",
    "class": "click",
    "targetDeg": 2.272,
-   "angularSpeed": 7.3,
+   "angularSpeed": 10,
    "fittsIdNearest": 3.604,
    "ttk": 0,
-   "median": 640,
+   "median": 600,
    "medianRange": [
-    564,
-    726
+    529,
+    681
    ],
    "rankMaxes": [
-    1037,
-    1071,
-    1093,
-    1121
+    989,
+    1023,
+    1045,
+    1072
    ]
   },
   {

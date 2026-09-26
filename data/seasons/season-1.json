@@ -1050,7 +1050,7 @@
       "file": "data/season-1/difficulty_model.json"
     }
   },
-  "builtAt": "2026-09-26T16:39:31.703Z",
+  "builtAt": "2026-09-26T16:50:13.754Z",
   "scenarios": [
     {
       "scenario": "Apogee Galaga Novice",
@@ -2163,15 +2163,15 @@
       "subCategory": "Dynamic Clicking",
       "window": 0,
       "label": "Electric",
-      "focus": "Straight runs, a dead stop at every turn, and a charged-up buzz all the while.",
+      "focus": "Straight runs up and down, a dead stop at every turn, and a charged-up buzz all the while.",
       "leaderboardId": null,
       "rankMaxes": [
-        467,
-        620,
-        716,
-        786,
-        846,
-        902
+        412,
+        559,
+        653,
+        722,
+        780,
+        835
       ],
       "source": {
         "kind": "predicted",
@@ -2187,15 +2187,15 @@
       "subCategory": "Dynamic Clicking",
       "window": 1,
       "label": "Electric",
-      "focus": "Straight runs, a dead stop at every turn, and a charged-up buzz all the while.",
+      "focus": "Straight runs up and down, a dead stop at every turn, and a charged-up buzz all the while.",
       "leaderboardId": null,
       "rankMaxes": [
-        819,
-        874,
-        897,
-        942,
-        980,
-        1014
+        761,
+        815,
+        838,
+        882,
+        919,
+        952
       ],
       "source": {
         "kind": "predicted",
@@ -2211,15 +2211,15 @@
       "subCategory": "Dynamic Clicking",
       "window": 2,
       "label": "Electric",
-      "focus": "Straight runs, a dead stop at every turn, and a charged-up buzz all the while.",
+      "focus": "Straight runs up and down, a dead stop at every turn, and a charged-up buzz all the while.",
       "leaderboardId": null,
       "rankMaxes": [
-        950,
-        983,
+        898,
+        930,
+        959,
+        986,
         1013,
-        1041,
-        1069,
-        1104
+        1047
       ],
       "source": {
         "kind": "predicted",
@@ -2235,13 +2235,13 @@
       "subCategory": "Dynamic Clicking",
       "window": 3,
       "label": "Electric",
-      "focus": "Straight runs, a dead stop at every turn, and a charged-up buzz all the while.",
+      "focus": "Straight runs up and down, a dead stop at every turn, and a charged-up buzz all the while.",
       "leaderboardId": null,
       "rankMaxes": [
-        1037,
-        1071,
-        1093,
-        1121
+        989,
+        1023,
+        1045,
+        1072
       ],
       "source": {
         "kind": "predicted",

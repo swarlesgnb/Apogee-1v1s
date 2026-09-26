@@ -323,12 +323,12 @@
           "label": "Electric",
           "leaderboardId": null,
           "rankMaxes": [
-            467,
-            620,
-            716,
-            786,
-            846,
-            902
+            412,
+            559,
+            653,
+            722,
+            780,
+            835
           ],
           "source": {
             "kind": "predicted",
@@ -343,12 +343,12 @@
           "label": "Electric",
           "leaderboardId": null,
           "rankMaxes": [
-            819,
-            874,
-            897,
-            942,
-            980,
-            1014
+            761,
+            815,
+            838,
+            882,
+            919,
+            952
           ],
           "source": {
             "kind": "predicted",
@@ -363,12 +363,12 @@
           "label": "Electric",
           "leaderboardId": null,
           "rankMaxes": [
-            950,
-            983,
+            898,
+            930,
+            959,
+            986,
             1013,
-            1041,
-            1069,
-            1104
+            1047
           ],
           "source": {
             "kind": "predicted",
@@ -383,10 +383,10 @@
           "label": "Electric",
           "leaderboardId": null,
           "rankMaxes": [
-            1037,
-            1071,
-            1093,
-            1121
+            989,
+            1023,
+            1045,
+            1072
           ],
           "source": {
             "kind": "predicted",
@@ -396,7 +396,7 @@
           "armFrom": "Apogee"
         }
       ],
-      "focus": "Straight runs, a dead stop at every turn, and a charged-up buzz all the while."
+      "focus": "Straight runs up and down, a dead stop at every turn, and a charged-up buzz all the while."
     },
     {
       "family": "Gravclick",

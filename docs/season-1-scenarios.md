@@ -132,14 +132,14 @@ Read the arc; the top of the bounce is the slowest moment. Gravity arcs. A bot u
 
 ### Electric
 
-Straight runs, a dead stop at every turn, and a charged-up buzz all the while. Linear motion with a vibration on top: the target runs straight, stops dead before it changes direction, and shakes up and down many times a second the whole time - so the stop is the moment to click, and the player reads it through the noise, the micro-adjustment cA 5ts vibrate is played for.
+Straight runs up and down, a dead stop at every turn, and a charged-up buzz all the while. Linear motion with a vibration on top: the target runs straight up and down, stops dead before it changes direction, and shakes side to side many times a second the whole time - so the stop is the moment to click, and the player reads it through the noise, the micro-adjustment cA 5ts vibrate is played for. Vertical since the playtest: every other moving family already travels sideways. The difficulty model reads a target's speed from its walking speed, which here is the buzz, so it prices every band at the buzz's 10 deg/s and sees only the targets shrinking; calibration from real runs is what corrects that.
 
 | Band | Size (deg) | Speed (deg/s) | Reversal (s) | Kill (s) | Predicted median | Thresholds |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
-| Novice | 2.80 | 6.3 | 2.00 | - | 711 (626-806) | 467, 620, 716, 786, 846, 902 |
-| Intermediate | 2.61 | 6.6 | 1.87 | - | 687 (605-779) | 819, 874, 897, 942, 980, 1014 |
-| Advanced | 2.44 | 6.9 | 1.74 | - | 663 (584-752) | 950, 983, 1013, 1041, 1069, 1104 |
-| Expert | 2.27 | 7.3 | 1.62 | - | 640 (564-726) | 1037, 1071, 1093, 1121 |
+| Novice | 2.80 | 10.0 | 0.06 | - | 648 (571-735) | 412, 559, 653, 722, 780, 835 |
+| Intermediate | 2.61 | 10.0 | 0.06 | - | 632 (557-717) | 761, 815, 838, 882, 919, 952 |
+| Advanced | 2.44 | 10.0 | 0.06 | - | 616 (543-699) | 898, 930, 959, 986, 1013, 1047 |
+| Expert | 2.27 | 10.0 | 0.06 | - | 600 (529-681) | 989, 1023, 1045, 1072 |
 
 ### Sun and Moon
 
