@@ -35,8 +35,8 @@
             "precision": 0
           },
           {
-            "name": "Apogee Pinpoint Novice",
-            "family": "Pinpoint",
+            "name": "Apogee Distant Novice",
+            "family": "Distant",
             "focus": "Small moves, smaller targets; settle the crosshair before you click.",
             "target": 1273,
             "finalTarget": 1353,
@@ -61,8 +61,8 @@
             "precision": 0
           },
           {
-            "name": "Apogee Pinpoint Intermediate",
-            "family": "Pinpoint",
+            "name": "Apogee Distant Intermediate",
+            "family": "Distant",
             "focus": "Small moves, smaller targets; settle the crosshair before you click.",
             "target": 1444,
             "finalTarget": 1497,
@@ -87,8 +87,8 @@
             "precision": 0
           },
           {
-            "name": "Apogee Pinpoint Advanced",
-            "family": "Pinpoint",
+            "name": "Apogee Distant Advanced",
+            "family": "Distant",
             "focus": "Small moves, smaller targets; settle the crosshair before you click.",
             "target": 1548,
             "finalTarget": 1584,
@@ -113,8 +113,8 @@
             "precision": 0
           },
           {
-            "name": "Apogee Pinpoint Expert",
-            "family": "Pinpoint",
+            "name": "Apogee Distant Expert",
+            "family": "Distant",
             "focus": "Small moves, smaller targets; settle the crosshair before you click.",
             "target": 1613,
             "finalTarget": 1648,
@@ -261,8 +261,8 @@
             "precision": 0
           },
           {
-            "name": "Apogee Pinpoint Novice",
-            "family": "Pinpoint",
+            "name": "Apogee Distant Novice",
+            "family": "Distant",
             "focus": "Small moves, smaller targets; settle the crosshair before you click.",
             "target": 1273,
             "finalTarget": 1353,
@@ -290,8 +290,8 @@
             "precision": 0
           },
           {
-            "name": "Apogee Pinpoint Intermediate",
-            "family": "Pinpoint",
+            "name": "Apogee Distant Intermediate",
+            "family": "Distant",
             "focus": "Small moves, smaller targets; settle the crosshair before you click.",
             "target": 1444,
             "finalTarget": 1497,
@@ -319,8 +319,8 @@
             "precision": 0
           },
           {
-            "name": "Apogee Pinpoint Advanced",
-            "family": "Pinpoint",
+            "name": "Apogee Distant Advanced",
+            "family": "Distant",
             "focus": "Small moves, smaller targets; settle the crosshair before you click.",
             "target": 1548,
             "finalTarget": 1584,
@@ -348,8 +348,8 @@
             "precision": 0
           },
           {
-            "name": "Apogee Pinpoint Expert",
-            "family": "Pinpoint",
+            "name": "Apogee Distant Expert",
+            "family": "Distant",
             "focus": "Small moves, smaller targets; settle the crosshair before you click.",
             "target": 1613,
             "finalTarget": 1648,
@@ -379,8 +379,8 @@
             "precision": 0
           },
           {
-            "name": "Apogee Pinpoint Novice",
-            "family": "Pinpoint",
+            "name": "Apogee Distant Novice",
+            "family": "Distant",
             "focus": "Small moves, smaller targets; settle the crosshair before you click.",
             "target": 1273,
             "finalTarget": 1353,
@@ -453,8 +453,8 @@
             "precision": 0
           },
           {
-            "name": "Apogee Pinpoint Intermediate",
-            "family": "Pinpoint",
+            "name": "Apogee Distant Intermediate",
+            "family": "Distant",
             "focus": "Small moves, smaller targets; settle the crosshair before you click.",
             "target": 1444,
             "finalTarget": 1497,
@@ -527,8 +527,8 @@
             "precision": 0
           },
           {
-            "name": "Apogee Pinpoint Advanced",
-            "family": "Pinpoint",
+            "name": "Apogee Distant Advanced",
+            "family": "Distant",
             "focus": "Small moves, smaller targets; settle the crosshair before you click.",
             "target": 1548,
             "finalTarget": 1584,
@@ -601,8 +601,8 @@
             "precision": 0
           },
           {
-            "name": "Apogee Pinpoint Expert",
-            "family": "Pinpoint",
+            "name": "Apogee Distant Expert",
+            "family": "Distant",
             "focus": "Small moves, smaller targets; settle the crosshair before you click.",
             "target": 1613,
             "finalTarget": 1648,
@@ -2499,8 +2499,8 @@
       "bands": [
         [
           {
-            "name": "Apogee DNA Novice",
-            "family": "DNA",
+            "name": "Apogee DNAts Novice",
+            "family": "DNAts",
             "focus": "Kill, then move straight to the next; no pause between targets.",
             "target": 2371,
             "finalTarget": 2485,
@@ -2515,8 +2515,8 @@
             "precision": 0
           },
           {
-            "name": "Apogee Column Novice",
-            "family": "Column",
+            "name": "Apogee ZeniTS Novice",
+            "family": "ZeniTS",
             "focus": "Switch up and down; stop on each one before you fire.",
             "target": 2371,
             "finalTarget": 2485,
@@ -2525,8 +2525,8 @@
         ],
         [
           {
-            "name": "Apogee DNA Intermediate",
-            "family": "DNA",
+            "name": "Apogee DNAts Intermediate",
+            "family": "DNAts",
             "focus": "Kill, then move straight to the next; no pause between targets.",
             "target": 2690,
             "finalTarget": 2766,
@@ -2541,8 +2541,8 @@
             "precision": 0
           },
           {
-            "name": "Apogee Column Intermediate",
-            "family": "Column",
+            "name": "Apogee ZeniTS Intermediate",
+            "family": "ZeniTS",
             "focus": "Switch up and down; stop on each one before you fire.",
             "target": 2690,
             "finalTarget": 2766,
@@ -2551,8 +2551,8 @@
         ],
         [
           {
-            "name": "Apogee DNA Advanced",
-            "family": "DNA",
+            "name": "Apogee DNAts Advanced",
+            "family": "DNAts",
             "focus": "Kill, then move straight to the next; no pause between targets.",
             "target": 2920,
             "finalTarget": 2972,
@@ -2567,8 +2567,8 @@
             "precision": 0
           },
           {
-            "name": "Apogee Column Advanced",
-            "family": "Column",
+            "name": "Apogee ZeniTS Advanced",
+            "family": "ZeniTS",
             "focus": "Switch up and down; stop on each one before you fire.",
             "target": 2920,
             "finalTarget": 2972,
@@ -2577,8 +2577,8 @@
         ],
         [
           {
-            "name": "Apogee DNA Expert",
-            "family": "DNA",
+            "name": "Apogee DNAts Expert",
+            "family": "DNAts",
             "focus": "Kill, then move straight to the next; no pause between targets.",
             "target": 3102,
             "finalTarget": 3153,
@@ -2593,8 +2593,8 @@
             "precision": 0
           },
           {
-            "name": "Apogee Column Expert",
-            "family": "Column",
+            "name": "Apogee ZeniTS Expert",
+            "family": "ZeniTS",
             "focus": "Switch up and down; stop on each one before you fire.",
             "target": 3102,
             "finalTarget": 3153,
@@ -2605,8 +2605,8 @@
       "discovery": [
         [
           {
-            "name": "Apogee Asteroids Novice",
-            "family": "Asteroids",
+            "name": "Apogee AsteroidTS Novice",
+            "family": "AsteroidTS",
             "focus": "Six small targets packed tight; short, exact moves.",
             "target": 2179,
             "finalTarget": 2290,
@@ -2634,8 +2634,8 @@
         ],
         [
           {
-            "name": "Apogee Asteroids Intermediate",
-            "family": "Asteroids",
+            "name": "Apogee AsteroidTS Intermediate",
+            "family": "AsteroidTS",
             "focus": "Six small targets packed tight; short, exact moves.",
             "target": 2485,
             "finalTarget": 2555,
@@ -2663,8 +2663,8 @@
         ],
         [
           {
-            "name": "Apogee Asteroids Advanced",
-            "family": "Asteroids",
+            "name": "Apogee AsteroidTS Advanced",
+            "family": "AsteroidTS",
             "focus": "Six small targets packed tight; short, exact moves.",
             "target": 2696,
             "finalTarget": 2743,
@@ -2692,8 +2692,8 @@
         ],
         [
           {
-            "name": "Apogee Asteroids Expert",
-            "family": "Asteroids",
+            "name": "Apogee AsteroidTS Expert",
+            "family": "AsteroidTS",
             "focus": "Six small targets packed tight; short, exact moves.",
             "target": 2862,
             "finalTarget": 2912,
@@ -2723,8 +2723,8 @@
       "circuits": [
         [
           {
-            "name": "Apogee DNA Novice",
-            "family": "DNA",
+            "name": "Apogee DNAts Novice",
+            "family": "DNAts",
             "focus": "Kill, then move straight to the next; no pause between targets.",
             "target": 2371,
             "finalTarget": 2485,
@@ -2741,8 +2741,8 @@
             "precision": 0
           },
           {
-            "name": "Apogee Column Novice",
-            "family": "Column",
+            "name": "Apogee ZeniTS Novice",
+            "family": "ZeniTS",
             "focus": "Switch up and down; stop on each one before you fire.",
             "target": 2371,
             "finalTarget": 2485,
@@ -2752,8 +2752,8 @@
         ],
         [
           {
-            "name": "Apogee DNA Intermediate",
-            "family": "DNA",
+            "name": "Apogee DNAts Intermediate",
+            "family": "DNAts",
             "focus": "Kill, then move straight to the next; no pause between targets.",
             "target": 2690,
             "finalTarget": 2766,
@@ -2770,8 +2770,8 @@
             "precision": 0
           },
           {
-            "name": "Apogee Column Intermediate",
-            "family": "Column",
+            "name": "Apogee ZeniTS Intermediate",
+            "family": "ZeniTS",
             "focus": "Switch up and down; stop on each one before you fire.",
             "target": 2690,
             "finalTarget": 2766,
@@ -2781,8 +2781,8 @@
         ],
         [
           {
-            "name": "Apogee DNA Advanced",
-            "family": "DNA",
+            "name": "Apogee DNAts Advanced",
+            "family": "DNAts",
             "focus": "Kill, then move straight to the next; no pause between targets.",
             "target": 2920,
             "finalTarget": 2972,
@@ -2799,8 +2799,8 @@
             "precision": 0
           },
           {
-            "name": "Apogee Column Advanced",
-            "family": "Column",
+            "name": "Apogee ZeniTS Advanced",
+            "family": "ZeniTS",
             "focus": "Switch up and down; stop on each one before you fire.",
             "target": 2920,
             "finalTarget": 2972,
@@ -2810,8 +2810,8 @@
         ],
         [
           {
-            "name": "Apogee DNA Expert",
-            "family": "DNA",
+            "name": "Apogee DNAts Expert",
+            "family": "DNAts",
             "focus": "Kill, then move straight to the next; no pause between targets.",
             "target": 3102,
             "finalTarget": 3153,
@@ -2828,8 +2828,8 @@
             "precision": 0
           },
           {
-            "name": "Apogee Column Expert",
-            "family": "Column",
+            "name": "Apogee ZeniTS Expert",
+            "family": "ZeniTS",
             "focus": "Switch up and down; stop on each one before you fire.",
             "target": 3102,
             "finalTarget": 3153,
@@ -2841,8 +2841,8 @@
       "pool": [
         [
           {
-            "name": "Apogee DNA Novice",
-            "family": "DNA",
+            "name": "Apogee DNAts Novice",
+            "family": "DNAts",
             "focus": "Kill, then move straight to the next; no pause between targets.",
             "target": 2371,
             "finalTarget": 2485,
@@ -2859,8 +2859,8 @@
             "precision": 0
           },
           {
-            "name": "Apogee Column Novice",
-            "family": "Column",
+            "name": "Apogee ZeniTS Novice",
+            "family": "ZeniTS",
             "focus": "Switch up and down; stop on each one before you fire.",
             "target": 2371,
             "finalTarget": 2485,
@@ -2868,8 +2868,8 @@
             "precision": 0
           },
           {
-            "name": "Apogee Asteroids Novice",
-            "family": "Asteroids",
+            "name": "Apogee AsteroidTS Novice",
+            "family": "AsteroidTS",
             "focus": "Six small targets packed tight; short, exact moves.",
             "target": 2179,
             "finalTarget": 2290,
@@ -2897,8 +2897,8 @@
         ],
         [
           {
-            "name": "Apogee DNA Intermediate",
-            "family": "DNA",
+            "name": "Apogee DNAts Intermediate",
+            "family": "DNAts",
             "focus": "Kill, then move straight to the next; no pause between targets.",
             "target": 2690,
             "finalTarget": 2766,
@@ -2915,8 +2915,8 @@
             "precision": 0
           },
           {
-            "name": "Apogee Column Intermediate",
-            "family": "Column",
+            "name": "Apogee ZeniTS Intermediate",
+            "family": "ZeniTS",
             "focus": "Switch up and down; stop on each one before you fire.",
             "target": 2690,
             "finalTarget": 2766,
@@ -2924,8 +2924,8 @@
             "precision": 0
           },
           {
-            "name": "Apogee Asteroids Intermediate",
-            "family": "Asteroids",
+            "name": "Apogee AsteroidTS Intermediate",
+            "family": "AsteroidTS",
             "focus": "Six small targets packed tight; short, exact moves.",
             "target": 2485,
             "finalTarget": 2555,
@@ -2953,8 +2953,8 @@
         ],
         [
           {
-            "name": "Apogee DNA Advanced",
-            "family": "DNA",
+            "name": "Apogee DNAts Advanced",
+            "family": "DNAts",
             "focus": "Kill, then move straight to the next; no pause between targets.",
             "target": 2920,
             "finalTarget": 2972,
@@ -2971,8 +2971,8 @@
             "precision": 0
           },
           {
-            "name": "Apogee Column Advanced",
-            "family": "Column",
+            "name": "Apogee ZeniTS Advanced",
+            "family": "ZeniTS",
             "focus": "Switch up and down; stop on each one before you fire.",
             "target": 2920,
             "finalTarget": 2972,
@@ -2980,8 +2980,8 @@
             "precision": 0
           },
           {
-            "name": "Apogee Asteroids Advanced",
-            "family": "Asteroids",
+            "name": "Apogee AsteroidTS Advanced",
+            "family": "AsteroidTS",
             "focus": "Six small targets packed tight; short, exact moves.",
             "target": 2696,
             "finalTarget": 2743,
@@ -3009,8 +3009,8 @@
         ],
         [
           {
-            "name": "Apogee DNA Expert",
-            "family": "DNA",
+            "name": "Apogee DNAts Expert",
+            "family": "DNAts",
             "focus": "Kill, then move straight to the next; no pause between targets.",
             "target": 3102,
             "finalTarget": 3153,
@@ -3027,8 +3027,8 @@
             "precision": 0
           },
           {
-            "name": "Apogee Column Expert",
-            "family": "Column",
+            "name": "Apogee ZeniTS Expert",
+            "family": "ZeniTS",
             "focus": "Switch up and down; stop on each one before you fire.",
             "target": 3102,
             "finalTarget": 3153,
@@ -3036,8 +3036,8 @@
             "precision": 0
           },
           {
-            "name": "Apogee Asteroids Expert",
-            "family": "Asteroids",
+            "name": "Apogee AsteroidTS Expert",
+            "family": "AsteroidTS",
             "focus": "Six small targets packed tight; short, exact moves.",
             "target": 2862,
             "finalTarget": 2912,

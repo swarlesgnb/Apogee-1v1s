@@ -1,11 +1,11 @@
-Name=Apogee Column Expert
+Name=Apogee DNAts Expert
 PlayerCharacters=Player
-BotCharacters=Apogee Column.bot
+BotCharacters=Apogee DNAts.bot
 IsChallenge=true
 OvershotProtectionTimer=0.0
 Timelimit=60.0
 PlayerProfile=Player
-AddedBots=Apogee Column.bot;Apogee Column.bot;Apogee Column.bot
+AddedBots=Apogee DNAts.bot;Apogee DNAts.bot;Apogee DNAts.bot
 PlayerMaxLives=0
 BotMaxLives=0;0;0
 PlayerTeam=1
@@ -42,7 +42,7 @@ ScoreLossPerMiss=0.0
 ScoreLossPerReload=0.0
 MultSqrtAcc=false
 EnableOverDamage=false
-MapName=Apogee Column Expert.json
+MapName=Apogee DNAts Expert.json
 MapScale=4.0
 BlockProjectilePredictors=true
 BlockCheats=true
@@ -84,7 +84,7 @@ AimTypeProjectile=false
 AimTypePlayerMovement=false
 DifficultyTag=4
 SearchTags=Apogee, Apogee Season 1, Speed Switching, Expert
-Description=Three still targets stacked vertically. Hold fire to kill.[nl][nl]Apogee Season 1, Speed Switching, Expert. Switch up and down; stop on each one before you fire.
+Description=Three still targets close together. Hold fire to kill.[nl][nl]Apogee Season 1, Speed Switching, Expert. Kill, then move straight to the next; no pause between targets.
 GameVersion=3.7.1
 ScenarioVersion=Initial
 
@@ -120,8 +120,8 @@ MinShootDelay=0.3
 MaxShootDelay=0.6
 
 [Bot Profile]
-Name=Apogee Column
-DodgeProfileNames=Apogee Column Move
+Name=Apogee DNAts
+DodgeProfileNames=Apogee DNAts Move
 DodgeProfileWeights=1.0
 DodgeProfileMaxChangeTime=60.0
 DodgeProfileMinChangeTime=60.0
@@ -130,7 +130,7 @@ WeaponProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0;1.0;1.0
 AimingProfileNames=Default;Default;Default;Default;Default;Default;Default;Default
 WeaponSwitchTime=3.0
 UseWeapons=false
-CharacterProfile=Apogee Column Body
+CharacterProfile=Apogee DNAts Body
 SeeThroughWalls=false
 NoDodging=true
 StandStillUntilHurt=false
@@ -298,7 +298,7 @@ PlaybackOptions.LoopUponCompletion=true
 PlaybackOptions.BreakToInputMode=false
 
 [Character Profile]
-Name=Apogee Column Body
+Name=Apogee DNAts Body
 MaxHealth=25.0
 WeaponProfileNames=;;;;;;;
 MinRespawnDelay=0.001
@@ -445,7 +445,7 @@ PlaybackOptions.LoopUponCompletion=true
 PlaybackOptions.BreakToInputMode=false
 
 [Dodge Profile]
-Name=Apogee Column Move
+Name=Apogee DNAts Move
 MaxTargetDistance=2200.0
 MinTargetDistance=1800.0
 ToggleLeftRight=true
@@ -956,7 +956,7 @@ MaxSpeedModifier=0.0
     ],
     "objects": [
         {
-            "location": "-1088.000000, -1114.104234, -1291.368322",
+            "location": "-1088.000000, -1242.508497, -1174.824089",
             "materialSets": [
                 {
                     "group": 0,
@@ -986,11 +986,11 @@ MaxSpeedModifier=0.0
             "mesh": "Cube",
             "name": "Default",
             "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "26.747820, 10.240000, 25.827366",
+            "scale": "26.760000, 10.240000, 23.496482",
             "type": "brush"
         },
         {
-            "location": "-1088.000000, 90.104234, -1291.368322",
+            "location": "-1088.000000, 218.508497, -1174.824089",
             "materialSets": [
                 {
                     "group": 0,
@@ -1020,11 +1020,11 @@ MaxSpeedModifier=0.0
             "mesh": "Cube",
             "name": "Default",
             "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "26.747820, 10.240000, 25.827366",
+            "scale": "26.760000, 10.240000, 23.496482",
             "type": "brush"
         },
         {
-            "location": "-1088.000000, -1114.104234, -1291.368322",
+            "location": "-1088.000000, -1242.508497, -1174.824089",
             "materialSets": [
                 {
                     "group": 0,
@@ -1054,11 +1054,11 @@ MaxSpeedModifier=0.0
             "mesh": "Cube",
             "name": "Default",
             "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "10.240000, 22.282085, 25.827366",
+            "scale": "10.240000, 24.850170, 23.496482",
             "type": "brush"
         },
         {
-            "location": "562.782025, -1114.104234, -1291.368322",
+            "location": "564.000000, -1242.508497, -1174.824089",
             "materialSets": [
                 {
                     "group": 0,
@@ -1088,11 +1088,11 @@ MaxSpeedModifier=0.0
             "mesh": "Cube",
             "name": "Default",
             "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "10.240000, 22.282085, 25.827366",
+            "scale": "10.240000, 24.850170, 23.496482",
             "type": "brush"
         },
         {
-            "location": "-1088.000000, -1114.104234, -1291.368322",
+            "location": "-1088.000000, -1242.508497, -1174.824089",
             "materialSets": [
                 {
                     "group": 0,
@@ -1122,11 +1122,11 @@ MaxSpeedModifier=0.0
             "mesh": "Cube",
             "name": "Default",
             "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "26.747820, 22.282085, 10.240000",
+            "scale": "26.760000, 24.850170, 10.240000",
             "type": "brush"
         },
         {
-            "location": "-1088.000000, -1114.104234, 267.368322",
+            "location": "-1088.000000, -1242.508497, 150.824089",
             "materialSets": [
                 {
                     "group": 0,
@@ -1156,7 +1156,7 @@ MaxSpeedModifier=0.0
             "mesh": "Cube",
             "name": "Default",
             "rotation": "0.000000, 0.000000, 0.000000",
-            "scale": "26.747820, 22.282085, 10.240000",
+            "scale": "26.760000, 24.850170, 10.240000",
             "type": "brush"
         },
         {
@@ -1193,7 +1193,7 @@ MaxSpeedModifier=0.0
             "type": "gameObject"
         },
         {
-            "location": "456.146738, -23.905638, -203.368322",
+            "location": "468.303915, -152.161166, -86.824089",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1226,7 +1226,7 @@ MaxSpeedModifier=0.0
             "type": "gameObject"
         },
         {
-            "location": "469.202402, -24.589856, -171.010072",
+            "location": "473.718730, -153.920546, -43.577871",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1259,7 +1259,7 @@ MaxSpeedModifier=0.0
             "type": "gameObject"
         },
         {
-            "location": "479.972160, -25.154275, -137.818678",
+            "location": "475.528258, -154.508497, 0.000000",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1292,7 +1292,7 @@ MaxSpeedModifier=0.0
             "type": "gameObject"
         },
         {
-            "location": "488.403542, -25.596145, -103.955845",
+            "location": "473.718730, -153.920546, 43.577871",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1325,7 +1325,7 @@ MaxSpeedModifier=0.0
             "type": "gameObject"
         },
         {
-            "location": "494.455470, -25.913313, -69.586550",
+            "location": "468.303915, -152.161166, 86.824089",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1358,7 +1358,7 @@ MaxSpeedModifier=0.0
             "type": "gameObject"
         },
         {
-            "location": "498.098462, -26.104234, -34.878237",
+            "location": "478.798718, -114.949402, -86.824089",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1391,7 +1391,7 @@ MaxSpeedModifier=0.0
             "type": "gameObject"
         },
         {
-            "location": "498.098462, -26.104234, 34.878237",
+            "location": "484.334880, -116.278517, -43.577871",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1424,7 +1424,7 @@ MaxSpeedModifier=0.0
             "type": "gameObject"
         },
         {
-            "location": "494.455470, -25.913313, 69.586550",
+            "location": "486.184960, -116.722682, 0.000000",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1457,7 +1457,7 @@ MaxSpeedModifier=0.0
             "type": "gameObject"
         },
         {
-            "location": "488.403542, -25.596145, 103.955845",
+            "location": "484.334880, -116.278517, 43.577871",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1490,7 +1490,7 @@ MaxSpeedModifier=0.0
             "type": "gameObject"
         },
         {
-            "location": "479.972160, -25.154275, 137.818678",
+            "location": "478.798718, -114.949402, 86.824089",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1523,7 +1523,7 @@ MaxSpeedModifier=0.0
             "type": "gameObject"
         },
         {
-            "location": "469.202402, -24.589856, 171.010072",
+            "location": "486.341568, -77.028937, -86.824089",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1556,7 +1556,7 @@ MaxSpeedModifier=0.0
             "type": "gameObject"
         },
         {
-            "location": "456.146738, -23.905638, 203.368322",
+            "location": "491.964944, -77.919592, -43.577871",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1589,7 +1589,7 @@ MaxSpeedModifier=0.0
             "type": "gameObject"
         },
         {
-            "location": "456.772729, 0.000000, -203.368322",
+            "location": "493.844170, -78.217233, 0.000000",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1622,7 +1622,7 @@ MaxSpeedModifier=0.0
             "type": "gameObject"
         },
         {
-            "location": "469.846310, 0.000000, -171.010072",
+            "location": "491.964944, -77.919592, 43.577871",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1655,7 +1655,7 @@ MaxSpeedModifier=0.0
             "type": "gameObject"
         },
         {
-            "location": "480.630848, 0.000000, -137.818678",
+            "location": "486.341568, -77.028937, 86.824089",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1688,7 +1688,7 @@ MaxSpeedModifier=0.0
             "type": "gameObject"
         },
         {
-            "location": "489.073800, 0.000000, -103.955845",
+            "location": "490.885960, -38.633563, -86.824089",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1721,7 +1721,7 @@ MaxSpeedModifier=0.0
             "type": "gameObject"
         },
         {
-            "location": "495.134034, 0.000000, -69.586550",
+            "location": "496.561881, -39.080268, -43.577871",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1754,7 +1754,7 @@ MaxSpeedModifier=0.0
             "type": "gameObject"
         },
         {
-            "location": "498.782025, 0.000000, -34.878237",
+            "location": "498.458667, -39.229548, 0.000000",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1787,7 +1787,7 @@ MaxSpeedModifier=0.0
             "type": "gameObject"
         },
         {
-            "location": "498.782025, 0.000000, 34.878237",
+            "location": "496.561881, -39.080268, 43.577871",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1820,7 +1820,7 @@ MaxSpeedModifier=0.0
             "type": "gameObject"
         },
         {
-            "location": "495.134034, 0.000000, 69.586550",
+            "location": "490.885960, -38.633563, 86.824089",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1853,7 +1853,7 @@ MaxSpeedModifier=0.0
             "type": "gameObject"
         },
         {
-            "location": "489.073800, 0.000000, 103.955845",
+            "location": "492.403877, 0.000000, -86.824089",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1886,7 +1886,7 @@ MaxSpeedModifier=0.0
             "type": "gameObject"
         },
         {
-            "location": "480.630848, 0.000000, 137.818678",
+            "location": "498.097349, 0.000000, -43.577871",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1919,7 +1919,7 @@ MaxSpeedModifier=0.0
             "type": "gameObject"
         },
         {
-            "location": "469.846310, 0.000000, 171.010072",
+            "location": "500.000000, 0.000000, 0.000000",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1952,7 +1952,7 @@ MaxSpeedModifier=0.0
             "type": "gameObject"
         },
         {
-            "location": "456.772729, 0.000000, 203.368322",
+            "location": "498.097349, 0.000000, 43.577871",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -1985,7 +1985,7 @@ MaxSpeedModifier=0.0
             "type": "gameObject"
         },
         {
-            "location": "456.146738, 23.905638, -203.368322",
+            "location": "492.403877, 0.000000, 86.824089",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -2018,7 +2018,7 @@ MaxSpeedModifier=0.0
             "type": "gameObject"
         },
         {
-            "location": "469.202402, 24.589856, -171.010072",
+            "location": "490.885960, 38.633563, -86.824089",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -2051,7 +2051,7 @@ MaxSpeedModifier=0.0
             "type": "gameObject"
         },
         {
-            "location": "479.972160, 25.154275, -137.818678",
+            "location": "496.561881, 39.080268, -43.577871",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -2084,7 +2084,7 @@ MaxSpeedModifier=0.0
             "type": "gameObject"
         },
         {
-            "location": "488.403542, 25.596145, -103.955845",
+            "location": "498.458667, 39.229548, 0.000000",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -2117,7 +2117,7 @@ MaxSpeedModifier=0.0
             "type": "gameObject"
         },
         {
-            "location": "494.455470, 25.913313, -69.586550",
+            "location": "496.561881, 39.080268, 43.577871",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -2150,7 +2150,7 @@ MaxSpeedModifier=0.0
             "type": "gameObject"
         },
         {
-            "location": "498.098462, 26.104234, -34.878237",
+            "location": "490.885960, 38.633563, 86.824089",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -2183,7 +2183,7 @@ MaxSpeedModifier=0.0
             "type": "gameObject"
         },
         {
-            "location": "498.098462, 26.104234, 34.878237",
+            "location": "486.341568, 77.028937, -86.824089",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -2216,7 +2216,7 @@ MaxSpeedModifier=0.0
             "type": "gameObject"
         },
         {
-            "location": "494.455470, 25.913313, 69.586550",
+            "location": "491.964944, 77.919592, -43.577871",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -2249,7 +2249,7 @@ MaxSpeedModifier=0.0
             "type": "gameObject"
         },
         {
-            "location": "488.403542, 25.596145, 103.955845",
+            "location": "493.844170, 78.217233, 0.000000",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -2282,7 +2282,7 @@ MaxSpeedModifier=0.0
             "type": "gameObject"
         },
         {
-            "location": "479.972160, 25.154275, 137.818678",
+            "location": "491.964944, 77.919592, 43.577871",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -2315,7 +2315,7 @@ MaxSpeedModifier=0.0
             "type": "gameObject"
         },
         {
-            "location": "469.202402, 24.589856, 171.010072",
+            "location": "486.341568, 77.028937, 86.824089",
             "name": "SpawnPoint",
             "properties": [
                 {
@@ -2348,7 +2348,304 @@ MaxSpeedModifier=0.0
             "type": "gameObject"
         },
         {
-            "location": "456.146738, 23.905638, 203.368322",
+            "location": "478.798718, 114.949402, -86.824089",
+            "name": "SpawnPoint",
+            "properties": [
+                {
+                    "name": "Name",
+                    "value": "SpawnPoint1"
+                },
+                {
+                    "name": "TeamMask",
+                    "value": 2
+                },
+                {
+                    "name": "Path",
+                    "value": ""
+                },
+                {
+                    "name": "LoopingPath",
+                    "value": false
+                },
+                {
+                    "name": "PermittedCharacterProfiles",
+                    "value": ""
+                },
+                {
+                    "name": "Weight",
+                    "value": 1
+                }
+            ],
+            "rotation": "0.000000, 0.000000, 180.000000",
+            "scale": "0.250000, 0.250000, 0.250000",
+            "type": "gameObject"
+        },
+        {
+            "location": "484.334880, 116.278517, -43.577871",
+            "name": "SpawnPoint",
+            "properties": [
+                {
+                    "name": "Name",
+                    "value": "SpawnPoint1"
+                },
+                {
+                    "name": "TeamMask",
+                    "value": 2
+                },
+                {
+                    "name": "Path",
+                    "value": ""
+                },
+                {
+                    "name": "LoopingPath",
+                    "value": false
+                },
+                {
+                    "name": "PermittedCharacterProfiles",
+                    "value": ""
+                },
+                {
+                    "name": "Weight",
+                    "value": 1
+                }
+            ],
+            "rotation": "0.000000, 0.000000, 180.000000",
+            "scale": "0.250000, 0.250000, 0.250000",
+            "type": "gameObject"
+        },
+        {
+            "location": "486.184960, 116.722682, 0.000000",
+            "name": "SpawnPoint",
+            "properties": [
+                {
+                    "name": "Name",
+                    "value": "SpawnPoint1"
+                },
+                {
+                    "name": "TeamMask",
+                    "value": 2
+                },
+                {
+                    "name": "Path",
+                    "value": ""
+                },
+                {
+                    "name": "LoopingPath",
+                    "value": false
+                },
+                {
+                    "name": "PermittedCharacterProfiles",
+                    "value": ""
+                },
+                {
+                    "name": "Weight",
+                    "value": 1
+                }
+            ],
+            "rotation": "0.000000, 0.000000, 180.000000",
+            "scale": "0.250000, 0.250000, 0.250000",
+            "type": "gameObject"
+        },
+        {
+            "location": "484.334880, 116.278517, 43.577871",
+            "name": "SpawnPoint",
+            "properties": [
+                {
+                    "name": "Name",
+                    "value": "SpawnPoint1"
+                },
+                {
+                    "name": "TeamMask",
+                    "value": 2
+                },
+                {
+                    "name": "Path",
+                    "value": ""
+                },
+                {
+                    "name": "LoopingPath",
+                    "value": false
+                },
+                {
+                    "name": "PermittedCharacterProfiles",
+                    "value": ""
+                },
+                {
+                    "name": "Weight",
+                    "value": 1
+                }
+            ],
+            "rotation": "0.000000, 0.000000, 180.000000",
+            "scale": "0.250000, 0.250000, 0.250000",
+            "type": "gameObject"
+        },
+        {
+            "location": "478.798718, 114.949402, 86.824089",
+            "name": "SpawnPoint",
+            "properties": [
+                {
+                    "name": "Name",
+                    "value": "SpawnPoint1"
+                },
+                {
+                    "name": "TeamMask",
+                    "value": 2
+                },
+                {
+                    "name": "Path",
+                    "value": ""
+                },
+                {
+                    "name": "LoopingPath",
+                    "value": false
+                },
+                {
+                    "name": "PermittedCharacterProfiles",
+                    "value": ""
+                },
+                {
+                    "name": "Weight",
+                    "value": 1
+                }
+            ],
+            "rotation": "0.000000, 0.000000, 180.000000",
+            "scale": "0.250000, 0.250000, 0.250000",
+            "type": "gameObject"
+        },
+        {
+            "location": "468.303915, 152.161166, -86.824089",
+            "name": "SpawnPoint",
+            "properties": [
+                {
+                    "name": "Name",
+                    "value": "SpawnPoint1"
+                },
+                {
+                    "name": "TeamMask",
+                    "value": 2
+                },
+                {
+                    "name": "Path",
+                    "value": ""
+                },
+                {
+                    "name": "LoopingPath",
+                    "value": false
+                },
+                {
+                    "name": "PermittedCharacterProfiles",
+                    "value": ""
+                },
+                {
+                    "name": "Weight",
+                    "value": 1
+                }
+            ],
+            "rotation": "0.000000, 0.000000, 180.000000",
+            "scale": "0.250000, 0.250000, 0.250000",
+            "type": "gameObject"
+        },
+        {
+            "location": "473.718730, 153.920546, -43.577871",
+            "name": "SpawnPoint",
+            "properties": [
+                {
+                    "name": "Name",
+                    "value": "SpawnPoint1"
+                },
+                {
+                    "name": "TeamMask",
+                    "value": 2
+                },
+                {
+                    "name": "Path",
+                    "value": ""
+                },
+                {
+                    "name": "LoopingPath",
+                    "value": false
+                },
+                {
+                    "name": "PermittedCharacterProfiles",
+                    "value": ""
+                },
+                {
+                    "name": "Weight",
+                    "value": 1
+                }
+            ],
+            "rotation": "0.000000, 0.000000, 180.000000",
+            "scale": "0.250000, 0.250000, 0.250000",
+            "type": "gameObject"
+        },
+        {
+            "location": "475.528258, 154.508497, 0.000000",
+            "name": "SpawnPoint",
+            "properties": [
+                {
+                    "name": "Name",
+                    "value": "SpawnPoint1"
+                },
+                {
+                    "name": "TeamMask",
+                    "value": 2
+                },
+                {
+                    "name": "Path",
+                    "value": ""
+                },
+                {
+                    "name": "LoopingPath",
+                    "value": false
+                },
+                {
+                    "name": "PermittedCharacterProfiles",
+                    "value": ""
+                },
+                {
+                    "name": "Weight",
+                    "value": 1
+                }
+            ],
+            "rotation": "0.000000, 0.000000, 180.000000",
+            "scale": "0.250000, 0.250000, 0.250000",
+            "type": "gameObject"
+        },
+        {
+            "location": "473.718730, 153.920546, 43.577871",
+            "name": "SpawnPoint",
+            "properties": [
+                {
+                    "name": "Name",
+                    "value": "SpawnPoint1"
+                },
+                {
+                    "name": "TeamMask",
+                    "value": 2
+                },
+                {
+                    "name": "Path",
+                    "value": ""
+                },
+                {
+                    "name": "LoopingPath",
+                    "value": false
+                },
+                {
+                    "name": "PermittedCharacterProfiles",
+                    "value": ""
+                },
+                {
+                    "name": "Weight",
+                    "value": 1
+                }
+            ],
+            "rotation": "0.000000, 0.000000, 180.000000",
+            "scale": "0.250000, 0.250000, 0.250000",
+            "type": "gameObject"
+        },
+        {
+            "location": "468.303915, 152.161166, 86.824089",
             "name": "SpawnPoint",
             "properties": [
                 {

@@ -1,11 +1,11 @@
-Name=Apogee Pinpoint Intermediate
+Name=Apogee Distant Expert
 PlayerCharacters=Player
-BotCharacters=Apogee Pinpoint.bot
+BotCharacters=Apogee Distant.bot
 IsChallenge=true
 OvershotProtectionTimer=0.0
 Timelimit=60.0
 PlayerProfile=Player
-AddedBots=Apogee Pinpoint.bot;Apogee Pinpoint.bot
+AddedBots=Apogee Distant.bot;Apogee Distant.bot
 PlayerMaxLives=0
 BotMaxLives=0;0
 PlayerTeam=1
@@ -42,7 +42,7 @@ ScoreLossPerMiss=2.0
 ScoreLossPerReload=0.0
 MultSqrtAcc=false
 EnableOverDamage=false
-MapName=Apogee Pinpoint Intermediate.json
+MapName=Apogee Distant Expert.json
 MapScale=4.0
 BlockProjectilePredictors=true
 BlockCheats=true
@@ -82,9 +82,9 @@ AimSubTypeTag=Static
 AimTypeFlicking=false
 AimTypeProjectile=false
 AimTypePlayerMovement=false
-DifficultyTag=2
-SearchTags=Apogee, Apogee Season 1, Static Clicking, Intermediate
-Description=Two small targets close together. One click each.[nl][nl]Apogee Season 1, Static Clicking, Intermediate. Small moves, smaller targets; settle the crosshair before you click.
+DifficultyTag=4
+SearchTags=Apogee, Apogee Season 1, Static Clicking, Expert
+Description=Two small targets close together. One click each.[nl][nl]Apogee Season 1, Static Clicking, Expert. Small moves, smaller targets; settle the crosshair before you click.
 GameVersion=3.7.0
 ScenarioVersion=Initial
 
@@ -120,7 +120,7 @@ MinShootDelay=0.3
 MaxShootDelay=0.6
 
 [Bot Profile]
-Name=Apogee Pinpoint
+Name=Apogee Distant
 DodgeProfileNames=
 DodgeProfileWeights=
 DodgeProfileMaxChangeTime=5.0
@@ -130,7 +130,7 @@ WeaponProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0;1.0;1.0
 AimingProfileNames=Default;Default;Default;Default;Default;Default;Default;Default
 WeaponSwitchTime=3.0
 UseWeapons=false
-CharacterProfile=Apogee Pinpoint Body
+CharacterProfile=Apogee Distant Body
 SeeThroughWalls=false
 NoDodging=true
 StandStillUntilHurt=false
@@ -297,7 +297,7 @@ PlaybackOptions.LoopUponCompletion=true
 PlaybackOptions.BreakToInputMode=false
 
 [Character Profile]
-Name=Apogee Pinpoint Body
+Name=Apogee Distant Body
 MaxHealth=1.0
 WeaponProfileNames=;;;;;;;
 MinRespawnDelay=0.001
@@ -332,8 +332,8 @@ EnemyHeadColorOnLookAt=X=1.000 Y=1.000 Z=1.000
 TeamBodyColor=X=0.000 Y=0.000 Z=255.000
 TeamHeadColor=X=255.000 Y=255.000 Z=255.000
 MainBBType=Spheroid
-MainBBHeight=29.543212
-MainBBRadius=14.771606
+MainBBHeight=22.361091
+MainBBRadius=11.180546
 MainBBHasHead=false
 MainBBHeadRadius=0.1
 MainBBHeadOffset=0.0

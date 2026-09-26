@@ -2889,92 +2889,6 @@
       "focus": "A flier changing direction on both axes; react on whichever one moves."
     },
     {
-      "family": "Asteroids",
-      "category": "Speed Switching",
-      "subCategory": "Speed Switching",
-      "variants": [
-        {
-          "window": 0,
-          "scenario": "Apogee Asteroids Novice",
-          "label": "Asteroids",
-          "leaderboardId": null,
-          "rankMaxes": [
-            1748,
-            2020,
-            2179,
-            2290,
-            2384,
-            2472
-          ],
-          "source": {
-            "kind": "predicted",
-            "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.141 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
-          },
-          "arm": "Fingertip",
-          "armFrom": "Apogee"
-        },
-        {
-          "window": 1,
-          "scenario": "Apogee Asteroids Intermediate",
-          "label": "Asteroids",
-          "leaderboardId": null,
-          "rankMaxes": [
-            2360,
-            2448,
-            2485,
-            2555,
-            2615,
-            2668
-          ],
-          "source": {
-            "kind": "predicted",
-            "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.141 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
-          },
-          "arm": "Fingertip",
-          "armFrom": "Apogee"
-        },
-        {
-          "window": 2,
-          "scenario": "Apogee Asteroids Advanced",
-          "label": "Asteroids",
-          "leaderboardId": null,
-          "rankMaxes": [
-            2591,
-            2644,
-            2696,
-            2743,
-            2788,
-            2849
-          ],
-          "source": {
-            "kind": "predicted",
-            "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.141 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
-          },
-          "arm": "Fingertip",
-          "armFrom": "Apogee"
-        },
-        {
-          "window": 3,
-          "scenario": "Apogee Asteroids Expert",
-          "label": "Asteroids",
-          "leaderboardId": null,
-          "rankMaxes": [
-            2762,
-            2823,
-            2862,
-            2912
-          ],
-          "source": {
-            "kind": "predicted",
-            "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.141 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
-          },
-          "arm": "Fingertip",
-          "armFrom": "Apogee"
-        }
-      ],
-      "focus": "Six small targets packed tight; short, exact moves."
-    },
-    {
       "family": "CockpiTS",
       "category": "Speed Switching",
       "subCategory": "Speed Switching",
@@ -3059,178 +2973,6 @@
         }
       ],
       "focus": "Switches across a curved wall; land the flick, then hold."
-    },
-    {
-      "family": "Column",
-      "category": "Speed Switching",
-      "subCategory": "Speed Switching",
-      "variants": [
-        {
-          "window": 0,
-          "scenario": "Apogee Column Novice",
-          "label": "Column",
-          "leaderboardId": null,
-          "rankMaxes": [
-            1906,
-            2201,
-            2371,
-            2485,
-            2582,
-            2675
-          ],
-          "source": {
-            "kind": "predicted",
-            "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.141 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
-          },
-          "arm": "Wrist",
-          "armFrom": "Apogee"
-        },
-        {
-          "window": 1,
-          "scenario": "Apogee Column Intermediate",
-          "label": "Column",
-          "leaderboardId": null,
-          "rankMaxes": [
-            2558,
-            2651,
-            2690,
-            2766,
-            2830,
-            2888
-          ],
-          "source": {
-            "kind": "predicted",
-            "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.141 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
-          },
-          "arm": "Wrist",
-          "armFrom": "Apogee"
-        },
-        {
-          "window": 2,
-          "scenario": "Apogee Column Advanced",
-          "label": "Column",
-          "leaderboardId": null,
-          "rankMaxes": [
-            2805,
-            2863,
-            2920,
-            2972,
-            3021,
-            3086
-          ],
-          "source": {
-            "kind": "predicted",
-            "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.141 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
-          },
-          "arm": "Wrist",
-          "armFrom": "Apogee"
-        },
-        {
-          "window": 3,
-          "scenario": "Apogee Column Expert",
-          "label": "Column",
-          "leaderboardId": null,
-          "rankMaxes": [
-            2995,
-            3060,
-            3102,
-            3153
-          ],
-          "source": {
-            "kind": "predicted",
-            "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.141 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
-          },
-          "arm": "Wrist",
-          "armFrom": "Apogee"
-        }
-      ],
-      "focus": "Switch up and down; stop on each one before you fire."
-    },
-    {
-      "family": "DNA",
-      "category": "Speed Switching",
-      "subCategory": "Speed Switching",
-      "variants": [
-        {
-          "window": 0,
-          "scenario": "Apogee DNA Novice",
-          "label": "DNA",
-          "leaderboardId": null,
-          "rankMaxes": [
-            1906,
-            2201,
-            2371,
-            2485,
-            2582,
-            2675
-          ],
-          "source": {
-            "kind": "predicted",
-            "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.141 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
-          },
-          "arm": "Wrist",
-          "armFrom": "Apogee"
-        },
-        {
-          "window": 1,
-          "scenario": "Apogee DNA Intermediate",
-          "label": "DNA",
-          "leaderboardId": null,
-          "rankMaxes": [
-            2558,
-            2651,
-            2690,
-            2766,
-            2830,
-            2888
-          ],
-          "source": {
-            "kind": "predicted",
-            "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.141 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
-          },
-          "arm": "Wrist",
-          "armFrom": "Apogee"
-        },
-        {
-          "window": 2,
-          "scenario": "Apogee DNA Advanced",
-          "label": "DNA",
-          "leaderboardId": null,
-          "rankMaxes": [
-            2805,
-            2863,
-            2920,
-            2972,
-            3021,
-            3086
-          ],
-          "source": {
-            "kind": "predicted",
-            "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.141 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
-          },
-          "arm": "Wrist",
-          "armFrom": "Apogee"
-        },
-        {
-          "window": 3,
-          "scenario": "Apogee DNA Expert",
-          "label": "DNA",
-          "leaderboardId": null,
-          "rankMaxes": [
-            2995,
-            3060,
-            3102,
-            3153
-          ],
-          "source": {
-            "kind": "predicted",
-            "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.141 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
-          },
-          "arm": "Wrist",
-          "armFrom": "Apogee"
-        }
-      ],
-      "focus": "Kill, then move straight to the next; no pause between targets."
     },
     {
       "family": "MartianTS",
@@ -3937,92 +3679,6 @@
       "focus": "Targets at two distances; read the size before you decide how far to move."
     },
     {
-      "family": "Pinpoint",
-      "category": "Static Clicking",
-      "subCategory": "Static Clicking",
-      "variants": [
-        {
-          "window": 0,
-          "scenario": "Apogee Pinpoint Novice",
-          "label": "Pinpoint",
-          "leaderboardId": null,
-          "rankMaxes": [
-            986,
-            1167,
-            1273,
-            1353,
-            1420,
-            1484
-          ],
-          "source": {
-            "kind": "predicted",
-            "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.126 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
-          },
-          "arm": "Fingertip",
-          "armFrom": "Apogee"
-        },
-        {
-          "window": 1,
-          "scenario": "Apogee Pinpoint Intermediate",
-          "label": "Pinpoint",
-          "leaderboardId": null,
-          "rankMaxes": [
-            1353,
-            1415,
-            1444,
-            1497,
-            1542,
-            1584
-          ],
-          "source": {
-            "kind": "predicted",
-            "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.126 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
-          },
-          "arm": "Fingertip",
-          "armFrom": "Apogee"
-        },
-        {
-          "window": 2,
-          "scenario": "Apogee Pinpoint Advanced",
-          "label": "Pinpoint",
-          "leaderboardId": null,
-          "rankMaxes": [
-            1471,
-            1511,
-            1548,
-            1584,
-            1619,
-            1663
-          ],
-          "source": {
-            "kind": "predicted",
-            "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.126 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
-          },
-          "arm": "Fingertip",
-          "armFrom": "Apogee"
-        },
-        {
-          "window": 3,
-          "scenario": "Apogee Pinpoint Expert",
-          "label": "Pinpoint",
-          "leaderboardId": null,
-          "rankMaxes": [
-            1544,
-            1586,
-            1613,
-            1648
-          ],
-          "source": {
-            "kind": "predicted",
-            "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.126 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
-          },
-          "arm": "Fingertip",
-          "armFrom": "Apogee"
-        }
-      ],
-      "focus": "Small moves, smaller targets; settle the crosshair before you click."
-    },
-    {
       "family": "Stars",
       "category": "Static Clicking",
       "subCategory": "Static Clicking",
@@ -4227,6 +3883,350 @@
         }
       ],
       "focus": "Flick up and down; the sideways movement is only ever a correction."
+    },
+    {
+      "family": "AsteroidTS",
+      "category": "Speed Switching",
+      "subCategory": "Speed Switching",
+      "variants": [
+        {
+          "window": 0,
+          "scenario": "Apogee AsteroidTS Novice",
+          "label": "AsteroidTS",
+          "leaderboardId": null,
+          "rankMaxes": [
+            1748,
+            2020,
+            2179,
+            2290,
+            2384,
+            2472
+          ],
+          "source": {
+            "kind": "predicted",
+            "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.141 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+          },
+          "arm": "Fingertip",
+          "armFrom": "Apogee"
+        },
+        {
+          "window": 1,
+          "scenario": "Apogee AsteroidTS Intermediate",
+          "label": "AsteroidTS",
+          "leaderboardId": null,
+          "rankMaxes": [
+            2360,
+            2448,
+            2485,
+            2555,
+            2615,
+            2668
+          ],
+          "source": {
+            "kind": "predicted",
+            "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.141 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+          },
+          "arm": "Fingertip",
+          "armFrom": "Apogee"
+        },
+        {
+          "window": 2,
+          "scenario": "Apogee AsteroidTS Advanced",
+          "label": "AsteroidTS",
+          "leaderboardId": null,
+          "rankMaxes": [
+            2591,
+            2644,
+            2696,
+            2743,
+            2788,
+            2849
+          ],
+          "source": {
+            "kind": "predicted",
+            "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.141 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+          },
+          "arm": "Fingertip",
+          "armFrom": "Apogee"
+        },
+        {
+          "window": 3,
+          "scenario": "Apogee AsteroidTS Expert",
+          "label": "AsteroidTS",
+          "leaderboardId": null,
+          "rankMaxes": [
+            2762,
+            2823,
+            2862,
+            2912
+          ],
+          "source": {
+            "kind": "predicted",
+            "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.141 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+          },
+          "arm": "Fingertip",
+          "armFrom": "Apogee"
+        }
+      ],
+      "focus": "Six small targets packed tight; short, exact moves."
+    },
+    {
+      "family": "DNAts",
+      "category": "Speed Switching",
+      "subCategory": "Speed Switching",
+      "variants": [
+        {
+          "window": 0,
+          "scenario": "Apogee DNAts Novice",
+          "label": "DNAts",
+          "leaderboardId": null,
+          "rankMaxes": [
+            1906,
+            2201,
+            2371,
+            2485,
+            2582,
+            2675
+          ],
+          "source": {
+            "kind": "predicted",
+            "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.141 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+          },
+          "arm": "Wrist",
+          "armFrom": "Apogee"
+        },
+        {
+          "window": 1,
+          "scenario": "Apogee DNAts Intermediate",
+          "label": "DNAts",
+          "leaderboardId": null,
+          "rankMaxes": [
+            2558,
+            2651,
+            2690,
+            2766,
+            2830,
+            2888
+          ],
+          "source": {
+            "kind": "predicted",
+            "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.141 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+          },
+          "arm": "Wrist",
+          "armFrom": "Apogee"
+        },
+        {
+          "window": 2,
+          "scenario": "Apogee DNAts Advanced",
+          "label": "DNAts",
+          "leaderboardId": null,
+          "rankMaxes": [
+            2805,
+            2863,
+            2920,
+            2972,
+            3021,
+            3086
+          ],
+          "source": {
+            "kind": "predicted",
+            "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.141 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+          },
+          "arm": "Wrist",
+          "armFrom": "Apogee"
+        },
+        {
+          "window": 3,
+          "scenario": "Apogee DNAts Expert",
+          "label": "DNAts",
+          "leaderboardId": null,
+          "rankMaxes": [
+            2995,
+            3060,
+            3102,
+            3153
+          ],
+          "source": {
+            "kind": "predicted",
+            "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.141 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+          },
+          "arm": "Wrist",
+          "armFrom": "Apogee"
+        }
+      ],
+      "focus": "Kill, then move straight to the next; no pause between targets."
+    },
+    {
+      "family": "ZeniTS",
+      "category": "Speed Switching",
+      "subCategory": "Speed Switching",
+      "variants": [
+        {
+          "window": 0,
+          "scenario": "Apogee ZeniTS Novice",
+          "label": "ZeniTS",
+          "leaderboardId": null,
+          "rankMaxes": [
+            1906,
+            2201,
+            2371,
+            2485,
+            2582,
+            2675
+          ],
+          "source": {
+            "kind": "predicted",
+            "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.141 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+          },
+          "arm": "Wrist",
+          "armFrom": "Apogee"
+        },
+        {
+          "window": 1,
+          "scenario": "Apogee ZeniTS Intermediate",
+          "label": "ZeniTS",
+          "leaderboardId": null,
+          "rankMaxes": [
+            2558,
+            2651,
+            2690,
+            2766,
+            2830,
+            2888
+          ],
+          "source": {
+            "kind": "predicted",
+            "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.141 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+          },
+          "arm": "Wrist",
+          "armFrom": "Apogee"
+        },
+        {
+          "window": 2,
+          "scenario": "Apogee ZeniTS Advanced",
+          "label": "ZeniTS",
+          "leaderboardId": null,
+          "rankMaxes": [
+            2805,
+            2863,
+            2920,
+            2972,
+            3021,
+            3086
+          ],
+          "source": {
+            "kind": "predicted",
+            "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.141 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+          },
+          "arm": "Wrist",
+          "armFrom": "Apogee"
+        },
+        {
+          "window": 3,
+          "scenario": "Apogee ZeniTS Expert",
+          "label": "ZeniTS",
+          "leaderboardId": null,
+          "rankMaxes": [
+            2995,
+            3060,
+            3102,
+            3153
+          ],
+          "source": {
+            "kind": "predicted",
+            "why": "Read off the board the switching model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.141 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+          },
+          "arm": "Wrist",
+          "armFrom": "Apogee"
+        }
+      ],
+      "focus": "Switch up and down; stop on each one before you fire."
+    },
+    {
+      "family": "Distant",
+      "category": "Static Clicking",
+      "subCategory": "Static Clicking",
+      "variants": [
+        {
+          "window": 0,
+          "scenario": "Apogee Distant Novice",
+          "label": "Distant",
+          "leaderboardId": null,
+          "rankMaxes": [
+            986,
+            1167,
+            1273,
+            1353,
+            1420,
+            1484
+          ],
+          "source": {
+            "kind": "predicted",
+            "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.126 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+          },
+          "arm": "Fingertip",
+          "armFrom": "Apogee"
+        },
+        {
+          "window": 1,
+          "scenario": "Apogee Distant Intermediate",
+          "label": "Distant",
+          "leaderboardId": null,
+          "rankMaxes": [
+            1353,
+            1415,
+            1444,
+            1497,
+            1542,
+            1584
+          ],
+          "source": {
+            "kind": "predicted",
+            "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.126 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+          },
+          "arm": "Fingertip",
+          "armFrom": "Apogee"
+        },
+        {
+          "window": 2,
+          "scenario": "Apogee Distant Advanced",
+          "label": "Distant",
+          "leaderboardId": null,
+          "rankMaxes": [
+            1471,
+            1511,
+            1548,
+            1584,
+            1619,
+            1663
+          ],
+          "source": {
+            "kind": "predicted",
+            "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.126 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+          },
+          "arm": "Fingertip",
+          "armFrom": "Apogee"
+        },
+        {
+          "window": 3,
+          "scenario": "Apogee Distant Expert",
+          "label": "Distant",
+          "leaderboardId": null,
+          "rankMaxes": [
+            1544,
+            1586,
+            1613,
+            1648
+          ],
+          "source": {
+            "kind": "predicted",
+            "why": "Read off the board the clicking model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is 0.126 in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one."
+          },
+          "arm": "Fingertip",
+          "armFrom": "Apogee"
+        }
+      ],
+      "focus": "Small moves, smaller targets; settle the crosshair before you click."
     }
   ],
   "$familyNotes": "Why a family's scenarios are what they are, where the choice needed defending. Written on the family rather than on a variant's `source` because the two are different claims: `source` says where a NUMBER came from and is rewritten whenever the thresholds are re-cut, so a reason parked there does not survive npm run cut:thresholds. The fuller case for each family - who published it, how many people play it - lives in data/scenario_rationale.json, which validate:rationale joins back to this file.",

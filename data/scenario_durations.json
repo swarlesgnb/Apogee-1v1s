@@ -1173,28 +1173,28 @@
       "from": "file"
     },
     {
-      "scenario": "Apogee Asteroids Advanced",
+      "scenario": "Apogee AsteroidTS Advanced",
       "seconds": 60,
       "runs": 0,
       "agreement": 1,
       "from": "file"
     },
     {
-      "scenario": "Apogee Asteroids Expert",
+      "scenario": "Apogee AsteroidTS Expert",
       "seconds": 60,
       "runs": 0,
       "agreement": 1,
       "from": "file"
     },
     {
-      "scenario": "Apogee Asteroids Intermediate",
+      "scenario": "Apogee AsteroidTS Intermediate",
       "seconds": 60,
       "runs": 0,
       "agreement": 1,
       "from": "file"
     },
     {
-      "scenario": "Apogee Asteroids Novice",
+      "scenario": "Apogee AsteroidTS Novice",
       "seconds": 60,
       "runs": 0,
       "agreement": 1,
@@ -1257,28 +1257,28 @@
       "from": "file"
     },
     {
-      "scenario": "Apogee Column Advanced",
+      "scenario": "Apogee ZeniTS Advanced",
       "seconds": 60,
       "runs": 0,
       "agreement": 1,
       "from": "file"
     },
     {
-      "scenario": "Apogee Column Expert",
+      "scenario": "Apogee ZeniTS Expert",
       "seconds": 60,
       "runs": 0,
       "agreement": 1,
       "from": "file"
     },
     {
-      "scenario": "Apogee Column Intermediate",
+      "scenario": "Apogee ZeniTS Intermediate",
       "seconds": 60,
       "runs": 0,
       "agreement": 1,
       "from": "file"
     },
     {
-      "scenario": "Apogee Column Novice",
+      "scenario": "Apogee ZeniTS Novice",
       "seconds": 60,
       "runs": 0,
       "agreement": 1,
@@ -1341,28 +1341,28 @@
       "from": "file"
     },
     {
-      "scenario": "Apogee DNA Advanced",
+      "scenario": "Apogee DNAts Advanced",
       "seconds": 60,
       "runs": 0,
       "agreement": 1,
       "from": "file"
     },
     {
-      "scenario": "Apogee DNA Expert",
+      "scenario": "Apogee DNAts Expert",
       "seconds": 60,
       "runs": 0,
       "agreement": 1,
       "from": "file"
     },
     {
-      "scenario": "Apogee DNA Intermediate",
+      "scenario": "Apogee DNAts Intermediate",
       "seconds": 60,
       "runs": 0,
       "agreement": 1,
       "from": "file"
     },
     {
-      "scenario": "Apogee DNA Novice",
+      "scenario": "Apogee DNAts Novice",
       "seconds": 60,
       "runs": 0,
       "agreement": 1,
@@ -1817,28 +1817,28 @@
       "from": "file"
     },
     {
-      "scenario": "Apogee Pinpoint Advanced",
+      "scenario": "Apogee Distant Advanced",
       "seconds": 60,
       "runs": 0,
       "agreement": 1,
       "from": "file"
     },
     {
-      "scenario": "Apogee Pinpoint Expert",
+      "scenario": "Apogee Distant Expert",
       "seconds": 60,
       "runs": 0,
       "agreement": 1,
       "from": "file"
     },
     {
-      "scenario": "Apogee Pinpoint Intermediate",
+      "scenario": "Apogee Distant Intermediate",
       "seconds": 60,
       "runs": 0,
       "agreement": 1,
       "from": "file"
     },
     {
-      "scenario": "Apogee Pinpoint Novice",
+      "scenario": "Apogee Distant Novice",
       "seconds": 60,
       "runs": 0,
       "agreement": 1,

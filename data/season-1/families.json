@@ -26,7 +26,7 @@
    "arm": "Wrist"
   },
   {
-   "family": "Pinpoint",
+   "family": "Distant",
    "category": "Static Clicking",
    "focus": "Small moves, smaller targets; settle the crosshair before you click.",
    "why": "Micro-correction at close spacing, the skill behind 1w2ts and Raw Mouse Control; RawMouseControlClicking3 is replayed 51.6 times per player (data/fun_audit.json).",
@@ -365,7 +365,7 @@
    "arm": "Wrist"
   },
   {
-   "family": "DNA",
+   "family": "DNAts",
    "category": "Speed Switching",
    "focus": "Kill, then move straight to the next; no pause between targets.",
    "why": "The core speed-switching loop on still targets in a compact field: the time between targets is what the score measures.",
@@ -390,7 +390,7 @@
    "arm": "Arm"
   },
   {
-   "family": "Column",
+   "family": "ZeniTS",
    "category": "Speed Switching",
    "focus": "Switch up and down; stop on each one before you fire.",
    "why": "Vertical switching, the axis the rest of the category barely uses.",
@@ -402,7 +402,7 @@
    "arm": "Wrist"
   },
   {
-   "family": "Asteroids",
+   "family": "AsteroidTS",
    "category": "Speed Switching",
    "focus": "Six small targets packed tight; short, exact moves.",
    "why": "Precision switching: small targets and small moves, the micro side of speed switching.",
@@ -694,8 +694,8 @@
    ]
   },
   {
-   "scenario": "Apogee Pinpoint Novice",
-   "family": "Pinpoint",
+   "scenario": "Apogee Distant Novice",
+   "family": "Distant",
    "band": "Novice",
    "class": "click",
    "targetDeg": 0.95,
@@ -717,8 +717,8 @@
    ]
   },
   {
-   "scenario": "Apogee Pinpoint Intermediate",
-   "family": "Pinpoint",
+   "scenario": "Apogee Distant Intermediate",
+   "family": "Distant",
    "band": "Intermediate",
    "class": "click",
    "targetDeg": 0.827,
@@ -740,8 +740,8 @@
    ]
   },
   {
-   "scenario": "Apogee Pinpoint Advanced",
-   "family": "Pinpoint",
+   "scenario": "Apogee Distant Advanced",
+   "family": "Distant",
    "band": "Advanced",
    "class": "click",
    "targetDeg": 0.719,
@@ -763,8 +763,8 @@
    ]
   },
   {
-   "scenario": "Apogee Pinpoint Expert",
-   "family": "Pinpoint",
+   "scenario": "Apogee Distant Expert",
+   "family": "Distant",
    "band": "Expert",
    "class": "click",
    "targetDeg": 0.626,
@@ -3124,8 +3124,8 @@
    ]
   },
   {
-   "scenario": "Apogee DNA Novice",
-   "family": "DNA",
+   "scenario": "Apogee DNAts Novice",
+   "family": "DNAts",
    "band": "Novice",
    "class": "switch",
    "targetDeg": 2.4,
@@ -3147,8 +3147,8 @@
    ]
   },
   {
-   "scenario": "Apogee DNA Intermediate",
-   "family": "DNA",
+   "scenario": "Apogee DNAts Intermediate",
+   "family": "DNAts",
    "band": "Intermediate",
    "class": "switch",
    "targetDeg": 2.088,
@@ -3170,8 +3170,8 @@
    ]
   },
   {
-   "scenario": "Apogee DNA Advanced",
-   "family": "DNA",
+   "scenario": "Apogee DNAts Advanced",
+   "family": "DNAts",
    "band": "Advanced",
    "class": "switch",
    "targetDeg": 1.817,
@@ -3193,8 +3193,8 @@
    ]
   },
   {
-   "scenario": "Apogee DNA Expert",
-   "family": "DNA",
+   "scenario": "Apogee DNAts Expert",
+   "family": "DNAts",
    "band": "Expert",
    "class": "switch",
    "targetDeg": 1.58,
@@ -3304,8 +3304,8 @@
    ]
   },
   {
-   "scenario": "Apogee Column Novice",
-   "family": "Column",
+   "scenario": "Apogee ZeniTS Novice",
+   "family": "ZeniTS",
    "band": "Novice",
    "class": "switch",
    "targetDeg": 2.4,
@@ -3327,8 +3327,8 @@
    ]
   },
   {
-   "scenario": "Apogee Column Intermediate",
-   "family": "Column",
+   "scenario": "Apogee ZeniTS Intermediate",
+   "family": "ZeniTS",
    "band": "Intermediate",
    "class": "switch",
    "targetDeg": 2.088,
@@ -3350,8 +3350,8 @@
    ]
   },
   {
-   "scenario": "Apogee Column Advanced",
-   "family": "Column",
+   "scenario": "Apogee ZeniTS Advanced",
+   "family": "ZeniTS",
    "band": "Advanced",
    "class": "switch",
    "targetDeg": 1.817,
@@ -3373,8 +3373,8 @@
    ]
   },
   {
-   "scenario": "Apogee Column Expert",
-   "family": "Column",
+   "scenario": "Apogee ZeniTS Expert",
+   "family": "ZeniTS",
    "band": "Expert",
    "class": "switch",
    "targetDeg": 1.58,
@@ -3394,8 +3394,8 @@
    ]
   },
   {
-   "scenario": "Apogee Asteroids Novice",
-   "family": "Asteroids",
+   "scenario": "Apogee AsteroidTS Novice",
+   "family": "AsteroidTS",
    "band": "Novice",
    "class": "switch",
    "targetDeg": 1.5,
@@ -3417,8 +3417,8 @@
    ]
   },
   {
-   "scenario": "Apogee Asteroids Intermediate",
-   "family": "Asteroids",
+   "scenario": "Apogee AsteroidTS Intermediate",
+   "family": "AsteroidTS",
    "band": "Intermediate",
    "class": "switch",
    "targetDeg": 1.305,
@@ -3440,8 +3440,8 @@
    ]
   },
   {
-   "scenario": "Apogee Asteroids Advanced",
-   "family": "Asteroids",
+   "scenario": "Apogee AsteroidTS Advanced",
+   "family": "AsteroidTS",
    "band": "Advanced",
    "class": "switch",
    "targetDeg": 1.135,
@@ -3463,8 +3463,8 @@
    ]
   },
   {
-   "scenario": "Apogee Asteroids Expert",
-   "family": "Asteroids",
+   "scenario": "Apogee AsteroidTS Expert",
+   "family": "AsteroidTS",
    "band": "Expert",
    "class": "switch",
    "targetDeg": 0.988,

@@ -29,7 +29,7 @@ Flick up and down; the sideways movement is only ever a correction. Vertical fli
 | Advanced | 1.21 | still | - | - | 1157 (1019-1312) | 1483, 1524, 1562, 1598, 1633, 1677 |
 | Expert | 1.05 | still | - | - | 1099 (969-1247) | 1558, 1600, 1627, 1662 |
 
-### Pinpoint
+### Distant
 
 Small moves, smaller targets; settle the crosshair before you click. Micro-correction at close spacing, the skill behind 1w2ts and Raw Mouse Control; RawMouseControlClicking3 is replayed 51.6 times per player (data/fun_audit.json).
 
@@ -334,7 +334,7 @@ Being tracked makes it turn; stay on it through the dodge. Reactive dodging: the
 
 ## Speed Switching
 
-### DNA
+### DNAts
 
 Kill, then move straight to the next; no pause between targets. The core speed-switching loop on still targets in a compact field: the time between targets is what the score measures.
 
@@ -356,7 +356,7 @@ Switches across a curved wall; land the flick, then hold. Speed switching on the
 | Advanced | 2.12 | still | - | 0.24 | 2339 (2142-2543) | 2833, 2891, 2949, 3001, 3050, 3115 |
 | Expert | 1.85 | still | - | 0.24 | 2313 (2117-2516) | 3024, 3089, 3131, 3181 |
 
-### Column
+### ZeniTS
 
 Switch up and down; stop on each one before you fire. Vertical switching, the axis the rest of the category barely uses.
 
@@ -367,7 +367,7 @@ Switch up and down; stop on each one before you fire. Vertical switching, the ax
 | Advanced | 1.82 | still | - | 0.24 | 2310 (2114-2513) | 2805, 2863, 2920, 2972, 3021, 3086 |
 | Expert | 1.58 | still | - | 0.24 | 2284 (2089-2486) | 2995, 3060, 3102, 3153 |
 
-### Asteroids
+### AsteroidTS
 
 Six small targets packed tight; short, exact moves. Precision switching: small targets and small moves, the micro side of speed switching.
 

@@ -13,11 +13,11 @@ scenario file format turned out to be, pitfalls included:
 
 | Category | Families |
 | --- | --- |
-| Static Clicking | Galaga (five on one line), Zenith (vertical), Pinpoint (micro), Stars (wide field), Constellation (real constellations as waves), Parallax (two depths), Nebula (six up at once), 1w6aliens (six still balloons on one wall) |
+| Static Clicking | Galaga (five on one line), Zenith (vertical), Distant (micro), Stars (wide field), Constellation (real constellations as waves), Parallax (two depths), Nebula (six up at once), 1w6aliens (six still balloons on one wall) |
 | Dynamic Clicking | Gravclick (slow floaters), Pendulum (slow wall-to-wall swings), Antigrav (bounces), Electric (straight runs, dead stops at turns, a charged buzz), Sun and Moon (two fast crossers, open room), Shooting Stars (straight lanes), Gravity Well (pressure: balloons that dash at you, on fuglaa's design), Meteor (Voltaic's Floating Heads, large and slow), Satellite (fliers in front, drifting nearer and further) |
 | Precise Tracking | Glide (smooth ground), Blastoff (vertical), Orbit (curves), Thread (small and slow), Arc (floaty jumps), AlienTrack (close and wide, with Ground Plaza's blink) |
 | Reactive Tracking | Pong (close strafes), Pong3D (range changes), Stutter (stops, sometimes for a second or two), Hover (jumps), UFO (3D flier), Feint (dodges when hit) |
-| Speed Switching | DNA (compact), CockpiTS (wide), Column (vertical), Asteroids (six small), RockeTS (slow movers, quick kills), MartianTS (long kills) |
+| Speed Switching | DNAts (compact), CockpiTS (wide), ZeniTS (vertical), AsteroidTS (six small), RockeTS (slow movers, quick kills), MartianTS (long kills) |
 | Evasive Switching | FleeTS (six strafers), skeeTS (thrown clay pigeons), comeTS (curving fliers), QuantumTS (regenerating), LosTS (one tough target that respawns), InvadersTS (close) |
 
 The second round of design came from Rylee's playtest of the first (2026-09-24): more

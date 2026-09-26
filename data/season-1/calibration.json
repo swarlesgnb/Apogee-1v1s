@@ -56,29 +56,6 @@
         }
       ]
     },
-    "Pinpoint": {
-      "factor": 1,
-      "raw": 0.9492,
-      "runs": 3,
-      "evidence": [
-        {
-          "scenario": "Apogee Pinpoint Novice",
-          "runs": 1,
-          "best": 1406,
-          "position": 3.791,
-          "target": 4.125,
-          "k": 0.9846
-        },
-        {
-          "scenario": "Apogee Pinpoint Intermediate",
-          "runs": 2,
-          "best": 1210,
-          "position": -3.095,
-          "target": -1.184,
-          "k": 0.932
-        }
-      ]
-    },
     "Stars": {
       "factor": 1.0907,
       "raw": 1.1391,
@@ -406,75 +383,6 @@
         }
       ]
     },
-    "DNA": {
-      "factor": 1,
-      "raw": 0.9954,
-      "runs": 2,
-      "evidence": [
-        {
-          "scenario": "Apogee DNA Novice",
-          "runs": 1,
-          "best": 2987,
-          "position": 7.029,
-          "target": 7.029,
-          "k": 1
-        },
-        {
-          "scenario": "Apogee DNA Intermediate",
-          "runs": 1,
-          "best": 2950,
-          "position": 5.939,
-          "target": 6.354,
-          "k": 0.9908
-        }
-      ]
-    },
-    "Column": {
-      "factor": 1,
-      "raw": 0.9597,
-      "runs": 2,
-      "evidence": [
-        {
-          "scenario": "Apogee Column Novice",
-          "runs": 1,
-          "best": 2875,
-          "position": 6.3,
-          "target": 7.029,
-          "k": 0.9625
-        },
-        {
-          "scenario": "Apogee Column Intermediate",
-          "runs": 1,
-          "best": 2849,
-          "position": 4.328,
-          "target": 6.354,
-          "k": 0.9569
-        }
-      ]
-    },
-    "Asteroids": {
-      "factor": 1,
-      "raw": 1.0216,
-      "runs": 2,
-      "evidence": [
-        {
-          "scenario": "Apogee Asteroids Novice",
-          "runs": 1,
-          "best": 2860,
-          "position": 7.68,
-          "target": 7.029,
-          "k": 1.0341
-        },
-        {
-          "scenario": "Apogee Asteroids Intermediate",
-          "runs": 1,
-          "best": 2777,
-          "position": 6.769,
-          "target": 6.354,
-          "k": 1.0093
-        }
-      ]
-    },
     "RockeTS": {
       "factor": 0.782,
       "raw": 0.7204,
@@ -608,6 +516,98 @@
           "position": 3.793,
           "target": 5.662,
           "k": 0.9003
+        }
+      ]
+    },
+    "Distant": {
+      "factor": 1,
+      "raw": 0.9492,
+      "runs": 3,
+      "evidence": [
+        {
+          "scenario": "Apogee Pinpoint Novice",
+          "runs": 1,
+          "best": 1406,
+          "position": 3.791,
+          "target": 4.125,
+          "k": 0.9846
+        },
+        {
+          "scenario": "Apogee Pinpoint Intermediate",
+          "runs": 2,
+          "best": 1210,
+          "position": -3.095,
+          "target": -1.184,
+          "k": 0.932
+        }
+      ]
+    },
+    "ZeniTS": {
+      "factor": 1,
+      "raw": 0.9597,
+      "runs": 2,
+      "evidence": [
+        {
+          "scenario": "Apogee Column Novice",
+          "runs": 1,
+          "best": 2875,
+          "position": 6.3,
+          "target": 7.029,
+          "k": 0.9625
+        },
+        {
+          "scenario": "Apogee Column Intermediate",
+          "runs": 1,
+          "best": 2849,
+          "position": 4.328,
+          "target": 6.354,
+          "k": 0.9569
+        }
+      ]
+    },
+    "AsteroidTS": {
+      "factor": 1,
+      "raw": 1.0216,
+      "runs": 2,
+      "evidence": [
+        {
+          "scenario": "Apogee Asteroids Novice",
+          "runs": 1,
+          "best": 2860,
+          "position": 7.68,
+          "target": 7.029,
+          "k": 1.0341
+        },
+        {
+          "scenario": "Apogee Asteroids Intermediate",
+          "runs": 1,
+          "best": 2777,
+          "position": 6.769,
+          "target": 6.354,
+          "k": 1.0093
+        }
+      ]
+    },
+    "DNAts": {
+      "factor": 1,
+      "raw": 0.9954,
+      "runs": 2,
+      "evidence": [
+        {
+          "scenario": "Apogee DNA Novice",
+          "runs": 1,
+          "best": 2987,
+          "position": 7.029,
+          "target": 7.029,
+          "k": 1
+        },
+        {
+          "scenario": "Apogee DNA Intermediate",
+          "runs": 1,
+          "best": 2950,
+          "position": 5.939,
+          "target": 6.354,
+          "k": 0.9908
         }
       ]
     }

@@ -1,11 +1,11 @@
-Name=Apogee Asteroids Intermediate
+Name=Apogee AsteroidTS Advanced
 PlayerCharacters=Player
-BotCharacters=Apogee Asteroids.bot
+BotCharacters=Apogee AsteroidTS.bot
 IsChallenge=true
 OvershotProtectionTimer=0.0
 Timelimit=60.0
 PlayerProfile=Player
-AddedBots=Apogee Asteroids.bot;Apogee Asteroids.bot;Apogee Asteroids.bot;Apogee Asteroids.bot;Apogee Asteroids.bot;Apogee Asteroids.bot
+AddedBots=Apogee AsteroidTS.bot;Apogee AsteroidTS.bot;Apogee AsteroidTS.bot;Apogee AsteroidTS.bot;Apogee AsteroidTS.bot;Apogee AsteroidTS.bot
 PlayerMaxLives=0
 BotMaxLives=0;0;0;0;0;0
 PlayerTeam=1
@@ -42,7 +42,7 @@ ScoreLossPerMiss=0.0
 ScoreLossPerReload=0.0
 MultSqrtAcc=false
 EnableOverDamage=false
-MapName=Apogee Asteroids Intermediate.json
+MapName=Apogee AsteroidTS Advanced.json
 MapScale=4.0
 BlockProjectilePredictors=true
 BlockCheats=true
@@ -82,9 +82,9 @@ AimSubTypeTag=Speed
 AimTypeFlicking=false
 AimTypeProjectile=false
 AimTypePlayerMovement=false
-DifficultyTag=2
-SearchTags=Apogee, Apogee Season 1, Speed Switching, Intermediate
-Description=Six small still targets packed together. Hold fire to kill.[nl][nl]Apogee Season 1, Speed Switching, Intermediate. Six small targets packed tight; short, exact moves.
+DifficultyTag=3
+SearchTags=Apogee, Apogee Season 1, Speed Switching, Advanced
+Description=Six small still targets packed together. Hold fire to kill.[nl][nl]Apogee Season 1, Speed Switching, Advanced. Six small targets packed tight; short, exact moves.
 GameVersion=3.7.1
 ScenarioVersion=Initial
 
@@ -120,8 +120,8 @@ MinShootDelay=0.3
 MaxShootDelay=0.6
 
 [Bot Profile]
-Name=Apogee Asteroids
-DodgeProfileNames=Apogee Asteroids Move
+Name=Apogee AsteroidTS
+DodgeProfileNames=Apogee AsteroidTS Move
 DodgeProfileWeights=1.0
 DodgeProfileMaxChangeTime=60.0
 DodgeProfileMinChangeTime=60.0
@@ -130,7 +130,7 @@ WeaponProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0;1.0;1.0
 AimingProfileNames=Default;Default;Default;Default;Default;Default;Default;Default
 WeaponSwitchTime=3.0
 UseWeapons=false
-CharacterProfile=Apogee Asteroids Body
+CharacterProfile=Apogee AsteroidTS Body
 SeeThroughWalls=false
 NoDodging=true
 StandStillUntilHurt=false
@@ -298,7 +298,7 @@ PlaybackOptions.LoopUponCompletion=true
 PlaybackOptions.BreakToInputMode=false
 
 [Character Profile]
-Name=Apogee Asteroids Body
+Name=Apogee AsteroidTS Body
 MaxHealth=20.0
 WeaponProfileNames=;;;;;;;
 MinRespawnDelay=0.001
@@ -334,8 +334,8 @@ EnemyHeadColorOnLookAt=X=1.000 Y=1.000 Z=1.000
 TeamBodyColor=X=1.000 Y=0.888 Z=0.000
 TeamHeadColor=X=1.000 Y=1.000 Z=1.000
 MainBBType=Spheroid
-MainBBHeight=50.110569
-MainBBRadius=25.055285
+MainBBHeight=43.595737
+MainBBRadius=21.797868
 MainBBHasHead=false
 MainBBHeadRadius=0.1
 MainBBHeadOffset=0.0
@@ -445,7 +445,7 @@ PlaybackOptions.LoopUponCompletion=true
 PlaybackOptions.BreakToInputMode=false
 
 [Dodge Profile]
-Name=Apogee Asteroids Move
+Name=Apogee AsteroidTS Move
 MaxTargetDistance=2420.0
 MinTargetDistance=1980.0
 ToggleLeftRight=true

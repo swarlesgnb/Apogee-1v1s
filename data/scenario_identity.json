@@ -1202,22 +1202,22 @@
       "aimType": "Tracking",
       "subCategory": "Precise Tracking"
     },
-    "Apogee Asteroids Advanced": {
+    "Apogee AsteroidTS Advanced": {
       "leaderboardId": null,
       "aimType": "Switching",
       "subCategory": "Speed Switching"
     },
-    "Apogee Asteroids Expert": {
+    "Apogee AsteroidTS Expert": {
       "leaderboardId": null,
       "aimType": "Switching",
       "subCategory": "Speed Switching"
     },
-    "Apogee Asteroids Intermediate": {
+    "Apogee AsteroidTS Intermediate": {
       "leaderboardId": null,
       "aimType": "Switching",
       "subCategory": "Speed Switching"
     },
-    "Apogee Asteroids Novice": {
+    "Apogee AsteroidTS Novice": {
       "leaderboardId": null,
       "aimType": "Switching",
       "subCategory": "Speed Switching"
@@ -1262,26 +1262,6 @@
       "aimType": "Switching",
       "subCategory": "Speed Switching"
     },
-    "Apogee Column Advanced": {
-      "leaderboardId": null,
-      "aimType": "Switching",
-      "subCategory": "Speed Switching"
-    },
-    "Apogee Column Expert": {
-      "leaderboardId": null,
-      "aimType": "Switching",
-      "subCategory": "Speed Switching"
-    },
-    "Apogee Column Intermediate": {
-      "leaderboardId": null,
-      "aimType": "Switching",
-      "subCategory": "Speed Switching"
-    },
-    "Apogee Column Novice": {
-      "leaderboardId": null,
-      "aimType": "Switching",
-      "subCategory": "Speed Switching"
-    },
     "Apogee Constellation Advanced": {
       "leaderboardId": null,
       "aimType": "Clicking",
@@ -1302,25 +1282,45 @@
       "aimType": "Clicking",
       "subCategory": "Static Clicking"
     },
-    "Apogee DNA Advanced": {
+    "Apogee DNAts Advanced": {
       "leaderboardId": null,
       "aimType": "Switching",
       "subCategory": "Speed Switching"
     },
-    "Apogee DNA Expert": {
+    "Apogee DNAts Expert": {
       "leaderboardId": null,
       "aimType": "Switching",
       "subCategory": "Speed Switching"
     },
-    "Apogee DNA Intermediate": {
+    "Apogee DNAts Intermediate": {
       "leaderboardId": null,
       "aimType": "Switching",
       "subCategory": "Speed Switching"
     },
-    "Apogee DNA Novice": {
+    "Apogee DNAts Novice": {
       "leaderboardId": null,
       "aimType": "Switching",
       "subCategory": "Speed Switching"
+    },
+    "Apogee Distant Advanced": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Static Clicking"
+    },
+    "Apogee Distant Expert": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Static Clicking"
+    },
+    "Apogee Distant Intermediate": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Static Clicking"
+    },
+    "Apogee Distant Novice": {
+      "leaderboardId": null,
+      "aimType": "Clicking",
+      "subCategory": "Static Clicking"
     },
     "Apogee Electric Advanced": {
       "leaderboardId": null,
@@ -1642,26 +1642,6 @@
       "aimType": "Clicking",
       "subCategory": "Dynamic Clicking"
     },
-    "Apogee Pinpoint Advanced": {
-      "leaderboardId": null,
-      "aimType": "Clicking",
-      "subCategory": "Static Clicking"
-    },
-    "Apogee Pinpoint Expert": {
-      "leaderboardId": null,
-      "aimType": "Clicking",
-      "subCategory": "Static Clicking"
-    },
-    "Apogee Pinpoint Intermediate": {
-      "leaderboardId": null,
-      "aimType": "Clicking",
-      "subCategory": "Static Clicking"
-    },
-    "Apogee Pinpoint Novice": {
-      "leaderboardId": null,
-      "aimType": "Clicking",
-      "subCategory": "Static Clicking"
-    },
     "Apogee Pong Advanced": {
       "leaderboardId": null,
       "aimType": "Tracking",
@@ -1881,6 +1861,26 @@
       "leaderboardId": null,
       "aimType": "Tracking",
       "subCategory": "Reactive Tracking"
+    },
+    "Apogee ZeniTS Advanced": {
+      "leaderboardId": null,
+      "aimType": "Switching",
+      "subCategory": "Speed Switching"
+    },
+    "Apogee ZeniTS Expert": {
+      "leaderboardId": null,
+      "aimType": "Switching",
+      "subCategory": "Speed Switching"
+    },
+    "Apogee ZeniTS Intermediate": {
+      "leaderboardId": null,
+      "aimType": "Switching",
+      "subCategory": "Speed Switching"
+    },
+    "Apogee ZeniTS Novice": {
+      "leaderboardId": null,
+      "aimType": "Switching",
+      "subCategory": "Speed Switching"
     },
     "Apogee Zenith Advanced": {
       "leaderboardId": null,

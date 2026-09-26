@@ -1050,7 +1050,7 @@
       "file": "data/season-1/difficulty_model.json"
     }
   },
-  "builtAt": "2026-09-26T16:50:13.754Z",
+  "builtAt": "2026-09-26T17:21:32.371Z",
   "scenarios": [
     {
       "scenario": "Apogee Galaga Novice",
@@ -1241,14 +1241,14 @@
       }
     },
     {
-      "scenario": "Apogee Pinpoint Novice",
+      "scenario": "Apogee Distant Novice",
       "category": "Static Clicking",
-      "family": "Pinpoint",
+      "family": "Distant",
       "arm": "Fingertip",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
       "window": 0,
-      "label": "Pinpoint",
+      "label": "Distant",
       "focus": "Small moves, smaller targets; settle the crosshair before you click.",
       "leaderboardId": null,
       "rankMaxes": [
@@ -1265,14 +1265,14 @@
       }
     },
     {
-      "scenario": "Apogee Pinpoint Intermediate",
+      "scenario": "Apogee Distant Intermediate",
       "category": "Static Clicking",
-      "family": "Pinpoint",
+      "family": "Distant",
       "arm": "Fingertip",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
       "window": 1,
-      "label": "Pinpoint",
+      "label": "Distant",
       "focus": "Small moves, smaller targets; settle the crosshair before you click.",
       "leaderboardId": null,
       "rankMaxes": [
@@ -1289,14 +1289,14 @@
       }
     },
     {
-      "scenario": "Apogee Pinpoint Advanced",
+      "scenario": "Apogee Distant Advanced",
       "category": "Static Clicking",
-      "family": "Pinpoint",
+      "family": "Distant",
       "arm": "Fingertip",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
       "window": 2,
-      "label": "Pinpoint",
+      "label": "Distant",
       "focus": "Small moves, smaller targets; settle the crosshair before you click.",
       "leaderboardId": null,
       "rankMaxes": [
@@ -1313,14 +1313,14 @@
       }
     },
     {
-      "scenario": "Apogee Pinpoint Expert",
+      "scenario": "Apogee Distant Expert",
       "category": "Static Clicking",
-      "family": "Pinpoint",
+      "family": "Distant",
       "arm": "Fingertip",
       "armFrom": "Apogee",
       "subCategory": "Static Clicking",
       "window": 3,
-      "label": "Pinpoint",
+      "label": "Distant",
       "focus": "Small moves, smaller targets; settle the crosshair before you click.",
       "leaderboardId": null,
       "rankMaxes": [
@@ -4085,14 +4085,14 @@
       }
     },
     {
-      "scenario": "Apogee DNA Novice",
+      "scenario": "Apogee DNAts Novice",
       "category": "Speed Switching",
-      "family": "DNA",
+      "family": "DNAts",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
       "window": 0,
-      "label": "DNA",
+      "label": "DNAts",
       "focus": "Kill, then move straight to the next; no pause between targets.",
       "leaderboardId": null,
       "rankMaxes": [
@@ -4109,14 +4109,14 @@
       }
     },
     {
-      "scenario": "Apogee DNA Intermediate",
+      "scenario": "Apogee DNAts Intermediate",
       "category": "Speed Switching",
-      "family": "DNA",
+      "family": "DNAts",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
       "window": 1,
-      "label": "DNA",
+      "label": "DNAts",
       "focus": "Kill, then move straight to the next; no pause between targets.",
       "leaderboardId": null,
       "rankMaxes": [
@@ -4133,14 +4133,14 @@
       }
     },
     {
-      "scenario": "Apogee DNA Advanced",
+      "scenario": "Apogee DNAts Advanced",
       "category": "Speed Switching",
-      "family": "DNA",
+      "family": "DNAts",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
       "window": 2,
-      "label": "DNA",
+      "label": "DNAts",
       "focus": "Kill, then move straight to the next; no pause between targets.",
       "leaderboardId": null,
       "rankMaxes": [
@@ -4157,14 +4157,14 @@
       }
     },
     {
-      "scenario": "Apogee DNA Expert",
+      "scenario": "Apogee DNAts Expert",
       "category": "Speed Switching",
-      "family": "DNA",
+      "family": "DNAts",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
       "window": 3,
-      "label": "DNA",
+      "label": "DNAts",
       "focus": "Kill, then move straight to the next; no pause between targets.",
       "leaderboardId": null,
       "rankMaxes": [
@@ -4273,14 +4273,14 @@
       }
     },
     {
-      "scenario": "Apogee Column Novice",
+      "scenario": "Apogee ZeniTS Novice",
       "category": "Speed Switching",
-      "family": "Column",
+      "family": "ZeniTS",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
       "window": 0,
-      "label": "Column",
+      "label": "ZeniTS",
       "focus": "Switch up and down; stop on each one before you fire.",
       "leaderboardId": null,
       "rankMaxes": [
@@ -4297,14 +4297,14 @@
       }
     },
     {
-      "scenario": "Apogee Column Intermediate",
+      "scenario": "Apogee ZeniTS Intermediate",
       "category": "Speed Switching",
-      "family": "Column",
+      "family": "ZeniTS",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
       "window": 1,
-      "label": "Column",
+      "label": "ZeniTS",
       "focus": "Switch up and down; stop on each one before you fire.",
       "leaderboardId": null,
       "rankMaxes": [
@@ -4321,14 +4321,14 @@
       }
     },
     {
-      "scenario": "Apogee Column Advanced",
+      "scenario": "Apogee ZeniTS Advanced",
       "category": "Speed Switching",
-      "family": "Column",
+      "family": "ZeniTS",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
       "window": 2,
-      "label": "Column",
+      "label": "ZeniTS",
       "focus": "Switch up and down; stop on each one before you fire.",
       "leaderboardId": null,
       "rankMaxes": [
@@ -4345,14 +4345,14 @@
       }
     },
     {
-      "scenario": "Apogee Column Expert",
+      "scenario": "Apogee ZeniTS Expert",
       "category": "Speed Switching",
-      "family": "Column",
+      "family": "ZeniTS",
       "arm": "Wrist",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
       "window": 3,
-      "label": "Column",
+      "label": "ZeniTS",
       "focus": "Switch up and down; stop on each one before you fire.",
       "leaderboardId": null,
       "rankMaxes": [
@@ -4367,14 +4367,14 @@
       }
     },
     {
-      "scenario": "Apogee Asteroids Novice",
+      "scenario": "Apogee AsteroidTS Novice",
       "category": "Speed Switching",
-      "family": "Asteroids",
+      "family": "AsteroidTS",
       "arm": "Fingertip",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
       "window": 0,
-      "label": "Asteroids",
+      "label": "AsteroidTS",
       "focus": "Six small targets packed tight; short, exact moves.",
       "leaderboardId": null,
       "rankMaxes": [
@@ -4391,14 +4391,14 @@
       }
     },
     {
-      "scenario": "Apogee Asteroids Intermediate",
+      "scenario": "Apogee AsteroidTS Intermediate",
       "category": "Speed Switching",
-      "family": "Asteroids",
+      "family": "AsteroidTS",
       "arm": "Fingertip",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
       "window": 1,
-      "label": "Asteroids",
+      "label": "AsteroidTS",
       "focus": "Six small targets packed tight; short, exact moves.",
       "leaderboardId": null,
       "rankMaxes": [
@@ -4415,14 +4415,14 @@
       }
     },
     {
-      "scenario": "Apogee Asteroids Advanced",
+      "scenario": "Apogee AsteroidTS Advanced",
       "category": "Speed Switching",
-      "family": "Asteroids",
+      "family": "AsteroidTS",
       "arm": "Fingertip",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
       "window": 2,
-      "label": "Asteroids",
+      "label": "AsteroidTS",
       "focus": "Six small targets packed tight; short, exact moves.",
       "leaderboardId": null,
       "rankMaxes": [
@@ -4439,14 +4439,14 @@
       }
     },
     {
-      "scenario": "Apogee Asteroids Expert",
+      "scenario": "Apogee AsteroidTS Expert",
       "category": "Speed Switching",
-      "family": "Asteroids",
+      "family": "AsteroidTS",
       "arm": "Fingertip",
       "armFrom": "Apogee",
       "subCategory": "Speed Switching",
       "window": 3,
-      "label": "Asteroids",
+      "label": "AsteroidTS",
       "focus": "Six small targets packed tight; short, exact moves.",
       "leaderboardId": null,
       "rankMaxes": [

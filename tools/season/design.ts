@@ -1116,7 +1116,7 @@ export const FAMILIES: Family[] = [
   ),
   family(
     {
-      name: "Pinpoint", category: "Static Clicking", subCategory: "Static Clicking", template: "staticClick", arm: "Fingertip",
+      name: "Distant", category: "Static Clicking", subCategory: "Static Clicking", template: "staticClick", arm: "Fingertip",
       focus: "Small moves, smaller targets; settle the crosshair before you click.",
       why: "Micro-correction at close spacing, the skill behind 1w2ts and Raw Mouse Control; RawMouseControlClicking3 is replayed 51.6 times per player (data/fun_audit.json).",
       learnsFrom: ["1w2ts Perfected", "RawMouseControlClicking3"],
@@ -1378,7 +1378,7 @@ export const FAMILIES: Family[] = [
   // ---- Speed Switching
   family(
     {
-      name: "DNA", category: "Speed Switching", subCategory: "Speed Switching", template: "groundSwitch", arm: "Wrist",
+      name: "DNAts", category: "Speed Switching", subCategory: "Speed Switching", template: "groundSwitch", arm: "Wrist",
       focus: "Kill, then move straight to the next; no pause between targets.",
       why: "The core speed-switching loop on still targets in a compact field: the time between targets is what the score measures.",
       learnsFrom: ["VT skyTS Novice", "beanTS"],
@@ -1396,7 +1396,7 @@ export const FAMILIES: Family[] = [
   ),
   family(
     {
-      name: "Column", category: "Speed Switching", subCategory: "Speed Switching", template: "groundSwitch", arm: "Wrist",
+      name: "ZeniTS", category: "Speed Switching", subCategory: "Speed Switching", template: "groundSwitch", arm: "Wrist",
       focus: "Switch up and down; stop on each one before you fire.",
       why: "Vertical switching, the axis the rest of the category barely uses.",
       learnsFrom: ["VT psalmTS Novice", "Pokeball 1w4ts 30%"],
@@ -1405,7 +1405,7 @@ export const FAMILIES: Family[] = [
   ),
   family(
     {
-      name: "Asteroids", category: "Speed Switching", subCategory: "Speed Switching", template: "groundSwitch", arm: "Fingertip",
+      name: "AsteroidTS", category: "Speed Switching", subCategory: "Speed Switching", template: "groundSwitch", arm: "Fingertip",
       focus: "Six small targets packed tight; short, exact moves.",
       why: "Precision switching: small targets and small moves, the micro side of speed switching.",
       learnsFrom: ["Pokeball Frenzy Auto Small Wide", "patCircleSwitch NR"],

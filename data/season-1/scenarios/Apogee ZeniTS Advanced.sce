@@ -1,11 +1,11 @@
-Name=Apogee Column Intermediate
+Name=Apogee ZeniTS Advanced
 PlayerCharacters=Player
-BotCharacters=Apogee Column.bot
+BotCharacters=Apogee ZeniTS.bot
 IsChallenge=true
 OvershotProtectionTimer=0.0
 Timelimit=60.0
 PlayerProfile=Player
-AddedBots=Apogee Column.bot;Apogee Column.bot;Apogee Column.bot
+AddedBots=Apogee ZeniTS.bot;Apogee ZeniTS.bot;Apogee ZeniTS.bot
 PlayerMaxLives=0
 BotMaxLives=0;0;0
 PlayerTeam=1
@@ -42,7 +42,7 @@ ScoreLossPerMiss=0.0
 ScoreLossPerReload=0.0
 MultSqrtAcc=false
 EnableOverDamage=false
-MapName=Apogee Column Intermediate.json
+MapName=Apogee ZeniTS Advanced.json
 MapScale=4.0
 BlockProjectilePredictors=true
 BlockCheats=true
@@ -82,9 +82,9 @@ AimSubTypeTag=Speed
 AimTypeFlicking=false
 AimTypeProjectile=false
 AimTypePlayerMovement=false
-DifficultyTag=2
-SearchTags=Apogee, Apogee Season 1, Speed Switching, Intermediate
-Description=Three still targets stacked vertically. Hold fire to kill.[nl][nl]Apogee Season 1, Speed Switching, Intermediate. Switch up and down; stop on each one before you fire.
+DifficultyTag=3
+SearchTags=Apogee, Apogee Season 1, Speed Switching, Advanced
+Description=Three still targets stacked vertically. Hold fire to kill.[nl][nl]Apogee Season 1, Speed Switching, Advanced. Switch up and down; stop on each one before you fire.
 GameVersion=3.7.1
 ScenarioVersion=Initial
 
@@ -120,8 +120,8 @@ MinShootDelay=0.3
 MaxShootDelay=0.6
 
 [Bot Profile]
-Name=Apogee Column
-DodgeProfileNames=Apogee Column Move
+Name=Apogee ZeniTS
+DodgeProfileNames=Apogee ZeniTS Move
 DodgeProfileWeights=1.0
 DodgeProfileMaxChangeTime=60.0
 DodgeProfileMinChangeTime=60.0
@@ -130,7 +130,7 @@ WeaponProfileWeights=1.0;1.0;1.0;1.0;1.0;1.0;1.0;1.0
 AimingProfileNames=Default;Default;Default;Default;Default;Default;Default;Default
 WeaponSwitchTime=3.0
 UseWeapons=false
-CharacterProfile=Apogee Column Body
+CharacterProfile=Apogee ZeniTS Body
 SeeThroughWalls=false
 NoDodging=true
 StandStillUntilHurt=false
@@ -298,7 +298,7 @@ PlaybackOptions.LoopUponCompletion=true
 PlaybackOptions.BreakToInputMode=false
 
 [Character Profile]
-Name=Apogee Column Body
+Name=Apogee ZeniTS Body
 MaxHealth=25.0
 WeaponProfileNames=;;;;;;;
 MinRespawnDelay=0.001
@@ -334,8 +334,8 @@ EnemyHeadColorOnLookAt=X=1.000 Y=1.000 Z=1.000
 TeamBodyColor=X=1.000 Y=0.888 Z=0.000
 TeamHeadColor=X=1.000 Y=1.000 Z=1.000
 MainBBType=Spheroid
-MainBBHeight=72.893017
-MainBBRadius=36.446508
+MainBBHeight=63.415218
+MainBBRadius=31.707609
 MainBBHasHead=false
 MainBBHeadRadius=0.1
 MainBBHeadOffset=0.0
@@ -445,7 +445,7 @@ PlaybackOptions.LoopUponCompletion=true
 PlaybackOptions.BreakToInputMode=false
 
 [Dodge Profile]
-Name=Apogee Column Move
+Name=Apogee ZeniTS Move
 MaxTargetDistance=2200.0
 MinTargetDistance=1800.0
 ToggleLeftRight=true
