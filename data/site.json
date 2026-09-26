@@ -1,0 +1,6 @@
+{
+  "about": "Authored inputs to the public page (npm run build:site). Everything else on it is read from the season. shareCodes is keyed by the practice playlist name exactly as practicePlaylists() writes it; the build refuses a code for a name the season does not produce.",
+  "downloadUrl": "https://github.com/swarlesgnb/Apogee-1v1s/releases/latest",
+  "sourceUrl": "https://github.com/swarlesgnb/Apogee-1v1s",
+  "shareCodes": {}
+}
