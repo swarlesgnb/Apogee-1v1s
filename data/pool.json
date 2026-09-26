@@ -323,12 +323,12 @@
           "label": "Electric",
           "leaderboardId": null,
           "rankMaxes": [
-            424,
-            573,
-            667,
-            736,
-            795,
-            850
+            467,
+            620,
+            716,
+            786,
+            846,
+            902
           ],
           "source": {
             "kind": "predicted",
@@ -343,12 +343,12 @@
           "label": "Electric",
           "leaderboardId": null,
           "rankMaxes": [
-            769,
-            823,
-            846,
-            891,
-            928,
-            960
+            819,
+            874,
+            897,
+            942,
+            980,
+            1014
           ],
           "source": {
             "kind": "predicted",
@@ -363,12 +363,12 @@
           "label": "Electric",
           "leaderboardId": null,
           "rankMaxes": [
-            899,
-            931,
-            960,
-            988,
-            1014,
-            1049
+            950,
+            983,
+            1013,
+            1041,
+            1069,
+            1104
           ],
           "source": {
             "kind": "predicted",
@@ -383,10 +383,10 @@
           "label": "Electric",
           "leaderboardId": null,
           "rankMaxes": [
-            984,
-            1017,
-            1039,
-            1066
+            1037,
+            1071,
+            1093,
+            1121
           ],
           "source": {
             "kind": "predicted",
@@ -409,12 +409,12 @@
           "label": "Gravclick",
           "leaderboardId": null,
           "rankMaxes": [
-            348,
-            480,
-            566,
-            628,
-            681,
-            731
+            384,
+            521,
+            609,
+            672,
+            726,
+            777
           ],
           "source": {
             "kind": "predicted",
@@ -429,12 +429,12 @@
           "label": "Gravclick",
           "leaderboardId": null,
           "rankMaxes": [
-            659,
-            708,
-            728,
-            769,
-            802,
-            831
+            702,
+            752,
+            773,
+            814,
+            849,
+            879
           ],
           "source": {
             "kind": "predicted",
@@ -449,12 +449,12 @@
           "label": "Gravclick",
           "leaderboardId": null,
           "rankMaxes": [
-            777,
-            805,
-            831,
-            856,
-            880,
-            911
+            822,
+            851,
+            878,
+            904,
+            928,
+            960
           ],
           "source": {
             "kind": "predicted",
@@ -469,10 +469,10 @@
           "label": "Gravclick",
           "leaderboardId": null,
           "rankMaxes": [
-            853,
-            883,
-            902,
-            926
+            900,
+            931,
+            950,
+            975
           ],
           "source": {
             "kind": "predicted",
@@ -667,12 +667,12 @@
           "label": "Pendulum",
           "leaderboardId": null,
           "rankMaxes": [
-            449,
-            602,
-            698,
-            768,
-            828,
-            884
+            493,
+            650,
+            748,
+            819,
+            880,
+            937
           ],
           "source": {
             "kind": "predicted",
@@ -687,12 +687,12 @@
           "label": "Pendulum",
           "leaderboardId": null,
           "rankMaxes": [
-            801,
-            856,
-            880,
-            925,
-            963,
-            997
+            852,
+            908,
+            932,
+            978,
+            1017,
+            1051
           ],
           "source": {
             "kind": "predicted",
@@ -707,12 +707,12 @@
           "label": "Pendulum",
           "leaderboardId": null,
           "rankMaxes": [
-            934,
-            966,
-            996,
-            1024,
-            1052,
-            1087
+            986,
+            1019,
+            1050,
+            1079,
+            1107,
+            1143
           ],
           "source": {
             "kind": "predicted",
@@ -727,10 +727,10 @@
           "label": "Pendulum",
           "leaderboardId": null,
           "rankMaxes": [
-            1020,
-            1055,
-            1077,
-            1105
+            1074,
+            1109,
+            1132,
+            1161
           ],
           "source": {
             "kind": "predicted",
@@ -753,12 +753,12 @@
           "label": "Satellite",
           "leaderboardId": null,
           "rankMaxes": [
-            403,
-            554,
-            651,
-            723,
-            784,
-            841
+            445,
+            602,
+            702,
+            775,
+            837,
+            895
           ],
           "source": {
             "kind": "predicted",
@@ -773,12 +773,12 @@
           "label": "Satellite",
           "leaderboardId": null,
           "rankMaxes": [
-            759,
-            815,
-            839,
-            885,
-            923,
-            957
+            810,
+            867,
+            892,
+            939,
+            978,
+            1012
           ],
           "source": {
             "kind": "predicted",
@@ -793,12 +793,12 @@
           "label": "Satellite",
           "leaderboardId": null,
           "rankMaxes": [
-            895,
-            928,
-            958,
-            986,
+            948,
+            982,
             1013,
-            1049
+            1041,
+            1070,
+            1106
           ],
           "source": {
             "kind": "predicted",
@@ -813,10 +813,10 @@
           "label": "Satellite",
           "leaderboardId": null,
           "rankMaxes": [
-            983,
-            1017,
-            1040,
-            1068
+            1038,
+            1073,
+            1096,
+            1125
           ],
           "source": {
             "kind": "predicted",

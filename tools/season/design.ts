@@ -1135,6 +1135,10 @@ export const FAMILIES: Family[] = [
   ),
 
   // ---- Dynamic Clicking
+  //
+  // Gravclick, Pendulum, Electric and Satellite run at 70% of their first speeds (12, 8, 9
+  // and 14 deg/s): the playtest found all four too fast from Intermediate up, even before
+  // the gentler band steps.
   family(
     {
       name: "Gravclick", category: "Dynamic Clicking", subCategory: "Dynamic Clicking", template: "movingClick", arm: "Wrist",
@@ -1142,16 +1146,17 @@ export const FAMILIES: Family[] = [
       why: "The entry to moving targets: slow, long-lived paths that reward confirming the shot rather than guessing it. Floating Heads Timing 400% has the most players of any dynamic-clicking scenario in data/fun_audit.json (352,281).",
       learnsFrom: ["Floating Heads Timing 400%", "VT Floating Heads Novice S5"],
     },
-    (f) => movingClick(f, { alive: 5, deg: 1.9, speed: 12, strafe: [4, 8] }, "Five targets floating slowly. One click each."),
+    (f) => movingClick(f, { alive: 5, deg: 1.9, speed: 8.4, strafe: [4, 8] }, "Five targets floating slowly. One click each."),
   ),
   family(
     {
       name: "Pendulum", category: "Dynamic Clicking", subCategory: "Dynamic Clicking", template: "movingClick", arm: "Wrist",
+      exceeds: [{ quantity: "angular speed (deg/s)", why: "Slower than the slowest of 54 popular dynamic-clicking scenarios (7.45 deg/s) on purpose: the playtest found it too fast from Intermediate up, and asked for it slowed down a lot. Its thresholds are the model reading below the speeds it was fitted on, so they are the first to recut from real runs." }],
       focus: "Slow swings from wall to wall; click on the swing, not only at the turn.",
       why: "A pendulum: slow, straight, level runs that turn only at the walls, so the swing is long and even and the skill is horizontal timing alone. Its movement is Floating Heads Timing 400%'s, slowed down.",
       learnsFrom: ["1wall5targets_pasu", "VT Pasu Novice S5"],
     },
-    (f) => movingClick(f, { alive: 4, deg: 3.0, speed: 8, strafe: [6.5, 7], upDown: null, bounce: true }, "Four targets swinging slowly from wall to wall. One click each."),
+    (f) => movingClick(f, { alive: 4, deg: 3.0, speed: 5.6, strafe: [6.5, 7], upDown: null, bounce: true }, "Four targets swinging slowly from wall to wall. One click each."),
   ),
   family(
     {
@@ -1165,11 +1170,12 @@ export const FAMILIES: Family[] = [
   family(
     {
       name: "Electric", category: "Dynamic Clicking", subCategory: "Dynamic Clicking", template: "movingClick", arm: "Fingertip",
+      exceeds: [{ quantity: "angular speed (deg/s)", why: "Slower than the slowest of 54 popular dynamic-clicking scenarios (7.45 deg/s) on purpose: the playtest found it too fast from Intermediate up, and asked for it slowed down a lot. Its thresholds are the model reading below the speeds it was fitted on, so they are the first to recut from real runs." }],
       focus: "Straight runs, a dead stop at every turn, and a charged-up buzz all the while.",
       why: "Linear motion with a vibration on top: the target runs straight, stops dead before it changes direction, and shakes up and down many times a second the whole time - so the stop is the moment to click, and the player reads it through the noise, the micro-adjustment cA 5ts vibrate is played for.",
       learnsFrom: ["cA 5ts vibrate", "VT Floating Heads Novice S5"],
     },
-    (f) => movingClick(f, { alive: 4, deg: 2.8, speed: 9, strafe: [1.5, 2.5], upDown: null, flyer: true, stopAtTurns: [0.35, 0.6], vibrate: { times: [0.04, 0.08], speed: 10 } }, "Four targets running straight, stopping dead at every turn, buzzing all the while. One click each."),
+    (f) => movingClick(f, { alive: 4, deg: 2.8, speed: 6.3, strafe: [1.5, 2.5], upDown: null, flyer: true, stopAtTurns: [0.35, 0.6], vibrate: { times: [0.04, 0.08], speed: 10 } }, "Four targets running straight, stopping dead at every turn, buzzing all the while. One click each."),
   ),
   family(
     {
@@ -1219,7 +1225,7 @@ export const FAMILIES: Family[] = [
       why: "psalmTS's motion as a clicking task: targets strafe round the player on long, even runs while climbing and dropping, linear in each axis and curved together.",
       learnsFrom: ["psalmTS angelic click", "VT psalmTS Novice"],
     },
-    (f) => movingClick(f, { alive: 5, deg: 3.0, speed: 14, strafe: [3, 4], upDown: [1.2, 2.0], flyer: true, depth: { near: 0.6, far: 1.3, every: [1.5, 2.5] } }, "Five flying targets in front of you, drifting nearer and further while rising and falling. One click each."),
+    (f) => movingClick(f, { alive: 5, deg: 3.0, speed: 9.8, strafe: [3, 4], upDown: [1.2, 2.0], flyer: true, depth: { near: 0.6, far: 1.3, every: [1.5, 2.5] } }, "Five flying targets in front of you, drifting nearer and further while rising and falling. One click each."),
   ),
 
   // ---- Precise Tracking

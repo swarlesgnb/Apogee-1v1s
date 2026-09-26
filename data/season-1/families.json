@@ -119,7 +119,13 @@
     "VT Pasu Novice S5"
    ],
    "template": "VT Floating Heads Novice S5",
-   "arm": "Wrist"
+   "arm": "Wrist",
+   "exceeds": [
+    {
+     "quantity": "angular speed (deg/s)",
+     "why": "Slower than the slowest of 54 popular dynamic-clicking scenarios (7.45 deg/s) on purpose: the playtest found it too fast from Intermediate up, and asked for it slowed down a lot. Its thresholds are the model reading below the speeds it was fitted on, so they are the first to recut from real runs."
+    }
+   ]
   },
   {
    "family": "Antigrav",
@@ -143,7 +149,13 @@
     "VT Floating Heads Novice S5"
    ],
    "template": "VT Floating Heads Novice S5",
-   "arm": "Fingertip"
+   "arm": "Fingertip",
+   "exceeds": [
+    {
+     "quantity": "angular speed (deg/s)",
+     "why": "Slower than the slowest of 54 popular dynamic-clicking scenarios (7.45 deg/s) on purpose: the playtest found it too fast from Intermediate up, and asked for it slowed down a lot. Its thresholds are the model reading below the speeds it was fitted on, so they are the first to recut from real runs."
+    }
+   ]
   },
   {
    "family": "Sun and Moon",
@@ -1227,21 +1239,21 @@
    "band": "Novice",
    "class": "click",
    "targetDeg": 1.9,
-   "angularSpeed": 12,
+   "angularSpeed": 8.4,
    "fittsIdNearest": 3.711,
    "ttk": 0,
-   "median": 561,
+   "median": 604,
    "medianRange": [
-    494,
-    636
+    532,
+    685
    ],
    "rankMaxes": [
-    348,
-    480,
-    566,
-    628,
-    681,
-    731
+    384,
+    521,
+    609,
+    672,
+    726,
+    777
    ]
   },
   {
@@ -1250,21 +1262,21 @@
    "band": "Intermediate",
    "class": "click",
    "targetDeg": 1.772,
-   "angularSpeed": 12.6,
+   "angularSpeed": 8.8,
    "fittsIdNearest": 3.804,
    "ttk": 0,
-   "median": 541,
+   "median": 583,
    "medianRange": [
-    477,
-    614
+    513,
+    661
    ],
    "rankMaxes": [
-    659,
-    708,
-    728,
-    769,
-    802,
-    831
+    702,
+    752,
+    773,
+    814,
+    849,
+    879
    ]
   },
   {
@@ -1273,21 +1285,21 @@
    "band": "Advanced",
    "class": "click",
    "targetDeg": 1.653,
-   "angularSpeed": 13.2,
+   "angularSpeed": 9.2,
    "fittsIdNearest": 3.897,
    "ttk": 0,
-   "median": 522,
+   "median": 562,
    "medianRange": [
-    460,
-    592
+    495,
+    638
    ],
    "rankMaxes": [
-    777,
-    805,
-    831,
-    856,
-    880,
-    911
+    822,
+    851,
+    878,
+    904,
+    928,
+    960
    ]
   },
   {
@@ -1296,19 +1308,19 @@
    "band": "Expert",
    "class": "click",
    "targetDeg": 1.542,
-   "angularSpeed": 13.8,
+   "angularSpeed": 9.7,
    "fittsIdNearest": 3.991,
    "ttk": 0,
-   "median": 503,
+   "median": 542,
    "medianRange": [
-    444,
-    571
+    478,
+    615
    ],
    "rankMaxes": [
-    853,
-    883,
-    902,
-    926
+    900,
+    931,
+    950,
+    975
    ]
   },
   {
@@ -1317,21 +1329,21 @@
    "band": "Novice",
    "class": "click",
    "targetDeg": 2.93,
-   "angularSpeed": 7.8,
+   "angularSpeed": 5.5,
    "fittsIdNearest": 3.272,
    "ttk": 0,
-   "median": 692,
+   "median": 743,
    "medianRange": [
-    610,
-    786
+    654,
+    842
    ],
    "rankMaxes": [
-    449,
-    602,
-    698,
-    768,
-    828,
-    884
+    493,
+    650,
+    748,
+    819,
+    880,
+    937
    ]
   },
   {
@@ -1340,21 +1352,21 @@
    "band": "Intermediate",
    "class": "click",
    "targetDeg": 2.733,
-   "angularSpeed": 8.2,
+   "angularSpeed": 5.7,
    "fittsIdNearest": 3.362,
    "ttk": 0,
-   "median": 669,
+   "median": 717,
    "medianRange": [
-    589,
-    759
+    632,
+    814
    ],
    "rankMaxes": [
-    801,
-    856,
-    880,
-    925,
-    963,
-    997
+    852,
+    908,
+    932,
+    978,
+    1017,
+    1051
    ]
   },
   {
@@ -1363,21 +1375,21 @@
    "band": "Advanced",
    "class": "click",
    "targetDeg": 2.549,
-   "angularSpeed": 8.6,
+   "angularSpeed": 6,
    "fittsIdNearest": 3.453,
    "ttk": 0,
-   "median": 646,
+   "median": 693,
    "medianRange": [
-    569,
-    733
+    611,
+    786
    ],
    "rankMaxes": [
-    934,
-    966,
-    996,
-    1024,
-    1052,
-    1087
+    986,
+    1019,
+    1050,
+    1079,
+    1107,
+    1143
    ]
   },
   {
@@ -1386,19 +1398,19 @@
    "band": "Expert",
    "class": "click",
    "targetDeg": 2.377,
-   "angularSpeed": 9,
+   "angularSpeed": 6.3,
    "fittsIdNearest": 3.545,
    "ttk": 0,
-   "median": 623,
+   "median": 669,
    "medianRange": [
-    549,
-    707
+    590,
+    759
    ],
    "rankMaxes": [
-    1020,
-    1055,
-    1077,
-    1105
+    1074,
+    1109,
+    1132,
+    1161
    ]
   },
   {
@@ -1497,21 +1509,21 @@
    "band": "Novice",
    "class": "click",
    "targetDeg": 2.8,
-   "angularSpeed": 9,
+   "angularSpeed": 6.3,
    "fittsIdNearest": 3.33,
    "ttk": 0,
-   "median": 662,
+   "median": 711,
    "medianRange": [
-    583,
-    751
+    626,
+    806
    ],
    "rankMaxes": [
-    424,
-    573,
-    667,
-    736,
-    795,
-    850
+    467,
+    620,
+    716,
+    786,
+    846,
+    902
    ]
   },
   {
@@ -1520,21 +1532,21 @@
    "band": "Intermediate",
    "class": "click",
    "targetDeg": 2.612,
-   "angularSpeed": 9.4,
+   "angularSpeed": 6.6,
    "fittsIdNearest": 3.421,
    "ttk": 0,
-   "median": 639,
+   "median": 687,
    "medianRange": [
-    563,
-    725
+    605,
+    779
    ],
    "rankMaxes": [
-    769,
-    823,
-    846,
-    891,
-    928,
-    960
+    819,
+    874,
+    897,
+    942,
+    980,
+    1014
    ]
   },
   {
@@ -1543,21 +1555,21 @@
    "band": "Advanced",
    "class": "click",
    "targetDeg": 2.436,
-   "angularSpeed": 9.9,
+   "angularSpeed": 6.9,
    "fittsIdNearest": 3.512,
    "ttk": 0,
-   "median": 617,
+   "median": 663,
    "medianRange": [
-    544,
-    700
+    584,
+    752
    ],
    "rankMaxes": [
-    899,
-    931,
-    960,
-    988,
-    1014,
-    1049
+    950,
+    983,
+    1013,
+    1041,
+    1069,
+    1104
    ]
   },
   {
@@ -1566,19 +1578,19 @@
    "band": "Expert",
    "class": "click",
    "targetDeg": 2.272,
-   "angularSpeed": 10.4,
+   "angularSpeed": 7.3,
    "fittsIdNearest": 3.604,
    "ttk": 0,
-   "median": 596,
+   "median": 640,
    "medianRange": [
-    525,
-    676
+    564,
+    726
    ],
    "rankMaxes": [
-    984,
-    1017,
-    1039,
-    1066
+    1037,
+    1071,
+    1093,
+    1121
    ]
   },
   {
@@ -1947,21 +1959,21 @@
    "band": "Novice",
    "class": "click",
    "targetDeg": 3.158,
-   "angularSpeed": 14.7,
+   "angularSpeed": 10.3,
    "fittsIdNearest": 3.049,
    "ttk": 0,
-   "median": 646,
+   "median": 696,
    "medianRange": [
-    569,
-    733
+    614,
+    790
    ],
    "rankMaxes": [
-    403,
-    554,
-    651,
-    723,
-    784,
-    841
+    445,
+    602,
+    702,
+    775,
+    837,
+    895
    ]
   },
   {
@@ -1970,21 +1982,21 @@
    "band": "Intermediate",
    "class": "click",
    "targetDeg": 2.945,
-   "angularSpeed": 15.5,
+   "angularSpeed": 10.8,
    "fittsIdNearest": 3.138,
    "ttk": 0,
-   "median": 624,
+   "median": 672,
    "medianRange": [
-    550,
-    708
+    593,
+    763
    ],
    "rankMaxes": [
-    759,
-    815,
-    839,
-    885,
-    923,
-    957
+    810,
+    867,
+    892,
+    939,
+    978,
+    1012
    ]
   },
   {
@@ -1993,21 +2005,21 @@
    "band": "Advanced",
    "class": "click",
    "targetDeg": 2.747,
-   "angularSpeed": 16.2,
+   "angularSpeed": 11.3,
    "fittsIdNearest": 3.227,
    "ttk": 0,
-   "median": 602,
+   "median": 649,
    "medianRange": [
-    531,
-    683
+    572,
+    737
    ],
    "rankMaxes": [
-    895,
-    928,
-    958,
-    986,
+    948,
+    982,
     1013,
-    1049
+    1041,
+    1070,
+    1106
    ]
   },
   {
@@ -2016,19 +2028,19 @@
    "band": "Expert",
    "class": "click",
    "targetDeg": 2.563,
-   "angularSpeed": 17,
+   "angularSpeed": 11.9,
    "fittsIdNearest": 3.317,
    "ttk": 0,
-   "median": 582,
+   "median": 627,
    "medianRange": [
-    513,
-    660
+    553,
+    711
    ],
    "rankMaxes": [
-    983,
-    1017,
-    1040,
-    1068
+    1038,
+    1073,
+    1096,
+    1125
    ]
   },
   {
