@@ -628,7 +628,7 @@ export interface AbandonResult {
   nothingToAbandon?: boolean;
   verdict: "loss" | null;
   rated: boolean;
-  reason?: "forfeit" | "seeding" | "expired";
+  reason?: "forfeit" | "seeding" | "expired" | "off-pool";
   ratingBefore?: number;
   ratingAfter?: number;
   ratingChange?: number;

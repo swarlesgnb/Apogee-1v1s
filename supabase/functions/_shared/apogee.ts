@@ -259,7 +259,7 @@ export interface ForfeitOutcome {
   matchId: string;
   rated: boolean;
   verdict: "loss" | null;
-  reason: "forfeit" | "seeding" | "already-played";
+  reason: "forfeit" | "seeding" | "already-played" | "off-pool";
   ratingBefore?: number;
   ratingAfter?: number;
   ratingChange?: number;
@@ -321,6 +321,45 @@ export async function forfeitMatch(
       .eq("id", matchId);
 
     return { matchId, rated: false, verdict: "loss", reason: "forfeit" };
+  }
+
+  // A match on scenarios the season no longer has could never have been played: find-match
+  // once drew opponents' run sets banked before the pool was rebuilt, and handed out
+  // matches named "scenario 947" with nothing in KovaaK's to launch. Leaving one costs
+  // nothing, whether by Abandon or by the clock. Checked by membership in the match's own
+  // window of the current pool, which is the same test find-match now applies up front.
+  const { data: poolRow } = await admin
+    .from("matches")
+    .select("scenario_ids, window_index")
+    .eq("id", matchId)
+    .maybeSingle();
+  const offPool = await (async () => {
+    const ids: number[] = poolRow?.scenario_ids ?? [];
+    if (ids.length === 0 || poolRow?.window_index == null) return false;
+    try {
+      const { selectable } = await loadSeasonPool(admin, poolRow.window_index);
+      const inPool = new Set(selectable.map((s) => s.id));
+      return !ids.every((id) => inPool.has(id));
+    } catch {
+      // No pool to compare against is not evidence the match was unplayable; charge the
+      // forfeit as usual rather than hand out free exits whenever the season is unreadable.
+      return false;
+    }
+  })();
+
+  if (offPool) {
+    await admin
+      .from("match_sides")
+      .update({ result: null, submitted_at: settledAt })
+      .eq("match_id", matchId)
+      .eq("player_id", playerId);
+
+    await admin
+      .from("matches")
+      .update({ status: "void", settled_at: settledAt })
+      .eq("id", matchId);
+
+    return { matchId, rated: false, verdict: null, reason: "off-pool" };
   }
 
   const { data: ratingRow } = await admin

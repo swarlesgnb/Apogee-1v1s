@@ -231,8 +231,20 @@ Deno.serve(handler(async (req, admin) => {
     }
   }
 
+  // Only run sets played on this pool. The candidate query narrows by window index and
+  // category but not by season, so a side banked before the pool was rebuilt was still
+  // drawn: its scenario ids were not in `selectable`, the match went out naming them
+  // "scenario 947" and the like, and the player was asked to play three scenarios the
+  // season no longer has. Membership rather than the season's name, because a rebuilt
+  // pool keeps the name.
+  const inPool = new Set(selectable.map((s) => s.id));
+
   const runSets: StoredRunSet[] = (candidates ?? [])
     .filter((c: any) => ratingByPlayer.has(c.player_id))
+    .filter((c: any) => {
+      const ids: number[] = c.matches.scenario_ids ?? [];
+      return ids.length > 0 && ids.every((id) => inPool.has(id));
+    })
     // Originals only. Every match answered from the pool holds a copy of the side it drew,
     // and each copy has a match_score, so without this one afternoon's run set multiplied
     // into as many candidates as it had opponents.
