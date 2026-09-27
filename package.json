@@ -57,7 +57,7 @@
     "validate:live": "tsx src/core/match/validateLiveQueue.ts",
     "beta": "tsx tools/betaReadiness.ts",
     "validate:schema": "tsx tools/validateSchema.ts",
-    "validate:functions": "tsx tools/validateFunctionImports.ts",
+    "validate:functions": "tsx tools/validateFunctionImports.ts && tsx tools/validateFunctionNames.ts",
     "validate:sound": "node tools/validateSound.mjs",
     "measure:sound": "electron tools/measureSound.cjs",
     "validate:orb": "tsx tools/validateOrb.ts",
