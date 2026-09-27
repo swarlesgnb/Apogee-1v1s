@@ -100,20 +100,21 @@ export function renderSite(inputs: SiteInputs): string {
 
   const blob = (file: string) => `${config.sourceUrl.replace(/\/+$/, "")}/blob/main/${file}`;
 
+
   // ---- pieces -------------------------------------------------------------------------
 
   const playlistLine = (playlist: PracticePlaylist | undefined, label: string) => {
     if (!playlist) return "";
     const code = codes[playlist.name]?.trim();
     return `
-      <div class="playlist">
+      <p class="playlist">
         <span class="pl-label">${esc(label)}</span>
         ${
           code
-            ? `<code class="pl-code">${esc(code)}</code><button type="button" class="btn btn-quiet btn-sm" data-copy="${esc(code)}">Copy code</button>`
-            : `<span class="pl-none">Share code coming with the Workshop release</span>`
+            ? `<code class="pl-code">${esc(code)}</code><button type="button" class="btn btn-sm" data-copy="${esc(code)}">Copy</button>`
+            : `<span class="pl-none">no share code yet</span>`
         }
-      </div>`;
+      </p>`;
   };
 
   const ladder = (band: SeasonBand) =>
@@ -124,7 +125,7 @@ export function renderSite(inputs: SiteInputs): string {
         return (
           `<li style="--c:${esc(raw)}"><span class="rung"></span>` +
           `<span class="rn" style="color:${esc(nameColor(raw))}">${esc(name)}</span>` +
-          (top ? `<span class="rk-top">Top ${band.positional!.topN}</span>` : "") +
+          (top ? `<span class="rk-top">top ${band.positional!.topN}</span>` : "") +
           `</li>`
         );
       })
@@ -135,7 +136,7 @@ export function renderSite(inputs: SiteInputs): string {
       const c = esc(band.rankColors[name] ?? palette["ink-dim"]);
       return i < s.rankMaxes.length
         ? `<td class="num" style="--c:${c}">${fmt.format(s.rankMaxes[i])}</td>`
-        : `<td class="num pos" style="--c:${c}">Top ${band.positional?.topN ?? ""}</td>`;
+        : `<td class="num pos" style="--c:${c}">top ${band.positional?.topN ?? ""}</td>`;
     });
     const label = s.label ?? s.scenario;
     return (
@@ -145,7 +146,7 @@ export function renderSite(inputs: SiteInputs): string {
       `<span class="sc-name">${esc(s.scenario)}</span></th>` +
       cells.join("") +
       `<td class="yours"><input type="number" inputmode="decimal" min="0" step="any" ` +
-      `placeholder="Score" aria-label="Your score on ${esc(label)}"><output aria-live="polite"></output></td></tr>`
+      `placeholder="score" aria-label="Your score on ${esc(label)}"><output aria-live="polite"></output></td></tr>`
     );
   };
 
@@ -172,16 +173,10 @@ export function renderSite(inputs: SiteInputs): string {
     return `
       <section class="category" id="${slug(windows[w])}-${slug(c.name)}" style="--ink-cat:${esc(mark.ink)}" data-band="${esc(JSON.stringify(bandData))}">
         <header class="cat-head">
-          <div class="cat-title">
-            <span class="cat-mark">${svg(mark.path, "icon", 1.4)}</span>
-            <div>
-              <h3>${esc(c.name)}</h3>
-              <p class="cat-count">${scenarios.length} scenarios · ${band.rankNames.length} ranks</p>
-            </div>
-          </div>
+          <h3>${svg(mark.path, "icon", 1.5)}${esc(c.name)} <span class="cat-count">${scenarios.length} scenarios</span></h3>
           ${c.description ? `<p class="cat-desc">${esc(c.description)}</p>` : ""}
           ${ladder(band)}
-          ${playlistLine(playlist, "Playlist")}
+          ${playlistLine(playlist, `${c.name} ${windows[w]} playlist:`)}
         </header>
         <div class="scroll" tabindex="0" role="region" aria-label="${esc(c.name)} ${esc(windows[w])} thresholds">
           <table>
@@ -201,18 +196,18 @@ export function renderSite(inputs: SiteInputs): string {
   const provisional =
     predicted === 0
       ? ""
-      : `<aside class="note"><b>Provisional thresholds.</b> ${
+      : `<p class="note">${
           predicted === season.scenarios.length
-            ? "Every threshold this season"
-            : `${predicted} of the ${season.scenarios.length} thresholds`
-        } was predicted from the scenario file, because the scenarios are new and there are
-        not enough real scores to cut ranks from yet.${
+            ? "All of these thresholds are provisional."
+            : `${predicted} of these ${season.scenarios.length} thresholds are provisional.`
+        } The scenarios are new, so there weren't enough real scores to set ranks from.
+        Each one was predicted from the scenario file${
           calibrated
-            ? ` ${calibrated === predicted ? "All of them were" : `${calibrated} were`} then adjusted
-        against playtest runs, and against the same players' scores on real KovaaK's
-        leaderboards.`
+            ? `${calibrated === predicted ? " and then" : `, and ${calibrated} of them then`} adjusted
+        using playtest runs and the same players' scores on KovaaK's leaderboards`
             : ""
-        } They get recut from real runs, and ranks can move when they do.</aside>`;
+        }. They'll be recut from real runs once there are enough, and ranks can move when
+        that happens.</p>`;
 
   const tabs = windows
     .map(
@@ -234,7 +229,7 @@ export function renderSite(inputs: SiteInputs): string {
       return `
       <div class="band" role="tabpanel" id="band-${slug(w)}" aria-labelledby="tab-${slug(w)}" tabindex="-1"${i === 0 ? "" : " hidden"}>
         <nav class="jumps" aria-label="${esc(w)} categories">${jumps}</nav>
-        ${all ? `<div class="all">${playlistLine(all, `Every ${w} scenario, one playlist`)}</div>` : ""}
+        ${all ? playlistLine(all, `Every ${w} scenario in one playlist:`) : ""}
         ${season.categories.map((c) => category(c, i)).join("")}
       </div>`;
     })
@@ -245,12 +240,12 @@ export function renderSite(inputs: SiteInputs): string {
         <form class="lookup" id="lookup">
           <label for="lookup-name">KovaaK's username</label>
           <div class="field">
-            <input id="lookup-name" name="username" autocomplete="off" spellcheck="false" placeholder="Your KovaaK's name">
-            <button type="submit" class="btn btn-primary">Look up</button>
+            <input id="lookup-name" name="username" autocomplete="off" spellcheck="false">
+            <button type="submit" class="btn">Look up</button>
           </div>
           <p class="status" id="lookup-status" aria-live="polite"></p>
         </form>
-        <div class="or"><span>or read it from this PC</span></div>`
+        <p class="or">or</p>`
     : "";
 
   // The client data the script needs, and nothing it can already read off the table.
@@ -269,16 +264,23 @@ export function renderSite(inputs: SiteInputs): string {
     .map(([k, v]) => `--${k}:${v};`)
     .join("");
 
+  const categoryCount = word(season.categories.length);
+
+  // The first version was laid out like a product landing page: a two-tone headline,
+  // small-caps labels over every section, a glowing card, numbered steps and a closing
+  // call to action. It read like a template, and it put the tables, the one thing here
+  // nobody else has, below a screen and a half of pitch. This is a rank sheet with a short
+  // explanation on top.
   return `<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Apogee · Ranked 1v1 for KovaaK's</title>
-<meta name="description" content="Ranked 1v1 for KovaaK's. Every ${esc(season.name)} scenario, the score each rank needs, and where yours land.">
+<title>Apogee - ranked 1v1 for KovaaK's</title>
+<meta name="description" content="Ranked 1v1 for KovaaK's. Every ${esc(season.name)} scenario, the score each rank needs, and where your own scores land.">
 <meta name="theme-color" content="${esc(palette.ground)}">
-<meta property="og:title" content="Apogee · Ranked 1v1 for KovaaK's">
-<meta property="og:description" content="${season.scenarios.length} scenarios, ${season.categories.length} categories, and the score each rank needs. Find where yours land.">
+<meta property="og:title" content="Apogee - ranked 1v1 for KovaaK's">
+<meta property="og:description" content="${esc(season.name)}: ${season.scenarios.length} scenarios across ${categoryCount} categories, and the score each rank needs on every one.">
 <link rel="icon" href="data:image/svg+xml,${encodeURIComponent(
     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="${palette.brand}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="${BRAND_MARK}"/></svg>`,
   )}">
@@ -293,293 +295,164 @@ export function renderSite(inputs: SiteInputs): string {
     --display: "Bahnschrift", "Barlow", "Segoe UI Variable Display", "Segoe UI", system-ui, sans-serif;
     --font: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", sans-serif;
     --mono: "Cascadia Mono", ui-monospace, Consolas, "SF Mono", "Roboto Mono", monospace;
-    --ease-out: cubic-bezier(.22, 1, .36, 1);
-    --press: 140ms;
-    --surface: 180ms;
-    --r: 10px;
-    --r-sm: 6px;
+    --r: 6px;
     --max: 1180px;
   }
   *, *::before, *::after { box-sizing: border-box; }
-  html { color-scheme: dark; scroll-behavior: smooth; scroll-padding-top: 88px; -webkit-text-size-adjust: 100%; }
-  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
-  body {
-    margin: 0; background: var(--ground); color: var(--ink);
-    font: 15px/1.55 var(--font); -webkit-font-smoothing: antialiased;
-    overflow-x: hidden;
-  }
-  a { color: inherit; }
-  :focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; border-radius: 2px; }
+  html { color-scheme: dark; scroll-padding-top: 64px; -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--ground); color: var(--ink); font: 15px/1.55 var(--font); -webkit-font-smoothing: antialiased; }
+  a { color: var(--brand); text-underline-offset: 3px; }
+  :focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
   .wrap { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+  h1, h2, h3 { font-family: var(--display); font-weight: 500; letter-spacing: -.01em; }
+  p { margin: 0 0 12px; }
 
-  /* The sky: one soft field of light and three orbits, drawn once behind everything. */
-  .sky { position: absolute; inset: 0 0 auto; height: 980px; pointer-events: none; overflow: hidden; z-index: 0; }
-  .sky::before {
-    content: ""; position: absolute; left: -12%; top: -220px; width: 900px; height: 760px;
-    background: radial-gradient(closest-side, rgba(229,237,176,.075), rgba(163,195,225,.035) 55%, transparent);
-    filter: blur(8px);
-  }
-  .sky svg { position: absolute; right: -260px; top: -300px; width: 1100px; height: 1100px; color: var(--cosmic-line); }
-  .sky::after {
-    content: ""; position: absolute; inset: auto 0 0; height: 240px;
-    background: linear-gradient(transparent, var(--ground));
-  }
+  /* ---- top ---- */
+  .top { border-bottom: 1px solid var(--rule); }
+  .top .wrap { display: flex; align-items: center; gap: 20px; height: 56px; }
+  .brand { display: flex; align-items: center; gap: 10px; margin-right: auto; color: var(--ink); text-decoration: none; font: 600 20px/1 var(--display); }
+  .brand svg { width: 22px; height: 22px; color: var(--brand); }
+  .top nav { display: flex; gap: 18px; font-size: 14px; }
+  .top nav a { color: var(--ink-mid); text-decoration: none; }
+  .top nav a:hover { color: var(--ink); }
+  .top nav a.btn-go { color: var(--brand-ink); }
 
-  /* ---- bar ---- */
-  .bar {
-    position: sticky; top: 0; z-index: 20;
-    background: color-mix(in srgb, var(--ground) 94%, transparent);
-    backdrop-filter: saturate(140%) blur(14px); -webkit-backdrop-filter: saturate(140%) blur(14px);
-    border-bottom: 1px solid transparent; transition: border-color var(--surface) var(--ease-out);
-  }
-  .bar.scrolled { border-bottom-color: var(--rule); }
-  .bar .wrap { display: flex; align-items: center; gap: 24px; height: 68px; }
-  .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; margin-right: auto; }
-  .brand .mark { width: 26px; height: 26px; color: var(--brand); }
-  .brand .word { font: 600 23px/1 var(--display); letter-spacing: -.01em; }
-  .brand .cap {
-    font: 500 9.5px/1.25 var(--mono); letter-spacing: .22em; text-transform: uppercase; color: var(--ink-dim);
-    border-left: 1px solid var(--rule-2); padding-left: 12px; max-width: 130px;
-  }
-  .bar nav { display: flex; align-items: center; gap: 4px; }
-  .bar nav a.link { text-decoration: none; color: var(--ink-mid); font-size: 14px; padding: 8px 12px; border-radius: var(--r-sm); transition: color var(--press), background var(--press); }
-  .bar nav a.link:hover { color: var(--ink); background: var(--control); }
-
-  /* ---- buttons ---- */
   .btn {
-    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-    font: 600 14px/1 var(--font); text-decoration: none; cursor: pointer;
-    height: 40px; padding: 0 18px; border-radius: var(--r-sm); border: 1px solid var(--rule-2);
-    background: var(--control); color: var(--ink); white-space: nowrap;
-    transition: background var(--press) var(--ease-out), border-color var(--press) var(--ease-out), transform var(--press) var(--ease-out);
+    display: inline-flex; align-items: center; gap: 8px; height: 36px; padding: 0 14px;
+    font: 600 14px/1 var(--font); text-decoration: none; cursor: pointer; white-space: nowrap;
+    border-radius: var(--r); border: 1px solid var(--rule-2); background: var(--control); color: var(--ink);
   }
-  .btn:hover { background: var(--control-hi); border-color: var(--rule-3); }
-  .btn:active { transform: scale(.97); }
-  .btn-primary { background: var(--brand); color: var(--brand-ink); border-color: var(--brand); }
-  .btn-primary:hover { background: #f0f6c6; border-color: #f0f6c6; }
-  .btn-quiet { background: transparent; }
-  .btn-sm { height: 30px; padding: 0 12px; font-size: 13px; }
-  .btn-lg { height: 48px; padding: 0 22px; font-size: 15px; }
+  .btn:hover { background: var(--control-hi); }
+  .btn-go { background: var(--brand); border-color: var(--brand); color: var(--brand-ink); }
+  .btn-go:hover { background: var(--brand); filter: brightness(1.08); }
+  .btn-sm { height: 28px; padding: 0 10px; font-size: 12.5px; }
   .btn .icon { width: 16px; height: 16px; }
 
-  .eyebrow {
-    display: flex; align-items: center; gap: 10px; margin: 0 0 18px;
-    font: 500 11px/1 var(--mono); letter-spacing: .2em; text-transform: uppercase; color: var(--brand-dim);
-  }
-  .eyebrow::before { content: ""; width: 22px; height: 1px; background: var(--brand); }
+  /* ---- intro ---- */
+  .intro { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 440px); gap: 48px; padding: 44px 0 36px; border-bottom: 1px solid var(--rule); }
+  .intro h1 { font-size: 40px; line-height: 1.1; margin: 0 0 16px; }
+  .intro .what { font-size: 16.5px; color: var(--ink-mid); max-width: 38em; }
+  .get { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; margin-top: 22px; color: var(--ink-dim); font-size: 13.5px; }
 
-  /* ---- hero ---- */
-  main { position: relative; z-index: 1; }
-  .hero { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(0, .92fr); gap: 56px; align-items: start; padding: 88px 0 40px; }
-  .hero h1 {
-    font: 500 clamp(52px, 7.4vw, 96px)/.94 var(--display); letter-spacing: -.02em; margin: 0 0 26px;
-    text-wrap: balance;
-  }
-  .hero h1 .soft { color: var(--ink-dim); }
-  .hero .lede { font-size: 18px; line-height: 1.6; color: var(--ink-mid); max-width: 30em; margin: 0 0 34px; }
-  .cta { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 26px; }
-  .facts { display: flex; flex-wrap: wrap; gap: 8px 22px; margin: 0; padding: 0; list-style: none; color: var(--ink-dim); font-size: 13px; }
-  .facts li { display: flex; align-items: center; gap: 8px; }
-  .facts li::before { content: ""; width: 4px; height: 4px; border-radius: 50%; background: var(--brand-line); }
-
-  /* ---- finder ---- */
-  .finder {
-    position: relative; border: 1px solid var(--rule); border-radius: 14px; padding: 28px;
-    background: linear-gradient(160deg, var(--card), var(--panel) 60%, var(--well));
-    box-shadow: 0 1px 0 rgba(255,255,255,.04) inset, 0 30px 80px -30px rgba(0,0,0,.7);
-  }
-  .finder::before {
-    content: ""; position: absolute; inset: -1px; border-radius: inherit; pointer-events: none;
-    background: linear-gradient(160deg, rgba(229,237,176,.35), transparent 38%) border-box;
-    -webkit-mask: linear-gradient(#000 0 0) padding-box, linear-gradient(#000 0 0);
-    -webkit-mask-composite: xor; mask-composite: exclude; border: 1px solid transparent;
-  }
-  .finder h2 { font: 500 28px/1.1 var(--display); margin: 0 0 10px; letter-spacing: -.01em; }
-  .finder .finder-intro { color: var(--ink-mid); margin: 0 0 22px; }
-  .lookup label { display: block; font-size: 13px; color: var(--ink-dim); margin-bottom: 8px; }
+  .check { border: 1px solid var(--rule); border-radius: var(--r); background: var(--panel); padding: 20px 22px; align-self: start; }
+  .check h2 { font-size: 20px; margin: 0 0 6px; }
+  .check > p { color: var(--ink-mid); font-size: 14px; }
+  .lookup label { display: block; font-size: 13px; color: var(--ink-dim); margin-bottom: 6px; }
   .field { display: flex; gap: 8px; }
   .field input {
-    flex: 1; min-width: 0; height: 40px; padding: 0 14px; border-radius: var(--r-sm);
-    background: var(--sunk); border: 1px solid var(--rule-2); color: var(--ink); font: 15px var(--font);
-    transition: border-color var(--press);
+    flex: 1; min-width: 0; height: 36px; padding: 0 12px; border-radius: var(--r);
+    background: var(--sunk); border: 1px solid var(--rule-2); color: var(--ink); font: 14.5px var(--font);
   }
-  .field input:focus { border-color: var(--brand-line); outline: none; box-shadow: 0 0 0 3px rgba(229,237,176,.12); }
-  .or { display: flex; align-items: center; gap: 14px; margin: 22px 0; color: var(--ink-dim); font-size: 12px; }
-  .or::before, .or::after { content: ""; flex: 1; height: 1px; background: var(--rule); }
-  .folder-path {
-    display: flex; align-items: center; gap: 8px; margin: 14px 0 0; padding: 10px 12px;
-    background: var(--sunk); border: 1px solid var(--rule); border-radius: var(--r-sm);
-  }
-  .folder-path code { flex: 1; min-width: 0; font: 12px/1.45 var(--mono); color: var(--ink-mid); overflow-wrap: anywhere; }
-  .status { min-height: 1.5em; margin: 12px 0 0; font-size: 13.5px; color: var(--ink-mid); }
+  .field input:focus { border-color: var(--brand-line); outline: none; }
+  .or { margin: 12px 0; color: var(--ink-dim); font-size: 13px; }
+  .folder-path { display: flex; align-items: center; gap: 8px; margin: 10px 0 0; }
+  .folder-path code { flex: 1; min-width: 0; font: 11.5px/1.45 var(--mono); color: var(--ink-dim); overflow-wrap: anywhere; }
+  .status { margin: 10px 0 0; font-size: 13.5px; color: var(--ink-mid); }
+  .status:empty { display: none; }
   .status b { color: var(--ink); }
-  .status.live::before {
-    content: ""; display: inline-block; width: 7px; height: 7px; margin-right: 8px; border-radius: 50%;
-    background: var(--up); box-shadow: 0 0 0 0 rgba(180,230,207,.6); animation: pulse 2.4s var(--ease-out) infinite;
-    vertical-align: 1px;
-  }
-  @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(180,230,207,.55); } 70%, 100% { box-shadow: 0 0 0 8px rgba(180,230,207,0); } }
-  .status:empty { min-height: 0; margin: 0; }
-  .to-ranks { display: flex; width: fit-content; align-items: center; gap: 6px; margin-top: 10px; color: var(--brand); font-weight: 600; font-size: 14px; text-decoration: none; }
+  .status.live::before { content: ""; display: inline-block; width: 7px; height: 7px; margin-right: 7px; border-radius: 50%; background: var(--up); vertical-align: 1px; }
+  .to-ranks { display: inline-block; margin-top: 8px; font-size: 14px; font-weight: 600; }
   .to-ranks[hidden] { display: none; }
-  .to-ranks .icon { width: 15px; height: 15px; transition: transform var(--press) var(--ease-out); }
-  .to-ranks:hover .icon { transform: translateY(2px); }
   .suggest { background: none; border: 0; padding: 0; color: var(--brand); font: inherit; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
-  .fine { margin: 18px 0 0; font-size: 12.5px; color: var(--ink-dim); display: flex; gap: 8px; align-items: flex-start; }
-  .fine .icon { width: 15px; height: 15px; flex: none; margin-top: 2px; color: var(--brand-dim); }
+  .fine { margin: 14px 0 0; font-size: 12.5px; color: var(--ink-dim); }
   .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
-  /* ---- steps ---- */
-  .section { padding: 88px 0 0; }
-  .section h2.big { font: 500 clamp(34px, 4.4vw, 48px)/1.04 var(--display); letter-spacing: -.015em; margin: 0 0 16px; }
-  .section .intro { color: var(--ink-mid); font-size: 16.5px; max-width: 40em; margin: 0 0 36px; }
-  .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--rule); }
-  .steps li { padding: 26px 26px 6px 0; }
-  .steps li + li { padding-left: 26px; border-left: 1px solid var(--rule); }
-  .steps .n { font: 500 12px var(--mono); color: var(--brand); letter-spacing: .08em; }
-  .steps h3 { font: 500 21px/1.2 var(--display); margin: 14px 0 8px; }
-  .steps p { margin: 0; color: var(--ink-mid); font-size: 14.5px; }
+  /* ---- how ---- */
+  .how { padding: 36px 0; border-bottom: 1px solid var(--rule); display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 24px 48px; }
+  .how h2 { font-size: 22px; margin: 0; }
+  .how ol { margin: 0; padding-left: 20px; max-width: 64em; color: var(--ink-mid); }
+  .how li { padding-left: 6px; margin-bottom: 8px; }
+  .how li::marker { color: var(--ink-dim); font-family: var(--mono); font-size: 13px; }
 
   /* ---- ranks ---- */
-  .note {
-    max-width: 46em; margin: -8px 0 36px; padding: 14px 18px; border-radius: var(--r-sm);
-    background: rgba(236,211,148,.06); border: 1px solid rgba(236,211,148,.22); color: var(--ink-mid); font-size: 14px;
-  }
-  .note b { color: var(--warn); font-weight: 600; }
-  .tabbar { position: sticky; top: 68px; z-index: 10; background: color-mix(in srgb, var(--ground) 90%, transparent); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); margin: 0 -24px; padding: 0 24px; }
-  [role=tablist] { position: relative; display: flex; gap: 4px; border-bottom: 1px solid var(--rule); overflow-x: auto; scrollbar-width: none; }
+  .ranks { padding-top: 36px; }
+  .ranks > h2 { font-size: 28px; margin: 0 0 8px; }
+  .ranks > .lead { color: var(--ink-mid); max-width: 52em; }
+  .note { max-width: 52em; color: var(--ink-mid); font-size: 14px; border-left: 3px solid var(--warn); padding: 2px 0 2px 14px; margin: 16px 0 24px; }
+  .tabbar { position: sticky; top: 0; z-index: 10; background: var(--ground); margin: 0 -24px; padding: 0 24px; }
+  [role=tablist] { position: relative; display: flex; gap: 2px; border-bottom: 1px solid var(--rule); overflow-x: auto; scrollbar-width: none; }
   [role=tablist]::-webkit-scrollbar { display: none; }
-  [role=tab] {
-    background: none; border: 0; color: var(--ink-dim); cursor: pointer; flex: none;
-    font: 500 17px/1 var(--display); padding: 18px 18px 17px; transition: color var(--press);
-  }
+  [role=tab] { background: none; border: 0; color: var(--ink-dim); cursor: pointer; flex: none; font: 500 16px/1 var(--display); padding: 16px 14px 14px; }
   [role=tab]:hover { color: var(--ink-mid); }
   [role=tab][aria-selected=true] { color: var(--ink); }
-  .tab-marker {
-    position: absolute; left: 0; bottom: -1px; height: 2px; width: 0; background: var(--brand);
-    transition: transform 260ms var(--ease-out), width 260ms var(--ease-out);
-  }
-  .band { padding-top: 24px; }
+  .tab-marker { position: absolute; left: 0; bottom: -1px; height: 2px; width: 0; background: var(--brand); transition: transform 200ms ease-out, width 200ms ease-out; }
+  @media (prefers-reduced-motion: reduce) { .tab-marker { transition: none; } }
+  .band { padding-top: 18px; }
   .band:focus { outline: none; }
-  .band:not([hidden]) { animation: rise 240ms var(--ease-out); }
-  @keyframes rise { from { opacity: 0; transform: translateY(6px); } }
-  @media (prefers-reduced-motion: reduce) { .band:not([hidden]) { animation: none; } .tab-marker { transition: none; } }
-  .jumps { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
-  .jumps a {
-    display: inline-flex; align-items: center; gap: 8px; height: 34px; padding: 0 14px 0 10px;
-    border: 1px solid var(--rule); border-radius: 999px; text-decoration: none; font-size: 13.5px; color: var(--ink-mid);
-    transition: border-color var(--press), color var(--press), background var(--press);
-  }
-  .jumps a .icon { width: 17px; height: 17px; color: var(--ink-cat); }
-  .jumps a:hover { color: var(--ink); border-color: var(--rule-2); background: var(--panel); }
-  .all { margin: 0 0 28px; }
+  .jumps { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-bottom: 12px; font-size: 14px; }
+  .jumps a { display: inline-flex; align-items: center; gap: 6px; color: var(--ink-mid); text-decoration: none; }
+  .jumps a:hover { color: var(--ink); }
+  .jumps .icon { width: 16px; height: 16px; color: var(--ink-cat); }
 
-  .category {
-    border: 1px solid var(--rule); border-radius: var(--r); margin-bottom: 20px; overflow: hidden;
-    background: var(--panel); scroll-margin-top: 150px;
-  }
-  .cat-head { padding: 26px 28px 22px; background: linear-gradient(180deg, color-mix(in srgb, var(--ink-cat) 5%, var(--panel)), var(--panel) 70%); }
-  .cat-title { display: flex; align-items: center; gap: 16px; margin-bottom: 14px; }
-  .cat-mark {
-    display: grid; place-items: center; width: 46px; height: 46px; flex: none; border-radius: 10px;
-    color: var(--ink-cat); background: color-mix(in srgb, var(--ink-cat) 9%, var(--well));
-    border: 1px solid color-mix(in srgb, var(--ink-cat) 30%, var(--rule));
-  }
-  .cat-mark .icon { width: 25px; height: 25px; }
-  .cat-title h3 { font: 500 24px/1.1 var(--display); margin: 0; letter-spacing: -.005em; }
-  .cat-count { margin: 4px 0 0; font: 12px var(--mono); color: var(--ink-dim); letter-spacing: .02em; }
-  .cat-desc { color: var(--ink-mid); margin: 0 0 20px; max-width: 72ch; font-size: 14.5px; }
+  .playlist { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; font-size: 13.5px; color: var(--ink-dim); margin: 0 0 18px; }
+  .pl-code { font: 13px var(--mono); color: var(--brand); }
 
-  .ladder { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 4px; list-style: none; margin: 0 0 18px; padding: 0; }
-  .ladder li { display: flex; flex-direction: column; gap: 7px; min-width: 0; }
-  .ladder .rung { height: 4px; border-radius: 2px; background: var(--c); box-shadow: 0 0 0 1px rgba(255,255,255,.06) inset; }
-  .ladder .rn { font: 600 13px/1.2 var(--font); overflow-wrap: anywhere; }
-  .ladder .rk-top { font: 10.5px var(--mono); color: var(--ink-dim); letter-spacing: .06em; text-transform: uppercase; margin-top: -4px; }
+  .category { border: 1px solid var(--rule); border-radius: var(--r); margin-bottom: 16px; background: var(--panel); scroll-margin-top: 64px; overflow: hidden; }
+  .cat-head { padding: 18px 20px 4px; border-top: 3px solid var(--ink-cat); }
+  .cat-head h3 { display: flex; align-items: center; gap: 10px; font-size: 21px; margin: 0 0 8px; }
+  .cat-head h3 .icon { width: 22px; height: 22px; color: var(--ink-cat); flex: none; }
+  .cat-count { font: 400 13px var(--font); color: var(--ink-dim); letter-spacing: 0; }
+  .cat-desc { color: var(--ink-mid); max-width: 72ch; font-size: 14px; }
+  .cat-head .playlist { margin-bottom: 14px; }
 
-  .playlist { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; font-size: 13.5px; }
-  .pl-label { font: 500 10.5px/1 var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--ink-dim); }
-  .pl-none { color: var(--ink-dim); }
-  .pl-code { font: 13px var(--mono); padding: 6px 10px; border-radius: var(--r-sm); background: var(--sunk); border: 1px solid var(--rule); color: var(--brand); }
+  .ladder { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 3px; list-style: none; margin: 14px 0 12px; padding: 0; }
+  .ladder li { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+  .ladder .rung { height: 3px; background: var(--c); }
+  .ladder .rn { font: 600 12.5px/1.2 var(--font); overflow-wrap: anywhere; }
+  .ladder .rk-top { font-size: 11px; color: var(--ink-dim); margin-top: -3px; }
 
   .scroll { overflow-x: auto; border-top: 1px solid var(--rule); }
   .scroll:focus-visible { outline-offset: -2px; }
   table { border-collapse: collapse; width: 100%; font-size: 14px; }
-  th, td { padding: 13px 14px; text-align: left; border-bottom: 1px solid var(--rule); vertical-align: top; }
-  thead th {
-    position: sticky; top: 0; font: 600 12.5px/1.2 var(--font); white-space: nowrap;
-    background: var(--well); padding-top: 11px; padding-bottom: 11px;
-  }
-  thead th:first-child, .yours-h { color: var(--ink-dim); font-family: var(--mono); font-weight: 500; font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; }
+  th, td { padding: 11px 12px; text-align: left; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  thead th { font: 600 12.5px/1.2 var(--font); white-space: nowrap; background: var(--well); }
+  thead th:first-child, .yours-h { color: var(--ink-dim); font-weight: 500; }
   tbody tr:last-child > * { border-bottom: 0; }
-  tbody tr { transition: background var(--surface); }
-  tbody tr:hover { background: rgba(255,255,255,.018); }
-  tbody th { font-weight: 400; min-width: 250px; padding-left: 28px; }
-  .sc-label { display: block; font: 500 16px/1.3 var(--display); }
-  .sc-focus { display: block; color: var(--ink-mid); font-size: 13px; margin-top: 3px; }
-  .sc-name { display: block; color: var(--ink-dim); font: 11px var(--mono); margin-top: 6px; }
-  td.num {
-    text-align: right; font: 13.5px var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap;
-    color: var(--ink-mid); padding-top: 15px;
-  }
+  tbody tr:hover { background: rgba(255,255,255,.02); }
+  tbody th { font-weight: 400; min-width: 240px; padding-left: 20px; }
+  .sc-label { display: block; font: 500 15.5px/1.3 var(--display); }
+  .sc-focus { display: block; color: var(--ink-mid); font-size: 13px; margin-top: 2px; }
+  .sc-name { display: block; color: var(--ink-dim); font: 11px var(--mono); margin-top: 4px; }
+  td.num { text-align: right; font: 13.5px var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; color: var(--ink-mid); padding-top: 13px; }
   thead th.num { text-align: right; }
-  td.num.pos { color: var(--ink-dim); font-size: 11.5px; letter-spacing: .04em; }
+  td.num.pos { color: var(--ink-dim); font-size: 12px; }
   td.num.met { color: var(--ink); box-shadow: inset 0 -2px 0 var(--c); }
-  .yours { min-width: 210px; padding-right: 28px; }
+  .yours { min-width: 200px; padding-right: 20px; }
   .yours input {
-    width: 112px; height: 34px; padding: 0 10px; border-radius: var(--r-sm);
+    width: 104px; height: 32px; padding: 0 9px; border-radius: var(--r);
     background: var(--sunk); border: 1px solid var(--rule-2); color: var(--ink); font: 13.5px var(--mono);
-    transition: border-color var(--press);
   }
-  .yours input::placeholder { color: var(--ink-dim); opacity: .7; }
-  .yours input:focus { outline: none; border-color: var(--brand-line); box-shadow: 0 0 0 3px rgba(229,237,176,.12); }
+  .yours input::placeholder { color: var(--ink-dim); opacity: .6; }
+  .yours input:focus { outline: none; border-color: var(--brand-line); }
   .yours input::-webkit-inner-spin-button { display: none; }
-  .yours output { display: flex; flex-direction: column; gap: 2px; margin-top: 8px; font-size: 13px; color: var(--ink-mid); }
+  .yours output { display: flex; flex-direction: column; gap: 2px; margin-top: 6px; font-size: 13px; color: var(--ink-mid); }
   .yours output:empty { display: none; }
   .yours output b { font-weight: 650; }
   .yours .unranked { color: var(--ink-dim); }
-  .yours .src { font: 10px var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--brand-dim); margin-top: 2px; }
-  tr.fresh { animation: fresh 1600ms var(--ease-out); }
-  @keyframes fresh { from { background: rgba(229,237,176,.12); } to { background: transparent; } }
+  .yours .src { font-size: 11.5px; color: var(--ink-dim); }
+  .yours .src::before { content: "from "; }
+  tr.fresh { animation: fresh 1400ms ease-out; }
+  @keyframes fresh { from { background: rgba(229,237,176,.1); } to { background: transparent; } }
 
-  /* ---- closing ---- */
-  .closer {
-    margin: 96px 0 0; padding: 56px; border-radius: 16px; border: 1px solid var(--rule);
-    background: radial-gradient(120% 140% at 0% 0%, rgba(229,237,176,.08), transparent 55%), var(--panel);
-    display: grid; grid-template-columns: 1fr auto; gap: 32px; align-items: center;
-  }
-  .closer h2 { font: 500 clamp(30px, 3.6vw, 42px)/1.05 var(--display); margin: 0 0 12px; letter-spacing: -.01em; }
-  .closer p { margin: 0; color: var(--ink-mid); max-width: 36em; }
-  footer { margin-top: 72px; border-top: 1px solid var(--rule); }
-  footer .wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 28px; padding-top: 26px; padding-bottom: 40px; color: var(--ink-dim); font-size: 13px; }
-  footer .brand .word { font-size: 18px; }
-  footer .brand .mark { width: 20px; height: 20px; }
-  footer nav { display: flex; flex-wrap: wrap; gap: 6px 20px; }
-  footer a { text-decoration: none; }
+  footer { margin-top: 48px; border-top: 1px solid var(--rule); }
+  footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 22px; padding-top: 20px; padding-bottom: 36px; color: var(--ink-dim); font-size: 13px; }
+  footer a { color: var(--ink-mid); text-decoration: none; }
   footer a:hover { color: var(--ink); }
-  footer .aside { flex-basis: 100%; }
+  footer .aside { margin-left: auto; }
 
-  /* ---- smaller screens ---- */
-  @media (max-width: 980px) {
-    .hero { grid-template-columns: 1fr; gap: 48px; padding: 56px 0 72px; }
-    .steps { grid-template-columns: repeat(2, 1fr); }
-    .steps li:nth-child(3) { padding-left: 0; border-left: 0; }
-    .steps li:nth-child(n+3) { border-top: 1px solid var(--rule); }
-    .closer { grid-template-columns: 1fr; padding: 40px; }
+  @media (max-width: 900px) {
+    .intro { grid-template-columns: 1fr; gap: 28px; padding-top: 32px; }
+    .how { grid-template-columns: 1fr; gap: 12px; }
+    footer .aside { margin-left: 0; flex-basis: 100%; }
   }
   @media (max-width: 720px) {
     .wrap { padding: 0 16px; }
-    .tabbar { margin: 0 -16px; padding: 0 16px; top: 60px; }
-    .bar .wrap { height: 60px; gap: 12px; }
-    .brand .cap, .bar nav a.link { display: none; }
-    .bar .btn { height: 36px; padding: 0 14px; font-size: 13px; }
-    .hero .lede { font-size: 16.5px; }
-    .finder { padding: 22px 18px; }
-    .steps { grid-template-columns: 1fr; }
-    .steps li, .steps li + li { padding: 22px 0 4px; border-left: 0; }
-    .steps li + li { border-top: 1px solid var(--rule); }
-    .cat-head { padding: 22px 18px 18px; }
-    .ladder { grid-auto-flow: row; grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: 12px; }
-    .closer { padding: 30px 22px; }
+    .tabbar { margin: 0 -16px; padding: 0 16px; }
+    .top nav a:not(.btn) { display: none; }
+    .intro h1 { font-size: 32px; }
+    .check { padding: 18px 16px; }
+    .cat-head { padding: 16px 16px 4px; }
+    .ladder { grid-auto-flow: row; grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: 10px; }
     /* The score box is the last column, so the scenario name stays put while a row
        scrolls under it. */
     tbody th, thead th:first-child { position: sticky; left: 0; z-index: 2; min-width: 150px; max-width: 150px; padding-left: 16px; }
@@ -590,122 +463,96 @@ export function renderSite(inputs: SiteInputs): string {
 </style>
 </head>
 <body>
-<div class="sky" aria-hidden="true">
-  <svg viewBox="0 0 1100 1100" fill="none" stroke="currentColor">
-    <circle cx="550" cy="550" r="300"/><circle cx="550" cy="550" r="420" stroke-dasharray="2 7"/><circle cx="550" cy="550" r="540"/>
-    <circle cx="276" cy="673" r="3.5" fill="currentColor"/><circle cx="908" cy="760" r="2.5" fill="currentColor"/><circle cx="160" cy="330" r="2" fill="currentColor"/>
-  </svg>
-</div>
 
-<header class="bar">
+<header class="top">
   <div class="wrap">
-    <a class="brand" href="#top" aria-label="Apogee, back to top">
-      ${svg(BRAND_MARK, "mark", 1.65)}<span class="word">apogee</span><span class="cap">Ranked aim training</span>
-    </a>
+    <a class="brand" href="#">${svg(BRAND_MARK, "mark", 1.8)}Apogee</a>
     <nav aria-label="Page">
-      <a class="link" href="#how">How it works</a>
-      <a class="link" href="#ranks">Ranks</a>
-      <a class="btn btn-primary" href="${esc(config.downloadUrl)}">Download</a>
+      <a href="#how">How it works</a>
+      <a href="#ranks">Ranks</a>
+      <a href="${esc(config.sourceUrl)}">Source</a>
+      <a class="btn btn-go btn-sm" href="${esc(config.downloadUrl)}">Download</a>
     </nav>
   </div>
 </header>
 
-<main id="top">
+<main>
   <div class="wrap">
-    <section class="hero">
+    <section class="intro">
       <div>
-        <p class="eyebrow">${esc(season.name)} · KovaaK's</p>
-        <h1>Ranked 1v1<br><span class="soft">for KovaaK's.</span></h1>
-        <p class="lede">Three scenarios, one opponent near your rating. Each round goes to
-        whoever beats their own baseline by more. Scores come straight from KovaaK's stats
-        files, so nothing is ever typed in.</p>
-        <div class="cta">
-          <a class="btn btn-primary btn-lg" href="${esc(config.downloadUrl)}">${svg("M12 3v12m0 0 5-5m-5 5-5-5M4 20h16", "icon", 1.8)}Download for Windows</a>
-          <a class="btn btn-lg" href="#ranks">See the ranks</a>
+        <h1>Ranked 1v1 for KovaaK's</h1>
+        <p class="what">You and an opponent near your rating play the same three scenarios.
+        Each one goes to whoever beats their own usual score on it by the bigger margin,
+        so it's about who plays above their level on the day. Scores are read from
+        KovaaK's stats files, so nobody types anything in.</p>
+        <p class="what">Below are all ${season.scenarios.length} ${esc(season.name)} scenarios and the
+        score each rank needs on them. Bring your own scores and see where you land.</p>
+        <div class="get">
+          <a class="btn btn-go" href="${esc(config.downloadUrl)}">${svg("M12 3v12m0 0 5-5m-5 5-5-5M4 20h16", "icon", 1.8)}Download for Windows</a>
+          <span>Free, and the <a href="${esc(config.sourceUrl)}">source is on GitHub</a>.</span>
         </div>
-        <ul class="facts">
-          <li>Free</li>
-          <li>Open source</li>
-          <li>${season.scenarios.length} scenarios, ${word(season.categories.length)} categories</li>
-        </ul>
       </div>
 
-      <aside class="finder" id="find" aria-labelledby="find-title">
-        <p class="eyebrow">Find your rank</p>
-        <h2 id="find-title">Where do your scores land?</h2>
-        <p class="finder-intro">Every rank is a score on a scenario you can play today. Bring your runs and the
-        table below fills itself in.</p>
+      <aside class="check" id="find" aria-labelledby="find-title">
+        <h2 id="find-title">Check your scores</h2>
+        <p>Your best on each season scenario gets filled into the tables below.</p>
         ${lookup}
-        <button type="button" class="btn ${liveLookup ? "" : "btn-primary "}btn-lg" id="folder-open" style="width:100%">
+        <button type="button" class="btn${liveLookup ? "" : " btn-go"}" id="folder-open">
           ${svg("M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z", "icon", 1.7)}Open your stats folder
         </button>
         <input type="file" id="folder-input" webkitdirectory multiple class="visually-hidden" tabindex="-1" aria-hidden="true">
         <div class="folder-path">
           <code>${esc(DEFAULT_STATS_PATH)}</code>
-          <button type="button" class="btn btn-quiet btn-sm" data-copy="${esc(DEFAULT_STATS_PATH)}">Copy</button>
+          <button type="button" class="btn btn-sm" data-copy="${esc(DEFAULT_STATS_PATH)}">Copy</button>
         </div>
         <p class="status" id="folder-status" aria-live="polite"></p>
-        <a class="to-ranks" id="to-ranks" href="#ranks" hidden>See where they land ${svg("M12 5v14m0 0 6-6m-6 6-6-6", "icon", 1.8)}</a>
-        <p class="fine">${svg("M12 3 5 6v5c0 4.5 3 8.3 7 10 4-1.7 7-5.5 7-10V6Z", "icon", 1.6)}<span>Read in this tab and never uploaded. In Chrome and Edge the page keeps
-        watching, so a run you finish in KovaaK's shows up here within seconds.</span></p>
+        <a class="to-ranks" id="to-ranks" href="#ranks" hidden>Go to the tables</a>
+        <p class="fine">The folder is read in this tab and never uploaded. Chrome and Edge keep
+        watching it, so a run shows up here a few seconds after you finish it.</p>
       </aside>
     </section>
 
-    <section class="section" id="how" aria-labelledby="how-title">
-      <p class="eyebrow">How a match works</p>
-      <h2 class="big" id="how-title">Your aim, against someone at your level.</h2>
-      <p class="intro">The queue opens once ${minRunsToQueue} of your runs have uploaded, which the
-      app does from the history KovaaK's already keeps. If you have played KovaaK's for a while, you are probably there already.</p>
-      <ol class="steps">
-        <li><span class="n">01</span><h3>Category</h3><p>Pick one of the ${word(season.categories.length)} below, or all of them.</p></li>
-        <li><span class="n">02</span><h3>Match</h3><p>You're paired with someone near your rating.</p></li>
-        <li><span class="n">03</span><h3>Play</h3><p>Three scenarios in KovaaK's, as normal. Apogee writes the playlist for you.</p></li>
-        <li><span class="n">04</span><h3>Results</h3><p>Each round goes to whoever beat their own baseline by more. Ratings settle on the server.</p></li>
+    <section class="how" id="how" aria-labelledby="how-title">
+      <h2 id="how-title">How a match works</h2>
+      <ol>
+        <li>Install the app and sign in through Steam. It uploads the runs already in your
+        stats folder, and you can queue once ${minRunsToQueue} of them are in.</li>
+        <li>Queue one of the ${categoryCount} categories, or all of them. You get matched with
+        someone near your rating.</li>
+        <li>The app puts the three scenarios in a KovaaK's playlist. Play them like you
+        normally would.</li>
+        <li>Each scenario is scored against your own baseline on it: the median of your last
+        50 runs, or 90% of your best if that's higher. The bigger improvement takes the
+        scenario. Ratings are worked out on the server, not in the app.</li>
       </ol>
     </section>
 
-    <section class="section" id="ranks" aria-labelledby="ranks-title">
-      <p class="eyebrow">${esc(season.name)}</p>
-      <h2 class="big" id="ranks-title">The ranks.</h2>
-      <p class="intro">Each category is graded in ${word(windows.length)} difficulty bands, and each band
-      is its own ladder. A rank on a scenario is the furthest column your best score reaches.</p>
+    <section class="ranks" id="ranks" aria-labelledby="ranks-title">
+      <h2 id="ranks-title">${esc(season.name)} ranks</h2>
+      <p class="lead">Each category is split into ${word(windows.length)} difficulty bands
+      (${windows.map(esc).join(", ")}), and each band has its own ladder. Your rank on a
+      scenario is the highest column your best score reaches.</p>
       ${provisional}
       <div class="tabbar"><div role="tablist" aria-label="Difficulty">${tabs}<span class="tab-marker" aria-hidden="true"></span></div></div>
       ${panels}
-    </section>
-
-    <section class="closer" aria-labelledby="closer-title">
-      <div>
-        <h2 id="closer-title">Found your rank? Come defend it.</h2>
-        <p>Queue a category and play someone who lands where you do. Windows only, for now.</p>
-      </div>
-      <a class="btn btn-primary btn-lg" href="${esc(config.downloadUrl)}">${svg("M12 3v12m0 0 5-5m-5 5-5-5M4 20h16", "icon", 1.8)}Download Apogee</a>
     </section>
   </div>
 </main>
 
 <footer>
   <div class="wrap">
-    <a class="brand" href="#top">${svg(BRAND_MARK, "mark", 1.65)}<span class="word">apogee</span></a>
-    <nav aria-label="Project">
-      <a href="${esc(config.sourceUrl)}">Source</a>
-      <a href="${esc(blob("FAIR-PLAY.md"))}">Fair play</a>
-      <a href="${esc(blob("PRIVACY.md"))}">Privacy</a>
-      <a href="${esc(blob("TERMS.md"))}">Terms</a>
-    </nav>
-    <span class="aside">Apogee is an independent project and is not affiliated with KovaaK's.</span>
+    <a href="${esc(config.downloadUrl)}">Download</a>
+    <a href="${esc(config.sourceUrl)}">Source</a>
+    <a href="${esc(blob("FAIR-PLAY.md"))}">Fair play</a>
+    <a href="${esc(blob("PRIVACY.md"))}">Privacy</a>
+    <a href="${esc(blob("TERMS.md"))}">Terms</a>
+    <span class="aside">Not affiliated with KovaaK's.</span>
   </div>
 </footer>
 
 <script type="application/json" id="site-data">${JSON.stringify(siteData).replace(/</g, "\\u003c")}</script>
 <script>
 ${script}
-(() => {
-  const bar = document.querySelector('.bar');
-  const onScroll = () => bar.classList.toggle('scrolled', window.scrollY > 8);
-  window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
-})();
 </script>
 </body>
 </html>
