@@ -208,7 +208,9 @@ Deno.serve(handler(async (req, admin) => {
         rd_before: theirSide.rd_before,
         submitted_at: theirSide.submitted_at,
       },
-    ]);
+      // Rows with different keys: without this PostgREST fills the answerer's missing
+      // deltas and provisional with NULL instead of their defaults. See find-match.
+    ], { defaultToNull: false });
 
     if (sidesError) throw new HttpError(500, sidesError.message);
 

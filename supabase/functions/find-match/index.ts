@@ -378,6 +378,12 @@ Deno.serve(handler(async (req, admin) => {
 
   // The caller's side is empty until they play. The opponent's side carries their
   // frozen deltas, which is what makes this an async match rather than a wait.
+  //
+  // `defaultToNull: false` because the two rows have different keys. PostgREST takes the
+  // union of the columns for a bulk insert and, by default, fills a key a row lacks with
+  // NULL rather than the column default, so the caller's side arrived with deltas and
+  // provisional NULL against their NOT NULL constraints. Every seeding match is a
+  // one-row insert, which is why this passed until the first two players met.
   const { error: sidesError } = await admin.from("match_sides").insert([
     { match_id: match.id, player_id: caller.playerId, rating_before: rating.rating, rd_before: rating.rd },
     {
@@ -390,7 +396,7 @@ Deno.serve(handler(async (req, admin) => {
       rd_before: opponent.rating.rd,
       submitted_at: opponent.createdAt.toISOString(),
     },
-  ]);
+  ], { defaultToNull: false });
 
   if (sidesError) throw new HttpError(500, sidesError.message);
 
