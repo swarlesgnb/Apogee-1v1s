@@ -21,6 +21,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
 import { parseFilename } from "../core/stats/parseStatsFile.ts";
+import { log } from "./crashLog.ts";
 import { collectRuns, type RunPayload } from "../core/sync/uploadRuns.ts";
 import { accessToken, supabase, SUPABASE_URL } from "./session.ts";
 
@@ -90,22 +91,35 @@ async function callFunction<T>(name: string, body: unknown): Promise<T> {
     onUnauthorized?.();
     throw new ApiError(EXPIRED_MESSAGE, 401);
   }
-  if (res.status >= 500) {
-    throw new ApiError("Apogee's server is having trouble. Try again in a minute.", res.status);
-  }
-
-  const text = await res.text();
+  const text = await res.text().catch(() => "");
   let parsed: unknown;
   try {
     parsed = text ? JSON.parse(text) : {};
   } catch {
-    throw new ApiError(`${name} returned a non-JSON response`, res.status);
+    parsed = undefined;
   }
 
+  // The functions put the real cause in `error` on a 500 as well, and this used to throw
+  // it away for a fixed sentence, so "the server is having trouble" after a first match
+  // could only be diagnosed from the dashboard's function logs. A 5xx from the gateway
+  // rather than the function (a boot failure, a worker limit) is not JSON, hence the raw
+  // text as the fallback.
+  const detail =
+    (parsed as { error?: string } | undefined)?.error ?? text.slice(0, 300).trim();
+
+  if (!res.ok) log(`${name} HTTP ${res.status}: ${detail || "(empty body)"}`);
+
+  if (res.status >= 500) {
+    throw new ApiError(
+      `Apogee's server is having trouble. Try again in a minute.${detail ? ` (${name}: ${detail})` : ""}`,
+      res.status,
+    );
+  }
+
+  if (parsed === undefined) throw new ApiError(`${name} returned a non-JSON response`, res.status);
+
   if (!res.ok) {
-    const message =
-      (parsed as { error?: string })?.error ?? `${name} failed with HTTP ${res.status}`;
-    throw new ApiError(message, res.status);
+    throw new ApiError(detail || `${name} failed with HTTP ${res.status}`, res.status);
   }
 
   return parsed as T;
