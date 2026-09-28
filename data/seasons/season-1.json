@@ -1050,7 +1050,7 @@
       "file": "data/season-1/difficulty_model.json"
     }
   },
-  "builtAt": "2026-09-26T18:03:40.473Z",
+  "builtAt": "2026-09-28T17:29:03.612Z",
   "scenarios": [
     {
       "scenario": "Apogee Galaga Novice",
@@ -1064,16 +1064,16 @@
       "focus": "Five targets on one level; flick sideways and stop dead.",
       "leaderboardId": null,
       "rankMaxes": [
-        972,
-        1143,
-        1242,
-        1318,
-        1382,
-        1443
+        1038,
+        1220,
+        1327,
+        1408,
+        1476,
+        1541
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 0.8974,
+        "factor": 0.9582,
         "predicted": [
           1083,
           1273,
@@ -1082,7 +1082,7 @@
           1540,
           1608
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.8974: the family's correction from 5 playtest run(s) on the current files, which put this family harder than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.9582: this band's correction from 4 playtest run(s) on its current file, which put it harder than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -1115,7 +1115,7 @@
           1671,
           1716
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.8974: the family's correction from 5 playtest run(s) on the current files, which put this family harder than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.8974: this band's correction from 3 playtest run(s) on its current file, which put it harder than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -1148,7 +1148,7 @@
           1754,
           1801
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.8974: the family's correction from 5 playtest run(s) on the current files, which put this family harder than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.8974: this band's correction from 1 playtest run(s) on its current file, which put it harder than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -1177,7 +1177,7 @@
           1749,
           1787
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.8974: the family's correction from 5 playtest run(s) on the current files, which put this family harder than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.8974: the family's correction from 8 playtest run(s) on the current files, this band having none of its own, which put it harder than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -1192,16 +1192,16 @@
       "focus": "Flick up and down; the sideways movement is only ever a correction.",
       "leaderboardId": null,
       "rankMaxes": [
-        839,
-        992,
-        1082,
-        1150,
-        1207,
-        1261
+        894,
+        1057,
+        1153,
+        1225,
+        1285,
+        1344
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 0.8424,
+        "factor": 0.8974,
         "predicted": [
           996,
           1178,
@@ -1210,7 +1210,7 @@
           1432,
           1497
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.8424: the family's correction from 5 playtest run(s) on the current files, which put this family harder than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.8974: this band's correction from 4 playtest run(s) on its current file, which put it harder than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -1225,16 +1225,16 @@
       "focus": "Flick up and down; the sideways movement is only ever a correction.",
       "leaderboardId": null,
       "rankMaxes": [
-        1150,
-        1203,
-        1227,
-        1272,
-        1310,
-        1346
+        1148,
+        1200,
+        1224,
+        1269,
+        1307,
+        1343
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 0.8424,
+        "factor": 0.8406,
         "predicted": [
           1365,
           1428,
@@ -1243,7 +1243,7 @@
           1555,
           1598
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.8424: the family's correction from 5 playtest run(s) on the current files, which put this family harder than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.8406: this band's correction from 3 playtest run(s) on its current file, which put it harder than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -1258,16 +1258,16 @@
       "focus": "Flick up and down; the sideways movement is only ever a correction.",
       "leaderboardId": null,
       "rankMaxes": [
-        1250,
-        1284,
-        1316,
-        1346,
-        1375,
-        1413
+        1257,
+        1292,
+        1324,
+        1354,
+        1384,
+        1421
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 0.8424,
+        "factor": 0.8475,
         "predicted": [
           1483,
           1524,
@@ -1276,7 +1276,7 @@
           1633,
           1677
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.8424: the family's correction from 5 playtest run(s) on the current files, which put this family harder than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.8475: this band's correction from 1 playtest run(s) on its current file, which put it harder than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -1291,21 +1291,21 @@
       "focus": "Flick up and down; the sideways movement is only ever a correction.",
       "leaderboardId": null,
       "rankMaxes": [
-        1312,
-        1348,
-        1371,
-        1400
+        1322,
+        1358,
+        1381,
+        1411
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 0.8424,
+        "factor": 0.8488,
         "predicted": [
           1558,
           1600,
           1627,
           1662
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.8424: the family's correction from 5 playtest run(s) on the current files, which put this family harder than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.8488: the family's correction from 8 playtest run(s) on the current files, this band having none of its own, which put it harder than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -1338,7 +1338,7 @@
           1420,
           1484
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.8974: the family's correction from 0 playtest run(s) on the current files, which put this family harder than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.8974: this band's correction from 3 playtest run(s) on its current file, which put it harder than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -1371,7 +1371,7 @@
           1542,
           1584
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.8974: the family's correction from 0 playtest run(s) on the current files, which put this family harder than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.8974: this band's correction from 3 playtest run(s) on its current file, which put it harder than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -1404,7 +1404,7 @@
           1619,
           1663
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.8974: the family's correction from 0 playtest run(s) on the current files, which put this family harder than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.8974: the family's correction from 6 playtest run(s) on the current files, this band having none of its own, which put it harder than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -1433,7 +1433,7 @@
           1613,
           1648
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.8974: the family's correction from 0 playtest run(s) on the current files, which put this family harder than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.8974: the family's correction from 6 playtest run(s) on the current files, this band having none of its own, which put it harder than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -1448,16 +1448,16 @@
       "focus": "A wide formation; big flicks across it, in both directions.",
       "leaderboardId": null,
       "rankMaxes": [
-        868,
-        1034,
-        1132,
-        1204,
-        1265,
-        1324
+        876,
+        1044,
+        1142,
+        1215,
+        1277,
+        1336
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 0.9576,
+        "factor": 0.9666,
         "predicted": [
           907,
           1080,
@@ -1466,7 +1466,7 @@
           1321,
           1382
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.9576: the family's correction from 3 playtest run(s) on the current files, which put this family harder than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.9666: this band's correction from 2 playtest run(s) on its current file, which put it harder than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -1481,16 +1481,16 @@
       "focus": "A wide formation; big flicks across it, in both directions.",
       "leaderboardId": null,
       "rankMaxes": [
-        1204,
-        1261,
-        1286,
-        1335,
-        1375,
-        1413
+        1242,
+        1300,
+        1326,
+        1376,
+        1418,
+        1457
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 0.9576,
+        "factor": 0.9873,
         "predicted": [
           1258,
           1317,
@@ -1499,7 +1499,7 @@
           1436,
           1476
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.9576: the family's correction from 3 playtest run(s) on the current files, which put this family harder than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.9873: this band's correction from 3 playtest run(s) on its current file, which put it harder than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -1514,16 +1514,16 @@
       "focus": "A wide formation; big flicks across it, in both directions.",
       "leaderboardId": null,
       "rankMaxes": [
-        1311,
-        1347,
-        1381,
-        1413,
-        1444,
-        1484
+        1228,
+        1262,
+        1294,
+        1324,
+        1354,
+        1391
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 0.9576,
+        "factor": 0.8974,
         "predicted": [
           1369,
           1406,
@@ -1532,7 +1532,7 @@
           1508,
           1550
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.9576: the family's correction from 3 playtest run(s) on the current files, which put this family harder than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.8974: this band's correction from 1 playtest run(s) on its current file, which put it harder than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -1547,21 +1547,21 @@
       "focus": "A wide formation; big flicks across it, in both directions.",
       "leaderboardId": null,
       "rankMaxes": [
-        1377,
-        1414,
-        1438,
-        1469
+        1418,
+        1457,
+        1482,
+        1514
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 0.9576,
+        "factor": 0.9865,
         "predicted": [
           1438,
           1477,
           1502,
           1534
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.9576: the family's correction from 3 playtest run(s) on the current files, which put this family harder than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.9865: the family's correction from 6 playtest run(s) on the current files, this band having none of its own, which put it harder than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -1576,16 +1576,16 @@
       "focus": "Clear the whole constellation; the next one appears when its last star falls.",
       "leaderboardId": null,
       "rankMaxes": [
-        955,
-        1119,
-        1215,
-        1289,
-        1350,
-        1409
+        1018,
+        1193,
+        1295,
+        1373,
+        1438,
+        1501
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 0.8423,
+        "factor": 0.8974,
         "predicted": [
           1134,
           1329,
@@ -1594,7 +1594,7 @@
           1603,
           1673
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.8423: the family's correction from 4 playtest run(s) on the current files, which put this family harder than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.8974: this band's correction from 4 playtest run(s) on its current file, which put it harder than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -1609,16 +1609,16 @@
       "focus": "Clear the whole constellation; the next one appears when its last star falls.",
       "leaderboardId": null,
       "rankMaxes": [
-        1289,
-        1347,
-        1373,
-        1422,
-        1464,
-        1503
+        1374,
+        1435,
+        1463,
+        1515,
+        1560,
+        1602
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 0.8423,
+        "factor": 0.8974,
         "predicted": [
           1531,
           1599,
@@ -1627,7 +1627,7 @@
           1738,
           1785
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.8423: the family's correction from 4 playtest run(s) on the current files, which put this family harder than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.8974: this band's correction from 3 playtest run(s) on its current file, which put it harder than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -1642,16 +1642,16 @@
       "focus": "Clear the whole constellation; the next one appears when its last star falls.",
       "leaderboardId": null,
       "rankMaxes": [
-        1399,
-        1437,
-        1472,
-        1504,
-        1537,
-        1578
+        1490,
+        1531,
+        1568,
+        1603,
+        1637,
+        1681
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 0.8423,
+        "factor": 0.8974,
         "predicted": [
           1661,
           1706,
@@ -1660,7 +1660,7 @@
           1824,
           1874
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.8423: the family's correction from 4 playtest run(s) on the current files, which put this family harder than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.8974: this band's correction from 1 playtest run(s) on its current file, which put it harder than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -1675,21 +1675,21 @@
       "focus": "Clear the whole constellation; the next one appears when its last star falls.",
       "leaderboardId": null,
       "rankMaxes": [
-        1468,
-        1508,
-        1534,
-        1567
+        1564,
+        1607,
+        1634,
+        1669
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 0.8423,
+        "factor": 0.8974,
         "predicted": [
           1743,
           1790,
           1821,
           1860
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.8423: the family's correction from 4 playtest run(s) on the current files, which put this family harder than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.8974: the family's correction from 8 playtest run(s) on the current files, this band having none of its own, which put it harder than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -1704,16 +1704,16 @@
       "focus": "Targets at two distances; read the size before you decide how far to move.",
       "leaderboardId": null,
       "rankMaxes": [
-        830,
-        983,
-        1072,
-        1139,
-        1195,
-        1250
+        888,
+        1051,
+        1146,
+        1218,
+        1279,
+        1336
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 0.839,
+        "factor": 0.8974,
         "predicted": [
           990,
           1171,
@@ -1722,7 +1722,7 @@
           1425,
           1489
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.839: the family's correction from 3 playtest run(s) on the current files, which put this family harder than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.8974: this band's correction from 3 playtest run(s) on its current file, which put it harder than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -1737,16 +1737,16 @@
       "focus": "Targets at two distances; read the size before you decide how far to move.",
       "leaderboardId": null,
       "rankMaxes": [
-        1139,
-        1192,
-        1215,
-        1260,
-        1298,
-        1333
+        1219,
+        1274,
+        1300,
+        1348,
+        1388,
+        1426
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 0.839,
+        "factor": 0.8974,
         "predicted": [
           1358,
           1420,
@@ -1755,7 +1755,7 @@
           1547,
           1589
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.839: the family's correction from 3 playtest run(s) on the current files, which put this family harder than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.8974: this band's correction from 4 playtest run(s) on its current file, which put it harder than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -1770,16 +1770,16 @@
       "focus": "Targets at two distances; read the size before you decide how far to move.",
       "leaderboardId": null,
       "rankMaxes": [
-        1238,
-        1272,
-        1304,
-        1333,
-        1363,
-        1400
+        1255,
+        1289,
+        1322,
+        1352,
+        1381,
+        1419
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 0.839,
+        "factor": 0.8506,
         "predicted": [
           1476,
           1516,
@@ -1788,7 +1788,7 @@
           1624,
           1668
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.839: the family's correction from 3 playtest run(s) on the current files, which put this family harder than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.8506: this band's correction from 1 playtest run(s) on its current file, which put it harder than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -1803,21 +1803,21 @@
       "focus": "Targets at two distances; read the size before you decide how far to move.",
       "leaderboardId": null,
       "rankMaxes": [
-        1300,
-        1335,
-        1358,
-        1387
+        1390,
+        1428,
+        1453,
+        1484
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 0.839,
+        "factor": 0.8974,
         "predicted": [
           1549,
           1592,
           1619,
           1653
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.839: the family's correction from 3 playtest run(s) on the current files, which put this family harder than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.8974: the family's correction from 8 playtest run(s) on the current files, this band having none of its own, which put it harder than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -1850,7 +1850,7 @@
           1675,
           1747
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.8974: the family's correction from 3 playtest run(s) on the current files, which put this family harder than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.8974: this band's correction from 2 playtest run(s) on its current file, which put it harder than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -1883,7 +1883,7 @@
           1816,
           1864
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.8974: the family's correction from 3 playtest run(s) on the current files, which put this family harder than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.8974: this band's correction from 2 playtest run(s) on its current file, which put it harder than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -1916,7 +1916,7 @@
           1906,
           1958
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.8974: the family's correction from 3 playtest run(s) on the current files, which put this family harder than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.8974: this band's correction from 1 playtest run(s) on its current file, which put it harder than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -1945,7 +1945,7 @@
           1904,
           1945
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.8974: the family's correction from 3 playtest run(s) on the current files, which put this family harder than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.8974: the family's correction from 5 playtest run(s) on the current files, this band having none of its own, which put it harder than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -1960,16 +1960,16 @@
       "focus": "Six still targets on one wall; take the nearest, keep the rhythm.",
       "leaderboardId": null,
       "rankMaxes": [
-        870,
-        1033,
-        1128,
-        1199,
-        1259,
-        1317
+        939,
+        1115,
+        1218,
+        1295,
+        1360,
+        1422
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 0.8974,
+        "factor": 0.9689,
         "predicted": [
           970,
           1151,
@@ -1978,7 +1978,7 @@
           1403,
           1467
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.8974: the family's correction from 5 playtest run(s) on the current files, which put this family harder than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.9689: this band's correction from 4 playtest run(s) on its current file, which put it harder than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -2011,7 +2011,7 @@
           1524,
           1566
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.8974: the family's correction from 5 playtest run(s) on the current files, which put this family harder than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.8974: this band's correction from 3 playtest run(s) on its current file, which put it harder than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -2044,7 +2044,7 @@
           1601,
           1644
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.8974: the family's correction from 5 playtest run(s) on the current files, which put this family harder than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.8974: this band's correction from 1 playtest run(s) on its current file, which put it harder than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -2059,21 +2059,21 @@
       "focus": "Six still targets on one wall; take the nearest, keep the rhythm.",
       "leaderboardId": null,
       "rankMaxes": [
-        1370,
-        1407,
-        1431,
-        1462
+        1453,
+        1493,
+        1518,
+        1551
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 0.8974,
+        "factor": 0.9522,
         "predicted": [
           1526,
           1568,
           1595,
           1629
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.8974: the family's correction from 5 playtest run(s) on the current files, which put this family harder than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.9522: the family's correction from 8 playtest run(s) on the current files, this band having none of its own, which put it harder than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -2088,16 +2088,16 @@
       "focus": "Slow floaters; match their drift for a moment, then click.",
       "leaderboardId": null,
       "rankMaxes": [
-        428,
-        582,
-        679,
-        750,
-        810,
-        867
+        393,
+        534,
+        623,
+        688,
+        744,
+        796
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.1156,
+        "factor": 1.0238,
         "predicted": [
           384,
           521,
@@ -2106,7 +2106,7 @@
           726,
           777
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1156: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0238: this band's correction from 2 playtest run(s) on its current file, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -2121,16 +2121,16 @@
       "focus": "Slow floaters; match their drift for a moment, then click.",
       "leaderboardId": null,
       "rankMaxes": [
-        784,
-        839,
-        863,
-        909,
-        947,
-        980
+        824,
+        882,
+        907,
+        955,
+        995,
+        1030
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.1156,
+        "factor": 1.1727,
         "predicted": [
           702,
           752,
@@ -2139,7 +2139,7 @@
           849,
           879
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1156: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1727: this band's correction from 1 playtest run(s) on its current file, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -2154,16 +2154,16 @@
       "focus": "Slow floaters; match their drift for a moment, then click.",
       "leaderboardId": null,
       "rankMaxes": [
+        859,
+        889,
         917,
-        950,
-        980,
-        1008,
-        1036,
-        1071
+        944,
+        970,
+        1003
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.1156,
+        "factor": 1.0446,
         "predicted": [
           822,
           851,
@@ -2172,7 +2172,7 @@
           928,
           960
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1156: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0446: the family's correction from 3 playtest run(s) on the current files, this band having none of its own, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -2187,21 +2187,21 @@
       "focus": "Slow floaters; match their drift for a moment, then click.",
       "leaderboardId": null,
       "rankMaxes": [
-        1004,
-        1038,
-        1060,
-        1088
+        940,
+        972,
+        993,
+        1019
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.1156,
+        "factor": 1.0446,
         "predicted": [
           900,
           931,
           950,
           975
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1156: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0446: the family's correction from 3 playtest run(s) on the current files, this band having none of its own, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -2216,16 +2216,16 @@
       "focus": "Slow swings from wall to wall; click on the swing, not only at the turn.",
       "leaderboardId": null,
       "rankMaxes": [
-        531,
-        700,
-        804,
-        881,
-        947,
-        1008
+        535,
+        705,
+        811,
+        889,
+        954,
+        1016
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.0755,
+        "factor": 1.0845,
         "predicted": [
           493,
           650,
@@ -2234,7 +2234,7 @@
           880,
           937
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0755: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0845: this band's correction from 2 playtest run(s) on its current file, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -2249,16 +2249,16 @@
       "focus": "Slow swings from wall to wall; click on the swing, not only at the turn.",
       "leaderboardId": null,
       "rankMaxes": [
-        916,
-        976,
-        1002,
-        1052,
-        1093,
-        1130
+        936,
+        997,
+        1024,
+        1074,
+        1117,
+        1154
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.0755,
+        "factor": 1.0984,
         "predicted": [
           852,
           908,
@@ -2267,7 +2267,7 @@
           1017,
           1051
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0755: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0984: this band's correction from 1 playtest run(s) on its current file, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -2282,16 +2282,16 @@
       "focus": "Slow swings from wall to wall; click on the swing, not only at the turn.",
       "leaderboardId": null,
       "rankMaxes": [
-        1060,
-        1096,
-        1129,
-        1160,
-        1191,
-        1229
+        1055,
+        1091,
+        1124,
+        1155,
+        1185,
+        1224
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.0755,
+        "factor": 1.0703,
         "predicted": [
           986,
           1019,
@@ -2300,7 +2300,7 @@
           1107,
           1143
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0755: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0703: the family's correction from 3 playtest run(s) on the current files, this band having none of its own, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -2315,21 +2315,21 @@
       "focus": "Slow swings from wall to wall; click on the swing, not only at the turn.",
       "leaderboardId": null,
       "rankMaxes": [
-        1155,
-        1193,
-        1217,
-        1248
+        1150,
+        1187,
+        1212,
+        1242
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.0755,
+        "factor": 1.0703,
         "predicted": [
           1074,
           1109,
           1132,
           1161
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0755: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0703: the family's correction from 3 playtest run(s) on the current files, this band having none of its own, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -2362,7 +2362,7 @@
           810,
           871
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1727: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1727: this band's correction from 2 playtest run(s) on its current file, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -2377,16 +2377,16 @@
       "focus": "Read the arc; the top of the bounce is the slowest moment.",
       "leaderboardId": null,
       "rankMaxes": [
-        919,
-        989,
-        1018,
-        1075,
-        1123,
-        1164
+        969,
+        1042,
+        1073,
+        1133,
+        1183,
+        1227
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.1727,
+        "factor": 1.2358,
         "predicted": [
           784,
           843,
@@ -2395,7 +2395,7 @@
           957,
           993
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1727: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.2358: this band's correction from 1 playtest run(s) on its current file, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -2428,7 +2428,7 @@
           1052,
           1090
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1727: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1727: the family's correction from 3 playtest run(s) on the current files, this band having none of its own, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -2457,7 +2457,7 @@
           1080,
           1110
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1727: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1727: the family's correction from 3 playtest run(s) on the current files, this band having none of its own, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -2472,16 +2472,16 @@
       "focus": "Straight runs up and down, a dead stop at every turn, and a charged-up buzz all the while.",
       "leaderboardId": null,
       "rankMaxes": [
-        513,
-        697,
-        813,
-        899,
-        972,
-        1040
+        518,
+        703,
+        821,
+        907,
+        981,
+        1050
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.2454,
+        "factor": 1.257,
         "predicted": [
           412,
           559,
@@ -2490,7 +2490,7 @@
           780,
           835
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.2454: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.257: this band's correction from 2 playtest run(s) on its current file, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -2505,16 +2505,16 @@
       "focus": "Straight runs up and down, a dead stop at every turn, and a charged-up buzz all the while.",
       "leaderboardId": null,
       "rankMaxes": [
-        948,
-        1015,
-        1044,
-        1099,
-        1145,
-        1186
+        1054,
+        1128,
+        1160,
+        1222,
+        1273,
+        1318
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.2454,
+        "factor": 1.3843,
         "predicted": [
           761,
           815,
@@ -2523,7 +2523,7 @@
           919,
           952
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.2454: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.3843: this band's correction from 2 playtest run(s) on its current file, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -2538,16 +2538,16 @@
       "focus": "Straight runs up and down, a dead stop at every turn, and a charged-up buzz all the while.",
       "leaderboardId": null,
       "rankMaxes": [
-        1118,
-        1158,
-        1194,
-        1228,
-        1262,
-        1304
+        1212,
+        1255,
+        1295,
+        1332,
+        1368,
+        1415
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.2454,
+        "factor": 1.3505,
         "predicted": [
           898,
           930,
@@ -2556,7 +2556,7 @@
           1013,
           1047
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.2454: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.3505: the family's correction from 4 playtest run(s) on the current files, this band having none of its own, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -2571,21 +2571,21 @@
       "focus": "Straight runs up and down, a dead stop at every turn, and a charged-up buzz all the while.",
       "leaderboardId": null,
       "rankMaxes": [
-        1232,
-        1274,
-        1301,
-        1335
+        1336,
+        1382,
+        1411,
+        1448
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.2454,
+        "factor": 1.3505,
         "predicted": [
           989,
           1023,
           1045,
           1072
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.2454: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.3505: the family's correction from 4 playtest run(s) on the current files, this band having none of its own, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -2618,7 +2618,7 @@
           549,
           594
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1727: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1727: this band's correction from 1 playtest run(s) on its current file, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -2633,16 +2633,16 @@
       "focus": "Two fast crossers in an open sky; move with the target and click inside the motion.",
       "leaderboardId": null,
       "rankMaxes": [
-        622,
-        674,
-        696,
-        739,
-        775,
-        806
+        694,
+        752,
+        777,
+        825,
+        865,
+        900
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.1727,
+        "factor": 1.3089,
         "predicted": [
           530,
           575,
@@ -2651,7 +2651,7 @@
           661,
           687
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1727: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.3089: this band's correction from 2 playtest run(s) on its current file, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -2666,16 +2666,16 @@
       "focus": "Two fast crossers in an open sky; move with the target and click inside the motion.",
       "leaderboardId": null,
       "rankMaxes": [
-        750,
-        780,
-        808,
-        834,
-        859,
-        892
+        812,
+        844,
+        874,
+        902,
+        929,
+        964
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.1727,
+        "factor": 1.2683,
         "predicted": [
           640,
           665,
@@ -2684,7 +2684,7 @@
           733,
           760
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1727: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.2683: the family's correction from 3 playtest run(s) on the current files, this band having none of its own, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -2699,21 +2699,21 @@
       "focus": "Two fast crossers in an open sky; move with the target and click inside the motion.",
       "leaderboardId": null,
       "rankMaxes": [
-        832,
-        864,
-        884,
-        910
+        900,
+        934,
+        956,
+        984
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.1727,
+        "factor": 1.2683,
         "predicted": [
           710,
           737,
           754,
           776
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1727: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.2683: the family's correction from 3 playtest run(s) on the current files, this band having none of its own, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -2746,7 +2746,7 @@
           948,
           1015
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1727: the family's correction from 0 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1727: this band's correction from 2 playtest run(s) on its current file, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -2761,16 +2761,16 @@
       "focus": "Straight lines across the sky; lead nothing, match the line and click.",
       "leaderboardId": null,
       "rankMaxes": [
-        1078,
-        1156,
-        1190,
-        1252,
-        1306,
-        1353
+        1206,
+        1293,
+        1331,
+        1401,
+        1461,
+        1513
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.1727,
+        "factor": 1.3118,
         "predicted": [
           919,
           985,
@@ -2779,7 +2779,7 @@
           1113,
           1154
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1727: the family's correction from 0 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.3118: this band's correction from 2 playtest run(s) on its current file, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -2794,16 +2794,16 @@
       "focus": "Straight lines across the sky; lead nothing, match the line and click.",
       "leaderboardId": null,
       "rankMaxes": [
-        1268,
-        1314,
-        1356,
-        1394,
-        1432,
-        1483
+        1369,
+        1419,
+        1464,
+        1506,
+        1546,
+        1601
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.1727,
+        "factor": 1.2663,
         "predicted": [
           1081,
           1121,
@@ -2812,7 +2812,7 @@
           1221,
           1264
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1727: the family's correction from 0 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.2663: the family's correction from 4 playtest run(s) on the current files, this band having none of its own, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -2827,21 +2827,21 @@
       "focus": "Straight lines across the sky; lead nothing, match the line and click.",
       "leaderboardId": null,
       "rankMaxes": [
-        1392,
-        1441,
-        1473,
-        1513
+        1503,
+        1556,
+        1590,
+        1634
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.1727,
+        "factor": 1.2663,
         "predicted": [
           1187,
           1229,
           1256,
           1290
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1727: the family's correction from 0 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.2663: the family's correction from 4 playtest run(s) on the current files, this band having none of its own, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -2856,16 +2856,16 @@
       "focus": "Pop them before they reach you; every one that does costs you.",
       "leaderboardId": null,
       "rankMaxes": [
-        28,
-        80,
-        128,
-        161,
-        184,
-        201
+        21,
+        58,
+        93,
+        116,
+        134,
+        146
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 0.9974,
+        "factor": 0.7229,
         "predicted": [
           28,
           80,
@@ -2874,7 +2874,7 @@
           185,
           202
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.9974: the family's correction from 1 playtest run(s) on the current files, which put this family harder than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.7229: this band's correction from 2 playtest run(s) on its current file, which put it harder than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -2889,16 +2889,16 @@
       "focus": "Pop them before they reach you; every one that does costs you.",
       "leaderboardId": null,
       "rankMaxes": [
-        180,
-        196,
+        184,
         201,
-        211,
-        218,
-        223
+        205,
+        216,
+        222,
+        228
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 0.9974,
+        "factor": 1.0186,
         "predicted": [
           180,
           197,
@@ -2907,7 +2907,7 @@
           218,
           223
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.9974: the family's correction from 1 playtest run(s) on the current files, which put this family harder than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0186: this band's correction from 1 playtest run(s) on its current file, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -2922,16 +2922,16 @@
       "focus": "Pop them before they reach you; every one that does costs you.",
       "leaderboardId": null,
       "rankMaxes": [
-        213,
-        218,
-        222,
-        226,
-        230,
-        235
+        162,
+        166,
+        169,
+        172,
+        175,
+        179
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 0.9974,
+        "factor": 0.7604,
         "predicted": [
           213,
           218,
@@ -2940,7 +2940,7 @@
           231,
           236
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.9974: the family's correction from 1 playtest run(s) on the current files, which put this family harder than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.7604: the family's correction from 3 playtest run(s) on the current files, this band having none of its own, which put it harder than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -2955,21 +2955,21 @@
       "focus": "Pop them before they reach you; every one that does costs you.",
       "leaderboardId": null,
       "rankMaxes": [
-        225,
-        230,
-        233,
-        237
+        171,
+        175,
+        177,
+        181
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 0.9974,
+        "factor": 0.7604,
         "predicted": [
           225,
           230,
           233,
           238
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.9974: the family's correction from 1 playtest run(s) on the current files, which put this family harder than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.7604: the family's correction from 3 playtest run(s) on the current files, this band having none of its own, which put it harder than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -2984,16 +2984,16 @@
       "focus": "Floating heads: big, slow drifters; confirm the shot before you click.",
       "leaderboardId": null,
       "rankMaxes": [
-        472,
-        646,
-        758,
-        840,
-        909,
-        975
+        525,
+        719,
+        842,
+        933,
+        1011,
+        1084
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.1727,
+        "factor": 1.3039,
         "predicted": [
           402,
           551,
@@ -3002,7 +3002,7 @@
           775,
           831
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1727: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.3039: this band's correction from 2 playtest run(s) on its current file, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -3017,16 +3017,16 @@
       "focus": "Floating heads: big, slow drifters; confirm the shot before you click.",
       "leaderboardId": null,
       "rankMaxes": [
-        851,
-        914,
-        941,
-        992,
-        1035,
-        1072
+        906,
+        973,
+        1001,
+        1056,
+        1101,
+        1141
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.1727,
+        "factor": 1.2481,
         "predicted": [
           726,
           779,
@@ -3035,7 +3035,7 @@
           883,
           915
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1727: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.2481: this band's correction from 1 playtest run(s) on its current file, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -3050,16 +3050,16 @@
       "focus": "Floating heads: big, slow drifters; confirm the shot before you click.",
       "leaderboardId": null,
       "rankMaxes": [
-        972,
-        1007,
-        1040,
-        1071,
-        1101,
-        1139
+        1085,
+        1125,
+        1162,
+        1196,
+        1230,
+        1273
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.1727,
+        "factor": 1.31,
         "predicted": [
           828,
           859,
@@ -3068,7 +3068,7 @@
           939,
           972
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1727: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.31: the family's correction from 3 playtest run(s) on the current files, this band having none of its own, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -3083,21 +3083,21 @@
       "focus": "Floating heads: big, slow drifters; confirm the shot before you click.",
       "leaderboardId": null,
       "rankMaxes": [
-        1034,
-        1071,
-        1095,
-        1124
+        1156,
+        1196,
+        1223,
+        1256
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.1727,
+        "factor": 1.31,
         "predicted": [
           882,
           913,
           933,
           959
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1727: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.31: the family's correction from 3 playtest run(s) on the current files, this band having none of its own, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -3130,7 +3130,7 @@
           837,
           895
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1727: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1727: this band's correction from 2 playtest run(s) on its current file, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -3163,7 +3163,7 @@
           978,
           1012
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1727: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1727: this band's correction from 1 playtest run(s) on its current file, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -3196,7 +3196,7 @@
           1070,
           1106
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1727: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1727: the family's correction from 3 playtest run(s) on the current files, this band having none of its own, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -3225,7 +3225,7 @@
           1096,
           1125
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1727: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1727: the family's correction from 3 playtest run(s) on the current files, this band having none of its own, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -3240,16 +3240,16 @@
       "focus": "Long, smooth strafes; ease into each turn with the target.",
       "leaderboardId": null,
       "rankMaxes": [
-        2383,
-        3173,
-        3637,
-        3955,
-        4222,
-        4461
+        2528,
+        3365,
+        3858,
+        4195,
+        4479,
+        4732
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.1448,
+        "factor": 1.2144,
         "predicted": [
           2081,
           2771,
@@ -3258,7 +3258,7 @@
           3688,
           3897
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1448: the family's correction from 2 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.2144: this band's correction from 2 playtest run(s) on its current file, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -3273,16 +3273,16 @@
       "focus": "Long, smooth strafes; ease into each turn with the target.",
       "leaderboardId": null,
       "rankMaxes": [
-        3971,
-        4212,
-        4315,
-        4506,
-        4659,
-        4794
+        4314,
+        4576,
+        4688,
+        4896,
+        5062,
+        5209
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.1448,
+        "factor": 1.2438,
         "predicted": [
           3468,
           3679,
@@ -3291,7 +3291,7 @@
           4070,
           4188
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1448: the family's correction from 2 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.2438: this band's correction from 1 playtest run(s) on its current file, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -3324,7 +3324,7 @@
           4268,
           4378
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1448: the family's correction from 2 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1448: this band's correction from 1 playtest run(s) on its current file, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -3339,21 +3339,21 @@
       "focus": "Long, smooth strafes; ease into each turn with the target.",
       "leaderboardId": null,
       "rankMaxes": [
-        4608,
-        4740,
-        4823,
-        4918
+        5018,
+        5162,
+        5252,
+        5356
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.1448,
+        "factor": 1.2467,
         "predicted": [
           4025,
           4140,
           4213,
           4296
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1448: the family's correction from 2 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.2467: the family's correction from 4 playtest run(s) on the current files, this band having none of its own, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -3368,16 +3368,16 @@
       "focus": "Mostly up and down; keep the crosshair level with it through each turn.",
       "leaderboardId": null,
       "rankMaxes": [
-        2442,
-        3193,
-        3606,
-        3877,
-        4102,
-        4301
+        2628,
+        3435,
+        3879,
+        4171,
+        4413,
+        4627
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.0024,
+        "factor": 1.0785,
         "predicted": [
           2436,
           3185,
@@ -3386,7 +3386,7 @@
           4092,
           4290
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0024: the family's correction from 4 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0785: this band's correction from 3 playtest run(s) on its current file, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -3401,16 +3401,16 @@
       "focus": "Mostly up and down; keep the crosshair level with it through each turn.",
       "leaderboardId": null,
       "rankMaxes": [
-        3898,
-        4103,
-        4191,
-        4351,
-        4483,
-        4597
+        4451,
+        4686,
+        4786,
+        4969,
+        5120,
+        5250
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.0024,
+        "factor": 1.1448,
         "predicted": [
           3888,
           4094,
@@ -3419,7 +3419,7 @@
           4472,
           4586
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0024: the family's correction from 4 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1448: this band's correction from 2 playtest run(s) on its current file, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -3434,16 +3434,16 @@
       "focus": "Mostly up and down; keep the crosshair level with it through each turn.",
       "leaderboardId": null,
       "rankMaxes": [
-        4284,
-        4402,
-        4506,
-        4604,
-        4703,
-        4801
+        4315,
+        4433,
+        4537,
+        4637,
+        4736,
+        4835
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.0024,
+        "factor": 1.0095,
         "predicted": [
           4274,
           4391,
@@ -3452,7 +3452,7 @@
           4692,
           4789
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0024: the family's correction from 4 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0095: this band's correction from 1 playtest run(s) on its current file, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -3467,21 +3467,21 @@
       "focus": "Mostly up and down; keep the crosshair level with it through each turn.",
       "leaderboardId": null,
       "rankMaxes": [
-        4498,
-        4603,
-        4668,
-        4747
+        4752,
+        4864,
+        4932,
+        5016
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.0024,
+        "factor": 1.0591,
         "predicted": [
           4487,
           4592,
           4657,
           4736
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0024: the family's correction from 4 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0591: the family's correction from 6 playtest run(s) on the current files, this band having none of its own, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -3496,16 +3496,16 @@
       "focus": "Curves in both directions; follow the path, do not cut its corners.",
       "leaderboardId": null,
       "rankMaxes": [
-        1909,
-        2553,
-        2936,
-        3198,
-        3418,
-        3614
+        2117,
+        2831,
+        3256,
+        3547,
+        3791,
+        4008
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 0.9331,
+        "factor": 1.0348,
         "predicted": [
           2046,
           2736,
@@ -3514,7 +3514,7 @@
           3663,
           3873
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.9331: the family's correction from 4 playtest run(s) on the current files, which put this family harder than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0348: this band's correction from 4 playtest run(s) on its current file, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -3529,16 +3529,16 @@
       "focus": "Curves in both directions; follow the path, do not cut its corners.",
       "leaderboardId": null,
       "rankMaxes": [
-        3212,
-        3410,
-        3494,
-        3650,
-        3774,
-        3884
+        3748,
+        3978,
+        4077,
+        4258,
+        4404,
+        4531
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 0.9331,
+        "factor": 1.0887,
         "predicted": [
           3443,
           3654,
@@ -3547,7 +3547,7 @@
           4045,
           4162
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.9331: the family's correction from 4 playtest run(s) on the current files, which put this family harder than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0887: this band's correction from 2 playtest run(s) on its current file, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -3562,16 +3562,16 @@
       "focus": "Curves in both directions; follow the path, do not cut its corners.",
       "leaderboardId": null,
       "rankMaxes": [
-        3563,
-        3672,
-        3770,
-        3863,
-        3956,
-        4058
+        3348,
+        3450,
+        3542,
+        3629,
+        3716,
+        3812
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 0.9331,
+        "factor": 0.8767,
         "predicted": [
           3818,
           3935,
@@ -3580,7 +3580,7 @@
           4239,
           4348
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.9331: the family's correction from 4 playtest run(s) on the current files, which put this family harder than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.8767: this band's correction from 1 playtest run(s) on its current file, which put it harder than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -3595,21 +3595,21 @@
       "focus": "Curves in both directions; follow the path, do not cut its corners.",
       "leaderboardId": null,
       "rankMaxes": [
-        3727,
-        3833,
-        3900,
-        3976
+        3940,
+        4053,
+        4124,
+        4204
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 0.9331,
+        "factor": 0.9866,
         "predicted": [
           3994,
           4108,
           4180,
           4262
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.9331: the family's correction from 4 playtest run(s) on the current files, which put this family harder than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.9866: the family's correction from 7 playtest run(s) on the current files, this band having none of its own, which put it harder than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -3624,16 +3624,16 @@
       "focus": "A small, slow target; precision over speed.",
       "leaderboardId": null,
       "rankMaxes": [
-        2739,
-        3624,
-        4132,
-        4473,
-        4759,
-        5012
+        2540,
+        3361,
+        3831,
+        4148,
+        4413,
+        4648
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.2346,
+        "factor": 1.1448,
         "predicted": [
           2219,
           2936,
@@ -3642,7 +3642,7 @@
           3855,
           4060
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.2346: the family's correction from 4 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1448: this band's correction from 3 playtest run(s) on its current file, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -3657,16 +3657,16 @@
       "focus": "A small, slow target; precision over speed.",
       "leaderboardId": null,
       "rankMaxes": [
-        4494,
-        4753,
-        4864,
-        5067,
-        5232,
-        5376
+        4559,
+        4821,
+        4933,
+        5140,
+        5307,
+        5453
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.2346,
+        "factor": 1.2523,
         "predicted": [
           3640,
           3850,
@@ -3675,7 +3675,7 @@
           4238,
           4354
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.2346: the family's correction from 4 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.2523: this band's correction from 1 playtest run(s) on its current file, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -3690,16 +3690,16 @@
       "focus": "A small, slow target; precision over speed.",
       "leaderboardId": null,
       "rankMaxes": [
-        4966,
-        5112,
-        5242,
-        5366,
-        5490,
-        5620
+        4605,
+        4740,
+        4861,
+        4976,
+        5090,
+        5211
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.2346,
+        "factor": 1.1448,
         "predicted": [
           4023,
           4141,
@@ -3708,7 +3708,7 @@
           4447,
           4552
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.2346: the family's correction from 4 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1448: this band's correction from 1 playtest run(s) on its current file, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -3723,21 +3723,21 @@
       "focus": "A small, slow target; precision over speed.",
       "leaderboardId": null,
       "rankMaxes": [
-        5208,
-        5345,
-        5431,
-        5531
+        5209,
+        5347,
+        5432,
+        5533
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.2346,
+        "factor": 1.2349,
         "predicted": [
           4218,
           4330,
           4399,
           4480
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.2346: the family's correction from 4 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.2349: the family's correction from 5 playtest run(s) on the current files, this band having none of its own, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -3770,7 +3770,7 @@
           3886,
           4090
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1448: the family's correction from 2 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1448: this band's correction from 2 playtest run(s) on its current file, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -3785,16 +3785,16 @@
       "focus": "Long jumps under low gravity; carry the crosshair along the arc.",
       "leaderboardId": null,
       "rankMaxes": [
-        4205,
-        4444,
-        4546,
-        4735,
-        4887,
-        5021
+        4523,
+        4781,
+        4891,
+        5094,
+        5258,
+        5402
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.1448,
+        "factor": 1.2316,
         "predicted": [
           3673,
           3882,
@@ -3803,7 +3803,7 @@
           4269,
           4386
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1448: the family's correction from 2 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.2316: the family's correction from 3 playtest run(s) on the current files, this band having none of its own, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -3818,16 +3818,16 @@
       "focus": "Long jumps under low gravity; carry the crosshair along the arc.",
       "leaderboardId": null,
       "rankMaxes": [
-        4644,
-        4779,
-        4900,
-        5015,
-        5129,
-        5249
+        5003,
+        5149,
+        5279,
+        5403,
+        5526,
+        5655
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.1448,
+        "factor": 1.2334,
         "predicted": [
           4056,
           4175,
@@ -3836,7 +3836,7 @@
           4480,
           4585
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1448: the family's correction from 2 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.2334: this band's correction from 1 playtest run(s) on its current file, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -3851,21 +3851,21 @@
       "focus": "Long jumps under low gravity; carry the crosshair along the arc.",
       "leaderboardId": null,
       "rankMaxes": [
-        4871,
-        4998,
-        5077,
-        5171
+        5240,
+        5377,
+        5462,
+        5563
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.1448,
+        "factor": 1.2316,
         "predicted": [
           4255,
           4366,
           4435,
           4517
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1448: the family's correction from 2 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.2316: the family's correction from 3 playtest run(s) on the current files, this band having none of its own, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -3880,16 +3880,16 @@
       "focus": "A close target sweeping wide that blinks now and then; track it, and find it again after the jump.",
       "leaderboardId": null,
       "rankMaxes": [
-        2320,
-        3093,
-        3551,
-        3868,
-        4135,
-        4374
+        2186,
+        2914,
+        3346,
+        3644,
+        3896,
+        4121
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.1448,
+        "factor": 1.0786,
         "predicted": [
           2027,
           2702,
@@ -3898,7 +3898,7 @@
           3612,
           3821
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1448: the family's correction from 2 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0786: this band's correction from 2 playtest run(s) on its current file, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -3931,7 +3931,7 @@
           3991,
           4109
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1448: the family's correction from 2 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1448: this band's correction from 1 playtest run(s) on its current file, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -3946,16 +3946,16 @@
       "focus": "A close target sweeping wide that blinks now and then; track it, and find it again after the jump.",
       "leaderboardId": null,
       "rankMaxes": [
-        4306,
-        4440,
-        4561,
-        4676,
-        4789,
-        4917
+        4079,
+        4207,
+        4321,
+        4430,
+        4537,
+        4658
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.1448,
+        "factor": 1.0846,
         "predicted": [
           3761,
           3879,
@@ -3964,7 +3964,7 @@
           4183,
           4295
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1448: the family's correction from 2 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0846: the family's correction from 3 playtest run(s) on the current files, this band having none of its own, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -3979,21 +3979,21 @@
       "focus": "A close target sweeping wide that blinks now and then; track it, and find it again after the jump.",
       "leaderboardId": null,
       "rankMaxes": [
-        4504,
-        4637,
-        4721,
-        4816
+        4267,
+        4393,
+        4473,
+        4563
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.1448,
+        "factor": 1.0846,
         "predicted": [
           3934,
           4050,
           4124,
           4207
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1448: the family's correction from 2 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0846: the family's correction from 3 playtest run(s) on the current files, this band having none of its own, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -4026,7 +4026,7 @@
           2705,
           2893
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1751: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1751: this band's correction from 2 playtest run(s) on its current file, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -4041,16 +4041,16 @@
       "focus": "Close, snappy strafes; react to the turn, do not predict it.",
       "leaderboardId": null,
       "rankMaxes": [
+        2640,
+        2831,
         2915,
-        3126,
-        3219,
-        3390,
-        3521,
-        3642
+        3070,
+        3189,
+        3298
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.1751,
+        "factor": 1.0642,
         "predicted": [
           2481,
           2661,
@@ -4059,7 +4059,7 @@
           2997,
           3099
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1751: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0642: this band's correction from 1 playtest run(s) on its current file, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -4074,16 +4074,16 @@
       "focus": "Close, snappy strafes; react to the turn, do not predict it.",
       "leaderboardId": null,
       "rankMaxes": [
-        3227,
-        3338,
-        3440,
-        3530,
-        3616,
-        3747
+        2993,
+        3096,
+        3191,
+        3275,
+        3354,
+        3476
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.1751,
+        "factor": 1.09,
         "predicted": [
           2746,
           2841,
@@ -4092,7 +4092,7 @@
           3077,
           3189
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1751: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.09: the family's correction from 3 playtest run(s) on the current files, this band having none of its own, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -4107,21 +4107,21 @@
       "focus": "Close, snappy strafes; react to the turn, do not predict it.",
       "leaderboardId": null,
       "rankMaxes": [
-        3281,
-        3408,
-        3494,
-        3572
+        3044,
+        3161,
+        3241,
+        3313
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.1751,
+        "factor": 1.09,
         "predicted": [
           2793,
           2900,
           2973,
           3039
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1751: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.09: the family's correction from 3 playtest run(s) on the current files, this band having none of its own, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -4154,7 +4154,7 @@
           2861,
           3056
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1751: the family's correction from 2 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1751: this band's correction from 3 playtest run(s) on its current file, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -4169,16 +4169,16 @@
       "focus": "Strafes and range changes; the target shrinks and grows as it moves.",
       "leaderboardId": null,
       "rankMaxes": [
-        3095,
-        3316,
-        3413,
-        3592,
-        3731,
-        3858
+        2931,
+        3140,
+        3232,
+        3402,
+        3533,
+        3654
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.1751,
+        "factor": 1.1128,
         "predicted": [
           2634,
           2822,
@@ -4187,7 +4187,7 @@
           3175,
           3283
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1751: the family's correction from 2 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1128: this band's correction from 1 playtest run(s) on its current file, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -4220,7 +4220,7 @@
           3282,
           3398
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1751: the family's correction from 2 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1751: the family's correction from 4 playtest run(s) on the current files, this band having none of its own, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -4249,7 +4249,7 @@
           3187,
           3260
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1751: the family's correction from 2 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1751: the family's correction from 4 playtest run(s) on the current files, this band having none of its own, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -4264,16 +4264,16 @@
       "focus": "It stops before it turns, and now and then stops dead for a second or two; stop with it.",
       "leaderboardId": null,
       "rankMaxes": [
-        2085,
-        2770,
-        3201,
-        3531,
-        3820,
-        4084
+        2147,
+        2852,
+        3297,
+        3637,
+        3934,
+        4207
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.3972,
+        "factor": 1.439,
         "predicted": [
           1492,
           1982,
@@ -4282,7 +4282,7 @@
           2734,
           2923
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.3972: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.439: this band's correction from 2 playtest run(s) on its current file, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -4297,16 +4297,16 @@
       "focus": "It stops before it turns, and now and then stops dead for a second or two; stop with it.",
       "leaderboardId": null,
       "rankMaxes": [
-        3506,
-        3759,
-        3870,
-        4076,
-        4234,
-        4379
+        3475,
+        3727,
+        3837,
+        4040,
+        4197,
+        4341
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.3972,
+        "factor": 1.3851,
         "predicted": [
           2509,
           2690,
@@ -4315,7 +4315,7 @@
           3030,
           3134
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.3972: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.3851: this band's correction from 1 playtest run(s) on its current file, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -4330,16 +4330,16 @@
       "focus": "It stops before it turns, and now and then stops dead for a second or two; stop with it.",
       "leaderboardId": null,
       "rankMaxes": [
-        3884,
-        4018,
-        4141,
-        4251,
-        4355,
-        4513
+        4128,
+        4271,
+        4402,
+        4518,
+        4629,
+        4797
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.3972,
+        "factor": 1.4852,
         "predicted": [
           2780,
           2876,
@@ -4348,7 +4348,7 @@
           3117,
           3230
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.3972: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.4852: the family's correction from 3 playtest run(s) on the current files, this band having none of its own, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -4363,21 +4363,21 @@
       "focus": "It stops before it turns, and now and then stops dead for a second or two; stop with it.",
       "leaderboardId": null,
       "rankMaxes": [
-        3957,
-        4109,
-        4214,
-        4309
+        4206,
+        4368,
+        4479,
+        4580
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.3972,
+        "factor": 1.4852,
         "predicted": [
           2832,
           2941,
           3016,
           3084
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.3972: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.4852: the family's correction from 3 playtest run(s) on the current files, this band having none of its own, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -4392,16 +4392,16 @@
       "focus": "Jumps and short strafes together; follow it up as well as across.",
       "leaderboardId": null,
       "rankMaxes": [
-        2064,
-        2741,
-        3161,
-        3475,
-        3747,
-        3995
+        2106,
+        2796,
+        3224,
+        3544,
+        3822,
+        4075
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.2619,
+        "factor": 1.2871,
         "predicted": [
           1636,
           2172,
@@ -4410,7 +4410,7 @@
           2969,
           3166
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.2619: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.2871: this band's correction from 3 playtest run(s) on its current file, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -4425,16 +4425,16 @@
       "focus": "Jumps and short strafes together; follow it up as well as across.",
       "leaderboardId": null,
       "rankMaxes": [
-        3459,
-        3700,
-        3806,
-        4000,
-        4153,
-        4292
+        3484,
+        3727,
+        3834,
+        4029,
+        4183,
+        4323
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.2619,
+        "factor": 1.2711,
         "predicted": [
           2741,
           2932,
@@ -4443,7 +4443,7 @@
           3291,
           3401
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.2619: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.2711: this band's correction from 1 playtest run(s) on its current file, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -4458,16 +4458,16 @@
       "focus": "Jumps and short strafes together; follow it up as well as across.",
       "leaderboardId": null,
       "rankMaxes": [
-        3837,
-        3969,
-        4088,
-        4198,
-        4303,
-        4448
+        3966,
+        4102,
+        4225,
+        4338,
+        4448,
+        4597
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.2619,
+        "factor": 1.3042,
         "predicted": [
           3041,
           3145,
@@ -4476,7 +4476,7 @@
           3410,
           3525
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.2619: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.3042: the family's correction from 4 playtest run(s) on the current files, this band having none of its own, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -4491,21 +4491,21 @@
       "focus": "Jumps and short strafes together; follow it up as well as across.",
       "leaderboardId": null,
       "rankMaxes": [
-        3947,
-        4089,
-        4184,
-        4277
+        4079,
+        4226,
+        4325,
+        4420
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.2619,
+        "factor": 1.3042,
         "predicted": [
           3128,
           3241,
           3316,
           3389
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.2619: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.3042: the family's correction from 4 playtest run(s) on the current files, this band having none of its own, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -4520,16 +4520,16 @@
       "focus": "A flier changing direction on both axes; react on whichever one moves.",
       "leaderboardId": null,
       "rankMaxes": [
-        1267,
-        1693,
-        1963,
-        2165,
-        2341,
-        2501
+        1173,
+        1567,
+        1817,
+        2004,
+        2166,
+        2314
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 0.8193,
+        "factor": 0.7583,
         "predicted": [
           1547,
           2067,
@@ -4538,7 +4538,7 @@
           2857,
           3052
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.8193: the family's correction from 1 playtest run(s) on the current files, which put this family harder than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.7583: this band's correction from 2 playtest run(s) on its current file, which put it harder than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -4553,16 +4553,16 @@
       "focus": "A flier changing direction on both axes; react on whichever one moves.",
       "leaderboardId": null,
       "rankMaxes": [
-        2155,
-        2309,
-        2376,
-        2500,
-        2596,
-        2683
+        1994,
+        2137,
+        2200,
+        2314,
+        2402,
+        2483
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 0.8193,
+        "factor": 0.7583,
         "predicted": [
           2630,
           2818,
@@ -4571,7 +4571,7 @@
           3168,
           3274
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.8193: the family's correction from 1 playtest run(s) on the current files, which put this family harder than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.7583: the family's correction from 2 playtest run(s) on the current files, this band having none of its own, which put it harder than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -4586,16 +4586,16 @@
       "focus": "A flier changing direction on both axes; react on whichever one moves.",
       "leaderboardId": null,
       "rankMaxes": [
-        2390,
-        2471,
-        2545,
-        2613,
-        2677,
-        2769
+        2212,
+        2287,
+        2356,
+        2418,
+        2478,
+        2563
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 0.8193,
+        "factor": 0.7583,
         "predicted": [
           2917,
           3016,
@@ -4604,7 +4604,7 @@
           3268,
           3380
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.8193: the family's correction from 1 playtest run(s) on the current files, which put this family harder than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.7583: the family's correction from 2 playtest run(s) on the current files, this band having none of its own, which put it harder than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -4619,21 +4619,21 @@
       "focus": "A flier changing direction on both axes; react on whichever one moves.",
       "leaderboardId": null,
       "rankMaxes": [
-        2444,
-        2534,
-        2594,
-        2650
+        2262,
+        2345,
+        2401,
+        2452
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 0.8193,
+        "factor": 0.7583,
         "predicted": [
           2984,
           3093,
           3166,
           3234
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.8193: the family's correction from 1 playtest run(s) on the current files, which put this family harder than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.7583: the family's correction from 2 playtest run(s) on the current files, this band having none of its own, which put it harder than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -4648,16 +4648,16 @@
       "focus": "Being tracked makes it turn; stay on it through the dodge.",
       "leaderboardId": null,
       "rankMaxes": [
-        1721,
-        2283,
-        2632,
-        2898,
-        3129,
-        3342
+        1840,
+        2441,
+        2814,
+        3098,
+        3345,
+        3573
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.0992,
+        "factor": 1.1751,
         "predicted": [
           1565,
           2077,
@@ -4666,7 +4666,7 @@
           2847,
           3040
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0992: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1751: this band's correction from 2 playtest run(s) on its current file, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -4681,16 +4681,16 @@
       "focus": "Being tracked makes it turn; stay on it through the dodge.",
       "leaderboardId": null,
       "rankMaxes": [
-        2880,
-        3085,
-        3175,
-        3342,
-        3472,
-        3592
+        3079,
+        3298,
+        3394,
+        3573,
+        3712,
+        3840
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.0992,
+        "factor": 1.1751,
         "predicted": [
           2620,
           2807,
@@ -4699,7 +4699,7 @@
           3159,
           3268
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0992: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1751: the family's correction from 2 playtest run(s) on the current files, this band having none of its own, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -4714,16 +4714,16 @@
       "focus": "Being tracked makes it turn; stay on it through the dodge.",
       "leaderboardId": null,
       "rankMaxes": [
-        3197,
-        3309,
-        3411,
-        3503,
-        3591,
-        3720
+        3417,
+        3537,
+        3647,
+        3745,
+        3839,
+        3977
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.0992,
+        "factor": 1.1751,
         "predicted": [
           2908,
           3010,
@@ -4732,7 +4732,7 @@
           3267,
           3384
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0992: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1751: the family's correction from 2 playtest run(s) on the current files, this band having none of its own, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -4747,21 +4747,21 @@
       "focus": "Being tracked makes it turn; stay on it through the dodge.",
       "leaderboardId": null,
       "rankMaxes": [
-        3278,
-        3405,
-        3490,
-        3573
+        3505,
+        3640,
+        3731,
+        3820
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.0992,
+        "factor": 1.1751,
         "predicted": [
           2983,
           3097,
           3175,
           3250
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0992: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1751: the family's correction from 2 playtest run(s) on the current files, this band having none of its own, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -4794,7 +4794,7 @@
           2582,
           2675
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0741: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0741: this band's correction from 2 playtest run(s) on its current file, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -4827,7 +4827,7 @@
           2830,
           2888
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0741: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0741: the family's correction from 3 playtest run(s) on the current files, this band having none of its own, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -4860,7 +4860,7 @@
           3021,
           3086
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0741: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0741: this band's correction from 1 playtest run(s) on its current file, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -4889,7 +4889,7 @@
           3102,
           3153
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0741: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0741: the family's correction from 3 playtest run(s) on the current files, this band having none of its own, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -4904,16 +4904,16 @@
       "focus": "Switches across a curved wall; land the flick, then hold.",
       "leaderboardId": null,
       "rankMaxes": [
-        2078,
-        2395,
-        2578,
-        2699,
-        2804,
-        2903
+        2296,
+        2647,
+        2849,
+        2983,
+        3098,
+        3208
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.0741,
+        "factor": 1.187,
         "predicted": [
           1935,
           2230,
@@ -4922,7 +4922,7 @@
           2610,
           2703
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0741: the family's correction from 0 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.187: this band's correction from 3 playtest run(s) on its current file, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -4937,16 +4937,16 @@
       "focus": "Switches across a curved wall; land the flick, then hold.",
       "leaderboardId": null,
       "rankMaxes": [
-        2777,
-        2877,
-        2919,
-        3000,
-        3069,
-        3132
+        3017,
+        3125,
+        3171,
+        3260,
+        3334,
+        3403
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.0741,
+        "factor": 1.167,
         "predicted": [
           2585,
           2678,
@@ -4955,7 +4955,7 @@
           2857,
           2916
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0741: the family's correction from 0 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.167: this band's correction from 1 playtest run(s) on its current file, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -4970,16 +4970,16 @@
       "focus": "Switches across a curved wall; land the flick, then hold.",
       "leaderboardId": null,
       "rankMaxes": [
-        3043,
-        3105,
-        3167,
-        3224,
-        3276,
-        3346
+        3407,
+        3477,
+        3547,
+        3610,
+        3669,
+        3747
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.0741,
+        "factor": 1.2028,
         "predicted": [
           2833,
           2891,
@@ -4988,7 +4988,7 @@
           3050,
           3115
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0741: the family's correction from 0 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.2028: the family's correction from 4 playtest run(s) on the current files, this band having none of its own, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -5003,21 +5003,21 @@
       "focus": "Switches across a curved wall; land the flick, then hold.",
       "leaderboardId": null,
       "rankMaxes": [
-        3248,
-        3318,
-        3363,
-        3417
+        3638,
+        3716,
+        3766,
+        3827
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.0741,
+        "factor": 1.2028,
         "predicted": [
           3024,
           3089,
           3131,
           3181
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0741: the family's correction from 0 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.2028: the family's correction from 4 playtest run(s) on the current files, this band having none of its own, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -5050,7 +5050,7 @@
           2582,
           2675
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0741: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0741: this band's correction from 3 playtest run(s) on its current file, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -5083,7 +5083,7 @@
           2830,
           2888
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0741: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0741: the family's correction from 4 playtest run(s) on the current files, this band having none of its own, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -5116,7 +5116,7 @@
           3021,
           3086
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0741: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0741: this band's correction from 1 playtest run(s) on its current file, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -5145,7 +5145,7 @@
           3102,
           3153
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0741: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0741: the family's correction from 4 playtest run(s) on the current files, this band having none of its own, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -5178,7 +5178,7 @@
           2384,
           2472
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0741: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0741: this band's correction from 1 playtest run(s) on its current file, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -5211,7 +5211,7 @@
           2615,
           2668
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0741: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0741: the family's correction from 2 playtest run(s) on the current files, this band having none of its own, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -5244,7 +5244,7 @@
           2788,
           2849
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0741: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0741: this band's correction from 1 playtest run(s) on its current file, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -5273,7 +5273,7 @@
           2862,
           2912
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0741: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0741: the family's correction from 2 playtest run(s) on the current files, this band having none of its own, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -5288,16 +5288,16 @@
       "focus": "Slow floaters that fall fast; the switch is the skill, the tracking only has to be clean.",
       "leaderboardId": null,
       "rankMaxes": [
-        1506,
-        1769,
-        1929,
-        2051,
-        2154,
-        2246
+        1200,
+        1409,
+        1537,
+        1634,
+        1716,
+        1789
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.0741,
+        "factor": 0.8557,
         "predicted": [
           1402,
           1647,
@@ -5306,7 +5306,7 @@
           2005,
           2091
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0741: the family's correction from 0 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.8557: this band's correction from 3 playtest run(s) on its current file, which put it harder than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -5321,16 +5321,16 @@
       "focus": "Slow floaters that fall fast; the switch is the skill, the tracking only has to be clean.",
       "leaderboardId": null,
       "rankMaxes": [
-        2113,
-        2205,
-        2244,
-        2316,
-        2374,
-        2421
+        1682,
+        1754,
+        1785,
+        1843,
+        1889,
+        1926
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.0741,
+        "factor": 0.8546,
         "predicted": [
           1968,
           2053,
@@ -5339,7 +5339,7 @@
           2211,
           2254
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0741: the family's correction from 0 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.8546: this band's correction from 2 playtest run(s) on its current file, which put it harder than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -5354,16 +5354,16 @@
       "focus": "Slow floaters that fall fast; the switch is the skill, the tracking only has to be clean.",
       "leaderboardId": null,
       "rankMaxes": [
-        2333,
-        2379,
-        2422,
-        2463,
-        2504,
-        2565
+        1789,
+        1824,
+        1857,
+        1888,
+        1919,
+        1966
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.0741,
+        "factor": 0.8234,
         "predicted": [
           2172,
           2215,
@@ -5372,7 +5372,7 @@
           2331,
           2388
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0741: the family's correction from 0 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.8234: the family's correction from 5 playtest run(s) on the current files, this band having none of its own, which put it harder than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -5387,21 +5387,21 @@
       "focus": "Slow floaters that fall fast; the switch is the skill, the tracking only has to be clean.",
       "leaderboardId": null,
       "rankMaxes": [
-        2459,
-        2520,
-        2560,
-        2613
+        1885,
+        1932,
+        1963,
+        2003
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.0741,
+        "factor": 0.8234,
         "predicted": [
           2289,
           2346,
           2384,
           2433
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0741: the family's correction from 0 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.8234: the family's correction from 5 playtest run(s) on the current files, this band having none of its own, which put it harder than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -5434,7 +5434,7 @@
           2934,
           3043
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0741: the family's correction from 0 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0741: this band's correction from 2 playtest run(s) on its current file, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -5449,16 +5449,16 @@
       "focus": "Each target takes a while; stay on it to the end, then switch.",
       "leaderboardId": null,
       "rankMaxes": [
-        3124,
-        3242,
-        3295,
-        3392,
-        3471,
-        3540
+        3316,
+        3441,
+        3497,
+        3600,
+        3684,
+        3757
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.0741,
+        "factor": 1.14,
         "predicted": [
           2909,
           3018,
@@ -5467,7 +5467,7 @@
           3231,
           3296
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0741: the family's correction from 0 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.14: this band's correction from 1 playtest run(s) on its current file, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -5482,16 +5482,16 @@
       "focus": "Each target takes a while; stay on it to the end, then switch.",
       "leaderboardId": null,
       "rankMaxes": [
-        3444,
-        3514,
-        3585,
-        3650,
-        3710,
-        3791
+        3639,
+        3712,
+        3787,
+        3856,
+        3919,
+        4005
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.0741,
+        "factor": 1.1347,
         "predicted": [
           3207,
           3271,
@@ -5500,7 +5500,7 @@
           3454,
           3529
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0741: the family's correction from 0 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1347: the family's correction from 3 playtest run(s) on the current files, this band having none of its own, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -5515,21 +5515,21 @@
       "focus": "Each target takes a while; stay on it to the end, then switch.",
       "leaderboardId": null,
       "rankMaxes": [
-        3682,
-        3764,
-        3817,
-        3874
+        3890,
+        3976,
+        4032,
+        4092
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.0741,
+        "factor": 1.1347,
         "predicted": [
           3428,
           3504,
           3554,
           3607
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0741: the family's correction from 0 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1347: the family's correction from 3 playtest run(s) on the current files, this band having none of its own, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -5562,7 +5562,7 @@
           2326,
           2438
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.046: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.046: this band's correction from 2 playtest run(s) on its current file, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -5595,7 +5595,7 @@
           2609,
           2663
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.046: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.046: this band's correction from 1 playtest run(s) on its current file, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -5610,16 +5610,16 @@
       "focus": "Six strafing targets; kill one without losing track of the others.",
       "leaderboardId": null,
       "rankMaxes": [
-        2687,
-        2742,
-        2797,
-        2850,
-        2901,
-        2981
+        2396,
+        2444,
+        2494,
+        2541,
+        2586,
+        2658
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.046,
+        "factor": 0.9326,
         "predicted": [
           2569,
           2621,
@@ -5628,7 +5628,7 @@
           2773,
           2850
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.046: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.9326: this band's correction from 1 playtest run(s) on its current file, which put it harder than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -5657,7 +5657,7 @@
           2858,
           2916
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.046: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.046: the family's correction from 4 playtest run(s) on the current files, this band having none of its own, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -5690,7 +5690,7 @@
           2363,
           2569
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.6276: the family's correction from 0 playtest run(s) on the current files, which put this family harder than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.6276: the family's correction from 0 playtest run(s) on the current files, this band having none of its own, which put it harder than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -5723,7 +5723,7 @@
           2959,
           3111
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.6276: the family's correction from 0 playtest run(s) on the current files, which put this family harder than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.6276: the family's correction from 0 playtest run(s) on the current files, this band having none of its own, which put it harder than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -5756,7 +5756,7 @@
           3480,
           3636
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.6276: the family's correction from 0 playtest run(s) on the current files, which put this family harder than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.6276: the family's correction from 0 playtest run(s) on the current files, this band having none of its own, which put it harder than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -5785,7 +5785,7 @@
           3712,
           3820
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.6276: the family's correction from 0 playtest run(s) on the current files, which put this family harder than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.6276: the family's correction from 0 playtest run(s) on the current files, this band having none of its own, which put it harder than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -5818,7 +5818,7 @@
           2297,
           2406
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.046: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.046: this band's correction from 2 playtest run(s) on its current file, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -5851,7 +5851,7 @@
           2571,
           2623
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.046: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.046: this band's correction from 2 playtest run(s) on its current file, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -5884,7 +5884,7 @@
           2730,
           2805
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.046: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.046: the family's correction from 4 playtest run(s) on the current files, this band having none of its own, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -5913,7 +5913,7 @@
           2811,
           2868
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.046: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.046: the family's correction from 4 playtest run(s) on the current files, this band having none of its own, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -5928,16 +5928,16 @@
       "focus": "Targets heal when left alone; finish every kill you start.",
       "leaderboardId": null,
       "rankMaxes": [
-        1831,
-        2210,
-        2442,
-        2600,
-        2739,
-        2870
+        1869,
+        2255,
+        2492,
+        2654,
+        2796,
+        2929
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.1126,
+        "factor": 1.1356,
         "predicted": [
           1646,
           1986,
@@ -5946,7 +5946,7 @@
           2462,
           2579
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1126: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1356: this band's correction from 3 playtest run(s) on its current file, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -5961,16 +5961,16 @@
       "focus": "Targets heal when left alone; finish every kill you start.",
       "leaderboardId": null,
       "rankMaxes": [
-        2693,
-        2824,
-        2884,
-        2992,
-        3072,
-        3135
+        2532,
+        2655,
+        2711,
+        2813,
+        2889,
+        2947
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.1126,
+        "factor": 1.046,
         "predicted": [
           2420,
           2538,
@@ -5979,7 +5979,7 @@
           2762,
           2818
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1126: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.046: this band's correction from 2 playtest run(s) on its current file, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -5994,16 +5994,16 @@
       "focus": "Targets heal when left alone; finish every kill you start.",
       "leaderboardId": null,
       "rankMaxes": [
-        3027,
-        3089,
-        3152,
-        3212,
-        3270,
-        3359
+        3045,
+        3107,
+        3170,
+        3231,
+        3289,
+        3379
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.1126,
+        "factor": 1.1191,
         "predicted": [
           2721,
           2776,
@@ -6012,7 +6012,7 @@
           2939,
           3019
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1126: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1191: the family's correction from 5 playtest run(s) on the current files, this band having none of its own, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -6027,21 +6027,21 @@
       "focus": "Targets heal when left alone; finish every kill you start.",
       "leaderboardId": null,
       "rankMaxes": [
-        3221,
-        3311,
-        3371,
-        3437
+        3240,
+        3330,
+        3391,
+        3457
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 1.1126,
+        "factor": 1.1191,
         "predicted": [
           2895,
           2976,
           3030,
           3089
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1126: the family's correction from 1 playtest run(s) on the current files, which put this family easier than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.1191: the family's correction from 5 playtest run(s) on the current files, this band having none of its own, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -6056,16 +6056,16 @@
       "focus": "One tough target; stay on it, and find it again the moment it respawns.",
       "leaderboardId": null,
       "rankMaxes": [
-        1923,
-        2561,
-        2945,
-        3213,
-        3440,
-        3644
+        1829,
+        2436,
+        2800,
+        3055,
+        3271,
+        3465
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 0.9834,
+        "factor": 0.9351,
         "predicted": [
           1956,
           2605,
@@ -6074,7 +6074,7 @@
           3498,
           3705
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.9834: the family's correction from 1 playtest run(s) on the current files, which put this family harder than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.9351: this band's correction from 2 playtest run(s) on its current file, which put it harder than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -6089,16 +6089,16 @@
       "focus": "One tough target; stay on it, and find it again the moment it respawns.",
       "leaderboardId": null,
       "rankMaxes": [
-        3219,
-        3423,
-        3511,
-        3671,
-        3800,
-        3914
+        3061,
+        3255,
+        3339,
+        3491,
+        3614,
+        3722
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 0.9834,
+        "factor": 0.9351,
         "predicted": [
           3274,
           3481,
@@ -6107,7 +6107,7 @@
           3864,
           3981
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.9834: the family's correction from 1 playtest run(s) on the current files, which put this family harder than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.9351: the family's correction from 2 playtest run(s) on the current files, this band having none of its own, which put it harder than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -6122,16 +6122,16 @@
       "focus": "One tough target; stay on it, and find it again the moment it respawns.",
       "leaderboardId": null,
       "rankMaxes": [
-        3569,
-        3681,
-        3782,
-        3879,
-        3974,
-        4082
+        3394,
+        3501,
+        3597,
+        3688,
+        3779,
+        3881
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 0.9834,
+        "factor": 0.9351,
         "predicted": [
           3629,
           3744,
@@ -6140,7 +6140,7 @@
           4041,
           4151
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.9834: the family's correction from 1 playtest run(s) on the current files, which put this family harder than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.9351: the family's correction from 2 playtest run(s) on the current files, this band having none of its own, which put it harder than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -6155,21 +6155,21 @@
       "focus": "One tough target; stay on it, and find it again the moment it respawns.",
       "leaderboardId": null,
       "rankMaxes": [
-        3720,
-        3831,
-        3901,
-        3977
+        3537,
+        3643,
+        3710,
+        3782
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 0.9834,
+        "factor": 0.9351,
         "predicted": [
           3783,
           3895,
           3967,
           4045
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.9834: the family's correction from 1 playtest run(s) on the current files, which put this family harder than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.9351: the family's correction from 2 playtest run(s) on the current files, this band having none of its own, which put it harder than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -6184,16 +6184,16 @@
       "focus": "Close targets moving fast across the view; stay with them, then turn to the next.",
       "leaderboardId": null,
       "rankMaxes": [
-        1535,
-        1851,
-        2046,
-        2183,
-        2302,
-        2413
+        1618,
+        1950,
+        2156,
+        2301,
+        2427,
+        2544
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 0.9924,
+        "factor": 1.046,
         "predicted": [
           1547,
           1865,
@@ -6202,7 +6202,7 @@
           2320,
           2432
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.9924: the family's correction from 1 playtest run(s) on the current files, which put this family harder than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.046: this band's correction from 3 playtest run(s) on its current file, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -6217,16 +6217,16 @@
       "focus": "Close targets moving fast across the view; stay with them, then turn to the next.",
       "leaderboardId": null,
       "rankMaxes": [
-        2262,
-        2373,
-        2424,
-        2515,
-        2584,
-        2636
+        2125,
+        2230,
+        2277,
+        2363,
+        2427,
+        2476
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 0.9924,
+        "factor": 0.9323,
         "predicted": [
           2280,
           2392,
@@ -6235,7 +6235,7 @@
           2603,
           2656
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.9924: the family's correction from 1 playtest run(s) on the current files, which put this family harder than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.9323: this band's correction from 1 playtest run(s) on its current file, which put it harder than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -6250,16 +6250,16 @@
       "focus": "Close targets moving fast across the view; stay with them, then turn to the next.",
       "leaderboardId": null,
       "rankMaxes": [
-        2543,
-        2595,
-        2647,
-        2697,
-        2746,
-        2822
+        2517,
+        2568,
+        2620,
+        2670,
+        2717,
+        2793
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 0.9924,
+        "factor": 0.9822,
         "predicted": [
           2563,
           2615,
@@ -6268,7 +6268,7 @@
           2767,
           2843
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.9924: the family's correction from 1 playtest run(s) on the current files, which put this family harder than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.9822: the family's correction from 4 playtest run(s) on the current files, this band having none of its own, which put it harder than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     },
     {
@@ -6283,21 +6283,21 @@
       "focus": "Close targets moving fast across the view; stay with them, then turn to the next.",
       "leaderboardId": null,
       "rankMaxes": [
-        2702,
-        2778,
-        2830,
-        2887
+        2674,
+        2750,
+        2801,
+        2857
       ],
       "source": {
         "kind": "calibrated",
-        "factor": 0.9924,
+        "factor": 0.9822,
         "predicted": [
           2723,
           2800,
           2851,
           2909
         ],
-        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.9924: the family's correction from 1 playtest run(s) on the current files, which put this family harder than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+        "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.9822: the family's correction from 4 playtest run(s) on the current files, this band having none of its own, which put it harder than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
       }
     }
   ]
