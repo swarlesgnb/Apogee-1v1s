@@ -2375,6 +2375,12 @@ ipcMain.handle("apogee:answerDuel", async (_e, { duelId, action } = {} as any) =
     // Accepting hands back a whole match; declining and cancelling hand back a verdict.
     // Taking up a match that is not there would wipe the one the player is playing.
     if (action === "accept" && result.matchId) adoptMatch(result);
+    // Taking back an unplayed duel voids the match it made; the panel must not keep it.
+    if (result.matchVoided && state.match?.matchId === result.matchVoided) {
+      state.match = null;
+      state.submitted.clear();
+      broadcast("apogee:match", null);
+    }
     void refreshDuels(`answered a duel: ${action}`);
     return { ok: true, status: result.status, match: action === "accept" ? result : undefined };
   } catch (err) {

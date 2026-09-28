@@ -20,6 +20,7 @@
  */
 
 import {
+  forfeitMatch,
   handler,
   INITIAL_TTL_MS,
   isOffPool,
@@ -74,6 +75,22 @@ Deno.serve(handler(async (req, admin) => {
       .maybeSingle();
 
     if (!cancelled) throw new HttpError(409, "that duel has already been answered");
+
+    // Taken back before its sender played: the match send-duel made for them is empty and
+    // nobody will play it, but it was still open, and one open match blocks the queue and
+    // every new duel. A sender who cancelled and tried again got "finish or abandon your
+    // current match" with no match on screen to finish. It has one side, so forfeitMatch
+    // voids it for nothing. A played one is left alone: it is a run set in the pool.
+    const { data: mine } = await admin
+      .from("match_sides")
+      .select("match_score")
+      .eq("match_id", row.match_id)
+      .eq("player_id", caller.playerId)
+      .maybeSingle();
+    if (mine && mine.match_score == null) {
+      await forfeitMatch(admin, row.match_id, caller.playerId, updateRating);
+      return json({ ok: true, status: "cancelled", matchVoided: row.match_id });
+    }
     return json({ ok: true, status: "cancelled" });
   }
 

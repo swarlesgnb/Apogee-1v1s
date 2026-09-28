@@ -409,6 +409,8 @@ export interface DuelAnswer {
   status: string;
   /** Present only on accept: the contested match this just created. */
   matchId?: string;
+  /** Present on a take-back before the sender played: the match that was voided with it. */
+  matchVoided?: string;
 }
 
 /**

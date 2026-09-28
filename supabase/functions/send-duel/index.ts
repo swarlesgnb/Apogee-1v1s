@@ -20,6 +20,7 @@
  */
 
 import {
+  forfeitMatch,
   handler,
   INITIAL_TTL_MS,
   json,
@@ -77,7 +78,24 @@ Deno.serve(handler(async (req, admin) => {
   // One match at a time, the same rule the queue holds to, and here it refuses rather
   // than resuming: the match they already have is not this duel, and handing it back
   // would answer a question they did not ask.
-  const live = await sweepStaleMatches(admin, caller.playerId, updateRating);
+  let live = await sweepStaleMatches(admin, caller.playerId, updateRating);
+
+  // The empty match of a duel this player took back is not a match they are in. answer-duel
+  // voids it on cancel now; this clears the ones left open before it did, which otherwise
+  // hold the player here until the match expires.
+  if (live) {
+    const { data: duel } = await admin.from("duels").select("status").eq("match_id", live.matchId).maybeSingle();
+    const { data: side } = await admin
+      .from("match_sides")
+      .select("match_score")
+      .eq("match_id", live.matchId)
+      .eq("player_id", caller.playerId)
+      .maybeSingle();
+    if (duel?.status === "cancelled" && side && side.match_score == null) {
+      await forfeitMatch(admin, live.matchId, caller.playerId, updateRating);
+      live = await sweepStaleMatches(admin, caller.playerId, updateRating);
+    }
+  }
   if (live) {
     throw new HttpError(409, "finish or abandon your current match before sending a duel");
   }
