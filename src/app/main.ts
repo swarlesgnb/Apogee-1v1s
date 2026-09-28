@@ -108,8 +108,14 @@ setDataDir(join(here, "..", "data"));
 // Smoke probes exercise settings and appearance writes as well as progress. Give
 // the entire process a fresh profile before any stores or Chromium caches open.
 const SMOKE = process.argv.includes("--smoke");
-if (SMOKE) {
-  const profile = mkdtempSync(join(app.getPath("temp"), "apogee-smoke-"));
+// `--fresh` is the same throwaway profile in an ordinary window: what a new player sees on
+// first launch - no remembered folder, no sign-in, no progress, the checklist not yet
+// dismissed - without touching the real profile. `--no-stats` also skips finding the
+// stats folder, for the screen a player sees when detection fails.
+const FRESH = process.argv.includes("--fresh");
+const NO_STATS = process.argv.includes("--no-stats");
+if (SMOKE || FRESH) {
+  const profile = mkdtempSync(join(app.getPath("temp"), SMOKE ? "apogee-smoke-" : "apogee-fresh-"));
   app.setPath("userData", profile);
   app.setPath("sessionData", profile);
 }
@@ -2057,7 +2063,7 @@ app.whenReady().then(() => {
   // Steam libraries, or a stats folder copied off another machine, told us the answer
   // once and should not be asked again every launch.
   const remembered = loadSettings().statsDir;
-  const found = remembered && existsSync(remembered) ? remembered : findStatsFolder();
+  const found = NO_STATS ? null : remembered && existsSync(remembered) ? remembered : findStatsFolder();
 
   if (found) {
     startWatching(found);
