@@ -26,13 +26,29 @@
       pool = pool.filter(r => r !== next);
       categories.set(next.category,(categories.get(next.category)||0)+1);
       families.add(next.family || next.scenario);
-      picked.push({ scenario:next.scenario, label:next.label || next.scenario, category:next.category,
-        reference:finite(next.last) ? next.last : finite(next.best) ? next.best : null,
-        referenceLabel:finite(next.last) ? 'Last run' : finite(next.best) ? 'Personal best' : 'First look',
-        target:mood === 'push' && finite(next.nextRankScore) && (!finite(next.best) || next.nextRankScore > next.best) ? next.nextRankScore : null,
-        runs:finite(next.runs) ? next.runs : 0, status:'pending', score:null });
+      picked.push({ ...track(next), target:mood === 'push' ? threshold(next) : null });
     }
     return picked;
+  }
+  // What a track freezes when it is planned. The best and the upcoming threshold ride along
+  // so a run can be judged against them when it lands, whatever the pool says by then.
+  const threshold = r => finite(r.nextRankScore) && (!finite(r.best) || r.nextRankScore > r.best) ? r.nextRankScore : null;
+  function track(r) {
+    return { scenario:r.scenario, label:r.label || r.scenario, category:r.category,
+      reference:finite(r.last) ? r.last : finite(r.best) ? r.best : null,
+      referenceLabel:finite(r.last) ? 'Last run' : finite(r.best) ? 'Personal best' : 'First look',
+      best:finite(r.best) ? r.best : null, threshold:threshold(r),
+      thresholdIndex:threshold(r) !== null && Number.isInteger(r.nextRankIndex) ? r.nextRankIndex : null,
+      target:null, runs:finite(r.runs) ? r.runs : 0, status:'pending', score:null };
+  }
+  /** The same scenarios in the same order, with references from the current pool. Scenarios
+   *  that left the pool are dropped rather than replayed into a launch that fails. */
+  function replay(rows, session) {
+    if (!session || !Array.isArray(rows)) return [];
+    return session.tracks.map(t => {
+      const r = rows.find(row => row && row.scenario === t.scenario);
+      return r && text(r.category) ? { ...track(r), target:t.target === null ? null : threshold(r) } : null;
+    }).filter(Boolean);
   }
   function create(tracks, mood, band, now = Date.now()) {
     if (!tracks.length || tracks.length > 9 || !moods.includes(mood)) return null;
@@ -45,7 +61,9 @@
     const receipt = typeof run.file === 'string' && run.file ? run.file : `${run.scenario}|${run.playedAt}|${run.score}`;
     if (session.receipts.includes(receipt)) return null;
     const next = structuredClone(session);
-    Object.assign(next.tracks[next.index],{status:'played',score:run.score,at});
+    // A personal best by the watcher's own history when it knows, else by the frozen best.
+    const pb = !!run.localPersonalBest || (finite(track.best) && run.score > track.best);
+    Object.assign(next.tracks[next.index],{status:'played',score:run.score,at,pb});
     next.receipts.push(receipt); next.index++; next.armedAt = Math.max(now,at);
     if (next.index === next.tracks.length) next.endedAt = now;
     return next;
@@ -62,6 +80,8 @@
     return { played:played.length, skipped:s.tracks.filter(t => t.status === 'skipped').length,
       improved:played.filter(t => finite(t.reference) && t.score > t.reference).length,
       compared:played.filter(t => finite(t.reference)).length,
+      bests:played.filter(t => t.pb).length,
+      thresholds:played.filter(t => finite(t.threshold) && t.score >= t.threshold).length,
       categories:new Set(played.map(t => t.category)).size };
   }
   function valid(s) {
@@ -73,5 +93,5 @@
         (t.reference === null || finite(t.reference)) && (t.target === null || finite(t.target)) &&
         (i < s.index ? ['played','skipped'].includes(t.status) : t.status === 'pending') && (t.status === 'played' ? finite(t.score) : t.score === null));
   }
-  globalThis.ApogeeMixtape = Object.freeze({plan,create,receive,skip,summary,valid});
+  globalThis.ApogeeMixtape = Object.freeze({plan,replay,create,receive,skip,summary,valid});
 })();

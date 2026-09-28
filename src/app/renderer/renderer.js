@@ -770,6 +770,20 @@ function badge(tier, uid) {
     '<path d="m29 46 11-21 11 21-11-6Zm3 5 8 7 8-7-8 2Z" fill="currentColor"/>' + pips + '</svg>';
 }
 
+/**
+ * What a run's verification tier means, for the tooltip on the tier word. Players saw
+ * "consistent" and "suspect" with no gloss; the definitions lived only in FAIR-PLAY.md,
+ * and these are that table's rows, shortened.
+ */
+function tierMeaning(tier) {
+  return {
+    verified: "KovaaK's servers hold a matching record. Counts in full.",
+    consistent: "No server record yet, but the file checks out and is near your verified best. Counts in full.",
+    suspect: "Above your verified best with no server record. Counts, and is held for review.",
+    rejected: "The file failed a check or was played outside the match. The match is void.",
+  }[tier] || "";
+}
+
 /* Discipline marks describe movement; they never decide the scenario pool. */
 const DISCIPLINES = {
   "Any": { key: "all", ink: "#d7fa52", cue: "Scenarios from all six categories", path: '<path d="M12 2 22 12 12 22 2 12ZM12 7v10M7 12h10"/>' },
@@ -966,6 +980,35 @@ function makeCopyable(el, name) {
 }
 
 /** The same banner, for something that worked. `quiet` for news nobody just asked for. */
+/**
+ * A found folder with no runs in it is a new KovaaK's install, not a missing folder. The
+ * first-run panel kept saying "Find your stats folder" beside a status bar reading
+ * "Watching", and pointed every locked tab at the folder chooser.
+ */
+function paintFolderFound() {
+  const banner = $("banner");
+  if (current || !currentPath || (banner.classList.contains("on") && !banner.classList.contains("notice"))) return;
+  $("emptyHead").textContent = "Found your KovaaK's stats";
+  $("emptyText").textContent = "Play any scenario in KovaaK's and it shows up here.";
+  $("emptyPath").textContent = currentPath;
+  $("emptyPath").hidden = false;
+  $("emptyHelp").hidden = true;
+  const choose = $("emptyChoose");
+  choose.textContent = "Change folder";
+  choose.classList.add("secondary");
+}
+
+/** Not found: the button becomes the one thing to do, and the path is one click away. */
+function paintFolderMissing() {
+  $("emptyHead").textContent = "Couldn't find your KovaaK's stats folder";
+  $("emptyText").textContent = "Choose it once and Apogee remembers it.";
+  $("emptyPath").hidden = true;
+  $("emptyHelp").hidden = false;
+  const choose = $("emptyChoose");
+  choose.textContent = "Choose folder";
+  choose.classList.remove("secondary");
+}
+
 function showNotice(message, quiet = false) {
   const banner = $("banner");
   banner.textContent = message;
@@ -1020,6 +1063,7 @@ let pendingMatchId = null;
  */
 let standing = null;
 function paintRating() {
+  renderSetup();
   const me = current?.player?.apogee;
   const rated = HOST !== "electron" ? me : standing && standing.matchesPlayed > 0 ? standing : null;
   $("myRating").textContent = rated ? Math.round(rated.rating) + " \u00b1" + Math.round(rated.rd) : "unrated";
@@ -1047,12 +1091,17 @@ let signedIn = false;
 function render(data) {
   lastSnapshot = data;
   current = data;
+  renderSetup();
   $("app").hidden = false;
   $("empty").hidden = true;
   document.body.classList.remove("awaiting-data");
   $("whoami").hidden = false;
 
   const me = data.player.apogee;
+  // No season run yet: the snapshot still derives a tier from percentile 0, which named the
+  // player the lowest rank while "next rank" named the same one. Unplaced is the fact.
+  const placed = !!data.player.benchmarkRank;
+  const tierName = placed ? me.tier.name : "Unplaced";
 
   // The whole chrome takes the player's rank colour: the selected tab's number, focus
   // rings, the badge, the one tile on the pool screen that is an instruction. The
@@ -1061,14 +1110,14 @@ function render(data) {
   document.documentElement.style.setProperty("--accent", me.tier.color);
 
   $("myBadge").innerHTML = badge(me.tier, "me");
-  $("myTier").textContent = me.tier.name;
+  $("myTier").textContent = tierName;
   $("myTier").style.color = legibleOnDark(me.tier.color, RANK_TEXT_CONTRAST);
   paintRating();
   $("myStreak").textContent = data.player.streak + "-day streak";
 
   $("heroBadge").innerHTML = badge(me.tier, "hero");
   document.querySelector(".rank-showcase").dataset.material = String(me.tier.id || "tier-1");
-  $("heroName").textContent = me.tier.name;
+  $("heroName").textContent = tierName;
   $("heroName").style.color = legibleOnDark(me.tier.color, RANK_TEXT_CONTRAST);
 
   // Three separate facts, so they read as three. Run together on one line they were a
@@ -1078,7 +1127,14 @@ function render(data) {
   // thing, not by travelling to a new value.
   paintRating();
   // "Top 100.0%" is a placement nobody has; below the lowest rung it is simply unplaced.
-  countTo($("heroPercentile"), Math.min(99.9, 100 - me.percentile), (v) => "top " + v.toFixed(1) + "%");
+  if (placed) countTo($("heroPercentile"), Math.min(99.9, 100 - me.percentile), (v) => "top " + v.toFixed(1) + "%");
+  else {
+    const el = $("heroPercentile");
+    if (el._countRaf) cancelAnimationFrame(el._countRaf);
+    el._countRaf = 0;
+    el._countValue = undefined;
+    el.textContent = "not placed yet";
+  }
   countTo($("heroRuns"), data.player.totalRuns, num);
   countTo(
     $("heroScenarios"),
@@ -6080,7 +6136,10 @@ function renderScenarioRanks() {
     tr.innerHTML =
       "<td>" + esc(r.label) + ' <span class="win">' + esc(r.windowName) + "</span></td>" +
       "<td>" + esc(r.category) + "</td>" +
-      '<td class="sc-rank">' + esc(held ?? "unranked") + "</td>" +
+      // A played score short of its band's first rank names that rank. Above Novice a
+      // band opens where Novice's fifth rank sits, and "unranked" there read to the
+      // playtest as a broken ladder rather than a rung not reached yet.
+      '<td class="sc-rank">' + esc(held ?? (r.runs > 0 && next ? "below " + next : "unranked")) + "</td>" +
       "<td>" + (r.best === null ? '<span class="base">unplayed</span>' : pts(r.best)) + "</td>" +
       '<td class="sc-rank">' + (maxedHere ? "maxed" : esc(next ?? "")) + "</td>" +
       "<td>" + (maxedHere ? "" : tgt(r.nextRankScore)) + "</td>" +
@@ -6474,7 +6533,11 @@ function renderSeasonView(data) {
       copy.textContent = guide.description;
       const route = document.createElement("span");
       route.className = "pool-circuit-route";
-      route.textContent = inCategory.length + " scenarios · play in order";
+      const playedHere = inCategory.filter((r) => r.runs > 0).length;
+      route.textContent =
+        inCategory.length + " scenarios · " +
+        (playedHere === inCategory.length ? "all played" : playedHere + " played") +
+        " · play in order";
       intro.append(copy, route);
       block.append(intro);
     }
@@ -6493,6 +6556,10 @@ function renderSeasonView(data) {
 
       const subHead = document.createElement("div");
       subHead.className = "pool-sub-head";
+      // A category that is one sub-skill named after itself printed its name twice, a
+      // heading and then the same words as a sub-heading directly under it. The played
+      // count it carried is on the intro's route line instead.
+      if (subs.length === 1 && sub === category.name && guide?.description) subHead.hidden = true;
       const maxed = inSub.filter((r) => r.nextRankScore === null).length;
       subHead.innerHTML =
         '<span class="pool-sub-name">' + esc(sub) + "</span>" +
@@ -6707,6 +6774,8 @@ function renderSeasonView(data) {
  * to be discovered: a playlist that is genuinely on disk and genuinely not in the menu
  * looks exactly like the app having failed.
  */
+/** The chip last written, so the redraw that follows a click can confirm it. */
+let lastWritten = null;
 function renderPlaylists() {
   const host = $("svPlaylists");
   if (!host) return;
@@ -6764,6 +6833,10 @@ function renderPlaylists() {
         note.dataset.done = "1";
         note.textContent = r.dir + " · " + r.note;
       }
+      // Said out loud, because rewriting a playlist that was already installed changes
+      // nothing a chip can show: the mark was filled before the click and is filled after
+      // it, so the click read as ignored and got pressed again.
+      lastWritten = { label: btn.dataset.label, band, at: Date.now() };
       renderPlaylists();
     } finally {
       delete btn.dataset.busy;
@@ -6785,6 +6858,11 @@ function renderPlaylists() {
     // The state is on the button itself, so it reaches a screen reader without the
     // stylesheet and without a second label to keep in step.
     chip.setAttribute("aria-pressed", isIn ? "true" : "false");
+    chip.dataset.label = label;
+    if (lastWritten && lastWritten.band === band && lastWritten.label === label && Date.now() - lastWritten.at < 1500) {
+      chip.classList.add("just-written");
+      setTimeout(() => chip.classList.remove("just-written"), 1200);
+    }
     return chip;
   };
 
@@ -6813,9 +6891,13 @@ function renderPlaylists() {
   const legend = $("svChipLegend");
   if (legend) {
     const n = every.filter((p) => installed.has(p.name)).length;
-    legend.textContent = n === 0
-      ? "None installed yet. A filled mark means the playlist is already in KovaaK's."
-      : n + " of " + every.length + " installed. A filled mark means it is already in KovaaK's.";
+    const status = n === 0
+      ? "None installed yet. A ticked mark means the playlist is already in KovaaK's."
+      : n + " of " + every.length + " installed. A ticked mark means it is already in KovaaK's.";
+    legend.textContent = lastWritten && lastWritten.band === band
+      ? "Wrote " + (lastWritten.label === "All bands" ? "every playlist" : lastWritten.label + " · " + (bands[band] || "")) +
+        ". Restart KovaaK's to load it. " + status
+      : status;
   }
 }
 
@@ -6864,7 +6946,7 @@ function renderBand() {
   $("bandNote").textContent =
     band.played === 0
       ? "not played yet"
-      : (band.rankName ? band.rankName : "below the first rank") +
+      : (band.rankName ? bandRankLabel(band) : "below the first rank") +
         " · " + num(band.energy) + " energy";
 
   // ---- the ladder ----
@@ -6994,8 +7076,10 @@ function renderRanks(data) {
 
   // Highest tier first: a ladder reads top-down, and the top is what people are
   // climbing toward.
+  // Unplaced marks no rung: the lowest tier is where percentile 0 falls, not a placement.
+  const placed = !!data.player.benchmarkRank;
   [...tiers].reverse().forEach((tier) => {
-    const here = tier.id === me.tier.id;
+    const here = placed && tier.id === me.tier.id;
     const li = document.createElement("li");
     li.className = here ? "here" : "";
     li.style.setProperty("--tier", tier.color);
@@ -7106,7 +7190,9 @@ function renderRanks(data) {
       name.className = "band-rank";
       name.textContent = unplayed
         ? "not played"
-        : (b.rankName ?? "below " + (b.rankNames[0] ?? "rank 1"));
+        : b.rankName
+          ? bandRankLabel(b)
+          : "below " + (b.rankNames[0] ?? "rank 1");
       card.append(name);
 
       // One pip per rank in this band, and only this band. The pip the player holds is
@@ -7228,7 +7314,9 @@ function renderRanks(data) {
 
     tr.innerHTML =
       "<td>" + esc(s.label) + (s.windowName ? ' <span class="win">' + esc(s.windowName) + "</span>" : "") + "</td>" +
-      '<td style="color:' + esc(ink) + '">' + esc(s.rankName || "unranked") + "</td>" +
+      '<td style="color:' + esc(ink) + '">' +
+        esc(s.rankName || (s.runs > 0 && s.nextRankName && !s.nextRankIsNewScenario ? "below " + s.nextRankName : "unranked")) +
+        "</td>" +
       '<td class="c-best"></td>' +
       '<td style="color:' + esc(nextInk) + '">' + esc(s.nextRankName) + "</td>" +
       "<td>" + tgt(s.nextRankScore) + target + "</td>" +
@@ -7351,7 +7439,7 @@ function renderTodo(arriving) {
     li.innerHTML =
       '<span class="n">' + (s.tier === "rejected" ? "!" : s.done ? "✓" : i + 1) + "</span>" +
       "<span>" + esc(s.label) + "</span>" +
-      (s.tier ? '<span class="tier-tag">received · ' + esc(s.tier) + "</span>" : s.uploading ? '<span class="tier-tag">Submitting…</span>' : s.failed ? '<span class="tier-tag">Upload failed · retry</span>' : '<span class="tier-tag">Awaiting run</span>') +
+      (s.tier ? '<span class="tier-tag" title="' + esc(tierMeaning(s.tier)) + '">received · ' + esc(s.tier) + "</span>" : s.uploading ? '<span class="tier-tag">Submitting…</span>' : s.failed ? '<span class="tier-tag">Upload failed · retry</span>' : '<span class="tier-tag">Awaiting run</span>') +
       (mine
         ? '<span class="scen-best" title="' +
           esc(num(mine.runs) + " runs on this scenario") +
@@ -7670,7 +7758,7 @@ function renderSettled(s) {
       "<td>" + esc(r.scenario) + "</td>" +
       "<td>" + (Number.isFinite(r.score) ? pts(r.score) : "—") + '<div class="base">base ' + (Number.isFinite(r.baseline) ? num(r.baseline) : "—") +
         (r.verificationTier && r.verificationTier !== "verified"
-          ? " · " + esc(r.verificationTier)
+          ? ' · <span title="' + esc(tierMeaning(r.verificationTier)) + '">' + esc(r.verificationTier) + "</span>"
           : "") +
         "</div></td>" +
       '<td class="' + (Number.isFinite(yours) ? yours >= 0 ? "up" : "down" : "") + '">' +
@@ -7900,6 +7988,9 @@ const QUEST_UNITS = {
   days: ["day", "days"],
   sets: ["set", "sets"],
   ranks: ["rank-up", "rank-ups"],
+  categories: ["category", "categories"],
+  families: ["family", "families"],
+  bests: ["new best", "new bests"],
 };
 
 /**
@@ -8061,6 +8152,7 @@ function nextCelebration() {
     quest.kind === "board_clear" ? "Board cleared"
     : quest.slot === "weekly" ? "Weekly quest complete"
     : quest.kind === "clean_set" ? "Floor raised"
+    : quest.kind === "personal_best" ? "New best"
     : "Quest complete";
   $("celebrateTitle").textContent = quest.title;
   $("celebrateDetail").textContent = quest.detail;
@@ -8081,7 +8173,7 @@ function nextCelebration() {
 
   // More waiting? Say so, so the button does not look like it dismissed them all.
   $("celebrateClose").textContent =
-    celebrationQueue.length > 0 ? `Next (${celebrationQueue.length} more)` : "Nice";
+    celebrationQueue.length > 0 ? `Next (${celebrationQueue.length} more)` : "Close";
 }
 
 function renderProgression(p) {
@@ -8111,6 +8203,7 @@ let eligibility = null;
  * server checks again regardless: this is a courtesy, not a control.
  */
 function renderEligibility() {
+  renderSetup();
   const gate = $("queueGate");
   const btn = $("queueBtn");
   if (!gate || !btn) return;
@@ -8125,28 +8218,27 @@ function renderEligibility() {
   }
 
   const { uploaded, required, missing } = eligibility;
-  // The gate said "0 uploaded" to a player with thousands of runs on this PC and no way
-  // to act on it: the upload control sat 500px further down. It names both counts and
-  // carries the button, and a history big enough to qualify is sent without asking.
+  // Any runs on this PC the server has not seen are sent without asking. This used to wait
+  // until there were enough local runs to open ranked outright, which left a player short
+  // of that to find an Upload button; in the first outside playtest the tester never
+  // found it. The button here appears only after the automatic upload has failed.
   const local = current && current.player ? current.player.totalRuns : 0;
-  const coverable = local >= required;
-  $("queueGateText").innerHTML =
-    'Ranked needs <span class="gate-count">' + num(required) + "</span> uploaded runs. " +
-    (local > uploaded
-      ? 'You have <span class="gate-count">' + num(local) + "</span> on this PC and " +
-        num(uploaded) + " uploaded."
-      : 'You have <span class="gate-count">' + num(uploaded) + "</span> \u00b7 " + num(missing) + " to go.");
+  const pending = signedIn && local > uploaded;
+  $("queueGateText").innerHTML = uploadBusy
+    ? "Uploading your runs\u2026"
+    : pending
+      ? 'Ranked opens at <span class="gate-count">' + num(required) + "</span> uploaded runs. " +
+        num(uploaded) + " uploaded so far."
+      : 'Play <span class="gate-count">' + num(missing) + "</span> more runs to open ranked.";
   const gateUpload = $("queueGateUpload");
   if (gateUpload) {
-    gateUpload.hidden = !(signedIn && local > uploaded);
-    gateUpload.disabled = uploadBusy;
-    gateUpload.textContent = uploadBusy ? "Uploading\u2026" : "Upload my " + num(local) + " runs";
+    gateUpload.hidden = !(pending && uploadFailed && !uploadBusy);
+    gateUpload.textContent = "Try the upload again";
   }
   setFill($("queueGateFill"), uploaded / required);
   gate.classList.add("on");
-  if (signedIn && coverable && !autoUploaded && !uploadBusy) {
+  if (pending && !autoUploaded && !uploadBusy) {
     autoUploaded = true;
-    showNotice("Uploading your run history so you can play ranked. This takes a minute.", true);
     $("uploadBtn").click();
   }
 
@@ -8156,9 +8248,10 @@ function renderEligibility() {
   btn.dataset.gated = "1";
 }
 
-/** One automatic upload per session: if it fails, the button is there. */
+/** One automatic upload per session: if it fails, the gate offers a retry. */
 let autoUploaded = false;
 let uploadBusy = false;
+let uploadFailed = false;
 
 function refreshEligibility() {
   if (!api || !api.queueEligibility) return;
@@ -8172,6 +8265,178 @@ function refreshEligibility() {
     // this cannot become a stream of banners.
     reportFailure("Could not check whether you can queue", err);
   });
+}
+
+/**
+ * A band's rank as a player reads it: "Diamond complete" once every scenario in the band
+ * has reached Diamond on its own score, the way evxl labels a benchmark, and plain
+ * "Diamond" while the rank is energy carrying a scenario that is still below it.
+ */
+function bandRankLabel(band) {
+  return band.complete ? band.rankName + " complete" : band.rankName;
+}
+
+/* ------------------------------------------------------------------ getting started */
+
+/**
+ * The checklist on the Arena screen, for the steps a new player cannot see from here.
+ *
+ * Every step is read off state the app already holds, so it cannot disagree with the
+ * screen: the stats folder from the snapshot, sign-in from the session, the run count
+ * from the same eligibility the queue gate uses, a match from the server's rating or a
+ * settle seen here. The match is remembered once seen, because a finished step must not
+ * come undone.
+ *
+ * Desktop only. The standalone preview has no session and nothing to press.
+ */
+const SETUP_KEY = "apogee.setup";
+
+function setupFlags() {
+  try {
+    return JSON.parse(localStorage.getItem(SETUP_KEY) || "{}") || {};
+  } catch {
+    return {};
+  }
+}
+
+function setSetupFlag(key) {
+  const flags = setupFlags();
+  if (flags[key]) return;
+  flags[key] = true;
+  try {
+    localStorage.setItem(SETUP_KEY, JSON.stringify(flags));
+  } catch {
+    /* storage unavailable: the step is still read live */
+  }
+}
+
+const SETUP_CHECK =
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg>';
+
+function setupSteps() {
+  const local = current && current.player ? current.player.totalRuns : 0;
+  const required = eligibility ? eligibility.required : null;
+  const uploaded = eligibility ? eligibility.uploaded : 0;
+
+  if (standing && standing.matchesPlayed > 0) setSetupFlag("match");
+  const flags = setupFlags();
+
+  // Three steps. The first outside playtest had five, with the upload as a step of its own
+  // and a button to press; the tester stalled on it. Signing in now starts the upload by
+  // itself (renderEligibility), so the step that asks for sign-in carries its progress,
+  // and duels are found from the queue screen once there is a match to be proud of.
+  const uploading = signedIn && eligibility && !eligibility.eligible;
+  return [
+    {
+      title: "Find your KovaaK's stats",
+      detail: local > 0 ? num(local) + " runs found." : "Found by itself on most installs.",
+      done: local > 0,
+      action: "Choose folder",
+      run: () => $("btnChoose").click(),
+    },
+    {
+      title: "Sign in with Steam",
+      detail: !signedIn
+        ? "Reads your Steam name, avatar and friends list. Nothing else."
+        : uploading
+          ? uploadBusy
+            ? "Uploading your runs…"
+            : local > uploaded
+              ? num(uploaded) + " of " + num(required) + " runs uploaded."
+              : "Play " + num(eligibility.missing) + " more runs to open ranked."
+          : "Signed in.",
+      progress: uploading && required ? Math.min(1, uploaded / required) : null,
+      done: signedIn && Boolean(eligibility && eligibility.eligible),
+      action: signedIn ? null : "Sign in",
+      run: () => $("btnSignIn").click(),
+    },
+    {
+      title: "Play your first match",
+      detail: "Pick a category and press Find opponent.",
+      done: Boolean(flags.match),
+      action: "Go to the queue",
+      run: () => {
+        const stage = document.querySelector(".queue-stage");
+        if (stage) stage.scrollIntoView({ behavior: "smooth", block: "start" });
+        $("queueBtn").focus({ preventScroll: true });
+      },
+    },
+  ];
+}
+
+/**
+ * Called from render(), the session handler and every state change below, so it must
+ * never throw into them: a checklist is not worth a first-run screen that never advances.
+ */
+function renderSetup() {
+  try {
+    paintSetup();
+  } catch (err) {
+    console.warn("getting started:", err);
+  }
+}
+
+function paintSetup() {
+  const panel = $("setupPanel");
+  const list = $("setupList");
+  if (!panel || !list) return;
+  if (HOST !== "electron" || setupFlags().hidden) {
+    panel.hidden = true;
+    return;
+  }
+
+  const steps = setupSteps();
+  const done = steps.filter((s) => s.done).length;
+  if (done === steps.length) {
+    // Finished is finished: the panel does not come back if a step later reads as undone,
+    // say after signing out.
+    setSetupFlag("hidden");
+    panel.hidden = true;
+    return;
+  }
+
+  const next = steps.findIndex((s) => !s.done);
+  list.textContent = "";
+  steps.forEach((step, i) => {
+    const li = document.createElement("li");
+    li.className = "setup-step" + (step.done ? " done" : "") + (i === next ? " next" : "");
+
+    const mark = document.createElement("span");
+    mark.className = "setup-mark";
+    if (step.done) mark.innerHTML = SETUP_CHECK;
+    else mark.textContent = String(i + 1);
+
+    const body = document.createElement("div");
+    const title = document.createElement("div");
+    title.className = "setup-title";
+    title.textContent = step.title;
+    const detail = document.createElement("p");
+    detail.className = "setup-detail";
+    detail.textContent = step.detail;
+    body.append(title, detail);
+    if (!step.done && step.progress != null) {
+      const bar = document.createElement("span");
+      bar.className = "setup-bar";
+      const fill = document.createElement("i");
+      fill.style.width = Math.round(step.progress * 100) + "%";
+      bar.append(fill);
+      body.append(bar);
+    }
+
+    li.append(mark, body);
+    if (!step.done && step.action) {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "go";
+      btn.textContent = step.action;
+      btn.addEventListener("click", step.run);
+      li.append(btn);
+    }
+    list.append(li);
+  });
+
+  $("setupNote").textContent = done + " of " + steps.length + " done";
+  panel.hidden = false;
 }
 
 /* ------------------------------------------------------------------ toast */
@@ -9558,6 +9823,7 @@ function renderSession(session, configured) {
   $("whoami").hidden = false;
 
   signedIn = Boolean(session);
+  renderSetup();
   if (!activeMatch) resetCommit(current);
   if (session) refreshStanding();
   else {
@@ -10192,6 +10458,7 @@ async function onRowAction(button, working, run) {
 
 function renderDuels(board) {
   duelBoard = board;
+  renderSetup();
   const panel = $("duels");
   const list = $("duelList");
   if (!panel || !list) return;
@@ -10339,6 +10606,16 @@ function renderRoster() {
   });
 
   host.textContent = "";
+  // Steam only shares a friends list set to public. Without it a friend who has not
+  // finished a match yet is not on this list at all, and nothing else would say why.
+  if (duelBoard.steamFriends === "private") {
+    const hint = document.createElement("p");
+    hint.className = "roster-empty";
+    hint.textContent =
+      "Your Steam friends list is private, so friends who haven't played a match yet can't be listed. " +
+      "Set Friends List to Public in Steam's privacy settings, or ask them to finish one match.";
+    host.append(hint);
+  }
   if (people.length === 0) {
     const empty = document.createElement("p");
     empty.className = "roster-empty";
@@ -10363,9 +10640,10 @@ function rosterRow(person, isFriend) {
   name.textContent = person.displayName;
   const sub = document.createElement("span");
   sub.className = "duel-sub";
-  sub.textContent = person.lastPlayedAt
+  const played = person.lastPlayedAt
     ? "last played " + new Date(person.lastPlayedAt).toLocaleDateString()
     : "no matches yet";
+  sub.textContent = person.steamFriend ? "Steam friend · " + played : played;
   who.append(name, sub);
 
   const rating = document.createElement("span");
@@ -11406,8 +11684,51 @@ document.querySelectorAll(".tab").forEach((tab) =>
 // go back to, so they have to be taken while they are still the only value there is.
 captureCopyDefaults();
 
+/**
+ * Keep the window buttons on the top bar's own ground.
+ *
+ * The operating system paints minimise, maximise and close on a strip main sets, and that
+ * strip only knows the colour it is told. The top bar's colour is whatever the stylesheets
+ * compute - the arcade look, the theme menu and Expedition all move it - so it is read off
+ * the element and sent whenever a theme, a screen or a stylesheet could have changed it.
+ */
+function syncWindowChrome() {
+  const bar = document.querySelector(".topbar");
+  if (!bar || !window.apogee || !window.apogee.setWindowChrome) return;
+  const hex = (css) => {
+    const m = /rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?/.exec(css || "");
+    if (!m || (m[4] !== undefined && Number(m[4]) === 0)) return null;
+    return "#" + [m[1], m[2], m[3]].map((n) => Number(n).toString(16).padStart(2, "0")).join("");
+  };
+  const style = getComputedStyle(bar);
+  const color = hex(style.backgroundColor) || hex(getComputedStyle(document.body).backgroundColor);
+  const probe = document.createElement("span");
+  probe.style.color = "var(--ink-mid)";
+  bar.append(probe);
+  const symbolColor = hex(getComputedStyle(probe).color);
+  probe.remove();
+  if (!color || !symbolColor) return;
+  const key = color + symbolColor;
+  if (key === syncWindowChrome.last) return;
+  syncWindowChrome.last = key;
+  window.apogee.setWindowChrome({ color, symbolColor });
+}
+
 if (HOST === "electron") {
   reserveTables();
+
+  {
+    let pending = 0;
+    const later = () => {
+      cancelAnimationFrame(pending);
+      pending = requestAnimationFrame(syncWindowChrome);
+    };
+    const watch = new MutationObserver(later);
+    watch.observe(document.documentElement, { attributes: true, subtree: false });
+    watch.observe(document.body, { attributes: true, attributeFilter: ["class", "data-screen", "style"] });
+    watch.observe(document.head, { childList: true, subtree: true, characterData: true });
+    later();
+  }
 
   wireAdmin();
   void loadAdminLook();
@@ -11495,6 +11816,7 @@ if (HOST === "electron") {
 
     btn.disabled = false;
     uploadBusy = false;
+    uploadFailed = Boolean(result.error || (result.result && result.result.errors.length));
     refreshEligibility();
     if (result.error) {
       showError(result.error);
@@ -11596,6 +11918,10 @@ if (HOST === "electron") {
   });
 
   api.onMatchSettled((settled) => {
+    // Any settled match, an unopposed one included: that is what puts a player in
+    // other people's duel lists, which is the point of the step.
+    setSetupFlag("match");
+    renderSetup();
     activeMatch = null;
     pendingMatchId = null;
     delete $("queueBtn").dataset.held;
@@ -11835,6 +12161,11 @@ if (HOST === "electron") {
 
   $("rosterFilter").addEventListener("input", renderRoster);
 
+  $("setupHide").addEventListener("click", () => {
+    setSetupFlag("hidden");
+    renderSetup();
+  });
+
   $("duelLive").addEventListener("click", () => {
     const tab = document.querySelector('.tab[data-screen="queue"]');
     if (tab) tab.click();
@@ -11924,6 +12255,7 @@ if (HOST === "electron") {
 
   api.onScanning(({ scanning }) => {
     setStatus(scanning ? "scanning" : "ok", scanning ? "Scanning…" : "Watching", currentPath);
+    if (!scanning) paintFolderFound();
   });
 
   api.onError((message) => {
@@ -11953,8 +12285,8 @@ if (HOST === "electron") {
       setStatus(state.lastError ? "bad" : "scanning", state.lastError ? "Problem" : "Scanning…", currentPath);
       if (state.lastError) {
         showError(state.lastError);
-        $("emptyText").textContent = state.lastError;
-      }
+        paintFolderMissing();
+      } else if (!state.scanning) paintFolderFound();
     }
   });
 } else {
@@ -12077,12 +12409,12 @@ function mountArcadeCommand() {
   if (!dialog || !input || !list) return;
   let opener = null;
   const descriptions = {
-    mixtape: 'Build a personal practice mix and keep your session recaps.',
-    queue: 'Pick a discipline. Find your rival.', seasonview: 'Benchmarks, families and your next rank.',
-    tournaments: 'Groups, brackets and fixtures.', result: 'Every round. Every rating point.',
-    profile: 'Your strengths and the work ahead.', quests: 'A fresh target for your next session.',
-    scenarios: 'Find the right scenario to train.', ranks: 'The ladder and your place on it.',
-    consistency: 'See what your recent runs are saying.', admin: 'Local appearance and app settings.',
+    mixtape: 'Build a practice playlist.',
+    queue: 'Queue a ranked match.', seasonview: 'Season benchmarks and your next rank.',
+    tournaments: 'Groups, brackets and fixtures.', result: 'Rounds and rating change from your last match.',
+    profile: 'Category strengths and weak spots.', quests: 'Current quests.',
+    scenarios: 'Search every scenario.', ranks: 'Rank thresholds and where you sit.',
+    consistency: 'How steady your recent scores are.', admin: 'Local appearance and app settings.',
     season: 'Manage the season definition.'
   };
   function renderRoutes() {

@@ -16,7 +16,7 @@
 
 import { build } from "esbuild";
 import { cpSync, existsSync, mkdirSync, readFileSync, rmSync } from "node:fs";
-import { dirname, join, resolve } from "node:path";
+import { dirname, join, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -99,8 +99,18 @@ export function copyStatic() {
   cpSync(join(root, "src", "app", "renderer"), join(outDir, "renderer"), { recursive: true });
   cpSync(join(root, "src", "app", "preload.cjs"), join(outDir, "preload.cjs"));
 
-  // Reference data the main process reads at runtime.
-  cpSync(join(root, "data"), join(root, "dist", "data"), { recursive: true });
+  // Reference data the main process reads at runtime. data/season-1 is authoring material
+  // - the scenario corpus, the difficulty model, the anchors - that nothing at runtime
+  // reads, except its scenarios: every Season 1 scenario is Apogee's own, exists nowhere
+  // but here, and the app installs them into KovaaK's (core/season/installScenarios.ts).
+  const authoring = join(root, "data", "season-1");
+  const shipped = join(authoring, "scenarios");
+  cpSync(join(root, "data"), join(root, "dist", "data"), {
+    recursive: true,
+    filter: (src) =>
+      src === authoring || src === shipped || src.startsWith(shipped + sep) ||
+      (src !== authoring && !src.startsWith(authoring + sep)),
+  });
 }
 
 export function cleanDist() {

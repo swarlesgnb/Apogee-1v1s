@@ -114,7 +114,10 @@ export type ThresholdSource =
   | { kind: "reconciled"; rule: string; from: ThresholdCitation[]; extended?: ExtendedTail }
   | { kind: "percentile"; cut: PercentileCut; why: string }
   | { kind: "seeded"; note: string }
-  | { kind: "authored"; why: string };
+  | { kind: "authored"; why: string }
+  | { kind: "predicted"; why: string }
+  /** A prediction whose board was scaled by a measured factor; see season/calibration.ts. */
+  | { kind: "calibrated"; factor: number; predicted: number[]; why: string };
 
 /** A source that has stopped being a debt. */
 export function isSourced(source: ThresholdSource | undefined): boolean {

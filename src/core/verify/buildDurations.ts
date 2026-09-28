@@ -21,6 +21,7 @@ import { join } from "node:path";
 
 import { parseStatsFile } from "../stats/parseStatsFile.ts";
 import { runDurationSeconds } from "../stats/duration.ts";
+import { authoredDurations } from "./authoredDurations.ts";
 
 const DEFAULT_STATS_DIR =
   "E:\\Steam\\steamapps\\common\\FPSAimTrainer\\FPSAimTrainer\\stats";
@@ -46,6 +47,8 @@ export interface ScenarioDuration {
   runs: number;
   /** Share of runs landing on the modal value. */
   agreement: number;
+  /** "file" when read from an authored scenario's own file rather than learned from runs. */
+  from?: "file";
 }
 
 export function deriveDuration(scenario: string, durations: number[]): ScenarioDuration {
@@ -113,9 +116,13 @@ function main(): void {
     }
   }
 
-  const models = [...byScenario.entries()]
-    .map(([scenario, durations]) => deriveDuration(scenario, durations))
-    .sort((a, b) => a.scenario.localeCompare(b.scenario));
+  // Apogee's own scenarios state their length; see authoredDurations.
+  const authored = authoredDurations();
+  const own = new Set(authored.map((d) => d.scenario));
+  const models = [
+    ...[...byScenario.entries()].filter(([scenario]) => !own.has(scenario)).map(([scenario, durations]) => deriveDuration(scenario, durations)),
+    ...authored,
+  ].sort((a, b) => a.scenario.localeCompare(b.scenario));
 
   const learned = models.filter((m) => m.seconds !== null);
 

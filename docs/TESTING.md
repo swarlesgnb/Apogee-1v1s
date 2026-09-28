@@ -21,7 +21,7 @@ timestamps and your Steam id. Not your files, not your inputs, not your screen.
 
 ## 1. Install
 
-Download `Apogee-0.4.0-rc.3-setup.exe` and run it.
+Download `Apogee-0.4.2-setup.exe` from the release page and run it.
 
 Windows will show a blue **Windows protected your PC** box, because the installer is not
 code-signed. Click **More info**, then **Run anyway**. A signing certificate is a few
@@ -50,6 +50,10 @@ is remembered after that.
 A fresh KovaaK's install with no runs yet is fine too; Apogee says the folder was found
 and picks up your first run as it lands.
 
+On first launch Apogee also installs Season 1's 164 scenarios into KovaaK's. They exist
+nowhere else, and KovaaK's only reads scenarios when it starts, so if the game was open,
+restart it before looking for them.
+
 The status bar shows how many runs it found. If that number is zero and you have played
 KovaaK's, the folder is wrong.
 
@@ -66,7 +70,7 @@ network is up does not sign you out: the app says it is retrying and carries on.
 ## 4. Your history uploads itself
 
 A match is scored against your own recent runs, so those runs have to be on the server
-before the first match means anything. Ranked needs 100 uploaded runs. If your PC holds
+before the first match means anything. Ranked needs 50 uploaded runs. If your PC holds
 enough, Apogee starts the upload the first time you sign in and says so; several thousand
 runs takes a minute or two, with a progress bar. If it does not start, the note under the
 queue button has an **Upload my runs** button, and so does the **Your history** panel.

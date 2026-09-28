@@ -1,0 +1,377 @@
+/**
+ * Predict a scenario's leaderboard from its file.
+ *
+ * Season 1's scenarios are new, so no board exists to cut their thresholds from. What
+ * does exist is some five hundred scenarios with both a file and a sampled board, and on
+ * those the physics of a scenario explains a useful share of where its board lands. This
+ * learns that relation and applies it: a prediction of what the board of an unplayed
+ * scenario will look like once people play it, which is what a threshold needs.
+ *
+ * Scores are not comparable across scenarios - ten points a kill here, one a hit there -
+ * so every score is first turned into a quantity a player produces, in units that mean the
+ * same thing everywhere:
+ *
+ *   click    seconds per kill: timelimit / (score / points per kill). Fitts' law predicts
+ *            its logarithm is linear in the index of difficulty of the flick, and on the
+ *            static-clicking scenarios measured it is (see `fit` evidence).
+ *   track    the share of the maximum score earned, as a logit, for a gun that fires while
+ *            held on one target. The maximum is every tick of the run landing.
+ *   switch   the same share, with several targets alive.
+ *
+ * One least-squares fit per class and per sampled board fraction, on features chosen in
+ * `features.ts`. Each class's fit carries its leave-one-out error, measured the way it
+ * will be used - predicting a scenario the fit did not see - and `predictLadder` hands that
+ * error back with every prediction, because a threshold seeded from a model is a guess of
+ * known size and the season says so.
+ *
+ * What is left out, and why: a population term. Harder variants of a family draw stronger
+ * crowds, so their boards sit higher than their physics alone predicts. Predicting a
+ * variant from a sibling's board, which would carry the crowd with it, was measured as
+ * well (`tools/fitDifficulty.ts` records it beside the pooled error): it is about as good,
+ * not clearly better, and a Season 1 scenario has no sibling with a board anyway.
+ */
+
+import type { ScenarioFeatures } from "./features.ts";
+
+export type DifficultyClass = "click" | "track" | "switch";
+
+export const FRACTIONS = [
+  0.001, 0.005, 0.01, 0.02, 0.035, 0.05, 0.075, 0.1, 0.15, 0.2, 0.3, 0.4, 0.5, 0.65, 0.8, 0.95,
+];
+
+/** The class a scenario's scoring puts it in, or null when no class describes it. */
+/**
+ * What a season family may ask of `classify` that the corpus fit never does.
+ *
+ * `pressure`: a pressure scenario - targets that punish being left, like fuglaa's balloons,
+ * which fire at the player and cost score when they hit - scored per hit or per damage on
+ * one-hit targets. The fit leaves pressure scenarios out, because their boards measure how
+ * much was lost as well as how fast targets fell; a family that is one is predicted from a
+ * pressure scenario's own board (`anchor`), moved by the clicking fit for what differs.
+ */
+export interface ClassifyOptions {
+  pressure?: boolean;
+}
+
+/**
+ * Points a kill is worth: per kill; or, under `pressure`, per hit on a one-hit target, or
+ * per point of damage times the target's health (fuglaa's balloons score per damage).
+ */
+/**
+ * Misses a kill costs, on a target that dies in one hit: moving, and still.
+ *
+ * A board records score, not kills, so a scenario that charges for a miss reads as fewer
+ * kills than were made unless the misses are taken back out. Each is the median over the
+ * one-hit clicking scenarios with at least five local runs, moving (5 degrees a second or
+ * more) or still (under 1) (tools/scenarioScience.ts, data/season-1/science.json;
+ * validate:season-files holds these to it). One player's history, played without a
+ * penalty, so they likely overstate what players miss once a miss costs; the thresholds
+ * they set are seeds like every other.
+ */
+export const MISSES_PER_KILL = 0.38;
+export const STILL_MISSES_PER_KILL = 0.09;
+
+function pointsPerKill(f: ScenarioFeatures): number {
+  const misses = (f.derived.angularSpeed ?? 0) < 1 ? STILL_MISSES_PER_KILL : MISSES_PER_KILL;
+  if (f.scoring.perKill > 0) return f.scoring.perKill - f.scoring.lossPerMiss * misses;
+  if (f.scoring.perHit > 0) return f.scoring.perHit;
+  return f.scoring.perDamage * (f.targets[0]?.health ?? 1);
+}
+
+export function classify(f: ScenarioFeatures, options: ClassifyOptions = {}): DifficultyClass | null {
+  const w = f.weapon;
+  const s = f.scoring;
+  if (!w || !f.geometry || !f.targets.length || f.multipliers.adaptive) return null;
+  if (f.timelimit <= 0 || f.timelimit > 200 || s.perTime !== 0) return null;
+  // Pressure scenarios refill the clock, so a board of them measures survival, not rate.
+  if (s.timeRefilledByKill > 0) return null;
+  // Targets that lose health on their own despawn: a pressure scenario, where the board
+  // measures how many were caught before they vanished rather than how fast each fell.
+  const expiring = f.targets.some((t) => t.regenPerSec < 0);
+  if (w.fullyAutomatic === false && s.perKill > 0 && s.perDamage === 0 && s.perHit === 0) {
+    if (expiring) return null;
+    return f.derived.fittsIdNearest !== null && f.derived.targetDeg ? "click" : null;
+  }
+  if (options.pressure && w.fullyAutomatic === false && s.perKill === 0 && (s.perHit > 0) !== (s.perDamage > 0) && f.derived.shotsToKill === 1) {
+    return f.derived.fittsIdNearest !== null && f.derived.targetDeg ? "click" : null;
+  }
+  if (w.fullyAutomatic && w.interval > 0 && w.interval <= 0.06 && s.perKill === 0 && (s.perHit > 0 || s.perDamage > 0)) {
+    if (!f.derived.targetDeg) return null;
+    if (f.concurrent <= 1.01) return "track";
+    // Not a regressor any more (see featureVector), but still the test that the spawn
+    // field was measured: letting in the 36 switching scenarios without one took the
+    // class's error at the median from 0.13 to 0.31.
+    return f.derived.fittsIdNearest !== null ? "switch" : null;
+  }
+  return null;
+}
+
+/** The most a run could score, for the two share-of-maximum classes. */
+function maxScore(f: ScenarioFeatures): number {
+  const w = f.weapon!;
+  return (f.timelimit / w.interval) * (f.scoring.perHit + f.scoring.perDamage * w.damage);
+}
+
+/**
+ * Accuracy-multiplied scores undo to the underlying share: with a plain multiplier the
+ * score is share squared, with the square-root one it is share to the 3/2.
+ */
+function unAccuracy(f: ScenarioFeatures, share: number): number {
+  if (!f.scoring.accuracyMult) return share;
+  return f.scoring.sqrtAccuracy ? Math.pow(share, 2 / 3) : Math.sqrt(share);
+}
+function reAccuracy(f: ScenarioFeatures, share: number): number {
+  if (!f.scoring.accuracyMult) return share;
+  return f.scoring.sqrtAccuracy ? Math.pow(share, 3 / 2) : share * share;
+}
+
+const logit = (p: number) => Math.log(p / (1 - p));
+const expit = (x: number) => 1 / (1 + Math.exp(-x));
+
+/** Score -> the class's comparable quantity. Null where it has none (a zero score). */
+export function toMetric(cls: DifficultyClass, f: ScenarioFeatures, score: number): number | null {
+  if (!(score > 0)) return null;
+  if (cls === "click") {
+    const kills = score / pointsPerKill(f);
+    return Math.log(f.timelimit / kills);
+  }
+  const share = unAccuracy(f, score / maxScore(f));
+  if (!(share > 0.005 && share < 0.995)) return null;
+  return logit(share);
+}
+
+export function fromMetric(cls: DifficultyClass, f: ScenarioFeatures, metric: number): number {
+  if (cls === "click") return (f.timelimit / Math.exp(metric)) * pointsPerKill(f);
+  return reAccuracy(f, expit(metric)) * maxScore(f);
+}
+
+export const FEATURE_NAMES: Record<DifficultyClass, string[]> = {
+  click: ["fitts ID of the nearest flick", "log(1 + angular speed)", "log(shots to kill)", "accuracy multiplier", "square-root accuracy multiplier"],
+  track: ["log(angular speed / size)", "log(strafe period)", "log(seconds to full speed)"],
+  switch: ["log(angular speed / size)", "log(time to kill)"],
+};
+
+/**
+ * The regressors, in FEATURE_NAMES order.
+ *
+ * Each one is kept because removing it raises the leave-one-out error at both the top 5%
+ * and the median of the board (the ablation in tools/fitDifficulty.ts, recorded in the
+ * model file). Three that were in and did not, removed one at a time: switching's
+ * nearest-flick Fitts ID (removing it lowered the class's error at both points), tracking's "leaves
+ * the ground" flag, then tracking's log size, which once the flag was gone carried nothing
+ * the speed-to-size ratio did not. Shots to kill for clicking earns only a little on a
+ * corpus that is nearly all one-hit, and stays because it is the physics of a three-hit
+ * target.
+ */
+export function featureVector(cls: DifficultyClass, f: ScenarioFeatures): number[] {
+  const d = f.derived;
+  const main = f.targets[0];
+  const speed = Math.max(d.angularSpeed ?? 0, 1);
+  if (cls === "click") {
+    // A kill-scored board is kills times points, times accuracy or its square root where the
+    // file says so. The two flags let the fit learn that penalty instead of averaging it into
+    // everything: without them, Voltaic's 1w4ts, scored on square-root accuracy, was predicted
+    // 15-25% above its board, and every unmultiplied scenario was predicted below its own.
+    const acc = f.scoring.accuracyMult;
+    return [d.fittsIdNearest ?? 0, Math.log1p(d.angularSpeed ?? 0), Math.log(Math.max(1, d.shotsToKill ?? 1)), acc && !f.scoring.sqrtAccuracy ? 1 : 0, acc && f.scoring.sqrtAccuracy ? 1 : 0];
+  }
+  if (cls === "track") {
+    // How sharply it turns: a target that takes a third of a second to reach speed reverses
+    // in a curve a player can follow, one that takes a hundredth reverses in a corner.
+    // Clamped because a zero acceleration in a file means "instant" to some templates.
+    const ramp = main.acceleration > 0 ? main.speed / main.acceleration : 0.01;
+    return [Math.log(speed / d.targetDeg!), Math.log(d.strafePeriod ?? 1), Math.log(Math.min(5, Math.max(0.01, ramp)))];
+  }
+  return [Math.log(speed / d.targetDeg!), Math.log(Math.max(d.ttk ?? 0, 0.02))];
+}
+
+// ---- least squares ------------------------------------------------------------------------
+
+/** Solve (XᵀX + λI) b = Xᵀy. The ridge is tiny and there only to survive a singular column. */
+export function leastSquares(X: number[][], y: number[], ridge = 1e-6): number[] {
+  const k = X[0].length;
+  const A = Array.from({ length: k }, () => new Array<number>(k).fill(0));
+  const b = new Array<number>(k).fill(0);
+  for (let r = 0; r < X.length; r++) {
+    for (let i = 0; i < k; i++) {
+      b[i] += X[r][i] * y[r];
+      for (let j = 0; j < k; j++) A[i][j] += X[r][i] * X[r][j];
+    }
+  }
+  for (let i = 1; i < k; i++) A[i][i] += ridge;
+  // Gaussian elimination with partial pivoting.
+  for (let c = 0; c < k; c++) {
+    let p = c;
+    for (let r = c + 1; r < k; r++) if (Math.abs(A[r][c]) > Math.abs(A[p][c])) p = r;
+    [A[c], A[p]] = [A[p], A[c]];
+    [b[c], b[p]] = [b[p], b[c]];
+    for (let r = c + 1; r < k; r++) {
+      const m = A[r][c] / A[c][c];
+      for (let j = c; j < k; j++) A[r][j] -= m * A[c][j];
+      b[r] -= m * b[c];
+    }
+  }
+  const x = new Array<number>(k).fill(0);
+  for (let i = k - 1; i >= 0; i--) {
+    let s = b[i];
+    for (let j = i + 1; j < k; j++) s -= A[i][j] * x[j];
+    x[i] = s / A[i][i];
+  }
+  return x;
+}
+
+const withIntercept = (v: number[]) => [1, ...v];
+const dot = (a: number[], b: number[]) => a.reduce((s, x, i) => s + x * b[i], 0);
+
+export interface FractionFit {
+  topFraction: number;
+  coefficients: number[];
+  n: number;
+  /** Leave-one-out residuals' absolute median and 90th percentile, in metric units. */
+  looMedian: number;
+  loo90: number;
+}
+
+export interface ClassModel {
+  class: DifficultyClass;
+  features: string[];
+  fits: FractionFit[];
+  /** The five scenarios predicted worst at the board median, leave-one-out, with the miss. */
+  worstMisses?: Array<{ scenario: string; error: number }>;
+  /**
+   * Every scenario's leave-one-out miss at the board median, predicted minus actual, in the
+   * class's metric. Kept so a claim about a group - "fliers are over-predicted" - can be
+   * checked against every member rather than the one that prompted it.
+   */
+  residualsAtMedian?: Record<string, number>;
+  /** The scenarios the fit learned from, so a claim about it can be re-derived. */
+  scenarios: string[];
+}
+
+export interface Sample {
+  name: string;
+  features: ScenarioFeatures;
+  ladder: Array<{ topFraction: number; score: number }>;
+}
+
+function quantile(values: number[], q: number): number {
+  const s = [...values].sort((a, b) => a - b);
+  if (!s.length) return NaN;
+  const i = (s.length - 1) * q;
+  const lo = Math.floor(i);
+  return s[lo] + (s[Math.min(s.length - 1, lo + 1)] - s[lo]) * (i - lo);
+}
+
+/**
+ * Fit one class. `drop` removes one feature by index, for the ablation that shows each
+ * feature earns its place; `fractions` narrows the board fractions fitted.
+ */
+export function fitClass(cls: DifficultyClass, samples: Sample[], drop: number | null = null, fractions: number[] = FRACTIONS): ClassModel {
+  const mine = samples.filter((s) => classify(s.features) === cls);
+  const fits: FractionFit[] = [];
+  let worstMisses: ClassModel["worstMisses"] = [];
+  let residualsAtMedian: Record<string, number> = {};
+  const vector = (f: ScenarioFeatures) => {
+    const v = featureVector(cls, f);
+    return drop === null ? v : v.filter((_, i) => i !== drop);
+  };
+  for (const topFraction of fractions) {
+    const X: number[][] = [];
+    const y: number[] = [];
+    const names: string[] = [];
+    for (const s of mine) {
+      const point = s.ladder.find((p) => Math.abs(p.topFraction - topFraction) < 1e-9);
+      const m = point ? toMetric(cls, s.features, point.score) : null;
+      if (m === null || !Number.isFinite(m)) continue;
+      X.push(withIntercept(vector(s.features)));
+      y.push(m);
+      names.push(s.name);
+    }
+    const coefficients = leastSquares(X, y);
+    const residuals: number[] = [];
+    const signed: number[] = [];
+    for (let i = 0; i < X.length; i++) {
+      const b = leastSquares(X.filter((_, j) => j !== i), y.filter((_, j) => j !== i));
+      signed.push(dot(X[i], b) - y[i]);
+      residuals.push(Math.abs(signed[i]));
+    }
+    if (topFraction === 0.5) {
+      worstMisses = signed
+        .map((error, i) => ({ scenario: names[i], error: Math.round(error * 1000) / 1000 }))
+        .sort((a, b) => Math.abs(b.error) - Math.abs(a.error))
+        .slice(0, 5);
+      residualsAtMedian = Object.fromEntries(signed.map((e, i) => [names[i], Math.round(e * 1000) / 1000]));
+    }
+    fits.push({ topFraction, coefficients, n: X.length, looMedian: quantile(residuals, 0.5), loo90: quantile(residuals, 0.9) });
+  }
+  return { class: cls, features: FEATURE_NAMES[cls], fits, worstMisses, residualsAtMedian, scenarios: mine.map((s) => s.name).sort() };
+}
+
+export interface Prediction {
+  class: DifficultyClass;
+  points: Array<{ topFraction: number; score: number; low: number; high: number }>;
+}
+
+/**
+ * The board a scenario is predicted to have, with the band a leave-one-out median error
+ * puts around each point. Forced to fall as the fraction grows, the same repair the
+ * sampler applies to a real board.
+ */
+export function predictLadder(model: ClassModel, f: ScenarioFeatures): Prediction {
+  const x = withIntercept(featureVector(model.class, f));
+  const points = model.fits.map((fit) => {
+    const m = dot(x, fit.coefficients);
+    // For clicking a larger metric is a slower kill, so the low score comes from +error.
+    const sign = model.class === "click" ? -1 : 1;
+    const a = fromMetric(model.class, f, m - sign * fit.looMedian);
+    const b = fromMetric(model.class, f, m + sign * fit.looMedian);
+    return { topFraction: fit.topFraction, score: fromMetric(model.class, f, m), low: Math.min(a, b), high: Math.max(a, b) };
+  });
+  for (let i = 1; i < points.length; i++) {
+    if (points[i].score > points[i - 1].score) points[i].score = points[i - 1].score;
+  }
+  return { class: model.class, points };
+}
+
+/**
+ * Predict from a sibling's real board instead of the pooled fit: the anchor's own metric at
+ * each board fraction, moved by the fit's coefficients for whatever differs between the two
+ * files. This is the "sibling transfer" `tools/fitDifficulty.ts` measures; it is used only
+ * where a family is built on a scenario with a board and the pooled fit is known to misread
+ * that kind of scenario (skeeTS on Skeet Tracking).
+ */
+export function predictFromAnchor(model: ClassModel, f: ScenarioFeatures, anchor: ScenarioFeatures, anchorLadder: Array<{ topFraction: number; score: number }>): Prediction {
+  const x = featureVector(model.class, f);
+  const xa = featureVector(model.class, anchor);
+  // A pressure board can fall to zero or below at its tail - more lost than won - where the
+  // metric has no value. Such a point takes the line through the two usable points before
+  // it; a board with fewer than two usable points is not an anchor.
+  const bases: Array<number | null> = model.fits.map((fit) => {
+    const real = anchorLadder.find((p) => Math.abs(p.topFraction - fit.topFraction) < 1e-9);
+    return real ? toMetric(model.class, anchor, real.score) : null;
+  });
+  for (let i = 0; i < bases.length; i++) {
+    if (bases[i] !== null) continue;
+    const before = bases.slice(0, i).map((v, j) => [j, v] as const).filter(([, v]) => v !== null) as Array<readonly [number, number]>;
+    if (before.length < 2) throw new Error(`the anchor's board has no usable score at ${model.fits[i].topFraction}`);
+    const [[j1, v1], [j2, v2]] = before.slice(-2);
+    const f1 = model.fits[j1].topFraction, f2 = model.fits[j2].topFraction;
+    bases[i] = v2 + ((v2 - v1) / (f2 - f1)) * (model.fits[i].topFraction - f2);
+  }
+  const points = model.fits.map((fit, i) => {
+    const base = bases[i]!;
+    // Clicking's metric is seconds of game time per kill. A player clicks in real time, so a
+    // faster game (Timescale above 1) packs more game seconds into each kill: the anchor's
+    // rate is moved into this file's game time before anything else changes.
+    const pace = model.class === "click" ? Math.log(f.multipliers.time / anchor.multipliers.time) : 0;
+    const m = base + pace + x.reduce((acc, v, i) => acc + (v - xa[i]) * fit.coefficients[i + 1], 0);
+    const sign = model.class === "click" ? -1 : 1;
+    const a = fromMetric(model.class, f, m - sign * fit.looMedian);
+    const b = fromMetric(model.class, f, m + sign * fit.looMedian);
+    return { topFraction: fit.topFraction, score: fromMetric(model.class, f, m), low: Math.min(a, b), high: Math.max(a, b) };
+  });
+  for (let i = 1; i < points.length; i++) {
+    if (points[i].score > points[i - 1].score) points[i].score = points[i - 1].score;
+  }
+  return { class: model.class, points };
+}

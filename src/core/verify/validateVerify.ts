@@ -17,6 +17,8 @@
  *   npx tsx src/core/verify/validateVerify.ts [statsFolder]
  */
 
+import { execFileSync } from "node:child_process";
+import { createHash } from "node:crypto";
 import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
@@ -537,6 +539,60 @@ function main(): void {
         false,
       );
     }
+  }
+
+  // ---- the scenario hash ----------------------------------------------------------------
+  //
+  // hash_known is hard for Apogee's own scenarios (consistency.ts), so it is measured the
+  // way every hard check is. Two facts carry it: every genuine stats file has a hash, and
+  // the hash is the MD5 of the scenario file KovaaK's loaded - which the playtest runs can
+  // show directly, against the files still installed from when they were played.
+  console.log("\nthe scenario hash");
+  const hashed = loaded.filter(({ run }) => /^[0-9a-f]{32}$/.test(run.hash ?? ""));
+  check("every genuine stats file carries a scenario hash", hashed.length === loaded.length, `${hashed.length} of ${loaded.length}`);
+
+  // Every version of each Apogee file the repository has held, before and after the season
+  // was renamed from its draft number. The installed copy cannot stand in: the install
+  // tool used to rewrite every file each time, so an installed file's age says nothing
+  // about which version a run was played on.
+  const versions = new Map<string, Set<string>>();
+  const md5sOf = (scenario: string): Set<string> => {
+    let known = versions.get(scenario);
+    if (known) return known;
+    known = new Set<string>();
+    for (const path of [`data/season-1/scenarios/${scenario}.sce`, `data/season-2/scenarios/${scenario}.sce`]) {
+      const commits = execFileSync("git", ["log", "--all", "--format=%H", "--", path], { encoding: "utf8" }).split("\n").filter(Boolean);
+      for (const commit of commits) {
+        try {
+          const bytes = execFileSync("git", ["show", `${commit}:${path}`], { maxBuffer: 16 << 20, stdio: ["ignore", "pipe", "ignore"] });
+          known.add(createHash("md5").update(bytes).digest("hex"));
+        } catch {
+          /* deleted in that commit */
+        }
+      }
+    }
+    versions.set(scenario, known);
+    return known;
+  };
+  const apogee = loaded.filter(({ run }) => run.scenario.startsWith("Apogee "));
+  const matched = apogee.filter(({ run }) => md5sOf(run.scenario).has(run.hash ?? ""));
+  // Twenty exact 128-bit matches to named file versions is the identity; a run that matches
+  // none was played on a build installed before it was committed, and cannot count against
+  // it. Fewer than twenty and this corpus does not show it.
+  if (apogee.length === 0) console.log("  --   no Apogee runs in this folder; the MD5 identity is unmeasured here");
+  else check(
+    "an Apogee run's hash is the MD5 of a version of its file",
+    matched.length >= 20,
+    `${matched.length} of ${apogee.length} runs match a committed version exactly` +
+      (matched.length < apogee.length ? `; ${apogee.filter((r) => !matched.includes(r)).map(({ run }) => run.scenario).join(", ")} played on an uncommitted build` : ""),
+  );
+
+  const sample = hashed[0]?.run;
+  if (sample) {
+    const failed = (knownHash: string) => checkConsistency(sample, { knownHash }).hardFailures.some((f) => f.startsWith("hash_known"));
+    check("a run on the known file passes", !failed(sample.hash!));
+    check("a run on any other file is refused", failed("0".repeat(32)));
+    check("a scenario with no known hash is not judged", !checkConsistency(sample, {}).hardFailures.some((f) => f.startsWith("hash_known")));
   }
 
   console.log();

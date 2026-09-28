@@ -1,3 +1,5 @@
+import type { BandFit, Recommendation, ScenarioIntel } from "./intel.ts";
+
 export interface ExpeditionScenario {
   name: string;
   family: string;
@@ -19,7 +21,7 @@ export interface Destination {
   pool?: ExpeditionScenario[][];
 }
 export interface ExpeditionDefinition {
-  version: 1 | 2 | 3 | 4;
+  version: 1 | 2 | 3 | 4 | 5;
   id: string;
   name: string;
   sourceSeason: string;
@@ -78,7 +80,7 @@ export interface Reward {
   requirement: string;
 }
 export interface ExpeditionState {
-  version: 1 | 2 | 3 | 4;
+  version: 1 | 2 | 3 | 4 | 5;
   definitionId: string;
   enrolledAt: number;
   band: number;
@@ -101,6 +103,10 @@ export interface ExpeditionView {
   offers?: ChallengeOffer[];
   journey?: JourneyView;
   journeys?: Pick<JourneyView, "title" | "description" | "rules">[];
+  /** The player's own history on expedition scenarios, for context beside each target. */
+  intel?: Record<string, ScenarioIntel>;
+  fit?: BandFit[];
+  recommendation?: Recommendation;
 }
 export interface JourneyView {
   title: string;

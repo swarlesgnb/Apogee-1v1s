@@ -19,9 +19,10 @@
  *    500 runs    day 12    11 days played
  *
  * with a median of 42 runs on any day the game was opened at all, and 207 on the
- * busiest. So 100 runs is two or three ordinary sessions for somebody who wants to
- * play, and about two and a half hours of actual aiming for somebody who only wants a
- * fresh rating. That is the honest size of this: a speed bump, not a wall.
+ * busiest. The bar was 100, two or three ordinary sessions. It went to 50 for the first
+ * outside testers, so that one who arrives with little history can reach the queue in
+ * the first evening or two rather than the first week: 50 is a little over the median
+ * day, and still over an hour of aiming for somebody who only wants a fresh rating. That is the honest size of this: a speed bump, not a wall.
  *
  * WHAT IT IS NOT
  *
@@ -48,7 +49,7 @@
  * rejection means the file failed local integrity, and those are excluded so that
  * uploading garbage cannot buy a ticket.
  */
-export const MIN_RUNS_TO_QUEUE = 100;
+export const MIN_RUNS_TO_QUEUE = 50;
 
 export interface QueueEligibility {
   eligible: boolean;

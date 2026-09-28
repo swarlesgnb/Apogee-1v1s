@@ -20,6 +20,26 @@ otherwise leaving the reference absent. Zero remains a real score. A new matchin
 missing, old or far-future timestamps, invalid scores and duplicate receipt IDs are
 refused. Launching is not completion. Skips remain separate from played tracks.
 
+## Playing a set
+
+Every planned track says why it is in the set, in its mood's terms: the points and
+percentage from the next threshold (named from the season's rank names) for Close the
+gap, the play count for Side quests, the best and nearest threshold for Full spectrum.
+Planning freezes each track's reference, personal best and next threshold alongside it.
+
+Where the desktop bridge can launch, **Start** creates the set and opens track 1 in one
+step. While an opened track has not been played the console says it is listening. When
+the matching run lands, a **Run received** card judges it against what the track froze: a
+new personal best (the watcher's own verdict when it has one, else the frozen best), a
+threshold passed, up or under the reference, or a first reference set. It names the next
+track. A run on a later track of the set is explained as out of order and does not count.
+The card decides nothing; the engine had already recorded or refused the run.
+
+The recap counts played tracks, tracks above their reference (or references set, when
+none could be compared), personal bests and disciplines, and names the standout.
+**Run it back** replays the same scenarios in the same order with references from the
+current pool; scenarios that left the pool are dropped.
+
 Auto-open next track is an opt-in toggle during a set: when a run is recorded, the next
 track opens in KovaaK's without returning to Apogee. It is remembered per machine.
 
@@ -52,10 +72,11 @@ menu feedback while retaining the current celestial palette and gameplay semanti
 ## Verification
 
 - `npm.cmd run validate:mixtape`: pure planning, timestamp/identity validation,
-  persistence shape, zero handling, skip and recap assertions.
+  persistence shape, zero handling, skip, recap, personal-best, threshold and replay assertions.
 - `npm.cmd run validate:mixtape-ui`: isolated Electron fixture with real preview pool
   and synthetic launch/run receipts. Covers the builder, modes, remix, selected band,
-  tracking, reload, partial/full recaps, history, failure states, reduced motion and
+  one-click start and launch, listening state, run verdicts, out-of-order runs,
+  tracking, reload, partial/full recaps, run it back, history, failure states, reduced motion and
   responsive screenshots in `.cache/mixtape-ui`.
 - `validate:reference-ui` enumerates the live navigation and covers all 11 player screens.
 

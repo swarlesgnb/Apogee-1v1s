@@ -4,7 +4,13 @@
 *.jpg binary
 *.ico binary
 
+# Scenario files are KovaaK's own format and are kept byte for byte as the game writes
+# them (CRLF, and an embedded map that is not ours to reflow). validate:sce round-trips
+# them exactly, which a checkout that rewrote their line endings would break.
+*.sce -text
+
 package-lock.json linguist-generated
 data/*.json linguist-generated
 data/benchmarks/*.json linguist-generated
+data/season-1/** linguist-generated
 tools/apogee-ui-preview.html linguist-generated

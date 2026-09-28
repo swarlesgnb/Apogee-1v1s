@@ -39,4 +39,20 @@ check(next.endedAt,103000,'Last receipt finishes set');check(m.summary(next).pla
 check(m.summary(next).improved,1,'Comparison uses saved reference');check(m.receive(next,run(first,103500),104000),null,'Finished set ignores receipts');
 check(m.valid(next),true,'Recap restorable');
 for(const bad of [null,{}, {...session,index:99},{...session,tracks:[]},{...session,armedAt:0},{...session,tracks:[{...session.tracks[0],score:NaN}]}])check(m.valid(bad),false,'Invalid saved data rejected');
+// What a run is judged against when it lands, and a set played again.
+const pushed=m.plan(rows,{mood:'push',count:3});
+check(pushed[0].best,150,'Best is frozen with the track');check(pushed[0].threshold,151,'Next threshold is frozen with the track');
+let judged=m.create(pushed,'push',0,200000);
+judged=m.receive(judged,run(judged.tracks[0].scenario,200500,151,'pb-a'),201000);
+check(judged.tracks[0].pb,true,'Beating the frozen best is a personal best');
+judged=m.receive(judged,{...run(judged.tracks[1].scenario,201500,10,'pb-b'),localPersonalBest:{previous:5}},202000);
+check(judged.tracks[1].pb,true,"The watcher's own personal-best verdict is trusted");
+judged=m.receive(judged,run(judged.tracks[2].scenario,202500,100,'pb-c'),203000);
+check(judged.tracks[2].pb,false,'Under the best is not a personal best');
+check([m.summary(judged).bests,m.summary(judged).thresholds],[2,1],'Recap counts bests and thresholds met');
+const again=m.replay(rows.map(r=>r.scenario===judged.tracks[0].scenario?{...r,last:151}:r),judged);
+check(again.map(t=>t.scenario),judged.tracks.map(t=>t.scenario),'Run it back keeps the order');
+check(again[0].reference,151,'Run it back refreshes references');
+check(m.replay(rows.filter(r=>r.scenario!==judged.tracks[1].scenario),judged).length,2,'A scenario that left the pool is dropped');
+check(m.valid(m.create(again,'push',0,300000)),true,'A replayed set is restorable');
 console.log(`PASS: ${checks} Mixtape planning, receipt, persistence and recap assertions.`);

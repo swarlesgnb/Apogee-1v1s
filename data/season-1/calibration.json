@@ -1,0 +1,1868 @@
+{
+  "about": "Per-family and per-band corrections to the predicted thresholds, measured by npm run calibrate:season on one player's runs and applied by build:season: a band's factor is its relative correction times its category's anchor to real boards, and a band with no runs takes its family's `factor`. See src/core/season/calibration.ts.",
+  "builtAt": "2026-09-28T17:29:02.685Z",
+  "rules": {
+    "minFamilies": 3,
+    "clamp": [
+      0.6,
+      1.5
+    ],
+    "deadband": 0.05,
+    "anchorClamp": [
+      0.75,
+      1.3333333333333333
+    ],
+    "combinedClamp": [
+      0.5,
+      2
+    ]
+  },
+  "categories": {
+    "Static Clicking": {
+      "factor": 0.8974,
+      "raw": 0.8974,
+      "realTopFraction": 0.06831,
+      "boards": 31,
+      "practice": 1.0336,
+      "practiceScenarios": 9,
+      "practiceFrom": "category",
+      "scenarios": 21
+    },
+    "Dynamic Clicking": {
+      "factor": 1.1727,
+      "raw": 1.1727,
+      "realTopFraction": 0.09705,
+      "boards": 32,
+      "practice": 1.1546,
+      "practiceScenarios": 8,
+      "practiceFrom": "category",
+      "scenarios": 10
+    },
+    "Precise Tracking": {
+      "factor": 1.1448,
+      "raw": 1.1448,
+      "realTopFraction": 0.11989,
+      "boards": 20,
+      "practice": 1.1084,
+      "practiceScenarios": 46,
+      "practiceFrom": "pooled",
+      "scenarios": 15
+    },
+    "Reactive Tracking": {
+      "factor": 1.1751,
+      "raw": 1.1751,
+      "realTopFraction": 0.16981,
+      "boards": 15,
+      "practice": 1.1664,
+      "practiceScenarios": 10,
+      "practiceFrom": "category",
+      "scenarios": 6
+    },
+    "Speed Switching": {
+      "factor": 1.0741,
+      "raw": 1.0741,
+      "realTopFraction": 0.0973,
+      "boards": 18,
+      "practice": 1.1084,
+      "practiceScenarios": 46,
+      "practiceFrom": "pooled",
+      "scenarios": 7
+    },
+    "Evasive Switching": {
+      "factor": 1.046,
+      "raw": 1.046,
+      "realTopFraction": 0.11404,
+      "boards": 5,
+      "practice": 1.1084,
+      "practiceScenarios": 46,
+      "practiceFrom": "pooled",
+      "scenarios": 6
+    }
+  },
+  "families": {
+    "Galaga": {
+      "factor": 0.8974,
+      "relative": 1,
+      "category": 0.8974,
+      "raw": 1.0456,
+      "runs": 8,
+      "evidence": [
+        {
+          "scenario": "Apogee Galaga Novice",
+          "window": 0,
+          "runs": 4,
+          "best": 1688,
+          "position": 5.762,
+          "target": 4.226,
+          "k": 1.0853
+        },
+        {
+          "scenario": "Apogee Galaga Intermediate",
+          "window": 1,
+          "runs": 3,
+          "best": 1494,
+          "position": 4.364,
+          "target": 4.226,
+          "k": 1.0061
+        },
+        {
+          "scenario": "Apogee Galaga Advanced",
+          "window": 2,
+          "runs": 1,
+          "best": 1456,
+          "position": 4.626,
+          "target": 4.226,
+          "k": 1.0115
+        }
+      ],
+      "windows": {
+        "0": {
+          "factor": 0.9582,
+          "relative": 1.0677,
+          "raw": 1.0853,
+          "runs": 4
+        },
+        "1": {
+          "factor": 0.8974,
+          "relative": 1,
+          "raw": 1.0061,
+          "runs": 3
+        },
+        "2": {
+          "factor": 0.8974,
+          "relative": 1,
+          "raw": 1.0115,
+          "runs": 1
+        }
+      }
+    },
+    "Zenith": {
+      "factor": 0.8488,
+      "relative": 0.9458,
+      "category": 0.8974,
+      "raw": 0.9392,
+      "runs": 8,
+      "evidence": [
+        {
+          "scenario": "Apogee Zenith Novice",
+          "window": 0,
+          "runs": 4,
+          "best": 1402,
+          "position": 3.552,
+          "target": 4.226,
+          "k": 0.9691
+        },
+        {
+          "scenario": "Apogee Zenith Intermediate",
+          "window": 1,
+          "runs": 3,
+          "best": 1264,
+          "position": 1.833,
+          "target": 4.226,
+          "k": 0.9165
+        },
+        {
+          "scenario": "Apogee Zenith Advanced",
+          "window": 2,
+          "runs": 1,
+          "best": 1192,
+          "position": 0.5,
+          "target": 4.226,
+          "k": 0.8918
+        }
+      ],
+      "windows": {
+        "0": {
+          "factor": 0.8974,
+          "relative": 1,
+          "raw": 0.9691,
+          "runs": 4
+        },
+        "1": {
+          "factor": 0.8406,
+          "relative": 0.9367,
+          "raw": 0.9165,
+          "runs": 3
+        },
+        "2": {
+          "factor": 0.8475,
+          "relative": 0.9444,
+          "raw": 0.8918,
+          "runs": 1
+        }
+      }
+    },
+    "Distant": {
+      "factor": 0.8974,
+      "relative": 1,
+      "category": 0.8974,
+      "raw": 0.9943,
+      "runs": 6,
+      "evidence": [
+        {
+          "scenario": "Apogee Distant Novice",
+          "window": 0,
+          "runs": 3,
+          "best": 1434,
+          "position": 4.219,
+          "target": 4.226,
+          "k": 0.9997
+        },
+        {
+          "scenario": "Apogee Distant Intermediate",
+          "window": 1,
+          "runs": 3,
+          "best": 1352,
+          "position": 3.978,
+          "target": 4.226,
+          "k": 0.989
+        }
+      ],
+      "windows": {
+        "0": {
+          "factor": 0.8974,
+          "relative": 1,
+          "raw": 0.9997,
+          "runs": 3
+        },
+        "1": {
+          "factor": 0.8974,
+          "relative": 1,
+          "raw": 0.989,
+          "runs": 3
+        }
+      }
+    },
+    "Stars": {
+      "factor": 0.9865,
+      "relative": 1.0993,
+      "category": 0.8974,
+      "raw": 1.1168,
+      "runs": 6,
+      "evidence": [
+        {
+          "scenario": "Apogee Stars Novice",
+          "window": 0,
+          "runs": 2,
+          "best": 1492,
+          "position": 6.158,
+          "target": 4.226,
+          "k": 1.1178
+        },
+        {
+          "scenario": "Apogee Stars Intermediate",
+          "window": 1,
+          "runs": 3,
+          "best": 1444,
+          "position": 8.2,
+          "target": 4.226,
+          "k": 1.1358
+        },
+        {
+          "scenario": "Apogee Stars Advanced",
+          "window": 2,
+          "runs": 1,
+          "best": 1306,
+          "position": 6.26,
+          "target": 4.226,
+          "k": 1.0597
+        }
+      ],
+      "windows": {
+        "0": {
+          "factor": 0.9666,
+          "relative": 1.0771,
+          "raw": 1.1178,
+          "runs": 2
+        },
+        "1": {
+          "factor": 0.9873,
+          "relative": 1.1002,
+          "raw": 1.1358,
+          "runs": 3
+        },
+        "2": {
+          "factor": 0.8974,
+          "relative": 1,
+          "raw": 1.0597,
+          "runs": 1
+        }
+      }
+    },
+    "Constellation": {
+      "factor": 0.8974,
+      "relative": 1,
+      "category": 0.8974,
+      "raw": 0.9743,
+      "runs": 8,
+      "evidence": [
+        {
+          "scenario": "Apogee Constellation Novice",
+          "window": 0,
+          "runs": 4,
+          "best": 1604,
+          "position": 4.014,
+          "target": 4.226,
+          "k": 0.9909
+        },
+        {
+          "scenario": "Apogee Constellation Intermediate",
+          "window": 1,
+          "runs": 3,
+          "best": 1506,
+          "position": 3.508,
+          "target": 4.226,
+          "k": 0.9739
+        },
+        {
+          "scenario": "Apogee Constellation Advanced",
+          "window": 2,
+          "runs": 1,
+          "best": 1368,
+          "position": 1.122,
+          "target": 4.226,
+          "k": 0.9119
+        }
+      ],
+      "windows": {
+        "0": {
+          "factor": 0.8974,
+          "relative": 1,
+          "raw": 0.9909,
+          "runs": 4
+        },
+        "1": {
+          "factor": 0.8974,
+          "relative": 1,
+          "raw": 0.9739,
+          "runs": 3
+        },
+        "2": {
+          "factor": 0.8974,
+          "relative": 1,
+          "raw": 0.9119,
+          "runs": 1
+        }
+      }
+    },
+    "Parallax": {
+      "factor": 0.8974,
+      "relative": 1,
+      "category": 0.8974,
+      "raw": 0.976,
+      "runs": 8,
+      "evidence": [
+        {
+          "scenario": "Apogee Parallax Novice",
+          "window": 0,
+          "runs": 3,
+          "best": 1398,
+          "position": 3.603,
+          "target": 4.226,
+          "k": 0.9712
+        },
+        {
+          "scenario": "Apogee Parallax Intermediate",
+          "window": 1,
+          "runs": 4,
+          "best": 1372,
+          "position": 4.226,
+          "target": 4.226,
+          "k": 1
+        },
+        {
+          "scenario": "Apogee Parallax Advanced",
+          "window": 2,
+          "runs": 1,
+          "best": 1196,
+          "position": 0.708,
+          "target": 4.226,
+          "k": 0.8985
+        }
+      ],
+      "windows": {
+        "0": {
+          "factor": 0.8974,
+          "relative": 1,
+          "raw": 0.9712,
+          "runs": 3
+        },
+        "1": {
+          "factor": 0.8974,
+          "relative": 1,
+          "raw": 1,
+          "runs": 4
+        },
+        "2": {
+          "factor": 0.8506,
+          "relative": 0.9479,
+          "raw": 0.8985,
+          "runs": 1
+        }
+      }
+    },
+    "Nebula": {
+      "factor": 0.8974,
+      "relative": 1,
+      "category": 0.8974,
+      "raw": 1.0004,
+      "runs": 5,
+      "evidence": [
+        {
+          "scenario": "Apogee Nebula Novice",
+          "window": 0,
+          "runs": 2,
+          "best": 1708,
+          "position": 4.458,
+          "target": 4.226,
+          "k": 1.0099
+        },
+        {
+          "scenario": "Apogee Nebula Intermediate",
+          "window": 1,
+          "runs": 2,
+          "best": 1602,
+          "position": 4.014,
+          "target": 4.226,
+          "k": 0.9907
+        },
+        {
+          "scenario": "Apogee Nebula Advanced",
+          "window": 2,
+          "runs": 1,
+          "best": 1570,
+          "position": 4.261,
+          "target": 4.226,
+          "k": 1.001
+        }
+      ],
+      "windows": {
+        "0": {
+          "factor": 0.8974,
+          "relative": 1,
+          "raw": 1.0099,
+          "runs": 2
+        },
+        "1": {
+          "factor": 0.8974,
+          "relative": 1,
+          "raw": 0.9907,
+          "runs": 2
+        },
+        "2": {
+          "factor": 0.8974,
+          "relative": 1,
+          "raw": 1.001,
+          "runs": 1
+        }
+      }
+    },
+    "1w6aliens": {
+      "factor": 0.9522,
+      "relative": 1.0611,
+      "category": 0.8974,
+      "raw": 1.069,
+      "runs": 8,
+      "evidence": [
+        {
+          "scenario": "Apogee 1w6aliens Novice",
+          "window": 0,
+          "runs": 4,
+          "best": 1560,
+          "position": 5.936,
+          "target": 4.226,
+          "k": 1.1006
+        },
+        {
+          "scenario": "Apogee 1w6aliens Intermediate",
+          "window": 1,
+          "runs": 3,
+          "best": 1420,
+          "position": 5.75,
+          "target": 4.226,
+          "k": 1.0511
+        },
+        {
+          "scenario": "Apogee 1w6aliens Advanced",
+          "window": 2,
+          "runs": 1,
+          "best": 1310,
+          "position": 4.257,
+          "target": 4.226,
+          "k": 1.0009
+        }
+      ],
+      "windows": {
+        "0": {
+          "factor": 0.9689,
+          "relative": 1.0797,
+          "raw": 1.1006,
+          "runs": 4
+        },
+        "1": {
+          "factor": 0.8974,
+          "relative": 1,
+          "raw": 1.0511,
+          "runs": 3
+        },
+        "2": {
+          "factor": 0.8974,
+          "relative": 1,
+          "raw": 1.0009,
+          "runs": 1
+        }
+      }
+    },
+    "Gravclick": {
+      "factor": 1.0446,
+      "relative": 0.8908,
+      "category": 1.1727,
+      "raw": 0.8571,
+      "runs": 3,
+      "evidence": [
+        {
+          "scenario": "Apogee Gravclick Novice",
+          "window": 0,
+          "runs": 2,
+          "best": 886,
+          "position": 6.387,
+          "target": 8.933,
+          "k": 0.8157
+        },
+        {
+          "scenario": "Apogee Gravclick Intermediate",
+          "window": 1,
+          "runs": 1,
+          "best": 830,
+          "position": 7.457,
+          "target": 8.933,
+          "k": 0.9464
+        }
+      ],
+      "windows": {
+        "0": {
+          "factor": 1.0238,
+          "relative": 0.873,
+          "raw": 0.8157,
+          "runs": 2
+        },
+        "1": {
+          "factor": 1.1727,
+          "relative": 1,
+          "raw": 0.9464,
+          "runs": 1
+        }
+      }
+    },
+    "Pendulum": {
+      "factor": 1.0703,
+      "relative": 0.9127,
+      "category": 1.1727,
+      "raw": 0.8853,
+      "runs": 3,
+      "evidence": [
+        {
+          "scenario": "Apogee Pendulum Novice",
+          "window": 0,
+          "runs": 2,
+          "best": 1144,
+          "position": 7.331,
+          "target": 8.933,
+          "k": 0.8894
+        },
+        {
+          "scenario": "Apogee Pendulum Intermediate",
+          "window": 1,
+          "runs": 1,
+          "best": 920,
+          "position": 5.5,
+          "target": 8.933,
+          "k": 0.8773
+        }
+      ],
+      "windows": {
+        "0": {
+          "factor": 1.0845,
+          "relative": 0.9248,
+          "raw": 0.8894,
+          "runs": 2
+        },
+        "1": {
+          "factor": 1.0984,
+          "relative": 0.9366,
+          "raw": 0.8773,
+          "runs": 1
+        }
+      }
+    },
+    "Antigrav": {
+      "factor": 1.1727,
+      "relative": 1,
+      "category": 1.1727,
+      "raw": 1.0442,
+      "runs": 3,
+      "evidence": [
+        {
+          "scenario": "Apogee Antigrav Novice",
+          "window": 0,
+          "runs": 2,
+          "best": 1250,
+          "position": 9.102,
+          "target": 8.933,
+          "k": 1.0126
+        },
+        {
+          "scenario": "Apogee Antigrav Intermediate",
+          "window": 1,
+          "runs": 1,
+          "best": 1100,
+          "position": 11.56,
+          "target": 8.933,
+          "k": 1.1104
+        }
+      ],
+      "windows": {
+        "0": {
+          "factor": 1.1727,
+          "relative": 1,
+          "raw": 1.0126,
+          "runs": 2
+        },
+        "1": {
+          "factor": 1.2358,
+          "relative": 1.0538,
+          "raw": 1.1104,
+          "runs": 1
+        }
+      }
+    },
+    "Electric": {
+      "factor": 1.3505,
+      "relative": 1.1516,
+      "category": 1.1727,
+      "raw": 1.193,
+      "runs": 4,
+      "evidence": [
+        {
+          "scenario": "Apogee Electric Novice",
+          "window": 0,
+          "runs": 2,
+          "best": 1296,
+          "position": 10.449,
+          "target": 8.933,
+          "k": 1.1098
+        },
+        {
+          "scenario": "Apogee Electric Intermediate",
+          "window": 1,
+          "runs": 2,
+          "best": 1218,
+          "position": 15.963,
+          "target": 8.933,
+          "k": 1.2824
+        }
+      ],
+      "windows": {
+        "0": {
+          "factor": 1.257,
+          "relative": 1.0719,
+          "raw": 1.1098,
+          "runs": 2
+        },
+        "1": {
+          "factor": 1.3843,
+          "relative": 1.1804,
+          "raw": 1.2824,
+          "runs": 2
+        }
+      }
+    },
+    "Sun and Moon": {
+      "factor": 1.2683,
+      "relative": 1.0815,
+      "category": 1.1727,
+      "raw": 1.1101,
+      "runs": 3,
+      "evidence": [
+        {
+          "scenario": "Apogee Sun and Moon Novice",
+          "window": 0,
+          "runs": 1,
+          "best": 850,
+          "position": 8.732,
+          "target": 8.933,
+          "k": 0.984
+        },
+        {
+          "scenario": "Apogee Sun and Moon Intermediate",
+          "window": 1,
+          "runs": 2,
+          "best": 808,
+          "position": 12.854,
+          "target": 8.933,
+          "k": 1.1791
+        }
+      ],
+      "windows": {
+        "0": {
+          "factor": 1.1727,
+          "relative": 1,
+          "raw": 0.984,
+          "runs": 1
+        },
+        "1": {
+          "factor": 1.3089,
+          "relative": 1.1161,
+          "raw": 1.1791,
+          "runs": 2
+        }
+      }
+    },
+    "Shooting Stars": {
+      "factor": 1.2663,
+      "relative": 1.0798,
+      "category": 1.1727,
+      "raw": 1.1007,
+      "runs": 4,
+      "evidence": [
+        {
+          "scenario": "Apogee Shooting Stars Novice",
+          "window": 0,
+          "runs": 2,
+          "best": 1456,
+          "position": 9.265,
+          "target": 8.933,
+          "k": 1.0241
+        },
+        {
+          "scenario": "Apogee Shooting Stars Intermediate",
+          "window": 1,
+          "runs": 2,
+          "best": 1362,
+          "position": 13.426,
+          "target": 8.933,
+          "k": 1.183
+        }
+      ],
+      "windows": {
+        "0": {
+          "factor": 1.1727,
+          "relative": 1,
+          "raw": 1.0241,
+          "runs": 2
+        },
+        "1": {
+          "factor": 1.3118,
+          "relative": 1.1186,
+          "raw": 1.183,
+          "runs": 2
+        }
+      }
+    },
+    "Gravity Well": {
+      "factor": 0.7604,
+      "relative": 0.6484,
+      "category": 1.1727,
+      "raw": 0.5612,
+      "runs": 3,
+      "evidence": [
+        {
+          "scenario": "Apogee Gravity Well Novice",
+          "window": 0,
+          "runs": 2,
+          "best": 164,
+          "position": 3.125,
+          "target": 8.933,
+          "k": 0.484
+        },
+        {
+          "scenario": "Apogee Gravity Well Intermediate",
+          "window": 1,
+          "runs": 1,
+          "best": 168,
+          "position": 2.605,
+          "target": 8.933,
+          "k": 0.7545
+        }
+      ],
+      "windows": {
+        "0": {
+          "factor": 0.7229,
+          "relative": 0.6164,
+          "raw": 0.484,
+          "runs": 2
+        },
+        "1": {
+          "factor": 1.0186,
+          "relative": 0.8686,
+          "raw": 0.7545,
+          "runs": 1
+        }
+      }
+    },
+    "Meteor": {
+      "factor": 1.31,
+      "relative": 1.1171,
+      "category": 1.1727,
+      "raw": 1.1591,
+      "runs": 3,
+      "evidence": [
+        {
+          "scenario": "Apogee Meteor Novice",
+          "window": 0,
+          "runs": 2,
+          "best": 1370,
+          "position": 11.282,
+          "target": 8.933,
+          "k": 1.1725
+        },
+        {
+          "scenario": "Apogee Meteor Intermediate",
+          "window": 1,
+          "runs": 1,
+          "best": 1034,
+          "position": 12.148,
+          "target": 8.933,
+          "k": 1.1327
+        }
+      ],
+      "windows": {
+        "0": {
+          "factor": 1.3039,
+          "relative": 1.1119,
+          "raw": 1.1725,
+          "runs": 2
+        },
+        "1": {
+          "factor": 1.2481,
+          "relative": 1.0643,
+          "raw": 1.1327,
+          "runs": 1
+        }
+      }
+    },
+    "Satellite": {
+      "factor": 1.1727,
+      "relative": 1,
+      "category": 1.1727,
+      "raw": 0.9534,
+      "runs": 3,
+      "evidence": [
+        {
+          "scenario": "Apogee Satellite Novice",
+          "window": 0,
+          "runs": 2,
+          "best": 1166,
+          "position": 8.011,
+          "target": 8.933,
+          "k": 0.9336
+        },
+        {
+          "scenario": "Apogee Satellite Intermediate",
+          "window": 1,
+          "runs": 1,
+          "best": 1004,
+          "position": 8.765,
+          "target": 8.933,
+          "k": 0.9943
+        }
+      ],
+      "windows": {
+        "0": {
+          "factor": 1.1727,
+          "relative": 1,
+          "raw": 0.9336,
+          "runs": 2
+        },
+        "1": {
+          "factor": 1.1727,
+          "relative": 1,
+          "raw": 0.9943,
+          "runs": 1
+        }
+      }
+    },
+    "Glide": {
+      "factor": 1.2467,
+      "relative": 1.089,
+      "category": 1.1448,
+      "raw": 1.1125,
+      "runs": 4,
+      "evidence": [
+        {
+          "scenario": "Apogee Glide Novice",
+          "window": 0,
+          "runs": 2,
+          "best": 5283,
+          "position": 8.816,
+          "target": 7.585,
+          "k": 1.0925
+        },
+        {
+          "scenario": "Apogee Glide Intermediate",
+          "window": 1,
+          "runs": 1,
+          "best": 4739,
+          "position": 12.826,
+          "target": 7.585,
+          "k": 1.1805
+        },
+        {
+          "scenario": "Apogee Glide Advanced",
+          "window": 2,
+          "runs": 1,
+          "best": 4132,
+          "position": 10.634,
+          "target": 7.585,
+          "k": 1.0872
+        }
+      ],
+      "windows": {
+        "0": {
+          "factor": 1.2144,
+          "relative": 1.0608,
+          "raw": 1.0925,
+          "runs": 2
+        },
+        "1": {
+          "factor": 1.2438,
+          "relative": 1.0865,
+          "raw": 1.1805,
+          "runs": 1
+        },
+        "2": {
+          "factor": 1.1448,
+          "relative": 1,
+          "raw": 1.0872,
+          "runs": 1
+        }
+      }
+    },
+    "Blastoff": {
+      "factor": 1.0591,
+      "relative": 0.9251,
+      "category": 1.1448,
+      "raw": 0.9131,
+      "runs": 6,
+      "evidence": [
+        {
+          "scenario": "Apogee Blastoff Novice",
+          "window": 0,
+          "runs": 3,
+          "best": 4847,
+          "position": 6.502,
+          "target": 7.585,
+          "k": 0.9235
+        },
+        {
+          "scenario": "Apogee Blastoff Intermediate",
+          "window": 1,
+          "runs": 2,
+          "best": 4298,
+          "position": 6.731,
+          "target": 7.585,
+          "k": 0.9729
+        },
+        {
+          "scenario": "Apogee Blastoff Advanced",
+          "window": 2,
+          "runs": 1,
+          "best": 3290,
+          "position": -1.553,
+          "target": 7.585,
+          "k": 0.7776
+        }
+      ],
+      "windows": {
+        "0": {
+          "factor": 1.0785,
+          "relative": 0.9421,
+          "raw": 0.9235,
+          "runs": 3
+        },
+        "1": {
+          "factor": 1.1448,
+          "relative": 1,
+          "raw": 0.9729,
+          "runs": 2
+        },
+        "2": {
+          "factor": 1.0095,
+          "relative": 0.8818,
+          "raw": 0.7776,
+          "runs": 1
+        }
+      }
+    },
+    "Orbit": {
+      "factor": 0.9866,
+      "relative": 0.8618,
+      "category": 1.1448,
+      "raw": 0.8437,
+      "runs": 7,
+      "evidence": [
+        {
+          "scenario": "Apogee Orbit Novice",
+          "window": 0,
+          "runs": 4,
+          "best": 4246,
+          "position": 6.021,
+          "target": 7.585,
+          "k": 0.8814
+        },
+        {
+          "scenario": "Apogee Orbit Intermediate",
+          "window": 1,
+          "runs": 2,
+          "best": 3700,
+          "position": 5.505,
+          "target": 7.585,
+          "k": 0.9274
+        },
+        {
+          "scenario": "Apogee Orbit Advanced",
+          "window": 2,
+          "runs": 1,
+          "best": 2213,
+          "position": -7.142,
+          "target": 7.585,
+          "k": 0.5864
+        }
+      ],
+      "windows": {
+        "0": {
+          "factor": 1.0348,
+          "relative": 0.9039,
+          "raw": 0.8814,
+          "runs": 4
+        },
+        "1": {
+          "factor": 1.0887,
+          "relative": 0.951,
+          "raw": 0.9274,
+          "runs": 2
+        },
+        "2": {
+          "factor": 0.8767,
+          "relative": 0.7658,
+          "raw": 0.5864,
+          "runs": 1
+        }
+      }
+    },
+    "Thread": {
+      "factor": 1.2349,
+      "relative": 1.0787,
+      "category": 1.1448,
+      "raw": 1.0952,
+      "runs": 5,
+      "evidence": [
+        {
+          "scenario": "Apogee Thread Novice",
+          "window": 0,
+          "runs": 3,
+          "best": 5326,
+          "position": 8.438,
+          "target": 7.585,
+          "k": 1.0627
+        },
+        {
+          "scenario": "Apogee Thread Intermediate",
+          "window": 1,
+          "runs": 1,
+          "best": 5005,
+          "position": 13.559,
+          "target": 7.585,
+          "k": 1.1967
+        },
+        {
+          "scenario": "Apogee Thread Advanced",
+          "window": 2,
+          "runs": 1,
+          "best": 4365,
+          "position": 11.18,
+          "target": 7.585,
+          "k": 1.097
+        }
+      ],
+      "windows": {
+        "0": {
+          "factor": 1.1448,
+          "relative": 1,
+          "raw": 1.0627,
+          "runs": 3
+        },
+        "1": {
+          "factor": 1.2523,
+          "relative": 1.0939,
+          "raw": 1.1967,
+          "runs": 1
+        },
+        "2": {
+          "factor": 1.1448,
+          "relative": 1,
+          "raw": 1.097,
+          "runs": 1
+        }
+      }
+    },
+    "Arc": {
+      "factor": 1.2316,
+      "relative": 1.0758,
+      "category": 1.1448,
+      "raw": 1.1024,
+      "runs": 3,
+      "evidence": [
+        {
+          "scenario": "Apogee Arc Novice",
+          "window": 0,
+          "runs": 2,
+          "best": 5418,
+          "position": 8.601,
+          "target": 7.585,
+          "k": 1.0743
+        },
+        {
+          "scenario": "Apogee Arc Advanced",
+          "window": 2,
+          "runs": 1,
+          "best": 4657,
+          "position": 13.681,
+          "target": 7.585,
+          "k": 1.1607
+        }
+      ],
+      "windows": {
+        "0": {
+          "factor": 1.1448,
+          "relative": 1,
+          "raw": 1.0743,
+          "runs": 2
+        },
+        "2": {
+          "factor": 1.2334,
+          "relative": 1.0774,
+          "raw": 1.1607,
+          "runs": 1
+        }
+      }
+    },
+    "AlienTrack": {
+      "factor": 1.0846,
+      "relative": 0.9474,
+      "category": 1.1448,
+      "raw": 0.9305,
+      "runs": 3,
+      "evidence": [
+        {
+          "scenario": "Apogee AlienTrack Novice",
+          "window": 0,
+          "runs": 2,
+          "best": 4343,
+          "position": 6.455,
+          "target": 7.585,
+          "k": 0.9146
+        },
+        {
+          "scenario": "Apogee AlienTrack Intermediate",
+          "window": 1,
+          "runs": 1,
+          "best": 3790,
+          "position": 6.599,
+          "target": 7.585,
+          "k": 0.9631
+        }
+      ],
+      "windows": {
+        "0": {
+          "factor": 1.0786,
+          "relative": 0.9422,
+          "raw": 0.9146,
+          "runs": 2
+        },
+        "1": {
+          "factor": 1.1448,
+          "relative": 1,
+          "raw": 0.9631,
+          "runs": 1
+        }
+      }
+    },
+    "Pong": {
+      "factor": 1.09,
+      "relative": 0.9276,
+      "category": 1.1751,
+      "raw": 0.9047,
+      "runs": 3,
+      "evidence": [
+        {
+          "scenario": "Apogee Pong Novice",
+          "window": 0,
+          "runs": 2,
+          "best": 3134,
+          "position": 5.849,
+          "target": 6.428,
+          "k": 0.9502
+        },
+        {
+          "scenario": "Apogee Pong Intermediate",
+          "window": 1,
+          "runs": 1,
+          "best": 2298,
+          "position": 2.519,
+          "target": 6.428,
+          "k": 0.8201
+        }
+      ],
+      "windows": {
+        "0": {
+          "factor": 1.1751,
+          "relative": 1,
+          "raw": 0.9502,
+          "runs": 2
+        },
+        "1": {
+          "factor": 1.0642,
+          "relative": 0.9056,
+          "raw": 0.8201,
+          "runs": 1
+        }
+      }
+    },
+    "Pong3D": {
+      "factor": 1.1751,
+      "relative": 1,
+      "category": 1.1751,
+      "raw": 0.98,
+      "runs": 4,
+      "evidence": [
+        {
+          "scenario": "Apogee Pong3D Novice",
+          "window": 0,
+          "runs": 3,
+          "best": 3516,
+          "position": 6.537,
+          "target": 6.428,
+          "k": 1.0094
+        },
+        {
+          "scenario": "Apogee Pong3D Intermediate",
+          "window": 1,
+          "runs": 1,
+          "best": 2663,
+          "position": 4.154,
+          "target": 6.428,
+          "k": 0.8968
+        }
+      ],
+      "windows": {
+        "0": {
+          "factor": 1.1751,
+          "relative": 1,
+          "raw": 1.0094,
+          "runs": 3
+        },
+        "1": {
+          "factor": 1.1128,
+          "relative": 0.947,
+          "raw": 0.8968,
+          "runs": 1
+        }
+      }
+    },
+    "Stutter": {
+      "factor": 1.4852,
+      "relative": 1.2639,
+      "category": 1.1751,
+      "raw": 1.3665,
+      "runs": 3,
+      "evidence": [
+        {
+          "scenario": "Apogee Stutter Novice",
+          "window": 0,
+          "runs": 2,
+          "best": 4515,
+          "position": 10.563,
+          "target": 6.428,
+          "k": 1.3552
+        },
+        {
+          "scenario": "Apogee Stutter Intermediate",
+          "window": 1,
+          "runs": 1,
+          "best": 3936,
+          "position": 15.416,
+          "target": 6.428,
+          "k": 1.3894
+        }
+      ],
+      "windows": {
+        "0": {
+          "factor": 1.439,
+          "relative": 1.2246,
+          "raw": 1.3552,
+          "runs": 2
+        },
+        "1": {
+          "factor": 1.3851,
+          "relative": 1.1787,
+          "raw": 1.3894,
+          "runs": 1
+        }
+      }
+    },
+    "Hover": {
+      "factor": 1.3042,
+      "relative": 1.1099,
+      "category": 1.1751,
+      "raw": 1.1392,
+      "runs": 4,
+      "evidence": [
+        {
+          "scenario": "Apogee Hover Novice",
+          "window": 0,
+          "runs": 3,
+          "best": 4068,
+          "position": 7.948,
+          "target": 6.428,
+          "k": 1.1291
+        },
+        {
+          "scenario": "Apogee Hover Intermediate",
+          "window": 1,
+          "runs": 1,
+          "best": 3606,
+          "position": 10.553,
+          "target": 6.428,
+          "k": 1.1701
+        }
+      ],
+      "windows": {
+        "0": {
+          "factor": 1.2871,
+          "relative": 1.0953,
+          "raw": 1.1291,
+          "runs": 3
+        },
+        "1": {
+          "factor": 1.2711,
+          "relative": 1.0817,
+          "raw": 1.1701,
+          "runs": 1
+        }
+      }
+    },
+    "UFO": {
+      "factor": 0.7583,
+      "relative": 0.6453,
+      "category": 1.1751,
+      "raw": 0.5184,
+      "runs": 2,
+      "evidence": [
+        {
+          "scenario": "Apogee UFO Novice",
+          "window": 0,
+          "runs": 2,
+          "best": 1805,
+          "position": 0.496,
+          "target": 6.428,
+          "k": 0.5184
+        }
+      ],
+      "windows": {
+        "0": {
+          "factor": 0.7583,
+          "relative": 0.6453,
+          "raw": 0.5184,
+          "runs": 2
+        }
+      }
+    },
+    "Feint": {
+      "factor": 1.1751,
+      "relative": 1,
+      "category": 1.1751,
+      "raw": 0.9907,
+      "runs": 2,
+      "evidence": [
+        {
+          "scenario": "Apogee Feint Novice",
+          "window": 0,
+          "runs": 2,
+          "best": 3429,
+          "position": 6.319,
+          "target": 6.428,
+          "k": 0.9907
+        }
+      ],
+      "windows": {
+        "0": {
+          "factor": 1.1751,
+          "relative": 1,
+          "raw": 0.9907,
+          "runs": 2
+        }
+      }
+    },
+    "DNAts": {
+      "factor": 1.0741,
+      "relative": 1,
+      "category": 1.0741,
+      "raw": 0.9851,
+      "runs": 3,
+      "evidence": [
+        {
+          "scenario": "Apogee DNAts Novice",
+          "window": 0,
+          "runs": 2,
+          "best": 3192,
+          "position": 8.362,
+          "target": 8.749,
+          "k": 0.9817
+        },
+        {
+          "scenario": "Apogee DNAts Advanced",
+          "window": 2,
+          "runs": 1,
+          "best": 2825,
+          "position": 8.345,
+          "target": 8.749,
+          "k": 0.9918
+        }
+      ],
+      "windows": {
+        "0": {
+          "factor": 1.0741,
+          "relative": 1,
+          "raw": 0.9817,
+          "runs": 2
+        },
+        "2": {
+          "factor": 1.0741,
+          "relative": 1,
+          "raw": 0.9918,
+          "runs": 1
+        }
+      }
+    },
+    "CockpiTS": {
+      "factor": 1.2028,
+      "relative": 1.1198,
+      "category": 1.0741,
+      "raw": 1.1519,
+      "runs": 4,
+      "evidence": [
+        {
+          "scenario": "Apogee CockpiTS Novice",
+          "window": 0,
+          "runs": 3,
+          "best": 3746,
+          "position": 11.79,
+          "target": 8.749,
+          "k": 1.1425
+        },
+        {
+          "scenario": "Apogee CockpiTS Intermediate",
+          "window": 1,
+          "runs": 1,
+          "best": 3425,
+          "position": 16.689,
+          "target": 8.749,
+          "k": 1.1805
+        }
+      ],
+      "windows": {
+        "0": {
+          "factor": 1.187,
+          "relative": 1.1051,
+          "raw": 1.1425,
+          "runs": 3
+        },
+        "1": {
+          "factor": 1.167,
+          "relative": 1.0865,
+          "raw": 1.1805,
+          "runs": 1
+        }
+      }
+    },
+    "ZeniTS": {
+      "factor": 1.0741,
+      "relative": 1,
+      "category": 1.0741,
+      "raw": 0.9426,
+      "runs": 4,
+      "evidence": [
+        {
+          "scenario": "Apogee ZeniTS Novice",
+          "window": 0,
+          "runs": 3,
+          "best": 3050,
+          "position": 7.438,
+          "target": 8.749,
+          "k": 0.938
+        },
+        {
+          "scenario": "Apogee ZeniTS Advanced",
+          "window": 2,
+          "runs": 1,
+          "best": 2725,
+          "position": 6.577,
+          "target": 8.749,
+          "k": 0.9567
+        }
+      ],
+      "windows": {
+        "0": {
+          "factor": 1.0741,
+          "relative": 1,
+          "raw": 0.938,
+          "runs": 3
+        },
+        "2": {
+          "factor": 1.0741,
+          "relative": 1,
+          "raw": 0.9567,
+          "runs": 1
+        }
+      }
+    },
+    "AsteroidTS": {
+      "factor": 1.0741,
+      "relative": 1,
+      "category": 1.0741,
+      "raw": 1.0164,
+      "runs": 2,
+      "evidence": [
+        {
+          "scenario": "Apogee AsteroidTS Novice",
+          "window": 0,
+          "runs": 1,
+          "best": 3071,
+          "position": 9.137,
+          "target": 8.749,
+          "k": 1.0186
+        },
+        {
+          "scenario": "Apogee AsteroidTS Advanced",
+          "window": 2,
+          "runs": 1,
+          "best": 2668,
+          "position": 9.462,
+          "target": 8.749,
+          "k": 1.0142
+        }
+      ],
+      "windows": {
+        "0": {
+          "factor": 1.0741,
+          "relative": 1,
+          "raw": 1.0186,
+          "runs": 1
+        },
+        "2": {
+          "factor": 1.0741,
+          "relative": 1,
+          "raw": 1.0142,
+          "runs": 1
+        }
+      }
+    },
+    "RockeTS": {
+      "factor": 0.8234,
+      "relative": 0.7666,
+      "category": 1.0741,
+      "raw": 0.7269,
+      "runs": 5,
+      "evidence": [
+        {
+          "scenario": "Apogee RockeTS Novice",
+          "window": 0,
+          "runs": 3,
+          "best": 1926,
+          "position": 3.177,
+          "target": 8.749,
+          "k": 0.7386
+        },
+        {
+          "scenario": "Apogee RockeTS Intermediate",
+          "window": 1,
+          "runs": 2,
+          "best": 1592,
+          "position": -2.573,
+          "target": 8.749,
+          "k": 0.7097
+        }
+      ],
+      "windows": {
+        "0": {
+          "factor": 0.8557,
+          "relative": 0.7967,
+          "raw": 0.7386,
+          "runs": 3
+        },
+        "1": {
+          "factor": 0.8546,
+          "relative": 0.7956,
+          "raw": 0.7097,
+          "runs": 2
+        }
+      }
+    },
+    "MartianTS": {
+      "factor": 1.1347,
+      "relative": 1.0564,
+      "category": 1.0741,
+      "raw": 1.076,
+      "runs": 3,
+      "evidence": [
+        {
+          "scenario": "Apogee MartianTS Novice",
+          "window": 0,
+          "runs": 2,
+          "best": 3914,
+          "position": 9.807,
+          "target": 8.749,
+          "k": 1.0515
+        },
+        {
+          "scenario": "Apogee MartianTS Intermediate",
+          "window": 1,
+          "runs": 1,
+          "best": 3695,
+          "position": 14.155,
+          "target": 8.749,
+          "k": 1.1266
+        }
+      ],
+      "windows": {
+        "0": {
+          "factor": 1.0741,
+          "relative": 1,
+          "raw": 1.0515,
+          "runs": 2
+        },
+        "1": {
+          "factor": 1.14,
+          "relative": 1.0614,
+          "raw": 1.1266,
+          "runs": 1
+        }
+      }
+    },
+    "FleeTS": {
+      "factor": 1.046,
+      "relative": 1,
+      "category": 1.046,
+      "raw": 0.9629,
+      "runs": 4,
+      "evidence": [
+        {
+          "scenario": "Apogee FleeTS Novice",
+          "window": 0,
+          "runs": 2,
+          "best": 2835,
+          "position": 7.24,
+          "target": 6.177,
+          "k": 1.0712
+        },
+        {
+          "scenario": "Apogee FleeTS Intermediate",
+          "window": 1,
+          "runs": 1,
+          "best": 2323,
+          "position": 4.33,
+          "target": 6.177,
+          "k": 0.9423
+        },
+        {
+          "scenario": "Apogee FleeTS Advanced",
+          "window": 2,
+          "runs": 1,
+          "best": 1961,
+          "position": -2.819,
+          "target": 6.177,
+          "k": 0.795
+        }
+      ],
+      "windows": {
+        "0": {
+          "factor": 1.046,
+          "relative": 1,
+          "raw": 1.0712,
+          "runs": 2
+        },
+        "1": {
+          "factor": 1.046,
+          "relative": 1,
+          "raw": 0.9423,
+          "runs": 1
+        },
+        "2": {
+          "factor": 0.9326,
+          "relative": 0.8916,
+          "raw": 0.795,
+          "runs": 1
+        }
+      }
+    },
+    "skeeTS": {
+      "factor": 0.6276,
+      "relative": 0.6,
+      "override": "No runs on the current file: all four playtest runs (1315, 1379, 1405, 1400) carry hash 69ca2fe9 where the file is a487161c, though the committed file has not changed since before them. They sat at the first of six ranks on Novice while every other Evasive Novice family was fourth or better, and the player could not pass the first rank near their ceiling. Read the same way as any family, that is a relative 0.51, held here at the 0.6 floor.",
+      "category": 1.046,
+      "raw": 1,
+      "runs": 0,
+      "evidence": []
+    },
+    "comeTS": {
+      "factor": 1.046,
+      "relative": 1,
+      "category": 1.046,
+      "raw": 1.0238,
+      "runs": 4,
+      "evidence": [
+        {
+          "scenario": "Apogee comeTS Novice",
+          "window": 0,
+          "runs": 2,
+          "best": 2680,
+          "position": 6.591,
+          "target": 6.177,
+          "k": 1.0273
+        },
+        {
+          "scenario": "Apogee comeTS Intermediate",
+          "window": 1,
+          "runs": 2,
+          "best": 2480,
+          "position": 6.73,
+          "target": 6.177,
+          "k": 1.0203
+        }
+      ],
+      "windows": {
+        "0": {
+          "factor": 1.046,
+          "relative": 1,
+          "raw": 1.0273,
+          "runs": 2
+        },
+        "1": {
+          "factor": 1.046,
+          "relative": 1,
+          "raw": 1.0203,
+          "runs": 2
+        }
+      }
+    },
+    "QuantumTS": {
+      "factor": 1.1191,
+      "relative": 1.0699,
+      "category": 1.046,
+      "raw": 1.0845,
+      "runs": 5,
+      "evidence": [
+        {
+          "scenario": "Apogee QuantumTS Novice",
+          "window": 0,
+          "runs": 3,
+          "best": 3123,
+          "position": 7.915,
+          "target": 6.177,
+          "k": 1.1159
+        },
+        {
+          "scenario": "Apogee QuantumTS Intermediate",
+          "window": 1,
+          "runs": 2,
+          "best": 2711,
+          "position": 7.301,
+          "target": 6.177,
+          "k": 1.039
+        }
+      ],
+      "windows": {
+        "0": {
+          "factor": 1.1356,
+          "relative": 1.0857,
+          "raw": 1.1159,
+          "runs": 3
+        },
+        "1": {
+          "factor": 1.046,
+          "relative": 1,
+          "raw": 1.039,
+          "runs": 2
+        }
+      }
+    },
+    "LosTS": {
+      "factor": 0.9351,
+      "relative": 0.894,
+      "category": 1.046,
+      "raw": 0.8453,
+      "runs": 2,
+      "evidence": [
+        {
+          "scenario": "Apogee LosTS Novice",
+          "window": 0,
+          "runs": 2,
+          "best": 3480,
+          "position": 3.922,
+          "target": 6.177,
+          "k": 0.8453
+        }
+      ],
+      "windows": {
+        "0": {
+          "factor": 0.9351,
+          "relative": 0.894,
+          "raw": 0.8453,
+          "runs": 2
+        }
+      }
+    },
+    "InvadersTS": {
+      "factor": 0.9822,
+      "relative": 0.939,
+      "category": 1.046,
+      "raw": 0.9244,
+      "runs": 4,
+      "evidence": [
+        {
+          "scenario": "Apogee InvadersTS Novice",
+          "window": 0,
+          "runs": 3,
+          "best": 2567,
+          "position": 5.763,
+          "target": 6.177,
+          "k": 0.9722
+        },
+        {
+          "scenario": "Apogee InvadersTS Intermediate",
+          "window": 1,
+          "runs": 1,
+          "best": 1954,
+          "position": -0.335,
+          "target": 6.177,
+          "k": 0.7945
+        }
+      ],
+      "windows": {
+        "0": {
+          "factor": 1.046,
+          "relative": 1,
+          "raw": 0.9722,
+          "runs": 3
+        },
+        "1": {
+          "factor": 0.9323,
+          "relative": 0.8913,
+          "raw": 0.7945,
+          "runs": 1
+        }
+      }
+    }
+  }
+}

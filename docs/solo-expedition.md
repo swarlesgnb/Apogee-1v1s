@@ -21,17 +21,21 @@ Unrelated scenarios never affect a trial. Novice ignores out-of-order trial scen
 
 ## Know what you are working toward
 
-The play screen puts the current activity first: one next target, its score, a short coaching cue, and the action to play it. Expand **See all targets** to inspect the complete requirement. The destination reward is shown beneath the activity; the chart tracks all six clears toward First Light.
+The star chart opens on the **deck**: one next move, in one sentence ("Score 1,285 on Apogee Zenith Novice"), the reason it matters (what the round is part of and the reward it leads to), every round of the current activity as a path from done to upcoming, and one line under **If you miss** stating the rule that applies right now. Before joining, the deck is the difficulty chooser: four cards that each say what a miss costs, with the player's own record against that difficulty's eighteen targets and a suggested starting point.
 
-After a clear, continue directly to the next uncleared destination or equip the ship and difficulty insignia you earned. Suggested destinations are a guide; the entire chart remains selectable.
+Beside every target the deck and the destination briefing show the player's best, its percentage of the target, and the median of the latest ten runs, read from every valid local run including those before joining. A label (Beaten before, Within reach at 90%, A stretch at 75%, Far off for now) is context only: nothing is gated or settled on it. The suggested difficulty is the highest one where at least three targets were played and half of them are already met; one met at 80% or better over nine or more played targets points one difficulty higher. It is a suggestion; every difficulty stays open.
 
-Discovery is optional in every difficulty: complete one run on each of three families for a Survey fragment. Other route challenges are:
+**Start** begins the attempt and opens its first scenario in KovaaK's in one step. While a launched run is outstanding the deck says it is listening. When the run lands, a **Signal received** card gives the score against the target, the verdict (checkpoint secured, round cleared, retry used, attempt over, warm-up progress, or practice logged against the selected destination) and what comes next. It is read from the change between two states the main process already settled; it decides nothing.
+
+The selected destination's briefing says what the discipline trains, lists the trial with the player's numbers, and holds the optional warm-ups, Survey, replays and the full rules. After a clear the deck offers the next uncleared destination, then the next difficulty.
+
+The Survey (stored as Discovery) is optional in every difficulty: complete one run on each of three families for a Survey fragment. The warm-ups (stored as routes) are:
 
 - **Score attack:** meet one score target.
 - **Steady set:** meet one target three times consecutively on the same scenario. A miss on that scenario resets the streak.
 - **Mixed circuit:** meet one target on each of three different families. Each successful scenario remains complete.
 
-Intermediate requires any one of these routes. Advanced uses any one to unlock retry support. In Novice and Expert they are optional collection activities. Use **Put route aside** to return to your main journey; accepted targets and progress remain saved, and matching new training runs still count. Resume from the optional routes panel.
+Intermediate requires any one warm-up, and the deck offers the three as the next move. Advanced uses any one to unlock retry support. In Novice and Expert they are optional collection activities. Setting a warm-up aside returns to the trial; accepted targets and progress remain saved, and matching new training runs still count. Resume from the Warm-ups section of the briefing.
 
 Personal Score attack and Steady set targets use 103% and 95% of the latest ten scores' median when at least five prior runs exist. Otherwise they use published targets. Targets freeze on acceptance. Switching away never rerolls a target. Finale standards are published and do not depend on your personal history.
 
@@ -47,9 +51,9 @@ The session recap records earned rewards, completed routes, attempts, new checkp
 
 ## Playing and saving
 
-Start an activity before playing. **Play next scenario** opens the next required scenario and writes `Apogee Expedition First Light.json` to KovaaK's playlists folder. Restart KovaaK's if its menu has not discovered the playlist.
+Start an activity before playing. Starting a trial, or **Play in KovaaK's** during one, opens the next required scenario and writes `Apogee Expedition First Light.json` to KovaaK's playlists folder. Restart KovaaK's if its menu has not discovered the playlist.
 
-Checkpoint and supported attempts export only the current target, so a miss cannot automatically skip to the next round through that playlist. Return to Apogee after the run for the next target or retry. Strict attempts export the remaining ordered rounds. Route playlists contain their remaining repetitions; return after a failed Steady set run for the updated requirement.
+Checkpoint and supported attempts export only the current target, so a miss cannot automatically skip to the next round through that playlist. The result appears in Apogee on its own after the run, with the next target or the retry. Strict attempts export the remaining ordered rounds. Route playlists contain their remaining repetitions; return after a failed Steady set run for the updated requirement.
 
 Progress is saved to `expedition-first-light-v3.json` in Electron's user-data directory, with atomic replacement and `.bak` recovery. V1 and v2 saves remain separate and untouched. Migration preserves rewards, equipment, accepted targets, route progress, and trial history. An already-active legacy attempt retains its original strict rules; new attempts use the new journey rules. Unreadable saves are preserved rather than silently replaced.
 
@@ -61,8 +65,8 @@ Visible maps and subgoals come from [David Blandy's solo-game design discussion]
 
 ## Verification
 
-- `npm.cmd run validate:expedition` covers the legacy evaluator, all four new journeys, all rewards, checkpoint persistence, retry limits, mastery, migration, playlists, and equipment.
-- `npm.cmd run validate:expedition-ui` exercises isolated Electron flows with synthetic progress: preview difficulty and enrollment, checkpoint recovery, Intermediate choices, supported/unassisted Advanced clears, Expert misses, reward previews, equipment, keyboard navigation, responsive layouts, and reduced motion. Screenshots go to `.cache/expedition-ui`.
+- `npm.cmd run validate:expedition` covers the scenario intel and difficulty suggestion, the legacy evaluator, all four new journeys, all rewards, checkpoint persistence, retry limits, mastery, migration, playlists, and equipment.
+- `npm.cmd run validate:expedition-ui` exercises isolated Electron flows with synthetic progress: the difficulty chooser and enrollment, one-click start and launch, the listening state and every verdict card, checkpoint recovery, Intermediate choices, supported/unassisted Advanced clears, Expert misses, reward previews, equipment, keyboard navigation, responsive layouts, and reduced motion. Screenshots go to `.cache/expedition-ui`.
 - `npm.cmd run typecheck` and `npm.cmd run smoke` check integration.
 
 None of this covers whether the training is enjoyable, whether the difficulty is balanced, or the hand-off into KovaaK's itself. Those need the four journeys played.

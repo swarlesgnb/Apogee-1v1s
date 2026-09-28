@@ -1455,6 +1455,31 @@ player, players on the entry rungs, and how many of the 128 benchmarks evxl list
 lineage. `npm run audit:fun` re-derives all three into `data/fun_audit.json`, and
 `validate:rebuild` fails if a replacement measures below the family whose slot it took.
 
+### Apogee's own scenarios replaced the borrowed pool
+
+Everything above in this section describes the first draft of Season 1: a pool of other
+authors' scenarios, each justified by the benchmark that banded it, with its thresholds cut
+from that scenario's KovaaK's board. It never shipped. Before the first playtest, Season 1
+was rebuilt from 164 scenarios Apogee authored itself: 41 families at four bands, designed
+in `tools/season/design.ts` and forged from real KovaaK's templates
+([docs/season-1.md](docs/season-1.md)).
+
+What changes, and what does not:
+
+- **Thresholds are predicted, not cut.** No board exists for a scenario nobody has played,
+  so each is read off the board a difficulty model fitted on 11k real runs predicts for
+  the file, at the same ladder percentiles (`data/pool.json`). `validate:season-files`
+  re-derives each one; `recut:season` replaces them from real boards as they appear.
+- **Why a family is here** lives in `data/season-1/families.json`, generated from the
+  design, with the popular scenarios each learns from. The rationale file, the curation
+  and expansion records and their validators were retired with the pool they described;
+  they are in git history before the replacement, and `audit:fun` still reads that pool
+  from there.
+- **No KovaaK's board, so no world record and no apex board** until the scenarios are
+  shared in game. The score-model checks already skip an unmodelled scenario, so nothing
+  honest is rejected; the file fingerprint (§5) stands in for the board's guarantee that
+  everyone played the same scenario.
+
 ### The order to build it in
 
 1. Own the pool. A season file naming the scenarios per category, read where

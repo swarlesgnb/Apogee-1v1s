@@ -6,6 +6,7 @@ import { loadExpedition, rewardCatalog } from './definition.ts';
 import { enroll, acceptChallenge, startTrial, syncExpedition, abandonTrial, canStartTrial, preparationReady, savedCheckpoints, trialSteps, challengeOffers } from './engine.ts';
 import { migrateExpedition } from './migrate.ts';
 import { journeyView } from './journey.ts';
+import { bandFit, recommendBand, scenarioIntel } from './intel.ts';
 import { ExpeditionStore, validState } from './store.ts';
 import { ExpeditionService } from '../../app/expedition.ts';
 import type { ChallengeKind, ExpeditionState } from './types.ts';
@@ -102,10 +103,11 @@ const mid = migrateExpedition(old, oldDef, v3, tick());
 assert.equal(JSON.stringify(old), before);
 assert.deepEqual(mid.routes, old.routes); assert.deepEqual(mid.rewards, old.rewards); assert.deepEqual(mid.trials, old.trials);
 assert.ok(validState(mid, v3));
-// v3 -> v4 changes the roster: rewards and trials carry over whole, and a route survives
-// exactly when every scenario it accepted is still offered in its v4 band.
+// v3 -> v4 -> v5 changes the roster twice: rewards and trials carry over whole, and a
+// route survives exactly when every scenario it accepted is still offered in its v5 band.
+const v4 = loadExpedition(4);
 const midBefore = JSON.stringify(mid);
-const migrated = migrateExpedition(mid, v3, def, tick());
+const migrated = migrateExpedition(migrateExpedition(mid, v3, v4, tick()), v4, def, tick());
 assert.equal(JSON.stringify(mid), midBefore);
 assert.deepEqual(migrated.rewards, old.rewards); assert.deepEqual(migrated.trials, old.trials);
 for (const [key, route] of Object.entries(mid.routes)) {
@@ -116,14 +118,14 @@ for (const [key, route] of Object.entries(mid.routes)) {
   if (playable) assert.deepEqual(migrated.routes[key], route);
 }
 assert.ok(validState(migrated, def));
-// Checkpoints banked on v3's roster: one on a scenario v4 keeps, one on a scenario it
-// retired. The destination must still start, carrying only the checkpoint still offered.
+// Checkpoints banked on v3's roster, carried through v4 to v5, which retired every one of
+// them. The destination must still start, carrying only the checkpoint still offered.
 {
   const v3Roster = v3.destinations[0].bands[0];
   let banked = startTrial(enroll(v3, tick()), v3, d.id, 0, tick());
   banked = syncExpedition(banked, v3, v3Roster.slice(0, 2).map(sc => run(sc.name, sc.target)), tick());
   banked = abandonTrial(banked, tick());
-  const moved = migrateExpedition(banked, v3, def, tick());
+  const moved = migrateExpedition(migrateExpedition(banked, v3, v4, tick()), v4, def, tick());
   const resumed = startTrial(moved, def, d.id, 0, tick());
   assert.ok(validState(resumed, def), 'a destination with checkpoints on a retired scenario still starts');
   const carried = resumed.trials.at(-1)!.results.map(r => r.scenario);
@@ -136,10 +138,10 @@ assert.equal(stillStrict.trials.at(-1)!.status, 'failed', 'migrated active trial
 const oldStore = new ExpeditionStore(join(folder, 'expedition-first-light-v2.json'), oldDef);
 oldStore.save(old); const bytes = readFileSync(oldStore.path);
 const serviceView = new ExpeditionService(folder).view(null);
-assert.equal(serviceView.error, null); assert.equal(serviceView.state!.version, 4);
+assert.equal(serviceView.error, null); assert.equal(serviceView.state!.version, 5);
 assert.deepEqual(readFileSync(oldStore.path), bytes);
 assert.deepEqual(new ExpeditionService(folder).view(null).state, serviceView.state);
-console.log('PASS: v2 -> v3 -> v4 preserves original bytes, rewards and active strict trials; routes survive where still playable; v4 reloads independently');
+console.log('PASS: v2 -> v3 -> v4 -> v5 preserves original bytes, rewards and active strict trials; routes survive where still playable; v5 reloads independently');
 
 const serviceFolder = join(folder, 'actions'), statsFolder = join(folder, 'stats'); mkdirSync(statsFolder);
 const service = new ExpeditionService(serviceFolder);
@@ -154,7 +156,7 @@ service.action({ type: 'select', destination: d.id, band: 3 }, statsFolder);
 service.action({ type: 'start' }, statsFolder); service.playlist(statsFolder);
 assert.equal(JSON.parse(readFileSync(playlistPath, 'utf8')).scenarioList.length, 3, 'strict attempt preserves ordered playlist');
 const appearanceFolder = join(folder, 'appearance');
-new ExpeditionStore(join(appearanceFolder, 'expedition-first-light-v4.json'), def).save(s);
+new ExpeditionStore(join(appearanceFolder, 'expedition-first-light-v5.json'), def).save(s);
 const appearanceService = new ExpeditionService(appearanceFolder);
 appearanceService.action({ type: 'equip', reward: `${d.id}:0:clear` }, null);
 assert.equal(appearanceService.view(null).state!.equipped.insignia, `${d.id}:0:clear`);
@@ -183,4 +185,23 @@ console.log('PASS: all four complete journeys, every final passage, 122 reachabl
 assert.ok(!preparationReady(enroll(def, tick()), def, 'final', 2));
 const broken = structuredClone(campaign); broken.trials[0].mode = 'prepared';
 assert.ok(!validState(broken, def), 'invalid mode/band combinations rejected');
+
+// The deck quotes these numbers beside every target and in the difficulty suggestion.
+const nov = def.destinations.flatMap(x => x.bands[0]), inter = def.destinations.flatMap(x => x.bands[1]);
+assert.equal(recommendBand(def, bandFit(def, scenarioIntel(def, []))).band, 0, 'no history suggests the gentlest band');
+const scout = [run(nov[0].name, nov[0].target * .5), run(nov[0].name, nov[0].target * 1.1), run(nov[0].name, nov[0].target * .9), run('Unrelated scenario', 1e9)];
+const intel = scenarioIntel(def, [...scout, scout[0]]);
+assert.deepEqual(Object.keys(intel), [nov[0].name], 'only expedition scenarios, duplicates counted once');
+assert.equal(intel[nov[0].name].runs, 3); assert.equal(intel[nov[0].name].best, nov[0].target * 1.1);
+assert.equal(intel[nov[0].name].last, nov[0].target * .9); assert.equal(intel[nov[0].name].median, nov[0].target * .9);
+const beating = (rows: typeof nov, n: number, factor: number) => rows.slice(0, n).map(s => run(s.name, s.target * factor));
+let fit = bandFit(def, scenarioIntel(def, [...beating(nov, 4, 1.05), ...beating(inter, 4, .8)]));
+assert.deepEqual(fit[0], { played: 4, met: 4, total: 18 }); assert.deepEqual(fit[1], { played: 4, met: 0, total: 18 });
+assert.equal(recommendBand(def, fit).band, 0, 'a band met at half or better, with too few plays to step up, is suggested itself');
+fit = bandFit(def, scenarioIntel(def, beating(nov, 10, 1.05)));
+const step = recommendBand(def, fit);
+assert.equal(step.band, 1, 'a band met almost everywhere points one higher'); assert.match(step.reason, /10 of 10/);
+fit = bandFit(def, scenarioIntel(def, [...beating(nov, 10, 1.05), ...beating(inter, 4, 1.05)]));
+assert.equal(recommendBand(def, fit).band, 1, 'the highest band that is a real test wins');
+console.log('PASS: scenario intel dedupes and ignores unrelated runs; band fit counts played and met targets; suggestion rule');
 console.log('Journey validation passed.');

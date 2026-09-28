@@ -15,7 +15,7 @@ app.setPath("userData", join(isolated, "electron"));
 const stats = join(isolated, "stats"); mkdirSync(stats);
 let dir: string | null = null, service = new ExpeditionService(isolated);
 const def = loadExpedition();
-const store = new ExpeditionStore(join(isolated, "expedition-first-light-v4.json"), def);
+const store = new ExpeditionStore(join(isolated, "expedition-first-light-v5.json"), def);
 const realNow = Date.now;
 let time = realNow(), serial = 0;
 const sessionStartedAt = time;
@@ -103,11 +103,18 @@ app.whenReady().then(async () => {
   await click('[data-exp-action="folder"]');
   await waitFor(`!!document.querySelector('[data-exp-action="enroll"]')`);
   async function chooseBand(b: number) {
+    // Before joining there is no select: the difficulties sit behind "Difficulty: … · change".
+    if (!service.view(dir).state) {
+      if (!(await evaluate<boolean>(`!!document.querySelector('.exp-band-card')`))) await click('[data-exp-action="toggle-bands"]');
+      await click(`.exp-band-card[data-band="${b}"]`);
+      return;
+    }
     await evaluate(`document.getElementById('expBand').value='${b}';document.getElementById('expBand').dispatchEvent(new Event('change',{bubbles:true}))`);
     await waitFor(`!document.getElementById('expBand').disabled && document.getElementById('expBand').value==='${b}'`);
   }
   await chooseBand(3);
-  assert.match(await evaluate<string>(`document.querySelector('.exp-journey h2').textContent`), /Prove your mastery/);
+  assert.match(await evaluate<string>(`document.querySelector('.exp-band-card.selected').textContent`), /Expert/);
+  assert.equal(await evaluate(`document.querySelectorAll('.exp-band-card').length`), 4, 'every difficulty is explained before joining');
   await click('[data-exp-action="enroll"]');
   assert.equal(service.view(dir).state!.band, 3, 'enrollment respects preview difficulty');
   await click('.exp-main-action [data-exp-action="start"]');
@@ -118,27 +125,38 @@ app.whenReady().then(async () => {
   state.enrolledAt = sessionStartedAt - 10000;
   state.runs.push({ id: 'ui-prior-session', scenario: roster[0].name, score: roster[0].target * .9, at: sessionStartedAt - 1000 });
   await publish(state);
-  assert.match(await evaluate<string>(`document.querySelector('.exp-last-result').textContent`), /Attempt ended/);
+  assert.match(await evaluate<string>(`document.querySelector('.exp-transmission').textContent`), /Attempt over/);
   await screenshot('02-expert-retry');
+  await click('[data-exp-action="dismiss-signal"]');
+  assert.match(await evaluate<string>(`document.querySelector('.exp-last-result').textContent`), /attempt ended/i, 'the miss outlives its dismissed verdict');
   await chooseBand(0);
+  // One click starts the attempt and opens its first scenario; the deck then listens.
   await click('.exp-main-action [data-exp-action="start"]');
-  await click('[data-exp-action="launch"]');
-  assert.match(await evaluate<string>(`document.querySelector('#expeditionMessage').textContent`), /Come back here/);
+  assert.match(await evaluate<string>(`document.querySelector('.exp-uplink').textContent`), new RegExp(`Listening for your run on ${roster[0].name}`));
   state = syncExpedition(service.view(dir).state!, def, [run(roster[0].name, roster[0].target), run(roster[1].name, 0)], advance());
   await publish(state);
-  assert.match(await evaluate<string>(`document.querySelector('.exp-objective h3').textContent`), /Checkpoint 2 of 3/);
-  assert.match(await evaluate<string>(`document.querySelector('.exp-last-result').textContent`), /cleared steps are safe/);
-  assert.equal(await evaluate(`document.querySelectorAll('.exp-next-target li').length`), 1, 'one immediate target');
-  await click('.exp-all-targets > summary');
+  assert.match(await evaluate<string>(`document.querySelector('.exp-objective .exp-eyebrow').textContent`), /Checkpoint 2 of 3/i);
+  assert.match(await evaluate<string>(`document.querySelector('.exp-objective h3').textContent`), new RegExp(roster[1].name));
+  assert.match(await evaluate<string>(`document.querySelector('.exp-transmission').textContent`), /Checkpoint 1 secured/);
+  assert.equal(await evaluate(`document.querySelectorAll('.exp-flight li').length`), 3, 'every round is visible');
+  assert.equal(await evaluate(`document.querySelectorAll('.exp-flight-current').length`), 1, 'one current round');
+  assert.equal(await evaluate(`!!document.querySelector('.exp-uplink')`), false, 'a landed run ends the listening state');
+  await click('.exp-detail > details:last-of-type > summary');
   await publish(state);
-  assert.equal(await evaluate(`document.querySelector('.exp-all-targets').open`), true, 'live refresh preserves expanded targets');
+  assert.equal(await evaluate(`document.querySelector('.exp-detail > details:last-of-type').open`), true, 'live refresh preserves expanded sections');
   await screenshot('03-novice-checkpoint');
+  state = syncExpedition(service.view(dir).state!, def, [run(roster[1].name, roster[1].target * .9)], advance());
+  await publish(state);
+  assert.match(await evaluate<string>(`document.querySelector('.exp-transmission').textContent`), /Not this time/);
+  assert.match(await evaluate<string>(`document.querySelector('.exp-transmission').textContent`), /1 checkpoint safe/);
+  await screenshot('03b-novice-miss');
   await click('[data-exp-action="abandon"]');
-  assert.match(await evaluate<string>(`document.querySelector('.exp-main-action').textContent`), /Resume checkpoints/);
+  assert.match(await evaluate<string>(`document.querySelector('.exp-main-action').textContent`), /Resume at checkpoint 2/);
   await click('.exp-main-action [data-exp-action="start"]');
   state = syncExpedition(service.view(dir).state!, def, roster.slice(1).map(sc => run(sc.name, sc.target * 1.2)), advance());
   await publish(state);
-  assert.match(await evaluate<string>(`document.querySelector('.exp-objective').textContent`), /Destination secured/);
+  assert.match(await evaluate<string>(`document.querySelector('.exp-objective h3').textContent`), new RegExp(`${d.name} is yours`));
+  assert.match(await evaluate<string>(`document.querySelector('.exp-transmission').textContent`), new RegExp(`${d.name} cleared`));
   assert.match(await evaluate<string>(`document.querySelector('.exp-journey-progress').textContent`), /1 \/ 6 destinations/);
   await click('.exp-detail [data-exp-action="equip"]');
   assert.equal(service.view(dir).state!.equipped.ship, `${d.id}:ship`);
@@ -151,8 +169,8 @@ app.whenReady().then(async () => {
   assert.equal(service.view(dir).state!.selected, def.destinations[1].id, 'clear offers next destination');
   await click(`.exp-planet[data-destination="${d.id}"]`);
   await chooseBand(1);
-  assert.equal(await evaluate(`document.querySelectorAll('.exp-choice').length`), 3);
-  assert.match(await evaluate<string>(`document.querySelector('.exp-choice-section').textContent`), /never have to clear all three/);
+  assert.equal(await evaluate(`document.querySelectorAll('.exp-deck-choice').length`), 3, 'the three warm-ups are the next move');
+  assert.match(await evaluate<string>(`document.querySelector('.exp-objective').textContent`), /Pick one warm-up/);
   for (const [w, h] of [[1440,1080],[940,640],[600,900]]) {
     win.setSize(w,h); await noOverflow(); await screenshot(`05-intermediate-${w}x${h}`);
   }
@@ -163,10 +181,11 @@ app.whenReady().then(async () => {
   assert.equal(accepted.steps![0].source, 'published');
   state = syncExpedition(state, def, accepted.steps!.map(st => run(st.scenario, st.target!)), advance());
   await publish(state);
-  assert.match(await evaluate<string>(`document.querySelector('.exp-objective').textContent`), /finale is open/);
+  assert.match(await evaluate<string>(`document.querySelector('.exp-objective h3').textContent`), /Take on the/);
+  assert.match(await evaluate<string>(`document.querySelector('.exp-transmission').textContent`), /trial at .* is open/);
   await click('.exp-optional > summary');
   await click('[data-exp-action="accept"][data-kind="circuit"]');
-  assert.match(await evaluate<string>(`document.querySelector('.exp-finale-ready').textContent`), /already unlocked/);
+  assert.match(await evaluate<string>(`document.querySelector('.exp-objective').textContent`), /already open/);
   await click('.exp-main-action [data-exp-action="pause-route"]');
   await click('.exp-main-action [data-exp-action="start"]');
   state = syncExpedition(service.view(dir).state!, def, [run(d.bands[1][0].name, 0)], advance());
@@ -191,7 +210,8 @@ app.whenReady().then(async () => {
   await click('.exp-main-action [data-approach="prepared"]');
   state = syncExpedition(service.view(dir).state!, def, [run(d.bands[2][0].name, 0)], advance());
   await publish(state);
-  assert.match(await evaluate<string>(`document.querySelector('.exp-objective p').textContent`), /0 retry remaining/);
+  assert.match(await evaluate<string>(`document.querySelector('.exp-rule').textContent`), /No retries left/);
+  assert.match(await evaluate<string>(`document.querySelector('.exp-transmission').textContent`), /Retry used/);
   state = syncExpedition(service.view(dir).state!, def, d.bands[2].map(sc => run(sc.name, sc.target * 1.2)), advance());
   await publish(state);
   assert.ok(!state.rewards[`${d.id}:2:direct`]);

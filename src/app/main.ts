@@ -95,6 +95,7 @@ import {
   practiceRows,
   writePracticePlaylists,
 } from "../core/season/practice.ts";
+import { installSeasonScenarios, scenariosFolderFor } from "../core/season/installScenarios.ts";
 
 /**
  * Bundled to dist/app/main.cjs, so `__dirname` is dist/app and the reference data
@@ -211,6 +212,7 @@ function rebuild(reason: string): void {
 
   state.scanning = true;
   broadcast("apogee:scanning", { scanning: true, reason });
+  const startedAt = performance.now();
 
   try {
     // Its own try: the solo Expedition failing to load must not cost the player their
@@ -257,6 +259,10 @@ function rebuild(reason: string): void {
   } finally {
     state.scanning = false;
     broadcast("apogee:scanning", { scanning: false, reason });
+    // Timed into the log so a stutter in KovaaK's can be laid against what Apogee was
+    // doing at that minute. A warm rebuild measured 44-144ms on a 13,861-run folder and a
+    // cold one 54s, so a line here past a second is the thing worth asking about.
+    log(`rebuild (${reason}) ${Math.round(performance.now() - startedAt)}ms`);
   }
 }
 
@@ -311,7 +317,30 @@ function startWatching(dir: string): void {
   });
 
   rebuild("initial scan");
+  installScenarioFiles(dir);
   refreshInstalledPlaylists(dir);
+}
+
+/**
+ * Put the season's scenario files into KovaaK's, rewriting any that differ.
+ *
+ * Every Season 1 scenario is Apogee's own and exists nowhere but in this app, and a ranked
+ * run on one is refused unless KovaaK's hashed exactly the shipped file - so a missing file
+ * is a scenario the player cannot open, and a stale one is a scenario whose runs cannot
+ * count. See core/season/installScenarios.ts.
+ */
+function installScenarioFiles(statsDir: string): void {
+  try {
+    const { written, removed } = installSeasonScenarios(scenariosFolderFor(statsDir));
+    if (written.length > 0 || removed.length > 0) {
+      log(`scenario files: ${written.length} written, ${removed.length} removed`);
+      notify(
+        `Installed ${written.length} Apogee scenario${written.length === 1 ? "" : "s"}. ` +
+        "If KovaaK's is open, restart it to load them.");
+    }
+  } catch (err) {
+    console.warn("could not install the season's scenarios:", friendlyError(err));
+  }
 }
 
 /**
@@ -323,7 +352,7 @@ function refreshInstalledPlaylists(statsDir: string): void {
   try {
     const refreshed = refreshStalePlaylists(loadSeason(), playlistsFolderFor(statsDir));
     if (refreshed.length > 0) {
-      broadcast("apogee:notice",
+      notify(
         `Updated ${refreshed.length} Apogee playlist${refreshed.length === 1 ? "" : "s"} to this season's scenarios. ` +
         "If KovaaK's is open, restart it to load them.");
     }
@@ -1160,6 +1189,7 @@ function runSmokeTest(): void {
         datedBoards: /boards as of/.test(
           document.getElementById("apexNote")?.textContent ?? "",
         ),
+        note: document.getElementById("apexNote")?.textContent ?? "",
         boardPanel: document.getElementById("apexBoardBody") !== null,
         boardNote: (
           document.getElementById("apexBoardNote")?.textContent ?? ""
@@ -1167,8 +1197,13 @@ function runSmokeTest(): void {
       };
     })()`);
 
+    // No season scenario has a KovaaK's board until they are shared in-game: that is a
+    // state to say, not a failure, and the check is that the screen says it.
+    const unsampled = apex.err === APEX_UNSAMPLED;
     if (!apex.tab) problems.push("the Apex tab is not in the DOM");
-    if (apex.err) problems.push(`the apex board failed: ${apex.err}`);
+    if (unsampled) {
+      if (!apex.note.includes("No KovaaK's leaderboard")) problems.push("the apex board does not say its boards are unsampled");
+    } else if (apex.err) problems.push(`the apex board failed: ${apex.err}`);
     else if (apex.categories <= 0) problems.push("the apex board has no categories");
     else if (apex.panels === 0) problems.push("the apex board painted no categories");
     else if (apex.rows !== apex.families) {
@@ -1187,8 +1222,8 @@ function runSmokeTest(): void {
     }
 
     if (!apex.boardPanel) problems.push("the Apex screen has nowhere to list the leaderboard");
-    // One per category plus the derived overall.
-    else if (apex.tabs !== apex.categories + 1) {
+    // One per category plus the derived overall; unsampled, there are no categories to tab.
+    else if (!unsampled && apex.tabs !== apex.categories + 1) {
       problems.push("the leaderboard does not offer a tab per category");
     } else if (apex.boardNote === 0) {
       // Signed out this is the line telling somebody why the board is empty. Blank
@@ -1198,7 +1233,9 @@ function runSmokeTest(): void {
 
     console.log(
       `apex board   : ${
-        apex.err
+        unsampled
+          ? "no season scenario has a sampled board yet, and the screen says so"
+          : apex.err
           ? `FAILED (${apex.err})`
           : `${apex.points.toFixed(2)} points, ${apex.graded}/${apex.families} families ` +
             `scored, ${apex.placed} placed, ${apex.targets} with a next target, ` +
@@ -1909,6 +1946,14 @@ function runSmokeTest(): void {
         `${season && season.available} scenarios to choose from`,
     );
 
+    // The window buttons' strip was set once and never matched the top bar under it.
+    const barColor = await probe.webContents
+      .executeJavaScript(`(() => { const m = /rgba?\\((\\d+),\\s*(\\d+),\\s*(\\d+)/.exec(getComputedStyle(document.querySelector(".topbar")).backgroundColor); return m ? "#" + m.slice(1, 4).map((n) => Number(n).toString(16).padStart(2, "0")).join("") : null; })()`)
+      .catch(() => null);
+    if (!windowChrome) problems.push("the renderer never reported the top bar's colour for the window buttons");
+    else if (windowChrome.color !== barColor) problems.push(`window buttons sit on ${windowChrome.color}, the top bar is ${barColor}`);
+    console.log(`window chrome: ${windowChrome ? `${windowChrome.color} on a ${barColor} top bar` : "NOT REPORTED"}`);
+
     console.log(`preload      : ${hasBridge ? "bridge exposed" : "MISSING"}`);
     console.log(`renderer     : ${rendered ? "loaded" : "EMPTY"}`);
 
@@ -2018,7 +2063,7 @@ app.whenReady().then(() => {
     startWatching(found);
   } else {
     state.lastError =
-      "Could not find your KovaaK's stats folder. Use \"Choose folder…\" to point Apogee at it.";
+      "Couldn't find your KovaaK's stats folder.";
   }
 
   app.on("activate", () => {
@@ -2330,6 +2375,31 @@ ipcMain.handle("apogee:sendDuel", async (_e, { to, category, pool } = {} as any)
   }
 });
 
+/**
+ * Repaint the strip the operating system draws minimise, maximise and close on.
+ *
+ * It was set once, at window creation, from DARK_CHROME, and the top bar it sits in is
+ * painted by the renderer's stylesheets: the arcade look moved --ground to #171918, the
+ * theme menu moves it again, and Expedition has its own. The buttons stayed on #10121b
+ * in a visibly different box. The renderer reports what the top bar actually computes
+ * to, whenever that can change, and this applies it. Hex only: it goes straight to the OS.
+ */
+let windowChrome: { color: string; symbolColor: string } | null = null;
+ipcMain.handle("apogee:setWindowChrome", (_e, { color, symbolColor } = {} as any) => {
+  const hex = /^#[0-9a-f]{6}$/i;
+  if (!hex.test(color) || !hex.test(symbolColor)) return false;
+  // Kept for the smoke test, whose probe window has no overlay to paint.
+  windowChrome = { color, symbolColor };
+  if (!window) return false;
+  try {
+    window.setTitleBarOverlay({ color, symbolColor, height: 46 });
+    return true;
+  } catch {
+    // Not every platform has an overlay to repaint; the default one stays.
+    return false;
+  }
+});
+
 ipcMain.handle("apogee:answerDuel", async (_e, { duelId, action } = {} as any) => {
   if (!state.session) return { error: "Sign in with Steam to play ranked." };
 
@@ -2338,6 +2408,12 @@ ipcMain.handle("apogee:answerDuel", async (_e, { duelId, action } = {} as any) =
     // Accepting hands back a whole match; declining and cancelling hand back a verdict.
     // Taking up a match that is not there would wipe the one the player is playing.
     if (action === "accept" && result.matchId) adoptMatch(result);
+    // Taking back an unplayed duel voids the match it made; the panel must not keep it.
+    if (result.matchVoided && state.match?.matchId === result.matchVoided) {
+      state.match = null;
+      state.submitted.clear();
+      broadcast("apogee:match", null);
+    }
     void refreshDuels(`answered a duel: ${action}`);
     return { ok: true, status: result.status, match: action === "accept" ? result : undefined };
   } catch (err) {
@@ -2548,7 +2624,7 @@ ipcMain.handle("apogee:getStanding", async () => {
 /**
  * Whether this account may queue yet, and how far off it is if not.
  *
- * Signed out, the answer is null rather than a refusal: "you need 100 runs" is a
+ * Signed out, the answer is null rather than a refusal: "you need 50 runs" is a
  * confusing thing to tell somebody whose actual problem is that they have not signed in.
  */
 async function currentEligibility(): Promise<QueueEligibility | null> {
@@ -3684,6 +3760,10 @@ ipcMain.handle("apogee:launchScenario", async (_e, { scenario } = {} as any) => 
  * somebody would forge a score onto. The two agree for an honest player, and where they
  * do not, the server's is the one that counts.
  */
+const APEX_UNSAMPLED =
+  "No KovaaK's leaderboard for this season's scenarios yet, so there is nothing to place " +
+  "you against. Apex points start once the boards are sampled.";
+
 ipcMain.handle("apogee:apex", () => {
   let season;
   try {
@@ -3706,6 +3786,13 @@ ipcMain.handle("apogee:apex", () => {
     // Absent rather than fatal: a build without the sampled boards still runs, it just
     // cannot show this panel. Saying so beats an empty board that reads as a bad score.
     return { error: "no sampled leaderboards in this build - run npm run sample:apex" };
+  }
+
+  // Apogee's own scenarios have no KovaaK's board until they are shared in-game (see
+  // docs/season-1.md). Without one every family grades as 0.00 points and "41 of 41
+  // scored", which reads as a bad score rather than as nothing to measure against.
+  if (!season.scenarios.some((sc) => sources.boards.has(sc.scenario))) {
+    return { error: APEX_UNSAMPLED };
   }
 
   const history = state.statsDir
@@ -3766,6 +3853,16 @@ ipcMain.handle("apogee:apex", () => {
  */
 ipcMain.handle("apogee:apexBoard", async (_e, { category } = {} as any) => {
   if (!state.session) return { error: "sign in to see the board" };
+
+  // The server builds this board from the same sampled boards (refresh-apex answers 503
+  // without them), so an unsampled season is said plainly rather than shown as empty.
+  try {
+    const sampled = JSON.parse(readFileSync(dataFile("leaderboard_apex.json"), "utf8")) as { boards?: { scenario: string }[] };
+    const names = new Set((sampled.boards ?? []).map((b) => b.scenario));
+    if (!loadSeason().scenarios.some((sc) => names.has(sc.scenario))) return { error: APEX_UNSAMPLED };
+  } catch {
+    // Unreadable locally is not a reason to hide the server's board; ask it anyway.
+  }
 
   let refreshed = true;
   try {

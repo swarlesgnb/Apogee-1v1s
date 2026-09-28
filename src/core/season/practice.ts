@@ -28,6 +28,7 @@ import { MIN_RUNS_FOR_BASELINE } from "../history/baseline.ts";
 import { originsOf, type OriginRank } from "../benchmarks/origins.ts";
 import {
   MATCH_PLAYLIST_PREFIX,
+  hasOfflineScenarios,
   serializePlaylist,
   type KovaaksPlaylist,
 } from "../match/playlist.ts";
@@ -128,7 +129,7 @@ function toKovaaks(playlist: PracticePlaylist, now: Date): KovaaksPlaylist {
     authorName: "",
     scenarioList: playlist.scenarios.map((scenario_name) => ({ scenario_name, play_Count: 1 })),
     description: playlist.description,
-    hasOfflineScenarios: false,
+    hasOfflineScenarios: hasOfflineScenarios(playlist.scenarios),
     hasEdited: true,
     shareCode: "",
     version: PLAYLIST_FORMAT_VERSION,
@@ -198,9 +199,14 @@ export function stalePlaylistNames(season: SeasonLike, dir: string): string[] {
     const path = join(dir, fileNameFor(playlist.name));
     if (!existsSync(path)) continue;
     try {
-      const list = (JSON.parse(readFileSync(path, "utf8")).scenarioList ?? [])
-        .map((s: { scenario_name?: string }) => s.scenario_name);
-      if (JSON.stringify(list) !== JSON.stringify(playlist.scenarios)) stale.push(playlist.name);
+      const file = JSON.parse(readFileSync(path, "utf8"));
+      const list = (file.scenarioList ?? []).map((s: { scenario_name?: string }) => s.scenario_name);
+      // The flag too: a playlist with the right scenarios and the flag off still cannot
+      // start them (hasOfflineScenarios in match/playlist.ts).
+      if (
+        JSON.stringify(list) !== JSON.stringify(playlist.scenarios) ||
+        file.hasOfflineScenarios !== hasOfflineScenarios(playlist.scenarios)
+      ) stale.push(playlist.name);
     } catch {
       stale.push(playlist.name);
     }

@@ -10,6 +10,7 @@
  * backwards, a missing board read as last place.
  */
 
+import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync } from "node:fs";
 
 import { dataFile } from "../dataDir.ts";
@@ -75,12 +76,23 @@ check(
   `window ${topWindow}`,
 );
 
-const ungraded = variants.filter((v) => !sources.boards.has(v.scenario));
+// Apogee's own scenarios have no KovaaK's board until they are shared in game, so nothing
+// can be sampled for them yet; their standing reads zero points until then. What must hold
+// is that a variant with a board is never left unsampled.
+const ungraded = variants.filter((v) => v.leaderboardId && !sources.boards.has(v.scenario));
 check(
-  "every graded variant has a sampled apex board",
+  "every graded variant with a KovaaK's board has a sampled apex board",
   ungraded.length === 0,
-  ungraded.length ? ungraded.map((v) => v.scenario).join(", ") : `${variants.length} boards`,
+  ungraded.length ? ungraded.map((v) => v.scenario).join(", ") : `${variants.filter((v) => v.leaderboardId).length} boards`,
 );
+const withoutBoard = variants.filter((v) => !v.leaderboardId).length;
+if (withoutBoard) console.log(`  ${DIM}${withoutBoard} of ${variants.length} graded variants have no board yet${RESET}`);
+
+// The measure is tested on the season's own boards, or on every sampled board while the
+// season has none: the arithmetic is the same, and a check over no boards cannot fail.
+const seasonBoards = variants.flatMap((v) => sources.boards.get(v.scenario) ?? []);
+const boardsUnderTest = seasonBoards.length > 0 ? seasonBoards : [...sources.boards.values()];
+if (seasonBoards.length === 0) console.log(`  ${DIM}measure checked on all ${boardsUnderTest.length} sampled boards${RESET}`);
 
 // ---- provenance ----------------------------------------------------------------------
 //
@@ -135,7 +147,7 @@ check(
 
 console.log(`\n${BOLD}the measure${RESET}`);
 
-const sample = sources.boards.get(variants[0].scenario)!;
+const sample = boardsUnderTest[0];
 
 check(
   "a score at the world record reads as rank 1",
@@ -249,10 +261,8 @@ check(
 let notAhead = 0;
 let named = 0;
 
-for (const variant of variants) {
-  const board = sources.boards.get(variant.scenario) ?? null;
-  const dist = sources.distributions.get(variant.scenario) ?? null;
-  if (!board) continue;
+for (const board of boardsUnderTest) {
+  const dist = sources.distributions.get(board.scenario) ?? null;
 
   for (const probe of [0.05, 0.2, 0.5, 0.9]) {
     const score = board.points[0].score * probe;
@@ -289,10 +299,9 @@ console.log(`\n${BOLD}the seam${RESET}  ${DIM}where apex hands over to the perce
 let worstSeam = { scenario: "", gap: 0 };
 let seamsChecked = 0;
 
-for (const variant of variants) {
-  const board = sources.boards.get(variant.scenario);
-  const dist = sources.distributions.get(variant.scenario);
-  if (!board || !dist) continue;
+for (const board of boardsUnderTest) {
+  const dist = sources.distributions.get(board.scenario);
+  if (!dist) continue;
 
   const last = board.points[board.points.length - 1];
   const raw = topFractionOfScore(dist, last.score);
@@ -300,7 +309,7 @@ for (const variant of variants) {
 
   seamsChecked++;
   const gap = Math.abs(raw - last.rank / board.total);
-  if (gap > worstSeam.gap) worstSeam = { scenario: variant.scenario, gap };
+  if (gap > worstSeam.gap) worstSeam = { scenario: board.scenario, gap };
 }
 
 console.log(
@@ -314,10 +323,8 @@ console.log(
 let inversions = 0;
 let worstInversion = { scenario: "", at: 0 };
 
-for (const variant of variants) {
-  const board = sources.boards.get(variant.scenario);
-  const dist = sources.distributions.get(variant.scenario);
-  if (!board) continue;
+for (const board of boardsUnderTest) {
+  const dist = sources.distributions.get(board.scenario);
 
   const top = board.points[0].score;
   let prev = Infinity;
@@ -328,7 +335,7 @@ for (const variant of variants) {
     // Fraction is distance from the top, so it must never grow as score grows.
     if (fraction > prev + 1e-12) {
       inversions++;
-      if (!worstInversion.scenario) worstInversion = { scenario: variant.scenario, at: score };
+      if (!worstInversion.scenario) worstInversion = { scenario: board.scenario, at: score };
     }
     prev = fraction;
   }
@@ -339,7 +346,7 @@ check(
   inversions === 0,
   inversions
     ? `${inversions} inversion(s), first on ${worstInversion.scenario} at ${worstInversion.at.toFixed(2)}`
-    : `${variants.length} boards swept`,
+    : `${boardsUnderTest.length} boards swept`,
 );
 
 // ---- what it adds over the ladder ----------------------------------------------------
@@ -362,6 +369,7 @@ let separatedByApex = 0;
 // failures of a property they were never measured on.
 let comparableTops = 0;
 
+if (graded.length === 0) console.log(`  ${DIM}no graded variant has a board yet; the ladder-against-board checks wait for one${RESET}`);
 for (const { v, board } of graded) {
   const top = v.rankMaxes[v.rankMaxes.length - 1];
   // Somebody exactly at the last threshold, and somebody far past it.
@@ -379,12 +387,12 @@ for (const { v, board } of graded) {
   if (pB > pA) separatedByApex++;
 }
 
-check(
+if (graded.length > 0) check(
   "the ladder ties a maxed score with a world record",
   tiedByLadder === comparableTops,
   `${tiedByLadder}/${comparableTops} families with a score above their own top threshold`,
 );
-check(
+if (graded.length > 0) check(
   "the apex board separates them",
   separatedByApex === comparableTops,
   `${separatedByApex}/${comparableTops} families`,
@@ -497,10 +505,25 @@ check(
 // board sorts on, and a sum in one of them is invisible until two players compare screens.
 // This holds the client side; the function is held to it by reading the same shape.
 //
-// Season 1 makes the difference concrete: eleven families in Precise Tracking against six
-// in Evasive Switching, so a sum would read almost two to one apart for identical standing.
+// Season 1 makes the difference concrete: nine families in Dynamic Clicking against six in
+// every other category, so a sum would read half as much again for identical standing.
 
-const weighted = apexStanding(season, corpusScores, sources);
+// Weighed on the season as it is once any of its families holds points. Until its
+// scenarios have boards none can, and a mean of zeros matches a sum of zeros, so the
+// arithmetic is weighed instead on the first draft's pool of borrowed scenarios, whose
+// boards are sampled and which the corpus played - read from the last commit that had it.
+const FIRST_DRAFT = "7b212c0";
+const ownPoints = apexStanding(season, corpusScores, sources);
+const weighted = ownPoints.categories.some((c) => c.points > 0)
+  ? ownPoints
+  : apexStanding(
+      JSON.parse(
+        execFileSync("git", ["show", `${FIRST_DRAFT}:data/seasons/season-1.json`], { encoding: "utf8", maxBuffer: 64 << 20 }),
+      ),
+      corpusScores,
+      sources,
+    );
+if (weighted !== ownPoints) console.log(`  ${DIM}no family holds points yet; weighed on the first draft's pool${RESET}`);
 const offBy = 1e-9;
 
 const categoryMeans = weighted.categories.filter((c) => c.total > 0);

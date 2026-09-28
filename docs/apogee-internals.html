@@ -872,28 +872,39 @@ scenarios[]           the pool
         changing what any past rank meant.
       </p>
 
-      <h3>Where season 1's numbers came from</h3>
+      <h3>Where season 1's numbers come from</h3>
       <p>
         Later seasons derive their thresholds from the previous season's population, which
         is the whole point — a rank becomes a percentile of what people actually score and
-        never needs maintaining. Season 1 cannot, because there is no population yet, so it
-        is seeded from two sources doing different jobs.
+        never needs maintaining. Season 1 cannot, because there is no population yet.
       </p>
       <p>
-        <strong>KovaaK's own leaderboards</strong> supply the thresholds. Every rank is the
-        score at a chosen percentile of the board for that scenario — the percentiles are
-        ours, the scores are a fact about the game — so &ldquo;why is this rank here&rdquo;
-        has an answer that does not rest on anybody's opinion. <strong>The local
-        corpus</strong> is a sanity check, not a source: one player's history describes that
-        player, but it can say whether a real person lands on the scale at all. A seed that
-        puts somebody off the end of its own ladder is wrong whatever its provenance.
+        Its scenarios are Apogee's own — 41 families at four bands, 164 files — so there are
+        no KovaaK's boards to read either. (A first draft was built from other authors'
+        scenarios, with thresholds cut from their boards; it was replaced before anyone
+        played it, and is in git history.) Each is built by editing a real KovaaK's file
+        (<code>src/core/scenario/forge.ts</code>), and its board is <em>predicted</em>: a
+        model fitted on every local scenario that has both a file and a sampled board turns
+        what the file says — target size and speed as angles, the Fitts difficulty of the
+        flick, time to kill — into the board it expects, and the thresholds are read off that
+        at the percentile ladder in <code>data/pool.json</code>. Every threshold carries the
+        model's error in its source, and every one is a seed: once Apogee players have played
+        a scenario, its thresholds should come from them.
       </p>
       <p>
-        Other benchmarks are <em>consulted</em> and never copied. Where one is read, its
-        thresholds are converted into percentiles of the same boards and then discarded, so
-        no other author's numbers survive into the season file. That is what makes the
-        earlier claim — that nothing here depends on Voltaic any more — literally true
-        rather than nearly true.
+        <span class="src">npm run build:season</span> builds the files and the season;
+        <span class="src">npm run validate:season-files</span> holds it to its rules, including
+        that every spawn admits its targets and every value lies within what real scenario
+        files use. The research behind the design is <code>docs/season-1-research.md</code>.
+      </p>
+      <p>
+        The files exist nowhere but in this app, so the client installs them into KovaaK's on
+        launch and rewrites any that differ (<code>src/core/season/installScenarios.ts</code>).
+        Byte for byte, because KovaaK's writes the MD5 of the scenario file into every stats
+        file, and <span class="src">submit-run</span> refuses a run on an Apogee scenario
+        whose hash is not the committed file's — an edited copy under the same name.
+        <span class="src">sync:reference</span> sends the hashes;
+        <span class="src">verify:deployment</span> checks the live ones match.
       </p>
     </section>
 
@@ -1580,7 +1591,7 @@ npm run verify:deployment     prove it against the live project</pre>
 <pre>npm run grant:admin -- &lt;steamId&gt; --note "why"   once, per admin
 npm run grant:admin -- --list                   who has it
 
-npm run build:season    rebuild season 1 from the seed + corpus
+npm run build:season    rebuild season 1 from tools/season/design.ts
 npm run push:season     load it into the project as a draft
 npm run validate:season prove edits keep the ladders in step</pre>
         </div>

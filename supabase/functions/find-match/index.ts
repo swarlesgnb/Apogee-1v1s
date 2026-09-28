@@ -231,8 +231,20 @@ Deno.serve(handler(async (req, admin) => {
     }
   }
 
+  // Only run sets played on this pool. The candidate query narrows by window index and
+  // category but not by season, so a side banked before the pool was rebuilt was still
+  // drawn: its scenario ids were not in `selectable`, the match went out naming them
+  // "scenario 947" and the like, and the player was asked to play three scenarios the
+  // season no longer has. Membership rather than the season's name, because a rebuilt
+  // pool keeps the name.
+  const inPool = new Set(selectable.map((s) => s.id));
+
   const runSets: StoredRunSet[] = (candidates ?? [])
     .filter((c: any) => ratingByPlayer.has(c.player_id))
+    .filter((c: any) => {
+      const ids: number[] = c.matches.scenario_ids ?? [];
+      return ids.length > 0 && ids.every((id) => inPool.has(id));
+    })
     // Originals only. Every match answered from the pool holds a copy of the side it drew,
     // and each copy has a match_score, so without this one afternoon's run set multiplied
     // into as many candidates as it had opponents.
@@ -378,6 +390,12 @@ Deno.serve(handler(async (req, admin) => {
 
   // The caller's side is empty until they play. The opponent's side carries their
   // frozen deltas, which is what makes this an async match rather than a wait.
+  //
+  // `defaultToNull: false` because the two rows have different keys. PostgREST takes the
+  // union of the columns for a bulk insert and, by default, fills a key a row lacks with
+  // NULL rather than the column default, so the caller's side arrived with deltas and
+  // provisional NULL against their NOT NULL constraints. Every seeding match is a
+  // one-row insert, which is why this passed until the first two players met.
   const { error: sidesError } = await admin.from("match_sides").insert([
     { match_id: match.id, player_id: caller.playerId, rating_before: rating.rating, rd_before: rating.rd },
     {
@@ -390,7 +408,7 @@ Deno.serve(handler(async (req, admin) => {
       rd_before: opponent.rating.rd,
       submitted_at: opponent.createdAt.toISOString(),
     },
-  ]);
+  ], { defaultToNull: false });
 
   if (sidesError) throw new HttpError(500, sidesError.message);
 

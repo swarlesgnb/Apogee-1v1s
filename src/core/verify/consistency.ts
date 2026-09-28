@@ -502,15 +502,24 @@ function checkWorldRecord(run: ParsedRun, ctx: ConsistencyContext): CheckResult 
 /**
  * Scenario hash must match the one we know.
  *
- * Hashes were measured to be stable over at least six months, so a mismatch means
- * either a modified scenario or a genuine upstream revision. Advisory, because the
- * latter is not the player's fault and would otherwise reject everyone at once the day
- * a scenario is updated.
+ * KovaaK's writes the MD5 of the scenario file into the stats file, so this is the check
+ * that the player ran the file the season ships and not an edited copy under the same
+ * name - bigger targets, a slower timescale. Measured before it was allowed to reject
+ * (validate:verify): all 13,890 stats files in the corpus carry a hash, and 25 of the 26
+ * Season 1 playtest runs carry exactly the MD5 of a committed version of their file - the
+ * other was played on a build installed before it was committed.
+ *
+ * HARD, and it can be, because `known_hash` is only ever set for Apogee's own scenarios,
+ * from the committed file (sync:reference). The reason this used to be advisory - a
+ * borrowed scenario's author can revise it, which is not the player's fault - does not
+ * arise: Apogee is the only author, a revision ships the file and its hash together, and
+ * the app rewrites any installed file that differs. A borrowed scenario has no known hash
+ * and the check skips.
  */
 function checkHash(run: ParsedRun, ctx: ConsistencyContext): CheckResult {
-  if (!ctx.knownHash || !run.hash) return result("hash_known", "advisory", "skip");
+  if (!ctx.knownHash) return result("hash_known", "hard", "skip");
   const ok = run.hash === ctx.knownHash;
-  return result("hash_known", "advisory", ok ? "pass" : "fail", ok ? undefined : run.hash);
+  return result("hash_known", "hard", ok ? "pass" : "fail", ok ? undefined : run.hash ?? "no hash in the file");
 }
 
 /**

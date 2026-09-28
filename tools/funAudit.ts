@@ -38,6 +38,7 @@
  */
 
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { execFileSync } from "node:child_process";
 import { join } from "node:path";
 
 import { dataFile } from "../src/core/dataDir.ts";
@@ -57,11 +58,15 @@ const CACHE = join(dataFile(".."), ".cache", "fun-audit");
 mkdirSync(CACHE, { recursive: true });
 
 const read = (name: string): any => JSON.parse(readFileSync(dataFile(name), "utf8"));
-// Once the rebuild is applied the replaced families are gone from pool.json; measure the
-// pool as it stood before it, so the audit re-derives the same comparison either side.
-const pool = existsSync(dataFile("season_fun_rebuild_calibration.json"))
-  ? (await import("./funRebuildHistory.ts")).beforeFunRebuildPool(read("pool.json"))
-  : read("pool.json");
+// The audit measured the first draft's pool of other authors' scenarios, which Apogee's
+// own replaced; data/pool.json now describes those. Read the first draft from the last
+// commit that had it, and, since the fun rebuild had already been applied to it, measure
+// that pool as it stood before the rebuild, so the audit re-derives the same comparison.
+const FIRST_DRAFT = "7b212c0";
+const firstDraftPool = JSON.parse(
+  execFileSync("git", ["show", `${FIRST_DRAFT}:data/pool.json`], { cwd: dataFile(".."), encoding: "utf8", maxBuffer: 64 << 20 }),
+);
+const pool = (await import("./funRebuildHistory.ts")).beforeFunRebuildPool(firstDraftPool);
 const spec = read("season_fun_rebuild.json");
 const registry = read("evxl_registry.json");
 

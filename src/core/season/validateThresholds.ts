@@ -13,6 +13,9 @@
  *   reconciled  must be bracketed by the sources it claims to reconcile - a reconciliation
  *               landing outside every number it reconciled is not one.
  *   authored    must carry a reason long enough to be a reason.
+ *   predicted   read off the board the difficulty model predicts for an Apogee scenario
+ *               with none of its own yet. Re-derived to the digit by validate:season-files,
+ *               which has the model; here it only has to say so.
  *   seeded      inherited from the percentile era with no source yet. Counted and printed on
  *               every run, because a debt nobody is reminded of is a debt nobody pays.
  *
@@ -145,6 +148,10 @@ for (const v of variants) {
     continue;
   }
   if (source.kind === "seeded") continue;
+  if (source.kind === "predicted" || source.kind === "calibrated") {
+    if (!source.why || source.why.trim().length < 60) unreasoned.push(v.scenario);
+    continue;
+  }
 
   // A percentile cut carries the board, the ranks and the shares it used, so the whole
   // thing is redone here rather than taken on the word of its `why`. Two ways it can be

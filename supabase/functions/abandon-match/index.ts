@@ -48,6 +48,8 @@ Deno.serve(handler(async (req, admin) => {
       : `You forfeited ${tournament.label}. Nothing was rated.`
     : outcome.reason === "seeding"
       ? "Nothing was rated: there was no opponent to play against."
+      : outcome.reason === "off-pool"
+        ? "Nothing was rated: this match was on scenarios the season no longer has."
       : outcome.reason === "already-played"
         ? "Your runs are already in, so this match will settle on its own."
         : "Match forfeited. You can queue again now.";

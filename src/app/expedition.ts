@@ -3,6 +3,7 @@ import { join } from "node:path";
 import { loadExpedition, rewardCatalog } from "../core/expedition/definition.ts";
 import { abandonTrial, acceptChallenge, challengeOffers, destinationFor, enroll, startTrial, syncExpedition } from "../core/expedition/engine.ts";
 import { migrateExpedition } from "../core/expedition/migrate.ts";
+import { bandFit, recommendBand, scenarioIntel } from "../core/expedition/intel.ts";
 import { journeys, journeyView } from "../core/expedition/journey.ts";
 import { ExpeditionRunReader } from "../core/expedition/runs.ts";
 import { ExpeditionStore } from "../core/expedition/store.ts";
@@ -21,7 +22,7 @@ export class ExpeditionService {
   private loaded = false;
   private history: ExpeditionRun[] = [];
   readonly sessionStartedAt = Date.now();
-  constructor(private folder: string) { this.store = new ExpeditionStore(join(folder, "expedition-first-light-v4.json"), this.definition); }
+  constructor(private folder: string) { this.store = new ExpeditionStore(join(folder, "expedition-first-light-v5.json"), this.definition); }
   private load() {
     if (this.loaded) return;
     const result = this.store.load();
@@ -29,9 +30,10 @@ export class ExpeditionService {
     if (!this.state) {
       // Each older save is read from its own file and walked forward one version at a
       // time; none of them is ever rewritten, so a failed upgrade loses nothing.
-      const v3 = loadExpedition(3), v2 = loadExpedition(2);
-      let old = new ExpeditionStore(join(this.folder, "expedition-first-light-v3.json"), v3).load().state;
-      if (!old) {
+      const v4 = loadExpedition(4), v3 = loadExpedition(3), v2 = loadExpedition(2);
+      let latest = new ExpeditionStore(join(this.folder, "expedition-first-light-v4.json"), v4).load().state;
+      let old = latest ? null : new ExpeditionStore(join(this.folder, "expedition-first-light-v3.json"), v3).load().state;
+      if (!latest && !old) {
         let older = new ExpeditionStore(join(this.folder, "expedition-first-light-v2.json"), v2).load().state;
         if (!older) {
           const legacy = loadExpedition(1), source = new ExpeditionStore(join(this.folder, "expedition-first-light-v1.json"), legacy).load();
@@ -39,8 +41,9 @@ export class ExpeditionService {
         }
         if (older) old = migrateExpedition(older, v2, v3, Date.now());
       }
-      if (old) {
-        this.commit(migrateExpedition(old, v3, this.definition, Date.now()));
+      if (old) latest = migrateExpedition(old, v3, v4, Date.now());
+      if (latest) {
+        this.commit(migrateExpedition(latest, v4, this.definition, Date.now()));
         this.warning = "Your rewards, cosmetics and run history are carried over, and an active attempt keeps its original rules. Routes whose scenarios changed with the new season start fresh. Your previous save is preserved separately.";
       }
     }
@@ -50,8 +53,9 @@ export class ExpeditionService {
   view(dir: string | null, sync = false): ExpeditionView {
     try {
       this.load();
+      // History is read before enrolment too: the difficulty suggestion depends on it.
+      if (sync && dir) this.history = this.reader.read(dir);
       if (sync && dir && this.state) {
-        this.history = this.reader.read(dir);
         const next = syncExpedition(this.state, this.definition, this.history, Date.now());
         if (JSON.stringify(next) !== JSON.stringify(this.state)) this.commit(next);
       }
@@ -63,7 +67,9 @@ export class ExpeditionService {
       const accepted = this.state?.routes[`${id}:${band}`]?.challenges.find(c => c.kind === offer.kind);
       if (accepted?.steps) offer.steps = accepted.steps;
     }
-    return { definition: this.definition, state: this.state, rewards: this.rewards, error: this.error, warning: this.warning, canPlay: !!dir, sessionStartedAt: this.sessionStartedAt, offers, journeys, journey: journeyView(this.state, this.definition) };
+    const intel = scenarioIntel(this.definition, [...this.history, ...(this.state?.runs ?? [])]), fit = bandFit(this.definition, intel);
+    return { definition: this.definition, state: this.state, rewards: this.rewards, error: this.error, warning: this.warning, canPlay: !!dir, sessionStartedAt: this.sessionStartedAt, offers, journeys, journey: journeyView(this.state, this.definition),
+      intel, fit, recommendation: recommendBand(this.definition, fit) };
   }
   action(raw: unknown, dir: string | null): ExpeditionView {
     this.load();
@@ -140,6 +146,7 @@ export class ExpeditionService {
     });
     const folder = playlistsFolderFor(dir); mkdirSync(folder, { recursive: true });
     writeFileSync(join(folder, playlist.playlistName + ".json"), serializePlaylist(playlist), "utf8");
-    return { scenario: scenarios[0], note: `Opening ${scenarios[0]} in KovaaK's. Come back here and press Play for each next step.` };
+    // The watcher picks the run up on its own; nothing needs pressing on the way back.
+    return { scenario: scenarios[0], note: `Opening ${scenarios[0]} in KovaaK's. Play one run; the result appears here by itself.` };
   }
 }

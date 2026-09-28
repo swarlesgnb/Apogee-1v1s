@@ -281,23 +281,28 @@ try {
     boards?: { scenario: string }[];
   };
   const season = JSON.parse(readFileSync(seasonPath, "utf8")) as {
-    scenarios?: { scenario: string; family?: string; window?: number }[];
+    scenarios?: { scenario: string; family?: string; window?: number; leaderboardId?: number | null }[];
   };
 
   // Only the top-window variant of each family is graded - see standing.ts - so the
   // other sixty-six being unsampled would not matter and should not raise anything.
-  const graded = new Map<string, { scenario: string; window: number }>();
+  const graded = new Map<string, { scenario: string; window: number; leaderboardId: number | null }>();
   for (const sc of season.scenarios ?? []) {
     const family = sc.family ?? sc.scenario;
     const window = sc.window ?? 0;
     const prior = graded.get(family);
-    if (!prior || window > prior.window) graded.set(family, { scenario: sc.scenario, window });
+    if (!prior || window > prior.window) graded.set(family, { scenario: sc.scenario, window, leaderboardId: sc.leaderboardId ?? null });
   }
 
+  // A board can only be sampled once it exists. Apogee's own scenarios have none until
+  // they are shared in game, so they are counted rather than reported as missing.
   const sampled = new Set((apex.boards ?? []).map((b) => b.scenario));
-  const missing = [...graded.values()].filter((g) => !sampled.has(g.scenario));
+  const boardless = [...graded.values()].filter((g) => !g.leaderboardId).length;
+  const missing = [...graded.values()].filter((g) => g.leaderboardId && !sampled.has(g.scenario));
 
-  if (missing.length > 0) {
+  if (boardless === graded.size) {
+    say("ok", "apex boards", `none of the ${graded.size} graded scenarios has a KovaaK's board yet; nothing to sample`);
+  } else if (missing.length > 0) {
     say(
       "bad",
       "apex boards",

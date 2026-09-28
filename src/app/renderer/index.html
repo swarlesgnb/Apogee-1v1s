@@ -448,6 +448,47 @@
   }
   .duel-foot button:hover { color: var(--ink); border-color: var(--rule-3); }
 
+  /* ------------------------------------------------------------------
+     Getting started
+     A numbered list, each step one line of what and one of why, with the
+     control that does it on the right. Done steps keep their place and go
+     quiet, so the list reads as progress rather than rearranging itself.
+     ------------------------------------------------------------------ */
+  .setup .phead { align-items: center; }
+  .setup-hide {
+    margin-left: var(--s3); background: none; border: 0; padding: var(--s1) var(--s2);
+    color: var(--ink-dim); font-size: var(--t-xs); cursor: pointer;
+  }
+  .setup-hide:hover { color: var(--ink); }
+  .setup-list { list-style: none; margin: 0; padding: 0; display: grid; }
+  .setup-step {
+    display: grid; grid-template-columns: 28px 1fr auto; gap: var(--s3); align-items: start;
+    padding: var(--s3) 0; border-top: 1px solid var(--rule);
+  }
+  .setup-list > .setup-step:first-child { border-top: 0; padding-top: 0; }
+  .setup-mark {
+    width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center;
+    font: 600 var(--t-xs)/1 var(--mono); color: var(--ink-mid);
+    border: 1px solid var(--rule-2); background: var(--well);
+  }
+  .setup-step.next .setup-mark { color: var(--brand, var(--ink)); border-color: var(--brand-line, var(--rule-3)); }
+  .setup-step.done .setup-mark { color: var(--ground); background: var(--up); border-color: var(--up); }
+  .setup-step.done .setup-mark svg { width: 13px; height: 13px; }
+  .setup-title { font-size: var(--t); font-weight: 600; color: var(--ink); line-height: 24px; }
+  .setup-step.done .setup-title { color: var(--ink-dim); font-weight: 500; }
+  .setup-detail { margin: 2px 0 0; font-size: var(--t-sm); color: var(--ink-mid); line-height: 1.5; max-width: 62ch; }
+  .setup-step.done .setup-detail { display: none; }
+  .setup-bar { display: block; height: 4px; margin-top: var(--s2); max-width: 260px; background: var(--well); border-radius: 2px; overflow: hidden; }
+  .setup-bar i { display: block; height: 100%; background: var(--brand, var(--up)); border-radius: 2px; }
+  .setup-step button.go {
+    font-family: var(--mono); font-size: var(--t-xs); font-weight: 600; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--ink); background: var(--control);
+    border: 1px solid var(--rule-2); padding: var(--s2) var(--s3); cursor: pointer; white-space: nowrap;
+  }
+  .setup-step.next button.go { color: var(--brand-ink, var(--ground)); background: var(--brand, var(--ink)); border-color: var(--brand, var(--ink)); }
+  .setup-step button.go:hover { border-color: var(--rule-3); }
+  .setup-step.next button.go:hover { filter: brightness(1.06); }
+
   .roster { margin-top: var(--s4); padding-top: var(--s4); border-top: 1px solid var(--rule-2); }
   .roster-top { display: grid; gap: var(--s3); margin-bottom: var(--s3); }
   .roster-list { display: grid; max-height: 320px; overflow-y: auto; }
@@ -2338,25 +2379,21 @@
 
   /* First run: no stats folder yet, so there is nothing else to show.
 
-     Three steps, read in order, so they are a numbered list down the page rather than
-     three cards across it. Three equal cards in a row say the three things are
-     alternatives to choose between; these are stages, and only the first one is
-     anything the reader has to do. */
+     One line and one button. The first outside playtest had three numbered steps here
+     and the tester read them as three things to do; the folder is found without help on
+     most installs, so the only thing worth saying is whether it was, and the path for a
+     player who has to point at it themselves sits behind "Where is it?". */
   .empty { padding: var(--s7) var(--s6); max-width: 620px; }
   .empty h2 { margin: 0 0 var(--s2); font-size: var(--t-lg); font-weight: 650; }
   .empty > p { margin: 0; max-width: 58ch; font-size: var(--t); color: var(--ink-mid); }
-  .empty-steps { display: grid; gap: 0; margin: var(--s5) 0 0; }
-  .empty-step {
-    display: grid; grid-template-columns: 34px 1fr; gap: var(--s3);
-    padding: var(--s3) 0; border-top: 1px solid var(--rule);
+  .empty .empty-path {
+    margin-top: var(--s2); font-family: var(--mono); font-size: var(--t-sm);
+    color: var(--ink-dim); overflow-wrap: anywhere;
   }
-  .empty-step:last-child { border-bottom: 1px solid var(--rule); }
-  .empty-step .n {
-    font-family: var(--mono); font-size: var(--t-sm); font-weight: 600;
-    color: var(--ink-dim); letter-spacing: .04em;
-  }
-  .empty-step h3 { margin: 0 0 2px; font-size: var(--t); font-weight: 600; }
-  .empty-step p { margin: 0; font-size: var(--t-sm); color: var(--ink-dim); line-height: 1.5; }
+  .empty-help { margin-top: var(--s4); font-size: var(--t-sm); color: var(--ink-dim); }
+  .empty-help summary { cursor: pointer; color: var(--ink-mid); }
+  .empty-help p { margin: var(--s2) 0 0; line-height: 1.5; max-width: 58ch; }
+  .empty-help code { font-family: var(--mono); overflow-wrap: anywhere; }
   .empty button {
     font-family: var(--mono); font-size: var(--t-sm); font-weight: 600;
     letter-spacing: .12em; text-transform: uppercase; margin-top: var(--s5);
@@ -2364,6 +2401,9 @@
     padding: var(--s3) var(--s5); cursor: pointer;
   }
   .empty button:hover { filter: brightness(1.1); }
+  .empty button.secondary {
+    color: var(--ink); background: transparent; border: 1px solid var(--rule);
+  }
 
   .footnote {
     margin: 8px 0 0; font-size: var(--t-sm); color: var(--ink-dim);
@@ -3212,7 +3252,7 @@
             <label for="soundVolume">Volume <output id="soundVolumeReadout">65%</output></label>
             <input id="soundVolume" type="range" min="0" max="100" step="1" value="65" aria-label="Sound volume">
             <div class="sound-preview"><button type="button" data-sound-preview="press">Ready</button><button type="button" data-sound-preview="matchFound">Match</button><button type="button" data-sound-preview="victory">Win</button></div>
-            <p>Short cues. Big moments. Press M to mute.</p>
+            <p>Press M to mute.</p>
           </div>
         </details>
         <!-- The player's own chrome. Beside the sound because it is the same kind of
@@ -3288,9 +3328,23 @@
                 <h1 data-copy="queue.title">Ranked 1v1</h1>
                 <p data-copy="queue.lede">3 scenarios, one opponent. Each round goes to whoever beats their own baseline by more.</p>
               </div>
-              <div class="arcade-hero-links"><button type="button" class="exp-home" id="expeditionHome" data-arcade-route="expedition"><span class="exp-home-symbol" aria-hidden="true">✦</span><span><small>SOLO PRACTICE</small><strong id="expeditionHomeTitle">First Light expedition</strong><span id="expeditionHomeDetail">Complete six destinations to earn ships and open the final challenge.</span></span><b>Continue →</b></button><button type="button" class="mixtape-entry" data-arcade-route="mixtape">Make a mixtape <span aria-hidden="true">↗</span></button><button type="button" data-arcade-route="tournaments">Tournaments <span aria-hidden="true">→</span></button></div>
+              <div class="arcade-hero-links"><button type="button" class="exp-home" id="expeditionHome" data-arcade-route="expedition"><span class="exp-home-symbol" aria-hidden="true">✦</span><span><small>SOLO PRACTICE</small><strong id="expeditionHomeTitle">First Light expedition</strong><span id="expeditionHomeDetail">Solo. Six planets, one per aim category.</span></span><b>Continue →</b></button><button type="button" class="mixtape-entry" data-arcade-route="mixtape">Make a mixtape <span aria-hidden="true">↗</span></button><button type="button" data-arcade-route="tournaments">Tournaments <span aria-hidden="true">→</span></button></div>
             </div>
 
+            <!-- Getting started. Above everything on the screen it gates, and gone for good
+                 once every step is done or it is hidden: a finished checklist is noise. The
+                 steps are the ones a new player cannot see from here - the run requirement,
+                 and a friend who is not in the duel list until they have signed in. -->
+            <div class="panel setup" id="setupPanel" hidden>
+              <div class="phead">
+                <h2>Getting started</h2>
+                <span class="note" id="setupNote"></span>
+                <button type="button" class="setup-hide" id="setupHide">Hide</button>
+              </div>
+              <div class="pbody">
+                <ol class="setup-list" id="setupList"></ol>
+              </div>
+            </div>
 
             <div class="panel rank-showcase">
               <div class="hero">
@@ -3332,7 +3386,7 @@
             </div>
 
             <div class="command-focus" id="commandFocus" hidden>
-              <div><span class="command-kicker">Practice direction</span><strong id="commandFocusName"></strong><p id="commandFocusDetail"></p></div>
+              <div><span class="command-kicker">Practice next</span><strong id="commandFocusName"></strong><p id="commandFocusDetail"></p></div>
               <button type="button" id="commandFocusOpen">View your aim</button>
             </div>
 
@@ -3343,7 +3397,7 @@
               </div>
               <div class="pbody queue-body">
                 <ol class="queue-journey" aria-label="Match stages"><li class="current" aria-current="step"><span>01</span>Category</li><li><span>02</span>Match</li><li><span>03</span>Play</li><li><span>04</span>Results</li></ol>
-                <div class="queue-signal"><span id="queueSignal" role="status">Choose your discipline</span></div>
+                <div class="queue-signal"><span id="queueSignal" role="status">Pick a category</span></div>
 
                 <div class="queue-pick">
                   <div>
@@ -3354,7 +3408,7 @@
 
                 <div class="queue-selection">
                   <div class="versus-mark" id="disciplineMark" aria-hidden="true"></div>
-                  <div class="queue-selection-copy"><span class="selection-label">Your selection</span><strong id="selectedDisciplineLabel">All categories</strong><span id="disciplineCue"></span></div>
+                  <div class="queue-selection-copy"><span class="selection-label">Category</span><strong id="selectedDisciplineLabel">All categories</strong><span id="disciplineCue"></span></div>
                   <button type="button" class="commit" id="queueBtn" aria-describedby="poolNote queueGateText">
                     <span><span class="commit-verb" id="queueVerb">Find opponent</span><span class="commit-sub" id="queueSub"></span></span>
                     <span class="commit-meta" id="queueMeta"></span>
@@ -3459,17 +3513,19 @@
               </div>
             </div>
 
-            <div class="panel" id="uploadRow" hidden>
-              <div class="phead">
-                <h2 data-copy="queue.p4.head">Your history</h2>
-                <span class="note" data-copy="queue.p4.note">safe to re-run</span>
-              </div>
+            <!-- Folded away: the upload runs by itself after sign-in (renderEligibility), and
+                 a new player met this panel as one more thing to do. Kept for a re-upload. -->
+            <details class="panel pool-disclosure" id="uploadRow" hidden>
+              <summary class="phead">
+                <h2 data-copy="queue.p4.head">Run history</h2>
+                <span class="note" data-copy="queue.p4.note">uploads by itself</span>
+              </summary>
               <div class="pbody">
                 <div class="upload-row">
                   <div>
-                    <div class="upload-title" id="uploadTitle">Upload history</div>
+                    <div class="upload-title" id="uploadTitle">Re-upload history</div>
                     <div class="upload-sub" id="uploadSub">
-                      Builds the baselines every match is scored against.
+                      Your baselines are built from these runs. Safe to run again.
                     </div>
                     <div class="upload-track" id="uploadTrack" hidden>
                       <div class="upload-fill" id="uploadFill"></div>
@@ -3478,7 +3534,7 @@
                   <button type="button" id="uploadBtn">Upload</button>
                 </div>
               </div>
-            </div>
+            </details>
             <details class="panel pool-disclosure" id="drawPanel" hidden>
               <summary class="phead">
                 <h2 data-copy="queue.p2.head">Scenario pool</h2>
@@ -4172,35 +4228,16 @@
 
         <!-- ------------------------------------------- first run -->
         <div class="panel empty" id="empty">
-          <h2>Waiting for your KovaaK's stats</h2>
-          <p id="emptyText">
-            Apogee reads the stat files KovaaK's writes after each run. No game mods,
-            no manual score entry.
-          </p>
-          <div class="empty-steps">
-            <div class="empty-step">
-              <div class="n">01</div>
-              <div>
-                <h3>Find your stats folder</h3>
-                <p>Detected automatically on most installs. If not, choose it below.</p>
-              </div>
-            </div>
-            <div class="empty-step">
-              <div class="n">02</div>
-              <div>
-                <h3>Play normally</h3>
-                <p>Each run is read as soon as KovaaK's saves it.</p>
-              </div>
-            </div>
-            <div class="empty-step">
-              <div class="n">03</div>
-              <div>
-                <h3>Queue a category</h3>
-                <p>3 scenarios vs. a real opponent, scored against your own baseline.</p>
-              </div>
-            </div>
-          </div>
-          <button type="button" id="emptyChoose">Choose stats folder…</button>
+          <h2 id="emptyHead">Looking for your KovaaK's stats…</h2>
+          <p id="emptyText">Apogee finds the stats folder by itself on most installs.</p>
+          <p class="empty-path" id="emptyPath" hidden></p>
+          <button type="button" id="emptyChoose" class="secondary">Choose folder</button>
+          <details class="empty-help" id="emptyHelp">
+            <summary>Where is it?</summary>
+            <p>Usually <code>Steam\steamapps\common\FPSAimTrainer\FPSAimTrainer\stats</code>.
+              Picking the Steam or FPSAimTrainer folder also works; Apogee looks inside it.</p>
+            <p>A fresh KovaaK's install has no stats until its first run is played.</p>
+          </details>
         </div>
 
       </div>

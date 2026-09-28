@@ -3,7 +3,49 @@
 What still stands between the local candidate and a public release, and how to re-check
 it. The solo campaign rules are in [the solo guide](solo-expedition.md).
 
-## Last local candidate, 2026-09-23
+## 0.4.2, 2026-09-28
+
+- Installer: `release/Apogee-0.4.2-setup.exe`
+- SHA-256: `d5e6e26c542ed997001b741f6e9441b8bb3f3754032cee15c52a820b95998608`
+- Notes: `release/notes-0.4.2.md`
+- Carries the first outside playtest's fixes (onboarding, Expedition's first view, the
+  duel take-back loop, off-pool matches), per-band threshold calibration with First Light
+  v5 refrozen on it, and five daily quests from 22 kinds. No scenario file changed, so the
+  hashes the server holds are 0.4.1's. It needs the functions redeployed and
+  `push:season` for the server's side.
+- `validatePackage` passed 179 of 179, and the unpacked build booted in `--smoke` from a
+  temporary directory. Unsigned (`Get-AuthenticodeSignature` reports NotSigned).
+- `validate:release` passed 31 of 35 before v5 was refrozen and `validate:expedition` then
+  passed. The three still failing were failing before this version's changes:
+  `validate:season-files` (ten scenario values outside the popular-scenario range: Gravclick,
+  Blastoff, Thread, Arc, InvadersTS), `beta` (41 unsampled Expert boards, as at rc.4), and
+  `audit:look`, whose unlifted-rank-text detector reads `esc(color)` in `badge()` without
+  seeing that `color` is `legibleOnDark(...)` two lines above it.
+
+## 0.4.0, 2026-09-25
+
+- Installer: `release/0.4.0/Apogee-0.4.0-setup.exe`
+- SHA-256: `57d542cf2774bed3e5476fba880aec8ace6025edbbd8ac8e53366a08544c168f`
+- rc.4 with the queue opened at 50 uploaded runs, and `package.json` at 0.4.0.
+  `validatePackage` passed 179 of 179 and the unpacked build booted in `--smoke` from a
+  temporary directory. Unsigned. The bar is enforced by `find-match` too, so it holds only
+  once the functions are redeployed.
+
+## rc.4, 2026-09-25
+
+- Installer: `release/candidate-2026-09-25-rc4/Apogee-0.4.0-rc.4-setup.exe`
+- SHA-256: `ec3f105fa22b441beed7747806d1a69af58d05e333fe014301150e0cb60d9445`
+- Unpacked: `release/candidate-2026-09-25-rc4/win-unpacked/Apogee.exe`
+- The first candidate on Apogee's own Season 1 scenarios: it ships and installs the 164
+  `.sce` files, which rc.3 (built the day before that pool landed) does not. Also carries
+  the expedition deck, mixtape verdicts, and the first-launch fixes (Unplaced, the
+  unsampled apex board, the kept install notice, Steam sign-in errors reaching the app).
+  `validate:release` passed 34 of 35; the failure is the apex-board beta blocker, which
+  clears when the scenarios are shared in KovaaK's (see [season-1](season-1.md)).
+  `validatePackage` passed 179 of 179, and the unpacked build booted in `--smoke` from a
+  temporary directory with all 164 scenarios. Unsigned.
+
+rc.3 is on the previous pool and should not go out. Its details follow.
 
 - Installer: `release/candidate-2026-09-23-rc3/Apogee-0.4.0-rc.3-setup.exe`
 - SHA-256: `be7de9de60853046ea4d9d00afdf3389dec11a197a26d1e1430ccf9e22b2c270`
@@ -63,7 +105,7 @@ console-message deprecation warning, so the run is not warning-free.
 
 ```powershell
 npm.cmd run validate:release
-node tools/validatePackage.mjs release/candidate-2026-09-23-rc3
+node tools/validatePackage.mjs release/candidate-2026-09-25-rc4
 ```
 
 `validate:release` writes each result under `.cache/release-readiness/`, failures
@@ -74,7 +116,7 @@ Rebuilding the candidate:
 ```powershell
 npm.cmd run build:icon
 npm.cmd run build:app
-& .\node_modules\.bin\electron-builder.cmd --win --publish never --config.directories.output=release/candidate-2026-09-23-rc3 --config.extraMetadata.version=0.4.0-rc.3
+& .\node_modules\.bin\electron-builder.cmd --win --publish never --config.directories.output=release/candidate-2026-09-25-rc4 --config.extraMetadata.version=0.4.0-rc.4
 ```
 
 The hash changes on every rebuild, so re-run the package check and the signature check
