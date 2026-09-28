@@ -21,6 +21,8 @@ function subscribe(channel, handler) {
 contextBridge.exposeInMainWorld("apogee", {
   /** Current state: stats folder, snapshot, error, scanning flag, session. */
   getState: () => ipcRenderer.invoke("apogee:getState"),
+  /** The top bar's painted colours, so the window buttons can sit on the same ground. */
+  setWindowChrome: (chrome) => ipcRenderer.invoke("apogee:setWindowChrome", chrome),
   expedition: () => ipcRenderer.invoke("apogee:expedition"),
   expeditionAction: (action) => ipcRenderer.invoke("apogee:expeditionAction", action),
   onExpedition: (handler) => subscribe("apogee:expedition", handler),

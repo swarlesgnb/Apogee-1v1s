@@ -11684,8 +11684,51 @@ document.querySelectorAll(".tab").forEach((tab) =>
 // go back to, so they have to be taken while they are still the only value there is.
 captureCopyDefaults();
 
+/**
+ * Keep the window buttons on the top bar's own ground.
+ *
+ * The operating system paints minimise, maximise and close on a strip main sets, and that
+ * strip only knows the colour it is told. The top bar's colour is whatever the stylesheets
+ * compute - the arcade look, the theme menu and Expedition all move it - so it is read off
+ * the element and sent whenever a theme, a screen or a stylesheet could have changed it.
+ */
+function syncWindowChrome() {
+  const bar = document.querySelector(".topbar");
+  if (!bar || !window.apogee || !window.apogee.setWindowChrome) return;
+  const hex = (css) => {
+    const m = /rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?/.exec(css || "");
+    if (!m || (m[4] !== undefined && Number(m[4]) === 0)) return null;
+    return "#" + [m[1], m[2], m[3]].map((n) => Number(n).toString(16).padStart(2, "0")).join("");
+  };
+  const style = getComputedStyle(bar);
+  const color = hex(style.backgroundColor) || hex(getComputedStyle(document.body).backgroundColor);
+  const probe = document.createElement("span");
+  probe.style.color = "var(--ink-mid)";
+  bar.append(probe);
+  const symbolColor = hex(getComputedStyle(probe).color);
+  probe.remove();
+  if (!color || !symbolColor) return;
+  const key = color + symbolColor;
+  if (key === syncWindowChrome.last) return;
+  syncWindowChrome.last = key;
+  window.apogee.setWindowChrome({ color, symbolColor });
+}
+
 if (HOST === "electron") {
   reserveTables();
+
+  {
+    let pending = 0;
+    const later = () => {
+      cancelAnimationFrame(pending);
+      pending = requestAnimationFrame(syncWindowChrome);
+    };
+    const watch = new MutationObserver(later);
+    watch.observe(document.documentElement, { attributes: true, subtree: false });
+    watch.observe(document.body, { attributes: true, attributeFilter: ["class", "data-screen", "style"] });
+    watch.observe(document.head, { childList: true, subtree: true, characterData: true });
+    later();
+  }
 
   wireAdmin();
   void loadAdminLook();

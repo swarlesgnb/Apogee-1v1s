@@ -1946,6 +1946,14 @@ function runSmokeTest(): void {
         `${season && season.available} scenarios to choose from`,
     );
 
+    // The window buttons' strip was set once and never matched the top bar under it.
+    const barColor = await probe.webContents
+      .executeJavaScript(`(() => { const m = /rgba?\\((\\d+),\\s*(\\d+),\\s*(\\d+)/.exec(getComputedStyle(document.querySelector(".topbar")).backgroundColor); return m ? "#" + m.slice(1, 4).map((n) => Number(n).toString(16).padStart(2, "0")).join("") : null; })()`)
+      .catch(() => null);
+    if (!windowChrome) problems.push("the renderer never reported the top bar's colour for the window buttons");
+    else if (windowChrome.color !== barColor) problems.push(`window buttons sit on ${windowChrome.color}, the top bar is ${barColor}`);
+    console.log(`window chrome: ${windowChrome ? `${windowChrome.color} on a ${barColor} top bar` : "NOT REPORTED"}`);
+
     console.log(`preload      : ${hasBridge ? "bridge exposed" : "MISSING"}`);
     console.log(`renderer     : ${rendered ? "loaded" : "EMPTY"}`);
 
@@ -2364,6 +2372,31 @@ ipcMain.handle("apogee:sendDuel", async (_e, { to, category, pool } = {} as any)
     return { match };
   } catch (err) {
     return { error: friendlyError(err) };
+  }
+});
+
+/**
+ * Repaint the strip the operating system draws minimise, maximise and close on.
+ *
+ * It was set once, at window creation, from DARK_CHROME, and the top bar it sits in is
+ * painted by the renderer's stylesheets: the arcade look moved --ground to #171918, the
+ * theme menu moves it again, and Expedition has its own. The buttons stayed on #10121b
+ * in a visibly different box. The renderer reports what the top bar actually computes
+ * to, whenever that can change, and this applies it. Hex only: it goes straight to the OS.
+ */
+let windowChrome: { color: string; symbolColor: string } | null = null;
+ipcMain.handle("apogee:setWindowChrome", (_e, { color, symbolColor } = {} as any) => {
+  const hex = /^#[0-9a-f]{6}$/i;
+  if (!hex.test(color) || !hex.test(symbolColor)) return false;
+  // Kept for the smoke test, whose probe window has no overlay to paint.
+  windowChrome = { color, symbolColor };
+  if (!window) return false;
+  try {
+    window.setTitleBarOverlay({ color, symbolColor, height: 46 });
+    return true;
+  } catch {
+    // Not every platform has an overlay to repaint; the default one stays.
+    return false;
   }
 });
 
