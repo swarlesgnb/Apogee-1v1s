@@ -3,6 +3,25 @@
 What still stands between the local candidate and a public release, and how to re-check
 it. The solo campaign rules are in [the solo guide](solo-expedition.md).
 
+## 0.4.2, 2026-09-28
+
+- Installer: `release/Apogee-0.4.2-setup.exe`
+- SHA-256: `d5e6e26c542ed997001b741f6e9441b8bb3f3754032cee15c52a820b95998608`
+- Notes: `release/notes-0.4.2.md`
+- Carries the first outside playtest's fixes (onboarding, Expedition's first view, the
+  duel take-back loop, off-pool matches), per-band threshold calibration with First Light
+  v5 refrozen on it, and five daily quests from 22 kinds. No scenario file changed, so the
+  hashes the server holds are 0.4.1's. It needs the functions redeployed and
+  `push:season` for the server's side.
+- `validatePackage` passed 179 of 179, and the unpacked build booted in `--smoke` from a
+  temporary directory. Unsigned (`Get-AuthenticodeSignature` reports NotSigned).
+- `validate:release` passed 31 of 35 before v5 was refrozen and `validate:expedition` then
+  passed. The three still failing were failing before this version's changes:
+  `validate:season-files` (ten scenario values outside the popular-scenario range: Gravclick,
+  Blastoff, Thread, Arc, InvadersTS), `beta` (41 unsampled Expert boards, as at rc.4), and
+  `audit:look`, whose unlifted-rank-text detector reads `esc(color)` in `badge()` without
+  seeing that `color` is `legibleOnDark(...)` two lines above it.
+
 ## 0.4.0, 2026-09-25
 
 - Installer: `release/0.4.0/Apogee-0.4.0-setup.exe`
