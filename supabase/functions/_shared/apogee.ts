@@ -265,6 +265,33 @@ export interface ForfeitOutcome {
   ratingChange?: number;
 }
 
+/**
+ * Whether a match names scenarios its window of the current pool no longer has.
+ *
+ * Such a match cannot be played: the season's playlists no longer install those scenarios,
+ * so there is nothing in KovaaK's to launch, and before `0e1df13` they reached the client
+ * as "scenario 947". Membership rather than the season's name, because a rebuilt pool keeps
+ * the name.
+ *
+ * An unreadable pool answers false. That is not evidence the match was unplayable, and a
+ * true here makes leaving free.
+ */
+export async function isOffPool(
+  admin: SupabaseClient,
+  scenarioIds: number[] | null | undefined,
+  windowIndex: number | null | undefined,
+): Promise<boolean> {
+  const ids = scenarioIds ?? [];
+  if (ids.length === 0 || windowIndex == null) return false;
+  try {
+    const { selectable } = await loadSeasonPool(admin, windowIndex);
+    const inPool = new Set(selectable.map((s) => s.id));
+    return !ids.every((id) => inPool.has(id));
+  } catch {
+    return false;
+  }
+}
+
 export async function forfeitMatch(
   admin: SupabaseClient,
   matchId: string,
@@ -333,19 +360,7 @@ export async function forfeitMatch(
     .select("scenario_ids, window_index")
     .eq("id", matchId)
     .maybeSingle();
-  const offPool = await (async () => {
-    const ids: number[] = poolRow?.scenario_ids ?? [];
-    if (ids.length === 0 || poolRow?.window_index == null) return false;
-    try {
-      const { selectable } = await loadSeasonPool(admin, poolRow.window_index);
-      const inPool = new Set(selectable.map((s) => s.id));
-      return !ids.every((id) => inPool.has(id));
-    } catch {
-      // No pool to compare against is not evidence the match was unplayable; charge the
-      // forfeit as usual rather than hand out free exits whenever the season is unreadable.
-      return false;
-    }
-  })();
+  const offPool = await isOffPool(admin, poolRow?.scenario_ids, poolRow?.window_index);
 
   if (offPool) {
     await admin
@@ -601,7 +616,7 @@ export async function sweepStaleMatches(
 ): Promise<LiveMatch | null> {
   const { data: rows } = await admin
     .from("match_sides")
-    .select("match_id, submitted_at, matches!inner(id, status, category, difficulty, scenario_ids, expires_at, created_at)")
+    .select("match_id, submitted_at, matches!inner(id, status, category, difficulty, scenario_ids, window_index, expires_at, created_at)")
     .eq("player_id", playerId)
     .in("matches.status", ["open", "awaiting_runs"]);
 
@@ -610,10 +625,21 @@ export async function sweepStaleMatches(
   const openMatches = (rows ?? []).filter((row: any) => !isCopiedSide(row, row.matches));
 
   const now = Date.now();
-  const stale = openMatches.filter((row: any) => {
+  const expired = openMatches.filter((row: any) => {
     const expiresAt = row.matches?.expires_at;
     return expiresAt != null && new Date(expiresAt).getTime() < now;
   });
+
+  // A live match on a pool that has since been rebuilt is retired here too, rather than
+  // handed back. Resuming it was the playtest bug: the queue kept returning the same
+  // unplayable three, and the only exit was Abandon. forfeitMatch voids it for nothing.
+  const offPool: any[] = [];
+  for (const row of openMatches) {
+    if (expired.includes(row)) continue;
+    const m = (row as any).matches;
+    if (await isOffPool(admin, m?.scenario_ids, m?.window_index)) offPool.push(row);
+  }
+  const stale = [...expired, ...offPool];
 
   for (const row of stale) {
     await forfeitMatch(admin, (row as any).match_id, playerId, updateRating);

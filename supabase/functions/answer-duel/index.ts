@@ -22,6 +22,7 @@
 import {
   handler,
   INITIAL_TTL_MS,
+  isOffPool,
   json,
   readJson,
   requireCaller,
@@ -149,6 +150,7 @@ Deno.serve(handler(async (req, admin) => {
       .eq("id", row.id);
   };
 
+  let closed = false;
   try {
     const { data: theirMatch } = await admin
       .from("matches")
@@ -157,6 +159,16 @@ Deno.serve(handler(async (req, admin) => {
       .maybeSingle();
 
     if (!theirMatch || !theirSide) throw new HttpError(410, "that duel's match is gone");
+
+    // A duel sent before the pool was rebuilt names three scenarios nobody can launch any
+    // more. Accepting it would make the "scenario 947" match find-match no longer makes, so
+    // the duel is closed as expired instead: released, it would sit in the inbox for a week
+    // failing the same way on every accept.
+    if (await isOffPool(admin, theirMatch.scenario_ids, theirMatch.window_index)) {
+      await admin.from("duels").update({ status: "expired" }).eq("id", row.id);
+      closed = true;
+      throw new HttpError(410, "that duel was sent on scenarios this season no longer has");
+    }
 
     const { data: myRating } = await admin
       .from("ratings")
@@ -264,7 +276,8 @@ Deno.serve(handler(async (req, admin) => {
       duel: { id: row.id, from: challenger?.display_name ?? "player" },
     });
   } catch (err) {
-    await release();
+    // An off-pool duel was closed for good; putting it back would reopen it.
+    if (!closed) await release();
     throw err;
   }
 }));
