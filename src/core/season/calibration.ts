@@ -9,9 +9,25 @@
  * inside one category and band. The model's is.
  *
  * So a player's bests are read as positions on each family's predicted ladder, and the
- * families are moved toward the median position of their category and band. It corrects
- * how families compare with each other and nothing else: a player who is maxed everywhere
+ * families are moved toward the median position of their category. It corrects how
+ * families compare with each other and nothing else: a player who is maxed everywhere
  * stays maxed everywhere, because the median moves with them.
+ *
+ * ONE LADDER ACROSS BANDS
+ *
+ * Positions are read on the season's one sixteen-rank ladder, not on each band's own six:
+ * band w grades from global rank `offset` (windows.ts), so a best at the second rank of
+ * Intermediate is at global rank 5, the same place as a best just past the top of Novice.
+ * The same player on the same family should land in the same place whichever band they
+ * play. Runs from 28 September 2026 showed they do not: on the thresholds as they stood,
+ * one player sat at global 3.8 on Pong Novice and -0.2 on Pong Intermediate, four ranks
+ * apart, and at 5.2 and 4.6 on Hover, half a rank apart. The model had priced how much harder Pong's Intermediate file
+ * is than its Novice one, and priced it wrong.
+ *
+ * Until then positions were compared inside one category and band and folded into one
+ * factor per family, so an error between a family's bands could not be seen, let alone
+ * corrected. Reading every band on one ladder and keeping a factor per band is what lets
+ * it be.
  *
  * WHAT COUNTS AS EVIDENCE
  *
@@ -25,8 +41,9 @@
  *
  * WHAT IT PRODUCES
  *
- * One factor per family, applied to every band of it: the model's error is the family's
- * mechanism, which its bands share. The predicted board is multiplied by the factor and
+ * A factor per family and band that has runs, and a family factor over all of its bands
+ * for the bands that have none: a band nobody has played takes its family's error, which
+ * is the best guess there is. The predicted board is multiplied by the factor and
  * cut at the same percentiles, so validate:season-files re-derives every calibrated row to
  * the digit from the model and data/season-1/calibration.json, and the uncalibrated
  * prediction stays on the row beside it.
@@ -43,6 +60,8 @@ export interface CalibrationInput {
   category: string;
   family: string;
   window: number;
+  /** The global rank index the band's first threshold is, from windowRankIndices. */
+  offset: number;
   /** The uncalibrated prediction, so re-running calibration never compounds. */
   predicted: number[];
   best: number;
@@ -61,7 +80,26 @@ export interface FamilyCalibration {
   /** Before shrinkage, clamp and deadband. */
   raw: number;
   runs: number;
-  evidence: Array<{ scenario: string; runs: number; best: number; position: number; target: number; k: number }>;
+  evidence: Array<{ scenario: string; window: number; runs: number; best: number; position: number; target: number; k: number }>;
+  /**
+   * Bands with runs of their own, by band index. Each is measured, shrunk, clamped and
+   * deadbanded like the family's factor, but on that band's runs alone; `factor` is what
+   * build:season applies to that band, and a band missing here takes the family's.
+   */
+  windows?: Record<string, BandCalibration>;
+}
+
+export interface BandCalibration {
+  factor: number;
+  relative?: number;
+  raw: number;
+  runs: number;
+}
+
+/** The factor build:season applies to one band of a family, and validate re-derives. */
+export function factorFor(calibration: Calibration | null | undefined, family: string, window: number): number {
+  const f = calibration?.families[family];
+  return f?.windows?.[String(window)]?.factor ?? f?.factor ?? 1;
 }
 
 export interface Calibration {
@@ -114,37 +152,42 @@ const median = (xs: number[]) => {
 
 const round = (v: number, places: number) => Math.round(v * 10 ** places) / 10 ** places;
 
+/** A log-space mean of `k` weighted by runs, shrunk by n/(n+1), clamped and deadbanded. */
+function settle(evidence: Array<{ runs: number; k: number }>): { factor: number; raw: number; runs: number } {
+  const runs = evidence.reduce((n, e) => n + e.runs, 0);
+  const logRaw = evidence.reduce((s, e) => s + e.runs * Math.log(e.k), 0) / runs;
+  const shrunk = logRaw * (runs / (runs + 1));
+  let factor = Math.min(CLAMP[1], Math.max(CLAMP[0], Math.exp(shrunk)));
+  if (Math.abs(Math.log(factor)) < Math.log(1 + DEADBAND)) factor = 1;
+  return { factor: round(factor, 4), raw: round(Math.exp(logRaw), 4), runs };
+}
+
 export function calibrate(inputs: CalibrationInput[]): Record<string, FamilyCalibration> {
   const groups = new Map<string, CalibrationInput[]>();
-  for (const x of inputs) {
-    const key = `${x.category}\u0000${x.window}`;
-    groups.set(key, [...(groups.get(key) ?? []), x]);
-  }
+  for (const x of inputs) groups.set(x.category, [...(groups.get(x.category) ?? []), x]);
 
   const perFamily = new Map<string, FamilyCalibration["evidence"]>();
   for (const group of groups.values()) {
     if (new Set(group.map((x) => x.family)).size < MIN_FAMILIES) continue;
-    const target = median(group.map((x) => position(x.best, x.predicted)));
+    const target = median(group.map((x) => x.offset + position(x.best, x.predicted)));
     for (const x of group) {
-      const at = scoreAt(target, x.predicted);
+      const at = scoreAt(target - x.offset, x.predicted);
       if (!(at > 0)) continue;
       const k = x.best / at;
       perFamily.set(x.family, [
         ...(perFamily.get(x.family) ?? []),
-        { scenario: x.scenario, runs: x.runs, best: x.best, position: round(position(x.best, x.predicted), 3), target: round(target, 3), k: round(k, 4) },
+        { scenario: x.scenario, window: x.window, runs: x.runs, best: x.best, position: round(x.offset + position(x.best, x.predicted), 3), target: round(target, 3), k: round(k, 4) },
       ]);
     }
   }
 
   const out: Record<string, FamilyCalibration> = {};
   for (const [family, evidence] of perFamily) {
-    // Bands weighted by the runs behind them, in log space.
-    const runs = evidence.reduce((n, e) => n + e.runs, 0);
-    const logRaw = evidence.reduce((s, e) => s + e.runs * Math.log(e.k), 0) / runs;
-    const shrunk = logRaw * (runs / (runs + 1));
-    let factor = Math.min(CLAMP[1], Math.max(CLAMP[0], Math.exp(shrunk)));
-    if (Math.abs(Math.log(factor)) < Math.log(1 + DEADBAND)) factor = 1;
-    out[family] = { factor: round(factor, 4), raw: round(Math.exp(logRaw), 4), runs, evidence };
+    const windows: Record<string, BandCalibration> = {};
+    for (const w of [...new Set(evidence.map((e) => e.window))].sort((a, b) => a - b)) {
+      windows[String(w)] = settle(evidence.filter((e) => e.window === w));
+    }
+    out[family] = { ...settle(evidence), evidence, windows };
   }
   return out;
 }
@@ -246,4 +289,20 @@ export function anchor(input: AnchorInput): CategoryAnchor {
 /** A predicted board with every score multiplied by `factor`. */
 export function scalePoints<T extends { score: number }>(points: T[], factor: number): T[] {
   return points.map((p) => ({ ...p, score: p.score * factor }));
+}
+
+/**
+ * The reason a threshold row carries, for a predicted row and a calibrated one. Shared by
+ * build:season, which forges the files, and recalibrate:season, which only re-reads them,
+ * so the two can never describe the same row differently.
+ */
+export function predictedWhy(cls: string, looMedian: number): string {
+  return `Read off the board ${cls === "click" ? "the clicking" : cls === "track" ? "the tracking" : "the switching"} model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is ${Math.round(looMedian * 1000) / 1000} in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one.`;
+}
+
+export function calibratedWhy(calibration: Calibration, family: string, window: number): string {
+  const f = calibration.families[family];
+  const band = f.windows?.[String(window)];
+  const factor = factorFor(calibration, family, window);
+  return `The model's prediction (see predicted), with every score on its board multiplied by ${factor}: ${band ? `this band's correction from ${band.runs} playtest run(s) on its current file` : `the family's correction from ${f.runs} playtest run(s) on the current files, this band having none of its own`}, which put it ${factor < 1 ? "harder" : "easier"} than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts.`;
 }

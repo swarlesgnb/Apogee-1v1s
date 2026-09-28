@@ -95,6 +95,7 @@
     "install:season": "tsx tools/installSeason.ts",
     "recut:season": "tsx tools/recutSeason.ts",
     "calibrate:season": "tsx tools/calibrateSeason.ts",
+    "recalibrate:season": "tsx tools/recalibrateSeason.ts",
     "workshop:status": "tsx tools/workshopStatus.ts",
     "workshop:previews": "electron tools/workshopPreviews.cjs",
     "workshop:upload": "tsx tools/workshopUpload.ts"

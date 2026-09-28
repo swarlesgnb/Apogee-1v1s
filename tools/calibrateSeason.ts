@@ -1,13 +1,19 @@
 /**
  * Write data/season-1/calibration.json from this machine's KovaaK's runs.
  *
- *   npm run calibrate:season [-- --stats <stats folder>] [--dry]
+ *   npm run calibrate:season [-- --stats <stats folder>] [--dry] [--keep-anchors]
+ *
+ * --keep-anchors carries each category's anchor from the calibration.json already written
+ * instead of measuring it again, so a round can move families and bands against each other
+ * without moving where a whole category sits. The first per-band round needed it: the same
+ * runs re-measured Reactive Tracking's anchor from x1.175 to x1.262, which raised every
+ * Reactive threshold by 7% in the round meant to fix Intermediate being out of reach.
  *
  * Then npm run build:season applies it. Two corrections, both in
- * src/core/season/calibration.ts, multiplied per family:
+ * src/core/season/calibration.ts, multiplied per family and band:
  *
- *   relative   each family against the rest of its category and band, from the player's
- *              Apogee bests alone
+ *   relative   each family and band against the rest of its category, read on the season's
+ *              one ladder across bands, from the player's Apogee bests alone
  *   anchor     each category's ladder moved so the player's practised Apogee best lands
  *              at their top fraction on the real KovaaK's boards of that category's
  *              scenarios (data/leaderboard_percentiles.json, categories from
@@ -69,6 +75,10 @@ const OVERRIDES: Record<string, { relative: number; why: string }> = {
 
 const args = process.argv.slice(2);
 const dry = args.includes("--dry");
+const keepAnchors = args.includes("--keep-anchors");
+const previousCalibration = keepAnchors
+  ? (JSON.parse(readFileSync(dataFile("season-1", "calibration.json"), "utf8")) as Calibration)
+  : null;
 const statsArg = args.indexOf("--stats");
 const root = kovaaksRoot();
 const statsDir = statsArg >= 0 ? args[statsArg + 1] : root ? join(root, "stats") : null;
@@ -128,7 +138,9 @@ for (const s of season.scenarios) {
   const b = apogee.get(s.scenario);
   const predicted = predictedOf(s);
   if (!b || !predicted) continue; // a row recut from a real board is not the model's to correct
-  inputs.push({ scenario: s.scenario, category: s.category, family: s.family!, window: s.window ?? 0, predicted, best: b.best, runs: b.runs });
+  const window = s.window ?? 0;
+  const offset = windowRankIndices(window, pool.windowSize, pool.ladder.ranks.length, pool.ladder.overlap)[0];
+  inputs.push({ scenario: s.scenario, category: s.category, family: s.family!, window, offset, predicted, best: b.best, runs: b.runs });
 }
 const relative = calibrate(inputs);
 
@@ -161,6 +173,12 @@ for (const category of season.categories.map((c) => c.name)) {
   const realTopFraction = played.length ? Math.exp(logs.reduce((s, l, i) => s + weights[i] * l, 0) / weights.reduce((a, b) => a + b, 0)) : 1;
   const own = practiceRatios(category);
   const fromCategory = own.length >= PRACTICE_MIN_SCENARIOS;
+  const kept = previousCalibration?.categories?.[category];
+  if (keepAnchors) {
+    if (!kept) throw new Error(`--keep-anchors: calibration.json has no anchor for ${category}`);
+    categories[category] = kept;
+    continue;
+  }
   categories[category] = anchor({
     category,
     realTopFraction,
@@ -189,22 +207,28 @@ for (const s of season.scenarios) {
   const override = rel ? undefined : OVERRIDES[family];
   const relFactor = override?.relative ?? rel?.factor ?? 1;
   const cat = categories[s.category]?.factor ?? 1;
-  const combined = Math.min(COMBINED_CLAMP[1], Math.max(COMBINED_CLAMP[0], relFactor * cat));
+  const combine = (r: number) => Math.round(Math.min(COMBINED_CLAMP[1], Math.max(COMBINED_CLAMP[0], r * cat)) * 10000) / 10000;
+  const combined = combine(relFactor);
   if (combined === 1 && !rel) continue;
+  // A band with runs of its own gets its own relative correction, times the same anchor.
+  const windows = rel?.windows
+    ? Object.fromEntries(Object.entries(rel.windows).map(([w, b]) => [w, { factor: combine(b.factor), relative: b.factor, raw: b.raw, runs: b.runs }]))
+    : undefined;
   families[family] = {
-    factor: Math.round(combined * 10000) / 10000,
+    factor: combined,
     relative: relFactor,
     ...(override ? { override: override.why } : {}),
     category: cat,
     raw: rel?.raw ?? 1,
     runs: rel?.runs ?? 0,
     evidence: rel?.evidence ?? [],
+    ...(windows ? { windows } : {}),
   };
 }
 
 const out: Calibration = {
   about:
-    "Per-family corrections to the predicted thresholds, measured by npm run calibrate:season on one player's runs and applied by build:season: each family's factor is its relative correction times its category's anchor to real boards. See src/core/season/calibration.ts.",
+    "Per-family and per-band corrections to the predicted thresholds, measured by npm run calibrate:season on one player's runs and applied by build:season: a band's factor is its relative correction times its category's anchor to real boards, and a band with no runs takes its family's `factor`. See src/core/season/calibration.ts.",
   builtAt: new Date().toISOString(),
   rules: { minFamilies: MIN_FAMILIES, clamp: CLAMP, deadband: DEADBAND, anchorClamp: ANCHOR_CLAMP, combinedClamp: COMBINED_CLAMP },
   categories,
@@ -219,7 +243,8 @@ for (const [c, a] of Object.entries(categories)) {
   );
 }
 for (const [f, c] of Object.entries(families).sort((a, b) => a[0].localeCompare(b[0]))) {
-  console.log(`  ${f.padEnd(16)} x${c.factor.toFixed(3)} = relative x${c.relative!.toFixed(3)} * category x${c.category!.toFixed(3)}`);
+  const bands = Object.entries(c.windows ?? {}).map(([w, b]) => `band ${w} x${b.factor.toFixed(3)} (${b.runs})`).join(", ");
+  console.log(`  ${f.padEnd(16)} x${c.factor.toFixed(3)} = relative x${c.relative!.toFixed(3)} * category x${c.category!.toFixed(3)}${bands ? `; ${bands}` : ""}`);
 }
 if (!dry) {
   writeFileSync(dataFile("season-1", "calibration.json"), JSON.stringify(out, null, 2) + "\n", "utf8");

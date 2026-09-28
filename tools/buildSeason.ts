@@ -32,7 +32,7 @@ import { thresholdsFrom } from "../src/core/season/percentiles.ts";
 import { windowRankCount, windowRankIndices } from "../src/core/season/windows.ts";
 import { validateSeason, type Season, type SeasonScenario } from "../src/core/season/season.ts";
 import { rebuildPool, type RebuildSeason } from "../src/core/season/rebuildPool.ts";
-import { scalePoints, type Calibration } from "../src/core/season/calibration.ts";
+import { calibratedWhy, factorFor, predictedWhy, scalePoints, type Calibration } from "../src/core/season/calibration.ts";
 import { buildCorpus, kovaaksRoot, scenarioFiles } from "./scenarioCorpus.ts";
 import { BANDS, FAMILIES, TEMPLATES, buildScenario, scenarioName, type Band, type Category, type TemplateKey } from "./season/design.ts";
 
@@ -216,20 +216,19 @@ const calibration: Calibration | null = existsSync(calibrationFile)
   : null;
 
 function thresholdsFor(b: Built): { rankMaxes: number[]; source: Record<string, unknown> } {
-  const factor = calibration?.families[b.family.name]?.factor ?? 1;
+  const factor = factorFor(calibration, b.family.name, b.band);
   if (factor === 1) return { rankMaxes: b.rankMaxes, source: predictedSource(b) };
   const ranks = windowRankIndices(b.band, windowSize, totalRanks, overlap).map((i) => ladder[i]);
   const dist = { scenario: b.name, leaderboardId: 0, total: 0, sampledAt: "", points: scalePoints(b.prediction.points, factor) };
   const rankMaxes = thresholdsFrom(dist, ranks);
   if (!rankMaxes) throw new Error(`${b.name}: the calibrated board does not reach every rank's percentile`);
-  const f = calibration!.families[b.family.name];
   return {
     rankMaxes,
     source: {
       kind: "calibrated",
       factor,
       predicted: b.rankMaxes,
-      why: `The model's prediction (see predicted), with every score on its board multiplied by ${factor}: the family's correction from ${f.runs} playtest run(s) on the current files, which put this family ${factor < 1 ? "harder" : "easier"} than the model had it next to the rest of its category. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts.`,
+      why: calibratedWhy(calibration!, b.family.name, b.band),
     },
   };
 }
@@ -254,7 +253,7 @@ const scenarios: Array<SeasonScenario & Record<string, unknown>> = built.map((b)
 function predictedSource(b: Built) {
   return {
     kind: "predicted",
-    why: `Read off the board ${b.cls === "click" ? "the clicking" : b.cls === "track" ? "the tracking" : "the switching"} model predicts for this file, at the pool ladder's percentiles for the ranks this band grades. The model's leave-one-out median error at the board median is ${round(models.get(b.cls)!.fits.find((f) => f.topFraction === 0.5)!.looMedian)} in its own units; see data/season-1/difficulty_model.json. Seeded: recut from a real board with tools/recutSeason.ts once there is one.`,
+    why: predictedWhy(b.cls, models.get(b.cls)!.fits.find((f) => f.topFraction === 0.5)!.looMedian),
   };
 }
 

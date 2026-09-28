@@ -39,7 +39,7 @@ import { get, num, parseSce, profile, list, type Sce } from "./sce.ts";
 import { jsonSpawns, scenarioFeatures } from "./features.ts";
 import { classify, MISSES_PER_KILL, STILL_MISSES_PER_KILL, predictFromAnchor, predictLadder, toMetric, type ClassModel } from "./difficulty.ts";
 import { thresholdsFrom } from "../season/percentiles.ts";
-import { scalePoints, type Calibration } from "../season/calibration.ts";
+import { factorFor, scalePoints, type Calibration } from "../season/calibration.ts";
 import { windowRankIndices } from "../season/windows.ts";
 import { validateSeason, type Season } from "../season/season.ts";
 import { buildCorpus, kovaaksRoot, scenarioFiles } from "../../../tools/scenarioCorpus.ts";
@@ -270,12 +270,12 @@ for (const s of season.scenarios) {
   if (kind === "percentile" && !real) fail(`${s.scenario}: says it was recut from a board, and no sampled board is on record`);
   const predictedPoints = prediction.points.map((p) => ({ topFraction: p.topFraction, score: p.score }));
   const ranks = windowRankIndices(s.window!, pool.windowSize, pool.ladder.ranks.length, pool.ladder.overlap).map((i) => pool.ladder.ranks[i]);
-  // A calibrated row is the same board scaled by its family's measured factor, and the
-  // factor has to be the one data/season-1/calibration.json holds for that family.
+  // A calibrated row is the same board scaled by its measured factor, and the factor has to
+  // be the one data/season-1/calibration.json holds for that family and band.
   const cal = kind === "calibrated" ? (s as unknown as { source: { factor: number; predicted: number[] } }).source : undefined;
   if (cal) {
-    const recorded = calibration?.families[s.family!]?.factor;
-    if (recorded !== cal.factor) fail(`${s.scenario}: calibrated by ${cal.factor}, but calibration.json has ${recorded ?? "nothing"} for ${s.family}`);
+    const recorded = calibration?.families[s.family!] ? factorFor(calibration, s.family!, s.window!) : undefined;
+    if (recorded !== cal.factor) fail(`${s.scenario}: calibrated by ${cal.factor}, but calibration.json has ${recorded ?? "nothing"} for ${s.family} band ${s.window}`);
     const unscaled = thresholdsFrom({ scenario: s.scenario, leaderboardId: 0, total: 0, sampledAt: "", points: predictedPoints }, ranks);
     if (JSON.stringify(unscaled) !== JSON.stringify(cal.predicted)) fail(`${s.scenario}: its recorded prediction ${cal.predicted.join(" ")} is not what the model gives, ${unscaled?.join(" ")}`);
   }
