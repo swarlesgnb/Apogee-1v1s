@@ -236,8 +236,9 @@ if (history.size === 0) {
   }
   console.log();
 
-  check("three dailies are issued", board.daily.length === 3, `${board.daily.length}`);
-  check("one per daily slot", new Set(board.daily.map((q) => q.slot)).size === 3,
+  check("five dailies are issued", board.daily.length === 5, `${board.daily.length}`);
+  check("no quest twice on one board", new Set(board.daily.map((q) => q.id)).size === board.daily.length);
+  check("every daily slot is filled", new Set(board.daily.map((q) => q.slot)).size === 3,
     board.daily.map((q) => q.slot).join(","));
   check("a weekly is issued", board.weekly !== null);
   check("every quest has player-facing text", all.every((q) => q.title.length > 0 && q.detail.length > 0));

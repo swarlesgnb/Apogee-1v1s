@@ -37,10 +37,23 @@ import { dayKey } from "./progression.ts";
 // shapes
 // ---------------------------------------------------------------------------
 
-/** Where a quest sits on the board. One daily of each of the first three, plus the weekly. */
+/** Where a quest sits on the board: five dailies across the first three, plus the weekly. */
 export type QuestSlot = "ceiling" | "floor" | "variety" | "weekly";
 
-export const DAILY_SLOTS: QuestSlot[] = ["ceiling", "floor", "variety"];
+/**
+ * The day's five, in board order.
+ *
+ * Three until the first outside playtest, where the board read as thin next to the rest of
+ * the app. Two of ceiling and variety because they have the most kinds to draw from (five
+ * and seven), and one of floor, which has four and asks for the longest sessions.
+ */
+export const DAILY_SLOTS: QuestSlot[] = ["ceiling", "floor", "variety", "ceiling", "variety"];
+
+/**
+ * The fewest dailies a board can hold and still pay the clear bonus. A small pool can leave
+ * a slot with nothing it has not already used; that board is still the whole board.
+ */
+const MIN_BOARD = 3;
 
 export type QuestKind =
   // ceiling: one good run
@@ -940,18 +953,32 @@ export function issueDaily(
   const avoid = new Set(recent);
   const daily: IssuedQuest[] = [];
   const reserve: Quest[] = [];
+  const used = new Set<string>();
+  const kindsIn = new Map<string, Set<QuestKind>>();
 
   for (const slot of DAILY_SLOTS as ("ceiling" | "floor" | "variety")[]) {
-    // A player too new for a slot's own kinds still gets three quests: the variety pool
+    // A player too new for a slot's own kinds still gets a full board: the variety pool
     // always has something, and a slot left empty would read as the board being broken.
     let pool = candidates[slot];
     if (pool.length === 0) pool = candidates.variety.map((q) => ({ ...q, id: `${q.id}#${slot}`, slot }));
 
+    // Nothing twice, and a slot's second quest of a different kind from its first while
+    // there is one: two "beat your median" on one board is one quest said twice.
+    pool = pool.filter((q) => !used.has(q.id) && !reserve.some((r) => r.id === q.id));
+    const kinds = kindsIn.get(slot) ?? new Set<QuestKind>();
+    const otherKind = pool.filter((q) => !kinds.has(q.kind));
+    if (otherKind.length > 0) pool = otherKind;
+
     const { pick, spare } = choose(pool, rng, avoid);
     if (!pick) continue;
     daily.push(issued(pick, since, until));
+    used.add(pick.id);
     avoid.add(subjectOf(pick));
-    if (spare) reserve.push(spare);
+    kindsIn.set(slot, kinds.add(pick.kind));
+    if (spare) {
+      reserve.push(spare);
+      used.add(spare.id);
+    }
   }
 
   return { daily, reserve };
@@ -1122,9 +1149,9 @@ function settle(state: QuestState, ctx: BoardContext, paid: CompletedQuest[]): v
     paid.push({ id: q.id, slot: q.slot, kind: q.kind, title: q.title, detail: q.detail, xp: q.xp, completedAt: q.completedAt });
   }
 
-  // A full board only. The issuer always fills all three slots, so a shorter one is a
-  // board that was built some other way and has not earned a bonus for being short.
-  if (!state.bonus && state.daily.length === DAILY_SLOTS.length && state.daily.every((q) => q.completedAt)) {
+  // A whole board only. The issuer fills every slot it has candidates for, so one shorter
+  // than MIN_BOARD was built some other way and has not earned a bonus for being short.
+  if (!state.bonus && state.daily.length >= MIN_BOARD && state.daily.every((q) => q.completedAt)) {
     const at = new Date(Math.max(...state.daily.map((q) => new Date(q.completedAt!).getTime())));
     const streak = playStreak(ctx.history, at);
     const xp = bonusXp(streak);
@@ -1135,7 +1162,7 @@ function settle(state: QuestState, ctx: BoardContext, paid: CompletedQuest[]): v
       slot: "bonus",
       kind: "board_clear",
       title: "Board cleared",
-      detail: `All three of today's quests, on a ${streak}-day streak.`,
+      detail: `All ${state.daily.length} of today's quests, on a ${streak}-day streak.`,
       xp,
       completedAt: at.toISOString(),
     });
@@ -1173,6 +1200,21 @@ export function syncBoard(stored: QuestState | null, ctx: BoardContext): QuestSy
     state.rerolled = false;
     state.bonus = null;
     state.recent = daily.map(subjectOf);
+  } else if (state.daily.length < DAILY_SLOTS.length && !state.bonus) {
+    // A board issued today under the old three slots is topped up rather than left short
+    // until midnight. The new quests are drawn the same way and never repeat one already
+    // on it; progress counts from the start of the day like the rest.
+    const have = new Set(state.daily.map((q) => q.id));
+    const { daily, reserve } = issueDaily(issuing, ctx.now, state.daily.map(subjectOf));
+    for (const q of daily) {
+      if (state.daily.length >= DAILY_SLOTS.length) break;
+      if (have.has(q.id)) continue;
+      state.daily.push(q);
+      have.add(q.id);
+    }
+    const spares = new Set(state.reserve.map((q) => q.id));
+    state.reserve = [...state.reserve, ...reserve.filter((q) => !have.has(q.id) && !spares.has(q.id))];
+    state.recent = state.daily.map(subjectOf);
   }
 
   const week = dayKey(startOfWeek(ctx.now));

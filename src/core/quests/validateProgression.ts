@@ -201,9 +201,10 @@ check("yesterday's finished quest is paid on today's first sync",
   rolled.newlyCompleted.some((q) => q.id === yq.id), rolled.newlyCompleted.map((q) => q.id).join(","));
 check("stamped inside its own day", rolled.newlyCompleted.find((q) => q.id === yq.id)?.completedAt.startsWith(dayKey(YESTERDAY).slice(0, 7)) === true
   && new Date(rolled.newlyCompleted.find((q) => q.id === yq.id)!.completedAt) < TODAY);
-check("a new board is issued", rolled.state.day === dayKey(NOW) && rolled.state.daily.length === 3,
+check("a new board is issued", rolled.state.day === dayKey(NOW) && rolled.state.daily.length >= 3,
   `${rolled.state.daily.length} quests`);
-check("one of each daily slot", new Set(rolled.state.daily.map((q) => q.slot)).size === 3,
+check("no quest twice on one board", new Set(rolled.state.daily.map((q) => q.id)).size === rolled.state.daily.length);
+check("every daily slot is filled", new Set(rolled.state.daily.map((q) => q.slot)).size === 3,
   rolled.state.daily.map((q) => q.slot).join(","));
 check("lifetime XP survives the reset", rolled.state.totalXp >= 1200, `${rolled.state.totalXp}`);
 check("the reroll is restored", rolled.state.rerolled === false);
@@ -238,14 +239,28 @@ check("a finished quest cannot be rerolled", "error" in rerollQuest(finished, re
 // ---------------------------------------------------------------------------
 console.log("\n── clearing the board ───────────────────────────");
 
-const three = [
+// A board issued today under three slots, with one already paid, is filled to five.
+{
+  const doneEarlier = { ...quest("reach_rank", "ceiling", { scenario: "A", bar: 200, from: 159 }, 200, 300, TODAY, "score"), completedAt: NOW.toISOString(), progress: 250 };
+  const old = [doneEarlier, quest("variety", "floor", {}, 2, 150, TODAY, "scenarios"), quest("category_volume", "variety", { category: "Clicking" }, 2, 150)];
+  const topped = syncBoard(board(old, TODAY, { totalXp: 300 }), ctx(withRuns(baseRuns(), "A", [250], TODAY))).state;
+  check("a three-quest board from today is topped up", topped.daily.length > 3 && topped.daily.length <= 5, `${topped.daily.length} quests`);
+  check("keeping its quests, and what is already paid", old.every((q) => topped.daily.some((t) => t.id === q.id))
+    && topped.daily.find((t) => t.id === doneEarlier.id)?.completedAt === doneEarlier.completedAt && topped.totalXp === 300);
+  check("with nothing twice", new Set(topped.daily.map((q) => q.id)).size === topped.daily.length);
+}
+
+// A full five, so the top-up that fills an older three-quest board has nothing to add.
+const five = [
   quest("reach_rank", "ceiling", { scenario: "A", bar: 200, from: 159 }, 200, 300, TODAY, "score"),
   quest("category_volume", "variety", { category: "Clicking" }, 2, 150),
   quest("variety", "floor", {}, 2, 150, TODAY, "scenarios"),
+  quest("revisit", "ceiling", { scenario: "B", bar: 100, from: 0 }, 100, 250, TODAY, "score"),
+  quest("category_tour", "variety", {}, 1, 200, TODAY, "categories"),
 ];
 let bRuns = withRuns(baseRuns(), "A", [250], TODAY);
-const partial = syncBoard(board(three), ctx(bRuns));
-check("no bonus until all three are done", partial.state.bonus === null);
+const partial = syncBoard(board(five), ctx(bRuns));
+check("no bonus until all five are done", partial.state.bonus === null);
 bRuns = withRuns(bRuns, "B", [150], TODAY, 70);
 const cleared = syncBoard(partial.state, ctx(bRuns));
 const bonus = cleared.newlyCompleted.find((q) => q.kind === "board_clear");
