@@ -2055,7 +2055,7 @@ app.whenReady().then(() => {
     startWatching(found);
   } else {
     state.lastError =
-      "Could not find your KovaaK's stats folder. Use \"Choose folder…\" to point Apogee at it.";
+      "Couldn't find your KovaaK's stats folder.";
   }
 
   app.on("activate", () => {

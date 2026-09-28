@@ -974,16 +974,25 @@ function makeCopyable(el, name) {
 function paintFolderFound() {
   const banner = $("banner");
   if (current || !currentPath || (banner.classList.contains("on") && !banner.classList.contains("notice"))) return;
-  $("emptyText").textContent =
-    "Found your stats folder. Play any scenario in KovaaK's and it shows up here the moment the run is saved.";
-  const first = document.querySelector("#empty .empty-step");
-  if (first) {
-    first.classList.add("done");
-    first.querySelector("h3").textContent = "Stats folder found";
-    first.querySelector("p").textContent = currentPath;
-  }
+  $("emptyHead").textContent = "Found your KovaaK's stats";
+  $("emptyText").textContent = "Play any scenario in KovaaK's and it shows up here.";
+  $("emptyPath").textContent = currentPath;
+  $("emptyPath").hidden = false;
+  $("emptyHelp").hidden = true;
   const choose = $("emptyChoose");
-  if (choose) { choose.textContent = "Use a different folder…"; choose.classList.add("secondary"); }
+  choose.textContent = "Change folder";
+  choose.classList.add("secondary");
+}
+
+/** Not found: the button becomes the one thing to do, and the path is one click away. */
+function paintFolderMissing() {
+  $("emptyHead").textContent = "Couldn't find your KovaaK's stats folder";
+  $("emptyText").textContent = "Choose it once and Apogee remembers it.";
+  $("emptyPath").hidden = true;
+  $("emptyHelp").hidden = false;
+  const choose = $("emptyChoose");
+  choose.textContent = "Choose folder";
+  choose.classList.remove("secondary");
 }
 
 function showNotice(message, quiet = false) {
@@ -8191,28 +8200,27 @@ function renderEligibility() {
   }
 
   const { uploaded, required, missing } = eligibility;
-  // The gate said "0 uploaded" to a player with thousands of runs on this PC and no way
-  // to act on it: the upload control sat 500px further down. It names both counts and
-  // carries the button, and a history big enough to qualify is sent without asking.
+  // Any runs on this PC the server has not seen are sent without asking. This used to wait
+  // until there were enough local runs to open ranked outright, which left a player short
+  // of that to find an Upload button; in the first outside playtest the tester never
+  // found it. The button here appears only after the automatic upload has failed.
   const local = current && current.player ? current.player.totalRuns : 0;
-  const coverable = local >= required;
-  $("queueGateText").innerHTML =
-    'Ranked needs <span class="gate-count">' + num(required) + "</span> uploaded runs. " +
-    (local > uploaded
-      ? 'You have <span class="gate-count">' + num(local) + "</span> on this PC and " +
-        num(uploaded) + " uploaded."
-      : 'You have <span class="gate-count">' + num(uploaded) + "</span> \u00b7 " + num(missing) + " to go.");
+  const pending = signedIn && local > uploaded;
+  $("queueGateText").innerHTML = uploadBusy
+    ? "Uploading your runs\u2026"
+    : pending
+      ? 'Ranked opens at <span class="gate-count">' + num(required) + "</span> uploaded runs. " +
+        num(uploaded) + " uploaded so far."
+      : 'Play <span class="gate-count">' + num(missing) + "</span> more runs to open ranked.";
   const gateUpload = $("queueGateUpload");
   if (gateUpload) {
-    gateUpload.hidden = !(signedIn && local > uploaded);
-    gateUpload.disabled = uploadBusy;
-    gateUpload.textContent = uploadBusy ? "Uploading\u2026" : "Upload my " + num(local) + " runs";
+    gateUpload.hidden = !(pending && uploadFailed && !uploadBusy);
+    gateUpload.textContent = "Try the upload again";
   }
   setFill($("queueGateFill"), uploaded / required);
   gate.classList.add("on");
-  if (signedIn && coverable && !autoUploaded && !uploadBusy) {
+  if (pending && !autoUploaded && !uploadBusy) {
     autoUploaded = true;
-    showNotice("Uploading your run history so you can play ranked. This takes a minute.", true);
     $("uploadBtn").click();
   }
 
@@ -8222,9 +8230,10 @@ function renderEligibility() {
   btn.dataset.gated = "1";
 }
 
-/** One automatic upload per session: if it fails, the button is there. */
+/** One automatic upload per session: if it fails, the gate offers a retry. */
 let autoUploaded = false;
 let uploadBusy = false;
+let uploadFailed = false;
 
 function refreshEligibility() {
   if (!api || !api.queueEligibility) return;
@@ -8257,8 +8266,8 @@ function bandRankLabel(band) {
  * Every step is read off state the app already holds, so it cannot disagree with the
  * screen: the stats folder from the snapshot, sign-in from the session, the run count
  * from the same eligibility the queue gate uses, a match from the server's rating or a
- * settle seen here, a duel from the board. The last two are remembered once seen, because
- * the board only keeps a sent duel for a week and a finished step must not come undone.
+ * settle seen here. The match is remembered once seen, because a finished step must not
+ * come undone.
  *
  * Desktop only. The standalone preview has no session and nothing to press.
  */
@@ -8292,63 +8301,46 @@ function setupSteps() {
   const uploaded = eligibility ? eligibility.uploaded : 0;
 
   if (standing && standing.matchesPlayed > 0) setSetupFlag("match");
-  if (duelBoard && duelBoard.outgoing && duelBoard.outgoing.length > 0) setSetupFlag("duel");
   const flags = setupFlags();
-  const steamPrivate = duelBoard && duelBoard.steamFriends === "private";
 
+  // Three steps. The first outside playtest had five, with the upload as a step of its own
+  // and a button to press; the tester stalled on it. Signing in now starts the upload by
+  // itself (renderEligibility), so the step that asks for sign-in carries its progress,
+  // and duels are found from the queue screen once there is a match to be proud of.
+  const uploading = signedIn && eligibility && !eligibility.eligible;
   return [
     {
       title: "Find your KovaaK's stats",
-      detail: "Apogee reads your scores from the stats folder KovaaK's writes after every run. Nothing is typed in.",
+      detail: local > 0 ? num(local) + " runs found." : "Found by itself on most installs.",
       done: local > 0,
       action: "Choose folder",
       run: () => $("btnChoose").click(),
     },
     {
       title: "Sign in with Steam",
-      detail: "Ranked and duels need an account. Apogee reads your Steam name, avatar and friends list, and nothing else.",
-      done: signedIn,
-      action: "Sign in",
+      detail: !signedIn
+        ? "Reads your Steam name, avatar and friends list. Nothing else."
+        : uploading
+          ? uploadBusy
+            ? "Uploading your runs…"
+            : local > uploaded
+              ? num(uploaded) + " of " + num(required) + " runs uploaded."
+              : "Play " + num(eligibility.missing) + " more runs to open ranked."
+          : "Signed in.",
+      progress: uploading && required ? Math.min(1, uploaded / required) : null,
+      done: signedIn && Boolean(eligibility && eligibility.eligible),
+      action: signedIn ? null : "Sign in",
       run: () => $("btnSignIn").click(),
     },
     {
-      title: required ? "Upload " + num(required) + " runs" : "Upload your runs",
-      detail: !signedIn
-        ? "Ranked opens once enough of your runs are uploaded. It starts after you sign in."
-        : local > uploaded
-          ? num(uploaded) + " uploaded, " + num(local) + " on this PC. Your history counts" +
-            (required && local >= required ? ", and it is enough to open ranked." : ".")
-          : num(uploaded) + " uploaded. Every run you finish in KovaaK's adds one.",
-      progress: required ? Math.min(1, uploaded / required) : null,
-      done: Boolean(eligibility && eligibility.eligible),
-      action: signedIn && local > uploaded ? "Upload now" : null,
-      run: () => $("uploadBtn").click(),
-    },
-    {
       title: "Play your first match",
-      detail: "Pick a category below and press Find opponent. If nobody is around you still get your three scenarios, and the next player is matched against them.",
+      detail: "Pick a category and press Find opponent.",
       done: Boolean(flags.match),
       action: "Go to the queue",
       run: () => {
         const stage = document.querySelector(".queue-stage");
         if (stage) stage.scrollIntoView({ behavior: "smooth", block: "start" });
         $("queueBtn").focus({ preventScroll: true });
-      },
-    },
-    {
-      title: "Duel a friend",
-      detail:
-        "Press Send a duel and pick them. You play your three first, then they have a week to answer. " +
-        (steamPrivate
-          ? "Your Steam friends list is private, so a friend only shows up once they have played a match. Setting it to Public in Steam lists them from their first sign-in."
-          : "Your Steam friends show up as soon as they sign in to Apogee."),
-      done: Boolean(flags.duel),
-      action: "Send a duel",
-      run: () => {
-        const panel = $("duels");
-        if (!panel || panel.hidden) return;
-        panel.scrollIntoView({ behavior: "smooth", block: "start" });
-        if ($("duelRoster").hidden) $("duelPickBtn").click();
       },
     },
   ];
@@ -11763,6 +11755,7 @@ if (HOST === "electron") {
 
     btn.disabled = false;
     uploadBusy = false;
+    uploadFailed = Boolean(result.error || (result.result && result.result.errors.length));
     refreshEligibility();
     if (result.error) {
       showError(result.error);
@@ -12231,7 +12224,7 @@ if (HOST === "electron") {
       setStatus(state.lastError ? "bad" : "scanning", state.lastError ? "Problem" : "Scanning…", currentPath);
       if (state.lastError) {
         showError(state.lastError);
-        $("emptyText").textContent = state.lastError;
+        paintFolderMissing();
       } else if (!state.scanning) paintFolderFound();
     }
   });
