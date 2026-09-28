@@ -10,6 +10,13 @@
   let view = null, page = 'map', filter = 'all', listMode = false, busy = false;
   let previewSelected = null, previewBand = null, announced = new Set(), initialized = false;
   let renderContext = '';
+  // First view. The first outside playtest opened this screen to four difficulty cards, six
+  // planets, two reward spotlights, a locked gate, three tabs and a difficulty select at
+  // once, and the tester closed it without playing. Before joining, the screen is the chart
+  // and one button, with the difficulties and a planet's detail shown only when asked for
+  // (`showBands`, `picked`). The reward pitches and the last passage wait for a first clear.
+  let showBands = false, picked = false;
+  const newcomer = () => !Object.keys(view.state?.rewards || {}).some(id => id.endsWith(':clear'));
   // The loop is play in KovaaK's, come back, see the verdict. `awaiting` is the launch that
   // is waiting for a run; `signal` is the verdict on the last one that arrived.
   let awaiting = null, signal = null;
@@ -217,14 +224,14 @@
   }
   function onboarding() {
     const def = view.definition, b = band(), rec = view.recommendation;
-    return `<section class="exp-objective exp-deck exp-onboard" style="--destination:#daf49a"><div class="exp-deck-main"><span class="exp-eyebrow">FIRST LIGHT · A SOLO CAMPAIGN BESIDE RANKED</span><h3>Six aim skills. A ship for each. One last passage.</h3>
-      <ol class="exp-how"><li><b>1</b><span>Choose how forgiving it should be</span></li><li><b>2</b><span>Clear six destinations: three scenarios each, in order</span></li><li><b>3</b><span>All six open the last passage and the First Light ship</span></li></ol>
-      <div class="exp-bands" role="radiogroup" aria-label="Difficulty">${def.bands.map((name, i) => {
+    const bands = showBands ? `<div class="exp-bands" role="radiogroup" aria-label="Difficulty">${def.bands.map((name, i) => {
         const f = view.fit?.[i], g = bandGuide[i] || bandGuide[0];
-        return `<button type="button" role="radio" class="exp-band-card ${i === b ? 'selected' : ''}" data-exp-action="preview-band" data-band="${i}" aria-checked="${i === b}">${rec?.band === i ? '<em>SUGGESTED FOR YOU</em>' : ''}<small>${e(name)}</small><strong>${e(g.tag)}</strong><span>${e(g.miss)}</span><span class="exp-band-best">Best if you ${e(g.best)}.</span><span class="exp-band-fit">${f?.played ? `Your bests meet ${f.met} of ${f.played} targets you have played` : 'You have not played these scenarios yet'}</span></button>`;
-      }).join('')}</div>${rec ? `<p class="exp-rec">${e(rec.reason)}</p>` : ''}</div>
-      <div class="exp-deck-side"><div class="exp-actions exp-main-action">${button(view.canPlay ? `Begin ${e(def.bands[b])} →` : 'Choose stats folder →', view.canPlay ? 'enroll' : 'folder', '', !bridge, true)}</div>
-      <p class="exp-rule"><b>Good to know</b>Change difficulty any time; nothing is lost. Scores come from your KovaaK’s stats folder. None of this touches ranked ratings or matchmaking.</p></div></section>`;
+        return `<button type="button" role="radio" class="exp-band-card ${i === b ? 'selected' : ''}" data-exp-action="preview-band" data-band="${i}" aria-checked="${i === b}">${rec?.band === i ? '<em>SUGGESTED</em>' : ''}<small>${e(name)}</small><strong>${e(g.tag)}</strong><span>${e(g.miss)}</span><span class="exp-band-fit">${f?.played ? `Your bests meet ${f.met} of ${f.played} targets you have played` : 'Not played yet'}</span></button>`;
+      }).join('')}</div>${rec ? `<p class="exp-rec">${e(rec.reason)}</p>` : ''}` : '';
+    return `<section class="exp-objective exp-deck exp-onboard" style="--destination:#daf49a"><div class="exp-deck-main"><span class="exp-eyebrow">SOLO · SEPARATE FROM RANKED</span><h3>Six planets, one per aim category</h3>
+      <p class="exp-deck-why">Beat three scenario targets at a planet to earn its ship.</p>
+      <button type="button" class="exp-text-button" data-exp-action="toggle-bands" aria-expanded="${showBands}">Difficulty: ${e(def.bands[b])} · ${showBands ? 'done' : 'change'}</button>${bands}</div>
+      <div class="exp-deck-side"><div class="exp-actions exp-main-action">${button(view.canPlay ? 'Start →' : 'Choose stats folder →', view.canPlay ? 'enroll' : 'folder', '', !bridge, true)}</div></div></section>`;
   }
   function deck() {
     if (!view.state) return onboarding();
@@ -262,6 +269,7 @@
   }
   function header() {
     const { definition: def, state: s } = view, b = band();
+    if (!s) return `<header class="exp-heading"><div><span class="exp-eyebrow">SOLO EXPEDITION</span><h1>First Light</h1></div></header>`;
     return `<header class="exp-heading"><div><span class="exp-eyebrow">SOLO EXPEDITION / 01</span><h1>First Light<span>Make your way out there.</span></h1></div>
       <div class="exp-heading-controls"><label>Difficulty<select id="expBand" aria-label="Expedition difficulty">${def.bands.map((name, i) => `<option value="${i}" ${i === b ? 'selected' : ''}>${e(name)}</option>`).join('')}</select></label><span class="exp-local">Saved on this device</span></div></header>
       <div class="exp-toolbar"><div class="exp-tabs" role="group" aria-label="Expedition views">${['map', 'collection', 'recap'].map(p => `<button data-exp-action="page" data-page="${p}" aria-pressed="${page === p}">${p === 'map' ? 'Star chart' : p === 'collection' ? `Collection · ${Object.keys(s?.rewards || {}).length}/${view.rewards.length}` : 'Session recap'}</button>`).join('')}</div><details class="exp-band-help"><summary>What changes with difficulty?</summary><p>Only how forgiving a miss is, and how high the targets are. Lower difficulties are never required. Each has its own clear insignias and mastery trophies; ships, frames, banners, titles and relics are shared, so each is earned once.</p></details></div>`;
@@ -300,7 +308,7 @@
       <div class="exp-brief-status"><span>${e(def.bands[b])}</span><b>${e(status)}</b>${record.length ? `<span>Best clear ${number(Math.max(...record) * 100)}% on the weakest round</span>` : ''}</div>
       ${active && !inTrial ? `<div class="exp-finale-ready"><p>Your attempt at ${e(destinationName(active.destination))} is still running. Finish or stop it to start one here.</p>${button('Back to that attempt', 'select', `data-destination="${active.destination}" data-band="${active.band}"`)}</div>` : ''}
       <div class="exp-roster-head"><small>THE TRIAL · ${r.length} ROUNDS, IN ORDER</small></div><ol class="exp-scenarios exp-roster">${rows}</ol>
-      ${rewardSpotlight(goalId, cleared ? has(`${id}:${b}:mastery`) ? 'EARNED IN THIS DIFFICULTY' : 'STILL TO EARN · MASTERY' : 'CLEAR IT TO EARN', cleared ? has(`${id}:${b}:mastery`) ? 'Clear and mastery complete here.' : 'Beat every target by 10% in one attempt, with no misses and no carried checkpoints.' : has(`${id}:ship`) ? `Your ship from here is already collected. This clear earns the ${def.bands[b]} insignia.` : 'Plus its frame, banner and title. The ship flies on your star chart once equipped.')}
+      ${newcomer() ? '' : rewardSpotlight(goalId, cleared ? has(`${id}:${b}:mastery`) ? 'EARNED IN THIS DIFFICULTY' : 'STILL TO EARN · MASTERY' : 'CLEAR IT TO EARN', cleared ? has(`${id}:${b}:mastery`) ? 'Clear and mastery complete here.' : 'Beat every target by 10% in one attempt, with no misses and no carried checkpoints.' : has(`${id}:ship`) ? `Your ship from here is already collected. This clear earns the ${def.bands[b]} insignia.` : 'Plus its frame, banner and title. The ship flies on your star chart once equipped.')}
       ${cleared && has(`${id}:ship`) && s?.equipped.ship !== `${id}:ship` ? `<div class="exp-actions">${button('Equip earned ship', 'equip', `data-reward="${id}:ship"`, !bridge)}</div>` : ''}
       ${cleared && s?.equipped.insignia !== `${id}:${b}:clear` ? `<div class="exp-actions exp-equip-insignia">${button(`Wear ${e(def.bands[b])} insignia`, 'equip', `data-reward="${id}:${b}:clear"`, !bridge)}</div>` : ''}
       ${s && !final && !inTrial ? `<details class="exp-optional"><summary>Warm-ups${b === 1 && !j.ready ? ' · one opens the trial' : b === 2 && !j.preparationReady ? ' · one earns a retry' : ' · optional relics'}</summary>${routeChoices(id, b, route, j.ready)}</details>` : ''}
@@ -318,7 +326,7 @@
     return `${deck()}
       ${s ? `<section class="exp-journey" aria-label="Your expedition goal"><div class="exp-journey-copy"><span class="exp-eyebrow">${e(def.bands[b]).toUpperCase()} · ${e(bandGuide[b]?.tag || '').toUpperCase()}</span><h2>${e(j.title)}</h2><p>${e(j.description)}</p></div><div class="exp-journey-progress"><strong>${finished ? 'First Light conquered' : `${j.cleared} / 6 destinations`}</strong><span>${finished ? 'Your collection and records stay yours.' : j.cleared === 6 ? 'The last passage is open.' : 'All six open the last passage.'}</span><div class="exp-signals" role="group" aria-label="Destination progress">${def.destinations.map((d, i) => `<button data-exp-action="select" data-destination="${d.id}" aria-label="${e(d.name)}: ${has(`${d.id}:${b}:clear`) ? 'cleared' : 'not cleared'}" title="${e(d.name)}" class="${has(`${d.id}:${b}:clear`) ? 'lit' : ''}">${has(`${d.id}:${b}:clear`) ? '✓' : i + 1}</button>`).join('')}</div></div></section>` : ''}
       ${finished ? `<div class="exp-finish"><span aria-hidden="true">✦</span><div><small>${e(def.bands[b]).toUpperCase()} EXPEDITION COMPLETE</small><h2>You found the first light.</h2><p>Your clears and rewards are permanent. Return for mastery, or take on another difficulty.</p></div>${button('Visit your collection', 'page', 'data-page="collection"')}</div>` : ''}
-      <div class="exp-layout">${detail()}<div class="exp-chart-panel"><div class="exp-chart-top"><span>STAR CHART · ANY DESTINATION, ANY ORDER</span><button class="exp-button" data-exp-action="layout" aria-pressed="${listMode}">${listMode ? 'Show star chart' : 'Show destination list'}</button></div>
+      <div class="exp-layout ${!s && !picked ? 'exp-layout-solo' : ''}">${!s && !picked ? '' : detail()}<div class="exp-chart-panel"><div class="exp-chart-top"><span>STAR CHART · ANY DESTINATION, ANY ORDER</span><button class="exp-button" data-exp-action="layout" aria-pressed="${listMode}">${listMode ? 'Show star chart' : 'Show destination list'}</button></div>
         <div class="exp-map ${listMode ? 'exp-map-list' : ''}"><div class="exp-orbits" aria-hidden="true"><i></i><i></i><i></i></div>
           ${def.destinations.map((d, i) => {
             const progress = j.destinations?.[d.id];
@@ -326,8 +334,8 @@
             return `<button class="exp-planet exp-planet-${i} ${selected() === d.id ? 'selected' : ''} ${has(`${d.id}:${b}:clear`) ? 'cleared' : ''}" data-exp-action="select" data-destination="${d.id}" aria-pressed="${selected() === d.id}" style="--destination:${e(d.color)}"><span class="exp-planet-body" aria-hidden="true"><i></i></span><span class="exp-planet-name">${e(d.name)}</span><span class="exp-planet-category">${e(d.category)}</span><span class="exp-planet-status">${status}</span>${j.next === d.id && !activeTrial() ? '<span class="exp-suggested">SUGGESTED NEXT</span>' : ''}</button>`;
           }).join('')}
           <div class="exp-map-ship">${art('ship', ship?.design ?? -1, ship?.color || '#d6e6ed')}<span>${e(ship?.name || 'Your starting ship')}${badge ? `<small class="exp-worn-insignia">${e(badge.name)}</small>` : ''}</span></div>
-        </div><button class="exp-final-gate ${selected() === 'final' ? 'selected' : ''}" data-exp-action="select" data-destination="final"><span class="exp-final-symbol" aria-hidden="true">✦</span><span><small>THE LAST PASSAGE</small><strong>Beyond the first light</strong><span>${j.cleared} / 6 destinations cleared</span></span><b>${finished ? 'CLEARED' : j.cleared === 6 ? 'OPEN' : 'LOCKED'} →</b></button>
-        ${rewardSpotlight('final:ship', finished ? 'FIRST LIGHT COLLECTION' : 'THE WHOLE EXPEDITION EARNS', has('final:ship') ? 'Your First Light ship is collected. Each difficulty also has its own final insignia and mastery trophy.' : 'Clear all six destinations in one difficulty, then the last passage, for this ship and the First Light profile set.')}</div></div>`;
+        </div>${newcomer() ? `<button class="exp-final-gate exp-final-dim ${selected() === 'final' ? 'selected' : ''}" data-exp-action="select" data-destination="final" aria-label="The last passage, locked"><span class="exp-final-symbol" aria-hidden="true">✦</span></button>` : `<button class="exp-final-gate ${selected() === 'final' ? 'selected' : ''}" data-exp-action="select" data-destination="final"><span class="exp-final-symbol" aria-hidden="true">✦</span><span><small>THE LAST PASSAGE</small><strong>Beyond the first light</strong><span>${j.cleared} / 6 destinations cleared</span></span><b>${finished ? 'CLEARED' : j.cleared === 6 ? 'OPEN' : 'LOCKED'} →</b></button>`}
+        ${newcomer() ? '' : rewardSpotlight('final:ship', finished ? 'FIRST LIGHT COLLECTION' : 'THE WHOLE EXPEDITION EARNS', has('final:ship') ? 'Your First Light ship is collected. Each difficulty also has its own final insignia and mastery trophy.' : 'Clear all six destinations in one difficulty, then the last passage, for this ship and the First Light profile set.')}</div></div>`;
   }
 
   function collection() {
@@ -387,7 +395,7 @@
     const homeTitle = document.getElementById('expeditionHomeTitle'), homeDetail = document.getElementById('expeditionHomeDetail');
     const m = nextMove();
     if (homeTitle) homeTitle.textContent = !view.state ? 'First Light expedition' : m.kind === 'trial' ? `${destinationName(m.id)} · attempt in progress` : `${destinationName(m.id)} · ${view.definition.bands[m.band]}`;
-    if (homeDetail) homeDetail.textContent = !view.state ? 'Six aim skills, a ship for each, then the last passage.'
+    if (homeDetail) homeDetail.textContent = !view.state ? 'Solo. Six planets, one per aim category.'
       : m.kind === 'cleared' && !m.actions?.includes('data-destination') ? 'Rewards collected. Try mastery, beat your record, or explore another destination.'
       : m.kind === 'choose' ? 'Next: pick one warm-up to open the trial.'
       : `Next: ${m.headline}.`;
@@ -534,6 +542,8 @@
     if (a === 'page') { page = target.dataset.page; render(); document.querySelector('.scroll')?.scrollTo({ top: 0, behavior: 'instant' }); return; }
     if (a === 'filter') { filter = target.dataset.filter; render(); return; }
     if (a === 'layout') { listMode = !listMode; render(); return; }
+    if (a === 'toggle-bands') { showBands = !showBands; render(); return; }
+    if (a === 'select') picked = true;
     if (a === 'dismiss-signal') { signal = null; render(); root.querySelector('.exp-objective h3')?.focus?.({ preventScroll: true }); return; }
     if (a === 'preview-band') { previewBand = Number(target.dataset.band); render(); root.querySelector(`.exp-band-card[data-band="${previewBand}"]`)?.focus({ preventScroll: true }); return; }
     if (a === 'reward') {

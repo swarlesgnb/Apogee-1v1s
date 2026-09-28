@@ -103,6 +103,12 @@ app.whenReady().then(async () => {
   await click('[data-exp-action="folder"]');
   await waitFor(`!!document.querySelector('[data-exp-action="enroll"]')`);
   async function chooseBand(b: number) {
+    // Before joining there is no select: the difficulties sit behind "Difficulty: … · change".
+    if (!service.view(dir).state) {
+      if (!(await evaluate<boolean>(`!!document.querySelector('.exp-band-card')`))) await click('[data-exp-action="toggle-bands"]');
+      await click(`.exp-band-card[data-band="${b}"]`);
+      return;
+    }
     await evaluate(`document.getElementById('expBand').value='${b}';document.getElementById('expBand').dispatchEvent(new Event('change',{bubbles:true}))`);
     await waitFor(`!document.getElementById('expBand').disabled && document.getElementById('expBand').value==='${b}'`);
   }
